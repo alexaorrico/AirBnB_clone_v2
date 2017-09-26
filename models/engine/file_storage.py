@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 from models.base_model import BaseModel
+from models.user import User
 import json
 
 
@@ -39,5 +40,5 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = eval(jo[key]["__class__"])(**jo[key])
-        except:
-            pass
+        except Exception as e:
+            print(e)
