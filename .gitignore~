@@ -1,0 +1,5 @@
+.gitignore
+__pycache__
+../__pycachhe__
+file.json
+1console.py*

@@ -75,5 +75,20 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+    def do_all(self, arg):
+        """ """
+        args = arg.split()
+        if len(args) == 0:
+            for item in models.storage.all():
+                print(item)
+
+        elif args[0] in classes:
+            for key in models.storage.all():
+                if args[0] in key:
+                    print(models.storage.all()[key])
+                else:
+                    print("** class doesn't exist **")
+                    return False
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
