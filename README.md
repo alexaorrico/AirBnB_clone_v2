@@ -65,7 +65,7 @@ Classes inherited from Base Model:
 
 
 ## Usage
-Interactive mode:
+Interactive mode:  
 Non-interactive mode:
 
 ## Examples of use
@@ -74,8 +74,8 @@ Non-interactive mode:
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) | [Twitter](www.twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) | [Twitter](www.twitter.com/earthtojhuang)
+Alexa Orrico - [Github](https://github.com/alexaorrico) | [Twitter](https://twitter.com/alexa_orrico)  
+Jennifer Huang - [Github](https://github.com/jhuang10123) | [Twitter](https://twitter.com/earthtojhuang)
 
 ## License
 Public Domain. No copy write protection. 
