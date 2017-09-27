@@ -12,7 +12,7 @@ Review = review.Review
 
 
 class TestReviewDocs(unittest.TestCase):
-    """Tests to check the documentation and style of State class"""
+    """Tests to check the documentation and style of Review class"""
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""

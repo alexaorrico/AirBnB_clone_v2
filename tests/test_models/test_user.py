@@ -11,7 +11,7 @@ import unittest
 User = user.User
 
 
-class TestCityDocs(unittest.TestCase):
+class TestUserDocs(unittest.TestCase):
     """Tests to check the documentation and style of User class"""
     @classmethod
     def setUpClass(cls):
