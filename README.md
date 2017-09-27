@@ -47,15 +47,15 @@ List of commands this console current supports:
 * `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
 
 Classes inherited from Base Model:
-* [amenity.py](amenity.py)
-* [city.py](city.py)
-* [place.py](place.py)
-* [review.py](review.py)
-* [state.py](state.py)
-* [user.py](user.py)
+* [amenity.py](/models/amenity.py)
+* [city.py](/models/city.py)
+* [place.py](/models/place.py)
+* [review.py](/models/review.py)
+* [state.py](/models/state.py)
+* [user.py](/models/user.py)
 
 #### `/models/engine`: directory contains File Storage class that handles JASON serialization and deserialization :
-[file_storage.py](file_storage.py) - serializes instances to a JSON file & deserializes back to instances
+[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
