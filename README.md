@@ -64,10 +64,6 @@ Classes inherited from Base Model:
 #### `/tests` directory contains all unit test cases for this project:
 
 
-## Usage
-Interactive mode:  
-Non-interactive mode:
-
 ## Examples of use
 ```
 vagrantAirBnB_clone$./console.py
