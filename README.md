@@ -106,21 +106,21 @@ TestBaseModel class:
 * `def test_place_class_docstring(self)` - Test for the Place class docstring
 
 [/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
-* * `def setUpClass(cls)` - Set up for the doc tests
+* `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
 * `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
 * `def test_review_module_docstring(self)` - Test for the review.py module docstring
 * `def test_review_class_docstring(self)` - Test for the Review class docstring
 
 [/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
-* * `def setUpClass(cls)` - Set up for the doc tests
+* `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
 * `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
 * `def test_state_module_docstring(self)` - Test for the state.py module docstring
 * `def test_state_class_docstring(self)` - Test for the State class docstring
 
 [/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
-* * `def setUpClass(cls)` - Set up for the doc tests
+* `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
 * `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
