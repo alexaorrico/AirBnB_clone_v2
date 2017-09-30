@@ -4,6 +4,8 @@
 import cmd
 import models
 from models.base_model import BaseModel
+from models.user import User
+classes = ["BaseModel", "User"]
 
 
 class HBNBCommand(cmd.Cmd):
@@ -24,7 +26,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of a class"""
-        classes = ["BaseModel"]
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -35,6 +36,25 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return False
         print(instance.id)
+        instance.save()
+
+    def do_show(self, arg):
+        """Prints an instance as a string based on the class and id"""
+        args = arg.split()
+        if len(args) == 0:
+            print("** class name missing **")
+            return False
+        if args[0] in classes:
+            if len(args) > 1:
+                key = args[0] + "." + args[1]
+                if key in models.storage.all():
+                    print(models.storage.all()[key])
+                else:
+                    print("** no instance found **")
+            else:
+                print("** instance id missing **")
+        else:
+            print("** class doesn't exist **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
