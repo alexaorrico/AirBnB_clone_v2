@@ -109,7 +109,6 @@ class HBNBCommand(cmd.Cmd):
         integers = ["number_rooms", "number_bathrooms", "max_guest",
                     "price_by_night"]
         floats = ["latitude", "longitude"]
-        datetimes = ["created_at", "updated_at"]
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] in classes:
@@ -118,18 +117,17 @@ class HBNBCommand(cmd.Cmd):
                 if k in models.storage.all():
                     if len(args) > 2:
                         if len(args) > 3:
-                            try:
-                                if args[2] in datetimes:
-                                    pass  # need to see how value is passed
-                                if args[0] == "Place":
-                                    if args[2] in integers:
+                            if args[0] == "Place":
+                                if args[2] in integers:
+                                    try:
                                         args[3] = int(args[3])
-                                    elif args[2] in floats:
+                                    except:
+                                        args[3] = 0
+                                elif args[2] in floats:
+                                    try:
                                         args[3] = float(args[3])
-                                    elif args[2] == "amenity_ids":
-                                        pass  # need to see how value is passed
-                            except:
-                                print("Invalid value")
+                                    except:
+                                        args[3] = 0.0
                             setattr(models.storage.all()[k], args[2], args[3])
                             models.storage.all()[k].save()
                         else:
