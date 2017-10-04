@@ -1,13 +1,11 @@
 #!/usr/bin/python3
-"""
-Contains the TestBaseModel and TestBaseModelDocs classes
-"""
-
 from datetime import datetime
 import inspect
 from models import base_model
 import pep8
 import unittest
+import string
+import os
 BaseModel = base_model.BaseModel
 
 
@@ -16,6 +14,7 @@ class TestBaseModelDocs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
+        os.remove("file.json")
         cls.base_f = inspect.getmembers(BaseModel, inspect.isfunction)
 
     def test_pep8_conformance_base_model(self):
@@ -81,3 +80,80 @@ class TestBaseModel(unittest.TestCase):
         bm2 = BaseModel()
         self.assertNotEqual(bm1.created_at, bm2.created_at)
         self.assertNotEqual(bm1.updated_at, bm2.updated_at)
+
+    def test_same_time(self):
+        """test updated_at and created_at are the same for a new instance"""
+        base_model = BaseModel()
+        self.assertEqual(base_model.updated_at, base_model.created_at)
+
+    def test_to_dict(self):
+        """Test conversion of object attributes to dictionary for json"""
+        my_model = BaseModel()
+        my_model.name = "Holberton"
+        my_model.my_number = 89
+        d = my_model.to_dict()
+        expected_attrs = ["id",
+                          "created_at",
+                          "updated_at",
+                          "name",
+                          "my_number",
+                          "__class__"]
+        self.assertCountEqual(d.keys(), expected_attrs)
+        self.assertEqual(d['__class__'], 'BaseModel')
+        self.assertEqual(d['name'], "Holberton")
+        self.assertEqual(d['my_number'], 89)
+
+    def test_date_differences(self):
+        """Test use of datetime for `created_at` attribute"""
+        my_model = BaseModel()
+        now = datetime.now()
+        self.assertTrue(type(my_model.created_at) == type(now))
+        self.assertTrue(type(my_model.updated_at) == type(now))
+        self.assertEqual(my_model.created_at, my_model.updated_at)
+        delta = now - my_model.created_at
+        self.assertAlmostEqual(delta.total_seconds(), 0.0, delta=1e-2)
+
+    def test_valid_UUID_creation(self):
+        '''test created_at is a saloon.'''
+        bm = BaseModel()
+        id = bm.id
+        allhex = id.split('-')
+        # id is a string
+        self.assertIs(type(id), str)
+        # len(id) = 37
+        self.assertIs(len(id), 36)
+        # dash at 8, 13, 18, 23 indexes
+        self.assertIs(id[8], "-")
+        self.assertIs(id[13], "-")
+        self.assertIs(id[18], "-")
+        self.assertIs(id[23], "-")
+
+        # all hex characters between dashes
+        for substring in allhex:
+            self.assertIs(all(c in string.hexdigits for c in substring), True)
+
+    def test_to_dict_creates_dict(self):
+        """test to_dict method creates a dictionary with proper attrs"""
+        bm = BaseModel()
+        new_d = bm.to_dict()
+        self.assertEqual(type(new_d), dict)
+        for attr in bm.__dict__:
+            self.assertTrue(attr in new_d)
+        self.assertTrue("__class__" in new_d)
+
+    def test_to_dict_values(self):
+        """test that values in dict returned from to_dict are correct"""
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        bm = BaseModel()
+        new_d = bm.to_dict()
+        self.assertEqual(new_d["__class__"], "BaseModel")
+        self.assertEqual(type(new_d["created_at"]), str)
+        self.assertEqual(type(new_d["updated_at"]), str)
+        self.assertEqual(new_d["created_at"], bm.created_at.strftime(t_format))
+        self.assertEqual(new_d["updated_at"], bm.updated_at.strftime(t_format))
+
+    def test_str(self):
+        """test that the str method has the correct output"""
+        bm = BaseModel()
+        string = "[BaseModel] ({}) {}".format(bm.id, bm.__dict__)
+        self.assertEqual(string, str(bm))
