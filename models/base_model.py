@@ -19,9 +19,9 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
-            if hasattr(self.created_at) and type(self.created_at]) is str:
+            if hasattr(self, "created_at") and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
-            if hasattr(self.updated_at) and type(self.updated_at]) is str:
+            if hasattr(self, "updated_at") and type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(kwargs["updated_at"], time)
         else:
             self.id = str(uuid.uuid4())
