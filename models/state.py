@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 
 class State(BaseModel):
     """Representation of state """
-    self.name = ""
+    name = ""
 
     def __init__(self, *args, **kwargs):
         """initializes state"""
