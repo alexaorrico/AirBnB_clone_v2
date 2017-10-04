@@ -42,7 +42,9 @@ class BaseModel:
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
-        new_dict["created_at"] = new_dict["created_at"].strftime(time)
-        new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
+        if "created_at" in new_dict:
+            new_dict["created_at"] = new_dict["created_at"].strftime(time)
+        if "updated_at" in new_dict:
+            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         new_dict["__class__"] = self.__class__.__name__
         return new_dict
