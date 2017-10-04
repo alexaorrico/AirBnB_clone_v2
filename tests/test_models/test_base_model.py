@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+Contains class TestBaseModelDocs and class TestBaseModel
+"""
+
+
 from datetime import datetime
 import inspect
 from models import base_model
