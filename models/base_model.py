@@ -16,9 +16,9 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
         if kwargs:
-            self.__dict__ = kwargs.copy()
-            if "__class__" in kwargs:
-                self.__dict__.pop("__class__")
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    setattr(self, key, value)
             if "created_at" in kwargs:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
             if "updated_at" in kwargs:
