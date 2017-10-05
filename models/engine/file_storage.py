@@ -16,19 +16,6 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
-def models_obj_hook(o_dict):
-    """imports BaseModel from models and returns dict"""
-    try:
-        cls = o_dict['__class__']
-    except KeyError:
-        return o_dict
-    else:
-        try:
-            return classes[cls](**o_dict)
-        except AttributeError:
-            return o_dict
-
-
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
 
@@ -56,9 +43,11 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file"""
+        """deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
-                self.__objects = json.load(f, object_hook=models_obj_hook)
+                jo = json.load(f)
+            for key in jo:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
         except:
             pass
