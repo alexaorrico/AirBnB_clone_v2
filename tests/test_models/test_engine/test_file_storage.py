@@ -9,6 +9,7 @@ from models.engine import file_storage
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
+classes = ["Amenity", "BaseModel", "City", "Place", "Review", "State", "User"]
 
 
 class TestFileStorageDocs(unittest.TestCase):
@@ -54,3 +55,12 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+    def test_all_returns_dict(self):
+        """Test that all returns a dict with keys <class name>.id"""
+        storage = FileStorage()
+        new_dict = storage.all()
+        self.assertEqual(type(new_dict), dict)

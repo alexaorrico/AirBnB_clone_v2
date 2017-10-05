@@ -9,7 +9,6 @@ from models import state
 from models.base_model import BaseModel
 import pep8
 import unittest
-import os
 State = state.State
 
 
@@ -18,7 +17,6 @@ class TestStateDocs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
-        os.remove("file.json")
         cls.state_f = inspect.getmembers(State, inspect.isfunction)
 
     def test_pep8_conformance_state(self):

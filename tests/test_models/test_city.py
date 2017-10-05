@@ -9,7 +9,6 @@ from models import city
 from models.base_model import BaseModel
 import pep8
 import unittest
-import os
 City = city.City
 
 
@@ -18,7 +17,6 @@ class TestCityDocs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
-        os.remove("file.json")
         cls.city_f = inspect.getmembers(City, inspect.isfunction)
 
     def test_pep8_conformance_city(self):

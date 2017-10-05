@@ -10,7 +10,6 @@ from models import base_model
 import pep8
 import unittest
 import string
-import os
 BaseModel = base_model.BaseModel
 
 
@@ -19,7 +18,6 @@ class TestBaseModelDocs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
-        os.remove("file.json")
         cls.base_f = inspect.getmembers(BaseModel, inspect.isfunction)
 
     def test_pep8_conformance_base_model(self):
