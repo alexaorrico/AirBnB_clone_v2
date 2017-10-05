@@ -14,6 +14,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
+import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -91,6 +92,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        os.remove("file.json")
         storage = FileStorage()
         new_dict = {}
         for key, value in classes.items():
@@ -104,4 +106,4 @@ class TestFileStorage(unittest.TestCase):
         string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()
-        self.assertEqual(string, js)
+        self.assertEqual(json.loads(string), json.loads(js))
