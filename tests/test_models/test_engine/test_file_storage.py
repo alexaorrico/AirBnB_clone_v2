@@ -79,7 +79,8 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
-        storage._FileStorage__objects = {}
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
         test_dict = {}
         for key, value in classes.items():
             with self.subTest(key=key, value=value):
@@ -88,7 +89,7 @@ class TestFileStorage(unittest.TestCase):
                 storage.new(instance)
                 test_dict[instance_key] = instance
                 self.assertEqual(test_dict, storage._FileStorage__objects)
-        storage._FileStorage__objects = {}
+        FileStorage._FileStorage__objects = save
 
     def test_save(self):
         """Test that save properly saves objects to file.json"""
@@ -99,8 +100,10 @@ class TestFileStorage(unittest.TestCase):
             instance = value()
             instance_key = instance.__class__.__name__ + "." + instance.id
             new_dict[instance_key] = instance
-        storage._FileStorage__objects = new_dict
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
         storage.save()
+        FileStorage._FileStorage__objects = save
         for key, value in new_dict.items():
             new_dict[key] = value.to_dict()
         string = json.dumps(new_dict)
