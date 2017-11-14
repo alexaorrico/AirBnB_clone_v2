@@ -13,6 +13,7 @@ place_amenity = Table('place_amenity', Base.metadata,
                       Column('amenity_id', String(60),
                              ForeignKey('amenities.id'), primary_key=True))
 
+
 class Place(BaseModel, Base):
     """Representation of Place """
     if models.storage_t == 'db':
