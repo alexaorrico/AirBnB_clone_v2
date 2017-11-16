@@ -5,6 +5,7 @@ Contains the TestAmenityDocs classes
 
 from datetime import datetime
 import inspect
+import models
 from models import amenity
 from models.base_model import BaseModel
 import pep8
@@ -70,16 +71,22 @@ class TestAmenity(unittest.TestCase):
         """Test that Amenity has attribute name, and it's as an empty string"""
         amenity = Amenity()
         self.assertTrue(hasattr(amenity, "name"))
-        self.assertEqual(amenity.name, "")
+        if models.storage_t == 'db':
+            self.assertEqual(amenity.name, None)
+        else:
+            self.assertEqual(amenity.name, "")
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         am = Amenity()
+        print(am.__dict__)
         new_d = am.to_dict()
         self.assertEqual(type(new_d), dict)
+        self.assertFalse("_sa_instance_state" in new_d)
         for attr in am.__dict__:
-            self.assertTrue(attr in new_d)
-            self.assertTrue("__class__" in new_d)
+            if attr is not "_sa_instance_state":
+                self.assertTrue(attr in new_d)
+        self.assertTrue("__class__" in new_d)
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""

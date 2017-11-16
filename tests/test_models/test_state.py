@@ -5,6 +5,7 @@ Contains the TestStateDocs classes
 
 from datetime import datetime
 import inspect
+import models
 from models import state
 from models.base_model import BaseModel
 import pep8
@@ -70,16 +71,21 @@ class TestState(unittest.TestCase):
         """Test that State has attribute name, and it's as an empty string"""
         state = State()
         self.assertTrue(hasattr(state, "name"))
-        self.assertEqual(state.name, "")
+        if models.storage_t == 'db':
+            self.assertEqual(state.name, None)
+        else:
+            self.assertEqual(state.name, "")
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         s = State()
         new_d = s.to_dict()
         self.assertEqual(type(new_d), dict)
+        self.assertFalse("_sa_instance_state" in new_d)
         for attr in s.__dict__:
-            self.assertTrue(attr in new_d)
-            self.assertTrue("__class__" in new_d)
+            if attr is not "_sa_instance_state":
+                self.assertTrue(attr in new_d)
+        self.assertTrue("__class__" in new_d)
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""

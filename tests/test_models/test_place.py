@@ -5,6 +5,7 @@ Contains the TestPlaceDocs classes
 
 from datetime import datetime
 import inspect
+import models
 from models import place
 from models.base_model import BaseModel
 import pep8
@@ -70,68 +71,99 @@ class TestPlace(unittest.TestCase):
         """Test Place has attr city_id, and it's an empty string"""
         place = Place()
         self.assertTrue(hasattr(place, "city_id"))
-        self.assertEqual(place.city_id, "")
+        if models.storage_t == 'db':
+            self.assertEqual(place.city_id, None)
+        else:
+            self.assertEqual(place.city_id, "")
 
     def test_user_id_attr(self):
         """Test Place has attr user_id, and it's an empty string"""
         place = Place()
         self.assertTrue(hasattr(place, "user_id"))
-        self.assertEqual(place.user_id, "")
+        if models.storage_t == 'db':
+            self.assertEqual(place.user_id, None)
+        else:
+            self.assertEqual(place.user_id, "")
 
     def test_name_attr(self):
         """Test Place has attr name, and it's an empty string"""
         place = Place()
         self.assertTrue(hasattr(place, "name"))
-        self.assertEqual(place.name, "")
+        if models.storage_t == 'db':
+            self.assertEqual(place.name, None)
+        else:
+            self.assertEqual(place.name, "")
 
     def test_description_attr(self):
         """Test Place has attr description, and it's an empty string"""
         place = Place()
         self.assertTrue(hasattr(place, "description"))
-        self.assertEqual(place.description, "")
+        if models.storage_t == 'db':
+            self.assertEqual(place.description, None)
+        else:
+            self.assertEqual(place.description, "")
 
     def test_number_rooms_attr(self):
         """Test Place has attr number_rooms, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "number_rooms"))
-        self.assertEqual(type(place.number_rooms), int)
-        self.assertEqual(place.number_rooms, 0)
+        if models.storage_t == 'db':
+            self.assertEqual(place.number_rooms, None)
+        else:
+            self.assertEqual(type(place.number_rooms), int)
+            self.assertEqual(place.number_rooms, 0)
 
     def test_number_bathrooms_attr(self):
         """Test Place has attr number_bathrooms, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "number_bathrooms"))
-        self.assertEqual(type(place.number_bathrooms), int)
-        self.assertEqual(place.number_bathrooms, 0)
+        if models.storage_t == 'db':
+            self.assertEqual(place.number_bathrooms, None)
+        else:
+            self.assertEqual(type(place.number_bathrooms), int)
+            self.assertEqual(place.number_bathrooms, 0)
 
     def test_max_guest_attr(self):
         """Test Place has attr max_guest, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "max_guest"))
-        self.assertEqual(type(place.max_guest), int)
-        self.assertEqual(place.max_guest, 0)
+        if models.storage_t == 'db':
+            self.assertEqual(place.max_guest, None)
+        else:
+            self.assertEqual(type(place.max_guest), int)
+            self.assertEqual(place.max_guest, 0)
 
     def test_price_by_night_attr(self):
         """Test Place has attr price_by_night, and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "price_by_night"))
-        self.assertEqual(type(place.price_by_night), int)
-        self.assertEqual(place.price_by_night, 0)
+        if models.storage_t == 'db':
+            self.assertEqual(place.price_by_night, None)
+        else:
+            self.assertEqual(type(place.price_by_night), int)
+            self.assertEqual(place.price_by_night, 0)
 
     def test_latitude_attr(self):
         """Test Place has attr latitude, and it's a float == 0.0"""
         place = Place()
         self.assertTrue(hasattr(place, "latitude"))
-        self.assertEqual(type(place.latitude), float)
-        self.assertEqual(place.latitude, 0.0)
+        if models.storage_t == 'db':
+            self.assertEqual(place.latitude, None)
+        else:
+            self.assertEqual(type(place.latitude), float)
+            self.assertEqual(place.latitude, 0.0)
 
-    def test_latitude_attr(self):
+    def test_longitude_attr(self):
         """Test Place has attr longitude, and it's a float == 0.0"""
         place = Place()
         self.assertTrue(hasattr(place, "longitude"))
-        self.assertEqual(type(place.longitude), float)
-        self.assertEqual(place.longitude, 0.0)
+        if models.storage_t == 'db':
+            self.assertEqual(place.longitude, None)
+        else:
+            self.assertEqual(type(place.longitude), float)
+            self.assertEqual(place.longitude, 0.0)
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
     def test_amenity_ids_attr(self):
         """Test Place has attr amenity_ids, and it's an empty list"""
         place = Place()
@@ -144,9 +176,11 @@ class TestPlace(unittest.TestCase):
         p = Place()
         new_d = p.to_dict()
         self.assertEqual(type(new_d), dict)
+        self.assertFalse("_sa_instance_state" in new_d)
         for attr in p.__dict__:
-            self.assertTrue(attr in new_d)
-            self.assertTrue("__class__" in new_d)
+            if attr is not "_sa_instance_state":
+                self.assertTrue(attr in new_d)
+        self.assertTrue("__class__" in new_d)
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
