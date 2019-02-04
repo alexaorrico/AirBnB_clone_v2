@@ -79,7 +79,7 @@ class FileStorage:
         """ count the number of objects in storage """
         count = 0
         if cls:
-            objs = self.__objects[cls]
+            objs = self.all(cls)
             for obj in objs:
                 count += 1
         else:

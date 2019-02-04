@@ -89,7 +89,7 @@ class DBStorage:
             for obj in objs:
                 count += 1
         else:
-            objs = self.__session.all()
+            objs = self.all()
             for obj in objs:
                 count += 1
         return (count)
