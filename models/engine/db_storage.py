@@ -87,9 +87,9 @@ class DBStorage:
         if cls:
             objs = self.__session.query(classes[cls]).all()
             for obj in objs:
-                count++
+                count += 1
         else:
             objs = self.__session.all()
             for obj in objs:
-                count++
+                count += 1
         return (count)
