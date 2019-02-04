@@ -70,7 +70,9 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ fix this comment plz day mon """
+        """ Gets all the objects of a class and returns the specific instance
+        if an ID is given
+        """
         try:
             oneObj = self.all(cls)
             for key, value in oneObj.items():
@@ -82,7 +84,7 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
-        """ fix this via pull request. bad comments """
+        """ Counts how many objects are in the storage file """
         # count = 0
         county = self.all(cls)
         return len(county)
