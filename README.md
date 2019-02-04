@@ -1,5 +1,12 @@
-# AirBnB Clone - The Console
+# AirBnB Clone V1 - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+
+# AirBnB Clone V2 - The Database
+Version 2: We (Jenn and Bryan) forked this existing codebase to improve on it. This version will now handle conversion from a JSON file storage system to a database focused storage. We will implement new and update existing functions so the code is compatible with SQL and also swap between storage formats without losing any data. Unit tests are also used and TDD is practiced.
+
+# AirBnB Clone V3 - Rest API
+Version 3: We (Damon and Bryan) used Flask and CORS to deliver our AirBnB clone app. We will convert a semi-static html page into a dynamic web page that delivers content from our database, following specific guidelines and requirements set for this project. We will focus on setting up RestFul API actions.
+
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
@@ -156,6 +163,9 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Bryan Leung - [Github](https://github.com/byn3) / [Twitter](https://twitter.com/byn3)  
+Damon Nyhan - [Github](https://github.com/anovacap) / [Twitter](https://twitter.com/anovacap)  
+
 
 Second part of Airbnb: Joann Vuong
 ## License
