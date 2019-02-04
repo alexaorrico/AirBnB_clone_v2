@@ -81,9 +81,9 @@ class FileStorage:
         if cls:
             objs = self.__objects[cls]
             for obj in objs:
-                count++
+                count += 1
         else:
             objs = self.__objects
             for obj in objs:
-                count++
+                count += 1
         return (count)
