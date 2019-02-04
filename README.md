@@ -154,6 +154,10 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+Jenn Ogden - [Github](https://github.com/jogden4195) / [Twitter](https://twitter.com/jogden95)  
+Jinji Zhang - [Github](https://github.com/iamzinzi) / [Twitter](https://twitter.com/hizinzi)
+
+## Original Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
