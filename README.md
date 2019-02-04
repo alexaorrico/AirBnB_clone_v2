@@ -164,7 +164,7 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Bryan Leung - [Github](https://github.com/byn3) / [Twitter](https://twitter.com/byn3)  
-Damon Nyhan - [Github](https://github.com/anovacap) / [Twitter](https://twitter.com/anovacap)  
+Damon W. Nyhan - [Github](https://github.com/anovacap) / [Twitter](https://twitter.com/anovacap)  
 
 
 Second part of Airbnb: Joann Vuong
