@@ -82,11 +82,11 @@ class DBStorage:
             id: string representing the object id
         """
         mydict = self.all(cls)
+        myobj = None
         for v in mydict.values():
             if v.id == id:
-                return v
-            else:
-                return None
+                myobj = v
+        return myobj
 
     def count(self, cls=None):
         """Count the number of objs in storage
