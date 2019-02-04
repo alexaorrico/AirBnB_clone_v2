@@ -76,7 +76,9 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """ fix this comment plz day mon """
+        """ Gets the objects requested and if the id of the instance
+        matches what is given, return that specific instance
+        """
         try:
             oneObj = models.storage.all(cls)
             for key, value in oneObj.items():
@@ -88,7 +90,7 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
-        """ fix this via pull request. bad comments """
+        """ Counts the number of objects or number of objects of the class """
         # count = 0
         oneObj = models.storage.all(cls)
         return len(oneObj)
