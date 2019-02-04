@@ -93,6 +93,15 @@ class TestDBStorage(unittest.TestCase):
         obj1 = State(name="California")
         models.storage.new(obj1)
         models.storage.save()
-        print(obj1)
         obj2 = models.storage.get('State', obj1.id)
         self.assertIs(obj1, obj2)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count method"""
+        first_count = models.storage.count('State')
+        obj1 = State(name="California")
+        models.storage.new(obj1)
+        models.storage.save()
+        second_count = models.storage.count('State')
+        self.assertEqual(second_count - first_count, 1)
