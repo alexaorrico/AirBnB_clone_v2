@@ -56,7 +56,7 @@ class DBStorage:
         for key, value in self.all().items():
             if cls == value.__class__.__name__ and id == key.split('.')[1]:
                 return value
-
+        return None
     def count(self, cls=None):
         """
         returns a count of the number of objects in storage of a given class
@@ -69,6 +69,7 @@ class DBStorage:
         else:
             for key, value in self.all().items():
                 counter += 1
+        return counter
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
