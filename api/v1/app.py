@@ -8,10 +8,10 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(close):
     ''' Closes current storage session '''
     storage.close()
 
 
 if __name__ == "__main__":
-    app.run(HBNB_API_HOST, HBNB_API_PORT, threaded=True)
+    app.run(host='0.0.0.0', threaded=True)
