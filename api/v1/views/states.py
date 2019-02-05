@@ -1,7 +1,9 @@
 """Module to create a new view for State objects"""
-from flask import jsonify, Flask
+from flask import jsonify, Flask, request
 from models import storage
 from api.v1.views import app_views
+from models.state import State
+
 
 @app_views.route('/states', methods=['GET'], strict_slashes = False)
 def get_states():
@@ -10,7 +12,7 @@ def get_states():
     my_list = []
     for value in all_states.values():
         my_list.append(value.to_dict())
-    return jsonify(my_list)
+    return (jsonify(my_list))
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes = False)
 def get_state_by_id(state_id):
@@ -28,7 +30,31 @@ def delete_state_by_id(state_id):
     if state is None:
         return jsonify({"error": "Not found"}), 404
     storage.delete(state)
+    storage.all('State').pop("{}.{}".format('State', state_id))
     storage.save()
     return jsonify({}), 200
 
-# @app_views.route('/api/v1/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes = False)
+def create_state():
+    """Post a State object"""
+    data = request.get_json()
+    if not data:
+        abort(400)
+        abort(Response("Not a JSON"))
+    if 'name' not in data:
+        abort(400)
+        abort(Response("Missing name"))
+    new_state = State(**data)
+    return jsonify(new_state.to_dict()), 201
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes = False)
+def put_state(state_id):
+    """Put a State object"""
+    data = request.get_json()
+    if not data:
+        abort(400)
+        abort(Response("Not a JSON"))
+    new_state = State(**data)
+    storage.new(new_state)
+    storage.save()
+    return jsonify(new_state.to_dict()), 200
