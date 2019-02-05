@@ -14,10 +14,16 @@ def teardown(error):
     storage.close()
 
 
-@app_views.route('/', strict_slashes=False)
-def not_found(404):
+@app.errorhandler(404)
+def not_found(e):
     """ Gives the 404 not found page """
     return (jsonify({"error": "Not found"}), 404)
+
+
+def create_app(config_filename):
+    """ Helps aid in making a 404 page """
+    app.register_error_handler(404, page_not_found)
+    return app
 
 if __name__ == '__main__':
     if not environ.get('HBNB_API_HOST'):
