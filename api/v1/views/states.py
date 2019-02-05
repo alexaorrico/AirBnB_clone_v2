@@ -15,21 +15,22 @@ def showStates():
     return(jsonify(count_l))
 
 
-@app_views.route('/states/<id>', strict_slashes=False, methods=['GET'])
-def a_states_id(id):
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
+def a_states_id(state_id):
     """ Gets the state and its id if any """
     for s_id in storage.all('State').values():
-        if s_id.id == id:
-            return jsonify(s_id.to_dict())
+        i = storage.get("State", state_id)
+        if i:
+            return jsonify(i.to_dict())
         else:
             return (jsonify({"error": "Not found"}), 404)
 
 
-@app_views.route('/states/<id>', strict_slashes=False, methods=["DELETE"])
-def del_states_id(id):
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=["DELETE"])
+def del_states_id(state_id):
     """ deletes a sate if given the id """
     for s_id in storage.all('State').values():
-        if s_id.id == id:
+        if s_id.state_id == state_id:
             return jsonify(s_id.delete())
         else:
             return (jsonify({"error": "Not found"}), 404)
@@ -48,6 +49,27 @@ def postStates():
     s.name = state
     s.save()
     return (jsonify(s.to_dict()), 201)
+
+
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=["PUT"])
+def updateState(state_id):
+    """ updates the state info, sopecifically name """
+    # garbage = {"id", "created_at", "updated_at"}
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
+    
+    thing2 = request.json
+
+    if not request.json:
+        return (jsonify({"error": "Not a JSON"}), 400)
+
+    thing = request.get_json()
+    for key, value in thing.items():
+        if key == 'name':
+            setattr(state, key, value)
+    state.save()
+    return (jsonify(state.to_dict(), 200))
 
 
 if __name__ == '__main__':
