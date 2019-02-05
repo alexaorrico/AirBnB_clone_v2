@@ -44,6 +44,7 @@ def delete_state_id(state_id):
         storage.delete(state)
         storage.save()
         return jsonify({}), 200
+    return abort(404)
 
 
 @app_views.route('/states/', strict_slashes=False, methods=['POST'])
