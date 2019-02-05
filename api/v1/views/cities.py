@@ -27,9 +27,9 @@ def create_city(state_id):
     if state:
         body = request.get_json()
         if not body:
-            return make_response('Not a JSON', 200)
+            return make_response('Not a JSON', 400)
         if not body.get('name'):
-            return make_response('Missing name', 200)
+            return make_response('Missing name', 400)
         city = City(name=body.get('name'), state_id=state_id)
         storage.new(city)
         storage.save()
