@@ -5,4 +5,6 @@ from api.v1.views import app_views
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    return ("{{\n  {}\n}}\n".format(jsonify({"status": "OK"})))
+    """ Returns the status of the http which should be 200 """
+    return (jsonify({"status":"OK"}))
+

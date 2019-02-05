@@ -20,3 +20,9 @@ if __name__ == '__main__':
     app.run(host=environ['HBNB_API_HOST'],
             port=environ['HBNB_API_PORT'],
             threaded=True)
+
+@app_views.route('/', strict_slashes=False)
+def not_found():
+    """ Gives the 404 not found page """
+    return (jsonify({"status":"OK"}))
+
