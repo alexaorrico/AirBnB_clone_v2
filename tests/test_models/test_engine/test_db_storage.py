@@ -68,8 +68,16 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    def setUp(self):
+        """Set up before test"""
+        pass
+
+    def tearDown(self):
+        """Close after test"""
+        pass
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -80,11 +88,32 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        new_dict = models.storage.all()
+        for k, v in new_dict.items():
+            self.assertEqual(type(v) in classes.values(), True)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        test = State(name="TEST")
+        models.storage.new(test)
+        models.storage.save()
+        dic = models.storage.all(State)
+        bool = False
+        for obj in dic.values():
+            if obj.name == "TEST":
+                bool = True
+        self.assertEqual(bool, True)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        test = State(name="TEST")
+        models.storage.new(test)
+        models.storage.save()
+        dic = models.storage.all(State)
+        bool = False
+        for obj in dic.values():
+            if obj.name == "TEST":
+                bool = True
+        self.assertEqual(bool, True)
