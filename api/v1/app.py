@@ -7,6 +7,8 @@ from api.v1.views import app_views
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
+
 @app.errorhandler(404)
 def page_not_found(error):
     """A function to handle page not found"""
