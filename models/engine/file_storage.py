@@ -70,16 +70,6 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-<<<<<<< HEAD
-        """method to retrieve one object"""
-
-        if cls and id:
-            obj = "{}.{}".format(cls, id)
-            if obj in self.__objects.keys():
-                return self.__objects[obj]
-        return None
-
-=======
         """retrieve one object"""
         if cls is not None and id is not None:
             for value in self.__objects.values():
@@ -99,4 +89,3 @@ class FileStorage:
             for item in self.__objects.values():
                 count += 1
         return count
->>>>>>> a91a2c67e43985ba7899d0afa2e08151447166f2
