@@ -10,8 +10,8 @@ from sqlalchemy.orm import relationship
 
 class User(BaseModel, Base):
     """Representation of a user """
+    __tablename__ = 'users'
     if models.storage_t == 'db':
-        __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
