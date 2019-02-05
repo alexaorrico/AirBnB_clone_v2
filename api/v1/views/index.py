@@ -17,7 +17,6 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 
-
 @app_views.route("/status")
 def status():
     """
@@ -25,6 +24,7 @@ def status():
     """
     j_status = {"status": "OK"}
     return jsonify(j_status)
+
 
 @app_views.route("/stats")
 def count_all():
