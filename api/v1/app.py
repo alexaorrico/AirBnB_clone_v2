@@ -3,7 +3,7 @@
 starts a Flask web application
 """
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -21,6 +21,14 @@ app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 app.env = 'development'
 app.config.update(JSONIFY_PRETTYPRINT_REGULAR=True)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Gives error message when any invalid
+    url are requested
+    """
+    return jsonify({"error": "Not found"})
 
 
 @app.teardown_appcontext
