@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Module to create a new view for State objects"""
 from flask import jsonify, Flask, request
 from models import storage
@@ -26,11 +27,10 @@ def get_state_by_id(state_id):
                  strict_slashes = False)
 def delete_state_by_id(state_id):
     """Deletes a state by ID"""
-    state = storage.get('State', state_id)
+    state = storage.get('State', str(state_id))
     if state is None:
         return jsonify({"error": "Not found"}), 404
     storage.delete(state)
-    storage.all('State').pop("{}.{}".format('State', state_id))
     storage.save()
     return jsonify({}), 200
 
