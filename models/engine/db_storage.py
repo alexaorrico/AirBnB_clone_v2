@@ -63,7 +63,8 @@ class DBStorage:
         returns a count of the number of objects in storage of a given class
         """
         if cls is not None:
-            cls = getattr(sys.modules[__name__], cls)
+            if type(cls) == str:
+                cls = getattr(sys.modules[__name__], cls)
             return self.__session.query(cls).count()
         else:
             counter = 0
