@@ -26,17 +26,20 @@ def a_states_id(state_id):
             return (jsonify({"error": "Not found"}), 404)
 
 
-@app_views.route('/states/<state_id>',
-                 strict_slashes=False,
+@app_views.route('/states/<state_id>', strict_slashes=False,
                  methods=["DELETE"])
 def del_states_id(state_id):
     """ deletes a sate if given the id """
-    for s_id in storage.all('State').values():
-        if s_id.state_id == state_id:
-            return jsonify(s_id.delete())
-        else:
-            return (jsonify({"error": "Not found"}), 404)
-
+    thing = storage.all('State')
+    # for i in states.state_id:
+    muricanState = "State." + state_id
+    state = thing.get(muricanState)
+    if state is None:
+        abort(404)
+    else:
+        state.delete()
+        storage.save()
+        return (jsonify({}), 200)
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def postStates():
@@ -70,7 +73,7 @@ def updateState(state_id):
         if key == 'name':
             setattr(state, key, value)
     state.save()
-    return (jsonify(state.to_dict(), 200))
+    return (jsonify(state.to_dict()), 200)
 
 
 if __name__ == '__main__':
