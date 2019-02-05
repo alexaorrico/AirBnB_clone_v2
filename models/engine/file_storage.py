@@ -90,4 +90,10 @@ class FileStorage:
             cls (string): string representing the class name (optional)
         Return: the number of objects in storage
         """
-        pass
+        count = 0
+        if cls is not None:
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    count += 1
+            return count
+        return (len(self.__objects))
