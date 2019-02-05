@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get properly retrieves objects based on id"""
+        storage = FileStorage()
+        first = True
+        saved_id = None
+        saved_obj = None
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            if first:
+                saved_class = key
+                saved_id = instance.id
+                saved_obj = instance
+                first = False
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        found_object = storage.get(saved_class, saved_id)
+        self.assertEqual(found_object, saved_obj)
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_failure(self):
+        """Test that get properly return None when obj not found"""
+        storage = FileStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        found_object = storage.get('Fake', 'Fake')
+        self.assertEqual(found_object, None)
+        FileStorage._FileStorage__objects = save
