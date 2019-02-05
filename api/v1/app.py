@@ -3,7 +3,7 @@
 
 from models import storage
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 import os
 
 
@@ -17,6 +17,11 @@ def closer(close):
     storage.close()
 
 
+@app.errorhandler(404)
+def fourOfour(e):
+    return (jsonify(error="Not found"), 404)
+
+
 if __name__ == "__main__":
     if os.getenv("HBNB_API_HOST"):
         host = os.getenv("HBNB_API_HOST")
@@ -26,4 +31,5 @@ if __name__ == "__main__":
         port = os.getenv("HBNB_API_PORT")
     else:
         port = "5000"
+    app.env = 'development'
     app.run(host=host, port=port, threaded=True)
