@@ -82,9 +82,9 @@ class DBStorage:
             id (string): string representing the object ID
         Return: the object, or None if not found
         """
-        for k, v in classes.items():
-            if cls == k:
-                objs = self.__session.query(classes[k]).all()
+        for key in classes.keys():
+            if cls == key:
+                objs = self.__session.query(classes[key]).all()
                 for item in objs:
                     # print(type(item))
                     # print(item)
@@ -99,3 +99,16 @@ class DBStorage:
             cls (string): string representing the class name (optional)
         Return: the number of objects in storage
         """
+        count = 0
+        if cls is not None:
+            for key in classes.keys():
+                if cls == key:
+                    objs = self.__session.query(classes[key]).all()
+                    for item in objs:
+                        count += 1
+        else:
+            for key in classes.keys():
+                objs = self.__session.query(classes[key]).all()
+                for item in objs:
+                    count += 1
+        return count
