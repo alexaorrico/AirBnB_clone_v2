@@ -11,12 +11,13 @@ def return_cities(state_id):
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
-    cities = []
-    for city in storage.all('City').values():
-        if city.state_id == state.id:
-            cities.append(city.to_dict())
-    if len(cities) == 0:
-        abort(404)
+    else:
+        cities = []
+        for city in storage.all('City').values():
+            if city.state_id == state.id:
+                cities.append(city.to_dict())
+        if len(cities) == 0:
+            abort(404)
     return jsonify(cities)
 
 
@@ -35,9 +36,10 @@ def delete_city(city_id):
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    storage.delete(city)
-    storage.save()
-    return jsonify({}), 200
+    else:
+        storage.delete(city)
+        storage.save()
+        return jsonify({}), 200
     abort(404)
 
 
