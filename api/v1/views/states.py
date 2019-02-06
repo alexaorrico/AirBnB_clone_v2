@@ -33,6 +33,7 @@ def state_delete(state_id):
         abort(404)
     else:
         storage.delete(obj)
+        storage.save()
         return jsonify({}), 200
 
 
@@ -47,7 +48,9 @@ def post_obj():
     if "name" not in dic.keys():
         abort(400, message="Missing name")
     else:
-        new_state = state.State(dic)
+        new_state = state.State()
+        for k, v in dic.items():
+            setattr(new_state, k, v)
         storage.new(new_state)
         storage.save()
         return jsonify(new_state.to_dict()), 201
@@ -67,6 +70,6 @@ def update_obj(state_id):
         abort(400, message="Not a JSON")
     for key, value in dic.items():
         if key not in ignore_key:
-            obj.__dict__[key] = value
+            setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict()), 201
