@@ -28,7 +28,7 @@ if __name__ == "__main__":
     else:
         host = "0.0.0.0"
     if os.getenv("HBNB_API_PORT"):
-        port = os.getenv("HBNB_API_PORT")
+        port = int(os.getenv("HBNB_API_PORT"))
     else:
         port = 5000
     app.env = 'development'
