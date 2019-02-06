@@ -30,7 +30,6 @@ def a_states_id(state_id):
 def del_states_id(state_id):
     """ deletes a sate if given the id """
     thing = storage.all('State')
-    # for i in states.state_id:
     muricanState = "State." + state_id
     state = thing.get(muricanState)
     if state is None:
