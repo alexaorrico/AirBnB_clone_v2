@@ -17,7 +17,7 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 
-@app_views.route("/status")
+@app_views.route("/status", strict_slashes=False)
 def status():
     """
     Returns OK if JSON works
@@ -26,7 +26,7 @@ def status():
     return jsonify(j_status)
 
 
-@app_views.route("/stats")
+@app_views.route("/stats", strict_slashes=False)
 def count_all():
     """
     Returns OK if JSON works
