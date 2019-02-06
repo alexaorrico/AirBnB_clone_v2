@@ -34,7 +34,7 @@ def a_place_id(place_id):
     if i:
         return jsonify(i.to_dict())
     else:
-        return (jsonify({"error": "Not found"}), 404)
+        abort(404)
 
 
 @app_views.route('/places/<place_id>', strict_slashes=False,
@@ -59,7 +59,7 @@ def postPlace(city_id):
     if storage.get("City", city_id) is None:
         abort(404)
     thing = request.get_json()
-    if thing is None or not request.json:
+    if thing is None:
         return (jsonify({"error": "Not a JSON"}), 400)
     user = thing.get("user_id")
     if user is None:
@@ -91,10 +91,10 @@ def updatePlace(place_id):
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    if not request.json:
+    thing = request.get_json()
+    if not thing:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    thing = request.get_json()
     for key, value in thing.items():
         if key == 'name':
             setattr(place, key, value)
