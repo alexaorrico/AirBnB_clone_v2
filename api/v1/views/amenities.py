@@ -19,7 +19,8 @@ def get_amenities():
     return jsonify([amenity.to_dict() for amenity in amenities])
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=["GET"])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=["GET"])
 def id_for_amenity(amenity_id):
     """
     defines the amenities/<amenity_id> route
@@ -68,7 +69,8 @@ def create_amenity():
     return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['PUT'])
 def amenity_update(amenity_id):
     """
     defines how an Update to a state is made
