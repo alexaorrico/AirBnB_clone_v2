@@ -8,8 +8,8 @@ from models.state import State
 from models.state import City
 
 
-
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['GET', 'POST'])
+@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=[
+                 'GET', 'POST'])
 def our_cities(state_id=None):
     """ retrieves all cities in a state """
 
@@ -23,13 +23,12 @@ def our_cities(state_id=None):
         return (jsonify(my_cities))
 
     if request.method == 'POST':
-        try:
-            data = request.get_json()
-        except:
-            return (jsonify('Not a JSON'), 400)
+        data = request.get_json(silent=True)
+        if not data:
+            return (jsonify({"error": 'Not a JSON'}), 400)
 
         if "name" not in data.keys():
-            return (jsonify("Missing name"), 400)
+            return (jsonify({"error": "Missing name"}), 400)
         city = City(**data)
         city.state_id = state_id
         storage.new(city)
@@ -37,7 +36,8 @@ def our_cities(state_id=None):
         return (jsonify(city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/cities/<city_id>', strict_slashes=False, methods=[
+                 'GET', 'DELETE', 'PUT'])
 def my_city(city_id=None):
     """ retrieves a city object """
     try:
@@ -54,10 +54,9 @@ def my_city(city_id=None):
         return (jsonify({}), 200)
 
     if request.method == 'PUT':
-        try:
-            data = request.get_json()
-        except:
-            return (jsonify('Not a JSON'), 400)
+        data = request.get_json(silent=True)
+        if not data:
+            return (jsonify({"error": 'Not a JSON'}), 400)
         for k, v in data.items():
             if k not in ['id', 'created_at', 'updated_at', 'state_id']:
                 setattr(obj, k, v)
