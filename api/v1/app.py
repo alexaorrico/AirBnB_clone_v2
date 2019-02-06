@@ -8,11 +8,11 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 app.config.update(JSONIFY_PRETTYPRINT_REGULAR=True)
 
+
 @app.errorhandler(404)
 def not_found(e):
     """ Returns a 404 error in JSON format """
     return jsonify({"error": "Not found"}), 404
-
 
 
 @app.teardown_appcontext
