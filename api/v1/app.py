@@ -9,11 +9,6 @@ app.register_blueprint(app_views)
 app.config.update(JSONIFY_PRETTYPRINT_REGULAR=True)
 
 
-@app.teardown_appcontext
-def teardown(error):
-    storage.close()
-
-
 @app.errorhandler(404)
 def not_found(e):
     """ Gives the 404 not found page """
@@ -24,6 +19,13 @@ def create_app(config_filename):
     """ Helps aid in making a 404 page """
     app.register_error_handler(404, page_not_found)
     return app
+
+
+@app.teardown_appcontext
+def teardown(error):
+    storage.close()
+
+
 
 if __name__ == '__main__':
     if not environ.get('HBNB_API_HOST'):

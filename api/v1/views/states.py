@@ -18,12 +18,11 @@ def showStates():
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def a_states_id(state_id):
     """ Gets the state and its id if any """
-    for s_id in storage.all('State').values():
-        i = storage.get("State", state_id)
-        if i:
-            return jsonify(i.to_dict())
-        else:
-            return (jsonify({"error": "Not found"}), 404)
+    i = storage.get("State", state_id)
+    if i:
+        return jsonify(i.to_dict())
+    else:
+        return (jsonify({"error": "Not found"}), 404)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
@@ -64,7 +63,7 @@ def updateState(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    thing2 = request.json
+    # thing2 = request.json
 
     if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
