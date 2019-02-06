@@ -86,3 +86,30 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_count(self):
+        """
+        Tests the count method returning correct count of objects in db_storage
+        by checking if count is still correct after adding new obect
+        """
+        initial_all = models.storage.count()
+        initial_state = models.storage.count("State")
+        new_state = State(name="Random")
+        new_state.save()
+        final_all = models.storage.count()
+        final_state = models.storage.count("State")
+        self.assertGreater(final_all, initial_all)
+        self.assertGreater(final_state, initial_state)
+
+    def test_get(self):
+        """
+        Tests the get method returning correct object in db_storage
+        """
+        tester = models.storage.get()
+        self.assertEqual(tester, None)
+        test_a = State(name="Random")
+        test_a.save()
+        test_b = models.storage.get("State", test_a.id)
+        self.assertEqual(test_a, test_b)
+        
+        
