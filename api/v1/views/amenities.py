@@ -42,11 +42,11 @@ def all_amenities(amenity_id=None):
             if k not in ['id', 'created_at', 'updated_at']:
                 setattr(amenity, k, v)
         amenity.save()
-        return (jsonify(amenity.to_dict()), 201)
+        return (jsonify(amenity.to_dict()), 200)
 
     if request.method == 'POST':
         if "name" not in data.keys():
             return (jsonify({"error": "Missing name"}), 400)
         amenity = Amenity(**data)
         amenity.save()
-        return (jsonify(amenity.to_dict()), 200)
+        return (jsonify(amenity.to_dict()), 201)
