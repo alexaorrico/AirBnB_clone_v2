@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Module to create a new view for City objects"""
-from flask import jsonify, Flask, request
+from flask import jsonify, Flask, request, abort
 from models import storage
 from api.v1.views import app_views
 from models.state import State
