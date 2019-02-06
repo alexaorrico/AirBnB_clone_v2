@@ -14,7 +14,6 @@ def states_ret():
         state_list.append(obj.to_dict())
     return jsonify(state_list)
 
-
 @app_views.route('/states/<state_id>', methods=["GET"])
 def get_by_id(state_id):
     """return json State objects by id"""
