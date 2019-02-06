@@ -14,7 +14,7 @@ try:
     hbnb_port = environ['HBNP_API_PORT']
 except:
     hbnb_host = '0.0.0.0'
-    hbnb_port = '5000'
+    hbnb_port = 5000
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -37,4 +37,4 @@ def teardown_appcont(exception):
     storage.close()
 
 if __name__ == "__main__":
-    app.run(host=hbnb_host, port=hbnb_port, threaded=True)
+    app.run(host=hbnb_host, port=int(hbnb_port), threaded=True)
