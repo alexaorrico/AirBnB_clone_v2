@@ -14,19 +14,18 @@ def not_found(e):
     """ Gives the 404 not found page """
     return (jsonify({"error": "Not found"}), 404)
 
-
+"""
 def create_app(config_filename):
-    """ Helps aid in making a 404 page """
+    "" Helps aid in making a 404 page ""
     app.register_error_handler(404, page_not_found)
     return app
+"""
 
 
 @app.teardown_appcontext
 def teardown(error):
     """ tears down and saves the storage """
     storage.close()
-
-
 
 if __name__ == '__main__':
     if not environ.get('HBNB_API_HOST'):
