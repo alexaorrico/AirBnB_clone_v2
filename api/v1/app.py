@@ -23,6 +23,7 @@ def create_app(config_filename):
 
 @app.teardown_appcontext
 def teardown(error):
+    """ tears down and saves the storage """
     storage.close()
 
 
