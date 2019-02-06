@@ -18,12 +18,11 @@ def showStates():
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def a_states_id(state_id):
     """ Gets the state and its id if any """
-    for s_id in storage.all('State').values():
-        i = storage.get("State", state_id)
-        if i:
-            return jsonify(i.to_dict())
-        else:
-            return (jsonify({"error": "Not found"}), 404)
+    i = storage.get("State", state_id)
+    if i:
+        return jsonify(i.to_dict())
+    else:
+        return (jsonify({"error": "Not found"}), 404)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
@@ -31,7 +30,6 @@ def a_states_id(state_id):
 def del_states_id(state_id):
     """ deletes a sate if given the id """
     thing = storage.all('State')
-    # for i in states.state_id:
     muricanState = "State." + state_id
     state = thing.get(muricanState)
     if state is None:
