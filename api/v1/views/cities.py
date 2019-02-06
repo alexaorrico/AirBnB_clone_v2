@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" file that handles all cities in flask stuff """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
@@ -50,6 +51,7 @@ def del_city_id(city_id):
 @app_views.route('/states/<state_id>/cities', strict_slashes=False,
                  methods=['POST'])
 def postCity(state_id):
+    """ posts the city """
     if storage.get("State", state_id) is None:
         abort(404)
     thing = request.get_json()
@@ -67,6 +69,7 @@ def postCity(state_id):
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=["PUT"])
 def updateCity(city_id):
+    """ updates the city """
     # garbage = {"id", "created_at", "updated_at"}
     city = storage.get("City", city_id)
     if city is None:
@@ -82,12 +85,3 @@ def updateCity(city_id):
             setattr(city, key, value)
     city.save()
     return (jsonify(city.to_dict()), 200)
-
-if __name__ == '__main__':
-    if not environ.get('HBNB_API_HOST'):
-        environ['HBNB_API_HOST'] = '0.0.0.0'
-    if not environ.get('HBNB_API_PORT'):
-        environ['HBNB_API_HOST'] = '5000'
-    app.run(host=environ['HBNB_API_HOST'],
-            port=environ['HBNB_API_PORT'],
-            threaded=True)

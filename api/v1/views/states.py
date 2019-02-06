@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" file that handles all states flask stuff """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
@@ -62,7 +63,7 @@ def updateState(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    thing2 = request.json
+    # thing2 = request.json
 
     if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
@@ -73,13 +74,3 @@ def updateState(state_id):
             setattr(state, key, value)
     state.save()
     return (jsonify(state.to_dict()), 200)
-
-
-if __name__ == '__main__':
-    if not environ.get('HBNB_API_HOST'):
-        environ['HBNB_API_HOST'] = '0.0.0.0'
-    if not environ.get('HBNB_API_PORT'):
-        environ['HBNB_API_HOST'] = '5000'
-    app.run(host=environ['HBNB_API_HOST'],
-            port=environ['HBNB_API_PORT'],
-            threaded=True)
