@@ -9,7 +9,7 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('states/<state_id>/cities',
+@app_views.route('/states/<state_id>/cities',
                  methods=['GET'],
                  strict_slashes=False)
 def list_all_cities(state_id):
@@ -22,7 +22,7 @@ def list_all_cities(state_id):
     return jsonify(s_cities)
 
 
-@app_views.route('cities/<city_id>',
+@app_views.route('/cities/<city_id>',
                  methods=['GET'],
                  strict_slashes=False)
 def get_a_city(city_id):
@@ -33,7 +33,7 @@ def get_a_city(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.route('cities/<city_id>',
+@app_views.route('/cities/<city_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_a_city(city_id):
@@ -46,7 +46,7 @@ def delete_a_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('states/<state_id>/cities',
+@app_views.route('/states/<state_id>/cities',
                  methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
@@ -63,7 +63,7 @@ def create_city(state_id):
     return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('cities/<city_id>',
+@app_views.route('/cities/<city_id>',
                  methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
