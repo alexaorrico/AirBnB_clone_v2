@@ -46,13 +46,13 @@ def create_state():
     """ Creates a State object, or returns a 400 if the HTTP body request is not
     valid JSON, or if the dict doesnt contain the key name """
     data = ""
-    try:
-        data = request.get_json()
-    except ValueError:
+    data = request.get_json()
+    if data is None:
         abort(400, "Not a JSON")
     name = data.get("name")
     if name is None:
         abort(400, "Missing name")
+
     new_state = State()
     new_state.name = name
     new_state.save()
@@ -67,10 +67,10 @@ def update_state(state_id):
     if state is None:
         abort(404)
     data = ""
-    try:
-        data = request.get_json()
-    except ValueError:
+    data = request.get_json()
+    if data is None:
         abort(400, "Not a JSON")
+
     for k, v in data.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state, k, v)
