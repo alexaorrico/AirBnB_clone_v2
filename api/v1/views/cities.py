@@ -27,6 +27,7 @@ def return_city(city_id):
         abort(404)
     return jsonify(city.to_dict())
 
+
 @app_views.route('/cities/<city_id>', methods=["PUT"])
 def update_city(city_id):
     """update a city"""
@@ -42,6 +43,7 @@ def update_city(city_id):
             setattr(city, k, v)
     storage.save()
     return jsonify(city.to_dict()), 200
+
 
 @app_views.route('/cities/<city_id>', methods=["DELETE"])
 def delete_city(city_id):
