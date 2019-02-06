@@ -6,15 +6,16 @@ starts a Flask web application
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-from os import getenv
+from os import getenv, environ
 
 
-try:
-    hbnb_host = getenv['HBNB_API_HOST']
-    hbnb_port = getenv['HBNP_API_PORT']
-except:
-    hbnb_host = '0.0.0.0'
-    hbnb_port = 5000
+hbnb_host = '0.0.0.0'
+hbnb_port = 5000
+if environ.get('HBNB_API_HOST'):
+    hbnb_host = getenv('HBNB_API_HOST')
+if environ.get('HBNP_API_PORT'):
+    hbnb_port = getenv('HBNP_API_PORT')
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
