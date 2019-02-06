@@ -15,7 +15,7 @@ from models.city import City
 def list_all_cities(state_id):
     """Retrieves a list of all Cities in a State"""
     state = storage.get('State', state_id)
-    if not state:
+    if state is None:
         abort(404)
     all_cities = storage.all("City").values()
     s_cities = [c.to_dict() for c in all_cities if c.state_id == state_id]
@@ -28,7 +28,7 @@ def list_all_cities(state_id):
 def get_a_city(city_id):
     """Retrieves a specific instance of City, otherwise 404 error"""
     city = storage.get('City', city_id)
-    if not city:
+    if city is None:
         abort(404)
     return jsonify(city.to_dict())
 
@@ -39,7 +39,7 @@ def get_a_city(city_id):
 def delete_a_city(city_id):
     """Deletes a specific instance of City, otherwise 404 error"""
     city = storage.get('City', city_id)
-    if not city:
+    if city is None:
         abort(404)
     storage.delete(city)
     storage.save()
