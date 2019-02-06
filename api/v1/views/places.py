@@ -5,7 +5,7 @@ module that defines API interactions for Places __objects
 from models import storage
 from models.place import Place
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -16,15 +16,13 @@ def get_places(city_id):
     Returns: list of all Place objects associated with a City obj
     """
     city = storage.get("City", city_id)
-
-    if not city:
-        abort(404)
-
-    return jsonify([place.to_dict() for place in city.places]), 200
+    if city:
+        return jsonify([place.to_dict() for place in city.places])
+    abort(404)
 
 
 @app_views.route('/places/<place_id>',
-                 strict_slashes=False, methods=["GET"])
+                 strict_slashes=False, methods=['GET'])
 def id_for_place(place_id):
     """
     defines the places/<place_id> route
@@ -32,8 +30,8 @@ def id_for_place(place_id):
     """
     a_place = storage.get("Place", place_id)
     if a_place:
-        return jsonify(a_place.to_dict()), 200
-    return abort(404)
+        return jsonify(a_place.to_dict())
+    abort(404)
 
 
 @app_views.route('/places/<place_id>',
@@ -48,8 +46,8 @@ def delete_place_id(place_id):
     if place:
         storage.delete(place)
         storage.save()
-        return jsonify({}), 200
-    return abort(404)
+        return jsonify({})
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -60,27 +58,27 @@ def create_place(city_id):
     Returns: 201 on successful creation
              400 "Not a JSON" if HTTP body request is not valid
     """
-    places = request.get_json()
     city = storage.get("City", city_id)
     if not city:
         abort(404)
-
-    if places is None:
-        return abort(400, 'Not a JSON')
-    if places.get("name") is None:
-        return abort(400, 'Missing name')
-    if places.get("user_id") is None:
-        return abort(400, 'Missing user_id')
-
-    user = storage.get("User", places['user_id'])
+    body = request.get_json()
+    if not body:
+        return make_response('Not a JSON', 400)
+    if not body.get("user_id"):
+        return make_response('Missing user_id', 400)
+    user = storage.get("User", body.get("user_id"))
     if not user:
         abort(404)
-
-    new_place = Place(**places)
-
-    storage.new(new_place)
+    if not body.get("name"):
+        return make_response('Missing name', 400)
+    place = Place(
+                  name=body.get("name"),
+                  user_id=body.get("user_id"),
+                  city_id=city_id
+                  )
+    storage.new(place)
     storage.save()
-    return jsonify(new_place.to_dict()), 201
+    return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>',
@@ -92,19 +90,14 @@ def place_update(place_id):
              400 "Not a JSON" if HTTP body request is not valid
              404 if state_id is not linked to any Place object
     """
-    place_data = request.get_json()
-
-    if not place_data:
-        return abort(400, 'Not a JSON')
-
-    place = storage.get('Place', place_id)
-
-    if not place:
-        return abort(404)
-
+    if not storage.get("Place", place_id):
+        abort(404)
+    body = request.json()
+    if not body:
+        return make_response('Not a JSON', 400)
     for key, value in place_data.items():
         if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             setattr(place, key, value)
     storage.save()
 
-    return jsonify(place.to_dict()), 200
+    return make_response(jsonify(place.to_dict()), 200)
