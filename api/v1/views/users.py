@@ -77,7 +77,9 @@ def updateUser(user_id):
         return (jsonify({"error": "Not a JSON"}), 400)
     thing = request.get_json()
     for key, value in thing.items():
-        if key == 'email':
+        if key == 'first_name':
+            setattr(usee, key, value)
+        if key == 'last_name':
             setattr(usee, key, value)
         if key == 'password':
             setattr(usee, key, value)
