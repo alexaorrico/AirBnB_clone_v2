@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+""" States RESTful API """
+
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
