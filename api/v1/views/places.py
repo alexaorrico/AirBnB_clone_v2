@@ -8,7 +8,8 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 
 
-@app_views.route('cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+@app_views.route('cities/<city_id>/places',
+                 strict_slashes=False, methods=['GET'])
 def get_places(city_id):
     """
     defines the places route
@@ -22,7 +23,8 @@ def get_places(city_id):
     return jsonify([place.to_dict() for place in city.places]), 200
 
 
-@app_views.route('/places/<place_id>', strict_slashes=False, methods=["GET"])
+@app_views.route('/places/<place_id>',
+                 strict_slashes=False, methods=["GET"])
 def id_for_place(place_id):
     """
     defines the places/<place_id> route
@@ -34,7 +36,8 @@ def id_for_place(place_id):
     return abort(404)
 
 
-@app_views.route('/places/<place_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/places/<place_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_place_id(place_id):
     """
     defines Delete for Place objects by id
@@ -49,7 +52,8 @@ def delete_place_id(place_id):
     return abort(404)
 
 
-@app_views.route('cities/<city_id>/places/', strict_slashes=False, methods=['POST'])
+@app_views.route('cities/<city_id>/places/',
+                 strict_slashes=False, methods=['POST'])
 def create_place(city_id):
     """
     define how to create a new place object
@@ -101,7 +105,7 @@ def place_update(place_id):
         return abort(404)
 
     for key, value in place_data.items():
-        if key not in ['id', 'user_id', 'city_id','created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             setattr(place, key, value)
     storage.save()
 
