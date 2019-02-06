@@ -21,7 +21,7 @@ def not_found(error):
     """Gives error message when any invalid
     url are requested
     """
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
