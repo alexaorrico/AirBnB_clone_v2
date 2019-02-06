@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" the index that shows status and stats """
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
