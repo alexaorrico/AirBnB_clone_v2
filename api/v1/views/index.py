@@ -13,8 +13,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-classes = {"Amenity": Amenity, "City": City, "Place": Place,
-           "Review": Review, "State": State, "User": User}
+classes = {"amenities": Amenity, "cities": City, "places": Place,
+           "reviews": Review, "states": State, "users": User}
 
 
 @app_views.route("/status", strict_slashes=False)
@@ -32,5 +32,5 @@ def count_all():
     Returns OK if JSON works
     """
     return jsonify({
-        name: storage.count(name) for name, _ in classes.items()
+        name: storage.count(obj) for name, obj in classes.items()
     })
