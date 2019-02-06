@@ -66,8 +66,6 @@ def updateAmenity(amenity_id):
     amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
-    thing2 = request.json
-
     if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
 
@@ -78,12 +76,3 @@ def updateAmenity(amenity_id):
     amenity.save()
     return (jsonify(amenity.to_dict()), 200)
 
-
-if __name__ == '__main__':
-    if not environ.get('HBNB_API_HOST'):
-        environ['HBNB_API_HOST'] = '0.0.0.0'
-    if not environ.get('HBNB_API_PORT'):
-        environ['HBNB_API_HOST'] = '5000'
-    app.run(host=environ['HBNB_API_HOST'],
-            port=environ['HBNB_API_PORT'],
-            threaded=True)
