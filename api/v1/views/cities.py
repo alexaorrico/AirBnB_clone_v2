@@ -37,7 +37,6 @@ def a_city_id(city_id):
 def del_city_id(city_id):
     """ deletes the city id """
     thing = storage.all("City")
-    # for i in states.state_id:
     muricanCity = "City." + city_id
     town = thing.get(muricanCity)
     if town is None:
