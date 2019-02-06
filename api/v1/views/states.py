@@ -14,9 +14,9 @@ def all_states():
             "State").values()]))
 
 
-@app_views.route('/states', strict_slashes=False, methods=['POST'])
+@app_views.route('/states', strict_slashes=False, methods=['POST', 'GET'])
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=[
-                 'GET', 'DELETE', 'POST', 'PUT'])
+                 'GET', 'DELETE', 'PUT'])
 def a_state(state_id=None):
     """ retrieves a State object by id """
 
@@ -34,9 +34,8 @@ def a_state(state_id=None):
             storage.save()
             return (jsonify({}), 200)
 
-        try:
-            data = request.get_json()
-        except:
+        data = request.get_json(silent=True)
+        if not data:
             return (jsonify({"error": 'Not a JSON'}), 400)
 
         if request.method == 'PUT':
@@ -49,17 +48,16 @@ def a_state(state_id=None):
 
     else:
         if request.method == 'POST':
-            try:
-                data = request.get_json()
-            except:
+
+            data = request.get_json(silent=True)
+            if not data:
                 return (jsonify({"error": 'Not a JSON'}), 400)
             if 'name' not in data.keys():
                 return (jsonify({"error": 'Missing name'}), 400)
             obj = State(**data)
-            storage.new(obj)
-            storage.save()
+            obj.save()
             return (jsonify(obj.to_dict()), 201)
 
-        else:
+        if request.method == 'GET':
             return (jsonify([state.to_dict() for state in storage.all(
                     "State").values()]))
