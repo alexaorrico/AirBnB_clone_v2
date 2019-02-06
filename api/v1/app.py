@@ -2,9 +2,10 @@
 """
 Starts up a flask web app
 """
-from flask import Flask, make_response, jsonify
 from models import storage
+from flask import Flask, make_response, jsonify
 from api.v1.views import app_views
+from os import getenv, environ
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -24,4 +25,8 @@ def teardown_appcontext(response_or_exc):
 if __name__ == "__main__":
     host = '0.0.0.0'
     port = 5000
-    app.run(host=host, port=port, threaded=True)
+    if environ.get('HBNB_API_HOST'):
+        host = getenv('HBNB_API_HOST')
+    if environ.get('HBNB_API_PORT'):
+        port = getenv('HBNB_API_PORT')
+    app.run(host=host, port=int(port), threaded=True)
