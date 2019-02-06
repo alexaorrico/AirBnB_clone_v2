@@ -51,11 +51,11 @@ def delete_a_city(city_id):
                  strict_slashes=False)
 def create_city(state_id):
     """Adds another object to the storage"""
-    if not request.json:
-        return {"error": "Not a JSON"}, 400
-    elif 'name' not in request.json.keys():
-        return {"error": "Missing name"}, 400
-    new_city_dict = request.get_json()
+    new_city_dict = request.get_json(silent=True)
+    if new_city_dict is None:
+        return jsonify({"error": "Not a JSON"}), 400
+    elif 'name' not in request.json:
+        return jsonify({"error": "Missing name"}), 400
     new_city_dict['state_id'] = state_id
     new_city = City(**new_city_dict)
     storage.new(new_city)
@@ -68,12 +68,12 @@ def create_city(state_id):
                  strict_slashes=False)
 def update_city(city_id):
     """Updates an instance of City"""
-    if not request.json:
-        return {'error': 'Not a JSON'}, 400
+    update_city_json = request.get_json(silent=True)
+    if update_city_json is None:
+        return jsonify({'error': 'Not a JSON'}), 400
     city = storage.get('City', city_id)
-    if not city:
+    if city is None:
         abort(404)
-    update_city_json = request.get_json()
     ignore = ['id', 'created_at', 'updated_at', 'state_id']
     for k, v in update_city_json.items():
         if k not in ignore:
