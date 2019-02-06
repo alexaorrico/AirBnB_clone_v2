@@ -75,7 +75,7 @@ def modify_city(city_id):
             return make_response('Not a JSON', 400)
         for k, v in body.items():
             if k not in ignore:
-                setattr(user, k, v)
+                setattr(city, k, v)
         storage.save()
         return make_response(jsonify(city.to_dict()), 200)
     abort(404)
