@@ -48,7 +48,7 @@ def del_amenity_id(amenity_id):
 @app_views.route('/amenities', strict_slashes=False, methods=['POST'])
 def postAmenity():
     """ creates a new Amenity """
-    thing = request.get_json(silent=True)
+    thing = request.get_json()
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
     amenity = thing.get("name")
@@ -69,7 +69,7 @@ def updateAmenity(amenity_id):
     amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
-    if thing is None or not request.json:
+    if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
 
     thing = request.get_json()
