@@ -31,9 +31,9 @@ def teardown_appcont(exception):
 
 if __name__ == "__main__":
     hbnb_host = '0.0.0.0'
-    hbnb_port = 5000
+    hbnb_port = '5000'
     if environ.get('HBNB_API_HOST'):
         hbnb_host = getenv('HBNB_API_HOST')
-    if environ.get('HBNP_API_PORT'):
-        hbnb_port = getenv('HBNP_API_PORT')
-    app.run(host=hbnb_host, port=int(hbnb_port), threaded=True)
+    if environ.get('HBNB_API_PORT'):
+        hbnb_port = getenv('HBNB_API_PORT')
+    app.run(host=hbnb_host, port=int(hbnb_port), threaded=True, debug=False)
