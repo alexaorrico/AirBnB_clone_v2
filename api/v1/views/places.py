@@ -7,9 +7,11 @@ from models.base_model import BaseModel
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
+from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+@app_views.route('/cities/<city_id>/places', strict_slashes=False,
+                 methods=['GET'])
 def showPlace(city_id):
     """ Shows all places in the file storage """
     count_l = []
@@ -18,9 +20,10 @@ def showPlace(city_id):
         abort(404)
     eachPlace = storage.all("Place")
     for value in eachPlace.values():
-        if value.place_id == city_id:
+        if value.city_id == city_id:
             count_l.append(value.to_dict())
     return(jsonify(count_l))
+
 
 @app_views.route('/places/<place_id>',
                  strict_slashes=False,
@@ -49,7 +52,8 @@ def del_place_id(place_id):
         return (jsonify({}), 200)
 
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+@app_views.route('/cities/<city_id>/places', strict_slashes=False,
+                 methods=['POST'])
 def postPlace(city_id):
     """ creates a new placee """
     if storage.get("City", city_id) is None:
@@ -60,35 +64,54 @@ def postPlace(city_id):
     user = thing.get("user_id")
     if user is None:
         return (jsonify({"error": "Missing user_id"}), 400)
-    if userBank is None:
+    checkUser = storage.all("User")
+    flag = 0
+    for value in checkUser.values():
+        if value == user:
+            flag = 1
+    if not flag:
         abort(404)
-    city = thing.get("name")
-    if city is None:
+    place = thing.get("name")
+    if place is None:
         return (jsonify({"error": "Missing name"}), 400)
     p = Place()
-    p.name = city
+    p.name = place
     p.city_id = city_id
-    p.user_id = userBank
-    c.save()
-    return (jsonify(c.to_dict()), 201)
+    p.user_id = user
+    p.save()
+    return (jsonify(p.to_dict()), 201)
 
 
-
-@app_views.route('/amarawenities/<amenity_id>',
+@app_views.route('/places/<place_id>',
                  strict_slashes=False,
                  methods=["PUT"])
-def updatePlace(amenity_id):
-    """ updates the amenity info, specifically name """
+def updatePlace(place_id):
+    """ updates the place info, specifically name """
     # garbage = {"id", "created_at", "updated_at"}
-    amenity = storage.get("Amenity", amenity_id)
-    if amenity is None:
+    place = storage.get("Place", place_id)
+    if place is None:
         abort(404)
     if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    thing = request.get_json()
+    thing = request.get_json(silent=True)
     for key, value in thing.items():
         if key == 'name':
-            setattr(amenity, key, value)
-    amenity.save()
-    return (jsonify(amenity.to_dict()), 200)
+            setattr(place, key, value)
+        if key == 'description':
+            setattr(place, key, value)
+        if key == 'number_rooms':
+            setattr(place, key, value)
+        if key == 'number_bathrooms':
+            setattr(place, key, value)
+        if key == 'max_guest':
+            setattr(place, key, value)
+        if key == 'price_by_night':
+            setattr(place, key, value)
+        if key == 'lattitude':
+            setattr(place, key, value)
+        if key == 'longitude':
+            setattr(place, key, value)
+
+    place.save()
+    return (jsonify(place.to_dict()), 200)
