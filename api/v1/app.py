@@ -9,14 +9,6 @@ from api.v1.views import app_views
 from os import getenv, environ
 
 
-hbnb_host = '0.0.0.0'
-hbnb_port = 5000
-if environ.get('HBNB_API_HOST'):
-    hbnb_host = getenv('HBNB_API_HOST')
-if environ.get('HBNP_API_PORT'):
-    hbnb_port = getenv('HBNP_API_PORT')
-
-
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
@@ -38,6 +30,10 @@ def teardown_appcont(exception):
     storage.close()
 
 if __name__ == "__main__":
-    print(hbnb_host)
-    print(hbnb_port)
+    hbnb_host = '0.0.0.0'
+    hbnb_port = 5000
+    if environ.get('HBNB_API_HOST'):
+        hbnb_host = getenv('HBNB_API_HOST')
+    if environ.get('HBNP_API_PORT'):
+        hbnb_port = getenv('HBNP_API_PORT')
     app.run(host=hbnb_host, port=int(hbnb_port), threaded=True)
