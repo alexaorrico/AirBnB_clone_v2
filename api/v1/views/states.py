@@ -27,7 +27,8 @@ def get_specific_state(state_id):
     return jsonify(state[0])
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_specific_state(state_id):
     """Deletes a specific instance of State, otherwise 404 error"""
     state = storage.get('State', state_id)
