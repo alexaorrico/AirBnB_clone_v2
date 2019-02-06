@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" initial blueprint for routing api views """
 from flask import Blueprint
 
 
