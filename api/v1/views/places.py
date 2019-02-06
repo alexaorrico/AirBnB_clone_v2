@@ -4,7 +4,7 @@
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
-from models.state import Place
+from models.place import Place
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=[
@@ -12,21 +12,19 @@ from models.state import Place
 def all_places(city_id=None):
     """ retrieves all Places """
 
-    places_list = storage.all("Place").values()
-
     try:
-        place = storage.all("Place").pop("Place." + city_id)
+        city = storage.all("City").pop("City." + city_id)
     except KeyError:
         abort(404)
 
     if request.method == "GET":
-        my_places = [place.to_dict() for place in place.places]
+        my_places = [place.to_dict() for place in city.places]
         return (jsonify(my_places))
 
     if request.method == "POST":
-        try:
-            data = request.get_json(silent=True)
-        except:
+
+        data = request.get_json(silent=True)
+        if not data:
             return (jsonify({"error": "Not a JSON"}), 400)
 
         users = [user.id for user in storage.all("User").values()]
@@ -38,6 +36,7 @@ def all_places(city_id=None):
         if data.get("user_id") not in users:
             abort(404)
         place = Place(**data)
+        place.city_id = city_id
         place.save()
         return (jsonify(place.to_dict()), 201)
 
@@ -46,8 +45,6 @@ def all_places(city_id=None):
                 'GET', 'DELETE', 'PUT'])
 def a_place(place_id):
     """ retrieves all Places """
-
-    places_list = storage.all("Place").values()
 
     try:
         place = storage.all("Place").pop("Place." + place_id)
