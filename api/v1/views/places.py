@@ -90,12 +90,13 @@ def place_update(place_id):
              400 "Not a JSON" if HTTP body request is not valid
              404 if state_id is not linked to any Place object
     """
-    if not storage.get("Place", place_id):
+    place = storage.get("Place", place_id)
+    if not place:
         abort(404)
-    body = request.json()
+    body = request.get_json()
     if not body:
         return make_response('Not a JSON', 400)
-    for key, value in place_data.items():
+    for key, value in body.items():
         if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             setattr(place, key, value)
     storage.save()
