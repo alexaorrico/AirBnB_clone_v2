@@ -77,5 +77,5 @@ def modify_city(city_id):
             if k not in ignore:
                 setattr(user, k, v)
         storage.save()
-        return make_response(jsonify(city.to_dict()), 201)
+        return make_response(jsonify(city.to_dict()), 200)
     abort(404)
