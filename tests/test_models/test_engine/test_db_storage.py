@@ -107,3 +107,30 @@ class TestDBStorage(unittest.TestCase):
     def test_get_with_faulty_classname(self):
         """Test that get properly handles errors/nonexistant obj instances"""
         self.assertEqual(None, models.storage.get("Usr", "fake_id"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_with_classname(self):
+        """Test that count properly counts instances"""
+        orig_count = models.storage.count('State')
+        new_state = State(name="Indiana")
+        models.storage.new(new_state)
+        models.storage.save()
+        self.assertEqual(orig_count + 1, models.storage.count('State'))
+        models.storage.delete(new_state)
+        models.storage.save()
+        self.assertEqual(orig_count, models.storage.count('State'))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_without_classname(self):
+        """Test that count properly counts instances"""
+        orig_count = models.storage.count()
+        new_state = State(name="Indiana")
+        new_user = User(password="goodbye", email="jinji@gmail.com")
+        models.storage.new(new_state)
+        models.storage.new(new_user)
+        models.storage.save()
+        self.assertEqual(orig_count + 2, models.storage.count())
+        models.storage.delete(new_state)
+        models.storage.delete(new_user)
+        models.storage.save()
+        self.aseertEqual(orig_count, models.storage.count())
