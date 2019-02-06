@@ -14,7 +14,7 @@ def return_cities(state_id):
         for city in storage.all('City').values():
             if city.state_id == state.id:
                 cities.append(city.to_dict())
-    if not len(cities):
+    if len(cities) == 0:
         abort(404)
     return jsonify(cities)
 
