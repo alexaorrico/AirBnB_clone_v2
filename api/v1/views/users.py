@@ -41,7 +41,7 @@ def post_user():
     """create user instance"""
     request_dict = request.get_json()
     if not request_dict:
-        abort(400)
+        abort(400, jsonify({'message': 'Not a JSON'}))
     if 'email' not in request_dict:
         abort(400, jsonify({'message': 'Missing email'}))
     if 'password' not in request_dict:
@@ -59,7 +59,7 @@ def put_user(user_id):
         abort(404)
     request_dict = request.get_json()
     if not request_dict:
-        abort(400)
+        abort(400, jsonify({'message': 'Not a JSON'}))
     for key, value in request_dict.items():
         if key not in ['id', 'email', 'created_at', 'updated_at']:
             setattr(obj, key, value)
