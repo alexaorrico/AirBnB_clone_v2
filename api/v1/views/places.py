@@ -94,7 +94,7 @@ def updatePlace(place_id):
     if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    thing = request.get_json(silent=True)
+    thing = request.get_json()
     for key, value in thing.items():
         if key == 'name':
             setattr(place, key, value)
