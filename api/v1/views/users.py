@@ -49,7 +49,7 @@ def del_user_id(user_id):
 @app_views.route('/users', strict_slashes=False, methods=['POST'])
 def postUser():
     """ creates a new User """
-    thing = request.get_json()
+    thing = request.get_json(silent=True)
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
     use_mail = thing.get("email")
