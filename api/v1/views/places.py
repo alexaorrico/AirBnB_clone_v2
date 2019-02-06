@@ -26,7 +26,7 @@ def showPlace(city_id):
                  strict_slashes=False,
                  methods=['GET'])
 def a_place_id(place_id):
-    """ Gets the amenity and its id if any """
+    """ Gets the place and its id if any """
     i = storage.get("Place", place_id)
     if i:
         return jsonify(i.to_dict())
@@ -37,7 +37,7 @@ def a_place_id(place_id):
 @app_views.route('/places/<place_id>', strict_slashes=False,
                  methods=["DELETE"])
 def del_place_id(place_id):
-    """ deletes an amenity if given the id """
+    """ deletes an place if given the id """
     thing = storage.all('Place')
     place = "Place." + place_id
     p = thing.get(place)
@@ -46,22 +46,32 @@ def del_place_id(place_id):
     else:
         p.delete()
         storage.save()
-        r:eturn (jsonify({}), 200)
+        return (jsonify({}), 200)
 
 
-@app_views.route('/a323menities', strict_slashes=False, methods=['POST'])
-def postPlace():
-    """ creates a new Amenity """
-    thing = request.get_json()
+@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+def postPlace(city_id):
+    """ creates a new placee """
+    if storage.get("City", city_id) is None:
+        abort(404)
+    thing = request.get_json(silent=True)
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
-    amenity = thing.get("name")
-    if amenity is None or len(thing) == 0:
+    user = thing.get("user_id")
+    if user is None:
+        return (jsonify({"error": "Missing user_id"}), 400)
+    if userBank is None:
+        abort(404)
+    city = thing.get("name")
+    if city is None:
         return (jsonify({"error": "Missing name"}), 400)
-    a = Amenity()
-    a.name = amenity
-    a.save()
-    return (jsonify(a.to_dict()), 201)
+    p = Place()
+    p.name = city
+    p.city_id = city_id
+    p.user_id = userBank
+    c.save()
+    return (jsonify(c.to_dict()), 201)
+
 
 
 @app_views.route('/amarawenities/<amenity_id>',
