@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Routes for Amenities"""
 from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
@@ -75,4 +76,3 @@ def updateAmenity(amenity_id):
             setattr(amenity, key, value)
     amenity.save()
     return (jsonify(amenity.to_dict()), 200)
-
