@@ -25,12 +25,11 @@ def showCities(state_id):
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
 def a_city_id(city_id):
     """ Gets the city and its id that is correlated """
-    for s_id in storage.all('State').values():
-        bayAireUh = storage.get("City", city_id)
-        if bayAireUh:
-            return jsonify(bayAireUh.to_dict())
-        else:
-            return (jsonify({"error": "Not found"}), 404)
+    bayAireUh = storage.get("City", city_id)
+    if bayAireUh:
+        return jsonify(bayAireUh.to_dict())
+    else:
+        return (jsonify({"error": "Not found"}), 404)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False,
