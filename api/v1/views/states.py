@@ -6,7 +6,6 @@ from models.base_model import BaseModel
 from models.state import State
 
 
-
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
     """ Uses to_dict to retrieve an object into a valid JSON """
@@ -27,7 +26,8 @@ def individual_states(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """ Deletes a State object, or returns a 404 if the state_id is not
     linked to any object """
@@ -55,6 +55,7 @@ def create_state():
     new_state.name = name
     new_state.save()
     return (jsonify(new_state.to_dict())), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
