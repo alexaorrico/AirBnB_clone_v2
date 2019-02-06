@@ -6,15 +6,8 @@ starts a Flask web application
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-from os import environ
+from os import getenv, environ
 
-
-try:
-    hbnb_host = environ['HBNB_API_HOST']
-    hbnb_port = environ['HBNP_API_PORT']
-except:
-    hbnb_host = '0.0.0.0'
-    hbnb_port = '5000'
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -28,7 +21,7 @@ def not_found(error):
     """Gives error message when any invalid
     url are requested
     """
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
@@ -37,4 +30,10 @@ def teardown_appcont(exception):
     storage.close()
 
 if __name__ == "__main__":
-    app.run(host=hbnb_host, port=hbnb_port, threaded=True)
+    hbnb_host = '0.0.0.0'
+    hbnb_port = 5000
+    if environ.get('HBNB_API_HOST'):
+        hbnb_host = getenv('HBNB_API_HOST')
+    if environ.get('HBNB_API_PORT'):
+        hbnb_port = getenv('HBNB_API_PORT')
+    app.run(host=hbnb_host, port=int(hbnb_port), threaded=True, debug=False)
