@@ -45,23 +45,21 @@ def create_state():
     """Adds another object to the storage"""
     # TODO: ADD ERROR MESSAGES
     if not request.json:
-        abort(400)
-#        return make_response({"error": "Not a JSON"}, 400)
+        return jsonify({"error": "Not a JSON"}), 400
     elif 'name' not in request.json.keys():
-        abort(400, "Missing name")
+        return jsonify({"error": "Missing name"}), 400
     new_state_dict = request.get_json()
     new_state = State(**new_state_dict)
     storage.new(new_state)
     storage.save()
-    return make_response(jsonify(new_state.to_dict()), 201)
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """Updates an instance of State"""
     if not request.json:
-        # TODO: ADD ERROR MESSAGE
-        abort(400)
+        return jsonify({'error': 'Not a JSON'}), 400
     states = storage.all('State')
     state = None
     for s in states:
@@ -74,4 +72,4 @@ def update_state(state_id):
     for k, v in update_state_json.items():
         if k not in ignore:
             setattr(state, k, v)
-    return make_response(jsonify(state.to_dict()), 200)
+    return jsonify(state.to_dict())
