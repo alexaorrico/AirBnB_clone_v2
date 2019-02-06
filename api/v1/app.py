@@ -14,11 +14,15 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_app(resp):
+    """ closes db connection """
     storage.close()
+
 
 @app.errorhandler(404)
 def _handle_api_error(ex):
+    """ returns json 404 """
     return (jsonify({'error': 'Not found'}), 404)
+
 
 HOST = os.getenv('HBNB_API_HOST', '0.0.0.0')
 PORT = os.getenv('HBNB_API_PORT', '5000')
