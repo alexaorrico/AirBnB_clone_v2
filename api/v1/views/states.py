@@ -31,10 +31,9 @@ def state_delete(state_id=None):
     obj = storage.get("State", state_id)
     if obj is None:
         abort(404)
-    else:
-        storage.delete(obj)
-        storage.save()
-        return jsonify({}), 200
+    storage.delete(obj)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/states/', methods=["POST"])
@@ -43,18 +42,15 @@ def post_obj():
     dic = {}
     dic = request.get_json(silent=True)
     if dic is None:
-        #return jsonify({'error': 'Not a JSON'}), 400
         abort(400, "Not a JSON")
     if "name" not in dic.keys():
-        #return jsonify({'error': 'Missing name'}), 400
         abort(400, "Missing name")
-    else:
-        new_state = state.State()
-        for k, v in dic.items():
-            setattr(new_state, k, v)
-        storage.new(new_state)
-        storage.save()
-        return jsonify(new_state.to_dict()), 201
+    new_state = state.State()
+    for k, v in dic.items():
+        setattr(new_state, k, v)
+    storage.new(new_state)
+    storage.save()
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=["PUT"])
@@ -66,10 +62,8 @@ def update_obj(state_id=None):
         abort(404)
     dic = request.get_json(silent=True)
     if dic is None:
-        #return jsonify({'error': 'Not a JSON'}), 400
         abort(400, "Not a JSON")
     for key, value in dic.items():
-        if key not in ignore_key:
-            setattr(obj, key, value)
+        setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict()), 200
