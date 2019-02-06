@@ -8,7 +8,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('states/', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def list_all_states():
     """Retrieves a list of all States"""
     data = storage.all('State')
@@ -16,7 +16,7 @@ def list_all_states():
     return jsonify(states)
 
 
-@app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_specific_state(state_id):
     """Retrieves a specific instance of State, otherwise 404 error"""
     data = storage.all('State')
@@ -27,20 +27,18 @@ def get_specific_state(state_id):
     return jsonify(state[0])
 
 
-@app_views.route('states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_specific_state(state_id):
     """Deletes a specific instance of State, otherwise 404 error"""
-    data = storage.all('State')
-    name = 'State.' + state_id
-    state = [v for k, v in data.items() if k == name]
-    if len(state) != 1:
+    state = storage.get('State', state_id)
+    if not state:
         abort(404)
-    storage.delete(state[0])
+    storage.delete(state)
     storage.save()
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('states/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Adds another object to the storage"""
     new_state_dict = request.get_json(silent=True)
@@ -54,7 +52,7 @@ def create_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """Updates an instance of State"""
     update_state_json = request.get_json(silent=True)
