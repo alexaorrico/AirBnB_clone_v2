@@ -46,9 +46,9 @@ def post_city(state_id):
     """create state instance"""
     request_dict = request.get_json()
     if not request_dict:
-        abort(400, "Not a JSON")
+        abort(400, {"message": "Not a JSON"})
     if "name" not in request_dict:
-        abort(400, "Missing name")
+        abort(400, {"message": "Missing name"})
     state_obj = storage.get("State", state_id)
     if not state_obj:
         abort(404)
@@ -66,7 +66,7 @@ def put_city(city_id):
         abort(404)
     request_dict = request.get_json()
     if not request_dict:
-        abort(400, "Not a JSON")
+        abort(400, {"message": "Not a JSON"})
     for key, value in request_dict.items():
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(obj, key, value)
