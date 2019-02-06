@@ -67,13 +67,14 @@ def delete_city(city_id):
 def modify_city(city_id):
     """modify a city object
     """
+    ignore = ["id", "state_id", "created_at", "updated_at"]
     city = storage.get("City", city_id)
     if city:
         body = request.get_json()
         if not body:
-            return make_response('Not a JSON', 200)
-        if body.get('name'):
-            city.name = body.get('name')
-            storage.save()
+            return make_response('Not a JSON', 400)
+        for k, v in body.items():
+            if k not in ignore:
+                setattr(user, k, v)
         return make_response(jsonify(city.to_dict()), 201)
     abort(404)
