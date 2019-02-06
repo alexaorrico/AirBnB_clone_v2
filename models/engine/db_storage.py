@@ -15,6 +15,8 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import sys
+
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -50,6 +52,25 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
+
+    def get(self, cls, id):
+        """retrieves one object from storage"""
+        cls = getattr(sys.modules[__name__], cls)
+        return self.__session.query(cls).get(id)
+
+    def count(self, cls=None):
+        """
+        returns a count of the number of objects in storage of a given class
+        """
+        if cls is not None:
+            if type(cls) == str:
+                cls = getattr(sys.modules[__name__], cls)
+            return self.__session.query(cls).count()
+        else:
+            counter = 0
+            for value in classes.values():
+                counter += self.__session.query(value).count()
+            return counter
 
     def new(self, obj):
         """add the object to the current database session"""

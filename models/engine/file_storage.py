@@ -34,6 +34,25 @@ class FileStorage:
             return new_dict
         return self.__objects
 
+    def get(self, cls, id):
+        """retrieves one object from storage"""
+        for key, value in self.__objects.items():
+            if cls == value.__class__.__name__ and id == key.split('.')[1]:
+                return value
+        return None
+    def count(self, cls=None):
+        """
+        returns a count of the number of objects in storage of a given class
+        """
+        counter = 0
+        if cls is not None:
+            for key, value in self.__objects.items():
+                if cls == value.__class__.__name__:
+                    counter += 1
+        else:
+            for key, vlaue in self.__objects.items():
+                counter += 1
+        return counter
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
