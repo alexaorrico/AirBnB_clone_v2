@@ -34,10 +34,13 @@ def all_amenities(amenity_id=None):
         return (jsonify({}), 200)
 
     data = request.get_json(silent=True)
-    if not data:
+    if data is None:
         return (jsonify({"error": 'Not a JSON'}), 400)
 
     if request.method == 'PUT':
+        obj = storage.get("Amenity", amenity_id)
+        if obj is None:
+            abort(404)
         for k, v in data.items():
             if k not in ['id', 'created_at', 'updated_at']:
                 setattr(amenity, k, v)
