@@ -44,7 +44,6 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=["POST"])
 def add_city(state_id):
     """add a city to a state"""
-    data = {}
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
@@ -64,7 +63,6 @@ def add_city(state_id):
 @app_views.route('/cities/<city_id>', methods=["PUT"])
 def update_city(city_id):
     """update a city"""
-    data = {}
     city = storage.get('City', city_id)
     if city is None:
         abort(404)
