@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Renders json view for City object(s)
 """
 from models import storage
