@@ -41,11 +41,12 @@ def del_states_id(state_id):
         storage.save()
         return (jsonify({}), 200)
 
+
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def postStates():
     """ creates a new state """
     thing = request.get_json()
-    if thing is None or len(thing) == 0:
+    if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
     state = thing.get("name")
     if state is None or len(thing) == 0:
