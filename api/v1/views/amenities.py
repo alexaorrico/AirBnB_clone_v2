@@ -60,7 +60,9 @@ def postAmenity():
     return (jsonify(a.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=["PUT"])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False,
+                 methods=["PUT"])
 def updateAmenity(amenity_id):
     """ updates the amenity info, specifically name """
     # garbage = {"id", "created_at", "updated_at"}
