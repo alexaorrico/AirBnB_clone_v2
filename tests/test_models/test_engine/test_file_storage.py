@@ -152,3 +152,32 @@ class TestFileStorage(unittest.TestCase):
         found_object = storage.get('Fake', 'Fake')
         self.assertEqual(found_object, None)
         FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_class_parameter(self):
+        """Test that count method words correctly with class name"""
+        storage = FileStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        FileStorage._FileStorage__objects = new_dict
+        orig_count = storage.count('User')
+        new_user = User()
+        storage.new(new_user)
+        self.assertEqual(orig_count + 1, storage.count('User'))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_no_parameter(self):
+        """Test that count method words correctly with no class name"""
+        storage = FileStorage()
+        new_dict = {}
+        count = 0
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+            count += 1
+        FileStorage._FileStorage__objects = new_dict
+        self.assertEqual(count, storage.count())
