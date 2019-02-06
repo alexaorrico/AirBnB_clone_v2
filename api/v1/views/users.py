@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Renders json view for User object(s)
 """
 from models import storage
