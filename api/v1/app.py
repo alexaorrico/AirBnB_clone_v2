@@ -19,8 +19,8 @@ except:
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-#app.env = 'development'
-#app.config.update(JSONIFY_PRETTYPRINT_REGULAR=True)
+app.env = 'development'
+app.config.update(JSONIFY_PRETTYPRINT_REGULAR=True)
 
 
 @app.errorhandler(404)
