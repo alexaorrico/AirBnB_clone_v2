@@ -43,7 +43,6 @@ def delete_specific_state(state_id):
 @app_views.route('states/', methods=['POST'], strict_slashes=False)
 def create_state():
     """Adds another object to the storage"""
-    # TODO: ADD ERROR MESSAGES
     new_state_dict = request.get_json(silent=True)
     if new_state_dict is None:
         return jsonify({"error": "Not a JSON"}), 400
@@ -72,4 +71,5 @@ def update_state(state_id):
     for k, v in update_state_json.items():
         if k not in ignore:
             setattr(state, k, v)
+            storage.save()
     return jsonify(state.to_dict())
