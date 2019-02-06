@@ -9,46 +9,50 @@ from models.city import City
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', strict_slashes=False, methods=['GET'])
-def showAmenity():
-    """ Shows all amenities in the file storage """
+@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+def showPlace(city_id):
+    """ Shows all places in the file storage """
     count_l = []
-    for value in storage.all("Amenity").values():
-        count_l.append(value.to_dict())
+    city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
+    eachPlace = storage.all("Place")
+    for value in eachPlace.values():
+        if value.place_id == city_id:
+            count_l.append(value.to_dict())
     return(jsonify(count_l))
 
-
-@app_views.route('/amenities/<amenity_id>',
+@app_views.route('/places/<place_id>',
                  strict_slashes=False,
                  methods=['GET'])
-def a_amenity_id(amenity_id):
+def a_place_id(place_id):
     """ Gets the amenity and its id if any """
-    i = storage.get("Amenity", amenity_id)
+    i = storage.get("Place", place_id)
     if i:
         return jsonify(i.to_dict())
     else:
         return (jsonify({"error": "Not found"}), 404)
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+@app_views.route('/places/<place_id>', strict_slashes=False,
                  methods=["DELETE"])
-def del_amenity_id(amenity_id):
+def del_place_id(place_id):
     """ deletes an amenity if given the id """
-    thing = storage.all('Amenity')
-    ameny = "Amenity." + amenity_id
-    amens = thing.get(ameny)
-    if amens is None:
+    thing = storage.all('Place')
+    place = "Place." + place_id
+    p = thing.get(place)
+    if p is None:
         abort(404)
     else:
-        amens.delete()
+        p.delete()
         storage.save()
-        return (jsonify({}), 200)
+        r:eturn (jsonify({}), 200)
 
 
-@app_views.route('/amenities', strict_slashes=False, methods=['POST'])
-def postAmenity():
+@app_views.route('/a323menities', strict_slashes=False, methods=['POST'])
+def postPlace():
     """ creates a new Amenity """
-    thing = request.get_json(silent=True)
+    thing = request.get_json()
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
     amenity = thing.get("name")
@@ -60,16 +64,16 @@ def postAmenity():
     return (jsonify(a.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>',
+@app_views.route('/amarawenities/<amenity_id>',
                  strict_slashes=False,
                  methods=["PUT"])
-def updateAmenity(amenity_id):
+def updatePlace(amenity_id):
     """ updates the amenity info, specifically name """
     # garbage = {"id", "created_at", "updated_at"}
     amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
-    if thing is None or not request.json:
+    if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
 
     thing = request.get_json()
