@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 
 
-@app_views.route('cities/<city_id>/places',
+@app_views.route('/cities/<city_id>/places',
                  strict_slashes=False, methods=['GET'])
 def get_places(city_id):
     """
@@ -52,7 +52,7 @@ def delete_place_id(place_id):
     return abort(404)
 
 
-@app_views.route('cities/<city_id>/places/',
+@app_views.route('/cities/<city_id>/places/',
                  strict_slashes=False, methods=['POST'])
 def create_place(city_id):
     """
@@ -66,10 +66,10 @@ def create_place(city_id):
         return abort(400, 'Not a JSON')
     if places.get("name") is None:
         return abort(400, 'Missing name')
-    if 'user_id' not in places:
+    if places.get("user_id") is None:
         return abort(400, 'Missing user_id')
 
-    city = storage.get("City", city_id).values()
+    city = storage.get("City", city_id)
     if not city:
         abort(404)
 
@@ -77,10 +77,9 @@ def create_place(city_id):
     if not user:
         abort(404)
 
-    new_user = places['user_id']
-    new_name = places['name']
     new_place = Place(**places)
 
+    storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict()), 201
 
