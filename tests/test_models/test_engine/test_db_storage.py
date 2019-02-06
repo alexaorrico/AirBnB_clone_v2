@@ -86,7 +86,7 @@ class TestFileStorage(unittest.TestCase):
         amenity_inst = Amenity(name="wifi")
         models.storage._DBStorage__session.add(state_inst)
         models.storage._DBStorage__session.add(amenity_inst)
-        models.storage._DBStorage__session
+        models.storage._DBStorage__session.commit()
         self.assertEqual(len(models.storage.all()), 2)
         models.storage._DBStorage__session.delete(state_inst)
         models.storage._DBStorage__session.delete(amenity_inst)
@@ -96,7 +96,7 @@ class TestFileStorage(unittest.TestCase):
         """test that new adds an object to the database"""
         state_inst = State(name="California")
         models.storage.new(state_inst)
-        models.storage._DBStorage__session
+        models.storage._DBStorage__session.commit()
         self.assertEqual(len(models.storage.all()), 1)
         models.storage._DBStorage__session.delete(state_inst)
 
@@ -105,7 +105,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to database"""
         state_inst = State(name="California")
         models.storage._DBStorage__session.add(state_inst)
-        models.storage._DBStorage__session
+        models.storage._DBStorage__session.commit()
         self.assertEqual(len(models.storage.all()), 1)
         models.storage._DBStorage__session.delete(state_inst)
         models.storage.save()
@@ -116,7 +116,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that get properly gets an object from database"""
         state_inst = State(name="California")
         models.storage._DBStorage__session.add(state_inst)
-        models.storage._DBStorage__session
+        models.storage._DBStorage__session.commit()
         self.assertIs(models.storage.get("State", state_inst.id), state_inst)
         self.assertIs(models.storage.get("State", "wrong id"), None)
         self.assertIs(models.storage.get("some class", state_inst.id), None)
@@ -129,7 +129,7 @@ class TestFileStorage(unittest.TestCase):
         amenity_inst = Amenity(name="wifi")
         models.storage._DBStorage__session.add(state_inst)
         models.storage._DBStorage__session.add(amenity_inst)
-        models.storage._DBStorage__session
+        models.storage._DBStorage__session.commit()
         self.assertEqual(models.storage.count(), 2)
         self.assertEqual(models.storage.count("State"), 1)
         self.assertEqual(models.storage.count("Amenity"), 1)
