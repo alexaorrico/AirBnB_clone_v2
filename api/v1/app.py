@@ -6,12 +6,12 @@ starts a Flask web application
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-from os import environ
+from os import getenv
 
 
 try:
-    hbnb_host = environ['HBNB_API_HOST']
-    hbnb_port = environ['HBNP_API_PORT']
+    hbnb_host = getenv['HBNB_API_HOST']
+    hbnb_port = getenv['HBNP_API_PORT']
 except:
     hbnb_host = '0.0.0.0'
     hbnb_port = 5000
@@ -37,4 +37,6 @@ def teardown_appcont(exception):
     storage.close()
 
 if __name__ == "__main__":
+    print(hbnb_host)
+    print(hbnb_port)
     app.run(host=hbnb_host, port=int(hbnb_port), threaded=True)
