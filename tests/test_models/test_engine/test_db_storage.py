@@ -69,7 +69,7 @@ test_db_storage.py'])
 
 
 class TestDBStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +86,24 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_new_user(self):
+        """Test that get properly retrieves an object from the database"""
+        new_user = User(password="goodbye", email="jinji@gmail.com")
+        user_id = new_user.id
+        models.storage.new(new_user)
+        models.storage.save()
+        self.assertEqual(new_user, models.storage.get("User", user_id))
+        models.storage.delete(new_user)
+        models.storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_faulty_id(self):
+        """Test that get properly handles errors/nonexistant obj instances"""
+        self.assertEqual(None, models.storage.get("User", "fake_id"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_faulty_classname(self):
+        """Test that get properly handles errors/nonexistant obj instances"""
+        self.assertEqual(None, models.storage.get("Usr", "fake_id"))
