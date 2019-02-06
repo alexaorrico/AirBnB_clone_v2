@@ -47,9 +47,11 @@ def post_obj():
     try:
         dic = request.get_json()
     except:
-        abort(400, "Not a JSON")
+        return jsonify({'error': 'Not a JSON'}), 400
+        #abort(400, "Not a JSON")
     if "name" not in dic.keys():
-        abort(400, "Missing name")
+        return jsonify({'error': 'Not a JSON'}), 400
+        #abort(400, "Missing name")
     else:
         new_state = state.State()
         for k, v in dic.items():
@@ -73,7 +75,8 @@ def update_obj(state_id=None):
     try:
         dic = request.get_json()
     except:
-        abort(400, "Not a JSON")
+        return jsonify({'error': 'Not a JSON'}), 400
+        #abort(400, "Not a JSON")
     for key, value in dic.items():
         if key not in ignore_key:
             setattr(obj, key, value)
