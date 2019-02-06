@@ -48,7 +48,7 @@ def delete_amenity_id(amenity_id):
     return abort(404)
 
 
-@app_views.route('/amenities/', strict_slashes=False, methods=['POST'])
+@app_views.route('/amenities', strict_slashes=False, methods=['POST'])
 def create_amenity():
     """
     define how to create a new amenity object
@@ -63,7 +63,7 @@ def create_amenity():
     except:
         return abort(400, 'Not a JSON')
 
-    new_amenity = Amenity(**amenities)
+    new_amenity = Amenity(name=amenities.get("name"))
     storage.new(new_amenity)
     storage.save()
     return jsonify(new_amenity.to_dict()), 201
