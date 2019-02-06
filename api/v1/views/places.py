@@ -61,6 +61,9 @@ def create_place(city_id):
              400 "Not a JSON" if HTTP body request is not valid
     """
     places = request.get_json()
+    city = storage.get("City", city_id)
+    if not city:
+        abort(404)
 
     if places is None:
         return abort(400, 'Not a JSON')
@@ -69,9 +72,6 @@ def create_place(city_id):
     if places.get("user_id") is None:
         return abort(400, 'Missing user_id')
 
-    city = storage.get("City", city_id)
-    if not city:
-        abort(404)
 
     user = storage.get("User", places['user_id'])
     if not user:
