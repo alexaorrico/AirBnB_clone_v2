@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+""" prepares data for easier viewing """
+
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
