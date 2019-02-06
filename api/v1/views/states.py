@@ -65,6 +65,8 @@ def put_state(state_id):
         abort(400)
         abort(Response("Not a JSON"))
 
+    # TODO
+    # Ignore id, created_at and updated_at
     for k, v in data.items():
         setattr(state, k, v)
         storage.new(state)
