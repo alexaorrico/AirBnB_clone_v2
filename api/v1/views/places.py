@@ -58,7 +58,7 @@ def postPlace(city_id):
     """ creates a new placee """
     if storage.get("City", city_id) is None:
         abort(404)
-    thing = request.get_json(silent=True)
+    thing = request.get_json()
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
     user = thing.get("user_id")
