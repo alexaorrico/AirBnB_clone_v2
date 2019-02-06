@@ -2,9 +2,10 @@
 """
 module that defines API interactions for Places __objects
 """
-from flask import Flask,
 from api.v1.views import app_views
-from models.amenity import amenity
+from models.amenity import Amenity
+from models import storage
+from flask import jsonify
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
@@ -17,13 +18,12 @@ def get_place_amens(place_id):
 
     if not place:
         abort(404)
-    # return empty list if no amenity associated
-    if not place.amenities:
-        return jsonify([])
 
     return jsonify([amenity.to_dict() for amenity in place.amenities])
 
-@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['DELETE'])
+
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=['DELETE'])
 def del_place_amen(place_id, amenity_id):
     """
     defines Delete for Amenity objects
