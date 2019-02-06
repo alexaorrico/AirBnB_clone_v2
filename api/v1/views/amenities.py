@@ -22,7 +22,7 @@ def all_amenities(amenity_id=None):
             abort(404)
 
     if request.method == 'GET':
-        if not amenity_id:
+        if amenity_id is None:
             my_amenities = [amen.to_dict() for amen in amenity_list]
             return (jsonify(my_amenities))
         else:
