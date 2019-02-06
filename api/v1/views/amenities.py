@@ -6,7 +6,7 @@ from flask import jsonify, abort, request
 
 
 @app_views.route('/amenities', methods=["GET"])
-def states_ret():
+def amenity_ret():
     """return json State objects"""
     ame_list = []
     all_objs = storage.all("Amenity")
@@ -16,7 +16,7 @@ def states_ret():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=["GET"])
-def get_by_id(state_id):
+def amenity_get_by_id(amenity_id):
     """return json State objects by id"""
     obj = storage.get("Amenity", amenity_id)
     if obj is None:
@@ -26,7 +26,7 @@ def get_by_id(state_id):
 
 
 @app_views.route('/amenities/<amenity_id>', methods=["DELETE"])
-def state_delete(state_id=None):
+def amenity_delete(amenity_id=None):
     """delete an object by id"""
     obj = storage.get("Amenity", amenity_id)
     if obj is None:
@@ -37,7 +37,7 @@ def state_delete(state_id=None):
 
 
 @app_views.route('/amenities/', methods=["POST"])
-def post_obj():
+def post_amenity_obj():
     """add new state object"""
     dic = {}
     dic = request.get_json(silent=True)
@@ -45,16 +45,16 @@ def post_obj():
         abort(400, "Not a JSON")
     if "name" not in dic.keys():
         abort(400, "Missing name")
-    new_ame = state.Amenity()
+    new_ame = amenity.Amenity()
     for k, v in dic.items():
         setattr(new_ame, k, v)
     storage.new(new_ame)
     storage.save()
-    return jsonify(new_state.to_dict()), 201
+    return jsonify(new_ame.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=["PUT"])
-def update_obj(amenity_id=None):
+def update_amenity_obj(amenity_id=None):
     """update new state object"""
     dic = {}
     obj = storage.get("Amenity", amenity_id)
