@@ -56,7 +56,6 @@ class BaseModel:
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
         self.updated_at = datetime.utcnow()
-        print(self.__dict__.keys())
         if "password" in self.__dict__.keys():
             if type(self.password) is str:
                 string = self.password
