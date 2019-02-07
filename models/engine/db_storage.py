@@ -91,6 +91,5 @@ class DBStorage:
 
     def count(self, cls=None):
         """ Counts the number of objects or number of objects of the class """
-        # count = 0
         oneObj = models.storage.all(cls)
         return len(oneObj)
