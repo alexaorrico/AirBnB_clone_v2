@@ -46,7 +46,7 @@ def add_review(place_id):
     place = storage.get('Place', place_id)
     if place is None:
         abort(404)
-    data = response.get_json(silent=True)
+    data = request.get_json(silent=True)
     if data is None:
         abort(400, "Not a JSON")
     if 'user_id' not in data.keys():
@@ -57,7 +57,7 @@ def add_review(place_id):
         abort(404)
     if 'text' not in data.keys():
         abort(400, "Missing text")
-    new_review = review.Review(place_id=place.id)
+    new_review = review.Review(user_id=user_id, place_id=place.id)
     for k, v in data.items():
         setattr(new_review, k, v)
     storage.new(new_review)
