@@ -19,7 +19,8 @@ def all_amenities():
     return jsonify(list)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def individual_amenities(amenity_id):
     """ Retrieves an Amenity object, or returns a 404 if the amenity_id is not
     linked to any object """
@@ -59,7 +60,8 @@ def create_amenity():
     return (jsonify(new_amenity.to_dict())), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_amenity(amenity_id):
     """ Updates an Amenity object, or returns a 400 if the HTTP body is not valid
     JSON, or a 404 if state_id is not linked to an object """
