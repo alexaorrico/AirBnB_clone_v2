@@ -71,7 +71,6 @@ def updateAmenity(amenity_id):
         abort(404)
     if not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
-
     thing = request.get_json()
     for key, value in thing.items():
         if key == 'name':
