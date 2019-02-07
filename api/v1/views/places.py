@@ -8,7 +8,8 @@ from models.base_model import BaseModel
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
 def all_places(city_id):
     """ Uses to_dict to retrieve an object into a valid JSON """
     all_cities = storage.all("City")
@@ -45,14 +46,14 @@ def delete_place(place_id):
     return jsonify({})
 
 
-@app_views.route('/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def create_place(city_id):
-    """ Creates a Place object, or returns a 400 if the HTTP body request is not
-    valid JSON, or if the dict doesnt contain the key name """
+    """ Creates a Place object, or returns a 400 if the HTTP body request
+    is not valid JSON, or if the dict doesnt contain the key name """
     city = storage.get("City", city_id)
     city_list = [city.id for city in storage.all("City").values()]
     if city is None or city not in city_list:
-        abort(400)
+        abort(404)
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
@@ -63,11 +64,14 @@ def create_place(city_id):
     if user_id not in user_list:
         abort(404)
     name = data.get("name")
-    if name is None or name not in data:
+    if name is None:
         abort(400, "Missing name")
+
     new_user_id = user_id
-    new_name = name
-    new_place = Place(user_id=new_user_id, name=new_name, city_id=city_id)
+    new_place = Place()
+    new_place.user_id = new_user_id
+    new_place.name = name
+    new_place.city_id = city_id
     for key, value in data.items():
         setattr(new_place, key, value)
     new_place.save()
