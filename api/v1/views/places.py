@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""Routes for Amenities"""
-from flask import jsonify, request, abort
+"""Routes for Place"""
+from flask import jsonify, request, abort, make_response
 from api.v1.views import app_views
 from models import storage
 from models.base_model import BaseModel
@@ -56,21 +56,19 @@ def del_place_id(place_id):
                  methods=['POST'])
 def postPlace(city_id):
     """ creates a new placee """
+    checkCity = storage.all("City")
     if storage.get("City", city_id) is None:
         abort(404)
     thing = request.get_json()
-    if thing is None:
-        return (jsonify({"error": "Not a JSON"}), 400)
+    if not thing:
+        return make_response('Not a JSON', 400)
     user = thing.get("user_id")
     if user is None:
         return (jsonify({"error": "Missing user_id"}), 400)
-    checkUser = storage.all("User")
-    flag = 0
-    for value in checkUser.values():
-        if value == user:
-            flag = 1
-    if not flag:
+    useConfirm = storage.get("User", user)
+    if useConfirm is None:
         abort(404)
+    checkUser = storage.all("User")
     place = thing.get("name")
     if place is None:
         return (jsonify({"error": "Missing name"}), 400)
@@ -78,6 +76,7 @@ def postPlace(city_id):
     p.name = place
     p.city_id = city_id
     p.user_id = user
+
     p.save()
     return (jsonify(p.to_dict()), 201)
 
