@@ -57,7 +57,7 @@ def add_review(place_id):
     if data.get('text') is None:
         abort(400, "Missing text")
     new_review = review.Review(user_id=userid,
-                               place_id=place_obj.id,
+                               place_id=place_id,
                                text=data.get('text'))
     storage.new(new_review)
     storage.save()
@@ -67,15 +67,19 @@ def add_review(place_id):
 @app_views.route('/reviews/<review_id>', methods=["PUT"])
 def update_review(review_id):
     """update a review"""
-    data = {}
-    review_obj = storage.get('Review', review_id)
-    if review_obj is None:
+    dic = {}
+    list_key = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
+    obj = storage.get("Review", review_id)
+    if obj is None:
         abort(404)
-    data = request.get_json(silent=True)
-    if data is None:
+    dic = request.get_json(silent=True)
+    if dic is None:
         abort(400, "Not a JSON")
-    for k, v in data.items():
-        if k not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
-            setattr(review_obj, k, v)
+    for key, value in dic.items():
+        if key not in list_key:
+            setattr(obj, key, value)
     storage.save()
+    storage.reload()
+    rid = obj.id
+    review_obj = storage.get('Review', rid)
     return jsonify(review_obj.to_dict()), 200
