@@ -17,9 +17,8 @@ classes = {"amenities": Amenity, "cities": City, "places": Place,
 @app_views.route('/status', methods=['GET'])
 def status():
     """Returns a json with status ok"""
-    return jsonify({
-        'status': 'OK'
-    })
+    return jsonify({'status': 'OK'})
+
 
 @app_views.route('/stats', methods=['GET'])
 def count_obj():
