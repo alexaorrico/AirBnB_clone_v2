@@ -2,7 +2,6 @@
 """
 Contains the TestFileStorageDocs classes
 """
-
 from datetime import datetime
 import inspect
 import models
@@ -116,7 +115,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_get(self):
         """Test that checks if get function works with filestorage"""
-        obj1 = State(name="California")
+        obj1 = State(**{'name': 'California'})
         models.storage.new(obj1)
         models.storage.save()
         obj2 = models.storage.get('State', obj1.id)
