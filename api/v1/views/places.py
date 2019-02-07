@@ -16,7 +16,7 @@ def get_all_places():
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
-def post_place(city_id):
+def post_place(city_id=""):
     """ makes a new place """
     city = storage.get('City', city_id)
     if not city:
@@ -43,7 +43,7 @@ def post_place(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['GET'])
-def get_one_place(place_id):
+def get_one_place(place_id=""):
     """ Returns specified place obj in json """
     if place_id:
         place = storage.get('Place', place_id)
@@ -53,7 +53,7 @@ def get_one_place(place_id):
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
-def del_place(place_id):
+def del_place(place_id=""):
     """ deletes the specified place """
     if place_id:
         place = storage.get('Place', place_id)
@@ -65,7 +65,7 @@ def del_place(place_id):
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
-def put_place(place_id):
+def put_place(place_id=""):
     """ updates an place """
     if place_id:
         place = storage.get('Place', place_id)
