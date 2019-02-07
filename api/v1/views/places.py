@@ -67,14 +67,8 @@ def search_place():
         """if cities not empty, narrow the list by
         city_id"""
         for place_obj in all_places.values():
-            if (place_obj.city_id in dic["cities"] and
-                (place_obj.city_id in list_city_id or
-                 list_city_id == [])):
-                all_objs.append(place_obj)
-    elif list_city_id != []:
-        """collect all place objects that linked with state_id"""
-        for place_obj in all_places.values():
-            if place_obj.city_id in list_city_id:
+            if (place_obj.city_id in dic["cities"] or
+                place_obj.city_id in list_city_id):
                 all_objs.append(place_obj)
     if all_objs == []:
         """if states and cities are empty, retrieve all places
