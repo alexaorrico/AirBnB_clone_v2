@@ -97,3 +97,4 @@ def put_place(place_id):
         setattr(place, k, v)
     place.save()
     return jsonify(place.to_dict())
+
