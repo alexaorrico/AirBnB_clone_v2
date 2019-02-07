@@ -94,7 +94,6 @@ def updateReview(review_id):
     thing = request.get_json()
     if not thing:
         return (jsonify({"error": "Not a JSON"}), 400)
-
     for key, value in thing.items():
         if key == 'text':
             setattr(review, key, value)
