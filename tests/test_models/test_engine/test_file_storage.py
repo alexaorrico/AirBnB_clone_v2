@@ -125,7 +125,7 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test that checks if count function works with filestorage"""
         first_count = models.storage.count('State')
-        obj1 = State(name="California")
+        obj1 = State(**{'name': 'California'})
         models.storage.new(obj1)
         models.storage.save()
         second_count = models.storage.count('State')
