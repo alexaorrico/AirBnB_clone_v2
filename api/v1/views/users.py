@@ -42,7 +42,7 @@ def all_users(user_id=None):
             if k not in ['id', 'created_at', 'updated_at', 'email']:
                 setattr(user, k, v)
         user.save()
-        return (jsonify(user.to_dict()), 201)
+        return (jsonify(user.to_dict()), 200)
 
     if request.method == 'POST':
         for x in ["email", "password"]:
@@ -50,4 +50,4 @@ def all_users(user_id=None):
                 return (jsonify({"error": "Missing {}".format(x)}), 400)
         user = User(**data)
         user.save()
-        return (jsonify(user.to_dict()), 200)
+        return (jsonify(user.to_dict()), 201)
