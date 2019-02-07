@@ -38,6 +38,53 @@ def place_delete(place_id=None):
     return jsonify({}), 200
 
 
+@app_views.route('/places_search', methods=["POST"])
+def search_place():
+    """search place"""
+    dic = {}
+    all_objs = []
+    dic = request.get_json(silent=True)
+    if dic is None:
+        abort(400, "Not a JSON")
+    all_places = storage.all("Place")
+    if dic == {}:
+        for value in all_places.values():
+            all_objs.append(value.to_dict())
+        return jsonify(all_objs)
+    all_cities = storage.all("City")
+    list_city_id = []
+    if "states" in dic.keys() and dic["states"] != []:
+        for city_obj in all_cities.values():
+            if (city_obj.state_id in dic["states"]):
+                list_city_id.append(city_obj.id)
+    if "cities" in dic.keys() and dic["cities"] != []:
+        for place_obj in all_places.values():
+            if (place_obj.city_id in dic["cities"] and
+                (place_obj.city_id in list_city_id or
+                 list_city_id == [])):
+                all_objs.append(place_obj)
+    elif list_city_id != []:
+        for place_obj in all_places.values():
+            if place_obj.city_id in list_city_id:
+                all_objs.append(place_obj)
+    if all_objs == []:
+        all_objs = all_places
+    if "amenities" in dic.keys() and dic["amenities"] != []:
+        ret_list = []
+        for place_obj in all_objs:
+            place_list_amenities = []
+            for amenity in place_obj.amenities:
+                place_list_amenities.append(amenity.id)
+            if sorted(dic["amenities"]) == sorted(place_list_amenities):
+                ret_list.append(place_obj.to_dict())
+        return jsonify(ret_list)
+    else:
+        ret_list = []
+        for value in all_objs:
+            ret_list.append(value.to_dict())
+        return jsonify(ret_list)
+
+
 @app_views.route('/cities/<city_id>/places', methods=["POST"])
 def post_place_obj(city_id):
     """add new place object"""
