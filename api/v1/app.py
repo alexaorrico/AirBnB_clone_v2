@@ -26,11 +26,11 @@ def teardown_db(self):
 
 if __name__ == '__main__':
     if os.getenv('HBNB_API_HOST'):
-        host = os.getenv('HBNB_API_HOST')
+        bnb_host = os.getenv('HBNB_API_HOST')
     else:
-        host = '0.0.0.0'
+        bnb_host = '0.0.0.0'
     if os.getenv('HBNB_API_PORT'):
-        port = os.getenv(int('HBNB_API_PORT'))
+        bnb_port = int(os.getenv('HBNB_API_PORT'))
     else:
-        port = 5000
-    app.run(host, port)
+        bnb_port = 5000
+    app.run(host=bnb_host, port=bnb_port, threaded=True)
