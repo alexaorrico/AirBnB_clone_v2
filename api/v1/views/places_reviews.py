@@ -21,7 +21,7 @@ def return_reviews(place_id):
 @app_views.route('/reviews/<review_id>', methods=["GET"])
 def return_review(review_id):
     """return single place object"""
-    review = storage.get('Review', place_id)
+    review = storage.get('Review', review_id)
     if review is None:
         abort(404)
     else:
