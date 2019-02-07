@@ -44,7 +44,7 @@ def del_states_id(state_id):
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def postStates():
     """ creates a new state """
-    thing = request.get_json()
+    thing = request.get_json(silent=True)
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
     state = thing.get("name")
@@ -64,11 +64,11 @@ def updateState(state_id):
     if state is None:
         abort(404)
     # thing2 = request.json
-
-    if not request.json:
+    thing = request.get_json(silent=True)
+    if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    thing = request.get_json()
+    thing = request.get_json(silent=True)
     for key, value in thing.items():
         if key == 'name':
             setattr(state, key, value)
