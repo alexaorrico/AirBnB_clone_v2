@@ -117,3 +117,28 @@ class TestDBStorage(unittest.TestCase):
             if obj.name == "TEST":
                 bool = True
         self.assertEqual(bool, True)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_reload(self):
+        """Test that reload properly reload objects to __objects"""
+        pass
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete(self):
+        """Test if objs will delete when delete method is called"""
+        pass
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_close(self):
+        """Test close"""
+        pass
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """test get function"""
+        pass
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test count function"""
+        pass
