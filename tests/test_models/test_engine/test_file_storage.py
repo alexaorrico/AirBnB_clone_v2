@@ -114,20 +114,20 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test that checks if get function works with filestorage"""
-        # TODO
-        # create an obj1
-        # create an obj2 using the get function
-        # check if obj1 is obj2
-        pass
+        obj1 = State(name="California")
+        models.storage.new(obj1)
+        models.storage.save()
+        obj2 = models.storage.get('State', obj1.id)
+        self.assertEqual(obj1.name, obj2.name)
+        self.assertEqual(obj1.id, obj2.id)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """Test that checks if count function works with filestorage"""
-        # TODO
-        # Get the count of objects (State for example)
-        # Create one new object and save it
-        # Save the new count
-        # Check if the difference of count is 1
+        first_count = models.storage.count('State')
+        obj1 = State(name="California")
+        models.storage.new(obj1)
+        models.storage.save()
+        second_count = models.storage.count('State')
+        self.assertEqual(second_count - first_count, 1)
