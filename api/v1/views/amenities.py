@@ -69,6 +69,7 @@ def put_amenity(amenity_id):
         amenity_json = request.get_json()
     except BadRequest:
         return jsonify(error="Not a JSON"), 400
+    """ remove the unwanted params """
     if amenity_json.get('id'):
         amenity_json.pop('id')
     if amenity_json.get('created_at'):
