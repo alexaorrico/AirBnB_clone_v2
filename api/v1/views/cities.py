@@ -49,13 +49,11 @@ def create_city(state_id):
     data = request.get_json()
     state = storage.get('State', state_id)
     if state is None:
-        return jsonify({"error": "Not found"}), 404
-    if not data:
-        abort(400)
-        abort(Response("Not a JSON"))
+        abort(404)
+    if data is None:
+        return jsonify({"error": "Not a JSON"}), 400
     if 'name' not in data:
-        abort(400)
-        abort(Response("Missing name"))
+        return jsonify({"error": "Missing name"}), 400
     data['state_id'] = state_id
     new_city = City(**data)
     storage.new(new_city)
@@ -71,9 +69,8 @@ def put_city(city_id):
         return jsonify({"error": "Not found"}), 404
 
     data = request.get_json()
-    if not data:
-        abort(400)
-        abort(Response("Not a JSON"))
+    if data is None:
+        return jsonify({"error": "Not a JSON"}), 400
 
     # TODO:
     # Ignore id, state_id, created_at and updated_at
