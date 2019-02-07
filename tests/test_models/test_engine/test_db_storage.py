@@ -155,4 +155,5 @@ class TestDBStorage(unittest.TestCase):
         storage.save()
         count_state = storage.count("State")
         count = storage.count()
-        self.assertTrue(count >= count_state, True)
+        self.assertEqual(count, 1)
+        self.assertEqual(count_state, 1)
