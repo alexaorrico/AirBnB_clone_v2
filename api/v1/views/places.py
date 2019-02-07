@@ -10,7 +10,8 @@ def place_ret(city_id):
     """return json Place objects"""
     place_list = []
     city = storage.get("City", city_id)
-    print(city)
+    if city is None:
+        abort(404)
     for place in city.places:
         place_list.append(place.to_dict())
     return jsonify(place_list)
