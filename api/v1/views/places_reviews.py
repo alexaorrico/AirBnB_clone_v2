@@ -37,7 +37,7 @@ def a_review_id(review_id):
     if i:
         return jsonify(i.to_dict())
     else:
-        return (jsonify({"error": "Not found"}), 404)
+        abort(404)
 
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
@@ -63,11 +63,14 @@ def postReview(place_id):
     if storage.get("Place", place_id) is None:
         abort(404)
     thing = request.get_json()
-    if thing is None or not request.json:
+    if not thing:
         return (jsonify({"error": "Not a JSON"}), 400)
     user = thing.get("user_id")
     if user is None:
         return (jsonify({"error": "Missing user_id"}), 400)
+    useConfirm = storage.get("User", user)
+    if useConfirm is None:
+        abort(404)
     review = thing.get("text")
     if review is None or len(thing) == 0:
         return (jsonify({"error": "Missing text"}), 400)
@@ -88,10 +91,10 @@ def updateReview(review_id):
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
-    if not request.json:
+    thing = request.get_json()
+    if not thing:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    thing = request.get_json()
     for key, value in thing.items():
         if key == 'text':
             setattr(review, key, value)
