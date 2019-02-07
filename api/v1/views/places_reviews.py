@@ -65,11 +65,14 @@ def postReview(place_id):
     thing = request.get_json()
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
-    review = thing.get("reviews")
+    user = thing.get("user_id")
+    if user is None:
+        return (jsonify({"error": "Missing user_id"}), 400)
+    review = thing.get("text")
     if review is None or len(thing) == 0:
-        return (jsonify({"error": "Missing name"}), 400)
+        return (jsonify({"error": "Missing text"}), 400)
     r = Review()
-    r.reviews = review
+    r.text = review
     r.save()
     return (jsonify(r.to_dict()), 201)
 
@@ -88,7 +91,7 @@ def updateReview(review_id):
 
     thing = request.get_json()
     for key, value in thing.items():
-        if key == 'reviews':
+        if key == 'text':
             setattr(review, key, value)
     review.save()
     return (jsonify(review.to_dict()), 200)
