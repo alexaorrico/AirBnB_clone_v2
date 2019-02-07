@@ -21,7 +21,7 @@ class User(BaseModel, Base):
         reviews = relationship("Review", cascade="all, delete", backref="user")
     else:
         email = ""
-        password = ""
+        __password = ""
         first_name = ""
         last_name = ""
 
@@ -31,12 +31,12 @@ class User(BaseModel, Base):
 
     @property
     def password(self):
-        """get password"""
+        """password getter"""
         return self.__password
 
     @password.setter
     def password(self, value):
-        """hash password"""
+        """hash and set value"""
         m = hashlib.new('md5')
         m.update(value.encode('utf-8'))
         self.__password = str(m.digest())
