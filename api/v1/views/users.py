@@ -5,7 +5,6 @@ from flask import jsonify, abort, request
 from models import storage
 from models.user import User
 from werkzeug.exceptions import BadRequest
-from sqlalchemy.exc import OperationalError
 
 
 @app_views.route('/users', methods=['GET'])
@@ -61,7 +60,7 @@ def get_put_delete_user(user_id=None):
                 return jsonify(error="Missing email"), 400
             if "password" not in user_json:
                 return jsonify(error="Missing password"), 400
-            
+
             return jsonify(user.to_dict()), 201
 
     return jsonify(user.to_dict())
