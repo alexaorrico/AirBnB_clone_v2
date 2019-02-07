@@ -72,6 +72,8 @@ def postReview(place_id):
     if review is None or len(thing) == 0:
         return (jsonify({"error": "Missing text"}), 400)
     r = Review()
+    r.user_id = user
+    r.place_id = place_id
     r.text = review
     r.save()
     return (jsonify(r.to_dict()), 201)

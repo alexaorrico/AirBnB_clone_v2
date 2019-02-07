@@ -61,7 +61,7 @@ def postPlace(city_id):
         abort(404)
     thing = request.get_json()
     if not thing:
-        return make_response('Not a JSON', 400)
+        return (jsonify({"error": "Not a JSON"}), 400)
     user = thing.get("user_id")
     if user is None:
         return (jsonify({"error": "Missing user_id"}), 400)
