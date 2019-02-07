@@ -63,11 +63,9 @@ def updateState(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    # thing2 = request.json
     thing = request.get_json(silent=True)
     if thing is None or not request.json:
         return (jsonify({"error": "Not a JSON"}), 400)
-
     thing = request.get_json(silent=True)
     for key, value in thing.items():
         if key == 'name':
