@@ -41,6 +41,7 @@ def delete_review(review_id):
 @app_views.route('places/<place_id>/reviews', methods=["POST"])
 def add_review(place_id):
     """add a review"""
+    data = {}
     place = storage.get('Place', place_id)
     if place is None:
         abort(404)
@@ -67,7 +68,6 @@ def add_review(place_id):
 def update_review(review_id):
     """update a review"""
     data = {}
-    list_key = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     review = storage.get('Review', review_id)
     if review is None:
         abort(404)
@@ -75,7 +75,6 @@ def update_review(review_id):
     if data is None:
         abort(400, "Not a JSON")
     for k, v in data.items():
-        if k not in list_key:
             setattr(review, k, v)
     storage.save()
     return jsonify(review.to_dict()), 200
