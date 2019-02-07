@@ -13,7 +13,7 @@ def return_cities(state_id):
         abort(404)
     cities = []
     for city in storage.all('City').values():
-        if city.state_id == state.id:
+        if city.state_id == state_id and state_id == state.id:
             cities.append(city.to_dict())
     if len(cities) == 0:
         abort(404)
