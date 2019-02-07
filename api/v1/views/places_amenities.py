@@ -5,7 +5,7 @@ module that defines API interactions for Places __objects
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models import storage
-from flask import jsonify
+from flask import jsonify, abort
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
