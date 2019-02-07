@@ -8,16 +8,12 @@ from flask import jsonify, abort, request
 @app_views.route('/states/<state_id>/cities', methods=["GET"])
 def return_cities(state_id):
     """return json City objects"""
-    state = storage.get('State', state_id)
-    if state is None:
+    cities = []
+    for city in storage.all('City').values():
+        if city.state_id == state_id:
+            cities.append(city.to_dict())
+    if len(cities) == 0:
         abort(404)
-    else:
-        cities = []
-        for city in storage.all('City').values():
-            if city.state_id == state_id:
-                cities.append(city.to_dict())
-        if len(cities) == 0:
-            abort(404)
     return jsonify(cities)
 
 
