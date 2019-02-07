@@ -50,8 +50,7 @@ def post_user_obj():
     new_user = user.User()
     for k, v in dic.items():
         setattr(new_user, k, v)
-    storage.new(new_user)
-    storage.save()
+    new_user.save()
     return jsonify(new_user.to_dict()), 201
 
 
@@ -69,5 +68,5 @@ def update_user_obj(user_id=None):
     for key, value in dic.items():
         if key not in list_key:
             setattr(obj, key, value)
-    storage.save()
+    obj.save()
     return jsonify(obj.to_dict()), 200
