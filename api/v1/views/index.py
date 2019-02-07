@@ -14,7 +14,6 @@ def status():
 @app_views.route('/stats', strict_slashes=False)
 def stats():
     """ displays how many objects and instances when called """
-    i = 0
     ob_d = {"amenities": "Amenity", "cities": "City", "places": "Place",
             "reviews": "Review", "states": "State", "users": "User"}
     count_d = {}
