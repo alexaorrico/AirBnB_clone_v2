@@ -49,7 +49,7 @@ def get_put_delete_user(user_id=None):
                 user_json.pop('created_at')
             if user_json.get('updated_at'):
                 user_json.pop('updated_at')
-            if user_json.get('email')
+            if user_json.get('email'):
                 user_json.pop('email')
             for k, v in user_json.items():
                 setattr(user, k, v)
