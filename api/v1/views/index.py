@@ -25,5 +25,5 @@ def count_obj():
     """Retrieves the number of each objects by type"""
     my_dict = {}
     for k, v in classes.items():
-        my_dict[v] = storage.count(k)
+        my_dict[k] = storage.count(v)
     return jsonify(my_dict)
