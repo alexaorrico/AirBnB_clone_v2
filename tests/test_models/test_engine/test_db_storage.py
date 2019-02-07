@@ -141,24 +141,19 @@ class TestDBStorage(unittest.TestCase):
         test = State(name="TEST")
         storage.new(test)
         storage.save()
-        first_state_id = list(models.storage.all("State").values())[0].id
-        obj = models.storage.get("State", first_state_id)
+        first_state_id = list(storage.all("State").values())[0].id
+        obj = storage.get("State", first_state_id)
         self.assertTrue(obj.__class__.__name__, "State")
         self.assertTrue(obj.id, first_state_id)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """test count function"""
-        count_state = models.storage.count("State")
-        count_city = models.storage.count("City")
-        count_place = models.storage.count("Place")
-        count_review = models.storage.count("Review")
-        count_user = models.storage.count("User")
-        count_am = models.storage.count("Amenity")
-        count = models.storage.count()
-        self.assertTrue(count >= count_state, True)
-        self.assertTrue(count >= count_city, True)
-        self.assertTrue(count >= count_place, True)
-        self.assertTrue(count >= count_review, True)
-        self.assertTrue(count >= count_user, True)
-        self.assertTrue(count >= count_am, True)
+        from models import storage
+        test = State(name="TEST")
+        storage.new(test)
+        storage.save()
+        count_state = storage.count("State")
+        count = storage.count()
+        self.assertEqual(count, 1)
+        self.assertEqual(count_state, 1)
