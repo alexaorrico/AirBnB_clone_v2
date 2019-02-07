@@ -70,7 +70,7 @@ class BaseModel:
             del new_dict["_sa_instance_state"]
         try:
             if getenv("HBNB_TYPE_STORAGE") == 'db':
-                del new_dict['password']
+                del new_dict['_User__password']
         except KeyError:
             pass
         return new_dict

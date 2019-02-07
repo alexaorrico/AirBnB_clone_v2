@@ -73,7 +73,8 @@ class TestFileStorage(unittest.TestCase):
     def tearDown(self):
         """commit session changes"""
         if os.path.isfile('file.json'):
-            os.remove('file.json')
+            #os.remove('file.json')
+            pass
         models.storage.reload()
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
