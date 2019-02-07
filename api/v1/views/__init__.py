@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Package views initialization"""
 from flask import Blueprint
 

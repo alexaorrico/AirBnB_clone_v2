@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Module with routes for app_views blueprint"""
 from api.v1.views import app_views
 from flask import jsonify
