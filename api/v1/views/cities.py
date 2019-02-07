@@ -46,10 +46,11 @@ def delete_city_by_id(city_id):
                  strict_slashes=False)
 def create_city(state_id):
     """Post a City object"""
-    data = request.get_json()
+
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
+    data = request.get_json()
     if data is None:
         return jsonify({"error": "Not a JSON"}), 400
     if 'name' not in data:
@@ -72,10 +73,9 @@ def put_city(city_id):
     if data is None:
         return jsonify({"error": "Not a JSON"}), 400
 
-    # TODO:
-    # Ignore id, state_id, created_at and updated_at
     for k, v in data.items():
-        setattr(city, k, v)
+        if k not in ["id", "state_id", "created_at", "updated_at"]:
+            setattr(city, k, v)
     storage.new(city)
     storage.save()
     return jsonify(city.to_dict()), 200
