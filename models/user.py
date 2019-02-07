@@ -39,4 +39,4 @@ class User(BaseModel, Base):
         """hash and set value"""
         m = hashlib.new('md5')
         m.update(value.encode('utf-8'))
-        self.__password = str(m.digest())
+        self.__password = str(m.hexdigest())
