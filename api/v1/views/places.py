@@ -67,7 +67,6 @@ def postPlace(city_id):
     useConfirm = storage.get("User", user)
     if useConfirm is None:
         abort(404)
-    checkUser = storage.all("User")
     place = thing.get("name")
     if place is None:
         return (jsonify({"error": "Missing name"}), 400)
