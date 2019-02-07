@@ -76,7 +76,6 @@ def postPlace(city_id):
     p.name = place
     p.city_id = city_id
     p.user_id = user
-
     p.save()
     return (jsonify(p.to_dict()), 201)
 
