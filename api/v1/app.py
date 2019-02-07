@@ -2,11 +2,13 @@
 """Endpint that returns the status of the API"""
 from models import storage
 from flask import Flask, render_template, jsonify, Blueprint
+from flask_cors import CORS
 from api.v1.views import app_views
 from os import getenv, environ
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.config.update(JSONIFY_PRETTYPRINT_REGULAR=True)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.errorhandler(404)
