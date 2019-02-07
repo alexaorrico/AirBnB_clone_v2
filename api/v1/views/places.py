@@ -56,7 +56,6 @@ def del_place_id(place_id):
                  methods=['POST'])
 def postPlace(city_id):
     """ creates a new placee """
-    checkCity = storage.all("City")
     if storage.get("City", city_id) is None:
         abort(404)
     thing = request.get_json()
