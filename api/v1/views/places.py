@@ -45,44 +45,56 @@ def search_place():
     all_objs = []
     dic = request.get_json(silent=True)
     if dic is None:
+        """If not JSON, rais 400 error with message
+        Not a JSON"""
         abort(400, "Not a JSON")
     all_places = storage.all("Place")
     if dic == {}:
+        """if empty, return all place objects
+        """
         for value in all_places.values():
             all_objs.append(value.to_dict())
-        return jsonify(all_objs)
+        return jsonify(all_objs), 201
     all_cities = storage.all("City")
     list_city_id = []
     if "states" in dic.keys() and dic["states"] != []:
+        """if states list not empty, all place linked to
+        state id"""
         for city_obj in all_cities.values():
             if (city_obj.state_id in dic["states"]):
                 list_city_id.append(city_obj.id)
     if "cities" in dic.keys() and dic["cities"] != []:
+        """if cities not empty, narrow the list by
+        city_id"""
         for place_obj in all_places.values():
             if (place_obj.city_id in dic["cities"] and
                 (place_obj.city_id in list_city_id or
                  list_city_id == [])):
                 all_objs.append(place_obj)
     elif list_city_id != []:
+        """collect all place objects that linked with state_id"""
         for place_obj in all_places.values():
             if place_obj.city_id in list_city_id:
                 all_objs.append(place_obj)
     if all_objs == []:
-        all_objs = all_places
+        """if states and cities are empty, retrieve all places
+        """
+        all_objs = list(all_places.values())
     if "amenities" in dic.keys() and dic["amenities"] != []:
         ret_list = []
         for place_obj in all_objs:
+            ret_list.append(place_obj.to_dict())
             place_list_amenities = []
             for amenity in place_obj.amenities:
                 place_list_amenities.append(amenity.id)
-            if sorted(dic["amenities"]) == sorted(place_list_amenities):
-                ret_list.append(place_obj.to_dict())
-        return jsonify(ret_list)
+            if set(dic["amenities"]) > set(place_list_amenities):
+                ret_list.pop()
+        return jsonify(ret_list), 201
     else:
         ret_list = []
         for value in all_objs:
             ret_list.append(value.to_dict())
-        return jsonify(ret_list)
+        return jsonify(ret_list), 201
 
 
 @app_views.route('/cities/<city_id>/places', methods=["POST"])
