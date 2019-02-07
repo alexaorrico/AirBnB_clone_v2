@@ -42,14 +42,14 @@ def place_delete(place_id=None):
 def post_place_obj(city_id):
     """add new place object"""
     dic = {}
-    if not storage.get("City", city_id):
+    if storage.get("City", city_id) is None:
         abort(404)
     dic = request.get_json(silent=True)
     if dic is None:
         abort(400, "Not a JSON")
     if "user_id" not in dic.keys():
         abort(400, "Missing user_id")
-    if not storage.get("User", dic["user_id"]):
+    if storage.get("User", dic["user_id"]) is None:
         abort(404)
     if "name" not in dic.keys():
         abort(400, "Missing name")
