@@ -15,7 +15,9 @@ def get_all_places(city_id):
     if not city:
         abort(404)
     places = storage.all(Place).values()
-    return jsonify([amen.to_dict() for amen in places if amen.city_id == city_id])
+    return jsonify(
+        [amen.to_dict() for amen in places if amen.city_id == city_id]
+        )
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
@@ -97,4 +99,3 @@ def put_place(place_id):
         setattr(place, k, v)
     place.save()
     return jsonify(place.to_dict())
-
