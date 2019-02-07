@@ -70,27 +70,13 @@ test_db_storage.py'])
 
 class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    def setUp(self):
-        """Set up before test"""
-        pass
-
-    def tearDown(self):
-        """Close after test"""
-        pass
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
         test = models.storage.all()
-        print(test)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-        new_dict = models.storage.all()
-        for k, v in new_dict.items():
-            self.assertEqual(type(v) in classes.values(), True)
+        self.assertEqual(type(test), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
