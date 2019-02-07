@@ -59,7 +59,7 @@ class BaseModel:
         if "password" in self.__dict__.keys():
             if type(self.password) is str:
                 string = self.password
-                self.password = hashlib.md5(string.encode())
+                self.password = hashlib.md5(string.encode()).hexdigest()
         models.storage.new(self)
         models.storage.save()
 
