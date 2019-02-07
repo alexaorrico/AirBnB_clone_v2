@@ -13,11 +13,11 @@ from models.amenity import Amenity
 def all_amenities(amenity_id=None):
     """ retrieves all amenities """
 
-    amenity_list = storage.all("Amenities").values()
+    amenity_list = storage.all("Amenity").values()
 
     if amenity_id:
         try:
-            amenity = storage.all("Amenities").pop("Amenity." + amenity_id)
+            amenity = storage.all("Amenity").pop("Amenity." + amenity_id)
         except KeyError:
             abort(404)
 
