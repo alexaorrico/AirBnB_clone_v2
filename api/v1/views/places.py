@@ -46,7 +46,7 @@ def post_place(city_id):
 def get_one_place(place_id):
     """ Returns specified place obj in json """
     if place_id:
-        place = storage.get('place', place_id)
+        place = storage.get('Place', place_id)
     if not place:
         abort(404)
     return jsonify(place.to_dict())
@@ -56,7 +56,7 @@ def get_one_place(place_id):
 def del_place(place_id):
     """ deletes the specified place """
     if place_id:
-        place = storage.get('place', place_id)
+        place = storage.get('Place', place_id)
     if not place:
         abort(404)
     place.delete()
@@ -68,7 +68,7 @@ def del_place(place_id):
 def put_place(place_id):
     """ updates an place """
     if place_id:
-        place = storage.get('place', place_id)
+        place = storage.get('Place', place_id)
     if not place:
         abort(404)
     if request.mimetype != 'application/json':
@@ -80,10 +80,16 @@ def put_place(place_id):
     """ remove the unwanted params """
     if place_json.get('id'):
         place_json.pop('id')
+    if place_json.get('user_id'):
+        place_json.pop('user_id')
+    if place_json.get('city_id'):
+        place_json.pop('city_id')
     if place_json.get('created_at'):
         place_json.pop('created_at')
     if place_json.get('updated_at'):
         place_json.pop('updated_at')
+    if place_json.get('__class__'):
+        place_json.pop('__class__')
     for k, v in place_json.items():
         setattr(place, k, v)
     place.save()
