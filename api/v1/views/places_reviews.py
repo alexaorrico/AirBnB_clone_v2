@@ -46,7 +46,7 @@ def delete_review_by_id(review_id):
                  strict_slashes=False)
 def create_review(place_id):
     """Post a Review object"""
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data:
         abort(400)
         abort(Response("Not a JSON"))
@@ -61,7 +61,7 @@ def create_review(place_id):
                  strict_slashes=False)
 def put_review(review_id):
     """Put a Review object"""
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data:
         abort(400)
         abort(Response("Not a JSON"))
