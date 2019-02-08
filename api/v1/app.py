@@ -5,7 +5,9 @@ from flask import Flask, render_template, jsonify, Blueprint
 from flask_cors import CORS
 from api.v1.views import app_views
 from os import getenv, environ
+from flasgger import Swagger
 app = Flask(__name__)
+swagger = Swagger(app)
 app.register_blueprint(app_views)
 app.config.update(JSONIFY_PRETTYPRINT_REGULAR=True)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
