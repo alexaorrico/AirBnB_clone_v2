@@ -51,7 +51,7 @@ def add_review(place_id=None):
     if storage.get("User", data.get('user_id')) is None:
         abort(404)
     if data.get('text') is None:
-        abort(400, jsonify({"message": "Missing text"})
+        abort(400, jsonify({"message": "Missing text"}))
     new_review = review.Review(user_id=data.get('user_id'),
                                place_id=place_id,
                                text=data.get('text'))
