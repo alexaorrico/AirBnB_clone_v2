@@ -76,6 +76,6 @@ def put_city(city_id):
     for k, v in data.items():
         if k not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(city, k, v)
-    #storage.new(city)
+    storage.new(city)
     storage.save()
     return jsonify(city.to_dict()), 200
