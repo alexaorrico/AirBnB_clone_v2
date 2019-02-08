@@ -7,7 +7,7 @@ from models.city import City
 from models.place import Place
 
 
-@app_views.route('cities/<city_id>/places', methods=['GET'],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places_by_city_id(city_id):
     """Retrieves the list of all Place objects by city_id"""
@@ -20,7 +20,7 @@ def get_places_by_city_id(city_id):
     return jsonify(list_of_places)
 
 
-@app_views.route('places/<place_id>', methods=['GET'],
+@app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
 def get_place_id(place_id):
     """Retrieves the list of all Place objects of a City by city_id"""
