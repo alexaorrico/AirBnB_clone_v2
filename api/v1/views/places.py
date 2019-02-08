@@ -71,13 +71,12 @@ def create_place(city_id):
 def put_place(place_id):
     """Put a Place object"""
     place = storage.get('Place', place_id)
-    user = storage.get('User', place.user_id)
     if place is None:
         abort(404)
 
     data = request.get_json(silent=True)
     if not data:
-        abort(400, "Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
 
     for k, v in data.items():
         if k not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
