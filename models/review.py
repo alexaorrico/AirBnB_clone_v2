@@ -12,10 +12,10 @@ class Review(BaseModel, Base):
     if models.storage_t == 'db':
         __tablename__ = 'reviews'
         place_id = Column(String(60),
-                          ForeignKey('places.id'),
+                          ForeignKey('places.id', ondelete="CASCADE"),
                           nullable=False)
         user_id = Column(String(60),
-                         ForeignKey('users.id'),
+                         ForeignKey('users.id', ondelete="CASCADE"),
                          nullable=False)
         text = Column(String(1024), nullable=False)
     else:
