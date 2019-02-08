@@ -75,11 +75,10 @@ class FileStorage:
             id: string representing the object ID
         """
         mydict = self.all(cls)
+        myobj = None
         for v in mydict.values():
             if v.id == id:
                 myobj = v
-            else:
-                myobj = None
         return myobj
 
     def count(self, cls=None):

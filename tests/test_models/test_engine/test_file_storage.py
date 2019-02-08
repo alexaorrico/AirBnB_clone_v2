@@ -119,8 +119,17 @@ class TestFileStorage(unittest.TestCase):
         models.storage.new(obj1)
         models.storage.save()
         obj2 = models.storage.get('State', obj1.id)
+        self.assertIs(type(obj2), State)
         self.assertEqual(obj1.name, obj2.name)
         self.assertEqual(obj1.id, obj2.id)
+
+    def test_get_fail(self):
+        """Test that checks if get function fails with filestorage"""
+        obj1 = State(**{'name': 'California'})
+        models.storage.new(obj1)
+        models.storage.save()
+        obj2 = models.storage.get('state', obj1.id)
+        self.assertIs(obj2, None)
 
     def test_count(self):
         """Test that checks if count function works with filestorage"""
@@ -130,3 +139,5 @@ class TestFileStorage(unittest.TestCase):
         models.storage.save()
         second_count = models.storage.count('State')
         self.assertEqual(second_count - first_count, 1)
+        third_count = models.storage.count('state')
+        self.assertIs(third_count, None)
