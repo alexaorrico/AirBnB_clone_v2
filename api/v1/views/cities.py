@@ -27,7 +27,7 @@ def get_city_id(city_id):
     city = storage.get('City', city_id)
     if city is None:
         return jsonify({"error": "Not found"}), 404
-    return jsonify(city.to_dict())
+    return jsonify(city.to_dict()), 200
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
