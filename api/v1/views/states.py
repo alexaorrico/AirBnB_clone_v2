@@ -21,7 +21,7 @@ def get_state_by_id(state_id):
     """Retrieves the state by ID"""
     state = storage.get('State', str(state_id))
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     return jsonify(state.to_dict())
 
 
@@ -31,7 +31,7 @@ def delete_state_by_id(state_id):
     """Deletes a state by ID"""
     state = storage.get('State', str(state_id))
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(state)
     storage.save()
     return jsonify({}), 200
@@ -58,7 +58,7 @@ def put_state(state_id):
     """Put a State object"""
     state = storage.get('State', str(state_id))
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
 
     data = request.get_json()
     if not data:
@@ -69,6 +69,7 @@ def put_state(state_id):
     # Ignore id, created_at and updated_at
     for k, v in data.items():
         setattr(state, k, v)
-        storage.new(state)
-        storage.save()
+
+    storage.new(state)
+    storage.save()
     return jsonify(state.to_dict()), 200
