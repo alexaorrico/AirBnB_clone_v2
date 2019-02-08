@@ -119,9 +119,8 @@ class TestFileStorage(unittest.TestCase):
         models.storage.new(obj1)
         models.storage.save()
         obj2 = models.storage.get('State', obj1.id)
-        self.assertIs(type(obj2), State)
         self.assertEqual(obj1.name, obj2.name)
-        self.assertEqual(obj1.id, obj2.id)
+        self.assertIs(obj1.id, obj2.id)
 
     def test_get_fail(self):
         """Test that checks if get function fails with filestorage"""
