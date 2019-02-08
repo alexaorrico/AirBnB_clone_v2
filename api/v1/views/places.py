@@ -43,12 +43,16 @@ def search_place():
     """search place"""
     dic = {}
     all_objs = []
+    list_city_id = []
+    ret_list = []
     dic = request.get_json(silent=True)
+
     if dic is None:
         """If not JSON, rais 400 error with message
         Not a JSON"""
         abort(400, "Not a JSON")
     all_places = storage.all("Place")
+
     if dic == {}:
         """if empty, return all place objects
         """
@@ -56,26 +60,28 @@ def search_place():
             all_objs.append(value.to_dict())
         return jsonify(all_objs), 201
     all_cities = storage.all("City")
-    list_city_id = []
+
     if "states" in dic.keys() and dic["states"] != []:
         """if states list not empty, all place linked to
         state id"""
-        for city_obj in all_cities.values():
-            if (city_obj.state_id in dic["states"]):
+        for state_obj_id in dic["states"]:
+            state_obj = storage.all("State", state_obj_id)
+            for city_obj in state_obj.cities:
                 list_city_id.append(city_obj.id)
+
     if "cities" in dic.keys() and dic["cities"] != []:
         """if cities not empty, narrow the list by
         city_id"""
         for place_obj in all_places.values():
-            if (place_obj.city_id in dic["cities"] or
-                place_obj.city_id in list_city_id):
+            if (place_obj.city_id in dic["cities"] or place_obj.city_id in list_city_id):
                 all_objs.append(place_obj)
+
     if all_objs == []:
         """if states and cities are empty, retrieve all places
         """
         all_objs = list(all_places.values())
+
     if "amenities" in dic.keys() and dic["amenities"] != []:
-        ret_list = []
         for place_obj in all_objs:
             ret_list.append(place_obj.to_dict())
             place_list_amenities = []
@@ -85,7 +91,6 @@ def search_place():
                 ret_list.pop()
         return jsonify(ret_list), 201
     else:
-        ret_list = []
         for value in all_objs:
             ret_list.append(value.to_dict())
         return jsonify(ret_list), 201
