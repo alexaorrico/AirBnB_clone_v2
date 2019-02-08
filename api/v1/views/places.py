@@ -48,7 +48,7 @@ def create_place(city_id):
     """Post a Place object"""
     data = request.get_json(silent=True)
     city = storage.get('City', city_id)
-    if city is None or user is None:
+    if city is None:
         abort(404)
     if not data:
         abort(400)
@@ -59,6 +59,7 @@ def create_place(city_id):
     if 'name' not in data:
         abort(400)
         abort(Response("Missing name"))
+
     user = storage.get('User', data['user_id'])
     if user is None:
         abort(404)
