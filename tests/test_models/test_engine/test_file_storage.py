@@ -139,4 +139,4 @@ class TestFileStorage(unittest.TestCase):
         second_count = models.storage.count('State')
         self.assertEqual(second_count - first_count, 1)
         third_count = models.storage.count('state')
-        self.assertIs(third_count, None)
+        self.assertIs(third_count, 0)
