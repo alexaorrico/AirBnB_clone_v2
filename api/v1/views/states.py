@@ -5,8 +5,14 @@ from api.v1.views import app_views
 from models import storage
 from models.base_model import BaseModel
 from models.state import State
+from flasgger.utils import swag_from
 
 
+specs_dict = {"__class__": "object",
+                    "created_at": "Y-M-Dtime",
+                    "id": "state_id",
+                    "name": "state name",
+                    "updated_at": "Y-M-Dtime",}
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def showStates():
     """ Shows all states in the file storage """
@@ -17,8 +23,13 @@ def showStates():
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
+@swag_from(specs_dict)
 def a_states_id(state_id):
-    """ Gets the state and its id if any """
+    """
+        This is the HBNB API
+        Call this api passing a state_id
+        and get back its schema
+    """
     i = storage.get("State", state_id)
     if i:
         return jsonify(i.to_dict())
