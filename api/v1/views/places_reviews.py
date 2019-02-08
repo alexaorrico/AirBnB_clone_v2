@@ -23,8 +23,7 @@ def return_review(review_id):
     review_obj = storage.get('Review', review_id)
     if review_obj is None:
         abort(404)
-    else:
-        return jsonify(review_obj.to_dict())
+    return jsonify(review_obj.to_dict())
 
 
 @app_views.route('/reviews/<review_id>', methods=["DELETE"])
@@ -35,7 +34,7 @@ def delete_review(review_id=None):
         abort(404)
     storage.delete(review_obj)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route('places/<place_id>/reviews', methods=["POST"])
@@ -46,19 +45,19 @@ def add_review(place_id=None):
     if place_obj is None:
         abort(404)
     if data is None:
-        abort(400, "Not a JSON")
+        return make_response("Not a JSON", 400)
     if 'user_id' not in data.keys():
-        abort(400, "Missing user_id")
+        return make_response("Missing user_id", 400)
     if storage.get("User", data.get('user_id')) is None:
         abort(404)
     if data.get('text') is None:
-        abort(400, "Missing text")
+        return make_response("Missing text", 400)
     new_review = review.Review(user_id=data.get('user_id'),
                                place_id=place_id,
                                text=data.get('text'))
     storage.new(new_review)
     storage.save()
-    return jsonify(new_review.to_dict()), 201
+    return make_response(jsonify(new_review.to_dict())), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=["PUT"])
@@ -71,9 +70,9 @@ def update_review(review_id=None):
         abort(404)
     dic = request.get_json(silent=True)
     if dic is None:
-        abort(400, "Not a JSON")
+        return make_response("Not a JSON", 400)
     for key, value in dic.items():
         if key not in list_key:
             setattr(obj, key, value)
     storage.save()
-    return jsonify(obj.to_dict()), 200
+    return make_response(jsonify(obj.to_dict())), 200
