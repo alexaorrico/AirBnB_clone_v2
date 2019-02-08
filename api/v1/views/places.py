@@ -17,7 +17,7 @@ def get_places_by_city_id(city_id):
         abort(404)
     for element in city.places:
         list_of_places.append(element.to_dict())
-    return jsonify(list_of_places)
+    return jsonify(list_of_places), 200
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
@@ -27,7 +27,7 @@ def get_place_id(place_id):
     place = storage.get('Place', place_id)
     if place is None:
         abort(404)
-    return jsonify(place.to_dict())
+    return jsonify(place.to_dict()), 200
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
@@ -79,8 +79,6 @@ def put_place(place_id):
         abort(400)
         abort(Response("Not a JSON"))
 
-    # TODO:
-    # Ignore id, city_id, created_at and updated_at
     for k, v in data.items():
         setattr(place, k, v)
     storage.new(place)
