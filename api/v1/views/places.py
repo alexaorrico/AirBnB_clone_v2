@@ -51,14 +51,11 @@ def create_place(city_id):
     if city is None:
         abort(404)
     if not data:
-        abort(400)
-        abort(Response("Not a JSON"))
+        return jsonify({"error": "Not a JSON"}), 400
     if 'user_id' not in data:
-        abort(400)
-        abort(Response("Missing user_id"))
+        return jsonify({"error": "Missing user_id"}), 400
     if 'name' not in data:
-        abort(400)
-        abort(Response("Missing name"))
+        abort(400, "Missing name")
 
     user = storage.get('User', data['user_id'])
     if user is None:
@@ -80,12 +77,10 @@ def put_place(place_id):
 
     data = request.get_json(silent=True)
     if not data:
-        abort(400)
-        abort(Response("Not a JSON"))
+        abort(400, "Not a JSON")
 
     for k, v in data.items():
         if k not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
             setattr(place, k, v)
-    storage.new(place)
-    storage.save()
+    place.save()
     return jsonify(place.to_dict()), 200
