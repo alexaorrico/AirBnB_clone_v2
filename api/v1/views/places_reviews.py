@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Module to create a new view for Review objects"""
-
 from flask import jsonify, Flask, request
 from models import storage
 from api.v1.views import app_views
@@ -16,7 +15,7 @@ def get_review(place_id):
     """Retrieves the list of all Review objs of a Place by place_id"""
     review = storage.get('Review', str(place_id))
     if place is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     return jsonify(review.to_dict())
 
 
@@ -26,7 +25,7 @@ def get_review_by_review_id(review_id):
     """Retrieves a Review object by review_id"""
     review = storage.get('Review', str(review_id))
     if review is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     return jsonify(review.to_dict())
 
 
@@ -36,7 +35,7 @@ def delete_review_by_id(review_id):
     """Deletes a review by ID"""
     review = storage.get('Review', str(review_id))
     if review is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(review)
     storage.save()
     return jsonify({}), 200
