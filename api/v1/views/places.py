@@ -14,7 +14,7 @@ def get_places_by_city_id(city_id):
     city = storage.get('City', city_id)
     list_of_places = []
     if city is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     for element in city.places:
         list_of_places.append(element.to_dict())
     return jsonify(list_of_places)
@@ -26,7 +26,7 @@ def get_place_id(place_id):
     """Retrieves the list of all Place objects of a City by city_id"""
     place = storage.get('Place', place_id)
     if place is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     return jsonify(place.to_dict())
 
 
@@ -36,7 +36,7 @@ def delete_place_by_id(place_id):
     """Deletes a place by ID"""
     place = storage.get('Place', place_id)
     if place is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(place)
     storage.save()
     return jsonify({}), 200
@@ -49,7 +49,7 @@ def create_place(city_id):
     data = request.get_json(silent=True)
     city = storage.get('City', city_id)
     if city is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     if not data:
         abort(400)
         abort(Response("Not a JSON"))
@@ -72,7 +72,7 @@ def put_place(place_id):
     """Put a Place object"""
     place = storage.get('Place', place_id)
     if place is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
 
     data = request.get_json(silent=True)
     if not data:
