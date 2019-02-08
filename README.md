@@ -10,15 +10,15 @@ In this section of the project a REST API Architecture was implemented using the
 
 URLs:
 
-* http://0.0.0.0:5000/api/v1/status - return the API status;
-* http://0.0.0.0:5000/api/v1/stats - retrieves the number of each object by type;
-* http://0.0.0.0:5000/api/v1/nop - a handler for 404 errors that returns a JSON-formatted 404 status code response;
-* http://0.0.0.0:5000/api/v1/states - handles all default RestFul API actions for State objects;
-* http://0.0.0.0:5000/api/v1/cities - handles all default RestFul API actions for City bjects;
-* http://0.0.0.0:5000/api/v1/amenities - handles all default RestFul API actions for Amenity objects;
-* http://0.0.0.0:5000/api/v1/users - handles all default Restful API actions for User objects;
-* http://0.0.0.0:5000/api/v1/places - handles all default RestFul API action for Place objects;
-* http://0.0.0.0:5000/api/v1/reviews - handles all default RestFul API actions for User objects;
+* http://0.0.0.0:5000/api/v1/status - return the API status.
+* http://0.0.0.0:5000/api/v1/stats - retrieves the number of each object by type.
+* http://0.0.0.0:5000/api/v1/nop - a handler for 404 errors that returns a JSON-formatted 404 status code response.
+* http://0.0.0.0:5000/api/v1/states - handles all default RestFul API actions for State objects.
+* http://0.0.0.0:5000/api/v1/cities - handles all default RestFul API actions for City bjects.
+* http://0.0.0.0:5000/api/v1/amenities - handles all default RestFul API actions for Amenity objects.
+* http://0.0.0.0:5000/api/v1/users - handles all default Restful API actions for User objects.
+* http://0.0.0.0:5000/api/v1/places - handles all default RestFul API action for Place objects.
+* http://0.0.0.0:5000/api/v1/reviews - handles all default RestFul API actions for User objects.
 
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
@@ -184,9 +184,6 @@ Leine Francesca Valente - [Github](https://github.com/leinefran) / [Twitter](htt
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-Second part of Airbnb: Joann Vuong
-## License
-Public Domain. No copy write protection.
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection.
