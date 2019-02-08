@@ -14,7 +14,7 @@ def get_cities_by_state_id(state_id):
     state = storage.get('State', state_id)
     list_of_cities = []
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     for element in state.cities:
         list_of_cities.append(element.to_dict())
     return jsonify(list_of_cities)
@@ -26,7 +26,7 @@ def get_city_id(city_id):
     """Retrieves the list of all City objects of a State by state_id"""
     city = storage.get('City', city_id)
     if city is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     return jsonify(city.to_dict()), 200
 
 
@@ -36,7 +36,7 @@ def delete_city_by_id(city_id):
     """Deletes a state by ID"""
     city = storage.get('City', city_id)
     if city is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(city)
     storage.save()
     return jsonify({}), 200
@@ -67,7 +67,7 @@ def put_city(city_id):
     """Put a City object"""
     city = storage.get('City', city_id)
     if city is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
 
     data = request.get_json()
     if data is None:
