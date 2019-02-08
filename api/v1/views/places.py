@@ -48,7 +48,8 @@ def create_place(city_id):
     """Post a Place object"""
     data = request.get_json(silent=True)
     city = storage.get('City', city_id)
-    if city is None:
+    user = storage.get('User', place.user_id)
+    if city is None or user is None:
         abort(404)
     if not data:
         abort(400)
