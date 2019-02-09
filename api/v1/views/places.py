@@ -72,10 +72,10 @@ def search_place():
     if "cities" in dic.keys() and dic["cities"] != []:
         """if cities not empty, narrow the list by
         city_id"""
-        for place_obj in all_places.values():
-            if (place_obj.city_id in dic["cities"] or place_obj.city_id in list_city_id):
-                all_objs.append(place_obj)
-
+        for p in all_places.values():
+            if (p.city_id in dic["cities"] or p.city_id in list_city_id):
+                all_objs.append(p)
+                
     if all_objs == []:
         """if states and cities are empty, retrieve all places
         """

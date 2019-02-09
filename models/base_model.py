@@ -12,7 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import uuid
 import hashlib
 
-time = "%Y-%m-%dT%H:%M:%S.%f"
+time = "%Y-%m-%dT%H:%M:%S"
 
 if models.storage_t == "db":
     Base = declarative_base()
