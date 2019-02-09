@@ -65,7 +65,7 @@ def search_place():
         """if states list not empty, all place linked to
         state id"""
         for state_obj_id in dic["states"]:
-            state_obj = storage.all("State", state_obj_id)
+            state_obj = storage.get("State", state_obj_id)
             for city_obj in state_obj.cities:
                 list_city_id.append(city_obj.id)
 
