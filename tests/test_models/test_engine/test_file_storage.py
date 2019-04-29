@@ -113,3 +113,52 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_too_many_args(self):
+        """tests get with too many args"""
+        with self.assertRaises(TypeError):
+            models.storage.get()
+
+    def test_get_too_few_args(self):
+        """tests get with too few args"""
+        with self.assertRaises(TypeError):
+            models.storage.get("1", "2", "3")
+
+    def test_get_type_cls(self):
+        """tests get when type of cls is wrong"""
+        self.assertEqual(models.storage.get([], "1111"), None)
+
+    def test_get_type_id(self):
+        """tests get when type of id is wrong"""
+        self.assertEqual(models.storage.get("State", []), None)
+
+    def test_get_no_class(self):
+        """tests get when cls does not exist"""
+        self.assertEqual(models.storage.get("NotAClass", "11111"), None)
+
+    def test_get_no_id(self):
+        """tests get when id does not exist"""
+        self.assertEqual(models.storage.get("State", "1111"), None)
+
+    def test_count_all(self):
+        """Tests all objects counted properly when counted"""
+        self.assertEqual(
+            models.storage.count(None), len(models.storage.all()))
+
+    def test_count_none(self):
+        """Test that count properly counts objects"""
+        self.assertFalse(models.storage.count("NotAClass"))
+
+    def test_count_bad_type(self):
+        """Test that count properly counts when given wrong type"""
+        self.assertFalse(models.storage.count({'hi': 'bye'}))
+
+    def test_count_works(self):
+        """Test when actual class given, works"""
+        self.assertEqual(
+            models.storage.count("State"), len(models.storage.all(State)))
+
+    def test_count_too_many_args(self):
+        """Tests failure when too many args"""
+        with self.assertRaises(TypeError):
+            models.storage.count("1", "2")
