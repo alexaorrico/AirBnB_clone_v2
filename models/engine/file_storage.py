@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """Get a single object from __objects
-        
+
         Args:
             cls     - string representing the class name
             id      - string representing the object ID
@@ -83,14 +83,14 @@ class FileStorage:
             return None
         if type(cls) is not str:
             cls = cls.__name__
-        key = '{}.{}'.format(cls,id)
+        key = '{}.{}'.format(cls, id)
         if key in self.__objects:
             return self.__objects[key]
         return None
 
     def count(self, cls=None):
         """returns the count of all objects or specific class in __objects
-        
+
         Arsg:
             cls - Default (None) else String representing the class name
 
