@@ -4,6 +4,10 @@ from models import storage
 
 
 @app_views.route('/status', methods=['GET'])
-def hello_hbnb():
+def status():
     if request.method == 'GET':
         return jsonify({'status': 'OK'})
+
+@app_views.route('/api/v1/stats', methods=['GET'])
+def stats():
+    return jsonify(storage.count())
