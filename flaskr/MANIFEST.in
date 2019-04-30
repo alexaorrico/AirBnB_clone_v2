@@ -1,2 +1,0 @@
-graft flaskr/templates
-graft flaskr/static
