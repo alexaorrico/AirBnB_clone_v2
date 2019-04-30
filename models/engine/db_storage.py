@@ -79,38 +79,34 @@ class DBStorage:
         """Get a single object from the database
 
         Args:
-            cls     - string representing the class name
-            id      - string representing the object ID
+            cls (str): string representing the class name
+            id  (str): string representing the object ID
 
         Returns:
             Object base on the class and id or else None.
         """
-        if not cls or not id:
+        try:
+            obj = eval(cls)
+        except NameError:
             return None
-        if type(cls) is str and cls not in classes.keys():
-            return None
-        elif type(cls) is not str and cls not in classes.values():
-            return None
-
-        if type(cls) is str:
-            cls = classes[cls]
-        return self.__session.query(cls).filter(cls.id == id).first()
+        if obj in classes.values():
+            return self.__session.query(obj).filter(obj.id == id).first()
 
     def count(self, cls=None):
         """returns the count of all objects or specific class in database
 
-        Arsg:
-            cls - Default (None) else String representing the class name
+        Args:
+            cls (str): Default (None) else String representing the class name
 
         Returns:
-            `count` of all object in __objects is cls is None, else `count`
-            of the specific onbject in __object.
+            `count` all the objects in the database if cls is None,
+            else `count` for a specific objects if cls is a valid model
         """
-        if not cls:
-            count = 0
-            for obj in classes.values():
-                count += len(self.__session.query(obj).all())
-            return count
+        if cls is None:
+            return sum(
+                len(self.__session.query(obj).all())
+                for obj in classes.values()
+            )
         if cls in classes.keys():
             return len(self.__session.query(classes[cls]).all())
         return 0
