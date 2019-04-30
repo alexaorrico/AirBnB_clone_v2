@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Test file for app.py"""
 import os
-import flaskr
+from api.v1.app import app
 import unittest
 import tempfile
 
@@ -27,5 +27,5 @@ class FlaskrTestCase(unittest.TestCase):
         self.assertEqual("No entries here so far", rv.data)
 
 if __name__ == "__main__":
-    print("RAN TEST)
+    print("RAN TEST")
     unittest.main()
