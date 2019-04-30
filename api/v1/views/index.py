@@ -1,17 +1,14 @@
 #!/usr/bin/python3
+"""Defines a status route for the HolbertonBnB API."""
 from api.v1.views import app_views
 from flask import jsonify
 
 
-@app_views.route('/status', methods=["GET"])
+@app_views.route("/status")
 def server_status():
-    '''Makes a GET call to the server
-    
+    """Returns the server status.
+
     Returns:
-        json message witht the current server status
-    '''
-    return jsonify({'status': "Ok"})
-
-
-if __name__ == '__main__':
-    pass
+        JSON object with the current server status.
+    """
+    return jsonify({"status": "OK"})
