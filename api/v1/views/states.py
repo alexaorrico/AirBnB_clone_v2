@@ -33,3 +33,19 @@ def delete_state(state_id=None):
                storage.delete(value)
             return jsonify(empty), 200
         abort(404)
+
+
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def post_state():
+    flag = 0
+    if not request.json:
+        abort(400, 'Not a JSON')
+    body = request.get_json()
+    for key in body:
+        if key == 'name':
+            flag = 1
+    if flag == 0:
+        abort(400, "Missing name")
+    new_state = State(body)
+    new_state_dic = new_state.to_dict()
+    return jsonify(new_state_dic), 201
