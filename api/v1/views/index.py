@@ -29,10 +29,12 @@ def stats():
         "states",
         "users"
     ]
+
     j = 0
     for i in classes:
         count = storage.count(i)
         dic[class_plural[j]] = count
         j += 1
+
     if request.method == 'GET':
         return jsonify(dic)
