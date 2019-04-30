@@ -29,7 +29,7 @@ def stats():
         "reviews": storage.count("Review"),
         "states": storage.count("State"),
         "users": storage.count("User")
-    })))
+    })), mimetype='application/json')
 
 
 @app_views.route("<path:invalid_path>")
@@ -37,4 +37,4 @@ def not_found(invalid_path):
     """Error handling function for 404 page"""
     return Response("{}\n".format(json.dumps({
         "error": "Not found"
-    })))
+    })), mimetype='application/json')
