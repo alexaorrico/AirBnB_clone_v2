@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-app_views = Blueprint("app_views", __name__)
 
 
 @app.errorhandler(404)

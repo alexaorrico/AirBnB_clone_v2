@@ -1,11 +1,8 @@
 #!/usr/bin/python3
-import json
 from models import storage
 from flask import jsonify
 from api.v1.views import app_views
 
-
-default_config = {'JSONIFY_PRETTYPRINT_REGULAR': True}
 
 @app_views.route("/", strict_slashes=False)
 def index():
