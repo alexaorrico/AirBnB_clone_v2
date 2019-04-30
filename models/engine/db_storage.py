@@ -82,6 +82,7 @@ class DBStorage:
                 return self.__session.query(classes[cls]).get(id)
             except:
                 return None
+
         return None
 
     def count(self, cls=None):
