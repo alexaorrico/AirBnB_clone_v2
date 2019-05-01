@@ -13,6 +13,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
 cities = storage.all(City).values()
 
+
 @app_views.route("states/<state_id>/cities", strict_slashes=False)
 def all_cities(state_id):
     """grab all cities in a state"""
@@ -21,6 +22,7 @@ def all_cities(state_id):
         abort(404)
     return jsonify(obj)
 
+
 @app_views.route("cities/<city_id>")
 def get_city_obj(city_id):
     """retrieve city obj"""
@@ -28,6 +30,7 @@ def get_city_obj(city_id):
     if len(obj) == 0:
         abort(404)
     return jsonify(obj)
+
 
 @app_views.route("cities/<city_id>", strict_slashes=False, methods=['DELETE'])
 def delete_city(city_id):
@@ -40,4 +43,7 @@ def delete_city(city_id):
         return jsonify({})
     abort(404)
 
-@app_views.route("states/<state_id>/cities", strict_slashes=False, methods=['POST'])
+
+@app_views.route("states/<state_id>/cities",
+                 strict_slashes=False,
+                 methods=['POST'])

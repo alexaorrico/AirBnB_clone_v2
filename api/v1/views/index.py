@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Index file with route information for general requests"""
 from models import storage
 from flask import jsonify
 from api.v1.views import app_views

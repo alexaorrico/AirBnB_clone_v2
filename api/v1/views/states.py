@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Flask module to configure routes for state class api calls"""
 from models.state import State
 from flask import jsonify, abort, request
 from models import storage
@@ -23,7 +24,10 @@ def state_get(state_id):
     else:
         abort(404)
 
-@app_views.route("/states/<state_id>", strict_slashes=False, methods=['DELETE'])
+
+@app_views.route("/states/<state_id>",
+                 strict_slashes=False,
+                 methods=['DELETE'])
 def state_delete(state_id):
     """Handles DELETE request with state objects"""
     if "State" + '.' + state_id in storage.all("State").keys():
@@ -33,11 +37,12 @@ def state_delete(state_id):
     else:
         abort(404)
 
+
 @app_views.route("/states", strict_slashes=False, methods=['POST'])
 def state_post():
     """Handles POST request with state objects"""
     try:
-        new_state=State(**(request.get_json()))
+        new_state = State(**(request.get_json()))
         storage.new(new_state)
         storage.save()
         return jsonify(new_state.to_dict()), 201

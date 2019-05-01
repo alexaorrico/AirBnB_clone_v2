@@ -11,11 +11,11 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
-
 @app.errorhandler(404)
 def not_found(invalid_path):
     """Error handling function for 404 page"""
     return jsonify(error="Not found"), 404
+
 
 @app.teardown_appcontext
 def tearDown(error):
