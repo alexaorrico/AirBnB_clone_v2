@@ -1,5 +1,5 @@
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, request, abort
 from models import storage
 from models.state import State
 """Routing for AirBnB state object"""
@@ -49,3 +49,16 @@ def post_state():
     new_state = State(body)
     new_state_dic = new_state.to_dict()
     return jsonify(new_state_dic), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def put_state(state_id=None):
+    if not request.json:
+        abort(400, 'Not a JSON')
+    body = request.get_json()
+    for key, value in dic.items():
+        if value.id == state_id:
+            for k, v in body.items():
+                setattr(value, k, v)
+            return jsonify(value.to_dict()), 200
+    abort(404)
