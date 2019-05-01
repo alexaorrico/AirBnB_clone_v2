@@ -1,11 +1,38 @@
 #!/usr/bin/python3
-from flask import jsonify
+from flask import jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route("/states", strict_slashes=False, methods=['GET'])
-def state_get(state_id=None):
+@app_views.route("/states",
+                 defaults={"state_id": None},
+                 strict_slashes=False,
+                 methods=['GET'])
+@app_views.route("/states/<state_id>", strict_slashes=False, methods=['GET'])
+def state_get(state_id):
     """Handle GET request for states"""
     if state_id is None:
-        pass
+        return jsonify(
+            [state.to_dict() for state in storage.all("State").values()]
+        )
+    elif "State" + '.' + state_id in storage.all("State").keys():
+        return jsonify(
+            storage.get("State", state_id).to_dict()
+        )
+    else:
+        abort(404)
+
+@app_views.route("/states/<state_id>", strict_slashes=False, methods=['DELETE'])
+def state_delete(state_id):
+    """Handles DELETE request with state objects"""
+    if "State" + '.' + state_id in storage.all("State").keys():
+        storage.delete(storage.all("State")['State' + '.' + state_id])
+        storage.save()
+        return jsonify({})
+    else:
+        abort(404)
+
+@app_views.route("/states", strict_slashes=False, methods=['POST'])
+def state_post():
+    """Handles POST request with state objects"""
+    
