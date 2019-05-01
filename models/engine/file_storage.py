@@ -71,8 +71,9 @@ class FileStorage:
 
     def get(self, cls, id):
         """gets a single instance of an object"""
-        if cls + "." + id in self.__objects.keys():
-            return self.__objects[cls + "." + id]
+        obj_id = "{}.{}".format(cls.__name__, id)
+        if obj_id in self.__objects.keys():
+            return self.__objects[obj_id]
         else:
             return None
 

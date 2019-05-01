@@ -70,6 +70,17 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    def setUp(self):
+        """ Sets up instace of storage and objects """
+        self.new_obj = User(
+                id="12345",
+                first_name="shoji",
+                last_name="takashima",
+                email="email@ya.com",
+                password="hi"
+                )
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +124,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
+    def test_get(self):
+        """ Returns an object """
+        obj = models.storage.all()
+        try:
+            del_obj = obj['User.12345']
+            models.storage.delete(del_obj)
+            models.storage.save()
+        except:
+            models.storage.new(self.new_obj)
+            models.storage.save()
+            ret_obj = models.storage.get(User, "12345")
+            self.assertEqual(ret_obj, self.new_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "testing fs storage")
+    def test_get_returns_nothing(self):
+        get_obj = models.storage.get(User, "0000")
+        self.assertIsNone(get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
+    def test_count_all(self):
+        original_len = len(models.storage.all())
+        method_count_len = models.storage.count()
+        self.assertEqual(original_len, method_count_len)
+
+    @unittest.skipIf(models.storage_t == 'db', "Testing fs storage")
+    def test_count_cls(self):
+        original_len = len(models.storage.all("User"))
+        method_count_len = models.storage.count("User")
+        self.assertEqual(original_len, method_count_len)
