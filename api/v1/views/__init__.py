@@ -14,4 +14,4 @@ from api.v1.views.users import *
 from models.place import Place
 from api.v1.views.places import *
 from models.review import Review
-from api.v1.views.place_reviews import *
+from api.v1.views.places_reviews import *
