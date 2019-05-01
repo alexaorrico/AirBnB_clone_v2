@@ -11,7 +11,7 @@ port = os.getenv('HBNB_API_PORT', 5000)
 
 
 @app.teardown_appcontext
-def tear_down(n):
+def tear_down(exc=None):
     storage.close()
 
 
@@ -20,5 +20,5 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, threaded=True)
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+    app.run(host=host, port=port, threaded=True)
