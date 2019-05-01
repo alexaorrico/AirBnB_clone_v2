@@ -28,6 +28,8 @@ def reviews(place_id):
     user_id = data.get("user_id")
     if user_id is None:
         return "Missing user_id", 400
+    if storage.get("User", user_id) is None:
+        abort(404)
     if data.get("text") is None:
         return "Missing text", 400
     data["place_id"] = place_id
