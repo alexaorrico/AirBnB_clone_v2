@@ -35,7 +35,6 @@ def delete_state(state_id=None):
         for key, value in dic.items():
             if value.id == state_id:
                 storage.delete(value)
-                storage.save()
                 return jsonify(empty), 200
         abort(404)
 
