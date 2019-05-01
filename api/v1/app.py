@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Entry point Airbnb_clone_v3 api calls"""
+"""Entry point for Airbnb_clone_v3 api calls."""
 from os import getenv
 from flask import Flask
 from flask import jsonify
@@ -19,7 +19,7 @@ def not_found(error):
 
 
 @app.teardown_appcontext
-def teardown_storage(self):
+def teardown_storage(exc):
     """Closes the storage session after every request."""
     storage.close()
 
