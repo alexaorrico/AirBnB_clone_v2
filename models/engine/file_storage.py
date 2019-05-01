@@ -74,8 +74,8 @@ class FileStorage:
         """get obj from filestorage"""
         if type(cls) != str:
             cls = cls().__class__.__name__
-        if (cls + '.' + id) in models.storage.all().keys():
-            return models.storage.all()[cls + '.' + id]
+        if (cls + '.' + id) in self.__objects.keys():
+            return self.__objects[cls + '.' + id]
         else:
             return None
 
