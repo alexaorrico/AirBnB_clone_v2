@@ -8,4 +8,4 @@ from api.v1.views.states import *
 from models.city import City
 from api.v1.views.cities import *
 from models.amenity import Amenity
-from api.v1.views.amenity import *
+from api.v1.views.amenities import *
