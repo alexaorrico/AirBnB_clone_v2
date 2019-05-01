@@ -1,9 +1,9 @@
 #!/usr/bin/python3
+"""Starts flask"""
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
-"""Starts flask"""
 app = Flask(__name__)
 app.register_blueprint(app_views)
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
