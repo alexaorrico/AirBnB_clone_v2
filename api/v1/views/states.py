@@ -8,6 +8,7 @@ from models.state import State
 @app_views.route('/states/<state_id>', methods=['GET'])
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_state(state_id=None):
+    """'GET' response"""
     dic = storage.all(State)
     if request.method == 'GET':
         if state_id is None:
@@ -24,6 +25,7 @@ def get_state(state_id=None):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id=None):
+    """'DELETE' response"""
     dic = storage.all(State)
     if request.method == 'DELETE':
         empty = {}
@@ -39,6 +41,7 @@ def delete_state(state_id=None):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
+    """'POST' response"""
     dic = storage.all(State)
     flag = 0
     if not request.json:
@@ -58,6 +61,7 @@ def post_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def put_state(state_id=None):
+    """'PUT' response"""
     dic = storage.all(State)
     if not request.json:
         abort(400, 'Not a JSON')
