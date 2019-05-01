@@ -6,7 +6,10 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['GET'],
+    strict_slashes=False)
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_amenity(amenity_id=None):
     """'GET' response"""
@@ -62,7 +65,10 @@ def post_amenity():
     return jsonify(new_amenity_dic), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['PUT'],
+    strict_slashes=False)
 def put_amenity(amenity_id=None):
     """'PUT' response"""
     dic = storage.all(Amenity)
@@ -76,4 +82,3 @@ def put_amenity(amenity_id=None):
             storage.save()
             return jsonify(value.to_dict()), 200
     abort(404)
-
