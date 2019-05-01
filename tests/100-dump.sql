@@ -16,16 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Drop database
-DROP DATABASE IF EXISTS hbnb_test_db;
-
--- Create database + user if doesn't exist
-CREATE DATABASE IF NOT EXISTS hbnb_test_db;
-CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost';
-SET PASSWORD FOR 'hbnb_test'@'localhost' = 'hbnb_test_pwd';
-GRANT ALL ON hbnb_test_db.* TO 'hbnb_test'@'localhost';
-GRANT SELECT ON performance_schema.* TO 'hbnb_test'@'localhost';
-FLUSH PRIVILEGES;
-
 USE hbnb_test_db;
 
 --
