@@ -9,3 +9,5 @@ from models.city import City
 from api.v1.views.cities import *
 from models.amenity import Amenity
 from api.v1.views.amenities import *
+from models.user import User
+from api.v1.views.users import *
