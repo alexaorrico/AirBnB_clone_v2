@@ -1,47 +1,42 @@
+#!/usr/bin/python3
 """Routing for AirBnB city object"""
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
-from models.state import State
 from models.city import City
+from models.state import State
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
-def get_city(city_id=None):
+@app_views.route(
+    '/states/<state_id>/cities',
+    methods=['GET'],
+    strict_slashes=False)
+def get_city(state_id=None):
     """'GET' response"""
     dic = storage.all(City)
-    if request.method == 'GET':
-        if city_id is None:
-            cities_list = []
-            for key, value in dic.items():
-                cities_list.append(value.to_dict())
-            return jsonify(cities_list)
-        else:
-            for key, value in dic.items():
-                if value.id == city_id:
-                    return jsonify(value.to_dict())
-            abort(404)
+    if state_id is None:
+        abort(404)
+    else:
+        for key, value in dic.items():
+            if value.state_id == state_id:
+                return jsonify(value.to_dict())
+        abort(404)
 
-@app_views.route('/cities/<city_id>', methods=['GET'])
-@app_views.route('/cities', methods=['GET'], strict_slashes=False)
-def get_city(city_id=None):
+
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+def get_city_by_id(city_id=None):
     """'GET' response"""
     dic = storage.all(City)
-    if request.method == 'GET':
-        if city_id is None:
-            cities_list = []
-            for key, value in dic.items():
-                cities_list.append(value.to_dict())
-            return jsonify(cities_list)
-        else:
-            for key, value in dic.items():
-                if value.id == city_id:
-                    return jsonify(value.to_dict())
-            abort(404)
+    if city_id is None:
+        abort(404)
+    else:
+        for key, value in dic.items():
+            if value.id == city_id:
+                return jsonify(value.to_dict())
+        abort(404)
 
 
-
-@app_views.route('/cities/<city_id>', methods=['DELETE'])
+@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id=None):
     """'DELETE' response"""
     dic = storage.all(City)
@@ -52,22 +47,29 @@ def delete_city(city_id=None):
         for key, value in dic.items():
             if value.id == city_id:
                 storage.delete(value)
+                storage.save()
                 return jsonify(empty), 200
         abort(404)
 
 
-@app_views.route('/cities', methods=['POST'], strict_slashes=False)
-def post_city():
+@app_views.route(
+    '/states/<state_id>/cities',
+    methods=['POST'],
+    strict_slashes=False)
+def post_city(state_id=None):
     """'POST' response"""
-    dic = storage.all(City)
+    dic = storage.all(State)
     flag = 0
     if not request.json:
         abort(400, 'Not a JSON')
     body = request.get_json()
-    for key in body:
+    for key, value in body.items():
         if key == 'name':
-            flag = 1
-    if flag == 0:
+            flag += 1
+    for key, value in dic.items():
+        if value.id == state_id:
+            flag += 1
+    if flag != 2:
         abort(400, "Missing name")
     new_city = City(**body)
     storage.new(new_city)
@@ -76,7 +78,7 @@ def post_city():
     return jsonify(new_city_dic), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'])
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def put_city(city_id=None):
     """'PUT' response"""
     dic = storage.all(City)

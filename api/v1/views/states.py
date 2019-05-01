@@ -6,7 +6,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_state(state_id=None):
     """'GET' response"""
@@ -24,7 +24,10 @@ def get_state(state_id=None):
             abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route(
+    '/states/<state_id>',
+    methods=['DELETE'],
+    strict_slashes=False)
 def delete_state(state_id=None):
     """'DELETE' response"""
     dic = storage.all(State)
@@ -35,6 +38,7 @@ def delete_state(state_id=None):
         for key, value in dic.items():
             if value.id == state_id:
                 storage.delete(value)
+                storage.save()
                 return jsonify(empty), 200
         abort(404)
 
@@ -59,7 +63,7 @@ def post_state():
     return jsonify(new_state_dic), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id=None):
     """'PUT' response"""
     dic = storage.all(State)

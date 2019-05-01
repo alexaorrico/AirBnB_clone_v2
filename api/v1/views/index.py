@@ -5,14 +5,14 @@ from flask import jsonify, request
 from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """Gets the status of the application"""
     if request.method == 'GET':
         return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """Gives object count of each class"""
     dic = {}
