@@ -71,6 +71,7 @@ def post_city(state_id=None):
             flag += 1
     if flag != 2:
         abort(400, "Missing name")
+    body['state_id'] = state_id
     new_city = City(**body)
     storage.new(new_city)
     storage.save()
