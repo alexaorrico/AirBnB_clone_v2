@@ -7,12 +7,14 @@ from models import storage
 
 @app_views.route('/status', methods=['GET'])
 def status():
+    """Gets the status of the application"""
     if request.method == 'GET':
         return jsonify({'status': 'OK'})
 
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
+    """Gives object count of each class"""
     dic = {}
     classes = [
         "Amenity",
