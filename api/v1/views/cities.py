@@ -59,7 +59,7 @@ def city_id(city_id):
     data = request.get_json(silent=True)
     if data is None:
         return "Not a JSON", 400
-    avoid = {"id", "created_at", "updated_at"}
+    avoid = {"id", "state_id", "created_at", "updated_at"}
     [setattr(city, k, v) for k, v in data.items() if k not in avoid]
     city.save()
     return jsonify(city.to_dict())

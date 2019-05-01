@@ -53,7 +53,7 @@ def amenity_id(amenity_id):
     # PUT method
     data = request.get_json(silent=True)
     if data is None:
-        return "Not a JSON", 404
+        return "Not a JSON", 400
     avoid = {"id", "created_at", "updated_at"}
     [setattr(amenity, k, v) for k, v in data.items() if k not in avoid]
     amenity.save()

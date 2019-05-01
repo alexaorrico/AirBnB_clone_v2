@@ -7,7 +7,7 @@ from models.place import Place
 
 
 @app_views.route("/cities/<city_id>/places", methods=["GET", "POST"])
-def places():
+def places(city_id):
     """Defines the GET and POST method for places on /cities route.
 
     GET - Retrieves a list of all Places related to a given city_id.
@@ -64,7 +64,7 @@ def place_id(place_id):
     # PUT method
     data = request.get_json(silent=True)
     if data is None:
-        return "Not a JSON", 404
+        return "Not a JSON", 400
     avoid = {"id", "user_id", "city_id", "created_at", "updated_at"}
     [setattr(place, k, v) for k, v in data.items() if k not in avoid]
     place.save()
