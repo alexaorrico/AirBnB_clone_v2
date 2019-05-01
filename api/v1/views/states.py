@@ -1,9 +1,9 @@
 #!/usr/bin/python3
+"""Routing for AirBnB state object"""
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
 from models.state import State
-"""Routing for AirBnB state object"""
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])

@@ -1,8 +1,8 @@
 #!/usr/bin/python3
+"""Routing for AirBnB"""
 from api.v1.views import app_views
 from flask import jsonify, request
 from models import storage
-"""Routing for AirBnB"""
 
 
 @app_views.route('/status', methods=['GET'])
