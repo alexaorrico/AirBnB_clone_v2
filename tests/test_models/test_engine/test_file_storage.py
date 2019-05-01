@@ -115,7 +115,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
     def test_get(self):
         """Test get method."""
         storage = FileStorage()
@@ -124,13 +124,13 @@ class TestFileStorage(unittest.TestCase):
         FileStorage._FileStorage__objects["{}.{}".format(key, ca.id)] = ca
         self.assertEqual(storage.get("State", ca.id), ca)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
+    def test_get_nonexistant_object(self):
         """Test get method with nonexistent parameter."""
         storage = FileStorage()
         self.assertIsNone(storage.get("State", "id"))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
     def test_count_no_class(self):
         """Test count method without specified class."""
         storage = FileStorage()
@@ -143,7 +143,7 @@ class TestFileStorage(unittest.TestCase):
         FileStorage._FileStorage__objects["{}.{}".format(key, sf.id)] = sf
         self.assertEqual(2, storage.count())
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
     def test_count_specified_class(self):
         """Test count method with specified class."""
         storage = FileStorage()
