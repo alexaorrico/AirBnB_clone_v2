@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from models.state import State
 from flask import jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
@@ -35,4 +36,12 @@ def state_delete(state_id):
 @app_views.route("/states", strict_slashes=False, methods=['POST'])
 def state_post():
     """Handles POST request with state objects"""
-    
+    try:
+        new_state=State(**(request.get_json()))
+        storage.new(new_state)
+        storage.save()
+        return jsonify(new_state.to_dict()), 201
+    except TypeError:
+        abort(404, 'Not a json')
+    except KeyError:
+        abort(404, 'Missing name')
