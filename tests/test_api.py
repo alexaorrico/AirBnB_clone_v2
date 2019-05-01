@@ -53,9 +53,9 @@ class AirbnbTestCase(unittest.TestCase):
             self.assertTrue(resp.get_json(silent=True))
 
     def test_some_stats_count(self):
-        """Test the count method for FileStorage and the API call to stats
+        """Test the count method for DB/File storage and the API call to stats
         The responce message is also tested that the format matches
-        the expected specs.
+        the expected spec.
         """
         with open("file.json", encoding="utf-8") as f:
             sample_a = {
