@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" Cities view for HBNB API """
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, make_response, request
 from models import storage
@@ -11,7 +12,9 @@ import json
 @app_views.route("/states/<state_id>/cities",
                  methods=["GET", "POST"], strict_slashes=False)
 def city_list(state_id):
-    """ render a list of cities """
+    """ GET: render a list of cities
+        POST: Create a city
+    """
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -34,7 +37,10 @@ def city_list(state_id):
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"],
                  strict_slashes=False)
 def city_detail(city_id):
-    """ Return a json of a city detail """
+    """ GET: Return a json of a city detail 
+        DELETE: Deltes an object and returns an empty json dictionary
+        PUT: Updates a city
+    """
     city = storage.get(City, city_id)
     if not city:
         abort(404)
