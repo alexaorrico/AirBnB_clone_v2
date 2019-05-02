@@ -37,7 +37,7 @@ def city_list(state_id):
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"],
                  strict_slashes=False)
 def city_detail(city_id):
-    """ GET: Return a json of a city detail 
+    """ GET: Return a json of a city detail
         DELETE: Deltes an object and returns an empty json dictionary
         PUT: Updates a city
     """
