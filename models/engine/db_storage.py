@@ -83,7 +83,7 @@ class DBStorage:
         for clss in classes:
             #  clss is just keys
             #  could be str or class keyword
-            if cls is None or cls is classes[clss] or cls is clss:
+            if cls is classes[clss] or cls is clss:
                 obj = self.__session.query(classes[clss]).\
                       filter(classes[clss].id == id).first()
         return obj
