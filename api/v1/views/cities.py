@@ -48,11 +48,11 @@ def delete_city(city_id):
     methods=['PUT'],
     strict_slashes=False)
 def put_city(city_id):
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    city_dict = request.get_json()
+    if not city_dict:
+        return (jsonify({'error': 'Not a JSON'}), 400)
     city = storage.get('City', city_id)
     if city:
-        city_dict = request.get_json()
         city.name = city_dict['name']
         city.save()
         return (jsonify(city.to_dict()), 200)
