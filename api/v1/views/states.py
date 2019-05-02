@@ -15,7 +15,7 @@ def states_get():
 def state_get(state_id):
     state = [v.to_dict() for k, v in
              storage.all("State").items() if k == 'State.' + state_id]
-    if not state[0]:
+    if not state or len(state) != 1:
         abort(404)
     return jsonify(state[0])
 
