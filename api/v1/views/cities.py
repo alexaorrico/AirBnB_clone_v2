@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ Cities view for HBNB API """
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, make_response, request
