@@ -1,4 +1,4 @@
- #!/usr/bin/python
+#!/usr/bin/python
 """holds class City"""
 from models.state import State
 from models.city import City
@@ -9,7 +9,9 @@ from os import getenv
 from models import storage
 
 
-@app_views.route("states/<state_id>/cities", strict_slashes=False, methods=['GET'])
+@app_views.route("/states/<state_id>/cities",
+                 strict_slashes=False,
+                 methods=['GET'])
 def all_cities(state_id):
     """grab all cities in a state"""
     print(state_id)
@@ -20,7 +22,7 @@ def all_cities(state_id):
     return jsonify(obj)
 
 
-@app_views.route("cities/<city_id>", strict_slashes=False, methods=['GET'])
+@app_views.route("/cities/<city_id>", strict_slashes=False, methods=['GET'])
 def get_city_obj(city_id):
     """retrieve city obj"""
     obj = [city.to_dict() for city in cities if city.id == city_id]
@@ -29,7 +31,7 @@ def get_city_obj(city_id):
     return jsonify(obj)
 
 
-@app_views.route("cities/<city_id>", strict_slashes=False, methods=['DELETE'])
+@app_views.route("/cities/<city_id>", strict_slashes=False, methods=['DELETE'])
 def delete_city(city_id):
     """delete a city"""
     obj = storage.get("City", city_id)
@@ -40,7 +42,7 @@ def delete_city(city_id):
     abort(404)
 
 
-@app_views.route("states/<state_id>/cities",
+@app_views.route("/states/<state_id>/cities",
                  strict_slashes=False,
                  methods=['POST'])
 def create_city(state_id):
