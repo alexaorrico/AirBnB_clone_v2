@@ -8,10 +8,11 @@ from os import environ
 
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views, url="/app_views")
 
 @app.teardown_appcontext
-def teardown():
+def teardown(exception):
     """calls storage.close"""
     storage.close()
 
