@@ -96,7 +96,8 @@ class TestDBStorage(unittest.TestCase):
         """Test all method with specified class."""
         users = self.storage.all(User)
         self.assertEqual(len(users), 1)
-        self.assertEqual(list(users.values())[0].password, "password")
+        self.assertEqual(list(users.values())[0].email,
+                         "holberton@holberton.com")
 
     @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
     def test_new(self):
