@@ -10,7 +10,6 @@ from models.state import State
 @app_views.route("/states/", methods=["POST"], strict_slashes=False)
 def state_post():
     new_dict = request.get_json(silent=True)
-    print("state_post\n{}\n".format(new_dict))
     if not new_dict:
         return jsonify({"error": "Not a JSON"}), 400
     if 'name' not in request.json:
