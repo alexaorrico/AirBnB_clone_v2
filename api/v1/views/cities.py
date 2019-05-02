@@ -11,7 +11,8 @@ from models import City, storage
     strict_slashes=False)
 def get_city_for_state(state_id):
     state = storage.get('State', state_id)
-    abort(404) if state is None
+    if state is None:
+        abort(404)
     cities = [city.to_dict() for city in state.cities]
     return make_response(jsonify(cities), 200)
 
@@ -21,7 +22,8 @@ def get_city_for_state(state_id):
     strict_slashes=False)
 def get_city(city_id):
     city = storage.get('City', city_id)
-    abort(404) if city is None
+    if state is None:
+        abort(404)
     return make_response(jsonify(city.to_dict()), 200)
 
 @app_views.route(
@@ -30,7 +32,8 @@ def get_city(city_id):
     strict_slashes=False)
 def delete_city(city_id):
     city = storage.get('City', city_id)
-    abort(404) if city is None
+    if state is None:
+        abort(404)
     city.delete()
     storage.save()
     return make_response(jsonify({}), 200)
@@ -42,9 +45,9 @@ def delete_city(city_id):
 def put_city(city_id):
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-
     city = storage.get('City', city_id)
-    abort(404) if city is None
+    if state is None:
+        abort(404)
     city_dict = request.get_json()
     city.name = city_dict['name']
     city.save()
