@@ -25,7 +25,7 @@ def all_cities(state_id):
 @app_views.route("/cities/<city_id>", strict_slashes=False, methods=['GET'])
 def get_city_obj(city_id):
     """retrieve city obj"""
-    cities = storage.all(City).values()
+    cities = storage.all("City").values()
     obj = [city.to_dict() for city in cities if city.id == city_id]
     if len(obj) == 0:
         abort(404)
@@ -54,7 +54,7 @@ def create_city(state_id):
     if data is None:
         abort(400, "Not a JSON")
     new_city = City(**data)
-    new_city.state_id = state_id
+    setattr(new_city, 'state_id', state_id)
     storage.new(new_city)
     storage.save()
     cities = storage.all(City)
@@ -62,6 +62,7 @@ def create_city(state_id):
         if city.state_id == state_id:
             return jsonify(new_city.to_dict()), 201
     abort(404)
+
 
 @app_views.route("/cities/<city_id>", strict_slashes=False,
                  methods=['PUT'])
