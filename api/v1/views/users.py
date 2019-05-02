@@ -31,7 +31,7 @@ def get_user(user_id):
 
 @app_views.route(
     '/users/<user_id>',
-    methods=['DELTE'],
+    methods=['DELETE'],
     strict_slashes=False)
 def delete_user(city_id):
     user = storage.get('User', user_id)
