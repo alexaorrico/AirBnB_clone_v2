@@ -404,7 +404,7 @@ class HolbertonBnBTestCase(unittest.TestCase):
             self.assertEqual(resp.status_code, 201)
             self.assertEqual(msg.get("__class__"), "User")
             self.assertEqual(msg.get("email"), "h@h.com")
-            self.assertEqual(msg.get("password"), "dwp")
+            self.assertIsNone(msg.get("password"))
             self.assertGreater(storage.count("User"), count)
 
     def test_users_bad_post(self):
@@ -459,12 +459,13 @@ class HolbertonBnBTestCase(unittest.TestCase):
                 "created_at": "avoid",
                 "updated_at": "avoid",
             }
+            original = self.user.id
             resp = a.put("/api/v1/users/{}".format(self.user.id),
                          json=data, follow_redirects=True)
             self.assertEqual(resp.status_code, 200)
-            self.assertEqual(resp.get_json().get("password"), "new")
+            self.assertNotEqual(resp.get_json().get("password"), original)
             user = storage.get("User", self.user.id)
-            self.assertEqual(user.password, "new")
+            self.assertNotEqual(user.password, original)
             self.assertNotEqual(user.id, "avoid")
             self.assertNotEqual(user.email, "avoid")
             self.assertNotEqual(user.created_at, "avoid")
