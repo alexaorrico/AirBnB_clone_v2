@@ -5,6 +5,7 @@ from flask import abort, request, make_response, jsonify
 from api.v1.views import app_views
 from models import City, storage
 
+
 @app_views.route(
     '/states/<state_id>/cities',
     methods=['GET'],
@@ -16,6 +17,7 @@ def get_city_for_state(state_id):
     cities = [city.to_dict() for city in state.cities]
     return make_response(jsonify(cities), 200)
 
+
 @app_views.route(
     '/cities/<city_id>',
     methods=['GET'],
@@ -25,6 +27,7 @@ def get_city(city_id):
     if state is None:
         abort(404)
     return make_response(jsonify(city.to_dict()), 200)
+
 
 @app_views.route(
     '/cities/<city_id>',
@@ -37,6 +40,7 @@ def delete_city(city_id):
     city.delete()
     storage.save()
     return make_response(jsonify({}), 200)
+
 
 @app_views.route(
     '/cities/<city_id>',
