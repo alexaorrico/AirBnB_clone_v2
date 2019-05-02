@@ -63,7 +63,7 @@ def post_user():
     methods=['PUT'],
     strict_slashes=false)
 def put_user(user_id):
-    ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
+    ignore_keys = ['id', 'email', 'created_at', 'updated_at']
     user_dict = request.get_json()
     if not user_dict:
         return (jsonify({'error': 'Not a JSON'}), 400)
