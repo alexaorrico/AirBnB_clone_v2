@@ -6,6 +6,7 @@ from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 
+
 @app_views.route("/states/", methods=["POST"], strict_slashes=False)
 def state_post():
     new_dict = request.get_json(silent=True)
@@ -25,6 +26,7 @@ def states_get():
     states = [v.to_dict() for k, v in storage.all("State").items()]
     return jsonify(states)
 
+
 @app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
 def state_get(state_id):
     state = [v.to_dict() for k, v in
@@ -32,6 +34,7 @@ def state_get(state_id):
     if not state or len(state) != 1:
         abort(404)
     return jsonify(state[0])
+
 
 @app_views.route("/states/<state_id>",
                  methods=["DELETE"],
@@ -44,6 +47,7 @@ def state_delete(state_id):
     storage.save()
     storage.close()
     return make_response(jsonify({}), 200)
+
 
 @app_views.route("/states/<state_id>",
                  methods=["PUT"],
