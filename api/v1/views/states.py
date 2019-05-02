@@ -52,23 +52,23 @@ def state_post():
     except KeyError:
         abort(400, 'Missing name')
 
+
 @app_views.route("/states/<state_id>",
                  strict_slashes=False,
                  methods=['PUT'])
 def state_put(state_id):
     """Handles PUT request with state object with state id"""
-    try:
-        stateKey = "State" + '.' + state_id
-        if stateKey in storage.all("State").keys():
-            stateObj = storage.get("State", state_id)
-            storage.delete(stateObj)
-            for k, v in request.get_json().items():
-                if k is not "id" and k is not "created_at" and k is not "updated_at":
-                    stateObj.__dict__[k] = v
-            storage.new(stateObj)
-            storage.save()
-            return jsonify(stateObj.to_dict())
-        else:
-            abort(404)
-    except TypeError:
+    objDict = request.get_json()
+    if objDict is None:
         abort(400, 'Not a JSON')
+    stateObj = storage.get("State", state_id)
+    if stateObj is None:
+        abort(404)
+    print(stateObj.name)
+    for k, v in objDict.items():
+        if k is not "id" and k is not "created_at"\
+           and k is not "updated_at":
+            setattr(stateObj, k, v)
+    stateObj.save()
+    print(stateObj.name)
+    return jsonify(stateObj.to_dict())

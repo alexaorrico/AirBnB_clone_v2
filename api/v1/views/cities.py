@@ -9,18 +9,16 @@ from os import getenv
 from models import storage
 
 
-app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix="/api/v1")
-cities = storage.all(City).values()
+#app = Flask(__name__)
+#app.register_blueprint(app_views, url_prefix="/api/v1")
+#cities = storage.all(City).values()
 
 
-@app_views.route("states/<state_id>/cities", strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", strict_slashes=False, methods=['GET'])
 def all_cities(state_id):
     """grab all cities in a state"""
-    obj = [city.to_dict() for city in cities if city.state_id == state_id]
-    if len(obj) == 0:
-        abort(404)
-    return jsonify(obj)
+    print(state_id)
+    return jsonify([cD.to_dict() for cD in storage.get("State", state_id).cities])
 
 
 @app_views.route("cities/<city_id>")
@@ -44,6 +42,6 @@ def delete_city(city_id):
     abort(404)
 
 
-@app_views.route("states/<state_id>/cities",
-                 strict_slashes=False,
-                 methods=['POST'])
+#@app_views.route("states/<state_id>/cities",
+#                 strict_slashes=False,
+#                 methods=['POST'])
