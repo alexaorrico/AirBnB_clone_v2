@@ -61,7 +61,7 @@ def post_user():
 @app_views.route(
     '/users/<user_id>',
     methods=['PUT'],
-    strict_slashes=false)
+    strict_slashes=False)
 def put_user(user_id):
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']
     user_dict = request.get_json()
