@@ -15,10 +15,10 @@ import json
                  methods=['GET'])
 def all_cities(state_id):
     """grab all cities in a state"""
+    if "State" + '.' + state_id not in storage.all("State").keys():
+        abort(404)
     cities = storage.all(City).values()
     obj = [city.to_dict() for city in cities if city.state_id == state_id]
-    if len(obj) == 0:
-        return jsonify({})
     return jsonify(obj)
 
 
