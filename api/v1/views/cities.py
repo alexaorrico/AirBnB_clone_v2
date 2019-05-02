@@ -25,6 +25,7 @@ def all_cities(state_id):
 @app_views.route("/cities/<city_id>", strict_slashes=False, methods=['GET'])
 def get_city_obj(city_id):
     """retrieve city obj"""
+    cities = storage.all(City).values()
     obj = [city.to_dict() for city in cities if city.id == city_id]
     if len(obj) == 0:
         abort(404)
@@ -71,12 +72,9 @@ def update_city(city_id):
         abort(400, "Not a JSON")
     if 'name' not in data.keys():
         abort(404, "Missing name")
-    cities = storage.all(City)
-    for city in cities.values():
-        if city.state_id == state_id:
-            """update it"""
-            for k, v in data.items():
-                if k != "id" and k != "created_at" and k != "updated_at":
-                    setattr(city, k, v)
-            return jsonify(city.to_dict())
-    abort(404)
+    city = storage.get(City, city_id)
+    for k, v in data.items():
+        if k != "id" and k != "created_at" and k != "updated_at":
+            setattr(city, k, v)
+    city.save()
+    return jsonify(city.to_dict())
