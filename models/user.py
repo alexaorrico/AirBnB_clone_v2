@@ -33,6 +33,7 @@ class User(BaseModel, Base):
         super().__init__(*args, **kwargs)
 
     def encrypt_password(self, _password):
+        """Hashes a user password with MD5"""
         setattr(
             self,
             'password',
