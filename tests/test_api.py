@@ -33,6 +33,13 @@ class HolbertonBnBTestCase(unittest.TestCase):
         cls.user.save()
         cls.place = Place(name="School",
                           city_id=cls.city.id, user_id=cls.user.id)
+        cls.amenity_2 = Amenity(name="bed")
+        cls.amenity_2.save()
+        if os.getenv("HBNB_TYPE_STORAGE") == "db":
+            cls.place.amenities.append(cls.amenity_2)
+        else:
+            cls.place.amenity_ids.append(cls.amenity_2.id)
+
         cls.place.save()
         cls.review = Review(text="Stellar",
                             place_id=cls.place.id, user_id=cls.user.id)
@@ -727,6 +734,99 @@ class HolbertonBnBTestCase(unittest.TestCase):
                          data="bad", follow_redirects=True)
             self.assertEqual(resp.status_code, 400)
             self.assertIn(b"Not a JSON", resp.data)
+
+    def test_places_amenities_get(self):
+        """Test GET with specific places id"""
+        with self.__app as a:
+            resp = a.get("/api/v1/places/{}/amenities".format(self.place.id))
+            self.assertEqual(resp.status_code, 200)
+
+    def test_places_amenities_bad_get(self):
+        """Test bad GET with specific places id"""
+        with self.__app as a:
+            resp = a.get("/api/v1/places/{}/amenities".format("bad_id"))
+            self.assertEqual(resp.status_code, 404)
+
+    def test_places_amenities_new_post(self):
+        """Test a POST a valid amenity that doesn't exists for the places"""
+        with self.__app as a:
+            amenity = Amenity(name="free money")
+            amenity.save()
+            resp = a.post("/api/v1/places/{}/amenities/{}".format(
+                self.place.id,
+                amenity.id
+            ))
+            self.assertEqual(resp.status_code, 201)
+
+    def test_places_amenities_exists_post(self):
+        """Test a POST a valid amenity that exists for the places"""
+        with self.__app as a:
+            resp = a.post("/api/v1/places/{}/amenities/{}".format(
+                self.place.id,
+                self.amenity_2.id
+            ))
+            self.assertEqual(resp.status_code, 200)
+
+    def test_places_amenities_new_post_bad_amenity(self):
+        """Test a POST a invalid amenity that doesn't exists for the places"""
+        with self.__app as a:
+            resp = a.post("/api/v1/places/{}/amenities/{}".format(
+                self.place.id,
+                "bad_id"
+            ))
+            self.assertEqual(resp.status_code, 404)
+
+    def test_places_amenities_new_post_bad_place(self):
+        """Test a POST a invalid places id"""
+        with self.__app as a:
+            resp = a.post("/api/v1/places/{}/amenities/{}".format(
+                "bad_id",
+                self.amenity_2.id
+            ))
+            self.assertEqual(resp.status_code, 404)
+
+    # DELETE
+    def test_places_amenities_bad_delete(self):
+        """Test a DELETE a invalid amenity
+        that doesn't exists for the places
+        """
+        with self.__app as a:
+            amenity = Amenity(name="monty python")
+            amenity.save()
+            resp = a.delete("/api/v1/places/{}/amenities/{}".format(
+                self.place.id,
+                amenity.id
+            ))
+            self.assertEqual(resp.status_code, 404)
+
+    def test_places_amenities_delete(self):
+        """Test a DELETE a valid amenity that exists for the places"""
+        with self.__app as a:
+            resp = a.post("/api/v1/places/{}/amenities/{}".format(
+                self.place.id,
+                self.amenity_2.id
+            ))
+            self.assertEqual(resp.status_code, 200)
+
+    def test_places_amenities_delete_bad_amenity(self):
+        """Test a DELETE a invalid amenity
+        that doesn't exists for the places
+        """
+        with self.__app as a:
+            resp = a.post("/api/v1/places/{}/amenities/{}".format(
+                self.place.id,
+                "bad_id"
+            ))
+            self.assertEqual(resp.status_code, 404)
+
+    def test_places_amenities_delete_bad_place(self):
+        """Test a DELETE a invalid places id"""
+        with self.__app as a:
+            resp = a.post("/api/v1/places/{}/amenities/{}".format(
+                "bad_id",
+                self.amenity_2.id
+            ))
+            self.assertEqual(resp.status_code, 404)
 
 
 if __name__ == "__main__":
