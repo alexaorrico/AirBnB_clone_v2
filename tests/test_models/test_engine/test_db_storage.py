@@ -5,7 +5,7 @@ import pep8
 import inspect
 import unittest
 import MySQLdb
-from models import storage
+import models
 from models.engine.db_storage import DBStorage
 from models.state import State
 from models.user import User
@@ -63,7 +63,7 @@ class TestDBStorage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Instantiate MySQLdb cursor."""
-        if type(storage) == DBStorage:
+        if type(models.storage) == DBStorage:
             db = MySQLdb.connect(user=os.getenv("HBNB_MYSQL_USER"),
                                  passwd=os.getenv("HBNB_MYSQL_PWD"),
                                  db=os.getenv("HBNB_MYSQL_DB"))
@@ -80,18 +80,18 @@ class TestDBStorage(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """Close MySQLdb cursor."""
-        if type(storage) == DBStorage:
+        if type(models.storage) == DBStorage:
             cls.cursor.close()
             cls.storage._DBStorage__session.close()
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_all_no_class(self):
         """Test all method without a specified class."""
         objs = storage.all()
         self.assertEqual(type(objs), dict)
         self.assertEqual(len(objs), 2)
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_all_specified_class(self):
         """Test all method with specified class."""
         users = self.storage.all(User)
@@ -99,7 +99,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertEqual(list(users.values())[0].email,
                          "holberton@holberton.com")
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_new(self):
         """Test new method."""
         ny = State(name="New York")
@@ -107,7 +107,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertIn(ny, list(self.storage._DBStorage__session.new))
         self.storage._DBStorage__session.rollback()
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         ak = State(name="Arkansas")
@@ -118,22 +118,22 @@ class TestDBStorage(unittest.TestCase):
         self.assertEqual(ak.id, query[0][0])
         self.cursor.execute("DELETE FROM states WHERE name = 'Arkansas'")
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_get(self):
         """Test get method."""
         self.assertEqual(self.storage.get("User", self.user.id), self.user)
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_get_nonexistant(self):
         """Test get method with nonexistant object."""
         self.assertIsNone(self.storage.get("User", "nonexistant"))
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_count_no_class(self):
         """Test count method without specified class."""
         self.assertEqual(2, self.storage.count())
 
-    @unittest.skipIf(type(storage) != DBStorage, "Testing FileStorage")
+    @unittest.skipIf(models.storage_t != "db", "not testing file storage")
     def test_count_specified_class(self):
         """Test count method with specified class."""
         self.assertEqual(1, self.storage.count("User"))
