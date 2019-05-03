@@ -1,0 +1,44 @@
+Links an amenity to a place.
+---
+tags:
+  -  "places_amenities"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: place_id
+    description: "The ID of the place to link to."
+    required: true
+    schema:
+      type: string
+  - in: path
+    name: amenity_id
+    description: "The ID of amenity to link."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: "Amenity already linked."
+    example:
+      {
+        "__class__": "Amenity",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "f4dfd576-7c29-4bdf-9fbd-5c95a170ebce",
+        "name": "Hair dryer",
+        "updated_at": "2017-03-25T02:17:06.000000"
+      }
+  201:
+    description: "The linked amenity."
+    example:
+      {
+        "__class__": "Amenity",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "f4dfd576-7c29-4bdf-9fbd-5c95a170ebce",
+        "name": "Hair dryer",
+        "updated_at": "2017-03-25T02:17:06.000000"
+      }
+  404:
+    description: "Not found"

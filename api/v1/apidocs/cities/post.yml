@@ -33,3 +33,5 @@ responses:
       }
   400:
     description: "'Not a JSON' or 'Missing name'"
+  404:
+    description: "Not found"

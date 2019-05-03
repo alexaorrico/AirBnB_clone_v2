@@ -1,0 +1,25 @@
+Unlinks an amenity from a place.
+---
+tags:
+  -  "places_amenities"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: place_id
+    description: "The ID of the linked place."
+    required: true
+    schema:
+      type: string
+  - in: path
+    name: amenity_id
+    description: "The ID of the amenity to unlink."
+    schema:
+      type: string
+responses:
+  200:
+    description: "An empty object representing the unlinked amenity."
+    schema:
+      type: "object"
+  404:
+    description: "Not found"

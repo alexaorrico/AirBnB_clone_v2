@@ -1,0 +1,16 @@
+Retrieves the counts of each object type.
+---
+tags:
+  -  "stats"
+responses:
+  200:
+    description: Object counts.
+    example:
+      {
+        "amenities": 47,
+        "cities": 36,
+        "places": 154,
+        "reviews": 718,
+        "states": 27,
+        "users": 31
+      }

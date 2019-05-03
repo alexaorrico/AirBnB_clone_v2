@@ -1,0 +1,40 @@
+Retrieves all amenities for a given place.
+---
+tags:
+  -  "places_amenities"
+parameters:
+  - in: path
+    name: place_id
+    description: "The ID of the place to retrieve amenities for."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: A list of all amenities for a given place.
+    examples:
+      [
+        {
+          "__class__": "Amenity",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "id": "017ec502-e84a-4a0f-92d6-d97e27bb6bdf",
+          "name": "Cable TV",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        },
+        {
+          "__class__": "Amenity",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "id": "12e9ccb4-03e4-4f82-ac3d-4fc7e3ebfbfe",
+          "name": "Internet",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        },
+        {
+          "__class__": "Amenity",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "id": "2f055228-5fd3-4b1d-a021-7e4b9b7d70a6",
+          "name": "TV",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        }
+      ]
+  404:
+    description: "Not found"
