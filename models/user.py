@@ -32,9 +32,12 @@ class User(BaseModel, Base):
         User.set_password(self, pwd)
         super().__init__(*args, **kwargs)
 
-    def encrypt_password(self, _password):
+    @property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def password(self, password):
         """Hashes a user password with MD5"""
-        setattr(
-            self,
-            'password',
-            hashlib.md5().update(_password.encode('utf-8')).hexdigest())
+        encryption = hashlib.md5(password.encode())
+        self._password = encryption.hexdigest()
