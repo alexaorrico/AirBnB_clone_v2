@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+User view for API.
+
+"""
 
 from flask import abort, request, jsonify
 
@@ -12,6 +16,7 @@ from models.user import User
     methods=['GET'],
     strict_slashes=False)
 def get_all_users():
+    """Returns JSON of all users"""
     users = []
     for user in storage.all('User').values():
         users.append(user.to_dict())
@@ -23,6 +28,7 @@ def get_all_users():
     methods=['GET'],
     strict_slashes=False)
 def get_user(user_id):
+    """Returns JSON user with a given id"""
     user = storage.get('User', user_id)
     if user:
         return jsonify(user.to_dict())
@@ -33,7 +39,8 @@ def get_user(user_id):
     '/users/<user_id>',
     methods=['DELETE'],
     strict_slashes=False)
-def delete_user(city_id):
+def delete_user(user_id):
+    """Deletes a user with a given id"""
     user = storage.get('User', user_id)
     if user:
         user.delete()
@@ -46,6 +53,7 @@ def delete_user(city_id):
     methods=['POST'],
     strict_slashes=False)
 def post_user():
+    """Creates a user"""
     user_dict = request.get_json()
     if not user_dict:
         return (jsonify({'error': 'Not a JSON'}), 400)
@@ -63,6 +71,7 @@ def post_user():
     methods=['PUT'],
     strict_slashes=False)
 def put_user(user_id):
+    """Updates a user with a given id"""
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']
     user_dict = request.get_json()
     if not user_dict:
