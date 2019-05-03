@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+Sets up Flask application
+
+"""
+
 
 from os import getenv
 from flask import Flask, make_response, jsonify
@@ -14,11 +19,13 @@ app.register_blueprint(app_views)
 
 @app.errorhandler(404)
 def page_not_found(error):
+    """Returns JSON error repsponse"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 @app.teardown_appcontext
 def teardown(self):
+    """Closes storage session"""
     storage.close()
 
 
