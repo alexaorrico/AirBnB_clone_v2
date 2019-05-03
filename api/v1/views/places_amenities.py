@@ -1,4 +1,4 @@
-# /usr/bin/python3
+#!/usr/bin/python3
 """Defines the view for places amenities Api calls"""
 import os
 from api.v1.views import app_views
