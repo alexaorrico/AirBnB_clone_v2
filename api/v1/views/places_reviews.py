@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Review view for API.
+
+"""
 
 from flask import abort, request, jsonify
 
@@ -12,6 +16,7 @@ from models.review import Review
     methods=['GET'],
     strict_slashes=False)
 def get_review_by_place(place_id):
+    """Returns JSON reviews of given place"""
     place = storage.get('Place', place_id)
     if place:
         reviews = []
@@ -26,6 +31,7 @@ def get_review_by_place(place_id):
     methods=['GET'],
     strict_slashes=False)
 def get_review(review_id):
+    """Returns JSON review with a given id"""
     review = storage.get('Review', review_id)
     if review:
         return (jsonify(review.to_dict()), 200)
@@ -37,6 +43,7 @@ def get_review(review_id):
     methods=['Delete'],
     strict_slashes=False)
 def delete_review(review_id):
+    """Deletes review with a given id"""
     review = storage.get('Review', review_id)
     if review:
         review.delete()
@@ -50,6 +57,7 @@ def delete_review(review_id):
     methods=['POST'],
     strict_slashes=False)
 def post_review(place_id):
+    """Creates review for a given place"""
     review_dict = request.get_json()
     place = storage.get('Place', place_id)
     if not review_dict:
@@ -71,6 +79,7 @@ def post_review(place_id):
     methods=['PUT'],
     strict_slashes=False)
 def put_review(review_id):
+    """Updates review with a given id"""
     ignore_keys = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
     review_dict = request.get_json()
     review = storage.get('Review', review_id)
