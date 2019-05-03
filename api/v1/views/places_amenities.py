@@ -1,10 +1,10 @@
 # /usr/bin/python3
 """Defines the view for places amenities Api calls"""
+import os
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models import storage
 from flask import abort, jsonify, request
-import os
 
 
 @app_views.route("/places/<place_id>/amenities", methods=["GET"])
@@ -44,11 +44,13 @@ def manage_place_amenities(place_id, amenity_id):
             # do the db stuff
             if amenity in place.amenities:
                 exists = True
-            place.amenities.append(amenity)
+            else:
+                place.amenities.append(amenity)
         else:
             if amenity.id in place.amenity_ids:
                 exists = True
-            place.amenity_ids.append(amenity.id)
+            else:
+                place.amenity_ids.append(amenity.id)
 
         place.save()
         return jsonify(amenity.to_dict()), (200 if exists else 201)
