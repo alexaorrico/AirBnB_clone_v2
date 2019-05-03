@@ -30,9 +30,9 @@ def get_all_users():
 def get_user(user_id):
     """Returns JSON user with a given id"""
     user = storage.get('User', user_id)
-    if user:
-        return jsonify(user.to_dict())
-    abort(404)
+    if user is None:
+        abort(404)
+    return jsonify(user.to_dict())
 
 
 @app_views.route(
