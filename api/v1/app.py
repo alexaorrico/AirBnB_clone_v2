@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-"""Entry point for Airbnb_clone_v3 api calls."""
+"""Entry point for HolbertonBnB API calls."""
 from os import getenv
 from flask import Flask
 from flask import jsonify
 from flask_cors import CORS
+from flasgger import Swagger, swag_from
 from models import storage
 from api.v1.views import app_views
 
@@ -12,6 +13,15 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
+
+template = {
+    "swagger": "2.0",
+    "info": {
+        "title": "HolbertonBnB",
+        "description": "RESTful API for HolbertonBnB",
+    }
+}
+swagger = Swagger(app, template=template)
 
 
 @app.errorhandler(404)
