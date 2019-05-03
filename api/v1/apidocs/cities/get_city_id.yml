@@ -1,0 +1,27 @@
+Retrieve a city with a given ID.
+---
+tags:
+  -  "cities"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: city_id
+    description: "The ID of the city to retrieve."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: The retrieved city.
+    example:
+      {
+        "__class__": "City",
+        "created_at": "2017-03-25T02:17:06",
+        "id": "1da255c0-f023-4779-8134-2b1b40f87683",
+        "name": "New Orleans",
+        "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
+        "updated_at": "2017-03-25T02:17:06"
+      }
+  404:
+    description: "Not found"

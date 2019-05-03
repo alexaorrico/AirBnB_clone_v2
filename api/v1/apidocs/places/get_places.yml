@@ -1,0 +1,51 @@
+Retrieves all places for a given city.
+---
+tags:
+  -  "places"
+parameters:
+  - in: path
+    name: city_id
+    description: "The ID of the city to retrieve places for."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: A list of all places for a given city.
+    examples:
+      [
+        {
+          "__class__": "Place",
+          "city_id": "05b0b99c-f10e-4e3a-88d1-b3187d6998ee",
+          "created_at":"2017-03-25T02:17:06.000000",
+          "description": "Bright, modern and private. Fantastic hotel alternative for business travel or holiday. <BR /><BR />Close to many neighborhoods, including: Castro, Mission, Dolores Park, and Noe Valley. You'll find wonderful restaurants, great urban hikes, and the warmest climate in San Francisco.<BR /><BR />The unit is on the ground floor with private entrance. You'll find great amenities to make your stay comfortable, including:<BR />> Streaming TV <BR />> Treadmill <BR />> Small fridge, microwave, coffee maker<BR />> Disposable plates, glasses and utensils available<BR />> Coffee pods, cream and sugar supplied<BR />> WiFi, desk and printer<BR />> Amble closet and drawer storage<BR />> Private outdoor space with city views<BR />> Close to Muni (Light Rail: L, M, T, and Bus: 35, 24)<BR />> Taxi, Uber, Lift all easily accessible<BR /><BR />From the street, enter through a gate, walkway and 2 steps down to a door. A lock-box with a code that will be provided prior to check-in.<BR /><BR />The separate e",
+          "id": "b39cada5-3ac8-42c4-972a-3d4b412a0c5a",
+          "latitude": 37.7587,
+          "longitude": -122.438,
+          "max_guest": 4,
+          "name": "Spacious 2 BD, Private Entrance, City Views",
+          "number_bathrooms": 1,
+          "number_rooms": 2,
+          "price_by_night": 130,
+          "updated_at": "2017-03-25T02:17:06.000000",
+          "user_id": "8394fd35-8a8a-479f-a398-48f53b4a6554"
+        },
+        {
+          "__class__": "Place",
+          "city_id": "05b0b99c-f10e-4e3a-88d1-b3187d6998ee",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "description": "Queen Bed Room in the San Francisco Bunkhouse.  Private Bathroom.  Shared Kitchen, Laundry and lounge with building.  Friendly 24 hour front desk.<BR /><BR />We are like a European Hostel.  Not all rooms are shared but you Check in at the front desk, which is open 24 hours.  Check in time is 3pm and check out is (URL HIDDEN) Number: (PHONE NUMBER HIDDEN)<BR /><BR />We are like a European Hostel.  Not all rooms are shared but you Check in at the front desk, which is open 24 hours.  Check in time is 3pm and check out is (URL HIDDEN) Number: (PHONE NUMBER HIDDEN)<BR /><BR />Check-out time is at 11:00AM otherwise you will be subject to an additional fee of $50.00, if it is not approved by the front desk. If check-out is past 12:00PM, you will be charged the half day\u0092s rate and any check-out past 1:00PM will be subject to paying a full day\u0092s rate.",
+          "id": "dce54621-9083-4cd9-9335-a9e8861289d8",
+          "latitude": 37.7859,
+          "longitude": -122.41,
+          "max_guest": 2,
+          "name": "BUNKHOUSE QUEEN  C09",
+          "number_bathrooms": 1,
+          "number_rooms": 0,
+          "price_by_night": 75,
+          "updated_at": "2017-03-25T02:17:06.000000",
+          "user_id": "00e93fc3-53ff-4da4-8e72-faa5216f81bb"
+        }
+      ]
+  404:
+    description: "Not found"

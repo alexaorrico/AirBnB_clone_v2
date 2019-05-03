@@ -1,0 +1,45 @@
+Creates a new user.
+---
+tags:
+  -  "users"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+  - in: query
+    name: email
+    description: "The email of the new user."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: password
+    description: "The password of the new user."
+  - in: query
+    name: first_name
+    description: "The first name of the new user."
+    required: false
+    schema:
+      type: string
+  - in: query
+    name: last_name
+    description: "The last name of the new user."
+    required: false
+    schema:
+      type: string
+responses:
+  201:
+    description: "The new user."
+    example:
+      {
+        "__class__": "User",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "email": "noemail26@gmail.com",
+        "first_name": "James",
+        "id": "dfc6b9a5-6673-4f1b-83cd-0dfa800c0d08",
+        "last_name": "Diaz",
+        "updated_at": "2017-03-25T02:17:06.000000"
+      }
+  400:
+    description: "'Not a JSON' or 'Missing email' or 'Missing password'"

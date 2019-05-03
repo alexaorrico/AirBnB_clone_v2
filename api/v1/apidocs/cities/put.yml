@@ -1,0 +1,34 @@
+Updates a given city with given attributes.
+---
+tags:
+  -  "cities"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: city_id
+    description: "The ID of the city to update."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: name
+    description: "The new name of the city."
+    schema:
+      type: string
+responses:
+  200:
+    description: "The updated state."
+    example:
+      {
+        "__class__": "City",
+        "created_at": "2017-03-25T02:17:06",
+        "id": "1da255c0-f023-4779-8134-2b1b40f87683",
+        "name": "The Big Easy",
+        "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
+        "updated_at": "2017-03-25T02:17:06"
+      }
+  400:
+    description: "Not a JSON"
+  404:
+    description: "Not found"

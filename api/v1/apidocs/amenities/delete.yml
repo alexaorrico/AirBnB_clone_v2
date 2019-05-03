@@ -1,0 +1,20 @@
+Deletes an amenity.
+---
+tags:
+  -  "amenities"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: amenity_id
+    description: "The ID of the amenity to delete."
+    required: true
+    schema:
+      type: "string"
+responses:
+  200:
+    description: "An empty object representing the deleted amenity."
+    schema:
+      type: "object"
+  404:
+    description: "Not found"

@@ -1,0 +1,20 @@
+Deletes a user.
+---
+tags:
+  -  "users"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: user_id
+    description: "The ID of the user to delete."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: "An empty object representing the deleted user."
+    schema:
+      type: "object"
+  404:
+    description: "Not found"

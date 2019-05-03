@@ -1,0 +1,33 @@
+Updates a given state with given attributes.
+---
+tags:
+  -  "states"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: state_id
+    description: "The ID of the state to update."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: name
+    description: "The new name of the state."
+    schema:
+      type: string
+responses:
+  200:
+    description: "The updated state."
+    example:
+      {
+        "__class__": "State",
+        "id": "058d0a57-2790-4daa-99b9-77445d67c58d",
+        "created_at": "2019-05-01T21:51:28.000000",
+        "updated_at": "2019-05-01T21:51:28.000000",
+        "name": "The Golden State",
+      }
+  400:
+    description: "Not a JSON"
+  404:
+    description: "Not found"

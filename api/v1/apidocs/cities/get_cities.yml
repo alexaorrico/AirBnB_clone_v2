@@ -1,0 +1,43 @@
+Retrieves all cities for a given state.
+---
+tags:
+  -  "cities"
+parameters:
+  - in: path
+    name: state_id
+    description: "The ID of the state to retrieve cities for."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: A list of all cities for a given state.
+    examples:
+      [
+        {
+          "__class__": "City",
+          "created_at": "2017-03-25T02:17:06",
+          "id": "1da255c0-f023-4779-8134-2b1b40f87683",
+          "name": "New Orleans",
+          "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
+          "updated_at": "2017-03-25T02:17:06"
+        },
+        {
+          "__class__": "City",
+          "created_at": "2017-03-25T02:17:06",
+          "id": "45903748-fa39-4cd0-8a0b-c62bfe471702",
+          "name": "Lafayette",
+          "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
+          "updated_at": "2017-03-25T02:17:06"
+        },
+        {
+          "__class__": "City",
+          "created_at": "2017-03-25T02:17:06",
+          "id": "e4e40a6e-59ff-4b4f-ab72-d6d100201588",
+          "name": "Baton rouge",
+          "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
+          "updated_at": "2017-03-25T02:17:06"
+        }
+      ]
+  404:
+    description: "Not found"

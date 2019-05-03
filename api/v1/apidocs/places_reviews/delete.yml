@@ -1,0 +1,20 @@
+Deletes a review.
+---
+tags:
+  -  "reviews"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: review_id
+    description: "The ID of the review to delete."
+    required: true
+    schema:
+      type: "string"
+responses:
+  200:
+    description: "An empty object representing the deleted review."
+    schema:
+      type: "object"
+  404:
+    description: "Not found"

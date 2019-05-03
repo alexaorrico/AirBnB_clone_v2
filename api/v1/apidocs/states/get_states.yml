@@ -1,0 +1,29 @@
+Retrieves all states.
+---
+tags:
+  -  "states"
+responses:
+  200:
+    description: A list of all states.
+    examples:
+      [
+        {
+          "__class__":"State","created_at":"2019-05-01T21:51:28.000000",
+          "id":"058d0a57-2790-4daa-99b9-77445d67c58d",
+          "name":"California","updated_at":"2019-05-01T21:51:28.000000"
+        },
+        {
+          "__class__":"State",
+          "created_at":"2019-05-01T21:32:39.000000",
+          "id":"067d57b4-7060-4d8d-aaa8-dfa3f72c8613",
+          "name":"Washington",
+          "updated_at":"2019-05-01T21:32:39.000000"
+        },
+        {
+          "__class__":"State",
+          "created_at":"2019-05-01T21:41:56.000000",
+          "id":"0953be68-6db8-4716-9251-5eb930f12898",
+          "name":"Arkansas",
+          "updated_at":"2019-05-01T21:41:56.000000"
+        }
+      ]

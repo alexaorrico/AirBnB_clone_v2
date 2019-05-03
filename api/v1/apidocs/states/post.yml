@@ -1,0 +1,28 @@
+Creates a new state.
+---
+tags:
+  -  "states"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+  - in: query
+    name: name
+    description: "The name of the new state."
+    required: true
+    schema:
+      type: string
+responses:
+  201:
+    description: "The new state."
+    example:
+      {
+        "__class__": "State",
+        "id": "058d0a57-2790-4daa-99b9-77445d67c58d",
+        "created_at": "2019-05-01T21:51:28.000000",
+        "updated_at": "2019-05-01T21:51:28.000000",
+        "name": "California",
+      }
+  400:
+    description: "'Not a JSON' or 'Missing name'"

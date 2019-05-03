@@ -1,0 +1,28 @@
+Retrieve a user with a given ID.
+---
+tags:
+  -  "users"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: user_id
+    description: "The ID of the user to retrieve."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: The retrieved user.
+    example:
+      {
+        "__class__": "User",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "email": "noemail15@gmail.com",
+        "first_name": "Fredrick",
+        "id": "85651506-c13c-4c2f-9c79-8fbebc048e39",
+        "last_name": "Morasca",
+        "updated_at": "2017-03-25T02:17:06.000000"
+      }
+  404:
+    description: "Not found"

@@ -1,0 +1,94 @@
+Creates a new place.
+---
+tags:
+  -  "places"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: city_id
+    description: "The ID of the related city."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: user_id
+    description: "The ID of the related user."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: name
+    description: "The name of the new place."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: description
+    description: "The description of the new place."
+    required: false
+    schema:
+      type: string
+  - in: query
+    name: number_rooms
+    description: "The number of rooms in the new place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: number_bathrooms
+    description: "The number of bathrooms in the new place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: max_guest
+    description: "The max guests count of the new place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: price_by_night
+    description: "The price by night of the new place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: latitude
+    description: "The latitude of the new place."
+    required: false
+    schema:
+      type: number
+      format: float
+  - in: query
+    name: longitude
+    description: "The longitude of the new place."
+    required: false
+    schema:
+      type: number
+      format: float
+responses:
+  201:
+    description: "The new place."
+    example:
+      {
+        "__class__": "Place",
+        "city_id": "6a1ea750-b16f-4814-ad7e-9f25e3843f53",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "description": "This country cottage style studio apartment is newly renovated, with a kitchenette, rustic deck, and hardwood floors. Close to great restaurants, wineries, coffee, and shopping.<BR /><BR />This studio apartment features hardwood floors, granite countertop, gas stovetop and oven, microwave, and fridge.  You'll get a great night of rest on the comfy queen size bed.  <BR /><BR />Our lovely neighborhood is just off the Sonoma Highway, and conveniently located near wineries, restaurants, coffee shops, and more. Great wineries in the area like Ravenswood, Buena Vista, BR Cohn, and Gundlach Bundschu are easy to access with a short drive. There are a plenty of great restaurants within walking distance, such as the Hot Box Grill and Sante at the Mission Inn, and Barking Dog Coffee for a quick coffee run. <BR /><BR />Other Things to Note: <BR />- This studio is located in the back of a main house (with separate walkway and yard space).  The main house is often occupied and rented out separately.",
+        "id": "bcda6018-7286-4d8c-abfa-dda1026adf88",
+        "latitude": 38.3175,
+        "longitude": -122.482, "max_guest": 2,
+        "name": "Sonoma Wine Country Cottage Studio",
+        "number_bathrooms": 1,
+        "number_rooms": 0,
+        "price_by_night": 139,
+        "updated_at": "2017-03-25T02:17:06.000000",
+        "user_id": "b6160096-c503-4909-a674-7bfbddc8cc45"
+      }
+  400:
+    description: "'Not a JSON' or 'Missing user_id' or 'Missing name'"
+  404:
+    description: "Not found"

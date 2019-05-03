@@ -1,0 +1,31 @@
+Retrieves all amenities.
+---
+tags:
+  -  "amenities"
+responses:
+  200:
+    description: A list of all amenities.
+    examples:
+      [
+        {
+          "__class__": "Amenity",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "id": "017ec502-e84a-4a0f-92d6-d97e27bb6bdf",
+          "name": "Cable TV",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        },
+        {
+          "__class__": "Amenity",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "id": "0d375b05-5ef9-4d43-aaca-436762bb25bf",
+          "name": "Lockbox",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        },
+        {
+          "__class__": "Amenity",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "id": "12e9ccb4-03e4-4f82-ac3d-4fc7e3ebfbfe",
+          "name": "Internet",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        }
+      ]

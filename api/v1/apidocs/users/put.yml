@@ -1,0 +1,48 @@
+Updates a given user with given attributes.
+---
+tags:
+  -  "users"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: user_id
+    description: "The ID of the user to update."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: password
+    description: "The new password of the user."
+    required: false
+    schema:
+      type: string
+  - in: query
+    name: first_name
+    description: "The new first name of the user."
+    required: false
+    schema:
+      type: string
+  - in: query
+    name: last_name
+    description: "The new last name of the user."
+    required: false
+    schema:
+      type: string
+responses:
+  200:
+    description: "The updated user."
+    example:
+      {
+        "__class__": "User",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "email": "noemail26@gmail.com",
+        "first_name": "Big Boy",
+        "id": "dfc6b9a5-6673-4f1b-83cd-0dfa800c0d08",
+        "last_name": "James",
+        "updated_at": "2017-03-26T02:08:07.000000"
+      }
+  400:
+    description: "Not a JSON"
+  404:
+    description: "Not found"

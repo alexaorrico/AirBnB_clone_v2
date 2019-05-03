@@ -1,0 +1,87 @@
+Updates a given place with given attributes.
+---
+tags:
+  -  "places"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: place_id
+    description: "The ID of the place to update."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: name
+    description: "The new name of the place."
+    required: false
+    schema:
+      type: string
+  - in: query
+    name: description
+    description: "The new description of the place."
+    required: false
+    schema:
+      type: string
+  - in: query
+    name: number_rooms
+    description: "The new number of rooms in the place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: number_bathrooms
+    description: "The new number of bathrooms in the place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: max_guest
+    description: "The new max guests count of the place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: price_by_night
+    description: "The new price by night of the place."
+    required: false
+    schema:
+      type: integer
+  - in: query
+    name: latitude
+    description: "The new latitude of the place."
+    required: false
+    schema:
+      type: number
+      format: float
+  - in: query
+    name: longitude
+    description: "The new longitude of the place."
+    required: false
+    schema:
+      type: number
+      format: float
+responses:
+  200:
+    description: "The updated place."
+    example:
+      {
+        "__class__": "Place",
+        "city_id": "6a1ea750-b16f-4814-ad7e-9f25e3843f53",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "description": "My 2 bedroom apartment is located right next to the Sonoma square! Walk to the restaurants, wineries, shopping, spas, and hiking trails. <BR /><BR />I have a nice patio/garden where you can relax, read a book or have a glass of wine. <BR /><BR />The guest room is large, lots of light and plenty of closet space.Full size bed. <BR /><BR />I have coffee, tea, and staple foods for your use. <BR /><BR />Any questions- feel free to ask!<BR /><BR />Nice patio and garden- lots of light!<BR /><BR />Very safe neighborhood and also have lock on bedroom door.<BR /><BR />I am always available to help provide suggestions to great restaurants and wineries.<BR /><BR />Wineries within walking distance- don't worry about driving!<BR /><BR />Visitors guide: (URL HIDDEN)<BR /><BR /><BR />Wineries within a 15 minute walk include:<BR />Pangloss Cellars<BR />Corner 103<BR />Bump Wine<BR />Roche <BR />Charles Creek<BR />Rancho Maria<BR />Evolve<BR />Hawkes<BR />Walt<BR />Auther<BR />Highway 12 <BR />Bennett C",
+        "id": "832b0d5e-b00b-40fb-b640-cddd0aa0ce82",
+        "latitude": 38.2896,
+        "longitude": -122.461,
+        "max_guest": 2,
+        "name": "Walk to historic town square and wineries!",
+        "number_bathrooms": 1,
+        "number_rooms": 1,
+        "price_by_night": 94,
+        "updated_at": "2017-03-25T02:17:06.000000",
+        "user_id": "d622edfa-fc35-4732-b5ec-a15d794267ec"
+      }
+  400:
+    description: "Not a JSON"
+  404:
+    description: "Not found"

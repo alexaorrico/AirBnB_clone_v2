@@ -1,0 +1,46 @@
+Retrieves all reviews for a given place.
+---
+tags:
+  -  "reviews"
+parameters:
+  - in: path
+    name: place_id
+    description: "The ID of the place to retrieve reviews for."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: A list of all reviews for a given place.
+    examples:
+      [
+        {
+          "__class__": "Review",
+          "created_at": "2017-03-25T02:17:07.000000",
+          "id": "5944a617-068b-418f-b5b6-dc32d036138b",
+          "place_id": "1ff1963c-7afa-470c-bc05-562b01549b09",
+          "text": "We had a great stay at Hanan's place. The location was ideal, and the back patio was a perfect place to unwind after a day of wine tasting. We were traveling for a girls trip, and had 4 of us staying at the house. We found it very comfortable, and were very happy to have laundry in unit! ",
+          "updated_at": "2017-03-25T02:17:07.000000",
+          "user_id": "70b18dcc-08ef-4040-91cf-4075973d320a"
+        },
+        {
+          "__class__": "Review",
+          "created_at": "2017-03-25T02:17:07.000000",
+          "id": "72f668bd-48ab-4a54-abd7-87b2d5cece45",
+          "place_id": "1ff1963c-7afa-470c-bc05-562b01549b09",
+          "text": "We loved our stay at Hanan's! We were able to rest and recharge after a long day of traveling. The beds are so comfy and the backyard is beautiful! The space was clean and the decor made it feel so homey. We loved the bathroom! Hanan was a wonderful host and made sure we had everything we needed. We could not have asked for a better experience for our first Airbnb stay!",
+          "updated_at": "2017-03-25T02:17:07.000000",
+          "user_id": "7231eaa1-400f-4cb5-a867-f5eba8adbb81"
+        },
+        {
+          "__class__": "Review",
+          "created_at": "2017-03-25T02:17:07.000000",
+          "id": "995bfb29-056d-4f8b-983d-7efbcf10a853",
+          "place_id": "1ff1963c-7afa-470c-bc05-562b01549b09",
+          "text": "Favorite BNB so far :) very comfy, super cute, good location, great host, can keep going on.... would definately recommend for a girls' trip to Napa! Can accommodate 4--we enjoyed for just 2 and had plenty of space. Hope to visit again!",
+          "updated_at": "2017-03-25T02:17:07.000000",
+          "user_id": "9eec6c06-5918-4867-833a-face490d4715"
+        }
+      ]
+  404:
+    description: "Not found"

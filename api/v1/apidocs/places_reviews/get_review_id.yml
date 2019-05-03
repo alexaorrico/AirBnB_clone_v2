@@ -1,0 +1,28 @@
+Retrieve a review with a given ID.
+---
+tags:
+  -  "reviews"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: review_id
+    description: "The ID of the review to retrieve."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: The retrieved review.
+    example:
+      {
+        "__class__": "Review",
+        "created_at": "2017-03-25T02:17:07.000000",
+        "id": "995bfb29-056d-4f8b-983d-7efbcf10a853",
+        "place_id": "1ff1963c-7afa-470c-bc05-562b01549b09",
+        "text": "Favorite BNB so far :) very comfy, super cute, good location, great host, can keep going on.... would definately recommend for a girls' trip to Napa! Can accommodate 4--we enjoyed for just 2 and had plenty of space. Hope to visit again!",
+        "updated_at": "2017-03-25T02:17:07.000000",
+        "user_id": "9eec6c06-5918-4867-833a-face490d4715"
+      }
+  404:
+    description: "Not found"

@@ -1,0 +1,36 @@
+Retrieves all users.
+---
+tags:
+  -  "users"
+responses:
+  200:
+    description: A list of all users.
+    examples:
+      [
+        {
+          "__class__": "User",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "email": "noemail6@gmail.com",
+          "first_name": "Todd",
+          "id": "00a11245-12fa-436e-9ccc-967417f8c30a",
+          "last_name": "Seanez",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        },
+        {
+          "__class__": "User",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "email": "noemail28@gmail.com",
+          "first_name": "Richard",
+          "id": "00e93fc3-53ff-4da4-8e72-faa5216f81bb",
+          "last_name": "Steere","updated_at":"2017-03-25T02:17:06.000000"
+        },
+        {
+          "__class__": "User",
+          "created_at": "2017-03-25T02:17:06.000000",
+          "email": "noemail23@gmail.com",
+          "first_name": "Cecilia",
+          "id": "150e591e-486b-48ee-be42-4aecba665020",
+          "last_name": "Boes",
+          "updated_at": "2017-03-25T02:17:06.000000"
+        },
+      ]

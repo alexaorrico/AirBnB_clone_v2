@@ -1,0 +1,35 @@
+Creates a new city.
+---
+tags:
+  -  "cities"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: state_id
+    description: "The ID of the related state."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: name
+    description: "The name of the new city."
+    required: true
+    schema:
+      type: string
+responses:
+  201:
+    description: "The new city."
+    example:
+      {
+        "__class__": "City",
+        "created_at": "2017-04-16T03:14:05.655490",
+        "id": "b75ae104-a8a3-475e-bf74-ab0a066ca2af",
+        "name": "Alexandria",
+        "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
+        "updated_at": "2017-04-16T03:14:05.655748"
+      }
+  400:
+    description: "'Not a JSON' or 'Missing name'"

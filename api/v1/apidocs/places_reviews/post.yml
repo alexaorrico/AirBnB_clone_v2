@@ -1,0 +1,44 @@
+Creates a new review.
+---
+tags:
+  -  "reviews"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: place_id
+    description: "The ID of the related place."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: user_id
+    description: "The ID of the related user."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: text
+    description: "The text of the new place."
+    required: true
+    schema:
+      type: string
+responses:
+  201:
+    description: "The new review."
+    example:
+      {
+        "__class__": "Review",
+        "created_at": "2017-03-25T02:17:07.000000",
+        "id": "5b123026-e90e-4973-9218-5f16ad1a2130",
+        "place_id": "a16c7358-bf66-4802-8933-1616b5a322db",
+        "text": "Perfect location and beautiful studio!!",
+        "updated_at": "2017-03-25T02:17:07.000000",
+        "user_id": "df668e22-e344-4c89-a050-e5ad211cbaa6"
+      }
+  400:
+    description: "'Not a JSON' or 'Missing user_id' or 'Missing text'"
+  404:
+    description: "Not found"

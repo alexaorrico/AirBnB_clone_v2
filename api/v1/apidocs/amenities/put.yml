@@ -1,0 +1,33 @@
+Updates a given amenity with given attributes.
+---
+tags:
+  -  "amenities"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: amenity_id
+    description: "The ID of the amenity to update."
+    required: true
+    schema:
+      type: string
+  - in: query
+    name: name
+    description: "The new name of the amenity."
+    schema:
+      type: string
+responses:
+  200:
+    description: "The updated state."
+    example:
+      {
+        "__class__": "Amenity",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "9c54e3ed-48b3-4438-bb2c-304e14a9bde4",
+        "name": "The most important meal of the day.",
+        "updated_at": "2017-03-25T02:17:06.000000"
+      }
+  400:
+    description: "Not a JSON"
+  404:
+    description: "Not found"

@@ -1,0 +1,35 @@
+Retrieve a place with a given ID.
+---
+tags:
+  -  "places"
+produces:
+  - "application/json"
+parameters:
+  - in: path
+    name: place_id
+    description: "The ID of the place to retrieve."
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: The retrieved city.
+    example:
+      {
+        "__class__": "Place",
+        "city_id": "d96b80e3-2c05-4fb6-922e-36643005a530",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "description": "Great Location....Newly remodeled Junior 1 bedroom studio in a historic building with a private entrance and small front yard in a quiet neighborhood walking distance to downtown Napa.<BR /><BR />Experience Napa at our new quaint junior 1 bedroom with private entrance \u0096 featuring a large 1 bedroom with mounted flat screen TV, full kitchen with stainless steel appliances, newly remodeled bathroom and access to a shared washer and dryer should you be staying longer than 3 days. Sleeps 2 comfortably. The kitchen is stocked with coffee and tea for you to enjoy during your stay. There is street parking right in front of the unit for multiple cars.<BR /><BR />Plenty of street parking<BR />Brand new queen size bed <BR />Central air conditioning/heating controlled <BR />Large walk in closet <BR />Shared Washer/dryer for long term renters (4+ night min)<BR />Egyptian cotton sheets <BR />Plush blankets and comforters<BR />Blackout shades in bedroom<BR />1 bathroom (1 shower, 1 toilet, 1 sink, 1 ",
+        "id": "a16c7358-bf66-4802-8933-1616b5a322db",
+        "latitude": 38.2993,
+        "longitude": -122.285,
+        "max_guest": 2,
+        "name": "New - Great Location! Affordable!",
+        "number_bathrooms": 1,
+        "number_rooms": 1,
+        "price_by_night": 165,
+        "updated_at": "2017-03-25T02:17:06.000000",
+        "user_id": "887dcd8d-d5ee-48de-9626-73ff4ea732fa"
+      }
+  404:
+    description: "Not found"
