@@ -60,8 +60,8 @@ def manage_place_amenities(place_id, amenity_id):
             abort(404)
         place.amenities.remove(amenity)
     else:
-        if amenity.id not in place.amenities_ids:
+        if amenity.id not in place.amenity_ids:
             abort(404)
-        place.amenities_ids.remove(amenity.id)
+        place.amenity_ids.remove(amenity.id)
     place.save()
     return jsonify({}), 200
