@@ -2,7 +2,7 @@
 """HolbertonBnB Amenity view."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from flasggr import swag_from
+from flasgger import swag_from
 from models import storage
 from models.amenity import Amenity
 

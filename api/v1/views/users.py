@@ -34,9 +34,9 @@ def users():
 
 
 @app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"])
-@app_views.route("../apidocs/users/get_user_id.yml", methods=["GET"])
-@app_views.route("../apidocs/users/delete.yml", methods=["DELETE"])
-@app_views.route("../apidocs/users/put.yml", methods=["PUT"])
+@swag_from("../apidocs/users/get_user_id.yml", methods=["GET"])
+@swag_from("../apidocs/users/delete.yml", methods=["DELETE"])
+@swag_from("../apidocs/users/put.yml", methods=["PUT"])
 def user_id(user_id):
     """Defines GET, PUT and DELETE methods for a specific ID on /users.
 

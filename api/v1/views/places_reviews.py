@@ -8,8 +8,8 @@ from models.review import Review
 
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET", "POST"])
-@app_views.route("../apidocs/places_reviews/get_reviews.yml", methods=["GET"])
-@app_views.route("../apidocs/places_reviews/post.yml", methods=["POST"])
+@swag_from("../apidocs/places_reviews/get_reviews.yml", methods=["GET"])
+@swag_from("../apidocs/places_reviews/post.yml", methods=["POST"])
 def reviews(place_id):
     """Defines the GET and POST method for reviews on /places route.
 
