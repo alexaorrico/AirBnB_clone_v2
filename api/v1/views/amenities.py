@@ -2,11 +2,14 @@
 """HolbertonBnB Amenity view."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
+from flasggr import swag_from
 from models import storage
 from models.amenity import Amenity
 
 
 @app_views.route("/amenities", methods=["GET", "POST"])
+@swag_from("../apidocs/amenities/get_amenities.yml", methods=["GET"])
+@swag_from("../apidocs/amenities/post.yml", methods=["POST"])
 def amenities():
     """Defines GET and POST methods for the /amenities route.
 
@@ -28,7 +31,10 @@ def amenities():
     return jsonify(amenity.to_dict()), 201
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["GET", "PUT", "DELETE"])
+@app_views.route("/amenities/<amenity_id>", methods=["GET", "DELETE", "PUT"])
+@swag_from("../apidocs/amenities/get_amenity_id.yml", methods=["GET"])
+@swag_from("../apidocs/amenities/delete.yml", methods=["DELETE"])
+@swag_from("../apidocs/amenities/put.yml", methods=["PUT"])
 def amenity_id(amenity_id):
     """Defines GET, PUT and DELETE methods for a specific ID on /amenities.
 

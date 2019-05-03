@@ -2,11 +2,14 @@
 """HolbertonBnB User view."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
+from flasgger import swag_from
 from models import storage
 from models.user import User
 
 
 @app_views.route("/users", methods=["GET", "POST"])
+@swag_from("../apidocs/users/get_users.yml", methods=["GET"])
+@swag_from("../apidocs/users/post.yml", methods=["POST"])
 def users():
     """Defines GET and POST methods for the /users route.
 
@@ -30,7 +33,10 @@ def users():
     return jsonify(user.to_dict()), 201
 
 
-@app_views.route("/users/<user_id>", methods=["GET", "PUT", "DELETE"])
+@app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"])
+@app_views.route("../apidocs/users/get_user_id.yml", methods=["GET"])
+@app_views.route("../apidocs/users/delete.yml", methods=["DELETE"])
+@app_views.route("../apidocs/users/put.yml", methods=["PUT"])
 def user_id(user_id):
     """Defines GET, PUT and DELETE methods for a specific ID on /users.
 

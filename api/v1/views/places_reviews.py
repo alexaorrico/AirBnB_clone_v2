@@ -2,11 +2,14 @@
 """HolbertonBnB Review view."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
+from flasgger import swag_from
 from models import storage
 from models.review import Review
 
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET", "POST"])
+@app_views.route("../apidocs/places_reviews/get_reviews.yml", methods=["GET"])
+@app_views.route("../apidocs/places_reviews/post.yml", methods=["POST"])
 def reviews(place_id):
     """Defines the GET and POST method for reviews on /places route.
 
@@ -38,7 +41,10 @@ def reviews(place_id):
     return jsonify(review.to_dict()), 201
 
 
-@app_views.route("/reviews/<review_id>", methods=["GET", "PUT", "DELETE"])
+@app_views.route("/reviews/<review_id>", methods=["GET", "DELETE", "PUT"])
+@swag_from("../apidocs/places_reviews/get_review_id.yml", methods=["GET"])
+@swag_from("../apidocs/places_reviews/delete.yml", methods=["DELETE"])
+@swag_from("../apidocs/places_reviews/put.yml", methods=["PUT"])
 def review_id(review_id):
     """Defines the GET, PUT and DELETE methods for a specific ID on reviews.
 

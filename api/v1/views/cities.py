@@ -2,11 +2,14 @@
 """HolbertonBnB City view."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
+from flasgger import swag_from
 from models import storage
 from models.city import City
 
 
 @app_views.route("/states/<state_id>/cities", methods=["GET", "POST"])
+@swag_from("../apidocs/cities/get_cities.yml", methods=["GET"])
+@swag_from("../apidocs/cities/post.yml", methods=["POST"])
 def cities_by_state(state_id):
     """Defines GET and POST methods for cities on the states route.
 
@@ -34,6 +37,9 @@ def cities_by_state(state_id):
 
 
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
+@swag_from("../apidocs/cities/get_city_id.yml", methods=["GET"])
+@swag_from("../apidocs/cities/delete.yml", methods=["DELETE"])
+@swag_from("../apidocs/cities/put.yml", methods=["PUT"])
 def city_id(city_id):
     """Defines GET, DELETE and PUT methods for a specific ID on cities.
 

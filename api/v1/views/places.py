@@ -2,11 +2,14 @@
 """HolbertonBnB Place view."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
+from flasgger import swag_from
 from models import storage
 from models.place import Place
 
 
 @app_views.route("/cities/<city_id>/places", methods=["GET", "POST"])
+@swag_from("../apidocs/places/get_places.yml", methods=["GET"])
+@swag_from("../apidocs/places/post.yml", methods=["POST"])
 def places(city_id):
     """Defines the GET and POST method for places on /cities route.
 
@@ -39,7 +42,10 @@ def places(city_id):
     return jsonify(place.to_dict()), 201
 
 
-@app_views.route("/places/<place_id>", methods=["GET", "PUT", "DELETE"])
+@app_views.route("/places/<place_id>", methods=["GET", "DELETE", "PUT"])
+@swag_from("../apidocs/places/get_place_id.yml", methods=["GET"])
+@swag_from("../apidocs/places/delete.yml", methods=["DELETE"])
+@swag_from("../apidocs/places/put.yml", methods=["PUT"])
 def place_id(place_id):
     """Defines the GET, PUT and DELETE methods for a specific ID on places.
 
