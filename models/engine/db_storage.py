@@ -79,4 +79,4 @@ class DBStorage:
         """retrieve a single object from storage"""
         if not isinstance(cls, type):
             cls = classes[cls]
-        return self.query(cls).filter(cls.id == str(id)).first()
+        return self.__session.query(cls).filter(cls.id == str(id)).first()
