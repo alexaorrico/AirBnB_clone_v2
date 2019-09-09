@@ -34,6 +34,7 @@ def delete_state(state_id):
     if not state:
         abort(404)
     storage.delete(state)
+    storage.save()
     return jsonify({})
 
 
@@ -41,13 +42,28 @@ def delete_state(state_id):
                  strict_slashes=False)
 def post_state():
     """ Method creates new state object """
-    return jsonify({"hi":"hi"})
-    try:
-        body = request.get_json()
-    except Exception as e:
+    body = request.get_json()
+    if not body:
         abort(400, "Not a JSON")
     if body.get("name") == None:
         abort(400, "Missing name")
-    state = State(body)
-    storage.new(state)
-    return state, 201
+    state = State(**body)
+    state.save()
+    return jsonify(state.to_dict()), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+def put_state(state_id):
+    """ Method updates a state object based off its id """
+    state = storage.get("State", state_id)
+    body = request.get_json()
+    if not state:
+        abort(404)
+    if not body:
+        abort(400, "Not a JSON")
+    for k, v in body.items():
+        if k not in ["id", "created_at", "updated_at"]:
+            setattr(state, k, v)
+    state.save()
+    return jsonify(state.to_dict())
