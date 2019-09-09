@@ -1,5 +1,5 @@
 #!/usr/bin/python
-""" Module efor state object view """
+""" Module for state object view """
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
