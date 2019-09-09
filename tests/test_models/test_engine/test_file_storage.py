@@ -113,3 +113,17 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test retrieval of single objects"""
+        objects = [cls() for cls in classes.values()]
+        for obj in objects:
+            obj.save()
+        for obj in objects:
+            found = models.storage.get(type(obj), obj.id)
+            self.assertIs(found, obj)
+        for obj in objects:
+            obj.delete()
+            found = models.storage.get(type(obj), obj.id)
+            self.assertIsNone(found)
