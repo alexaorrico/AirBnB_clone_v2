@@ -154,6 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+Sam Hermes - [Github](https://github.com/hermesboots) / [Twitter](https://twitter.com/hermesboots)
+Nate Petersen - [Github](https://github.com/blueexcess) / [Twitter](https://twitter.com/natefp)
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
