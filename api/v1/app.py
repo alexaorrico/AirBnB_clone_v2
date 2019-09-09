@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Module for first API """
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 def close_down(self):
     """ Method closes current session """
     storage.close()
+
+
+@app.errorhandler(404)
+def status_404(e):
+    """ Method handles 404 response """
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
