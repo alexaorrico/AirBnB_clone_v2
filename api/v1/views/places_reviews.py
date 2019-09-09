@@ -1,5 +1,5 @@
 #!/usr/bin/python
-""" Module for state object view """
+""" Module for review object view """
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
@@ -54,7 +54,7 @@ def post_review():
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
-def review_state(state_id):
+def put_review(review_id):
     """ Method updates a review object based off its id """
     review = storage.get("Review", review_id)
     body = request.get_json()

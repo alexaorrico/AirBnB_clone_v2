@@ -1,5 +1,5 @@
 #!/usr/bin/python
-""" Module for state object view """
+""" Module for place object view """
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
@@ -18,7 +18,7 @@ def get_places():
 
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
-def get_place_id(state_id):
+def get_place_id(place_id):
     """ Method retrieves place object with certain id """
     place = storage.get("Place", place_id)
     if not place:
@@ -56,7 +56,7 @@ def post_place():
                  strict_slashes=False)
 def put_place(place_id):
     """ Method updates a place object based off its id """
-    place = storage.get("Place", state_id)
+    place = storage.get("Place", place_id)
     body = request.get_json()
     if not place:
         abort(404)

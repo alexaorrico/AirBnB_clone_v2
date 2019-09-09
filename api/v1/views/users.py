@@ -1,5 +1,5 @@
 #!/usr/bin/python
-""" Module for state object view """
+""" Module for User object view """
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
@@ -18,7 +18,7 @@ def get_users():
 
 @app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
-def get_user_id(state_id):
+def get_user_id(user_id):
     """ Method retrieves user object with certain id """
     user = storage.get("User", user_id)
     if not user:
