@@ -74,6 +74,8 @@ class FileStorage:
         key = "{}.{}".format(cls, id)
         if cls and id and key in self.all(cls):
             return self.all(cls)[key]
+        else:
+            return None
 
     def count(self, cls=None):
         """ Method counts the number of objects """
