@@ -154,11 +154,11 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-Second part of Airbnb: Joann Vuong
-Kelly Hodis - [Github](https://github.com/kellyhodis) / [Twitter](https://twitter.com/hodiskelly)
-Cynthia Dominguez - [Github](https://github.com/cynergist) / [Twitter](https://twitter.com/cynthiadomingz)    
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico) </br >
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang) </br >
+Second part of Airbnb: Joann Vuong </br >
+Kelly Hodis - [Github](https://github.com/kellyhodis) / [Twitter](https://twitter.com/hodiskelly) </br >
+Cynthia Dominguez - [Github](https://github.com/cynergist) / [Twitter](https://twitter.com/cynthiadomingz) </br >    
 
 ## License
 Public Domain. No copy write protection. 
