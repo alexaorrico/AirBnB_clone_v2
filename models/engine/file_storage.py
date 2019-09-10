@@ -58,6 +58,14 @@ class FileStorage:
         except:
             pass
 
+    def get(self, cls, id):
+        """returns the object based on cls and id"""
+        if cls is not None:
+            key = cls.__name__ + '.' + id
+            if key in self.__objects:
+                return self.__objects[key]
+        return None
+
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
         if obj is not None:
