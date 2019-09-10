@@ -75,8 +75,7 @@ class FileStorage:
         id_object = cls + "." + id
         if id_object in objects:
             return objects[id_object]
-        else:
-            return None
+        return None
 
     def count(self, cls=None):
         """ Return count of objects """
