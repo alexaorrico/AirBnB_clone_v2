@@ -50,3 +50,16 @@ def update_state(state_id=None):
             setattr(obj, k, v)
     obj.save()
     return jsonify(obj.to_dict()), 200
+
+@app_views.route("/states/", methods=["POST"], strict_slashes=False)
+def create_state():
+    ''' create a state if doesn't already exist '''
+    args = request.get_json()
+    if not args:
+        return jsonify({"error": "Not a JSON"}), 400
+    elif 'name' not in args:
+        return jsonify({"error": "Missing name"}), 400
+    obj = State(**args)
+    storage.new(obj)
+    storage.save()
+    return jsonify(obj.to_dict()), 201
