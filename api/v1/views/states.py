@@ -1,9 +1,12 @@
 #!/usr/bin/python3
 """Module for State related endpoints"""
 from api.v1.views import app_views
+from api.v1.views import *
 from flask import jsonify, make_response, abort, request
 from models import storage
 from models.state import State
+
+model = "State"
 
 
 @app_views.route("/states", strict_slashes=False,
@@ -12,56 +15,27 @@ from models.state import State
 def get_state(state_id):
     """GET /state api route"""
     if not state_id:
-        list_states = [v.to_dict() for v in storage.all("State").values()]
-        return jsonify(list_states)
+        list_objs = [v.to_dict() for v in storage.all(model).values()]
+        return jsonify(list_objs)
 
-    state = storage.get("State", state_id)
-    if not state:
-        return make_response(jsonify({"error": "Not found"}), 404)
-
-    return jsonify(state.to_dict())
+    return get_model("State", state_id)
 
 
 @app_views.route("/states/<state_id>", methods=["DELETE"])
 def delete_state(state_id):
     """DELETE /state api route"""
-    state = storage.get("State", state_id)
-    if not state:
-        return make_response(jsonify({"error": "Not found"}), 404)
-
-    storage.delete(state)
-    storage.save()
-    return make_response(jsonify({}), 200)
+    return delete_model(model, state_id)
 
 
 @app_views.route("/states", strict_slashes=False, methods=["POST"])
 def post_state():
     """POST /state api route"""
-    data = request.get_json(force=True, silent=True)
-    if not data:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-
-    if "name" not in data:
-        return make_response(jsonify({"error": "Missing name"}), 400)
-
-    s = State(**data)
-    s.save()
-    return make_response(jsonify(s.to_dict()), 201)
+    required_data = {"name"}
+    return post_model(model, None, None, required_data)
 
 
 @app_views.route("/states/<state_id>", methods=["PUT"])
 def put_state(state_id):
     """PUT /state api route"""
-    state = storage.get("State", state_id)
-    if not state:
-        return make_response(jsonify({"error": "Not found"}), 404)
-
-    data = request.get_json(force=True, silent=True)
-    if not data:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-
-    for key, value in data.items():
-        if key not in ["id", "created_at", "updated_at"]:
-            setattr(state, key, value)
-    state.save()
-    return make_response(jsonify(state.to_dict()), 200)
+    ignore_data = ["id", "created_at", "updated_at"]
+    return put_model(model, state_id, ignore_data)
