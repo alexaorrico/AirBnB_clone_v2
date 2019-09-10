@@ -70,6 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """ Returns objects"""
         key = "{}.{}".format(cls, id)
         if key in self.__objects.keys():
             return self.__objects[key]
@@ -77,6 +78,7 @@ class FileStorage:
             return None
 
     def count(self, cls=None):
+        """ Returns count """
         count = 0
         if cls is None:
             return len(self.__objects)

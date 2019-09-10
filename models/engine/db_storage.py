@@ -76,6 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
+        """ Retuns objects """
         objs = self.__session.query(classes[cls]).all()
         for obj in objs:
             if obj.id == id:
@@ -83,6 +84,7 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
+        """ Returns count """
         count = 0
         if cls is None:
             for obj in classes.values():
