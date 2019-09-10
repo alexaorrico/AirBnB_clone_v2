@@ -113,3 +113,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(modesl.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get method returns the correct object or None"""
+        c = City()
+        self.assertEqual(c, get("City", c.id))
+
+        """Test that get method fails if None in place of class is passed"""
+        self.assertEqual(None, get(None, c.id))
+
+        """Test that get method fails if incorrect id is passed"""
+        self.assertEqual(None, get("City", "54332"))
+
+        """Test that get method fails if "NULL" id is passed"""
+        self.assertEqual(None, get("City", "NULL"))
