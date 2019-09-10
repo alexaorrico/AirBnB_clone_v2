@@ -11,6 +11,7 @@ app.register_blueprint(app_views)
 
 @app.errorhandler(404)
 def not_found(error):
+    """error handle function"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
