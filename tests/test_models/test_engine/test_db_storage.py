@@ -97,7 +97,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(t1, t2)
 
     def test_count(self):
-        """Test that count correctly counts objects in storage"""
+        """Test that count func correctly counts objects in storage"""
         baseline = models.storage.count()
         baselines = models.storage.count("State")
         s1 = State(name="Denial")
