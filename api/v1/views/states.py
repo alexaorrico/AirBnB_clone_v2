@@ -18,7 +18,7 @@ def get_state(state_id):
         list_objs = [v.to_dict() for v in storage.all(model).values()]
         return jsonify(list_objs)
 
-    return get_model("State", state_id)
+    return get_model(model, state_id)
 
 
 @app_views.route("/states/<state_id>", methods=["DELETE"])

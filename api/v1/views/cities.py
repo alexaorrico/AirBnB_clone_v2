@@ -13,7 +13,7 @@ parent_model = "State"
 @app_views.route("/states/<state_id>/cities", methods=["GET"])
 def get_cities(state_id):
     """GET /state api route"""
-    return get_models("State", state_id, "cities")
+    return get_models(parent_model, state_id, "cities")
 
 
 @app_views.route("/cities/<city_id>", methods=["GET"])
