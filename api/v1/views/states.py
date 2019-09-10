@@ -47,6 +47,7 @@ def states_create():
         return jsonify({"error": msg}), 400
 
     var = State(**data)
+    storage.new(var)
     storage.save()
     return jsonify(var.to_dict()), 201
 
@@ -55,19 +56,17 @@ def states_create():
 def states_update(state_id):
     """update state"""
     state = storage.get("State", state_id)
-    data = request.get_json()
-    print(data['name'])
-    print(state)
+    if state is None:
+        abort(404)
+    try:
+        data = request.get_json()
+    except:
+        msg = "Not a JSON"
+        return jsonify({"error": msg}), 400
 
-    return jsonify(state.to_dict()), 201
+    for k, v in data.items():
+        if k not in ["id", "created_at", "updated_at"]:
+            setattr(state, k, v)
 
-
-""" @app_views.route('/stats')
-def stats():
-    status render template for json
-    dict_objs = {'amenities': 'Amenity', 'cities': 'City', 'places': 'Place',
-                 'reviews': 'Review', 'states': 'State', 'users': 'User'}
-    new_dict = {}
-    for k, v in dict_objs.items():
-        new_dict[k] = storage.count(v)
-    return jsonify(new_dict) """
+    storage.save()
+    return jsonify(state.to_dict()), 200
