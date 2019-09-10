@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """function to create the route status"""
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 
@@ -25,12 +25,41 @@ def states_id(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def states_delete(state_id):
     states = storage.get("State", state_id)
-    if states == None:
+    if states is None:
         abort(404)
     storage.delete(states)
     storage.save()
     storage.close()
     return jsonify({})
+
+
+@app_views.route('/states', methods=['POST'])
+def states_create():
+    """create state"""
+    try:
+        data = request.get_json()
+    except:
+        msg = "Not a JSON"
+        return jsonify({"error": msg}), 400
+
+    if "name" not in data:
+        msg = "Missing name"
+        return jsonify({"error": msg}), 400
+
+    var = State(**data)
+    storage.save()
+    return jsonify(var.to_dict()), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def states_update(state_id):
+    """update state"""
+    state = storage.get("State", state_id)
+    data = request.get_json()
+    print(data['name'])
+    print(state)
+
+    return jsonify(state.to_dict()), 201
 
 
 """ @app_views.route('/stats')
