@@ -45,8 +45,10 @@ def post_user():
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    if body.get("name") == None:
-        abort(400, "Missing name")
+    if body.get("email") is None:
+        abort(400, "Missing email")
+    if body.get("password") is None:
+        abort(400, "Missing password")
     user = User(**body)
     user.save()
     return jsonify(user.to_dict()), 201
@@ -63,7 +65,7 @@ def put_user(user_id):
     if not body:
         abort(400, "Not a JSON")
     for k, v in body.items():
-        if k not in ["id", "created_at", "updated_at"]:
+        if k not in ["id", "created_at", "updated_at", "email"]:
             setattr(user, k, v)
     user.save()
     return jsonify(user.to_dict())
