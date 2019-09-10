@@ -24,6 +24,7 @@ def get_state(state_id=None):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id=None):
+    ''' deletes an individual state '''
     obj = storage.get(State, state_id)
     if obj is None:
         ''' if no state obj with that id '''
@@ -32,4 +33,20 @@ def delete_state(state_id=None):
     obj.delete()
     storage.save()
     storage.close()
-    return jsonify({})
+    return jsonify({}), 200
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def update_state(state_id=None):
+    ''' updates an individual state '''
+    obj = storage.get(State, state_id)
+    if obj is None:
+        ''' if no state obj with that id '''
+        abort(404, 'Not found')
+    args = request.get_json()
+    if not args:
+        return jsonify({"error": "Not a JSON"}), 400
+    for k, v in args.items():
+        if k not in ["id", "updated_at", "created_at"]:
+            setattr(obj, k, v)
+    obj.save()
+    return jsonify(obj.to_dict()), 200
