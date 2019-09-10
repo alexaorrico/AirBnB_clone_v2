@@ -114,7 +114,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(modesl.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(modesl.storage_t != 'db', "not testing file storage")
     def test_get(self):
         """Test that get method returns the correct object or None"""
         c = City()

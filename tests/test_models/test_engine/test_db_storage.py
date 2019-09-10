@@ -86,3 +86,18 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(modesl.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get method returns the correct object or None"""
+        c = City()
+        self.assertEqual(c, get("City", c.id))
+
+        """Test that get method fails if None in place of class is passed"""
+        self.assertEqual(None, get(None, c.id))
+
+        """Test that get method fails if incorrect id is passed"""
+        self.assertEqual(None, get("City", "54332"))
+
+        """Test that get method fails if "NULL" id is passed"""
+        self.assertEqual(None, get("City", "NULL"))
