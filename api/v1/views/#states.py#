@@ -1,0 +1,25 @@
+#!/usr/bin/python3
+""" API REST for State """
+from models import storage
+from models.state import State
+from api.v1.views import app_views
+from flask import jsonify, abort, request
+
+
+@app_views.route('/states')
+def states_all():
+    """ Route return all states """
+    return jsonify(list(map(lambda x: x.to_dict(),
+                            list(storage.all(State).values()))))
+
+
+@app_views.route('/states/<id>')
+def states_id(id):
+    """ Route return states with referenced id """
+    my_state = storage.get('State', id)
+    try:
+        return jsonify(my_state.to_dict())
+    except:
+        abort(404)
+
+
