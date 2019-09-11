@@ -63,12 +63,10 @@ def update_states(state_id):
         if my_object is not None:
             for keys, values in data.items():
                 if keys not in ["created_at", "updated_at", "id"]:
-                    print("En setattr")
                     setattr(my_object, keys, values)
             my_object.save()
             return jsonify(my_object.to_dict()), 200
         else:
             abort(404)
     else:
-        print("No es json")
         return jsonify(error="Not a JSON"), 400
