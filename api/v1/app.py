@@ -22,7 +22,7 @@ def close_app(self):
 @app.errorhandler(404)
 def padge_not_found(e):
     '''handle unfound pages'''
-    return make_response(jsonify({"error": "Not Found"}))
+    return make_response(jsonify({"error": "Not Found"}), 404)
 
 
 if __name__ == "__main__":
