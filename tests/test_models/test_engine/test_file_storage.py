@@ -70,7 +70,8 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db',
+                     "testing file storage instead of db")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -78,7 +79,8 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db',
+                     "testing file storage instead of db")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -94,10 +96,11 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db',
+                     "testing file storage instead of db")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-        storage = FileStorage()
+        storage = models.storage
         new_dict = {}
         for key, value in classes.items():
             instance = value()
@@ -113,3 +116,45 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db',
+                     "testing file storage instead of db")
+    def test_get_none(self):
+        """Test to check if None is returned if bad parameters are passed
+        or if object is not found in storage"""
+        instance = models.storage
+        self.assertIs(instance.get("State", "some_id"), None)
+        state_cls = State()
+        instance.new(state_cls)
+        self.assertIs(instance.get(None, "some_id"), None)
+        self.assertIs(instance.get("State", None), None)
+        self.assertIs(instance.get([1, 2, 3], "some_id"), None)
+        self.assertIs(instance.get("State", [1, 2, 3]), None)
+        self.assertIs(instance.get("State", "some_id"), None)
+
+    @unittest.skipIf(models.storage_t == 'db',
+                     "testing file storage instead of db")
+    def test_get(self):
+        """Test to check if obj was correctly grabbed"""
+        instance = models.storage
+        state_cls = State()
+        instance.new(state_cls)
+        self.assertIs(instance.get(state_cls.__class__.__name__,
+                                   state_cls.id), state_cls)
+
+    @unittest.skipIf(models.storage_t == 'db',
+                     "testing file storage instead of db")
+    def test_count(self):
+        """Test to check if number of objects returned is correct"""
+        instance = models.storage
+        dict_of_objs = instance.all()
+        num_of_objs = len(dict_of_objs)
+        if num_of_objs == 0:
+            state_cls = State()
+            instance.new(state_cls)
+            self.assertNotEqual(len(instance.all()), 0)
+        else:
+            state_cls = State()
+            instance.new(state_cls)
+            plus_one = len(instance.all())
+            self.assertNotEqual(num_of_objs, plus_one)
