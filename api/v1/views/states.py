@@ -1,4 +1,4 @@
-#!/usr/bin/pyhton3
+#!/usr/bin/python3
 """ API REST for State """
 from models import storage
 from models.state import State

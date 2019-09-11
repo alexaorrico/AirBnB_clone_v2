@@ -1,4 +1,4 @@
-#!/usr/bin/pyhton3
+#!/usr/bin/python3
 """ Index of several Class for JSON API """
 from api.v1.views import app_views
 from flask import jsonify
