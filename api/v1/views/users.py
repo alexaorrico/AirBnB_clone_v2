@@ -11,18 +11,19 @@ def get_all_users():
     data = storage.all(User)
     new = [val.to_dict() for key, val in data.items()]
     return jsonify(new)
-"""
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state(state_id=None):
-    ''' returns an individual state object '''
-    obj = storage.get(State, state_id)
+
+
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+def get_user(user_id=None):
+    ''' returns an individual user object '''
+    obj = storage.get(User, user_id)
     if obj is None:
         ''' if no state obj with that id '''
         abort(404, 'Not found')
     obj = obj.to_dict()
     return jsonify(obj)
 
-
+"""
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                   strict_slashes=False)
 def delete_state(state_id=None):
