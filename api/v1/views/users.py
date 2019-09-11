@@ -23,12 +23,12 @@ def get_user(user_id=None):
     obj = obj.to_dict()
     return jsonify(obj)
 
-"""
-@app_views.route('/states/<state_id>', methods=['DELETE'],
+
+@app_views.route('/users/<user_id>', methods=['DELETE'],
                   strict_slashes=False)
-def delete_state(state_id=None):
-    ''' deletes an individual state '''
-    obj = storage.get(State, state_id)
+def delete_user(user_id=None):
+    ''' deletes an individual user '''
+    obj = storage.get(User, user_id)
     if obj is None:
         ''' if no state obj with that id '''
         abort(404, 'Not found')
@@ -36,7 +36,7 @@ def delete_state(state_id=None):
     obj.delete()
     storage.save()
     return jsonify({}), 200
-
+"""
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id=None):
     ''' updates an individual state '''
