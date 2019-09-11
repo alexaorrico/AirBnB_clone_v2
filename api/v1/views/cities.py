@@ -1,4 +1,4 @@
-#!/usr/bin/pyhton
+#!/usr/bin/pyhton3
 """ API REST for City """
 from models import storage
 from models.city import City

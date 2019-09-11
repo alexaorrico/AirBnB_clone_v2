@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """ API class """
 from models import storage
 from api.v1.views import app_views
@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """closes the storage on teardown"""
@@ -16,6 +17,7 @@ def teardown_db(exception):
 
 @app.errorhandler(404)
 def _handle_api_error(ex):
+    """  handle error 404 """
     return jsonify(error="Not found")
 
 
