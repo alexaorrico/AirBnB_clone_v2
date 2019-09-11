@@ -77,9 +77,7 @@ class TestDBStorage(unittest.TestCase):
     def test_get(self):
         """Test that get returns the object based on the class
         name and its ID, or None if not found"""
-        test_state = State(name="Idaho")
-        test_state.save()
-        self.assertIs(test_state, models.storage.get("State",
-                                                     test_state.id))
-        self.assertIs(None, models.storage.get("State",
-                                               "bad id"))
+        obj = State()
+        obj.save()
+        self.assertIs(obj, models.storage.get("State", obj.id))
+        self.assertIs(None, models.storage.get("State", "bad id"))
