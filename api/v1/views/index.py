@@ -13,10 +13,12 @@ FileToText = {
     "users": "User"
 }
 
+
 @app_views.route('/status', strict_slashes=False)
 def hbnb_Status():
     ''' hbnb Status '''
     return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats', strict_slashes=False)
 def hbnb_Stats():
