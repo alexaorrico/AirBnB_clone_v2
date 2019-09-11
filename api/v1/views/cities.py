@@ -63,15 +63,18 @@ def update_cities(city_id):
     """ Route update cities with PUT """
 
     if request.is_json:
-        data = request.get_json()
-        my_object = storage.get('City', city_id)
-        if my_object is not None:
-            for keys, values in data.items():
-                if keys not in ["created_at", "updated_at", "id"]:
-                    setattr(my_object, keys, values)
-            my_object.save()
-            return jsonify(my_object.to_dict()), 200
-        else:
-            abort(404)
+        try:
+            data = request.get_json()
+            my_object = storage.get('City', city_id)
+            if my_object is not None:
+                for keys, values in data.items():
+                    if keys not in ["created_at", "updated_at", "id"]:
+                        setattr(my_object, keys, values)
+                my_object.save()
+                return jsonify(my_object.to_dict()), 200
+            else:
+                abort(404)
+        except:
+            return jsonify(error="Not a JSON"), 400
     else:
         return jsonify(error="Not a JSON"), 400
