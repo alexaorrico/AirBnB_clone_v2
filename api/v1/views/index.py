@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# Create routes and save JSON package
+"""Create routes and save JSON package"""
+
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -11,7 +12,7 @@ def app_view_json():
 
 @app_views.route('/stats', strict_slashes = False)
 def cout_data_json():
-    """ comment """
+    """ comment function app views """
     return jsonify({"amenities": storage.count("Amenity"),
                     "states": storage.count("State"),
                     "cities": storage.count("City"),
