@@ -6,6 +6,7 @@ from flask import jsonify, make_response, abort, request
 from models import storage
 from models.state import State
 
+
 model = "State"
 
 
