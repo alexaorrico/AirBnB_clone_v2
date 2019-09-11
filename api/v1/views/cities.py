@@ -41,7 +41,7 @@ def delete_city_id(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_cities(state_id):
-    """ Route create cities """
+    """ Route create cities with POST"""
     if request.is_json:
         try:
             data = request.get_json()
@@ -60,7 +60,7 @@ def create_cities(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_cities(city_id):
-    """ Route update cities """
+    """ Route update cities with PUT """
 
     if request.is_json:
         data = request.get_json()
