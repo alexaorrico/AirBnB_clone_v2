@@ -18,7 +18,7 @@ def teardown_db(exception):
 @app.errorhandler(404)
 def _handle_api_error(ex):
     """  handle error 404 """
-    return jsonify(error="Not found")
+    return jsonify(error="Not found"), 404
 
 
 if __name__ == "__main__":
