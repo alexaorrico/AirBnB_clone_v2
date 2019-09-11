@@ -10,6 +10,7 @@ from models.city import City
                  methods=['GET'],
                  strict_slashes=False)
 def get_all_cities(state_id=None):
+    ''' retrieves a list of all city objects of a given state '''
     state = storage.get('State', state_id)
     if state is None:
         abort(404, 'Not found 1')
@@ -30,7 +31,7 @@ def get_all_cities(state_id=None):
                  methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id=None):
-    ''' returns an individual state object '''
+    ''' returns an individual city object '''
     obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
@@ -41,7 +42,7 @@ def get_city(city_id=None):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id=None):
-    ''' deletes an individual state '''
+    ''' deletes an individual city '''
     obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
@@ -73,28 +74,21 @@ def create_city(state_id=None):
     return jsonify(obj.to_dict()), 201
 
 
-
-"""
-@app_views.route('/states/', methods=['GET'], strict_slashes=False)
-def get_all_states():
-    data = storage.all(State)
-    new = [val.to_dict() for key, val in data.items()]
-    return jsonify(new)
-
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state(state_id=None):
-    ''' updates an individual state '''
-    obj = storage.get(State, state_id)
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def update_city(city_id=None):
+    ''' updates an individual city '''
+    obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
         abort(404, 'Not found')
+
     args = request.get_json()
+
     if not args:
         return jsonify({"error": "Not a JSON"}), 400
+
     for k, v in args.items():
-        if k not in ["id", "updated_at", "created_at"]:
+        if k not in ["id", "state_id", "updated_at", "created_at"]:
             setattr(obj, k, v)
     obj.save()
     return jsonify(obj.to_dict()), 200
-
-"""
