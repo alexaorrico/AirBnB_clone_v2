@@ -35,7 +35,6 @@ def delete_model(model, model_id):
 def post_model(model, parent_model, parent_model_id, required_data):
     """POST /model api route"""
     from models.engine.db_storage import classes
-    print("POST MODEL!")
     if parent_model:
         parent = storage.get(parent_model, parent_model_id)
         if not parent:
@@ -49,6 +48,10 @@ def post_model(model, parent_model, parent_model_id, required_data):
         if requirement not in data:
             message = "Missing " + requirement
             return make_response(jsonify({"error": message}), 400)
+
+    if "user_id" in required_data:  # TODO: does this work?
+        if not storage.get("User", data.get("user_id")):
+            return make_response(jsonify({"error": "Not found"}), 404)
 
     if parent_model:
         data[parent_model.lower() + '_id'] = parent_model_id
@@ -80,3 +83,4 @@ from api.v1.views.states import *
 from api.v1.views.cities import *
 from api.v1.views.amenities import *
 from api.v1.views.users import *
+from api.v1.views.places import *
