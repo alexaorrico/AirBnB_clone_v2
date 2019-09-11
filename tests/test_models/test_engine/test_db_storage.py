@@ -101,3 +101,22 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete_user_with_place(self):
+        """tests deleting a user associated with a place"""
+        from models import storage
+        s = State(name="Kalifornia")
+        s.save()
+        c = City(name="Sanfran", state_id=s.id)
+        c.save()
+        u = User(name="Userio", email="foo", password="bar")
+        u.save()
+        p = Place(name="Housy", city_id=c.id, user_id=u.id)
+        p.save()
+        storage.delete(u)
+        storage.save()
+        user_key = "User." + u.id
+        place_key = "Place." + p.id
+        self.assertFalse(user_key in storage.all(User))
+        self.assertFalse(place_key in storage.all(Place))
