@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+''' starts a flask web app
+'''
 from flask import Blueprint
 
 
