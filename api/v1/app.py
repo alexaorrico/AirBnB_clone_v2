@@ -9,10 +9,17 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
+@app.teardown_appcontext
+def closedb(foo):
+    """Closes db session"""
+    storage.close()
+
+
 @app.errorhandler(404)
 def not_found(error):
     """error handle function"""
     return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
