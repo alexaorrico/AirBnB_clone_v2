@@ -74,7 +74,7 @@ def put_review(review_id):
     if not body:
         abort(400, "Not a JSON")
     for k, v in body.items():
-        if k not in ["id", "created_at", "updated_at"]:
+        if k not in ["id", "user_id", "created_at", "updated_at"]:
             setattr(review, k, v)
     review.save()
     return jsonify(review.to_dict())
