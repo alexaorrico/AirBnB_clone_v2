@@ -19,14 +19,14 @@ class User(BaseModel, Base):
         places = relationship(
             "Place",
             cascade="all,delete",
-            backref=backref("user", cascade="all,delete"),
+            backref=backref("user"),
             passive_deletes=True,
             single_parent=True)
         # TODO: wtf single_parent
         reviews = relationship(
             "Review",
             cascade="all,delete",
-            backref=backref("user", cascade="all,delete"),
+            backref=backref("user"),
             passive_deletes=True,
             single_parent=True)
     else:
