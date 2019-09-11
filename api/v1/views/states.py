@@ -9,7 +9,7 @@ from flask import jsonify, abort, request
 @app_views.route('/states')
 def states_all():
     """ Route return all states """
-    return jsonify(list(map(lambda x:x.to_dict(),
+    return jsonify(list(map(lambda x: x.to_dict(),
                             list(storage.all(State).values()))))
 
 

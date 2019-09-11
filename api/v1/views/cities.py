@@ -10,7 +10,7 @@ from flask import jsonify, abort
 @app_views.route('/cities/')
 def cities_all():
     """ Route return all cities """
-    return jsonify(list(map(lambda x:x.to_dict(),
+    return jsonify(list(map(lambda x: x.to_dict(),
                             list(storage.all(City).values()))))
 
 
