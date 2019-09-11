@@ -14,7 +14,7 @@ def get_all_cities(state_id=None):
     ''' retrieves a list of all city objects of a given state '''
     state = storage.get('State', state_id)
     if state is None:
-        abort(404, 'Not found 1')
+        abort(404)
 
     cities = storage.all('City')
     city_list = []
@@ -23,7 +23,7 @@ def get_all_cities(state_id=None):
             city_list.append(val.to_dict())
 
     if len(city_list) == 0:
-        abort(404, 'Not found 2')
+        abort(404)
 
     return jsonify(city_list)
 
@@ -36,7 +36,7 @@ def get_city(city_id=None):
     obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
     obj = obj.to_dict()
     return jsonify(obj)
 
@@ -47,9 +47,9 @@ def delete_city(city_id=None):
     obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
 
-    obj.delete()
+    obj.delete(obj)
     storage.save()
     return jsonify({}), 200
 
