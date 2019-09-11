@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """Module for Blueprint app_views"""
-from flask import Blueprint, abort
+from flask import Blueprint, abort, make_response
 
 
 def get_models(parent_model, parent_model_id, parent_getter):
     """GET /model api route"""
     parent = storage.get(parent_model, parent_model_id)
+    print(parent)
     if not parent:
         return make_response(jsonify({"error": "Not found"}), 404)
 
