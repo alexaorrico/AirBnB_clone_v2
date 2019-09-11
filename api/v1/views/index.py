@@ -7,7 +7,7 @@ from models import storage
 FileToText = {
     "amenities": "Amenity",
     "cities": "City",
-    "places": "Place"
+    "places": "Place",
     "reviews": "Review",
     "states": "State",
     "users": "User"
