@@ -66,6 +66,12 @@ class FileStorage:
                 return self.__objects[key]
         return None
 
+    def count(self, cls=None):
+        """count the number of objects matching cls if cls is not None,
+        otherwise count all objects"""
+        from models import storage
+        return len(storage.all(cls))
+
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
         if obj is not None:
