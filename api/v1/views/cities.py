@@ -5,6 +5,7 @@ from flask import jsonify, request, abort
 from models.state import State
 from models.city import City
 
+
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'],
                  strict_slashes=False)
@@ -38,6 +39,38 @@ def get_city(city_id=None):
     return jsonify(obj)
 
 
+@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
+def delete_city(city_id=None):
+    ''' deletes an individual state '''
+    obj = storage.get('City', city_id)
+    if obj is None:
+        ''' if no state obj with that id '''
+        abort(404, 'Not found')
+
+    obj.delete()
+    storage.save()
+    return jsonify({}), 200
+
+
+@app_views.route("/states/<state_id>/cities",
+                 methods=["POST"],
+                 strict_slashes=False)
+def create_city(state_id=None):
+    ''' create a city if doesn't already exist '''
+    state = storage.get('State', state_id)
+    if state is None:
+        abort(404, 'Not found')
+
+    args = request.get_json()
+    if not args:
+        return jsonify({"error": "Not a JSON"}), 400
+    elif 'name' not in args:
+        return jsonify({"error": "Missing name"}), 400
+    args['state_id'] = state_id
+    obj = City(**args)
+    storage.new(obj)
+    storage.save()
+    return jsonify(obj.to_dict()), 201
 
 
 
@@ -47,19 +80,6 @@ def get_all_states():
     data = storage.all(State)
     new = [val.to_dict() for key, val in data.items()]
     return jsonify(new)
-
-
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def delete_state(state_id=None):
-    ''' deletes an individual state '''
-    obj = storage.get(State, state_id)
-    if obj is None:
-        ''' if no state obj with that id '''
-        abort(404, 'Not found')
-
-    obj.delete()
-    storage.save()
-    return jsonify({}), 200
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id=None):
@@ -77,16 +97,4 @@ def update_state(state_id=None):
     obj.save()
     return jsonify(obj.to_dict()), 200
 
-@app_views.route("/states/", methods=["POST"], strict_slashes=False)
-def create_state():
-    ''' create a state if doesn't already exist '''
-    args = request.get_json()
-    if not args:
-        return jsonify({"error": "Not a JSON"}), 400
-    elif 'name' not in args:
-        return jsonify({"error": "Missing name"}), 400
-    obj = State(**args)
-    storage.new(obj)
-    storage.save()
-    return jsonify(obj.to_dict()), 201
 """
