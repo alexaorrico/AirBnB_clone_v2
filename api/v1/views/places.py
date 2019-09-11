@@ -7,12 +7,14 @@ from models import storage
 from models.place import Place
 
 
-@app_views.route('/places', methods=['GET'],
+@app_views.route('/cities/<city_id>places', methods=['GET'],
                  strict_slashes=False)
 def get_places():
     """ Returns all place objects """
-    places_dict_list = [place.to_dict() for
-                        place in storage.all("Place").values()]
+    city = storage.get("City", city_id)
+    if not city:
+        abort(404)
+    places_dict_list = [place.to_dict() for place in city]
     return jsonify(places_dict_list)
 
 
@@ -42,11 +44,20 @@ def delete_place(place_id):
                  strict_slashes=False)
 def post_place():
     """ Method creates new place object """
+    city = storage.get("City", city_id)
+    if not city:
+        abort(404)
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
+    if 'user.id' not in body:
+         abort(400, "Missing user_id")
     if body.get("name") == None:
         abort(400, "Missing name")
+    user = storage.get("User", body['user_id'])
+    if not user:
+        abort(404)
+    body['city_id'] = city_id
     place = Places(**body)
     place.save()
     return jsonify(place.to_dict()), 201
@@ -63,7 +74,8 @@ def put_place(place_id):
     if not body:
         abort(400, "Not a JSON")
     for k, v in body.items():
-        if k not in ["id", "created_at", "updated_at"]:
+        if k not in ["id", "user_id", "city_id",
+                     "created_at", "updated_at"]:
             setattr(place, k, v)
     place.save()
     return jsonify(place.to_dict())

@@ -7,12 +7,14 @@ from models import storage
 from models.review import Review
 
 
-@app_views.route('/reviews', methods=['GET'],
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def get_reviews():
-    """ Returns all review objects """
-    reviews_dict_list = [review.to_dict() for
-                        review in storage.all("Review").values()]
+def get_reviews(place_id):
+    """ Returns all review objects of a place """
+    place = storage.get("Place", place_id)
+    if not place:
+        abort(404)
+    reviews_dict_list = [review.to_dict() for review in place]
     return jsonify(reviews_dict_list)
 
 
@@ -42,11 +44,20 @@ def delete_review(review_id):
                  strict_slashes=False)
 def post_review():
     """ Method creates new review object """
+    place = storage.get("Place", place_id)
+    if not place:
+        abort(404)
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
+    if 'user.id' not in body:
+         abort(400, "Missing user_id")
     if body.get("name") == None:
-        abort(400, "Missing name")
+        abort(400, "Missing text")
+    user = storage.get("User", body['user_id'])
+    if not user:
+        abort(404)
+    body['place_id'] = place_id
     review = Review(**body)
     review.save()
     return jsonify(review.to_dict()), 201
