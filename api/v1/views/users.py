@@ -22,11 +22,11 @@ def get_user(user_id=None):
         ''' if no state obj with that id '''
         abort(404, 'Not found')
     obj = obj.to_dict()
-    return jsonify(obj)
+    return jsonify(obj), 200
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def delete_user(user_id=None):
     ''' deletes an individual user '''
     obj = storage.get(User, user_id)
