@@ -44,6 +44,8 @@ def create_cities(state_id):
     """ Route create cities with POST"""
     if request.is_json:
         data = request.get_json()
+        if not storage.get("State", state_id):
+            abort(404)
         if 'name' in data:
             data["state_id"] = state_id
             new_city = City(**data)
