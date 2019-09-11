@@ -44,7 +44,7 @@ def create_states():
             if 'name' in data:
                 new_state = State(**data)
                 new_state.save()
-                return jsonify(new_state.to_dict()), 200
+                return jsonify(new_state.to_dict()), 201
             else:
                 return jsonify(error="Missing name"), 400
         except:
