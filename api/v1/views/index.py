@@ -11,12 +11,6 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.app_errorhandler(404)
-def handle_404(err):
-    """status render template for json"""
-    return jsonify({"error": "Not found"}), 404
-
-
 @app_views.route('/stats')
 def stats():
     """status render template for json"""
