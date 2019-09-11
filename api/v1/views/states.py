@@ -43,16 +43,15 @@ def states_create():
         data = request.get_json()
     except:
         msg = "Not a JSON"
-        abort(400, msg)
+        return jsonify({"error": msg}), 400
 
     if "name" not in data:
         msg = "Missing name"
-        abort(400, msg)
+        return jsonify({"error": msg}), 400
 
     var = State(**data)
     storage.new(var)
     storage.save()
-    storage.close()
     return jsonify(var.to_dict()), 201
 
 
@@ -66,12 +65,11 @@ def states_update(state_id):
         data = request.get_json()
     except:
         msg = "Not a JSON"
-        abort(400, msg)
+        return jsonify({"error": msg}), 400
 
     for k, v in data.items():
         if k not in ["id", "created_at", "updated_at"]:
             setattr(state, k, v)
 
     storage.save()
-    storage.close()
     return jsonify(state.to_dict()), 200
