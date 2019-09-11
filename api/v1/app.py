@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# Create conection to server
 from models import storage
 from flask import Flask
 from api.v1.views import app_views

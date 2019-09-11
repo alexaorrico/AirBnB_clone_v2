@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# Create routes and save JSON package
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
