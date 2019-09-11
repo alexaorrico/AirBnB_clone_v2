@@ -11,14 +11,14 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def json_string():
     new = {}
     new['status'] = "OK"
     return jsonify(new)
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'])
 def obj_by_count():
     new = {}
     cls_dict = {'amenities': Amenity, 'cities': City, 'places': Place,
