@@ -7,14 +7,14 @@ from models import storage
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>places', methods=['GET'],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def get_places():
+def get_places(city_id):
     """ Returns all place objects """
     city = storage.get("City", city_id)
     if not city:
         abort(404)
-    places_dict_list = [place.to_dict() for place in city]
+    places_dict_list = [place.to_dict() for place in city.places]
     return jsonify(places_dict_list)
 
 
@@ -50,9 +50,9 @@ def post_place():
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    if 'user.id' not in body:
-         abort(400, "Missing user_id")
-    if body.get("name") == None:
+    if body.get("user_id") is None:
+        abort(400, "Missing user_id")
+    if body.get("name") is None:
         abort(400, "Missing name")
     user = storage.get("User", body['user_id'])
     if not user:
