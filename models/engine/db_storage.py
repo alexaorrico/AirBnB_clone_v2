@@ -93,4 +93,3 @@ class DBStorage:
         if key in objects:
             return objects[key]
         return None
-

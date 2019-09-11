@@ -87,4 +87,3 @@ class FileStorage:
         if key in objects:
             return objects[key]
         return None
-
