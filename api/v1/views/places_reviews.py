@@ -50,7 +50,7 @@ def post_review(place_id):
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    if 'user_id' not in body:
+    if body.get("user_id") is None:
         abort(400, "Missing user_id")
     if body.get("name") is None:
         abort(400, "Missing text")
