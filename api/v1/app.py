@@ -2,7 +2,7 @@
 """
 Flask module to return text as default route
 """
-from flask import Flask, escape, jsonify
+from flask import Flask, escape, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -12,15 +12,17 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def close_app(self):
     '''close session'''
     storage.close()
 
+
 @app.errorhandler(404)
 def padge_not_found(e):
     '''handle unfound pages'''
-    return jsonify({"error": "Not Found"})
+    return make_response(jsonify({"error": "Not Found"}), 404)
 
 
 if __name__ == "__main__":
@@ -30,4 +32,4 @@ if __name__ == "__main__":
     p = '5000'
     if getenv('HBNB_API_PORT'):
         p = getenv('HBNB_API_PORT')
-    app.run(debug=True, host=h, port=p, threaded=True) 
+    app.run(debug=True, host=h, port=p, threaded=True)
