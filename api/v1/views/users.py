@@ -36,8 +36,9 @@ def delete_user(user_id=None):
     obj.delete()
     storage.save()
     return jsonify({}), 200
+
 """
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/users/>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id=None):
     ''' updates an individual state '''
     obj = storage.get(State, state_id)
@@ -52,17 +53,19 @@ def update_state(state_id=None):
             setattr(obj, k, v)
     obj.save()
     return jsonify(obj.to_dict()), 200
+"""
 
-@app_views.route("/states/", methods=["POST"], strict_slashes=False)
-def create_state():
-    ''' create a state if doesn't already exist '''
+@app_views.route("/users/", methods=["POST"], strict_slashes=False)
+def create_user():
+    ''' create a user if doesn't already exist '''
     args = request.get_json()
     if not args:
         return jsonify({"error": "Not a JSON"}), 400
-    elif 'name' not in args:
-        return jsonify({"error": "Missing name"}), 400
-    obj = State(**args)
+    elif 'email' not in args:
+        return jsonify({"error": "Missing email"}), 400
+    elif 'password' not in args:
+        return jsonify({"error": "Missing password"}), 400
+    obj = User(**args)
     storage.new(obj)
     storage.save()
     return jsonify(obj.to_dict()), 201
-"""
