@@ -49,7 +49,7 @@ def delete_city(city_id=None):
         ''' if no state obj with that id '''
         abort(404)
 
-    obj.delete(obj)
+    storage.delete(obj)
     storage.save()
     return jsonify({}), 200
 
