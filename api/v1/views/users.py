@@ -22,11 +22,11 @@ def get_user(user_id=None):
         ''' if no state obj with that id '''
         abort(404, 'Not found')
     obj = obj.to_dict()
-    return jsonify(obj)
+    return jsonify(obj), 200
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def delete_user(user_id=None):
     ''' deletes an individual user '''
     obj = storage.get(User, user_id)
@@ -38,11 +38,11 @@ def delete_user(user_id=None):
     storage.save()
     return jsonify({}), 200
 
-"""
-@app_views.route('/users/>', methods=['PUT'], strict_slashes=False)
-def update_state(state_id=None):
-    ''' updates an individual state '''
-    obj = storage.get(State, state_id)
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def update_user(user_id=None):
+    ''' updates an individual user '''
+    obj = storage.get(User, user_id)
     if obj is None:
         ''' if no state obj with that id '''
         abort(404, 'Not found')
@@ -50,11 +50,11 @@ def update_state(state_id=None):
     if not args:
         return jsonify({"error": "Not a JSON"}), 400
     for k, v in args.items():
-        if k not in ["id", "updated_at", "created_at"]:
+        if k not in ["id", "email", "updated_at", "created_at"]:
             setattr(obj, k, v)
     obj.save()
     return jsonify(obj.to_dict()), 200
-"""
+
 
 @app_views.route("/users/", methods=["POST"], strict_slashes=False)
 def create_user():
