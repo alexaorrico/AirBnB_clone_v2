@@ -52,7 +52,7 @@ def post_review(place_id):
         abort(400, "Not a JSON")
     if body.get("user_id") is None:
         abort(400, "Missing user_id")
-    if body.get("name") is None:
+    if body.get("text") is None:
         abort(400, "Missing text")
     user = storage.get("User", body['user_id'])
     if not user:
