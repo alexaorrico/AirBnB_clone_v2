@@ -71,9 +71,8 @@ class FileStorage:
 
     def get(self, cls, id):
         """ Methond to retrive one object"""
-        save_object = self.all(cls)
         search_key = cls + '.' + id
-        for key, value in save_object.items():
+        for key, value in self.__objects.items():
             if key == search_key:
                 return value
             else:
