@@ -5,7 +5,6 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
-import models
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -22,7 +21,7 @@ import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
-STORAGE = os.getenv('HBNB_TYPE_STORAGE')
+STORAGE = os.environ.get('HBNB_TYPE_STORAGE')
 
 
 @unittest.skipIf(STORAGE != 'db', 'skip if environ not db')
@@ -32,6 +31,7 @@ class TestDBStorageDocs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
+        print("STORAGE = {}".format(STORAGE))
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
     def test_pep8_conformance_db_storage(self):
@@ -90,8 +90,9 @@ class TestDBStorage(unittest.TestCase):
         count_state = storage.count("State")
         count_all = storage.count()
         obj = State(name="X")
-        obj2 = City(name="Y")
         obj.save()
+        obj2 = User(email="Y", password="Z")
         obj2.save()
+        self.assertEqual(storage.count("bad state"), 0)
         self.assertEqual(storage.count("State"), count_state + 1)
         self.assertEqual(storage.count(), count_all + 2)
