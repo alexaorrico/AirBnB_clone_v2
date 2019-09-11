@@ -14,7 +14,7 @@ def get_reviews(place_id):
     place = storage.get("Place", place_id)
     if not place:
         abort(404)
-    reviews_dict_list = [review.to_dict() for review in place]
+    reviews_dict_list = [review.to_dict() for review in place.reviews]
     return jsonify(reviews_dict_list)
 
 
@@ -40,9 +40,9 @@ def delete_review(review_id):
     return jsonify({})
 
 
-@app_views.route('/reviews', methods=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def post_review():
+def post_review(place_id):
     """ Method creates new review object """
     place = storage.get("Place", place_id)
     if not place:
@@ -50,9 +50,9 @@ def post_review():
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    if 'user.id' not in body:
-         abort(400, "Missing user_id")
-    if body.get("name") == None:
+    if 'user_id' not in body:
+        abort(400, "Missing user_id")
+    if body.get("name") is None:
         abort(400, "Missing text")
     user = storage.get("User", body['user_id'])
     if not user:
