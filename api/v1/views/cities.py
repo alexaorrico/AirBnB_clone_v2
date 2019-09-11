@@ -61,7 +61,7 @@ def create_city(state_id=None):
     ''' create a city if doesn't already exist '''
     state = storage.get('State', state_id)
     if state is None:
-        abort(404, 'Not found')
+        abort(404)
 
     args = request.get_json()
     if not args:
@@ -91,5 +91,5 @@ def update_city(city_id=None):
     for k, v in args.items():
         if k not in ["id", "state_id", "updated_at", "created_at"]:
             setattr(obj, k, v)
-    obj.save()
+    storage.save()
     return jsonify(obj.to_dict()), 200
