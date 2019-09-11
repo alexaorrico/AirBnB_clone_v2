@@ -114,17 +114,32 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(modesl.storage_t != 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_get(self):
         """Test that get method returns the correct object or None"""
         c = City()
-        self.assertEqual(c, get("City", c.id))
+        self.assertEqual(c, storage.get("City", c.id))
 
         """Test that get method fails if None in place of class is passed"""
-        self.assertEqual(None, get(None, c.id))
+        self.assertEqual(None, storage.get(None, c.id))
 
         """Test that get method fails if incorrect id is passed"""
-        self.assertEqual(None, get("City", "54332"))
+        self.assertEqual(None, storage.get("City", "54332"))
 
         """Test that get method fails if "NULL" id is passed"""
-        self.assertEqual(None, get("City", "NULL"))
+        self.assertEqual(None, storage.get("City", "NULL"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count method returns a type integer"""
+        self.assertEqual(int, type(storage.count()))
+
+        """Test that count method returns the correct number of total
+        objs passed
+        """
+        self.assertEqual(len(storage.all()), storage.count())
+
+        """Test that count method returns the correct num of matching
+        cls inputs
+        """
+        self.assertEqual(len(storage.all("City")), storage.count("City"))
