@@ -15,7 +15,6 @@ parent_model = None
 @app_views.route("/amenities/<amenity_id>", methods=["GET"])
 def get_amenity(amenity_id):
     """GET /aminities api route"""
-    print("GA!")
     if not amenity_id:
         list_objs = [v.to_dict() for v in storage.all(model).values()]
         return jsonify(list_objs)
