@@ -3,6 +3,7 @@
 starts a Flask web application
 """
 
+import os
 from models import storage
 from flask import Flask, jsonify
 from api.v1.views import app_views
@@ -26,5 +27,6 @@ def teardown_db(exception):
 
 if __name__ == '__main__':
     """init of the flask app"""
-
-    app.run(host='0.0.0.0', port='5000', threaded=True)
+    ip = os.environ.get('HBNB_API_HOST', '0.0.0.0')
+    port = os.environ.get('HBNB_API_PORT', '5000')
+    app.run(host=ip, port=port, threaded=True)
