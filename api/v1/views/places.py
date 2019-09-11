@@ -40,9 +40,9 @@ def delete_place(place_id):
     return jsonify({})
 
 
-@app_views.route('/places', methods=['POST'],
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def post_place():
+def post_place(city_id):
     """ Method creates new place object """
     city = storage.get("City", city_id)
     if not city:
@@ -58,7 +58,7 @@ def post_place():
     if not user:
         abort(404)
     body['city_id'] = city_id
-    place = Places(**body)
+    place = Place(**body)
     place.save()
     return jsonify(place.to_dict()), 201
 
