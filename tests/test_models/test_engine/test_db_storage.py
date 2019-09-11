@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -77,7 +78,7 @@ class TestDBStorage(unittest.TestCase):
     def test_get(self):
         """Test that get returns the object based on the class
         name and its ID, or None if not found"""
-        obj = State(name="California")
+        obj = State(name="X")
         obj.save()
-        self.assertIs(obj, models.storage.get("State", obj.id))
-        self.assertIs(None, models.storage.get("State", "bad id"))
+        self.assertIs(obj, storage.get("State", obj.id))
+        self.assertIs(None, storage.get("State", "bad id"))
