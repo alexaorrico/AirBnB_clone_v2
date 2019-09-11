@@ -25,7 +25,7 @@ def get_user(user_id=None):
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def delete_user(user_id=None):
     ''' deletes an individual user '''
     obj = storage.get(User, user_id)
