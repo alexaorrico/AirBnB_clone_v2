@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+''' a new view for City objects that handles all default RestFul API '''
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, request, abort
@@ -13,7 +14,7 @@ def get_all_cities(state_id=None):
     ''' retrieves a list of all city objects of a given state '''
     state = storage.get('State', state_id)
     if state is None:
-        abort(404, 'Not found 1')
+        abort(404)
 
     cities = storage.all('City')
     city_list = []
@@ -22,7 +23,7 @@ def get_all_cities(state_id=None):
             city_list.append(val.to_dict())
 
     if len(city_list) == 0:
-        abort(404, 'Not found 2')
+        abort(404)
 
     return jsonify(city_list)
 
@@ -35,7 +36,7 @@ def get_city(city_id=None):
     obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
     obj = obj.to_dict()
     return jsonify(obj)
 
@@ -46,9 +47,9 @@ def delete_city(city_id=None):
     obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
 
-    obj.delete()
+    storage.delete(obj)
     storage.save()
     return jsonify({}), 200
 
@@ -60,7 +61,7 @@ def create_city(state_id=None):
     ''' create a city if doesn't already exist '''
     state = storage.get('State', state_id)
     if state is None:
-        abort(404, 'Not found')
+        abort(404)
 
     args = request.get_json()
     if not args:
@@ -90,5 +91,5 @@ def update_city(city_id=None):
     for k, v in args.items():
         if k not in ["id", "state_id", "updated_at", "created_at"]:
             setattr(obj, k, v)
-    obj.save()
+    storage.save()
     return jsonify(obj.to_dict()), 200
