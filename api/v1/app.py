@@ -3,7 +3,7 @@
 Creates app.py to register blueprint to Flask instance app
 '''
 from flask import Flask
-from storage import models
+from models import storage
 from api.v1.views import app_views
 from os import getenv
 
