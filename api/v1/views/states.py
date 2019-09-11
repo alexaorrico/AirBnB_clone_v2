@@ -7,13 +7,14 @@ from models import storage
 from models.state import State
 
 
-@app_wiews.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def getStates():
     ''' gets all State information used for all states '''
     statesList = []
     for state in storage.all("State").values():
         statesList.append(state.to_dict())
     return jsonify(statesList)
+
 
 @app_views.route('/states/<string:state_id>', methods=['GET'],
                  strict_slashes=False)
@@ -35,6 +36,7 @@ def deleteState(state_id):
     stateDelete.delete()
     storage.save()
     return (jsonify({}))
+
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def postState():
