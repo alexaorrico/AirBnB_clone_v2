@@ -7,6 +7,7 @@ from models import storage
 from flask import Flask
 from api.v1.views import app_views
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 app.register_blueprint(app_views)
 
