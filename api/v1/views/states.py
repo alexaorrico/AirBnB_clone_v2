@@ -8,6 +8,7 @@ from models.state import State
 
 @app_views.route('/states')
 def states():
+    """retrieve all objs"""
     states = []
     for val in storage.all("State").values():
         states.append(val.to_dict())
@@ -16,6 +17,7 @@ def states():
 
 @app_views.route('/states/<state_id>')
 def states_id(state_id):
+    """get state with his id"""
     for val in storage.all("State").values():
         if val.id == state_id:
             return jsonify(val.to_dict())
@@ -24,6 +26,7 @@ def states_id(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def states_delete(state_id):
+    """delete a obj with his id"""
     states = storage.get("State", state_id)
     if states is None:
         abort(404)
@@ -49,6 +52,7 @@ def states_create():
     var = State(**data)
     storage.new(var)
     storage.save()
+    storage.close()
     return jsonify(var.to_dict()), 201
 
 
@@ -69,4 +73,5 @@ def states_update(state_id):
             setattr(state, k, v)
 
     storage.save()
+    storage.close()
     return jsonify(state.to_dict()), 200
