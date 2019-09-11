@@ -39,9 +39,9 @@ def states_delete(state_id):
 @app_views.route('/states', methods=['POST'])
 def states_create():
     """create state"""
-    try:
+    if request.is_json:
         data = request.get_json()
-    except:
+    else:
         msg = "Not a JSON"
         return jsonify({"error": msg}), 400
 
@@ -61,9 +61,9 @@ def states_update(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    try:
+    if request.is_json:
         data = request.get_json()
-    except:
+    else:
         msg = "Not a JSON"
         return jsonify({"error": msg}), 400
 
