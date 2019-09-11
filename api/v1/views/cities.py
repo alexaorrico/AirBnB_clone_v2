@@ -48,6 +48,9 @@ def city_create(state_id):
     if "name" not in data:
         msg = "Missing name"
         return jsonify({"error": msg}), 400
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
     data.update({'state_id': state_id})
     city = City(**data)
     storage.new(city)
