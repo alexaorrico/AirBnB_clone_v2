@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """ Module for User object view """
 
 from api.v1.views import app_views
