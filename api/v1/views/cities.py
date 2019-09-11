@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+''' a new view for City objects that handles all default RestFul API '''
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, request, abort
