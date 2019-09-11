@@ -10,7 +10,8 @@ model = "Place"
 parent_model = "City"
 
 
-@app_views.route("/cities/<city_id>/places", methods=["GET"])
+@app_views.route("/cities/<city_id>/places", strict_slashes=False,
+                 methods=["GET"])
 def get_places(city_id):
     """GET /city api route"""
     return get_models(parent_model, city_id, "places")
@@ -28,7 +29,8 @@ def delete_place(place_id):
     return delete_model(model, place_id)
 
 
-@app_views.route("/cities/<city_id>/places", methods=["POST"])
+@app_views.route("/cities/<city_id>/places", strict_slashes=False,
+                 methods=["POST"])
 def post_place(city_id):
     """POST /places api route"""
     required_data = {"name", "user_id"}

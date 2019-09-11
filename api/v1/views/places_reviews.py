@@ -10,7 +10,8 @@ model = "Review"
 parent_model = "Place"
 
 
-@app_views.route("/places/<place_id>/reviews", methods=["GET"])
+@app_views.route("/places/<place_id>/reviews", strict_slashes=False,
+                 methods=["GET"])
 def get_reviews(place_id):
     """GET /place api route"""
     return get_models(parent_model, place_id, "reviews")
@@ -28,7 +29,8 @@ def delete_review(review_id):
     return delete_model(model, review_id)
 
 
-@app_views.route("/places/<place_id>/reviews", methods=["POST"])
+@app_views.route("/places/<place_id>/reviews", strict_slashes=False,
+                 methods=["POST"])
 def post_review(place_id):
     """POST /reviews api route"""
     required_data = {"text", "user_id"}
