@@ -5,12 +5,14 @@ from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 
-@app_views.route('/status', strict_slashes = False)
+
+@app_views.route('/status', strict_slashes=False)
 def app_view_json():
     """ object app_views that returns a JSON """
     return jsonify({"status": "OK"})
 
-@app_views.route('/stats', strict_slashes = False)
+
+@app_views.route('/stats', strict_slashes=False)
 def cout_data_json():
     """ comment function app views """
     return jsonify({"amenities": storage.count("Amenity"),
