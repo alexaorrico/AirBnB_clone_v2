@@ -51,7 +51,6 @@ def create_pl_amenities(place_id, amenity_id):
         return jsonify(my_amenity.to_dict()), 200
     if getenv("HBNB_TYPE_STORAGE") == 'db':
         my_place.amenities.append(my_amenity)
-        storage.save()        
     else:
         my_place.amenity_ids.append(amenity_id)
     return jsonify(my_amenity.to_dict()), 201
