@@ -49,11 +49,14 @@ def create_reviews(place_id):
         if not storage.get("User", user_id):
             abort(404)
         if 'text' in data:
-            data["place_id"] = place_id
-            data["user_id"] = user_id
-            new_review = Review(**data)
-            new_review.save()
-            return jsonify(new_review.to_dict()), 201
+            if 'user_id' in data:
+                data["place_id"] = place_id
+                data["user_id"] = user_id
+                new_review = Review(**data)
+                new_review.save()
+                return jsonify(new_review.to_dict()), 201
+            else:
+                return jsonify(error='Missing user_id'), 400
         else:
             return jsonify(error="Missing text"), 400
     else:
@@ -63,7 +66,6 @@ def create_reviews(place_id):
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
 def update_reviews(review_id):
     """ Route update reviews with PUT """
-
     if request.is_json:
         data = request.get_json()
         my_object = storage.get('Review', review_id)
