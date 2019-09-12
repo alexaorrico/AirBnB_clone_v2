@@ -34,4 +34,4 @@ def _handle_api_error(ex):
 
 
 if __name__ == "__main__":
-    app.run(host=str(h), port=int(p), threaded=True)
+    app.run(host=h, port=p, threaded=True)
