@@ -24,12 +24,12 @@ def state_route():
             abort(400, 'Not a JSON')
         if "name" not in new_state:
             abort(400, 'Missing name')
-            new_state_obj = State(**new_state)
-            new_state_obj.save()
+        new_state_obj = State(**new_state)
+        new_state_obj.save()
         return jsonify(new_state_obj), 201
 
 
-@app_views.route('/state/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def state_id_route(state_id):
     '''Retrieves a state object'''
     states = storage.get("State", state_id)
