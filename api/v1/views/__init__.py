@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-initialize Blueprint
-"""
+""" Initialize Blueprint """
 
 from flask import Blueprint
 

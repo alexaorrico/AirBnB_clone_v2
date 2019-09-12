@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" State objects that handles all default RestFul API actions """
+"""State objects that handles all default RestFul API actions"""
 
 from models.base_model import BaseModel
 from api.v1.views import app_views
