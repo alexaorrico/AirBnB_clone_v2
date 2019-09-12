@@ -12,6 +12,8 @@ from os import getenv
 def pl_amenity_all(place_id):
     """ Route return all amenities in place referenced id """
     my_place = storage.get('Place', place_id)
+    if my_place is None:
+        abort(404)
     if getenv("HBNB_TYPE_STORAGE") == 'db':
         return jsonify(list(map(lambda x: x.to_dict(), my_place.amenities)))
     else:
@@ -53,4 +55,5 @@ def create_pl_amenities(place_id, amenity_id):
         my_place.amenities.append(my_amenity)
     else:
         my_place.amenity_ids.append(amenity_id)
+    storage.save()
     return jsonify(my_amenity.to_dict()), 201
