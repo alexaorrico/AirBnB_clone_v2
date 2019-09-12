@@ -8,7 +8,7 @@ from flask import jsonify, abort, request
 
 
 @app_views.route('/places/<place_id>/reviews')
-def reviews_id(place_id):
+def reviews_all(place_id):
     """ Route return all reviews in place referenced id """
     my_place = storage.get('Place', place_id)
     try:
@@ -28,7 +28,7 @@ def reviews_id(review_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
-def delete_city_id(review_id):
+def delete_review_id(review_id):
     """ Route delete reviews with referenced id """
     my_object = storage.get('Review', review_id)
     if my_object is not None:
@@ -39,34 +39,37 @@ def delete_city_id(review_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'])
-def create_cities(state_id):
-    """ Route create cities with POST"""
+@app_views.route('/places/<place_id>/reviews', methods=['POST'])
+def create_reviews(place_id):
+    """ Route create reviews with POST"""
     if request.is_json:
         data = request.get_json()
-        if not storage.get("State", state_id):
+        if not storage.get("Place", place_id):
             abort(404)
-        if 'name' in data:
-            data["state_id"] = state_id
-            new_city = City(**data)
-            new_city.save()
-            return jsonify(new_city.to_dict()), 201
+        if not storage.get("User", user_id):
+            abort(404)
+        if 'text' in data:
+            data["place_id"] = place_id
+            data["user_id"] = user_id
+            new_review = Review(**data)
+            new_review.save()
+            return jsonify(new_review.to_dict()), 201
         else:
-            return jsonify(error="Missing name"), 400
+            return jsonify(error="Missing text"), 400
     else:
         return jsonify(error="Not a JSON"), 400
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'])
-def update_cities(city_id):
-    """ Route update cities with PUT """
+@app_views.route('/reviews/<review_id>', methods=['PUT'])
+def update_reviews(review_id):
+    """ Route update reviews with PUT """
 
     if request.is_json:
         data = request.get_json()
-        my_object = storage.get('City', city_id)
+        my_object = storage.get('Review', review_id)
         if my_object is not None:
             for keys, values in data.items():
-                if keys not in ["created_at", "updated_at", "id"]:
+                if keys not in ["created_at", "updated_at", "id", "user_id", "place_id"]:
                     setattr(my_object, keys, values)
             my_object.save()
             return jsonify(my_object.to_dict()), 200
