@@ -5,6 +5,7 @@ from flask import jsonify, request, make_response
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states', strict_slashes=False)
 def all_states():
     """
@@ -12,9 +13,10 @@ def all_states():
     """
     states_list = []
     states_obj = storage.all("State")
-    for _,value in states_obj.items():
+    for _, value in states_obj.items():
         states_list.append(value.to_dict())
     return jsonify(states_list)
+
 
 @app_views.route('/states/<state_id>')
 def state(state_id):
@@ -25,6 +27,7 @@ def state(state_id):
     if state is not None:
         return jsonify(state.to_dict())
     return jsonify({"error": "Not found"}), 404
+
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def del_state(state_id):
@@ -38,11 +41,15 @@ def del_state(state_id):
         return jsonify()
     return jsonify({"error": "Not found"}), 404
 
+
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def create_state():
+    """
+    Create a new object state
+    """
     if not request.json:
         return make_response(jsonify(message='Not a JSON'), 400)
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         return make_response(jsonify(message='Missing name'), 400)
     state = request.json
     new_state = State(**state)
@@ -50,6 +57,29 @@ def create_state():
     storage.save()
     return jsonify(new_state.to_dict()), 201
 
+
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def update_state(state_id):
+    """
+    Update a state by id
+    """
+    state = storage.get('State', state_id)
+    if state is None:
+        abort(404)
+    if not request.json:
+        return make_response(jsonify(message='Not a JSON'), 400)
+    params = request.json
+    skip = ['id', 'created_at', 'updated_at']
+    for key, value in params.items():
+        if key not in skip:
+            setattr(state, key, value)
+    storage.save()
+    return jsonify(state.to_dict())
+
+
 @app_views.errorhandler(404)
 def page_not_found(error):
+    """
+    Handle 404 error
+    """
     return jsonify({"error": "Not found"}), 404
