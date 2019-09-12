@@ -19,6 +19,14 @@ def teardown_db(exception=None):
     """closes or otherwise deallocates the resource"""
     storage.close()
 
+
+@app.errorhandler(404)
+def errot_notfound(message):
+    """ handler for 404 errors """
+    respuesta = jsonify({"error": "Not found"})
+    respuesta.status_code = 404
+    return respuesta
+
 if __name__ == '__main__':
     app.run(port=int(getenv("HBNB_API_PORT")),
             host=getenv("HBNB_API_HOST"), threaded=True)
