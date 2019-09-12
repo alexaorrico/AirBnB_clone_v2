@@ -3,7 +3,7 @@
 """ Module for states
 """
 from api.v1.views import app_views
-from flask import jsonify, request, make_response
+from flask import jsonify, request, make_response, abort
 from models import storage
 from models.state import State
 
@@ -49,7 +49,7 @@ def create_state():
     """
     Create a new object state
     """
-    if not request.is_json:
+    if not request.get_json():
         return make_response(jsonify({"error": 'Not a JSON'}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": 'Missing name'}), 400)
@@ -68,7 +68,7 @@ def update_state(state_id):
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
-    if not request.is_json:
+    if not request.get_json():
         return make_response(jsonify({"error": 'Not a JSON'}), 400)
     params = request.get_json()
     skip = ['id', 'created_at', 'updated_at']
