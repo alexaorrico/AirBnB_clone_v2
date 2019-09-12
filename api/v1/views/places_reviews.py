@@ -69,7 +69,8 @@ def update_reviews(review_id):
         my_object = storage.get('Review', review_id)
         if my_object is not None:
             for keys, values in data.items():
-                if keys not in ["created_at", "updated_at", "id", "user_id", "place_id"]:
+                if keys not in ["created_at", "updated_at",
+                                "id", "user_id", "place_id"]:
                     setattr(my_object, keys, values)
             my_object.save()
             return jsonify(my_object.to_dict()), 200
