@@ -41,7 +41,7 @@ def del_user(user_id):
     if user is not None:
         storage.delete(user)
         storage.save()
-        return jsonify()
+        return jsonify({}), 200
     return jsonify({"error": "Not found"}), 404
 
 
@@ -50,7 +50,7 @@ def create_user():
     """
     Create a new object user
     """
-    if not request.get_json():
+    if not request.is_json():
         return make_response(jsonify(message='Not a JSON'), 400)
     if 'email' not in request.get_json():
         return make_response(jsonify(message='Missing email'), 400)
@@ -71,7 +71,7 @@ def update_user(user_id):
     user = storage.get('User', user_id)
     if user is None:
         abort(404)
-    if not request.get_json():
+    if not request.is_json():
         return make_response(jsonify(message='Not a JSON'), 400)
     params = request.get_json()
     skip = ['id', 'email', 'created_at', 'updated_at']

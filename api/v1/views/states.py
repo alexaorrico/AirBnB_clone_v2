@@ -49,7 +49,7 @@ def create_state():
     """
     Create a new object state
     """
-    if not request.get_json():
+    if not request.is_json():
         return make_response(jsonify(message='Not a JSON'), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify(message='Missing name'), 400)
@@ -68,7 +68,7 @@ def update_state(state_id):
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
-    if not request.get_json():
+    if not request.is_json():
         return make_response(jsonify(message='Not a JSON'), 400)
     params = request.get_json()
     skip = ['id', 'created_at', 'updated_at']
