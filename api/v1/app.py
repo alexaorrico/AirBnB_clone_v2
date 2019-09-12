@@ -10,8 +10,8 @@ import os
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
 
 h = os.environ.get("HBNB_API_HOST", "0.0.0.0")
 p = os.environ.get("HBNB_API_PORT", "5000")
@@ -19,11 +19,17 @@ p = os.environ.get("HBNB_API_PORT", "5000")
 
 @app.teardown_appcontext
 def close(exception=None):
+"""
+   teardown function
+"""
     storage.close()
 
 
 @app.errorhandler(404)
 def _handle_api_error(ex):
+"""
+   errorhandler funtion
+"""
     return jsonify({"error": "Not found"}), 404
 
 
