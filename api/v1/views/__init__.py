@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+""" ini file
+"""
 
 from flask import Blueprint
 
