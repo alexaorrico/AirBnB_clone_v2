@@ -23,4 +23,4 @@ def gstats():
         "users": storage.count("User")
     }
 
-    return jsonify(stats_dict)
+    return jsonify(dict_stats)
