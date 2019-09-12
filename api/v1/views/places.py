@@ -45,12 +45,14 @@ def create_places(city_id):
     """ Route create place with POST"""
     if request.is_json:
         data = request.get_json()
-        if not storage.get("City", city_id):
+        if "City" not in data or not storage.get("City", city_id):
             abort(404)
         if 'name' not in data:
             return jsonify(error="Missing name"), 400
         if 'user_id' not in data:
             return jsonify(error="Missing user_id"), 400
+        if not storage.get("User", user_id):
+            abort(404)
         data["state_id"] = state_id
         new_place = Place(**data)
         new_place.save()
@@ -67,9 +69,13 @@ def update_places(place_id):
         data = request.get_json()
         my_object = storage.get('Place', place_id)
         if my_object is not None:
+            if "review_id" not in my_object:
+                abort(404)
+            if storage.get('Review', my_object['Review']) is None:
+                abort(404)
             for keys, values in data.items():
-                if keys not in ["created_at", "updated_at", "id",
-                                "place_id", "city_id"]:
+                if keys not in ["created_at", "updated_at", "id", "updated_at",
+                                "id", "place_id", "city_id"]:
                     setattr(my_object, keys, values)
             my_object.save()
             return jsonify(my_object.to_dict()), 200
