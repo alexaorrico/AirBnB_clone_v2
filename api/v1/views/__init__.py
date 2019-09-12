@@ -7,5 +7,6 @@ from flask import Blueprint
 
 
 app_views = Blueprint("mold", __name__, url_prefix='/api/v1')
-if mold:
-    from api.v1.views.index import *
+
+
+from api.v1.views.index import *
