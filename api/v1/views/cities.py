@@ -7,11 +7,11 @@ from models import storage
 from flask import request, jsonify, make_response, abort
 
 
-@app_views.route('states/<state_id>/cities', methods=['GET', 'POST'])
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def state_cities_route(state_id):
     '''Returns a JSON of a city object'''
     state = storage.get("State", state_id)
-    if not state:
+    if state is None:
         abort(404)
 
     if request.method == 'GET':
