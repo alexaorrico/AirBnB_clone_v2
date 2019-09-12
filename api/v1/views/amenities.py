@@ -22,7 +22,7 @@ def get_amenity(amenity_id=None):
     obj = storage.get('Amenity', amenity_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
     obj = obj.to_dict()
     return jsonify(obj)
 
@@ -35,18 +35,18 @@ def delete_amenity(amenity_id=None):
     obj = storage.get('Amenity', amenity_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
 
     storage.delete(obj)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)
 def create_amenity():
     ''' create an amenity if doesn't already exist '''
     args = request.get_json()
-    if not args:
+    if args is None:
         return jsonify({"error": "Not a JSON"}), 400
     elif 'name' not in args:
         return jsonify({"error": "Missing name"}), 400
@@ -64,12 +64,12 @@ def update_amenity(amenity_id=None):
     obj = storage.get('Amenity', amenity_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
     args = request.get_json()
-    if not args:
+    if args is None:
         return jsonify({"error": "Not a JSON"}), 400
     for k, v in args.items():
         if k not in ["id", "updated_at", "created_at"]:
             setattr(obj, k, v)
     obj.save()
-    return jsonify(obj.to_dict()), 200
+    return jsonify(obj.to_dict())
