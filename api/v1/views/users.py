@@ -1,9 +1,12 @@
 #!/usr/bin/python3
+""" comment
+"""
 
 from api.v1.views import app_views
 from flask import jsonify, request, make_response
 from models import storage
 from models.user import User
+
 
 @app_views.route('/users', strict_slashes=False)
 def all_users():
@@ -46,11 +49,13 @@ def create_user():
     """
     Create a new object user
     """
-    if not request.get_json:
+    if not request.get_json():
         return make_response(jsonify(message='Not a JSON'), 400)
-    if 'name' not in request.get_json:
-        return make_response(jsonify(message='Missing name'), 400)
-    user = request.get_json
+    if 'email' not in request.get_json():
+        return make_response(jsonify(message='Missing email'), 400)
+    if 'password' not in request.get_json():
+        return make_response(jsonify(message='Missing password'), 400)
+    user = request.get_json()
     new_user = User(**user)
     storage.new(new_user)
     storage.save()
@@ -65,10 +70,10 @@ def update_user(user_id):
     user = storage.get('User', user_id)
     if user is None:
         abort(404)
-    if not request.get_json:
+    if not request.get_json():
         return make_response(jsonify(message='Not a JSON'), 400)
-    params = request.get_json
-    skip = ['id', 'created_at', 'updated_at']
+    params = request.get_json()
+    skip = ['id', 'email', 'created_at', 'updated_at']
     for key, value in params.items():
         if key not in skip:
             setattr(user, key, value)
