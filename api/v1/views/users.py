@@ -34,7 +34,7 @@ def delete_user(user_id=None):
         ''' if no state obj with that id '''
         abort(404)
 
-    storage.delete(user)
+    storage.delete(obj)
     storage.save()
     return jsonify({}), 200
 
