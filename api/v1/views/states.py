@@ -40,7 +40,7 @@ def del_state(state_id):
     if state is not None:
         storage.delete(state)
         storage.save()
-        return jsonify()
+        return jsonify({}), 200
     return jsonify({"error": "Not found"}), 404
 
 
@@ -49,10 +49,10 @@ def create_state():
     """
     Create a new object state
     """
-    if not request.get_json():
-        return make_response(jsonify(message='Not a JSON'), 400)
+    if not request.is_json:
+        return make_response(jsonify({"error": 'Not a JSON'}), 400)
     if 'name' not in request.get_json():
-        return make_response(jsonify(message='Missing name'), 400)
+        return make_response(jsonify({"error": 'Missing name'}), 400)
     state = request.get_json()
     new_state = State(**state)
     storage.new(new_state)
@@ -68,8 +68,8 @@ def update_state(state_id):
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify(message='Not a JSON'), 400)
+    if not request.is_json:
+        return make_response(jsonify({"error": 'Not a JSON'}), 400)
     params = request.get_json()
     skip = ['id', 'created_at', 'updated_at']
     for key, value in params.items():
