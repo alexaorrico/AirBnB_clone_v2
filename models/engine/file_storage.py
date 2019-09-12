@@ -78,14 +78,14 @@ class FileStorage:
                         return (value)
         return (None)
 
-        def count(self, cls=None):
-            """ method to count the number of objects in storage"""
-            cont = 0
-            for key, value in self.__objects.items():
-                if cls is not None:
-                    if cls == value.__class__ or
-                    cls == value.__class__.__name__:
-                        cont = cont + 1
-                else:
+    def count(self, cls=None):
+        """ method to count the number of objects in storage"""
+        cont = 0
+        for key, value in self.__objects.items():
+            if cls is not None:
+                if cls == value.__class__ or \
+                   cls == value.__class__.__name__:
                     cont = cont + 1
-            return (cont)
+            else:
+                cont = cont + 1
+        return (cont)
