@@ -31,6 +31,7 @@ def state_cities_route(state_id):
         new_city_obj.save()
         return jsonify(new_city_obj.to_dict()), 201
 
+
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
 def cities_route(city_id):
     '''Retrieves cities within the state object'''
@@ -47,3 +48,15 @@ def cities_route(city_id):
         storage.delete(city)
         storage.save()
         return {}, 200
+
+    if request.method == 'PUT':
+        '''PUT updates the city object with name of the city changed'''
+        city_put = request.get_json()
+        if city_put is None:
+            abort(400, 'Not a JSON')
+        ignore_keys = ['id', 'created_at', 'updated_at']
+        for key, value in city_put.items():
+            if key not in ignore_keys:
+                setattr(city, key, value)
+                city.save()
+        return make_response(jsonify(city.to_dict()), 200)
