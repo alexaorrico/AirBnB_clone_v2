@@ -21,10 +21,7 @@ def get_all_cities(state_id=None):
     for val in cities.values():
         if val.state_id == state_id:
             city_list.append(val.to_dict())
-
-    if len(city_list) == 0:
-        abort(404)
-
+    
     return jsonify(city_list)
 
 
@@ -64,7 +61,7 @@ def create_city(state_id=None):
         abort(404)
 
     args = request.get_json()
-    if not args:
+    if args is None:
         return jsonify({"error": "Not a JSON"}), 400
     elif 'name' not in args:
         return jsonify({"error": "Missing name"}), 400
@@ -81,11 +78,11 @@ def update_city(city_id=None):
     obj = storage.get('City', city_id)
     if obj is None:
         ''' if no state obj with that id '''
-        abort(404, 'Not found')
+        abort(404)
 
     args = request.get_json()
 
-    if not args:
+    if args is None:
         return jsonify({"error": "Not a JSON"}), 400
 
     for k, v in args.items():
