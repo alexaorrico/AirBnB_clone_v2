@@ -3,7 +3,7 @@
 from api.v1.views import app_views
 from flask import jsonify, request, make_response
 from models import storage
-from models.amenity import Amenity 
+from models.amenity import Amenity
 
 
 @app_views.route('/amenities', strict_slashes=False)
@@ -47,11 +47,11 @@ def create_amenity():
     """
     Create a new object amenity
     """
-    if not request.json:
+    if not request.get_json():
         return make_response(jsonify(message='Not a JSON'), 400)
-    if 'name' not in request.json:
+    if 'name' not in request.get_json():
         return make_response(jsonify(message='Missing name'), 400)
-    amenity = request.json
+    amenity = request.get_json()
     new_amenity = Amenity(**amenity)
     storage.new(new_amenity)
     storage.save()
@@ -66,9 +66,9 @@ def update_amenity(amenity_id):
     amenity = storage.get('Amenity', amenity_id)
     if amenity is None:
         abort(404)
-    if not request.json:
+    if not request.get_json():
         return make_response(jsonify(message='Not a JSON'), 400)
-    params = request.json
+    params = request.get_json()
     skip = ['id', 'created_at', 'updated_at']
     for key, value in params.items():
         if key not in skip:
