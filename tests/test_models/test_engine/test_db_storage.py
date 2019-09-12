@@ -90,29 +90,33 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get method returns the correct object or None"""
-        c = City()
-        self.assertEqual(c, storage.get("City", c.id))
+        s = State(name="Foo")
+        s.save()
+        c = City(name="Bar", state_id=s.id)
+        c.save()
+        self.assertEqual(c, models.storage.get("City", c.id))
 
         """Test that get method fails if None in place of class is passed"""
-        self.assertEqual(None, storage.get(None, c.id))
+        self.assertEqual(None, models.storage.get(None, c.id))
 
         """Test that get method fails if incorrect id is passed"""
-        self.assertEqual(None, storage.get("City", "54332"))
+        self.assertEqual(None, models.storage.get("City", "54332"))
 
         """Test that get method fails if "NULL" id is passed"""
-        self.assertEqual(None, storage.get("City", "NULL"))
+        self.assertEqual(None, models.storage.get("City", "NULL"))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count method returns a type integer"""
-        self.assertEqual(int, type(storage.count()))
+        self.assertEqual(int, type(models.storage.count()))
 
         """Test that count method returns the correct number of total
         objs passed
         """
-        self.assertEqual(len(storage.all()), storage.count())
+        self.assertEqual(len(models.storage.all()), models.storage.count())
 
         """Test that count method returns the correct num of matching
         cls inputs
         """
-        self.assertEqual(len(storage.all("City")), storage.count("City"))
+        self.assertEqual(len(models.storage.all("City")),
+                         models.storage.count("City"))
