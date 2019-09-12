@@ -43,16 +43,16 @@ def delete_place_id(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_places(city_id):
     """ Route create place with POST"""
+    if storage.get("City", city_id) is None:
+        abort(404)        
     if request.is_json:
         data = request.get_json()
-        if storage.get("City", city_id) is None:
+        if 'user_id' not in data:
+            return jsonify(error="Missing user_id"), 400
+        if storage.get("User", data["user_id"]) is None:
             abort(404)
         if 'name' not in data:
             return jsonify(error="Missing name"), 400
-        if 'user_id' not in data:
-            return jsonify(error="Missing user_id"), 400
-        if storage.get("User", user_id) is None:
-            abort(404)
         data["city_id"] = city_id
         new_place = Place(**data)
         new_place.save()
