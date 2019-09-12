@@ -149,6 +149,9 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
+## Rest API
+Implement Rest API for all resources
+
 
 ## Bugs
 No known bugs at this time. 
@@ -158,5 +161,9 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+Third part of Airbnb: 
+Rodrigo Cruz - [Github](https://github.com/rodrigocruz13)
+Arley Brinez - [Github](https://github.com/arleybri18)
 ## License
 Public Domain. No copy write protection. 
