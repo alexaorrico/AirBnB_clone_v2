@@ -21,13 +21,29 @@ def state_cities_route(state_id):
         return jsonify(city_list)
 
     if request.method == 'POST':
-        new_city = request.get_json
+        new_city = request.get_json()
         if not new_city:
             abort(400, 'Not a JSON')
         if "name" not in new_city:
             abort(400, 'Missing name')
         new_city['state_id'] = state_id
-        print(new_city)
         new_city_obj = City(**new_city)
         new_city_obj.save()
         return jsonify(new_city_obj.to_dict()), 201
+
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+def cities_route(city_id):
+    '''Retrieves cities within the state object'''
+    city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
+
+    if request.method == 'GET':
+        '''GET retrieves from the db a specific city by id'''
+        return jsonify(city.to_dict())
+
+    if request.method == 'DELETE':
+        '''DELETE removes from db the specific city object'''
+        storage.delete(city)
+        storage.save()
+        return {}, 200
