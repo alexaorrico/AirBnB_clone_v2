@@ -135,15 +135,20 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_count(self):
         """Test that count method returns a type integer"""
+        first_count_all = models.storage.count()
+        first_count_state = models.storage.count("State")
+        o = State(name="Hawaii")
+        o.save()
+        second_count_all = models.storage.count()
+        second_count_state = models.storage.count("State")
+        """Test that count method returns a type integer"""
         self.assertEqual(int, type(models.storage.count()))
 
-        """Test that count method returns the correct number of total
-        objs passed
-        """
-        self.assertEqual(len(models.storage.all()), models.storage.count())
+        """Test that count method returns the
+        correct number of total objs passed """
+        self.assertEqual(first_count_all + 1, second_count_all)
 
-        """Test that count method returns the correct num of matching
-        cls inputs
-        """
-        self.assertEqual(len(models.storage.all("City")),
-                         models.storage.count("City"))
+        """Test that count method returns the
+        correct num of matching cls inputs """
+        self.assertEqual(first_count_state + 1, second_count_state)
+        self.assertEqual(int, type(models.storage.count()))
