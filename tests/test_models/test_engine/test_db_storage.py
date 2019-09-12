@@ -74,9 +74,9 @@ test_db_storage.py'])
         state = State(name="yesid")
         storage.new(state)
         storage.save()
-        first_state_id = list(storage.all("State").values())[0].id
+        first_state_id = list(storage.all("State").values())
         id1 = first_state_id
-        self.assertTrue(storage.get("State", first_state_id), id1)
+        self.assertTrue(storage.get("State", state.id), id1)
 
     def test_dbs_func_count(self):
         """Test for the presence of docstrings in DBStorage methods"""
@@ -89,23 +89,6 @@ test_db_storage.py'])
         id1 = first_state_id
         self.assertTrue(storage.get("State", first_state_id), id1)
         self.assertTrue(num1 + 1, num2)
-
-    def test_create_entry(self):
-        """ Tests if a new element is added the db """
-        os.system("cat setup_mysql_test.sql | mysql -hlocalhost -uroot -proot")
-        connection = SQLito.connect(
-            'localhost',
-            'hbnb_test',
-            'hbnb_test_pwd',
-            'hbnb_test_db')
-        cursor = connection.cursor()
-        number1 = cursor.execute("SELECT * FROM states")
-        cursor.execute(
-            """INSERT INTO states(name, id, created_at, updated_at) VALUES\
-                    ('California', '123456678', '2019-08-15T17:50:56.590977',\
-                    '2019-08-15T17:50:56.590977')""")
-        number2 = cursor.execute("SELECT * FROM states")
-        self.assertEqual(number1 + 1, number2)
 
 
 class TestFileStorage(unittest.TestCase):
