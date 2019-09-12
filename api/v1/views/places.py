@@ -44,7 +44,7 @@ def delete_place_id(place_id):
 def create_places(city_id):
     """ Route create place with POST"""
     if storage.get("City", city_id) is None:
-        abort(404)        
+        abort(404)
     if request.is_json:
         data = request.get_json()
         if 'user_id' not in data:
