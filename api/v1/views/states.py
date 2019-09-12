@@ -26,7 +26,7 @@ def state_route():
             abort(400, 'Missing name')
         new_state_obj = State(**new_state)
         new_state_obj.save()
-        return jsonify(new_state_obj), 201
+        return jsonify(new_state_obj.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
@@ -40,7 +40,7 @@ def state_id_route(state_id):
         return jsonify(states.to_dict())
     if request.method == 'DELETE':
         '''DELETE removes from db the specific state object'''
-        states.delete()
+        storage.delete(states)
         storage.save()
         return {}, 200
     if request.method == 'PUT':
@@ -51,5 +51,6 @@ def state_id_route(state_id):
         ignore_keys = ["id", "created_at", "updated_at"]
         for key, val in state_put.items():
             if key not in ignore_keys:
-                setattr(state_put, key, val)
-        return make_response(jsonify(state_put.to_dict()), 200)
+                setattr(states, key, val)
+                states.save()
+        return make_response(jsonify(states.to_dict()), 200)
