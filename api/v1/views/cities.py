@@ -3,7 +3,7 @@
 """ Module for cities
 """
 from api.v1.views import app_views
-from flask import jsonify, request, make_response
+from flask import jsonify, request, make_response, abort
 from models import storage
 from models.state import State
 from models.city import City
@@ -43,7 +43,7 @@ def del_city(city_id):
     if city is not None:
         storage.delete(city)
         storage.save()
-        return jsonify()
+        return jsonify({})
     return jsonify({"error": "Not found"}), 404
 
 
@@ -56,9 +56,9 @@ def create_city(state_id):
     Create a new object city
     """
     if not request.get_json():
-        return make_response(jsonify(message='Not a JSON'), 400)
+        return make_response(jsonify({"error": 'Not a JSON'}), 400)
     if 'name' not in request.get_json():
-        return make_response(jsonify(message='Missing name'), 400)
+        return make_response(jsonify({"error": 'Missing name'}), 400)
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
@@ -79,7 +79,7 @@ def update_city(city_id):
     if city is None:
         abort(404)
     if not request.get_json():
-        return make_response(jsonify(message='Not a JSON'), 400)
+        return make_response(jsonify({"error": 'Not a JSON'}), 400)
     params = request.get_json()
     skip = ['id', 'created_at', 'updated_at']
     for key, value in params.items():
