@@ -21,7 +21,7 @@ def get_all_cities(state_id=None):
     for val in cities.values():
         if val.state_id == state_id:
             city_list.append(val.to_dict())
-    
+
     return jsonify(city_list)
 
 
