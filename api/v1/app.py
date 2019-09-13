@@ -17,6 +17,7 @@ app.register_blueprint(app_views)
 h = os.environ.get("HBNB_API_HOST", "0.0.0.0")
 p = os.environ.get("HBNB_API_PORT", "5000")
 
+
 @app.teardown_appcontext
 def close(exception=None):
     """
