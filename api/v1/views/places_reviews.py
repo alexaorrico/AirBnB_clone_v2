@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" Module for cities
+""" Module for reviews
 """
 from api.v1.views import app_views
 from flask import jsonify, request, make_response, abort
