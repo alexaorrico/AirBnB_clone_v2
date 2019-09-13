@@ -57,9 +57,9 @@ def create_review(place_id=None):
     args = request.get_json()
     if args is None:
         return jsonify({"error": "Not a JSON"}), 400
-    elif 'place_id' not in args:
-        return jsonify({"error": "Missing place_id"}), 400
-    elif 'user_id' not in args:
+#    elif 'place_id' not in args:
+#        return jsonify({"error": "Missing place_id"}), 400
+    if 'user_id' not in args:
         return jsonify({"error": "Missing user_id"}), 400
     elif 'text' not in args:
         return jsonify({"error": "Missing text"}), 400
@@ -79,18 +79,34 @@ def create_review(place_id=None):
     storage.save()
     return jsonify(obj.to_dict()), 201
 
+"""
+@app_views.route("/users/", methods=["POST"], strict_slashes=False)
+def create_user():
+    ''' create a user if doesn't already exist '''
+    args = request.get_json()
+    if args is None:
+        return jsonify({"error": "Not a JSON"}), 400
+    elif 'email' not in args:
+        return jsonify({"error": "Missing email"}), 400
+    elif 'password' not in args:
+        return jsonify({"error": "Missing password"}), 400
+    obj = User(**args)
+    storage.new(obj)
+    storage.save()
+    return jsonify(obj.to_dict()), 201
+"""
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id=None):
     ''' updates an individual review '''
+    args = request.get_json()
+    if args is None:
+        return jsonify({"error": "Not a JSON"}), 400
+
     obj = storage.get('Review', review_id)
     if obj is None:
         ''' if no review obj with that id '''
         abort(404)
-
-    args = request.get_json()
-    if args is None:
-        return jsonify({"error": "Not a JSON"}), 400
 
     for k, v in args.items():
         if k not in ["id", "place_id", "user_id", "updated_at", "created_at"]:
