@@ -5,7 +5,8 @@ from models.base_model import BaseModel
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
-from models.state import State
+from models.cities import City
+from models.states import State
 
 
 @app_views.route("/states/<state_id>/cities",
@@ -64,6 +65,7 @@ def create_city(state_id):
         return respuesta
     else:
         abort(404)
+
 
 @app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
