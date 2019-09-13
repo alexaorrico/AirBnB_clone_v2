@@ -81,7 +81,7 @@ def update_place(place_id):
     if not request.get_json():
         return make_response(jsonify({"error": 'Not a JSON'}), 400)
     params = request.get_json()
-    skip = ['id', 'created_at', 'updated_at']
+    skip = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for key, value in params.items():
         if key not in skip:
             setattr(place, key, value)
