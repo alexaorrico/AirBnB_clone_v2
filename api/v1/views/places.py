@@ -79,7 +79,7 @@ def create_search():
     if request.is_json:
         data = request.get_json()
         if len(data) is 0:
-            places_l = storage.all('Place').values()
+            places_l = storage.all('Place')
         else:
             if 'states'in data and len(data["states"]) is not 0:
                 for my_states in data["states"]:
@@ -103,6 +103,8 @@ def create_search():
                                             storage.all('Place').values()))
                 if len(places_l) is 0:
                     places_l = storage.all('Place').values()
+            print(places_l)
+            print("*"*50)
             return jsonify(list(map(check_amenities, places_l))), 200
     else:
         return jsonify(error="Not a JSON"), 400
