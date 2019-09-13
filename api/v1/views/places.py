@@ -6,6 +6,15 @@ from models.city import City
 from models.place import Place
 from api.v1.views import app_views
 from flask import jsonify, abort, request
+from os import getenv
+
+
+def check_amenities(place):
+    """ helper function """
+    place_dict = place.to_dict()
+    if "amenities" in place_dict:
+        del place_dict["amenities"]
+    return place_dict
 
 
 @app_views.route('/cities/<city_id>/places')
@@ -57,6 +66,46 @@ def create_places(city_id):
         new_place = Place(**data)
         new_place.save()
         return jsonify(new_place.to_dict()), 201
+    else:
+        return jsonify(error="Not a JSON"), 400
+
+
+@app_views.route('/places_search', methods=['POST'])
+def create_search():
+    """ Route search places based on JSON """
+    amenities_l = []
+    cities_l = []
+    places_l = []
+    if request.is_json:
+        data = request.get_json()
+        if len(data) is 0:
+            places_l = storage.all('Place')
+        else:
+            if 'states'in data and len(data["states"]) is not 0:
+                for my_states in data["states"]:
+                    cities_l += storage.get('State', my_states).cities
+            if 'cities' in data and len(data["cities"]) is not 0:
+                cities_l.append(data["cities"])
+                for my_cities in cities_l:
+                    places_l += list(map(lambda x: x.places,
+                                         storage.get('City', my_cities)))
+            if 'amenities' in data and len(data["amenities"]) is not 0:
+                if getenv("HBNB_TYPE_STORAGE") == 'db':
+                    places_l += list(filter(lambda x:
+                                            all(elem in
+                                                list(map(lambda y: y.id,
+                                                         x.amenities))
+                                                for elem in data["amenities"]),
+                                            storage.all('Place').values()))
+                else:
+                    places_l += list(filter(lambda x: all(elem in x.amenity_ids
+                                            for elem in data["amenities"]),
+                                            storage.all('Place').values()))
+                if len(places_l) is 0:
+                    places_l = storage.all('Place').values()
+            print(places_l)
+            print("*"*50)
+            return jsonify(list(map(check_amenities, places_l))), 200
     else:
         return jsonify(error="Not a JSON"), 400
 
