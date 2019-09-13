@@ -14,7 +14,7 @@ def get_cities(state_id):
     state = storage.get('State', state_id)
     cities_list = []
     if state:
-        for city in state.cities.items():
+        for city in state.cities:
             cities_list.append(city.to_dict())
         return jsonify(cities_list)
     else:
@@ -55,26 +55,26 @@ def create_city(state_id):
     state = storage.get('State', state_id)
     if state:
         city = City(**data)
-        storage.new(estado)
+        city.state_id = state_id
         storage.save()
         respuesta = jsonify(city.to_dict())
         respuesta.status_code = 200
         return respuesta
 
 
-@app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
-def update_state(state_id):
-    """ Delete a State object """
+@app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
+def update_city(city_id):
+    """ Update a State object """
     if not request.is_json:
         abort(400, "Not a JSON")
-    estado = storage.get('State', state_id)
-    if estado:
-        datos = request.get_json()
-        if type(datos) is dict:
-            omitir = ['id', 'created_at', 'updated_at']
-            for name, value in datos.items():
-                if name not in omitir:
-                    setattr(estado, name, value)
-            storage.save()
-            return jsonify(estado.to_dict())
-    abort(404)
+    city = storage.get('City', city_id)
+    if city:
+        data = request.get_json()
+        omitir = ['id', 'created_at', 'updated_at']
+        for name, value in data.items():
+            if name not in omitir:
+                setattr(city, name, value)
+        storage.save()
+        return jsonify(city.to_dict()), 200
+    else:
+        abort(404)
