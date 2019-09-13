@@ -71,6 +71,23 @@ test_file_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing file storage")
+    def test_get1(self):
+        """Test validate id returned by get function"""
+        obj = models.storage.all("State")
+        if len(obj) != 0:
+            first_state_id = list(obj.values())[0].id
+            state = storage.get("State", first_state_id)
+            self.assertEqual(first_state_id, state.id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count1(self):
+        """Test validates number of State objects"""
+        objects_c1 = len(models.storage.all("State"))
+        objects_c2 = models.storage.count("State")
+        self.assertEqual(objects_c1, objects_c2)
+
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
