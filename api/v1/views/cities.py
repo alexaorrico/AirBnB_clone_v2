@@ -60,9 +60,10 @@ def create_city(state_id):
         city.state_id = state_id
         storage.save()
         respuesta = jsonify(city.to_dict())
-        respuesta.status_code = 200
+        respuesta.status_code = 201
         return respuesta
-
+    else:
+        abort(404)
 
 @app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
