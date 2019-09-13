@@ -19,7 +19,7 @@ def get_amenities():
 
 @app_views.route("/amenities/<amenity_id>", methods=['GET'],
                  strict_slashes=False)
-def get_amenities(amenities_id):
+def get_amenity(amenity_id):
     """ Retrieves a Amenity object """
     estado = storage.get('Amenity', amenity_id)
     if estado:
