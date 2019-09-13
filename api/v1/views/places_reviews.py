@@ -35,7 +35,7 @@ def reviews_by_id(review_id):
     return jsonify({"error": "Not found"}), 404
 
 
-@app_views.route('/reviews/<reviews_id>', methods=['DELETE'])
+@app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def del_review(review_id):
     """
     Delete a review by id
