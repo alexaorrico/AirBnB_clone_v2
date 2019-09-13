@@ -96,6 +96,7 @@ def create_user():
     return jsonify(obj.to_dict()), 201
 """
 
+
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id=None):
     ''' updates an individual review '''
