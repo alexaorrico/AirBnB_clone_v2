@@ -6,7 +6,9 @@ from flask import jsonify, request, abort
 from models.place import Place
 from models.review import Review
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
+                 strict_slashes=False)
 def get_all_reviews_of_place(place_id=None):
     ''' retrieves a list of all review objects of a given place '''
     place = storage.get('Place', place_id)

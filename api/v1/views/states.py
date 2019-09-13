@@ -5,6 +5,7 @@ from models import storage
 from flask import jsonify, request, abort
 from models.state import State
 
+
 @app_views.route('/states/', methods=['GET'], strict_slashes=False)
 def get_all_states():
     ''' get all state objs '''
