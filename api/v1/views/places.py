@@ -101,8 +101,8 @@ def create_search():
                     places_l += list(filter(lambda x: all(elem in x.amenity_ids
                                             for elem in data["amenities"]),
                                             storage.all('Place').values()))
-                if len(places_l) is 0:
-                    places_l = storage.all('Place').values()
+            if len(places_l) is 0:
+                places_l = storage.all('Place').values()
             return jsonify(list(map(check_amenities, places_l))), 200
     else:
         return jsonify(error="Not a JSON"), 400
