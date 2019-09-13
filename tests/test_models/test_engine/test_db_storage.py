@@ -67,9 +67,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-
-class TestFileStorage(unittest.TestCase):
-
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get1(self):
         """Verify wheter object's ID is equal by the function get"""
@@ -84,9 +81,11 @@ class TestFileStorage(unittest.TestCase):
         """Verify whether len of storage.all is equal to N of states"""
         objects_c1 = len(models.storage.all("State"))
         objects_c2 = models.storage.count("State")
-        self.assertEqual(objects_c1, objects_c2)
 
+
+class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
