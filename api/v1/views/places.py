@@ -79,7 +79,7 @@ def create_search():
     if request.is_json:
         data = request.get_json()
         if len(data) is 0:
-            places_l = storage.all('Place').values()
+            places_l = storage.all('Place')
         else:
             if 'states'in data and len(data["states"]) is not 0:
                 for my_states in data["states"]:
@@ -100,7 +100,7 @@ def create_search():
                 else:
                     places_l += list(filter(lambda x: all(elem in x.amenity_ids
                                             for elem in data["amenities"]),
-                                            storage.all('Place').values()))
+                                            storage.all('Place').values()
             if len(places_l) is 0:
                 places_l = storage.all('Place').values()
             return jsonify(list(map(check_amenities, places_l))), 200
