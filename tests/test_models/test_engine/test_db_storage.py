@@ -86,3 +86,84 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_db_get(self):
+        """Test for get request"""
+        s = State(name="test_state_please_delete")
+        s.save()
+        self.assertEqual(models.storage.get("State", s.id), s)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_dbs_count(self):
+        """test for count request"""
+        count = models.storage.count("State")
+        s = State(name="test_state_please_delete")
+        s.save()
+        self.assertEqual(models.storage.count("State"), count + 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete_user_and_its_place_and_review(self):
+        """tests deleting a user associated with a place"""
+        from models import storage
+        n = str(randint(0, 100))
+        s = State(name="TestState" + n)
+        s.save()
+        c = City(name="TestCity" + n, state_id=s.id)
+        c.save()
+        u = User(name="TestUser" + n, email="foo" + n, password="bar")
+        u.save()
+        p = Place(name="TestPlace" + n, city_id=c.id, user_id=u.id)
+        p.save()
+        r = Review(text="TestReview" + n, place_id=p.id, user_id=u.id)
+        r.save()
+        storage.delete(u)
+        storage.save()
+        city_key = "City." + c.id
+        state_key = "State." + c.id
+        user_key = "User." + u.id
+        place_key = "Place." + p.id
+        self.assertFalse(user_key in storage.all(User))
+        self.assertFalse(place_key in storage.all(Place))
+        self.assertTrue(state_key in storage.all(City))
+        self.assertTrue(city_key in storage.all(State))
+        self.assertFalse(("Review." + r.id) in storage.all(Place))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete_place(self):
+        """test deleting the user of a place"""
+        from models import storage
+        n = str(randint(0, 100))
+        s = State(name="TestState" + n)
+        s.save()
+        c = City(name="TestCity" + n, state_id=s.id)
+        c.save()
+        u = User(name="TestUser" + n, email="foo" + n, password="bar")
+        u.save()
+        p = Place(name="TestPlace" + n, city_id=c.id, user_id=u.id)
+        p.save()
+        storage.delete(p)
+        storage.save()
+        self.assertTrue(("User." + u.id) in storage.all(User))
+        self.assertFalse(("Place." + p.id) in storage.all(Place))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete_place_with_review(self):
+        """test deleting a place and its review """
+        from models import storage
+        n = str(randint(0, 100))
+        s = State(name="TestState" + n)
+        s.save()
+        c = City(name="TestCity" + n, state_id=s.id)
+        c.save()
+        u = User(name="TestUser" + n, email="foo" + n, password="bar")
+        u.save()
+        p = Place(name="TestPlace" + n, city_id=c.id, user_id=u.id)
+        p.save()
+        r = Review(text="TestReview" + n, place_id=p.id, user_id=u.id)
+        r.save()
+        storage.delete(p)
+        storage.save()
+        self.assertTrue(("User." + u.id) in storage.all(User))
+        self.assertFalse(("Place." + p.id) in storage.all(Place))
+        self.assertFalse(("Review." + r.id) in storage.all(Review))
