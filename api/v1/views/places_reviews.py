@@ -68,7 +68,7 @@ def create_review(place_id):
     if place is None:
         abort(404)
     review = request.get_json()
-    user = storage.get("User", review[user_id])
+    user = storage.get("User", review['user_id'])
     if user is None:
         abort(404)
     review['place_id'] = place_id
