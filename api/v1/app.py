@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""""""
+"""
+Build Flask Application
+"""
 from os import getenv
 from flask import Flask
 from models import storage
