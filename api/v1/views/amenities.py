@@ -20,14 +20,11 @@ def amenities():
 
     if request.method == 'POST':
         request_json = request.get_json()
-        if not isinstance(request_json, dict):
-            abort(400, 'Not a JSON')
+        if not request_json:
+            return jsonify(error='Not a JSON')
         if 'name' not in request_json:
-            abort(400, 'Missing name')
-        amenity = storage.get('Amenity, amenity_id')
-        for key, value in request_json.items():
-            if key != "__class__":
-                setattr(amenity, key, value)
+            return jsonify(error='Missing name')
+        amenity = Amenity(**request_json)
         storage.new(amenity)
         storage.save()
         return jsonify(amenity.to_dict())
@@ -57,7 +54,7 @@ def amenity(amenity_id=None):
     if request.method == 'PUT':
         request_json = request.get_json()
         if not isinstance(request_json, dict):
-            abort(400, error='Not a JSON')
+            return jsonify(error='Not a JSON')
         amenity = storage.get('Amenity', amenity_id)
         if amenity:
             for key, value in request_json.items():
