@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from flask import request, abort, jsonify
 from models import storage
-from models.cities import City
+from models.city import City
 from api.v1.views import app_views
 
 
@@ -21,15 +21,18 @@ def cities(state_id=None):
 
     if request.method == 'POST':
         request_json = request.get_json()
-        if not isinstance(request_json, dict):
-            abort(400, 'Not a JSON')
+        if not request_json:
+            return jsonify({'error': 'Not a JSON'}), 200
         if 'name' not in request_json:
-            abort(400, 'Missing name')
-        request_json['state_id'] = state_id
-        city = City(**request_json)
-        storage.new(city)
-        storage.save()
-        return jsonify(city.to_dict())
+            return jsonify({'error': 'Missing name'}), 200
+        state = storage.get('State', state_id)
+        if state:
+            request_json['state_id'] = state_id
+            city = City(**request_json)
+            storage.new(city)
+            storage.save()
+            return jsonify(city.to_dict())
+        abort(404)
 
 @app_views.route('/cities/<city_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
