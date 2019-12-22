@@ -35,7 +35,7 @@ def amenity(place_id=None, amenity_id=None):
         place = storage.get('Place', place_id)
         amenity = storage.get('Amenity', amenity_id)
         if place and amenity and amenity_id in place.amenities:
-            delattr(place.amenities, amenity_id)
+            place.amenities.remove(amenity)
             storage.save()
             return jsonify({}), 200
         abort(404)
@@ -44,6 +44,6 @@ def amenity(place_id=None, amenity_id=None):
         place = storage.get('Place', place_id)
         amenity = storage.get('Amenity', amenity_id)
         if place and amenity and amenity_id not in place.amenities:
-            setattr(place.amenities, amenity_id, amenity)
+            place.amenities.append(amenity)
             storage.save()
             return jsonify(amenity.to_dict()), 201
