@@ -55,7 +55,7 @@ class DBStorage:
         """
         Method to retrieve one object
         """
-        if cls and id and isinstance(cls, str) and isinstance(id, str):
+        if id and cls and isinstance(cls, str) and isinstance(id, str):
             objs = self.__session.query(classes[cls]).all()
             for obj in objs:
                 if obj.id == id:

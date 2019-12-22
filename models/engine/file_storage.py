@@ -38,7 +38,7 @@ class FileStorage:
         """
         Method to retrieve one object
         """
-        if cls and id and isinstance(cls, str) and isinstance(id, str):
+        if id and cls and isinstance(cls, str) and isinstance(id, str):
             key = cls + '.' + id
             return self.__objects[key]
 
