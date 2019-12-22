@@ -47,3 +47,4 @@ def amenity(place_id=None, amenity_id=None):
             place.amenities.append(amenity)
             storage.save()
             return jsonify(amenity.to_dict()), 201
+        abort(404)
