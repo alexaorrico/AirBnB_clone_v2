@@ -18,9 +18,11 @@ def cities(state_id=None):
     if request.method == 'GET':
         list_cities = []
         state = storage.get('State', state_id)
-        for city in state.cities:
-            list_cities.append(city.to_dict())
-        return jsonify(list_cities), 200
+        if state:
+            for city in state.cities:
+                list_cities.append(city.to_dict())
+            return jsonify(list_cities), 200
+        abort(404)
 
     if request.method == 'POST':
         request_json = request.get_json()
