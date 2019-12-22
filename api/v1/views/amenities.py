@@ -24,9 +24,9 @@ def amenities():
     if request.method == 'POST':
         request_json = request.get_json()
         if not request_json:
-            return jsonify(error='Not a JSON')
+            return jsonify(error='Not a JSON'), 400
         if 'name' not in request_json:
-            return jsonify(error='Missing name')
+            return jsonify(error='Missing name'), 400
         amenity = Amenity(**request_json)
         storage.new(amenity)
         storage.save()
@@ -57,7 +57,7 @@ def amenity(amenity_id=None):
     if request.method == 'PUT':
         request_json = request.get_json()
         if not request_json:
-            return jsonify(error='Not a JSON')
+            return jsonify(error='Not a JSON'), 400
         amenity = storage.get('Amenity', amenity_id)
         if amenity:
             for key, value in request_json.items():
