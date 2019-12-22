@@ -20,14 +20,11 @@ def states():
 
     if request.method == 'POST':
         request_json = request.get_json()
-        if not isinstance(request_json, dict):
-            abort(400, 'Not a JSON')
+        if request_json:
+            return jsonify(error='Not a JSON'), 400
         if 'name' not in request_json:
-            abort(400, 'Missing name')
-        state = State(request_json)
-        for key, value in request_json.items():
-            if key != "__class__":
-                setattr(state, key, value)
+            return jsonify(error='Missing name'), 400
+        state = State(**request_json)
         storage.new(state)
         storage.save()
         return jsonify(state.to_dict())
@@ -57,7 +54,7 @@ def state(state_id=None):
     if request.method == 'PUT':
         request_json = request.get_json()
         if not isinstance(request_json, dict):
-            abort(400, error='Not a JSON')
+            return jsonify(error='Not a JSON'), 400
         state = storage.get('State', state_id)
         if state:
             for key, value in request_json.items():
