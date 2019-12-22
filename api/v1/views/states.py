@@ -19,7 +19,7 @@ def states():
         states = storage.all('State').values()
         for state in states:
             list_states.append(state.to_dict())
-        return jsonify(list_states)
+        return jsonify(list_states), 200
 
     if request.method == 'POST':
         request_json = request.get_json()
@@ -30,7 +30,7 @@ def states():
         state = State(**request_json)
         storage.new(state)
         storage.save()
-        return jsonify(state.to_dict())
+        return jsonify(state.to_dict()), 200
 
 
 @app_views.route('/states/<state_id>',
@@ -43,7 +43,7 @@ def state(state_id=None):
     if request.method == 'GET':
         state = storage.get('State', state_id)
         if state:
-            return jsonify(state.to_dict())
+            return jsonify(state.to_dict()), 200
         abort(404)
 
     if request.method == 'DELETE':

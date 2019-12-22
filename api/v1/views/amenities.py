@@ -56,7 +56,7 @@ def amenity(amenity_id=None):
 
     if request.method == 'PUT':
         request_json = request.get_json()
-        if not isinstance(request_json, dict):
+        if not request_json:
             return jsonify(error='Not a JSON')
         amenity = storage.get('Amenity', amenity_id)
         if amenity:
