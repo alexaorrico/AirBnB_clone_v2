@@ -61,8 +61,8 @@ def city(city_id=None):
 
     if request.method == 'PUT':
         request_json = request.get_json()
-        if not request:
-            return jsonify({'error': 'Not a JSON'}), 200
+        if not request_json:
+            return jsonify(error='Not a JSON'), 200
         city = storage.get('City', city_id)
         if city:
             for key, value in request_json.items():

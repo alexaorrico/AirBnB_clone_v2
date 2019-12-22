@@ -30,7 +30,7 @@ def amenities():
         amenity = Amenity(**request_json)
         storage.new(amenity)
         storage.save()
-        return jsonify(amenity.to_dict()), 200
+        return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>',

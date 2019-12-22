@@ -23,7 +23,7 @@ def states():
 
     if request.method == 'POST':
         request_json = request.get_json()
-        if request_json:
+        if not request_json:
             return jsonify(error='Not a JSON'), 400
         if 'name' not in request_json:
             return jsonify(error='Missing name'), 400
