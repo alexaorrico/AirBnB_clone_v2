@@ -34,7 +34,7 @@ def cities(state_id=None):
             city = City(**request_json)
             storage.new(city)
             storage.save()
-            return jsonify(city.to_dict()), 200
+            return jsonify(city.to_dict()), 201
         abort(404)
 
 

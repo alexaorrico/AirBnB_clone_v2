@@ -30,7 +30,7 @@ def states():
         state = State(**request_json)
         storage.new(state)
         storage.save()
-        return jsonify(state.to_dict()), 200
+        return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>',
