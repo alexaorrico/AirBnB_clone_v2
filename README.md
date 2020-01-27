@@ -157,8 +157,8 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 - AirBnB_clone_v3
-David Peralta - [Github](https://github.com/david-develop) / [Twitter](https://twitter.com/davico_net)
-Juan David Marin Bernal - [Github](https://github.com/Teslothorcha) / [Twitter](https://twitter.com/Teslothorcha)
+David Peralta :) - [Github](https://github.com/david-develop) / [Twitter](https://twitter.com/davico_net)
+Juan David Marin Bernal :) - [Github](https://github.com/Teslothorcha) / [Twitter](https://twitter.com/Teslothorcha)
 
 Second part of Airbnb: Joann Vuong
 ## License
