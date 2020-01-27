@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-File that configures the routes of the app
+File that configures the routes of index
 """
 from api.v1.views import app_views
 from flask import jsonify
@@ -32,7 +32,6 @@ def stats():
     obj_count = {}
 
     for key, val in objects.items():
-        print(key + " " + val + " " + str(storage.count(key)))
         obj_count[val] = storage.count(key)
 
     return jsonify(obj_count)

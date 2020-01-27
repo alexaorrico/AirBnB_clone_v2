@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-App file of the program
+This method is the controller of the app
 """
 from flask import Flask
 from models import storage
@@ -18,9 +18,12 @@ def error_404(error):
     """error 404 Not found"""
     return (jsonify(error="Not found"), 404)
 
+
 @app.teardown_appcontext
 def close_sesssion(_):
+    """method that close the session"""
     storage.close()
+
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
