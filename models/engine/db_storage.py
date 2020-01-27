@@ -15,6 +15,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -74,3 +75,16 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """brings only one object with the id"""
+        try:
+            obj = self.__session.query(eval(cls)).filter_by(id=id).first()
+            return obj
+        except NoResultFound as e:
+            print(e)
+            return None
+
+    def count(self, cls=None):
+        mydict = self.all(cls)
+        return len(mydict)
