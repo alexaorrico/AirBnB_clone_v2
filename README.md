@@ -160,7 +160,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 
 Third part of Airbnb:
-Marco Chan - [Github](https://github/com/inspiredtolive) / [Twitter](https://twitter.com/MarcoCodes)
+Marco Chan - [Github](https://github/com/inspiredtolive) / [Twitter](https://twitter.com/MarcoCodes)  
 Alia Vang - [Github](https://github.com/aliavang)
 ## License
 Public Domain. No copy write protection.
