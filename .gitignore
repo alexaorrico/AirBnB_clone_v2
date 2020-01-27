@@ -1,0 +1,4 @@
+/* Ignoring pyc files */
+*.pyc
+/* Ignoring test files */
+file.json
