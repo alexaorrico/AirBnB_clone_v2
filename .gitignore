@@ -1,0 +1,38 @@
+# Ignore all
+*
+
+# Unignore all files with extensions
+!*.*
+!*AUTHORS
+
+# Unignore all dirs
+!*/
+
+# Ignore emacs autosave~ and #modified# files
+*~
+**/*~
+**/\#*
+**/.\#*
+
+# Ignore __pycache__
+**/__pycache__
+
+# Ignore main files
+**/*main.c
+**/*main.py
+**/*.json
+
+# Ignore object files and libraries
+*.o
+*.ko
+*.obj
+*.elf
+
+# Ignore _putchar.c and a.out
+**/_putchar.c
+**/a.out
+
+# Ignore OS generated files
+.DS_Store
+.DS_Store?
+._*
