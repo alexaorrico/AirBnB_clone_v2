@@ -97,8 +97,8 @@ class TestDBCount(unittest.TestCase):
 
     def test_count_class_int(self):
         """Test that return type is int"""
-        for klass in classes:
-            self.assertIs(type(models.storage.count(klass)), int)
+        for class_in_dic in classes:
+            self.assertIs(type(models.storage.count(class_in_dic)), int)
 
     def test_correct_count_return(self):
         """ Test the return value of count """
@@ -106,17 +106,18 @@ class TestDBCount(unittest.TestCase):
 
     def test_correct_count_class_return(self):
         """ Test the return value of count when class is passed """
-        for klass in classes:
-            self.assertEqual(models.storage.count(klass),
-                             len(models.storage.all(klass)))
+        for class_in_dic in classes:
+            self.assertEqual(models.storage.count(class_in_dic),
+                             len(models.storage.all(class_in_dic)))
 
 
+""" Saved test case
 class TestDBGet(unittest.TestCase):
-    """ Test for get func """
+    Test for get func
 
     def test_get_obj(self):
-        """ Test that return type is int """
+         Test that return type is int
         storage = DBStorage()
         new_state = State("California")
         storage.new(new_state)
-        self.assertEqual(storage.get("State", new_state.id), new_state)
+        self.assertEqual(storage.get("State", new_state.id), new_state)"""

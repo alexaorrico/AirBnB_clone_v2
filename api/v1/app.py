@@ -10,6 +10,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(self):
+    """ App closes storage when closed """
     storage.close()
 
 
