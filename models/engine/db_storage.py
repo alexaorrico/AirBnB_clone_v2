@@ -79,7 +79,7 @@ class DBStorage:
         """return a count of objects within a class"""
         if cls is None or id is None:
             return None
-        obj = self.__session.query().get(id)
+        obj = self.__session.query(classes[cls]).get(id)
         return obj
 
     def count(self, cls=None):
