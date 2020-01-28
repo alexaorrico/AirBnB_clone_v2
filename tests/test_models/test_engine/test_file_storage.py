@@ -113,3 +113,26 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_fs_get(self):
+        """testing the get
+        method to gather object"""
+        from models import storage
+        first_state_id = list(storage.all("State").values())[0].id
+        state_obj = storage.get("State", first_state_id)
+        self.assertIsInstance(state_obj, State)
+        self.assertEqual(state_obj.id, first_state_id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_fs_count(self):
+        """Testing the count method"""
+        from models import storage
+        initial_all = storage.count()
+        initial_user = storage.count("User")
+        new_user = User(name="test_user", password="test", email="test@test.com")
+        storage.new(new_user)
+        storage.save()
+        self.assertNotEqual(initial_all, storage.count())
+        self.assertNotEqual(initial_user, storage.count("User"))
+        storage.delete(new_user)
