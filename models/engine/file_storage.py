@@ -26,6 +26,10 @@ class FileStorage:
 
     def all(self, cls=None):
         """returns the dictionary __objects"""
+        if type(cls) is str:
+            cls = classes.get(cls)
+            if not cls:
+                return {}
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
