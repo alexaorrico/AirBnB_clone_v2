@@ -2,6 +2,10 @@
 from flask import jsonify
 from models import storage
 from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 from flask import abort, request, make_response
 
 
@@ -39,12 +43,26 @@ class ApiMethod:
     def update_objects(self, cls, obj_id, **kwargs):
         obj = storage.get(cls, obj_id)
         if obj:
-
             for key, value in kwargs.items():
                 setattr(obj, key, value)
-
-                storage.save()
-
-                return obj.to_dict()
+            storage.save()
+            print(obj.to_dict())
+            return obj.to_dict()
         else:
             return None
+    def get_object_byid(self, cls, obj_id):
+        """ retrieve ojects associated to another Object. ej: an state
+            has many cities """
+        clss = {'cities': 'State', 'amenities': 'Place', 'places': 'City',
+                'reviews': 'Place'}
+        myobj = storage.get(cls, obj_id)
+        if not myobj:
+            return None
+        mylist = []
+        att = ''
+        for k, v in clss.items():
+            if cls == v:
+                att = k
+        for obj in getattr(myobj, att):
+            mylist.append(obj.to_dict())
+        return mylist
