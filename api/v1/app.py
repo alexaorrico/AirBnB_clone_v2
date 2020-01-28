@@ -14,5 +14,11 @@ def teardown(exception):
     """close storage"""
     storage.close()
 
+
+@app.errorhandler(404)
+def error_404(error):
+    """error message in the case page is not found"""
+    return {"error" : "Not found"}, 404
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='5000', threaded=True)
