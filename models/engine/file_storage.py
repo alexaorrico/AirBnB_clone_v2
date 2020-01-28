@@ -75,3 +75,9 @@ class FileStorage:
         except Exception:
             return None
 
+        """Returns the object based on the class name and its ID, or None if not found"""
+        pass
+
+    def count(self, cls=None):
+        """Counts the number of objects in storage"""
+        pass
