@@ -80,4 +80,5 @@ class FileStorage:
 
     def count(self, cls=None):
         """Counts the number of objects in storage"""
-        pass
+        counting = len(self.all(cls))
+        return(counting)
