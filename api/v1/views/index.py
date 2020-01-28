@@ -11,6 +11,7 @@ def status():
     """return dictionary with status"""
     return {"status": "OK"}
 
+
 @app_views.route('/stats')
 def stats():
     """Retrieve number of each objects by type"""
