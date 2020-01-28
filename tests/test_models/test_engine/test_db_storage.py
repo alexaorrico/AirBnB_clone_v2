@@ -90,6 +90,7 @@ class TestFileStorage(unittest.TestCase):
 
 class TestDBCount(unittest.TestCase):
     """ Test for count func """
+
     def test_count_int(self):
         """Test that return type is int"""
         self.assertIs(type(models.storage.count()), int)
@@ -109,8 +110,10 @@ class TestDBCount(unittest.TestCase):
             self.assertEqual(models.storage.count(klass),
                              len(models.storage.all(klass)))
 
+
 class TestDBGet(unittest.TestCase):
     """ Test for get func """
+
     def test_get_obj(self):
         """ Test that return type is int """
         storage = DBStorage()

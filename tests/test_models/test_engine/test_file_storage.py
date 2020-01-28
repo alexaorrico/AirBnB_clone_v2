@@ -137,7 +137,9 @@ class TestFileStorage(unittest.TestCase):
     def test_count_class(self):
         """Test that count the number of objects of one class"""
         for klass in classes:
-            self.assertEqual(models.storage.count(klass), len(models.storage.all(klass)))
+            self.assertEqual(
+                models.storage.count(klass), len(
+                    models.storage.all(klass)))
 
     def test_count_type(self):
         """Test type of response of count alone"""
