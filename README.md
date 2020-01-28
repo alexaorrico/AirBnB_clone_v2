@@ -64,13 +64,13 @@ Classes inherited from Base Model:
 * `def reload(self)` -  deserializes the JSON file to __objects
 
 #### `/models/engine` directory contains DBStorage class that handles MySQL database storage:
-[db_storage.py](/models/engine/file_storage.py) - directory contains DBStorage class that handles MySQL database storage
-* `def all(self)` - returns the dictionary __objects
-* `def get(self, cls, id)` - gets an object from the dictionary __objects
+[db_storage.py](/models/engine/db_storage.py) - directory contains DBStorage class that handles MySQL database storage
+* `def all(self)` - gets all or objects of a certain type
+* `def get(self, cls, id)` - gets an object from the database
 * `def count(self, cls=None)` - count the objects of type cls, or all if cls is None
-* `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
-* `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* `def reload(self)` -  deserializes the JSON file to __objects
+* `def new(self, obj)` - insert obj with key <obj class name>.id
+* `def save(self)`  - commit transactions to the database
+* `def reload(self)` -  reconnect to the database
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
