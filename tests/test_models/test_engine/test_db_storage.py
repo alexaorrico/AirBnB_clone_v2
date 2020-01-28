@@ -86,3 +86,38 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBCount(unittest.TestCase):
+    """ Test for count func """
+
+    def test_count_int(self):
+        """Test that return type is int"""
+        self.assertIs(type(models.storage.count()), int)
+
+    def test_count_class_int(self):
+        """Test that return type is int"""
+        for class_in_dic in classes:
+            self.assertIs(type(models.storage.count(class_in_dic)), int)
+
+    def test_correct_count_return(self):
+        """ Test the return value of count """
+        self.assertEqual(models.storage.count(), len(models.storage.all()))
+
+    def test_correct_count_class_return(self):
+        """ Test the return value of count when class is passed """
+        for class_in_dic in classes:
+            self.assertEqual(models.storage.count(class_in_dic),
+                             len(models.storage.all(class_in_dic)))
+
+
+""" Saved test case
+class TestDBGet(unittest.TestCase):
+    Test for get func
+
+    def test_get_obj(self):
+         Test that return type is int
+        storage = DBStorage()
+        new_state = State("California")
+        storage.new(new_state)
+        self.assertEqual(storage.get("State", new_state.id), new_state)"""

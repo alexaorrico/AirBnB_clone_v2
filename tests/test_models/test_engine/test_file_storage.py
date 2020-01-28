@@ -113,3 +113,38 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Test that retrieve correctly the object requested"""
+        storage = FileStorage()
+        new_state = State("California")
+        storage.new(new_state)
+        self.assertEqual(storage.get("State", new_state.id), new_state)
+
+    def test_types_cls_id_get(self):
+        """Test the type of cls and id is str"""
+        pass
+
+    def test_get_notFound(self):
+        """Test that get doesnt found """
+        storage = FileStorage()
+        self.assertEqual(storage.get("State", "This is false"), None)
+
+    def test_count(self):
+        """Test the count of a class"""
+        self.assertEqual(models.storage.count(), len(models.storage.all()))
+
+    def test_count_class(self):
+        """Test that count the number of objects of one class"""
+        for class_in_dic in classes:
+            self.assertEqual(
+                models.storage.count(class_in_dic), len(
+                    models.storage.all(class_in_dic)))
+
+    def test_count_type(self):
+        """Test type of response of count alone"""
+        self.assertIs(type(models.storage.count()), int)
+
+    def test_count_class_type(self):
+        """Test type of response of count passing a class"""
+        self.assertIs(type(models.storage.count("State")), int)
