@@ -9,15 +9,15 @@ def get_status():
 
 @app_views.route('/stats', methods=['GET'])
 def get_stats():
-    objects = {
-        "amenities": 0,
-        "cities": 0,
-        "places": 0,
-        "reviews": 0,
-        "states": 0,
-        "users": 0
-    }
-    for key in objects.keys():
-        objects[key] = storage.count(key[0].upper+key[1:])
-    return jsonify(objects)
+    return jsonify({
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
+    })
+    #for key in objects.keys():
+        #objects[key] = key[0].upper()+key[1:-1]storage.count(key[0].upper()+key[1:-1])
+   # return jsonify(objects)
 
