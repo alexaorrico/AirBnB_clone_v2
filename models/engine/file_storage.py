@@ -39,6 +39,10 @@ class FileStorage:
         key = '{}.{}'.format(cls, id)
         return self.all(cls).get(key)
 
+    def count(self, cls=None):
+        """count the objects of type cls, or all if cls is None"""
+        return len(self.all(cls))
+
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:

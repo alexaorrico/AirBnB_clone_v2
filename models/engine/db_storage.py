@@ -56,6 +56,10 @@ class DBStorage:
         key = '{}.{}'.format(cls, id)
         return self.all(cls).get(key)
 
+    def count(self, cls=None):
+        """count the objects of type cls, or all if cls is None"""
+        return len(self.all(cls))
+
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
@@ -74,7 +78,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = Session()
 
     def close(self):
         """call remove() method on the private session attribute"""
