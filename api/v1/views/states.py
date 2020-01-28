@@ -14,12 +14,14 @@ def get_states():
     return jsonify(states_list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE'],
+                 strict_slashes=False)
 def get_states_id(state_id):
     if request.method == 'GET':
         states_all = storage.all("State")
         try:
-            unique_state = states_all["{}.{}".format("State", state_id)].to_dict()
+            unique_state = states_all["{}.{}".format("State",
+                                                     state_id)].to_dict()
         except KeyError:
             abort(404)
         return jsonify(unique_state)
@@ -46,3 +48,21 @@ def post_states():
     storage.new(new_state)
     storage.save()
     return(jsonify(new_state.to_dict())), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def put_states(state_id):
+    states_all = storage.all("State")
+    try:
+        unique_state = states_all["{}.{}".format("State", state_id)]
+        json_tmp = request.get_json()
+        if not json_tmp:
+            return jsonify("Not a JSON"), 400
+        for key, value in json_tmp.items():
+            if key == 'id' or key == 'updated_at' or key == 'created_at':
+                pass
+            setattr(unique_state, key, value)
+        unique_state.save()
+    except KeyError:
+        abort(404)
+    return jsonify(unique_state.to_dict()), 200
