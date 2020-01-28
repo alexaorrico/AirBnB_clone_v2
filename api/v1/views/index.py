@@ -1,15 +1,13 @@
 #!/usr/bin/python3
-# import api.v1.views
-from flask import Flask
+from flask import Flask, jsonify
 from api.v1.views import app_views
-from json import dumps, loads
 from models import storage
 
 
 @app_views.route('/status')
 def status():
     """returns status ok"""
-    return (loads('{"status": "OK"}'))
+    return (jsonify({"status": "OK"}))
 
 
 @app_views.route('/stats')
@@ -28,4 +26,4 @@ def numtypes():
     userC = storage.count("User")
     dicty["users"] = userC
 
-    return loads(dumps(dicty))
+    return jsonify(dicty)
