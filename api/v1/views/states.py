@@ -3,7 +3,7 @@
 File that configures the routes of state
 """
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from models.state import State
 from models import storage
 
@@ -25,7 +25,9 @@ def get_state(state_id=None):
     else:
         abort(404)
 
-@app_views.route("/states/<state_id>", methods=['DELETE'], strict_slashes=False)
+
+@app_views.route("/states/<state_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id=None):
     """
     deletes a State object
@@ -37,3 +39,19 @@ def delete_state(state_id=None):
         return jsonify({})
     else:
         abort(404)
+
+
+@app_views.route("/states", methods=["POST"],
+                 strict_slashes=False)
+def post_state():
+    data = request.get_json()
+
+    if data:
+        if "name" in data:
+            obj = State(**data)
+            obj.save()
+            return (jsonify(obj.to_dict()), 201)
+        else:
+            abort(400, "Missing name")
+    else:
+        abort(400, "Not a JSON")
