@@ -15,7 +15,8 @@ def get_all_amenities():
     return jsonify([amenity.to_dict() for amenity in amenity_dict.values()])
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['GET'])
 def get_amenity(amenity_id):
     """Gets an Amenity by id."""
     amenity = storage.get("Amenity", amenity_id)
@@ -32,6 +33,7 @@ def delete_amenity(amenity_id):
     if amenity is None:
         abort(404)
     storage.delete(amenity)
+    storae.save()
     return {}, 200
 
 
@@ -48,7 +50,8 @@ def post_amenities():
     return new_amenity.to_dict(), 201
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
+                 methods=['PUT'])
 def update_amenity(amenity_id):
     """Updates an Amenity."""
     ignore = ["id", "created_at", "updated_at"]
@@ -61,5 +64,5 @@ def update_amenity(amenity_id):
     for key, value in json_data.items():
         if key not in ignore:
             setattr(amenity, key, value)
-    amenity.save()
+    storage.save()
     return amenity.to_dict(), 200
