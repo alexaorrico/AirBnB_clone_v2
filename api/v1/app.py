@@ -1,4 +1,4 @@
-#!/user/bin/python3
+#!/usr/bin/python3
 """
 App file for APi project
 """
@@ -19,9 +19,9 @@ def Teardown(self):
 
 @app.errorhandler(404)
 def error_handler(error):
-    """mondá """
+    """Function to handle error 404 """
     error_dict = {"error": "Not found"}
-    return jsonify(error_dict)
+    return jsonify(error_dict), 404
 
 
 if __name__ == "__main__":
