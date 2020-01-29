@@ -64,5 +64,22 @@ def set_task_POST():
     return jsonify(state_post.to_dict()), 201
 
 
+@app_views.route("/states/<string:state_id>", methods=['PUT'],
+                 strict_slashes=False)
+def set_task_PUT(state_id):
+    """
+    method PUT
+    """
+    state = storage.get("State", state_id)
+    if not request.json:
+        return jsonify({"error": "Not a JSON"}), 404
+    if state is None:
+        abort(404)
+    for atriv, val in request.get_json().items():
+        setattr(state, atriv, val)
+    storage.save()
+    return jsonify(state.to_dict())
+
+
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
