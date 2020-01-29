@@ -78,7 +78,7 @@ def set_task_PUT(state_id):
     for atriv, val in request.get_json().items():
         setattr(state, atriv, val)
     storage.save()
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 200
 
 
 if __name__ == "__main__":
