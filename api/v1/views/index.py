@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 '''
 routes:
-returns status: Ok - /status
-returns the number of instance - /stats
+/status
+/stats
 '''
 from api.v1.views import app_views
 from flask import jsonify
@@ -11,11 +11,13 @@ from models import storage
 
 @app_views.route('/status')
 def status():
+    """returns status: Ok"""
     return jsonify({'status': 'OK'})
 
 
 @app_views.route('/stats')
 def stats():
+    """returns the number of instance"""
     stat = {
         'amenities': storage.count('Amenity'),
         'cities': storage.count('City'),
