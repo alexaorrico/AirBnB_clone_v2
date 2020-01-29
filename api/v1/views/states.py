@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" states api"""
 
 from flask import jsonify
 from models import storage
@@ -12,6 +13,7 @@ from flask import abort, request, make_response
 @app_views.route("/states", methods=['GET', 'POST'], strict_slashes=False)
 @app_views.route("/states/<state_id>", methods=['GET', 'DELETE', 'PUT'])
 def state_obj(state_id=None):
+    """ states api"""
     apimethod = ApiMethod()
     if request.method == 'GET':
         if state_id is None:
