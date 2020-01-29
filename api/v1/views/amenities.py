@@ -18,7 +18,8 @@ def fetch_all_amenities():
     return jsonify(amenities_list)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>",
+                 methods=['GET'], strict_slashes=False)
 def fetch_amenity(amenity_id):
     """Fetch a amenity"""
     amenity = storage.get("Amenity", amenity_id)
@@ -53,7 +54,8 @@ def create_amenity():
     return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>",
+                 methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
     """Updates an amenity"""
     attributes_unchanged = ['id', 'created_at', 'updated_at']
