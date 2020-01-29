@@ -73,7 +73,7 @@ def create_place(city_id):
 def update_place(place_id):
     """Updates a place"""
     attributes_unchanged = ['id', 'created_at',
-                            'updated_at', 'state_id']
+                            'updated_at', 'user_id', 'city_id']
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
