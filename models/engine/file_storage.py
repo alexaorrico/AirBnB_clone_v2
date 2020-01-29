@@ -70,6 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """call reload() method for deserializing the JSON file to objects"""
         try:
             mydict = self.all(cls)
             obj = {}
@@ -81,6 +82,7 @@ class FileStorage:
             print("error en capturar el objeto con el id")
 
     def count(self, cls=None):
+        """call reload() method for deserializing the JSON file to objects"""
         try:
             mydict = self.all(cls)
             return len(mydict)

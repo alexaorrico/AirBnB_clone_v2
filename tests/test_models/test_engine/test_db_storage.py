@@ -75,13 +75,13 @@ test_db_storage.py'])
         self.assertEqual(state.id, first_state_id)
         self.assertIsInstance(state, State)
 
-
     def test_db_count(self):
         """Test for the get method db"""
         from models import storage
         count = storage.count("State")
         self.assertEqual(type(count), type(1))
         self.assertIsNot(count, None)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""

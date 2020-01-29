@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" cities api"""
 
 from flask import jsonify
 from models import storage
@@ -12,6 +13,7 @@ from flask import abort, request, make_response
 @app_views.route("/states/<state_id>/cities",
                  methods=['GET', 'POST'], strict_slashes=False)
 def city_state(state_id=None):
+    """ cities api"""
     apimethod = ApiMethod()
     if request.method == 'GET':
         if not state_id:
@@ -41,6 +43,7 @@ def city_state(state_id=None):
 @app_views.route("/cities/<city_id>",
                  methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def city(city_id=None):
+    """ cities api"""
     print('entre a RUTA')
     apimethod = ApiMethod()
     if request.method == 'GET':
