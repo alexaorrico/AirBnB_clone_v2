@@ -45,13 +45,16 @@ def del_review_id(review_id):
 def post_reviews(place_id):
     """ POST method to add a review for place of id """
     data = request.get_json()
-    catch_place = storage.get('Place', place_id)
-    if catch_place is None:
-        abort(404)
     if not data:
         abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
+    if 'user_id' not in data:
+        abort(400, 'Missing user_id')
+    if 'text' not in data:
+        abort(400, 'Missing text')
+    catch_place = storage.get('Place', place_id)
+    catch_user = storage.get('User', data['user_id'])
+    if catch_place is None or catch_user is None:
+        abort(404)
     new_review = Review(**data)
     new_review.place_id = place_id
     new_review.save()
@@ -68,7 +71,7 @@ def put_reviews_id(review_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if key not in ['id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'created_at', 'updated_at']:
             setattr(catch_review, key, value)
     storage.save()
     return jsonify(catch_review.to_dict()), 200

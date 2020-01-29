@@ -24,7 +24,7 @@ def get_places_cities_id(city_id):
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place_id(place_id):
     """ Return the place form a id """
-    catch_place = storage.get('Place', pace_id)
+    catch_place = storage.get('Place', place_id)
     if catch_place is None:
         abort(404)
     return jsonify(catch_place.to_dict())
