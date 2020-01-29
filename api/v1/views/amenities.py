@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """amenities routes api"""
 
 from flask import jsonify, abort, request, make_response
