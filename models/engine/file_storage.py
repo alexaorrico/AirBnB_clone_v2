@@ -78,7 +78,7 @@ class FileStorage:
         """returns object based on the class name"""
         dict1 = self.all(cls)
         list1 = dict1.values()
-            for item in list1:
+        for item in list1:
                 if item.id == id:
                     return item
         return None
