@@ -50,17 +50,18 @@ def post_state():
     except TypeError:
         abort(make_response(jsonify("Not a JSON"), 400))
 
+
 @app_views.route("/states/<state_id>", methods=['PUT'])
 def put_state(state_id):
     """Updates a State at a given ID"""
     try:
         s = storage.get('State', state_id)
+        if s is None:
+            abort(404)
         r = request.get_json()
         for key, value in r.items():
             setattr(s, key, value)
     except AttributeError:
-        abort(404)
-    except TypeError:
         abort(make_response(jsonify("Not a JSON"), 400))
     s.save()
     return make_response(jsonify(s.to_dict()), 200)
