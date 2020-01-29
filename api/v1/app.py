@@ -21,7 +21,7 @@ def teardown_appcontext(self):
 def error404(error):
     """create a handler for 404 errors that returns a JSON-formatted 404
     status code response"""
-    error = {"error": "Not found"}
+    error_dict = {"error": "Not found"}
     return jsonify(error), 404
 
 
