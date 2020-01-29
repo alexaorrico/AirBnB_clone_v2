@@ -24,6 +24,8 @@ class DBStorage:
     """interaacts with the MySQL database"""
     __engine = None
     __session = None
+    classes = {"Amenity": "amenities", "City": "cities",
+           "Place": "places", "Review": "reviews", "State": "states", "User": "users"}
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -54,7 +56,7 @@ class DBStorage:
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
-
+        self.save()
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
@@ -63,6 +65,7 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+            self.save()
 
     def reload(self):
         """reloads data from the database"""
