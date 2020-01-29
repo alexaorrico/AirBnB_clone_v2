@@ -60,7 +60,10 @@ def create_review(place_id):
     creates a Review object
     """
     place_obj = storage.get("Place", place_id)
-    obj_request = request.get_json()
+    try:
+        obj_request = request.get_json()
+    except Exception:
+        abort(400, "Not a JSON")
     try:
         if place_obj:
             if obj_request:
