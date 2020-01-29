@@ -1,22 +1,24 @@
 #!/usr/bin/python3
+""" Review api"""
 
 from flask import jsonify
 from models import storage
-from models.city import City
+from models.review import Review
 from api.v1.views import app_views
 from api.v1.views import *
 from api.v1.views.methods import ApiMethod
 from flask import abort, request, make_response
 
 
-
-@app_views.route("/states/<state_id>/cities", methods=['GET', 'POST'], strict_slashes=False)
-def city_state(state_id=None):
+@app_views.route("/places/<place_id>/reviews",
+                 methods=['GET', 'POST'], strict_slashes=False)
+def review_place(place_id=None):
+    """ place api"""
     apimethod = ApiMethod()
     if request.method == 'GET':
-        if not state_id:
+        if not place_id:
             abort(400)
-        mylist = apimethod.get_object_byid("State", state_id)
+        mylist = apimethod.get_object_byid("Place", place_id)
         if mylist:
             return make_response(jsonify(mylist), 200)
         else:
@@ -25,34 +27,38 @@ def city_state(state_id=None):
     if request.method == 'POST':
         if not request.json:
             abort(400, "Not a JSON")
-        if not 'name' in request.json:
-            abort(400, "Missing name")
+        if 'user_id' not in request.json:
+            abort(400, "Missing user_id")
+        if 'text' not in request.json:
+            abort(400, "Missing text")
 
         mydict = request.get_json()
-        myobj = storage.get('State', state_id)
-        if myobj:
+        myuser = storage.get('User', mydict['user_id'])
+        myobj = storage.get('Place', place_id)
+        if myobj and myuser:
             mydict['state_id'] = state_id
             newObjDict = apimethod.create_object(City, **mydict)
         else:
             abort(404)
         return make_response(jsonify(newObjDict), 201)
 
-@app_views.route("/cities/<city_id>", methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
-def city(city_id=None):
-    print('entre a RUTA')
+
+@app_views.route("/reviews/<review_id>",
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+def review(review_id=None):
+    """ review api"""
     apimethod = ApiMethod()
     if request.method == 'GET':
-        print('entre a GET')
-        if not city_id:
+        if not review_id:
             abort(400)
-    mydict = apimethod.get_one_object("City", city_id)
-    if not mydict:
-        abort(404)
-    else:
-        return make_response(jsonify(mydict), 200)
+        mydict = apimethod.get_one_object("Review", review_id)
+        if not mydict:
+            abort(404)
+        else:
+            return make_response(jsonify(mydict), 200)
     if request.method == 'DELETE':
-        if city_id:
-            deleteObj = apimethod.delete_one_object("City", city_id)
+        if review_id:
+            deleteObj = apimethod.delete_one_object("Review", review_id)
             if not deleteObj:
                 abort(404)
             else:
@@ -61,18 +67,16 @@ def city(city_id=None):
             abort(400)
 
     if request.method == 'PUT':
-        print('entre a put')
         if not request.json:
             abort(400, "Not a JSON")
 
         mydict = request.get_json()
 
-        list = ['id', 'created_at', 'updated_at', 'state_id']
+        list = ['id', 'created_at', 'updated_at', 'user_id', 'place_id']
         for key in list:
             if key in mydict.keys():
                 mydict.pop(key)
-        print(mydict)
-        updObjDict = apimethod.update_objects("City", city_id, **mydict)
+        updObjDict = apimethod.update_objects("Review", review_id, **mydict)
         if updObjDict:
 
             return make_response(jsonify(updObjDict), 200)
