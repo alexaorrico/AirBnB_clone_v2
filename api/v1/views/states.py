@@ -20,10 +20,12 @@ def states():
 
     if request.method == 'POST':
         request_json = request.get_json()
-        if not request_json.is_json():
-            abort(400, error='Not a JSON')
+        try:
+            request_json.is_json()
+        except Exception:
+            abort(400, 'Not a JSON')
         if 'name' not in request_json:
-            abort(400, error='Missing name')
+            abort(400, 'Missing name')
         state = State(request_json)
         for key, value in request_json.items():
             if key != "__class__":
