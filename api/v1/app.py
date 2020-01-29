@@ -11,10 +11,12 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
+
 @app.teardown_appcontext
 def closer(self):
     """method that calls storage close"""
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
