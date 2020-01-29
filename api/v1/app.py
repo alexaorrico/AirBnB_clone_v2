@@ -17,5 +17,11 @@ def session_off(self):
     """Shuts down app"""
     storage.close()
 
+
+@app.errorhandler(404)
+def not_found(error):
+    return ({"error": "Not Found"})
+
+
 if __name__ == "__main__":
     app.run(host=hst, port=prt, threaded=True)
