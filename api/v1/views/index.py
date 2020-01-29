@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """status"""
 
-from flask import jsonify
+from flask import jsonify, make_response
 from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
@@ -20,13 +20,13 @@ classes = {"amenities": Amenity,
            "users": User}
 
 
-@app_views.route("/status")
+@app_views.route("/status", strict_slashes=False)
 def status():
     """status ok"""
-    return jsonify({"status": "0K"})
+    return make_response(jsonify({"status": "0K"}), 200)
 
 
-@app_views.route("/stats")
+@app_views.route("/stats", strict_slashes=False)
 def stats():
     """count of objects by type"""
     adict = {}

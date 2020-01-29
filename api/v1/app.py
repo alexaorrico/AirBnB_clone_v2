@@ -18,7 +18,7 @@ try:
         """close"""
         storage.close()
 except:
-    print("error")
+    pass
 
 
 @app.errorhandler(404)
