@@ -32,6 +32,7 @@ def delete_state(state_id):
     state = storage.get("State", state_id)
     if state is not None:
         storage.delete(state)
+        storage.save()
         return {}, 200
     else:
         abort(404)
@@ -63,7 +64,7 @@ def update_state(state_id):
         for key, value in json_data.items():
             if key not in ignore:
                 setattr(state, key, value)
-        state.save()
+        storage.save()
         return state.to_dict(), 200
     else:
         return "Not a JSON", 400
