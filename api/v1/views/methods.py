@@ -50,6 +50,7 @@ class ApiMethod:
             return obj.to_dict()
         else:
             return None
+
     def get_object_byid(self, cls, obj_id):
         """ retrieve ojects associated to another Object. ej: an state
             has many cities """

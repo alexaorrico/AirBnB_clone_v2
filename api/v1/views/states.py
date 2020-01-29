@@ -38,7 +38,7 @@ def state_obj(state_id=None):
     if request.method == 'POST':
         if not request.json:
             abort(400, "Not a JSON")
-        if not 'name' in request.json:
+        if 'name' not in request.json:
             abort(400, "Missing name")
 
         mydict = request.get_json()

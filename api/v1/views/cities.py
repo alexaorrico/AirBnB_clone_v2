@@ -9,8 +9,8 @@ from api.v1.views.methods import ApiMethod
 from flask import abort, request, make_response
 
 
-
-@app_views.route("/states/<state_id>/cities", methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities",
+                 methods=['GET', 'POST'], strict_slashes=False)
 def city_state(state_id=None):
     apimethod = ApiMethod()
     if request.method == 'GET':
@@ -25,7 +25,7 @@ def city_state(state_id=None):
     if request.method == 'POST':
         if not request.json:
             abort(400, "Not a JSON")
-        if not 'name' in request.json:
+        if 'name' not in request.json:
             abort(400, "Missing name")
 
         mydict = request.get_json()
@@ -37,7 +37,9 @@ def city_state(state_id=None):
             abort(404)
         return make_response(jsonify(newObjDict), 201)
 
-@app_views.route("/cities/<city_id>", methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+
+@app_views.route("/cities/<city_id>",
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def city(city_id=None):
     print('entre a RUTA')
     apimethod = ApiMethod()
