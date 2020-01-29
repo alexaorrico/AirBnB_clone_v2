@@ -47,7 +47,7 @@ def post_user():
         abort(400, 'Missing password')
     new_user = User(**data)
     new_user.save()
-    return jsonify(new_user.to_dict())
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)

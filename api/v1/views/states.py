@@ -24,7 +24,7 @@ def post_states():
         abort(400, 'Missing name')
     new_state = State(**data)
     new_state.save()
-    return jsonify(new_state.to_dict())
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
