@@ -73,19 +73,13 @@ class FileStorage:
         '''
             gets a specific 'cls' object with matching 'id'
         '''
-        try:
-            for value in self.all(cls).values():
-                if value.id == id:
-                    return value
-        except BaseException:
-            return None
+        objects = self.all(cls)
+        id_object = cls + "." + id
+        if id_object in objects:
+            return objects[id_object]
         return None
 
     def count(self, cls=None):
-        '''
-           returns the number of 'cls' object or all the objects
-        '''
-        if cls is None:
-            return len(self.all())
-        else:
-            return len(self.all(cls))
+        """ Return count of objects """
+        objects = self.all(cls)
+        return len(objects)

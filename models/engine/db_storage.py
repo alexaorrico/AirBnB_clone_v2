@@ -77,21 +77,22 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        '''
-            Method to retrieve Objects
-        '''
-        try:
-            for value in self.all(cls).values():
-                if value.id == id:
-                    return value
-        except BaseException:
-            return None
-        return None
+        """returns an object based on its cls and id
+        Return:
+            returns an specific object or None if not found
+        """
+        if (cls is not None) and (id is not None):
+            dict_objs = self.all(cls)
+            k = cls + '.' + id
+            if (k in dict_objs):
+                return (dict_objs[k])
+            else:
+                return None
 
     def count(self, cls=None):
-        '''
-            Method to retrieve count of class
-        '''
-        if cls is not None:
-            return len(self.all(cls).values())
-        return len(self.all())
+        """returns an object based on its cls and id
+        Return:
+            returns an specific object or None if not found
+        """
+        dict_objs = self.all(cls)
+        return (len(dict_objs))
