@@ -18,7 +18,6 @@ def get_cities(state_id=None):
     state_obj = storage.get("State", state_id)
     if state_obj:
         for city_obj in state_obj.cities:
-            print(city_obj.to_dict())
             all_cities.append(city_obj.to_dict())
         return jsonify(all_cities)
     else:
