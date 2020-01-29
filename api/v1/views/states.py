@@ -63,6 +63,7 @@ def update_state(state_id):
         for key, value in json_data.items():
             if key not in ignore:
                 setattr(state, key, value)
+        state.save()
         return state.to_dict(), 200
     else:
         return "Not a JSON", 400
