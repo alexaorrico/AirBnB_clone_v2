@@ -9,7 +9,7 @@ from api.v1.views import app_views
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities(state_id):
-   """Return list of cities in a state"""
+    """Return list of cities in a state"""
     unique_state = storage.get("State", state_id)
     if not unique_state:
         abort(404)
