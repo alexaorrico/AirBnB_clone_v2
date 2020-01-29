@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-"""Flask application that handle cities API"""
+"""Flask application that handle cities API
 from flask import jsonify, abort, request
 from models import storage
 from models.city import City
 from api.v1.views import app_views
 
 
-"""@app_views.route('/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities(state_id):
    """ """Return list of cities in a state"""
