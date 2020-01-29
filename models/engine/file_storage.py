@@ -27,12 +27,10 @@ class FileStorage:
     def all(self, cls=None):
         """returns the dictionary __objects"""
         if cls is not None:
-            print(self.__objects)
             new_dict = {}
             for key, value in self.__objects.items():
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     new_dict[key] = value
-            print(new_dict)
             return new_dict
         return self.__objects
 
@@ -79,13 +77,7 @@ class FileStorage:
 
     def count(self, cls=None):
         """ return # of objects based on the class name"""
-        count = 0
         if cls is None:
-            for obj in self.__objects.keys():
-                count += 1
-        else:
-            for obj in self.__objects.keys():
-                if cls in obj:
-                    count +=1
+            return len(self.all())
 
-        return count
+        return len(self.all(cls))
