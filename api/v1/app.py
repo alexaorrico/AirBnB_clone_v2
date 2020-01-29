@@ -4,7 +4,7 @@ from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from os import getenv
-from flask import jsonify
+from flask import jsonify, make_response
 
 
 app = Flask(__name__)
@@ -20,10 +20,9 @@ def teardown_storage(self):
 @app.errorhandler(404)
 def page_not_found(e):
     """handler for 404 errors """
-    return jsonify({'error': "Not found"}), 404
+    return make_response(jsonify({'error': "Not found"}), 404)
 
 
 if __name__ == '__main__':
     app.run(host=getenv("HBNB_API_HOST", default="0.0.0.0"),
             port=getenv("HBNB_API_PORT", default="5000"))
-
