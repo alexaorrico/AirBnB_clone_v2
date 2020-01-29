@@ -7,7 +7,7 @@ import models
 from models import storage
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """Route /status on the object app_views that returns a
      JSON: "status": "OK"""""
@@ -15,7 +15,7 @@ def status():
     return jsonify(status)
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """An endpoint that retrieves the number of each objects by type"""""
     status = {"amenities": storage.count("Amenity"),
