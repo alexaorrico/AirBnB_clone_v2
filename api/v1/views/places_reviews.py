@@ -34,8 +34,10 @@ def review_place(place_id=None):
 
         mydict = request.get_json()
         myuser = storage.get('User', mydict['user_id'])
+        if not myuser:
+            abort(404)
         myobj = storage.get('Place', place_id)
-        if myobj and myuser:
+        if myobj:
             mydict['state_id'] = state_id
             newObjDict = apimethod.create_object(City, **mydict)
         else:
