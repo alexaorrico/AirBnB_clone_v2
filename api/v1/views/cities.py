@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Flask application that handle states API"""
+"""Flask application that handle cities API"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -40,7 +40,7 @@ def get_cities_id(city_id):
         if obj_to_delete is None:
             abort(404)
         else:
-            storage.delete(obj_to_delete)
+            obj_to_delete.delete()
             storage.save()
             return jsonify({}), 200
 
@@ -57,8 +57,7 @@ def post_city(state_id):
     except (KeyError, TypeError):
         return jsonify("Missing name"), 400
     new_city = City(**json_tmp, state_id=state_id)
-    storage.new(new_city)
-    storage.save()
+    new_city.save()
     return(jsonify(new_city.to_dict())), 201
 
 
@@ -72,7 +71,7 @@ def put_city(city_id):
         if not json_tmp:
             return jsonify("Not a JSON"), 400
         for key, value in json_tmp.items():
-            if key == 'id' or key == 'updated_at' or key == 'created_at':
+            if key == 'id' or key == 'updated_at' or key == 'created_at' or key == 'state_id':
                 pass
             setattr(unique_city, key, value)
         unique_city.save()
