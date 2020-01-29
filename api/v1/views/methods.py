@@ -39,12 +39,11 @@ class ApiMethod:
     def update_objects(self, cls, obj_id, **kwargs):
         obj = storage.get(cls, obj_id)
         if obj:
-
             for key, value in kwargs.items():
                 setattr(obj, key, value)
 
-                storage.save()
+            storage.save()
 
-                return obj.to_dict()
+            return obj.to_dict()
         else:
             return None
