@@ -3,7 +3,7 @@
 Status of your API
 """
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -22,7 +22,7 @@ def closer(self):
 @app.errorhandler(404)
 def not_found(error):
     """method that calls error pages"""
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
