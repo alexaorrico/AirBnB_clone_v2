@@ -19,6 +19,7 @@ def stats():
     stat_dict["amenities"] = storage.count("Amenity")
     stat_dict["cities"] = storage.count("City")
     stat_dict["places"] = storage.count("Place")
+    stat_dict["reviews"] = storage.count("Review")
     stat_dict["states"] = storage.count("State")
     stat_dict["users"] = storage.count("User")
     return stat_dict
