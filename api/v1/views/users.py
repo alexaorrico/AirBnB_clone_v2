@@ -78,8 +78,8 @@ def put_user(user_id=None):
             abort(400, "Not a JSON")
         if data:
             for key, value in data.items():
-                if (key != "id" and key != "created_at"
-                    and key != "updated_at" and key != "email"):
+                if (key != "id" and key != "created_at" and
+                        key != "updated_at" and key != "email"):
                     setattr(user_obj, key, value)
             user_obj.save()
             return (jsonify(user_obj.to_dict()))
