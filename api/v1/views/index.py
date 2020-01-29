@@ -6,13 +6,13 @@ from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """return dictionary with status"""
     return {"status": "OK"}
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """Retrieve number of each objects by type"""
     stat_dict = {}
