@@ -50,11 +50,11 @@ def post_user():
     """
     Route that create a new User
     """
-    if not request.json:
+    if not request.get_json():
         abort(400, "Not a JSON")
-    if 'email' not in request.json:
+    if 'email' not in request.get_json():
         abort(400, "Missing email")
-    if 'password' not in request.json:
+    if 'password' not in request.get_json():
         abort(400, "Missing password")
     obj_request = request.get_json()
     user_obj = User(**obj_request)
