@@ -44,10 +44,8 @@ def city_state(state_id=None):
                  methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def city(city_id=None):
     """ cities api"""
-    print('entre a RUTA')
     apimethod = ApiMethod()
     if request.method == 'GET':
-        print('entre a GET')
         if not city_id:
             abort(400)
         mydict = apimethod.get_one_object("City", city_id)
