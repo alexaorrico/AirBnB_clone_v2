@@ -73,13 +73,21 @@ class FileStorage:
         '''
             gets a specific 'cls' object with matching 'id'
         '''
-        objects = self.all(cls)
-        id_object = cls + "." + id
-        if id_object in objects:
-            return objects[id_object]
-        return None
+       if cls not in models.classes.keys():
+            return None
+        cls = models.classes[cls]
+        try:
+            return self.__session.query(cls).filter_by(id=id).one_or_none()
+        except MultipleResult
+
 
     def count(self, cls=None):
-        """ Return count of objects """
-        objects = self.all(cls)
-        return len(objects)
+        """returns an object based on its cls and id
+        Return:
+            returns an specific object or None if not found
+        """
+        if cls is no None:
+            if self.__models_avaliable.get(cls) is not None:
+                return(len (self.all(cls)))
+        else:
+            return(len(self.all()))
