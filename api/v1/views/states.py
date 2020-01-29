@@ -55,10 +55,8 @@ def set_task_POST():
     State object
     """
     if not request.json:
-        abort(400)
         return jsonify({"error": "Not a JSON"})
     if 'name' not in request.json:
-        abort(400)
         return jsonify({"error": "Missing name"})
 
     state_post = State(**request.get_json())
