@@ -26,10 +26,6 @@ class FileStorage:
 
     def all(self, cls=None):
         """returns the dictionary __objects"""
-        if type(cls) is str:
-            cls = classes.get(cls)
-            if not cls:
-                return {}
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
@@ -75,12 +71,13 @@ class FileStorage:
 
     def get(self, cls, id):
         """Method to retrieve one object"""
-        key_name = cls + "." + id
-        return self.__objects.get(key_name)
+        try:
+            return self.all(eval(cls))['{}.{}'.format(cls, id)]
+        except Exception:
+            return None
+        pass
 
     def count(self, cls=None):
-        """A method to count the number of objects in storage"""
-        if cls is None:
-            return len(self.all())
-        else:
-            return len(self.all(cls))
+        """Counts the number of objects in storage"""
+        count = len(self.all(cls))
+        return(count)
