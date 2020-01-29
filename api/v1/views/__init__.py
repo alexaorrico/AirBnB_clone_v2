@@ -1,7 +1,7 @@
+#!/usr/bin/python3
 """
 set up blueprint
 """
-
 from flask import Blueprint
 
 
