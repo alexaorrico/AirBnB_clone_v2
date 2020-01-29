@@ -12,6 +12,7 @@ app.register_blueprint(app_views)
 host = getenv("HBNB_API_HOST") or '0.0.0.0'
 port = getenv("HBNB_API_PORT") or 5000
 
+
 @app.teardown_appcontext
 def teardown(exception):
     """close storage"""
