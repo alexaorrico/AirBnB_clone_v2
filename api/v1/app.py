@@ -15,6 +15,7 @@ HOST = getenv('HBNB_API_HOST', "0.0.0.0")
 PORT = getenv('HBNB_API_PORT', 5000)
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 # registers the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
 
