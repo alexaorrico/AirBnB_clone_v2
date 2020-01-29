@@ -61,6 +61,29 @@ def create_review(place_id):
     """
     place_obj = storage.get("Place", place_id)
     obj_request = request.get_json()
+    try:
+        if place_obj:
+            if obj_request:
+                if 'user_id' in obj_request and 'text' in obj_request:
+                    new_review_obj = Review(**obj_request)
+                    setattr(new_review_obj, "place_id", place_id)
+                    new_review_obj.save()
+                    return (jsonify(new_review_obj.to_dict()))
+                else:
+                    if 'user_id' not in obj_request:
+                        abort(400, "Missing user_id")
+                    if 'text' not in obj_request:
+                        abort(400, "Missing text")
+            else:
+                abort(400, "Not a JSON")
+        else:
+            abort(404)
+    except IntegrityError:
+        abort(404)
+
+    """
+    place_obj = storage.get("Place", place_id)
+    obj_request = request.get_json()
     user_id = obj_request.get("user_id")
     user_obj = storage.get("User", user_id)
     if "user_id" not in obj_request:
@@ -83,6 +106,7 @@ def create_review(place_id):
             abort(404)
     except IntegrityError:
         abort(404)
+    """
 
 
 @app_views.route("/reviews/<review_id>", methods=['PUT'], strict_slashes=False)
