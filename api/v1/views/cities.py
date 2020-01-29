@@ -53,6 +53,7 @@ def delete_city_by_id(city_id):
     if city is None:
         abort(404)
     storage.delete(city)
+    storage.save()
     return {}, 200
 
 
@@ -69,5 +70,5 @@ def put_city_by_id(city_id):
     for key in json_data:
         if key not in ignore:
             setattr(city, key, json_data[key])
-    city.save()
+    storage.save()
     return city.to_dict(), 200
