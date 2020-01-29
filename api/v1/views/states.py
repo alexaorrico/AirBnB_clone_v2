@@ -49,6 +49,7 @@ def get_task_delete(state_id):
     return jsonify({}), 200
 
 
+<<<<<<< HEAD
 @app_views.route("/states", methods=['POST'], strict_slashes=False)
 def set_task_POST():
     """
@@ -65,6 +66,20 @@ def set_task_POST():
     state_post.save()
     return jsonify(state_post.to_dict()), 201
 
+=======
+@app_views.route("/states", methods=['POST'], strict_slashes=False))
+def post_task():
+    """
+    Method to POST a new state with code 201
+    """
+    print(variable1request.get_json)
+    if != request.get_json:
+        abort(400, "Not a jason")
+    elif not "name" in request.get_jason:
+        abort(400, "MIssing name")
+    else:
+    print(request.get_json)
+>>>>>>> df718f329aaafff763350a6776f031b14a74007b
 
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
