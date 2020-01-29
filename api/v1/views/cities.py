@@ -73,7 +73,6 @@ def city(city_id=None):
         for key in list:
             if key in mydict.keys():
                 mydict.pop(key)
-        print(mydict)
         updObjDict = apimethod.update_objects("City", city_id, **mydict)
         if updObjDict:
 
