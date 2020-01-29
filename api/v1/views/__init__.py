@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Use blueprint mapping"""
 
 from flask import Blueprint
 
