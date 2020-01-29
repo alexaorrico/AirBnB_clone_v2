@@ -7,5 +7,3 @@
 **/__pycache__/*
 **/*.pyc
 
-# Ignore Filejson
-file.json
