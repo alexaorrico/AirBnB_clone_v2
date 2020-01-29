@@ -6,7 +6,7 @@ from models import storage
 
 @app_views.route('/status', strict_slashes=False)
 def status_api():
-    return make_response(jsonify({'status': 'Ok'}), 200)
+    return jsonify({'status': 'OK'})
 
 
 @app_views.route('/stats', strict_slashes=False)
