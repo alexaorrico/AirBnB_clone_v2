@@ -67,7 +67,7 @@ def put_cities_id(city_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if not key in ['id', 'created_at', 'updated_at']:
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(catch_city, key, value)
     storage.save()
     return jsonify(catch_city.to_dict()), 200
