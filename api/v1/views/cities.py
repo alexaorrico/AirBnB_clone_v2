@@ -53,7 +53,7 @@ def post_city(state_id):
         return jsonify("Missing name"), 400
     new_city = City(**json_tmp, state_id=state_id)
     new_city.save()
-    return(jsonify(new_city.to_dict())), 201
+    return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('cities/<city_id>', methods=['PUT'], strict_slashes=False)
