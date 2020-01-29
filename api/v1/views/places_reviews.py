@@ -8,6 +8,7 @@ from models.place import Place
 from models.review import Review
 from models.user import User
 from models import storage
+from sqlalchemy.exc import IntegrityError
 
 
 @app_views.route("/places/<place_id>/reviews", strict_slashes=False)
