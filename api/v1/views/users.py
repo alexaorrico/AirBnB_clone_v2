@@ -47,10 +47,7 @@ def post_user():
     """
     Route that create a new User
     """
-    try:
-        data = request.get_json()
-    except Exception:
-        abort(400, "Not a JSON")
+    data = request.get_json()
     if "email" not in data:
         abort(400, "Missing email")
     if "password" not in data:
