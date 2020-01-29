@@ -58,6 +58,7 @@ def put_states_id(state_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        setattr(catch_state, key, value)
+        if not key in [id, created_at, updated_at]:
+            setattr(catch_state, key, value)
     storage.save()
     return jsonify(catch_state.to_dict()), 200
