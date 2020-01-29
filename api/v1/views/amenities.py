@@ -1,22 +1,22 @@
 #!/usr/bin/python3
 from flask import request, abort, jsonify
 from models import storage
-from models.state import State
+from models.amenity import Amenity
 from api.v1.views import app_views
 
 
-@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
-def states():
+@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
+def amenities():
     """
     Retrieves the list of all State objects: GET /api/v1/states
     Creates a State: POST /api/v1/states
     """
     if request.method == 'GET':
-        list_states = []
-        states = storage.all('State').values()
-        for state in states:
-            list_states.append(state.to_dict())
-        return jsonify(list_states)
+        list_amenities = []
+        amenities = storage.all('Amenity').values()
+        for amenity in amenities:
+            list_amenities.append(amenity.to_dict())
+        return jsonify(list_amenities)
 
     if request.method == 'POST':
         request_json = request.get_json()
@@ -24,32 +24,32 @@ def states():
             abort(400, 'Not a JSON')
         if 'name' not in request_json:
             abort(400, 'Missing name')
-        state = State(request_json)
+        amenity = storage.get('Amenity, amenity_id')
         for key, value in request_json.items():
             if key != "__class__":
-                setattr(state, key, value)
-        storage.new(state)
+                setattr(amenity, key, value)
+        storage.new(amenity)
         storage.save()
-        return jsonify(state.to_dict())
+        return jsonify(amenity.to_dict())
 
 
-@app_views.route('/states/<state_id>',
+@app_views.route('/amenities/<amenity_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
-def state(state_id=None):
+def amenity(amenity_id=None):
     """
-    Retrieves the list of all State objects: GET /api/v1/states
+    Retrieves the list of all Amenity objects: GET /api/v1/states
     Creates a State: POST /api/v1/states
     """
     if request.method == 'GET':
-        state = storage.get('State', state_id)
-        if state:
-            return jsonify(state.to_dict())
+        amenity = storage.get('Amenity', amenity_id)
+        if amenity:
+            return jsonify(amenity.to_dict())
         abort(404)
 
     if request.method == 'DELETE':
-        state = storage.get('State', state_id)
-        if state:
-            storage.delete(state)
+        amenity = storage.get('Amenity', amenity_id)
+        if amenity:
+            storage.delete(amenity)
             storage.save()
             return jsonify({}), 200
         abort(404)
@@ -58,11 +58,11 @@ def state(state_id=None):
         request_json = request.get_json()
         if not isinstance(request_json, dict):
             abort(400, error='Not a JSON')
-        state = storage.get('State', state_id)
-        if state:
+        amenity = storage.get('Amenity', amenity_id)
+        if amenity:
             for key, value in request_json.items():
                 if key not in ["__class__", "id", "created_at", "updated_at"]:
-                    setattr(state, key, value)
+                    setattr(amenity, key, value)
             storage.save()
-            return jsonify(state.to_dict()), 200
+            return jsonify(amenity.to_dict()), 200
         abort(404)

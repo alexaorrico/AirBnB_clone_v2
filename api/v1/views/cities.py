@@ -34,6 +34,7 @@ def cities(state_id=None):
             return jsonify(city.to_dict())
         abort(404)
 
+
 @app_views.route('/cities/<city_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def city(city_id=None):
