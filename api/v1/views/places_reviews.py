@@ -71,7 +71,7 @@ def create_review(place_id):
                     new_review_obj = Review(**obj_request)
                     setattr(new_review_obj, "place_id", place_id)
                     new_review_obj.save()
-                    return (jsonify(new_review_obj.to_dict()))
+                    return (jsonify(new_review_obj.to_dict()), 201)
                 else:
                     if 'user_id' not in obj_request:
                         abort(400, "Missing user_id")
