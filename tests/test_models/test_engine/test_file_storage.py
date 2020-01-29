@@ -120,3 +120,4 @@ class TestFileStorage(unittest.TestCase):
         result = models.storage.get("State", state.id)
         self.assertIsNone(models.storage.get("State", "Fake_ID"))
         self.assertEqual(result, state)
+
