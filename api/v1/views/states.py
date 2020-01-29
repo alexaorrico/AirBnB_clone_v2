@@ -41,7 +41,6 @@ def delete_state(state_id):
 def post_state():
     """create state via POST"""
     json_data = request.get_json()
-    print(type(json_data))
     if json_data is None:
         return "Not a JSON", 400
     elif "name" not in json_data:
