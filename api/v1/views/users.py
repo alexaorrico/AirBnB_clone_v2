@@ -65,7 +65,6 @@ def post_user():
         abort(400, "Not a JSON")
 
 
-@app_views.route("/users", methods=["PUT"], strict_slashes=False)
 @app_views.route("/users/<user_id>", methods=["PUT"],
                  strict_slashes=False)
 def put_user(user_id=None):
