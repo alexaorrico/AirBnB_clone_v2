@@ -14,6 +14,9 @@ from api.v1.views import app_views
 def fetch_all_cities(state_id):
     """Fetch all states"""
     cities_list = []
+    check_state = storage.get("State", state_id)
+    if check_state is None:
+        abort(404)
     cities = storage.all("City")
     for city in cities.values():
         if state_id == getattr(city, 'state_id'):
