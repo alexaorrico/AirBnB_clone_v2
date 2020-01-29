@@ -10,16 +10,18 @@ from api.v1.views import app_views
 from os import getenv
 
 
-HOST = getenv(HBNB_API_HOST, "0.0.0.0")
-PORT = getenv(HBNB_API_PORT, 5000)
+HOST = getenv('HBNB_API_HOST', "0.0.0.0")
+PORT = getenv('HBNB_API_PORT', 5000)
 
 app = Flask(__name__)
+# registers the blueprint app_views to your Flask instance app
+app.register_blueprint(app_views)
 
-# register the blueprint app_views to your Flask instance app
 
-
-# declare a method to handle @app.teardown_appcontext that calls storage.close()
 @app.teardown_appcontext
+def close_storage(exe):
+    """closes storage"""
+    storage.close()
 
 
 if __name__ == "__main__":
