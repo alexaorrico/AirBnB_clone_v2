@@ -20,13 +20,13 @@ classes = {"amenities": Amenity,
            "users": User}
 
 
-@app_views.route("/status", strict_slashes=False)
+@app_views.route("/status")
 def status():
     """status ok"""
-    return make_response(jsonify({"status": "0K"}), 200)
+    return jsonify({"status": "0K"})
 
 
-@app_views.route("/stats", strict_slashes=False)
+@app_views.route("/stats")
 def stats():
     """count of objects by type"""
     adict = {}
