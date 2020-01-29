@@ -3,21 +3,24 @@
 returns the status of the app_views object at route /status
 """
 
-from api.v1 import views
+from . import app_views
 from models import storage
-from json import dumps
-from collections import defaultdict
+from flask.json import jsonify
 
 
-@views.app_views.route("/status")
+@app_views.route("/status")
 def status():
-    return dumps({"status": "OK"})
+    return jsonify(status="OK")
 
 
-@views.app_views.route("/stats")
+@app_views.route("/stats")
 def stats():
     """Get number of objects indexed by type"""
-    numbers = defaultdict(lambda: 0)
-    for value in storage.all().values():
-        numbers[str(type(value))] += 1
-    return dumps(numbers)
+    return jsonify(
+        amenities=storage.count("Amenity"),
+        cities=storage.count("City"),
+        places=storage.count("Place"),
+        reviews=storage.count("Review"),
+        states=storage.count("State"),
+        users=storage.count("User"),
+    )
