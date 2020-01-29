@@ -1,7 +1,7 @@
 #!/usr/bin/pyhton3
 """It’s time to start an API!"""
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -15,6 +15,14 @@ app.register_blueprint(app_views)
 def teardown_appcontext(self):
     """A method to handle @app.teardown_appcontext that calls storage.close"""
     storage.close()
+
+
+@app.errorhandler(404)
+def error404(error):
+    """create a handler for 404 errors that returns a JSON-formatted 404
+    status code response"""
+    error = {"error": "Not found"}
+    return jsonify(error), 404
 
 
 if __name__ == "__main__":
