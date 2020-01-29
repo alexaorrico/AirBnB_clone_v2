@@ -31,7 +31,6 @@ def review_place(place_id=None):
             abort(400, "Missing user_id")
         if 'text' not in request.json:
             abort(400, "Missing text")
-
         mydict = request.get_json()
         myuser = storage.get('User', mydict['user_id'])
         if not myuser:
