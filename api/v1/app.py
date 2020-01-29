@@ -1,4 +1,4 @@
-#!/usr/bin/pyhton3
+#!/usr/bin/python3
 """It’s time to start an API!"""
 
 from flask import Flask, jsonify, make_response
