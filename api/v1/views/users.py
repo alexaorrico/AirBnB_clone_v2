@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models.user import User
 from models import storage
+from sqlalchemy.exc import IntegrityError
 
 
 @app_views.route("/users", strict_slashes=False)
@@ -49,18 +50,18 @@ def post_user():
     """
     try:
         data = request.get_json()
-    except Exception:
-        abort(400, "Not a JSON")
-    if "email" not in data:
-        abort(400, "Missing email")
-    if "password" not in data:
-        abort(400, "Missing password")
-    if data:
-        new_user_obj = User(**data)
-        new_user_obj.save()
-        return (jsonify(new_user_obj.to_dict()), 201)
-    else:
-        abort(400, "Not a JSON")
+        if "email" not in data:
+            abort(400, "Missing email")
+        if "password" not in data:
+            abort(400, "Missing password")
+        if data:
+            new_user_obj = User(**data)
+            new_user_obj.save()
+            return (jsonify(new_user_obj.to_dict()), 201)
+        else:
+            abort(400, "Not a JSON")
+    except IntegrityError:
+        abort(404)
 
 
 @app_views.route("/users", methods=["PUT"], strict_slashes=False)
@@ -78,8 +79,8 @@ def put_user(user_id=None):
             abort(400, "Not a JSON")
         if data:
             for key, value in data.items():
-                if (key != "id" and key != "created_at"
-                    and key != "updated_at" and key != "email"):
+                if (key != "id" and key != "created_at" and
+                        key != "updated_at" and key != "email"):
                     setattr(user_obj, key, value)
             user_obj.save()
             return (jsonify(user_obj.to_dict()))
