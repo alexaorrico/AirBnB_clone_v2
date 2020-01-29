@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+B#!/usr/bin/python3
 """
 Contains the FileStorage class
 """
@@ -68,3 +68,19 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """retrieve one object"""
+        if cls is not None and id is not None:
+            key = cls + '.' + id
+            return self.all(cls).get(key)
+        else:
+            return None
+        pass
+
+    def count(self, cls=None):
+        """returns the count of objects in storage matching the class"""
+        if cls is not None:
+            return len(self.all(cls))
+        else:
+            return len(self.all())
