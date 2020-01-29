@@ -2,8 +2,8 @@
 """
 New view for State objects that handles taht handles all default ResFul API.
 """
- 
-from flask import abort
+
+from flask import abort, request
 from flask import jsonify
 from models.state import State
 from models import storage
@@ -43,6 +43,19 @@ def get_task_delete(state_id):
         storage.delete(stateArr)
     return jsonify({}), 200
 
+
+@app_views.route("/states", methods=['POST'], strict_slashes=False))
+def post_task():
+    """
+    Method to POST a new state with code 201
+    """
+    print(variable1request.get_json)
+    if != request.get_json:
+        abort(400, "Not a jason")
+    elif not "name" in request.get_jason:
+        abort(400, "MIssing name")
+    else:
+    print(request.get_json)
 
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
