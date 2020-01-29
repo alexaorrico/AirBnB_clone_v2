@@ -34,10 +34,10 @@ def delete_user(user_id=None):
     deletes a User object
     """
     user_obj = storage.get("User", user_id)
-    if user_obj:
+    if user_obj is not None:
         user_obj.delete()
         storage.save()
-        return jsonify({})
+        return (jsonify({}), 200)
     else:
         abort(404)
 
@@ -73,7 +73,7 @@ def put_user(user_id=None):
     Route that update an User
     """
     user_obj = storage.get("User", user_id)
-    if user_id and user_obj:
+    if user_obj:
         try:
             data = request.get_json()
         except Exception:
@@ -84,7 +84,7 @@ def put_user(user_id=None):
                         key != "updated_at" and key != "email"):
                     setattr(user_obj, key, value)
             user_obj.save()
-            return (jsonify(user_obj.to_dict()))
+            return (jsonify(user_obj.to_dict()), 200)
         else:
             abort(400, "Not a JSON")
     else:
