@@ -46,6 +46,7 @@ def get_task_delete(state_id):
         abort(404)
     else:
         storage.delete(stateArr)
+        storage.save()
     return jsonify({}), 200
 
 
