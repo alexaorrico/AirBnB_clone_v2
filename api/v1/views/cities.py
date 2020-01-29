@@ -11,15 +11,12 @@ from models.city import City
                  strict_slashes=False)
 def get_cities(state_id):
     """Return list of cities in a state"""
-    states_all = storage.all("State")
-    try:
-        unique_state = states_all["{}.{}".format("State",
-                                                 state_id)]
-        city_list = []
-        for city in unique_state.cities:
-            city_list.append(city.to_dict())
-    except KeyError:
+    unique_state = storage.get("State", state_id)
+    if not unique_state:
         abort(404)
+    city_list = []
+    for city in unique_state.cities:
+        city_list.append(city.to_dict())
     return jsonify(city_list)
 
 
@@ -28,16 +25,13 @@ def get_cities(state_id):
 def get_cities_id(city_id):
     """Return a single city"""
     if request.method == 'GET':
-        cities_all = storage.all("City")
-        try:
-            unique_city = cities_all["{}.{}".format("City",
-                                                    city_id)]
-        except KeyError:
+        unique_city = storage.get("City", city_id)
+        if not unique_city:
             abort(404)
         return jsonify(unique_city.to_dict())
     elif request.method == 'DELETE':
         obj_to_delete = storage.get("City", city_id)
-        if obj_to_delete is None:
+        if not obj_to_delete:
             abort(404)
         else:
             obj_to_delete.delete()
@@ -49,12 +43,13 @@ def get_cities_id(city_id):
                  strict_slashes=False)
 def post_city(state_id):
     """Post new city"""
+    unique_state = storage.get("State", state_id)
+    if not unique_state:
+        abort(404)
     json_tmp = request.get_json()
     if not json_tmp:
         return jsonify("Not a JSON"), 400
-    try:
-        json_tmp['name']
-    except (KeyError, TypeError):
+    if 'name' not in json_tmp:
         return jsonify("Missing name"), 400
     new_city = City(**json_tmp, state_id=state_id)
     new_city.save()
@@ -64,17 +59,16 @@ def post_city(state_id):
 @app_views.route('cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def put_city(city_id):
     """Put method to update city"""
-    cities_all = storage.all("City")
-    try:
-        unique_city = cities_all["{}.{}".format("City", city_id)]
-        json_tmp = request.get_json()
-        if not json_tmp:
-            return jsonify("Not a JSON"), 400
-        for key, value in json_tmp.items():
-            if key == 'id' or key == 'updated_at' or key == 'created_at' or key == 'state_id':
-                pass
-            setattr(unique_city, key, value)
-        unique_city.save()
-    except KeyError:
+    unique_city = storage.get("City", city_id)
+    if not unique_city:
         abort(404)
+    json_tmp = request.get_json()
+    if not json_tmp:
+        return jsonify("Not a JSON"), 400
+    for key, value in json_tmp.items():
+        if key == 'id' or key == 'updated_at' or key == 'created_at'\
+           or key == 'state_id':
+            pass
+        setattr(unique_city, key, value)
+    unique_city.save()
     return jsonify(unique_city.to_dict()), 200

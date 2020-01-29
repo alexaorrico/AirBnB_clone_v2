@@ -21,19 +21,16 @@ def get_states():
 def get_states_id(state_id):
     """Return a single state"""
     if request.method == 'GET':
-        states_all = storage.all("State")
-        try:
-            unique_state = states_all["{}.{}".format("State",
-                                                     state_id)].to_dict()
-        except KeyError:
+        unique_state = storage.get("State", state_id)
+        if unique_state is None:
             abort(404)
-        return jsonify(unique_state)
+        return jsonify(unique_state.to_dict())
     elif request.method == 'DELETE':
         obj_to_delete = storage.get("State", state_id)
         if obj_to_delete is None:
             abort(404)
         else:
-            storage.delete(obj_to_delete)
+            obj_to_delete.delete()
             storage.save()
             return jsonify({}), 200
 
@@ -56,17 +53,15 @@ def post_states():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_states(state_id):
     """Put method to update states"""
-    states_all = storage.all("State")
-    try:
-        unique_state = states_all["{}.{}".format("State", state_id)]
-        json_tmp = request.get_json()
-        if not json_tmp:
-            return jsonify("Not a JSON"), 400
-        for key, value in json_tmp.items():
-            if key == 'id' or key == 'updated_at' or key == 'created_at':
-                pass
-            setattr(unique_state, key, value)
-        unique_state.save()
-    except KeyError:
+    unique_state = storage.get("State", state_id)
+    if unique_state is None:
         abort(404)
+    json_tmp = request.get_json()
+    if not json_tmp:
+        return jsonify("Not a JSON"), 400
+    for key, value in json_tmp.items():
+        if key == 'id' or key == 'updated_at' or key == 'created_at':
+            pass
+        setattr(unique_state, key, value)
+    unique_state.save()
     return jsonify(unique_state.to_dict()), 200
