@@ -1,0 +1,11 @@
+# Ignore emacs autosave~ and #modified# files
+*~
+**/*~
+**/\#*
+
+# Ignore compiled __pycache__ folder and pyc
+**/__pycache__/*
+**/*.pyc
+
+# Ignore Filejson
+file.json
