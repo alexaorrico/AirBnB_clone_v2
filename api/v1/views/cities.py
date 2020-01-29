@@ -56,7 +56,6 @@ def city(city_id=None):
         else:
             return make_response(jsonify(mydict), 200)
     if request.method == 'DELETE':
-        print('entre a GET')
         if city_id:
             deleteObj = apimethod.delete_one_object("City", city_id)
             if not deleteObj:
@@ -67,7 +66,6 @@ def city(city_id=None):
             abort(400)
 
     if request.method == 'PUT':
-        print('entre a put')
         if not request.json:
             abort(400, "Not a JSON")
 
