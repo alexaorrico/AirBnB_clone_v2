@@ -36,7 +36,8 @@ def get_states_id(state_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def del_states_id(state_id):
     """ Return status of the APP as OK """
     catch_state = storage.get('State', state_id)
@@ -58,7 +59,7 @@ def put_states_id(state_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if not key in [id, created_at, updated_at]:
+        if not key in ["id", "created_at", "updated_at"]:
             setattr(catch_state, key, value)
     storage.save()
     return jsonify(catch_state.to_dict()), 200
