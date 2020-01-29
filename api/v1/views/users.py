@@ -7,7 +7,8 @@ from flask import jsonify, abort, request
 from models.user import User
 from models import storage
 
-@app_views.route("/users", methods=['GET'], strict_slashes=False)
+
+@app_views.route("/users", strict_slashes=False)
 def get_usersfor():
     """
     Route to get users
@@ -18,7 +19,7 @@ def get_usersfor():
     return jsonify(list_obj)
 
 
-@app_views.route("/users/<user_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/users/<user_id>", strict_slashes=False)
 def get_users(user_id):
     """
     Route to get user
