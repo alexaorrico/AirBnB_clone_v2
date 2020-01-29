@@ -3,12 +3,15 @@
 New view for State objects that handles taht handles all default ResFul API.
 """
 
-from flask import abort, request
+
+from flask import abort
 from flask import jsonify
 from models.state import State
 from models import storage
 from flask import Flask
 from api.v1.views import app_views
+from flask import request
+
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_task():
@@ -20,7 +23,8 @@ def get_task():
     return jsonify(state_list)
 
 
-@app_views.route("/states/<string:state_id>",methods=['GET'], strict_slashes=False)
+@app_views.route("/states/<string:state_id>", methods=['GET'],
+                 strict_slashes=False)
 def get_task_id(state_id):
     """
     Return id of the function
@@ -31,7 +35,8 @@ def get_task_id(state_id):
     return jsonify(stateArr.to_dict())
 
 
-@app_views.route("states/<string:state_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("states/<string:state_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def get_task_delete(state_id):
     """
     method Delete of the function
@@ -44,18 +49,22 @@ def get_task_delete(state_id):
     return jsonify({}), 200
 
 
-@app_views.route("/states", methods=['POST'], strict_slashes=False))
-def post_task():
+@app_views.route("/states", methods=['POST'], strict_slashes=False)
+def set_task_POST():
     """
-    Method to POST a new state with code 201
+    State object
     """
-    print(variable1request.get_json)
-    if != request.get_json:
-        abort(400, "Not a jason")
-    elif not "name" in request.get_jason:
-        abort(400, "MIssing name")
-    else:
-    print(request.get_json)
+    if not request.json:
+        abort(400)
+        return jsonify({"error": "Not a JSON"})
+    if 'name' not in request.json:
+        abort(400)
+        return jsonify({"error": "Missing name"})
+
+    state_post = State(**request.get_json())
+    state_post.save()
+    return jsonify(state_post.to_dict()), 201
+
 
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
