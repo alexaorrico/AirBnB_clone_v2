@@ -5,13 +5,13 @@ from flask import jsonify, make_response
 from models import storage
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status')
 def status_api():
     """Return the status 200"""
     return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', strict_slashes=False)
+@app_views.route('/stats')
 def stats_api():
     """endpoint that retrieves the number of each objects by type"""
     return jsonify({
