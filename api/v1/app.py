@@ -10,15 +10,12 @@ import os
 
 
 app = Flask(__name__)
-try:
-    app.register_blueprint(app_views, url_prefix="/api/v1")
+app.register_blueprint(app_views)
 
-    @app.teardown_appcontext
-    def teardown_storage(e):
-        """close"""
-        storage.close()
-except:
-    pass
+@app.teardown_appcontext
+def teardown_storage(e):
+    """close"""
+    storage.close()
 
 
 @app.errorhandler(404)
