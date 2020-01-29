@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Flask application"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -12,11 +13,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_storage(self):
+    """Teardown method that close session of database"""
     storage.close()
 
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """handler for 404 errors """
     return jsonify({'error': "Not found"}), 404
 
 
