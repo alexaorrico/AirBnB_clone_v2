@@ -49,6 +49,9 @@ def delete_place(place_id):
 def create_place(city_id):
     """Creates a place"""
     post_data = request.get_json()
+    check_city = storage.get("City", city_id)
+    if check_city is None:
+        abort(404)
     if post_data is None:
         abort(400, 'Not a JSON')
     if post_data.get('user_id') is None:
