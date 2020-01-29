@@ -19,7 +19,7 @@ def states():
 
 
 @app_views.route("/states/<state_id>", methods=['GET'])
-def state(state_id):
+def get_state(state_id):
     """Retrieves a state given its ID"""
     try:
         return jsonify(storage.get('State', state_id).to_dict())
@@ -37,13 +37,30 @@ def del_state(state_id):
         abort(404)
 
 
-
 @app_views.route("/states", methods=['POST'])
 def post_state():
     """Creates a state"""
     try:
-        s = State(**request.get_json())
+        r = request.get_json()
+        if 'name' not in r:
+            abort(make_response(jsonify("Missing name"), 400))
+        s = State(**r)
         s.save()
         return make_response(jsonify(s.to_dict()), 200)
     except TypeError:
+        abort(make_response(jsonify("Not a JSON"), 400))
+
+@app_views.route("/states/<state_id>", methods=['PUT'])
+def put_state(state_id):
+    """Updates a State at a given ID"""
+    try:
+        s = storage.get('State', state_id)
+        r = request.get_json()
+        for key, value in r.items():
+            setattr(s, key, value)
+    except AttributeError:
         abort(404)
+    except TypeError:
+        abort(make_response(jsonify("Not a JSON"), 400))
+    s.save()
+    return make_response(jsonify(s.to_dict()), 200)
