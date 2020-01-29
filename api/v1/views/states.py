@@ -49,8 +49,7 @@ def post_states():
     except (KeyError, TypeError):
         return jsonify("Missing name"), 400
     new_state = State(**json_tmp)
-    storage.new(new_state)
-    storage.save()
+    new_state.save()
     return(jsonify(new_state.to_dict())), 201
 
 

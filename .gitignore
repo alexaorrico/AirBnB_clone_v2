@@ -6,3 +6,4 @@
 # Ignore compiled __pycache__ folder and pyc
 **/__pycache__/*
 **/*.pyc
+file.json
