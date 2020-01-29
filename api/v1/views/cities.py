@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-State view module
+Defines City endpoints
 """
 from models import storage
 from flask import request, jsonify, abort
