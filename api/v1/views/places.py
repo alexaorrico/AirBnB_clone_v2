@@ -35,6 +35,11 @@ def place_city(city_id=None):
             abort(400, "Missing name")
 
         mydict = request.get_json()
+
+        myuser = storage.get('User', mydict['user_id'])
+        if not myuser:
+            abort(404)
+
         myobj = storage.get('City', city_id)
         if myobj:
             mydict['city_id'] = city_id
