@@ -35,7 +35,7 @@ def delete_user(user_id=None):
     """
     user_obj = storage.get("User", user_id)
     if user_obj:
-        storage.delete(user_obj)
+        user_obj.delete()
         storage.save()
         return jsonify({})
     else:
@@ -49,19 +49,20 @@ def post_user():
     Route that create a new User
     """
     try:
-        data = request.get_json()
-        if "email" not in data:
-            abort(400, "Missing email")
-        if "password" not in data:
-            abort(400, "Missing password")
-        if data:
-            new_user_obj = User(**data)
-            new_user_obj.save()
-            return (jsonify(new_user_obj.to_dict()), 201)
-        else:
-            abort(400, "Not a JSON")
-    except IntegrityError:
-        abort(404)
+        obj_data = request.get_json()
+    except Exception:
+        abort(400, "Not a JSON")
+    if "email" not in request.get_json():
+        abort(400, "Missing email")
+    if "password" not in request.get_json():
+        abort(400, "Missing password")
+    obj_data = request.get_json()
+    if obj_data:
+        new_user_obj = User(**obj_data)
+        new_user_obj.save()
+        return (jsonify(new_user_obj.to_dict()), 201)
+    else:
+        abort(400, "Not a JSON")
 
 
 @app_views.route("/users", methods=["PUT"], strict_slashes=False)
