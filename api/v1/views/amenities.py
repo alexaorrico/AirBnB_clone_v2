@@ -19,7 +19,7 @@ def amenities():
         amenities = storage.all('Amenity').values()
         for amenity in amenities:
             list_amenities.append(amenity.to_dict())
-        return jsonify(list_amenities)
+        return jsonify(list_amenities), 200
 
     if request.method == 'POST':
         request_json = request.get_json()
@@ -30,7 +30,7 @@ def amenities():
         amenity = Amenity(**request_json)
         storage.new(amenity)
         storage.save()
-        return jsonify(amenity.to_dict())
+        return jsonify(amenity.to_dict()), 200
 
 
 @app_views.route('/amenities/<amenity_id>',
@@ -43,7 +43,7 @@ def amenity(amenity_id=None):
     if request.method == 'GET':
         amenity = storage.get('Amenity', amenity_id)
         if amenity:
-            return jsonify(amenity.to_dict())
+            return jsonify(amenity.to_dict()), 200
         abort(404)
 
     if request.method == 'DELETE':
@@ -56,7 +56,7 @@ def amenity(amenity_id=None):
 
     if request.method == 'PUT':
         request_json = request.get_json()
-        if not isinstance(request_json, dict):
+        if not request_json:
             return jsonify(error='Not a JSON')
         amenity = storage.get('Amenity', amenity_id)
         if amenity:

@@ -20,7 +20,7 @@ def cities(state_id=None):
         state = storage.get('State', state_id)
         for city in state.cities:
             list_cities.append(city.to_dict())
-        return jsonify(list_cities)
+        return jsonify(list_cities), 200
 
     if request.method == 'POST':
         request_json = request.get_json()
@@ -34,7 +34,7 @@ def cities(state_id=None):
             city = City(**request_json)
             storage.new(city)
             storage.save()
-            return jsonify(city.to_dict())
+            return jsonify(city.to_dict()), 200
         abort(404)
 
 
@@ -48,7 +48,7 @@ def city(city_id=None):
     if request.method == 'GET':
         city = storage.get('City', city_id)
         if city:
-            return jsonify(city.to_dict())
+            return jsonify(city.to_dict()), 200
         abort(404)
 
     if request.method == 'DELETE':
@@ -61,7 +61,7 @@ def city(city_id=None):
 
     if request.method == 'PUT':
         request_json = request.get_json()
-        if not isinstance(request_json, dict):
+        if not request:
             abort(400, error='Not a JSON')
         city = storage.get('City', city_id)
         if city:
