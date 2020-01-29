@@ -86,5 +86,6 @@ class DBStorage:
             return None
 
     def count(self, cls=None):
+        """brings only one object with the id"""
         mydict = self.all(cls)
         return len(mydict)

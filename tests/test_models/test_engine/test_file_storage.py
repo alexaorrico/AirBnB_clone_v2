@@ -75,7 +75,6 @@ test_file_storage.py'])
         self.assertEqual(state.id, first_state_id)
         self.assertIsInstance(state, State)
 
-
     def test_db_count(self):
         """Test for the get method db"""
         from models import storage
