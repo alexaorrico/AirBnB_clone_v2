@@ -25,6 +25,9 @@ def app_view():
 
 @app_views.route('/stats', strict_slashes=False)
 def count_objs():
+    """
+    clase
+    """
     new_objs = {}
     objects = {"amenities": Amenity, "cities": City, "places": Place,
                "reviews": Review, "states": State, "users": User}
