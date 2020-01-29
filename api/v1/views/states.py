@@ -29,7 +29,7 @@ def GetStateById(state_id):
 def DeleteStateById(state_id):
     """Deletes an state based on its id for DELETE HTTP method"""
     exists = False
-    all_states = storge.all("State")
+    all_states = storage.all("State")
     for state in all_states.values():
         if state.id == state_id:
             exists = True
@@ -39,21 +39,40 @@ def DeleteStateById(state_id):
     if not exists:
         abort(404)
 
-@app_views.route('/states/<state_id>', methods=['POST'])
-def PostState()
+@app_views.route('/states/', methods=['POST'])
+def PostState():
     """Posts a state"""
     info = request.get_json()
     if not info:
         abort(400,'Not a JSON')
-    elif name not in data:
+    elif "name" not in info:
         abort(400, 'Missing name')
     state = State()
-    state.name = data['name']
+    state.name = info['name']
     state.save()
     state = state.to_dict()
     return jsonify(state), 201
     
 
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def PutState(state_id):
+    """ Updates a State uses PUT HTTP method"""
+    exists = False
+    all_states = storage.all("State")
+    for state in all_states.values():
+        print(state.name, state.id)
+        if state.id == state_id:
+            exists = True
+    if not exists:
+        abort(404)
+    info = request.get_json()
+    if not info:
+        abort(400,'Not a JSON')
+    upt_state = all_states['{}.{}'.format('State', state_id)]
+    upt_state.name = info['name']
+    upt_state.save()
+    upt_state = upt_state.to_dict()
+    return jsonify(upt_state), 201
 
 if __name__ == '__main__':
     pass
