@@ -72,8 +72,8 @@ def create_place(city_id):
                 else:
                     if 'user_id' not in obj_request:
                         abort(400, "Missing user_id")
-                        if 'name' not in obj_request:
-                            abort(400, "Missing name")
+                    if 'name' not in obj_request:
+                        abort(400, "Missing name")
             else:
                 abort(400, "Not a JSON")
         else:
