@@ -3,12 +3,21 @@ from models import storage
 from api.v1.views import app_views
 import os
 
-app = Flask()
+"""
+    app
+"""
+
+
+app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(bruh):
+    """ teardown """
     storage.close()
+
+
+app.register_blueprint(app_views)
 
 
 if __name__ == "__main__":
