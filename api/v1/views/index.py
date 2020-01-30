@@ -13,10 +13,12 @@ def status():
 @app_views.route('/stats')
 def stats():
     """number of of objects by type"""
-    dic = {"amenities": storage.count("Amenity"),
+    dic = {
+        "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         'places': storage.count('Place'),
         'reviews': storage.count('Review'),
         'states': storage.count('State'),
-        'users': storage.count('User')}
+        'users': storage.count('User')
+    }
     return jsonify(dic)
