@@ -10,7 +10,7 @@ from flask import jsonify, abort, request
 def get_cities(state_id):
     """Return list of cities in a state"""
     state = storage.get("State", state_id)
-    if state == None:
+    if state is None:
         abort(404)
     cities_list = []
     for city in state.cities:
@@ -18,30 +18,33 @@ def get_cities(state_id):
         cities_list.append(city_dict)
     return jsonify(cities_list)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Retrieve a single city"""
     city = storage.get("City", city_id)
-    if city == None:
+    if city is None:
         abort(404)
     city = city.to_dict()
     return jsonify(city)
+
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
     """Delete a city"""
     city = storage.get("City", city_id)
-    if city == None:
+    if city is None:
         abort(404)
     city.delete()
     storage.save()
     return jsonify({}), 200
 
+
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def post_city(state_id):
     """Create a new city"""
     state = storage.get("State", state_id)
-    if state == None:
+    if state is None:
         abort(404)
     json_obj = request.get_json()
     if not request.json:
@@ -54,11 +57,12 @@ def post_city(state_id):
     city = new_city.to_dict()
     return jsonify(city), 201
 
+
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def put_city(city_id):
     """Put a city"""
     city = storage.get("City", city_id)
-    if city == None:
+    if city is None:
         abort(404)
     json_obj = request.get_json()
     if not request.json:
