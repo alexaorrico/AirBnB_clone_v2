@@ -14,11 +14,12 @@ def list_states():
     s_list = []
     states = storage.all("State")
     for state in states.values():
+        print(state.name, state.id)
         s_list.append(state.to_dict())
     return jsonify(s_list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def GetStateById(state_id):
     """Retrieves state based on its id for GET HTTP method"""
     all_states = storage.all("State")
@@ -28,7 +29,7 @@ def GetStateById(state_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def DeleteStateById(state_id):
     """Deletes an state based on its id for DELETE HTTP method"""
     states = storage.all('State')
@@ -41,7 +42,7 @@ def DeleteStateById(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def PostState():
     """Posts a state"""
     info = request.get_json()
@@ -56,7 +57,7 @@ def PostState():
     return jsonify(state), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def PutState(state_id):
     """ Updates a State uses PUT HTTP method"""
     exists = False
@@ -73,7 +74,7 @@ def PutState(state_id):
     upt_state.name = info['name']
     upt_state.save()
     upt_state = upt_state.to_dict()
-    return jsonify(upt_state), 201
+    return jsonify(upt_state), 200
 
 
 if __name__ == '__main__':
