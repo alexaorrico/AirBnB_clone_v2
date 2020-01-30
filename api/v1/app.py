@@ -5,11 +5,13 @@ from models import storage
 from api.v1.views import app_views
 from os import getenv
 from flask import jsonify, make_response
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
+CORS(app)
 
 
 @app.teardown_appcontext
