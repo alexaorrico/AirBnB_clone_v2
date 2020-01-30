@@ -23,7 +23,7 @@ def get_state(state_id):
     """Retrieves a state given its ID"""
     try:
         return jsonify(storage.get('State', state_id).to_dict())
-    except KeyError:
+    except AttributeError:
         abort(404)
 
 
