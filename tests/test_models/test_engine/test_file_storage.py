@@ -130,7 +130,8 @@ class TestFileStorage(unittest.TestCase):
         from models import storage
         initial_all = storage.count()
         initial_user = storage.count("User")
-        new_user = User(name="test_user", password="test", email="test@test.com")
+        new_user = User(name="test_user", password="test",
+                        email="test@test.com")
         storage.new(new_user)
         storage.save()
         self.assertNotEqual(initial_all, storage.count())

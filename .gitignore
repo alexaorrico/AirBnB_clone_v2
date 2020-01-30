@@ -7,3 +7,8 @@
 **/__pycache__/*
 **/*.pyc
 
+<<<<<<< HEAD
+=======
+# Ignore Filejson
+file.json
+>>>>>>> 4ea20951bb01e71fab223152c944e95ad3e49dc1
