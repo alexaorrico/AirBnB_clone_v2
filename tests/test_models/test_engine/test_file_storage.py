@@ -114,26 +114,30 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that retrieve correctly the object requested"""
-        storage = FileStorage()
         new_state = State("California")
-        storage.new(new_state)
-        self.assertEqual(storage.get("State", new_state.id), new_state)
+        new_state.save()
+        self.assertEqual(models.storage.get("State", new_state.id), new_state)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_types_cls_id_get(self):
         """Test the type of cls and id is str"""
         pass
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_notFound(self):
         """Test that get doesnt found """
         storage = FileStorage()
         self.assertEqual(storage.get("State", "This is false"), None)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test the count of a class"""
         self.assertEqual(models.storage.count(), len(models.storage.all()))
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_class(self):
         """Test that count the number of objects of one class"""
         for class_in_dic in classes:
@@ -141,10 +145,12 @@ class TestFileStorage(unittest.TestCase):
                 models.storage.count(class_in_dic), len(
                     models.storage.all(class_in_dic)))
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_type(self):
         """Test type of response of count alone"""
         self.assertIs(type(models.storage.count()), int)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_class_type(self):
         """Test type of response of count passing a class"""
         self.assertIs(type(models.storage.count("State")), int)
