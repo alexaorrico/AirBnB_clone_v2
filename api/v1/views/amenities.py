@@ -13,14 +13,14 @@ from flask import request
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def get_amenties_all(state_id):
+def get_amenities_all():
     """
     create Amenty objects
     """
 
-    list_amentiy = []
+    list_amenity = []
 
-    for amenty in storage.all('Amenity').values():
+    for amenity in storage.all('Amenity').values():
         list_amenity.append(amenity.to_dict())
     return jsonify(list_amenity)
 
@@ -72,16 +72,16 @@ def set_amenity_PUT(amenity_id):
     """
     method PUT object
     """
-    ament = storage.get('Amenity', amenity_id)
-    if ament is None:
+    amenity_st = storage.get('Amenity', amenity_id)
+    if amenity_st is None:
         abort(404)
     if not request.json:
         return jsonify({"error": "Not a JSON"}), 400
-    for key, value in request.get_json().items():
-        if key not in ['id', 'created_at', 'updated_at']:
-            setattr(ament, key, value)
-    amenity.save()
-    return jsonify(ament.to_dict())
+    for atrr, value in request.get_json().items():
+        if atrr not in ['id', 'created_at', 'updated_at']:
+            setattr(amenity_st, atrr, value)
+    storage.save()
+    return jsonify(amenity_st.to_dict()), 200
 
 
 if __name__ == "__main__":
