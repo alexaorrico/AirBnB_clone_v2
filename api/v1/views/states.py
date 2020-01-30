@@ -34,7 +34,7 @@ def get_states_id(state_id):
             return jsonify({}), 200
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states', methods=['POST'])
 def post_states():
     """Post states"""
     json_tmp = request.get_json()
