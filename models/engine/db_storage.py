@@ -93,4 +93,4 @@ class DBStorage:
             else:
                 if cls in key:
                     count += 1
-        return (counter)
+        return (count)
