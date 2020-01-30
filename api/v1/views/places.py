@@ -23,7 +23,7 @@ def get_places(city_id):
         abort(404)
     if storage.get('City', city_id) is None:
         abort(404)
-    for place in storage.get('City', city_id).place:
+    for place in storage.get('City', city_id).places:
         places_city.append(place.to_dict())
     return jsonify(places_city)
 
@@ -35,7 +35,7 @@ def get_places_id(place_id):
     Return id of the function
     """
     placeArr = storage.get("Place", place_id)
-    if placeeArr is None:
+    if placeArr is None:
         abort(404)
     return jsonify(placeArr.to_dict())
 
