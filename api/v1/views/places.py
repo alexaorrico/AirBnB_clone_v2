@@ -8,16 +8,16 @@ from models.place import Place
 from api.v1.views import app_views
 
 
-@app_views.route('/states/<state_id>/places',
+@app_views.route('cities/<city_id>/places',
                  methods=['GET', 'POST'], strict_slashes=False)
-def places(state_id=None):
+def places(place_id=None):
     """
     Retrieves the list of all Place objects: GET /api/v1/places
     Creates a Place: POST /api/v1/places
     """
     if request.method == 'GET':
         list_cities = []
-        state = storage.get('State', state_id)
+        state = storage.get('State', place_id)
         if state:
             for place in state.places:
                 list_cities.append(place.to_dict())
@@ -30,9 +30,9 @@ def places(state_id=None):
             return jsonify(error='Not a JSON'), 400
         if 'name' not in request_json:
             return jsonify(error='Missing name'), 400
-        state = storage.get('State', state_id)
+        state = storage.get('State', place_id)
         if state:
-            request_json['state_id'] = state.id
+            request_json['place_id'] = place.id
             place = Place(**request_json)
             storage.new(place)
             storage.save()
