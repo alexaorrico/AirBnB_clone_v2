@@ -4,7 +4,7 @@
 Module Aplication
 """
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -19,6 +19,13 @@ app.strict_slashes = False
 def closeMethod(exception=None):
     """Method for close session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def notFound(e):
+    """Method for return 404 code Not Found"""
+    return jsonify({"error": "Not found"})
+
 
 if __name__ == '__main__':
     app.run(host=os.environ['HBNB_API_HOST'],
