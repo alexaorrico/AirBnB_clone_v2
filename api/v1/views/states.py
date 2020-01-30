@@ -1,4 +1,4 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
 """ States Module"""
 
 
@@ -27,6 +27,7 @@ def get_state(state_id):
     if state:
         return jsonify(state.to_dict())
     abort(404)
+
 
 @app_views.route("/states", methods=['POST'], strict_slashes=False)
 def create_state():
