@@ -66,7 +66,7 @@ def set_city_POST(state_id):
     state = storage.get("State", state_id)
     info = request.get_json()
     if state is None:
-        abort(400)
+        abort(404)
     if not info:
         abort((400), "Not a JSON")
     elif 'name' not in info:
