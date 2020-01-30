@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, make_response, request
+from flask import Flask, jsonify, abort, request
 from models import storage
 from models.state import State
 
@@ -46,7 +46,7 @@ def del_states_id(state_id):
     else:
         storage.delete(catch_state)
         storage.save()
-        return make_response(jsonify({}), 200)
+        return jsonify({}), 200
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -59,7 +59,7 @@ def put_states_id(state_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if not key in ["id", "created_at", "updated_at"]:
+        if key not in ["id", "created_at", "updated_at"]:
             setattr(catch_state, key, value)
     storage.save()
     return jsonify(catch_state.to_dict()), 200

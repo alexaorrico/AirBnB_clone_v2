@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, make_response, request
+from flask import Flask, jsonify, abort, request
 from models import storage
 from models.place import Place
 from models.city import City
@@ -24,13 +24,14 @@ def get_cities_id_places(city_id):
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place_id(place_id):
     """ Return the place form a id """
-    catch_place = storage.get('Place', pace_id)
+    catch_place = storage.get('Place', place_id)
     if catch_place is None:
         abort(404)
     return jsonify(catch_place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def del_place_id(place_id):
     """ Delete the place form a id """
     catch_place = storage.get('Place', place_id)
@@ -72,7 +73,7 @@ def put_places_id(place_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if not key in ['user_id', 'city_id', 'id', 'created_at', 'updated_at']:
+        if key not in ['user_id', 'city_id', 'id', 'created_at', 'updated_at']:
             setattr(catch_place, key, value)
     storage.save()
     return jsonify(catch_place.to_dict()), 200

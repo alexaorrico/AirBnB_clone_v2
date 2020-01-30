@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, make_response, request
+from flask import Flask, jsonify, abort, request
 from models import storage
 from models.amenity import Amenity
 
@@ -27,7 +27,10 @@ def post_amenities():
     return jsonify(new_amenity.to_dict())
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['GET'],
+    strict_slashes=False)
 def get_amenities_id(amenity_id):
     """ GET method to get an amenity by some ID """
     for amenity in storage.all('Amenity').values():
@@ -36,7 +39,10 @@ def get_amenities_id(amenity_id):
     abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['DELETE'],
+    strict_slashes=False)
 def del_amenities_id(amenity_id):
     """ DELETE method to delete amenity object by ID """
     catch_amenity = storage.get('Amenity', amenity_id)
@@ -44,10 +50,13 @@ def del_amenities_id(amenity_id):
         abort(404)
     storage.delete(catch_amenity)
     storage.save()
-    return make_response(jsonify({}), 200)
+    return jsonify({}), 200
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['PUT'],
+    strict_slashes=False)
 def put_amenities_id(amenity_id):
     """ PUT method to update values in amenity by ID """
     catch_amenity = storage.get('Amenity', amenity_id)
@@ -57,7 +66,7 @@ def put_amenities_id(amenity_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if not key in ['id', 'created_at', 'updated_at']:
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(catch_amenity, key, value)
     storage.save()
     return jsonify(catch_amenity.to_dict()), 200

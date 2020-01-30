@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, make_response, request
+from flask import Flask, jsonify, abort, request
 from models import storage
 from models.state import State
 from models.user import User
@@ -60,7 +60,7 @@ def put_user_id(user_id):
     if not data:
         abort(400, 'Not a JSON')
     for key, value in data.items():
-        if not key in ['id', 'created_at', 'updated_at']:
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(catch_user, key, value)
     storage.save()
     return jsonify(catch_user.to_dict()), 200
