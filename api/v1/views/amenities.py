@@ -3,7 +3,6 @@
 New view for Amenity objects that handles taht handles all default ResFul API.
 """
 
-
 from flask import abort
 from flask import jsonify
 from models.amenty import Amenty
