@@ -34,7 +34,7 @@ def del_amenity_by_id(amenity_id):
     am_to_erase.delete()
     storage.save()
     erased = {}
-    return jsonify(erased)
+    return jsonify(erased), 200
 
 
 @app_views.route('/amenities', methods=['POST'])
@@ -66,4 +66,4 @@ def updates_amenity(amenity_id):
             setattr(am, key, value)
     am.save()
     new_am = am.to_dict()
-    return jsonify(new_am)
+    return jsonify(new_am), 200
