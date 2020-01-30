@@ -8,6 +8,7 @@ from models.amenity import Amenity
 from models.city import City
 from models.state import State
 
+
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def list_all_amenities():
     """ Retrieves list of all States """
