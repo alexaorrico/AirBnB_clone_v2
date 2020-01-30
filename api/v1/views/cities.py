@@ -13,14 +13,15 @@ from api.v1.views import app_views
 from flask import request
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def get_city(state_id):
     """
     """
     if state_id is None:
         abort(404)
     city_list = []
-    if storage.get('State',state_id) is None:
+    if storage.get('State', state_id) is None:
         abort(404)
     get_cities = storage.all("City")
     for key, value in get_cities.items():
@@ -55,7 +56,8 @@ def get_city_delete(city_id):
     return jsonify({}), 200
 
 
-@app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=['POST'],
+                 strict_slashes=False)
 def set_city_POST(state_id):
     """
     State object
@@ -77,22 +79,23 @@ def set_city_POST(state_id):
         return jsonify(new_city.to_dict()), 201
 
 
-# @app_views.route("/cities/<city_id>", methods=['PUT'],
-#                 strict_slashes=False)
-# def set_task_PUT(city_id):
+@app_views.route("/cities/<city_id>", methods=['PUT'],
+                 strict_slashes=False)
+def set_city_PUT(city_id):
     """
     method PUT
     """
-  #  city_st = storage.get("City", city_id)
-   # if not request.json:
-    #    return jsonify({"error": "Not a JSON"}), 400
-   # if city_st is None:
-    #    abort(404)
-   # for atriv, val in request.json.items():
-    #    setattr(city_st, atriv, val)
-   # storage.save()
-   # return jsonify(city_st.to_dict()), 200
-
+    city_st = storage.get("City", city_id)
+    if not request.json:
+        return jsonify({"error": "Not a JSON"}), 400
+    if city_st is None:
+        abort(404)
+    for atriv, val in request.json.items():
+        if ((atriv != "id" and atriv != "state_id" and
+             atriv != "created_at" and atriv != "updated_at")):
+            setattr(city_st, atriv, val)
+    storage.save()
+    return jsonify(city_st.to_dict()), 200
 
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
