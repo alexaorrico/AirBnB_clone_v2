@@ -38,8 +38,9 @@ class FileStorage:
         """
         Method to retrieve one object
         """
-        key = cls + '.' + id
-        return self.__objects[key]
+        if cls and id and isinstance(cls, str) and isinstance(id, str):
+            key = cls + '.' + id
+            return self.__objects[key]
 
     def count(self, cls=None):
         """
