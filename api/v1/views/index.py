@@ -14,7 +14,7 @@ def get_status():
 @app_views.route('/stats')
 def get_stats():
     """ Return count of every class in dictionary """
-    return jsonify(amenity=storage.count('Amenity'),
+    return jsonify(amenities=storage.count('Amenity'),
                    cities=storage.count('City'),
                    places=storage.count('Place'),
                    reviews=storage.count('Review'),

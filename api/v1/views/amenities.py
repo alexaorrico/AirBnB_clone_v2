@@ -25,7 +25,7 @@ def post_amenities():
         abort(400, 'Missing name')
     new_amenity = Amenity(**data)
     new_amenity.save()
-    return jsonify(new_amenity.to_dict())
+    return jsonify(new_amenity.to_dict()), 201
 
 
 @app_views.route(
