@@ -7,6 +7,7 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states/', methods=['GET'], strict_slashes=False)
 def list_states():
     """lists all states"""
@@ -16,6 +17,7 @@ def list_states():
         s_list.append(state.to_dict())
     return jsonify(s_list)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'])
 def GetStateById(state_id):
     """Retrieves state based on its id for GET HTTP method"""
@@ -24,6 +26,7 @@ def GetStateById(state_id):
         if state.id == state_id:
             return jsonify(state.to_dict())
     abort(404)
+
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def DeleteStateById(state_id):
@@ -37,12 +40,13 @@ def DeleteStateById(state_id):
     storage.save()
     return jsonify({}), 200
 
+
 @app_views.route('/states/', methods=['POST'])
 def PostState():
     """Posts a state"""
     info = request.get_json()
     if not info:
-        abort(400,'Not a JSON')
+        abort(400, 'Not a JSON')
     elif "name" not in info:
         abort(400, 'Missing name')
     state = State()
@@ -50,7 +54,7 @@ def PostState():
     state.save()
     state = state.to_dict()
     return jsonify(state), 201
-    
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def PutState(state_id):
@@ -65,12 +69,13 @@ def PutState(state_id):
         abort(404)
     info = request.get_json()
     if not info:
-        abort(400,'Not a JSON')
+        abort(400, 'Not a JSON')
     upt_state = all_states['{}.{}'.format('State', state_id)]
     upt_state.name = info['name']
     upt_state.save()
     upt_state = upt_state.to_dict()
     return jsonify(upt_state), 201
+
 
 if __name__ == '__main__':
     pass
