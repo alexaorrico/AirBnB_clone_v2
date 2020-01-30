@@ -8,7 +8,7 @@ from models.city import City
 
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'], strict_slashes=False)
-def get_cities_states_id(state_id):
+def get_state_id_cities(state_id):
     """ Return the cities from a state id """
     catch_state = storage.get('State', state_id)
     if catch_state is None:
@@ -41,7 +41,7 @@ def del_city_id(city_id):
 
 @app_views.route('/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
-def post_cities(state_id):
+def post_state_id_cities(state_id):
     """ Return cities associated with a state id """
     data = request.get_json()
     catch_state = storage.get('State', state_id)

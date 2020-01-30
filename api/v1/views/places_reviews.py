@@ -8,7 +8,7 @@ from models.review import Review
 
 @app_views.route('/places/<place_id>/reviews',
                  methods=['GET'], strict_slashes=False)
-def get_places_reviews_id(place_id):
+def get_places_id_reviews(place_id):
     """ GET method to list every review of a place """
     catch_place_review = storage.get('Place', place_id)
     if catch_place_review is None:
@@ -42,7 +42,7 @@ def del_review_id(review_id):
 
 @app_views.route('/places/<place_id>/reviews',
                  methods=['POST'], strict_slashes=False)
-def post_reviews(place_id):
+def post_places_id_reviews(place_id):
     """ POST method to add a review for place of id """
     data = request.get_json()
     catch_place = storage.get('Place', place_id)
