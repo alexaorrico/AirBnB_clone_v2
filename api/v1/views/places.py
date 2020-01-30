@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" This module starts the flask application for Place"""
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from models import storage
@@ -8,7 +9,7 @@ from models.city import City
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
-def get_places_cities_id(city_id):
+def get_cities_id_places(city_id):
     """ Return the places related to a state id """
     catch_city = storage.get('City', city_id)
     match_places = storage.all('Place')
@@ -44,7 +45,7 @@ def del_place_id(place_id):
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['POST'], strict_slashes=False)
-def post_places(city_id):
+def post_cities_id_places(city_id):
     """ Return places associated with a city id """
     data = request.get_json()
     if not data:
