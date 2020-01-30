@@ -57,6 +57,7 @@ class TestUserDocs(unittest.TestCase):
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', "not testing db storage")
 class TestUser(unittest.TestCase):
     """Test the User class"""
     def test_is_subclass(self):
@@ -75,15 +76,15 @@ class TestUser(unittest.TestCase):
             self.assertEqual(user.email, None)
         else:
             self.assertEqual(user.email, "")
-
-    """def test_password_attr(self):
-        Test that User has attr password, and it's an empty string
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_password_attr(self):
+        """Test that User has attr password, and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "password"))
         if models.storage_t == 'db':
             self.assertEqual(user.password, None)
         else:
-            self.assertEqual(user.password, "")"""
+            self.assertEqual(user.password, "")
 
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
