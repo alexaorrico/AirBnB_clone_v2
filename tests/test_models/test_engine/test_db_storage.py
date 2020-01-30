@@ -91,34 +91,19 @@ class TestFileStorage(unittest.TestCase):
 class TestDBCount(unittest.TestCase):
     """ Test for count func """
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_int(self):
-        """Test that return type is int"""
-        self.assertIs(type(models.storage.count()), int)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_class_int(self):
-        """Test that return type is int"""
-        for class_in_dic in classes:
-            self.assertIs(type(models.storage.count(class_in_dic)), int)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_correct_count_return(self):
-        """ Test the return value of count """
-        self.assertEqual(models.storage.count(), len(models.storage.all()))
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_correct_count_class_return(self):
-        """ Test the return value of count when class is passed """
-        for class_in_dic in classes:
-            self.assertEqual(models.storage.count(class_in_dic),
-                             len(models.storage.all(class_in_dic)))
+    def test_count(self):
+        """ Test script for count func """
+        count = models.storage.count("State")
+        new_state = State(name="California")
+        new_state.save()
+        self.assertEqual(models.storage.count("State"), count + 1)
 
 
 class TestDBGet(unittest.TestCase):
     """Test for get func"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_obj(self):
-        """ Test that return type is int """
-        new_state = State("California")
+    def test_get(self):
+        """ Test script for count func """
+        new_state = State(name="California")
         new_state.save()
         self.assertEqual(models.storage.get("State", new_state.id), new_state)
