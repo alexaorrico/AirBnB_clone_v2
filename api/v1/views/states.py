@@ -1,20 +1,20 @@
-#!/usr/bin/python3
+#!/usr/bin/python3 
 """ States Module"""
 
-from models import storage
-from flask import abort, jsonify, request, make_response
-from api.v1.views import app_views
+
 from models.state import State
+from models import storage
+from flask import Flask, abort, jsonify, request, json
+from api.v1.views import app_views
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
-    """
-    Retrieves the list of all State objects
+    """    Retrieves the list of all State objects
     """
     states = []
-    for state in storage.all("State").values():
-        states.append(state.to_dict())
+    for key, value in storage.all("State").items():
+        states.append(value.to_dict())
     return jsonify(states)
 
 
@@ -28,19 +28,23 @@ def get_state(state_id):
         return jsonify(state.to_dict())
     abort(404)
 
-
 @app_views.route("/states", methods=['POST'], strict_slashes=False)
 def create_state():
     """
     Create a new State instance
     """
-    if not request.json:
-        abort(400, "Not a JSON")
-    if 'name' not in request.json:
-        abort(400, "Missing name")
-    state = models.state.State(name=request.json['name'])
-    state.save()
-    return jsonify(state.to_dict()), 201
+    if request.is_json:
+        dicc = request.get_json()
+    else:
+        return jsonify({"error": "Not a JSON"}), 400
+    if 'name' in dicc:
+        new_state = State()
+        new_state.name = dicc["name"]
+        storage.new(new_state)
+        storage.save()
+        return jsonify(new_state.to_dict()), 201
+    else:
+        return jsonify({"error": "Missing name"}), 400
 
 
 @app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
@@ -57,7 +61,6 @@ def update_state(state_id):
         return jsonify(state.to_dict()), 200
     abort(404)
 
-
 @app_views.route("/states/<state_id>", methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
@@ -70,8 +73,3 @@ def delete_state(state_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
-
-
-if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0', port=5000)
