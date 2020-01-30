@@ -25,17 +25,19 @@ def show_cities(state_id):
     return jsonify(s_list)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'])
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def GetCityById(city_id):
     """Retrieves city based on its id for GET HTTP method"""
-    all_cities = storage.all("City")
-    for city in all_cities.values():
-        if city.id == city_id:
-            return jsonify(city.to_dict())
-    abort(404)
+    cities = storage.all("City")
+    c_id = "City." + city_id
+    if cities.get(c_id) is None:
+        abort(404)
+    city = cities.get(c_id).to_dict()
+    return city
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'])
+@app_views.route('/cities/<city_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def DeleteCityById(city_id):
     """Deletes a city based on its id for DELETE HTTP method"""
     cities = storage.all('City')
@@ -48,7 +50,8 @@ def DeleteCityById(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def PostCity(state_id):
     """Posts a city"""
     info = request.get_json()
@@ -68,24 +71,22 @@ def PostCity(state_id):
     return jsonify(city), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'])
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def PutState(city_id):
     """ Updates a City uses PUT HTTP method"""
-    exists = False
-    all_cities = storage.all("City")
-    for city in all_cities.values():
-        if city.id == city_id:
-            exists = True
-    if not exists:
-        abort(404)
     info = request.get_json()
+    cities = storage.all("City")
+    pair = "City." + city_id
+    if cities.get(pair) is None:
+        abort(404)
     if not info:
         abort(400, 'Not a JSON')
-    upt_city = all_cities['{}.{}'.format('City', city_id)]
-    upt_city.name = info['name']
-    upt_city.save()
-    upt_city = upt_city.to_dict()
-    return jsonify(upt_city), 200
+    else:
+        city = cities.get(info)
+        city.name = info['name']
+        city.save()
+        city = city.to_dict()
+    return jsonify(city), 200
 
 
 if __name__ == '__main__':
