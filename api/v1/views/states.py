@@ -71,6 +71,7 @@ def delete_state(state_id):
         return jsonify({}), 200
     abort(404)
 
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
