@@ -28,16 +28,14 @@ def GetStateById(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def DeleteStateById(state_id):
     """Deletes an state based on its id for DELETE HTTP method"""
-    exists = False
-    all_states = storage.all("State")
-    for state in all_states.values():
-        if state.id == state_id:
-            exists = True
-            storage.delete(state)
-            return {}
-    storage.save()
-    if not exists:
+    states = storage.all('State')
+    s_id = "State." + state_id
+    to_del = states.get(s_id)
+    if to_del is None:
         abort(404)
+    storage.delete(to_del)
+    storage.save()
+    return jsonify({}), 200
 
 @app_views.route('/states/', methods=['POST'])
 def PostState():
