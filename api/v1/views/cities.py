@@ -53,6 +53,7 @@ def get_city_delete(city_id):
         abort(404)
     else:
         storage.delete(cityArr)
+        storage.save()
     return jsonify({}), 200
 
 
