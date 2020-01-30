@@ -13,7 +13,7 @@ from models import storage
 from flask import request
 
 
-@app_views.route("/cities", methods=['GET'])
+@app_views.route("/states/<state_id>/cities", methods=['GET'])
 def cities():
     """Retrieves the list of all City objects attached to a State"""
     return jsonify([c.to_dict() for c in storage.all('City').values()])
