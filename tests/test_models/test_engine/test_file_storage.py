@@ -130,7 +130,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
-        """Verify wheter object's ID is equal by the function get"""
+        """Verify object's ID is equal by the function get"""
         obj = models.storage.all("State")
         if len(obj) != 0:
             first_state_id = list(obj.values())[0].id
@@ -139,7 +139,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Verify whether len of storage.all is equal to N of states"""
+        """Verify len of storage.all is equal to x of states"""
         objects_c1 = len(models.storage.all("State"))
         objects_c2 = models.storage.count("State")
         self.assertEqual(objects_c1, objects_c2)
