@@ -33,7 +33,7 @@ def delete_amenity(amenity_id):
     if amenity is None:
         abort(404)
     storage.delete(amenity)
-    storae.save()
+    storage.save()
     return {}, 200
 
 
