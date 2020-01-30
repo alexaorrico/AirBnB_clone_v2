@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" This module starts the flask application for city"""
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from models import storage
