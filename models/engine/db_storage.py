@@ -94,8 +94,4 @@ class DBStorage:
         Return:
             returns an specific object or None if not found
         """
-        if cls is no None:
-            if self.__models_avaliable.get(cls) is not None:
-                return(len (self.all(cls)))
-        else:
-            return(len(self.all()))
+        return len(self.all(classes.get(cls)))
