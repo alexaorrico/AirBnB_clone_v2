@@ -16,10 +16,11 @@ def teardown(exception):
     """ function that calls close from storage """
     storage.close()
 
+
 @app.errorhandler(404)
 def handle_not_found(exception):
     """handle 404 error not found"""
-    return make_response(jsonify({"error":"Not found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
     """ iniciatizate the app by run """
