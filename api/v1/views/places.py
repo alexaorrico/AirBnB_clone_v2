@@ -5,6 +5,7 @@ Define user endpoints
 from models import storage
 from Flask import request, jsonify, abort
 from api.v1.views import app_views
+from models.city import City
 from models.places import Place
 
 
