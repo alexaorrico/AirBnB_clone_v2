@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-New view for CIty objects that handles taht handles all default ResFul API.
+New view for Amenity objects that handles taht handles all default ResFul API.
 """
 
 
