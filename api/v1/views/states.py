@@ -6,7 +6,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'])
 def get_states():
     """Return the state list"""
     states_all = storage.all("State")
@@ -16,8 +16,7 @@ def get_states():
     return jsonify(states_list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE'])
 def get_states_id(state_id):
     """Return a single state"""
     if request.method == 'GET':
@@ -35,7 +34,7 @@ def get_states_id(state_id):
             return jsonify({}), 200
 
 
-@app_views.route('/states/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/', methods=['POST'])
 def post_states():
     """Post states"""
     json_tmp = request.get_json()
@@ -50,7 +49,7 @@ def post_states():
     return(jsonify(new_state.to_dict())), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def put_states(state_id):
     """Put method to update states"""
     unique_state = storage.get("State", state_id)
