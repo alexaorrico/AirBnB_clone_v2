@@ -18,7 +18,8 @@ def get_amenities():
     return jsonify(amenities)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=["GET"],
+                 strict_slashes=False)
 def get_amenity(amenity_id):
     """
     Retrieves a Amenity object by id
@@ -48,7 +49,8 @@ def create_amenity():
         return jsonify({"error": "Missing name"}), 400
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=['PUT'],
+                 strict_slashes=False)
 def update_amenity(amenity_id):
     """
     Update a Amenity instance
