@@ -44,8 +44,10 @@ def create_user():
     new_user_dict = request.get_json(silent=True)
     if new_user_dict is None:
         return jsonify({"error": "Not a JSON"}), 400
-    if 'name' not in request.json:
-        return jsonify({"error": "Missing name"}), 400
+    if 'email' not in request.json:
+        return jsonify({"error": "Missing email"}), 400
+    if 'password' not in request.json:
+        return jsonify({"error": "Missing password"}), 400
     new_user = User(**new_user_dict)
     storage.new(new_user)
     storage.save()
