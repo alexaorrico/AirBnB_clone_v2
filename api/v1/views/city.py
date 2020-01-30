@@ -4,6 +4,7 @@ Handles all default RESTful API actions for City objects
 """
 
 from . import app_views
+from models.state import State
 from models.city import City
 from flask.json import jsonify
 from flask import abort
@@ -14,7 +15,7 @@ from flask import request
 
 @app_views.route("/cities", methods=['GET'])
 def cities():
-    """Retrieves the list of all City objects"""
+    """Retrieves the list of all City objects attached to a State"""
     return jsonify([c.to_dict() for c in storage.all('City').values()])
 
 
