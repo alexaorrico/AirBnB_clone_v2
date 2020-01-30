@@ -8,9 +8,10 @@ from models import storage
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
-def list_cities(state_id):
-    """lists all cities"""
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
+def show_cities(state_id):
+    """lists all states"""
     s_list = []
     states = storage.all("State")
     s_id = "State." + state_id
@@ -24,7 +25,7 @@ def list_cities(state_id):
     return jsonify(s_list)
 
 
-@app_views.route('/cities/<city_id>>', methods=['GET'])
+@app_views.route('/cities/<city_id>', methods=['GET'])
 def GetCityById(city_id):
     """Retrieves city based on its id for GET HTTP method"""
     all_cities = storage.all("City")
@@ -84,7 +85,7 @@ def PutState(city_id):
     upt_city.name = info['name']
     upt_city.save()
     upt_city = upt_city.to_dict()
-    return jsonify(upt_city), 201
+    return jsonify(upt_city), 200
 
 
 if __name__ == '__main__':
