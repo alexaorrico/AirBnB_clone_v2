@@ -2,7 +2,7 @@
 """ create  a instance Flask and register Blueprint """
 
 
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -19,6 +19,13 @@ def teardown_appcontext(exception=None):
     """ down app and close storage """
     storage.close()
 
+
+@app.errorhandler(404)
+def not_found(message):
+    """Handles the 404 status code"""
+    response = jsonify({'error': 'Not found'})
+    response.status_code = 404
+    return response
 
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
