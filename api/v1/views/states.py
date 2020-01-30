@@ -62,7 +62,6 @@ def PutState(state_id):
     exists = False
     all_states = storage.all("State")
     for state in all_states.values():
-        print(state.name, state.id)
         if state.id == state_id:
             exists = True
     if not exists:
