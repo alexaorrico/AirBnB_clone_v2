@@ -16,10 +16,8 @@ def fetch_all_places_amenities(place_id):
     check_place = storage.get("Place", place_id)
     if check_place is None:
         abort(404)
-    amenities = storage.all("Amenity")
-    for amenity in amenities.values():
-        if place_id == getattr(amenity, 'place_id'):
-            amenities_list.append(amenity.to_dict())
+    for amenities in check_place.amenities:
+        amenities_list.append(amenities.to_dict())
     return jsonify(amenities_list), 200
 
 
@@ -33,10 +31,10 @@ def delete_place_amenities(place_id, amenity_id):
     amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
-    if getattr(amenity, 'place_id') != place_id:
+    if amenity not in place.amenities:
         abort(404)
-    amenity.delete()
-    storage.save()
+    place.amenities.remove(amenity)
+    place.save()
     return jsonify({}), 200
 
 
@@ -50,8 +48,8 @@ def create_place_amenities(place_id, amenity_id):
     amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
-    if getattr(amenity, 'place_id') == place_id:
+    if amenity in place.amenities:
         return jsonify(amenity.to_dict()), 200
-    setattr(amenity, 'place_id', place_id)
-    storage.save()
+    place.amenities.append(amenity)
+    place.save()
     return jsonify(amenity.to_dict()), 201
