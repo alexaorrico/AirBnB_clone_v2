@@ -9,7 +9,7 @@ from flask import Flask, jsonify, abort, request, make_response
 
 @app_views.route('/cities', methods=['GET'], strict_slashes=False)
 def all_cities():
-    """Retrieves the list of all City objects"""
+    """Retrieves the list of all State objects"""
     cities_list = []
     states_objs = storage.all('City').values()
     for element in states_objs:
