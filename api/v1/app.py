@@ -5,6 +5,7 @@ Returns the status of the API
 
 import models
 from flask import Flask
+from flask import make_response
 from flask.json import jsonify
 from models import storage
 from api.v1.views import app_views
@@ -23,7 +24,7 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def error_404(err):
     """Produce a 404 error message"""
-    return jsonify(error="Not found")
+    return make_response(jsonify(error="Not found"), 404)
 
 
 @app.teardown_appcontext
