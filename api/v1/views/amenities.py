@@ -5,7 +5,7 @@ New view for Amenity objects that handles taht handles all default ResFul API.
 
 from flask import abort
 from flask import jsonify
-from models.amenty import Amenty
+from models.amenity import Amenity
 from models import storage
 from flask import Flask
 from api.v1.views import app_views
@@ -18,9 +18,9 @@ def get_amenties_all(state_id):
     create Amenty objects
     """
 
-    list_amenty = []
+    list_amentiy = []
 
-    for amenty in storage.all('Amenty').values():
+    for amenty in storage.all('Amenity').values():
         list_amenity.append(amenity.to_dict())
     return jsonify(list_amenity)
 
