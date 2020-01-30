@@ -77,21 +77,21 @@ def set_city_POST(state_id):
         return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route("/cities/<city_id>", methods=['PUT'],
-                 strict_slashes=False)
-def set_task_PUT(city_id):
+# @app_views.route("/cities/<city_id>", methods=['PUT'],
+#                 strict_slashes=False)
+# def set_task_PUT(city_id):
     """
     method PUT
     """
-    city_st = storage.get("City", city_id)
-    if not request.json:
-        return jsonify({"error": "Not a JSON"}), 400
-    if city_st is None:
-        abort(404)
-    for atriv, val in request.json.items():
-        setattr(city_st, atriv, val)
-    storage.save()
-    return jsonify(city_st.to_dict()), 200
+  #  city_st = storage.get("City", city_id)
+   # if not request.json:
+    #    return jsonify({"error": "Not a JSON"}), 400
+   # if city_st is None:
+    #    abort(404)
+   # for atriv, val in request.json.items():
+    #    setattr(city_st, atriv, val)
+   # storage.save()
+   # return jsonify(city_st.to_dict()), 200
 
 
 if __name__ == "__main__":
