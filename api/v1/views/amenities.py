@@ -70,6 +70,6 @@ def update_amenity(amenity_id):
     ignore = ['id', 'created_at', 'updated_at']
     for k, v in update_state_json.items():
         if k not in ignore:
-            setattr(state, k, v)
+            setattr(amenity, k, v)
             storage.save()
     return jsonify(amenity.to_dict())
