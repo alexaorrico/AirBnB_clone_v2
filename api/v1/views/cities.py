@@ -15,7 +15,7 @@ def states_id_cities(id):
     city = [c for c in storage.all("State").values() if c.id == id]
     if not city:
         return {"error": "Not found"}, 404
-    
+
     if request.method == "GET":
         return (jsonify([
             s.to_dict() for s
