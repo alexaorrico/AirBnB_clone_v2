@@ -55,12 +55,14 @@ def create_a_city(state_id):
     if "name" in dicc:
         new_city = City()
         new_city.name = dicc["name"]
+        new_city.state_id = state_id
         storage.new(new_city)
         storage.save()
+        storage.close()
         return jsonify(new_city.to_dict()), 201
     else:
         return jsonify({"error": "Missing name"}), 400
-
+    abort(404)
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_a_city(city_id):
