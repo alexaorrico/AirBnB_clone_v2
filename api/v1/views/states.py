@@ -4,7 +4,7 @@
 from api.v1.views import app_views
 from models import storage
 from models.state import State
-from flask import Flask, jsonify, make_response, abort, request
+from flask import Flask, jsonify, abort, request
 
 
 @app_views.route('/states/',  methods=['GET'])
@@ -50,14 +50,14 @@ def States_Post():
     data = request.get_json()
 
     if not data:
-        return make_response(jsonify({"message": "Not a JSON"}), 400)
+        return jsonify({"message": "Not a JSON"}), 400
     if "name" not in data:
-        return make_response(jsonify({"message": "Missing name"}), 400)
+        return jsonify({"message": "Missing name"}), 400
 
     name_state = {"name": data["name"]}
     new_state = State(**data)
     new_state.save()
-    return make_response(jsonify(new_state.to_dict()), 201)
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>',  methods=['PUT'])
@@ -69,7 +69,7 @@ def State_Put(state_id):
     if data is None:
         abort(404)
     if not data_req:
-        return make_response(jsonify({"message": "Not a JSON"}), 400)
+        return jsonify({"message": "Not a JSON"}), 400
 
     for key, value in data_req.items():
         if key in ['id', 'created_at', 'updated_at']:
