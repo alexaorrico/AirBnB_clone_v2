@@ -11,6 +11,8 @@ from flask import make_response
 from models import storage
 from flask import request
 
+STATE_IGNORE_KEYS = {'id', 'created_at', 'updated_at'}
+
 
 @app_views.route("/states", methods=['GET'])
 def states():
@@ -46,7 +48,7 @@ def post_state():
             abort(make_response(jsonify("Missing name"), 400))
         s = State(**r)
         s.save()
-        return make_response(jsonify(s.to_dict()), 200)
+        return make_response(jsonify(s.to_dict()), 201)
     except TypeError:
         abort(make_response(jsonify("Not a JSON"), 400))
 
@@ -60,7 +62,8 @@ def put_state(state_id):
             abort(404)
         r = request.get_json()
         for key, value in r.items():
-            setattr(s, key, value)
+            if key not in STATE_IGNORE_KEYS:
+                setattr(s, key, value)
     except AttributeError:
         abort(make_response(jsonify("Not a JSON"), 400))
     s.save()
