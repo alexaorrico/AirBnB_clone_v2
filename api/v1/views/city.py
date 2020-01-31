@@ -12,7 +12,7 @@ from flask.json import jsonify
 
 
 @app_views.route("/states/<state_id>/cities", methods=['GET'])
-def state_cities(state_id):
+def get_state_cities(state_id):
     """Retrieves the list of all City objects attached to a State"""
     state = storage.get('State', state_id)
     if state is None:
