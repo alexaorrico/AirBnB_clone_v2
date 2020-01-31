@@ -9,6 +9,7 @@ from api.v1.views import app_views
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 
@@ -21,7 +22,7 @@ def close(bruh):
 @app.errorhandler(404)
 def heck(e):
     """ 404 """
-    return {"error": "Not found"}
+    return (e or {"error": "Not found"}, 404)
 
 
 if __name__ == "__main__":
