@@ -18,6 +18,12 @@ def close(bruh):
     storage.close()
 
 
+@app.errorhandler(404)
+def heck(e):
+    """ 404 """
+    return {"error": "Not found"}
+
+
 if __name__ == "__main__":
     app.run(
         host=getenv("HBNB_API_HOST") or "0.0.0.0",
