@@ -20,6 +20,7 @@ def close(bruh):
 
 @app.errorhandler(404)
 def heck(e):
+    """ 404 """
     return {"error": "Not found"}
 
 
