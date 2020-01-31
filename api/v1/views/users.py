@@ -2,8 +2,8 @@
 """ Users file """
 
 import models.user import User
-from models import users
-from flask import Flak, abort, jsonify, request, json
+from models import storage
+from flask import Flask, abort, jsonify, request, json
 from api.v1.views import app_views
 
 
@@ -23,7 +23,7 @@ def get_user(user_id):
     """
     Retrieves an User instance
     """
-    user = storage.get("User", user_id)
+    user = storage.get("User", id=user_id)
     if user:
         return jsonify(user.to_dict())
     abort(404)
