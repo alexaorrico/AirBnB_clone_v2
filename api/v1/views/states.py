@@ -39,11 +39,11 @@ def delete_state(state):
     return (jsonify(dict()), 200)
 
 
-methods = [
+methods = {
     "GET": get_state,
     "PUT": put_state,
     "DELETE": delete_state,
-]
+}
 
 
 @app_views.route("/states", methods=["GET", "POST"])
@@ -71,6 +71,6 @@ def states():
 def states_id(id):
     """ states """
     for state in storage.all("State").values():
-        if state.id == id and methods[request.method]:
+        if state.id == id and request.method in methods:
             return methods[request.method](state)
     abort(404, "Not found")
