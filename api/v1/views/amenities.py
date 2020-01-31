@@ -8,7 +8,7 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET'])
+@app_views.route('/amenities/', methods=['GET'])
 def list_amenities():
     """lists all amenities"""
     s_list = []
@@ -19,17 +19,17 @@ def list_amenities():
     return jsonify(s_list)
 
 
-@app_views.route('/amenity/<amenity_id>', methods=['GET'])
-def GetAmenityById(amenity_id):
+@app_views.route('/amenities/<amenities_id>', methods=['GET'])
+def GetAmenityById(amenities_id):
     """Retrieves amenity based on its id for GET HTTP method"""
     all_amenity = storage.all("Amenity")
     for amenity in all_amenity.values():
-        if amenity.id == amenity_id:
+        if amenity.id == amenities_id:
             return jsonify(amenity.to_dict())
     abort(404)
 
 
-@app_views.route('/amenity/<amenity_id>', methods=['DELETE'])
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def DeleteAmenityById(amenity_id):
     """Deletes an amenity based on its id for DELETE HTTP method"""
     amenities = storage.all('Amenity')
@@ -42,7 +42,7 @@ def DeleteAmenityById(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'])
+@app_views.route('/amenities/', methods=['POST'])
 def PostAmenity():
     """Posts a amenity"""
     info = request.get_json()
