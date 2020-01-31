@@ -72,4 +72,4 @@ def update_user(user_id):
         if k not in ignore:
             setattr(user, k, v)
             storage.save()
-    return jsonify(user.to_dict())
+    return jsonify(user.to_dict()), 200
