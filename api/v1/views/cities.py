@@ -11,8 +11,8 @@ from models.city import City
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'], strict_slashes=False)
 def show_cities(state_id):
-    """This functions lists all the cities"""
-    list_t = []
+    """lists all states"""
+    s_list = []
     states = storage.all("State")
     s_id = "State." + state_id
     if states.get(s_id) is None:
@@ -21,13 +21,13 @@ def show_cities(state_id):
         cities = storage.all("City")
         for city in cities.values():
             if city.state_id == state_id:
-                list_t.append(city.to_dict())
-    return jsonify(list_t)
+                s_list.append(city.to_dict())
+    return jsonify(s_list)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def get_city(city_id):
-    """This functions get a specific state by id"""
+def GetStateById(city_id):
+    """Retrieves city based on its id for GET HTTP method"""
     cities = storage.all("City")
     c_id = "City." + city_id
     if cities.get(c_id) is None:
@@ -38,8 +38,8 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_city(city_id):
-    """This function delete a state by id"""
+def DeleteStateById(city_id):
+    """Deletes an state based on its id for DELETE HTTP method"""
     cities = storage.all('City')
     c_id = "City." + city_id
     to_del = cities.get(c_id)
@@ -53,18 +53,18 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
-    """This function create a new city"""
-    data = request.get_json()
+    """Posts a state"""
+    info = request.get_json()
     states = storage.all("State")
-    match = "State." + state_id
-    if states.get(match) is None:
+    pair = "State." + state_id
+    if states.get(pair) is None:
         abort(404)
-    if not data:
+    if not info:
         abort(400, 'Not a JSON')
-    elif 'name' not in data:
+    elif 'name' not in info:
         abort(400, 'Missing name')
     city = City()
-    city.name = data['name']
+    city.name = info['name']
     city.state_id = state_id
     city.save()
     city = city.to_dict()
@@ -74,16 +74,16 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """This function update a state by id"""
-    data = request.get_json()
+    info = request.get_json()
     cities = storage.all('City')
-    match = 'City.' + city_id
-    if cities.get(match) is None:
+    pair = 'City.' + city_id
+    if cities.get(pair) is None:
         abort(404)
-    if not data:
+    if not info:
         abort(400, 'Not a JSON')
     else:
-        city = cities.get(match)
-        city.name = data['name']
+        city = cities.get(pair)
+        city.name = info['name']
         city.save()
         city = city.to_dict()
     return jsonify(city), 200
