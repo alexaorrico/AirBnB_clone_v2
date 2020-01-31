@@ -7,8 +7,7 @@ from . import app_views
 from models import storage
 from models.city import City
 from models.place import Place
-from flask import abort, make_response, request
-from flask.json import jsonify
+from flask import abort, jsonify, make_response, request
 
 PLACE_IGNORE_KEYS = {'id', 'user_id', 'city_id', 'created_at', 'updated_at'}
 
@@ -50,12 +49,13 @@ def post_place(city_id):
     r = request.get_json()
     if r is None:
         abort(make_response(jsonify("Not a JSON"), 400))
-    user_id = r.get('user_id')
-    if user_id is None:
+    if 'user_id' not in r:
         abort(make_response(jsonify("Missing user_id"), 400))
-    u = storage.get('User', user_id)
+    u = storage.get('User', r['user_id'])
     if u is None:
         abort(404)
+    if 'name' not in r:
+        abort(make_response(jsonify("Missing name"), 400))
     r['city_id'] = city_id
     p = Place(**r)
     p.save()
