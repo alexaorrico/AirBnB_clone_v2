@@ -4,6 +4,8 @@
 """
 from flask import Flask, abort, jsonify, request
 from api.v1.views import app_views
+from models.state import State
+from models import storage
 
 
 def get_state(state):
@@ -44,10 +46,31 @@ methods = [
 ]
 
 
-@app_views.route('/states/<id>', methods=['GET', 'PUT', 'DELETE'])
+@app_views.route("/states", methods=["GET", "POST"])
+def states():
+    """ list or create """
+    if request.method == "GET":
+        return (jsonify([
+            s.to_dict()
+            for s
+            in storage.all("State").values()
+        ]), 200)
+    elif request.method == "POST":
+        try:
+            x = request.get_json()
+        except:
+            abort(400, "Not a JSON")
+        if "name" not in new:
+            abort(400, "Missing name")
+        new = State(x)
+        new.save()
+        return (jsonify(new.to_dict()), 201)
+
+
+@app_views.route("/states/<id>", methods=["GET", "PUT", "DELETE"])
 def states_id(id):
     """ states """
-    for state in storage.all('State').values():
+    for state in storage.all("State").values():
         if state.id == id and methods[request.method]:
             return methods[request.method](state)
-    abort(404, 'Not found')
+    abort(404, "Not found")
