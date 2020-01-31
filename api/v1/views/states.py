@@ -4,16 +4,16 @@
 """
 from api.v1.views import app_views
 from models.state import State
-from general import do
+from api.v1.views.general import do
 
 
 @app_views.route("/states", methods=["GET", "POST"])
 def states():
     """ list or create """
-    return do(State, request)
+    return do(State)
 
 
 @app_views.route("/states/<id>", methods=["GET", "PUT", "DELETE"])
 def states_id(id):
     """ states """
-    return do(State, request, id)
+    return do(State, id)

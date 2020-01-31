@@ -35,21 +35,20 @@ def delete_obj(obj):
 
 
 methods = {
-    "GET": get_state,
-    "PUT": put_state,
-    "DELETE": delete_state,
+    "GET": get_obj,
+    "PUT": put_obj,
+    "DELETE": delete_obj,
 }
 
 
-def do(cls, request, id=None):
+def do(cls, id=None):
     if id:
-        for obj in storage.(cls).values():
+        for obj in storage.all(cls).values():
             if obj.id == id and request.method in methods:
                 return methods[request.method](obj)
     elif request.method == "GET":
         return (jsonify([
-            s.to_dict()
-            for s
+            s.to_dict() for s
             in storage.all(cls).values()
         ]), 200)
     elif request.method == "POST":
@@ -57,11 +56,11 @@ def do(cls, request, id=None):
             data = request.get_json()
         except:
             abort(400, "Not a JSON")
-        if "name" not in data:
+        if not data or "name" not in data:
             abort(400, "Missing name")
         new = cls()
         for key in data:
             setattr(new, key, data[key])
         new.save()
         return (jsonify(new.to_dict()), 201)
-    abort(404, "Not found")
+    return {"error": "Not found"}, 404
