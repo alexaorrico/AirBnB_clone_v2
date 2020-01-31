@@ -7,18 +7,18 @@ from flask import abort, jsonify, request
 from api.v1.views import app_views
 
 
-@app_views.route('/users')
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
     """
     Retrieves the list of all User objects
     """
     users = []
-    for user in storage.all("User").values():
-        users.append(user.to_dict())
+    for user in storage.all("User").items():
+        users.append(value.to_dict())
     return jsonify(users)
 
 
-@app_views.route('/users/<user_id>')
+@app_views.route('/users/<user_id>', methods=["GET"], strict_slashes=False)
 def get_user(user_id):
     """
     Retrieves an User instance
@@ -29,7 +29,7 @@ def get_user(user_id):
     abort(404)
 
 
-@app_views.route('/users', methods=['POST'])
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
     """
     Create a new User instance
@@ -45,14 +45,14 @@ def create_user():
     return jsonify(user.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'])
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
     """
     Update a User instance
     """
     if not request.json:
         abort(400, "Not a JSON")
-    user = storage.get("User", user_id)
+    user = storage.get("User", id=user_id)
     if user:
         if 'password' in request.json.keys():
             user.password = request.json['password']
@@ -65,12 +65,12 @@ def update_user(user_id):
     abort(404)
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'])
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """
     Delete a user instance
     """
-    user = storage.get("User", user_id)
+    user = storage.get("User", id=user_id)
     if user:
         storage.delete(user)
         storage.save()
