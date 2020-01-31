@@ -14,7 +14,10 @@ from flask.json import jsonify
 @app_views.route("/states/<state_id>/cities", methods=['GET'])
 def state_cities(state_id):
     """Retrieves the list of all City objects attached to a State"""
-    return jsonify([c.to_dict() for c in storage.all('City').values()])
+    state = storage.get('State', state_id)
+    if state is None:
+        abort(404)
+    return jsonify([city.to_dict() for city in state.cities])
 
 
 @app_views.route("/cities/<city_id>", methods=['GET'])
