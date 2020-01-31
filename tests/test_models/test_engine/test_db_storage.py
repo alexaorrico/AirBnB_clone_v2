@@ -90,9 +90,9 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_dbstorage_get(self):
         """
-       test verify Get method
+        test verify Get method
         """
-       new = models.storage.all("State")
+        new = models.storage.all("State")
         if len(new) != 0:
             first_state_id = list(new.values())[0].id
             state = models.storage.get("State", first_state_id)
