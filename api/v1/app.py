@@ -30,5 +30,6 @@ def not_found(message):
     response.status_code = 404
     return response
 
+
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
