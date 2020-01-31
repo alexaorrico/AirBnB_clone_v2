@@ -9,7 +9,6 @@ from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from os import getenv
 
-
 HOST = getenv('HBNB_API_HOST', "0.0.0.0")
 PORT = getenv('HBNB_API_PORT', 5000)
 
