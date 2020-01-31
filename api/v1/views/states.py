@@ -17,7 +17,7 @@ def get_state(state):
 
 def put_state(state):
     """ put """
-    if !state:
+    if not state:
         abort(404)
     try:
         x = request.get_json()
@@ -32,7 +32,7 @@ def put_state(state):
 
 def delete_state(state):
     """ delete """
-    if !state:
+    if not state:
         abort(404)
     storage.delete(state)
     storage.save()
