@@ -47,8 +47,10 @@ def post_user():
     dic = request.get_json()
     if not dic:
         abort(400, "Not a JSON")
-    if not ('name' in dic.keys()):
-        abort(400, "Missing name")
+    if not ('email' in dic.keys()):
+        abort(400, "Missing email")
+    if not ('password' in dic.keys()):
+        abort(400, "Missing password")
     user = User(**dic)
     user.save()
     return jsonify(user.to_dict()), 201
@@ -68,7 +70,7 @@ def put_user(user_id):
     if not new_dict:
         abort(400, "Not a JSON")
     for key, value in new_dict.items():
-        if key in ('id', 'created_at', 'updated_at'):
+        if key in ('id', 'email', 'created_at', 'updated_at'):
             continue
         else:
             setattr(user, key, value)

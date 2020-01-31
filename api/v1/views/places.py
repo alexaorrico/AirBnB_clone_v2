@@ -53,14 +53,19 @@ def post_place(city_id):
     dic = request.get_json()
     if not dic:
         abort(400, "Not a JSON")
+    if not ('user_id' in dic.keys()):
+        abort(400, "Missing user_id")
     if not ('name' in dic.keys()):
         abort(400, "Missing name")
     cities = storage.all('City')
     for key in cities.keys():
         if key.split('.')[-1] == city_id:
-            place = Place(city_id=city_id, **dic)
-            place.save()
-            return jsonify(place.to_dict()), 201
+            users = storage.all('User')
+            for k in users.keys():
+                if k.split('.')[-1] == dic.get('user_id'):
+                    place = Place(city_id=city_id, **dic)
+                    place.save()
+                    return jsonify(place.to_dict()), 201
     abort(404)
 
 
