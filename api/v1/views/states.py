@@ -11,7 +11,7 @@ from models import storage
 def get_state(state):
     """ get """
     if state:
-        (jsonify(state.to_dict()), 200)
+        return (jsonify(state.to_dict()), 200)
     return abort(404)
 
 
@@ -62,7 +62,9 @@ def states():
             abort(400, "Not a JSON")
         if "name" not in data:
             abort(400, "Missing name")
-        new = State(data)
+        new = State()
+        for key in data:
+            setattr(new, key, data[key])
         new.save()
         return (jsonify(new.to_dict()), 201)
 
@@ -72,5 +74,6 @@ def states_id(id):
     """ states """
     for state in storage.all("State").values():
         if state.id == id and request.method in methods:
+            print("OK!")
             return methods[request.method](state)
     abort(404, "Not found")
