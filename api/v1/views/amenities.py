@@ -19,7 +19,8 @@ def list_amenities():
     return jsonify(s_list)
 
 
-@app_views.route('/amenities/<amenities_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenities_id>',
+                 methods=['GET'], strict_slashes=False)
 def GetAmenityById(amenities_id):
     """Retrieves amenity based on its id for GET HTTP method"""
     all_amenity = storage.all("Amenity")
@@ -29,7 +30,8 @@ def GetAmenityById(amenities_id):
     abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def DeleteAmenityById(amenity_id):
     """Deletes an amenity based on its id for DELETE HTTP method"""
     amenities = storage.all('Amenity')
@@ -42,7 +44,8 @@ def DeleteAmenityById(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities/', methods=['POST'], strict_slashes=False)
+@app_views.route('/amenities/',
+                 methods=['POST'], strict_slashes=False)
 def PostAmenity():
     """Posts a amenity"""
     info = request.get_json()
@@ -57,7 +60,8 @@ def PostAmenity():
     return jsonify(amenity), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def PutAmenity(amenity_id):
     """ Updates a Amenity uses PUT HTTP method"""
     exists = False
