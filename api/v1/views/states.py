@@ -6,10 +6,8 @@ from models import storage
 from models.state import State
 from flask import Flask, jsonify, abort, request
 
-app_views.url_map.strict_slashes = False
 
-
-@app_views.route('/states/',  methods=['GET'])
+@app_views.route('/states/',  methods=['GET'], strict_slashes=False)
 def States_Get():
     """ Retrieve all the states"""
 
@@ -22,7 +20,7 @@ def States_Get():
     return jsonify(var)
 
 
-@app_views.route('/states/<state_id>',  methods=['GET'])
+@app_views.route('/states/<state_id>',  methods=['GET'], strict_slashes=False)
 def States_Id(state_id):
     """ Retrieve an state by id """
     data = storage.all('State')
@@ -33,7 +31,7 @@ def States_Id(state_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>',  methods=['DELETE'])
+@app_views.route('/states/<state_id>',  methods=['DELETE'], strict_slashes=False)
 def State_Delete(state_id):
     """ Retrieve an state by id """
     data = storage.all('State')
@@ -45,7 +43,7 @@ def State_Delete(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/',  methods=['POST'])
+@app_views.route('/states/',  methods=['POST'], strict_slashes=False)
 def States_Post():
     """ Post """
 
@@ -62,7 +60,7 @@ def States_Post():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>',  methods=['PUT'])
+@app_views.route('/states/<state_id>',  methods=['PUT'], strict_slashes=False)
 def State_Put(state_id):
     """ Put """
     data = storage.get('State', state_id)
