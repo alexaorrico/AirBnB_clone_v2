@@ -9,6 +9,7 @@ from flask import make_response
 from flask.json import jsonify
 from models import storage
 from api.v1.views import app_views
+from flask_cors import CORS
 from os import getenv
 
 
@@ -20,6 +21,7 @@ app.url_map.strict_slashes = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # registers the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/*": {"app_views": "*"}})
 
 
 @app.errorhandler(404)
