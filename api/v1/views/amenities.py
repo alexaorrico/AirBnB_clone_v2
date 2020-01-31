@@ -38,7 +38,7 @@ def del_amenity(amenity_id):
 
 
 @app_views.route("/amenities", methods=['POST'])
-def post_amenity(amenity_id):
+def post_amenity():
     """Creates an amenity"""
     r = request.get_json()
     if r is None:
