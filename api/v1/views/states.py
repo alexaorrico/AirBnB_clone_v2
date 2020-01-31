@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-""" index file """
+""" State file """
 
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 from models.state import State
 from models import storage
 
@@ -40,7 +40,26 @@ def delete_state(state_id):
 @app_views.route('/states', methods=['POST'])
 def create_state():
     """creates a new state"""
-    try:
-        return {}, 200
-    except:
-        abort(404)
+    payload = request.get_json()
+    if payload is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    else:
+        if 'name' in payload:
+            new_state = State(name=payload.get('name'))
+            new_state.save()
+            return jsonify(new_state.to_dict()), 200
+        else:
+            return make_response(jsonify({"error": "Missing name"}), 400)
+
+
+@app_views.route('/states/<string:state_id>', methods=['PUT'])
+def update_state(state_id):
+    """ updates a state instance """
+
+    update = request.get_json()
+    if update is None:
+        abort(400, "Not a JSON")
+    updated_state = storage.get("State", id=state_id)
+    setattr(updated_state, 'name', update.get('name'))
+    updated_state.save()
+    return (updated_state.to_dict())
