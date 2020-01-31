@@ -71,8 +71,8 @@ def delete_amenity(amenity_id):
     """
     Delete a Amenity instance
     """
-    state = storage.get("Amenity", id=amenity_id)
-    if state:
+    amenity = storage.get("Amenity", id=amenity_id)
+    if amenity:
         storage.delete(amenity)
         storage.save()
         return jsonify({}), 200
