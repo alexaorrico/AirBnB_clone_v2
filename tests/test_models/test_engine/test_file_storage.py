@@ -117,20 +117,26 @@ class TestFileStorage(unittest.TestCase):
 
 class new_tests(unittest.TestCase):
     """Test new method get"""
+
     def testing_count(self):
         """testing count with no parameters"""
         self.assertTrue("{}".format(storage.count(), 48))
+
     def testing_count_with_params(self):
         """testing count with parameters"""
         self.assertTrue("{}".format(storage.count("State")), 16)
+
     def testing_get(self):
         """testing get with no cls param"""
         first_state_id = list(storage.all(State).values())[0].id
         self.assertTrue("{}".format(storage.get("State", first_state_id), 0))
+
     def testing_get_no_id(self):
         """testing get with no id param"""
         first_state_id = None
-        self.assertTrue("{}".format(storage.get("State", first_state_id), None))
+        self.assertTrue("{}".format(storage.get("State", first_state_id),
+                                    None))
+
 
 if __name__ == '__main__':
     unittest.main()
