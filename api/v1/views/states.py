@@ -15,5 +15,5 @@ def states():
 
 @app_views.route("/states/<id>", methods=["GET", "PUT", "DELETE"])
 def states_id(id):
-    """ states """
+    """ modify """
     return do(State, id)

@@ -49,5 +49,5 @@ def states_id_cities(id):
 
 @app_views.route("/cities/<id>", methods=["GET", "PUT", "DELETE"])
 def cities_id(id):
-    """ states """
+    """ modift """
     return do(City, id)

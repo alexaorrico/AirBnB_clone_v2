@@ -1,6 +1,9 @@
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
+"""
+    general stuff
+"""
 
 
 def get_obj(obj):
@@ -42,6 +45,7 @@ methods = {
 
 
 def do(cls, id=None):
+    """ general """
     if id:
         for obj in storage.all(cls).values():
             if obj.id == id and request.method in methods:

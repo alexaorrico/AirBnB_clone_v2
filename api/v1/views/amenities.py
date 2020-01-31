@@ -15,5 +15,5 @@ def amenities():
 
 @app_views.route("/amenities/<id>", methods=["GET", "PUT", "DELETE"])
 def amenities_id(id):
-    """ modify """
+    """ modifyy """
     return do(Amenity, id)
