@@ -3,15 +3,11 @@
 Returns the status of the API
 """
 
-import models
-from flask import Flask
-from flask import make_response
-from flask.json import jsonify
 from models import storage
 from api.v1.views import app_views
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from os import getenv
-
 
 HOST = getenv('HBNB_API_HOST', "0.0.0.0")
 PORT = getenv('HBNB_API_PORT', 5000)
@@ -21,7 +17,7 @@ app.url_map.strict_slashes = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # registers the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/*": {"app_views": "*"}})
+cors = CORS(app, resources={r"/*": {HOST: "*"}})
 
 
 @app.errorhandler(404)
