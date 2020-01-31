@@ -7,6 +7,7 @@ from . import app_views
 from models import storage
 from models.user import User
 from models.place import Place
+from models.review import Review
 from flask import abort, jsonify, make_response, request
 
 REVIEW_IGNORE_KEYS = {'id', 'user_id', 'place_id', 'created_at', 'updated_at'}
