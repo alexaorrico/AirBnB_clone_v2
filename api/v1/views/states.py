@@ -51,7 +51,7 @@ def States_Post():
 
     if not data:
         return make_response(jsonify({"message": "Not a JSON"}), 400)
-    if not "name" in data:
+    if "name" not in data:
         return make_response(jsonify({"message": "Missing name"}), 400)
 
     name_state = {"name": data["name"]}
@@ -71,7 +71,9 @@ def State_Put(state_id):
     if not data_req:
         return make_response(jsonify({"message": "Not a JSON"}), 400)
 
-    new_dict = update(state_id, data_req)
-#    data['name'] = data_req['name']
-#    data.save()
-    return make_response(jsonify(new_dict.to_dict()), 200)
+    for key, value in data_req.items():
+        if key in ['id', 'created_at', 'updated_at']:
+            continue
+        setattr(data, key, value)
+    data.save()
+    return jsonify(data.to_dict()), 200
