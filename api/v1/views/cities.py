@@ -64,6 +64,7 @@ def create_a_city(state_id):
         return jsonify({"error": "Missing name"}), 400
     abort(404)
 
+
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_a_city(city_id):
     """update a cities """
