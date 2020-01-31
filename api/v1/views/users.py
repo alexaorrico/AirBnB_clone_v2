@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """ Users file """
 
-import models.user import User
+import models
 from models import storage
-from flask import Flask, abort, jsonify, request, json
+from flask import abort, jsonify, request
 from api.v1.views import app_views
 
 
@@ -13,8 +13,8 @@ def get_users():
     Retrieves the list of all User objects
     """
     users = []
-    for user in storage.all("User").items():
-        users.append(value.to_dict())
+    for user in storage.all("User").values():
+        users.append(user.to_dict())
     return jsonify(users)
 
 
