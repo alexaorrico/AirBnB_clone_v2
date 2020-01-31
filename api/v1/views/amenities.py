@@ -21,12 +21,19 @@ def list_all_amenities():
                  strict_slashes=False)
 def get_specific_amenity(amenity_id):
     """ Retrieves a state object, if not linked, then 404"""
+    data = storage.get('Amenity', amenity_id)
+    if data:
+        return data.to_dict()
+    else:
+        abort(404)
+"""
     data = storage.all('Amenity')
     name = 'Amenity.' + amenity_id
     amenity = [v.to_dict() for k, v in data.items() if k == name]
     if len(amenity) != 1:
         abort(404)
     return jsonify(amenity[0])
+"""
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
