@@ -12,12 +12,14 @@ from os import getenv
 HOST = getenv('HBNB_API_HOST', "0.0.0.0")
 PORT = getenv('HBNB_API_PORT', 5000)
 
+# enable CORS for app_views blueprint
+cors = CORS(app_views, resources={r"/*": {"origins": HOST}})
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # registers the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/*": {HOST: "*"}})
 
 
 @app.errorhandler(404)
