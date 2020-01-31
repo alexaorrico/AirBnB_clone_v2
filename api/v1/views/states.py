@@ -6,6 +6,8 @@ from models import storage
 from models.state import State
 from flask import Flask, jsonify, abort, request
 
+app_views.url_map.strict_slashes = False
+
 
 @app_views.route('/states/',  methods=['GET'])
 def States_Get():
@@ -26,7 +28,7 @@ def States_Id(state_id):
     data = storage.all('State')
     for key, value in data.items():
         key = key.split(".")
-        if key[1] == state_id:
+        if key[-1] == state_id:
             return jsonify(value.to_dict())
     abort(404)
 
