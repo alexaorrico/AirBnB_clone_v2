@@ -8,6 +8,7 @@ from models.city import City
 from flask import Flask, jsonify, abort, request
 from models.amenity import Amenity
 
+
 @app_views.route('/states/amenities', methods=['GET'],
                  strict_slashes=False)
 def Amenity_Get():
@@ -20,9 +21,9 @@ def Amenity_Get():
     return jsonify(amenity)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], 
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def Amentity_Id(amenity_id)
+def Amentity_Id(amenity_id):
     """ Retrieves a Amenity object """
     data = storage.all('Amenity')
     for key, value in data.items():
@@ -62,7 +63,7 @@ def Amenities_Post():
     return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], 
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
 def Amenity_Put(amenity_id):
     """ Updates a Amenity object """
@@ -81,4 +82,3 @@ def Amenity_Put(amenity_id):
         setattr(data, key, value)
     data.save()
     return jsonify(data.to_dict()), 200
-
