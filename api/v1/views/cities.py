@@ -53,7 +53,10 @@ def Cities_Delete(city_id):
 def Cities_Post(state_id):
     """ Post """
     data_req = request.get_json()
+    data_state = storage.get('State', state_id)
 
+    if data_state is None:
+        abort(404)
     if not data_req:
         return jsonify({"message": "Not a JSON"}), 400
     if "name" not in data_req:
