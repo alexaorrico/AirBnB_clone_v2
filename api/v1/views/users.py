@@ -75,8 +75,9 @@ def User_Put(user_id):
         return jsonify({"message": "Not a JSON"}), 400
 
     for key, value in data_req.items():
-        if key in ['id', 'created_at', 'updated_at']:
+        if key in ['id', 'email', 'created_at', 'updated_at']:
             continue
         setattr(data, key, value)
     data.save()
     return jsonify(data.to_dict()), 200
+    
