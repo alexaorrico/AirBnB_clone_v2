@@ -3,13 +3,11 @@
 
 from api.v1.views import app_views
 from models import storage
-from models.state import State
-from models.city import City
 from flask import Flask, jsonify, abort, request
 from models.amenity import Amenity
 
 
-@app_views.route('/states/amenities', methods=['GET'],
+@app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
 def Amenity_Get():
     """Retrieves the list of all Amenity objects """
@@ -35,7 +33,7 @@ def Amentity_Id(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def Amenity_Delete(state_id):
+def Amenity_Delete(amenity_id):
     """ Deletes a Amenity object """
     data = storage.all('Amenity')
     del_amenity = storage.get('Amenity', amenity_id)
@@ -58,7 +56,7 @@ def Amenities_Post():
         return jsonify({"message": "Missing name"}), 400
 
     name_amenity = {"name": data["name"]}
-    new_amenity = State(**data)
+    new_amenity = Amenity(**data)
     new_amenity.save()
     return jsonify(new_amenity.to_dict()), 201
 

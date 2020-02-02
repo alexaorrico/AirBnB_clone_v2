@@ -44,7 +44,7 @@ def User_Delete(user_id):
     return jsonify({}), 200
 
 
-@app_views.route('/users/',  methods=['POST'], strict_slashes=False)
+@app_views.route('/users/', methods=['POST'], strict_slashes=False)
 def Users_Post():
     """ Post """
 
@@ -63,8 +63,8 @@ def Users_Post():
     return jsonify(new_user.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>',  methods=['PUT'], strict_slashes=False)
-def State_Put(state_id):
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def User_Put(user_id):
     """ Put """
     data = storage.get('User', user_id)
     data_req = request.get_json()
