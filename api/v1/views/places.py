@@ -52,7 +52,7 @@ def Places_Delete(place_id):
 
 @app_views.route('cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def Places_Post(state_id):
+def Places_Post(city_id):
     """ Create a Place """
     data_req = request.get_json()
     data_city = storage.get('City', city_id)
