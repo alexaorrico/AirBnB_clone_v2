@@ -87,11 +87,16 @@ def places_search():
     amenities = [
         storage.get('Amenity', id) for id in params.get('amenities', [])
     ]
-    cities_id = set(params.get(
-        'cities', [c.id for c in storage.all('City').values()]
-    ))
     states_id = set(params.get(
-        'states', [s.id for s in storage.all('State').values()]
+        'states',
+        [] if params.get('cities') is not None else [
+            s.id for s in storage.all('State').values()]
+    ))
+    cities_id = set(params.get(
+        'cities',
+        [] if params.get('states') is not None else [
+            c.id for c in storage.all('City').values()
+        ]
     ))
     cities_id.update({
         c.id for c in filter(
