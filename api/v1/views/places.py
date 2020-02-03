@@ -76,3 +76,23 @@ def put_place(place_id):
             setattr(p, k, v)
     p.save()
     return make_response(jsonify(p.to_dict()), 200)
+
+
+@app_views.route("/places_search", methods=['POST'])
+def places_search():
+    """Search for a place by state, city, and amenity"""
+    params = request.get_json()
+    if params is None:
+        abort(make_response(jsonify("Not a JSON"), 400))
+    amenities = set(params.get('amenities', []))
+    cities = set(params.get('cities', [city.id for city in storage.all('City').values()]))
+    states = set(params.get('states', [state.id for state in storage.all('State').values()]))
+    cities.update(filter(
+        lambda c: c.state_id in states,
+        storage.all('City').values()
+    ))
+    places = filter(
+        lambda p: p.city_id in cities and all(map(lambda a: a in p.amenities, amenities)),
+        storage.all('Places').values()
+    )
+    return jsonify([p.to_dict() for p in places])
