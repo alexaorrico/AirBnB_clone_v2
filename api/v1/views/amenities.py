@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Createa  new view for State objects that handle restfulapi"""
+""" Createa  new view for State objects that handle RESTfulapi"""
 
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response, request
@@ -20,7 +20,7 @@ def list_all_amenities():
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
 def get_specific_amenity(amenity_id):
-    """ Retrieves a state object, if not linked, then 404"""
+    """ Retrieves a state object, if not linked, then abort 404"""
     data = storage.get('Amenity', amenity_id)
     if data:
         return data.to_dict()
