@@ -67,11 +67,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    def test_dbs_method_get(self):
-        """Test for the get method of database storage """
-
-    def test_dbs_method_close(self):
-        """ Test for the close method of database """
 
 
 
@@ -93,3 +88,11 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_dbs_method_get(self):
+        """Test for the get method of database storage """
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_dbs_method_close(self):
+        """ Test for the close method of database """
