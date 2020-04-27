@@ -121,4 +121,3 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_close(self):
         """ Tests the close method of filestorage """
-
