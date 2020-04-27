@@ -68,15 +68,15 @@ def put_state(state_id):
     """
     Updates a State
     """
-    if not request.json:
-        abort(400, description="Not a JSON")
-
-    ignore = ['id', 'created_at', 'updated_at']
-
     state = storage.get(State, state_id)
 
     if not state:
         abort(404)
+
+    if not request.json:
+        abort(400, description="Not a JSON")
+
+    ignore = ['id', 'created_at', 'updated_at']
 
     data = request.json
     for key, value in data.items():
