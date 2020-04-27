@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """get object based on the class name and ID - None if not found"""
-        if cls in classes.values():            
+        if cls in classes.values():
             data = self.all(cls)
             id = "{}.{}".format(cls.__name__, id)
             return data.get(id)
@@ -82,7 +82,7 @@ class FileStorage:
         count = 0
         if cls in classes.values():
             data = self.all(cls)
-        else:   
+        else:
             data = self.all()
         count = len(data)
         return count
