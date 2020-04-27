@@ -5,7 +5,7 @@ Flask App that integrates with AirBnB static HTML Template
 
 from api.v1.views import app_views
 from models import storage
-from flask import Flask
+from flask import Flask, jsonify, make_response, render_template
 import os
 
 # Variable instance of flask named app
@@ -27,6 +27,16 @@ def teardown_db(exception):
     the current SQLAlchemy Session
     """
     storage.close()
+
+@app.errorhandler(404)
+def handle_404(exception):
+    """
+    Handler for 404 error (Not Found)
+    """
+    code = exception.__str__().split()[0]
+    description = exception.description
+    message = {'error': description}
+    return make_response(jsonify(message), code)
 
 if __name__ == "__main__":
     """
