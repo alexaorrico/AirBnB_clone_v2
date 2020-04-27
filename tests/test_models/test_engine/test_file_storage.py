@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -117,7 +118,20 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """ Tests the get method of filestorage """
+        all_states = storage.all("State").values()
+        if all_states:
+            first_state_id = list(all_states)[0].id
+            first_state = storage.get("State", first_state_id)
+            self.assertTrue(isinstance(first_state, State))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_close(self):
         """ Tests the close method of filestorage """
+        self.assertTrue(isinstance(storage.count(), int))
+        self.assertTrue(isinstance(storage.count("State"), int))
+        all_objects = storage.all()
+        if all_objects:
+            self.assertEqual(storage.count(), len(all_objects))
+        all_states = storage.all("State")
+        if all_states:
+            self.assertEqual(storage.count("State"), len(all_states))
