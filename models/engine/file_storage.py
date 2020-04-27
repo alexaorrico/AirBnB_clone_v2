@@ -71,10 +71,7 @@ class FileStorage:
     def count(self, cls=None):
         """Return count of objects in storage
         """
-        if cls:
-            return len(self.all(cls))
-        else:
-            return len(self.all())
+        return len(self.all(cls))
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
