@@ -5,6 +5,8 @@ Flask App that integrates with AirBnB static HTML Template
 
 from api.v1.views import app_views
 from models import storage
+from flask import Flask
+import os
 
 # Variable instance of flask named app
 app = Flask(__name__)
