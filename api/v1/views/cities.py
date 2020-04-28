@@ -13,11 +13,11 @@ from models.city import City
                  methods=['GET'], strict_slashes=False)
 def get_cities(state_id=None):
     ''' Retrieves a list of all city objects of a given state '''
-    state = storage.get('State', state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
-    cities = storage.all('City')
+    cities = storage.all(City)
     city_list = []
     for val in cities.values():
         if val.state_id == state_id:
@@ -31,7 +31,7 @@ def get_cities(state_id=None):
                  strict_slashes=False)
 def get_city(city_id=None):
     ''' returns an individual city object '''
-    obj = storage.get('City', city_id)
+    obj = storage.get(City, city_id)
     if obj is None:
         ''' if no state obj with that id '''
         abort(404)
@@ -42,7 +42,7 @@ def get_city(city_id=None):
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id=None):
     ''' deletes an individual city '''
-    obj = storage.get('City', city_id)
+    obj = storage.get(City, city_id)
     if obj is None:
         ''' if no state obj with that id '''
         abort(404)
@@ -57,7 +57,7 @@ def delete_city(city_id=None):
                  strict_slashes=False)
 def create_city(state_id=None):
     ''' create a city if doesn't already exist '''
-    state = storage.get('State', state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -76,7 +76,7 @@ def create_city(state_id=None):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id=None):
     ''' updates an individual city '''
-    obj = storage.get('City', city_id)
+    obj = storage.get(City, city_id)
     if obj is None:
         ''' if no state obj with that id '''
         abort(404)
