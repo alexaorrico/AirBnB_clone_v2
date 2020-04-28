@@ -232,5 +232,6 @@ by _Guillaume_
 * [ ] 16. Search
 * [ ] 17. Documentation
 
+Branch ```storage_get_count```
 ## Developers in 0x05. AirBnB clone - RESTful API
 David Bravo Beltran, Luis Miguel Moreno Cano, Javier Andrés Garzón Patarroyo
