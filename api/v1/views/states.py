@@ -5,7 +5,7 @@ from models import storage
 from models.state import State
 from json import dumps
 from api.v1.app import *
-from flask import abort
+from flask import abort, request
 
 
 @app_views.route('/states/')
@@ -46,3 +46,22 @@ def delete_by_id(id):
         return {}, 200
     else:
         abort(404)
+
+
+@app_views.route('/states/', methods=['POST'])
+def post_state():
+    """get request and post new state"""
+    new_state = None
+    try:
+        new_state = request.get_json()
+        if 'name' in new_state:
+            obj_state = State()
+            obj_state.name = new_state['name']
+            storage.new(obj_state)
+            storage.save()
+            dict_obj = obj_state.to_dict()
+            return dumps(dict_obj, indent=4)
+        else:
+            return 'Missing name', 400
+    except:
+        return 'Not a JSON', 400
