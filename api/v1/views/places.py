@@ -83,6 +83,7 @@ def post_place(city_id):
 
     instance = Place(**data)
     instance.city_id = city.id
+    storage.new(instance)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
