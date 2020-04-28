@@ -11,6 +11,7 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 
 @app.teardown_appcontext
 def teardown_app(self):
+    """ storage and close """
     storage.close()
 
 if __name__ == "__main__":
