@@ -32,6 +32,7 @@ def get_users(user_id=None):
                  strict_slashes=False)
 def delete_user(user_id):
     """
+
     Deletes a user Object
     """
 
@@ -51,15 +52,15 @@ def post_user():
     """
     Creates a user
     """
-    if not request.get_json:
+    if not request.get_json():
         abort(400, description="Not a JSON")
 
-    if 'email' not in request.get_json:
+    if 'email' not in request.get_json():
         abort(400, description="Missing email")
-    if 'password' not in request.get_json:
+    if 'password' not in request.get_json():
         abort(400, description="Missing password")
 
-    data = request.get_json
+    data = request.get_json()
     instance = User(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
@@ -75,12 +76,12 @@ def put_user(user_id):
     if not user:
         abort(404)
 
-    if not request.get_json:
+    if not request.get_json():
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'email', 'created_at', 'updated_at']
 
-    data = request.get_json
+    data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
             setattr(user, key, value)

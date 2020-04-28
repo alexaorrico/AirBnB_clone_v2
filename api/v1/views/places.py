@@ -66,19 +66,19 @@ def post_place(city_id):
     if not city:
         abort(404)
 
-    if not request.get_json:
+    if not request.get_json():
         abort(400, description="Not a JSON")
 
-    if 'user_id' not in request.get_json:
+    if 'user_id' not in request.get_json():
         abort(400, description="Missing user_id")
 
-    data = request.get_json
+    data = request.get_json()
     user = storage.get(User, data['user_id'])
 
     if not user:
         abort(404)
 
-    if 'name' not in request.get_json:
+    if 'name' not in request.get_json():
         abort(400, description="Missing name")
 
     data['city_id'] = city_id
@@ -97,7 +97,7 @@ def put_place(place_id):
     if not place:
         abort(404)
 
-    if not request.get_json:
+    if not request.get_json():
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
@@ -116,10 +116,10 @@ def places_search():
     of the request
     """
 
-    if not request.get_json:
+    if not request.get_json():
         abort(400, description="Not a JSON")
 
-    data = request.get_json
+    data = request.get_json()
 
     states = data.get('states', None)
     cities = data.get('cities', None)
