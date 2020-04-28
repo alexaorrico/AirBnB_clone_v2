@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" ssss """
+""" show status """
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -7,6 +7,6 @@ from models import storage
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """ sss """
+    """ object app_views that returns a JSON """
     app_views = {'status': 'OK'}
-    return app_views
+    return jsonify(app_views)

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" asdf """
+""" import files and blueprint """
 from flask import Blueprint
 
 app_views  = Blueprint('status', __name__, url_prefix='/api/v1')
