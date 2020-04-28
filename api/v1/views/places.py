@@ -138,23 +138,26 @@ def places_search():
     if states:
         states_obj = [storage.get(State, s_id) for s_id in states]
         for state in states_obj:
-            for city in state.cities:
-                for place in city.places:
-                    list_places.append(place)
+            if state:
+                for city in state.cities:
+                    for place in city.places:
+                        list_places.append(place)
 
     if cities:
         city_obj = [storage.get(City, c_id) for c_id in cities]
         for city in city_obj:
-            for place in city.places:
-                if place not in list_places:
-                    list_places.append(place)
+            if city:
+                for place in city.places:
+                    if place not in list_places:
+                        list_places.append(place)
 
     if amenities:
         if not list_places:
             list_places = storage.all(Place).values()
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
         list_places = [place for place in list_places
-                       if all([am in place.amenities for am in amenities_obj])]
+                       if all([am in place.amenities
+                               for am in amenities_obj if am])]
 
     places = []
     for p in list_places:
