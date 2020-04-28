@@ -31,6 +31,7 @@ def teardown_db(exception):
     """
     storage.close()
 
+
 @app.errorhandler(404)
 def handle_404(exception):
     """
@@ -40,6 +41,7 @@ def handle_404(exception):
     description = "Not found"
     message = {'error': description}
     return make_response(jsonify(message), code)
+
 
 if __name__ == "__main__":
     """
