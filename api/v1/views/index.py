@@ -29,8 +29,13 @@ def count_objects():
     """
     function for count each obj in each class
     """
-    list_class = ["Amenity", "City", "Place", "Review", "State", "User"]
+    list_class = {"amenity": "Amenity",
+                  "city": "City",
+                  "place": "Place",
+                  "review": "Review",
+                  "state": "State",
+                  "user": "User"}
     dict_class = {}
-    for item in list_class:
-        dict_class[item] = storage.count(eval(item))
+    for item, val in list_class.items():
+        dict_class[item] = storage.count(eval(val))
     return jsonify(dict_class)
