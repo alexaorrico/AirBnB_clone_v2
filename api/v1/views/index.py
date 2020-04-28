@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ creates a route """
 from api.v1.views import app_views
-from flash import jsonify
+from flask import jsonify
 from models import storage
 
 
