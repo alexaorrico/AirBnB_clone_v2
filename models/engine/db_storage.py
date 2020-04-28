@@ -74,3 +74,18 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def count(self, cls=None):
+        """
+        count totsal of instances from dbstorage
+        args:
+            @cls: class name
+        """
+        count = 0
+        if cls in classes.keys():
+           all_instances = self.all(cls)
+        else:
+           all_instances = self.all()
+
+        count = len(all_instances)
+        return count
