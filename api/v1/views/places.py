@@ -123,7 +123,7 @@ def places_search():
 
     data = request.get_json()
 
-    if data == [{}]:
+    if data == [{}] or len(data) == 0:
         empty = 1
 
     else:
@@ -155,17 +155,14 @@ def places_search():
                     list_places.append(place)
 
     if amenities:
-        if not states and not cities:
-            list_places = [place for place in storage.all(Place).values()]
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
-        for place in list_places:
-            if not all(elem in place.amenities for elem in amenities_obj):
-                list_places.remove(place)
+        list_places = [place for place in list_places
+                       if all([am in place.amenities for am in amenities_obj])]
 
     places = []
-    for place in list_places:
-        dic = place.to_dict()
-        dic.pop('amenities', None)
-        places.append(dic)
+    for p in list_places:
+        d = p.to_dict()
+        d.pop('amenities', None)
+        places.append(d)
 
     return jsonify(places)
