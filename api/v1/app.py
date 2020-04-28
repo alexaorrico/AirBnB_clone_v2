@@ -6,10 +6,13 @@ Flask App that integrates with AirBnB static HTML Template
 from api.v1.views import app_views
 from models import storage
 from flask import Flask, jsonify, make_response, render_template
+from flask_cors import CORS
 import os
 
 # Variable instance of flask named app
 app = Flask(__name__)
+# CORS app
+CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 # Flask server enviromental variables setup
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
