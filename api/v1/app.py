@@ -25,4 +25,4 @@ if __name__ == "__main__":
     h = os.getenv('HBNB_API_HOST') if os.getenv('HBNB_API_HOST') else '0.0.0.0'
     p = os.getenv('HBNB_API_PORT') if os.getenv('HBNB_API_PORT') else 5000
     app.run(host=h, port=p)
-    threaded=True
+    threaded = True
