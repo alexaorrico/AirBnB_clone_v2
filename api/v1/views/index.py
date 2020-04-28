@@ -14,8 +14,7 @@ def route():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def some_stats():
     """Retrieves the number of each objects by type"""
-    stats_dic =
-    {
+    stats_dic = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
