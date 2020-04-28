@@ -9,3 +9,13 @@ from models import storage
 def status():
     """ returns a JSON """
     return jsonify({"status": "OK"})
+
+
+@app_views.route("/stats")
+def stats():
+    clases = {"amenities": Amenity, "cities": City, "places": Place,
+              "reviews": Review, "states": State, "users": User}
+    my_dict = {}
+    for i, j in clases.items():
+        my_dict[i] = storage.count(j)
+    return jsonify(my_dict)
