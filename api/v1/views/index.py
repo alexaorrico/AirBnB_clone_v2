@@ -1,9 +1,18 @@
 #!/usr/bin/python3
-from api.v1.views.__init__ import *
 
-moochila()
+from api.v1.views import app_views
+from models import storage
 
-@app_views.route('/api/v1/status')
+@app_views.route('/status')
 def status():
-    json = {'status': 'OK'}
+    return ({"status": "OK"})
+
+@app_views.route('/stats')
+def stats():
+    classes = {"users": 'User', "states": 'State', "amenities": 'Amenity',
+            "cities": 'City', "places": 'Place', "reviews": 'Review'}
+    json = {}
+    for key, value in classes.items():
+        json[key] = storage.count(value)
     return json
+    
