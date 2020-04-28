@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for Places """
+from models.state import State
 from models.city import City
 from models.place import Place
 from models.user import User
@@ -101,9 +102,57 @@ def put_place(place_id):
 
     ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
 
-    data = request.json
     for key, value in data.items():
         if key not in ignore:
             setattr(place, key, value)
     storage.save()
     return make_response(jsonify(place.to_dict()), 200)
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def places_search():
+    """
+    Retrieves all Place objects depending of the JSON in the body
+    of the request
+    """
+
+    if not request.json:
+        abort(400, description="Not a JSON")
+
+    data = request.json
+
+    states = data.get('states', None)
+    cities = data.get('cities', None)
+    amenities = data.get('amenities', None)
+
+    if not states and not cities and not amenities:
+        places = storage.all(Place).values()
+        list_places = []
+        for place in places:
+            list_places.append(place.to_dict())
+        return jsonify(list_places)
+
+    list_places = []
+    if states:
+        states_obj = [storage.get(State, s_id) for s_id in states]
+        for state in states_obj:
+            for city in state.cities:
+                for place in city.places:
+                    list_places.append(place)
+
+    if cities:
+        city_obj = [storage.get(City, c_id) for c_id in cities]
+        for city in city_obj:
+            for place in city.places:
+                if place not in list_places:
+                    list_places.append(place)
+
+    if amenities:
+        amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
+        for place in list_places:
+            if not all(elem in place.amenities for elem in amenities):
+                list_places.remove(place)
+
+    places = [place.to_dict() for place in list_places]
+
+    return jsonify(places)
