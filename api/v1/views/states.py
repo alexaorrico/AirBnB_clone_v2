@@ -32,3 +32,17 @@ def states_by_id(id):
         abort(404)
     obj = dumps(obj, indent=4)
     return (obj)
+
+
+@app_views.route('/states/<id>', methods=['DELETE'])
+def delete_by_id(id):
+    """delete state by id"""
+    dict_states = storage.all(State)
+    key = "State." + id
+    if key in dict_states:
+        obj = dict_states[key]
+        obj.delete()
+        storage.save()
+        return {}, 200
+    else:
+        abort(404)
