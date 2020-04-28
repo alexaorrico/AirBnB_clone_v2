@@ -15,10 +15,10 @@ def teardown(self):
     """teardown close"""
     storage.close()
 
-def errorhandler404(self):
+@app.errorhandler(404)
+def errorhandler404(error):
     """status 404 error handler"""
     return jsonify({"error": "Not found"})
-
 
 if __name__ == "__main__":
     app.run(host=getenv('HBNB_API_HOST', '0.0.0.0'),
