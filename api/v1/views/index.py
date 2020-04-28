@@ -15,7 +15,9 @@ from json import dumps
 @app_views.route('/status')
 def status():
     """returns a JSON: "status": "OK"""
-    return jsonify(status="OK")
+    status_dict = {"status": "OK"}
+    status_dict = dumps(status_dict, indent=4)
+    return (status_dict)
 
 
 @app_views.route('/stats')
@@ -28,5 +30,5 @@ def stats():
     for value in classes.values():
         count = storage.count(value)
         dict_count[value.__name__] = count
-    dict_count = dumps(dict_count)
+    dict_count = dumps(dict_count, indent=4)
     return (dict_count)

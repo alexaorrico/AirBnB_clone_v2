@@ -4,7 +4,7 @@ from models import storage
 from flask import Flask
 from api.v1.views import app_views
 from os import getenv
-from flask import jsonify
+from json import dumps
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -13,7 +13,9 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def error_404(error):
     """handler for 404 errors that returns a JSON-formatted"""
-    return jsonify(error="Not found"), 404
+    error_dict = {"error": "Not found"}
+    error_dict = dumps(error_dict, indent=4)
+    return error_dict, 404
 
 
 @app.teardown_appcontext
