@@ -29,12 +29,12 @@ def count_objects():
     """
     function for count each obj in each class
     """
-    list_class = {"amenity": "Amenity",
-                  "city": "City",
-                  "place": "Place",
-                  "review": "Review",
-                  "state": "State",
-                  "user": "User"}
+    list_class = {"amenities": "Amenity",
+                  "cities": "City",
+                  "places": "Place",
+                  "reviews": "Review",
+                  "states": "State",
+                  "users": "User"}
     dict_class = {}
     for item, val in list_class.items():
         dict_class[item] = storage.count(eval(val))
