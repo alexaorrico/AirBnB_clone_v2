@@ -51,13 +51,13 @@ def post_state():
     """
     Creates a State
     """
-    if not request.json:
+    if not request.get_json:
         abort(400, description="Not a JSON")
 
     if 'name' not in request.json:
         abort(400, description="Missing name")
 
-    data = request.json
+    data = request.get_json
     instance = State(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
@@ -73,12 +73,12 @@ def put_state(state_id):
     if not state:
         abort(404)
 
-    if not request.json:
+    if not request.get_json:
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'created_at', 'updated_at']
 
-    data = request.json
+    data = request.get_json
     for key, value in data.items():
         if key not in ignore:
             setattr(state, key, value)

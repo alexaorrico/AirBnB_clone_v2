@@ -59,12 +59,12 @@ def post_city(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    if not request.json:
+    if not request.get_json:
         abort(400, description="Not a JSON")
-    if 'name' not in request.json:
+    if 'name' not in request.get_json:
         abort(400, description="Missing name")
 
-    data = request.json
+    data = request.get_json
     instance = City(**data)
     instance.state_id = state.id
     instance.save()
@@ -80,12 +80,12 @@ def put_city(city_id):
     if not city:
         abort(404)
 
-    if not request.json:
+    if not request.get_json:
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'state_id', 'created_at', 'updated_at']
 
-    data = request.json
+    data = request.get_json
     for key, value in data.items():
         if key not in ignore:
             setattr(city, key, value)
