@@ -65,3 +65,22 @@ def post_state():
             return 'Missing name', 400
     except:
         return 'Not a JSON', 400
+
+
+@app_views.route('/states/<id>', methods=['PUT'])
+def edit_by_id(id):
+    """edit state by id"""
+    try:
+        dict_states = storage.all(State)
+        new_state = request.get_json()
+        key = "State." + id
+        if key in dict_states:
+            obj = dict_states[key]
+            obj.name = new_state["name"]
+            storage.save()
+            obj = obj.to_dict()
+            return dumps(obj, indent=4)
+        else:
+            abort(404)
+    except:
+        return 'Not a JSON', 400
