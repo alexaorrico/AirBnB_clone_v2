@@ -71,8 +71,9 @@ class FileStorage:
 
     def get(self, cls, id):
         """Returns the object based on the class name and its ID"""
-        k = cls + "." + id
-        if k in self.__objects.keys():
+        k = "{}".format(cls.__class__)
+        print (k)
+        if k in self.__objects:
             return self.__objects[k]
         return None
 
@@ -83,6 +84,6 @@ class FileStorage:
         else:
             c = 0
             for obj in self.__objects.values():
-                if obj._class.name_ == cls:
+                if obj.__class__.__name__ == cls:
                     c += 1
             return c

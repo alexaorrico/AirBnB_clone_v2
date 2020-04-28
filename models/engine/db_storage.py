@@ -88,7 +88,7 @@ class DBStorage:
         else:
             c = 0
             if cls in classes:
-                for key, baseClass in self.all().items():
-                    if type(baseClass.__name__) == cls:
+                for baseClass in self.all().items():
+                    if type(baseClass).__name__ == cls:
                         c += 1
             return c
