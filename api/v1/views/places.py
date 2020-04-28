@@ -87,10 +87,10 @@ def item_locator(id, item):
         for key, value in users:
             if value.to_dict()['id'] == id:
                 return True
-            return False
+        return False
     if item == 'Place':
         place = storage.all('Place').items()
         for key, value in place:
             if value.to_dict()['id'] == id:
                 return True
-            return False
+        return False
