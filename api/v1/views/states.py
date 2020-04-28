@@ -5,13 +5,33 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
-
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states(state_id=None):
     """
     Retrieves the list of all State objects
     or a specific State
+    ---
+    swagger: '2.0'
+    info:
+      description: State API 
+    parameters:
+      - name: state_id
+        in: path
+        type: string
+        required: False
+        description: the uuid of the state
+    responses:
+      404:
+        description: Error resource not found
+      200:
+        description: Request executed successfully
+        schema:
+          id: uuid
+          created at: datetime format
+          name:
+            description: the state name
+            default: Alabama
     """
 
     if not state_id:
