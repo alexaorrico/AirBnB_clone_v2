@@ -123,9 +123,10 @@ def places_search():
 
     data = request.get_json()
 
-    states = data.get('states', None)
-    cities = data.get('cities', None)
-    amenities = data.get('amenities', None)
+    if data:
+        states = data.get('states', None)
+        cities = data.get('cities', None)
+        amenities = data.get('amenities', None)
 
     if not data or (not states and not cities and not amenities):
         places = storage.all(Place).values()
