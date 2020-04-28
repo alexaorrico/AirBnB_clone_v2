@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from hashlib import md5
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -66,5 +67,26 @@ class FileStorage:
                 del self.__objects[key]
 
     def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
+        """Deserialize JSON file to objects"""
         self.reload()
+
+    def get(self, cls="", id=""):
+        """Returns obj based on cls and id else None"""
+        if not isinstance(cls, str) or not isinstance(id, str):
+            return None
+        try:
+            return self.all(eval(cls)).get(cls + "." + id)
+        except:
+            return None
+
+    def count(self, cls=None):
+        """Count number of objects in storage or specific number
+        of cls objects"""
+        if cls is None:
+            return len(self.all())
+        if not isinstance(cls, str):
+            return None
+        try:
+            return len(self.all(eval(cls)))
+        except:
+            return None
