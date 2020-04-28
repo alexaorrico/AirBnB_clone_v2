@@ -34,7 +34,7 @@ def handle_404(exception):
     Handler for 404 error (Not Found)
     """
     code = exception.__str__().split()[0]
-    description = exception.description
+    description = "Not found"
     message = {'error': description}
     return make_response(jsonify(message), code)
 
