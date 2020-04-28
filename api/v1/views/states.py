@@ -10,7 +10,7 @@ from flask import jsonify, abort, request, make_response
 @app_views.route('/states', strict_slashes=False, methods=['GET', 'POST'])
 def states():
     ls = []
-    objects = storage.all()
+    objects = storage.all('States')
     if request.method == "GET":
         for key, value in objects.items():
             ls.append(value.to_dict())
@@ -29,7 +29,7 @@ def states():
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET', 'DELETE', 'PUT'])
 def state(state_id):
-    objects = storage.all()
+    objects = storage.all('States')
     for key, value in objects.items():
         if state_id == value.id:
             if request.method == "GET":
