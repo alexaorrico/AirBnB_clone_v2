@@ -123,16 +123,11 @@ def places_search():
 
     data = request.get_json()
 
-    if data == [{}] or len(data) == 0:
-        empty = 1
+    states = data.get('states', None)
+    cities = data.get('cities', None)
+    amenities = data.get('amenities', None)
 
-    else:
-        empty = 0
-        states = data.get('states', None)
-        cities = data.get('cities', None)
-        amenities = data.get('amenities', None)
-
-    if empty or (not states and not cities and not amenities):
+    if not data or (not states and not cities and not amenities):
         places = storage.all(Place).values()
         list_places = []
         for place in places:
