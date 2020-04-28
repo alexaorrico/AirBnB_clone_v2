@@ -4,6 +4,7 @@ from models.state import State
 from models.city import City
 from models.place import Place
 from models.user import User
+from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -122,11 +123,16 @@ def places_search():
 
     data = request.get_json()
 
-    states = data.get('states', None)
-    cities = data.get('cities', None)
-    amenities = data.get('amenities', None)
+    if data == [{}]:
+        empty = 1
 
-    if not states and not cities and not amenities:
+    else:
+        empty = 0
+        states = data.get('states', None)
+        cities = data.get('cities', None)
+        amenities = data.get('amenities', None)
+
+    if empty or (not states and not cities and not amenities):
         places = storage.all(Place).values()
         list_places = []
         for place in places:
@@ -149,11 +155,17 @@ def places_search():
                     list_places.append(place)
 
     if amenities:
+        if not states and not cities:
+            list_places = [place for place in storage.all(Place).values()]
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
         for place in list_places:
-            if not all(elem in place.amenities for elem in amenities):
+            if not all(elem in place.amenities for elem in amenities_obj):
                 list_places.remove(place)
 
-    places = [place.to_dict() for place in list_places]
+    places = []
+    for place in list_places:
+        dic = place.to_dict()
+        dic.pop('amenities', None)
+        places.append(dic)
 
     return jsonify(places)
