@@ -81,9 +81,8 @@ def post_place(city_id):
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
 
+    data["city_id"] = city_id
     instance = Place(**data)
-    instance.city_id = city.id
-    storage.new(instance)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
@@ -98,7 +97,8 @@ def put_place(place_id):
     if not place:
         abort(404)
 
-    if not request.get_json():
+    data = request.get_json()
+    if not data:
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
