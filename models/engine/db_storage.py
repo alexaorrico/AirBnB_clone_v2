@@ -89,3 +89,20 @@ class DBStorage:
 
         count = len(all_instances)
         return count
+
+    def get(self, cls, id):
+        """
+        get element instance from quey based on the id if the class
+        is none
+            args:
+                @cls: class name
+                @id: id to compare and get instance
+        """
+        cls_query = self.all(cls)
+        match = {}
+
+        for key, value ins cls_query.items():
+            if value.id == id:
+                match[key] = value
+                return match
+        return None
