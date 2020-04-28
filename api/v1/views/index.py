@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-""" Starts a Flash Web Application """
+""" view for status of the api"""
 from api.v1.views import app_views
-from flask import jsonify
 from models import storage
 from models.city import City
 from models.place import Place
