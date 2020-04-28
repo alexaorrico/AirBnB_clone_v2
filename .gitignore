@@ -1,0 +1,19 @@
+*.pdf
+*.pyc
+*.tar
+*.tgz
+*.bz2
+*.cnf
+*.cfg
+*.log
+*~
+*main.c
+*.json
+# Executables
+*.exe
+*.out
+*.app
+*.o
+# W3C validator for Holberton School
+w3c_validator.py
+__pycache__/
