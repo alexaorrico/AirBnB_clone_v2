@@ -20,7 +20,6 @@ def some_stats():
                  "reviews": storage.count("Review"),
                  "states": storage.count("State"),
                  "users": storage.count("User")}
-
     return jsonify(stats_dic)
 
 
