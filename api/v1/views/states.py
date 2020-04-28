@@ -5,16 +5,16 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states(state_id=None):
     """
-    Retrieves the list of all State objects
-    or a specific State
+    Retrieves the list of all State objects or a specific State
     ---
-    swagger: '2.0'
+    title: HBNB State API
     info:
-      description: State API 
+      description: This is the documentation for state API requests
     parameters:
       - name: state_id
         in: path
@@ -26,12 +26,6 @@ def get_states(state_id=None):
         description: Error resource not found
       200:
         description: Request executed successfully
-        schema:
-          id: uuid
-          created at: datetime format
-          name:
-            description: the state name
-            default: Alabama
     """
 
     if not state_id:
@@ -53,6 +47,17 @@ def get_states(state_id=None):
 def delete_state(state_id):
     """
     Deletes a State Object
+    ---
+    parameters:
+      - name: state_id
+        in: path
+        required: True
+        description: uuid of the state
+    responses:
+      404:
+        State not found
+      200:
+        State deletion was completed successfully
     """
 
     state = storage.get(State, state_id)
@@ -70,6 +75,19 @@ def delete_state(state_id):
 def post_state():
     """
     Creates a State
+    ---
+    parameters:
+      - name: name
+        in: header
+        requred: True
+        description: The name of the state
+    responses:
+      404:
+        State not found
+      400:
+        error: Not a valid JSON or Missing State name
+      200:
+        State deletion was completed successfully
     """
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -87,6 +105,17 @@ def post_state():
 def put_state(state_id):
     """
     Updates a State
+    ---
+    parameters:
+      - name: state_id
+        in: path
+        required: True
+        description: uuid of the state
+    responses:
+      404:
+        State not found
+      200:
+        State update was completed successfully
     """
     state = storage.get(State, state_id)
 
