@@ -167,10 +167,10 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time.
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-Houssem Eddine Ben Khalifa - [Github](https://github.com/edin93) / [Twitter](https://twitter.com/h_edin93)  
-Adib Gruise - [Github](https://github.com/s0m35h1t) / [Twitter](https://twitter.com/GruiseAdib)
+* Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+* Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+* Houssem Eddine Ben Khalifa - [Github](https://github.com/edin93) / [Twitter](https://twitter.com/h_edin93)  
+* Adib Gruise - [Github](https://github.com/s0m35h1t) / [Twitter](https://twitter.com/GruiseAdib)
 
 ## License
 Public Domain. No copy write protection.
