@@ -4,6 +4,12 @@ Flask index file that returns the json status response
 """
 from api.v1.views import app_views
 from models import storage
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 from flask import jsonify
 from flask import request
 
@@ -26,5 +32,5 @@ def count_objects():
     list_class = ["Amenity", "City", "Place", "Review", "State", "User"]
     dict_class = {}
     for item in list_class:
-        dict_class[item] = storage.count(item)
+        dict_class[item] = storage.count(eval(item))
     return jsonify(dict_class)
