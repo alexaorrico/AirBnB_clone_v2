@@ -1,0 +1,21 @@
+# Temporal File Storage file
+file.json
+
+# PyCharm Workspace
+.idea
+
+# VSCode Workspace
+.vscode
+*.code-workspace
+
+# Python Cache
+__pycache__
+
+# Bash files
+generate-authors.sh
+
+# Files emacs
+*~
+
+# Releases tarballs
+versions/
