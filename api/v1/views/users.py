@@ -8,26 +8,27 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/user/get_user.yml', methods=['GET'])
-def get_users(user_id=None):
+def get_users():
     """
     Retrieves the list of all user objects
     or a specific user
     """
+    all_users = storage.all(User).values()
+    list_users = []
+    for user in all_users:
+        list_users.append(user.to_dict())
+    return jsonify(list_users)
 
-    if not user_id:
-        all_users = storage.all(User).values()
-        list_users = []
-        for user in all_users:
-            list_users.append(user.to_dict())
-        return jsonify(list_users)
-    else:
-        user = storage.get(User, user_id)
-        if not user:
-            abort(404)
 
-        return jsonify(user.to_dict())
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+def get_user(user_id):
+    """ Retrieves an user """
+    user = storage.get(User, user_id)
+    if not user:
+        abort(404)
+
+    return jsonify(user.to_dict())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
