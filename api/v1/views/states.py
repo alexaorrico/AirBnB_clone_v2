@@ -20,11 +20,10 @@ def get_states():
     return jsonify(list_states)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """ Retrieves a specific State """
-    state = state = storage.get(State, state_id)
+    state = storage.get(State, state_id)
     if not state:
         abort(404)
 
