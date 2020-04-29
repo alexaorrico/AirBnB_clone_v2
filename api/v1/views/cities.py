@@ -2,6 +2,7 @@
 """Cities module"""
 from api.v1.views import app_views
 from models import storage
+from models.state import State
 from models.city import City
 from flask import jsonify, request, abort
 
@@ -13,9 +14,9 @@ from flask import jsonify, request, abort
 def get_all_cities(state_id):
     """Gets all City objects of a State"""
     city_list = []
-    if storage.get("State", state_id) is None:
+    if storage.get(State, state_id) is None:
         abort(404)
-    city_list = dict([city for city in storage.get("State", state_id)
+    city_list = dict([city for city in storage.all(City).values()
                       if city.state_id == state_id])
     return (jsonify(city_list))
 
@@ -23,16 +24,16 @@ def get_all_cities(state_id):
 @app_views.route("/cities/<city_id>", methods=["GET"])
 def get_city_id(city_id):
     """Retrieves a City object"""
-    if storage.get("City", city_id) is None:
+    if storage.get(City, city_id) is None:
         abort(404)
     else:
-        return (jsonify(storage.get("State", state_id).to_dict()))
+        return (jsonify(storage.get(City, city_id).to_dict()))
 
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"])
 def delete_city(city_id):
     """Deletes a City object"""
-    cities = storage.get("City", city_id)
+    cities = storage.get(City, city_id)
     if cities is None:
         abort(404)
     else:
@@ -47,7 +48,7 @@ def delete_city(city_id):
     strict_slashes=False)
 def post_city(state_id):
     """Creates a new city object"""
-    if storage.get("State", state_id) is None:
+    if storage.get(State, state_id) is None:
         abort(404)
     if not request.get_json():
         return (jsonify({"error": "Not a JSON"})), 400
@@ -64,7 +65,7 @@ def post_city(state_id):
 def update_city(city_id):
     """Updates the city object"""
     data = request.get_json()
-    all_the_cities = storage.get("State", state_id)
+    all_the_cities = storage.get(City, city_id)
     if all_the_cities is None:
         abort(404)
     if not data:
@@ -72,5 +73,5 @@ def update_city(city_id):
     for key, value in data.items():
         if key != "id" and key != "created_at" and key != "updated_at":
             setattr(all_the_cities, key, value)
-    all_the_cities.save()
-    return jsonify(all_the_all_the_cities.to_dict()), 200
+    storage.save()
+    return jsonify(all_the_cities.to_dict()), 200
