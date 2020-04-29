@@ -22,7 +22,7 @@ def states(state_id=None):
     else:
         stateList = []
         all_states = storage.all('State')
-        for k, state in all_states.items():
+        for state in all_states.values():
             stateList.append(state.to_dict())
         return jsonify(stateList)
 
@@ -46,9 +46,9 @@ def states_create():
     """Creates new states"""
     res = request.get_json()
     if res is None:
-        abort(400, 'Not a JSON')
+        abort(400, "Not a JSON")
     if 'name' not in res:
-        abort(400, 'Missing name')
+        abort(400, "Missing name")
     newState = State(name=res['name'])
     storage.new(newState)
     storage.save()
@@ -65,7 +65,7 @@ def states_put(state_id=None):
     if state is None:
         abort(404)
     if res is None:
-        abort(400, 'Not a JSON')
+        abort(400, "Not a JSON")
     for k, v in res.items():
         if k != 'id' and k != 'created_at' and k != 'updated_at':
             setattr(state, k, v)
