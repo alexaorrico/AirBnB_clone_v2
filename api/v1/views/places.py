@@ -16,6 +16,7 @@ def get_places(city_id=None):
     if not city:
         abort(404)
     my_dict = []
+    places = {}
     places = storage.all(Place)
     for place in places.values():
         if place.city_id == places.id:
