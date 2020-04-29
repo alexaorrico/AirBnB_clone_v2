@@ -1,0 +1,13 @@
+    tags:
+      - Places
+    parameters:
+      - name: state_id
+        in: path
+        type: string
+        required: False
+        description: The unique id for each state
+    responses:
+      404:
+        description: resource not found!
+      200:
+        description: Successful request
