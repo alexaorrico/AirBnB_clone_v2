@@ -58,7 +58,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self, hide_password=True):
+    def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         storage_type = getenv("HBNB_TYPE_STORAGE", None)
         new_dict = self.__dict__.copy()
@@ -69,8 +69,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if hide_password is True:
-            new_dict.pop('password', None)
+        if (storage_type == 'db' and 'password' in new_dict):
+            del new_dict['password']
         return new_dict
 
     def delete(self):

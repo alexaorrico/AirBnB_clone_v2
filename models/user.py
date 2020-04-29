@@ -35,5 +35,5 @@ class User(BaseModel, Base):
 
     def hash_password(self, value):
         """Hash user password md5"""
-        value = md5(value.encode("utf-8")).hexdigest()
+        value = md5(value)
         setattr(self, 'password', value)
