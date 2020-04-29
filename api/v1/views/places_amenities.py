@@ -20,13 +20,7 @@ def place_amenities(place_id):
 
     # GET
     if request.method == "GET":
-        if getenv("HBNB_TYPE_STORAGE", None) == "db":
-            return jsonify([amenity.to_dict() for amenity in place.amenities])
-        else:
-            return jsonify([
-                storage.get('Amenity', amenity_id).to_dict()
-                for amenity_id in place.amenity_ids
-            ])
+        return jsonify([amenity.to_dict() for amenity in place.amenities])
 
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
@@ -66,11 +60,11 @@ def place_amenity(place_id, amenity_id):
         # Storage type db
         if amenity not in place.amenities:
             abort(404)
-        place.amenities.append(amenity)
+        place.amenities.remove(amenity)
     else:
         # Storgae type file
         if amenity.id not in place.amenity_ids:
             abort(404)
-        place.amenity_ids.append(amenity_id)
+        place.amenity_ids.remove(amenity_id)
     place.save()
     return jsonify({})
