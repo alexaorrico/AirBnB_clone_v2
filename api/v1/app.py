@@ -2,10 +2,10 @@
 """
 Representation for all models
 """
-
 from flask import Flask, render_template, Blueprint, jsonify
 from api.v1.views import app_views
 from models import *
+from os import getenv
 from models import storage
 
 app = Flask(__name__)
