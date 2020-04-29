@@ -16,7 +16,7 @@ def states(state_id=None):
         state_id = "State.{}".format(state_id)
         all_states = storage.all('State')
         if state_id in all_states:
-            return jsonify(all_states[state_id].to_dict()), 200
+            return jsonify(all_states[state_id].to_dict())
         else:
             abort(404)
     else:
