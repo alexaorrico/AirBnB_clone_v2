@@ -57,8 +57,6 @@ class DBStorage:
 
     def get(self, cls, id):
         """retrieves an object"""
-        if not isinstance(cls, str) or not isinstance(id, str):
-            return None
         return (self.__session.query(classes[cls.__name__]).get(id))
 
     def count(self, cls=None):
