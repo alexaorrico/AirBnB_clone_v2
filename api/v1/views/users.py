@@ -51,7 +51,7 @@ def user(user_id):
         return jsonify(user.to_dict())
 
     # PUT
-    elif request.medhod == 'PUT':
+    elif request.method == 'PUT':
         doc = request.get_json(silent=True)
         if doc is None:
             return "Not a JSON", 400
