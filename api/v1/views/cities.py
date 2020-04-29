@@ -10,7 +10,7 @@ from flasgger.utils import swag_from
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-@swag_from('documentation/city/get_city.yml', methods=['GET'])
+@swag_from('documentation/city/cities_by_state.yml', methods=['GET'])
 def get_cities(state_id):
     """
     Retrieves the list of all cities objects

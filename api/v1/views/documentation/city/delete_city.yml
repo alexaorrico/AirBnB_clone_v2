@@ -1,3 +1,4 @@
+    deletes a city based on id
     ---
     tags:
       - Cities
@@ -9,6 +10,6 @@
         description: id of the city
     responses:
       404:
-        description: Resource not found!
+        description: City  not found!
       200:
         description: Request completed successfully
