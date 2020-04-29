@@ -2,7 +2,7 @@
 """A new view for State objects"""
 from api.v1.views import app_views
 from models import state, storage
-from flask import Flask, jsonify, abort, request, Blueprint
+from flask import Flask, jsonify, abort, request
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
