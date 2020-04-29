@@ -1,0 +1,26 @@
+    tags:
+      - States
+    parameters:
+      - name: state_id
+        in: path
+        type: string
+        required: true
+        description: the unique id of the state
+    responses:
+      500:
+        description: Error The language is not awesome!
+      200:
+        description: A language with its awesomeness
+        schema:
+          id: awesome
+          properties:
+            language:
+              type: string
+              description: The language name
+              default: Lua
+            features:
+              type: array
+              description: The awesomeness list
+              items:
+                type: string
+              default: ["perfect", "simple", "lovely"]

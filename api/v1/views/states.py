@@ -4,28 +4,15 @@ from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+from flasgger.utils import swag_from
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/get_state.yml', methods=['GET'])
 def get_states(state_id=None):
     """
     Retrieves the list of all State objects or a specific State
-    ---
-    title: HBNB State API
-    info:
-      description: This is the documentation for state API requests
-    parameters:
-      - name: state_id
-        in: path
-        type: string
-        required: False
-        description: the uuid of the state
-    responses:
-      404:
-        description: Error resource not found
-      200:
-        description: Request executed successfully
     """
 
     if not state_id:
@@ -44,20 +31,10 @@ def get_states(state_id=None):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('documentation/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
     Deletes a State Object
-    ---
-    parameters:
-      - name: state_id
-        in: path
-        required: True
-        description: uuid of the state
-    responses:
-      404:
-        State not found
-      200:
-        State deletion was completed successfully
     """
 
     state = storage.get(State, state_id)
@@ -72,22 +49,10 @@ def delete_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
+@swag_from('documentation/post_state.yml', methods=['POST'])
 def post_state():
     """
     Creates a State
-    ---
-    parameters:
-      - name: name
-        in: header
-        requred: True
-        description: The name of the state
-    responses:
-      404:
-        State not found
-      400:
-        error: Not a valid JSON or Missing State name
-      200:
-        State deletion was completed successfully
     """
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -102,20 +67,10 @@ def post_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('documentation/put_state.yml', methods=['PUT'])
 def put_state(state_id):
     """
     Updates a State
-    ---
-    parameters:
-      - name: state_id
-        in: path
-        required: True
-        description: uuid of the state
-    responses:
-      404:
-        State not found
-      200:
-        State update was completed successfully
     """
     state = storage.get(State, state_id)
 

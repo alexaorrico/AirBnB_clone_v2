@@ -1,0 +1,22 @@
+    tags:
+      - States
+    responses:
+      404:
+        description: Error The language is not awesome!
+      400:
+        description: Missing name or Not Valid JSON
+      201:
+        description: Request completed successfully
+        schema:
+          id: awesome
+          properties:
+            language:
+              type: string
+              description: The language name
+              default: Lua
+            features:
+              type: array
+              description: The awesomeness list
+              items:
+                type: string
+              default: ["perfect", "simple", "lovely"]
