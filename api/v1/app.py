@@ -13,7 +13,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 
