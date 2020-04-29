@@ -22,7 +22,7 @@ def states(state_id=None):
     else:
         stateList = []
         all_states = storage.all('State')
-        for state in all_states.values():
+        for k, state in all_states.items():
             stateList.append(state.to_dict())
         return jsonify(stateList)
 
