@@ -30,10 +30,9 @@ def delete_users(users_id):
     all_the_users = storage.get(User, users_id)
     if all_the_users is None:
         abort(404)
-    else:
-        storage.delete(all_the_users)
-        storage.save()
-        return (jsonify({})), 200
+    storage.delete(all_the_users)
+    storage.save()
+    return (jsonify({})), 200
 
 
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
@@ -42,8 +41,10 @@ def post_user():
     data = request.get_json()
     if not data:
         return (jsonify({"error": "Not a JSON"})), 400
-    if "name" not in data:
-        return (jsonify({"error": "Missing name"})), 400
+    if "email" not in data:
+        return (jsonify({"error": "Missing email"})), 400
+    if "password" not in data:
+        return (jsonify({"error": "Missing password"})), 400
     new_user_obj = User(**data)
     new_user_obj.save()
     return (new_user_obj.to_dict()), 201
