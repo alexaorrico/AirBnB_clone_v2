@@ -13,7 +13,7 @@ def stat():
     return jsonify(app_views), 200
 
 
-@app_views.route('/api/v1/stats', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     my_dict = {
         "amenities": storage.count('Amenity'),
