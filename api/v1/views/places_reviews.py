@@ -9,7 +9,7 @@ from models.review import Review
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET", "POST"])
 def reviews(place_id):
-    """Defines /places/<place_id>/reviews with GET, POST methods 
+    """Defines /places/<place_id>/reviews with GET, POST methods
 
     GET - Get all Reviews related to a given place_id
     POST - Creates a new  Review.
