@@ -20,7 +20,7 @@ def places(city_id):
     if city is None:
         abort(404)
     if request.method == 'GET':
-        return jsonify([place.to_dict() for city in city.places])
+        return jsonify([place.to_dict() for place in city.places])
 
     # POST
     doc = request.get_json(silent=True)
