@@ -16,7 +16,7 @@ def get_all_cities(state_id):
     city_list = []
     if storage.get(State, state_id) is None:
         abort(404)
-    city_list = dict([city for city in storage.get(State, state_id)
+    city_list = dict([city for city in storage.all(City).values()
                       if city.state_id == state_id])
     return (jsonify(city_list))
 
@@ -74,4 +74,4 @@ def update_city(city_id):
         if key != "id" and key != "created_at" and key != "updated_at":
             setattr(all_the_cities, key, value)
     all_the_cities.save()
-    return jsonify(all_the_all_the_cities.to_dict()), 200
+    return jsonify(all_the_cities.to_dict()), 200
