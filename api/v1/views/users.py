@@ -58,7 +58,10 @@ def user(user_id):
 
         for k, v in doc.items():
             if k not in ('id', 'email', 'created_at', 'updated_at'):
-                setattr(user, k, v)
+                if k == 'password':
+                    User.hash_password(user, v)
+                else:
+                    setattr(user, k, v)
         user.save()
         return jsonify(user.to_dict()), 200
 
