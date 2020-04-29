@@ -162,7 +162,11 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-Santiago Árboleda - [Github](https://github.com/monoprosito) / [Twitter](https://twitter.com/msarboledal)
+
+Second part of Airbnb: Joann Vuong
+
+Santiago Arboleda Londoño - [Github](https://github.com/monoprosito) / [Twitter](https://twitter.com/msarboledal)
+
 Juan Calle - [Github](https://github.com/johnconnor77) / [Twitter](https://twitter.com/jfcalleh)
 
 
