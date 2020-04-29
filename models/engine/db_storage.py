@@ -80,7 +80,7 @@ class DBStorage:
         not found"""
         if cls is not None or id is not None:
             good = self.all(cls)
-            word = "State.{}".format(id)
+            word = "{}.{}".format(cls, id)
             for k, v in good.items():
                 if k == word:
                     return (v)
