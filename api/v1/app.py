@@ -9,6 +9,7 @@ from api.v1.views import app_views
 import os
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
