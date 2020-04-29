@@ -1,13 +1,20 @@
+    posts a new user
+    ---
     tags:
       - Users
     parameters:
-      - name: amenity_id
-        in: path
+      - name: email
+        in: header
         type: string
-        required: false
-        description: The id of the amenity
+        required: true
+        description: user's email
+      - name: password
+        in: header
+        type: string
+        required: true
+        description: user's password
     responses:
-      404:
-        description: resource not found!
-      200:
-        description: request executed successfully
+      400:
+        description: Missing email \nMissing Password\nNot a valid JSON
+      201:
+        description: successfully created user

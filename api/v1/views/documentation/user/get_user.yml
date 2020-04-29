@@ -1,13 +1,15 @@
+    retrieves all users or a specific user.
+    ---
     tags:
       - Users
     parameters:
-      - name: amenity_id
+      - name: user_id
         in: path
         type: string
         required: false
-        description: The id of the amenity
+        description: The id of the user to retrieve
     responses:
       404:
-        description: resource not found!
+        description: user not found!
       200:
         description: request executed successfully
