@@ -42,7 +42,7 @@ def reviews(place_id):
 
 
 @app_views.route("/reviews/<review_id>", methods=["GET", "PUT", "DELETE"])
-def review_id(review_id):
+def review(review_id):
     """Define/reviews/<review_id> with GET, DELETE and PUT methods
 
     GET - get a Review with the given id.
