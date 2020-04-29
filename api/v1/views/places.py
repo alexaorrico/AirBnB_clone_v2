@@ -11,13 +11,11 @@ from flask import jsonify, request, abort
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
 def get_places_from_city(city_id):
-    """Gets all Places objects from a City"""
-    place_list = []
+    """Gets all Places objects from a City object"""
     if storage.get(City, city_id) is None:
         abort(404)
-    place_list = dict([place for place in storage.all(Place).values()
-                       if place.city_id == city_id])
-    return (jsonify(place_list))
+    return (jsonify(([place.to_dict() for place in storage.all(Place).
+                      values()if place.city_id == city_id])))
 
 
 @app_views.route("/places/<city_id>", methods=["GET"])
@@ -48,11 +46,16 @@ def post_place(city_id):
     """Creates a new place object"""
     if storage.get(City, city_id) is None:
         abort(404)
-    if not request.get_json():
-        return (jsonify({"error": "Not a JSON"})), 400
-    if "name" not in request.get_json():
-        return (jsonify({"error": "Missing name"})), 400
     data = request.get_json()
+    if not data:
+        return (jsonify({"error": "Not a JSON"})), 400
+    if "user_id" not in data:
+        return (jsonify({"error": "Missing user_id"})), 400
+    if storage.get(User, data["user_id"]) is None:
+        abort(404)
+    if "name" not in data:
+        return (jsonify({"error": "Missing name"})), 400
+    user_id = data["user_id"]
     data["city_id"] = city_id
     new_place_obj = Place(**data)
     new_place_obj.save()
@@ -62,6 +65,7 @@ def post_place(city_id):
 @app_views.route("/places/<place_id>", methods=["PUT"])
 def update_place(place_id):
     """Updates the place object"""
+    ignore_data = ["id", "user_id", "city_id", "created_at", "updated_at"]
     data = request.get_json()
     all_the_places = storage.get(Place, place_id)
     if all_the_places is None:
@@ -69,7 +73,7 @@ def update_place(place_id):
     if not data:
         return (jsonify({"error": "Not a JSON"})), 400
     for key, value in data.items():
-        if key != "id" and key != "created_at" and key != "updated_at":
+        if key not in ignore_data:
             setattr(all_the_places, key, value)
     storage.save()
     return jsonify(all_the_places.to_dict()), 200
