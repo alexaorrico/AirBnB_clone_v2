@@ -26,14 +26,15 @@ def places(city_id):
     doc = request.get_json(silent=True)
     if doc is None:
         return "Not a JSON", 400
-    if doc.get("user_id") is None:
-        return "Missing user_id", 400
     user_id = doc.get('user_id')
+    if user_id is None:
+        return "Missing user_id", 400
     user = storage.get('User', user_id)
     if user is None:
         abort(404)
     if doc.get('name') is None:
         return 'Missing name', 400
+    doc["city_id"] = city_id
     place = Place(**doc)
     place.save()
     return jsonify(place.to_dict()), 201
