@@ -6,7 +6,7 @@ all default RestFul API actions.
 
 from flask import Flask, render_template
 from api.v1.views import app_views
-from models import storage, user
+from models import storage
 from flask import jsonify, abort, request
 import models
 
