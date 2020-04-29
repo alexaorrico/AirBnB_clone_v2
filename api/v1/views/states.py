@@ -27,7 +27,7 @@ def states():
     return jsonify(state.to_dict()), 200
 
 
-@app_views.route("/states/<state id>", methodes=["GET", "DELETE", "PUT"])
+@app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
 def state(state_id):
     """Define /state/<state_id> with GET, PUT and DELETE  methodes
 
@@ -35,7 +35,7 @@ def state(state_id):
     PUT - Update the state with the given id
     DELETE - Deletes the state with the givem id
     """
-    state = storage.get("State", state_id)
+    state = storage.get('State', state_id)
     if state is None:
         abort(404)
 
