@@ -14,8 +14,8 @@ def get_places_from_city(city_id):
     """Gets all Places objects from a City object"""
     if storage.get(City, city_id) is None:
         abort(404)
-    return (jsonify(([v.to_dict() for k, v in storage.all(Place).values()
-                      if v.city_id == city_id])))
+    return (jsonify(([place.to_dict() for place in storage.all(Place).
+                      values()if place.city_id == city_id])))
 
 
 @app_views.route("/places/<city_id>", methods=["GET"])
@@ -56,8 +56,10 @@ def post_place(city_id):
     if "name" not in data:
         return (jsonify({"error": "Missing name"})), 400
     user_id = data["user_id"]
-    data["city_id"] = city_id
-    new_place_obj = Place(**data)
+    place_name = data["name"]
+    new_place_obj = Place(user_id=user_id, name=name, city_id=city_id)
+    for k, v in data.items():
+        setattr(new_place_obj, k, v)
     new_place_obj.save()
     return jsonify(new_place_obj.to_dict()), 201
 
