@@ -36,7 +36,7 @@ def delete_users(users_id):
         return (jsonify({})), 200
 
 
-@app_views.route("/users/", methods=["POST"], strict_slashes=False)
+@app_views.route("/users", methods=["POST"], strict_slashes=False)
 def post_user():
     """Creates a new user object"""
     data = request.get_json()

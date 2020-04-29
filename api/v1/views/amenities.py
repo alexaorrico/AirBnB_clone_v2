@@ -5,25 +5,28 @@ from models import storage
 from models.amenity import Amenity
 from flask import jsonify, request, abort
 
+
 @app_views.route("/amenities", methods=["GET"])
 def get_amenities():
     """Gets amenity objects"""
     amenities_list = []
-    for i in storage.all(State).values():
-        amenities_list.append(value.to_dict())
+    for i in storage.all(Amenity).values():
+        amenities_list.append(i.to_dict())
     return jsonify(state_list)
+
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET"])
 def get_amenity_id(amenity_id):
-    """Gets a certain state based on the state's id"""
-    if storage.get('Amenity', amenity_id) is None:
+    """Gets a certain amenity"""
+    if storage.get(Amenity, amenity_id) is None:
         abort(404)
     else:
-        return (jsonify(storage.get("Amenity", amenity_id).to_dict()))
+        return (jsonify(storage.get(Amenity, amenity_id).to_dict()))
+
 
 @app_views.route("/amenities/<amenity_id>", methods=["DELETE"])
 def delete_amenity(amenity_id):
-    """Deletes an amenity based id"""
+    """Deletes an amenity based on id"""
     all_the_amenities = storage.get(Amenity, amenity_id)
     if all_the_amenities is None:
         abort(404)
@@ -33,7 +36,7 @@ def delete_amenity(amenity_id):
         return (jsonify({})), 200
 
 
-@app_views.route("/amenities/", methods=["POST"], strict_slashes=False)
+@app_views.route("/amenities", methods=["POST"], strict_slashes=False)
 def post_amenity():
     """Creates a new amenity object"""
     data = request.get_json()
@@ -46,8 +49,11 @@ def post_amenity():
     return (new_amenity_obj.to_dict()), 201
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["PUT"], strict_slashes=False)
-def update_amenity(state_id):
+@app_views.route(
+    "/amenities/<amenity_id>",
+    methods=["PUT"],
+    strict_slashes=False)
+def update_amenity(amenity_id):
     """Updates the amenity object"""
     data = request.get_json()
     all_the_amenities = storage.get(Amenity, amenity_id)
