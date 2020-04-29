@@ -2,7 +2,6 @@
 """Define Review Routes"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from flasgger import swag_from
 from models import storage
 from models.review import Review
 
