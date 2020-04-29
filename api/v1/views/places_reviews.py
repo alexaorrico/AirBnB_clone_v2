@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Place module"""
+"""Place_reviews module"""
 from api.v1.views import app_views
 from models import storage
 from models.review import Review
