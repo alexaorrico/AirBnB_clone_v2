@@ -2,7 +2,7 @@
 """ view for Place objects that handles all default RestFul API actions """
 import os
 import json
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
 from models.city import City
@@ -35,7 +35,7 @@ def del_place_id(place_id):
         abort(404)
     place.delete()
     storage.save()
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route("/cities/<city_id>/places", methods=['POST'])
