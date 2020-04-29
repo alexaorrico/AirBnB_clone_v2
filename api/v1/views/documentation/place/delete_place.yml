@@ -1,13 +1,15 @@
+    Deletes a place based on the id provided
+    ---
     tags:
       - Places
     parameters:
-      - name: state_id
+      - name: place_id
         in: path
         type: string
-        required: False
-        description: The unique id for each state
+        required: true
+        description: The uuid of the place to delete
     responses:
       404:
-        description: resource not found!
+        description: Place not found!
       200:
-        description: Successful request
+        description: Deletion request sucessful
