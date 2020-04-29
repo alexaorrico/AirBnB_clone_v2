@@ -48,8 +48,10 @@ def amenity_post():
     """Creates an user"""
     if not request.get_json():
         return jsonify({'message': 'Not a JSON'}), 400
-    if 'name' not in request.get_json():
-        return jsonify({'message': 'Missing name'}), 400
+    if 'email' not in request.get_json():
+        return jsonify({'message': 'Missing email'}), 400
+    if 'password' not in request.get_json():
+        return jsonify({'message': 'Missing password'}), 400
 
     user = user.User(name=request.get_json().get('name'))
     user.save()
@@ -67,7 +69,7 @@ def user_put(user_id):
         abort(400, 'Not a JSON')
 
     for k, v in request.get_json().items():
-        if k not in ['id', 'created_at', 'updated_at']:
+        if k not in ['id', 'email', 'created_at', 'updated_at']:
             setattr(user, k, v)
     user.save()
     return jsonify(user.to_dict())
