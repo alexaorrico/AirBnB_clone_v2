@@ -45,7 +45,7 @@ def post_review(place_id):
     """Creates a new review object"""
     if storage.get(Place, place_id) is None:
         abort(404)
-    if storage.get(User, user_id) is None:
+    if storage.get(User, user_id):
         abort(404)
     if not request.get_json():
         return (jsonify({"error": "Not a JSON"})), 400
