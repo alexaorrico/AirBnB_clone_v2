@@ -12,7 +12,7 @@ def get_amenities():
     amenities_list = []
     for i in storage.all(Amenity).values():
         amenities_list.append(i.to_dict())
-    return jsonify(state_list)
+    return jsonify(amenity_list)
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET"])
