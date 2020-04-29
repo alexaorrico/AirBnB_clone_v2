@@ -97,19 +97,23 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-        storage = FileStorage()
-        new_dict = {}
-        for key, value in classes.items():
-            instance = value()
-            instance_key = instance.__class__.__name__ + "." + instance.id
-            new_dict[instance_key] = instance
-        save = FileStorage._FileStorage__objects
-        FileStorage._FileStorage__objects = new_dict
-        storage.save()
-        FileStorage._FileStorage__objects = save
-        for key, value in new_dict.items():
-            new_dict[key] = value.to_dict()
-        string = json.dumps(new_dict)
-        with open("file.json", "r") as f:
-            js = f.read()
-        self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Test that get correctly gets a designated object from storage"""
+        t1 = models.storage.get()
+        self.assertEqual(t1, None)
+        t2 = State(name="Cameron")
+        t2.save()
+        t1 = models.storage.get("State", t2.id)
+        self.assertEqual(t1, t2)
+
+    def test_count(self):
+        """Test that count correctly counts objects in storage"""
+        baseline = models.storage.count()
+        baselines = models.storage.count("State")
+        s1 = State(name="Denial")
+        s1.save()
+        count1 = models.storage.count()
+        count2 = models.storage.count("State")
+        self.assertEqual(baseline, count1 - 1)
+        self.assertEqual(baselines, count2 - 1)
