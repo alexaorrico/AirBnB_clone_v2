@@ -1,3 +1,4 @@
+    Updates a city based on id
     ---
     tags:
       - Cities
@@ -9,6 +10,8 @@
         description: id of the city
     responses:
       404:
-        description: Resource not found!
+        description: city not found!
+      400:
+        description: Not a valid JSON
       200:
         description: Request completed successfully

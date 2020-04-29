@@ -1,15 +1,15 @@
-    get a specific city  based on the state_id
+    get a list of cities based on the state_id
     ---
     tags:
       - Cities
     parameters:
-      - name: city_id
+      - name: state_id
         in: path
         type: string
         required: true
-        description: The uniqe id of the city
+        description: The uniqe id of the state
     responses:
       404:
-        description: City not found!
+        description: No state is linked to the ID!
       200:
         description: Request completed successfully
