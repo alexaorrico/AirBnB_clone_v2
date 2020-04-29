@@ -1,0 +1,15 @@
+    Gets a specific state by ID or the list of all states if no ID is specied
+    ---
+    tags:
+      - States
+    parameters:
+      - name: state_id
+        in: path
+        type: string
+        required: false
+        description: the unique id of the state
+    responses:
+       404:
+        description: State not found
+       200:
+        description: Successful request
