@@ -11,11 +11,11 @@ from flask import jsonify, request, abort
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
 def get_places_from_city(city_id):
-    """Gets all Places objects from a City"""
+    """Gets all Places objects from a City object"""
     if storage.get(City, city_id) is None:
         abort(404)
-    return (jsonify(([place.to_dict() for place in storage.all(Place).values()
-                      if place.city_id == city_id])))
+    return (jsonify(([place.to_dict() for place in storage.all(Place).
+                      values()if place.city_id == city_id])))
 
 
 @app_views.route("/places/<city_id>", methods=["GET"])
