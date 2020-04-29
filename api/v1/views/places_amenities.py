@@ -23,19 +23,20 @@ def place_amenities(place_id):
         return jsonify([amenity.to_dict() for amenity in place.amenities])
 
 
-
-@app_views.route("places/<place_id>/amenities/<amenity_id>", methods=["POST", "DELETE"])
+@app_views.route("places/<place_id>/amenities/<amenity_id>",
+                 methods=["POST", "DELETE"])
 def place_amenity(place_id, amenity_id):
-    """Define places/<place_id>/amenities/<amenity_id> with POST and DELETE methods
+    """Define places/<place_id>/amenities/<amenity_id>
+    with POST and DELETE methods
 
     DELETE - Deletes a Review  with the given id
-    POST - link an amenity to a place 
+    POST - link an amenity to a place
     """
     place = storage.get("PLace", place_id)
     amenity = storage.get("Amenity", amenity_id)
     if place is None or amenity is None:
         abort(404)
-    
+
     already_exist = False
     # POST
     if request.method == "POST":
@@ -52,8 +53,7 @@ def place_amenity(place_id, amenity_id):
             else:
                 already_exist = True
         place.save()
-        return jsonify(amenity.to_dict()), (201 if not already_exist else  200) 
-
+        return jsonify(amenity.to_dict()), (201 if not already_exist else 200)
 
     # DELETE
     if getenv("HBNB_TYPE_STORAGE", None) == "db":
