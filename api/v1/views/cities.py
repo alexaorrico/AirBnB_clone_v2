@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+Define city routes.
+"""
+
+
 from flask import request, abort, jsonify
 from models import storage
 from models.city import City
