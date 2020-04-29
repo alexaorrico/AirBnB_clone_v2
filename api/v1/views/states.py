@@ -42,7 +42,7 @@ def pos_state():
     res = request.get_json()
     if res is None:
         abort(400, 'Not a JSON')
-    if 'name' not in content:
+    if 'name' not in res:
         abort(400, 'Missing name')
     newState = State(name=res['name'])
     storage.new(newState)
