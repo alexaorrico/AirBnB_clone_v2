@@ -91,8 +91,9 @@ class DBStorage:
         """
         Method to count the number of objects in storage
         :param cls: class name
-        :return: the number of objects in storage matching the given class name.
-        If no name is passed, returns the count of all objects in storage.
+        :return: the number of objects in storage matching
+        the given class name. If no name is passed, returns
+        the count of all objects in storage.
         """
         return len(self.all(cls))
 
