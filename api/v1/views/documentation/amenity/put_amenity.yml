@@ -1,0 +1,16 @@
+This is the language awesomeness API
+    Call this api passing a language name and get back its features
+    ---
+    tags:
+      - Amenities
+    parameters:
+      - name: amenity_id
+        in: path
+        type: string
+        required: false
+        description: The id of the amenity
+    responses:
+      404:
+        description: resource not found!
+      200:
+        description: request executed successfully
