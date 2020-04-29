@@ -25,7 +25,7 @@ def some_stats():
     dict = {"amenities": storage.count(Amenity),
             "cities": storage.count(City),
             "places": storage.count(Place),
-            "review": storage.count(Review),
+            "reviews": storage.count(Review),
             "states": storage.count(State),
             "users": storage.count(User)}
     return jsonify(dict)
