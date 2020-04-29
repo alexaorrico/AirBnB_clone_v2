@@ -6,11 +6,13 @@ from flask import jsonify, abort, request
 from models.place import Place
 
 
-@app_views.route("/cities/<city_id>/places", methods=['GET'],
-                 strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", methods=['GET'], strict_slashes=False)
 def all_Places(city_id):
-    """ return all Place on a City ID """
+    """ return all Place on a City ID 
+    if not found, error 404 """
     dic = []
+    if item_locator(city_id, 'City') is False:
+        abort(404)
     places = storage.all('Place').items()
     for key, value in places:
         if value.to_dict()['city_id'] == city_id:
@@ -20,7 +22,8 @@ def all_Places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def place_id(place_id):
-    """ Return a Place id """
+    """ Return a Place id 
+    or Return 404 if it not found """
     place = storage.get('Place', place_id)
     if place:
         return jsonify(place.to_dict())
@@ -28,10 +31,10 @@ def place_id(place_id):
         abort(404)
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
-    """ Delete a Place with their ID """
+    """ Delete a Place with their ID, return a void dictionary,
+    if place not found, return 404 status"""
     place = storage.get('Place', place_id)
     if place:
         place.delete()
@@ -41,8 +44,7 @@ def delete_place(place_id):
         abort(404)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def create_place(city_id):
     """ Create a Place """
     if not (request.is_json):
@@ -82,15 +84,8 @@ def upd_place(place_id):
 
 def item_locator(id, item):
     """ fin into items list """
-    if item == 'User':
-        users = storage.all('User').items()
-        for key, value in users:
-            if value.to_dict()['id'] == id:
-                return True
-        return False
-    if item == 'Place':
-        place = storage.all('Place').items()
-        for key, value in place:
-            if value.to_dict()['id'] == id:
-                return True
-        return False
+    list_items = storage.all(str(item)).items()
+    for key, value in list_items:
+        if value.to_dict()['id']== id:
+            return True
+    return False
