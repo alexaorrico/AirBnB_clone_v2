@@ -2,7 +2,7 @@
 """A new view for State objects"""
 from api.v1.views import app_views
 from models import state, storage
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, abort, request, Blueprint
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -26,7 +26,7 @@ def state_id(state_id):
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def state_delete(state_id):
     """Deletes a State"""
     state = storage.get('State', state_id)

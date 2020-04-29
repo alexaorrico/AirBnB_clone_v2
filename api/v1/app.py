@@ -3,8 +3,8 @@
 """
 
 from flask import Flask, render_template
-from api.v1.views import app_views
-from models import *
+from api.v1.views import app_views, states, cities
+from os import getenv
 from models import storage
 from flask import jsonify
 
@@ -16,6 +16,7 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
+
 
 @app.errorhandler(404)
 def page_not_found(e):
