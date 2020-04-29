@@ -11,3 +11,16 @@ def stat():
     """return status code 200"""
     app_views = {'status': 'OK'}
     return jsonify(app_views), 200
+
+
+@app_views.route('/api/v1/stats', strict_slashes=False)
+def stats():
+    my_dict = {
+        "amenities": storage.count('Amenity'),
+        "cities": storage.count('City'),
+        "places": storage.count('Place'),
+        "reviews": storage.count('Rewiew'),
+        "states": storage.count('State'),
+        "users": storage.count('User')
+    }
+    return jsonify(my_dict)
