@@ -73,5 +73,5 @@ def update_city(city_id):
     for key, value in data.items():
         if key != "id" and key != "created_at" and key != "updated_at":
             setattr(all_the_cities, key, value)
-    all_the_cities.save()
+    storage.save()
     return jsonify(all_the_cities.to_dict()), 200

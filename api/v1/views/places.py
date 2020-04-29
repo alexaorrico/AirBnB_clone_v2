@@ -15,13 +15,13 @@ def get_places_from_city(city_id):
     if storage.get(City, city_id) is None:
         abort(404)
     place_list = dict([place for place in storage.all(Place).values()
-                      if place.city_id == city_id])
+                       if place.city_id == city_id])
     return (jsonify(place_list))
 
 
 @app_views.route("/places/<city_id>", methods=["GET"])
 def get_place_id(place_id):
-    """Retrieves a Place object"""
+    """Gets a Place object"""
     if storage.get(Place, place_id) is None:
         abort(404)
     return (jsonify(storage.get(Place, place_id).to_dict()))
@@ -59,7 +59,7 @@ def post_place(city_id):
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"])
-def update_city(place_id):
+def update_place(place_id):
     """Updates the place object"""
     data = request.get_json()
     all_the_places = storage.get(Place, place_id)
@@ -70,5 +70,5 @@ def update_city(place_id):
     for key, value in data.items():
         if key != "id" and key != "created_at" and key != "updated_at":
             setattr(all_the_places, key, value)
-    all_the_places.save()
+    storage.save()
     return jsonify(all_the_places.to_dict()), 200
