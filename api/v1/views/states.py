@@ -53,7 +53,7 @@ def state(state_id):
             if k not in ("id", "created_at", "updated_at"):
                 setattr(state, k, v)
         state.save()
-        return jsonify(state.to)
+        return jsonify(state.to_dict())
 
     # DELETE
     state.delete()
