@@ -72,9 +72,14 @@ class FileStorage:
     def get(self, cls, id):
         """method to retrieve one object"""
         all_objs = self.all()
-        key = cls.__name__ + "." + id
 
         try:
+            if (isinstance(cls, str)):
+                key = cls + "." + id
+
+            else:
+                key = cls.__name__ + "." + id
+
             obj = all_objs[key]
             return obj
 
@@ -92,10 +97,6 @@ class FileStorage:
             return len(all_objs.keys())
 
         else:
-            if (isinstance(cls, str)):
-                fil_recs = self.all(cls)
-
-            else:
-                fil_recs = self.all(cls)
+            fil_recs = self.all(cls)
 
             return len(fil_recs)
