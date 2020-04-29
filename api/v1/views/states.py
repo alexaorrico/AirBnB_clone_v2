@@ -27,7 +27,7 @@ def states():
         return "Missing name", 400
     state = State(**doc)
     state.save()
-    return jsonify(state.to_dict()), 200
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
