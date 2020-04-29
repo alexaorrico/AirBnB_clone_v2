@@ -49,7 +49,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -70,6 +70,31 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """
+        Method that retrieves on object
+        form class and id
+        :param cls: class name
+        :param id: string representation of the id
+        :return: the object based on the class name and its ID,
+         or None if not found
+        """
+        if cls and id:
+            key = cls.__name__ + "." + id
+            objs = self.all(cls)
+            return objs[key]
+
+        return None
+
+    def count(self, cls=None):
+        """
+        Method to count the number of objects in storage
+        :param cls: class name
+        :return: the number of objects in storage matching the given class name.
+        If no name is passed, returns the count of all objects in storage.
+        """
+        return len(self.all(cls))
 
     def close(self):
         """call remove() method on the private session attribute"""
