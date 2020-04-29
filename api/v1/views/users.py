@@ -4,7 +4,7 @@ View for Users objects that handles
 all default RestFul API actions.
 """
 
-from flask import Flask, render_template
+from flask import Flask
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
@@ -44,18 +44,21 @@ def user_delete(user_id):
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
-def amenity_post():
+def user_post():
     """Creates an user"""
     if not request.get_json():
         return jsonify({'message': 'Not a JSON'}), 400
-    if 'email' not in request.get_json():
+    create_user = request.get_json()
+    if 'email' not in create_user:
         return jsonify({'message': 'Missing email'}), 400
-    if 'password' not in request.get_json():
+    if 'password' not in create_user:
         return jsonify({'message': 'Missing password'}), 400
 
-    user = user.User(name=request.get_json().get('name'))
-    user.save()
-    return jsonify(user.to_dict()), 201
+    new_user = User(**create_user)
+    storage.new(new_user)
+    storage.save()
+    storage.close()
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'],
