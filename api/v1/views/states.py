@@ -8,29 +8,30 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get_state.yml', methods=['GET'])
-def get_states(state_id=None):
+def get_states():
     """
-    Retrieves the list of all State objects or a specific State
+    Retrieves the list of all State objects
     """
-
-    if not state_id:
-        all_states = storage.all(State).values()
-        list_states = []
-        for state in all_states:
-            list_states.append(state.to_dict())
-        return jsonify(list_states)
-    else:
-        state = storage.get(State, state_id)
-        if not state:
-            abort(404)
-
-        return jsonify(state.to_dict())
+    all_states = storage.all(State).values()
+    list_states = []
+    for state in all_states:
+        list_states.append(state.to_dict())
+    return jsonify(list_states)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
+def get_state(state_id):
+    """ Retrieves a specific State """
+    state = state = storage.get(State, state_id)
+    if not state:
+        abort(404)
+
+    return jsonify(state.to_dict())
+
+
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
