@@ -34,5 +34,6 @@ class User(BaseModel, Base):
         super().__init__(*args, **kwargs)
 
     def hash_password(self, value):
+        """Hash user password md5"""
         value = md5(value.encode("utf-8")).hexdigest()
         setattr(self, 'password', value)
