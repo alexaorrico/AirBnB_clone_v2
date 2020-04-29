@@ -55,12 +55,11 @@ def post_place(city_id):
         abort(404)
     if "name" not in data:
         return (jsonify({"error": "Missing name"})), 400
-    else:
-        user_id = data["user_id"]
-        data["city_id"] = city_id
-        new_place_obj = Place(**data)
-        new_place_obj.save()
-        return jsonify(new_place_obj.to_dict()), 201
+    user_id = data["user_id"]
+    data["city_id"] = city_id
+    new_place_obj = Place(**data)
+    new_place_obj.save()
+    return jsonify(new_place_obj.to_dict()), 201
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"])
