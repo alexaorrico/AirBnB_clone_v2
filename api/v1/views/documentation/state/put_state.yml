@@ -1,3 +1,5 @@
+    Updates the state info based on ID
+    ---
     tags:
       - States
     parameters:
@@ -7,20 +9,7 @@
         required: true
         description: the unique id of the state
     responses:
-      500:
-        description: Error The language is not awesome!
+      404:
+        description: State not found
       200:
         description: A language with its awesomeness
-        schema:
-          id: awesome
-          properties:
-            language:
-              type: string
-              description: The language name
-              default: Lua
-            features:
-              type: array
-              description: The awesomeness list
-              items:
-                type: string
-              default: ["perfect", "simple", "lovely"]

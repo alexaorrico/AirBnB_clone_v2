@@ -1,3 +1,4 @@
+    Gets the list of all states
     ---
     tags:
       - States
@@ -5,23 +6,26 @@
       - name: state_id
         in: path
         type: string
-        required: False
-        description: The unique id for each state
+        required: false
+        description: the unique id of the state
     responses:
-      404:
-        description: State ID not linked to any state!
-      200:
+       200:
         description: Successful request
         schema:
-          id: awesome
+          id: state
           properties:
-            language:
+            __class__:
               type: string
-              description: The language name
-              default: Lua
-            features:
-              type: array
-              description: The awesomeness list
-              items:
-                type: string
-              default: ["perfect", "simple", "lovely"]
+              description: class name ( State)
+            created_at:
+              type: string
+              description: time of creation of the instance
+            id:
+              type: string
+              description: The uuid of the state instance
+            name:
+              type: string
+              description: the state name ex (Alabama)
+            updated_at:
+              type: string
+              description: time of last update of the instance
