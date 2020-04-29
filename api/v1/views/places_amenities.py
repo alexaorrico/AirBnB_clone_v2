@@ -8,7 +8,7 @@ from models.amenity import Amenity
 from models.place import Place
 
 
-@app_views.route("/places/<place_id>/amenities>", methods=["GET"])
+@app_views.route("/places/<place_id>/amenities", methods=["GET"])
 def place_amenities(place_id):
     """Defines places/<place_id>/amenities/<amenity_id> with GET method
 
@@ -32,7 +32,7 @@ def place_amenity(place_id, amenity_id):
     DELETE - Deletes a Review  with the given id
     POST - link an amenity to a place
     """
-    place = storage.get("PLace", place_id)
+    place = storage.get("Place", place_id)
     amenity = storage.get("Amenity", amenity_id)
     if place is None or amenity is None:
         abort(404)
