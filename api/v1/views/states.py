@@ -13,10 +13,10 @@ from api.v1.views import app_views
 def states(state_id=None):
     """view for State objects that handles all default RestFul API actions"""
     if state_id:
-        state_id = "State.{}".format(state_id)
+        state_id = storage.get('State', state_id)
         all_states = storage.all('State')
         if state_id in all_states:
-            return jsonify(all_states[state_id].to_dict())
+            return jsonify(all_states[state_id].to_dict()), 200
         else:
             abort(404)
     else:
