@@ -20,7 +20,13 @@ def place_amenities(place_id):
 
     # GET
     if request.method == "GET":
-        return jsonify([amenity.to_dict() for amenity in place.amenities])
+        if getenv("HBNB_TYPE_STORAGE", None) == "db":
+            return jsonify([amenity.to_dict() for amenity in place.amenities])
+        else:
+            return jsonify([
+                storage.get('Amenity', amenity_id).to_dict()
+                for amenity_id in place.amenity_ids
+            ])
 
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
