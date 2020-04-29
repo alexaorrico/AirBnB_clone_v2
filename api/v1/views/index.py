@@ -18,13 +18,14 @@ def jsonify_app():
     """ Function that returns a JSON """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def some_stats():
     """ Retrieves the number of each objects by type """
     dict = {"amenities": storage.count(Amenity),
             "cities": storage.count(City),
-			"places": storage.count(Place),
-			"review": storage.count(Review),
-			"states": storage.count(State),
-			"users": storage.count(User)}
+            "places": storage.count(Place),
+            "review": storage.count(Review),
+            "states": storage.count(State),
+            "users": storage.count(User)}
     return jsonify(dict)
