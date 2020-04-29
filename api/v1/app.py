@@ -4,7 +4,7 @@ Create API.
 """
 
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -21,6 +21,12 @@ def close(exc):
     Terminate session.
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Return not found modified JSON."""
+    return jsonify({'error': 'Not found'}), 404
 
 
 if __name__ == "__main__":
