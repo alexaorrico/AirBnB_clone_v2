@@ -11,7 +11,7 @@ from api.v1.views import app_views
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-def states(state_id=None):
+def states_cities(state_id=None):
     """view for State objects that handles all default RestFul API actions"""
     state = storage.get('State', state_id)
     if state is None:
@@ -56,6 +56,7 @@ def city_create(state_id=None):
         abort(400, "Not a JSON")
     if 'name' not in res:
         abort(400, "Missing name")
+    res['state_id'] = state_id
     newCity = City(**res)
     storage.new(newCity)
     storage.save()
