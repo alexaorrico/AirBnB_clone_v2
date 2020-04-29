@@ -56,11 +56,8 @@ def post_place(city_id):
     if "name" not in data:
         return (jsonify({"error": "Missing name"})), 400
     user_id = data["user_id"]
-    place_name = data["name"]
-    new_place_obj = Place(user_id=user_id, name=name, city_id=city_id)
-    for k, v in data.items():
-        setattr(new_place_obj, k, v)
-    setattr(new_place_obj, "city_id", city_id)
+    data["city_id"] = city_id
+    new_place_obj = Place(**data)
     new_place_obj.save()
     return jsonify(new_place_obj.to_dict()), 201
 
