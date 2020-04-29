@@ -87,5 +87,6 @@ class DBStorage:
             return sum(
                 [self.__session.query(m).count() for m in classes.values()]
             )
+        if type(cls) is str:
+            return self.__session.query(classes[cls]).count()
         return self.__session.query(cls).count()
-    
