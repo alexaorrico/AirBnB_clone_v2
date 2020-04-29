@@ -23,7 +23,7 @@ def place_amenities(place_id):
         return jsonify([amenity.to_dict() for amenity in place.amenities])
 
 
-@app_views.route("places/<place_id>/amenities/<amenity_id>",
+@app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  methods=["POST", "DELETE"])
 def place_amenity(place_id, amenity_id):
     """Define places/<place_id>/amenities/<amenity_id>
