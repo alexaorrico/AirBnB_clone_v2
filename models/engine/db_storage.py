@@ -82,7 +82,8 @@ class DBStorage:
         my_dict = {}
         key = "{}.{}".format(cls.__name__, id)
         for cls_key in self.__session.query(cls).all():
-            return cls_key
+            if cls_key.id == id:
+                return cls_key
         return None
 
     def count(self, cls=None):
