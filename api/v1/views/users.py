@@ -64,5 +64,5 @@ def user(user_id):
 
     # DELETE
     user.delete()
-    user.save()
+    storage.save()
     return jsonify({}), 200
