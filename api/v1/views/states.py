@@ -1,16 +1,14 @@
 #!/usr/bin/python3
-"""Create a new view for State objects that handles all default RestFul API"""
-
-
+"""Create a new view for State objects that handles all"""
 from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 from api.v1.views import app_views
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def states(state_id=None):
+@app_views.route('/states', strict_slashes=False, methods=['GET'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
+def get_states(state_id=None):
     """view for State objects that handles all default RestFul API actions"""
     all_states = storage.all('State')
     if state_id:
