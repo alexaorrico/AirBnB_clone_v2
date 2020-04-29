@@ -80,10 +80,7 @@ class DBStorage:
         :return: the object based on the class name and its ID,
          or None if not found
         """
-        if type(cls) == str:
-            cls = classes[cls]
-
-        if cls and id:
+        if cls and id and type(cls) != str:
             key = cls.__name__ + "." + id
             objs = self.all(cls)
             return objs[key]
