@@ -3,7 +3,7 @@
 """
 
 from flask import Flask, render_template
-from api.v1.views import app_views, states, cities
+from api.v1.views import app_views
 from os import getenv
 from models import storage
 from flask import jsonify
