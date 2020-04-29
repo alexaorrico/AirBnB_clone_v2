@@ -58,7 +58,7 @@ def post_review(place_id):
 
 
 @app_views.route("/reviews/<review_id>", methods=["PUT"])
-def update_city(place_id):
+def update_review(place_id):
     """Updates a review object"""
     data = request.get_json()
     all_the_reviews = storage.get(Place, review_id)
