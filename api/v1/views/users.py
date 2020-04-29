@@ -9,9 +9,7 @@ from flask import jsonify, request, abort
 @app_views.route("/users", methods=["GET"])
 def get_users():
     """Gets user objects"""
-    users_list = []
-    for i in storage.all(User).values():
-        users_list.append(i.to_dict())
+    users_list = dict([user for user in storage.all(User).values()])
     return jsonify(users_list)
 
 
