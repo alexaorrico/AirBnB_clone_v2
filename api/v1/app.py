@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """ app """
-from models import storage
-from api.v1.views import app_views
+import os
 from flask import Flask, Blueprint, jsonify
 from flask_cors import CORS
-import os
+from api.v1.views import app_views
+from models import storage
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.url_map.strict_slashes = False
@@ -13,7 +13,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(err):
-    """ method """
+    """ method to handle """
     storage.close()
 
 
