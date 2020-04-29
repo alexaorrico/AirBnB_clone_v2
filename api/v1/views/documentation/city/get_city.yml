@@ -1,0 +1,13 @@
+    tags:
+      - Cities
+    parameters:
+      - name: state_id
+        in: path
+        type: string
+        required: true
+        description: The uniqe id of the state
+    responses:
+      404:
+        description: No state is linked to the ID!
+      200:
+        description: Request completed successfully
