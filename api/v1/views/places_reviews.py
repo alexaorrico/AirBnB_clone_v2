@@ -50,11 +50,11 @@ def post_review(place_id):
     data = request.get_json()
     if "user_id" not in data:
         return (jsonify({"error": "Missing user_id"})), 400
-    user_id = data["user_id"]
+    if storage.get(User, data["user_id"]) is None:
+        abort(404)
     if "text" not in data:
         return (jsonify({"error": "Missing text"})), 400
-    data["user_id"] = user_id_review
-    data["text"] = text_review
+    data["place_id"] = place_id
     new_review_obj = Review(**data)
     new_review_obj.save()
     return jsonify(new_review_obj.to_dict()), 201
