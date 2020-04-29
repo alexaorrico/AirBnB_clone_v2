@@ -77,7 +77,7 @@ class FileStorage:
         if cls and id and type(cls) != str:
             key = cls.__name__ + "." + id
             objs = self.all(cls)
-            return objs[key]
+            return objs.get(key)
 
         return None
 
