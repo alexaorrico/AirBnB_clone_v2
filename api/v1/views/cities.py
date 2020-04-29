@@ -39,7 +39,7 @@ def get_city(city_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
-@swag_from('documentation/delete_city.yml', methods=['DELETE'])
+@swag_from('documentation/city/delete_city.yml', methods=['DELETE'])
 def delete_city(city_id):
     """
     Deletes a city based on id provided
