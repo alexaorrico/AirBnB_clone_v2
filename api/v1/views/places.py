@@ -2,7 +2,7 @@
 """ view for Place objects that handles all default RestFul API actions """
 import os
 import json
-from flask import Blueprint, Flask, jsonify, abort, request
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.city import City
@@ -15,7 +15,12 @@ def get_places(city_id=None):
     city = storage.get("City", city_id)
     if not city:
         abort(404)
-    return jsonify([place.to_dict() for place in city.places])
+    my_dict = []
+    places = storage.all(Place)
+    for place in places.values():
+        if place.city_id == places.id:
+            my_dict.append(place.to_dict())
+    return jsonify(my_dict)
 
 
 @app_views.route("/places/<place_id>", methods=['GET'])
