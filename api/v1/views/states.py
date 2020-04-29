@@ -12,11 +12,9 @@ def states():
     POST - Create a new state
     GET - Get a list of all states
     """
-    # GET
     if request.method == "GET":
         return jsonify([state.to_dict()
                         for state in storage.all("State").values()])
-    # POST
     doc = request.get_json(silent=True)
     if doc is None:
         return "Not a JSON", 400
@@ -39,11 +37,9 @@ def state(state_id):
     if state is None:
         abort(404)
 
-    # GET
     if request.method == "GET":
         return jsonify(state.to_dict())
 
-    # PUT
     elif request.method == "PUT":
         doc = request.get_json(silent=True)
         if doc is None:
@@ -55,7 +51,6 @@ def state(state_id):
         state.save()
         return jsonify(state.to_dict())
 
-    # DELETE
     state.delete()
     storage.save()
     return jsonify({})
