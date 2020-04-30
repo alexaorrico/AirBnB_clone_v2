@@ -45,7 +45,7 @@ def create_user():
     if 'password' not in res:
         abort(400, "Missing password")
     newUser = User(**res)
-    storage.new(newUser
+    storage.new(newUser)
     storage.save()
     return jsonify(newUser.to_dict()), 201
 
