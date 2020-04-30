@@ -58,7 +58,7 @@ def put_user(user_id=None):
 
     if users is None:
         abort(404)
-    if res in None:
+    if res is None:
         abort(404, "Not a JSON")
     for k, v in res.items():
         if k != 'id' and k != 'email' and \
