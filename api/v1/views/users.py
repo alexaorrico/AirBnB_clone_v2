@@ -8,7 +8,7 @@ from models.user import User
 from api.v1.views import app_views
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
+@app_views.route('/users', strict_slashes=False, methods=['GET'])
 def user():
     """Retrieves the list of all User objects"""
     users = storage.all('User')
@@ -18,7 +18,7 @@ def user():
     return jsonify(list_user)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=['GET'])
 def users_id(user_id=None):
     """Retrieves a User object"""
     users = storage.get('User', user_id)
@@ -27,7 +27,7 @@ def users_id(user_id=None):
     return jsonify(users.to_dict())
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
 def delete_user(user_id=None):
     """Deletes a User object"""
     users = storage.get('User', user_id)
@@ -38,7 +38,7 @@ def delete_user(user_id=None):
     return jsonify({}), 200
 
 
-@app_views.route('/users', methods=['POST'], strict_slashes=False)
+@app_views.route('/users', strict_slashes=False, methods=['POST'])
 def create_user():
     """Creates a User"""
     res = request.get_json()
@@ -54,7 +54,7 @@ def create_user():
     return jsonify(newUser.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def put_user(user_id=None):
     """Updates a User object"""
     users = storage.get('User', user_id)
