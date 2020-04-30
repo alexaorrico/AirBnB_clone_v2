@@ -3,18 +3,20 @@
     tags:
       - Users
     parameters:
-      - name: email
-        in: header
-        type: string
+      - name: user_and_password
+        in: body
         required: true
-        description: user's email
-      - name: password
-        in: header
-        type: string
-        required: true
-        description: user's password
+        requires:
+          - email:
+          - password:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+
     responses:
       400:
-        description: Missing email \nMissing Password\nNot a valid JSON
+        description: Missing email/password or not a JSON
       201:
         description: successfully created user

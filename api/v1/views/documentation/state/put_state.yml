@@ -8,8 +8,12 @@
         type: string
         required: true
         description: the unique id of the state
+      - name: request
+        in: body
+        required: true
+
     responses:
       404:
         description: State not found
       200:
-        description: A language with its awesomeness
+        description: Request executed successfully

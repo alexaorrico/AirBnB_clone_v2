@@ -8,7 +8,7 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/amenity/get_amenity.yml', methods=['GET'])
+@swag_from('documentation/amenity/all_amenities.yml')
 def get_amenities():
     """
     Retrieves a list of all amenities
@@ -22,6 +22,7 @@ def get_amenities():
 
 @app_views.route('/amenities/<amenity_id>/', methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/amenity/get_amenity.yml', methods=['GET'])
 def get_amenity(amenity_id):
     """ Retrieves an amenity """
     amenity = storage.get(Amenity, amenity_id)

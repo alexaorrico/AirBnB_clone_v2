@@ -1,4 +1,4 @@
-    Posts a new state. 
+    Posts a new state.
     ---
     tags:
       - States
@@ -6,10 +6,13 @@
       - name: request
         in: body
         required: true
-        description: must contain the name key
+        requires:
+          - name
+        properties:
+          name:
+            type: string
+
     responses:
-      404:
-        description: State not found!
       400:
         description: Missing name or Not Valid JSON
       201:

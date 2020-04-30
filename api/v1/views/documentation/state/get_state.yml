@@ -2,30 +2,6 @@
     ---
     tags:
       - States
-    parameters:
-      - name: state_id
-        in: path
-        type: string
-        required: false
-        description: the unique id of the state
     responses:
        200:
         description: Successful request
-        schema:
-          id: state
-          properties:
-            __class__:
-              type: string
-              description: class name ( State)
-            created_at:
-              type: string
-              description: time of creation of the instance
-            id:
-              type: string
-              description: The uuid of the state instance
-            name:
-              type: string
-              description: the state name ex (Alabama)
-            updated_at:
-              type: string
-              description: time of last update of the instance

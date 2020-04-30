@@ -1,5 +1,4 @@
-This is the language awesomeness API
-    Call this api passing a language name and get back its features
+    Updates an amenity
     ---
     tags:
       - Amenities
@@ -7,10 +6,15 @@ This is the language awesomeness API
       - name: amenity_id
         in: path
         type: string
-        required: false
+        required: true
         description: The id of the amenity
+      - name: update_request
+        in: body
+        required: true
     responses:
       404:
         description: resource not found!
+      400:
+        description: Not a JSON
       200:
         description: request executed successfully
