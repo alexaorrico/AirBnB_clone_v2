@@ -16,7 +16,7 @@ def close_session(self):
 @app.errorhandler
 def error404(self):
     """Error 404 for page"""
-    return jsonify(error: "Not found"), 404
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == '__main__':
     default_host = getenv('0.0.0.0')
