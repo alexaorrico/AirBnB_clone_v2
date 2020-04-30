@@ -82,7 +82,7 @@ class DBStorage:
             good = self.all(cls)
             word = "{}.{}".format(cls, id)
             for k, v in good.items():
-                if k == word:
+                if v.id == id:
                     return (v)
             return(None)
 

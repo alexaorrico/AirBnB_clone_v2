@@ -2,7 +2,7 @@
 """ start of a flask application"""
 from models import storage
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from os import getenv
 
 app = Flask(__name__)
@@ -13,6 +13,10 @@ def close_session(self):
     """closes the application"""
     storage.close()
 
+@app.errorhandler
+def error404(self):
+    """Error 404 for page"""
+    return jsonify("error": "Not found")
 
 if __name__ == '__main__':
     default_host = getenv('0.0.0.0')
