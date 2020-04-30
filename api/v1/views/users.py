@@ -4,14 +4,18 @@
 
 from flask import jsonify, abort, request
 from models import storage
-from models.city import City
+from models.user import User
 from api.v1.views import app_views
+
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def user():
     """Retrieves the list of all User objects"""
-    users = storage.get('User')
-    return jsonify(users.to_dict())
+    users = storage.all('User')
+    list_user = []
+    for x in users:
+        list_user.append(x.to_dict)
+    return jsonify(list_user)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
