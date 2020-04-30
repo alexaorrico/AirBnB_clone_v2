@@ -76,7 +76,7 @@ class FileStorage:
             good = self.all(cls)
             word = "{}.{}".format(id)
             for k, v in good.items():
-                if k == word:
+                if v.id == id:
                     return (v)
                 return None
 
