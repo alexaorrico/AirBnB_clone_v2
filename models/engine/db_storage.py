@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """Returns the object based on the class name and its ID, or None if
         not found"""
-        if cls is not None or id is not None:
+        if cls is not None and id is not None:
             good = self.all(cls)
             word = "{}.{}".format(cls, id)
             for k, v in good.items():
