@@ -9,31 +9,31 @@ from api.v1.views import app_views
 
 
 @app_views.route('/users', strict_slashes=False, methods=['GET'])
-def user():
-    """Retrieves the list of all User objects"""
+def get_users():
+    userList = []
     users = storage.all('User')
-    list_user = []
-    for x in users.values():
-        list_user.append(x.to_dict())
-    return jsonify(list_user)
+    for user in users.values():
+        userList.append(user.to_dict())
+    return jsonify(userList)
 
 
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['GET'])
-def users_id(user_id=None):
-    """Retrieves a User object"""
-    users = storage.get('User', user_id)
-    if users is None:
+@app_views.route('/users/<user_id>',
+                 strict_slashes=False, methods=['GET'])
+def get_user(user_id):
+    user = storage.get('User', user_id)
+    if user is None:
         abort(404)
-    return jsonify(users.to_dict())
+    else:
+        return(jsonify(user.to_dict()))
 
 
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
-def delete_user(user_id=None):
-    """Deletes a User object"""
-    users = storage.get('User', user_id)
-    if users is None:
+@app_views.route('/users/<user_id>',
+                 strict_slashes=False, methods=['DELETE'])
+def delete_user(user_id):
+    user = storage.get('User', user_id)
+    if user is None:
         abort(404)
-    storage.delete()
+    storage.delete(user)
     storage.save()
     return jsonify({}), 200
 
@@ -54,19 +54,17 @@ def create_user():
     return jsonify(newUser.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
-def put_user(user_id=None):
-    """Updates a User object"""
-    users = storage.get('User', user_id)
+@app_views.route('/users/<user_id>', strict_slashes=False,
+                 methods=['PUT'])
+def modify_user(user_id):
     res = request.get_json()
-
-    if users is None:
+    user = storage.get('User', user_id)
+    if user is None:
         abort(404)
     if res is None:
-        abort(400, "Not a JSON")
+        abort(400, 'Not a JSON')
     for k, v in res.items():
-        if k != 'id' and k != 'email' and \
-           k != 'updated_at' and k != 'created_at':
-            setattr(users, k, v)
+        if k != 'id' and k != 'created_at' and k != 'updated_at':
+            setattr(user, k, v)
     storage.save()
-    return jsonify(users.to_dict()), 200
+    return jsonify(user.to_dict()), 200
