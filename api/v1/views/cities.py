@@ -9,7 +9,8 @@ from models.state import State
 from models.state import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def cites_id(state_id=None):
     """
     """
@@ -17,8 +18,7 @@ def cites_id(state_id=None):
     if states is None:
         abort(404)
     cities = storage.all("City")
-    cities_ = [i.to_dict() for i in cities.values()
-                       if i.state_id == state_id]
+    cities_ = [i.to_dict() for i in cities.values() if i.state_id == state_id]
     return (jsonify(cities_))
 
 
@@ -44,7 +44,8 @@ def city_del(city_id=None):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def create_id(state_id=None):
     """
     """

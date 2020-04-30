@@ -18,7 +18,8 @@ def amenities_():
     return (jsonify(amenities))
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 def _amenity(amenity_id=None):
     """
     """
@@ -28,7 +29,8 @@ def _amenity(amenity_id=None):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>",
+                 methods=['DELETE'], strict_slashes=False)
 def amenity_delete(amenity_id=None):
     """
     """
@@ -53,7 +55,8 @@ def amenities_create():
     return jsonify(instance.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def amenity_update(amenity_id):
     """
     """
@@ -69,4 +72,5 @@ def amenity_update(amenity_id):
         else:
             setattr(amenity, keys, value)
     amenity.save()
+
     return jsonify(amenity.to_dict()), 200
