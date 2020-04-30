@@ -74,7 +74,7 @@ class FileStorage:
         not found"""
         if cls is not None or id is not None:
             good = self.all(cls)
-            word = "{}.{}".format(id)
+            word = "{}.{}".format(cls, id)
             for k, v in good.items():
                 if v.id == id:
                     return (v)
