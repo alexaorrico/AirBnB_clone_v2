@@ -8,6 +8,10 @@
         type: string
         required: true
         description: id of the city
+      - name: update_request
+        in: body
+        required: true
+
     responses:
       404:
         description: city not found!
