@@ -1,0 +1,7 @@
+    gets all amenities of a place
+    ---
+    tags:
+      - Amenities
+    responses:
+      200:
+        description: request executed successfully
