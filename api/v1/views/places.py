@@ -76,4 +76,4 @@ def put_place_id(place_id):
         if key not in ignore_keys:
             setattr(place, key, value)
     place.save()
-    return jsonify(pc.to_dict()), 200
+    return jsonify(place.to_dict()), 200
