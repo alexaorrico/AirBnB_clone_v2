@@ -23,5 +23,7 @@
     responses:
       404:
         description: resource not found!
+      400:
+        description: missing user_id, name or invalid JSON
       200:
         description: Successful request

@@ -9,18 +9,6 @@ parameters:
     required: try
     description: the unique id of the city
 
-components:
-  schemas:
-    User:    # Schema name
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 1          # Property example
-        name:
-          type: string
-          example: New order  # Property example
 responses:
   200:
     description: Successful request

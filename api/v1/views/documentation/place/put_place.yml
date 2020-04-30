@@ -7,7 +7,7 @@
         in: path
         type: string
         required: true
-        description: The unique id of the state
+        description: The unique id of the place
       - name: parameters to update
         in: body
         required: true

@@ -27,7 +27,7 @@ def get_reviews(place_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/reviews/get_reviews.yml', methods=['GET'])
+@swag_from('documentation/reviews/get_review.yml', methods=['GET'])
 def get_review(review_id):
     """
     Retrieves a Review object
