@@ -1,4 +1,4 @@
-    retrieves all users or a specific user.
+    retrieves a specific user.
     ---
     tags:
       - Users
@@ -6,7 +6,7 @@
       - name: user_id
         in: path
         type: string
-        required: false
+        required: true
         description: The id of the user to retrieve
     responses:
       404:
