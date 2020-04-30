@@ -15,7 +15,6 @@ responses:
     schema:
       type: array
       items:
-        id: amenity
         properties:
           __class__:
             type: string

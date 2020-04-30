@@ -12,7 +12,6 @@ responses:
   200:
     description: Successful request
     schema:
-      id: state
       properties:
         __class__:
           type: string
