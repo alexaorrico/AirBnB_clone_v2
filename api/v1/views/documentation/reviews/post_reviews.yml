@@ -25,5 +25,5 @@
         description: resource not found!
       400:
         description: missing user_id, text, or Invalid JSON
-      200:
+      201:
         description: Successful request

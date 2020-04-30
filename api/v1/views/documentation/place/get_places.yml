@@ -6,7 +6,7 @@ parameters:
   - name: city_id
     in: path
     type: string
-    required: try
+    required: true
     description: the unique id of the city
 
 responses:
