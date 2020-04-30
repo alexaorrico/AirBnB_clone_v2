@@ -20,7 +20,8 @@ def jsonify_amenities_1():
     return jsonify(my_list)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def jsonify_amenities_2(amenity_id):
 
     the_obj = storage.get(Amenity, amenity_id)
@@ -29,7 +30,8 @@ def jsonify_amenities_2(amenity_id):
     return jsonify(the_obj.to_dict())
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def jsonify_amenity_3(amenity_id):
 
     the_obj = storage.get(Amenity, amenity_id)
@@ -52,7 +54,8 @@ def jsonify_amenity_4():
     return make_response(jsonify(new.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def jsonify_amenity_5(amenity_id):
     the_obj = storage.get(Amenity, amenity_id)
     json_put = request.get_json()
