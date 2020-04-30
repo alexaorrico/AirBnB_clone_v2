@@ -73,16 +73,21 @@ class FileStorage:
     def get(self, cls, id):
         """
         """
-        if cls and id:
-            string = str(cls)
-            split = string.split(".")
-            copy = self.cut_char(split[2])
+        if type(cls) is not str:
+            if cls and id:
+                string = str(cls)
+                split = string.split(".")
+                copy = self.cut_char(split[2])
+                data = self.all(cls)
+                search = "{}.{}".format(copy, id)
+                if search in data:
+                    return data[search]
+        else:
             data = self.all(cls)
-            search = "{}.{}".format(copy, id)
+            search = "{}.{}".format(cls, id)
             if search in data:
                 return data[search]
-        else:
-            return None
+        return (None)
 
     def count(self, cls=None):
         """
@@ -92,5 +97,5 @@ class FileStorage:
     def cut_char(sel, string):
         """
         """
-        copy=string[0:-2]
+        copy = string[0:-2]
         return(copy)    
