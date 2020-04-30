@@ -62,6 +62,7 @@ def post_review(place_id=None):
         abort(404)
     if 'text' not in res.keys():
         abort(400, "Missing text")
+    res['place_id'] = place_id
     newReview = Review(**res)
     storage.new(newReview)
     storage.save()
