@@ -15,7 +15,6 @@ responses:
     schema:
       type: array
       items:
-        id: place
         properties:
           __class__:
             type: string
