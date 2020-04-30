@@ -6,11 +6,11 @@ from api.v1.views import app_views
 from models import storage
 
 app = Flask(__name__)
-@app_views.route('api/v1/status')
+@app_views.route('api/v1/status', method=['GET'], strick_slashes=False)
 
 def return_jason():
     """ return json status"""
-    return jsonify(status = 'OK')
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('api/v1/status', strick_slashes=False)

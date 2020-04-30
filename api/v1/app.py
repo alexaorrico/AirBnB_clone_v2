@@ -19,7 +19,7 @@ def error404(self):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == '__main__':
-    default_host = getenv('0.0.0.0')
-    default_port =  getenv('5000')
+    default_host = getenv('HBNB_API_HOST')
+    default_port =  getenv('HBNB_API_PORT')
 
     app.run(host=default_host, port=default_port, threaded=True)
