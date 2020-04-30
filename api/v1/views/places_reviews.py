@@ -57,10 +57,9 @@ def post_review(place_id=None):
         abort(400, "Not a JSON")
     if 'user_id' not in res.keys():
         abort(400, "Missing user_id")
-    else:
-        id_user = storage.get('User', User.id)
-        if id_user is None:
-            abort(404)
+    id_user = storage.get('User', res['user_id'])
+    if id_user is None:
+        abort(404)
     if 'text' not in res.keys():
         abort(400, "Missing text")
     newReview = Review(**res)
