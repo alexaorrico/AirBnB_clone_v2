@@ -14,10 +14,10 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def review_places(place_id=None):
     """Retrieves the list of all Review objects of a Place"""
-    reviews = storage.get('Place', place_id)
-    if reviews is None:
+    review_pla = storage.get('Place', place_id)
+    if review_pla is None:
         abort(404)
-    all_review = reviews.review
+    all_review = review_pla.reviews
     list_review = []
     for rev in all_review:
         list_review.append(rev.to_dict())
