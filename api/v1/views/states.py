@@ -8,17 +8,17 @@ from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-def retrieve_all_states():
+def states():
     """
     """
-    all_states = []
+    states_ = []
     for value in storage.all("State").values():
-        all_states.append(value.to_dict())
-    return jsonify(all_states)
+        states_.append(value.to_dict())
+    return jsonify(states_)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def retrieve_state_id(state_id):
+def id_state(state_id):
     """
     """
     state = (storage.get('State', state_id))
@@ -28,9 +28,8 @@ def retrieve_state_id(state_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
-def Delete_state(state_id):
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+def Del_state(state_id):
     """
     """
     state = storage.get('State', state_id)
@@ -43,32 +42,32 @@ def Delete_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def Post_state():
+def state_post():
     """
     """
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
     if 'name' not in request.get_json():
         return jsonify({"error": "Missing name"}), 400
-    instance = State(**request.get_json())
-    instance.save()
-    return jsonify(instance.to_dict()), 201
+    ins = State(**request.get_json())
+    ins.save()
+    return jsonify(ins.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state(state_id):
+def state_update(state_id):
     """
     """
-    keys = ['id', 'created_at', 'updated_at']
+    key = ['id', 'created_at', 'updated_at']
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
-    for key, value in request.get_json().items():
-        if key in keys:
+    for keys, value in request.get_json().items():
+        if keys in key:
             pass
         else:
-            setattr(state, key, value)
+            setattr(state, keys, value)
     state.save()
     return jsonify(state.to_dict()), 200
