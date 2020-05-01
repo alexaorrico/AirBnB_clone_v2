@@ -6,14 +6,14 @@ from api.v1.views import app_views
 from models import storage
 
 app = Flask(__name__)
-@app_views.route('/api/v1/status', method=['GET'], strick_slashes=False)
+@app_views.route('/api/v1/status', method=['GET'], strict_slashes=False)
 
 def return_jason():
     """ return json status"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1/stats', strick_slashes=False)
+@app_views.route('/api/v1/stats', strict_slashes=False)
 def class_status(self):
     """ endpoint that retrieves the number of each objects by type"""
     class_data = {
