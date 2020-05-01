@@ -13,10 +13,10 @@ def close_session(self):
     """closes the application"""
     storage.close()
 
-@app.errorhandler
+@app.errorhandler(404)
 def error404(self):
     """Error 404 for page"""
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == '__main__':
     default_host = getenv('HBNB_API_HOST', '0.0.0.0')
