@@ -6,7 +6,7 @@ from api.v1.views  import app_views
 from models import storage
 from models.state import State
 
-@app_views.route('/api/v1/states', method=['GET'], strick_slashes=False)
+@app_views.route('/api/v1/states', methods=['GET'], strict_slashes=False)
 
 def show_all_states():
     """gets all state objects and displays them"""
@@ -16,8 +16,8 @@ def show_all_states():
 
     return jsonify(state_list)
 
-@app_views.route('/api/v1/states/<state_id>', method=['GET'],
-                 strick_slashes=False)
+@app_views.route('/api/v1/states/<state_id>', methods=['GET'],
+                 strict_slashes=False)
 def show_single_state(state_id):
     """ get a specific state by its id """
     state = storage.get('State', state_id)
