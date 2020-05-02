@@ -26,11 +26,26 @@ def show_single_state(state_id):
     else:
         abort(404)
 
-"""@app_views.route('/api/v1/states', method=[POST],
+@app_views.route('/api/v1/states', method=[POST],
                  strick_slashes=False)
 
 def state_create():
- state = request.get_json()
+    """create a new state"""
+    state = request.get_json()
     if state is None:
         abort(404, 'Not a JSON')
-"""
+    if 'name'not in state:
+        abort(404, 'missing name')
+
+@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
+
+def delete_state(state_id):
+    """delete an existing state by its id"""
+    delete_state = storage.get('State', state_id)
+    if delete_state is not None:
+        delete_state.delete()
+        storage.save()
+        return jsonify({}), 200
+    else:
+        abort(404)

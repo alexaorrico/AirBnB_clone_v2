@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 """ Api """
-
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 
-app = Flask(__name__)
-@app_views.route('/api/v1/status', methods=['GET'], strict_slashes=False)
 
+app = Flask(__name__)
+
+
+@app_views.route('/api/v1/status', methods=['GET'], strict_slashes=False)
 def return_jason():
     """ return json status"""
     return jsonify({"status": "OK"})
