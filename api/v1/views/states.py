@@ -11,7 +11,7 @@ from models.state import State
 def show_all_states():
     """gets all state objects and displays them"""
     state_list = []
-    if i in storage.all('State'):
+    for i in storage.all('State').values():
         state_list.append(i.to_dict())
 
     return jsonify(state_list)
@@ -26,8 +26,8 @@ def show_single_state(state_id):
     else:
         abort(404)
 
-@app_views.route('/api/v1/states', method=[POST],
-                 strick_slashes=False)
+@app_views.route('/api/v1/states', methods=['POST'],
+                 strict_slashes=False)
 
 def state_create():
     """create a new state"""
@@ -36,6 +36,9 @@ def state_create():
         abort(404, 'Not a JSON')
     if 'name'not in state:
         abort(404, 'missing name')
+    created_state = State(state)
+    created_state.save()
+    return jsonify(created_state)
 
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
@@ -49,3 +52,17 @@ def delete_state(state_id):
         return jsonify({}), 200
     else:
         abort(404)
+
+@app_views.route('/api/v1/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+
+def updated_state(state_id):
+    """ updates information about a state"""
+    state = request.get_json()
+    if state is None:
+        abort(404, 'Not a JSON')
+    updated_state = storage.get('State', state_id)
+    if updated_state is None:
+        abort(404)
+
+        
