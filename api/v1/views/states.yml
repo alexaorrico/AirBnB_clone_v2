@@ -1,0 +1,18 @@
+Get a State by it's ID
+---
+tags:
+  - State
+produces:
+  - application/json
+  - application/xml
+parameters:
+  - in: path
+    name: state_id
+    description: ID of the State to get
+    type: integer
+    required: true
+responses:
+  200:
+    description: OK
+    schema:
+      type: string
