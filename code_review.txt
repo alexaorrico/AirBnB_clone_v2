@@ -1,0 +1,4 @@
+GunterPearson
+
+For get method set cls and id defaults to None
+Reminder, don't forget to write tests
