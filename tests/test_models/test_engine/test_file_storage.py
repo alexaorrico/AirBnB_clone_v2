@@ -2,7 +2,6 @@
 """
 Contains the TestFileStorageDocs classes
 """
-
 from datetime import datetime
 import inspect
 import models
@@ -15,7 +14,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
-import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -113,3 +111,22 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Tests the get function"""
+        state_class = State(name="Colorado")
+        state_class_id = state_class.id
+
+        state_class.save()
+
+        self.assertEqual(models.storage.get("State", state_class_id),
+                         state_class)
+
+    def test_count(self):
+        """Tests the count function"""
+        state_class = State(name="California")
+
+        state_class.save()
+
+        count = models.storage.count("State")
+        self.assertEqual(models.storage.count("State"), count)
