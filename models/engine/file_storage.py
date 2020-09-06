@@ -78,7 +78,7 @@ class FileStorage:
                 retObj[key] = value
             else:
                 return None
-        return retObj
+        return (retObj[key])
 
     def count(self, cls=None):
         """ method to count number of objects in storage """
