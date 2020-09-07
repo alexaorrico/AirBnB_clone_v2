@@ -76,8 +76,9 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """return the object according to the class and the id"""
-        key = "{}.{}".format(str(cls), id) # self.__class__.__name__ + '.' + self.id
+        """Return the object according to the class and the id"""
+        key = "{}.{}".format(
+            cls.__name__, id)
         dictionary = self.all(cls)
         if key in dictionary:
             return dictionary[key]
