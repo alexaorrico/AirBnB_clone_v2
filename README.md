@@ -154,9 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang
-Adonis Tejeda - [Github](https://github.com/adonis7ejeda) / [Twitter](https://twitter.com/adonis7ejeda)
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)  
+Adonis Tejeda - [Github](https://github.com/adonis7ejeda) / [Twitter](https://twitter.com/adonis7ejeda)  
 Ronnie Barrios - [Github](https://github.com/ronniebm) / [Twitter](https://twitter.com/ronniealberto)  
 
 Third part of Airbnb: Adonis Tejeda & Ronnie Barrios.
