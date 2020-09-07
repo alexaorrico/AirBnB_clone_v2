@@ -74,7 +74,7 @@ class FileStorage:
         if cls is not None:
             first_part = None
             things = self.all(cls)
-            for key, value in classes:
+            for key, value in classes.items():
                 if value == cls:
                     first_part = key
                     break
@@ -86,9 +86,13 @@ class FileStorage:
         else:
             return None
 
-        def count(self, cls=None):
-            objs = self.all(cls)
-            count = 0
-            for key in objs:
-                count += 1
-            return count
+    def count(self, cls=None):
+        """ 
+        Returns number of objects of type <cls> or number of all objects
+        if cls not defined 
+        """
+        objs = self.all(cls)
+        count = 0
+        for key in objs:
+            count += 1
+        return count
