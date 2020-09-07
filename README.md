@@ -160,3 +160,82 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+-- -- -- --
+
+# 0x05. AirBnB clone - RESTful API
+Foundations - Higher-level programming ― AirBnB clone
+
+###### :copyright: **[Holberton School](https://www.holbertonschool.com/)**
+by _Guillaume_
+
+## Learning Objectives
+###### General
+* What REST means
+* What API means
+* What CORS means
+* What is an API
+* What is a REST API
+* What are other type of APIs
+* Which is the HTTP method to retrieve resource(s)
+* Which is the HTTP method to create a resource
+* Which is the HTTP method to update resource
+* Which is the HTTP method to delete resource
+* How to request Rest API
+
+## Resources
+* [Rest API concept](https://intranet.hbtn.io/concepts/45)
+* [Learn REST: A RESTful Tutorial](https://www.restapitutorial.com/)
+* [Designing a RESTful API with Python and Flask](https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
+* [HTTP access control (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+* [Flask cheatsheet](https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/301/flask_cheatsheet.pdf)
+* [What are Flask Blueprints, exactly?](https://stackoverflow.com/questions/24420857/what-are-flask-blueprints-exactly)
+* [Flask](https://palletsprojects.com/p/flask/)
+* [Modular Applications with Blueprints](https://flask.palletsprojects.com/en/1.1.x/blueprints/)
+* [Flask tests](https://flask.palletsprojects.com/en/1.1.x/testing/)
+* [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
+* [AirBnB clone - RESTful API](https://www.youtube.com/watch?v=LrQhULlFJdU&feature=youtu.be)
+* [unittest module](https://docs.python.org/3.4/library/unittest.html#module-unittest)
+* [Zenly](https://zen.ly/)
+* [Why code reviews matter (and actually save time!)](https://www.atlassian.com/agile/software-development/code-reviews)
+* [Code Review Best Practices](https://www.kevinlondon.com/2015/05/05/code-review-best-practices.html)
+* [Github - code review tool](https://github.com/features#code-review)
+* [Code Review on GitHub](https://www.youtube.com/watch?v=HW0RPaJqm4g)
+* [Effective pull requests and other good practices for teams using Github](https://codeinthehole.com/tips/pull-requests-and-other-good-practices-for-teams-using-github/)
+* [Merging vs. Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)
+* [34 brilliantly designed 404 error pages](https://www.creativebloq.com/web-design/best-404-pages-812505)
+* [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+* [MD5](https://docs.python.org/3.4/library/hashlib.html)
+* [Swagger](https://swagger.io/)
+* [Flasgger](https://github.com/flasgger/flasgger)
+* [AirBnB clone](https://intranet.hbtn.io/concepts/74)
+* [codebase](https://github.com/alexaorrico/AirBnB_clone_v2)
+* [import this repository](https://docs.google.com/document/d/1ZqezYZxuKj_oLkldvH-GnKg5I5r19rvAEyJn6bBndM4/edit)
+
+## Tasks
+* [ ] 0. Restart from scratch!
+* [ ] 1. Never fail!
+* [ ] 2. Code review
+* [ ] 3. Improve storage
+* [ ] 4. Status of your API
+* [ ] 5. Some stats?
+* [ ] 6. Not found
+* [ ] 7. State
+* [ ] 8. City
+* [ ] 9. Amenity
+* [ ] 10. User
+* [ ] 11. Place
+* [ ] 12. Reviews
+* [ ] 13. HTTP access control (CORS)
+* [ ] 14. Place - Amenity
+* [ ] 15. Security improvements!
+* [ ] 16. Search
+* [ ] 17. Documentation
+
+Branch ```storage_get_count```
+## Developers in 0x05. AirBnB clone - RESTful API
+Javier Andrés Garzón Patarroyo
+
+- [website](https://tecnoayuda.co/)
+
+:man_technologist: :books: :computer: :globe_with_meridians:
