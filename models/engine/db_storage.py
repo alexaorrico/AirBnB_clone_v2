@@ -80,9 +80,12 @@ class DBStorage:
         if cls and id:
             obj = "{}.{}".format(cls.__name__, id)
             all_obj = self.all(cls)
-            return all_obj.get(obj)
+            if all_obj != {}:
+                return all_obj.get(obj)
         return None
 
     def count(self, cls=None):
         """ method to count obj in class"""
+        if cls not in classes.values() and cls != None:
+            return "** class doesn't exist **"
         return len(self.all(cls))
