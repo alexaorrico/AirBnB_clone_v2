@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """get the obejects by id, using dict's get()
+        """get class ob by id, using dict's get()
             args:
                 cls -str(): class name to get
                 id  -str(): instance id to get
