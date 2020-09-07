@@ -69,6 +69,7 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
+    """please remove this after PR/ code review of below additions"""
     def get(self, cls, id):
         """ A method to retrieve one object """
         clss = self.all(cls)
