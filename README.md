@@ -158,5 +158,20 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+Third part of Airbnb Contributors:
+- Julian Castañeda
+    - Twitter: [@Castaedajulian]
+    - Github: [@juliancastaeda]
+- Lina María Montaño Ramírez
+    - Twitter: [@calypsobronte]
+    - Github: [@calypsobronte]
+
 ## License
 Public Domain. No copy write protection. 
+
+
+[@Castaedajulian]: https://twitter.com/Castaedajulian
+[@calypsobronte]: https://twitter.com/calypsobronte
+[@juliancastaeda]: https://github.com/juliancastaeda
+[@calypsobronte]: https://github.com/calypsobronte
