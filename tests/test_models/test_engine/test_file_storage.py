@@ -145,16 +145,16 @@ class TestFileStorage(unittest.TestCase):
         base2.save()
         size2 = len(dictionary)
         self.assertTrue(size2 > size1)
-        # self.assertEqual(len(FileStorage._FileStorage__objects), 2)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Check get() method"""
         storage = FileStorage()
-        first_state_id = list(storage.all(State).values())[0].id
-        print("\n---------", first_state_id)
+        state1 = State()
+        state2 = State()
+        state1.save()
+        state2.save()
         obj_id = list(storage.all(State).values())[0]
-        print("*************")
-        print(obj_id)
+        first_state_id = list(storage.all(State).values())[0].id
         get_value = storage.get(State, first_state_id)
         self.assertTrue(get_value is obj_id)
