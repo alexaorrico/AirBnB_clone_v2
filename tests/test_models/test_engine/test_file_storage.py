@@ -132,20 +132,21 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(FileStorage._FileStorage__objects[id_key]),
                          BaseModel)
 
-        """ @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-        def test_count(self):
-        
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Check count() method"""
         storage = FileStorage()
-        save = FileStorage._FileStorage__objects
-        # FileStorage._FileStorage__objects = {}
+        base1 = BaseModel()
+        dictionary = storage.all()
+        base1.save()
+        size1 = len(dictionary)
         base2 = BaseModel()
-        size1 = len(save)
-        storage.save()
-        size2 = len(storage.all())
-        print("size1", size1, "size2", size2)
+        dictionary = storage.all()
+        base2.save()
+        size2 = len(dictionary)
         self.assertTrue(size2 > size1)
         # self.assertEqual(len(FileStorage._FileStorage__objects), 2)
-        """
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Check get() method"""
