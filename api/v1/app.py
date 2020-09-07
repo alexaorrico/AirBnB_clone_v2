@@ -11,12 +11,13 @@ import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+""" CORS for Task 13 """
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.errorhandler(404)
 def invalid_route(e):
-    """ 404 """
+    """ 404 for Task 6? """
     return (jsonify({"error": "Not found"}), 404)
 
 
