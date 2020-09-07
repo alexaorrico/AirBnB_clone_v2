@@ -80,7 +80,7 @@ class DBStorage:
         try:
             obj_dict = {}
             if cls:
-                obj_class = self.__session.query(self.CNC.get(cls)).all()
+                obj_class = self.__session.query(cls).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
             return obj_dict[id]
@@ -97,15 +97,13 @@ class DBStorage:
         """
         obj_dict = {}
         if cls:
-            obj_class = self.__session.query(self.CNC.get(cls)).all()
+            obj_class = self.__session.query(cls).all()
             for item in obj_class:
                 obj_dict[item.id] = item
             return len(obj_dict)
         else:
-            for cls_name in self.CNC:
-                if cls_name == 'BaseModel':
-                    continue
-                obj_class = self.__session.query(self.CNC.get(cls_name)).all()
+            for cls_name in classes:
+                obj_class = self.__session.query(classes[cls_name]).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
             return len(obj_dict)
