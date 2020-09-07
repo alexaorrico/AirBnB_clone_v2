@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_reload(self):
+        """ Check the method reload"""
+        st_file1 = FileStorage()
+        try:
+            os.remove("file.json")
+        except:
+            pass
+        FileStorage._FileStorage__objects = {}
+        base4 = BaseModel()
+        id_key = type(base4).__name__ + "." + base4.id
+        base4.save()
+        st_file1.reload()
+        self.assertEqual(type(FileStorage._FileStorage__objects), dict)
+        self.assertEqual(type(FileStorage._FileStorage__objects[id_key]),
+                         BaseModel)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Check count() method  between two instances created"""
+        st_file = FileStorage()
+        FileStorage._FileStorage__objects = {}
+        base2 = BaseModel()
+        size1 = len(FileStorage._FileStorage__objects)
+        base3 = BaseModel()
+        size2 = len(FileStorage._FileStorage__objects)
+        self.assertTrue(size2 > size1)
+        self.assertEqual(len(FileStorage._FileStorage__objects), 2)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Check get() method"""
+        first_state_id = list(storage.all(State).values())[0].id
+        obj_id = list(storage.all(State).values())[0]
+        print("*************")
+        print(obj_id)
+        get_value = storage.get(State, first_state_id)
+        self.assertTrue(get_value is obj_id)
