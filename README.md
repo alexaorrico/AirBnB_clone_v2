@@ -158,5 +158,9 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+For AirBnBv3 Collab:
+Camilo Villegas - [Github](https://github.com/mrdoomus) / [Linkedin](https://www.linkedin.com/in/camilovj/)
+Dionisio Arango - [Github](https://github.com/Dioni1195) / [Linkedin](https://www.linkedin.com/in/dionisio-andres-arango-rojas-318a31182/)
 ## License
 Public Domain. No copy write protection. 
