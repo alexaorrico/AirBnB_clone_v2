@@ -3,7 +3,7 @@
 from models import storage
 from os import getenv
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, make_response, jsonify
 
 
 app = Flask(__name__)
@@ -13,6 +13,18 @@ app.register_blueprint(app_views)
 def teardown_appcontext(self):
     """teardown method"""
     storage.close()
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """
+    404 error handler
+    args:
+        error status
+    return:
+        json error response
+    """
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
     host = getenv('HBNB_API_HOST', '0.0.0.0')
