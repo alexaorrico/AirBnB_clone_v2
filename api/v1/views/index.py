@@ -6,6 +6,7 @@ App views for AirBnB_clone_v3
 from api.v1.views import app_views
 from flask import jsonify, request
 from models import storage
+from models import *
 
 
 @app_views.route('/status', methods=['GET'])
@@ -20,16 +21,14 @@ def stats():
     """
     function to return the count of all class objects
     """
-    if request.method == 'GET':
-        response = {}
-        CLASSES = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states",
-            "User": "users"
-        }
-        for key, value in CLASSES.items():
-            response[value] = storage.count(key)
-        return jsonify(response)
+    total = {}
+    classes = {"Amenity": "amenities",
+               "City": "cities",
+               "Place": "places",
+               "Review": "reviews",
+               "State": "states",
+               "User": "users"}
+    for cls in classes:
+        count = storage.count(cls)
+        total[classes.get(cls)] = count
+    return jsonify(total)
