@@ -17,8 +17,8 @@ def status():
 
 @app_views.route('/api/v1/stats')
 def stats():
-    """comment"""
-    return jsonify({'amenities': storage.count(Amenity),
+    commenr
+    returnjsonify({'amenities': storage.count(Amenity),
                     'cities': storage.count(City),
                     'places': storage.count(Place),
                     'reviews': storage.count(Review),
