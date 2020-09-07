@@ -83,11 +83,8 @@ class FileStorage:
     def count(self, cls=None):
         """counts the numbers of objects in storage"""
         if cls and cls in classes.values():
-            print("nic: class is a class name")
             return len(self.all(cls.__name__))
         elif cls and cls in classes:
-            print("nic: class is a string")
             return len(self.all(cls))
         else:
-            print("nic: no classes")
             return len(self.__objects)
