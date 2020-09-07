@@ -22,9 +22,10 @@ def get_states():
         return make_response(jsonify(state.to_dict()), 201)
 
 
-@app_views.route('/states/<string:state_id>', methods=["GET", "DELETE", "PUT"])
+@app_views.route('/states/<string:state_id>', strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def get_state_id(state_id=None):
-    """ get certian state"""
+    """ get certain state """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
