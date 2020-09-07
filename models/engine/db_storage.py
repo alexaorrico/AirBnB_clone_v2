@@ -82,12 +82,10 @@ class DBStorage:
         Args:
             id ([str]): [id of class]
         """
-        clss = self.all(cls)
         if id is not None:
-            for obj in clss.values():
+            for obj in self.all(cls).values():
                 return obj
-        else:
-            return None
+        return None
 
     def count(self, cls=None):
         """[count method]
@@ -97,5 +95,4 @@ class DBStorage:
         """
         if cls is not None:
             return len(self.all(cls))
-        else:
-            return len(self.all())
+        return len(self.all())
