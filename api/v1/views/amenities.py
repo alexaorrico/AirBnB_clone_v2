@@ -22,7 +22,8 @@ def get_amenities():
         return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["GET", "DELETE", "PUT"])
+@app_views.route('/amenities/<string:amenity_id>', strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def get_amenity_id(amenity_id=None):
     """ get certian state"""
     amenity = storage.get(Amenity, amenity_id)
