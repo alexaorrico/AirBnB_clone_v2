@@ -4,7 +4,7 @@
 """
 from api.v1.views.index import app_views, State
 from models import storage
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 
 
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
@@ -37,7 +37,7 @@ def viewallthestatethings():
                  methods=['GET', 'DELETE', 'PUT'])
 def stateidtime(state_id):
     """Handles a state object with said id depending on HTTP request"""
-    stl = storage.get(State, state_id)
+    stl = storage.get("State", state_id)
     if stl is not None:
         sd = stl.to_dict()
         if request.method == 'GET':
@@ -50,7 +50,7 @@ def stateidtime(state_id):
             try:
                 body = request.get_json()
             except:
-                return jsonify({"error": "Not a JSON"}), 400
+                return "Not a JSON", 400
             body.pop("id", "")
             body.pop("created_at", "")
             body.pop("updated_at", "")
@@ -60,7 +60,7 @@ def stateidtime(state_id):
             """s.save()"""
             stl.save()
             sd = stl.to_dict()
-            return jsonify(sd)
+            return jsonify(sd), 200
 
     else:
         abort(404)
