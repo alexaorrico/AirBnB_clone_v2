@@ -14,10 +14,10 @@ def get_cities(state_id=None):
     state = storage.get(State, state_id)
     all_cities = storage.all("City")
 
-    if request.method == "GET":
-        if state is None:
+    if state is None:
             abort(404)
 
+    if request.method == "GET":
         obj_list = []
         for obj in all_cities.values():
             if state_id == obj.state_id:
@@ -45,11 +45,11 @@ def get_city_id(city_id=None):
 
     if request.method == "GET":
         return jsonify(city.to_dict())
-    elif request.method == "DELETE":
+    if request.method == "DELETE":
         city.delete()
         storage.save()
         return jsonify({})
-    elif request.method == "PUT":
+    if request.method == "PUT":
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         for key, val in request.get_json().items():
