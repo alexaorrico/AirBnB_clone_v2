@@ -5,6 +5,7 @@ from models import storage
 from flask import jsonify
 from models.state import State
 from flask import abort
+from flask import make_response
 
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
@@ -28,3 +29,18 @@ def get_states(state_id):
             abort(404)
         else:
             return jsonify(dict_state.to_dict())
+
+
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+def delete_state(state_id):
+    """Deletes an object State if exists, otherwise raise
+        404 error
+    """
+    if state_id:
+        state = storage.get(State, state_id)
+        if state is None:
+            abort(404)
+        else:
+            storage.delete(state)
+            return make_response(jsonify({}, 200))
+            
