@@ -99,6 +99,6 @@ class DBStorage:
             Total count of all objects in database of type `cls`, or total of
         all objects if no type given.
         """
-        if cls == None:
+        if cls is None:
             return (len(self.all()))
         return (len(self.__session.query(cls).all()))

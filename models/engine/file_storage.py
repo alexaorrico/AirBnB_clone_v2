@@ -85,6 +85,7 @@ class FileStorage:
             args:
                 cls=class we want to count
             returns
-                number of instances if class given, else number of db entries total.
+                number of instances if class given, else number of db entries
+            total.
         """
         return len(self.all(cls))
