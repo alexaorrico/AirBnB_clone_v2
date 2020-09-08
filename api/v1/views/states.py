@@ -52,7 +52,7 @@ def response_state():
     """Post request that allow to create a new State if exists the name
         or raise Error if is not a valid json or if the name is missing
     """
-    if not request.json:
+    if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     req = request.get_json()
     if "name" not in req:
@@ -69,9 +69,10 @@ def update_state(state_id):
         if state is None:
             abort(404)
 
-        if not request.json:
+        if not request.get_json():
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         req = request.get_json()
         for key, value in req.items():
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(state, key, value)
+        return make_response(jsonify(state.to_dict()), 200)
