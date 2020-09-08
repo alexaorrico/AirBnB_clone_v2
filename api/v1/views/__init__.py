@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Views for AirBnB_clone_v3
+Here we create the Blueprint app_views
 """
 
 from flask import Blueprint
