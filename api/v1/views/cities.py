@@ -27,6 +27,7 @@ def citytime(state_id):
                 if "name" not in body.keys():
                     abort(400, "Missing name")
                 else:
+                    body.update({'state_id': state_id})
                     newcity = City(**body)
                     newcity.save()
                     return jsonify(newcity.to_dict()), 201
