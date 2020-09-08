@@ -17,10 +17,11 @@ def get_city(city_id):
     return:
         city instance, else 404
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
 
     if city:
-        return jsonify(city.to_dict())
+        return make_response('Test', 200)
+        #return jsonify(city.to_dict())
     else:
         abort(404)
 
