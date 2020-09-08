@@ -42,5 +42,5 @@ def delete_state(state_id):
             abort(404)
         else:
             storage.delete(state)
-            return make_response(jsonify({}, 200))
-            
+            storage.save()
+            return make_response(jsonify({}), 200)
