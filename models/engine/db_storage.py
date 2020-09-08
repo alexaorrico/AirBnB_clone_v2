@@ -95,3 +95,4 @@ class DBStorage:
         else:
             result = len(self.all())
         return result
+        

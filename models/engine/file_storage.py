@@ -89,3 +89,4 @@ class FileStorage:
         else:
             result = len(self.all())
         return result
+        
