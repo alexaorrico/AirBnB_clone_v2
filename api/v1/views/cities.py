@@ -31,7 +31,7 @@ def citytime(state_id):
                     newcity = City(**body)
                     newcity.save()
                     return jsonify(newcity.to_dict()), 201
-            except ValueError:
+            except:
                 abort(400, "Not a JSON")
 
     else:
@@ -65,7 +65,7 @@ def truecityfun(city_id):
                 c.save()
                 cd = c.to_dict()
                 return jsonify(cd)
-            except ValueError:
+            except:
                 abort(400, "Not a JSON")
 
     else:
