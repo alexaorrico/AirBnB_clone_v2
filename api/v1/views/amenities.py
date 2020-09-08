@@ -30,7 +30,7 @@ def viewalltheamenities():
                 newamen.save()
                 return jsonify(newamen.to_dict()), 201
 
-        except ValueError:
+        except:
             abort(400, "Not a JSON")
 
 
@@ -63,7 +63,7 @@ def hailmary(amenity_id):
                 ad = a.to_dict()
                 return jsonify(ad)
 
-            except ValueError:
+            except:
                 abort(400, "Not a JSON")
 
     else:
