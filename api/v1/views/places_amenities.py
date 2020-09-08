@@ -6,6 +6,7 @@ from models.place import Place
 from models.city import City
 from models.user import User
 from models.review import Review
+from models.amenity import Amenity
 from flask import jsonify, request, abort, make_response
 import os
 
@@ -20,34 +21,31 @@ def get_amenities_from_place(place_id=None):
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         return jsonify([amenity.to_dict() for amenity in place.amenities])
     else:
-        return jsonify([amenity.to_dict() for amenity in place.amenity_ids])
+        return jsonify([amenity.to_dict() for amenity in place.amenities])
 
 
 @app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
                  strict_slashes=False, methods=["DELETE", "POST"])
-def dev_get_amenity_id(review_id=None):
+def dev_get_amenity_id(amenity_id=None, place_id=None):
     """ gets amenity by id"""
-    review = storage.get(Review, review_id)
-    if review is None:
+    amenity = storage.get(Amenity, amenity_id)
+    place = storage.get(Place, place_id)
+    if amenity is None or place is None:
         abort(404)
-    if request.method == "DELETE":
-        review.delete()
-        storage.save()
-        return jsonify({})
-    if request.method == "POST":
-        if not request.get_json():
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
-        if request.get_json().get("user_id") is None:
-            return make_response(jsonify({'error': 'Missing user_id'}), 400)
-        if request.get_json().get("text") is None:
-            return make_response(jsonify({'error': 'Missing text'}), 400)
-        user = storage.get(User, request.get_json().get("user_id"))
-        if user is None:
-            abort(404)
-        dic = request.get_json()
-        dic.update({"place_id": place_id})
-        review = Review(**dic)
-        review.save()
-        return make_response(jsonify(review.to_dict()), 201)
 
-        return jsonify(review.to_dict())
+    if amenity not in place.amenities:
+        abort(404)
+
+    if request.method == "DELETE":
+        if os.getenv("HBNB_TYPE_STORAGE") == "db":
+            place.amenities.remove(amenity)
+            storage.save()
+            return jsonify({})
+
+    if request.method == "POST":
+        if amenity in place.amenities:
+            return jsonify(amenity.to_dict())
+        else:
+            place.amenities.append(amenity)
+            place.save()
+            return make_response(jsonify(amenity.to_dict()), 201)
