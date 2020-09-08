@@ -20,14 +20,15 @@ def get_all_states():
         data = request.get_json()
         if not request.is_json:
             abort(400, description="Not a JSON")
-        if not 'name' in request.json:
+        if 'name' not in request.json:
             abort(400, description="Missing name")
         state = State(**data)
         state.save()
         return (jsonify(state.to_dict()), 201)
-        
 
-@app_views.route('/states/<state_id>', methods=["GET", "PUT"], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=["GET", "PUT"],
+                 strict_slashes=False)
 def get_a_state(state_id):
     """ retrieves one unique state object """
     state = storage.get(State, state_id)
