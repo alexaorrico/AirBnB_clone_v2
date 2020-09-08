@@ -25,5 +25,11 @@ def dudewermypge(e):
 
 
 if __name__ == '__main__':
-    app.run(host=os.getenv("HBNB_API_HOST"),
-            port=os.getenv("HBNB_API_PORT"), threaded=True)
+    ho = os.getenv("HBNB_API_HOST")
+    po = os.getenv("HBNB_API_PORT")
+    if ho is None:
+        ho = 0.0.0.0
+    if po is None:
+        po = 5000
+
+    app.run(host=ho, port=po, threaded=True)
