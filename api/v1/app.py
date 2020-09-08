@@ -5,6 +5,7 @@
 from models import storage
 from api.v1.views import app_views
 from flask import Blueprint, Flask, jsonify
+import os
 
 
 app = Flask(__name__)
@@ -24,4 +25,4 @@ def dudewermypge(e):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    app.run(host=os.getenv("HBNB_API_HOST"), port=os.getenv("HBNB_API_PORT"), threaded=True)
