@@ -7,6 +7,7 @@ from flask import Flask, make_response, jsonify
 
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
@@ -16,8 +17,8 @@ def teardown_appcontext(self):
 
 @app.errorhandler(404)
 def page_not_found(e):
-    """
-    404 error handler
+    """404 error handler
+
     args:
         error status
     return:
