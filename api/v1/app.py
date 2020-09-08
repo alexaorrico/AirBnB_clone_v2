@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-    """[flask app]
-    """
+"""
+[flask app]
+"""
 
 
 from api.v1.views import app_views
