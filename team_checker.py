@@ -36,7 +36,7 @@ packages = [
                 {"file_storage": ["FileStorage"]},
                 {"db_storage": ["DBStorage"]}]},
     {"tests.test_models": [
-                {"test_amenity": ["TestAmenityDocs"]},
+                {"test_amenity": ["TestAmenityDocs", "TestAmenity"]},
                 {"test_base_model": ["TestBaseModelDocs", "TestBaseModel"]},
                 {"test_city": ["TestCityDocs", "TestCity"]},
                 {"test_place": ["TestPlaceDocs", "TestPlace"]},
@@ -60,4 +60,5 @@ for package in packages:
                         print("[Found] - {} class docs".format(m_class))
                     else:
                         print("[Not Found] - {} class docs".format(m_class))
+            print()
 print()
