@@ -13,10 +13,8 @@ def viewallthestatethings():
 
     if request.method == 'GET':
         stl = storage.all(State)
-        li = []
-        for state in stl.values():
-            li.append(state.to_dict())
-        return jsonify(li)
+        states = [state.to_dict() for state in stl.values()]
+        return jsonify(states)
     if request.method == 'POST':
         try:
             body = request.get_json()
