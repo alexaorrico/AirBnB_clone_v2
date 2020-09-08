@@ -21,9 +21,9 @@ def viewallthestatethings():
         try:
             body = request.get_json()
         except:
-            return jsonify({"error": "Not a JSON"}), 400
+            return "Not a JSON", 400
         if "name" not in body.keys():
-            return jsonify({"error": "Missing name"}), 400
+            return "Missing name", 400
         else:
             newstate = State(**body)
             """for k in body.keys():
