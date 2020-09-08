@@ -15,7 +15,7 @@ def status():
     """jsonify my life"""
     return jsonify({'status': 'OK'})
 
-@app_views.route('/api/v1/stats')
+"""@app_views.route('/api/v1/stats')
 def stats():
     commenr
     returnjsonify({'amenities': storage.count(Amenity),
@@ -24,3 +24,4 @@ def stats():
                     'reviews': storage.count(Review),
                     'states': storage.count(State)
                     'users': storage.count(User)})
+"""
