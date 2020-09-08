@@ -34,7 +34,7 @@ def del_city(city_id):
     return:
         ok status (200) and empty dictionary
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
 
     if city:
         storage.delete(city)
@@ -54,7 +54,7 @@ def put_city(city_id):
     return:
         city object with ok status(200)
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city:
         if not request.get_json():
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
@@ -76,7 +76,7 @@ def get_cities(state_id):
     return: 
         each city object as json
     """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     cities_list = []
     if state:
         for city in state.cities:
@@ -97,13 +97,13 @@ def post_city(state_id):
     return:
         new city object and 201 status
     """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state:
-        if not request.json():
+        if not request.get_json():
             return (jsonify({'error': 'Not a JSON'}), 400)
         if 'name' not in request.get_json():
             return (jsonify({'error': 'Missing name'}), 400)
-        new_city = request.get_json.get('name')
+        new_city = request.get_json().get('name')
         city_object = City(name=new_city, state_id=state_id)
         city_object.save()
     else:
