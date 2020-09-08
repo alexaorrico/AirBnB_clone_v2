@@ -9,6 +9,7 @@ def get_status():
     """returns a JSON: 'status': 'OK'"""
     return jsonify({'status': 'OK'})
 
+
 @app_views.route('/stats', strict_slashes=False, methods=['GET'])
 def get_stats():
     """returns a JSON: 'class': count"""
