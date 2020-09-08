@@ -1,4 +1,4 @@
-#!/bin/bash python3
+#!/usr/bin/python3
 """ state view """
 from api.v1.views import app_views
 from flask import jsonify, Blueprint, render_template, abort, request
