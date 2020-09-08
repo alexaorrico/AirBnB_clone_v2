@@ -158,6 +158,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Youssef Belhadj - [Github](https://github.com/usfbelhadj) / [Twitter](https://twitter.com/Youssef35969631)
+Foued Dadi - [Github](https://github.com/FouedDadi)
 
 Second part of Airbnb: Joann Vuong
 ## License
