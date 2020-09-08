@@ -9,7 +9,7 @@ from flask import jsonify, request, abort, make_response
 
 @app_views.route('/places/<place_id>/reviews',
                  methods=['GET', 'POST'], strict_slashes=False)
-def viewalltheplacethings(place_id):
+def viewallthereviewthings(place_id):
     """Retrieves the list of all State objects"""
     if storage.get(Place, place_id) is None:
         abort(404)
