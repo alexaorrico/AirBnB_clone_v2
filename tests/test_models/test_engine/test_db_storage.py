@@ -92,8 +92,7 @@ class TestDBStorage(unittest.TestCase):
         """Test that get returns the object requested or None"""
         state = State()
         state.name = "Oklahoma"
-        models.storage.new(state)
-        models.storage.save()
+        state.save()
 
         # test valid input
         valid = models.storage.get(State, state.id)
@@ -104,26 +103,26 @@ class TestDBStorage(unittest.TestCase):
         # test for obj that is not one of the classes
         bad_obj = models.storage.get(bad_obj, state.id)
         self.assertIs(bad_obj, None)
-        models.storage.delete(state)
+        state.delete()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count returns objects or given class or or all objects"""
         state1 = State()
         state1.name = "Oklahoma"
-        models.storage.new(state1)
+        state1.save()
         state2 = State()
         state2.name = "Texas"
-        models.storage.new(state2)
+        state2.save()
         # valid test case, when cls is give and when not given
         self.assertEqual(models.storage.count(State), 2)
         self.assertEqual(models.storage.count(), 2)
         # delete one state obj
-        models.storage.delete(state2)
+        state2.delete()
         self.assertEqual(models.storage.count(State), 1)
         self.assertEqual(models.storage.count(State), 1)
         # add a test for obj that is not one of the classes?
         not_obj = None
         self.assertEqual(models.storage.count(not_obj),
                          "** class doesn't exist **")
-        models.storage.delete(state1)
+        state1.delete()
