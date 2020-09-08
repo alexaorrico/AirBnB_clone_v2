@@ -31,11 +31,10 @@ def get_a_state(state_id):
 @app_views.route('/states/<state_id>', methods=["GET", "DELETE"], strict_slashes=False)
 def del_a_state(state_id):
     """ delete one unique state object """
-    states = storage.all(State).values()
-    for state in states:
-        if state.id == state_id:
-            output = {}
-            output = state.to_dict()
-            State.delete(id)
-            return jsonify(output), 200
-    return jsonify({"error": "Not found"}), 404
+    state = storage.get(State, state_id)
+    if state is None:
+        return jsonify({"error": "Not found"}), 404
+    storage.delete(state)
+    storage.save()
+    result = make_response(jsonify({}), 200)
+    return result
