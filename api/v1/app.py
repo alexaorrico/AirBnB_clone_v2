@@ -28,7 +28,7 @@ if __name__ == '__main__':
     ho = os.getenv("HBNB_API_HOST")
     po = os.getenv("HBNB_API_PORT")
     if ho is None:
-        ho = 0.0.0.0
+        ho = '0.0.0.0'
     if po is None:
         po = 5000
 
