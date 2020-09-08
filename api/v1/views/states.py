@@ -53,7 +53,6 @@ def create_a_state():
 @app_view.route('/api/v1/states/<state_id>', methods=['PUT'])
 def update_a_state():
     """ this method updates a state """
-    lizt = []
     states = storage.all(State).values()
     req = request.get_json()
     if req is not (type)JSON:
