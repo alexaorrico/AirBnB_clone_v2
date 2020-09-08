@@ -25,15 +25,16 @@ def get_a_user(user_id):
         if user.id == user_id:
             output = user.to_dict()
             return (jsonify(output))
-    return jsonify({"error": "Not found"}), 404
+    abort(404)
 
 
-@app_views.route('/users/<user_id>', methods=["GET", "DELETE"], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=["GET", "DELETE"],
+                 strict_slashes=False)
 def del_a_user(user_id):
     """ delete one unique user object """
     user = storage.get(User, user_id)
     if user is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(user)
     storage.save()
     result = make_response(jsonify({}), 200)
