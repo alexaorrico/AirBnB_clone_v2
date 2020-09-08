@@ -23,7 +23,8 @@ def get_a_state():
         if state.id == state_id:
             lizt = state.to_dict()
             return jsonify(lizt)
-    return jsonify({"error": "Not found"}), 404 """mental note maybe a try/except block"""
+    return jsonify({"error": "Not found"}), 404
+    """MENTAL NOTE:  maybe a try/except block"""
 
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_a_state():
@@ -58,7 +59,8 @@ def update_a_state():
     if req is not (type)JSON:
         raise TypeError(400, 'Not a JSON')
     for state in states:
-        if state.id not in states:""" should this be state_id ??? """
+        if state.id not in states:
+        """ ^^ NOTE: should this be state_id ??? ^^ """
             raise KeyError(404, 'state_id not found')
         else:
             for key, value in states:
@@ -67,7 +69,7 @@ def update_a_state():
                     states.update({'key':'value'})
                 return jsonify(states), 200
 
-                """A DIFFERENT APPROACH
+                """A DIFFERENT APPROACH:
                 if key == '__class__':
                     states['__class__'] = value
                 if key == 'name':
