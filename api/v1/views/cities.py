@@ -8,7 +8,7 @@ from models.state import State
 from models.base_model import BaseModel
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def all_cities(state_id):
     """list all cities in state"""
@@ -16,19 +16,39 @@ def all_cities(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    for city in state.cities:
-        output.append(city.to_dict())
-    return (jsonify(output))
+    if request.method == 'GET':
+        for city in state.cities:
+            output.append(city.to_dict())
+        return (jsonify(output))
+    if request.method == 'POST':
+        data = request.get_json()
+        if not request.is_json:
+            abort(400, description="Not a JSON")
+        if 'name' not in request.json:
+            abort(400, description="Missing name")
+        city = City(**data)
+        city.save()
+        return (jsonify(city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['GET', 'PUT'],
+                 strict_slashes=False)
 def a_city(city_id):
     """list a city by id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    output = city.to_dict()
-    return (jsonify(output))
+    if request.method == 'GET':
+        output = city.to_dict()
+        return (jsonify(output))
+    if request.method == 'PUT':
+        data = request.get_json()
+        if not request.is_json:
+            abort(400, description="Not a JSON")
+        for key, value in data.items():
+            setattr(city, key, value)
+        city.save()
+        return (jsonify(city.to_dict()), 200)
 
 
 @app_views.route('/cities/<city_id>', methods=["GET", "DELETE"],
