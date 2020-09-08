@@ -32,7 +32,7 @@ def viewalltheuserthings():
                 newuser.save()
                 return jsonify(newuser.to_dict()), 201
 
-        except ValueError:
+        except:
             abort(400, "Not a JSON")
 
 
@@ -66,7 +66,7 @@ def useridtime(user_id):
                 ud = u.to_dict()
                 return jsonify(ud)
 
-            except ValueError:
+            except:
                 abort(400, "Not a JSON")
 
     else:
