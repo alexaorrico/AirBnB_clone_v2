@@ -3,7 +3,7 @@
 the Blueprints will be registered here and this App.py
 is the one who will execute the application"""
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 # here we import our blueprint app_views
 from api.v1.views import app_views
@@ -19,6 +19,13 @@ app.register_blueprint(app_views)
 def teardown(self):
     """ handles teardown """
     storage.close()
+
+@app.errorhandler(404)
+def page_not_found(error):
+    """handler for 404 errors that returns a
+    JSON-formatted 404 status code response"""
+    response = make_response(jsonify({"error": "Not found"}), 404)
+    return response
 
 
 if __name__ == '__main__':
