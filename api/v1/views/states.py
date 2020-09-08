@@ -20,18 +20,17 @@ def viewallthestatethings():
     if request.method == 'POST':
         try:
             body = request.get_json()
-            if "name" not in body.keys():
-                abort(400, "Missing name")
-            else:
-                newstate = State(**body)
-                """for k in body.keys():
-                    setattr(newstate, k, body.get(k))"""
-                """newstate.__dict__.update(body)"""
-                newstate.save()
-                return jsonify(newstate.to_dict()), 201
-
-        except ValueError:
-            abort(400, "Not a JSON")
+        except:
+            return jsonify({"error": "Not a JSON"}), 400
+        if "name" not in body.keys():
+            return jsonify({"error": "Missing name"}), 400
+        else:
+            newstate = State(**body)
+            """for k in body.keys():
+                setattr(newstate, k, body.get(k))"""
+            """newstate.__dict__.update(body)"""
+            newstate.save()
+            return jsonify(newstate.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
@@ -52,19 +51,18 @@ def stateidtime(state_id):
         if request.method == 'PUT':
             try:
                 body = request.get_json()
-                body.pop("id", "")
-                body.pop("created_at", "")
-                body.pop("updated_at", "")
-                """s.__dict__.update(body)"""
-                for k in body.keys():
-                    setattr(s, k, body.get(k))
-                """s.save()"""
-                s.save()
-                sd = s.to_dict()
-                return jsonify(sd)
-
-            except ValueError:
-                abort(400, "Not a JSON")
+            except:
+                return jsonify({"error": "Not a JSON"}), 400
+            body.pop("id", "")
+            body.pop("created_at", "")
+            body.pop("updated_at", "")
+            """s.__dict__.update(body)"""
+            for k in body.keys():
+                setattr(s, k, body.get(k))
+            """s.save()"""
+            s.save()
+            sd = s.to_dict()
+            return jsonify(sd)
 
     else:
         abort(404)
