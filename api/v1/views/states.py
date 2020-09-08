@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from models import storage
 from models.state import State
+from flask import jsonify
 
 
 @app_views.route('/api/v1/states', methods=['GET'])
@@ -33,9 +34,9 @@ def delete_a_state():
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
-            lizt = state.to_dict()
-            State.delete(state_id)
-            return jsonify(lizt), 200
+            storage.delete(state)
+            storage.save()
+            return jsonify({}), 200
     return jsonify({'error': 'Not found'}), 404
 
 @app_views.route('/api/v1/states', methods=['POST'])
