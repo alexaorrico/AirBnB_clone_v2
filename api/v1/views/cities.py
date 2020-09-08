@@ -26,3 +26,16 @@ def get_cities(state_id):
                 if city.state_id == state_id:
                     list_cities.append(city.to_dict())
             return jsonify(list_cities)
+
+
+@app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
+def get_city(city_id):
+    """Return city according class and id of the city
+        or return Error: Not found if it doesn't exist.
+    """
+    if city_id:
+        dict_city = storage.get(City, city_id)
+        if dict_city is None:
+            abort(404)
+        else:
+            return jsonify(dict_city.to_dict())
