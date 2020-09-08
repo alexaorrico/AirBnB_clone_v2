@@ -25,15 +25,16 @@ def get_a_place(place_id):
         if place.id == place_id:
             output = place.to_dict()
             return (jsonify(output))
-    return jsonify({"error": "Not found"}), 404
+    abort(404)
 
 
-@app_views.route('/places/<place_id>', methods=["GET", "DELETE"], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=["GET", "DELETE"],
+                 strict_slashes=False)
 def del_a_place(place_id):
     """ delete one unique place object """
     place = storage.get(Place, place_id)
     if place is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(place)
     storage.save()
     result = make_response(jsonify({}), 200)

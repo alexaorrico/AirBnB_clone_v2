@@ -7,7 +7,7 @@ from models.state import State
 from models.base_model import BaseModel
 
 
-@app_views.route('/states', methods=["GET"], strict_slashes=False)
+@app_views.route('/states', methods=["GET", "POST"], strict_slashes=False)
 def get_all_states():
     """ retrieves all state objects """
     output = []
@@ -25,15 +25,16 @@ def get_a_state(state_id):
         if state.id == state_id:
             output = state.to_dict()
             return (jsonify(output))
-    return jsonify({"error": "Not found"}), 404
+    abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=["GET", "DELETE"], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=["GET", "DELETE"],
+                 strict_slashes=False)
 def del_a_state(state_id):
     """ delete one unique state object """
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     storage.delete(state)
     storage.save()
     result = make_response(jsonify({}), 200)
