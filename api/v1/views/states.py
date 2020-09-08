@@ -2,8 +2,7 @@
 """
     HBNB_V3: Task 7
 """
-from api.v1.views.index import app_views
-from api.v1.views import State
+from api.v1.views.index import app_views, State
 from models import storage
 from flask import jsonify, request, abort
 
@@ -11,8 +10,6 @@ from flask import jsonify, request, abort
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def viewallthestatethings():
     """Retrieves the list of all State objects"""
-    from models import storage
-    from models.state import State
 
     if request.method == 'GET':
         stl = storage.all(State)
@@ -26,8 +23,10 @@ def viewallthestatethings():
             if "name" not in body.keys():
                 abort(400, "Missing name")
             else:
-                newstate = State()
-                newstate.__dict__.update(body)
+                newstate = State(**body)
+                """for k in body.keys():
+                    setattr(newstate, k, body.get(k))"""
+                """newstate.__dict__.update(body)"""
                 newstate.save()
                 return jsonify(newstate.to_dict()), 201
 
@@ -56,7 +55,10 @@ def stateidtime(state_id):
                 body.pop("id", "")
                 body.pop("created_at", "")
                 body.pop("updated_at", "")
-                s.__dict__.update(body)
+                """s.__dict__.update(body)"""
+                for k in body.keys():
+                    setattr(s, k, body.get(k))
+                """s.save()"""
                 s.save()
                 sd = s.to_dict()
                 return jsonify(sd)
