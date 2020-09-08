@@ -7,7 +7,8 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route("/cities/<city_id>", strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=['GET'],
+                 strict_slashes=False)
 def get_city(city_id):
     """
     function to get city instance by id using get verb
@@ -23,7 +24,8 @@ def get_city(city_id):
     else:
         abort(404)
 
-@app_views.route("/cities/<city_id>", strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def del_city(city_id):
     """
     delete city instance with id, using delete verb
@@ -41,7 +43,8 @@ def del_city(city_id):
     else:
         abort(404)
 
-@app_views.route("/cities/<city_id>", strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=['PUT'],
+                 strict_slashes=False)
 def put_city(city_id):
     """
     update city instance by city_id with a PUT verb request.
@@ -63,7 +66,8 @@ def put_city(city_id):
     else:
         abort(404)
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def get_cities(state_id):
     """
     get all city objects for a certain state.
@@ -82,7 +86,8 @@ def get_cities(state_id):
 
     return jsonify(cities_list)
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def post_city(state_id):
     """
     make a new city object
