@@ -37,15 +37,13 @@ def viewallthestatethings():
                  methods=['GET', 'DELETE', 'PUT'])
 def stateidtime(state_id):
     """Handles a state object with said id depending on HTTP request"""
-    stl = storage.all(State)
-    k = "State." + state_id
-    if k in stl.keys():
-        s = stl.get(k)
-        sd = s.to_dict()
+    stl = storage.get(State, state_id)
+    if stl is not None:
+        sd = stl.to_dict()
         if request.method == 'GET':
             return jsonify(sd)
         if request.method == 'DELETE':
-            storage.delete(s)
+            storage.delete(stl)
             storage.save()
             return jsonify({})
         if request.method == 'PUT':
@@ -58,10 +56,10 @@ def stateidtime(state_id):
             body.pop("updated_at", "")
             """s.__dict__.update(body)"""
             for k in body.keys():
-                setattr(s, k, body.get(k))
+                setattr(stl, k, body.get(k))
             """s.save()"""
-            s.save()
-            sd = s.to_dict()
+            stl.save()
+            sd = stl.to_dict()
             return jsonify(sd)
 
     else:
