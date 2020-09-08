@@ -6,6 +6,7 @@ from flask import jsonify
 from models.state import State
 from flask import abort
 from flask import make_response
+from flask import request
 
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
@@ -44,3 +45,17 @@ def delete_state(state_id):
             storage.delete(state)
             storage.save()
             return make_response(jsonify({}), 200)
+
+
+@app_views.route('/states', strict_slashes=False, methods=['POST'])
+def response_state():
+    """Post request that allow to create a new State if exists the name
+        or raise Error if is not a valid json or if the name is missing
+    """
+    if not request.json:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    req = request.get_json()
+    if "name" not in req:
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    state = State(**req).to_dict()
+    return make_response(jsonify(state), 201)
