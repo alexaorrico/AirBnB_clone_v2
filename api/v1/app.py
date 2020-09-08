@@ -32,4 +32,4 @@ if __name__ == '__main__':
     if po is None:
         po = 5000
 
-    app.run(host=ho, port=po, threaded=True)
+    app.run(host=ho, port=po, threaded=True, debug=True)

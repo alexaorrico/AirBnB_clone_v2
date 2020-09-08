@@ -7,7 +7,7 @@ from models import storage
 from flask import jsonify, request, abort
 
 
-@app_views.route('/states', methods=['GET', 'POST', 'PUT', 'DELETE'], strict_slashes=False)
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def viewallthestatethings():
     """Retrieves the list of all State objects"""
 
@@ -34,7 +34,7 @@ def viewallthestatethings():
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
-                 methods=['GET', 'DELETE', 'PUT', 'POST'])
+                 methods=['GET', 'DELETE', 'PUT'])
 def stateidtime(state_id):
     """Handles a state object with said id depending on HTTP request"""
     stl = storage.all(State)
