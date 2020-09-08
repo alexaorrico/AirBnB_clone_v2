@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """cities"""
 from api.v1.views import app_views
-from flask import jsonify, Blueprint, render_template, abort
+from flask import jsonify, Blueprint, make_response, abort
 from models import storage
 from models.city import City
 from models.state import State

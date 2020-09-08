@@ -1,7 +1,7 @@
-#!/bin/bash python3
+#!/usr/bin/python3
 """ amenities """
 from api.v1.views import app_views
-from flask import jsonify, Blueprint, render_template, abort
+from flask import jsonify, Blueprint, make_response, abort
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
