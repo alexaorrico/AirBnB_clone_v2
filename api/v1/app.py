@@ -3,6 +3,8 @@
 from flask import Flask, render_template, jsonify
 from models import storage
 from api.v1.views import app_views
+from os import getenv
+
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
 host = getenv('HBNB_API_HOST') if getenv('HBNB_API_HOST') else '0.0.0.0'
