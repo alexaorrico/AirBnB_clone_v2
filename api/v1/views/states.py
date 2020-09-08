@@ -17,6 +17,7 @@ def get_states():
 @app_views.route('/api/v1/states/<state_id>')
 def get_a_state():
     """finds a unique state based of state_id"""
+    lizt = []
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
@@ -27,6 +28,7 @@ def get_a_state():
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_a_state():
     """delete a specific state"""
+    lizt = []
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
@@ -47,3 +49,27 @@ def create_a_state():
     new_state = State(**req)
     new_state.save()
     return jsonify(new_state), 201
+
+@app_view.route('/api/v1/states/<state_id>', methods=['PUT'])
+def update_a_state():
+    """ this method updates a state """
+    lizt = []
+    states = storage.all(State).values()
+    req = request.get_json()
+    if req is not (type)JSON:
+        raise TypeError(400, 'Not a JSON')
+    for state in states:
+        if state.id not in states:""" should this be state_id ??? """
+            raise KeyError(404, 'state_id not found')
+        else:
+            for key, value in states:
+                if key is not 'id' or key is not 'created_at'
+                or key is not 'updated_at':
+                    states.update({'key':'value'})
+                return jsonify(states), 200
+
+                """A DIFFERENT APPROACH
+                if key == '__class__':
+                    states['__class__'] = value
+                if key == 'name':
+                    states['name'] = value"""
