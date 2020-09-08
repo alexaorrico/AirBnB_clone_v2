@@ -41,7 +41,7 @@ def viewalltheplacethings(place_id):
             return jsonify(newrevw.to_dict()), 201
 
 
-@app_views.route('/review/<review_id>', strict_slashes=False,
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
 def reviewidtime(review_id):
     """Handles a state object with said id depending on HTTP request"""
