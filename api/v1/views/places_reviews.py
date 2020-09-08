@@ -21,24 +21,24 @@ def viewallthereviewthings(place_id):
     if request.method == 'POST':
         try:
             body = request.get_json()
+            if "user_id" not in body.keys():
+                return "Missing user_id", 400
+            elif "text" not in body.keys():
+                return "Missing text", 400
+            else:
+                if storage.get(User, body.get('user_id')) is None:
+                    abort(404)
+                if storage.get(Place, place_id) is None:
+                    abort(404)
+                body.update({"place_id": place_id})
+                newrevw = Review(**body)
+                """for k in body.keys():
+                    setattr(newstate, k, body.get(k))"""
+                """newstate.__dict__.update(body)"""
+                newrevw.save()
+                return jsonify(newrevw.to_dict()), 201
         except:
             return "Not a JSON", 400
-        if "user_id" not in body.keys():
-            return "Missing user_id", 400
-        elif "text" not in body.keys():
-            return "Missing text", 400
-        else:
-            if storage.get(User, body.get('user_id')) is None:
-                abort(404)
-            if storage.get(Place, place_id) is None:
-                abort(404)
-            body.update({"place_id": place_id})
-            newrevw = Review(**body)
-            """for k in body.keys():
-                setattr(newstate, k, body.get(k))"""
-            """newstate.__dict__.update(body)"""
-            newrevw.save()
-            return jsonify(newrevw.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
@@ -57,20 +57,20 @@ def reviewidtime(review_id):
         if request.method == 'PUT':
             try:
                 body = request.get_json()
+                body.pop("id", "")
+                body.pop("created_at", "")
+                body.pop("updated_at", "")
+                body.pop("user_id", "")
+                body.pop("place_id", "")
+                """s.__dict__.update(body)"""
+                for k in body.keys():
+                    setattr(rtl, k, body.get(k))
+                """s.save()"""
+                rtl.save()
+                sd = rtl.to_dict()
+                return jsonify(sd)
             except:
                 return "Not a JSON", 400
-            body.pop("id", "")
-            body.pop("created_at", "")
-            body.pop("updated_at", "")
-            body.pop("user_id", "")
-            body.pop("place_id", "")
-            """s.__dict__.update(body)"""
-            for k in body.keys():
-                setattr(rtl, k, body.get(k))
-            """s.save()"""
-            rtl.save()
-            sd = rtl.to_dict()
-            return jsonify(sd)
 
     else:
         abort(404)
