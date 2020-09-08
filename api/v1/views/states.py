@@ -50,7 +50,7 @@ def stateidtime(state_id):
             try:
                 body = request.get_json()
             except:
-                return jsonify({"error": "Not a JSON"}), 400
+                return "Not a JSON", 400
             body.pop("id", "")
             body.pop("created_at", "")
             body.pop("updated_at", "")
