@@ -123,6 +123,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertEqual(models.storage.count(State), 1)
         self.assertEqual(models.storage.count(State), 1)
         # add a test for obj that is not one of the classes?
+        not_obj = None
         self.assertEqual(models.storage.count(not_obj),
                          "** class doesn't exist **")
         models.storage.delete(state1)

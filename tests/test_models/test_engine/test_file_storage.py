@@ -127,7 +127,8 @@ class TestFileStorage(unittest.TestCase):
         # Test invalid id
         self.assertIs(models.storage.get(clss, "bad_id_12345"), None)
         # Test invalid class
-        self.assertIs(models.storage.get(not_clss, id), None)
+        bad_clss = None
+        self.assertIs(models.storage.get(bad_clss, id), None)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
@@ -139,5 +140,3 @@ class TestFileStorage(unittest.TestCase):
         fs_state = models.storage.all(State)
         self.assertEqual(models.storage.count(State), len(fs_state))
         # test for obj that is not one of the classes
-        self.assertEqual(models.storage.count(not_obj),
-                         "** class doesn't exist **")
