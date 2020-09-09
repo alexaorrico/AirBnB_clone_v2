@@ -32,7 +32,8 @@ def get_a_state(state_id=None):
     return abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_a_state(state_id=None):
     """ Deletes a State object according to its id """
 
@@ -42,7 +43,7 @@ def delete_a_state(state_id=None):
     if my_state is not None:
         storage.delete(my_state)
         storage.save()
-        return jsonify({})
+        return make_response(jsonify({}), 200)
 
     return abort(404)
 
@@ -77,15 +78,17 @@ def update_a_state(state_id=None):
     if my_state is not None:
         body = request.get_json(silent=True)
         if body is None:
-            return make_response(jsonify({'error', 'Not a JSON'}), 400)
+            return make_response(jsonify({'error': 'Not a JSON'}), 400)
         if 'id' in body:
             del body['id']
         if 'created_at' in body:
             del body['created_at']
         if 'updated_at' in body:
             del body['updated_at']
-        my_state.__dict__.update(**body)
+        my_state.__dict__.update(body)
+        setattr(my_state, 'algo_mas', "funciona_no_jodaaaa!!!")
         my_state.save()
-        return jsonify(my_state.to_dict())
+
+        return make_response(jsonify(my_state.to_dict()), 200)
 
     return abort(404)
