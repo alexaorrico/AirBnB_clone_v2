@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ Web APP """
 
-from flask import Flask
+from flask import Flask, Blueprint, jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 from os import environ, getenv
@@ -17,6 +18,16 @@ port = getenv("HBNB_API_PORT") if "HBNB_API_PORT" in environ else 5000
 def teardown_storage(self):
     """ Teardown storage """
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """ not found 404 """
+    response = jsonify({
+        'error': 'Not found'
+    })
+    response.status_code = 404
+    return response
 
 
 if __name__ == '__main__':
