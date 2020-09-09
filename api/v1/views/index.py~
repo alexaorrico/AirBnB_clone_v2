@@ -1,8 +1,0 @@
-#!/usr/bin/python3
-"""commandant"""
-from api.v1.views import app_views
-from flask import jsonify, Blueprint
-
-@app_views.route('/status', methods=['GET'])
-def status():
-    return jsonify({'status': 'OK'})

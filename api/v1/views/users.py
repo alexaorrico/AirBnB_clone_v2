@@ -26,14 +26,13 @@ def get_a_user():
             return jsonify(lizt)
     return jsonify({"error": "Not found"}), 404
 
-
-@app_views.route('/api/v1/users/<user_id>')
+@app_views.route('/api/v1/users/<user_id>', methods=['DELETE'])
 def del_a_user():
     """remove one"""
-    users = storage.all(User).values()
-    for user in users:
-        if user.id == user_id:
-            storage.delete(user)
-            storage.save()
-            return jsonify({}), 200
-    return jsonify({"error": "Not found"}), 404
+    users = storage.get(User, user_id)
+    if users is None:
+        abort(404)
+    else:
+        storage.delete(user)
+        storage.save()
+        return jsonify({}), 200

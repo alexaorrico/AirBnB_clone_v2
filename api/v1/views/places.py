@@ -33,10 +33,10 @@ def get_a_place():
 @app_views.route('/api/v1/places/<place_id>', methods=['DELETE'])
 def del_a_place():
     """comment"""
-    places = storage.all(Place).values()
-    for place in places:
-        if place.id == place_id:
-            storage.delete(place)
-            storage.save()
-            return jsonify({}), 200
-    return jsonify({"error": "Not found"}), 404
+    places = storage.get(Place, place_id)
+    if places is None:
+        abort(404)
+    else:
+        storage.delete(place)
+        storage.save()
+        return jsonify({}), 200

@@ -33,10 +33,10 @@ def get_a_city():
 @app_views.route('/api/v1/cities/<city_id>', methods=[DELETE])
 def del_a_city():
     """delete a specific city"""
-    urban = storage.all(City).values()
-    for city in urban:
-        if city.id == city_id:
-            storage.delete(city)
-            storage.save()
-            return jsonify({}), 200
-    return jsonify({"error": "Not found"}), 404
+    urban = storage.get(City, city_id)
+    if urban is None:
+        abort(404)
+    else:
+        storage.delete(city)
+        storage.save()
+        return jsonify({}), 200

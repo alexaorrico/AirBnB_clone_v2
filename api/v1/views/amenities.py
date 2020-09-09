@@ -31,10 +31,10 @@ def get_an_amenity():
 @app_views.route('/api/v1/amenities/<amenity_id>', methods=['DELETE'])
 def del_an_amenity():
     """asdasdasdasdasd"""
-    water_pressure = storage.all(Amenity).values()
-    for amenity in water_pressure:
-        if amenity.id == amenity_id:
-            storage.delete(amenity)
-            storage.save()
-            return jsonify({}), 200
-    return jsonify({"error": "Not found"}), 404
+    water_pressure = storage.get(Amenity, amenity_id)
+    if water_pressure is None:
+        abort(404)
+    else:
+        storage.delete(amenity)
+        storage.save()
+        return jsonify({}), 200
