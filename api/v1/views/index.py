@@ -16,8 +16,7 @@ from api.v1.views import app_views
 @app_views.route('/status', strict_slashes=False)
 def status():
     """ returns status """
-    status = {"status": "OK"}
-    return jsonify(status)
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
@@ -37,3 +36,7 @@ def stats():
     for key, value in classes.items():
         response[value] = storage.count(key)
     return jsonify(response)
+
+
+if __name__ == '__main__':
+    pass
