@@ -9,13 +9,13 @@ from sqlalchemy.orm import relationship
 import hashlib
 from sqlalchemy_utils import PasswordType
 
+
 class User(BaseModel, Base):
     """Representation of a user """
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
-        password = Column(PasswordType(
-        schemes=[
+        password = Column(PasswordType(schemes=[
             'md5_crypt'
         ]), nullable=False)
         first_name = Column(String(128), nullable=True)
