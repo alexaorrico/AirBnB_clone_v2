@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" Script to init the project """
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
@@ -7,6 +9,7 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
+
 
 @app.teardown_appcontext
 def teardown_db(obj):

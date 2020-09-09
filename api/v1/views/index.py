@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" Script to give the status of the files """
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -27,4 +29,3 @@ def index():
             "states": storage.count(State),
             "users": storage.count(User)
         })
-

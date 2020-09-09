@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" Script to route the request """
 from api.v1.views import app_views
 from models.state import State
 from models import storage
@@ -75,9 +77,3 @@ def get_state_by_id(state_id):
             # abort(400, description="fails cause yes")
 
     abort(404)
-
-
-
-
-
-
