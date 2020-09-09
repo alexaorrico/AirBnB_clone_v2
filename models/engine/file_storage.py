@@ -73,17 +73,23 @@ class FileStorage:
         """ A method to retrieve one object
         return: an object"""
         for objecto in self.__objects.keys():
-            if objecto == cls.__class__.__name__ + '.' + id:
-                return objecto
+            # objeto = "City.5ce4caa5-6224-4278-b31b-1d826f35c953"
+            if objecto.split('.')[1] == id:
+                return self.__objects[objecto]
         return None
 
     def count(self, cls=None):
         """ A method to count the number of objects in storage:
         :return: Returns the number of objects in storage matching the given
         class name. If no name is passed, returns the count of all objects in
-        storage.""""
+        storage."""
         i = 0
-        for objecto in self.__objects.values():
-            if cls == value.__class__.__name__:
+        if cls:
+            for objecto in self.__objects.values():
+                if cls == type(objecto):
+                    i += 1
+        else:
+            for objecto in self.__objects.values():
                 i += 1
+
         return i

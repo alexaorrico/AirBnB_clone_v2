@@ -12,3 +12,5 @@ file.json
 7-dump.sql
 7-dump.sql
 10-dump.sql
+test_get_count.py
+100-dump.sql
