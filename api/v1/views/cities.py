@@ -78,11 +78,9 @@ def post_city(state_id):
         new city object and 201 status
     """
     state = storage.get(State, state_id)
-    req_dict = request.get_json()
 
     if state:
-        # if not request.get_json():
-        if not req_dict:
+        if not request.get_json():
             return (jsonify({'error': 'Not a JSON'}), 400)
         if 'name' not in request.get_json():
             return (jsonify({'error': 'Missing name'}), 400)
