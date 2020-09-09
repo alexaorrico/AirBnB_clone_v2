@@ -14,6 +14,7 @@ app = Flask(__name__)
 # Now as we know the Blueprints are not an application
 # so they have to be registered in our app.py
 app.register_blueprint(app_views)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
 @app.teardown_appcontext
