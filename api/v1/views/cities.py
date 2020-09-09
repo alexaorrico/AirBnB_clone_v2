@@ -70,9 +70,9 @@ def create_city(state_id=None):
                 flag = 1
                 setattr(obj, k, v)
                 setattr(obj, "state_id", state_id)
-                storage.new(obj)
-                storage.save()
-                var = obj.to_dict()
+            storage.new(obj)
+            storage.save()
+            var = obj.to_dict()
     if flag == 0:
         abort(404)
     else:
