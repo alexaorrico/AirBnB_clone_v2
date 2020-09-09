@@ -3,7 +3,7 @@
 from api.v1.views import app_views
 from models.state import State
 from models import storage
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -56,17 +56,15 @@ def post_state_create():
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_state_update(state_id):
-    """comet"""
-    obj = storage.get(State, state_id)
-    conten = request.get_json()
-
-    if obj is None:
-        return abort(404)
-    if conten is None:
-        return "Not a JSON", 400
-    if conten.get('name') is None:
-        return "Missing name", 400
-    obj.__dict__ = conten
+def put_state(state_id):
+    """update a state"""
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    for attr, val in request.get_json().items():
+        if attr not in ['id', 'created_at', 'updated_at']:
+            setattr(state, attr, val)
     storage.save()
-    return jsonify(obj.to_dict()), 200
+    return jsonify(state.to_dict())
