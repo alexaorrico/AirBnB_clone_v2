@@ -30,21 +30,25 @@ def get_a_state():
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_a_state():
     """delete a specific state"""
-    lizt = []
-    states = storage.all(State).values()
-    for state in states:
-        if state.id == state_id:
-            storage.delete(state)
-            storage.save()
-            return jsonify({}), 200
-    return jsonify({'error': 'Not found'}), 404
+    states = storage.get(State, state_id)
+    if states is None:
+        abort(404)
+    else:
+        storage.delete(state)
+        storage.save()
+        return jsonify({}), 200
 
 @app_views.route('/api/v1/states', methods=['POST'])
 def create_a_state():
     """create a state"""
     req = request.get_json()
-    if req is not (type)JSON:
-        raise TypeError(400, 'Not a JSON')
+    try:
+        req = req.loads(req)
+    except TypeError as e:
+        return False
+    return True
+    """if req is not (type)JSON:
+        raise TypeError(400, 'Not a JSON')"""
     key = 'name'
     if key not in req:
         raise ValueError(400, 'Missing name')
