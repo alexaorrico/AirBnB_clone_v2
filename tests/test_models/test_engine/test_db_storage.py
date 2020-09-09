@@ -24,20 +24,20 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 # initialize new instance of hbnb_test_db
-
-# cmd line: HBNB_ENV=test HBNB_MYSQL_USER=hbnb_test \
-#           HBNB_MYSQL_PWD=hbnb_test_pwd \
-#           HBNB_MYSQL_HOST=localhost \
-#           HBNB_MYSQL_DB=hbnb_test_db \
-#           HBNB_TYPE_STORAGE=db \
-#           python3 -m unittest discover tests
-storage = DBStorage()
-# populate empty hbnb_test_db with 7-dump.sql
-# !!! must have hbnb_test user created !!!
-#    and with permission to hbnb_test_db
-#     run setup_mysql_test.sql as root
-subprocess.call("./populate_test_db.sh", shell=True)
-storage.reload()
+if models.storage_t == 'db':
+    # cmd line: HBNB_ENV=test HBNB_MYSQL_USER=hbnb_test \
+    #           HBNB_MYSQL_PWD=hbnb_test_pwd \
+    #           HBNB_MYSQL_HOST=localhost \
+    #           HBNB_MYSQL_DB=hbnb_test_db \
+    #           HBNB_TYPE_STORAGE=db \
+    #           python3 -m unittest discover tests
+    storage = DBStorage()
+    # populate empty hbnb_test_db with 7-dump.sql
+    # !!! must have hbnb_test user created !!!
+    #    and with permission to hbnb_test_db
+    #     run setup_mysql_test.sql as root
+    subprocess.call("./populate_test_db.sh", shell=True)
+    storage.reload()
 
 
 class TestDBStorageDocs(unittest.TestCase):
