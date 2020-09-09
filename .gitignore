@@ -1,2 +1,4 @@
 __pycache__
 .vscode
+file.json
+test_get_count.py
