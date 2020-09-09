@@ -7,7 +7,6 @@ from models.amenity import Amenity
 
 print("All objects: {}".format(storage.count()))
 print("State objects: {}".format(storage.count(State)))
-print("State objects: {}".format(storage.count(Amenity)))
 
 first_state_id = list(storage.all(State).values())[0].id
 print("First state: {}".format(storage.get(State, first_state_id)))
