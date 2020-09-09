@@ -15,7 +15,7 @@ app = Flask(__name__)
 # Now as we know the Blueprints are not an application
 # so they have to be registered in our app.py
 app.register_blueprint(app_views)
-# app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
 @app.teardown_appcontext
@@ -35,4 +35,4 @@ def page_not_found(error):
 if __name__ == '__main__':
     HBNB_API_HOST = getenv("HBNB_API_HOST", '0.0.0.0')
     HBNB_API_PORT = getenv("HBNB_API_PORT ", '5000')
-    app.run(HBNB_API_HOST, HBNB_API_PORT, threaded=True)
+    app.run(debug=True, host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
