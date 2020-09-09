@@ -6,7 +6,7 @@ from flask import jsonify
 from models.amenity import Amenity
 
 
-@app_views.route('/api/v1/amenities')
+@app_views.route('/amenities')
 def get_amenities():
     """asdasdadsa"""
     lizt = []
@@ -16,7 +16,7 @@ def get_amenities():
     return jsonify(lizt)
 
 
-@app_views.route('/api/v1/amenities/<amenity_id>')
+@app_views.route('/amenities/<amenity_id>')
 def get_an_amenity():
     """return unique amenity"""
     lizt = []
@@ -28,7 +28,7 @@ def get_an_amenity():
     return jsonify({"error": "Not found"}), 404
 
 
-@app_views.route('/api/v1/amenities/<amenity_id>', methods=['DELETE'])
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def del_an_amenity():
     """asdasdasdasdasd"""
     water_pressure = storage.get(Amenity, amenity_id)
