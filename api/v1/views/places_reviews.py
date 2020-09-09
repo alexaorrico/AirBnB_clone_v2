@@ -5,6 +5,7 @@ from flask import jsonify, Blueprint, make_response, abort, request
 from models import storage
 from models.review import Review
 from models.place import Place
+from models.user import User
 from models.base_model import BaseModel
 
 

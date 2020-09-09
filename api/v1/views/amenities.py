@@ -50,7 +50,7 @@ def get_an_amenity(amenity_id):
         return (jsonify(amenity.to_dict()), 200)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["GET, DELETE"],
+@app_views.route('/amenities/<amenity_id>', methods=["GET", "DELETE"],
                  strict_slashes=False)
 def del_an_amenity(amenity_id):
     """ deletes one unique amenity """

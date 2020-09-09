@@ -4,6 +4,8 @@ from api.v1.views import app_views
 from flask import jsonify, Blueprint, make_response, abort, request
 from models import storage
 from models.place import Place
+from models.city import City
+from models.user import User
 from models.base_model import BaseModel
 
 
@@ -11,6 +13,7 @@ from models.base_model import BaseModel
                  strict_slashes=False)
 def get_city_place(city_id):
     """ gets all place objs of a city """
+    output = []
     city = storage.get(City, city_id)
     if city is None:
         abort(404)

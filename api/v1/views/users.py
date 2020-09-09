@@ -22,7 +22,7 @@ def get_all_users():
         if not request.is_json:
             abort(400, description="Not a JSON")
         if 'email' not in request.json:
-            abort(404, description="Missing email")
+            abort(400, description="Missing email")
         if 'password' not in request.json:
             abort(400, description="Missing password")
         user = User(**data)
