@@ -24,6 +24,6 @@ def error_handler(not_found):
 
 
 if __name__ == "__main__":
-    host = getenv("HBNB_API_HOST", "0.0.0.0")
-    port = getenv("HBNB_API_PORT", 5000)
-    app.run(host, port, threaded=True)
+    HBNB_API_HOST = getenv("HBNB_API_HOST", "0.0.0.0")
+    HBNB_API_PORT = int(getenv("HBNB_API_PORT", 5000))
+    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
