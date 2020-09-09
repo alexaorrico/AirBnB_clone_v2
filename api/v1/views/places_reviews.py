@@ -27,9 +27,9 @@ def viewallthereviewthings(place_id):
                 return "Missing text", 400
             else:
                 if storage.get(User, body.get('user_id')) is None:
-                    abort(404)
+                    return "", 404
                 if storage.get(Place, place_id) is None:
-                    abort(404)
+                    return "", 404
                 body.update({"place_id": place_id})
                 newrevw = Review(**body)
                 """for k in body.keys():
