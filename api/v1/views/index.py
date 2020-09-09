@@ -28,7 +28,3 @@ def reoute_count():
         'users': storage.count('User')
     }
     return jsonify(count_stats)
-
-
-if __name__ == "__main__":
-    pass
