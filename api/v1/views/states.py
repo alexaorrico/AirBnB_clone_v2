@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Create a new view for State objects"""
 
-from flask import jsonify, request
+from flask import jsonify, request, abort
 from models.state import State
 from models import storage
 from api.v1.views import app_views
@@ -39,12 +39,13 @@ def states_id(state_id):
         storage.delete(state)
         storage.save()
         return jsonify({}), 200
-    if request.method == 'PUT':
-        response = request.get_json()
-        if response is None:
+    if request.method == "PUT":
+        data = request.get_json()
+        if data is None:
             abort(400, "Not a JSON")
-        for key, val in response.items():
-            if key not in ['id', 'created_at', 'updated_at']:
-                setattr(state, key, val)
+        for key, value in data.items():
+            if key != "id" and key != "created_at" and key != "updated_at"\
+             and hasattr(state, key):
+                setattr(state, key, value)
         storage.save()
         return jsonify(state.to_dict()), 200
