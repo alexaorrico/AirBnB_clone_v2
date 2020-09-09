@@ -68,8 +68,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +86,43 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get returns the object requested or None"""
+        state = State()
+        state.name = "Oklahoma"
+        state.save()
+
+        # test valid input
+        valid = models.storage.get(State, state.id)
+        self.assertIs(valid, state)
+        # test bad id
+        bad_id = models.storage.get(State, "bad_id_1234")
+        self.assertIs(bad_id, None)
+        # test for obj that is not one of the classes
+        bad_obj = models.storage.get(bad_obj, state.id)
+        self.assertIs(bad_obj, None)
+        state.delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns objects or given class or or all objects"""
+        state1 = State()
+        state1.name = "Oklahoma"
+        state1.save()
+        state2 = State()
+        state2.name = "Texas"
+        state2.save()
+        # valid test case, when cls is give and when not given
+        self.assertEqual(models.storage.count(State), 2)
+        self.assertEqual(models.storage.count(), 2)
+        # delete one state obj
+        state2.delete()
+        self.assertEqual(models.storage.count(State), 1)
+        self.assertEqual(models.storage.count(State), 1)
+        # add a test for obj that is not one of the classes?
+        not_obj = None
+        self.assertEqual(models.storage.count(not_obj),
+                         "** class doesn't exist **")
+        state1.delete()
