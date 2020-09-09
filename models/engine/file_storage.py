@@ -70,16 +70,18 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """ Function to get all objs of a class """
         all_objs = self.all(cls)
         obj_id = cls.__name__ + '.' + id
-    
+
         if obj_id in all_objs:
             return all_objs[obj_id]
         else:
             return None
-    
+
     def count(self, cls=None):
-        if cls != None:
-           return len(self.all(cls))
+        """ Function to count all objs """
+        if cls is not None:
+            return len(self.all(cls))
         else:
-           return len(self.all())
+            return len(self.all())
