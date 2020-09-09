@@ -7,18 +7,17 @@ import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import hashlib
-
+from sqlalchemy_utils import PasswordType
 
 class User(BaseModel, Base):
     """Representation of a user """
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
-        password = Column(String(128), nullable=False)
-        '''PasswordType(
+        password = Column(PasswordType(
         schemes=[
             'md5_crypt'
-        ]))'''
+        ]), nullable=False)
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
         places = relationship("Place", backref="user")
@@ -33,11 +32,11 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
-    def __setattr__(self, key, value):
+    def __setattr__(self, name, value):
         """ it's documented, see? """
-        if key == 'password':
+        if name == 'password':
             hashlib.md5(value.encode()).hexdigest()
-        super.__setattr__(self, key, value)
+        super.__setattr__(self, name, value)
     '''
     @property
     def password(self):
