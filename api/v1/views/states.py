@@ -57,8 +57,9 @@ def response_state():
     req = request.get_json()
     if "name" not in req:
         return make_response(jsonify({"error": "Missing name"}), 400)
-    state = State(**req).to_dict()
-    return make_response(jsonify(state), 201)
+    state = State(**req)
+    state.save()
+    return make_response(jsonify(state.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
@@ -75,4 +76,5 @@ def update_state(state_id):
         for key, value in req.items():
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(state, key, value)
+        state.save()
         return make_response(jsonify(state.to_dict()), 200)
