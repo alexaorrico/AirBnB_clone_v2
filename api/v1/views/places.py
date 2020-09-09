@@ -27,7 +27,7 @@ def viewalltheplacethings(city_id):
                 return "Missing name", 400
             else:
                 if storage.get(User, body.get('user_id')) is None:
-                    abort(404)
+                    return "", 404
                 body.update({"city_id": city_id})
                 newplace = Place(**body)
                 """for k in body.keys():
