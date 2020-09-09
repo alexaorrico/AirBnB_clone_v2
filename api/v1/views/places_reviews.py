@@ -7,7 +7,7 @@ from models.review import Review
 from models.place import Place
 
 
-@app_views.route('/api/v1/places/<place_id>/reviews')
+@app_views.route('/places/<place_id>/reviews')
 def get_reviews():
     """yelp"""
     lizt = []
@@ -18,7 +18,7 @@ def get_reviews():
     return jsonify(lizt)
 
 
-@app_views.route('/api/v1/reviews/<review_id>')
+@app_views.route('/reviews/<review_id>')
 def get_a_review():
     """review"""
     review = storage.get(Review, review_id)
@@ -27,7 +27,8 @@ def get_a_review():
     else:
         return jsonify(review)
 
-@app_views.route('/api/v1/reviews/<review_id>', methods=['DELETE'])
+
+@app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_a_review():
     """ deletes review object """
     review = storage.get(Review, review_id)

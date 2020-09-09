@@ -7,7 +7,7 @@ from models.place import Place
 from models.city import City
 
 
-@app_views.route('/api/v1/cities/<city_id>/places')
+@app_views.route('/cities/<city_id>/places')
 def get_places():
     """our hearts pump dust and our hairs all grey"""
     lizt = []
@@ -18,7 +18,7 @@ def get_places():
     return jsonify(lizt)
 
 
-@app_views.route('/api/v1/places/<place_id>')
+@app_views.route('/places/<place_id>')
 def get_a_place():
     """comment"""
     lizt = []
@@ -30,7 +30,7 @@ def get_a_place():
     return jsonify({"error": "Not found"}), 404
 
 
-@app_views.route('/api/v1/places/<place_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def del_a_place():
     """comment"""
     places = storage.get(Place, place_id)

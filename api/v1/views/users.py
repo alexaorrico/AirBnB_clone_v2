@@ -6,7 +6,7 @@ from flask import jsonify
 from models.user import User
 
 
-@app_views.route('/api/v1/users')
+@app_views.route('/users')
 def get_users():
     """get em"""
     lizt = []
@@ -15,7 +15,8 @@ def get_users():
         lizt.append(user.to_dict())
     return jsonify(lizt)
 
-@app_views.route('/api/v1/users/<user_id>')
+
+@app_views.route('/users/<user_id>')
 def get_a_user():
     """get one"""
     lizt = []
@@ -26,7 +27,8 @@ def get_a_user():
             return jsonify(lizt)
     return jsonify({"error": "Not found"}), 404
 
-@app_views.route('/api/v1/users/<user_id>', methods=['DELETE'])
+
+@app_views.route('/users/<user_id>', methods=['DELETE'])
 def del_a_user():
     """remove one"""
     users = storage.get(User, user_id)
