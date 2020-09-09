@@ -9,9 +9,9 @@ from api.v1.views import app_views
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
-def cities_list():
+def cities_list(state_id):
     """Retrieves the list of all City objects"""
-    states = storage.all("State")
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     if request.method == "GET":
@@ -28,7 +28,7 @@ def cities_list():
         if "name" not in response:
             abort(400, "Missing name")
         response["state_id"] = state_id
-        new_city = City(**data)
+        new_city = City(**response)
         new_city.save()
         return jsonify(new_city.to_dict()), 201
 
