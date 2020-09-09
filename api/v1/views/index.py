@@ -7,6 +7,16 @@ from flask import jsonify
 from models import storage
 # we import the Blueprint 'app_views'created in the __init__
 from api.v1.views import app_views
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+
+
+classes = {"amenities": Amenity, "cities": City, "places": Place,
+           "reviews": Review, "states": State, "users": User}
 
 
 # the followings are the entendpoints of the app_view blueprint
@@ -24,19 +34,11 @@ def get_stats():
     """
     function to return the count of all class objects
     """
-    response = {}
-    classes = {
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-        "User": "users"
-    }
+    result = {}
     for key, value in classes.items():
-        response[value] = storage.count(key)
-    return jsonify(response)
+        result[key] = storage.count(value)
+    return jsonify(result)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass
