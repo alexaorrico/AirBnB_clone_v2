@@ -15,11 +15,5 @@ def CloseSession(self):
     storage.close()
 
 if __name__ == "__main__":
-    if getenv('HBNB_API_HOST') and getenv('HBNB_API_PORT'):
-        host_host = getenv('HBNB_API_HOST')
-        port_port = getenv('HBNB_API_PORT')
-    else:
-        host_host = '0.0.0.0'
-        port_port = 5000
     app.run(host=getenv('HBNB_API_HOST', '0.0.0.0'),
             port=int(getenv('HBNB_API_PORT', 5000)), threaded=True)
