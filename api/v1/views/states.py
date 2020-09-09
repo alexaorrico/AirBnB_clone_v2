@@ -7,13 +7,13 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def states_list():
     """Retrieves the list of all State objects"""
     if request.method == 'GET':
         all_states = []
         for key in storage.all("State").values():
-            all_states.append(ket.to_dict())
+            all_states.append(key.to_dict())
         return jsonify(all_states)
     if request.method == 'POST':
         response = request.get_json()
@@ -26,7 +26,8 @@ def states_list():
         return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/states/<state_id>", methods=['GET', 'DELETE', 'PUT'])
+@app_views.route("/states/<state_id>", methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def states_id(state_id):
     """Deletes a State object:"""
     state = storage.get("State", state_id)
