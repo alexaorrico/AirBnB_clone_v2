@@ -2,9 +2,11 @@
 """ amenities view class """
 from models import storage
 from api.v1.views import app_views
+from models.state import State
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.amenity import Amenity
 from flask import jsonify, request, abort, make_response
 
 
@@ -56,3 +58,57 @@ def get_place_id(place_id=None):
                 setattr(place, key, val)
         place.save()
         return jsonify(place.to_dict())
+
+
+@app_views.route("/places_search", strict_slashes=False, methods=["POST"])
+def places_search():
+    """ retrieves all Place objects depending of the JSON
+        in the body of the request
+    """
+    # Not sure if this is correct way to check empty body
+    """
+    if request.get_json() == {}:
+        return jsonify([obj.to_dict() for obj in storage.all(Place).values()])
+    """
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+
+    if request.get_json().get("states") is not None:
+        if request.get_json().get("cities") is not None:
+            place_list = []
+            for city_id in request.get_json().get("cities"):
+                city = storage.get(City, city_id)
+                place_list.append([place.to_dict() for place in city.places])
+            return jsonify(place_list)
+        else:
+            place_list = []
+            for state_id in request.get_json().get("states"):
+                state = storage.get(State, state_id)
+                cities = [city for city in state.cities]
+                for city in cities:
+                    place_list.append([place.to_dict()
+                                      for place in city.places])
+            return jsonify(place_list)
+
+    if request.get_json().get("cities") is not None:
+            place_list = []
+            for city_id in request.get_json().get("cities"):
+                city = storage.get(City, city_id)
+                place_list.append([place.to_dict() for place in city.places])
+            return jsonify(place_list)
+
+    """
+    if request.get_json().get("amenities") is not None:
+        places = storage.all(Place)
+        place_list = []
+        for place in places.values():
+            for amenity_id in request.get_json().get("amenities"):
+                amenity = storage.get(Amenity, amenity_id)
+                if amenity in place.amenities:
+                    new_place = storage.get(Place, place.id)
+                    print("+++++++++++++++++++++++")
+                    print(new_place)
+                    place_list.append(new_place.to_dict())
+        return jsonify(place_list)
+    """
+    return jsonify([obj.to_dict() for obj in storage.all(Place).values()])
