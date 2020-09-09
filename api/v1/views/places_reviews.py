@@ -2,13 +2,13 @@
 """comment"""
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from flask import jsonify, abort, request, Blueprint
 from models.review import Review
 from models.place import Place
 
 
 @app_views.route('/places/<place_id>/reviews')
-def get_reviews():
+def get_reviews(place_id):
     """yelp"""
     lizt = []
     reviews = storage.all(Review).values()
@@ -19,22 +19,21 @@ def get_reviews():
 
 
 @app_views.route('/reviews/<review_id>')
-def get_a_review():
+def get_a_review(review_id):
     """review"""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    else:
-        return jsonify(review)
+    ret = review.to_dict()
+    return jsonify(ret)
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
-def delete_a_review():
+def delete_a_review(review_id):
     """ deletes review object """
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    else:
-        review.delete()
-        review.save()
-        return jsonify({})
+    storage.delete(review)
+    storage.save()
+    return jsonify({}), 200

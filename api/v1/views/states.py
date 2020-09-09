@@ -28,15 +28,14 @@ def get_a_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_a_state():
+def delete_a_state(state_id):
     """delete a specific state"""
     states = storage.get(State, state_id)
     if states is None:
         abort(404)
-    else:
-        storage.delete(state)
-        storage.save()
-        return jsonify({}), 200
+    storage.delete(states)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -54,7 +53,7 @@ def create_a_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_a_state():
+def update_a_state(state_id):
     """ this method updates a state """
     state = storage.get(State, state_id)
     if state is None:
