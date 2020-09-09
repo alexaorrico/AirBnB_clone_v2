@@ -2,7 +2,7 @@
 """
     HBNB_V3: Task 12
 """
-from api.v1.views.index import app_views, Place, Review
+from api.v1.views.index import app_views, Place, Review, User
 from models import storage
 from flask import jsonify, request, abort, make_response
 
