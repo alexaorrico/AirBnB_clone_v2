@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" flask api module """
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
