@@ -179,8 +179,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/Esteban1891) / [Twitter](https://twitter.com/Esteban1891)  
-Jennifer Huang - [Github](https://github.com/JoseAVallejo12) / [Twitter](https://twitter.com/JoseAVallejo12)
+Esteban De La Hoz - [Github](https://github.com/Esteban1891) / [Twitter](https://twitter.com/Esteban1891)  
+Jose Vallejo - [Github](https://github.com/JoseAVallejo12) / [Twitter](https://twitter.com/JoseAVallejo12)
 
 ## License
 Public Domain. No copy write protection. 
