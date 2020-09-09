@@ -28,14 +28,6 @@ def not_found(error):
     """
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-@app.errorhandler(400)
-def not_json(error):
-    """
-    Handler for 400 errors that returns a JSON-formatted
-    400 status code response.
-    """
-    return make_response(jsonify({'error': 'Not a JSON'}), 400)
-
 
 if __name__ == '__main__':
     host_env = getenv('HBNB_API_HOST')
