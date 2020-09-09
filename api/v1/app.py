@@ -1,4 +1,4 @@
-#!/usr/bin.python3
+#!/usr/bin/python3
 """API Status"""
 from flask import Flask
 from models import storage
