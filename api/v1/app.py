@@ -19,7 +19,7 @@ def tear_down(error):
 
 @app.errorhandler(404)
 def _handle_api_error(error):
-    return jsonify(error="Not found")
+    return make_response(jsonify(error="Not found"), 404)
 
 if __name__ == "__main__":
     app.run(host=getenv('HBNB_API_HOST'),
