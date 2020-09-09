@@ -19,10 +19,10 @@ def states_list():
     # method is POST
     body_dic = request.get_json()
     if "name" not in body_dic:
-        return jsonify(error="Missing name"), 400
+        return jsonify({"error": "Missing name"}), 400
     if body_dic is None:
-        return jsonify(error="Not a JSON"), 400
-    new_state = State(body_dic)
+        return jsonify({"error": "Not a JSON"}), 400
+    new_state = State(**body_dic)
     storage.new(new_state)
     return jsonify(new_state.to_dict()), 201
 
@@ -42,7 +42,7 @@ def states_id(state_id):
         else:  # method = PUT
             body_dic = request.get_json()
             if body_dic is None:
-                return jsonify(error="Not a JSON"), 400
+                return jsonify({"error": "Not a JSON"}), 400
             for key, value in state_objs.items():
                 ignore_keys = ["id", "created_at", "updated_at"]
                 if key not in ignore_keys:
