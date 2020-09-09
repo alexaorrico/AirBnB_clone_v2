@@ -3,7 +3,7 @@
 Here is where we create the routes to the endpoints of our blueprints
 """
 
-from flask import jsonify, request
+from flask import jsonify
 from models import storage
 # we import the Blueprint 'app_views'created in the __init__
 from api.v1.views import app_views
