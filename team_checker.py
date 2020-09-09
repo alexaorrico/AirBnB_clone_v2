@@ -62,3 +62,23 @@ for package in packages:
                         print("[Not Found] - {} class docs".format(m_class))
             print()
 print()
+
+print("\n\t======== SHEBANG '#' CHECK ========\n")
+
+current_dir = '.'
+errors = False
+for root, dirs, files in os.walk(current_dir):
+    for file in files:
+        if file.endswith('.py'):
+            try:
+                with open(os.path.join(root, file), "r") as File:
+                    hold_lines = File.readlines()
+                if hold_lines[0] != "#!/usr/bin/python3\n":
+                    errors = True
+                    print("[Shebang Not Found] - {}".format(
+                        os.path.join(root, file)))
+            except Exception:
+                pass
+if not errors:
+    print("OK")
+print()
