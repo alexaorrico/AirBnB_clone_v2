@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from models.base_model import BaseModel, Base
 from flask import jsonify, abort, request
 from models.state import State
@@ -6,7 +7,7 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def allcities(state_id=None):
     """ jsonify """
     lista = []
@@ -78,7 +79,7 @@ def create_city(state_id=None):
         return (jsonify(var), 201)
 
 
-@app_views.route('cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def change_city(city_id=None):
     if not request.json:
         abort(400, "Not a JSON")
