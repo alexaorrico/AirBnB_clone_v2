@@ -5,6 +5,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import make_response
 from flask import jsonify
+import os
 
 
 app = Flask(__name__)
@@ -24,4 +25,6 @@ def close_session(db):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    hst = os.getenv("HBNB_API_HOST", default="0.0.0.0")
+    prt = int(os.getenv("HBNB_API_PORT", default=5000))
+    app.run(host=hst, port=prt, threaded=True)
