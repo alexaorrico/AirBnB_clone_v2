@@ -80,7 +80,7 @@ class DBStorage:
         try:
             obj_dict = {}
             if cls:
-                obj_class = self.__session.query(classes[cls]).all()
+                obj_class = self.__session.query(cls).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
             return obj_dict[id]
@@ -97,7 +97,7 @@ class DBStorage:
         """
         obj_dict = {}
         if cls:
-            obj_class = self.__session.query(classes[cls]).all()
+            obj_class = self.__session.query(cls).all()
             for item in obj_class:
                 obj_dict[item.id] = item
             return len(obj_dict)
