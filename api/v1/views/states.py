@@ -32,7 +32,9 @@ def get_states(state_id):
             return jsonify(dict_state.to_dict())
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False,
+                 methods=['DELETE'])
 def delete_state(state_id):
     """Deletes an object State if exists, otherwise raise
         404 error

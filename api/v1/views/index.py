@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Task 0"""
+"""Index of the application"""
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -17,12 +17,18 @@ def Index():
     """Function index"""
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'])
 def number_objects():
     """counts the number of objects for each model"""
 
-    classes = {"amenities": Amenity, "cities": City,
-           "places": Place, "reviews": Review, "states": State, "users": User}
+    classes = {
+        "amenities": Amenity,
+        "cities": City,
+        "places": Place,
+        "reviews": Review,
+        "states": State,
+        "users": User}
     dictionary = {}
     for key, cl in classes.items():
         numb = storage.count(cl)

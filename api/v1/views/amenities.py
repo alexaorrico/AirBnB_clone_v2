@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""VIew for States"""
+"""View for Amenities"""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -19,7 +19,8 @@ def all_amenities():
     return jsonify(list_amenities)
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['GET'])
 def get_amenities(amenity_id):
     """Return amenity according class and id of Amenit
         or return Error: Not found if it doesn't exist.
@@ -32,7 +33,8 @@ def get_amenities(amenity_id):
             return jsonify(dict_am.to_dict())
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_amenity(amenity_id):
     """Deletes an object Amenity if exists, otherwise raise
         404 error
@@ -62,7 +64,8 @@ def response_amenity():
     return make_response(jsonify(amenities.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['PUT'])
 def update_amenity(amenity_id):
     """Updates attributes from an Amenity object"""
     if amenity_id:

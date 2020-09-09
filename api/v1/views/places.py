@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""VIew for States"""
+"""View for Places"""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -11,7 +11,8 @@ from flask import make_response
 from flask import request
 
 
-@app_views.route('cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+@app_views.route('cities/<city_id>/places',
+                 strict_slashes=False, methods=['GET'])
 def get_places(city_id):
     """Return places according to id of city object
         or return error: Not found if it doesn't exist.
@@ -57,7 +58,8 @@ def delete_place(place_id):
             return make_response(jsonify({}), 200)
 
 
-@app_views.route('cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+@app_views.route('cities/<city_id>/places',
+                 strict_slashes=False, methods=['POST'])
 def response_place(city_id):
     """Post request that allow to create a new place if exists the name
         or raise Error if is not a valid json or if the name is missing
@@ -97,7 +99,12 @@ def update_place(place_id):
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         req = request.get_json()
         for key, value in req.items():
-            if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            if key not in [
+                'id',
+                'user_id',
+                'city_id',
+                'created_at',
+                    'updated_at']:
                 setattr(obj_places, key, value)
         obj_places.save()
         return make_response(jsonify(obj_places.to_dict()), 200)

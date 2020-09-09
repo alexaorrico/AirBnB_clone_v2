@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""VIew for States"""
+"""View for Reviews"""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -11,7 +11,8 @@ from flask import make_response
 from flask import request
 
 
-@app_views.route('places/<place_id>/reviews', strict_slashes=False, methods=['GET'])
+@app_views.route('places/<place_id>/reviews',
+                 strict_slashes=False, methods=['GET'])
 def get_reviews(place_id):
     """Return reviews according to id of place object
         or return error: Not found if it doesn't exist.
@@ -42,7 +43,9 @@ def get_review(review_id):
             return jsonify(dict_review.to_dict())
 
 
-@app_views.route('reviews/<review_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('reviews/<review_id>',
+                 strict_slashes=False,
+                 methods=['DELETE'])
 def delete_review(review_id):
     """Deletes an object Review if exists, otherwise raise
         404 error
@@ -57,7 +60,8 @@ def delete_review(review_id):
             return make_response(jsonify({}), 200)
 
 
-@app_views.route('places/<place_id>/reviews', strict_slashes=False, methods=['POST'])
+@app_views.route('places/<place_id>/reviews',
+                 strict_slashes=False, methods=['POST'])
 def response_reviews(place_id):
     """Post request that allow to create a new review if exists the name
         or raise Error if is not a valid json or if the name is missing
@@ -95,7 +99,12 @@ def update_review(review_id):
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         req = request.get_json()
         for key, value in req.items():
-            if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+            if key not in [
+                'id',
+                'user_id',
+                'place_id',
+                'created_at',
+                    'updated_at']:
                 setattr(obj_reviews, key, value)
         obj_reviews.save()
         return make_response(jsonify(obj_reviews.to_dict()), 200)

@@ -1,20 +1,22 @@
 #!/usr/bin/python3
-"""Task 0"""
+"""Create instance of flask"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from flask import make_response
 from flask import jsonify
+from flask_cors import CORS
 import os
 
 
 app = Flask(__name__)
-
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
 
 @app.errorhandler(404)
 def not_found(error):
+    """ Handler for 404 errors that returns a JSON 404 status code"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
 

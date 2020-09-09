@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""VIew for States"""
+"""View for Cities"""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -10,7 +10,8 @@ from flask import request
 from models.state import State
 
 
-@app_views.route('states/<state_id>/cities', strict_slashes=False, methods=['GET'])
+@app_views.route('states/<state_id>/cities',
+                 strict_slashes=False, methods=['GET'])
 def get_cities(state_id):
     """Return cities according to id of state object
         or return Error: Not found if it doesn't exist.
@@ -56,7 +57,8 @@ def delete_city(city_id):
             return make_response(jsonify({}), 200)
 
 
-@app_views.route('states/<state_id>/cities', strict_slashes=False, methods=['POST'])
+@app_views.route('states/<state_id>/cities',
+                 strict_slashes=False, methods=['POST'])
 def response_city(state_id):
     """Post request that allow to create a new City if exists the name
         or raise Error if is not a valid json or if the name is missing
