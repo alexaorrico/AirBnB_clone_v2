@@ -10,10 +10,8 @@ from flask import jsonify, abort, request
 def states():
     """This method is responsible for providing a list of all
         objects of type state as a json representation.
-
     Returns:
         dict: All State objects.
-
     """
     objs = [ob.to_dict() for ob in storage.all(State).values()]
     return jsonify(objs)
@@ -24,13 +22,10 @@ def states():
 def states_id(state_id=None):
     """This method is in charge of handling all http requests
         referring to State class objects.
-
     Args:
         state_id (str, None): Id of State object. Defaults to None.
-
     Returns:
         dict: returns a specific value depending on the type of request.
-
     """
     obj = storage.get(State, state_id)
     # Get a specific State object through the HTTP GET request.

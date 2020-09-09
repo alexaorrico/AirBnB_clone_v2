@@ -14,10 +14,8 @@ from flask import jsonify
 @app_views.route('/status')
 def status():
     """Return the current status.
-
     Returns:
         dict: "OK"
-
     """
     return jsonify({"status": "OK"})
 
@@ -25,10 +23,8 @@ def status():
 @app_views.route('/stats')
 def stats():
     """This method is responsible for returning the count of states.
-
     Returns:
         dict: returns the number of objects per state.
-
     """
     classes = {"amenities": storage.count(Amenity),
                "cities": storage.count(City),
