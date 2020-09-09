@@ -16,6 +16,7 @@ abnbText = {
 
 @app_views.route('/status', strict_slashes=False)
 def status():
+    """status"""
     return jsonify({"status": "OK"})
 
 
