@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+    testing:
+        image: bnb:latest
+        container_name: tet
+        working_dir: '/app'
+        volumes:
+            - ./:/app
+        ports:
+            - 5000:5000
+        entrypoint:
+            - bash
+        stdin_open: true
