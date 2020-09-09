@@ -50,6 +50,7 @@ def amenityinplaceidtimechea(place_id, amenity_id):
                     return jsonify(atl.to_dict()), 200
                 else:
                     ptl.amenities.append(atl)
+                    ptl.save()
                     return jsonify(atl.to_dict()), 201
             else:
                 if atl.__dict__.get("id") in ptl.amenity_ids:
