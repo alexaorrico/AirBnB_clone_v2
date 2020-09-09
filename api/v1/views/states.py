@@ -45,7 +45,7 @@ def post_state_create():
     conten = request.get_json()
     if conten is None:
         return "Not a JSON", 400
-    if conten.get('name') == None:
+    if conten.get('name') is None:
         return "Missing name", 400
     else:
         new_obj = State(**conten)
@@ -54,23 +54,19 @@ def post_state_create():
     return jsonify(new_obj.to_dict()), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['PUT'],
+                 strict_slashes=False)
 def put_state_update(state_id):
     """comet"""
     obj = storage.get(State, state_id)
     conten = request.get_json()
 
-    if obj == None:
+    if obj is None:
         return abort(404)
     if conten is None:
         return "Not a JSON", 400
-    if conten.get('name') == None:
+    if conten.get('name') is None:
         return "Missing name", 400
     obj.__dict__ = conten
     storage.save()
     return jsonify(obj.to_dict()), 200
-
-""" else:
-        obj.__dict__ = conten
-        storage.new(obj)
-        storage.save() """
