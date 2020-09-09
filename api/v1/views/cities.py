@@ -59,7 +59,7 @@ def put_city(city_id):
     city = storage.get(City, city_id)
     if city:
         if not request.get_json():
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+            return (jsonify({'error': 'Not a JSON'}), 400)
         for k, v in request.get_json():
             if k not in ['id', 'state_id', 'created_at', 'updated_at']:
                 setattr(city, k, v)
