@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" api for user """
 from models.base_model import BaseModel, Base
 from flask import jsonify, abort, request
 from models.user import User
@@ -9,7 +10,7 @@ from api.v1.views import app_views
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def allusers(user_id=None):
-    """ jsonify """
+    """ show all users and one user object"""
     if user_id is None:
         lista = []
         for v in storage.all(User).values():
@@ -29,6 +30,7 @@ def allusers(user_id=None):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_users(user_id=None):
+    """ delete a user object """
     dicti = {}
     flag = 0
     for v in storage.all(User).values():
@@ -44,6 +46,7 @@ def delete_users(user_id=None):
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_task_users():
+    """ create a user object """
     if not request.json:
         abort(400, "Not a JSON")
     if not 'email' in request.json:
@@ -62,6 +65,7 @@ def create_task_users():
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def put_task_users(user_id=None):
+    """ change atributes of user object """
     lista = ["first_name", "last_name", "password"]
     if not request.json:
         abort(400, "Not a JSON")
