@@ -11,7 +11,6 @@ from flask import jsonify, abort, request
                  strict_slashes=False)
 def cities_states(state_id):
     """return all city in states id"""
-    # Get a specific City object through the HTTP GET request.
     if request.method == 'GET':
         all_cities = []
         for city in storage.all(City).values():
@@ -20,7 +19,6 @@ def cities_states(state_id):
         if len(all_cities) > 0:
             return jsonify(all_cities)
         abort(404)
-    # Create a new City object through the HTTP POST request.
     elif request.method == 'POST':
         obj_state = storage.get(State, state_id)
         if obj_state:
@@ -40,19 +38,16 @@ def cities_states(state_id):
 def cities_id(city_id):
     """function that contains all the methods to perform in the api"""
     obj = storage.get(City, city_id)
-    # Get a specific City object through the HTTP GET request.
     if request.method == 'GET':
         if obj is not None:
             return jsonify(obj.to_dict())
         abort(404)
-    # Delete a specific City object through the HTTP DELETE request.
     elif request.method == 'DELETE':
         if obj is not None:
             storage.delete(obj)
             storage.save()
             return jsonify({}), 200
         abort(404)
-    # Update a specific City object through the HTTP PUT request.
     elif request.method == 'PUT':
         if obj is not None:
             if request.get_json(silent=True):
