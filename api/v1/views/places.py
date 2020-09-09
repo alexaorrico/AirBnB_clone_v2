@@ -24,7 +24,7 @@ def places_all(city_id):
     places = storage.all("Place").values()
     for place in places:
         if place.city_id == city_id:
-            places_all.append(place.to_json())
+            places_all.append(place.to_dict())
     return jsonify(places_all)
 
 
@@ -35,7 +35,7 @@ def place_get(place_id):
     place = storage.get("Place", place_id)
     if place is None:
         abort(404, description="place_id not linked to any Place object")
-    place = place.to_json()
+    place = place.to_dict()
     return jsonify(place)
 
 

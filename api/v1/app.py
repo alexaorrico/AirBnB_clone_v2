@@ -20,6 +20,7 @@ def teardown(self):
     """ handles teardown """
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """handler for 404 errors that returns a

@@ -16,7 +16,7 @@ from models.city import City
 
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'], strict_slashes=False)
-def all_cities():
+def all_cities(state_id):
     """
     function to return the all City objects
     """
@@ -27,7 +27,7 @@ def all_cities():
     cities = storage.all("City").values()
     for city in cities:
         if city.state_id == state_id:
-            all_cities.append(city.to_json())
+            all_cities.append(city.to_dict())
     return jsonify(all_cities)
 
 
@@ -39,7 +39,7 @@ def city_id(city_id):
     city = storage.get("City", city_id)
     if city is None:
         abort(404, description="city_id not linked to any City object")
-    city = city.to_json()
+    city = city.to_dict()
     return jsonify(city)
 
 

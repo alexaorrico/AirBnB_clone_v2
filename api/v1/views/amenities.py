@@ -19,7 +19,7 @@ def amenities_all():
     amenities_all = []
     amenities = storage.all("Amenity").values()
     for amenity in amenities:
-        amenities_all.append(amenity.to_json())
+        amenities_all.append(amenity.to_dict())
     return jsonify(amenities_all)
 
 
@@ -30,7 +30,7 @@ def amenity_get(amenity_id):
     amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404, description="amenity_id not linked to any Amenity object")
-    amenity = amenity.to_json()
+    amenity = amenity.to_dict()
     return jsonify(amenity)
 
 
