@@ -16,13 +16,13 @@ def status():
     """jsonify my life"""
     return jsonify({'status': 'OK'})
 
-"""@app_views.route('/api/v1/stats')
+
+@app_views.route('/stats')
 def stats():
-    commenr
-    returnjsonify({'amenities': storage.count(Amenity),
+    """ this is a comment """
+    return jsonify({'amenities': storage.count(Amenity),
                     'cities': storage.count(City),
                     'places': storage.count(Place),
                     'reviews': storage.count(Review),
                     'states': storage.count(State)
                     'users': storage.count(User)})
-"""
