@@ -8,6 +8,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models.amenity import Amenity
+from flask import jsonify
 
 
 @app_views.route('/status')
@@ -18,7 +19,7 @@ def status():
         dict: "OK"
 
     """
-    return {"status": "OK"}
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats')
@@ -35,4 +36,4 @@ def stats():
                "reviews": storage.count(Review),
                "states": storage.count(State),
                "users": storage.count(User)}
-    return classes
+    return jsonify(classes)
