@@ -1,0 +1,8 @@
+# Files
+main_delete.py
+test_get_count.py
+test_params_create
+
+# Directories
+models/__pycache__
+models/engine/__pycache__
