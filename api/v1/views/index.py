@@ -13,28 +13,27 @@ from api.v1.views import app_views
 # in other words /status == /api/v1/status and /stats == /api/v1/stats
 # we create that blueprint to access to all the endpoints easily
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """ returns status """
     status = {"status": "OK"}
     return jsonify(status)
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """
     function to return the count of all class objects
     """
-    if request.method == 'GET':
-        response = {}
-        classes = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states",
-            "User": "users"
-        }
-        for key, value in classes.items():
-            response[value] = storage.count(key)
-        return jsonify(response)
+    response = {}
+    classes = {
+        "Amenity": "amenities",
+        "City": "cities",
+        "Place": "places",
+        "Review": "reviews",
+        "State": "states",
+        "User": "users"
+    }
+    for key, value in classes.items():
+        response[value] = storage.count(key)
+    return jsonify(response)
