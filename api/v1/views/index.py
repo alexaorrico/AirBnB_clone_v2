@@ -2,12 +2,12 @@
 """ returns json statuses for app_views routes  """
 from api.v1.views import app_views
 from flask import jsonify
-from models.states import States
-from models.city import City
-from models.amenities import Amenity
-from models.places import Places
-from modes.review import Review
-from models.users import Users
+from models.states import storage.models.State
+from models.cities import storage.models.City
+from models.amenities import storage.models.Amenity
+from models.places import storage.models.Place
+from modes.reviews import storage.models.Review
+from models.users import storage.models.User
 
 
 @app_views.route('/status', strict_slashes=False)
