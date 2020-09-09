@@ -30,7 +30,7 @@ def get_a_city():
             return jsonify(lizt)
     return jsonify({"error": "Not found"}), 404
 
-@app_views.route('/api/v1/cities/<city_id>', methods=[DELETE])
+@app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'])
 def del_a_city():
     """delete a specific city"""
     urban = storage.get(City, city_id)

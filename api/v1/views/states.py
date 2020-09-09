@@ -3,10 +3,10 @@
 from api.v1.views import app_views
 from models import storage
 from models.state import State
-from flask import jsonify
+from flask import jsonify, Blueprint, abort, request
 
 
-@app_views.route('/api/v1/states', methods=['GET'])
+@app_views.route('/api/v1/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """returns list of all states"""
     lizt = []
@@ -15,19 +15,18 @@ def get_states():
         lizt.append(state.to_dict())
     return jsonify(lizt)
 
-@app_views.route('/api/v1/states/<state_id>')
+@app_views.route('/api/v1/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_a_state():
     """finds a unique state based of state_id"""
-    lizt = []
-    states = storage.all(State).values()
-    for state in states:
-        if state.id == state_id:
-            lizt = state.to_dict()
-            return jsonify(lizt)
-    return jsonify({"error": "Not found"}), 404
-    """MENTAL NOTE:  maybe a try/except block"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    ret = state.to_dict()
+    return jsonify(ret)
+    
 
-@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
+
+@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_a_state():
     """delete a specific state"""
     states = storage.get(State, state_id)
@@ -38,44 +37,29 @@ def delete_a_state():
         storage.save()
         return jsonify({}), 200
 
-@app_views.route('/api/v1/states', methods=['POST'])
+@app_views.route('/api/v1/states', methods=['POST'], strict_slashes=False)
 def create_a_state():
     """create a state"""
     req = request.get_json()
-    try:
-        req = req.loads(req)
-    except TypeError as e:
-        return False
-    return True
-    """if req is not (type)JSON:
-        raise TypeError(400, 'Not a JSON')"""
+    if not request.is_json:
+        abort(400, description="Not a JSON")
     key = 'name'
     if key not in req:
-        raise ValueError(400, 'Missing name')
+        abort(400, description="Missing name")
     new_state = State(**req)
     new_state.save()
     return jsonify(new_state), 201
 
-@app_view.route('/api/v1/states/<state_id>', methods=['PUT'])
+@app_views.route('/api/v1/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_a_state():
     """ this method updates a state """
-    states = storage.all(State).values()
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
     req = request.get_json()
-    if req is not (type)JSON:
-        raise TypeError(400, 'Not a JSON')
-    for state in states:
-        if state.id not in states:
-        """ ^^ NOTE: should this be state_id ??? ^^ """
-            raise KeyError(404, 'state_id not found')
-        else:
-            for key, value in states:
-                if key is not 'id' or key is not 'created_at'
-                or key is not 'updated_at':
-                    states.update({'key':'value'})
-                return jsonify(states), 200
-
-                """A DIFFERENT APPROACH:
-                if key == '__class__':
-                    states['__class__'] = value
-                if key == 'name':
-                    states['name'] = value"""
+    if not request.is_json:
+        abort(400, description="Not a JSON")
+    for key, value in state:
+        if key is not "id" and key is not "created_at" and key is not "updated_at":
+            state.update({'key':'value'})
+    return jsonify(state), 200
