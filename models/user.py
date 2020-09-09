@@ -29,3 +29,4 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
+        self.password = md5((self.password).encode('utf-8')).hexdigest()
