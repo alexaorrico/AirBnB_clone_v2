@@ -22,12 +22,12 @@ def all_reviews(place_id):
         return (jsonify(output))
     if request.method == 'POST':
         data = request.get_json()
-        if not request.is_json():
+        if not request.is_json:
             abort(400, description="Not a JSON")
         user = storage.get(User, user_id)
         if user is None:
             abort(404)
-        if 'text' not in request.json():
+        if 'text' not in request.json:
             abort(400, description="Missing text")
         review = Review(**data)
         review.save()
@@ -46,7 +46,7 @@ def a_review(review_id):
         return (jsonify(output))
     if request.method == 'PUT':
         data = request.get_json()
-        if not request.is_json():
+        if not request.is_json:
             abort(400, description="Not a JSON")
         for key, value in data.items():
             setattr(review, key, value)

@@ -18,12 +18,12 @@ def get_all_users():
             output.append(user.to_dict())
         return (jsonify(output))
     if request.method == "POST":
-        data = request.get_jason()
-        if not request.is_json():
+        data = request.get_json()
+        if not request.is_json:
             abort(400, description="Not a JSON")
-        if 'email' not in request.json():
+        if 'email' not in request.json:
             abort(404, description="Missing email")
-        if 'password' not in request.is_json():
+        if 'password' not in request.json:
             abort(400, description="Missing password")
         user = User(**data)
         user.save()
@@ -41,8 +41,8 @@ def get_a_user(user_id):
         output = user.to_dict()
         return (jsonify(output))
     if request.method == "PUT":
-        data = request.to_json()
-        if not request.is_json():
+        data = request.get_json()
+        if not request.is_json:
             abort(400, description="Not a JSON")
         for key, value in data.items():
             setattr(user, key, value)

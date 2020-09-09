@@ -17,9 +17,9 @@ def get_all_places():
     return (jsonify(output))
 
 
-@app_views.route('/cities/<city_id>/places', methods=["GET", "POST"]
-                 , strict_slashes=False)
-def get_city_place():
+@app_views.route('/cities/<city_id>/places', methods=["GET", "POST"],
+                 strict_slashes=False)
+def get_city_place(city_id):
     """ gets all place objs of a city """
     city = storage.get(City, city_id)
     if city is None:
@@ -30,15 +30,16 @@ def get_city_place():
         return (jsonify(output))
     if request.method == "POST":
         request.get_json()
-        if not request.is_json():
+        if not request.is_json:
             abort(400, description="Not a JSON")
-        if 'user_id' not in request.json():
+        if 'user_id' not in request.json:
             abort(400, description="Missing user_id")
-        if 'name' not in request.json():
+        if 'name' not in request.json:
             abort(400, description="Missing name")
         user = User(**data)
         user.save()
         return (jsonify(user.to_dict()), 201)
+
 
 @app_views.route('/places/<place_id>', methods=[
                  "GET", "PUT", "DELETE"], strict_slashes=False)
@@ -52,7 +53,7 @@ def get_a_place(place_id):
         return (jsonify(output))
     if request.method == "PUT":
         data = request.get_json()
-        if not request.is_json():
+        if not request.is_json:
             abort(400, description="Not a JSON")
         for key, value in data.items():
             setattr(place, key, value)
