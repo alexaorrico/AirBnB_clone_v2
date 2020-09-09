@@ -36,12 +36,12 @@ def states_id(state_id):
     if request.method == 'GET':
         return jsonify(state.to_dict())
     if request.method == 'DELETE':
-        storage.detete(state)
+        storage.delete(state)
         storage.save()
         return jsonify({}), 200
     if request.method == 'PUT':
         response = request.get_json()
-        if not response:
+        if response is None:
             abort(400, "Not a JSON")
         for key, val in response.items():
             if key not in ['id', 'created_at', 'updated_at']:
