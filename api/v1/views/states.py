@@ -6,7 +6,7 @@ from models.state import State
 from flask import jsonify, abort, request
 
 
-@app_views.route('/states/', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def states():
     """This method is responsible for providing a list of all
         objects of type state as a json representation and create new ones.
@@ -31,7 +31,8 @@ def states():
         return jsonify({"error": "Not a JSON"}), 400
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def states_id(state_id):
     """This method is in charge of handling all http requests
         referring to State class objects.
