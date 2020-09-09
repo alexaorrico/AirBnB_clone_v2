@@ -2,7 +2,7 @@
 """ammonite colony"""
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from flask import jsonify, abort, request, Blueprint
 from models.amenity import Amenity
 
 
@@ -17,24 +17,21 @@ def get_amenities():
 
 
 @app_views.route('/amenities/<amenity_id>')
-def get_an_amenity():
+def get_an_amenity(amenity_id):
     """return unique amenity"""
-    lizt = []
-    amenities = storage.all(Amenity).values()
-    for amenity in amenities:
-        if amenity.id == amenity_id:
-            lizt = amenity.to_dict()
-            return jsonify(lizt)
-    return jsonify({"error": "Not found"}), 404
+    amenities = storage.get(Amenity, amenity_id)
+    if amenities is None:
+        abort(404)
+    ret = amenities.to_dict()
+    return jsonify(ret)
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
-def del_an_amenity():
+def del_an_amenity(amenity_id):
     """asdasdasdasdasd"""
-    water_pressure = storage.get(Amenity, amenity_id)
-    if water_pressure is None:
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
-    else:
-        storage.delete(amenity)
-        storage.save()
-        return jsonify({}), 200
+    storage.delete(amenity)
+    storage.save()
+    return jsonify({}), 200

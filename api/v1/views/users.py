@@ -2,7 +2,7 @@
 """dont trust the user"""
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from flask import jsonify, abort, request, Blueprint
 from models.user import User
 
 
@@ -17,24 +17,21 @@ def get_users():
 
 
 @app_views.route('/users/<user_id>')
-def get_a_user():
+def get_a_user(user_id):
     """get one"""
-    lizt = []
-    users = storage.all(User).values()
-    for user in users:
-        if user.id == user_id:
-            lizt = user.to_dict()
-            return jsonify(lizt)
-    return jsonify({"error": "Not found"}), 404
+    users = storage.get(User, user_id)
+    if users is None:
+        abort(404)
+    ret = users.to_dict()
+    return jsonify(ret)
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'])
-def del_a_user():
+def del_a_user(user_id):
     """remove one"""
     users = storage.get(User, user_id)
     if users is None:
         abort(404)
-    else:
-        storage.delete(user)
-        storage.save()
-        return jsonify({}), 200
+    storage.delete(users)
+    storage.save()
+    return jsonify({}), 200

@@ -4,40 +4,37 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 from models.city import City
-from flask import jsonify
+from flask import jsonify, abort, request, Blueprint
 
 
 @app_views.route('/states/<state_id>/cities')
-def get_cities():
+def get_cities(state_id):
     """return list of all cities in state"""
     lizt = []
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify({"error": "Not found"}), 404
+        abort(404)
     for city in state.cities:
         lizt.append(city.to_dict())
     return jsonify(lizt)
 
 
 @app_views.route('/cities/<city_id>')
-def get_a_city():
+def get_a_city(city_id):
     """retrieve of specific City object"""
-    lizt = []
-    urban = storage.all(City).values()
-    for city in cities:
-        if city.id == city_id:
-            lizt = city.to_dict()
-            return jsonify(lizt)
-    return jsonify({"error": "Not found"}), 404
+    city = storage.get(City, city_id)
+    if city is None:
+        abort(404)
+    ret = city.to_dict()
+    return jsonify(ret)
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
-def del_a_city():
+def del_a_city(city_id):
     """delete a specific city"""
-    urban = storage.get(City, city_id)
-    if urban is None:
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
-    else:
-        storage.delete(city)
-        storage.save()
-        return jsonify({}), 200
+    storage.delete(city)
+    storage.save()
+    return jsonify({}), 200
