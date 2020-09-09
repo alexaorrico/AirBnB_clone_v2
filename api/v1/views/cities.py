@@ -24,6 +24,7 @@ def get_city(city_id):
     else:
         abort(404)
 
+
 @app_views.route("/cities/<city_id>", methods=['DELETE'],
                  strict_slashes=False)
 def del_city(city_id):
@@ -42,6 +43,7 @@ def del_city(city_id):
         return ({})
     else:
         abort(404)
+
 
 @app_views.route("/cities/<city_id>", methods=['PUT'],
                  strict_slashes=False)
@@ -66,6 +68,7 @@ def put_city(city_id):
     else:
         abort(404)
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities(state_id):
@@ -73,7 +76,7 @@ def get_cities(state_id):
     get all city objects for a certain state.
     args:
         state_id: state for which we want to see all cities
-    return: 
+    return:
         each city object as json
     """
     state = storage.get(State, state_id)
@@ -85,6 +88,7 @@ def get_cities(state_id):
         abort(404)
 
     return jsonify(cities_list)
+
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)

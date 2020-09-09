@@ -6,25 +6,28 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from models import storage
 from models.place import Place
+from models.city import City
+from models.user import User
 
 
-@app_views.route("/places", methods=['GET'],
+@app_views.route("/cities/<city_id>/places", methods=['GET'],
                  strict_slashes=False)
-def GET_all_Place():
-    """ Returns JSON list of all `Place` instances in storage
+def GET_all_Place(city_id):
+    """ Returns JSON list of all `Place` instances associated
+    with a given `City` instance in storage
 
     Return:
-        JSON list of all `Place` instances
+        JSON list of all `Place` instances for a given `City` instance
     """
-    place = storage.get(City, city_id)
-    place_list = []
-    if place:
+    city = storage.get(City, city_id)
+
+    if city:
+        place_list = []
         for place in city.places:
             place_list.append(place.to_dict())
+        return jsonify(place_list)
     else:
         abort(404)
-
-    return jsonify(place_list)
 
 
 @app_views.route("/places/<place_id>", methods=['GET'],
@@ -69,7 +72,8 @@ def DELETE_Place(place_id):
         abort(404)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
 def POST_Place(city_id):
     """ Creates new `Place` instance in storage
 
@@ -78,6 +82,7 @@ def POST_Place(city_id):
     on error
     """
     city = storage.get(City, city_id)
+
     if city:
         req_dict = request.get_json()
         if not req_dict:
@@ -86,12 +91,12 @@ def POST_Place(city_id):
             return (jsonify({'error': 'Missing name'}), 400)
         elif 'user_id' not in req_dict:
             return (jsonify({'error': 'Missing user_id'}), 400)
-        name = request.get_json().get('name')
-        user_id = request.get_json().get('user_id')
+        name = req_dict.get('name')
+        user_id = req_dict.get('user_id')
         user = storage.get(User, user_id)
         if user is None:
             abort(404)
-        new_Place = Place(name=name, user_id=user_id, user=user)
+        new_Place = Place(name=name, city_id=city_id, user_id=user_id)
         new_Place.save()
 
         return (jsonify(new_Place.to_dict()), 201)
@@ -119,7 +124,8 @@ def PUT_Place(place_id):
         if not req_dict:
             return (jsonify({'error': 'Not a JSON'}), 400)
         for key, value in req_dict.items():
-            if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
+            if key not in ['id', 'created_at', 'updated_at',
+                           'user_id', 'city_id']:
                 setattr(place, key, value)
         storage.save()
         return (jsonify(place.to_dict()))
