@@ -2,14 +2,14 @@
 """Starts a Flask API application."""
 import os
 from models import storage
-from api.v1.views import app_views, index
+from api.v1.views import app_views, index, states
 from flask import Flask, jsonify
 
 app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close_funtion(self):
+def close_funtion(n):
     """close funtion."""
     storage.close()
 
