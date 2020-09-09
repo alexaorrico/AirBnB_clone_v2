@@ -18,6 +18,7 @@ abnbText = {
     "users": "User"
 }
 
+
 @app_views.route('/stats', strict_slashes=False)
 def hbnbStats():
     """Retrieve the stats"""
