@@ -77,10 +77,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """method to retrieve one object"""
-        if cls is not None and type(cls) is str and\
-            cls in classes and id is not None and\
-            type(id) is str:
-                obj = self.__session.query(classes[cls]).filter(cls.id == id).first()
+        if cls is not None and type(cls) is str \
+                and cls in classes and id is not None and type(id) is str:
+                obj = self.__session.query(classes[cls]).filter(
+                    cls.id == id).first()
                 return obj
         else:
             return None
