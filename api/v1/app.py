@@ -19,14 +19,14 @@ def index():
     """returns Hello HBNB!"""
     return 'Hello HBNB! ESTEBAN'
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
-    return jsonify({ "error": "Not found"}), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 app.register_blueprint(app_views)
-
 
 
 if __name__ == '__main__':
