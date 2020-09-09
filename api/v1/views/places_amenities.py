@@ -36,11 +36,13 @@ def amenityinplaceidtimechea(place_id, amenity_id):
             if getenv("HBNB_TYPE_STORAGE") == "db":
                 if atl in ptl.amenities:
                     ptl.amenities.remove(atl)
+                    ptl.save()
                 else:
                     abort(404)
             else:
                 if atl.__dict__.get("id") in ptl.amenity_ids:
                     ptl.amenities.remove(atl.__dict__.get("id"))
+                    ptl.save()
                 else:
                     abort(404)
             return jsonify({})
@@ -57,6 +59,7 @@ def amenityinplaceidtimechea(place_id, amenity_id):
                     return jsonify(atl.to_dict()), 200
                 else:
                     ptl.amenities.append(atl.__dict__.get('id'))
+                    ptl.save()
                     return jsonify(atl.to_dict()), 201
     else:
         abort(404)
