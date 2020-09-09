@@ -5,7 +5,6 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
-import models
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -19,8 +18,8 @@ import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
-classes = {"Amenity": Amenity, "City": City, "Place": Place,
-           "Review": Review, "State": State, "User": User}
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -28,61 +27,118 @@ class TestDBStorageDocs(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
-        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+        cls.fs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
-    def test_pep8_conformance_db_storage(self):
-        """Test that models/engine/db_storage.py conforms to PEP8."""
+    def test_pep8_conformance_file_storage(self):
+        """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/db_storage.py'])
+        result = pep8s.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_pep8_conformance_test_db_storage(self):
-        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
+    def test_pep8_conformance_test_file_storage(self):
+        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_db_storage_module_docstring(self):
-        """Test for the db_storage.py module docstring"""
-        self.assertIsNot(db_storage.__doc__, None,
-                         "db_storage.py needs a docstring")
-        self.assertTrue(len(db_storage.__doc__) >= 1,
-                        "db_storage.py needs a docstring")
-
-    def test_db_storage_class_docstring(self):
+    def test_file_storage_class_docstring(self):
         """Test for the DBStorage class docstring"""
         self.assertIsNot(DBStorage.__doc__, None,
-                         "DBStorage class needs a docstring")
+                         "State class needs a docstring")
         self.assertTrue(len(DBStorage.__doc__) >= 1,
-                        "DBStorage class needs a docstring")
+                        "State class needs a docstring")
 
-    def test_dbs_func_docstrings(self):
+    def test_fs_func_docstrings(self):
         """Test for the presence of docstrings in DBStorage methods"""
-        for func in self.dbs_f:
+        for func in self.fs_f:
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up class"""
+        self.create_data()
+
+    def create_data():
+        """Creating Test Data"""
+        ca_state = State(name='California')
+
+        pa_city = City(name='Palo Alto', state_id=ca_state.id)
+        sf_city = City(name='San Francisco', state_id=ca_state.id)
+
+        am_user = User(first_name='Julian', last_name='Cano',
+                       email='1591@holbertonschool.com',
+                       password='J00ee12')
+        ab_user = User(first_name='Juan', last_name='Gomez',
+                       email='1592@holbertonschool.com',
+                       password='Yrer')
+
+        home_amenity = Amenity(name="Wifi")
+        sav_amenity = Amenity(name="Washer")
+
+        home_place = Place(name='Tall Tree House',
+                           city_id=pa_city.id,
+                           amenity_id=home_amenity.id,
+                           user_id=am_user.id)
+        sav_place = Place(name='San Antonio Villa',
+                          city_id=pa_city.id,
+                          amenity_id=sav_amenity.id,
+                          user_id=ab_user.id)
+
+        home_review = Review(text="Is a dope house",
+                             place_id=home_place.id,
+                             user_id=ab_user.id)
+        sav_review = Review(text="Is a wack villa",
+                            place_id=home_place.id,
+                            user_id=am_user.id)
+
     def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+        """Test that all returns the DBStorage.__objects attr"""
+        storage = DBStorage()
+        new_dict = storage.all()
+        self.assertEqual(type(new_dict), dict)
+        self.assertIs(new_dict, storage._DBStorage__objects)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
-        """test that new adds an object to the database"""
+        """test that new adds an object to the DBStorage.__objects attr"""
+        storage = DBStorage()
+        save = DBStorage._DBStorage__objects
+        DBStorage._DBStorage__objects = {}
+        test_dict = {}
+        for key, value in classes.items():
+            with self.subTest(key=key, value=value):
+                instance = value()
+                instance_key = instance.__class__.__name__ + "." + instance.id
+                storage.new(instance)
+                test_dict[instance_key] = instance
+                self.assertEqual(test_dict, storage._DBStorage__objects)
+        DBStorage._DBStorage__objects = save
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        os.remove("file.json")
+        storage = DBStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = DBStorage._DBStorage__objects
+        DBStorage._DBStorage__objects = new_dict
+        storage.save()
+        DBStorage._DBStorage__objects = save
+        for key, value in new_dict.items():
+            new_dict[key] = value.to_dict()
+        string = json.dumps(new_dict)
+        with open("file.json", "r") as f:
+            js = f.read()
+        self.assertEqual(json.loads(string), json.loads(js))
