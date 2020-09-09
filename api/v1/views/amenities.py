@@ -8,7 +8,7 @@ from api.v1.views import app_views
 
 
 @app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
-def states_list():
+def amenities_list():
     """Retrieves the list of all Amenities objects"""
     if request.method == 'GET':
         all_amenities = []
