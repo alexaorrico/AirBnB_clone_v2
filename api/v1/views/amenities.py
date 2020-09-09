@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" ameniti rest api """
 from models.base_model import BaseModel, Base
 from flask import jsonify, abort, request
 from models.amenity import Amenity
@@ -9,7 +10,7 @@ from api.v1.views import app_views
 @app_views.route('amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def allAmenitys(amenity_id=None):
-    """ jsonify """
+    """ show all and one amenitie object """
     if amenity_id is None:
         lista = []
         for v in storage.all(Amenity).values():
@@ -29,6 +30,7 @@ def allAmenitys(amenity_id=None):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
 def delete_amenities(amenity_id=None):
+    """ delete an amenity object """
     if amenity_id is None:
         abort(404)
     dicti = {}
@@ -46,6 +48,7 @@ def delete_amenities(amenity_id=None):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_task_amenities():
+    """ create an amenity object """
     if not request.json:
         abort(400, "Not a JSON")
     if not 'name' in request.json:
@@ -62,6 +65,7 @@ def create_task_amenities():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
 def put_task_amenities(amenity_id=None):
+    """ change an atribute of amenity object """
     if not request.json or not 'name' in request.json:
         abort(400, "Not a JSON")
     if amenity_id is None:
