@@ -27,7 +27,7 @@ def allAmenitys(amenity_id=None):
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
-def delete(amenity_id=None):
+def delete_amenities(amenity_id=None):
     if amenity_id is None:
         abort(404)
     dicti = {}
@@ -44,7 +44,7 @@ def delete(amenity_id=None):
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-def create_task():
+def create_task_amenities():
     if not request.json:
         abort(400, "Not a JSON")
     if not 'name' in request.json:
@@ -60,7 +60,7 @@ def create_task():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
-def put_task(amenity_id=None):
+def put_task_amenities(amenity_id=None):
     if not request.json or not 'name' in request.json:
         abort(400, "Not a JSON")
     if amenity_id is None:
