@@ -75,7 +75,6 @@ class FileStorage:
         if cls is not None and id:
             key_obj = cls.__name__ + ".{}".format(id)
             obj_found = self.all(cls).get(key_obj, None)
-            
         return obj_found
 
     def count(self, cls=None):
