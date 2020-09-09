@@ -18,10 +18,10 @@ def all_places_get(city_id=None):
     """ jsonify """
     lista = []
     flag = 0
-    for v in storage.all(Place).values():
+    for v in storage.all(City).values():
         if v.id == city_id:
-            for city in v.cities:
-                lista.append(city.to_dict())
+            for place in v.places:
+                lista.append(place.to_dict())
             flag = 1
     if flag == 0:
         abort(404)
@@ -66,19 +66,23 @@ def create_places(city_id=None):
         abort(400, "Not a JSON")
     if not 'name' in request.json:
         abort(400, "Missing name")
+    if not 'user_id' in request.json:
+        abort(400, "Missing user_id")
     result = request.get_json()
     print(result)
     obj = Place()
     flag = 0
     for v in storage.all(City).values():
         if v.id == city_id:
-            for k, v in result.items():
-                flag = 1
-                setattr(obj, k, v)
-                setattr(obj, "city_id", city_id)
-                storage.new(obj)
-                storage.save()
-                var = obj.to_dict()
+            for k, values in result.items():
+                flag += 1
+                setattr(obj, k, values)
+                if flag == 1:
+                    setattr(obj, "city_id", city_id)
+                    flag += 1
+            storage.new(obj)
+            storage.save()
+            var = obj.to_dict()
     if flag == 0:
         abort(404)
     else:
