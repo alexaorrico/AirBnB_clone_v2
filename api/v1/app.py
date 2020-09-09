@@ -18,4 +18,4 @@ def teardown(self):
     storage.close()
 
 if __name__ == "__main__":
-    app.run(host=ip, port=port, threaded=True)
+    app.run(host=host, port=port, threaded=True)
