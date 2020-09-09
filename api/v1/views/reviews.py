@@ -5,6 +5,7 @@ from models import storage
 from flask import jsonify
 from models.place import Place
 from models.review import Review
+from models.user import User
 from flask import abort
 from flask import make_response
 from flask import request
@@ -68,11 +69,19 @@ def response_reviews(place_id):
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     req = request.get_json()
-    if "name" not in req:
-        return make_response(jsonify({"error": "Missing name"}), 400)
+
+    if "user_id" not in req:
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
+    user = storage.get(User, req['user_id'])
+    if user is None:
+        abort(404)
+
+    if "text" not in req:
+        return make_response(jsonify({"error": "Missing text"}), 400)
     req['place_id'] = place_id
-    reviews = Review(**req).to_dict()
-    return make_response(jsonify(reviews), 201)
+    reviews = Review(**req)
+    reviews.save()
+    return make_response(jsonify(reviews.to_dict()), 201)
 
 
 @app_views.route('reviews/<review_id>', strict_slashes=False, methods=['PUT'])
@@ -86,6 +95,7 @@ def update_review(review_id):
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         req = request.get_json()
         for key, value in req.items():
-            if key not in ['id', 'created_at', 'updated_at']:
+            if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
                 setattr(obj_reviews, key, value)
+        obj_reviews.save()
         return make_response(jsonify(obj_reviews.to_dict()), 200)

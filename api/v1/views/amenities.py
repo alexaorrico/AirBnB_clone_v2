@@ -57,8 +57,9 @@ def response_amenity():
     req = request.get_json()
     if "name" not in req:
         return make_response(jsonify({"error": "Missing name"}), 400)
-    amenities = Amenity(**req).to_dict()
-    return make_response(jsonify(amenities), 201)
+    amenities = Amenity(**req)
+    amenities.save()
+    return make_response(jsonify(amenities.to_dict()), 201)
 
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
@@ -75,4 +76,5 @@ def update_amenity(amenity_id):
         for key, value in req.items():
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(amenities, key, value)
+        amenities.save()
         return make_response(jsonify(amenities.to_dict()), 200)

@@ -5,6 +5,7 @@ from models import storage
 from flask import jsonify
 from models.place import Place
 from models.city import City
+from models.user import User
 from flask import abort
 from flask import make_response
 from flask import request
@@ -68,11 +69,20 @@ def response_place(city_id):
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     req = request.get_json()
+
+    if "user_id" not in req:
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
+
+    user = storage.get(User, req['user_id'])
+    if user is None:
+        abort(404)
+
     if "name" not in req:
         return make_response(jsonify({"error": "Missing name"}), 400)
     req['city_id'] = city_id
-    places = Place(**req).to_dict()
-    return make_response(jsonify(places), 201)
+    places = Place(**req)
+    places.save()
+    return make_response(jsonify(places.to_dict()), 201)
 
 
 @app_views.route('places/<place_id>', strict_slashes=False, methods=['PUT'])
@@ -87,6 +97,7 @@ def update_place(place_id):
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         req = request.get_json()
         for key, value in req.items():
-            if key not in ['id', 'created_at', 'updated_at']:
+            if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
                 setattr(obj_places, key, value)
+        obj_places.save()
         return make_response(jsonify(obj_places.to_dict()), 200)

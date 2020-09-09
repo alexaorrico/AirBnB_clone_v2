@@ -55,10 +55,13 @@ def response_user():
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     req = request.get_json()
-    if "name" not in req:
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    users = User(**req).to_dict()
-    return make_response(jsonify(users), 201)
+    if "email" not in req:
+        return make_response(jsonify({"error": "Missing email"}), 400)
+    if "password" not in req:
+        return make_response(jsonify({"error": "Missing password"}), 400)
+    users = User(**req)
+    users.save()
+    return make_response(jsonify(users.to_dict()), 201)
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
@@ -73,6 +76,7 @@ def update_user(user_id):
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         req = request.get_json()
         for key, value in req.items():
-            if key not in ['id', 'created_at', 'updated_at']:
+            if key not in ['id', 'email', 'created_at', 'updated_at']:
                 setattr(users, key, value)
+        users.save()
         return make_response(jsonify(users.to_dict()), 200)

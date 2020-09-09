@@ -71,8 +71,9 @@ def response_city(state_id):
     if "name" not in req:
         return make_response(jsonify({"error": "Missing name"}), 400)
     req['state_id'] = state_id
-    city = City(**req).to_dict()
-    return make_response(jsonify(city), 201)
+    city = City(**req)
+    city.save()
+    return make_response(jsonify(city.to_dict()), 201)
 
 
 @app_views.route('cities/<city_id>', strict_slashes=False, methods=['PUT'])
@@ -89,4 +90,5 @@ def update_city(city_id):
         for key, value in req.items():
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(obj_cities, key, value)
+        obj_cities.save()
         return make_response(jsonify(obj_cities.to_dict()), 200)
