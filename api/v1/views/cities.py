@@ -23,7 +23,7 @@ def list_all_cities(state_id):
         for value in storage_list_state.cities:
             city_state.append(value.to_dict())
         return jsonify(city_state)
-    
+
 
 @app_views.route('/states/<state_id>/cities', methods=['GET\
 '], strict_slashes=False)
@@ -104,4 +104,3 @@ def updateCity(city_id):
             setattr(cities, key, value)
     storage.save()
     return jsonify(cities.to_dict()), 200
-
