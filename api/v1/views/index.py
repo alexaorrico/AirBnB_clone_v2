@@ -2,23 +2,23 @@
 """ returns json statuses for app_views routes  """
 from api.v1.views import app_views
 from flask import jsonify
-from models.states import storage.models.State
-from models.cities import storage.models.City
-from models.amenities import storage.models.Amenity
-from models.places import storage.models.Place
-from modes.reviews import storage.models.Review
-from models.users import storage.models.User
+from models import storage
 
 
-@app_views.route('/status', strict_slashes=False)
-def stat_return():
-    """ return json status: OK """
-    return jsonify({"status": "OK"})
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
+def reoute_status():
+    """first route
+    Returns:
+        json: json count number of instances
+    """
+    return jsonify({
+        "status": "OK"
+    }), 200
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def stat_count():
-    """ endpoint that retrieves the # of each objects by type """
+def reoute_count():
+    """endpoint of each objects by type"""
     count_stats = {
         'amenities': storage.count('Amenity'),
         'cities': storage.count('City'),
