@@ -113,21 +113,9 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
             """ Confirm __objects is a dict """
-            storage = DBStorage()
-            new_place = Place()
-            new_place.city_id = "0001"
-            new_place.user_id = "0001"
-            new_place.name = "My_little_house"
-            new_place.number_rooms = 4
-            new_place.number_bathrooms = 2
-            new_place.max_guest = 10
-            new_place.price_by_night = 300
-            new_place.latitude = 37.773972
-            new_place.longitude = -122.431297
-            new_place.save()
-            key = "Place" + "." + str(new_place.id)
             first_place_id = list(storage.all(Place).values())[0].id
-            self.assertEqual(type(storage.get(Place, first_place_id)), dict)
+            expected_answer = models.storage.get(State, first_state_id)
+            self.assertEqual(expected_answer.__class__.__name__, "State")
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
