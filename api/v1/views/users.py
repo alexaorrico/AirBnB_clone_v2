@@ -21,9 +21,9 @@ def viewalltheuserthings():
         try:
             body = request.get_json()
             if "email" not in body.keys():
-                return "Missing email", 400 
+                return "Missing email", 400
             elif "password" not in body.keys():
-                return "Missing password", 400 
+                return "Missing password", 400
             else:
                 newuser = User(**body)
                 """for k in body.keys():
