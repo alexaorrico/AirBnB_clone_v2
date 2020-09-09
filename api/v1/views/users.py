@@ -20,19 +20,27 @@ def viewalltheuserthings():
     if request.method == 'POST':
         try:
             body = request.get_json()
+            print('0')
             if "email" not in body.keys():
+                print("1")
                 abort(400, "Missing email")
             elif "password" not in body.keys():
+                print('2')
                 abort(400, "Missing password")
             else:
+                print('3')
                 newuser = User(**body)
+                print('4')
                 """for k in body.keys():
                     setattr(newstate, k, body.get(k))"""
                 """newstate.__dict__.update(body)"""
                 newuser.save()
+                print('5')
                 return jsonify(newuser.to_dict()), 201
 
-        except:
+        except Exception as e:
+            print(type(e))
+            print(e)
             abort(400, "Not a JSON")
 
 
