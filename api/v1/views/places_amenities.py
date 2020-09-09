@@ -33,8 +33,6 @@ def amenityinplaceidtimechea(place_id, amenity_id):
     atl = storage.get(Amenity, amenity_id)
     if ptl is not None and atl is not None:
         if request.method == 'DELETE':
-            if f == 0:
-                abort(404)
             if getenv("HBNB_TYPE_STORAGE") == "db":
                 if atl in ptl.amenities:
                     ptl.amenities.remove(atl)
