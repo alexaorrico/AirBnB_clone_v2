@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This module is responsible for the execution and management of the app."""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -24,10 +24,10 @@ def page_not_found(self):
         dict: Returns a JSON-formatted 404 status code response.
 
     """
-    return {"error": "Not found"}, 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
     h = getenv("HBNB_API_HOST", "0.0.0.0")
     p = getenv("HBNB_API_PORT", "5000")
-    app.run(debug=True, host=h, port=p, threaded=True)
+    app.run(host=h, port=p, threaded=True)
