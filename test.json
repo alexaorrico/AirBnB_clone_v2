@@ -1,0 +1,79 @@
+[
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "10098698-bace-4bfb-8c0a-6bae0f7f5b8f",
+        "name": "Oregon",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "5976f0e7-5c5f-4949-aae0-90d68fd239c0",
+        "name": "Florida",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "bbee73a7-2f71-47e6-938a-2d9e932d4ff9",
+        "name": "Mississippi",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "0e391e25-dd3a-45f4-bce3-4d1dea83f3c7",
+        "name": "Alabama",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "b5fc9076-6c20-44a7-ac9b-97de17112329",
+        "name": "Minnesota",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "459e021a-e794-447d-9dd2-e03b7963f7d2",
+        "name": "Arizona",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "d2398800-dd87-482b-be21-50a3063858ad",
+        "name": "Illinois",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "9799648d-88dc-4e63-b858-32e6531bec5c",
+        "name": "California",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "f8d21261-3e79-4f5c-829a-99d7452cd73c",
+        "name": "Colorado",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
+        "name": "Louisiana",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    },
+    {
+        "__class__": "State",
+        "created_at": "2017-03-25T02:17:06.000000",
+        "id": "541bba6e-9543-4b33-8062-77ef26cd9778",
+        "name": "Hawaii",
+        "updated_at": "2017-03-25T02:17:06.000000"
+    }
+]

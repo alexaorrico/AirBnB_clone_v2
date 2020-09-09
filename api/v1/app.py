@@ -6,6 +6,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
 def teardown_db(obj):
@@ -22,6 +23,7 @@ def handle_bad_request(error):
 
 
 app.register_error_handler(404, handle_bad_request)
+
 
 if __name__ == "__main__":
     app.run(
