@@ -11,13 +11,13 @@ from flask import jsonify, abort, request
                  strict_slashes=False)
 def states_id_cities(state_id):
     """Get a specific City object through the HTTP GET request."""
+    if storage.get(State, state_id) is None:
+        abort(404)
     all_cities = []
     for city in storage.all(City).values():
         if city.state_id == state_id:
             all_cities.append(city.to_dict())
-    if len(all_cities) > 0:
-        return jsonify(all_cities)
-    abort(404)
+    return jsonify(all_cities)
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
@@ -26,8 +26,8 @@ def cities_id_post(state_id):
     """Create a new City object through the HTTP POST request."""
     obj_state = storage.get(State, state_id)
     if obj_state:
-        if request.get_json(silent=True):
-            if "name" in request.get_json(silent=True):
+        if request.get_json():
+            if "name" in request.get_json():
                 obj = City(**request.get_json(), state_id=state_id)
                 storage.new(obj)
                 storage.save()
@@ -65,7 +65,7 @@ def city_id_put(city_id):
     """Update a specific City object through the HTTP PUT request."""
     obj = storage.get(City, city_id)
     if obj is not None:
-        if request.get_json(silent=True):
+        if request.get_json():
             fix_dict = request.get_json()
             attributes = ["id", "created_at", "updated_at"]
             for k, v in fix_dict.items():
