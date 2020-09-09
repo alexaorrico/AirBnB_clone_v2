@@ -7,16 +7,6 @@ from models.place import Place
 from models.base_model import BaseModel
 
 
-@app_views.route('/places', methods=["GET"], strict_slashes=False)
-def get_all_places():
-    """ retrieves all place objects """
-    output = []
-    places = storage.all(Place).values()
-    for place in places:
-        output.append(place.to_dict())
-    return (jsonify(output))
-
-
 @app_views.route('/cities/<city_id>/places', methods=["GET", "POST"],
                  strict_slashes=False)
 def get_city_place(city_id):
@@ -34,11 +24,14 @@ def get_city_place(city_id):
             abort(400, description="Not a JSON")
         if 'user_id' not in request.json:
             abort(400, description="Missing user_id")
+        user = storage.get(User, user_id)
+        if user is None:
+            abort(404)
         if 'name' not in request.json:
             abort(400, description="Missing name")
-        user = User(**data)
-        user.save()
-        return (jsonify(user.to_dict()), 201)
+        place = Place(**data)
+        place.save()
+        return (jsonify(place.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>', methods=[
