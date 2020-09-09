@@ -1,12 +1,12 @@
-from flask import Blueprint, jsonify
-from api.v1.views import *
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep  1 14:42:23 2020
+@author: Robinson Montes
+         Mauricio Olarte
+"""
+from flask import Blueprint
+from . import *
 
 
-app_views = Blueprint('app_views', __name__, url_prefix='/api/v1/')
-
-status = {'status': 'ok'}
-@app_views.route('/status', methods=['GET'])
-def get_tasks():
-    """ check the status of route """
-    # return('hola')
-    return jsonify({'status': 'ok'})
+app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
