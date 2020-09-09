@@ -49,7 +49,7 @@ def create_a_state():
         abort(400, description="Missing name")
     new_state = State(**req)
     new_state.save()
-    return jsonify(new_state), 201
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -61,7 +61,8 @@ def update_a_state(state_id):
     req = request.get_json()
     if not request.is_json:
         abort(400, description="Not a JSON")
-    for k, value in state:
+    for k, value in req.items():
         if k is not "id" and k is not "created_at" and k is not "updated_at":
-            state.update({'k': 'value'})
-    return jsonify(state), 200
+            setattr(state, k, value)
+    state.save()
+    return jsonify(state.to_dict()), 200
