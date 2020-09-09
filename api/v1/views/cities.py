@@ -7,7 +7,7 @@ from models.city import City
 from flask import jsonify
 
 
-@app_views.route('/api/v1/states/<state_id>/cities')
+@app_views.route('/states/<state_id>/cities')
 def get_cities():
     """return list of all cities in state"""
     lizt = []
@@ -19,7 +19,7 @@ def get_cities():
     return jsonify(lizt)
 
 
-@app_views.route('/api/v1/cities/<city_id>')
+@app_views.route('/cities/<city_id>')
 def get_a_city():
     """retrieve of specific City object"""
     lizt = []
@@ -30,7 +30,8 @@ def get_a_city():
             return jsonify(lizt)
     return jsonify({"error": "Not found"}), 404
 
-@app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'])
+
+@app_views.route('/cities/<city_id>', methods=['DELETE'])
 def del_a_city():
     """delete a specific city"""
     urban = storage.get(City, city_id)

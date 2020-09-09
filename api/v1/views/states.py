@@ -6,7 +6,7 @@ from models.state import State
 from flask import jsonify, Blueprint, abort, request
 
 
-@app_views.route('/api/v1/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """returns list of all states"""
     lizt = []
@@ -15,7 +15,8 @@ def get_states():
         lizt.append(state.to_dict())
     return jsonify(lizt)
 
-@app_views.route('/api/v1/states/<state_id>', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_a_state():
     """finds a unique state based of state_id"""
     state = storage.get(State, state_id)
@@ -23,10 +24,10 @@ def get_a_state():
         abort(404)
     ret = state.to_dict()
     return jsonify(ret)
-    
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_a_state():
     """delete a specific state"""
     states = storage.get(State, state_id)
@@ -37,7 +38,8 @@ def delete_a_state():
         storage.save()
         return jsonify({}), 200
 
-@app_views.route('/api/v1/states', methods=['POST'], strict_slashes=False)
+
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_a_state():
     """create a state"""
     req = request.get_json()
@@ -50,7 +52,8 @@ def create_a_state():
     new_state.save()
     return jsonify(new_state), 201
 
-@app_views.route('/api/v1/states/<state_id>', methods=['PUT'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_a_state():
     """ this method updates a state """
     state = storage.get(State, state_id)
@@ -59,7 +62,7 @@ def update_a_state():
     req = request.get_json()
     if not request.is_json:
         abort(400, description="Not a JSON")
-    for key, value in state:
-        if key is not "id" and key is not "created_at" and key is not "updated_at":
-            state.update({'key':'value'})
+    for k, value in state:
+        if k is not "id" and k is not "created_at" and k is not "updated_at":
+            state.update({'k': 'value'})
     return jsonify(state), 200
