@@ -45,9 +45,10 @@ def delete(state_id=None):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_task():
-    if not request.json or not 'name' in request.json:
-        abort(400)
-
+    if not request.json:
+        abort(400, "Not a JSON")
+    if not 'name' in request.json:
+        abort(400, "Missing name")
     result = request.get_json()
     obj = State()
     for k, v in result.items():
@@ -56,3 +57,25 @@ def create_task():
     storage.save()
     var = obj.to_dict()
     return (jsonify(var), 201)
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def put_task(state_id=None):
+    if not request.json or not 'name' in request.json:
+        abort(400, "Not a JSON")
+    if state_id is None:
+        abort(404)
+
+    result = request.get_json()
+    flag = 0
+    for values in storage.all(State).values():
+        if values.id == state_id:
+            for k, v in result.items():
+                setattr(values, k, v)
+                storage.save()
+                attr = (values.to_dict())
+            flag = 1
+    if flag == 0:
+        abort(404)
+    else:
+        return (jsonify(attr), 200)
