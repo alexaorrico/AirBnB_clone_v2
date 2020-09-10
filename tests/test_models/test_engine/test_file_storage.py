@@ -129,4 +129,4 @@ class TestFileStorage(unittest.TestCase):
         self.obj = State(name="California")
         self.obj.save()
         count_2 = models.storage.count()
-        self.assertEqual(count_1, count_2)
+        self.assertEqual(count_1 + 1, count_2)
