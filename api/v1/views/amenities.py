@@ -68,4 +68,3 @@ def update_amenity(amenity_id):
             setattr(amenity, attr, val)
     storage.save()
     return jsonify(amenity.to_dict())
-    
