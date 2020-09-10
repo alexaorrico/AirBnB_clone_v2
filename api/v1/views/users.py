@@ -54,7 +54,7 @@ def users_by_id(user_id):
     """
 
     User_obj = storage.get(User, user_id)
-    if User_obj == None:
+    if User_obj is None:
         abort(404)
 
     if request.method == 'GET':

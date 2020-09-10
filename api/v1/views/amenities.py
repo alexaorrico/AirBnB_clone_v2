@@ -52,7 +52,7 @@ def amenities_by_id(amenity_id):
     """
 
     amenity_obj = storage.get(Amenity, amenity_id)
-    if amenity_obj == None:
+    if amenity_obj is None:
         abort(404)
 
     if request.method == 'GET':

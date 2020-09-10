@@ -56,7 +56,7 @@ def places_by_id(place_id):
     """
 
     place_obj = storage.get(Place, place_id)
-    if place_obj == None:    
+    if place_obj is None:
         abort(404)
 
     if request.method == 'GET':
@@ -74,7 +74,7 @@ def places_by_id(place_id):
             abort(400, 'Not a JSON')
 
         user_obj = storage.get(User, place_obj.user_id)
-        if user_obj == None:
+        if user_obj is None:
             abort(404)
 
         ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
