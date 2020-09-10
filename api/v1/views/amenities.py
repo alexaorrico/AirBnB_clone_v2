@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""   module that creates a new view for Amenity objects"""
+"""RESTful API for Amenities object """
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models.base_model import BaseModel
@@ -69,7 +69,7 @@ def update_amenity(amenity_id):
         if my_dict is None:
             abort(400, "Not a JSON")
         for key, value in my_dict.items():
-                if key not in ["id", "created_at", "updated_at"]:
-                    setattr(amenity, key, value)
+            if key not in ["id", "created_at", "updated_at"]:
+                setattr(amenity, key, value)
         storage.save()
         return jsonify(amenity.to_dict()), 200
