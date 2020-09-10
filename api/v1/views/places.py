@@ -52,14 +52,14 @@ def places_push(city_id):
     if storage.get(City, city_id) is None:
         abort(404)
     if not request.get_json(silent=True):
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return make_response("Not a JSON", 400)
     req = request.get_json()
     if "user_id" not in req:
-        return make_response(jsonify({"error": "Missing user_id"}), 400)
+        return make_response("Missing user_id", 400)
     if storage.get(User, req['user_id']) is None:
         abort(404)
     if "name" not in req:
-        return make_response(jsonify({"error": "Missing name"}), 400)
+        return make_response("Missing name", 400)
     req['city_id'] = city_id
     place = Place(**req)
     place.save()
@@ -73,7 +73,7 @@ def places_id_put(place_id):
     if obj_place is None:
         abort(404)
     if not request.get_json(silent=True):
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return make_response("Not a JSON", 400)
     req = request.get_json()
     for key, value in req.items():
         if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
