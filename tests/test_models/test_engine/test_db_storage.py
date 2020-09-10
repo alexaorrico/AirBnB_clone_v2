@@ -85,7 +85,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -206,3 +206,20 @@ class TestFileStorage(unittest.TestCase):
         Therefore, save is verified working during the delete test
         """
         pass
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_dbcount(self):
+        """tests count"""
+        pre = storage.count("Amenity")
+        test_obj = Amenity(name="foo")
+        storage.new(test_obj)
+        post = storage.count("Amenity")
+        self.assertEqual(pre + 1, post)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_dbget(self):
+        """tests get"""
+        test_obj = Amenity(name="bar")
+        storage.new(test_obj)
+        data = storage.get("Amenity", test_obj.id)
+        self.assertEqual(id(test_obj), id(data))
