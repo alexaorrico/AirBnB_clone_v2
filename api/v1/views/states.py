@@ -21,9 +21,9 @@ def all_states_N():
     """ Retrieves a list with all state, including the new one. """
     body_dic = request.get_json()
     if "name" not in body_dic:
-        return jsonify({"error": "Missing name"}), 400
+        return (jsonify({"error": "Missing name"}), 400)
     if body_dic is None:
-        return jsonify({"error": "Not a JSON"}), 400
+        return (jsonify({"error": "Not a JSON"}), 400)
     new_state = State(**body_dic)
     storage.new(new_state)
     storage.save()
@@ -67,4 +67,4 @@ def get_state(state_id):
     if state_obj:
         return jsonify(state_obj.to_dict())
     else:
-        abort(404)
+        abort(404
