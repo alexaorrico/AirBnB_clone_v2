@@ -80,8 +80,11 @@ class DBStorage:
         objs = self.all(cls)
         if len(objs) == 0:
             return None
-        key = "{}.{}".format(cls.__name__, id)
-        return objs[key]
+        try:
+            key = "{}.{}".format(cls.__name__, id)
+            return objs[key]
+        except KeyError:
+            return None
 
     def count(self, cls=None):
         """gets count of cls objs"""
