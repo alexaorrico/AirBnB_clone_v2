@@ -88,6 +88,6 @@ def review_put(review_id):
     for key, value in data.items():
         ignore_keys = ["id", "user_id", "place_id", "created_at", "updated_at"]
         if key not in ignore_keys:
-            review.bm_update(key, value)
+            setattr(review, key, value)
     review.save()
     return make_response(jsonify(review.to_dict()), 200)

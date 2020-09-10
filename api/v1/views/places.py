@@ -91,6 +91,6 @@ def place_put(place_id):
     for key, value in data.items():
         ignore_keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
         if key not in ignore_keys:
-            place.bm_update(key, value)
+            setattr(place, key, value)
     place.save()
     return make_response(jsonify(place.to_dict()), 200)
