@@ -21,7 +21,7 @@ def amenities_list():
             abort(400, "Not a JSON")
         if "name" not in response:
             abort(400, "Missing name")
-        new_amenity = State(**response)
+        new_amenity = Amenity(**response)
         new_amenity.save()
         return jsonify(new_amenity.to_dict()), 201
 
@@ -44,7 +44,7 @@ def amenities_id(amenity_id):
     if request.method == "PUT":
         response = request.get_json()
         if response is None:
-            return "Not a JSON", 400
+            abort(400, "Not a JSON")
         if amenity is None:
             abort(404)
         for key, value in response.items():
