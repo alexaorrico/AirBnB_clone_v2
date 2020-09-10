@@ -34,6 +34,7 @@ def reviews_place(place_id):
         if "text" not in response:
             abort(400, "Missing text")
         new_review = Review(**response)
+        new_review.place_id = place_id
         new_review.save()
         return jsonify(new_review.to_dict()), 201
 
@@ -56,8 +57,8 @@ def place_review(review_id):
         if response is None:
             abort(400, "Not a JSON")
         for key, value in response.items():
-            if key not in ['id', 'created_at', 'updated_at', 'user_id',
-                           'city_id']:
+            if key not in ["id", "user_id", "place_id", "created_at",
+                           "updated_at"]:
                 setattr(review, key, value)
         storage.save()
         return jsonify(review.to_dict()), 200
