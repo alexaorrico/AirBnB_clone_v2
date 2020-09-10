@@ -23,10 +23,12 @@ def page_not_found(e):
     # note that we set the 404 status explicitly
     return jsonify({"error": "Not found"}), 404
 
+
 @app.errorhandler(400)
 def page_not_found(e):
     # note that we set the 404 status explicitly
     return "Not a JSON", 400
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('HBNB_API_HOST'),
