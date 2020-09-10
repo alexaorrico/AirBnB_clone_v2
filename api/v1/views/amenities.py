@@ -3,7 +3,6 @@
 from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models.amenity import Amenity
-from models.city import City
 from models import storage
 
 
@@ -66,7 +65,7 @@ def update_amenity(amenity_id):
         if not body_dic:
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in body_dic.items():
-            ignore_keys = ['id', 'created_at']
+            ignore_keys = ['id', 'created_at', 'updated_at']
             if key not in ignore_keys:
                 setattr(amenity_obj, key, value)
         amenity_obj.save()
