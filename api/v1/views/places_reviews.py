@@ -31,7 +31,7 @@ def reviews_all(place_id):
                  strict_slashes=False)
 def review_get(review_id):
     """ handles GET method """
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404, description="review_id not linked to any Review object")
     review = review.to_dict()
@@ -42,7 +42,7 @@ def review_get(review_id):
                  strict_slashes=False)
 def review_delete(review_id):
     """ handles DELETE method """
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404, description="review_id not linked to any Review object")
     storage.delete(review)
@@ -78,7 +78,7 @@ def review_post(place_id):
                  strict_slashes=False)
 def review_put(review_id):
     """ handles PUT method """
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404, description="city_id not linked to any City object")
     data = request.get_json()

@@ -34,7 +34,7 @@ def places_all(city_id):
                  strict_slashes=False)
 def place_get(place_id):
     """ handles GET method """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404, description="place_id not linked to any Place object")
     place = place.to_dict()
@@ -45,7 +45,7 @@ def place_get(place_id):
                  strict_slashes=False)
 def place_delete(place_id):
     """ handles DELETE method """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404, description="place_id not linked to any Place object")
     storage.delete(place)
@@ -81,7 +81,7 @@ def place_post(city_id):
                  strict_slashes=False)
 def place_put(place_id):
     """ handles PUT method """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404, description="city_id not linked to any City object")
     data = request.get_json()
