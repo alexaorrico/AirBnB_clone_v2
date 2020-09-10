@@ -7,7 +7,8 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states',
+                 methods=['GET'], strict_slashes=False)
 def get_states():
     """getter fir the states"""
     states = []
@@ -16,29 +17,30 @@ def get_states():
     return jsonify(states)
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/states/<string:state_id>',
+                 methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """get a specific state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/states/<string:state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """delete state gets ID"""
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    state.delete()
+    storage.delete(state)
     storage.save()
     return (jsonify({}))
 
 
-@app_views.route('/states/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/',
+                 methods=['POST'], strict_slashes=False)
 def post_state():
     """create state"""
     if not request.get_json():
@@ -50,11 +52,11 @@ def post_state():
     return make_response(jsonify(state.to_dict()), 201)
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/states/<string:state_id>',
+                 methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
     """update state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if not request.get_json():
@@ -64,7 +66,3 @@ def put_state(state_id):
             setattr(state, attr, val)
     state.save()
     return jsonify(state.to_dict())
-
-
-if __name__ == "__main__":
-    pass
