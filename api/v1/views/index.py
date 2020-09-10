@@ -7,17 +7,7 @@ from json import dumps
 from models import storage
 
 
-classes = {
-    "amenities": "Amenity",
-    "cities": "City",
-    "places": "Place",
-    "reviews": "Review",
-    "states": "State",
-    "users": "User"
-}
-
-
-@app_views.route("/status", strict_slashes=False)
+@app_views.route("/status", strict_slashes=False, methods=['GET'])
 def json_ok():
     """ Return the status of the api """
     response = make_response({"status": "ok"})
@@ -28,6 +18,13 @@ def json_ok():
 @app_views.route("/stats", strict_slashes=False)
 def stats():
     """ returns the count of existing classes """
+    classes = {
+        "amenities": "Amenity",
+        "cities": "City",
+        "places": "Place",
+        "reviews": "Review",
+        "states": "State",
+        "users": "User"}
     dict_count = {}
     for k, v in classes.items():
         dict_count[k] = storage.count(v)
