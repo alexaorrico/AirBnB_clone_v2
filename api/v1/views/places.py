@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""View for State objects that handles all default RestFul API"""
+"""View for Place objects that handles all default RestFul API"""
 from api.v1.views import app_views
 from models.place import Place
 from models import storage
@@ -10,11 +10,12 @@ from flask import jsonify, abort, request, make_response
     '], strict_slashes=False)
 def get_places(city_id):
     """Returns a json object with all the city"""
+    if not city:
+        abort(404)
     list_dict = []
-    for obj in storage.all(State).values():
+    for obj in storage.get('City', city_id):
         list_dict.append(obj.to_dict())
-    return jsonify(list_dict), 200
-
+    return jsonify(list_dict)
 
 @app_views.route('/places/<string:place_id>', methods=['GET'],
                  strict_slashes=False)
