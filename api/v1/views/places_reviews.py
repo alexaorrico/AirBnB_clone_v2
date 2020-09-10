@@ -5,6 +5,7 @@ from models import storage
 from flask import jsonify, abort, request, Blueprint
 from models.review import Review
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
@@ -61,13 +62,14 @@ def create_a_review(place_id):
     key = 'text'
     if key not in req:
         abort(400, description="Missing text")
+    req['place_id'] = place_id
     new_review = Review(**req)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
-def update_a_review(reviews_id):
+def update_a_review(review_id):
     """ this method updates a review """
     review = storage.get(Review, review_id)
     if review is None:
