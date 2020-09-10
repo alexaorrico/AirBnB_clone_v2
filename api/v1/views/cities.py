@@ -21,7 +21,7 @@ def all_cities(state_id):
     return jsonify(list_dic_city)
 
 
-@app_views.route('/cities/city_id>',
+@app_views.route('/cities/<city_id>',
                  methods=['GETT'], strict_slashes=False)
 def get_city(city_id):
     """ Retrieves a city linked with city_id. """
