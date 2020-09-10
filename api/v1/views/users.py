@@ -12,7 +12,7 @@ def all_users():
     user_objs = storage.all(User).values()
     list_dic_users = []
     for user in user_objs:
-        list_dic_states.append(user.to_dict())
+        list_dic_users.append(user.to_dict())
     return jsonify(list_dic_users)
 
 
@@ -26,9 +26,9 @@ def new_user():
         return jsonify({'error': 'Missing email'}), 400
     if "password" not in body_dic:
         return jsonify({'error': 'Missing password'}), 400
-    new_state = State(**body_dic)
+    new_user = User(**body_dic)
     storage.save()
-    return jsonify(new_state.to_dict()), 201
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
