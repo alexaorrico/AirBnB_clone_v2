@@ -34,8 +34,8 @@ def reviews_place(place_id):
             abort(404)
         if "text" not in response:
             return make_response(jsonify({"error": "Missing text"}), 400)
+        response['place_id'] = place_id
         new_review = Review(**response)
-        new_review.place_id = place_id
         new_review.save()
         return make_response(jsonify(review.to_dict()), 201)
 
