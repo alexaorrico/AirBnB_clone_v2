@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -67,6 +68,20 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        """Tests to check get method"""
+        if storage.all("State").values():
+            first_state_id = list(storage.all("State").values())[0].id
+            first_state = storage.get("State", first_state_id)
+            self.assertTrue(isinstance(first_state, State))
+
+    def test_count(self):
+        """Tests to check count method"""
+        all_objects = storage.count()
+        all_states = storage.count("State")
+        self.assertTrue(isinstance(all_objects, int))
+        self.assertTrue(isinstance(all_states, int))
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -115,16 +130,17 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
-        """Test that get properly returns a requested object"""
-        storage = FileStorage()
-        user = User(name="User1")
-        user.save()
-        self.assertEqual(user, storage.get("User", user.id))
+    def test_db_get(self):
+        """Tests to check get method"""
+        if storage.all("State").values():
+            first_state_id = list(storage.all("State").values())[0].id
+            first_state = storage.get("State", first_state_id)
+            self.assertTrue(isinstance(first_state, State))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count(self):
-        """Test that count properly counts all objects"""
-        storage = FileStorage()
-        nobjs = len(storage._FileStorage__objects)
-        self.assertEqual(nobjs, storage.count())
+    def test_db_count(self):
+        """Tests to check count method"""
+        all_objects = storage.count()
+        all_states = storage.count("State")
+        self.assertTrue(isinstance(all_objects, int))
+        self.assertTrue(isinstance(all_states, int))
