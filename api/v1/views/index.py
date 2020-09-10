@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    create a route
+    Create a route
 """
 from flask import jsonify
 from api.v1.views import app_views
@@ -11,5 +11,4 @@ def status():
     """
     return status ok json
     """
-    return jsonify({"status": "OK"}) 
-
+    return jsonify({"status": "OK"})
