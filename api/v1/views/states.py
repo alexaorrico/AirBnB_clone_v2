@@ -12,7 +12,11 @@ from models.state import State
 @app_views.route('/api/v1/states', strict_slashes=False)
 =======
 
+<<<<<<< HEAD
 @app_views.route('/api/v1/states', methods=['GET'], strict_slashes=False)
+>>>>>>> cm
+=======
+@app_views.route('/api/v1/states', strict_slashes=False)
 >>>>>>> cm
 def all_states():
     """Retrieves a list of all State objects"""
@@ -22,8 +26,7 @@ def all_states():
     return jsonify(all_states)
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/api/v1/states/<state_id>', strict_slashes=False)
 def retrieve_state(state_id):
     """Retrieves a State object"""
     try:
@@ -33,8 +36,7 @@ def retrieve_state(state_id):
         abort(404)
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/api/v1/states/<state_id>', strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object"""
     state = storage.get('State', state_id)
@@ -46,7 +48,7 @@ def delete_state(state_id):
         abort(404)
 
 
-@app_views.route('/api/v1/states', methods=['POST'], strict_slashes=False)
+@app_views.route('/api/v1/states', strict_slashes=False)
 def create_state():
     """Creates a State object"""
     state_list = request.get_json()
@@ -60,8 +62,7 @@ def create_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/api/v1/states/<state_id>', strict_slashes=False)
 def update_state(state_id):
     """Updates a State object"""
     update_obj = request.get_json()
