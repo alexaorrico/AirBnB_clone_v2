@@ -2,13 +2,19 @@
 """Init Module"""
 
 from models.state import State
-
-from api.v1.views.states import *
-from api.v1.views.index import *
+from models.city import City
 
 from flask import Blueprint, request, abort
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+
+
+def parent_obj(p_obj, p_obj_id, p_get):
+    """Parent Obj GET request Method"""
+    parent = storage.get(p_obj, p_obj_id)
+    if parent:
+        return jsonify([p.to_dict() for p in getattr(parent, p_get)]), 200
+    abort(404)
 
 
 def get_object(obj, obj_id):
@@ -70,3 +76,7 @@ def put(obj, obj_id, ignore_keys):
     query_obj.save()
 
     return jsonify(query_obj.to_dict()), 200
+
+from api.v1.views.index import *
+from api.v1.views.states import *
+from api.v1.views.cities import *
