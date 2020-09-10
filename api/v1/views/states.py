@@ -61,7 +61,7 @@ def update_state(state_id):
     if not update_obj:
         abort(400, {'Not a JSON'})
     this_state = storage.get('State', state_id)
-    if not thi_state:
+    if not this_state:
         abort(404)
     for key, value in update_obj.items():
         setattr(this_state, key, value)
