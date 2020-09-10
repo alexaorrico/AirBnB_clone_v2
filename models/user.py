@@ -27,6 +27,10 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
-        super().__init__(*args, **kwargs)
+        if kwargs:
+            passwd = kwargs.pop("password", None)
+            if passwd is not None:
+                new_password = md5((passwd).encode('utf-8')).hexdigest()
+                setattr(self, "password", new_password)
 
-        self.password = md5((self.password).encode('utf-8')).hexdigest()
+        super().__init__(*args, **kwargs)
