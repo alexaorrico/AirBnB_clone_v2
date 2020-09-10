@@ -19,6 +19,7 @@ def citiesretr(state_id):
         cities.append(city.to_dict())
     return jsonify(cities)
 
+
 @app_views.route('/cities/<string:city_id>',
                  methods=['GET'], strict_slashes=False)
 def cityid(city_id):
@@ -27,6 +28,7 @@ def cityid(city_id):
     if cityobj is None:
         abort(404)
     return jsonify(cityobj.to_dict())
+
 
 @app_views.route('/cities/<string:city_id>',
                  methods=['DELETE'], strict_slashes=False)
@@ -38,6 +40,7 @@ def delete(city_id):
     storage.delete(cityobj)
     storage.save()
     return (jsonify({}), 200)
+
 
 @app_views.route('/states/<string:state_id>/cities',
                  methods=['POST'], strict_slashes=False)
@@ -55,6 +58,7 @@ def createcity(state_id):
     jsoncity = City(**post_json)
     jsoncity.save()
     return make_response(jsonify(jsoncity.to_dict()), 201)
+
 
 @app_views.route('/cities/<string:city_id>',
                  methods=['PUT'], strict_slashes=False)
