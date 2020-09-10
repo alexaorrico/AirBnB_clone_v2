@@ -13,8 +13,8 @@ from api.v1.views.cities import *
 
 from api.v1.views.amenities import *
 
-from api.vi.views.users import *
+from api.v1.views.users import *
 
-from api.vi.views.places import *
+from api.v1.views.places import *
 
-from api.vi.views.reviews import *
+from api.v1.views.reviews import *
