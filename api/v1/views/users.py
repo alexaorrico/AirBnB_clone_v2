@@ -10,10 +10,10 @@ from models.user import User
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def all_users():
     """get users"""
-    all_users = []
+    users = []
     for user in storage.all('User').values():
-        all_users.append(user.to_dict())
-    return jsonify(all_users)
+        users.append(user.to_dict())
+    return jsonify(users)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
