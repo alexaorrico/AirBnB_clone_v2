@@ -1,52 +1,54 @@
 #!/usr/bin/python3
 """View for Place objects that handles all default RestFul API"""
+from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
-from models.place import Place
-from models.city import City
-from models.user import User
 from models import storage
-from flask import jsonify, abort, request, make_response
+from models.city import City
+from models.state import State
+from models.place import Place
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET\
-    '], strict_slashes=False)
-def get_places(city_id):
-    """Returns a json object with all the city"""
+'], strict_slashes=False)
+def displayPlacesByCity(city_id):
+    """Return the places by city if not error 404
+    """
     city = storage.get('City', city_id)
     if not city:
         abort(404)
-    list_dict = []
-    for obj in city.places:
-        list_dict.append(obj.to_dict())
-    return jsonify(list_dict)
+    lista = []
+    for i in city.places:
+        lista.append(i.to_dict())
+    return jsonify(lista)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def get_place(place_id):
-    """Returns a json object with the place with given id"""
-    obj = storage.get(Place, place_id)
-    if (obj):
-        return jsonify(obj.to_dict()), 200
-    else:
+def displayPlacesbyId(place_id):
+    """Return the places by id if not error 404
+    """
+    place = storage.get('Place', place_id)
+    if not place:
         abort(404)
+    return jsonify(place.to_dict())
 
 
-@app_views.route('/places/<string:place_id>', methods=['DELETE'],
-                 strict_slashes=False)
-def delete_place(place_id):
-    """Delete a place"""
-    obj = storage.get(Place, place_id)
-    if (obj):
-        storage.delete(obj)
+@app_views.route('/places/<place_id>', methods=['DELETE\
+'], strict_slashes=False)
+def deletePlace(place_id):
+    """Delete a place if not error 404
+    """
+    list_places = {}
+    place = storage.get('Place', place_id)
+    if place:
+        storage.delete(place)
         storage.save()
-        return jsonify({}), 200
-    else:
-        abort(404)
+        return jsonify({})
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST\
-    '], strict_slashes=False)
-def create_place(city_id):
+'], strict_slashes=False)
+def createPlace(city_id):
     """Create a place for a city if not error 404
     """
     cities = storage.get('City', city_id)
@@ -69,10 +71,10 @@ def create_place(city_id):
     return jsonify(new_place.to_dict()), 201
 
 
-@app_views.route('/places/<string:place_id>', methods=['PUT'],
-                 strict_slashes=False)
-def update_place(place_id):
-    """Update a place"""
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
+def updatePlace(place_id):
+    """Update a place if not error 404
+    """
     place = request.get_json()
     if not place:
         abort(400, {'Not a JSON'})
