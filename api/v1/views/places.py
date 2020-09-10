@@ -51,9 +51,14 @@ def createplace(city_id):
         abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "not a JSON"}), 400)
-    if 'user_id' not in request.get_json():
-        return make_response(jsonify({"error": "missing name"}), 400)
     post_json = request.get_json()
+    if 'user_id' not in post_json:
+        return make_response(jsonify({"error": "missing user_id"}), 400)
+    userid = storage.get(User, post_json['user_id'])
+    if user is None:
+        abort(404)
+    if 'name' not in request.get_json():
+        return make_response(jsonify({"error": "missing name"}), 400)
     post_json['city_id'] = city_id
     jsonplace = Place(**post_json)
     jsonplace.save()
