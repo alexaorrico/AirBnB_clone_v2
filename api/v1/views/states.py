@@ -67,4 +67,4 @@ def get_state(state_id):
     if state_obj:
         return jsonify(state_obj.to_dict())
     else:
-        abort(404
+        abort(404)
