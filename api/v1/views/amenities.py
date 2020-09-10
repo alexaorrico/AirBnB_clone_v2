@@ -5,7 +5,11 @@ from api.v1.views import app_views
 from flask import request, jsonify, abort
 from models import storage
 
-
+@app_views.route(
+    '/amenities',
+    strict_slashes=False,
+    methods=['GET', 'POST']
+)
 @app_views.route(
     '/amenities/<amenity_id>',
     strict_slashes=False, methods=['GET', 'PUT', 'DELETE']
