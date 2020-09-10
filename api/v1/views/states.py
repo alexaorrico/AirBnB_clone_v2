@@ -22,7 +22,7 @@ def all_states_N():
     body_dic = request.get_json()
     if "name" not in body_dic:
         return jsonify({'error': 'Missing name'}), 400
-    if body_dic is None:
+    if not body_dic:
         return jsonify({'error': 'Not a JSON'}), 400
     new_state = State(**body_dic)
     storage.save()
@@ -35,7 +35,7 @@ def update_state(state_id):
     state_obj = storage.get(State, state_id)
     if state_obj:
         body_dic = request.get_json()
-        if body_dic is None:
+        if not body_dic:
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in body_dic.items():
             ignore_keys = ['id', 'created_at']
