@@ -15,17 +15,17 @@ def states_list():
         list_dic_states = []
         for state in state_objs:
             list_dic_states.append(state.to_dict())
-        return jsonify(list_dic_states)
+        return (jsonify(list_dic_states))
     # method is POST
     body_dic = request.get_json()
     if "name" not in body_dic:
-        return jsonify({"error": "Missing name"}), 400
+        return (jsonify({"error": "Missing name"}), 400)
     if body_dic is None:
-        return jsonify({"error": "Not a JSON"}), 400
+        return (jsonify({"error": "Not a JSON"}), 400)
     new_state = State(**body_dic)
     storage.new(new_state)
     storage.save()
-    return jsonify(new_state.to_dict()), 201
+    return (jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route("/states/<state_id>",
@@ -35,19 +35,19 @@ def states_id(state_id):
     state_obj = storage.get(State, state_id)
     if state_obj:
         if request.method == "GET":
-            return jsonify(state_obj.to_dict())
+            return (jsonify(state_obj.to_dict()))
         if request.method == "DELETE":
             storage.delete(state_obj)
             storage.save()
-            return jsonify({}), 200
+            return (jsonify({}), 200)
         else:  # method = PUT
             body_dic = request.get_json()
             if body_dic is None:
-                return jsonify({"error": "Not a JSON"}), 400
+                return (jsonify({"error": "Not a JSON"}), 400)
             for key, value in body_dic.items():
                 ignore_keys = ["id", "created_at"]
                 if key not in ignore_keys:
                     setattr(state_obj, key, value)
             storage.save()
-            return jsonify(state_obj.to_dict()), 200
+            return (jsonify(state_obj.to_dict()), 200)
     abort(404)  # when the id is not linked with any state
