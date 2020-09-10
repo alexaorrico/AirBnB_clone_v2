@@ -34,7 +34,7 @@ def retrieve_city(city_id):
         abort(404)
 
 
-@app_views.route('/api/v1/citys/<city_id>', methods=['DELETE'],
+@app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
     """Deletes a City object"""
@@ -62,7 +62,7 @@ def create_city():
     return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/api/v1/citys/<city_id>', methods=['POST'],
+@app_views.route('/api/v1/cities/<city_id>', methods=['POST'],
                  strict_slashes=False)
 def update_city(city_id):
     """Updates a City object"""
@@ -75,4 +75,4 @@ def update_city(city_id):
     for key, value in update_obj.items():
         setattr(this_city, key, value)
     storage.save()
-    return jsonify(this_city.to_dict())
+    return jsonify(this_city.to_dict()), 200
