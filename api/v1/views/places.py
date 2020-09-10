@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""module that creates a new view for Places objects"""
+""" RESTful API for Place object """
 from flask import jsonify, abort, request
 from models.base_model import BaseModel
 from api.v1.views import app_views
