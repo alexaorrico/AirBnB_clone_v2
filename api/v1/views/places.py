@@ -19,9 +19,7 @@ def all_places_id(city_id):
     for place in all_places:
         if place.city_id == city_id:
             specific_places.append(place.to_dict())
-    if len(specific_places) > 0:
-        return jsonify(specific_places)
-    abort(404)
+    return jsonify(specific_places)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
