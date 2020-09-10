@@ -4,6 +4,7 @@ Create a route that returns a JSON
 """
 from flask import Flask
 from api.v1.views import app_views
+from models import storage
 
 
 @app_views.route('/api/v1/status', strict_slashes=False)
