@@ -54,7 +54,7 @@ def app_route_state4():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def app_route_state5(state_id):
-    """ PUT update an state """    
+    """ PUT update an state """
     if state_id:
             obj_states = storage.get(State, state_id)
             if obj_states is None:
