@@ -48,8 +48,7 @@ def user(user_id):
         if response is None:
             abort(400, "Not a JSON")
         for key, value in response.items():
-            if key != "id" and key != "created_at" and key != "updated_at"\
-                    and key != "email" and hasattr(user, key):
+            if key not in ['id', 'created_at', 'updated_at', 'email']:
                 setattr(user, key, value)
         storage.save()
         return jsonify(user.to_dict()), 200

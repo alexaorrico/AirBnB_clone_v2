@@ -44,8 +44,7 @@ def states_id(state_id):
         if data is None:
             abort(400, "Not a JSON")
         for key, value in data.items():
-            if key != "id" and key != "created_at" and key != "updated_at"\
-             and hasattr(state, key):
-                setattr(state, key, value)
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(place, key, value)
         storage.save()
         return jsonify(state.to_dict()), 200
