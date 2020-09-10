@@ -71,9 +71,11 @@ def places_search():
     states = info.get('states', [])
     cities = info.get('cities', [])
     amenities = info.get('amenities', [])
-    if states == cities == amenities == []:
+    if states == cities == []:
         return jsonify([obj.to_dict() for obj in storage.all(Place).values()])
     place_list = []
+    amenity_list = []
+    return_list = []
     for state_id in states:
         state = storage.get(State, state_id)
         state_cities = state.cities
@@ -84,4 +86,15 @@ def places_search():
         city = storage.get(City, city_id)
         for place in city.places:
             place_list.append(place)
-    return jsonify([place.to_dict() for place in place_list])
+    for amenity_id in amenities:
+        amenity = storage.get(Amenity, amenity_id)
+        if amenity:
+            amenity_list.append(amenity)
+    for place in place_list:
+        return_list.append(place.to_dict())
+        place_amenities = place.amenities
+        for amenity in amenity_list:
+            if amenity not in place_amenities:
+                return_list.pop()
+                break
+    return jsonify(return_list)
