@@ -30,13 +30,13 @@ def new_place(city_id):
     """ Retrieves a new created place """
     body_dic = request.get_json()
     city = storage.get(City, city_id)
-    user = storage.get(User, body_dic.get("user_id", None))
     if not city:
         abort(404)
     if not body_dic:
         return jsonify({'error': 'Not a JSON'}), 400
     if "user_id" not in body_dic:
         return jsonify({'error': 'Missing user_id'}), 400
+    user = storage.get(User, body_dic.get("user_id", None))
     if not user:
         abort(404)
     if "name" not in body_dic:
