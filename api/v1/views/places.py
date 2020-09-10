@@ -10,7 +10,7 @@ from models.place import Place
 
 @app_views.route('/cities/<city_id>/places', methods=['GET\
 '], strict_slashes=False)
-def displayPlacesByCity(city_id):
+def display_by_city(city_id):
     """Return the places by city if not error 404
     """
     city = storage.get('City', city_id)
@@ -23,7 +23,7 @@ def displayPlacesByCity(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def displayPlacesbyId(place_id):
+def display_by_id(place_id):
     """Return the places by id if not error 404
     """
     place = storage.get('Place', place_id)
@@ -34,7 +34,7 @@ def displayPlacesbyId(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE\
 '], strict_slashes=False)
-def deletePlace(place_id):
+def delete_place(place_id):
     """Delete a place if not error 404
     """
     list_places = {}
@@ -48,7 +48,7 @@ def deletePlace(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST\
 '], strict_slashes=False)
-def createPlace(city_id):
+def create_place(city_id):
     """Create a place for a city if not error 404
     """
     cities = storage.get('City', city_id)
@@ -72,7 +72,7 @@ def createPlace(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-def updatePlace(place_id):
+def update_place(place_id):
     """Update a place if not error 404
     """
     place = request.get_json()
