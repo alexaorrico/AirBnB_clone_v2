@@ -18,7 +18,7 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.error_handler(404)
+@app.errorhandler(404)
 def not_found(exception):
     """page not found"""
     return make_response({'error': 'Not found'}, 404)
