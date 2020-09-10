@@ -43,7 +43,7 @@ def del_a_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
-def create_a_city():
+def create_a_city(state_id):
     """create a city"""
     req = request.get_json()
     if not request.is_json:
@@ -55,7 +55,8 @@ def create_a_city():
     key = 'name'
     if key not in req:
         abort(400, description="Missing name")
-    new_city = State(**req)
+    req['state_id'] = state_id
+    new_city = City(**req)
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
