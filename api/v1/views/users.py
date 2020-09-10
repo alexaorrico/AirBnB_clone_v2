@@ -36,9 +36,9 @@ def user_id_delete(user_id):
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
-def user_post(user_id):
+def user_post():
     """Create a new User object through the HTTP POST request."""
-    if not request.get_json():
+    if not request.get_json(silent=True):
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     req = request.get_json()
     if "email" not in req:
@@ -56,7 +56,7 @@ def users_id_put(user_id):
     obj_user = storage.get(User, user_id)
     if obj_user is None:
         abort(404)
-    if not request.get_json():
+    if not request.get_json(silent=True):
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     req = request.get_json()
     for key, value in req.items():
