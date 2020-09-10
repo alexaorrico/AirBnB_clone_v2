@@ -83,7 +83,7 @@ class DBStorage:
         try:
             key = "{}.{}".format(cls.__name__, id)
             return objs[key]
-        except KeyError:
+        except:
             return None
 
     def count(self, cls=None):
