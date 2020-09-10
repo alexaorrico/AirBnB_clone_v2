@@ -2,7 +2,7 @@
 """
 Flask api app file
 """
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -15,6 +15,13 @@ app.register_blueprint(app_views)
 def teardown(self):
     """ close session """
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(e):
+    """ 404 not found """
+    return jsonify({"error": "Not found"})
+
 
 if __name__ == "__main__":
     from os import getenv
