@@ -85,6 +85,7 @@ class DBStorage:
             for keys, values in result.items():
                 if keys == key:
                     return str(values)
+            return (None)
 
     def count(self, cls=None):
         """ Returns the number of objects in
