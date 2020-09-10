@@ -29,11 +29,11 @@ def state_id(state_id):
     """
     function to return State object by id throught a GET method
     """
-    states = storage.all("State")
-    state = states.get(state_id)
-    if state is None:
-        abort(404)
-    return jsonify(state.to_dict())
+    all_states = storage.all("State").values()
+    for state in all_states:
+        if state.id == state_id:
+            return jsonify(state.to_dict())
+    abort(404)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
