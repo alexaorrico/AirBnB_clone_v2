@@ -25,7 +25,7 @@ def all_states():
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def state_id(state_id):
+def get_state(state_id):
     """
     function to return State object by id throught a GET method
     """
@@ -42,7 +42,7 @@ def delete_state(state_id):
     """
     function to delete State object by id throught a DELETE method
     """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -62,7 +62,8 @@ def post_state():
     if "name" not in dic_json:
         return make_response("Missing name", 400)
     new_state = State(**dic_json)
-    new_state.save()
+    storage.new(new_state)
+    storage.save()
     return make_response(jsonify(new_state.to_dict()), 201)
 
 
@@ -71,7 +72,7 @@ def put_state(state_id):
     """
     function to update a State object by id throught a PUT method
     """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     dic_json = request.get_json()
