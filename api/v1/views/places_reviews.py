@@ -19,7 +19,7 @@ def reviews_place(place_id):
         review = storage.all(Review).values()
         all_review = []
         for key in review.values():
-            if key.city_id == city_id:
+            if key.place_id == place_id:
                 all_review.append(key.to_dict())
         return jsonify(all_review)
     if request.method == "POST":
@@ -34,9 +34,9 @@ def reviews_place(place_id):
         if "text" not in response:
             abort(400, "Missing text")
         response["city_id"] = city_id
-        new_place = Place(**response)
-        new_place.save()
-        return jsonify(new_place.to_dict()), 201
+        new_review = Review(**response)
+        new_review.save()
+        return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=["GET", "DELETE", "PUT"],
