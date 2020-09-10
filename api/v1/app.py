@@ -27,8 +27,7 @@ def teardown(self):
 def page_not_found(error):
     """handler for 404 errors that returns a
     JSON-formatted 404 status code response"""
-    response = make_response(jsonify({"error": "Not found"}), 404)
-    return response
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
