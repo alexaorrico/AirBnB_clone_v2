@@ -7,7 +7,7 @@ from models.user import User
 from models import storage
 
 
-@app_views.route('/users/<user_id>', methods=['GET'],
+@app_views.route('/users', methods=['GET'],
                  strict_slashes=False)
 def get_users():
     """Retrieves the list of all users object """
@@ -15,7 +15,7 @@ def get_users():
     list_users = []
     for user in users.values():
         list_users.append(user.to_dict())
-    return jsonify(list_cities)
+    return jsonify(list_users)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'],
@@ -41,12 +41,12 @@ def delete_user(user_id):
     return jsonify(empty_dict), 200
 
 
-@app_views.route('/user', methods=['POST'], strict_slashes=False)
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
     """ Creates a User object """
-    if user is None:
-        abort(400, "Not a JSON")
     my_dict = request.get_json()
+    if my_dict is None:
+        abort(400, "Not a JSON")
     if "email" not in my_dict.keys():
         abort(400, "Missing email")
     elif "password" not in my_dict.keys():
