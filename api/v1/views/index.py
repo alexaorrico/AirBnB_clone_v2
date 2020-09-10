@@ -28,6 +28,3 @@ def count_objects():
             "reviews": storage.count(Review),
             "states": storage.count(State),
             "users": storage.count(User)}
-
-if __name__ == '__main__':
-    app.run(debug=True)
