@@ -6,6 +6,7 @@ View for Reviews that handles all RESTful API actions
 from flask import jsonify, request, abort, make_response
 from models import storage
 from models.review import Review
+from models.place import Place
 from api.v1.views import app_views
 
 
@@ -13,7 +14,7 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def reviews_all(place_id):
     """ returns list of all Review objects """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404, description="place_id not linked to any Place object")
     reviews_all = []
@@ -52,7 +53,7 @@ def review_delete(review_id):
                  strict_slashes=False)
 def review_post(place_id):
     """ handles POST method """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404, description="place_id not linked to any Place object")
     data = request.get_json()

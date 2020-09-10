@@ -6,6 +6,7 @@ view for Place objects that handles all default RestFul API actions
 from flask import jsonify, request, abort, make_response
 from models import storage
 from models.place import Place
+from models.city import City
 from api.v1.views import app_views
 
 
@@ -17,7 +18,7 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def places_all(city_id):
     """ returns list of all Place objects linked to a given City """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404, description="city_id not linked to any City object")
     places_all = []
@@ -56,7 +57,7 @@ def place_delete(place_id):
                  strict_slashes=False)
 def place_post(city_id):
     """ handles POST method """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404, description="city_id not linked to any City object")
     data = request.get_json()
