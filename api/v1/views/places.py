@@ -2,6 +2,7 @@
 """View for Place objects that handles all default RestFul API"""
 from api.v1.views import app_views
 from models.place import Place
+from models.city import City
 from models import storage
 from flask import jsonify, abort, request, make_response
 
