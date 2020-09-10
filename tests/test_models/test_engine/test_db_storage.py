@@ -223,4 +223,3 @@ class TestDBStorage(unittest.TestCase):
         storage.new(test_obj)
         data = storage.get("Amenity", test_obj.id)
         self.assertEqual(id(test_obj), id(data))
-
