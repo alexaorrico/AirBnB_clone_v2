@@ -65,11 +65,6 @@ def places_search():
     """ retrieves all Place objects depending of the JSON
         in the body of the request
     """
-    # Not sure if this is correct way to check empty body
-    """
-    if request.get_json() == {}:
-        return jsonify([obj.to_dict() for obj in storage.all(Place).values()])
-    """
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
@@ -97,7 +92,6 @@ def places_search():
                 place_list.append([place.to_dict() for place in city.places])
             return jsonify(place_list)
 
-    """
     if request.get_json().get("amenities") is not None:
         places = storage.all(Place)
         place_list = []
@@ -105,10 +99,14 @@ def places_search():
             for amenity_id in request.get_json().get("amenities"):
                 amenity = storage.get(Amenity, amenity_id)
                 if amenity in place.amenities:
-                    new_place = storage.get(Place, place.id)
-                    print("+++++++++++++++++++++++")
-                    print(new_place)
-                    place_list.append(new_place.to_dict())
+                    new_dict = place.__dict__.copy()
+                    if "amenities" in new_dict:
+                        del new_dict["amenities"]
+                    if "_sa_instance_state" in new_dict:
+                        del new_dict["_sa_instance_state"]
+                    if "__class__" not in new_dict:
+                        new_dict.update({"__class__": "Place"})
+                    place_list.append(new_dict)
         return jsonify(place_list)
-    """
+
     return jsonify([obj.to_dict() for obj in storage.all(Place).values()])
