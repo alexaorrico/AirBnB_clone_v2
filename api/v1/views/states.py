@@ -31,7 +31,7 @@ def get_state(state_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """delete state gets ID"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -39,7 +39,7 @@ def delete_state(state_id):
     return (jsonify({}))
 
 
-@app_views.route('/states/',
+@app_views.route('/states',
                  methods=['POST'], strict_slashes=False)
 def post_state():
     """create state"""
