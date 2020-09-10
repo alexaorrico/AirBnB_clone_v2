@@ -8,16 +8,8 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 
-<<<<<<< HEAD
-@app_views.route('/api/v1/states', strict_slashes=False)
-=======
 
-<<<<<<< HEAD
-@app_views.route('/api/v1/states', methods=['GET'], strict_slashes=False)
->>>>>>> cm
-=======
 @app_views.route('/api/v1/states', strict_slashes=False)
->>>>>>> cm
 def all_states():
     """Retrieves a list of all State objects"""
     all_states = []
