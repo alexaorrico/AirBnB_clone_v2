@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+"""Blue print for flask app """
 
 from flask import Blueprint
 
