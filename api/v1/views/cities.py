@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" city restapi """
 from models.base_model import BaseModel, Base
 from flask import jsonify, abort, request
 from models.state import State
@@ -7,9 +8,10 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def allcities(state_id=None):
-    """ jsonify """
+    """ Retrieves a city object """
     lista = []
     flag = 0
     for v in storage.all(State).values():
@@ -25,7 +27,7 @@ def allcities(state_id=None):
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def allcitiesbyid(city_id=None):
-    """ jsonify """
+    """ Retrieve all city objects """
     flag = 0
     for v in storage.all(City).values():
         if v.id == city_id:
@@ -39,6 +41,7 @@ def allcitiesbyid(city_id=None):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def deletecity(city_id=None):
+    """ delete a city object """
     if city_id is None:
         abort(404)
     dicti = {}
@@ -54,11 +57,13 @@ def deletecity(city_id=None):
         return (jsonify(dicti), 200)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def create_city(state_id=None):
+    """ create a city object """
     if not request.json:
         abort(400, "Not a JSON")
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         abort(400, "Missing name")
     result = request.get_json()
     print(result)
@@ -79,8 +84,10 @@ def create_city(state_id=None):
         return (jsonify(var), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>',
+                 methods=['PUT'], strict_slashes=False)
 def change_city(city_id=None):
+    """ change atributes of city object """
     if not request.json:
         abort(400, "Not a JSON")
 
