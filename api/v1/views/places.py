@@ -6,6 +6,7 @@ from models import storage
 from models.state import State
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('/cities/<string:city_id>/places',
@@ -51,16 +52,16 @@ def createplace(city_id):
         abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    post_json = request.get_json()
-    if 'user_id' not in post_json:
+    jsonfile = request.get_json()
+    if 'user_id' not in jsonfile:
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    userid = storage.get(User, post_json['user_id'])
+    userid = storage.get(User, jsonfile['user_id'])
     if userid is None:
         abort(404)
-    if 'name' not in post_json:
+    if 'name' not in jsonfile:
         return make_response(jsonify({"error": "Missing name"}), 400)
-    post_json['city_id'] = city_id
-    jsonplace = Place(**post_json)
+    jsonfile['city_id'] = city_id
+    jsonplace = Place(**jsonfile)
     jsonplace.save()
     return make_response(jsonify(jsonplace.to_dict()), 201)
 
@@ -69,13 +70,13 @@ def createplace(city_id):
                  methods=['PUT'], strict_slashes=False)
 def updateplace(place_id):
     """update a place as json"""
-    update = storage.get(Place, place_id)
-    if update is None:
+    updateplace = storage.get(Place, place_id)
+    if updateplace is None:
         abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     for key, value in request.get_json().items():
         if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
-            setattr(update, key, value)
-    update.save()
-    return jsonify(update.to_dict())
+            setattr(updateplace, key, value)
+    updateplace.save()
+    return (jsonify(updateplace.to_dict()))
