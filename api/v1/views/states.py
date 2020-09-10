@@ -32,8 +32,7 @@ def states_list():
                  methods=["GET", "DELETE", "PUT"], strict_slashes=False)
 def states_id(state_id):
     """ Retrieves a State object using an id. """
-    state_objs = storage.all(State)
-    state_obj = state_objs.get("State.{}".format(state_id), None)
+    state_obj = storage.get(State, state_id)
     if state_obj:
         if request.method == "GET":
             return jsonify(state_obj.to_dict())
