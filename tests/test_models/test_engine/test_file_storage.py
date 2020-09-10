@@ -117,16 +117,26 @@ class TestFileStorage(unittest.TestCase):
 
 class TestFileStorageMethods(unittest.TestCase):
     """Test the File Storage class methods"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
     def test_get(self):
-        """test that get method properly retrieve objects"""
-        first_city_id = list(models.storage.all(City).values())[0].id
-        answer = models.storage.get(City, first_city_id)
-        self.assertEqual(answer.__class__.__name__, "City")
+        """Test that get method return objects"""
+        storage = FileStorage()
+        self.assertIs(storage.get("User", "nothing"), None)
+        self.assertIs(storage.get("nothing", "nothing"), None)
+        new_user = User()
+        new_user.save()
+        self.assertIs(storage.get("User", new_user.id), new_user)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
     def test_count(self):
-        """test that count method properly count all the
-        number of objects in storage"""
-        answer = models.storage.count(State)
-        self.assertEqual(answer, 1)
+        storage = FileStorage()
+        length = len(storage.all())
+        self.assertEqual(storage.count(), length)
+        statelen = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), statelen)
+        newstate = State()
+        newstate.save()
+        self.assertEqual(storage.count(), length + 1)
+        self.assertEqual(storage.count("State"), statelen + 1)
