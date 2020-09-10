@@ -4,6 +4,7 @@ from api.v1.views import app_views
 from flask import jsonify, abort, Response, request
 from json import dumps
 from models import storage
+from models.state import State
 
 
 @app_views.route("/states/", methods=["GET"], strict_slashes=False)
@@ -45,8 +46,8 @@ def app_route_state4():
         return abort(400, "Missing name")
     if data is None:
         return abort(400, "Not a JSON")
-    state_dict = state.to_dict()
     state = State(**data)
+    state_dict = state.to_dict()
     state.save()
     return jsonify(state_dict), 201
 
