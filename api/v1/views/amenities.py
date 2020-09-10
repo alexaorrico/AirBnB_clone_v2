@@ -60,7 +60,7 @@ def amenities_post():
                  strict_slashes=False, methods=['PUT'])
 def amenities_put(amenity_id):
     """Update a specific Amenity object through the HTTP PUT request"""
-    if city_id:
+    if amenity_id:
         obj_amenities = storage.get(Amenity, amenity_id)
         if obj_amenities is None:
             abort(404)
