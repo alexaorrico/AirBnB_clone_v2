@@ -79,3 +79,4 @@ def put_cities(city_id):
     else:
         result = jsonify({'error': 'Not a JSON'}), 400
     return result
+    
