@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""""""
+"""RESTful API por state objects"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models.base_model import BaseModel
@@ -68,7 +68,7 @@ def update_state(state_id):
         if my_dict is None:
             abort(400, "Not a JSON")
         for key, value in my_dict.items():
-                if key not in ["id", "created_at", "updated_at"]:
-                    setattr(state, key, value)
+            if key not in ["id", "created_at", "updated_at"]:
+                setattr(state, key, value)
         storage.save()
         return jsonify(state.to_dict()), 200
