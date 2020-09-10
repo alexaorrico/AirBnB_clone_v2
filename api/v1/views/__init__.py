@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Here we create the Blueprint app_views
-"""
+"""Here we create the Blueprint app_views"""
 
 from flask import Blueprint
 
