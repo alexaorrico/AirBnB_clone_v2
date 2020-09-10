@@ -20,7 +20,7 @@ def close(self):
 @app.errorhandler(404)
 def json_404(error):
     """ Function to handle the 404 error - Not found """
-    return jsonify({"error": "Not Found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
