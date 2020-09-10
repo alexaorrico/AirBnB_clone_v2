@@ -44,7 +44,7 @@ def state_post():
     """ handles POST method
     """
     data = request.get_json()
-     if 'name' not in data:
+    if 'name' not in data:
         return abort(400, "Missing name")
     if data is None:
         return abort(400, "Not a JSON")
