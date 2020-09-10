@@ -6,8 +6,7 @@ from json import dumps
 from models import storage
 
 
-
-@app_views.route("/states/", methods=["GET"])
+@app_views.route("/states/", methods=["GET"], strict_slashes=False)
 def app_route_state():
     """ GET all states """
     converted_states = []
@@ -27,7 +26,7 @@ def app_route_state2(states_id):
     return abort(404)
 
 
-@app_views.route("/states/<states_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/states/<states_id>", methods=["DELETE"])
 def app_route_state3(states_id):
     """ DELETE state from ID """
     search = storage.get("State", states_id)
@@ -38,9 +37,8 @@ def app_route_state3(states_id):
     return abort(404)
 
 
-
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def state_post():
+def app_route_state4():
     """ POST new user """
     data = request.get_json()
     if 'name' not in data:
@@ -53,18 +51,18 @@ def state_post():
     return jsonify(state_dict), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
-def state_put(state_id):
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def app_route_state5(state_id):
     """ PUT update an state """
     state = storage.get("State", state_id)
 
     if state is None:
-        abort(404)
+        return abort(404)
 
     data = request.get_json()
 
     if data is None:
-        abort(400, "Not a JSON")
+        return abort(400, "Not a JSON")
 
     res = state.to_dict().update(**data)
 
