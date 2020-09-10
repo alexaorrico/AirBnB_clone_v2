@@ -13,39 +13,36 @@ from models.state import State
 @app_views.route('states/<state_id>/cities',
                  strict_slashes=False, methods=['GET'])
 def get_cities(state_id):
-    """Return cities according to id of state object
-        or return Error: Not found if it doesn't exist.
+    """Return cities for  states id or  error message
     """
     if state_id:
-        dict_state = storage.get(State, state_id)
-        if dict_state is None:
+        dict_st = storage.get(State, state_id)
+        if dict_st is None:
             abort(404)
         else:
             cities = storage.all(City).values()
-            list_cities = []
+            list_c = []
             for city in cities:
                 if city.state_id == state_id:
-                    list_cities.append(city.to_dict())
-            return jsonify(list_cities)
+                    list_c.append(city.to_dict())
+            return jsonify(list_c)
 
 
 @app_views.route('cities/<city_id>', strict_slashes=False, methods=['GET'])
 def get_city(city_id):
-    """Return city according class and id of the city
-        or return Error: Not found if it doesn't exist.
+    """Return city for class and city id or messages error
     """
     if city_id:
-        dict_city = storage.get(City, city_id)
-        if dict_city is None:
+        dict_c = storage.get(City, city_id)
+        if dict_c is None:
             abort(404)
         else:
-            return jsonify(dict_city.to_dict())
+            return jsonify(dict_c.to_dict())
 
 
 @app_views.route('cities/<city_id>', strict_slashes=False, methods=['DELETE'])
 def delete_city(city_id):
-    """Deletes an object City if exists, otherwise raise
-        404 error
+    """Deletes an City if exists, or 404 error
     """
     if city_id:
         city = storage.get(City, city_id)
@@ -60,8 +57,8 @@ def delete_city(city_id):
 @app_views.route('states/<state_id>/cities',
                  strict_slashes=False, methods=['POST'])
 def response_city(state_id):
-    """Post request that allow to create a new City if exists the name
-        or raise Error if is not a valid json or if the name is missing
+    """create a new City if exists the name or raise Error
+        if is not a valid json or if the name is missing
     """
     if state_id:
         state = storage.get(State, state_id)
