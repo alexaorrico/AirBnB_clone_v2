@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Users"""
 
+from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 from models import storage
 from models.user import User
-from api.v1.views import app_views
 
 
 @app_views.route('/users',
@@ -25,10 +25,6 @@ def get_user(user_id):
     if users is None:
         abort(404)
     return jsonify(users.to_dict())
-    # for user in users:
-    #     if user.id == user_id:
-    #         return jsonify(user.to_dict())
-    # abort(404)
 
 
 @app_views.route('/users/<string:user_id>',
@@ -40,7 +36,6 @@ def delete_user(user_id):
         abort(404)
     storage.delete(user)
     storage.save()
-    #response = make_response(jsonify({}), 200)
     return (jsonify({}))
 
 
@@ -69,9 +64,9 @@ def updateuser(user_id):
         abort(404)
     json = request.get_json()
     if not djson:
-        return make_response(jsonify({"error":"Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     for key, value in djson.items():
         if key not in ["id", "email", "created_at", "updated_at"]:
             setattr(user, key, value)
     user.save()
-    return make_response(jsonify(user.to_dict()), 200)
+    return (jsonify(user.to_dict()), 200)
