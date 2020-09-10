@@ -56,12 +56,11 @@ def new_amenity(amenity_id):
     return jsonify(new_amenity.to_dict()), 201
 
 
-
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
     """Update a current Amenity"""
-    amenity_obj = storage.get(Amenity, city_id)
+    amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj:
         body_dic = request.get_json()
         if not body_dic:
