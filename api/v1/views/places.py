@@ -43,6 +43,7 @@ def new_place(city_id):
         return jsonify({'error': 'Missing name'}), 400
     new_place = Place(**body_dic)
     setattr(new_place, "city_id", city_id)
+    storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict()), 201
 
