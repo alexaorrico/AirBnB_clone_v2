@@ -53,9 +53,8 @@ def users_by_id(user_id):
         Handle objects by ID
     """
 
-    try:
-        User_obj = storage.get(User, user_id)
-    except:
+    User_obj = storage.get(User, user_id)
+    if User_obj == None:
         abort(404)
 
     if request.method == 'GET':

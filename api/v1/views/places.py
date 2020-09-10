@@ -55,9 +55,8 @@ def places_by_id(place_id):
         Handle objects by ID
     """
 
-    try:
-        place_obj = storage.get(Place, place_id)
-    except:
+    place_obj = storage.get(Place, place_id)
+    if place_obj == None:    
         abort(404)
 
     if request.method == 'GET':
@@ -74,9 +73,8 @@ def places_by_id(place_id):
         except:
             abort(400, 'Not a JSON')
 
-        try:
-            user_obj = storage.get(User, place_obj.user_id)
-        except:
+        user_obj = storage.get(User, place_obj.user_id)
+        if user_obj == None:
             abort(404)
 
         ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']

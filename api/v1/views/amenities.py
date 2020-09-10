@@ -51,9 +51,8 @@ def amenities_by_id(amenity_id):
         Handle objects by ID
     """
 
-    try:
-        amenity_obj = storage.get(Amenity, amenity_id)
-    except:
+    amenity_obj = storage.get(Amenity, amenity_id)
+    if amenity_obj == None:
         abort(404)
 
     if request.method == 'GET':
