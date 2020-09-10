@@ -57,9 +57,7 @@ def update_place(place_id):
         if not body_dic:
             return jsonify({'error': 'Not a JSON'}), 400
         for key, value in body_dic.items():
-            ignore_keys = ['id', 'created_at', 'user_id', 'city_id']
-            if key not in ignore_keys:
-                setattr(place_obj, key, value)
+            setattr(place_obj, key, value)
         place_obj.save()
         return jsonify(place_obj.to_dict()), 200
     else:
