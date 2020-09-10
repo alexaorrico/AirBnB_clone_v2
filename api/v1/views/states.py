@@ -35,7 +35,7 @@ def delete_state(state_id):
     if state:
         state.delete()
         storage.save()
-        return {}
+        return jsonify({}), 200
     else:
         abort(404)
 
@@ -51,7 +51,7 @@ def create_state():
     new_state = State(**state_list)
     storage.new(new_state)
     storage.save()
-    return new_state.to_dict(), 201
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/api/v1/states/<state_id>', strict_slashes=False)
@@ -66,4 +66,4 @@ def update_state(state_id):
     for key, value in update_obj.items():
         setattr(this_state, key, value)
     storage.save()
-    return this_state.to_dict()
+    return jsonify(this_state.to_dict())
