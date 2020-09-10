@@ -73,11 +73,11 @@ class FileStorage:
         """A method to retrieve one object"""
         from models import storage
 
+        if cls is None or id is None:
+            return None
         for obj in storage.all(cls).values():
             if obj.id == id:
                 return obj
-        if cls is None or id is None:
-            return None
         return None
 
     def count(self, cls=None):
