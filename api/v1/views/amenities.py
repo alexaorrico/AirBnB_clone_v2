@@ -45,8 +45,7 @@ def amenities_id(amenity_id):
         if response is None:
             abort(400, "Not a JSON")
         for key, value in response.items():
-            if key != "id" and key != "created_at" and key != "updated_at"\
-                    and hasattr(amenity, key):
-                setattr(amenity, key, value)
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(place, key, value)
         storage.save()
         return jsonify(amenity.to_dict()), 200

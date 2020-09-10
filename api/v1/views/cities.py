@@ -51,8 +51,7 @@ def city_id(city_id):
         if data is None:
             abort(400, "Not a JSON")
         for key, value in data.items():
-            if key != "id" and key != "created_at" and key != "updated_at"\
-                    and hasattr(city, key):
-                setattr(city, key, value)
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(place, key, value)
         storage.save()
         return jsonify(city.to_dict()), 200
