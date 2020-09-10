@@ -35,9 +35,8 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    try:
-        state_json = request.get_json()
-    except:
+    state_json = request.get_json()
+    if state_json is None:
         abort(400, 'Not a JSON')
 
     for key in state_json.keys():
@@ -54,9 +53,8 @@ def create_state():
     the new state information is expected to be
     json string
     """
-    try:
-        state_json = request.get_json()
-    except:
+    state_json = request.get_json()
+    if state_json is None:
         abort(400, 'Not a JSON')
     if state_json.get('name') is None:
         abort(400, "Missing name")
