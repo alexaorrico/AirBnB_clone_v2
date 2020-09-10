@@ -51,9 +51,9 @@ def amenities_post():
     req = request.get_json()
     if "name" not in req:
         return make_response(jsonify({"error": "Missing name"}), 400)
-    city = City(**req)
-    city.save()
-    return make_response(jsonify(city.to_dict()), 201)
+    amenities = Amenity(**req)
+    amenities.save()
+    return make_response(jsonify(amenities.to_dict()), 201)
 
 
 @app_views.route('/amenities/<amenity_id>',
