@@ -9,6 +9,7 @@ from models.state import State
 from models.city import City
 from models.place import Place
 from models.review import Review
+from models.user import User
 from api.v1.views import app_views
 
 
@@ -20,7 +21,7 @@ def reviews_all(place_id):
     if place is None:
         abort(404, description="place_id not linked to any Place object")
     reviews_all = []
-    reviews = storage.all("Review").values()
+    reviews = storage.all(Review).values()
     for review in reviews:
         if review.place_id == place_id:
             reviews_all.append(review.to_dict())
@@ -63,7 +64,7 @@ def review_post(place_id):
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in data:
         abort(400, "Missing user_id")
-    user = storage.get("User", data['user_id'])
+    user = storage.get(User, data['user_id'])
     if user is None:
         abort(404, description="user_id not linked to any User object")
     if 'text' not in data:
