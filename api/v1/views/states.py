@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Restful API for State objects. """
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 from api.v1.views import app_views
 from models.state import State
 from models import storage
@@ -19,9 +19,9 @@ def states_list():
     # method is POST
     body_dic = request.get_json()
     if "name" not in body_dic:
-        return jsonify({"error": "Missing name"}), 400
+        return make_response(jsonify({"error": "Missing name"}), 400)
     if body_dic is None:
-        return jsonify({"error": "Not a JSON"}), 400
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     new_state = State(**body_dic)
     storage.new(new_state)
     storage.save()
@@ -44,7 +44,7 @@ def states_id(state_id):
         else:  # method = PUT
             body_dic = request.get_json()
             if body_dic is None:
-                return jsonify({"error": "Not a JSON"}), 400
+                return make_response(jsonify({"error": "Not a JSON"}), 400)
             for key, value in body_dic.items():
                 ignore_keys = ["id", "created_at", "updated_at"]
                 if key not in ignore_keys:
