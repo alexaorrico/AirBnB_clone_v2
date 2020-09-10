@@ -86,3 +86,46 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_count(self):
+        """ Test for the FS count method
+        """
+        num_states = models.storage.count()
+        #for i in range(3):
+        state = State(name="statey")
+        state.save()
+        # passing non-BaseModel derived object as `cls` - return 0
+        #for test_type in (str, int, float):
+            #self.assertEqual(storage.count(test_type), 0)
+        # passing BaseModel derived object as `cls`
+        self.assertEqual(models.storage.count(State), num_states + 1)
+
+        #for i in range(2):
+        #city = City(name="new_city")
+        #city.save()
+        
+        # passing None as `cls` - count all types in storage
+        #self.assertEqual(models.storage.count(None),
+         #                len(models.storage.all(State)) + len(models.storage.all(City)))
+        # passing no `cls` - count all types in storage
+        #self.assertEqual(models.storage.count(),
+         #                len(models.storage.all(State)) + len(models.storage.all(City)))
+        
+        #FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get(self):
+        """ Test for FS get method
+        """
+        state = State(name="PR")
+        state.save()
+        # passing non-BaseModel derived object as `cls` - None
+        #for test_type in (str, int, float):
+         #   self.assertIsNone(storage.get(test_type, state.id))
+        # passing BaseModel derived object as `cls`, invalid id - None
+        #self.assertIsNone(storage.get(State, 'invalid_id'))
+        # passing BaseModel derived object as `cls`, valid id - obj with id
+        self.assertIs(models.storage.get(State, state.id), state)
