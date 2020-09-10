@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""View for Cities"""
+"""This module is in charge of handling requests for state-type objects."""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
@@ -13,9 +13,7 @@ from models.state import State
 @app_views.route('states/<state_id>/cities',
                  strict_slashes=False, methods=['GET'])
 def get_cities(state_id):
-    """Return cities according to id of state object
-        or return Error: Not found if it doesn't exist.
-    """
+    """return all city in states id"""
     if state_id:
         dict_state = storage.get(State, state_id)
         if dict_state is None:
@@ -31,9 +29,7 @@ def get_cities(state_id):
 
 @app_views.route('cities/<city_id>', strict_slashes=False, methods=['GET'])
 def get_city(city_id):
-    """Return city according class and id of the city
-        or return Error: Not found if it doesn't exist.
-    """
+    """Get a specific City object through the HTTP GET request"""
     if city_id:
         dict_city = storage.get(City, city_id)
         if dict_city is None:
@@ -44,9 +40,7 @@ def get_city(city_id):
 
 @app_views.route('cities/<city_id>', strict_slashes=False, methods=['DELETE'])
 def delete_city(city_id):
-    """Deletes an object City if exists, otherwise raise
-        404 error
-    """
+    """Delete a specific City object through the HTTP DELETE request"""
     if city_id:
         city = storage.get(City, city_id)
         if city is None:
@@ -60,9 +54,7 @@ def delete_city(city_id):
 @app_views.route('states/<state_id>/cities',
                  strict_slashes=False, methods=['POST'])
 def response_city(state_id):
-    """Post request that allow to create a new City if exists the name
-        or raise Error if is not a valid json or if the name is missing
-    """
+    """Create a new City object through the HTTP POST request"""
     if state_id:
         state = storage.get(State, state_id)
         if state is None:
@@ -80,7 +72,7 @@ def response_city(state_id):
 
 @app_views.route('cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def update_city(city_id):
-    """Updates attributes from an State object"""
+    """Update a specific City object through the HTTP PUT request"""
     if city_id:
         obj_cities = storage.get(City, city_id)
         if obj_cities is None:
