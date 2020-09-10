@@ -14,7 +14,7 @@ def all_amenities():
     """Return amenities"""
     dict_am = storage.all(Amenity)
     list_am = []
-    for v in dict_amenities.values():
+    for v in dict_am.values():
         list_am.append(v.to_dict())
     return jsonify(list_am)
 
@@ -74,7 +74,7 @@ def update_amenity(amenity_id):
         if not request.get_json():
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         request = request.get_json()
-        for k, v in req.items():
+        for k, v in request.items():
             if k not in ['id', 'created_at', 'updated_at']:
                 setattr(amenities, k, v)
         amenities.save()
