@@ -18,9 +18,9 @@ def amenities_list():
     if request.method == 'POST':
         response = request.get_json()
         if response is None:
-            abort(400, "Not a JSON")
+            return "Not a JSON", 400
         if "name" not in response:
-            abort(400, "Missing name")
+            return "Missing name", 400
         new_amenity = State(**response)
         new_amenity.save()
         return jsonify(new_amenity.to_dict()), 201
@@ -36,13 +36,17 @@ def amenities_id(amenity_id):
     if request.method == 'GET':
         return jsonify(amenity.to_dict())
     if request.method == 'DELETE':
+        if amenity is None:
+            abort(404)
         storage.delete(amenity)
         storage.save()
         return jsonify({}), 200
     if request.method == "PUT":
         response = request.get_json()
         if response is None:
-            abort(400, "Not a JSON")
+            return "Not a JSON", 400
+        if amenity is None:
+            abort(404)
         for key, value in response.items():
             if key != "id" and key != "created_at" and key != "updated_at"\
              and hasattr(amenity, key):
