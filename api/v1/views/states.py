@@ -15,7 +15,7 @@ def states_list():
         list_dic_states = []
         for state in state_objs:
             list_dic_states.append(state.to_dict())
-            return jsonify(list_dic_states)
+        return jsonify(list_dic_states)
     # method is POST
     body_dic = request.get_json()
     if "name" not in body_dic:
@@ -37,7 +37,8 @@ def states_id(state_id):
         if request.method == "GET":
             return jsonify(state_obj.to_dict())
         if request.method == "DELETE":
-            state_obj.delete()
+            storage.delete(state_obj)
+            storage.save()
             return jsonify({}), 200
         else:  # method = PUT
             body_dic = request.get_json()
@@ -46,7 +47,7 @@ def states_id(state_id):
             for key, value in state_objs.items():
                 ignore_keys = ["id", "created_at", "updated_at"]
                 if key not in ignore_keys:
-                    setattr(state_objs, key, value)
+                    setattr(state_obj, key, value)
             storage.save()
-            return jsonify(state_object.to_dict()), 200
+            return jsonify(state_obj.to_dict()), 200
     abort(404)  # when the id is not linked with any state
