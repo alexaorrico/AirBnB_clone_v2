@@ -7,7 +7,6 @@ from flask import jsonify, request, abort, make_response
 from models import storage
 from api.v1.views import app_views
 from models.state import State
-from models.city import City
 
 
 # the followings are the entendpoints of the app_view blueprint
