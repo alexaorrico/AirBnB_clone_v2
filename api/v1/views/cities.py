@@ -11,18 +11,19 @@ from models import storage
                  methods=['GET'], strict_slashes=False)
 def all_cities(state_id):
     """ Retrieves a list with all citiy objects of a State. """
+    state_obj = storate.get(State, state_id)
     city_objs = storage.all(City).values()
     list_dic_city = []
+    if not state_obj:
+        abort(404)
     for city in city_objs:
         if city.state_id == state_id:
             list_dic_city.append(city.to_dict())
-    if len(list_dic_city) == 0:
-        abort(404)
     return jsonify(list_dic_city)
 
 
 @app_views.route('/cities/<city_id>',
-                 methods=['GETT'], strict_slashes=False)
+                 methods=['GET'], strict_slashes=False)
 def get_city(city_id):
     """ Retrieves a city linked with city_id. """
     city = storage.get(City, city_id)
