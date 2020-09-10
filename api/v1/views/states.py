@@ -5,7 +5,6 @@ view for State objects that handles all default RestFul API actions
 
 from flask import jsonify, request, abort, make_response
 from models import storage
-# we import the Blueprint 'app_views'created in the __init__
 from api.v1.views import app_views
 from models.state import State
 
@@ -30,9 +29,10 @@ def state_id(state_id):
     """
     function to return State object by id throught a GET method
     """
-    state = storage.get("State", state_id)
+    states = storage.all("State")
+    state = states.get(state_id)
     if state is None:
-        abort(404, description="state_id not linked to any State object")
+        abort(404)
     return jsonify(state.to_dict())
 
 
@@ -44,7 +44,7 @@ def delete_state(state_id):
     """
     state = storage.get("State", state_id)
     if state is None:
-        abort(404, description="state_id not linked to any State object")
+        abort(404)
     state.delete()
     storage.save()
     response = make_response(jsonify({}), 200)
@@ -58,9 +58,9 @@ def post_state():
     """
     dic_json = request.get_json()
     if not dic_json:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return make_response("Not a JSON", 400)
     if "name" not in dic_json:
-        return make_response(jsonify({"error": "Missing name"}), 400)
+        return make_response("Missing name", 400)
     new_state = State(**dic_json)
     new_state.save()
     return make_response(jsonify(new_state.to_dict()), 201)
@@ -73,12 +73,16 @@ def put_state(state_id):
     """
     state = storage.get("State", state_id)
     if state is None:
-        abort(404, description="state_id not linked to any State object")
+        abort(404)
     dic_json = request.get_json()
     if not dic_json:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return make_response("Not a JSON", 400)
     for key, value in dic_json.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(state, key, value)
     state.save()
     return make_response(jsonify(state.to_dict()), 200)
+
+
+if __name__ == "__main__":
+    pass
