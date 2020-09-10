@@ -66,3 +66,7 @@ def put_user(user_id):
             setattr(user, attr, val)
     user.save()
     return jsonify(user.to_dict())
+
+
+if __name__ == "__main__":
+    pass
