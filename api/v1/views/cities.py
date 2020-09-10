@@ -2,6 +2,7 @@
 """ Restful API for State objects. """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
+from models.state import State
 from models.city import City
 from models import storage
 
@@ -32,7 +33,7 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>',
                  methods=['PUT'], strict_slashes=False)
-def update_state(city_id):
+def update_city(city_id):
     """Update a current City"""
     city_obj = storage.get(City, city_id)
     if city_obj:
@@ -62,11 +63,19 @@ def delete_city(city_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state(state_id):
-    """Get current state """
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
+def new_city(state_id):
+    """Create a new City object. """
+    body_dic = request.get_json()
     state_obj = storage.get(State, state_id)
-    if state_obj:
-        return jsonify(state_obj.to_dict())
-    else:
+    if not state_obj:
         abort(404)
+    if not body_dic:
+        return jsonify({'error': 'Not a JSON'}), 400
+    if "name" not in body_dic:
+        return jsonify({'error': 'Missing name'}), 400
+
+    new_city = City(**body_dic)
+    storage.save()
+    return jsonify(new_city.to_dict()), 201
