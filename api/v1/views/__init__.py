@@ -17,4 +17,4 @@ from api.vi.views.users import *
 
 from api.vi.views.places import *
 
-from api.vi.views.reviews import *
+from api.vi.views.places_reviews import *
