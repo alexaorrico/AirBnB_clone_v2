@@ -65,8 +65,8 @@ def create_city(state_id):
                  strict_slashes=False)
 def update_city(city_id):
     """Updates a city object"""
-    update_city_json = request.get_json(silent=True)
-    if update_city_json is None:
+    city_obj = request.get_json(silent=True)
+    if city_obj is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
     city = storage.get('City', city_id)
