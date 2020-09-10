@@ -52,7 +52,7 @@ def amenities_id(amenity_id):
             abort(404)
         for key, value in response.items():
             if key != "id" and key != "created_at" and key != "updated_at"\
-             and hasattr(amenity, key):
+                    and hasattr(amenity, key):
                 setattr(amenity, key, value)
         storage.save()
         return jsonify(amenity.to_dict()), 200
