@@ -72,5 +72,5 @@ def state_put(state_id):
 
     state = State(**res)
     storage.save()
-    s = state.to_dict()
-    return jsonify(s), 200
+
+    return jsonify(res), 200
