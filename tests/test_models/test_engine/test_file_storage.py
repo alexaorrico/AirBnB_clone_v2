@@ -122,7 +122,10 @@ class TestFileStorage(unittest.TestCase):
         state.save()
 
         # Test valid input
-        self.assertIs(models.storage.get(State, state.id), state)
+        valid = models.storage.get(State, state.id)
+        self.assertIs(valid, state)
+        # Test ids are the same
+        self.assertEqual(state.id, valid.id)
         # Test invalid id
         self.assertIs(models.storage.get(State, "bad_id_12345"), None)
         # Test invalid class
