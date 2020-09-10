@@ -40,7 +40,7 @@ def reviews_place(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=["GET", "DELETE", "PUT"],
                  strict_slashes=False)
-def place(place_id):
+def place_review(review_id):
     """ Manipulate an specific Place """
     review = storage.get(Review, review_id)
     if review is None:
