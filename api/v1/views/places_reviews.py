@@ -15,7 +15,7 @@ from models.city import City
                  strict_slashes=False)
 def get_reviews(place_id):
     """get review for a place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     reviews = []
@@ -28,7 +28,7 @@ def get_reviews(place_id):
                  strict_slashes=False)
 def get_review(review_id):
     """specified reviewd informa"""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     return jsonify(review.to_dict())
@@ -38,10 +38,10 @@ def get_review(review_id):
                  strict_slashes=False)
 def delete_review(review_id):
     """delet a review1"""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    review.delete()
+    storage.delete(review)
     storage.save()
     return (jsonify({}))
 
@@ -50,21 +50,21 @@ def delete_review(review_id):
                  strict_slashes=False)
 def post_review(place_id):
     """create review LOL]"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    kwargs = request.get_json()
-    if 'user_id' not in kwargs:
+    jsonfile = request.get_json()
+    if 'user_id' not in jsonfile:
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
-    user = storage.get("User", kwargs['user_id'])
+    user = storage.get(User, jsonfile['user_id'])
     if user is None:
         abort(404)
-    if 'text' not in kwargs:
+    if 'text' not in jsonfile:
         return make_response(jsonify({'error': 'Missing text'}), 400)
-    kwargs['place_id'] = place_id
-    review = Review(**kwargs)
+    jsonfile['place_id'] = place_id
+    review = Review(**jsonfile)
     review.save()
     return make_response(jsonify(review.to_dict()), 201)
 
@@ -73,7 +73,7 @@ def post_review(place_id):
                  strict_slashes=False)
 def put_review(review_id):
     """updat review"""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     if not request.get_json():
