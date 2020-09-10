@@ -13,7 +13,8 @@ def app_route_state():
     converted_states = []
     all_states = storage.all()
     for values in all_states.values():
-        converted_states.append(values.to_dict())
+        if values.to_dict()["__class__"] == "State":
+            converted_states.append(values.to_dict())
 
     return jsonify(converted_states)
 
