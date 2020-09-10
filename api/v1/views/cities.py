@@ -18,6 +18,7 @@ def get_cities(state_id):
     st_cities = [c.to_dict() for c in all_cities if c.state_id == state_id]
     return jsonify(st_cities)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
@@ -27,3 +28,14 @@ def get_city(city_id):
         abort(404)
     return jsonify(city.to_dict())
 
+
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_city_id(city_id):
+    """Deletes a City object by id"""
+    city_id = storage.get('City', city_id)
+    if city_id is None:
+        abort(404)
+    storage.delete(city_id)
+    storage.save()
+    return jsonify({}), 200
