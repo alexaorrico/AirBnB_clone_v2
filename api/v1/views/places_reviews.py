@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app_views.route('/api/v1/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def all_reviews(city_id):
+def all_reviews(place_id):
     """ retrieves the list of all Review objects of a Place """
     place = storage.get(Place, place_id)
 
