@@ -6,17 +6,14 @@ from flask import Flask, jsonify, abort, request
 from models import storage
 from models.city import City
 from models.place import Place
-from os import getenv
-app = Flask(__name__)
-
-storage_t = getenv("HBNB_TYPE_STORAGE")
+from models.user import User
 
 
-@app.route('/api/v1/cities/<city_id>/places', methods=['GET'],
-           strict_slashes=False)
+@app_views.route('/api/v1/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
 def all_places(city_id):
     """ retrieves the list of all Place objects of a City """
-    city = storage.get(City, city.id)
+    city = storage.get(City, city_id)
 
     if city is None:
         abort(404)
@@ -28,11 +25,11 @@ def all_places(city_id):
         return jsonify(all_places)
 
 
-@app.route('/api/v1/places/<place_id>', methods=['GET'],
-           strict_slashes=False)
+@app_views.route('/api/v1/places/<place_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_place(place_id):
     """ retrieves a Place object """
-    place = storage.get(Place, place.id)
+    place = storage.get(Place, place_id)
 
     if place is None:
         abort(404)
@@ -40,11 +37,11 @@ def get_place(place_id):
         return jsonify(place)
 
 
-@app.route('/api/v1/places/<place_id>', methods=['DELETE'],
-           strict_slashes=False)
+@app_views.route('/api/v1/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_place(place_id):
     """ deletes a Place object """
-    place = storage.get(Place, place.id)
+    place = storage.get(Place, place_id)
 
     if place is None:
         abort(404)
@@ -54,11 +51,13 @@ def delete_place(place_id):
         return jsonify({}), 200
 
 
-@app.route('/api/v1/cities/<city_id>/places', methods=['POST'],
-           strict_slashes=False)
+@app_views.route('/api/v1/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
 def create_place(city_id):
     """ creates a Place object """
     place_obj = request.get_json()
+    if not storage.get(City, city_id):
+        abort(404)
     if not place_obj:
         abort(400, {'Not a JSON'})
     if 'user_id' not in place_obj:
@@ -73,10 +72,12 @@ def create_place(city_id):
     return jsonify(new_place.to_dict()), 201
 
 
-@app.route('/api/v1/places/<place_id>', methods=['PUT'],
-           strict_slashes=False)
+@app_views.route('/api/v1/places/<place_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_place(place_id):
     """ updates a Place object """
+    if not storage.get(Place, place_id):
+        abort(404)
     upd_place = request.get_json()
     if not upd_place:
         abort(400, {'Not a JSON'})
@@ -84,4 +85,4 @@ def update_place(place_id):
     for key, value in upd_place.items():
         setattr(this_place, key, value)
     storage.save()
-    return jsonify(this_state.to_dict())
+    return jsonify(this_place.to_dict()), 200
