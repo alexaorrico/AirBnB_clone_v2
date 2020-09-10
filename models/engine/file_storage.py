@@ -73,9 +73,6 @@ class FileStorage:
         """Method to retrieve one object"""
         clss = classes[cls.__name__]
         if cls is not None and id is not None:
-            key = "{}.{}".format(cls, id)
-            obj = self.__objects.get(key, None)
-            return obj
             for value in self.all(clss).values():
                 if value.id == id:
                     return (value)
