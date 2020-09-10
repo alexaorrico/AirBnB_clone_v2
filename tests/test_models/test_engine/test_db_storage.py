@@ -97,6 +97,8 @@ class TestDBStorage(unittest.TestCase):
         # test valid input
         valid = models.storage.get(State, state.id)
         self.assertIs(valid, state)
+        # test ids are equal
+        self.assertEqual(state.id, valid.id)
         # test bad id
         bad_id = models.storage.get(State, "bad_id_1234")
         self.assertIs(bad_id, None)
