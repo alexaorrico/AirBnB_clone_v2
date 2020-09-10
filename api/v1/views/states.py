@@ -24,6 +24,7 @@ def states_list():
         return jsonify({"error": "Not a JSON"}), 400
     new_state = State(**body_dic)
     storage.new(new_state)
+    storage.save()
     return jsonify(new_state.to_dict()), 201
 
 
