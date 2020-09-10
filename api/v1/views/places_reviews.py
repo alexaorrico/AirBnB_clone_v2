@@ -60,5 +60,5 @@ def place_review(review_id):
             if key not in ["id", "user_id", "place_id", "created_at",
                            "updated_at"]:
                 setattr(review, key, value)
-        storage.save()
+        review.save()
         return jsonify(review.to_dict()), 200
