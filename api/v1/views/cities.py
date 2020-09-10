@@ -76,7 +76,7 @@ def update_city(city_id):
 
         for key, value in data.items():
             if key != 'id' or key != 'created_at':
-                if key != 'updated_at' or key != 'city_id':
+                if key != 'updated_at' or key != 'state_id':
                     setattr(city_obj, key, value)
 
         storage.save()
