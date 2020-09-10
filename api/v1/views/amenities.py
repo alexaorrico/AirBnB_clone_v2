@@ -30,7 +30,7 @@ def aminities_get(amenity_id):
         abort(404)
 
 
-@app_views.route('/amenities/<amenity_id',
+@app_views.route('/amenities/<amenity_id>',
                  strict_slashes=False, methods=['DELETE'])
 def amenities_delete(amenity_id):
     """Delete a specific Amenity object through the HTTP DELETE request"""
@@ -56,7 +56,8 @@ def amenities_post():
     return make_response(jsonify(city.to_dict()), 201)
 
 
-@app_views('amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['PUT'])
 def amenities_put(amenity_id):
     """Update a specific Amenity object through the HTTP PUT request"""
     if city_id:
