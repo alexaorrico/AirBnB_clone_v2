@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" State restful api """
 from models.base_model import BaseModel, Base
 from flask import jsonify, abort, request
 from models.state import State
@@ -9,7 +10,7 @@ from api.v1.views import app_views
 @app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def allstates(state_id=None):
-    """ jsonify """
+    """ Retrieve one object or all objects of State """
     if state_id is None:
         lista = []
         for v in storage.all(State).values():
@@ -27,8 +28,10 @@ def allstates(state_id=None):
             return (jsonify(attr))
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete(state_id=None):
+    """ Delete a state object """
     if state_id is None:
         abort(404)
     dicti = {}
@@ -46,9 +49,10 @@ def delete(state_id=None):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_task():
+    """ create a state object """
     if not request.json:
         abort(400, "Not a JSON")
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         abort(400, "Missing name")
     result = request.get_json()
     obj = State()
@@ -62,7 +66,8 @@ def create_task():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_task(state_id=None):
-    if not request.json or not 'name' in request.json:
+    """ Change atributes of state object """
+    if not request.json or 'name' not in request.json:
         abort(400, "Not a JSON")
     if state_id is None:
         abort(404)
