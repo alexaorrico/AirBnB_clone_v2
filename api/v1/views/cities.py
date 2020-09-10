@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""   module that creates a new view for City objects"""
+""" RESTful API for City object """
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models.base_model import BaseModel
@@ -19,7 +19,7 @@ def get_cities(state_id):
             list_cities.append(city.to_dict())
             return jsonify(list_cities)
     else:
-            abort(404)
+        abort(404)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'],
@@ -76,7 +76,7 @@ def update_city(city_id):
         if my_dict is None:
             abort(400, "Not a JSON")
         for key, value in my_dict.items():
-                if key not in ["id", "created_at", "updated_at"]:
-                    setattr(city, key, value)
+            if key not in ["id", "created_at", "updated_at"]:
+                setattr(city, key, value)
         storage.save()
         return jsonify(city.to_dict()), 200
