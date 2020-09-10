@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Amenity Api Module"""
+"""Users Api Module"""
 from flask import jsonify, abort, make_response, request
 from api.v1.views import app_views
 from models.user import User
