@@ -67,4 +67,3 @@ def amenityupdate(amenity_id):
             setattr(update_amen, key, value)
     update_amen.save()
     return jsonify(update_amen.to_dict()), 200
-    
