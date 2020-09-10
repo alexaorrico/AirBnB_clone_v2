@@ -19,7 +19,7 @@ def teardown_close(db_close):
 def resource_not_found(e):
     """return error 404"""
     return jsonify({
-                    "error": "Not found"
+                    "error": "Not found" 
                   }), 404
 
 
