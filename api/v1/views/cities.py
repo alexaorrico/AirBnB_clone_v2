@@ -11,7 +11,7 @@ from models import storage
                  methods=['GET'], strict_slashes=False)
 def all_cities(state_id):
     """ Retrieves a list with all citiy objects of a State. """
-    state_obj = storate.get(State, state_id)
+    state_obj = storage.get(State, state_id)
     city_objs = storage.all(City).values()
     list_dic_city = []
     if not state_obj:
