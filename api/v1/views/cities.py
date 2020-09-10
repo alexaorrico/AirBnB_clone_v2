@@ -15,7 +15,7 @@ from models.city import City
 def all_cities():
     """Retrieves the list of all City objects of a State"""
     all_cities = []
-    if not storage.get('State', city_id):
+    if not storage.get('State', state_id):
         abort(404)
     for city in storage.all('City').values():
         if state_id == city.to.dict()['state_id']:
