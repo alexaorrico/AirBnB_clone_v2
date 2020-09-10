@@ -6,7 +6,7 @@ from models.state import State
 from models import storage
 
 
-@app_views.route("/states", methods=["GET"], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
     """ Retrieves a list with all states. """
     state_objs = storage.all(State).values()
@@ -16,29 +16,29 @@ def all_states():
     return jsonify(list_dic_states)
 
 
-@app_views.route("/states", methods=["POST"], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def all_states_N():
     """ Retrieves a list with all state, including the new one. """
     body_dic = request.get_json()
     if "name" not in body_dic:
-        return jsonify({"error": "Missing name"}), 400
+        return jsonify({'error': 'Missing name'}), 400
     if body_dic is None:
-        return jsonify({"error": "Not a JSON"}), 400
+        return jsonify({'error': 'Not a JSON'}), 400
     new_state = State(**body_dic)
     storage.save()
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """Update a current state"""
     state_obj = storage.get(State, state_id)
     if state_obj:
         body_dic = request.get_json()
         if body_dic is None:
-            return jsonify({"error": "Not a JSON"}), 400
+            return jsonify({'error': 'Not a JSON'}), 400
         for key, value in body_dic.items():
-            ignore_keys = ["id", "created_at"]
+            ignore_keys = ['id', 'created_at']
             if key not in ignore_keys:
                 setattr(state_obj, key, value)
         state_obj.save()
@@ -47,8 +47,8 @@ def update_state(state_id):
         abort(404)
 
 
-@app_views.route("/states/<state_id>",
-                 methods=["DELETE"], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """Delete current state """
     state_obj = storage.get(State, state_id)
@@ -60,7 +60,7 @@ def delete_state(state_id):
         abort(404)
 
 
-@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """Get current state """
     state_obj = storage.get(State, state_id)
