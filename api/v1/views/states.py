@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Restful API for State objects. """
-from flask import jsonify, request, abort, make_response
+from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models.state import State
 from models import storage
@@ -25,7 +25,7 @@ def states_list():
     new_state = State(**body_dic)
     storage.new(new_state)
     storage.save()
-    return make_response(jsonify(new_state.to_dict()), 201)
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route("/states/<state_id>",
@@ -40,15 +40,14 @@ def states_id(state_id):
         if request.method == "DELETE":
             storage.delete(state_obj)
             storage.save()
-            return make_response(jsonify({}), 200)
+            return jsonify({}), 200
         else:  # method = PUT
             body_dic = request.get_json()
             if body_dic is None:
-                return jsonify({"error": "Not a JSON"}), 400
+                return jsonify({"error": "Not a JSON"}), 400)
             for key, value in body_dic.items():
-                ignore_keys = ["id", "created_at", "updated_at"]
                 if key not in ignore_keys:
                     setattr(state_obj, key, value)
             storage.save()
-            return make_response(jsonify(state_obj.to_dict()), 200)
+            return jsonify(state_obj.to_dict()), 200
     abort(404)  # when the id is not linked with any state
