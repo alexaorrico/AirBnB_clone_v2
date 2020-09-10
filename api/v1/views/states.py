@@ -41,10 +41,9 @@ def app_route_state3(states_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def state_post():
-    """ handles POST method
-    """
+    """ POST new user """
     data = request.get_json()
-     if 'name' not in data:
+    if 'name' not in data:
         return abort(400, "Missing name")
     if data is None:
         return abort(400, "Not a JSON")
@@ -56,8 +55,7 @@ def state_post():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def state_put(state_id):
-    """ handles PUT method
-    """
+    """ PUT update an state """
     state = storage.get("State", state_id)
 
     if state is None:
