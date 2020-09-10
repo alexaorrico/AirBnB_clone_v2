@@ -44,7 +44,7 @@ def states_id(state_id):
         else:  # method = PUT
             body_dic = request.get_json()
             if body_dic is None:
-                return jsonify({"error": "Not a JSON"}), 400)
+                return jsonify({"error": "Not a JSON"}), 400
             for key, value in body_dic.items():
                 if key not in ignore_keys:
                     setattr(state_obj, key, value)
