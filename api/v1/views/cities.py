@@ -10,7 +10,7 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/api/v1/cities/<state_id>/cities', methods=['GET'],
+@app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def all_cities(state_id):
     """Retrieves the list of all City objects of a State"""
@@ -18,7 +18,7 @@ def all_cities(state_id):
     if not storage.get('State', state_id):
         abort(404)
     for city in storage.all('City').values():
-        if state_id == city.to.dict()['state_id']:
+        if state_id == city.to_dict()['state_id']:
             all_cities.append(city.to_dict())
     return jsonify(all_cities)
 
