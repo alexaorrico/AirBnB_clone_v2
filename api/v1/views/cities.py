@@ -62,7 +62,7 @@ def city(city_id):
         if jreq is None:
             abort(400, 'Not a JSON')
 
-        for k, v in jreq:
+        for k, v in jreq.items():
             if k not in ['id', 'created_at', 'updated_at']:
                 setattr(city, k, v)
         city.save()

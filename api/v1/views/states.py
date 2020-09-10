@@ -48,6 +48,7 @@ def state(state_id):
 
     if request.method == "DELETE":
         state.delete()
+        storage.save()
         return jsonify({})
 
     if request.method == "PUT":
@@ -55,7 +56,7 @@ def state(state_id):
         if jreq is None:
             abort(400, 'Not a JSON')
 
-        for k, v in jreq:
+        for k, v in jreq.items():
             if k not in ['id', 'created_at', 'updated_at']:
                 setattr(state, k, v)
         state.save()
