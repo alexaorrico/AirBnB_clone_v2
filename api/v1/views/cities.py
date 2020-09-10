@@ -49,7 +49,7 @@ def delete_city(city_id):
 
 @app_views.route('/api/v1/states/<state_id>/cities', methods=['PUT'],
                  strict_slashes=False)
-def create_city():
+def create_city(state_id):
     """Creates a City object"""
     city_list = request.get_json()
     if not storage.get('State', state_id):
