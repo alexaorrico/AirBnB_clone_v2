@@ -79,13 +79,16 @@ class DBStorage:
         """ retrieve an object """
         if cls is None or id is None:
             return None
+        if type(cls) is str:
+            key = cls + '.' + id
         else:
-            result = self.all(cls)
             key = cls.__name__ + '.' + id
-            for keys, values in result.items():
-                if keys == key:
-                    return str(values)
-            return (None)
+
+        result = self.all(cls)
+        for keys, values in result.items():
+            if keys == key:
+                return (values)
+        return (None)
 
     def count(self, cls=None):
         """ Returns the number of objects in
