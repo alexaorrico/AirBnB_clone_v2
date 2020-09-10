@@ -14,7 +14,7 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def reviews_place(place_id):
     """ Retrieves the list of all Places objects """
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if place is None:
         abort(404)
     if request.method == "GET":
@@ -44,7 +44,7 @@ def reviews_place(place_id):
                  strict_slashes=False)
 def place_review(review_id):
     """ Manipulate an specific Place """
-    review = storage.get(Review, review_id)
+    review = storage.get("Review", review_id)
     if review is None:
         abort(404)
     if request.method == "GET":
