@@ -40,13 +40,13 @@ def update_state(state_id):
     except:
         abort(400, 'Not a JSON')
 
-    for key in state_json:
+    for key in state_json.keys():
         if key in ignored_keys:
             continue
         if getattr(state, key):
             setattr(state, key, state_json[key])
         storage.save()
-        return state.to_dict(), 200
+        return jsonify(state.to_dict()), 200
 
 
 def create_state():
@@ -63,7 +63,7 @@ def create_state():
     state = State(**state_json)
     storage.new(state)
     storage.save()
-    return state.to_dict(), 201
+    return jsonify(state.to_dict()), 201
 
 
 def delete_state(state_id):
@@ -71,11 +71,9 @@ def delete_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    else:
-        storage.delete(state)
-        storage.save()
-        return {}
-    pass
+    storage.delete(state)
+    storage.save()
+    return jsonify({}), 200
 
 
 def get_state(state_id):
@@ -83,7 +81,7 @@ def get_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    return state.to_dict()
+    return jsonify(state.to_dict())
 
 
 def all_states():
