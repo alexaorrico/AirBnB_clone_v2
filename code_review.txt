@@ -1,0 +1,3 @@
+Fatchicken277 - Alejandro Ramirez
+Hello mate, you have a spelling mistake in the doc string of the get method in the two files. you also have a few descriptive doc string.
+Excellent
