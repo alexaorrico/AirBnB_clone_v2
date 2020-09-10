@@ -77,4 +77,3 @@ def put_states(state_id):
     else:
         result = jsonify({'error': 'Not a JSON'}), 400
     return result
-    

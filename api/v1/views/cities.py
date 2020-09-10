@@ -5,7 +5,9 @@ from models import storage
 from api.v1.views import app_views, State, City
 from flask import abort
 
-@app_views.route('/states/<state_id>/cities',methods=['GET'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
     """ Retrives the list of all City objs base on state_id """
     objs = storage.get(State, state_id)
@@ -29,7 +31,7 @@ def get_cities_by_id(city_id):
     return result
 
 
-@app_views.route('/cities/<city_id>',methods=['DELETE'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city_by_id(city_id):
     """ DELETE city by ID """
     city_object = storage.get(City, city_id)
@@ -43,7 +45,8 @@ def delete_city_by_id(city_id):
     return result
 
 
-@app_views.route('/states/<state_id>/cities',methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def post_city(state_id):
     """ Creates a City obj """
     state_object = storage.get(State, state_id)
@@ -79,4 +82,3 @@ def put_cities(city_id):
     else:
         result = jsonify({'error': 'Not a JSON'}), 400
     return result
-    
