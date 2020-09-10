@@ -42,10 +42,10 @@ def app_route_state3(states_id):
 def app_route_state4():
     """ POST new user """
     data = request.get_json()
-    if 'name' not in data:
-        return abort(400, "Missing name")
     if data is None:
         return abort(400, "Not a JSON")
+    if 'name' not in data:
+        return abort(400, "Missing name")
     state = State(**data)
     state_dict = state.to_dict()
     state.save()
