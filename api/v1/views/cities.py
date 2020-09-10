@@ -68,6 +68,10 @@ def post_city(state_id):
     if state is None:
         abort(404)
     dic_json = request.get_json()
+    if not dic_json:
+        return make_response("Not a JSON", 400)
+    if "name" not in dic_json:
+        return make_response("Missing name", 400)
     dic_json["state_id"] = state_id
     new_city = City(**dic_json)
     storage.new(new_city)
