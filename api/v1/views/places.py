@@ -7,6 +7,7 @@ from models import storage
 from models.city import City
 from models.place import Place
 from os import getenv
+app = Flask(__name__)
 
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
