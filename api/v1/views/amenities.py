@@ -2,7 +2,7 @@
 """ Restful API for State objects. """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
-from models.state import Amenities
+from models.amenity import Amenity
 from models.city import City
 from models import storage
 
@@ -14,13 +14,13 @@ def all_amenities():
     amenity_objs = storage.all(Amenity).values()
     list_dic_amenity = []
     for amenity in amenity_objs:
-        list_dic_city.append(city.to_dict())
-    return jsonify(list_dic_city)
+        list_dic_amenity.append(amenity.to_dict())
+    return jsonify(list_dic_amenity)
 
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'], strict_slashes=False)
-def get_city(amenity_id):
+def get_amenity(amenity_id):
     """ Retrieves a Amenity object linked with amenity_id. """
     amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj:
@@ -30,7 +30,7 @@ def get_city(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_city(amenity_id):
+def delete_amenity(amenity_id):
     """Delete current amenity """
     amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj:
@@ -43,7 +43,7 @@ def delete_city(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['POST'], strict_slashes=False)
-def new_city(amenity_id):
+def new_amenity(amenity_id):
     """Create a new Amenity object. """
     body_dic = request.get_json()
     if not body_dic:
@@ -59,7 +59,7 @@ def new_city(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
-def update_city(amenity_id):
+def update_amenity(amenity_id):
     """Update a current Amenity"""
     amenity_obj = storage.get(Amenity, city_id)
     if amenity_obj:
