@@ -10,3 +10,20 @@ from models import storage
 def status():
     """DOC"""
     return jsonify({"status": "OK"})
+
+
+@app_views.route('/stats', strict_slashes=False)
+def status_count():
+    """Doc"""
+    clss = {
+        "Amenity": "amenities",
+        "Place": "places",
+        "State": "states",
+        "Review": "reviews",
+        "User": "users"
+        "City": "cities",
+        }
+    d = {}
+    for k, val in clss.items():
+        d[val] = storage.count(k)
+    return jsonify(d)
