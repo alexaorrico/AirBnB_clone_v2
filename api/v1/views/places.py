@@ -30,7 +30,7 @@ def new_place(city_id):
     """ Retrieves a new created place """
     body_dic = request.get_json()
     city = storage.get(City, city_id)
-    user = body_dic.get("user_id", None)
+    user = storage.get(User, body_dic.get("user_id", None))
     if not city:
         abort(404)
     if not body_dic:
