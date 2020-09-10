@@ -5,8 +5,9 @@ view for Place objects that handles all default RestFul API actions
 
 from flask import jsonify, request, abort, make_response
 from models import storage
-from models.place import Place
+from models.state import State
 from models.city import City
+from models.place import Place
 from api.v1.views import app_views
 
 

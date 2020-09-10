@@ -5,8 +5,10 @@ View for Reviews that handles all RESTful API actions
 
 from flask import jsonify, request, abort, make_response
 from models import storage
-from models.review import Review
+from models.state import State
+from models.city import City
 from models.place import Place
+from models.review import Review
 from api.v1.views import app_views
 
 
