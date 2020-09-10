@@ -46,6 +46,7 @@ def states_id(state_id):
             if body_dic is None:
                 return jsonify({"error": "Not a JSON"}), 400
             for key, value in body_dic.items():
+                ignore_keys = ["id", "created_at"]
                 if key not in ignore_keys:
                     setattr(state_obj, key, value)
             storage.save()
