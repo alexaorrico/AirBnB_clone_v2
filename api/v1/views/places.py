@@ -61,7 +61,7 @@ def create_place(city_id):
     user_id = data['user_id']
     city_obj = storage.get(City, city_id)
     user_obj = storage.get(User, user_id)
-    if city_obj and user_id:
+    if city_obj and user_obj:
         data['city_id'] = city_id
         new_place = Place(**data)
         storage.new(new_place)
