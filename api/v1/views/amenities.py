@@ -24,7 +24,8 @@ def get_amenity(amenity_id):
     amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj:
         return jsonify(amenity_obj.to_dict())
-    abort(404)
+    else:
+        abort(404)
 
 
 @app_views.route('/amenities/<amenity_id>',
@@ -40,9 +41,9 @@ def delete_amenity(amenity_id):
         abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>',
+@app_views.route('/amenities',
                  methods=['POST'], strict_slashes=False)
-def new_amenity(amenity_id):
+def new_amenity():
     """Create a new Amenity object. """
     body_dic = request.get_json()
     if not body_dic:
