@@ -42,6 +42,7 @@ def new_place(city_id):
     if "name" not in body_dic:
         return jsonify({'error': 'Missing name'}), 400
     new_place = Place(**body_dic)
+    setattr(new_place, "city_id", city_id)
     storage.save()
     return jsonify(new_place.to_dict()), 201
 
