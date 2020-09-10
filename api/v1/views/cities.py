@@ -1,13 +1,9 @@
 #!/usr/bin/python3
 """View for Cities"""
-from api.v1.views import app_views
+from flask import jsonify, abort, request
 from models import storage
-from flask import jsonify
 from models.city import City
-from flask import abort
-from flask import make_response
-from flask import request
-from models.state import State
+from api.v1.views import app_viewte
 
 
 @app_views.route('states/<state_id>/cities',
