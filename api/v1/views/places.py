@@ -10,16 +10,17 @@ from flask import jsonify, abort, request, make_response
     '], strict_slashes=False)
 def get_places(city_id):
     """Returns a json object with all the city"""
+    city = storage.get('City', city_id)
     if not city:
         abort(404)
     list_dict = []
-    for obj in storage.get('City', city_id):
+    for obj in city.places:
         list_dict.append(obj.to_dict())
     return jsonify(list_dict)
 
-@app_views.route('/places/<string:place_id>', methods=['GET'],
-                 strict_slashes=False)
-def get_place(state_id):
+
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+def get_place(place_id):
     """Returns a json object with the place with given id"""
     obj = storage.get(Place, place_id)
     if (obj):
@@ -30,7 +31,7 @@ def get_place(state_id):
 
 @app_views.route('/places/<string:place_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_place(state_id):
+def delete_place(place_id):
     """Delete a place"""
     obj = storage.get(Place, place_id)
     if (obj):
@@ -43,7 +44,7 @@ def delete_place(state_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST\
     '], strict_slashes=False)
-def createPlace(city_id):
+def create_place(city_id):
     """Create a place for a city if not error 404
     """
     cities = storage.get('City', city_id)
