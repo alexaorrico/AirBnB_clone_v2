@@ -30,8 +30,8 @@ def all_states_N():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/states", methods=["PUT"], strict_slashes=False)
-def update_state():
+@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
+def update_state(state_id):
     """Update a current state"""
     state_obj = storage.get(State, state_id)
     if state_obj:
@@ -48,8 +48,8 @@ def update_state():
         abort(404)
 
 
-@app_views.route("/states", methods=["DELETE"], strict_slashes=False)
-def delete_state():
+@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
+def delete_state(state_id):
     """Delete current state """
     state_obj = storage.get(State, state_id)
     if state_obj:
@@ -60,11 +60,11 @@ def delete_state():
         abort(404)
 
 
-@app_views.route("/states", methods=["GET"], strict_slashes=False)
-def get_state():
+@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
+def get_state(state_id):
     """Get current state """
     state_obj = storage.get(State, state_id)
     if state_obj:
         return jsonify(state_obj.to_dict())
     else:
-        abort(404
+        abort(404)
