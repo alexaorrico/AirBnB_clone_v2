@@ -12,6 +12,7 @@ def return_status():
     """returns a JSON string"""
     return {"status": "OK"}
 
+
 @app_views.route('/api/v1/stats', strict_slashes=False)
 def count_objects():
     """retrieves the number of each object by type"""
