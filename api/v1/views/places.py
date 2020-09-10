@@ -6,7 +6,8 @@ from models import storage
 from flask import jsonify, abort, request, make_response
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET\
+    '], strict_slashes=False)
 def get_places(city_id):
     """Returns a json object with all the city"""
     list_dict = []
@@ -39,7 +40,8 @@ def delete_place(state_id):
         abort(404)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST\
+    '], strict_slashes=False)
 def createPlace(city_id):
     """Create a place for a city if not error 404
     """
