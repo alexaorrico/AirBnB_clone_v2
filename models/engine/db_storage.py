@@ -78,8 +78,13 @@ class DBStorage:
     def get(self, cls, id):
         """get specific object"""
         objs = self.all(cls)
-        key = "{}.{}".format(cls.__name__, id)
-        return objs.get(key)
+        if len(objs) == 0:
+            return None
+        try:
+            key = "{}.{}".format(cls.__name__, id)
+            return objs[key]
+        except KeyError:
+            return None
 
     def count(self, cls=None):
         """gets count of cls objs"""
