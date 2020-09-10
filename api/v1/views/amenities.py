@@ -18,15 +18,15 @@ def amenities_list():
     if request.method == 'POST':
         response = request.get_json()
         if response is None:
-            return "Not a JSON", 400
+            abort(400, "Not a JSON")
         if "name" not in response:
-            return "Missing name", 400
+            abort(400, "Missing name")
         new_amenity = State(**response)
         new_amenity.save()
         return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route("/amenities/<state_id>", methods=['GET', 'DELETE', 'PUT'],
+@app_views.route("/amenities/<amenity_id>", methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def amenities_id(amenity_id):
     """ Manipulate an specific amenity """
