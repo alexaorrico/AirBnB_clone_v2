@@ -49,9 +49,9 @@ def create_task_users():
     """ create a user object """
     if not request.json:
         abort(400, "Not a JSON")
-    if not 'email' in request.json:
+    if 'email' not in request.json:
         abort(400, "Missing email")
-    if not 'password' in request.json:
+    if 'password' not in request.json:
         abort(400, "Missing password")
     result = request.get_json()
     obj = User()

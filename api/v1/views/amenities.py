@@ -7,7 +7,8 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def allAmenitys(amenity_id=None):
     """ show all and one amenitie object """
@@ -28,7 +29,8 @@ def allAmenitys(amenity_id=None):
             return (jsonify(attr))
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_amenities(amenity_id=None):
     """ delete an amenity object """
     if amenity_id is None:
@@ -51,7 +53,7 @@ def create_task_amenities():
     """ create an amenity object """
     if not request.json:
         abort(400, "Not a JSON")
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         abort(400, "Missing name")
     result = request.get_json()
     obj = Amenity()
@@ -63,10 +65,11 @@ def create_task_amenities():
     return (jsonify(var), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def put_task_amenities(amenity_id=None):
     """ change an atribute of amenity object """
-    if not request.json or not 'name' in request.json:
+    if not request.json or 'name' not in request.json:
         abort(400, "Not a JSON")
     if amenity_id is None:
         abort(404)

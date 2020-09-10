@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 Rest api for Reviews
@@ -14,7 +13,8 @@ from models.review import Review
 from api.v1.views import app_views
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                 methods=['GET'], strict_slashes=False)
 def all_review(place_id=None):
     """ Show all review objects """
     lista = []
@@ -44,7 +44,8 @@ def onereview(review_id=None):
         return (jsonify(attr))
 
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/reviews/<review_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_reviews(review_id=None):
     """ delete """
     dicti = {}
@@ -60,14 +61,15 @@ def delete_reviews(review_id=None):
         return (jsonify(dicti), 200)
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST'], strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                 methods=['POST'], strict_slashes=False)
 def create_reviews(place_id=None):
     """ Post and create object """
     if not request.json:
         abort(400, "Not a JSON")
-    if not 'text' in request.json:
+    if 'text' not in request.json:
         abort(400, "Missing text")
-    if not 'user_id' in request.json:
+    if 'user_id' not in request.json:
         abort(400, "Missing user_id")
     result = request.get_json()
     obj = Review()

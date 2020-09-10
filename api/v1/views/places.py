@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 places
@@ -13,7 +12,8 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('cities/<city_id>/places',
+                 methods=['GET'], strict_slashes=False)
 def all_places_get(city_id=None):
     """ Show all places objects """
     lista = []
@@ -43,7 +43,8 @@ def all_places(place_id=None):
         return (jsonify(attr))
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_places(place_id=None):
     """ delete a place """
     if place_id is None:
@@ -61,14 +62,15 @@ def delete_places(place_id=None):
         return (jsonify(dicti), 200)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=['POST'], strict_slashes=False)
 def create_places(city_id=None):
     """ Create a object place """
     if not request.json:
         abort(400, "Not a JSON")
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         abort(400, "Missing name")
-    if not 'user_id' in request.json:
+    if 'user_id' not in request.json:
         abort(400, "Missing user_id")
     result = request.get_json()
     obj = Place()

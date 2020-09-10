@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+""" index of restapi """
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -14,13 +14,13 @@ import json
 
 @app_views.route('/status', methods=['GET'])
 def retun_json():
-    """ jsonify """
+    """ Show status of api """
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'])
 def number_cls_json():
-    """ jsonify """
+    """ count the number of all objects in the data base """
 
     list_bd = {"amenities": Amenity, "cities": City, "places": Place,
                "reviews": Review, "states": State, "users": User}
