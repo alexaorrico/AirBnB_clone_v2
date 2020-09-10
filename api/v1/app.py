@@ -5,7 +5,6 @@ is the one who will execute the application"""
 
 from flask import Flask, jsonify, make_response
 from models import storage
-# here we import our blueprint app_views
 from api.v1.views import app_views
 from os import getenv
 
