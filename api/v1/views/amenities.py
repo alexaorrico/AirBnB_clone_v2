@@ -22,7 +22,7 @@ def amenities_list():
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         if "name" not in response:
             return make_response(jsonify({"error": "Missing name"}), 400)
-        new_amenity = State(**response)
+        new_amenity = Amenity(**response)
         new_amenity.save()
         return make_response(jsonify(amenities.to_dict()), 201)
 
