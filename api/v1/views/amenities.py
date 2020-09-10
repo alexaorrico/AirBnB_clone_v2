@@ -13,7 +13,7 @@ def amenities_list():
     """Retrieves the list of all Amenities objects"""
     if request.method == 'GET':
         all_amenities = []
-        for key in storage.all(Amenity).values():
+        for key in storage.all("Amenity").values():
             all_amenities.append(key.to_dict())
         return jsonify(all_amenities)
     if request.method == 'POST':
@@ -24,7 +24,7 @@ def amenities_list():
             abort(400, "Missing name")
         new_amenity = Amenity(**response)
         new_amenity.save()
-        return make_response(jsonify(amenities.to_dict()), 201)
+        return jsonify(new_amenity.to_dict()), 201
 
 
 @app_views.route("/amenities/<amenity_id>", methods=['GET', 'DELETE', 'PUT'],
@@ -35,21 +35,15 @@ def amenities_id(amenity_id):
     if amenity is None:
         abort(404)
     if request.method == 'GET':
-        if amenity:
-            return jsonify(amenity.to_dict())
-        abort(404)
+        return jsonify(amenity.to_dict())
     if request.method == 'DELETE':
-        if amenity is None:
-            abort(404)
         storage.delete(amenity)
         storage.save()
-        return make_responce(jsonify({}), 200)
+        return jsonify({}), 200
     if request.method == "PUT":
         response = request.get_json()
         if response is None:
             abort(400, "Not a JSON")
-        if amenity is None:
-            abort(404)
         for key, value in response.items():
             if key != "id" and key != "created_at" and key != "updated_at"\
                     and hasattr(amenity, key):
