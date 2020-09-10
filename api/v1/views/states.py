@@ -21,11 +21,10 @@ def all_states_N():
     """ Retrieves a list with all state, including the new one. """
     body_dic = request.get_json()
     if "name" not in body_dic:
-        return (jsonify({"error": "Missing name"}), 400)
+        return jsonify({"error": "Missing name"}), 400
     if body_dic is None:
-        return (jsonify({"error": "Not a JSON"}), 400)
+        return jsonify({"error": "Not a JSON"}), 400
     new_state = State(**body_dic)
-    storage.new(new_state)
     storage.save()
     return jsonify(new_state.to_dict()), 201
 
@@ -42,13 +41,14 @@ def update_state(state_id):
             ignore_keys = ["id", "created_at"]
             if key not in ignore_keys:
                 setattr(state_obj, key, value)
-        storage.save()
+        state_obj.save()
         return jsonify(state_obj.to_dict()), 200
     else:
         abort(404)
 
 
-@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/states/<state_id>",
+                 methods=["DELETE"], strict_slashes=False)
 def delete_state(state_id):
     """Delete current state """
     state_obj = storage.get(State, state_id)
