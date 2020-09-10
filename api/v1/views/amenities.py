@@ -33,7 +33,7 @@ def amenityobj(amenity_id):
 def amenitydelete(amenity_id):
     """deletes an amenity object"""
     amenobj = storage.get(Amenity, amenity_id)
-    if cityobj is None:
+    if amenobj is None:
         abort(404)
     storage.delete(amenobj)
     storage.save()
