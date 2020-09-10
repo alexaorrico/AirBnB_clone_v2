@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-"""Create a new view for State objects"""
+"""Create a new view for Amenity objects"""
 
 from flask import jsonify, request, abort
-from flask import make_response
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
@@ -46,6 +45,6 @@ def amenities_id(amenity_id):
             abort(400, "Not a JSON")
         for key, value in response.items():
             if key not in ['id', 'created_at', 'updated_at']:
-                setattr(place, key, value)
+                setattr(amenity, key, value)
         storage.save()
         return jsonify(amenity.to_dict()), 200
