@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-starts a Flask web application
+start a Flask web application
 """
 
 from flask import Flask, render_template
@@ -20,6 +20,7 @@ def cities_by_states():
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
