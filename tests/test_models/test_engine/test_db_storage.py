@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -69,7 +70,7 @@ test_db_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -92,17 +93,19 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
-        """Test for get method"""
-        self.obj = State(name="California")
-        self.obj.save()
-        id_state = models.storage.get("State", self.obj.id)
-        self.assertTrue(id_state)
+        """Test case for get method at state"""
+        dic_new_state = {'name': 'Valle'}
+        new_obj = State(**dic_new_state)
+        new_obj.save()
+        get_obj = storage.get(State, new_obj.id)
+        self.assertEqual(type(get_obj), State)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """ Test for count method """
-        count_1 = models.storage.count()
-        self.obj = State(name="California")
-        self.obj.save()
-        count_2 = models.storage.count()
-        self.assertNotEqual(count_1, count_2)
+        """ Test case for count method at state"""
+        first_count = storage.count(State)
+        dic_new_state = {'name': 'Valle'}
+        new_obj = State(**dic_new_state)
+        new_obj.save()
+        second_count = storage.count(State)
+        self.assertGreater(second_count, first_count)
