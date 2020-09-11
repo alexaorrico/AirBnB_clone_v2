@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """ flask module to manage the stored users """
+from models import storage
 from models.user import User
 from api.v1.views import app_views
 from flask import request, jsonify, abort
-from models import storage
 
 
 @app_views.route(
@@ -40,12 +40,10 @@ def update_user(user_id):
         abort(400, 'Not a JSON')
 
     for key in user_json.keys():
-        if key in ignored_keys:
-            continue
-        if getattr(user, key):
+        if key not in ignored_keys:
             setattr(user, key, user_json[key])
-        storage.save()
-        return jsonify(user.to_dict()), 200
+    storage.save()
+    return jsonify(user.to_dict()), 200
 
 
 def create_user():
