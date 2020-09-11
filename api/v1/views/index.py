@@ -13,17 +13,17 @@ def status():
 
 
 @app_views.route('/stats', strict_slashes=False)
-def status_count():
+def stats():
     """Doc"""
-    clss = {
+    c = {
         "Amenity": "amenities",
-        "Place": "places",
-        "State": "states",
-        "Review": "reviews",
-        "User": "users"
         "City": "cities",
+        "Place": "places",
+        "Review": "reviews",
+        "State": "states",
+        "User": "users"
         }
     d = {}
-    for k, val in clss.items():
-        d[val] = storage.count(k)
+    for key, val in c.items():
+        d[val] = storage.count(key)
     return jsonify(d)
