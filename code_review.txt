@@ -13,3 +13,8 @@ Fixed imports and syntax on app.run
 Merge pull request #4 from linkjavier/storage_get_count …
 
 Fixed BinBash
+
+Merge pull request #5 from linkjavier/storage_get_count …
+
+Fixed pep8 warnings
+
