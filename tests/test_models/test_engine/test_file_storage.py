@@ -136,6 +136,8 @@ class TestFileStorage(unittest.TestCase):
         """[summary]
         """
         storage = FileStorage()
+        self.assertIs(storage.get("User", "Nasser"), None)
+        self.assertIs(storage.get("hello", "world"), None)
         new_state = State()
         new_state.save()
         self.assertIs(storage.get("State", new_state.id), new_state)
