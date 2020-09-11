@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-view for State objects that handles all default RestFul API actions
+view for State objects that handles all default RestFul API action
 """
 
 from flask import jsonify, request, abort, make_response
