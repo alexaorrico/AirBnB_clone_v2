@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-view for User objects that handles all default RestFul API actions
+view for User objects that handles all default RestFul API action
 """
 
 from flask import jsonify, request, abort, make_response
