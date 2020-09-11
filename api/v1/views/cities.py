@@ -71,6 +71,7 @@ def create_city(state_id):
         abort(400, "Missing name")
     city_json['state_id'] = state_id
     city = City(**city_json)
+    storage.new(city)
     storage.save()
     return jsonify(city.to_dict()), 201
 
