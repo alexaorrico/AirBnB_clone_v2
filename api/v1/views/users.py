@@ -79,4 +79,3 @@ def put_users(user_id):
     else:
         result = jsonify({'error': 'Not a JSON'}), 400
     return result
-    
