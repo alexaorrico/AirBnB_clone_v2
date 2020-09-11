@@ -121,3 +121,13 @@ class TestFileStorage(unittest.TestCase):
         models.storage.new(a)
         models.storage.save()
         self.assertEqual(models.storage.get(State, a.id), a)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test get"""
+        self.instance = State()
+        self.instance.save()
+        self.test = models.storage.get(State, self.instance.id)
+        self.assertTrue(self.test.id == self.instance.id)
+        self.assertTrue(self.instance is self.test)
+        self.assertTrue(isinstance(self.test, State))
