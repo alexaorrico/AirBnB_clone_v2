@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" console """
+""" console Airbnb """
 
 import cmd
 from datetime import datetime
@@ -159,6 +159,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
