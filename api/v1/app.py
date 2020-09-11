@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """App.py is the entry point, all the routes of
 the Blueprints will be registered here and this App.py
-is the one who will execute the application"""
+is the one who will execute the application """
 
 from flask import Flask, jsonify, make_response
 from models import storage
