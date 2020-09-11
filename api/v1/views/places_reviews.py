@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-View for Reviews that handles all RESTful API actions
+View for Reviews that handles all RESTful API action
 """
 
 from flask import jsonify, request, abort, make_response
