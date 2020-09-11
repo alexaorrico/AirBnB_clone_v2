@@ -25,3 +25,7 @@ Created an endpoint that retrieves the number of each objects by type
 Merge pull request #7 from linkjavier/storage_get_count …
 
 Created a handler for 404 errors that returns a JSON-formatted 404 status code response
+
+Merge pull request #8 from linkjavier/storage_get_count …
+
+Permissions and Pretty JSON
