@@ -145,3 +145,15 @@ class TestFileStorage(unittest.TestCase):
     def test_get_no_id(self):
         """tests get when id does not exist"""
         self.assertEqual(models.storage.get("State", "1111"), None)
+
+        
+    def test_get_too_many_args(self):
+        """tests get with too many args"""
+        with self.assertRaises(TypeError):
+            models.storage.get()
+
+    def test_get_too_few_args(self):
+        """tests get with too few args"""
+        with self.assertRaises(TypeError):
+            models.storage.get("1", "2", "3")
+
