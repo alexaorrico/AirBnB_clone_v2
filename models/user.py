@@ -15,10 +15,6 @@ class User(BaseModel, Base):
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
-        '''PasswordType(
-        schemes=[
-            'md5_crypt'
-        ]))'''
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
         places = relationship("Place", backref="user")
@@ -33,11 +29,11 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
-    def __setattr__(self, key, value):
+    def __setattr__(self, name, value):
         """ it's documented, see? """
-        if key == 'password':
-            hashlib.md5(value.encode()).hexdigest()
-        super.__setattr__(self, key, value)
+        if name == 'password':
+            value = hashlib.md5(value.encode()).hexdigest()
+        self.__dict__[name] = value
     '''
     @property
     def password(self):

@@ -1,10 +1,50 @@
 #!/usr/bin/python3
 """
-    HBNB_V3: Task 11
+    HBNB_V3: Task 11 and 16
 """
-from api.v1.views.index import app_views, Place, User, City
+from api.v1.views.index import app_views, Place, User, City, State
 from models import storage
 from flask import jsonify, request, abort, make_response
+
+
+@app_views.route('/places_search',
+                 methods=['POST'], strict_slashes=False)
+def viewalltheplacethingswithsearchyo():
+    """ read the method name, duh """
+    if request.method == 'POST':
+        try:
+            body = request.get_json()
+            k = body.keys()
+        except:
+            return "Not a JSON", 400
+        li = []
+        if "states" in body.keys():
+            sts = body.get('states')
+            states = storage.all(State)
+            for st in states.values():
+                if st.__dict__['id'] in sts:
+                    for cty in st.cities:
+                        for plc in cty.places:
+                            if plc not in li:
+                                li.append(plc)
+        if "cities" in body.keys():
+            cties = body.get('cities')
+            cities = storage.all(City)
+            for cty in cities.values():
+                if cty.__dict__['id'] in cties:
+                    for plc in cty.places:
+                        if plc not in li:
+                            li.append(plc)
+        if "amenities" in body.keys():
+            for plc in li.copy():
+                for amty in body.get("amenities"):
+                    actual = storage.get(Amenity, amty)
+                    if actual not in plc.amenities:
+                        li.pop(plc)
+        newli = []
+        for plc in li:
+            newli.append(plc.to_dict())
+        return jsonify(newli)
 
 
 @app_views.route('/cities/<city_id>/places',
