@@ -9,9 +9,10 @@ from models.place import Place
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
 def places_get(city_id):
     """Retrieves the list of all PLace objects of a City"""
-    if storage.get('City', city_id) is None:
+    all_cities = storage.get('City', city_id)
+    if all_cities is None:
         abort(404)
-    all_places = storage.get('City', city_id).places
+    all_places = all_cities.places
     places_for_json = []
     for place in all_places:
         places_for_json.append(place.to_dict())
@@ -21,9 +22,10 @@ def places_get(city_id):
 @app_views.route('/places/<place_id>', strict_slashes=False)
 def get_places(place_id):
     """Retrieves a Place object"""
-    if storage.get('Place', place_id) is None:
+    all_places = storage.get('Place', place_id)
+    if all_places is None:
         abort(404)
-    return jsonify(storage.get('Place', place_id).to_dict())
+    return jsonify(all_places.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
@@ -50,7 +52,7 @@ def post_places(city_id):
         abort(400, "Missing name")
     if storage.get('City', city_id) is None:
         abort(404)
-    if storage.get('User', request.json['user_id']):
+    if storage.get('User', request.json['user_id']) is None:
         abort(404)
     new_place = Place(name=request.json["name"],
                       city_id=city_id, user_id=request.json['user_id'])
