@@ -29,3 +29,8 @@ Created a handler for 404 errors that returns a JSON-formatted 404 status code r
 Merge pull request #8 from linkjavier/storage_get_count …
 
 Permissions and Pretty JSON
+
+Merge pull request #9 from linkjavier/storage_get_count …
+
+Fixed return 404
+
