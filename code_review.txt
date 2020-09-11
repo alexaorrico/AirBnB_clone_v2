@@ -34,3 +34,6 @@ Merge pull request #9 from linkjavier/storage_get_count …
 
 Fixed return 404
 
+Merge pull request #10 from linkjavier/storage_get_count …
+
+New view for State objects that handles all default RestFul API actions
