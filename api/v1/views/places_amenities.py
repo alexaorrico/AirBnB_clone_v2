@@ -6,7 +6,7 @@ from models.base_model import BaseModel, Base
 from flask import jsonify, abort, request
 from models.state import State
 from models.city import City
-from models.place import Place, place_amenity
+from models.place import Place
 from models.user import User
 from models import storage
 from models.review import Review
