@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""View for Places"""
+"""Places"""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
