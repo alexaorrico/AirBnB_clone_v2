@@ -1,49 +1,48 @@
 #!/usr/bin/python3
-""" Places """
+"""Create a new view for Review objects"""
 
 from flask import jsonify, request, abort
-from flask import make_response
-from models.place import Place
+from models.state import State
 from models.review import Review
-from models.user import User
 from models import storage
 from api.v1.views import app_views
 
 
 @app_views.route('/places/<place_id>/reviews', methods=["GET", "POST"],
                  strict_slashes=False)
-def reviews_place(place_id):
-    """ Retrieves the list of all Places objects """
+def list_reviews(place_id):
+    """ Retrieves the list of all Review objects """
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
     if request.method == "GET":
-        review = storage.all(Review).values()
+        reviews = storage.all("Review")
         all_review = []
-        for key in review.values():
+        for key in reviews.values():
             if key.place_id == place_id:
                 all_review.append(key.to_dict())
         return jsonify(all_review)
     if request.method == "POST":
         response = request.get_json()
         if response is None:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
+            abort(400, "Not a JSON")
         if "user_id" not in response:
-            return make_response(jsonify({"error": "Missing user_id"}), 400)
+            abort(400, "Missing user_id")
+        user = storage.get("User", response["user_id"])
         if user is None:
             abort(404)
         if "text" not in response:
-            return make_response(jsonify({"error": "Missing text"}), 400)
-        response['place_id'] = place_id
+            abort(400, "Missing text")
+        response["place_id"] = place_id
         new_review = Review(**response)
         new_review.save()
-        return make_response(jsonify(review.to_dict()), 201)
+        return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=["GET", "DELETE", "PUT"],
                  strict_slashes=False)
-def place_review(review_id):
-    """ Manipulate an specific Place """
+def review(review_id):
+    """ Manipulate an specific Review """
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
@@ -52,14 +51,14 @@ def place_review(review_id):
     if request.method == "DELETE":
         storage.delete(review)
         storage.save()
-        return make_response(jsonify({}), 200)
+        return jsonify({}), 200
     if request.method == "PUT":
-        response = request.get_json()
-        if response is None:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
-        for key, value in response.items():
-            if key not in ["id", "user_id", "place_id", "created_at",
-                           "updated_at"]:
+        data = request.get_json()
+        if data is None:
+            abort(400, "Not a JSON")
+        for key, value in data.items():
+            if key not in ['id', 'created_at', 'updated_at', 'user_id',
+                           'place_id']:
                 setattr(review, key, value)
-        review.save()
-        return make_response(jsonify(review.to_dict()), 200)
+        storage.save()
+        return jsonify(review.to_dict()), 200
