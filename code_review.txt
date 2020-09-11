@@ -1,0 +1,13 @@
+Merge pull request #1 from linkjavier/storage_get_count …
+
+Merge storage_get_count to master. The file_storage and db_storage was updated with two new functions. get() and count().
+
+Merge pull request #2 from linkjavier/storage_get_count …
+
+upload task 4 create rout for api
+
+Merge pull request #3 from linkjavier/storage_get_count …
+
+Fixed imports and syntax on app.run
+
+
