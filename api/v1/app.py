@@ -5,10 +5,12 @@ from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ, getenv
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 host = getenv("HBNB_API_HOST") if "HBNB_API_HOST" in environ else "0.0.0.0"
 port = getenv("HBNB_API_PORT") if "HBNB_API_PORT" in environ else 5000
 
