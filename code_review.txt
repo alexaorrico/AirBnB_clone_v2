@@ -10,4 +10,6 @@ Merge pull request #3 from linkjavier/storage_get_count …
 
 Fixed imports and syntax on app.run
 
+Merge pull request #4 from linkjavier/storage_get_count …
 
+Fixed BinBash
