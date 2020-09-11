@@ -46,7 +46,7 @@ def delete_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    storage.delete(City)
+    storage.delete(city)
     storage.save()
     return jsonify({}), 200
 
