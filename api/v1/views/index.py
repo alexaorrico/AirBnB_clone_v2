@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Here is where we create the routes to the endpoints of our blueprints
+Here is where we create the routes 
+to the endpoints of our blueprints
 """
 
 from api.v1.views import app_views
