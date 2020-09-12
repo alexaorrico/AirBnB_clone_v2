@@ -7,6 +7,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import jsonify, make_response, abort, request
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
     '''get all states'''
@@ -24,7 +25,6 @@ def get_state_byid(state_id):
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
-
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
