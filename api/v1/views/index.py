@@ -27,7 +27,6 @@ def status():
 def stat_obj():
     """return statut of obj"""
     num = {}
-    for i in range(len(classes)):
-        num_objs[names[i]] = storage.count(classes[i])
-
+    for key, cls in classes.items():
+        num[key] = storage.count(cls)
     return jsonify(num)
