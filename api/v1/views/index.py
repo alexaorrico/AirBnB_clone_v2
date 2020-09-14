@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Here is where we create the routes 
+Here is where we create the routes
 to the endpoints of our blueprints
 """
 
