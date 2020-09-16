@@ -57,7 +57,7 @@ def putstate(state_id=None):
     new = request.get_json()
     if new is None:
         abort(400, "Not a JSON")
-    for key, value in update.items():
+    for key, value in new.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
     storage.save()
