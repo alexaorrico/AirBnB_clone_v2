@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""View for user objects that handles all default RestFul API actions:"""
+"""View for user objects that handles all default RestFul API actions """
 
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response, request
@@ -13,7 +13,7 @@ def get_users():
         GET /api/v1/users
     """
     users = []
-    all_users = storage.all(user).values()
+    all_users = storage.all(User).values()
 
     for each in all_users:
         users.append(each.to_dict())
@@ -83,16 +83,17 @@ def update_user(user_id):
     """ Updates a user object:
         PUT /api/v1/users/<user_id>
     """
-    update_obj = storage.get(User, user_id)
-    req_json = request.get_json()
+    upd_obj = request.get_json()
+    user = storage.get(User, user_id)
 
-    if not req_json:
-        return jsonify({'error': 'Not a JSON'}), 400
-    if obj:
-        for key, value in req_json.items():
-            setattr(update_obj, key, value)
-        user.save()
-
-        return jsonify(obj.to_dict()), 200
-    else:
+    if user is None:
         abort(404)
+
+    if not upd_obj:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    for key, value in upd_obj.items():
+        setattr(user, key, value)
+    user.save()
+
+    return jsonify(user.to_dict())
