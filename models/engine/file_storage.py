@@ -81,6 +81,3 @@ class FileStorage:
             return dic.get(key)
         else:
             return None
-
-
-
