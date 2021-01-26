@@ -76,18 +76,15 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """x"""
-        # could also verify the class right here before we call all()
-        test = self.all(cls)
-        for obj in test.values():
+        """this is a test string"""
+        for obj in self.all(cls).values():
             if obj.id == id:
                 return obj
         return None
 
     def count(self, cls=None):
-        """x"""
+        """this is a test string"""
         out = 0
-        test = self.all(cls)
-        for obj in test:
+        for obj in self.all(cls).values():
             out += 1
         return out
