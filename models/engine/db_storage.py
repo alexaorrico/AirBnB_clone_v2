@@ -83,7 +83,7 @@ class DBStorage:
             for objeto in storage.all(cls).values():
                 if objeto.id == id:
                     return objeto
-    
+
     def count(self, cls=None):
-            a = len(self.all(cls))
-            return a
+        a = len(self.all(cls))
+        return a
