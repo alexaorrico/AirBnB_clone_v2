@@ -31,6 +31,8 @@ def places_base(c_id):
             out = Place(**kwargs)
             if "user_id" not in out.to_dict().keys():
                 return "Missing user_id", 400
+            if not storage.get(User, out.to_dict()["user_id"]):
+                abort(404)
             if "name" not in out.to_dict().keys():
                 return "Missing name", 400
             out.save()
