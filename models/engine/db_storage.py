@@ -84,7 +84,4 @@ class DBStorage:
 
     def count(self, cls=None):
         """this is a test string"""
-        out = 0
-        for obj in self.all(cls).values():
-            out += 1
-        return out
+        return len(self.all(cls))
