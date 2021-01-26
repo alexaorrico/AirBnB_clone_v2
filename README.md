@@ -204,7 +204,7 @@ Jennifer Huang - Github(https://github.com/jhuang10123) / Twitter(https://twitte
 <hr>
 <h2>Authors</h2>
 <ul>
-<li>Deyber Deyber Castañeda 1846@holbertonschool.com</li>
+<li>Deyber Castañeda 1846@holbertonschool.com</li>
 <li>Hector Orozco 2066@holbertonschool.com</li>
 <hr>
 <h2>License</h2>
