@@ -93,7 +93,7 @@ class DBStorage:
         """
         item_keys = self.all(cls).keys()
 
-        if class is None:
+        if cls is None:
             return len(item_keys)
         else:
             count = 0
