@@ -159,6 +159,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong<br>
 Third part of Airbnb:<br>
 Reese Hicks - [Github](https://github.com/dreeseh) / 1859@holbertonschool.com<br>
-Alex Smith - [Github](https://github.com/) / 1763@holbertonschool.com
+Alex Smith - [Github](https://github.com/not-notAlex/) / 1763@holbertonschool.com
 ## License
 Public Domain. No copy write protection. 
