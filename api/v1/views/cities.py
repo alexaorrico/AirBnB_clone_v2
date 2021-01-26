@@ -30,7 +30,7 @@ def cities_base(s_id):
             kwargs.update(request.get_json())
             out = City(**kwargs)
             if "name" not in out.to_dict().keys():
-                return "Missing name", 404
+                return "Missing name", 400
             out.save()
             return out.to_dict(), 201
         abort(404)
