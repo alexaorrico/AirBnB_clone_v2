@@ -31,24 +31,24 @@ def states_base():
 def states_id(s_id):
     """this is a test string"""
     if request.method == "GET":
-        for state in storage.all("State").values():
-            if state.id == s_id:
-                return state.to_dict()
+        state = storage.get(State, s_id)
+        if state:
+            return state.to_dict()
         abort(404)
     if request.method == "DELETE":
-        for state in storage.all("State").values():
-            if state.id == s_id:
-                state.delete()
-                storage.save()
-                return {}, 200
+        state = storage.get(State, s_id)
+        if state:
+            state.delete()
+            storage.save()
+            return {}, 200
         abort(404)
     if request.method == "PUT":
-        for state in storage.all("State").values():
-            if state.id == s_id:
-                if not request.is_json:
-                    return "Not a JSON", 400
-                for k, v in request.get_json().items():
-                    setattr(state, k, v)
-                storage.save()
-                return state.to_dict()
+        state = storage.get(State, s_id)
+        if state:
+            if not request.is_json:
+                return "Not a JSON", 400
+            for k, v in request.get_json().items():
+                setattr(state, k, v)
+            storage.save()
+            return state.to_dict()
         abort(404)
