@@ -12,13 +12,13 @@ classes = [Amenity, City, Place, Review, State, User]
 
 
 @app_views.route("/status", strict_slashes=False)
-def a():
+def status_check():
     """x"""
     return {"status": "OK"}
 
 
 @app_views.route("/stats", strict_slashes=False)
-def b():
+def view_counts():
     """x"""
     out = {}
     for cls in classes:
