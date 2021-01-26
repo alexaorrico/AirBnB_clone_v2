@@ -10,6 +10,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 classes = [Amenity, City, Place, Review, State, User]
+decoded = ["amenities", "cities", "places", "reviews", "states", "users"]
 
 
 @app_views.route("/status", strict_slashes=False)
@@ -22,6 +23,6 @@ def status_check():
 def view_counts():
     """this is a test string"""
     out = {}
-    for cls in classes:
-        out.update({cls.__name__: storage.count(cls)})
+    for i in range(len(classes)):
+        out.update({decoded[i]: storage.count(classes[i])})
     return out
