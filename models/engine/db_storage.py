@@ -84,7 +84,9 @@ class DBStorage:
         
         item_id = str(cls) + '.' + str(id)
         all_objs = self.all(cls)
-        return all_objs[item_id]
+        for obj in all_objs.values():
+            if obj.id == id:
+                return obj
 
     def count(self, cls=None):
         """
@@ -92,13 +94,4 @@ class DBStorage:
         if class supplied count of instances of that class
         """
         item_keys = self.all(cls).keys()
-
-        if cls is None:
-            return len(item_keys)
-        else:
-            count = 0
-            for key in item_keys:
-                print(key)
-                if str(cls) in key:
-                    count += 1
-            return count
+        return len(item_keys)
