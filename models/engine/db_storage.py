@@ -82,7 +82,6 @@ class DBStorage:
         else:
             for objeto in storage.all(cls).values():
                 if objeto.id == id:
-                    print("{}".format(objeto))
                     return objeto
     
     def count(self, cls=None):
