@@ -5,7 +5,6 @@ from flask import jsonify, abort, request
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
-from models import Place
 
 
 @app_views.route("/places/<place_id>/amenities/",
