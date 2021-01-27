@@ -24,6 +24,7 @@ def amenities_base():
         out.save()
         return out.to_dict(), 201
 
+
 @app_views.route("/amenities/<a_id>",
                  strict_slashes=False,
                  methods=["GET", "DELETE", "PUT"])
