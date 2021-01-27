@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""this is a test string"""
 
 from flask import request
 from api.v1.views import app_views
@@ -7,18 +8,22 @@ from models.place import Place
 from models.review import Review
 
 
-@app_views.route("/places/<p_id>/reviews", strict_slashes=False, methods=["GET", "POST"])
+@app_views.route("/places/<p_id>/reviews",
+                 strict_slashes=False,
+                 methods=["GET", "POST"])
 def reviews_base(p_id):
-    """x"""
+    """this is a test string"""
     if request.method == "GET":
         return {"GET": "Not implemented"}
     if request.method == "POST":
         return {"POST": "Not implemented"}
 
 
-@app_views.route("/reviews/<r_id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
+@app_views.route("/reviews/<r_id>",
+                 strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def reviews_id(r_id):
-    """x"""
+    """this is a test string"""
     if request.method == "GET":
         return {"GET": "Not implemented"}
     if request.method == "DELETE":

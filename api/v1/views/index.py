@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""this is a test string"""
 
 from api.v1.views import app_views
 from models import storage
@@ -13,13 +14,13 @@ classes = [Amenity, City, Place, Review, State, User]
 
 @app_views.route("/status", strict_slashes=False)
 def status_check():
-    """x"""
+    """this is a test string"""
     return {"status": "OK"}
 
 
 @app_views.route("/stats", strict_slashes=False)
 def view_counts():
-    """x"""
+    """this is a test string"""
     out = {}
     for cls in classes:
         out.update({cls.__name__: storage.count(cls)})
