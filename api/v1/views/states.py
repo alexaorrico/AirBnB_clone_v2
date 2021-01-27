@@ -24,7 +24,9 @@ def states_base():
         return out.to_dict(), 201
 
 
-@app_views.route("/states/<s_id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
+@app_views.route("/states/<s_id>",
+                 strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def states_id(s_id):
     """x"""
     if request.method == "GET":

@@ -7,7 +7,9 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route("/states/<s_id>/cities", strict_slashes=False, methods=["GET", "POST"])
+@app_views.route("/states/<s_id>/cities",
+                 strict_slashes=False,
+                 methods=["GET", "POST"])
 def cities_base(s_id):
     """x"""
     if request.method == "GET":
@@ -33,7 +35,9 @@ def cities_base(s_id):
         abort(404)
 
 
-@app_views.route("/cities/<c_id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
+@app_views.route("/cities/<c_id>",
+                 strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def cities_id(c_id):
     """x"""
     if request.method == "GET":

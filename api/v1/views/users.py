@@ -15,7 +15,9 @@ def users_base():
         return {"POST": "Not implemented"}
 
 
-@app_views.route("/users/<u_id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
+@app_views.route("/users/<u_id>",
+                 strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def users_id(u_id):
     """x"""
     if request.method == "GET":

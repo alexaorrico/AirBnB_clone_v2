@@ -7,7 +7,9 @@ from models.city import City
 from models.place import Place
 
 
-@app_views.route("/cities/<c_id>/places", strict_slashes=False, methods=["GET", "POST"])
+@app_views.route("/cities/<c_id>/places",
+                 strict_slashes=False,
+                 methods=["GET", "POST"])
 def places_base(c_id):
     """x"""
     if request.method == "GET":
@@ -16,7 +18,9 @@ def places_base(c_id):
         return {"POST": "Not implemented"}
 
 
-@app_views.route("/places/<p_id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
+@app_views.route("/places/<p_id>",
+                 strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def places_id(p_id):
     """x"""
     if request.method == "GET":
