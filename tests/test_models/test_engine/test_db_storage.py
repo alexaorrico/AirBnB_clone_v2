@@ -95,3 +95,11 @@ class TestDBStorage(unittest.TestCase):
         test = DBStorage()
         test.reload()
         self.assertTrue(test.get(State, "testing") is None)
+
+    def test_count(self):
+        """test that count works correctly"""
+        from models import storage
+        bench = storage.count()
+        storage.new(State(**{"name": "Jalapeno"}))
+        storage.save()
+        self.assertTrue(bench + 1 == storage.count())
