@@ -14,7 +14,7 @@ def app_status():
     """
     return(jsonify(status="OK"))
 
-@app_views.route("/api/v1/stats")
+@app_views.route("/stats")
 def stats():
     total = {"amenities": storage.count("Amenity"),
              "cities": storage.count("City"),
