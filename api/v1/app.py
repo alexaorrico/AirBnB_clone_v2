@@ -20,4 +20,10 @@ def tear(err=None):
     storage.close()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, threaded=True)
+    h = getenv("HBNB_API_HOST")
+    if not h:
+        h = "0.0.0.0"
+    p = getenv("HBNB_API_PORT")
+    if not p:
+        p = 5000
+    app.run(host=h, port=p, threaded=True)
