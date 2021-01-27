@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-"""
-Starting an API
-"""
+""" Starting an API """
+
 
 from flask import Flask
 from models import storage
