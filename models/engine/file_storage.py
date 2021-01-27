@@ -76,7 +76,6 @@ class FileStorage:
         if id is None:
             return None
 
-        item_id = str(cls) + '.' + str(id)
         all_objs = self.all(cls)
         for obj in all_objs.values():
             if obj.id == id:
@@ -88,5 +87,6 @@ class FileStorage:
         A method to count the number of objects in storage,
         if class supplied count of instances of that class
         """
+
         item_keys = self.all(cls).keys()
         return len(item_keys)
