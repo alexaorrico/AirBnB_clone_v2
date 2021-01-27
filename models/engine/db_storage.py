@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """this is a test string"""
-        for obj in self.all(cls).values():
+        for obj in self.__session.query(cls).all():
             if obj.id == id:
                 return obj
         return None
