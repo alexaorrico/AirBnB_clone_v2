@@ -15,7 +15,9 @@ def amenities_base():
         return {"POST": "Not implemented"}
 
 
-@app_views.route("/amenities/<a_id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
+@app_views.route("/amenities/<a_id>",
+                 strict_slashes=False,
+                 methods=["GET", "DELETE", "PUT"])
 def amenities_id(a_id):
     """x"""
     if request.method == "GET":
