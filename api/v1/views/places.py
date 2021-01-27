@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""x"""
 
 from flask import request
 from api.v1.views import app_views
