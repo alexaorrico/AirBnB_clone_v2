@@ -16,7 +16,7 @@ def places_base(c_id):
     if request.method == "GET":
         out = []
         city = storage.get(City, c_id)
-        if city.id == c_id:
+        if city:
             for place in city.places:
                 out.append(place.to_dict())
             return jsonify(out)
@@ -25,7 +25,7 @@ def places_base(c_id):
         if not request.is_json:
             return "Not a JSON", 400
         city = storage.get(City, c_id)
-        if city.id == c_id:
+        if city:
             kwargs = {"city_id": c_id}
             kwargs.update(request.get_json())
             out = Place(**kwargs)
@@ -43,19 +43,19 @@ def places_id(p_id):
     """this is a test string"""
     if request.method == "GET":
         place = storage.get(Place, p_id)
-        if place.id == p_id:
+        if place:
             return place.to_dict()
         abort(404)
     if request.method == "DELETE":
         place = storage.get(Place, p_id)
-        if place.id == p_id:
+        if place:
             place.delete()
             storage.save()
             return {}, 200
         abort(404)
     if request.method == "PUT":
         place = storage.get(Place, p_id)
-        if place.id == p_id:
+        if place:
             if not request.is_json:
                 return "Not a JSON", 400
             for k, v in request.get_json().items():
