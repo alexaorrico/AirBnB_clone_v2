@@ -31,24 +31,24 @@ def amenities_base():
 def amenities_id(a_id):
     """this is a test string"""
     if request.method == "GET":
-        for amenity in storage.all("Amenity").values():
-            if amenity.id == a_id:
-                return amenity.to_dict()
+        amenity = storage.get(Amenity, a_id)
+        if amenity:
+            return amenity.to_dict()
         abort(404)
     if request.method == "DELETE":
-        for amenity in storage.all("Amenity").values():
-            if amenity.id == a_id:
-                amenity.delete()
-                storage.save()
-                return {}, 200
+        amenity = storage.get(Amenity, a_id)
+        if amenity:
+            amenity.delete()
+            storage.save()
+            return {}, 200
         abort(404)
     if request.method == "PUT":
-        for amenity in storage.all("Amenity").values():
-            if amenity.id == a_id:
-                if not request.is_json:
-                    return "Not a JSON", 400
-                for k, v in request.get_json().items():
-                    setattr(amenity, k, v)
-                storage.save()
-                return amenity.to_dict()
+        amenity = storage.get(Amenity, a_id)
+        if amenity:
+            if not request.is_json:
+                return "Not a JSON", 400
+            for k, v in request.get_json().items():
+                setattr(amenity, k, v)
+            storage.save()
+            return amenity.to_dict()
         abort(404)

@@ -15,24 +15,24 @@ def cities_base(s_id):
     """this is a test string"""
     if request.method == "GET":
         out = []
-        for state in storage.all("State").values():
-            if state.id == s_id:
-                for city in state.cities:
-                    out.append(city.to_dict())
-                return jsonify(out)
+        state = storage.get(State, s_id)
+        if state:
+            for city in state.cities:
+                out.append(city.to_dict())
+            return jsonify(out)
         abort(404)
     if request.method == "POST":
         if not request.is_json:
             return "Not a JSON", 400
-        for state in storage.all("State").values():
-            if state.id == s_id:
-                kwargs = {"state_id": s_id}
-                kwargs.update(request.get_json())
-                out = City(**kwargs)
-                if "name" not in out.to_dict().keys():
-                    return "Missing name", 400
-                out.save()
-                return out.to_dict(), 201
+        state = storage.get(State, s_id)
+        if state:
+            kwargs = {"state_id": s_id}
+            kwargs.update(request.get_json())
+            out = City(**kwargs)
+            if "name" not in out.to_dict().keys():
+                return "Missing name", 404
+            out.save()
+            return out.to_dict(), 201
         abort(404)
 
 
@@ -42,25 +42,25 @@ def cities_base(s_id):
 def cities_id(c_id):
     """this is a test string"""
     if request.method == "GET":
-        for city in storage.all("City").values():
-            if city.id == c_id:
-                return city.to_dict()
+        city = storage.get(City, c_id)
+        if city:
+            return city.to_dict()
         abort(404)
     if request.method == "DELETE":
-        for city in storage.all("City").values():
-            if city.id == c_id:
-                city.delete()
-                storage.save()
-                return {}, 200
+        city = storage.get(City, c_id)
+        if city:
+            city.delete()
+            storage.save()
+            return {}, 200
         abort(404)
     if request.method == "PUT":
-        for city in storage.all("City").values():
-            if city.id == c_id:
-                if not request.is_json:
-                    return "Not a JSON", 400
-                for k, v in request.get_json().items():
-                    if k not in ["id", "state_id", "created_at", "updated_at"]:
-                        setattr(city, k, v)
-                storage.save()
-                return city.to_dict(), 200
+        city = storage.get(City, c_id)
+        if city:
+            if not request.is_json:
+                return "Not a JSON", 400
+            for k, v in request.get_json().items():
+                if k not in ["id", "state_id", "created_at", "updated_at"]:
+                    setattr(city, k, v)
+            storage.save()
+            return city.to_dict(), 200
         abort(404)
