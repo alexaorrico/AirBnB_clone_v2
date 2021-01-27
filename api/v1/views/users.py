@@ -19,8 +19,10 @@ def users_base():
         if not request.is_json:
             return "Not a JSON", 400
         out = User(**request.get_json())
-        if "name" not in out.to_dict().keys():
-            return "Missing name", 400
+        if "email" not in out.to_dict().keys():
+            return "Missing email", 400
+        if "password" not in out.to_dict().keys():
+            return "Missing password", 400
         out.save()
         return out.to_dict(), 201
 
