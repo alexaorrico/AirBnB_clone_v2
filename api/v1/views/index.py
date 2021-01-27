@@ -10,12 +10,13 @@ from models import storage
 @app_views.route('/status')
 def jsonok():
     """return JSON"""
-    return jsonify({"status":"OK"})
+    return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats')
 def eDict():
     nDict = {"Amenity": "amenities", "City": "cities", "Place": "places",
-            "Review": "reviews", "State": "states", "User": "users"}
+             "Review": "reviews", "State": "states", "User": "users"}
     voidDict = {}
 
     for key, value in nDict.items():
