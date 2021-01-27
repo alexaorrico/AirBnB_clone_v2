@@ -70,17 +70,15 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """x"""
-        test = self.all(cls)
-        for obj in test.values():
+        """this is a test string"""
+        for obj in self.all(cls).values():
             if obj.id == id:
                 return obj
         return None
 
     def count(self, cls=None):
-        """x"""
+        """this is a test string"""
         out = 0
-        test = self.all(cls)
-        for obj in test:
+        for obj in self.all(cls):
             out += 1
         return out
