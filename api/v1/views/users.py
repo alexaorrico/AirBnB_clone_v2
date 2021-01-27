@@ -33,24 +33,24 @@ def users_base():
 def users_id(u_id):
     """this is a test string"""
     if request.method == "GET":
-        for user in storage.all("User").values():
-            if user.id == u_id:
-                return user.to_dict()
+        user = storage.get(User, u_id)
+        if user:
+            return user.to_dict()
         abort(404)
     if request.method == "DELETE":
-        for user in storage.all("User").values():
-            if user.id == u_id:
-                user.delete()
-                storage.save()
-                return {}, 200
+        user storage.get(User, u_id)
+        if user:
+            user.delete()
+            storage.save()
+            return {}, 200
         abort(404)
     if request.method == "PUT":
-        for user in storage.all("User").values():
-            if user.id == u_id:
-                if not request.is_json:
-                    return "Not a JSON", 400
-                for k, v in request.get_json().items():
-                    setattr(user, k, v)
-                storage.save()
-                return user.to_dict()
+        user = storage.get(User, u_id)
+        if user:
+            if not request.is_json:
+                return "Not a JSON", 400
+            for k, v in request.get_json().items():
+                setattr(user, k, v)
+            storage.save()
+            return user.to_dict()
         abort(404)
