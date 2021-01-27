@@ -21,7 +21,7 @@ def stats_jsn():
         "Review": "reviews",
         "State": "states",
         "User": "users"
-        }
+    }
     opt_dic = {}
     for k, v in options.items():
         opt_dic[v] = storage.count(k)
