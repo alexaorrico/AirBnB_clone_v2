@@ -48,4 +48,4 @@ def create_state():
     state = State(**kwargs)
     storage.new(state)
     storage.save()
-    return jsonify(state.to_dict()), 20
+    return jsonify(state.to_dict()), 201
