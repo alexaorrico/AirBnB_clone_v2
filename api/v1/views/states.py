@@ -23,7 +23,10 @@ def states(state_id=None):
     else:
         abort(404)
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'],
+                 strict_slashes=False)
 def delete_states(state_id=None):
     """
     xdddd
@@ -37,6 +40,7 @@ def delete_states(state_id=None):
     storage.save()
     return jsonify({}), 200
 
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_states():
     """
@@ -49,12 +53,13 @@ def post_states():
 
     if "name" not in data.keys():
         abort("Missing name", 400)
-    
+
     new_value = State(**data)
     storage.new(new_value)
     storage.save()
 
     return jsonify(new_value.to_dict()), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_states(state_id):
@@ -73,7 +78,7 @@ def put_states(state_id):
 
     if "name" not in data.keys():
         abort("Missing name", 400)
-    
+
     for k, v in data.items():
         if k in ["id", "created_at", "updated_at"]:
             pass
