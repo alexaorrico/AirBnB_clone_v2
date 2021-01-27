@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+from io import StringIO
+import contextlib
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +115,37 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestDBStorage_NewMethods_v3(unittest.TestCase):
+    """Tests to methods added in V3"""
+
+    def test_dbs_get(self):
+        """Test for the method to retrieve one object"""
+        new_state = State(name="California")
+        models.storage.new(new_state)
+        new_state.save()
+        first_state_id = list(models.storage.all("State").values())[0].id
+        # print(models.storage.get("State", first_state_id).__class__.__name__)
+        self.assertEqual(models.storage.get(
+            "State", first_state_id).__class__.__name__, 'State')
+        temp_stdout1 = StringIO()
+        with contextlib.redirect_stdout(temp_stdout1):
+            print("First state: {}".format(models.storage.get("State",
+                                                              first_state_id)))
+        output = temp_stdout1.getvalue().strip()
+        self.assertIn(first_state_id, output)
+
+    def test_dbs_count(self):
+        """Test for the method to count the number of objects in storage"""
+        self.assertIs(type(models.storage.count()), int)
+        self.assertIs(type(models.storage.count("State")), int)
+        temp_stdout1 = StringIO()
+        with contextlib.redirect_stdout(temp_stdout1):
+            print(models.storage.count())
+        output1 = temp_stdout1.getvalue().strip()
+        temp_stdout2 = StringIO()
+        with contextlib.redirect_stdout(temp_stdout2):
+            print(models.storage.count("State"))
+        output2 = temp_stdout2.getvalue().strip()
+        # print("output1: {} output2: {}".format(output1, output2))
+        self.assertTrue(output1 >= output2)
