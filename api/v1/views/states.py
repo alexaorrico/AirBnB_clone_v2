@@ -5,7 +5,7 @@
 from models.base_model import BaseModel
 from models.state import State
 from models import storage
-from flask import Flask, request, jasonify
+from flask import Flask, request, jsonify
 from api.v1.views import app_views
 
 
