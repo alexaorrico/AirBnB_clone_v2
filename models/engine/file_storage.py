@@ -76,17 +76,6 @@ class FileStorage:
             pass
         del FileStorage.__objects
         FileStorage.__objects = {}
-        self.save()def delete_all(self):
-        """
-            deletes all stored objects, for testing purposes
-        """
-        try:
-            with open(FileStorage.__file_path, mode='w') as f_io:
-                pass
-        except:
-            pass
-        del FileStorage.__objects
-        FileStorage.__objects = {}
         self.save()
 
     def close(self):
