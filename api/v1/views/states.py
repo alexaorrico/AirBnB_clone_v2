@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import request
+from flask import request, jsonify, abort
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -10,17 +10,44 @@ from models.state import State
 def states_base():
     """x"""
     if request.method == "GET":
-        return {"GET": "Not implemented"}
+        out = []
+        for state in storage.all("State").values():
+            out.append(state.to_dict())
+        return jsonify(out)
     if request.method == "POST":
-        return {"POST": "Not implemented"}
+        if not request.is_json:
+            return "Not a JSON", 400
+        out = State(**request.get_json())
+        if "name" not in out.to_dict().keys():
+            return "Missing name", 400
+        out.save()
+        return out.to_dict(), 201
 
 
 @app_views.route("/states/<id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
 def states_id(id):
     """x"""
     if request.method == "GET":
-        return {"GET": "Not implemented"}
+        for state in storage.all("State").values():
+            if state.id == id:
+                return state.to_dict()
+        abort(404)
     if request.method == "DELETE":
-        return {"DELETE": "Not implemented"}
+        for state in storage.all("State").values():
+            if state.id == id:
+                for city in state.cities:
+                    city.delete()
+                state.delete()
+                storage.save()
+                return {}, 200
+        abort(404)
     if request.method == "PUT":
-        return {"PUT": "Not implemented"}
+        for state in storage.all("State").values():
+            if state.id == id:
+                if not request.is_json:
+                    return "Not a JSON", 400
+                for k, v in request.get_json().items():
+                    setattr(state, k, v)
+                storage.save()
+                return state.to_dict()
+        abort(404)
