@@ -24,26 +24,24 @@ def states_base():
         return out.to_dict(), 201
 
 
-@app_views.route("/states/<id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
-def states_id(id):
+@app_views.route("/states/<s_id>", strict_slashes=False, methods=["GET", "DELETE", "PUT"])
+def states_id(s_id):
     """x"""
     if request.method == "GET":
         for state in storage.all("State").values():
-            if state.id == id:
+            if state.id == s_id:
                 return state.to_dict()
         abort(404)
     if request.method == "DELETE":
         for state in storage.all("State").values():
-            if state.id == id:
-                for city in state.cities:
-                    city.delete()
+            if state.id == s_id:
                 state.delete()
                 storage.save()
                 return {}, 200
         abort(404)
     if request.method == "PUT":
         for state in storage.all("State").values():
-            if state.id == id:
+            if state.id == s_id:
                 if not request.is_json:
                     return "Not a JSON", 400
                 for k, v in request.get_json().items():
