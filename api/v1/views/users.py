@@ -38,7 +38,7 @@ def users_id(u_id):
             return user.to_dict()
         abort(404)
     if request.method == "DELETE":
-        user storage.get(User, u_id)
+        user = storage.get(User, u_id)
         if user:
             user.delete()
             storage.save()
