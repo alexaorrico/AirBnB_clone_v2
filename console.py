@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import shlex  # for splitting the line along spaces except in double quotes
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -159,6 +160,13 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
+    def do_count(self, cls=None):
+        """Count the instances of a class, if supplied, or all if not"""
+        if cls in classes:
+            print(storage.count(cls))
+        else:
+            print(storage.count(None))
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
