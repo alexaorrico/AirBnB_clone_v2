@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """retrieves one object"""
+        """retrieves one object."""
         if id and cls:
             return self.all(cls)[str(cls.__name__)+"."+id]
         else:
