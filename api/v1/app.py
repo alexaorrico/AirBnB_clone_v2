@@ -17,7 +17,7 @@ def teardown_api(exception):
     return storage.close()
 
 
-@app.error_handler(404)
+@app.errorhandler(404)
 def not_found(self):
     """Handles page not found error"""
     notfound = jsonify({"error": "Not found"}, 404)
