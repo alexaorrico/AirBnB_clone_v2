@@ -116,6 +116,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+
 class TestDBStorage_NewMethods_v3(unittest.TestCase):
     """Tests to methods added in V3"""
 
