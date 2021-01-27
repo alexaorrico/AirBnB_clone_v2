@@ -20,8 +20,8 @@ def teardown_api(exception):
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST')
     if host is None:
-       os.environ['HBNB_API_HOST'] = '0.0.0.0'
-       host = os.getenv('HBNB_API_HOST')
+        os.environ['HBNB_API_HOST'] = '0.0.0.0'
+        host = os.getenv('HBNB_API_HOST')
     port = int(os.getenv('HBNB_API_PORT'))
     if port is None:
         os.environ['HBNB_API_PORT'] = int(5000)
