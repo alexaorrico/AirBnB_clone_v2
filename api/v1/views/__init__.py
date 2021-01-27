@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""x"""
 
 from flask import Blueprint
 
