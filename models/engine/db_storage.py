@@ -81,12 +81,12 @@ class DBStorage:
             return None
         if id is None:
             return None
-        
-        item_id = str(cls) + '.' + str(id)
+
         all_objs = self.all(cls)
         for obj in all_objs.values():
             if obj.id == id:
                 return obj
+        return None
 
     def count(self, cls=None):
         """
