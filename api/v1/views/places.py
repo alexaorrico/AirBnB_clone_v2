@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""x"""
+"""this is a test string"""
 
 from flask import request
 from api.v1.views import app_views
@@ -12,7 +12,7 @@ from models.place import Place
                  strict_slashes=False,
                  methods=["GET", "POST"])
 def places_base(c_id):
-    """x"""
+    """this is a test string"""
     if request.method == "GET":
         return {"GET": "Not implemented"}
     if request.method == "POST":
@@ -23,7 +23,7 @@ def places_base(c_id):
                  strict_slashes=False,
                  methods=["GET", "DELETE", "PUT"])
 def places_id(p_id):
-    """x"""
+    """this is a test string"""
     if request.method == "GET":
         return {"GET": "Not implemented"}
     if request.method == "DELETE":

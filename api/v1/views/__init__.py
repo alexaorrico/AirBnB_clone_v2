@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""x"""
+"""this is a test string"""
 
 from flask import Blueprint
 

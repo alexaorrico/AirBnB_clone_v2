@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""x"""
+"""this is a test string"""
 
 from models import storage
 from flask import Flask
@@ -10,13 +10,13 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 
 @app.errorhandler(404)
 def page_not_found(err=None):
-    """x"""
+    """this is a test string"""
     return {"error": "Not found"}, 404
 
 
 @app.teardown_appcontext
 def tear(err=None):
-    """rip and"""
+    """this is a test string"""
     storage.close()
 
 if __name__ == "__main__":
