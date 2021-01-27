@@ -36,7 +36,7 @@ def city_view(city_id):
 def delete_city(city_id):
     """Deletes a City object"""
     ct = storage.get(City, city_id)
-    if st is None:
+    if ct is None:
         abort(404)
     storage.delete(ct)
     storage.save()
