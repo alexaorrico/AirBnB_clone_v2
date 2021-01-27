@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """this is a test string"""
 
-from flask import request
+from flask import request, jsonify, abort
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -11,9 +11,18 @@ from models.user import User
 def users_base():
     """this is a test string"""
     if request.method == "GET":
-        return {"GET": "Not implemented"}
+        out = []
+        for user in storage.all("User").values():
+            out.append(user.to_dict())
+        return jsonify(out)
     if request.method == "POST":
-        return {"POST": "Not implemented"}
+        if not request.is_json:
+            return "Not a JSON", 400
+        out = User(**request.get_json())
+        if "name" not in out.to_dict().keys():
+            return "Missing name", 400
+        out.save()
+        return out.to_dict(), 201
 
 
 @app_views.route("/users/<u_id>",
@@ -22,8 +31,24 @@ def users_base():
 def users_id(u_id):
     """this is a test string"""
     if request.method == "GET":
-        return {"GET": "Not implemented"}
+        for user in storage.all("User").values():
+            if user.id == u_id:
+                return user.to_dict()
+        abort(404)
     if request.method == "DELETE":
-        return {"DELETE": "Not implemented"}
+        for user in storage.all("User").values():
+            if user.id == u_id:
+                user.delete()
+                storage.save()
+                return {}, 200
+        abort(404)
     if request.method == "PUT":
-        return {"PUT": "Not implemented"}
+        for user in storage.all("User").values():
+            if user.id == u_id:
+                if not request.is_json:
+                    return "Not a JSON", 400
+                for k, v in request.get_json().items():
+                    setattr(user, k, v)
+                storage.save()
+                return user.to_dict()
+        abort(404)
