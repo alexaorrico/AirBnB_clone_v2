@@ -20,7 +20,7 @@ def teardown_api(exception):
 @app.errorhandler(404)
 def not_found(self):
     """Handles page not found error"""
-    notfound = jsonify({"error": "Not found"}, 404)
+    notfound = (jsonify({"error": "Not found"}), 404)
     return notfound
 
 
