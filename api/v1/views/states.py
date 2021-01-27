@@ -2,7 +2,9 @@
 """
  New view for State objects that handles all default RestFul API actions.
 """
-from models import BaseModel, State, storage
+from models.base_model import BaseModel
+from models.state import State
+from models import storage
 from flask import Flask, request, jasonify
 from api.v1.views import app_views
 
