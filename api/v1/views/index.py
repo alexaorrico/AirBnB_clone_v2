@@ -13,6 +13,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/status/', strict_slashes=False)
 def status():
     """returns status: OK if JSON is working
