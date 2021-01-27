@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """
+Starting an API
 """
 
 from flask import Flask
@@ -16,10 +17,11 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def storage_close(exception):
+    """ Closes Storage with exception"""
     storage.close()
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     if not host:
         host = '0.0.0.0'
     if not port:
