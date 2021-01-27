@@ -4,19 +4,26 @@ Module for hbnb API api
 """
 from flask import Flask, render_template, Blueprint, jsonify
 from models import storage
+import os
 from api.v1.views import app_views
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
-@app.teardown_appconext
-def teardown_api():
+@app.teardown_appcontext
+def teardown_api(exception):
     """After query return ends current session"""
-    storage.close()
+    return storage.close()
 
 
 if __name__ == "__main__":
-    host = getenv(HBNB_API_HOST='0.0.0.0')
-    port = int(getenv(HBNB_API_PORT='5000'))
+    host = os.getenv('HBNB_API_HOST')
+    if host is None:
+       os.environ['HBNB_API_HOST'] = '0.0.0.0'
+       host = os.getenv('HBNB_API_HOST')
+    port = int(os.getenv('HBNB_API_PORT'))
+    if port is None:
+        os.environ['HBNB_API_PORT'] = int(5000)
+        port = int(os.getenv('HBNB_API_PORT'))
     app.run(host=host, port=port, threaded=True)
