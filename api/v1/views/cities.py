@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""x"""
+"""this is a test string"""
 
 from flask import request, abort, jsonify
 from api.v1.views import app_views
@@ -12,7 +12,7 @@ from models.city import City
                  strict_slashes=False,
                  methods=["GET", "POST"])
 def cities_base(s_id):
-    """x"""
+    """this is a test string"""
     if request.method == "GET":
         out = []
         for state in storage.all("State").values():
@@ -40,7 +40,7 @@ def cities_base(s_id):
                  strict_slashes=False,
                  methods=["GET", "DELETE", "PUT"])
 def cities_id(c_id):
-    """x"""
+    """this is a test string"""
     if request.method == "GET":
         for city in storage.all("City").values():
             if city.id == c_id:
