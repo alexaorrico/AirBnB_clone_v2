@@ -2,7 +2,7 @@
 """ Starting an API """
 
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -12,6 +12,12 @@ port = getenv('HBNB_API_PORT')
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+
+@app.errorhandler(404)
+def error_404(error):
+    """Handling 404 error with JSON output"""
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
