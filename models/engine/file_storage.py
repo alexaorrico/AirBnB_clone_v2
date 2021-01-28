@@ -70,7 +70,10 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """this is a test string"""
+        """
+        Returns the object based on the class and its ID,
+        or None if not found
+        """
         return self.__objects.get(str(cls.__name__) + "." + id)
 
     def count(self, cls=None):
