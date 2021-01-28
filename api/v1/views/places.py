@@ -92,5 +92,6 @@ def put_place(place_id):
                 if k != 'created_at' and k != 'updated_at' and k != 'id'\
                    and k !='user_id' and k != 'city_id':
                     setattr(place, k, v)
+            place.save()
             return(jsonify(place.to_dict()), 200)
     abort(404)

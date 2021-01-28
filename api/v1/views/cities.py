@@ -89,5 +89,6 @@ def put_city(city_id):
             for k, v in payload.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':
                     setattr(city, k, v)
+            city.save()
             return(jsonify(city.to_dict()), 200)
     abort(404)

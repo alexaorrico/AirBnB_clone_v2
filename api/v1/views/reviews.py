@@ -89,5 +89,6 @@ def put_review(review_id):
             for k, v in payload.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':
                     setattr(review, k, v)
+            review.save()
             return(jsonify(review.to_dict()), 200)
     abort(404)
