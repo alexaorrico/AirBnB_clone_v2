@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 """view for Placae and Amenity relationship object that
-    handles all default RestFul API actions
-"""
+    handles all default RestFul API actions"""
 
 from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.city import City
 from models.user import User
-from models.place import Place, place_amenity
+from models.place import Place
 from models.amenity import Amenity
 from os import getenv
+
+
+if getenv('HBNB_TYPE_STORAGE') == 'db':
+    from models.place import place_amenity
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
