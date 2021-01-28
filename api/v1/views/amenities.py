@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""this is a test string"""
+"""
+a new view for Amenity objects that handles
+all default RestFul API actions
+"""
 
 from flask import request, jsonify, abort
 from api.v1.views import app_views
