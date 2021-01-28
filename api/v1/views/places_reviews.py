@@ -11,13 +11,13 @@ from models.review import Review
 
 @app_views.route('/place/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def place_getplacerev(place_id=None):
+def reviews_getplacerev(place_id=None):
     """Retrieve reviews from each place"""
     state = storage.get(Place, place_id)
     if state is None:
         abort(404)
     list_review = []
-    for i in state.places_reviews:
+    for i in state.reviews:
         list_review.append(i.to_dict())
     return jsonify(list_review)
 
@@ -61,6 +61,7 @@ def post_review(place_id):
         abort(400, "Missing text")
     else:
         new_rev = Review(**data)
+        new_rev.place_id = place_id
         storage.save()
     return jsonify(new_rev.to_dict()), 201
 
