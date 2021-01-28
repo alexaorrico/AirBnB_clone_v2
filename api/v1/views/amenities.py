@@ -21,7 +21,8 @@ def amenities_getstate(state_id=None):
     return jsonify(list_amenities)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 def get_amenity(amenity_id=None):
     """get amenity objects"""
     amenity = storage.get(Amenity, amenity_id)
@@ -60,7 +61,8 @@ def post_amenity(state_id):
     return jsonify(new_ame.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def put_amenity(amenity_id=None):
     """Put method"""
     data = request.get_json()
