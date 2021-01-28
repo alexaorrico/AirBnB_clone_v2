@@ -20,4 +20,5 @@ def teardown(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host=os.getenv("HBNB_API_HOST"), port=os.getenv("HBNB_API_PORT"), threaded=True)
+    app.run(debug=True, host=os.getenv("HBNB_API_HOST"),
+            port=os.getenv("HBNB_API_PORT"), threaded=True)
