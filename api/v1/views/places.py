@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Places module """
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from models import storage
 from models.place import Place
 from models.city import City
@@ -16,21 +16,20 @@ from models.city import City
     methods=['GET'],
     strict_slashes=False)
 def placeof_city(city_id=None, place_id=None):
+    """place and cities"""
     if place_id:
-        obj_place = storage.get(Place, place_id)
-        if obj_place:
-            return jsonify(obj_place.to_dict())
+        if storage.get(Place, place_id):
+            return jsonify(storage.get(Place, place_id).to_dict())
         else:
             abort(404)
-
     if city_id:
-        acity = storage.get(City, city_id)
-        if acity is None:
+        city = storage.get(City, city_id)
+        if not city:
             abort(404)
-        place_list = []
-        for aplace in acity.places:
-            place_list.append(aplace.to_dict())
-        return jsonify(place_list), 200
+        list_places = []
+        for place in city.places:
+            list_places.append(place.to_dict())
+        return jsonify(list_places)
     else:
         abort(404)
 
@@ -45,7 +44,7 @@ def delete_place(place_id=None):
     if storage.get(Place, place_id):
         storage.delete(storage.get(Place, place_id))
         storage.save()
-        return jsonify({}), 200
+        return jsonify({})
     else:
         abort(404)
 
@@ -59,27 +58,27 @@ def post_place(city_id=None):
     """
     city = storage.get(City, city_id)
     if city:
-        place_dic = request.get_json()
-        if place_dic is None:
+        place = request.get_json()
+        if not place:
             abort(400, "Not a JSON")
-        if "user_id" not in place_dic.keys():
-            abort(404, "Missing user_id")
+        if "user_id" not in place:
+            abort(400, "Missing user_id")
         if not storage.get("User", place["user_id"]):
             abort(404)
-        if "name" not in place_dic.keys():
+        if "name" not in place:
             abort(400, "Missing name")
         else:
-            place_dic['city_id'] = city.id
+            place['city_id'] = city.id
             new_place = Place(**place)
+            storage.new(new_place)
             storage.save()
             return jsonify(new_place.to_dict()), 201
-    else:
-        abort(404)
+    abort(404)
 
 
 @app_views.route('/places/<place_id>',
                  methods=['PUT'], strict_slashes=False)
-def put_user(place_id=None):
+def put_place(place_id=None):
     """
     arreglar
     """
