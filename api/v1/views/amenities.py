@@ -10,7 +10,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def get_states():
+def get_amenities():
     """Gets the dict containing all the states
     """
     amenities = storage.all("Amenity")
@@ -19,7 +19,7 @@ def get_states():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def get_state_id(amenity_id):
+def get_amenity_id(amenity_id):
     """Gets a amenity by its ID
     """
     amenity = storage.get("Amenity", amenity_id)
@@ -31,7 +31,7 @@ def get_state_id(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_states(amenity_id):
+def delete_amenity(amenity_id):
     """Deletes an amenity
     """
     amenity = storage.get("Amenity", amenity_id)
@@ -44,7 +44,7 @@ def delete_states(amenity_id):
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-def post_state():
+def post_amenity():
     """Creates an amenity
     """
     got_json = request.get_json()
@@ -58,8 +58,9 @@ def post_state():
     return make_response(jsonify(new_amen.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
-def put_state(amenity_id):
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
+def put_amenity(amenity_id):
     """Updates an amenity
     """
     got_json = request.get_json()
