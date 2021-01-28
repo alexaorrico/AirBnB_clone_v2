@@ -12,10 +12,10 @@ from models.amenity import Amenity
 def get_amenity(amenity_id=None):
     """get amenity object"""
     if amenity_id is None:
-        Namenitylist = []
-        for item in storage.all(Amenity).values():
-            Namenitylist.append(item.to_dict())
-        return jsonify(Namenitylist)
+        ListAmenity = []
+        for sAmenity in storage.all(Amenity).values():
+            ListAmenity.append(sAmenity.to_dict())
+        return jsonify(ListAmenity)
     elif storage.get(Amenity, amenity_id):
         return jsonify(storage.get(Amenity, amenity_id).to_dict())
     else:
@@ -42,9 +42,9 @@ def post_amenity():
     elif "name" not in request.get_json().keys():
         abort(400, "Missing name")
     else:
-        new_amenity = Amenity(**request.get_json())
+        Create_amenity = Amenity(**request.get_json())
         storage.save()
-    return jsonify(new_amenity.to_dict()), 201
+    return jsonify(Create_amenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>',
@@ -55,10 +55,10 @@ def put_amenity(amenity_id=None):
         abort(404)
     if request.get_json() is None:
         return "Not a JSON", 400
-    for key, value in request.get_json().items():
-        if key in ["id", "created_at", "updated_at"]:
+    for keye, val in request.get_json().items():
+        if keye in ["id", "created_at", "updated_at"]:
             pass
         else:
-            setattr(storage.get("Amenity", amenity_id), key, value)
+            setattr(storage.get("Amenity", amenity_id), keye, val)
     storage.save()
     return jsonify(storage.get("Amenity", amenity_id).to_dict()), 200
