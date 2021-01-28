@@ -27,7 +27,8 @@ def states_get_error(state_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_states(state_id):
     """deletes a State object
     """
@@ -71,7 +72,8 @@ def put_states(state_id):
 
     ignore_keys = ["id", "created_at", "updated_at"]
     for key, value in info.items():
-        if key not in ignore keys:
+        if key not in ignore_keys:
+            setattr(state_info, key, value)
 
     state_info.save()
     return jsonify(state_info.to_dict())
