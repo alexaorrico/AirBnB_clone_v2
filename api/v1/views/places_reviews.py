@@ -16,9 +16,9 @@ from models.review import Review
 def reviews_of_place(place_id):
     """Retrieve the list of all Review objects of a Place"""
     place = storage.get(Place, place_id)
-    if Place is None:
+    if place is None:
         abort(404)
-    reviews_place = [reviews.to_dict() for reviews in place.reviews]
+    reviews_place = [review.to_dict() for review in place.reviews]
     return jsonify(reviews_place)
 
 
