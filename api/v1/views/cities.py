@@ -10,7 +10,7 @@ from models.city import City
                  strict_slashes=False)
 def city_getstate(state_id=None):
     """Retrieve list city objects"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     list_cities = []
@@ -20,7 +20,7 @@ def city_getstate(state_id=None):
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def get_cities(city_id=None):
+def get_city(city_id=None):
     """get city objects"""
     city = storage.get(City, city_id)
     if city is None:
