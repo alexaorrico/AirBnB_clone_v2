@@ -6,7 +6,8 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def cities(state_id=None):
     """ falta arreglar xd """
 
@@ -19,3 +20,79 @@ def cities(state_id=None):
         cities = [xd.to_dict() for xd in data.cities]
         return (jsonify(cities), 200)
     abort(404)
+
+
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+def citie(city_id=None):
+
+    data = storage.get(City, city_id)
+    if data:
+        return jsonify(data.to_dict()), 200
+    else:
+        abort(404)
+
+
+@app_views.route('/cities/<city_id>',
+                 methods=['DELETE'],
+                 strict_slashes=False)
+def delete_city(city_id=None):
+    """
+    delete state if id is match with obj
+    """
+    if storage.get(City, city_id):
+        storage.delete(storage.get(City, city_id))
+        storage.save()
+        return jsonify({}), 200
+    else:
+        abort(404)
+
+
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
+def post_cities(state_id=None):
+    """
+    arreglar
+    """
+
+    cit_dict = request.get_json()
+
+    obj = storage.get(State, state_id)
+
+    if obj is None:
+        abort(400)
+    if cit_dict is None:
+        abort("Not a JSON", 400)
+    if "name" not in cit_dict.keys():
+        abort("Missing name", 400)
+
+    cit_dict["state_id"] = state_id
+    new_city = City(**cit_dict)
+    new_city.save()
+
+    return jsonify(new_city.to_dict()), 200
+
+
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def put_cities(city_id=None):
+    """
+    arreglar
+    """
+
+    data = request.get_json()
+
+    obj = storage.get(City, city_id)
+
+    if obj is None:
+        abort(404)
+
+    if data is None:
+        return "Not a JSON", 400
+
+    for k, v in data.items():
+        if k in ["id", "created_at", "updated_at"]:
+            pass
+        else:
+            setattr(obj, k, v)
+    storage.save()
+
+    return jsonify(obj.to_dict()), 200
