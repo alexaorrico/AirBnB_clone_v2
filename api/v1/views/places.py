@@ -5,11 +5,12 @@ from models import storage
 from flask import jsonify, abort, request
 from models.state import State
 from models.city import City
+from models.place import Place
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def place_getstate(city_id=None):
+def place_getplace(city_id=None):
     """Retrieve list city objects"""
     state = storage.get(City, city_id)
     if state is None:
@@ -51,10 +52,10 @@ def post_place(city_id):
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
+    elif storage.get(User, data[user_id]) is None:
+        abort(404)
     elif "user_id" not in data.keys():
         abort(400, "Missing user_id")
-    elif storage.get(User, user_id) is None:
-        abort(404)
     elif "name" not in data.keys():
         abort(400, "Missing name")
     else:
@@ -73,7 +74,7 @@ def put_place(place_id=None):
     if data is None:
         return "Not a JSON", 400
     for k, v in data.items():
-        if k in ["id", "created_at", "updated_at"]:
+        if k in ["id", "user_id", "city_id", "created_at", "updated_at"]:
             pass
         else:
             setattr(obj, k, v)
