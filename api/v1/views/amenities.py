@@ -9,14 +9,14 @@ from flask import jsonify, request, abort
 @app_views.route('/amenities', strict_slashes=False, methods=['POST', 'GET'])
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=[
     'PUT', 'GET', 'DELETE'])
-def amenities(amenities_id=None):
+def amenities(amenity_id=None):
     """retrieves list of all amenities or amenities by amenity_id"""
     if amenity_id is None:
         # /amenities GET method
         if request.method == 'GET':
             list_amen = []
             for amenities in storage.all('Amenity').values():
-                list_amen.append(state.to_dict())
+                list_amen.append(amenities.to_dict())
             return jsonify(list_amen)
 
         # /amenities POST method
