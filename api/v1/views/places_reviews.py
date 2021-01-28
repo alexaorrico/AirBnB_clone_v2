@@ -10,8 +10,9 @@ import json
 from flask import Flask, jsonify, request, make_response, abort
 from api.v1.views import app_views
 
+
 @app_views.route('/place/<place_id>/reviews', methods=['GET'],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_review_by_place(place_id):
     """Method to get all reviews by place_id"""
     place = storage.all(Place)
@@ -52,6 +53,7 @@ def delete_review(review_id):
             return jsonify({}), 200
     abort(404)
 
+
 @app_views.route('/places/<place_id>/place', methods=['POST'],
                  strict_slashes=False)
 def post_review(place_id):
@@ -64,6 +66,7 @@ def post_review(place_id):
     elif 'user_id' not in payload:
         abort(400, 'Missing user_id')
     elif 'user.user_id' not in payload:
+        abort(404)
 
     for place in place.values():
         if place.id == place_id:

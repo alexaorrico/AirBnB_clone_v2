@@ -11,7 +11,7 @@ from api.v1.views import app_views
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_city_by_state(state_id):
     """Method to get al cities by state id"""
     states = storage.all(State)
@@ -51,6 +51,7 @@ def delete_city(city_id):
             storage.save()
             return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
