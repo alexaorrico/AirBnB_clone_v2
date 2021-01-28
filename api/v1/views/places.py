@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from models import storage
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route("/cities/<c_id>/places",
@@ -32,8 +33,8 @@ def places_base(c_id):
             info = out.to_dict()
             if "user_id" not in info.keys():
                 return "Missing user_id", 400
-#            if not storage.get(User, info.get("user_id")):
-#                abort(404)
+            if not storage.get(User, info.get("user_id")):
+                abort(404)
             if "name" not in info.keys():
                 return "Missing name", 400
             out.save()
