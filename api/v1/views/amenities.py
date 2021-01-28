@@ -2,7 +2,7 @@
 """handles amenity route requests"""
 from api.v1.views import app_views
 from models import storage
-from models.state import Amenity
+from models.amenity import Amenity
 from flask import jsonify, request, abort
 
 
