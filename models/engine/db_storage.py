@@ -89,4 +89,6 @@ class DBStorage:
         elif cls is None:
             for name_class in classes.values():
                 count += self.__session.query(name_class).count()
-        return count
+        if count:
+            return count
+        return None
