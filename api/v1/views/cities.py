@@ -7,14 +7,15 @@ from models.city import City
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
-def states(state_id=None):
-    """ xd """
+def cities(state_id=None):
+    """ falta arreglar xd """
 
     data = storage.get(State, state_id)
     if data is None:
         abort(404)
 
-    cities = []
-    for city in data.cities:
-        cities.append(city.dict())
-    return jsonify(cities)
+    if data:
+
+        cities = [xd.to_dict() for xd in data.cities]
+        return (jsonify(cities), 200)
+    abort(404)
