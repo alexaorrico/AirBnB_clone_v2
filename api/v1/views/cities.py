@@ -6,10 +6,11 @@ from models.state import State
 from models.city import City
 from models import storage
 import json
-from flask import Flask, jsonify, request, make_response, abort
+from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
 
-@app_view.route('/states/<state_id>/cities', methods=['GET'],
+
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                 strict_slashes=False)
 def get_city_by_state(state_id):
     """Method to get al cities by state id"""
@@ -26,7 +27,7 @@ def get_city_by_state(state_id):
     return
 
 
-@app_viess.route('cities/<city_id>', methods=['GET'],
+@app_views.route('cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
     """Get a single city by id number"""
@@ -66,6 +67,7 @@ def post_city(state_id):
     for state in states.values():
         if state.id == state_id:
             new_city = City(**payload)
+            setattr(new_city, 'state_id', state_id)
             new_city.save()
             return(jsonify(new_city.to_dict()), 201)
     abort(404)
