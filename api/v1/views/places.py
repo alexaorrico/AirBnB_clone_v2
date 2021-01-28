@@ -32,8 +32,8 @@ def places_base(c_id):
             info = out.to_dict()
             if "user_id" not in info.keys():
                 return "Missing user_id", 400
-            if not storage.get(User, info.get("user_id")):
-                abort(404)
+#            if not storage.get(User, info.get("user_id")):
+#                abort(404)
             if "name" not in info.keys():
                 return "Missing name", 400
             out.save()
