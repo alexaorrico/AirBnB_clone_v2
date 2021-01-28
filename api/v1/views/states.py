@@ -68,7 +68,7 @@ def put_states(state_id=None):
         abort(404)
 
     if data is None:
-        abort("Not a JSON", 400)
+        return "Not a JSON", 400
 
     for k, v in data.items():
         if k in ["id", "created_at", "updated_at"]:
