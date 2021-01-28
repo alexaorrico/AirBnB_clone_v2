@@ -3,16 +3,15 @@
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
-from models.amenity import Amenity
 from models.user import User
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 @app_views.route('/users/<user_id>',
                  methods=['GET'], strict_slashes=False)
-def get_users(user_id=None):
+def get_user(user_id=None):
     """get users object"""
-    if us_id is None:
+    if user_id is None:
         ListUsers = []
         for sUsers in storage.all(User).values():
             ListUsers.append(sUsers.to_dict())
@@ -58,10 +57,10 @@ def put_user(user_id=None):
         abort(404)
     if request.get_json() is None:
         return "Not a JSON", 400
-    for keye, val in request.get_json().items():
-        if keye in ["id", "created_at", "updated_at"]:
+    for key, val in request.get_json().items():
+        if key in ["id", "created_at", "updated_at"]:
             pass
         else:
-            setattr(storage.get("User", user_id), keye, val)
+            setattr(storage.get("User", user_id), key, val)
     storage.save()
     return jsonify(storage.get("User", user_id).to_dict()), 200
