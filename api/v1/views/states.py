@@ -29,16 +29,16 @@ def states(state_id=None):
                  strict_slashes=False)
 def delete_states(state_id=None):
     """
-    xdddd
+    delete state if id is match with obj
     """
     data = storage.get(State, state_id)
 
     if data is None:
         abort(404)
-
-    storage.delete(data)
-    storage.save()
-    return jsonify({}), 200
+    else:
+        storage.delete(data)
+        storage.save()
+        return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -50,25 +50,23 @@ def post_states():
 
     if data is None:
         abort("Not a JSON", 400)
-
-    if "name" not in data.keys():
+    elif "name" not in data.keys():
         abort("Missing name", 400)
-
-    new_value = State(**data)
-    storage.new(new_value)
-    storage.save()
-
+    else:
+        new_value = State(**data)
+        storage.new(new_value)
+        storage.save()
     return jsonify(new_value.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def put_states(state_id):
+def put_states(state_id=None):
     """
-    xdddd
+    PUT states
     """
     data = request.get_json()
 
-    obj = storage.get(State, state_id)
+    obj = storage.get("State", state_id)
 
     if obj is None:
         abort(404)
