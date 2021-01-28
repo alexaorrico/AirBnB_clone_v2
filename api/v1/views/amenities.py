@@ -14,7 +14,7 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def get_amen(amenity_id=None):
     """Uses  the models class to_dict to retrieve all amenity objects"""
-    amenities = storage.all("Amenity")
+    amenities = storage.all(Amenity)
     all_amenities= []
 
     if amenity_id is None or amenity_id is "":
