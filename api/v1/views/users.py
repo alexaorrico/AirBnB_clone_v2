@@ -10,7 +10,7 @@ from flask import jsonify, request, abort
     'POST', 'GET'])
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=[
     'PUT', 'GET', 'DELETE'])
-def amenities(user_id=None):
+def users(user_id=None):
     """handles HTTP requests related to users"""
     if user_id is None:
         # /users GET method
