@@ -82,7 +82,7 @@ def put_user(user_id=None):
         return "Not a JSON", 400
 
     for k, v in data.items():
-        if k in ["id", "created_at", "updated_at"]:
+        if k in ["id", "created_at", "updated_at", "email"]:
             pass
         else:
             setattr(obj, k, v)
