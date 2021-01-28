@@ -29,11 +29,12 @@ def places_base(c_id):
             kwargs = {"city_id": c_id}
             kwargs.update(request.get_json())
             out = Place(**kwargs)
-            if "user_id" not in out.to_dict().keys():
+            info = out.to_dict()
+            if "user_id" not in info.keys():
                 return "Missing user_id", 400
-            if not storage.get(User, out.to_dict()["user_id"]):
+            if not storage.get(User, info.get("user_id")):
                 abort(404)
-            if "name" not in out.to_dict().keys():
+            if "name" not in info.keys():
                 return "Missing name", 400
             out.save()
             return out.to_dict(), 201
