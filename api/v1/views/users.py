@@ -52,5 +52,5 @@ def users_id(u_id):
             for k, v in request.get_json().items():
                 setattr(user, k, v)
             storage.save()
-            return user.to_dict()
+            return user.to_dict(), 200
         abort(404)
