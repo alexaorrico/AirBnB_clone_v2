@@ -71,10 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """this is a test string"""
-        for obj in self.all(cls).values():
-            if obj.id == id:
-                return obj
-        return None
+        return self.__objects.get(str(cls.__name__) + "." + id)
 
     def count(self, cls=None):
         """this is a test string"""
