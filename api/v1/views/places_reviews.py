@@ -16,23 +16,30 @@ def reviews_base(p_id):
     """this is a test string"""
     if request.method == "GET":
         out = []
-        for user in storage.all("Review").values():
-            out.append(user.to_dict())
-        return jsonify(out)
+        place = storage.get(Place, p_id)
+        if place:
+            for review in place.reviews:
+                out.append(review.to_dict())
+            return jsonify(out)
+        abort(404)
     if request.method == "POST":
         if not request.is_json:
             return "Not a JSON", 400
-        out = Review(**request.get_json())
-        if not storage.get(Place, info.get("place_id")):
-            abort(404)
-        if "user_id" not in out.to_dict().keys():
-            return "Missing user_id", 400
-        if not storage.get(User, info.get("user_id")):
-            abort(404)
-        if "text" not in out.to_dict().keys():
-            return "Missing text", 400
-        out.save()
-        return out.to_dict(), 201
+        place = storage.get(Place, p_id)
+        if place:
+            kwargs = {"place_id": p_id}
+            kwargs.update(request.get_json())
+            out = Review(**kwargs)
+            info = out.to_dict()
+            if "user_id" not in info.keys():
+                return "Missing user_id", 400
+            if not storage.get(User, info.get("user_id")):
+                abort(404)
+            if "text" not in info.keys():
+                return "Missing text", 400
+            out.save()
+            return out.to_dict(), 201
+        abort(404)
 
 
 @app_views.route("/reviews/<r_id>",
@@ -41,7 +48,7 @@ def reviews_base(p_id):
 def reviews_id(r_id):
     """this is a test string"""
     if request.method == "GET":
-        review = storage.get(review, r_id)
+        review = storage.get(Review, r_id)
         if review:
             return review.to_dict()
         abort(404)
