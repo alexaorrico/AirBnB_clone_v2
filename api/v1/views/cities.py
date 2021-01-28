@@ -46,7 +46,8 @@ def delete_city(city_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def post_city(state_id):
     """Creates a state
     """
@@ -62,6 +63,7 @@ def post_city(state_id):
     storage.new(new_city)
     storage.save()
     return make_response(jsonify(new_city.to_dict()), 201)
+
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def put_city(city_id):
