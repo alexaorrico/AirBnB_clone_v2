@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """ Modification States """
-
-
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, abort,
+from flask import jsonify, abort, request
 from models.state import State
 
 
@@ -14,16 +12,16 @@ def states_all(state_id=None):
     """Retrieve list state objects"""
     if state_id is None:
         list_states = []
-        for rstate in storage.all("State").values():
+        for rstate in storage.all(State).values():
             list_states.append(rstate.to_dict())
         return jsonify(list_states)
     elif storage.get(State, state_id):
-        return jsonify(storage.get(State, state_id))
+        return jsonify(storage.get(State, state_id).to_dict())
     else:
         abort(404)
 
 
-@app_views.route('/api/v1/states/<state_id>',
+@app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
 def state_delete(state_id=None):
     """Delete state"""
