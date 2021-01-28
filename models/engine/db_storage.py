@@ -76,7 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """this is a test string"""
+        """Returns the object based on the class and its ID, or None if not found"""
         for obj in self.__session.query(cls).all():
             if obj.id == id:
                 return obj
