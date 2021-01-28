@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""amenitys"""
+"""Users"""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
@@ -17,7 +17,7 @@ def get_users(user_id=None):
         for sUsers in storage.all(User).values():
             ListUsers.append(sUsers.to_dict())
         return jsonify(ListUsers)
-    elif storage.get(User, users_id):
+    elif storage.get(User, user_id):
         return jsonify(storage.get(User, user_id).to_dict())
     else:
         abort(404)
@@ -40,8 +40,10 @@ def post_user():
     """Add User object"""
     if request.get_json() is None:
         abort(400, "Not a JSON")
-    elif "name" not in request.get_json().keys():
-        abort(400, "Missing name")
+    elif "email" not in request.get_json().keys():
+        abort(400, "Missing email")
+    elif "password" not in request.get_json().keys():
+        abort(400, "Missing password")
     else:
         Create_user = User(**request.get_json())
         storage.save()
@@ -60,6 +62,6 @@ def put_user(user_id=None):
         if keye in ["id", "created_at", "updated_at"]:
             pass
         else:
-            setattr(storage.get("Amenity", user_id), keye, val)
+            setattr(storage.get("User", user_id), keye, val)
     storage.save()
-    return jsonify(storage.get("Amenity", user_id).to_dict()), 200
+    return jsonify(storage.get("User", user_id).to_dict()), 200
