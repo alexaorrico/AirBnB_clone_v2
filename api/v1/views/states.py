@@ -32,7 +32,7 @@ def states_base():
                  strict_slashes=False,
                  methods=["GET", "DELETE", "PUT"])
 def states_id(s_id):
-    """this is a test string"""
+    """Retrieves a State object"""
     if request.method == "GET":
         state = storage.get(State, s_id)
         if state:
