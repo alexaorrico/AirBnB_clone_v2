@@ -14,10 +14,8 @@ def cities(state_id=None):
     if data is None:
         abort(404)
 
-    cities = []
     if data:
 
-        for city in data.cities:
-            cities = city.to_dict()
+        cities = [xd.to_dict() for xd in data.cities]
         return (jsonify(cities), 200)
     abort(404)
