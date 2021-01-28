@@ -43,7 +43,7 @@ def cities_base(s_id):
                  strict_slashes=False,
                  methods=["GET", "DELETE", "PUT"])
 def cities_id(c_id):
-    """this is a test string"""
+    """Retrieves a City object."""
     if request.method == "GET":
         city = storage.get(City, c_id)
         if city:
