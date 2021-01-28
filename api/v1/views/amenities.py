@@ -12,7 +12,7 @@ from api.v1.views import app_views
 @app_views.route('/amenities/', methods=['GET'], strict_slashes=False)
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def amen_api_GET_dict(amenity_id=None):
+def get_amen(amenity_id=None):
     """Uses  the models class to_dict to retrieve all amenity objects"""
     amenities = storage.all("Amenity")
     all_amenities= []
@@ -30,7 +30,7 @@ def amen_api_GET_dict(amenity_id=None):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def amen_api_DEL_Amenity(amenity_id):
+def delete_amen(amenity_id):
     """Use models class to delete an instace of class Amenity"""
     amenities = storage.all(Amenity)
 
@@ -44,7 +44,7 @@ def amen_api_DEL_Amenity(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['POST'],
                 strict_slashes=False)
-def amen_api_POST_Amenity(amenity_id):
+def post_amen(amenity_id):
     """"Method to create an amenity"""
     payload = request.get_josn(silent=True)
 
@@ -61,7 +61,7 @@ def amen_api_POST_Amenity(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def amen_api_PUT_Amenity(amenity_id):
+def put_amen(amenity_id):
     """Method to update a amenity object"""
     payload_amen = request.get_json(silent=True)
     amenities = storage.all(Amenity)
