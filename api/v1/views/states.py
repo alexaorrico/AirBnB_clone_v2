@@ -8,8 +8,8 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def retrobj(state_id=None):
-    """retrieve object"""
+def get_state(state_id=None):
+    """get state object"""
     if state_id is None:
         Nstatelist = []
         for item in storage.all(State).values():
@@ -23,8 +23,8 @@ def retrobj(state_id=None):
 
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delobj(state_id=None):
-    """retrieve object"""
+def del_state(state_id=None):
+    """Delete state object"""
     if storage.get(State, state_id):
         storage.delete(storage.get(State, state_id))
         storage.save()
@@ -34,21 +34,21 @@ def delobj(state_id=None):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def post_states():
-    """post method"""
+def post_state():
+    """Add state object"""
     if request.get_json() is None:
         abort(400, "Not a JSON")
     elif "name" not in request.get_json().keys():
         abort(400, "Missing name")
     else:
-        new_value = State(**request.get_json())
+        new_state = State(**request.get_json())
         storage.save()
-    return jsonify(new_value.to_dict()), 201
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def put_states(state_id=None):
-    """PUT method"""
+def put_state(state_id=None):
+    """Update state object"""
     if storage.get("State", state_id) is None:
         abort(404)
     if request.get_json() is None:
