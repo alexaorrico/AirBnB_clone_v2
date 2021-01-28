@@ -19,7 +19,7 @@ def page_not_found(err=None):
 
 @app.teardown_appcontext
 def tear(err=None):
-    """this is a test string"""
+    """app teardown function"""
     storage.close()
 
 if __name__ == "__main__":
