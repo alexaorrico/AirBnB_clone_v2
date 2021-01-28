@@ -8,7 +8,7 @@ from models.city import City
 from models.amenity import Amenity
 
 
-@app_views.route('/states/<state_id>/amenities', methods=['GET'],
+@app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
 def amenities_getstate(state_id=None):
     """Retrieve list amenity objects"""
@@ -43,7 +43,7 @@ def delete_amenity(amenity_id=None):
         abort(404)
 
 
-@app_views.route('/states/<state_id>/amenities', methods=['POST'],
+@app_views.route('/amenities', methods=['POST'],
                  strict_slashes=False)
 def post_amenity(state_id):
     """ post method """
