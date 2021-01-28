@@ -29,7 +29,7 @@ def get_amenity(amenity_id):
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_amenity(amenity_id):
-    """Retrieve a specific amenity object by id"""
+    """Delete a specific amenity object by id"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity:
         storage.delete(amenity)
@@ -54,7 +54,7 @@ def create_amenity():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def uptade_amenity(state_id):
+def uptade_amenity(amenity_id):
     """Update a amenity store into storage"""
     if request.get_json() is None:
         return "Not a JSON", 400
