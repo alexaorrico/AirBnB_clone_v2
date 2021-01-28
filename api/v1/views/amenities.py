@@ -15,7 +15,7 @@ from api.v1.views import app_views
 def get_amen(amenity_id=None):
     """Uses  the models class to_dict to retrieve all amenity objects"""
     amenities = storage.all(Amenity)
-    all_amenities= []
+    all_amenities = []
 
     if amenity_id is None or amenity_id is "":
         for amenity in amenities.values():
@@ -44,7 +44,7 @@ def delete_amen(amenity_id):
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['POST'],
-                strict_slashes=False)
+                 strict_slashes=False)
 def post_amen(amenity_id):
     """"Method to create an amenity"""
     payload = request.get_josn(silent=True)

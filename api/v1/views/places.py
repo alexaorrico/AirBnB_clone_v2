@@ -11,7 +11,7 @@ from api.v1.views import app_views
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_place_by_city(city_id):
     """Method to get al cities by city id"""
     cities = storage.all(City)
@@ -52,7 +52,7 @@ def delete_place(place_id):
             return jsonify({}), 200
     abort(404)
 
-    
+
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def post_place(city_id):
@@ -86,11 +86,11 @@ def put_place(place_id):
     if payload is None:
         abort(400, 'Not a JSON')
 
+    no_nos = ['created_at', 'updated_at', 'id', 'user_id', 'city_id']
     for place in cities.values():
         if place.id == place_id:
             for k, v in payload.items():
-                if k != 'created_at' and k != 'updated_at' and k != 'id'\
-                   and k !='user_id' and k != 'city_id':
+                if k not in no_nos:
                     setattr(place, k, v)
             place.save()
             return(jsonify(place.to_dict()), 200)
