@@ -15,7 +15,7 @@ from api.v1.views import app_views
 def api_GET_dict(amenity_id=None):
     """Uses  the models class to_dict to retrieve all amenity objects"""
     amenities = storage.all("Amenity")
-    all_states = []
+    all_amenities= []
 
     if amenity_id is None or amenity_id is "":
         for amenity in amenities.values():
@@ -34,7 +34,7 @@ def api_DEL_Amenity(amenity_id):
     """Use models class to delete an instace of class Amenity"""
     amenities = storage.all(Amenity)
 
-    for state in states.values():
+    for amenities in amenities.values():
         if amenity.id == amenity_id:
             amenity.delete()
             storage.save()
