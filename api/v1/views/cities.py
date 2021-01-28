@@ -27,6 +27,7 @@ def get_city(city_id=None):
     else:
         return jsonify(storage.get(City, city_id).to_dict())
 
+
 @app_views.route('/cities/<city_id>',
                  methods=['DELETE'], strict_slashes=False)
 def del_city(city_id=None):
