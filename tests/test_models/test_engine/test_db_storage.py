@@ -71,16 +71,21 @@ test_db_storage.py'])
 
 class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != "db", "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != "db", "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        len_all = len(storage.all())
+        self.assertEqual(len_all, len(storage.all()))
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != "db", "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
         db = MySQLdb.connect(user=os.getenv(
@@ -96,7 +101,8 @@ class TestDBStorage(unittest.TestCase):
         cur.close()
         db.close()
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != "db", "not testing db storage")
     def test_save(self):
         """ Test if an object is store in the database """
         new = State(name="Antioquia")
