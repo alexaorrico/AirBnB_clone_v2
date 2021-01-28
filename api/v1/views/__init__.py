@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""this is a test string"""
+"""api/v1/views initialization file"""
 
 from flask import Blueprint
 
