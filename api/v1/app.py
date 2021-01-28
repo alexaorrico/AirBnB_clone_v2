@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""this is a test string"""
+"""web app creation module"""
 
 from models import storage
 from flask import Flask
