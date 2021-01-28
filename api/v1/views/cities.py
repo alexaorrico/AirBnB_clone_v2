@@ -10,7 +10,7 @@ from models.city import City
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET'], strict_slashes=False)
 def cities(state_id=None):
-    """ falta arreglar xd """
+    """ GET status exit 200 if its ok """
 
     data = storage.get(State, state_id)
     if data is None:
@@ -20,7 +20,6 @@ def cities(state_id=None):
 
         cities = [xd.to_dict() for xd in data.cities]
         return (jsonify(cities), 200)
-    abort(404)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
@@ -52,7 +51,7 @@ def delete_city(city_id=None):
                  methods=['POST'], strict_slashes=False)
 def post_cities(state_id=None):
     """
-    arreglar
+    POST cities, exit with status 201
     """
 
     cit_dict = request.get_json()
@@ -70,7 +69,7 @@ def post_cities(state_id=None):
     new_city = City(**cit_dict)
     new_city.save()
 
-    return jsonify(new_city.to_dict()), 200
+    return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
