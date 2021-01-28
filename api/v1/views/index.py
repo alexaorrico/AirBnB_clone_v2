@@ -15,7 +15,10 @@ decoded = ["amenities", "cities", "places", "reviews", "states", "users"]
 
 @app_views.route("/status", strict_slashes=False)
 def status_check():
-    """this is a test string"""
+    """
+    a route /status on the object app_views that
+    returns a JSON: "status": "OK"
+    """
     return {"status": "OK"}
 
 
