@@ -34,7 +34,7 @@ def get_city(city_id):
     cities = storage.all(City)
     for city in cities.values():
         if city.id == city_id:
-            return(jsonify(city.todict()))
+            return(jsonify(city.to_dict()))
     abort(404)
     return
 
@@ -45,7 +45,7 @@ def delete_city(city_id):
     """deletes a single city"""
     cities = storage.all(City)
 
-    for city in city.values():
+    for city in cities.values():
         if city.id == city_id:
             city.delete()
             storage.save()
@@ -89,5 +89,6 @@ def put_city(city_id):
             for k, v in payload.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':
                     setattr(city, k, v)
+            city.save()
             return(jsonify(city.to_dict()), 200)
     abort(404)

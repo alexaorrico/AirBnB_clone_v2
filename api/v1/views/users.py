@@ -12,7 +12,7 @@ from api.v1.views import app_views
 
 @app_views.route('/users/', methods=['GET'], strict_slashes=False)
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
-def api_GET_dict(user_id=None):
+def get_user(user_id=None):
     """Uses the models class to_dict to retreive all user objects"""
     users = storage.all("User")
     all_users = []
@@ -31,7 +31,7 @@ def api_GET_dict(user_id=None):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
-def api_DEL_User(user_id):
+def delete_user(user_id):
     """Use models class to delete an instace of class User"""
     users = storage.all(User)
 
@@ -44,7 +44,7 @@ def api_DEL_User(user_id):
 
 
 @app_views.route('/users/', methods=['POST'], strict_slashes=False)
-def api_POST_User():
+def post_user():
     """Method to create a User"""
     payload = request.get_json(silent=True)
 
@@ -62,7 +62,7 @@ def api_POST_User():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def api_PUT_User(user_id):
+def put_user(user_id):
     """Method to update a user object"""
     payload = request.get_json(silent=True)
     users = storage.all(User)
@@ -76,5 +76,6 @@ def api_PUT_User(user_id):
                 if k != 'created_at' and k != 'updated_at' and k != 'id' \
                    and k != email:
                     setattr(user, k, v)
+            user.save()
             return(jsonify(user.to_dict()), 200)
     abort(404)

@@ -73,5 +73,6 @@ def api_PUT_State(state_id):
             for k, v in payload.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':
                     setattr(state, k, v)
+            state.save()
             return(jsonify(state.to_dict()), 200)
     abort(404)

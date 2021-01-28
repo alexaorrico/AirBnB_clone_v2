@@ -14,7 +14,7 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def get_amen(amenity_id=None):
     """Uses  the models class to_dict to retrieve all amenity objects"""
-    amenities = storage.all("Amenity")
+    amenities = storage.all(Amenity)
     all_amenities= []
 
     if amenity_id is None or amenity_id is "":
@@ -23,7 +23,8 @@ def get_amen(amenity_id=None):
         return jsonify(all_amenities)
     else:
         for amenity in amenities.values():
-            return jsonify(amenity.to_dict())
+            if amenity.id == amenity_id:
+                return jsonify(amenity.to_dict())
     abort(404)
     return
 
@@ -34,7 +35,7 @@ def delete_amen(amenity_id):
     """Use models class to delete an instace of class Amenity"""
     amenities = storage.all(Amenity)
 
-    for amenities in amenities.values():
+    for amenity in amenities.values():
         if amenity.id == amenity_id:
             amenity.delete()
             storage.save()
@@ -74,5 +75,6 @@ def put_amen(amenity_id):
             for k, v in payload_amen.item():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':
                     setattr(amenity, k, v)
+            amenity.save()
             return(jsonify(amenity.to_dict()), 200)
     abort(400)
