@@ -64,7 +64,6 @@ def put_state(state_id):
     got_json = request.get_json()
     if not got_json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    
     state = storage.get("State", state_id)
     if state:
         for key, val in got_json.items():
