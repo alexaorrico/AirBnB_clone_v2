@@ -11,6 +11,7 @@ from models import storage
 def status():
     return jsonify({"status": "OK"})
 
+
 @app_views.route("/stats")
 def count_stats():
     return jsonify({
