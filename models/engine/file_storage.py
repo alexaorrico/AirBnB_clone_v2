@@ -73,6 +73,8 @@ class FileStorage:
         """method to retrieve an object
         if object doent exist return none
         """
+        if type(cls) is str and cls in classes:
+            cls = classes[cls]
         objects = self.all()
         key = '{}.{}'.format(cls.__name__, id)
         return objects.get(key)
