@@ -19,6 +19,7 @@ def teardown(error):
     """Method that handles teardown"""
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(e):
     """ returns a JSON-formatted
