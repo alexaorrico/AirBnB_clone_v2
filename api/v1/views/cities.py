@@ -17,7 +17,6 @@ def cities(state_id=None):
         abort(404)
 
     if data:
-
         cities = [xd.to_dict() for xd in data.cities]
         return (jsonify(cities), 200)
 
@@ -59,11 +58,11 @@ def post_cities(state_id=None):
     obj = storage.get(State, state_id)
 
     if obj is None:
-        abort(400)
+        abort(404)
     if cit_dict is None:
-        abort("Not a JSON", 400)
+        abort(400, "Not a JSON")
     if "name" not in cit_dict.keys():
-        abort("Missing name", 400)
+        abort(400, "Missing name")
 
     cit_dict["state_id"] = state_id
     new_city = City(**cit_dict)
@@ -75,7 +74,7 @@ def post_cities(state_id=None):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def put_cities(city_id=None):
     """
-    arreglar
+    arreglar hohohohohho
     """
 
     data = request.get_json()
