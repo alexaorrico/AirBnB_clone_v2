@@ -50,7 +50,7 @@ def post_states():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_states(state_id):
     """PUT method"""
-    if storage.get(State, state_id) is None:
+    if storage.get("State", state_id) is None:
         abort(404)
     if request.get_json() is None:
         return "Not a JSON", 400
