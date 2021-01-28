@@ -88,7 +88,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def test_get_db(self):
+    def test_get_db_state(self):
         """testing get method"""
         d0 = {"name": "Test0"}
         new_state0 = State(**d0)
@@ -97,8 +97,66 @@ class TestFileStorage(unittest.TestCase):
         st0 = storage.get(State, new_state0.id)
         self.assertEqual(new_state0, st0)
 
+    def test_get_db_city(self):
+        """testing get method with class city"""
+        d0 = {"name": "Test0"}
+        new_city0 = City(**d0)
+        storage.new(new_city0)
+        storage.save()
+        city0 = storage.get(City, new_city0.id)
+        self.assertEqual(new_city0, city0)
+
+    def test_get_db_amenity(self):
+        """testing get method with class Amenity"""
+        d0 = {"name": "Test0"}
+        new_amenity0 = Amenity(**d0)
+        storage.new(new_amenity0)
+        storage.save()
+        amenity0 = storage.get(Amenity, new_amenity0.id)
+        self.assertEqual(new_amenity0, amenity0)
+
+    def test_get_db_user(self):
+        """testing get method with class User"""
+        d0 = {"email": "email0@", "password": "hdgesdg!"}
+        new_user0 = User(**d0)
+        storage.new(new_user0)
+        storage.save()
+        user0 = storage.get(User, new_user0.id)
+        self.assertEqual(new_user0, user0)
+
+    def test_get_db_place(self):
+        """testing get method with class Place"""
+        new_us = User(name="user")
+        d0 = {"name": "place", "user_id": new_us.id}
+        new_place0 = Place(**d0)
+        storage.new(new_place0)
+        storage.save()
+        place0 = storage.get(Place, new_place0.id)
+        self.assertEqual(new_place0, place0)
+
+    def test_get_db_review(self):
+        """testing get method with class Review"""
+        new_us = User(name="user")
+        d0 = {"text": "text", "user_id": new_us.id}
+        new_review0 = Review(**d0)
+        storage.new(new_review0)
+        storage.save()
+        review0 = storage.get(Review, new_review0.id)
+        self.assertEqual(new_review0, review0)
+
+    def test_get_db_id(self):
+        """testing get method with a wrong id"""
+        get_state = storage.get(State, "2456jffghj")
+        self.assertEqual(get_state, None)
+
     def test_count_db(self):
-        """Testing count method"""
+        """Testing count method for all classes"""
         len_0 = len(storage.all())
         count_0 = storage.count()
         self.assertEqual(len_0, count_0)
+
+    def test_count_db_state(self):
+        """Testing count method for a State class"""
+        len_state = len(storage.all(State))
+        count_state = storage.count(State)
+        self.assertEqual(len_state, count_state)

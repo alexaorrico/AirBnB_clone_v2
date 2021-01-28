@@ -115,8 +115,8 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    def test_get_file(self):
-        """testing get method"""
+    def test_get_file_st(self):
+        """testing get method with State class"""
         d1 = {"name": "Test0"}
         new_state1 = State(**d1)
         storage.new(new_state1)
@@ -124,8 +124,66 @@ class TestFileStorage(unittest.TestCase):
         st1 = storage.get(State, new_state1.id)
         self.assertEqual(new_state1, st1)
 
+    def test_get_file_ct(self):
+        """testing get method with City class"""
+        d1 = {"name": "Test0"}
+        new_city1 = City(**d1)
+        storage.new(new_city1)
+        storage.save()
+        ct1 = storage.get(City, new_city1.id)
+        self.assertEqual(new_city1, ct1)
+
+    def test_get_file_us(self):
+        """testing get method with User class"""
+        d1 = {"email": "email", "password": "password"}
+        new_user1 = User(**d1)
+        storage.new(new_user1)
+        storage.save()
+        us1 = storage.get(User, new_user1.id)
+        self.assertEqual(new_user1, us1)
+
+    def test_get_file_am(self):
+        """testing get method with Amenity class"""
+        d1 = {"name": "name"}
+        new_amenity1 = Amenity(**d1)
+        storage.new(new_amenity1)
+        storage.save()
+        am1 = storage.get(Amenity, new_amenity1.id)
+        self.assertEqual(new_amenity1, am1)
+
+    def test_get_file_pl(self):
+        """testing get method with Place class"""
+        new_us = User(name="user")
+        d1 = {"name": "place", "user_id": new_us.id}
+        new_place1 = Place(**d1)
+        storage.new(new_place1)
+        storage.save()
+        pl1 = storage.get(Place, new_place1.id)
+        self.assertEqual(new_place1, pl1)
+
+    def test_get_file_rv(self):
+        """testing get method with Review class"""
+        new_us = User(name="user1")
+        d1 = {"text": "testing", "user_id": new_us.id}
+        new_review1 = Review(**d1)
+        storage.new(new_review1)
+        storage.save()
+        rv1 = storage.get(Review, new_review1.id)
+        self.assertEqual(new_review1, rv1)
+
+    def test_get_file_id(self):
+        """testing get method with a wrong id"""
+        get_state = storage.get(State, "2456jffghj")
+        self.assertEqual(get_state, None)
+
     def test_count_file(self):
         """Testing count method"""
         len_1 = len(storage.all())
         count_1 = storage.count()
         self.assertEqual(len_1, count_1)
+
+    def test_count_db_state(self):
+        """Testing count method for a State class"""
+        len_state = len(storage.all(State))
+        count_state = storage.count(State)
+        self.assertEqual(len_state, count_state)
