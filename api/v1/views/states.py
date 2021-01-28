@@ -10,13 +10,11 @@ from models.state import State
 @app_views.route("/states", strict_slashes=False, methods=["GET", "POST"])
 def states_base():
     """this is a test string"""
-    # GET method
     if request.method == "GET":
         out = []
         for state in storage.all("State").values():
             out.append(state.to_dict())
         return jsonify(out)
-    # POST method
     if request.method == "POST":
         if not request.is_json:
             return "Not a JSON", 400
@@ -32,28 +30,25 @@ def states_base():
                  methods=["GET", "DELETE", "PUT"])
 def states_id(s_id):
     """this is a test string"""
-    # GET method
     if request.method == "GET":
         state = storage.get(State, s_id)
-        if not state:
-            abort(404)
-        return state.to_dict()
-    # DELETE method
+        if state:
+            return state.to_dict()
+        abort(404)
     if request.method == "DELETE":
         state = storage.get(State, s_id)
-        if not state:
-            abort(404)
-        state.delete()
-        storage.save()
-        return {}, 200
-    # PUT method
+        if state:
+            state.delete()
+            storage.save()
+            return {}, 200
+        abort(404)
     if request.method == "PUT":
         state = storage.get(State, s_id)
-        if not state:
-            abort(404)
-        if not request.is_json:
-            return "Not a JSON", 400
-        for k, v in request.get_json().items():
-            setattr(state, k, v)
-        storage.save()
-        return state.to_dict()
+        if state:
+            if not request.is_json:
+                return "Not a JSON", 400
+            for k, v in request.get_json().items():
+                setattr(state, k, v)
+            storage.save()
+            return state.to_dict()
+        abort(404)
