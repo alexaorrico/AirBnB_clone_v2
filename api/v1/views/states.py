@@ -12,7 +12,7 @@ from models.state import State
 
 @app_views.route("/states", strict_slashes=False, methods=["GET", "POST"])
 def states_base():
-    """this is a test string"""
+    """Retrieves the list of all State objects"""
     if request.method == "GET":
         out = []
         for state in storage.all("State").values():
