@@ -46,17 +46,17 @@ def delete_user(user_id=None):
                  methods=['POST'], strict_slashes=False)
 def post_user():
     """
-    arreglar
+    POST user exit status 201 if its ok or 400 if not
     """
 
     user_dict = request.get_json()
 
     if user_dict is None:
-        abort("Not a JSON", 400)
+        abort(400, "Not a JSON")
     if "email" not in user_dict.keys():
-        abort("Missing email", 400)
+        abort(400, "Missing email")
     if "password" not in user_dict.keys():
-        abort("Missing password", 400)
+        abort(400, "Missing password")
 
     new_User = User(**user_dict)
     new_User.save()
