@@ -29,7 +29,7 @@ def cities(state_id=None, city_id=None):
         # /states/<state_id>/cities POST method
         if request.method == 'POST':
             new_json = request.get_json(silent=True)
-            state = storage.get('State', state_id)
+            state = storage.get(State, state_id)
             if state is None:
                 abort(404)
             if new_json is None:
@@ -44,14 +44,14 @@ def cities(state_id=None, city_id=None):
     else:
         # /cities/<city_id> GET method
         if request.method == 'GET':
-            city = storage.get('City', city_id)
+            city = storage.get(City, city_id)
             if city is not None:
                 return jsonify(city.to_dict())
             abort(404)
 
         # /cities/<city_id> DELETE method
         if request.method == 'DELETE':
-            city = storage.get('City', city_id)
+            city = storage.get(City, city_id)
             if city is not None:
                 city.delete()
                 storage.save()
@@ -60,13 +60,14 @@ def cities(state_id=None, city_id=None):
 
         # /cities/<city_id> PUT method
         if request.method == 'PUT':
-            city = storage.get('City', city_id)
+            city = storage.get(City, city_id)
             if city is None:
                 abort(404)
             new_json = request.get_json(silent=True)
             if new_json is None:
                 abort(400, 'Not a JSON')
             for k, v in new_json.items():
-                setattr(city, k, v)
+                if k not in ['id', 'state_id', 'created_at', 'updated_at']:
+                    setattr(city, k, v)
             city.save()
             return jsonify(city.to_dict()), 200
