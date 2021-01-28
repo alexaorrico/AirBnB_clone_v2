@@ -19,7 +19,7 @@ def all_states_list():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def state_by_id(state_id):
-    """Returns an object state"""
+    """Returns a given object state"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -35,7 +35,8 @@ def delete_state(state_id):
         abort(404)
     storage.delete(state)
     storage.save()
-    return make_response(jsonify({}), 200)
+    
+    
 
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
