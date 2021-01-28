@@ -52,9 +52,9 @@ def post_amenities():
     amen_dict = request.get_json()
 
     if amen_dict is None:
-        abort("Not a JSON", 400)
+        abort(400, "Not a JSON")
     if "name" not in amen_dict.keys():
-        abort("Missing name", 400)
+        abort(400, "Missing name")
 
     new_amenity = Amenity(**amen_dict)
     new_amenity.save()
