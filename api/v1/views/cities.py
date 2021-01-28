@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""this is a test string"""
+"""
+create a new view for City objects that handles
+all default RestFul API actions
+"""
 
 from flask import request, abort, jsonify
 from api.v1.views import app_views
@@ -12,7 +15,7 @@ from models.city import City
                  strict_slashes=False,
                  methods=["GET", "POST"])
 def cities_base(s_id):
-    """this is a test string"""
+    """Retrieves the list of all City objects of a State"""
     if request.method == "GET":
         out = []
         state = storage.get(State, s_id)
