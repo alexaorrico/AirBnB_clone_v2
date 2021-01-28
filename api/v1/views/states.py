@@ -37,9 +37,9 @@ def delobj(state_id=None):
 def post_states():
     """post method"""
     if request.get_json() is None:
-        abort("Not a JSON", 400)
+        abort(400, "Not a JSON")
     elif "name" not in request.get_json().keys():
-        abort("Missing name", 400)
+        abort(400, "Missing name")
     else:
         new_value = State(**request.get_json())
         storage.save()
