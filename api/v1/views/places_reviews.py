@@ -10,7 +10,6 @@ from models.review import Review
 from models.place import Place
 
 
-
 @app_views.route('/places/<place_id>/reviews', methods=['GET\
 '], strict_slashes=False)
 def displayReviewsByPlace(place_id):
@@ -43,7 +42,7 @@ def deleteReview(review_id):
         abort(404)
     storage.delete(reviews)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST\
