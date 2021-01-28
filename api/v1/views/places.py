@@ -17,7 +17,7 @@ def places(city_id=None, place_id=None, user_id=None):
     if city_id is not None:
         # /cities/<city_id>/places GET method
         if request.method == 'GET':
-            city_list = storage.all('City')
+            city_list = storage.all(City)
             places_list = []
             if city_list is not {}:
                 for city in city_list.values():
