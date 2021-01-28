@@ -14,10 +14,7 @@ def get_states():
     """Gets the dict containing all the states
     """
     states = storage.all("State")
-    list_states = []
-    for state in states.values():
-        list_states.append(state.to_dict())
-    return jsonify(list_states)
+    return jsonify([state.to_dict() for state in states.values()])
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
@@ -57,7 +54,7 @@ def post_state():
     new_state = State(**got_json)
     storage.new(new_state)
     storage.save()
-    return make_response(jsonify(new_state.to_dict), 201)
+    return make_response(jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -70,8 +67,8 @@ def put_state(state_id):
     state = storage.get("State", state_id)
     if state:
         for key, val in got_json.items():
-            setattr(state, key, value)
+            setattr(state, key, val)
         storage.save()
-        return make_response(jsonify(state.to_dict), 200)
+        return make_response(jsonify(state.to_dict()), 200)
     else:
         abort(404)
