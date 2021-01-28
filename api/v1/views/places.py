@@ -52,10 +52,10 @@ def post_place(city_id):
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
-    elif not storage.get("User", data["user_id"]):
-        abort(404)
     elif "user_id" not in data.keys():
         abort(400, "Missing user_id")
+    elif not storage.get("User", data["user_id"]):
+        abort(404)
     elif "name" not in data.keys():
         abort(400, "Missing name")
     else:
@@ -68,7 +68,7 @@ def post_place(city_id):
 def put_place(place_id=None):
     """Put method"""
     data = request.get_json()
-    obj = storage.get(Place, place_id)
+    obj = storage.get("Place", place_id)
     if obj is None:
         abort(404)
     if data is None:
