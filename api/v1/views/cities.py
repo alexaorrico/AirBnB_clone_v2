@@ -23,6 +23,7 @@ def cities(state_id=None, city_id=None):
                     if state.id == state_id:
                         for city in state.cities:
                             cities_list.append(city.to_dict())
+                        return jsonify(cities_list)
             abort(404)
 
         # /states/<state_id>/cities POST method
