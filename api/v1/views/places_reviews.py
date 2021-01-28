@@ -9,7 +9,7 @@ from models.place import Place
 from models.review import Review
 
 
-@app_views.route('/cities/<city_id>/reviews', methods=['GET'],
+@app_views.route('/place/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def place_getplacerev(place_id=None):
     """Retrieve reviews from each place"""
@@ -34,7 +34,7 @@ def get_review(review_id=None):
 
 @app_views.route('/reviews/<review_id>>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_rev(review_id=None):
+def delete_review(review_id=None):
     """Delete review"""
     if storage.get(Review, review_id):
         storage.delete(storage.get(Review, review_id))
