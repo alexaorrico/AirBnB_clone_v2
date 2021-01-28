@@ -10,8 +10,8 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-from models.user import User
 from os import getenv
+from models.user import User
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
