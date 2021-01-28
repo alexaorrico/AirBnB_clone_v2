@@ -12,7 +12,7 @@ from flask import jsonify, request, abort
     'POST', 'GET'])
 @app_views.route('/reviews/<review_id>', strict_slashes=False, methods=[
     'PUT', 'GET', 'DELETE'])
-def cities(place_id=None, review_id=None):
+def places_reviews(place_id=None, review_id=None):
     """handles HTTP requests related to cities"""
     if place_id is not None:
         # /places/<place_id>/reviews GET method
