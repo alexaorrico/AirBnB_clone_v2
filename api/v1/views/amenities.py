@@ -55,7 +55,8 @@ def amenities(amenities_id=None):
                     if new_json is None:
                         abort(400, 'Not a JSON')
                     for k, v in new_json.items():
-                        setattr(amenities, k, v)
+                        if k not in ['id', 'created_at', 'updated_at']:
+                            setattr(amenities, k, v)
                     amenities.save()
                     return jsonify(amenities.to_dict()), 200
             abort(404)
