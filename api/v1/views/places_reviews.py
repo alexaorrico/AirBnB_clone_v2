@@ -11,7 +11,7 @@ from models.review import Review
 
 @app_views.route('/place/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def reviews_getplacerev(place_id=None):
+def get_place_review(place_id=None):
     """Retrieve reviews from each place"""
     state = storage.get(Place, place_id)
     if state is None:
