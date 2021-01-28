@@ -9,7 +9,10 @@ import json
 from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 84d39cdfb0bb7918d4e8588d7e838b380bc24bfa
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                 strict_slashes=False)
 def get_city_by_state(state_id):
