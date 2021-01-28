@@ -15,8 +15,9 @@ def cities_get(state_id=None):
     state_info = storage.get("State", state_id)
     if state_info is None:
         return abort(404)
+
     state_cities = state_info.cities
-    cities_dict = [city.to_dict() for city in cities]
+    cities_dict = [city.to_dict() for city in state_cities]
     return jsonify(cities_dict)
 
 
@@ -56,11 +57,12 @@ def post_city(state_id):
     if name is None:
         abort(400, 'Missing name')
 
-    my_state = storage.get('State', id)
-    if my_state is None:
+    state_info = storage.get("State", state_id)
+    if state_info is None:
         abort(404)
-    new_city = City()
-    new_city.state_id = id
+
+    new_city = City(**info)
+    new_city.state_id = state_id
     new_city.name = name
     new_city.save()
 
