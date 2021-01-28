@@ -127,15 +127,6 @@ class TestFileStorage(unittest.TestCase):
         st1 = storage.get(State, new_state1.id)
         self.assertEqual(new_state1, st1)
 
-    def test_get_file_ct(self):
-        """testing get method with City class"""
-        d1 = {"name": "Test0"}
-        new_city1 = City(**d1)
-        storage.new(new_city1)
-        storage.save()
-        ct1 = storage.get(City, new_city1.id)
-        self.assertEqual(new_city1, ct1)
-
     def test_get_file_us(self):
         """testing get method with User class"""
         d1 = {"email": "email", "password": "password"}
@@ -153,26 +144,6 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         am1 = storage.get(Amenity, new_amenity1.id)
         self.assertEqual(new_amenity1, am1)
-
-    def test_get_file_pl(self):
-        """testing get method with Place class"""
-        new_us = User(name="user")
-        d1 = {"name": "place", "user_id": new_us.id}
-        new_place1 = Place(**d1)
-        storage.new(new_place1)
-        storage.save()
-        pl1 = storage.get(Place, new_place1.id)
-        self.assertEqual(new_place1, pl1)
-
-    def test_get_file_rv(self):
-        """testing get method with Review class"""
-        new_us = User(name="user1")
-        d1 = {"text": "testing", "user_id": new_us.id}
-        new_review1 = Review(**d1)
-        storage.new(new_review1)
-        storage.save()
-        rv1 = storage.get(Review, new_review1.id)
-        self.assertEqual(new_review1, rv1)
 
     def test_get_file_id(self):
         """testing get method with a wrong id"""
