@@ -74,5 +74,8 @@ class FileStorage:
         return self.__objects.get(str(cls.__name__) + "." + id)
 
     def count(self, cls=None):
-        """this is a test string"""
+        """
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
         return len(self.all(cls))
