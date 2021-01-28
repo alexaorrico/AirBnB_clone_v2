@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""this is a test string"""
+"""index file for app views"""
 
 from api.v1.views import app_views
 from models import storage
