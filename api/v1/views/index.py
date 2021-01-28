@@ -24,7 +24,7 @@ def status_check():
 
 @app_views.route("/stats", strict_slashes=False)
 def view_counts():
-    """this is a test string"""
+    """an endpoint that retrieves the number of each objects by type"""
     out = {}
     for i in range(len(classes)):
         out.update({decoded[i]: storage.count(classes[i])})
