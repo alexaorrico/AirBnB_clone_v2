@@ -61,12 +61,15 @@ def post_state():
 def put_state(state_id):
     """Updates a state
     """
-    state = storage.get("State", state_id)
-    if state is None:
-        abort(404)
     got_json = request.get_json()
     if not got_json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    for key, val in got_json.items():
-        setattr(state, key, value)
-    return make_response(jsonify(state.to_dict), 200)
+    
+    state = storage.get("State", state_id)
+    if state:
+        for key, val in got_json.items():
+            setattr(state, key, value)
+        storage.save()
+        return make_response(jsonify(state.to_dict), 200)
+    else:
+        abort(404)
