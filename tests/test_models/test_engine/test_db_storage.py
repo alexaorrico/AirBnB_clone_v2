@@ -69,7 +69,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -83,10 +83,27 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        db = MySQLdb.connect(user=os.getenv(
+            'HBNB_MYSQL_USER'), passwd=os.geten('HBNB_MYSQL_PWD'),
+            db=os.getenv('HBNB_MYSQL_DB'))
+        cur = db.cursor()
+        for tbl in tbl_cls:
+            rows = cur.execute("SELECT COUNT(*) FROM {}".format(tbl))
+            obj1 = tbl_cls[tbl]()
+            storage.new(obj1)
+            rows_final = cur.execute("SELECT COUNT(*) FROM {}".format(tbl))
+            self.assertTrue(rows + 1, rows_final)
+        cur.close()
+        db.close()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """ Test if an object is store in the database """
+        new = State(name="Antioquia")
+        new.save()
+        _id = new.to_dict()['id']
+        self.assertIn(
+            new.__class__.__name__ + '.' + _id, storage.all(type(new)).keys())
 
     def test_get_db_state(self):
         """testing get method"""
