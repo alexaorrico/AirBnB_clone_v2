@@ -7,6 +7,7 @@ from models import storage
 from models.city import City
 from models.state import State
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def cities_get(state_id=None):
@@ -67,7 +68,6 @@ def post_city(state_id):
     new_city.save()
 
     return (jsonify(new_city.to_dict()), 201)
-
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
