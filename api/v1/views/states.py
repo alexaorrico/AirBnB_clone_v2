@@ -28,7 +28,7 @@ def delobj(state_id=None):
     if storage.get(State, state_id):
         storage.delete(storage.get(State, state_id))
         storage.save()
-        return {}, 200
+        return jsonify({}), 200
     else:
         abort(404)
 
@@ -43,7 +43,6 @@ def post_states():
         abort("Missing name", 400)
     else:
         new_value = State(**request.get_json())
-        storage.new(new_value)
         storage.save()
     return jsonify(new_value.to_dict()), 201
 
