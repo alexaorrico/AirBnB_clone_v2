@@ -12,3 +12,16 @@ from models import storage
 def status():
     """Route on the object app_views that returns a JSON"""
     return jsonify({"status": "OK"})
+
+
+@app_views.route('/stats', strict_slashes=False)
+def count_objstype():
+    """count each objects by type"""
+    list_objs = {
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'places': storage.count('Place'),
+        'reviews': storage.count('Review'),
+        'states': storage.count('State'),
+        'users': storage.count('User'), }
+    return jsonify(list_objs)
