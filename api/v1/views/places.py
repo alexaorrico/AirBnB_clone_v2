@@ -32,7 +32,7 @@ def _places(city_id):
         if city_info is not None:
             kwargs = {"city_id": city_id}
             kwargs.update(request.get_json())
-            all_places = Place(**dict)
+            all_places = Place(**kwargs)
             dict_info = all_places.to_dict()
 
         if "user_id" not in dict_info.keys():
