@@ -9,17 +9,19 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities/', methods=['GET'], strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>/', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>/', methods=['GET'],
+                 strict_slashes=False)
 def amenities_get(amenity_id=None):
     """retrieves the list of all State objects
     """
     if amenity_id is None:
-        amenity = storage.all("Amenities").values()
-        json_amenities = jsonify([amenity.to_dict() for amenity in list])
-        return json_amenities
+        amenity_info = storage.all("Amenity").values()
+        amenities = [value.to_dict() for key, value in amenity_info.items()]
+        return jsonify(amenities)
 
     try:
-        amenities_info = jsonify(storage.get('Amenities', amenity_id).to_dict())
+        amenities_info = jsonify(storage.get('Amenities',
+                                             amenity_id).to_dict())
         return amenities_info
     except:
         abort(404)
@@ -57,7 +59,8 @@ def post_amenity():
     return (jsonify(amenity_post.to_dict()), 201)
 
 
-@app_views.route('/amenity/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenity/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def put_amenity(amenity_id):
     """updates a state object
     """
