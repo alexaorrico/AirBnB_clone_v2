@@ -10,7 +10,7 @@ from models.amenity import Amenity
 @app_views.route('/amenities/', methods=['GET', 'POST'], strict_slashes=False)
 @app_views.route('/amenities/<amenity_id>/', methods=['GET', 'POST'],
                  strict_slashes=False)
-def amenities_get(amenity_id=None):
+def amenities_get():
     """retrieves the list of all State objects
     """
     if request.method == "GET":
@@ -43,23 +43,24 @@ def delete_amenities(amenity_id):
     return (jsonify(dict), 200)
 
 
-@app_views.route('/amenity/<amenity_id>', methods=['PUT'],
+@app_views.route('/amenity/<amenity_id>', methods=['PUT', 'GET'],
                  strict_slashes=False)
 def put_amenity(amenity_id):
     """updates a state object
     """
-    info = request.get_json()
-    if info is None:
-        return jsonify(abort(400, 'Not a JSON'))
-
-    amenity_info = storage.get("Amenity", state_id)
-    if amenity_info is None:
+    if request.method == "GET":
+        amenity = storage.get(Amenity, a_id)
+        if amenity is not None:
+            return amenity.to_dict()
         abort(404)
 
-    ignore_keys = ["id", "created_at", "updated_at"]
-    for key, value in info.items():
-        if key not in ignore_keys:
-            setattr(amenity_info, key, value)
-
-    amenity_info.save()
-    return jsonify(amenity_info.to_dict())
+    if request.method == "PUT":
+        amenity = storage.get(Amenity, a_id)
+        if amenity is not None:
+            if not request.is_json:
+                return "Not a JSON", 400
+            for k, v in request.get_json().items():
+                setattr(amenity, k, v)
+            storage.save()
+            return amenity.to_dict()
+        abort(404)
