@@ -64,6 +64,7 @@ def post_review(place_id):
     elif 'user_id' not in payload:
         abort(400, 'Missing user_id')
     elif 'user.user_id' not in payload:
+        abort(404)
 
     for place in place.values():
         if place.id == place_id:
