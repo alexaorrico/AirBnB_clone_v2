@@ -20,17 +20,15 @@ def teardown_api(exception):
 
 
 @app.errorhandler(404)
-def not_found(self):
+def not_found(exception):
     """Handles page not found error"""
-    notfound = (jsonify({"error": "Not found"}), 404)
-    return notfound
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST')
     port = int(os.getenv('HBNB_API_PORT'))
-    
-    #THIS IS SETTING IT, NOT CHECKING
+
     """ os.environ['HBNB_API_HOST'] = '0.0.0.0'
     host = '0.0.0.0'
     os.environ['HBNB_API_PORT'] = '5000'

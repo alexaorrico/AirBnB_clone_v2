@@ -21,14 +21,14 @@ def get_review_by_place(place_id):
     for place in place.values():
         if place.id == place_id:
             for review in reviews.values():
-                if review.place.id == place_id:
+                if review.place_id == place_id:
                     reviews_in_place.append(review.to_dict())
             return jsonify(reviews_in_place)
     abort(404)
     return
 
 
-@app_views.route('reviews/<review_id>', methods=['GET'],
+@app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
     """Get a single review by id number"""

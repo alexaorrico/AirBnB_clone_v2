@@ -8,9 +8,9 @@ from models import storage
 app = Flask(__name__)
 
 
-@app_views.route('/status/', strict_slashes=False)
+@app_views.route('/status', strict_slashes=False)
 def status():
-    nominal = {"Status": "OK"}
+    nominal = {"status": "OK"}
     return jsonify(nominal)
 
 

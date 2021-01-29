@@ -77,4 +77,4 @@ def put_amen(amenity_id):
                     setattr(amenity, k, v)
             amenity.save()
             return(jsonify(amenity.to_dict()), 200)
-    abort(400)
+    abort(404)
