@@ -35,8 +35,6 @@ def delete_state(state_id):
         abort(404)
     storage.delete(state)
     storage.save()
-    
-    
 
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
