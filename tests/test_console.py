@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the class TestConsoleDocs
+Contains the class TestConsoleDocs for unit tests
 """
 
 import console
