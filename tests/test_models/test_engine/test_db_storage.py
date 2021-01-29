@@ -90,14 +90,14 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_db_storage_get(self):
-        """Test get method"""
+        """Test get method to return state"""
         new_obj = State(name="OK")
         obj = storage.get("State", "fake")
         self.assertIsNone(obj)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_db_storage_count(self):
-        """Test count method"""
+        """Test count method to retyrn number of objects"""
         storage.reload()
         all_count = storage.count(None)
         cls_count = storage.count("State")
