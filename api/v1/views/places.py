@@ -35,18 +35,18 @@ def _places(city_id):
             all_places = Place(**kwargs)
             dict_info = all_places.to_dict()
 
-        if "user_id" not in dict_info.keys():
-            return "Missing user_id", 400
+            if "user_id" not in dict_info.keys():
+                return "Missing user_id", 400
 
-        if not storage.get(User, dict_info.get("user_id")):
-            abort(404)
+            if not storage.get(User, dict_info.get("user_id")):
+                abort(404)
 
-        if "name" not in dict_info.keys():
-            return "Missing name", 400
+            if "name" not in dict_info.keys():
+                return "Missing name", 400
 
-        all_places.save()
-        return all_places.to_dict(), 201
-    abort(404)
+            all_places.save()
+            return all_places.to_dict(), 201
+        abort(404)
 
 
 @app_views.route('/places/<places_id>', methods=['GET', 'PUT', 'DELETE'],
