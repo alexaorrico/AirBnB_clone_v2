@@ -65,19 +65,31 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
 
+    def delete_all(self):
+        """
+            deletes all stored objects, for testing purposes
+        """
+        try:
+            with open(FileStorage.__file_path, mode='w') as f_io:
+                pass
+        except:
+            pass
+        del FileStorage.__objects
+        FileStorage.__objects = {}
+        self.save()
+
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
     def get(self, cls, id):
-        """ retrieves one object """
-        if cls:
-            obj_dict = self.all(cls)
-            key = cls.__name__ + "." + id
-            return obj_dict[key]
-        return None
+        """retrieve one object depending of its class and id"""
+        clss = self.all(cls)
+        if type(cls) != str:
+            cls = cls.__name__
+        key = cls + '.' + id
+        return clss.get(key)
 
     def count(self, cls=None):
-        """ counts number of objects of a class in storage
-        here we are using the all() method defined above"""
+        """count the number of objects in storage"""
         return len(self.all(cls))
