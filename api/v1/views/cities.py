@@ -43,7 +43,7 @@ def delete_city(city_id):
 
 @app_views.route('/states/<state_id>/cities',
                  strict_slashes=False, methods=['POST'])
-def create_city():
+def create_city(state_id):
     """Creates a new city"""
     new_city = request.get_json()
     if new_city is None:
