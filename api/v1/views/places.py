@@ -6,22 +6,21 @@
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
-from models.user import User
-from models.city import City
+from models.place import Place
 
 
 @app_views.route('/user', methods=['GET'], strict_slashes=False)
-def get_user():
+def get_places():
     """Gets the dict containing all the states
     """
-    user = storage.all("User")
-    list_users = []
+    places = storage.all("Places")
+    list_places = []
     for user in user.values():
         list_users.append(user.to_dict())
     return jsonify(list_users)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'],
+@app_views.route('/user/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user_id(user_id):
     """Gets a user by its ID
@@ -33,7 +32,7 @@ def get_user_id(user_id):
         abort(404)
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'],
+@app_views.route('/user/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
     """Deletes an user
