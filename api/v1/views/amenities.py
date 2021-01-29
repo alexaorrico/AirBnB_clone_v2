@@ -49,18 +49,18 @@ def put_amenity(amenity_id):
     """updates a state object
     """
     if request.method == "GET":
-        amenity = storage.get(Amenity, a_id)
-        if amenity is not None:
-            return amenity.to_dict()
+        amenity_info = storage.get(Amenity, amenity_id)
+        if amenity_info is not None:
+            return amenity_info.to_dict()
         abort(404)
 
     if request.method == "PUT":
-        amenity = storage.get(Amenity, a_id)
-        if amenity is not None:
+        amenity_info = storage.get(Amenity, amenity_id)
+        if amenity_info is not None:
             if not request.is_json:
                 return "Not a JSON", 400
             for k, v in request.get_json().items():
-                setattr(amenity, k, v)
+                setattr(amenity_info, k, v)
             storage.save()
-            return amenity.to_dict()
+            return amenity_info.to_dict()
         abort(404)
