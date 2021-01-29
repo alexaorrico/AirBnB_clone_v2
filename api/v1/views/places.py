@@ -20,9 +20,8 @@ def places(city_id=None, place_id=None):
             city = storage.get(City, city_id)
             if city is None:
                 abort(404)
-            places = storage.all(Place).values()
             return jsonify(
-                [place for place in places if place.city_id == city_id])
+                [place.to_dict() for place in city.places])
 
         # /cities/<city_id>/places POST method
         if request.method == 'POST':
@@ -45,7 +44,7 @@ def places(city_id=None, place_id=None):
             return jsonify(new_place.to_dict()), 201
 
     else:
-        #/places/<place_id> GET method
+        # /places/<place_id> GET method
         if request.method == 'GET':
             place = storage.get(Place, place_id)
             if place is not None:
