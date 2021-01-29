@@ -32,6 +32,7 @@ def cities_get_error(city_id):
     else:
         abort(404)
 
+
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_cities(city_id):
