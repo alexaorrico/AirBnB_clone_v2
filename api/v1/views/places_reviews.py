@@ -11,7 +11,7 @@ from models.place import Place
 
 @app_views.route('/places/<places_id>/reviews', methods=['GET', 'POST'],
                  strict_slashes=False)
-def _places(places_id):
+def _places_reviews(places_id):
     """retrieves the list of all place objects
     """
     if request.method == "GET":
