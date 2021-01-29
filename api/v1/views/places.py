@@ -67,8 +67,11 @@ def places_id(place_id):
                 return "Not a JSON", 400
 
             for key, value in request.get_json().items():
-                if key not in ["id", "user_id", "city_id",
-                             "created_at", "updated_at"]:
+                if key not in ["id",
+                               "user_id",
+                               "city_id",
+                               "created_at",
+                               "updated_at"]:
                     setattr(place_info, key, value)
             storage.save()
             return place_info.to_dict()
