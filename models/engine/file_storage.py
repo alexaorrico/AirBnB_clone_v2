@@ -87,5 +87,4 @@ class FileStorage:
         A method to count the number of objects in storage,
         if class supplied count of instances of that class
         """
-        item_keys = self.all(cls).keys()
-        return len(item_keys)
+        return len(self.all(cls))
