@@ -1,15 +1,13 @@
 #!/usr/bin/python3
 """Handles all default RestFul API actions for State objects"""
 
-from api.v1.views import app_views
-from flask import jsonify, make_response, abort, request
+from flask import jsonify, request, abort, make_response
 from models import storage
-from models.amenity import Amenity
 from models.state import State
-from models.user import User
-from models.place import Place
 from models.city import City
-from models.review import Review
+from models.place import Place
+from models.user import User
+from api.v1.views import app_views
 
 
 @app_views.route("/cities/<city_id>/places",
