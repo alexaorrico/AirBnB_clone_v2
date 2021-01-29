@@ -27,13 +27,13 @@ def not_found(self):
 
 
 if __name__ == "__main__":
-    """host = os.getenv('HBNB_API_HOST')
+    host = os.getenv('HBNB_API_HOST')
     port = int(os.getenv('HBNB_API_PORT'))
-    ###THIS IS SETTING IT, NOT CHECKING """
-
-    """ os.environ['HBNB_API_HOST'] = '0.0.0.0' """
+    
+    #THIS IS SETTING IT, NOT CHECKING
+    """ os.environ['HBNB_API_HOST'] = '0.0.0.0'
     host = '0.0.0.0'
-    """ os.environ['HBNB_API_PORT'] = '5000'    """
-    port = '5000'
+    os.environ['HBNB_API_PORT'] = '5000'
+    port = '5000'"""
 
     app.run(host=host, port=port, threaded=True)
