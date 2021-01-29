@@ -16,7 +16,7 @@ def _places(city_id):
     """
     if request.method == "GET":
         all_places = []
-        city_info = storage.get('City', city_id)
+        city_info = storage.get(City, city_id)
 
         if place_info is not None:
             for key in city_info.places:
