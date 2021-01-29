@@ -45,19 +45,19 @@ def user_id(user_id):
 
     if request.method == "PUT":
         user_info = storage.get(User, user_id)
-        if amenity_info is not None:
+        if user_info is not None:
             if not request.is_json:
                 return "Not a JSON", 400
 
             for key, value in request.get_json().items():
                 setattr(user_info, key, value)
             storage.save()
-            return user_info.to_dict()
+            return user_info.to_dict(), 200
         abort(404)
 
     if request.method == "DELETE":
-        user_info = storage.get(Amenity, amenity_id)
-        if user_info:
+        user_info = storage.get(User, user_id)
+        if user_info is not None:
             user_info.delete()
             storage.save()
             return {}, 200
