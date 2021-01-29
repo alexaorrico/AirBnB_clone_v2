@@ -9,8 +9,8 @@ from models.user import User
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places',
-                 methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def _places(city_id):
     """retrieves the list of all place objects
     """
@@ -18,7 +18,7 @@ def _places(city_id):
         all_places = []
         city_info = storage.get('City', city_id)
 
-        if city_info is not None:
+        if place_info is not None:
             for key in city_info.places:
                 all_places.append(key.to_dict())
             return jasonify(city_info)
@@ -30,7 +30,7 @@ def _places(city_id):
 
         city_info = storage.get('City', city_id)
         if city_info is not None:
-            dict = {"city_id:", city_id}
+            dict = {"city_id": city_id}
             dict.update(request.get_json())
             all_places = Place(**dict)
             dict_info = all_places.to_dict()
@@ -57,25 +57,27 @@ def places_id(place_id):
     if request.method == "GET":
         place_info = storage.get(Place, place_id)
         if place_info is not None:
-            return amenity_info.to_dict()
+            return place_info.to_dict()
         abort(404)
 
     if request.method == "PUT":
-        amenity_info = storage.get(Amenity, amenity_id)
-        if amenity_info is not None:
+        place_info = storage.get(Place, place_id)
+        if place_info is not None:
             if not request.is_json:
                 return "Not a JSON", 400
 
-            for k, v in request.get_json().items():
-                setattr(amenity_info, k, v)
+            for key, value in request.get_json().items():
+                if key not in ["id", "user_id", "city_id",
+                             "created_at", "updated_at"]:
+                    setattr(place_info, key, value)
             storage.save()
-            return amenity_info.to_dict()
+            return place_info.to_dict()
         abort(404)
 
     if request.method == "DELETE":
-        amenity_info = storage.get(Amenity, amenity_id)
-        if amenity_info:
-            amenity_info.delete()
+        place_info = storage.get(Place, place_id)
+        if place_info is not None:
+            place_info.delete()
             storage.save()
             return {}, 200
         abort(404)
