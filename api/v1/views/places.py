@@ -18,7 +18,7 @@ def _places(city_id):
         all_places = []
         city_info = storage.get(City, city_id)
 
-        if place_info is not None:
+        if city_info is not None:
             for key in city_info.places:
                 all_places.append(key.to_dict())
             return jsonify(all_places)
