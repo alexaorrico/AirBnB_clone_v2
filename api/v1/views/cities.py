@@ -59,7 +59,7 @@ def create_city(state_id):
     else:
         new_obj = City(**new_city)
         new_obj.state_id = states.id
-        storage.new(new_obj) 
+        storage.new(new_obj)
         storage.save()
         return jsonify(new_obj.to_dict()), 201
 
