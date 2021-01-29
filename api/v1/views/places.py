@@ -51,7 +51,7 @@ def _places(city_id):
 
 @app_views.route('/places/<places_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def places_id(places_id):
+def places_ident(places_id):
     """updates a place object
     """
     if request.method == "GET":
@@ -74,7 +74,7 @@ def places_id(places_id):
                                "updated_at"]:
                     setattr(place_info, key, value)
             storage.save()
-            return place_info.to_dict()
+            return place_info.to_dict(), 200
         abort(404)
 
     if request.method == "DELETE":
