@@ -39,7 +39,7 @@ def delete_city(city_id):
         abort(404)
     storage.delete(city)
     storage.save()
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states/<state_id>/cities',
@@ -73,6 +73,7 @@ def update_city(city_id):
         return jsonify({'error': 'Not a JSON'}), 400
 
     city_dict = storage.get(City, city_id)
+    ignore_list = ['id', 'created_at', 'updated_at']
     if city_dict:
         for key, value in city_to_update.items():
             setattr(city_dict, key, value)
