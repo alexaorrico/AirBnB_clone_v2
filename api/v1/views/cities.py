@@ -56,6 +56,7 @@ def create_city(state_id):
     elif 'name' not in new_city:
         return jsonify({'error': 'Missing name'}), 400
     else:
+        new_city['state_id'] = state_id
         new_obj = City(**new_city)
         storage.new(new_obj)
         storage.save()
