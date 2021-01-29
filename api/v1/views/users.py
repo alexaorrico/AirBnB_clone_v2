@@ -52,8 +52,13 @@ def post_user():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'email' not in got_json:
         return make_response(jsonify({"error": "Missing email"}), 400)
+<<<<<<< HEAD
     if 'password' not in got_json:
         return make_response(jsonify({"error": "Missing password"}), 400)
+=======
+    elif "password" not in got _json:
+        return make_response(jsonify({'error': 'Missing password'}), 400))
+>>>>>>> 4c4e81c70aba54288a4e4d4e44c5abcd1d159814
     new_user = User(**got_json)
     storage.new(new_user)
     storage.save()
@@ -70,7 +75,8 @@ def put_user(user_id):
     user = storage.get("User", user_id)
     if user:
         for key, val in got_json.items():
-            setattr(user, key, val)
+            if key not in list_ign:
+                setattr(user, key, val)
         storage.save()
         return make_response(jsonify(user.to_dict()), 200)
     else:
