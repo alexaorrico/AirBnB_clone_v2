@@ -67,7 +67,7 @@ def post_review(place_id):
         return make_response(jsonify({"error": "Missing text"}), 400)
     new_rev = Review(**got_json)
     storage.new(new_rev)
-    new_rev.place_id = place.place_id
+    new_rev.place_id = place.id
     storage.save()
     return make_response(jsonify(new_rev.to_dict()), 201)
 
