@@ -15,7 +15,7 @@ def cities_get(state_id=None):
     """
     state_info = storage.get("State", state_id)
     if state_info is None:
-        return abort(404)
+        abort(404)
 
     state_cities = state_info.cities
     cities_dict = [city.to_dict() for city in state_cities]
@@ -26,11 +26,11 @@ def cities_get(state_id=None):
 def cities_get_error(city_id):
     """retrieves a City object
     """
-    city_info = storage.get("City", city_id)
-    if city_info is None:
-        return abort(404)
-    return (jsonify(city_info.to_dict()), 210)
-
+    city = storage.get('City', city_id)
+    if city:
+        return city.to_dict()
+    else:
+        abort(404)
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
@@ -39,7 +39,7 @@ def delete_cities(city_id):
     """
     del_city = storage.get('City', city_id)
     if del_city is None:
-        return jsonify(abort(404))
+        abort(404)
     storage.delete(del_city)
     storage.save()
     return (jsonify({}), 200)
@@ -52,11 +52,11 @@ def post_city(state_id):
     """
     info = request.get_json(silent=True)
     if info is None:
-        abort(400, 'Not a JSON')
+        return jsonify(abort(400, 'Not a JSON'))
 
     name = info.get('name')
     if name is None:
-        abort(400, 'Missing name')
+        return jsonify(abort(400, 'Missing name'))
 
     state_info = storage.get("State", state_id)
     if state_info is None:
