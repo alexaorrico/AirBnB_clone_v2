@@ -4,27 +4,29 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
-from models.state import State
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities/', methods=['GET'], strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>/', methods=['GET'],
+@app_views.route('/amenities/', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>/', methods=['GET', 'POST'],
                  strict_slashes=False)
 def amenities_get(amenity_id=None):
     """retrieves the list of all State objects
     """
-    if amenity_id is None:
-        amenity_info = storage.all("Amenity").values()
-        amenities = [value.to_dict() for key, value in amenity_info.items()]
-        return jsonify(amenities)
+    if request.method == "GET":
+        all_amenities = []
+        for key in storage.all("Amenity").values():
+            all_amenities.append(key.to_dict())
+        return jsonify(all_amenities)
 
-    try:
-        amenities_info = jsonify(storage.get('Amenities',
-                                             amenity_id).to_dict())
-        return amenities_info
-    except:
-        abort(404)
+    if request.method == 'POST':
+        if not request.is_json:
+            return "Not a JSON", 400
+        all_amenities = Amenity(**request.get_json())
+        if "name" not in all_amenities.to_dict().keys():
+            return "Missing name", 400
+        all_amenities.save()
+        return all_amenities.to_dict(), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
@@ -39,24 +41,6 @@ def delete_amenities(amenity_id):
     storage.save()
     dict = {}
     return (jsonify(dict), 200)
-
-
-@app_views.route('/amenities/', methods=['POST'], strict_slashes=False)
-def post_amenity():
-    """creates a state
-    """
-    info = request.get_json()
-    if info is None:
-        return jsonify(abort(400, 'Not a JSON'))
-
-    name = info.get('name')
-    if name is None:
-        return jsonify(abort(400, 'Missing name'))
-
-    amenity_post = State(**info)
-    amenity_post.save()
-
-    return (jsonify(amenity_post.to_dict()), 201)
 
 
 @app_views.route('/amenity/<amenity_id>', methods=['PUT'],
