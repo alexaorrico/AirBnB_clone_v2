@@ -30,8 +30,8 @@ def _places(city_id):
 
         city_info = storage.get(City, city_id)
         if city_info is not None:
-            dict = {"city_id": city_id}
-            dict.update(request.get_json())
+            kwargs = {"city_id": city_id}
+            kwargs.update(request.get_json())
             all_places = Place(**dict)
             dict_info = all_places.to_dict()
 
