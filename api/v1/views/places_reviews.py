@@ -28,9 +28,9 @@ def _places(places_id):
         if not request.is_json:
             return "Not a JSON", 400
 
-        place_info = storage.get(Place, place_id)
+        place_info = storage.get(Place, places_id)
         if place_info is not None:
-            kwargs = {"place_id": place_id}
+            kwargs = {"place_id": places_id}
             kwargs.update(request.get_json())
             all_places = Review(**kwargs)
             dict_info = all_places.to_dict()
