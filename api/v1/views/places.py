@@ -28,7 +28,7 @@ def _places(city_id):
         if not request.is_json:
             return "Not a JSON", 400
 
-        city_info = storage.get('City', city_id)
+        city_info = storage.get(City, city_id)
         if city_info is not None:
             dict = {"city_id": city_id}
             dict.update(request.get_json())
@@ -45,7 +45,7 @@ def _places(city_id):
             return "Missing name", 400
 
         all_places.save()
-        return all_amenities.to_dict(), 201
+        return all_places.to_dict(), 201
     abort(404)
 
 
