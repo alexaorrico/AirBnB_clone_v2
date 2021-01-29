@@ -4,6 +4,7 @@ Methods for Place class in our API
 """
 from models.city import City
 from models.place import Place
+from models.user import User
 from models import storage
 import json
 from flask import Flask, jsonify, request, make_response, abort
@@ -59,6 +60,7 @@ def post_place(city_id):
     """Creates a new place"""
     payload = request.get_json(silent=True)
     cities = storage.all(City)
+    users = storage.all(User)
 
     if payload is None:
         abort(400, 'Not a JSON')
@@ -70,11 +72,12 @@ def post_place(city_id):
     for city in cities.values():
         if city.id == city_id:
             payload["city_id"] = city_id
-            new_place = Place(**payload)
-            new_place.save()
-            return(jsonify(new_place.to_dict()), 201)
+            for user in users.values():
+                if user.id == payload['user_id']:
+                    new_place = Place(**payload)
+                    new_place.save()
+                    return(jsonify(new_place.to_dict()), 201)
     abort(404)
-    return
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
