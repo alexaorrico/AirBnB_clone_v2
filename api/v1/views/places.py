@@ -40,7 +40,8 @@ def places(city_id=None, place_id=None):
                 abort(404)
             new_place = Place(**new_json)
             new_place.city_id = city_id
-            new_place.save()
+            storage.new(new_place)
+            storage.save()
             return jsonify(new_place.to_dict()), 201
 
     else:
