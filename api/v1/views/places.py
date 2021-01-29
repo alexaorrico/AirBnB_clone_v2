@@ -21,7 +21,7 @@ def _places(city_id):
         if place_info is not None:
             for key in city_info.places:
                 all_places.append(key.to_dict())
-            return jasonify(city_info)
+            return jsonify(all_places)
         abort(404)
 
     if request.method == 'POST':
