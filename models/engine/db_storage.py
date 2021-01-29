@@ -77,11 +77,15 @@ class DBStorage:
 
     def get(self, cls, id):
         """ retrieves one object """
-        if cls:
-            obj_class = self.all(cls)
-            key = cls.__name__ + "." + id
-            return obj_class.get(key)
-        return None
+        try:
+            obj_dict = {}
+            if cls:
+                obj_class = self.__session.query(cls).all()
+                for item in obj_class:
+                    obj_dict[item.id] = item
+            return obj_dict[id]
+        except:
+            return None
 
     def count(self, cls=None):
         """Counts number of objects in storage
@@ -91,4 +95,15 @@ class DBStorage:
             the number of objects in storage matching the given class name.
             If no name is passed, returns the count of all objects in storage.
         """
-        return len(self.all(cls))
+        obj_dict = {}
+        if cls:
+            obj_class = self.__session.query(cls).all()
+            for item in obj_class:
+                obj_dict[item.id] = item
+            return len(obj_dict)
+        else:
+            for cls_name in classes:
+                obj_class = self.__session.query(classes[cls_name]).all()
+                for item in obj_class:
+                    obj_dict[item.id] = item
+            return len(obj_dict)
