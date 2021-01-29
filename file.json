@@ -1,0 +1,15 @@
+{
+    "State.335ec70f-da09-45d8-ad21-5030b55f12c8": {
+        "id": "335ec70f-da09-45d8-ad21-5030b55f12c8",
+        "created_at": "2021-01-29T02:52:28.963623",
+        "updated_at": "2021-01-29T02:52:28.963654",
+        "__class__": "State"
+    },
+    "State.db9a549e-bdab-436e-a662-3df68d89e1e6": {
+        "id": "db9a549e-bdab-436e-a662-3df68d89e1e6",
+        "created_at": "2021-01-29T03:45:08.580721",
+        "updated_at": "2021-01-29T03:46:02.871806",
+        "name": "MEDALLO",
+        "__class__": "State"
+    }
+}

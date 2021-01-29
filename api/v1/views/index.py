@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Status APi """
 from flask import Flask, jsonify
 from api.v1.views import app_views
