@@ -51,17 +51,17 @@ def _places(city_id):
 
 @app_views.route('/places/<places_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def places_id(place_id):
+def places_id(places_id):
     """updates a place object
     """
     if request.method == "GET":
-        place_info = storage.get(Place, place_id)
+        place_info = storage.get(Place, places_id)
         if place_info is not None:
             return place_info.to_dict()
         abort(404)
 
     if request.method == "PUT":
-        place_info = storage.get(Place, place_id)
+        place_info = storage.get(Place, places_id)
         if place_info is not None:
             if not request.is_json:
                 return "Not a JSON", 400
@@ -78,7 +78,7 @@ def places_id(place_id):
         abort(404)
 
     if request.method == "DELETE":
-        place_info = storage.get(Place, place_id)
+        place_info = storage.get(Place, places_id)
         if place_info is not None:
             place_info.delete()
             storage.save()
