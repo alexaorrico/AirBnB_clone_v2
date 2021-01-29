@@ -14,6 +14,7 @@ def get_states():
         all_states.append(states.to_dict())
     return jsonify(all_states)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_id(state_id=None):
     """ Retrieves a single state objects """
@@ -23,13 +24,14 @@ def get_state_id(state_id=None):
     return jsonify(single_states.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_State(state_id):
     """ Deletes a state """
     try:
         del_state = storage.get(State, state_id)
         storage.delete(del_state)
-        storage.save()
+        del_state.save()
         return jsonify({}), 200
     except Exception:
         abort(404)
@@ -50,7 +52,7 @@ def post_state():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
     """update a state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if not request.json:
