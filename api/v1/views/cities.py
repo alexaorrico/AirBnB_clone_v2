@@ -14,7 +14,6 @@ from models.city import City
 def get_cities(state_id):
     """Gets the list containing all the cities
     """
-
     state = storage.get("State", state_id)
     if state is None:
         return abort(404)
