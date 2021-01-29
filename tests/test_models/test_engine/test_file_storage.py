@@ -117,7 +117,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_fs_storage_get(self):
-        """Test get method"""
+        """Test get method to return object"""
         storage = FileStorage()
         new_obj = State(name="OK")
         obj = storage.get("State", "fake")
@@ -125,7 +125,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_fs_storage_count(self):
-        """Test count method"""
+        """Test count method to return number of objects"""
         storage = FileStorage()
         storage.reload()
         all_count = storage.count()
