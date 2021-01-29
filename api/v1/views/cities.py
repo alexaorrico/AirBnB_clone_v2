@@ -3,7 +3,7 @@
 
 from models.city import City
 from models.state import State
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
 from models import storage, base_model
 
@@ -76,9 +76,9 @@ def create_city_ob(state_id):
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def update_city_ob(city_id):
-    """Update a User object"""
+    """Update a City object"""
     if request.method == 'PUT':
-        ob = storage.get(User, city_id)
+        ob = storage.get(City, city_id)
         data = request.get_json()
         if not ob:
             return abort(404)
