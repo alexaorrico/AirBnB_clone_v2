@@ -14,7 +14,10 @@ def get_user():
     """Gets the dict containing all the states
     """
     user = storage.all("User")
-    return jsonify([user.to_dict() for user in user.values()])
+    list_users = []
+    for user in user.values():
+        list_users.append(user.to_dict())
+    return jsonify(list_users)
 
 
 @app_views.route('/user/<user_id>', methods=['GET'],
@@ -44,7 +47,7 @@ def delete_user(user_id):
 
 
 @app_views.route('/user', methods=['POST'], strict_slashes=False)
-def post_amenity():
+def post_user():
     """Creates an user
     """
     got_json = request.get_json()
@@ -60,10 +63,11 @@ def post_amenity():
 
 @app_views.route('/user/<user_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_amenity(user_id):
+def put_user(user_id):
     """Updates an user
     """
     got_json = request.get_json()
+    list_ign = ['id', 'email', 'created_at', 'updated_at']
     if not got_json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     user = storage.get("User", user_id)
