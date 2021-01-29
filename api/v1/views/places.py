@@ -6,19 +6,22 @@
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
-from models.user import User
-from models.city import City
+from models.place import Place
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
-def get_users():
-    """Gets the dict containing all the users
+@app_views.route('/user', methods=['GET'], strict_slashes=False)
+def get_places():
+    """Gets the dict containing all the states
     """
-    users = storage.all("User")
-    return jsonify([user.to_dict() for user in users.values()])
+    places = storage.all("Places")
+    list_places = []
+    for user in user.values():
+        list_users.append(user.to_dict())
+    return jsonify(list_users)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/user/<user_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_user_id(user_id):
     """Gets a user by its ID
     """
@@ -29,10 +32,10 @@ def get_user_id(user_id):
         abort(404)
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'],
+@app_views.route('/user/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
-    """Deletes a user
+    """Deletes an user
     """
     user = storage.get("User", user_id)
     if user is not None:
@@ -43,28 +46,28 @@ def delete_user(user_id):
         abort(404)
 
 
-@app_views.route('/users', methods=['POST'], strict_slashes=False)
+@app_views.route('/user', methods=['POST'], strict_slashes=False)
 def post_user():
     """Creates an user
     """
     got_json = request.get_json()
     if not got_json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'email' not in got_json:
-        return make_response(jsonify({"error": "Missing email"}), 400)
-    if 'password' not in got_json:
-        return make_response(jsonify({"error": "Missing password"}), 400)
-    new_user = User(**got_json)
-    storage.new(new_user)
+    if 'name' not in got_json:
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    new_amen = User(**got_json)
+    storage.new(new_amen)
     storage.save()
-    return make_response(jsonify(new_user.to_dict()), 201)
+    return make_response(jsonify(new_amen.to_dict()), 201)
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/user/<user_id>', methods=['PUT'],
+                 strict_slashes=False)
 def put_user(user_id):
-    """Updates a user
+    """Updates an user
     """
     got_json = request.get_json()
+    list_ign = ['id', 'email', 'created_at', 'updated_at']
     if not got_json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     user = storage.get("User", user_id)
