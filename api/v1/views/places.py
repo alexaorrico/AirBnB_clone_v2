@@ -9,7 +9,8 @@ from flask import jsonify, abort, request, make_response
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
 def get_places(city_id):
     """Gets the dict containing all places of a city
     """
@@ -58,7 +59,7 @@ def post_place(city_id):
     if not got_json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in got_json:
-        return make_response(jsonify({"error": "Missing name"}), 400)
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
     a_user = storage.get("User", got_json['user_id'])
     if a_user is None:
         abort(404)
