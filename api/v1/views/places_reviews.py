@@ -35,7 +35,7 @@ def get_review(review_id):
     reviews = storage.all(Review)
     for review in reviews.values():
         if review.id == review_id:
-            return(jsonify(review.todict()))
+            return(jsonify(review.to_dict()))
     abort(404)
     return
 
@@ -44,9 +44,9 @@ def get_review(review_id):
                  strict_slashes=False)
 def delete_review(review_id):
     """deletes a single review"""
-    place = storage.all(Review)
+    reviews = storage.all(Review)
 
-    for review in review.values():
+    for review in reviews.values():
         if review.id == review_id:
             review.delete()
             storage.save()
@@ -71,6 +71,7 @@ def post_review(place_id):
     for place in place.values():
         if place.id == place_id:
             new_review = Review(**payload)
+            setattr(new_review, 'place_id', place.id)
             new_review.save()
             return(jsonify(new_review.to_dict()), 201)
     abort(404)
@@ -87,7 +88,7 @@ def put_review(review_id):
     if payload is None:
         abort(400, 'Not a JSON')
 
-    for review in place.values():
+    for review in reviews.values():
         if review.id == review_id:
             for k, v in payload.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':
