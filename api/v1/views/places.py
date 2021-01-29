@@ -38,14 +38,14 @@ def get_Place_id(place_id):
 
 
 @app_views.route(
-    '/places/<Place_id>',
+    '/places/<place_id>',
     strict_slashes=False,
     methods=['DELETE']
 )
-def delete_Place_ob(Place_id):
+def delete_Place_ob(place_id):
     """Delete a Place object by id"""
     if request.method == 'DELETE':
-        ob = storage.get(Place, Place_id)
+        ob = storage.get(Place, place_id)
         if ob is not None:
             storage.delete(ob)
             storage.save()
@@ -84,14 +84,14 @@ def create_Place_ob(city_id):
 
 
 @app_views.route(
-    '/places/<Place_id>',
+    '/places/<place_id>',
     strict_slashes=False,
     methods=['PUT']
 )
-def update_Place_ob(Place_id):
+def update_Place_ob(place_id):
     """Update a Place object"""
     if request.method == 'PUT':
-        ob = storage.get(Place, Place_id)
+        ob = storage.get(Place, place_id)
         data = request.get_json()
         if not ob:
             return abort(404)
