@@ -12,7 +12,7 @@ from flask import jsonify, request, abort
     'POST', 'GET'])
 @app_views.route('/places/<place_id>', strict_slashes=False, methods=[
     'PUT', 'GET', 'DELETE'])
-def places(city_id=None, place_id=None, user_id=None):
+def places(city_id=None, place_id=None):
     """handles HTTP requests related to places"""
     if city_id is not None:
         # /cities/<city_id>/places GET method
@@ -54,7 +54,7 @@ def places(city_id=None, place_id=None, user_id=None):
         # places/<place_id> DELETE method
         if request.method == 'DELETE':
             place = storage.get(Place, place_id)
-            if Place is not None:
+            if place is not None:
                 place.delete()
                 storage.save()
                 return jsonify({}), 200
