@@ -145,7 +145,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(string, str(inst))
 
     @mock.patch('models.storage')
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_save(self, mock_storage):
         """Test that save method updates `updated_at` and calls
         `storage.save`"""

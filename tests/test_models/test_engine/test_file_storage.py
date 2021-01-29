@@ -42,7 +42,8 @@ class TestFileStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_file_storage.py'])
-        self.assertEqual(result.total_errors, 0)
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_file_storage_module_docstring(self):
         """Test for the file_storage.py module docstring"""
@@ -112,49 +113,3 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
-
-
-class TestFileStorageMethods(unittest.TestCase):
-    """Test the DBStorage class methods"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
-    @classmethod
-    def setUpClass(cls):
-        """Creating the objects to use"""
-        cls.object_state = State(name="California")
-        cls.object_city = City(state_id=cls.object_state.id,
-                               name="Los Angeles")
-        cls.object_state.save()
-        cls.object_city.save()
-
-    @classmethod
-    def tearDownClass(cls):
-        """ Remove objects in storage at end of each tests """
-        try:
-            os.remove('file.json')
-        except Exception:
-            pass
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
-    def test_get(self):
-        """ test the get method for an existing object of class cls  """
-        first_state_id = list(models.storage.all(State).values())[0].id
-        expected_answer = models.storage.get(State, first_state_id)
-        self.assertEqual(expected_answer.__class__.__name__, "State")
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
-    def test_count_all(self):
-        """ test the count method for all existing objects in the DB """
-        expected_answer = models.storage.count()
-        self.assertEqual(expected_answer, 2)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
-    def test_count_cls(self):
-        """ test the count method for an existing object of class cls  """
-        expected_answer = models.storage.count(State)
-        self.assertEqual(expected_answer, 1)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
-    def test_count_None_cls(self):
-        """ test the count method for a none existing object of class cls """
-        expected_answer = models.storage.count(Review)
-        self.assertEqual(expected_answer, 0)
