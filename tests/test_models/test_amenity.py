@@ -77,7 +77,7 @@ class TestAmenity(unittest.TestCase):
             self.assertEqual(amenity.name, "")
 
     def test_to_dict_creates_dict(self):
-        """test to_dict method creates a dictionary with proper attrs"""
+        """Test to_dict method creates a dictionary with proper attrs"""
         am = Amenity()
         print(am.__dict__)
         new_d = am.to_dict()
@@ -89,7 +89,7 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue("__class__" in new_d)
 
     def test_to_dict_values(self):
-        """test that values in dict returned from to_dict are correct"""
+        """Test that values in dict returned from to_dict are correct"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         am = Amenity()
         new_d = am.to_dict()
@@ -100,7 +100,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(new_d["updated_at"], am.updated_at.strftime(t_format))
 
     def test_str(self):
-        """test that the str method has the correct output"""
+        """Test that the str method has the correct output"""
         amenity = Amenity()
         string = "[Amenity] ({}) {}".format(amenity.id, amenity.__dict__)
         self.assertEqual(string, str(amenity))

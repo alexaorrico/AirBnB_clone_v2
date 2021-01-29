@@ -128,7 +128,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(d['my_number'], 89)
 
     def test_to_dict_values(self):
-        """test that values in dict returned from to_dict are correct"""
+        """Test that values in dict returned from to_dict are correct"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         bm = BaseModel()
         new_d = bm.to_dict()
@@ -139,7 +139,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_d["updated_at"], bm.updated_at.strftime(t_format))
 
     def test_str(self):
-        """test that the str method has the correct output"""
+        """Test that the str method has the correct output"""
         inst = BaseModel()
         string = "[BaseModel] ({}) {}".format(inst.id, inst.__dict__)
         self.assertEqual(string, str(inst))
