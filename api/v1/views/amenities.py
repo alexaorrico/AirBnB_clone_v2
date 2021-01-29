@@ -58,7 +58,7 @@ def post_amenity():
 
 
 @app_views.route('/amenity/<amenity_id>', methods=['PUT'], strict_slashes=False)
-def put_states(amenity_id):
+def put_amenity(amenity_id):
     """updates a state object
     """
     info = request.get_json()
