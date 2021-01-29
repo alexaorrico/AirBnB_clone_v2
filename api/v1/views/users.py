@@ -30,7 +30,7 @@ def get_user_id(user_id):
     if user is not None:
         return jsonify(user.to_dict())
     else:
-        abort(404)
+        return abort(404)
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
@@ -44,7 +44,7 @@ def delete_user(user_id):
         storage.save()
         return make_response(jsonify({}), 200)
     else:
-        abort(404)
+        return abort(404)
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -56,16 +56,15 @@ def post_user():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'email' not in got_json:
         return make_response(jsonify({"error": "Missing email"}), 400)
-    elif "password" not in got _json:
+    elif "password" not in got_json:
         return make_response(jsonify({'error': 'Missing password'}), 400))
-    new_user = User(**got_json)
+    new_user =User(**got_json)
     storage.new(new_user)
     storage.save()
     return make_response(jsonify(new_user.to_dict()), 201)
 
 
-@app_views.route('/user/<user_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/user/<user_id>', methods=['PUT'], strict_slashes=False)
 def put_user(user_id):
     """Updates an user
     """
@@ -78,7 +77,7 @@ def put_user(user_id):
         for key, val in got_json.items():
             if key not in list_ign:
                 setattr(user, key, val)
-        storage.save()
+            storage.save()
         return make_response(jsonify(user.to_dict()), 200)
     else:
-        abort(404)
+        return abort(404)

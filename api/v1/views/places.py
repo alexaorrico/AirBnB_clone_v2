@@ -55,10 +55,10 @@ def post_user():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in got_json:
         return make_response(jsonify({"error": "Missing name"}), 400)
-    new_amen = User(**got_json)
-    storage.new(new_amen)
+    new_user = User(**got_json)
+    storage.new(new_user)
     storage.save()
-    return make_response(jsonify(new_amen.to_dict()), 201)
+    return make_response(jsonify(new_user.to_dict()), 201)
 
 
 @app_views.route('/user/<user_id>', methods=['PUT'],
