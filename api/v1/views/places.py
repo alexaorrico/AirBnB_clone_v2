@@ -32,7 +32,7 @@ def places(city_id=None, place_id=None):
                 abort(404)
             if new_json is None:
                 abort(400, 'Not a JSON')
-            if 'user_id' not in new_json:
+            if 'user_id' not in new_json.keys():
                 abort(400, 'Missing user_id')
             if 'name' not in new_json:
                 abort(400, 'Missing name')
@@ -44,7 +44,7 @@ def places(city_id=None, place_id=None):
             return jsonify(new_place.to_dict()), 201
 
     else:
-        # places/<place_id> GET method
+        #/places/<place_id> GET method
         if request.method == 'GET':
             place = storage.get(Place, place_id)
             if place is not None:
