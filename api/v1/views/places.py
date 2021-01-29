@@ -13,33 +13,31 @@ from flask import jsonify, request, abort
 @app_views.route('/places/<place_id>', strict_slashes=False, methods=[
     'PUT', 'GET', 'DELETE'])
 def places(city_id=None, place_id=None, user_id=None):
-    """handles HTTP requests related to cities"""
+    """handles HTTP requests related to places"""
     if city_id is not None:
         # /cities/<city_id>/places GET method
         if request.method == 'GET':
-            city_list = storage.all(City)
-            places_list = []
-            if city_list is not {}:
-                for city in city_list.values():
-                    if city.id == city_id:
-                        for place in city.places:
-                            places_list.append(place.to_dict())
-                        return jsonify(places_list)
-            abort(404)
+            city = storage.get(City, city_id)
+            if city is None:
+                abort(404)
+            places = storage.all(Place).values()
+            return jsonify(
+                [place for place in places if place.city_id == city_id])
 
         # /cities/<city_id>/places POST method
         if request.method == 'POST':
             new_json = request.get_json(silent=True)
             city = storage.get(City, city_id)
-            user = storage.get(User, user_id)
-            if city or user is None:
+            if city is None:
                 abort(404)
-            if user_id not in new_json:
-                abort(400, 'Missing user_id')
             if new_json is None:
                 abort(400, 'Not a JSON')
+            if 'user_id' not in new_json:
+                abort(400, 'Missing user_id')
             if 'name' not in new_json:
                 abort(400, 'Missing name')
+            if storage.get(User, new_json['user_id']) is None:
+                abort(404)
             new_place = Place(**new_json)
             new_place.city_id = city_id
             new_place.save()
