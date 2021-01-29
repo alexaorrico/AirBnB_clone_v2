@@ -10,7 +10,8 @@ from api.v1.views import app_views
 
 
 @app_views.route('/amenities/', strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['GET'])
 def get_amen(amenity_id=None):
     """Uses  the models class to_dict to retrieve all amenity objects"""
     amenities = storage.all(Amenity)
