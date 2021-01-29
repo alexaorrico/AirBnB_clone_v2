@@ -17,7 +17,7 @@ def places_reviews(place_id=None, review_id=None):
     if place_id is not None:
         # /places/<place_id>/reviews GET method
         if request.method == 'GET':
-            place = storage.all(Place)
+            place = storage.get(Place, place_id)
             if place is not None:
                 return jsonify([review for review in place.reviews])
             abort(404)
