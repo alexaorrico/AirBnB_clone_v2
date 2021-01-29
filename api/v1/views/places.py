@@ -9,7 +9,11 @@ from api.v1.views import app_views
 from models import storage, base_model
 
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+@app_views.route(
+    '/cities/<city_id>/places',
+    strict_slashes=False,
+    methods=['GET']
+)
 def get_places(city_id):
     """Retrieves the list of all Place objects"""
     if request.method == 'GET':
@@ -50,7 +54,11 @@ def delete_Place_ob(Place_id):
             return abort(404)
 
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+@app_views.route(
+    '/cities/<city_id>/places',
+    strict_slashes=False,
+    methods=['POST']
+)
 def create_Place_ob(city_id):
     """Create a Place object"""
     if request.method == 'POST':
@@ -75,7 +83,11 @@ def create_Place_ob(city_id):
             return jsonify(ob.to_dict()), 201
 
 
-@app_views.route('/places/<Place_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route(
+    '/places/<Place_id>',
+    strict_slashes=False,
+    methods=['PUT']
+)
 def update_Place_ob(Place_id):
     """Update a Place object"""
     if request.method == 'PUT':
@@ -86,7 +98,13 @@ def update_Place_ob(Place_id):
         if not data:
             return "Not a JSON", 400
         for key, val in data.items():
-            if key not in ["id", "created_at", "updated_at", "user_id", "city_id"]:
+            if key not in [
+                "id",
+                "created_at",
+                "updated_at",
+                "user_id",
+                "city_id"
+            ]:
                 setattr(ob, key, val)
         storage.save()
         return jsonify(ob.to_dict()), 200
