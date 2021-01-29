@@ -70,7 +70,7 @@ def put_user(user_id):
     user = storage.get("User", user_id)
     if user:
         for key, val in got_json.items():
-            if key not in list_ign:
+            if key not in ['id', 'email', 'created_at', 'updated_at']:
                 setattr(user, key, val)
         storage.save()
         return make_response(jsonify(user.to_dict()), 200)
