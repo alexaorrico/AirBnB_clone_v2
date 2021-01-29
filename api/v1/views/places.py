@@ -16,7 +16,7 @@ def get_places(city_id):
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    city.places
+    places_list = city.places
     places = storage.all("Places")
     list_places = []
     for user in user.values():
@@ -26,7 +26,7 @@ def get_places(city_id):
 
 @app_views.route('/user/<user_id>', methods=['GET'],
                  strict_slashes=False)
-def get_user_id(user_id):
+def get_place_id(user_id):
     """Gets a user by its ID
     """
     user = storage.get("User", user_id)
@@ -38,7 +38,7 @@ def get_user_id(user_id):
 
 @app_views.route('/user/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_user(user_id):
+def delete_place(user_id):
     """Deletes an user
     """
     user = storage.get("User", user_id)
@@ -51,7 +51,7 @@ def delete_user(user_id):
 
 
 @app_views.route('/user', methods=['POST'], strict_slashes=False)
-def post_user():
+def post_place():
     """Creates an user
     """
     got_json = request.get_json()
@@ -67,7 +67,7 @@ def post_user():
 
 @app_views.route('/user/<user_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_user(user_id):
+def put_place(user_id):
     """Updates an user
     """
     got_json = request.get_json()
