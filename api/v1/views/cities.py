@@ -14,7 +14,6 @@ from models.city import City
 def get_cities(state_id):
     """Gets the list containing all the cities
     """
-
     state = storage.get("State", state_id)
     if state is None:
         return abort(404)
@@ -61,7 +60,7 @@ def post_city(state_id):
         return make_response(jsonify({"error": "Missing name"}), 400)
     new_city = City(**got_json)
     storage.new(new_city)
-    new_city.state_id = state_id
+    new_city.state_id = state.id
     storage.save()
     return make_response(jsonify(new_city.to_dict()), 201)
 
