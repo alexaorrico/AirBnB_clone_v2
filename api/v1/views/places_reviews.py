@@ -11,7 +11,7 @@ from flask import Flask, jsonify, request, make_response, abort
 from api.v1.views import app_views
 
 
-@app_views.route('/place/<place_id>/reviews', methods=['GET'],
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def get_review_by_place(place_id):
     """Method to get all reviews by place_id"""
@@ -20,7 +20,7 @@ def get_review_by_place(place_id):
     reviews_in_place = []
     for place in place.values():
         if place.id == place_id:
-            for review in review.values():
+            for review in reviews.values():
                 if review.place.id == place_id:
                     reviews_in_place.append(review.to_dict())
             return jsonify(reviews_in_place)
@@ -35,18 +35,18 @@ def get_review(review_id):
     reviews = storage.all(Review)
     for review in reviews.values():
         if review.id == review_id:
-            return(jsonify(review.todict()))
+            return(jsonify(review.to_dict()))
     abort(404)
     return
 
 
-@app_views.route('place/<review_id>', methods=['DELETE'],
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
     """deletes a single review"""
-    place = storage.all(Review)
+    reviews = storage.all(Review)
 
-    for review in review.values():
+    for review in reviews.values():
         if review.id == review_id:
             review.delete()
             storage.save()
@@ -54,22 +54,23 @@ def delete_review(review_id):
     abort(404)
 
 
-@app_views.route('/places/<place_id>/place', methods=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def post_review(place_id):
     """Creates a new review"""
     payload = request.get_json(silent=True)
-    place = storage.all(Place)
+    places = storage.all(Place)
 
     if payload is None:
         abort(400, 'Not a JSON')
     elif 'user_id' not in payload:
         abort(400, 'Missing user_id')
-    elif 'user.user_id' not in payload:
-        abort(404)
+    elif 'text' not in payload:
+        abort(400, 'Missing text')
 
-    for place in place.values():
+    for place in places.values():
         if place.id == place_id:
+            payload["place_id"] = place_id
             new_review = Review(**payload)
             new_review.save()
             return(jsonify(new_review.to_dict()), 201)
@@ -87,7 +88,7 @@ def put_review(review_id):
     if payload is None:
         abort(400, 'Not a JSON')
 
-    for review in place.values():
+    for review in reviews.values():
         if review.id == review_id:
             for k, v in payload.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':

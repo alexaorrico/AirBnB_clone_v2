@@ -9,9 +9,9 @@ from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
 
 
-@app_views.route('/amenities/', methods=['GET'], strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/amenities/', strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['GET'])
 def get_amen(amenity_id=None):
     """Uses  the models class to_dict to retrieve all amenity objects"""
     amenities = storage.all(Amenity)
@@ -43,16 +43,16 @@ def delete_amen(amenity_id):
     abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['POST'],
+@app_views.route('/amenities/', methods=['POST'],
                  strict_slashes=False)
-def post_amen(amenity_id):
+def post_amen():
     """"Method to create an amenity"""
-    payload = request.get_josn(silent=True)
+    payload = request.get_json(silent=True)
 
     if payload is None:
         abort(400, 'Not a JSON')
     elif 'name' not in payload:
-        about(400, 'Missing name')
+        abort(400, 'Missing name')
 
     new_amenity = Amenity(**payload)
     new_amenity.save()
@@ -72,7 +72,7 @@ def put_amen(amenity_id):
 
     for amenity in amenities.values():
         if amenity.id == amenity_id:
-            for k, v in payload_amen.item():
+            for k, v in payload_amen.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id':
                     setattr(amenity, k, v)
             amenity.save()

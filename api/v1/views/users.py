@@ -74,7 +74,7 @@ def put_user(user_id):
         if user.id == user_id:
             for k, v in payload.items():
                 if k != 'created_at' and k != 'updated_at' and k != 'id' \
-                   and k != email:
+                   and k != 'email':
                     setattr(user, k, v)
             user.save()
             return(jsonify(user.to_dict()), 200)

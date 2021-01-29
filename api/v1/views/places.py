@@ -19,7 +19,7 @@ def get_place_by_city(city_id):
     places_in_city = []
     for city in cities.values():
         if city.id == city_id:
-            for city in cities.values():
+            for place in places.values():
                 if place.city_id == city_id:
                     places_in_city.append(place.to_dict())
             return jsonify(places_in_city)
@@ -34,18 +34,18 @@ def get_place(place_id):
     places = storage.all(Place)
     for place in places.values():
         if place.id == place_id:
-            return(jsonify(place.todict()))
+            return(jsonify(place.to_dict()))
     abort(404)
     return
 
 
-@app_views.route('place/<place_id>', methods=['DELETE'],
+@app_views.route('places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
     """deletes a single place"""
     places = storage.all(Place)
 
-    for place in place.values():
+    for place in places.values():
         if place.id == place_id:
             place.delete()
             storage.save()
@@ -69,6 +69,7 @@ def post_place(city_id):
 
     for city in cities.values():
         if city.id == city_id:
+            payload["city_id"] = city_id
             new_place = Place(**payload)
             new_place.save()
             return(jsonify(new_place.to_dict()), 201)
@@ -87,7 +88,7 @@ def put_place(place_id):
         abort(400, 'Not a JSON')
 
     no_nos = ['created_at', 'updated_at', 'id', 'user_id', 'city_id']
-    for place in cities.values():
+    for place in places.values():
         if place.id == place_id:
             for k, v in payload.items():
                 if k not in no_nos:
