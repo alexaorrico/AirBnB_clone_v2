@@ -10,7 +10,7 @@ from models.user import User
 from models.city import City
 
 
-@app_views.route('/user', methods=['GET'], strict_slashes=False)
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_user():
     """Gets the dict containing all the states
     """
@@ -47,19 +47,21 @@ def delete_user(user_id):
         abort(404)
 
 
-@app_views.route('/user', methods=['POST'], strict_slashes=False)
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
 def post_user():
     """Creates an user
     """
     got_json = request.get_json()
     if not got_json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'name' not in got_json:
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    new_amen = User(**got_json)
-    storage.new(new_amen)
+    if 'email' not in got_json:
+        return make_response(jsonify({"error": "Missing email"}), 400)
+    elif "password" not in got _json:
+        return make_response(jsonify({'error': 'Missing password'}), 400))
+    new_user = User(**got_json)
+    storage.new(new_user)
     storage.save()
-    return make_response(jsonify(new_amen.to_dict()), 201)
+    return make_response(jsonify(new_user.to_dict()), 201)
 
 
 @app_views.route('/user/<user_id>', methods=['PUT'],
@@ -74,7 +76,8 @@ def put_user(user_id):
     user = storage.get("User", user_id)
     if user:
         for key, val in got_json.items():
-            setattr(user, key, val)
+            if key not in list_ign:
+                setattr(user, key, val)
         storage.save()
         return make_response(jsonify(user.to_dict()), 200)
     else:
