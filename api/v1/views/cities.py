@@ -70,7 +70,7 @@ def update_city(city_id):
     if city_to_update is None:
         abort(404)
     if not city_to_update:
-        return jsonify({'error': 'Not a JSON'}), 400
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     city_dict = storage.get(City, city_id)
     ignore_list = ['id', 'created_at', 'updated_at']
