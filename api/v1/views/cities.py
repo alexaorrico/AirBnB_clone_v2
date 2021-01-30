@@ -53,14 +53,14 @@ def create_city(state_id):
     if new_city is None:
         abort(404)
     if not new_city:
-        return jsonify({'error': 'Not a JSON'}), 400
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     elif 'name' not in new_city:
-        return jsonify({'error': 'Missing name'}), 400
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     else:
         new_city['state_id'] = state_id
         new_obj = City(**new_city)
         new_obj.save()
-        return jsonify(new_obj.to_dict()), 201
+        return make_response(jsonify(new_obj.to_dict()), 201)
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
