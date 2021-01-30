@@ -21,7 +21,7 @@ def get_places(city_id):
         if not city_obj:
             return abort(404)
         Place_list = []
-        for ob in Place_list.places:
+        for ob in city_obj.places:
             Place_list.append(ob.to_dict())
         return jsonify(Place_list), 200
 
@@ -97,14 +97,15 @@ def update_Place_ob(place_id):
             return abort(404)
         if not data:
             return "Not a JSON", 400
+        list_keys = [
+            "id",
+            "created_at",
+            "updated_at",
+            "user_id",
+            "city_id"
+        ]
         for key, val in data.items():
-            if key not in [
-                "id",
-                "created_at",
-                "updated_at",
-                "user_id",
-                "city_id"
-            ]:
+            if key not in list_keys:
                 setattr(ob, key, val)
         storage.save()
         return jsonify(ob.to_dict()), 200
