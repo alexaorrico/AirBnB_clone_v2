@@ -16,12 +16,12 @@
 	 CSS styles
 	 ********************** -->
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome.css') }}?{{ cache_id }}">
   </head>
 
   <!-- **********************
