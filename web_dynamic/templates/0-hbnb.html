@@ -10,7 +10,7 @@
 
     <!-- FAVICON -->
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/icon.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/icon.png') }}?{{ cache_id }}">
 
     <!-- **********************
 	 CSS styles
@@ -102,7 +102,7 @@
 
 	      <div class="price_by_night">
 
-		{{ place.price_by_night }}
+		${{ place.price_by_night }}
 
 	      </div>
 	    </div>
