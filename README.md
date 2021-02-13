@@ -191,7 +191,7 @@ EOF  all  create  destroy  help  quit  show  update
 <p>No known bugs at this time.</p>
 
 <h2>Original Authors</h2>
-<p>Alexa Orrico - Github(https://github.com/alexaorrico) / Twitter(https://twitter.com/alexa_orrico)  
+<p>Alexa Orrico - Github(https://github.com/alexaorrico) / Twitter(https://twitter.com/alexa_orrico)
 Jennifer Huang - Github(https://github.com/jhuang10123) / Twitter(https://twitter.com/earthtojhuang)
 </p>
 
