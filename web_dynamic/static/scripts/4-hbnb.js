@@ -18,7 +18,7 @@ $(function () {
       $('DIV#api_status').removeClass('available');
     }
   });
-
+//Filter Search Button
   $('button').click(() =>
   $.ajax('http://0.0.0.0:5001/api/v1/places_search', {
     data: JSON.stringify({}),
