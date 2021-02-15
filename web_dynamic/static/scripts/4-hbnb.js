@@ -18,15 +18,17 @@ $(function () {
       $('DIV#api_status').removeClass('available');
     }
   });
-//Filter Search Button
+
   $('button').click(() =>
-  $.ajax('http://0.0.0.0:5001/api/v1/places_search', {
-    data: JSON.stringify({}),
-    contentType: 'application/json',
-    type: 'POST',
-    success: data => {
-      for (const place of data) {
-        const template = `<article>
+    $.ajax('http://0.0.0.0:5001/api/v1/places_search', {
+      data: JSON.stringify({ amenities: Object.keys(listAmenities) }),
+      contentType: 'application/json',
+      type: 'POST',
+      success: data => {
+        $('section.places').empty();
+        $('section.places').append('<h1>Places</h1>');
+        for (const place of data) {
+          const template = `<article>
 
       <div class="title">
 
@@ -75,8 +77,8 @@ $(function () {
       </div>
 
     </article> <!-- End 1 PLACE Article -->`;
-        $('section.places').append(template);
+          $('section.places').append(template);
+        }
       }
-    }
-  }));
+    }));
 });

@@ -44,7 +44,7 @@
       <div class="container">
 
 	<!-- **********************
-	     FILTERS BUTTON
+	     FILTERS
 	     ********************** -->
 
 	<section class="filters">
@@ -58,7 +58,7 @@
 	    <h4>&nbsp;</h4>
 	    <ul class="popover">
 	      {% for state in states|dictsort %}
-	      <H2>{{ state[0] }}</H2>
+	      <H2>{{ state[1].name }}</H2>
 	      <UL>
 		{% for city in state[1].cities|sort(attribute='name') %}
 		<LI>{{ city.name }}</LI>
