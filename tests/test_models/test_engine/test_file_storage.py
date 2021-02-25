@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """
 Contains the TestFileStorageDocs classes
+
+    you may have to put this line to restart the app
+    from models import storage
 """
 
 from datetime import datetime
@@ -113,3 +116,88 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_z00_count(self):
+        """Test Returns the object based on the class and its ID,
+        or None if not found"""
+        from models import storage
+        no_output = " > /dev/null 2>&1"
+        str_cmd = 'echo \'create State name="Arizona"\' | ./console.py'
+
+        os.system("rm file.json")
+
+        code = os.system(str_cmd + no_output)
+        self.assertFalse(code)
+
+        storage.reload()
+        num_states = storage.count(State)
+        self.assertEqual(num_states, 1)
+
+        os.system("rm file.json" + no_output)
+
+    def test_z01_count_exception(self):
+        """ test raises many arguments """
+        from models import storage
+        with self.assertRaises(TypeError):
+            storage.count(State, City)
+        with self.assertRaises(TypeError):
+            storage.count(State, City, User)
+        with self.assertRaises(TypeError):
+            storage.count(State, City, User, Place)
+
+    def test_z02_count_with_numbers(self):
+        """ test count with numbers """
+        from models import storage
+        self.assertFalse(storage.count(20))
+        self.assertFalse(storage.count(202))
+        self.assertFalse(storage.count(20.20))
+        self.assertFalse(storage.count(50.5))
+
+    def test_z01_count_with_str(self):
+        """ test count with str """
+        from models import storage
+        self.assertFalse(storage.count("State"))
+        self.assertFalse(storage.count("User"))
+        self.assertFalse(storage.count("Hola"))
+        self.assertFalse(storage.count("hjssksksuisissj"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_z10_get(self):
+        """Test returns the number of objects in storage"""
+        from models import storage
+        no_output = " > /dev/null 2>&1"
+        str_cmd = 'echo \'create State name="Arizona"\' | ./console.py'
+
+        os.system("rm file.json" + no_output)
+
+        code = os.system(str_cmd + no_output)
+        self.assertFalse(code)
+
+        first_state_id = list(storage.all(State).values())[0].id
+
+        state = storage.get(State, first_state_id)
+        self.assertTrue(state)
+        self.assertEqual(state.id, first_state_id)
+
+        os.system("rm file.json" + no_output)
+
+    def test_z10_get(self):
+        """Test empty file"""
+        from models import storage
+        no_output = " > /dev/null 2>&1"
+
+        os.system("rm file.json" + no_output)
+
+        state = storage.get(State, "FAKE_ID")
+        self.assertEqual(state, None)
+
+    def test_z11_get(self):
+        """Test no valid class"""
+        from models import storage
+        no_output = " > /dev/null 2>&1"
+
+        os.system("rm file.json" + no_output)
+
+        state = storage.get("FAKE_CLASS", "FAKE_ID")
+        self.assertEqual(state, None)
