@@ -63,7 +63,7 @@ test_file_storage.py'])
         """Test for the presence of docstrings in FileStorage methods"""
         for func in self.fs_f:
             self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
+                            "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
@@ -113,3 +113,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == "db", "not testing file storage")
+    def test_get(self):
+        """tests that filestorage handles get correctly"""
+        storage = FileStorage()
+        self.assertTrue(storage.get(State, "testing") is None)
+
+    @unittest.skipIf(models.storage_t == "db", "not testing file storage")
+    def test_count(self):
+        """tests that filestorage handles count correctly"""
+        from models import storage
+        bench = storage.count()
+        storage.new(State(**{"name": "Habenero"}))
+        storage.save()
+        self.assertTrue(bench + 1 == storage.count())
