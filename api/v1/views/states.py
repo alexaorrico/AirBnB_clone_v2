@@ -24,12 +24,11 @@ def show_state(state_id):
             if state.id == state_id:
                 return jsonify(state.to_dict())
         abort(404)
-    else if request.method == 'DELETE':
+    elif request.method == 'DELETE':
         states = storage.all(State).values()
         for state in states:
             if state.id == state_id:
                 state.delete()
+                storage.save()
                 return jsonify({}), 200
         abort(404)
-    else if request.method == 'PUT':
-        
