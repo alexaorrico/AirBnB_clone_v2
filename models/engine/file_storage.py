@@ -76,6 +76,7 @@ class FileStorage:
         name = cls.__name__ + "." + id
         if name in objects.keys():
             return (objects[name])
+        return None
 
     def count(self, cls=None):
         """ Counts the number of objects based on class. """
@@ -89,5 +90,4 @@ class FileStorage:
         else:
             for obj in objects.values():
                 count += 1
-
         return(count)
