@@ -154,6 +154,10 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+Cecilia Giudice - [Github](https://github.com/ChechG) / Linkedin: Cecilia Giudice
+Julian Arbini - [Github](https://github.com/JulianArbini97) / Linkedin: Julian Arbini
+
+Base Code:
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Julián Arbini - [Github](https://github.com/JulianArbini97)
