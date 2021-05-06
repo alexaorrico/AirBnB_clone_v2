@@ -12,6 +12,7 @@ classes = {"amenities": "Amenity",
            "states": "State",
            "users": "User"}
 
+
 @app_views.route('/status', strict_slashes=False)
 def status():
     """
@@ -19,6 +20,7 @@ def status():
         Displays the status of the API.
     """
     return {"status": "OK"}
+
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
