@@ -161,7 +161,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 
 
-Med Salah Bourouba (Brandixitor) - [Github](https://github.com/Brandixitor)
+Med Salah Bourouba (Brandixitor) - [Github](https://github.com/Brandixitor) </br>
 Hadir Jenny - [Github](https://github.com/JennyHadir)
 ## License
 Public Domain. No copy write protection. 
