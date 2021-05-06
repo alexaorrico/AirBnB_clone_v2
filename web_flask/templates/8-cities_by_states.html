@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <HTML lang="en">
     <HEAD>
-        <TITLE>HBNB</TITLE>
+      <TITLE>HBNB</TITLE>
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}?{{ cache_id }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}?{{ cache_id }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}?{{ cache_id }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}?{{ cache_id }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') }}?{{ cache_id }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome.css') }}?{{ cache_id }}">
     </HEAD>
     <BODY>
         <H1>States</H1>
