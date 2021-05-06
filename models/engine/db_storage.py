@@ -3,6 +3,7 @@
 Contains the class DBStorage
 """
 
+import json
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -78,10 +79,11 @@ class DBStorage:
     def get(self, cls, id):
         """ return obj by name id """
         new_obj = self.all(cls)
-        id = cls + '.' + id
-        return(new_obj.get(id))
+        new_id = cls.__name__ + '.' + id
+        rt_obj = new_obj.get(new_id)
+        return(rt_obj)
 
-    def count(self):
+    def count(self, cls=None):
         """ get count """
-        all_dict = self.all(cls)
+        all_dict = self.all(cls) 
         return len(all_dict)
