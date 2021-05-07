@@ -9,6 +9,8 @@ env = environ.copy()
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+app.url_map.strict_slashes = False
+
 
 @app.teardown_appcontext
 def teardown(exception):
@@ -20,6 +22,7 @@ def teardown(exception):
 def page_not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+
 if __name__ == '__main__':
     if "HBNB_API_HOST" in env:
         host_api = env['HBNB_API_HOST']
@@ -29,4 +32,4 @@ if __name__ == '__main__':
         host_port = env['HBNB_API_PORT']
     else:
         host_port = 5000
-    app.run(host=host_api, port=host_port, threaded=True)
+    app.run(host=host_api, port=int(host_port), threaded=True, debug=True)
