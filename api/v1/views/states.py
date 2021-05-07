@@ -27,11 +27,12 @@ def getter_id(id=None):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def deleter_id(state_id=None):
     '''deleter_id - delete an object by id'''
     id = storage.get(State, state_id)
-    
+
     if id is not None:
         storage.delete(id)
         storage.save()
