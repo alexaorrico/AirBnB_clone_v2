@@ -29,7 +29,7 @@ def show_states():
         else:
             abort(400, desciption="Not a JSON")
 
-
+@app_views.route("states/<state_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("states/<state_id>", methods=['GET', 'DELETE', 'PUT'])
 def show_state(state_id):
     """ returns state data """
