@@ -53,7 +53,7 @@ def show_user(user_id):
             new_dict = request.get_json()
             users = storage.get(User, user_id)
             if users:
-                for k,v in new_dict.items():
+                for k in new_dict.keys():
                     if k != 'id' and k != 'email' and k != 'created_at' and k != 'updated_at':
                         users[k] = new_dict[k]
                 storage.save()
