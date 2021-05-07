@@ -54,8 +54,6 @@ def show_user(user_id):
             users = storage.all(User).values()
             for user in users:
                 if user.id == user_id:
-                    user.first_name = new_dict['first_name']
-                    user.last_name = new_dict['last_name']
                     user.password = new_dict['password']
                     storage.save()
                     return jsonify(user.to_dict()), 200
