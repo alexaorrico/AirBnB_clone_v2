@@ -55,7 +55,7 @@ def show_user(user_id):
             if users:
                 for k, v in users.items():
                     if k != 'id' and k != 'email' and k != 'created_at' and k != 'updated_at':
-                        users.k = new_dict[k]
+                        setattr(users, k, v)
                 storage.save()
                 return jsonify(users.to_dict()), 200
             else:
