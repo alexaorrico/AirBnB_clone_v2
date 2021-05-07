@@ -32,6 +32,19 @@ def show_state(state_id):
                 storage.save()
                 return jsonify({}), 200
         abort(404)
+    elif request.method == 'PUT':
+        if request.json:
+            new_dict = request.get_json()
+            states = storage.all(State).values()
+            for state in states:
+                if state.id == state_id:
+                    state.name = new_dict['name']
+                    storage.save()
+                    return jsonify(state.to_dict()), 200
+            abort(404)
+        else:
+            abort(400, desciption="Not a JSON")
+
 
 @app_views.route('/states/', methods=['POST'])
 def create_state():
