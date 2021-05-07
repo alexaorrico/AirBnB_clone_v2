@@ -1,0 +1,10 @@
+*~
+\#*\#
+__pycache__/
+versions/
+.vscode/
+*main*.py
+*.pyo
+*.pyc
+*.sql
+file.json
