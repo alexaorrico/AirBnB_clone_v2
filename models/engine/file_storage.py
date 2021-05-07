@@ -71,6 +71,8 @@ class FileStorage:
 
     def get(self, cls, id):
         """ retrieve an object based on class (cls) and id (id) """
+        if cls not in classes:
+            return (None)
         dic = self.all(cls)
         return (dic.get(str(cls.__name__) + '.' + str(id), None))
 
