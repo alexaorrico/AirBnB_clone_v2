@@ -4,7 +4,7 @@
 from api.v1.views import app_views
 from models import storage
 from models.state import State
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 
 
 @app_views.route('/states', methods=["GET"])
@@ -33,6 +33,7 @@ def state_delete(state_id):
     if res is None:
         abort(404)
     storage.delete(res)
+    storage.save()
     return jsonify({}), 200
 
 
@@ -50,8 +51,8 @@ def state_post():
     return jsonify(statedict), 200
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=["PUT"])
-def state_put():
+@app_views.route('/states/<state_id>', methods=["PUT"])
+def state_put(state_id):
     """updates a state object"""
     res = storage.get(State, state_id)
     if res is None:
@@ -62,6 +63,7 @@ def state_put():
     for key, value in request_data.items():
         blacklist = ["id", "created_at", "updated_at"]
         if key not in blacklist:
-            res[key] = value
+            setattr(res, key, value)
+    res.save()
     resdict = res.to_dict()
     return jsonify(resdict), 200
