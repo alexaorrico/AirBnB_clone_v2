@@ -83,10 +83,9 @@ class DBStorage:
             return new_dict_[key]
         return None
 
-
     def count(self, cls=None):
         """i am count"""
-        if cls is not None: 
+        if cls is not None:
             carlstive = self.all(cls.__name__)
             return (len(carlstive))
         return len(self.all())
