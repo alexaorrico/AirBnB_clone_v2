@@ -17,15 +17,15 @@ def getter_states():
     return jsonify(new_list)
 
 
-@app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
-def getter_id(id=None):
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+def getter_id(state_id=None):
     '''getter_id - gets all state objects by id'''
-    state_id = storage.get(State, id)
-    if state_id is not None:
-        return state_id.to_dict()
+    allstate = storage.all("State")
+    state = allstate.get("State", state_id).to_dict()
+    if state is not None:
+        return jsonify(state)
     else:
         abort(404)
-
 
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
@@ -44,7 +44,7 @@ def deleter_id(state_id=None):
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def post_state():
     '''post_state - create an state object with post'''
-    if not request.json():
+    if not request.get_json():
         jsonify({"error": "Not a JSON"}), 404
     body_dict = request.get_json()
     if "name" not in body_dict:
