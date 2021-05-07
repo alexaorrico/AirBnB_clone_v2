@@ -48,4 +48,17 @@ def show_user(user_id):
                 storage.save()
                 return jsonify({}), 200
         abort(404)
-
+    elif request.method == 'PUT':
+        if request.json:
+            new_dict = request.get_json()
+            users = storage.get(User, user_id)
+            if users:
+                for k,v in new_dict.items():
+                    if k != 'id' and k != 'email' and k != 'created_at' and k != 'updated_at':
+                        users[k] = new_dict[k]
+                storage.save()
+                return jsonify(users.to_dict()), 200
+            else:
+                abort(404)
+        else:
+            abort(400, description="Not a JSON")
