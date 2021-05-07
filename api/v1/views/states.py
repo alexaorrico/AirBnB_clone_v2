@@ -1,7 +1,8 @@
 #!/usr/bin/pyhton3
 from api.v1.views import app_views
-from flask import abort, jsonify 
+from flask import abort, jsonify, request
 from models import storage
+from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
@@ -32,3 +33,16 @@ def delete_obj(state_id):
         return jsonify({})
     else:
         abort(404)
+    
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def post_obj():
+    """Create a State object"""
+    object_state = request.get_json()
+    if 'name' not in object_state:
+        return jsonify("Missing name"), 400
+    elif object_state is not None:
+        new = State(**object_state)
+        new.save()
+        return jsonify(new.to_dict()), 201
+    else:
+        return jsonify("Not a JSON"), 400
