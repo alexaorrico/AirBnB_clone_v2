@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from ..views import app_views
-from flask import jsonify, json
+from flask import jsonify, json, make_response
 from models import storage
 from models.amenity import Amenity
 from models.city import City

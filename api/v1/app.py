@@ -2,13 +2,14 @@
 """ script to create a new app with flask """
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
@@ -25,4 +26,10 @@ if __name__ == '__main__':
         prt = os.getenv("HBNB_API_PORT")
     else:
         prt = 5000
-    app.run(host=hst, port=prt, threaded=True)
+    app.run(host=hst, port=prt)
+
+from werkzeug.exceptions import HTTPException
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return (jsonify({'error': 'Not found'}), 404)
