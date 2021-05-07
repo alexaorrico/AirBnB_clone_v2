@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 '''creates a new view for State objects'''
+from werkzeug import exceptions
 from models import storage
 from api.v1.views import app_views
 from models.state import State
@@ -21,11 +22,12 @@ def getter_states():
 def getter_id(state_id=None):
     '''getter_id - gets all state objects by id'''
     allstate = storage.all("State")
-    state = allstate.get("State", state_id).to_dict()
-    if state is not None:
+    try:
+        state = allstate.get("State." + state_id).to_dict()
         return jsonify(state)
-    else:
+    except exceptions as e:
         abort(404)
+
 
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
