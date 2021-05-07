@@ -54,9 +54,9 @@ def show_user(user_id):
             users = storage.get(User, user_id)
             if users:
                 no_touch = ['id', 'email', 'created_at', 'updated_at']
-                for k,v in users.items():
+                for k,v in new_dict.items():
                     if k not in no_touch:
-                        v = new_dict[k]
+                        users[k] = new_dict[k]
                         storage.save()
                 return jsonify(users.to_dict()), 200
             else:
