@@ -71,21 +71,9 @@ class FileStorage:
 
     def get(self, cls, id):
         """ gets some stuff """
-        from models import storage
-        data = storage.all(cls)
-        st = cls.__name__ + "." + id
-        if st in data:
-            return data.get(st)
-        else:
-            return None
+        key = "{}.{}".format(cls, id)
+        return self.all(cls).get(key) if self.all(cls).get(key) else None
 
     def count(self, cls=None):
         """ counts some stuff """
-        from models import storage
-        if cls is None:
-            data = storage.all()
-            count = len(data)
-        else:
-            data = storage.all(cls)
-            count = len(data)
-        return count
+        return len(self.all(cls)) if cls else len(self.all())
