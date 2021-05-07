@@ -159,8 +159,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Huy NGUYEN - [GitHub](https://github.com/huy75)
 Tanguy SAURA-NERI - [GitHub](https://github.com/TS-N)
 
-Tanguy Sauraneri - [Github](https://github.com/TS-N)
-Huy Nguyen - [Github](https://github.com/huy75)
 
 Second part of Airbnb: Joann Vuong
 ## License
