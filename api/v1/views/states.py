@@ -21,11 +21,10 @@ def getter_states():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def getter_id(state_id=None):
     '''getter_id - gets all state objects by id'''
-    allstate = storage.all("State")
-    try:
-        state = allstate.get("State." + state_id).to_dict()
-        return jsonify(state)
-    except exceptions as e:
+    state_id = storage.get(State, id)
+    if state_id is not None:
+        return state_id.to_dict()
+    else:
         abort(404)
 
 
@@ -47,10 +46,10 @@ def deleter_id(state_id=None):
 def post_state():
     '''post_state - create an state object with post'''
     if not request.get_json():
-        jsonify({"error": "Not a JSON"}), 404
+        jsonify({"error": "Not a JSON"}), 400
     body_dict = request.get_json()
     if "name" not in body_dict:
-        jsonify({"error": "Missing name"}), 404
+        jsonify({"error": "Missing name"}), 400
     state = State(name=body_dict["name"])
     state.save()
     return jsonify(state.to_dict()), 201
