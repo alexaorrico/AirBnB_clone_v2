@@ -44,17 +44,14 @@ def deleter_id(state_id=None):
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def post_state():
     '''post_state - create an state object with post'''
-    try:
-        if not request.get_json():
-            jsonify({"error": "Not a JSON"}), 404
-        body_dict = request.get_json()
-        if "name" not in body_dict:
-            jsonify({"error": "Missing name"}), 404
-        state = State(name=body_dict["name"])
-        state.save()
-        return jsonify(state.to_dict()), 201
-    except Exception as e:
-        abort(404)
+    if not request.json():
+        jsonify({"error": "Not a JSON"}), 404
+    body_dict = request.get_json()
+    if "name" not in body_dict:
+        jsonify({"error": "Missing name"}), 404
+    state = State(name=body_dict["name"])
+    state.save()
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
