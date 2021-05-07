@@ -11,7 +11,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def close():
+def close(self):
     storage.close()
 
 if __name__ == "__main__":
