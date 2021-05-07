@@ -6,14 +6,28 @@ from models import storage
 from models.state import State
 import json
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET', 'POST'])
 def show_states():
     """ returns list of states """
-    lista = []
-    states = storage.all(State).values()
-    for state in states:
-        lista.append(state.to_dict())
-    return jsonify(lista)
+    if request.method == 'GET':
+        lista = []
+        states = storage.all(State).values()
+        for state in states:
+            lista.append(state.to_dict())
+        return jsonify(lista)
+    elif request.method == 'POST':
+        if request.json:
+            new_dict = request.get_json()
+            if "name" in new_dict.keys():
+                new_state = State(**new_dict)
+                storage.new(new_state)
+                storage.save()
+                return jsonify(new_state.to_dict()), 201
+            else:
+                abort(400, description="Missing name")
+        else:
+            abort(400, desciption="Not a JSON")
+
 
 @app_views.route('states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def show_state(state_id):
@@ -44,19 +58,3 @@ def show_state(state_id):
             abort(404)
         else:
             abort(400, desciption="Not a JSON")
-
-
-@app_views.route('/states', methods=['POST'])
-def create_state():
-    """ create state """
-    if request.json:
-        new_dict = request.get_json()
-        if "name" in new_dict.keys():
-            new_state = State(**new_dict)
-            storage.new(new_state)
-            storage.save()
-            return jsonify(new_state.to_dict()), 201
-        else:
-            abort(400, description="Missing name")
-    else:
-        abort(400, desciption="Not a JSON")
