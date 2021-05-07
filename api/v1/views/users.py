@@ -9,7 +9,7 @@ import json
 @app_views.route("/users/", methods=['GET', 'POST'])
 @app_views.route("/users", methods=['GET', 'POST'])
 def show_users():
-    """ returns list of states """
+    """ returns list of users """
     if request.method == 'GET':
         lista = []
         users = storage.all(User).values()
@@ -57,8 +57,8 @@ def show_user(user_id):
                 for k,v in new_dict.items():
                     if k not in no_touch:
                         users[k] = new_dict[k]
-                        storage.save()
-                return jsonify(users.to_dict()), 200
+            storage.save()
+            return jsonify(users.to_dict()), 200
             else:
                 abort(404)
         else:
