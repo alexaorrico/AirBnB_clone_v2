@@ -35,6 +35,7 @@ def state_delete(state_id):
     storage.delete(res)
     return jsonify({}), 200
 
+
 @app_views.route('/states', methods=["POST"])
 def state_post():
     """creates a state object"""
@@ -47,3 +48,20 @@ def state_post():
     storage.new(stateobj)
     statedict = stateobj.to_dict()
     return jsonify(statedict), 200
+
+
+@app_views.route('/api/v1/states/<state_id>', methods=["PUT"])
+def state_put():
+    """updates a state object"""
+    res = storage.get(State, state_id)
+    if res is None:
+        abort(404)
+    request_data = request.get_json()
+    if request_data is None:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    for key, value in request_data.items():
+        blacklist = ["id", "created_at", "updated_at"]
+        if key not in blacklist:
+            res[key] = value
+    resdict = res.to_dict()
+    return jsonify(resdict), 200
