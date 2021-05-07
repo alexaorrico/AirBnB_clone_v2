@@ -4,6 +4,7 @@ from flask import abort, jsonify, request
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
     """Retrieves the list of all State objects: GET /api/v1/states"""
@@ -23,7 +24,9 @@ def object_state(state_id, strict_slashes=False):
     else:
         abort(404)
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_obj(state_id):
     """Deletes a State object"""
     object_state = storage.get("State", state_id)
@@ -33,7 +36,8 @@ def delete_obj(state_id):
         return jsonify({})
     else:
         abort(404)
-    
+
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_obj():
     """Create a State object"""

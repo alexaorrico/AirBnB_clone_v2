@@ -77,8 +77,8 @@ class FileStorage:
         """
         if cls is not None and id != "":
             for key, value in self.__objects.items():
-                if ((cls == value.__class__ or cls == value.__class__.__name__) 
-                     and value.id == id):
+                if ((cls == value.__class__ or
+                   cls == value.__class__.__name__) and value.id == id):
                     return value
         return None
 
