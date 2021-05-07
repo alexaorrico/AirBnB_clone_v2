@@ -81,11 +81,11 @@ class DBStorage:
             if c in str(cls):
                 break
         key = str(c) + "." + id
-        if key in models.storage.all():
-            return models.storage.all()[key]
+        if key in self.all():
+            return self.all()[key]
         else:
             return None
 
     def count(self, cls=None):
         """returns number of objects in storage"""
-        return (len(models.storage.all(cls)))
+        return (len(self.all(cls)))
