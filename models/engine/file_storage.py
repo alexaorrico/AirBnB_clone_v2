@@ -93,6 +93,6 @@ class FileStorage:
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     count += 1
         else:
-            for key, value in self.__objects.items():
+            for key in self.__objects:
                 count += 1
         return count
