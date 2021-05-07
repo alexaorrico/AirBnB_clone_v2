@@ -21,10 +21,9 @@ def getter_states():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def getter_id(state_id):
     '''getter_id - gets all state objects by id'''
-    allstate = storage.all("State")
     state_name = "State." + state_id
     try:
-        state = allstate.get(state_name).to_dict()
+        state = storage.get(state_name).to_dict()
         return jsonify(state)
     except Exception:
         abort(404)
