@@ -23,7 +23,7 @@ def show_cities(state_id):
         if request.json:
             new_dict = request.get_json()
             if "name" in new_dict.keys():
-                new_city = State(**new_city)
+                new_city = State(**new_dict)
                 storage.new(new_city)
                 storage.save()
                 return jsonify(new_city.to_dict()), 201
