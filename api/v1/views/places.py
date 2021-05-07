@@ -10,7 +10,7 @@ import json
 
 @app_views.route("/cities/<city_id>/places/", methods=['GET', 'POST'])
 @app_views.route("/cities/<city_id>/places", methods=['GET', 'POST'])
-def show_cities(city_id):
+def show_places(city_id):
     """ returns list of places """
     cities = storage.get(City, city_id)
     if not cities:
@@ -42,7 +42,7 @@ def show_cities(city_id):
 
 @app_views.route("places/<place_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("places/<place_id>", methods=['GET', 'DELETE', 'PUT'])
-def show_city(place_id):
+def show_place(place_id):
     """ returns state data """
     if request.method == 'GET':
         places = storage.all(Place).values()
