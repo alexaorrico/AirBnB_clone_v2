@@ -6,7 +6,7 @@ from models import storage
 from models.state import State
 import json
 
-@app_views.route('/states/', methods=['GET',])
+@app_views.route('/states/', methods=['GET'])
 def show_states():
     """ returns list of states """
     lista = []
@@ -32,3 +32,18 @@ def show_state(state_id):
                 storage.save()
                 return jsonify({}), 200
         abort(404)
+
+@app_views.route('/states/', methods=['POST'])
+def create_state():
+    """ create state """
+    if request.json:
+        new_dict = request.get_json()
+        if "name" in new_dict.keys():
+            new_state = State(**new_dict)
+            storage.new(new_state)
+            storage.save()
+            return jsonify(new_state.to_dict()), 201
+        else:
+            abort(400, description="Missing name")
+    else:
+        abort(400, desciption="Not a JSON")
