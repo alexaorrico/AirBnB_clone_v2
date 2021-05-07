@@ -2,7 +2,7 @@
 """ script to create a new app with flask """
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 import os
 
@@ -26,10 +26,9 @@ if __name__ == '__main__':
         prt = os.getenv("HBNB_API_PORT")
     else:
         prt = 5000
-    app.run(host=hst, port=prt)
+    app.run(host=hst, port=prt, debug=True)
 
-from werkzeug.exceptions import HTTPException
 
 @app.errorhandler(404)
-def page_not_found(error):
-    return (jsonify({'error': 'Not found'}), 404)
+def resource_not_found(e):
+    return make_response(jsonify({'error': 'Not found'}), 404)

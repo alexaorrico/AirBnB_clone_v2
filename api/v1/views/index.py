@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from ..views import app_views
-from flask import jsonify, json, make_response
+from flask import jsonify, json, make_response, abort
 from models import storage
 from models.amenity import Amenity
 from models.city import City
@@ -12,7 +12,7 @@ from models.user import User
 
 @app_views.route('/status')
 def jsonresponse():
-    return json.dumps({"status": "ok"}, indent=4)
+    return jsonify({'status': 'ok'})
 
 @app_views.route('/stats')
 def stats():
@@ -23,4 +23,13 @@ def stats():
     dct1["reviews"] = storage.count(Review)
     dct1["states"] = storage.count(State)
     dct1["users"] = storage.count(User)
-    return json.dumps(dct1, indent=4)
+    return jsonify(dct1)
+
+@app_views.route("/cheese")
+def get_one_cheese():
+    resource = None
+
+    if resource is None:
+        abort(404, description="Resource not found")
+
+    return jsonify(resource)
