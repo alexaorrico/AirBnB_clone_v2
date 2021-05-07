@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+"""index file"""
+
+from api.v1.views import app_views
+from Flask import jsonify
+
+@app_views.route("/status")
+def status():
+    """status"""
+    return jsonify({"status": "OK"})
