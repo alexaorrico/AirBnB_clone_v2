@@ -19,20 +19,14 @@ def show_users():
     elif request.method == 'POST':
         if request.json:
             new_dict = request.get_json()
-            if "email" in new_dict.keys():
-                new_user = User(**new_dict)
-                storage.new(new_user)
-                storage.save()
-                return jsonify(new_user.to_dict()), 201
-            else:
+            if 'email' not in new_dict:
                 abort(400, description="Missing email")
-            if "password" in new_dict.keys():
-                new_user = User(**new_dict)
-                storage.new(new_user)
-                storage.save()
-                return jsonify(new_user.to_dict()), 201
-            else:
+            if 'password' not in new_dict:
                 abort(400, description="Missing password")
+            new_user = User(**new_dict)
+            storage.new(new_user)
+            storage.save()
+            return jsonify(new_user.to_dict()), 201
         else:
             abort(400, description="Not a JSON")
 
