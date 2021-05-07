@@ -104,20 +104,20 @@ class TestFileStorage(unittest.TestCase):
         name and its ID, or None if not found"""
         s = State(name='X')
         s.save()
-        self.assertIs(s, storage.get("State", s.id))
-        self.assertIs(None, storage.get("State", "bad id"))
+        self.assertIs(s, storage.get(State, s.id))
+        self.assertIs(None, storage.get(State, "bad id"))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_db(self):
         """returns the number of objects in
         storage matching the given class name. If no name is
         passed, returns the count of all objects in storage."""
-        count_state = storage.count("State")
+        count_state = storage.count(State)
         count_all = storage.count()
         s = State(name='Y')
         s.save()
         c = City(name='Z')
         c.save()
         self.assertEqual(storage.count("bad state"), 0)
-        self.assertEqual(storage.count("State"), count_state + 1)
+        self.assertEqual(storage.count(State), count_state + 1)
         self.assertEqual(storage.count(), count_all + 2)

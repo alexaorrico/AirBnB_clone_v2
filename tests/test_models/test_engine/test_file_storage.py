@@ -132,8 +132,8 @@ class TestFileStorage(unittest.TestCase):
         storage = FileStorage()
         s = State(name='X')
         s.save()
-        self.assertIs(s, storage.get("State", s.id))
-        self.assertIs(None, storage.get("State", "bad id"))
+        self.assertIs(s, storage.get(State, s.id))
+        self.assertIs(None, storage.get(State, "bad id"))
 
         @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
         def test_count_fs(self):
@@ -141,12 +141,12 @@ class TestFileStorage(unittest.TestCase):
             storage matching the given class name. If no name is
             passed, returns the count of all objects in storage."""
             storage = FileStorage()
-            count_state = storage.count("State")
+            count_state = storage.count(State)
             count_all = storage.count()
             s = State(name='Y')
             s.save()
             c = City(name='Z')
             c.save()
             self.assertEqual(storage.count("bad state"), 0)
-            self.assertEqual(storage.count("State"), count_state + 1)
+            self.assertEqual(storage.count(State), count_state + 1)
             self.assertEqual(storage.count(), count_all + 2)
