@@ -72,7 +72,7 @@ class FileStorage:
     def get(self, cls, id):
         """ retrieve an object based on class (cls) and id (id) """
         dic = self.all(cls)
-        return (dic.get(str(cls.__name__) + '.' + str(id), default=None))
+        return (dic.get(str(cls.__name__) + '.' + str(id), None))
 
     def count(self, cls=None):
         """ counts the number of objects in storage """
