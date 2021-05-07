@@ -25,7 +25,7 @@ def teardown(self):
 @app.errorhandler(404)
 def page_not_found(e):
     """Handles 404 error"""
-    return jsonify("error": "Not found"), 404
+    return jsonify(error: "Not found"), 404
 
 if __name__ == "__main__":
     app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
