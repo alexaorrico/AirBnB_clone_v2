@@ -6,7 +6,7 @@ from models import storage
 from models.state import State
 import json
 
-@app_views.route('/states/', methods=['GET'])
+@app_views.route('/states', methods=['GET'])
 def show_states():
     """ returns list of states """
     lista = []
@@ -46,7 +46,7 @@ def show_state(state_id):
             abort(400, desciption="Not a JSON")
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states', methods=['POST'])
 def create_state():
     """ create state """
     if request.json:
