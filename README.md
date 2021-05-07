@@ -151,7 +151,6 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 
 
-
 ## Authors
-samuel
-sergio
+Samuel Martinez
+Sergio Urrego
