@@ -14,6 +14,7 @@ app.register_blueprint(app_views)
 def close(self):
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(err):
     """404 error"""
