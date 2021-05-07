@@ -7,6 +7,7 @@ from flask import Flask, make_response, jsonify
 import os
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 HBNB_API_HOST = os.getenv("HBNB_API_HOST")

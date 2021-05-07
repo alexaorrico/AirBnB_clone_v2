@@ -2,15 +2,18 @@
 """ TBD """
 
 from api.v1.views import app_views
-from flask import jsonify, abort
+from models import storage
+from models.state import State
+from flask import jsonify, abort, request
+
 
 @app_views.route('/states', methods=["GET"])
 def states():
     """retrieves list of all State objects"""
-    states_dict = storage.all(State) # { classname.id, OBJ }
+    states_dict = storage.all(State)
     states_list = []
-    for key, value in states_dict: # value = state object
-        states_list.append(value.todict())
+    for value in states_dict.values():
+        states_list.append(value.to_dict())
     return(jsonify(states_list))
 
 
@@ -20,7 +23,7 @@ def states_id(state_id):
     res = storage.get(State, state_id)
     if res is None:
         abort(404)
-    return jsonify(res.todict())
+    return jsonify(res.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=["DELETE"])
@@ -38,9 +41,9 @@ def state_post():
     request_data = request.get_json()
     if request_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if "name" not in request_data.keys:
+    if "name" not in request_data.keys():
         return make_response(jsonify({'error': 'Missing name'}), 400)
     stateobj = State(**request_data)
     storage.new(stateobj)
-    statedict = stateobj.todict()
+    statedict = stateobj.to_dict()
     return jsonify(statedict), 200
