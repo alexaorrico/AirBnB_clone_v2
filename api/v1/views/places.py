@@ -65,9 +65,11 @@ def show_place(place_id):
             places = storage.all(Place).values()
             for place in places:
                 if place.id == place_id:
-                    place.name = new_dict['name']
-                    storage.save()
-                    return jsonify(place.to_dict()), 200
+                    for k, v in new_dict.items():
+                    if k != 'id' and k != 'user_id' and k != 'city_id' and k != 'updated_at' and k != 'created_at':
+                        setattr(users, k, v)
+                storage.save()
+                return jsonify(users.to_dict()), 200
             abort(404)
         else:
             abort(400, description="Not a JSON")
