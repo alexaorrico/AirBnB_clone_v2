@@ -7,7 +7,6 @@ from models import storage
 from models.state import State
 
 
-
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
     """Retrieves the list of all State objects: GET /api/v1/states"""
@@ -56,6 +55,7 @@ def post_obj():
         return jsonify(new_o.to_dict()), 201
     else:
         abort(400, "Not a JSON")
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update(state_id=None):
