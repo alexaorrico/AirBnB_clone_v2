@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 """ starts api """
+
+
 from flask import Flask
-from models import storage
+
 from api.v1.views import app_views
+from models import storage
+
 app = Flask(__name__)
 
 app.register_blueprint(app_views)
@@ -10,6 +14,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_db(exception):
+    """ not sure if it should be exception or self """
     """ a method that calls storage.close """
     storage.close()
 
