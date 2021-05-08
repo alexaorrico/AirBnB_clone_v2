@@ -76,7 +76,7 @@ def show_place(place_id):
         else:
             abort(400, description="Not a JSON")
 
-@app_views.route('/places_search', methods=['POST'])
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def St_Ci_Am_places():
     """ Function to search places containing one of """
     new_dict = request.get_json()
