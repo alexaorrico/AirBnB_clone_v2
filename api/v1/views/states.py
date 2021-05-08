@@ -53,8 +53,8 @@ def post_state(state_id=None):
         willy = request.get_json()
     except:
         abort(400, 'Not a JSON')
-    if not willy:
-        abort(404)
+    if willy is none:
+        abort(400, 'Not a JSON')
     elif "name" not in willy.keys():
         abort(400, 'Missing name')
     else:
@@ -72,8 +72,6 @@ def put_state(state_id=None):
         dict_w = request.get_json()
     except:
         abort(400, 'Not a JSON')
-    if not dict_w:
-        abort(404)
     if state_id is None:
         abort(404)
     if dict_w is None:
