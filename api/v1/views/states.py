@@ -32,3 +32,17 @@ def del_state(state_id):
             storage.save()
             return ({}, 200)
     abort(404)
+
+@app_views.route('/api/v1/states', methods=['POST'])
+def post_state(state_id):
+    """Method that transforms HTTP body request to a new state"""
+    jreq = request.get_json(silent=True)
+
+    if jreq is None:
+        abort(400, 'Not a JSON')
+    if 'name' not in jreq:
+        abort(400, 'Missing name')
+    new_state = State(jreq)
+    storage.save()
+    return new_state
+    
