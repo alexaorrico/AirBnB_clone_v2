@@ -1,7 +1,13 @@
 #!/usr/bin/python3
-""" Index to api to handle status and stats route"""
+""" Module for storing indeces for the route Blueprints. """
 from api.v1.views import app_views
-import flask
+from flask import jsonify
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.place import Place
+from models.state import State
+from models.user import User
 from models import storage
 
 
@@ -9,23 +15,17 @@ from models import storage
 def return_status():
     """ Returns the status of the api. """
     status = {"status": "OK"}
-    return(flask.jsonify(status))
+    return(jsonify(status))
 
 
-@app_views.route('/stats', strict_slashes=False)
-def stats():
-    """
-    Endpoint that retrieves the number of each objects by type
-    """
-    statsc = {
-            "amenities": "Amenity",
-            "cities": "City",
-            "places": "Place",
-            "reviews": "Review",
-            "states": "State",
-            "users": "User"
-            }
-    for key, value in statsc.items():
-        statsc[key] = storage.count(value)
+@app_views.route("/stats", strict_slashes=False)
+def return_stats():
+    """ Returns the stats in numbers of the objects available. """
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User}
+    stats = {}
 
-    return flask.jsonify(statsc)
+    for key, obj in classes.items():
+        stats[key] = storage.count(obj)
+
+    return(jsonify(stats))
