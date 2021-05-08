@@ -112,10 +112,10 @@ def St_Ci_Am_places():
     
     if "amenities" in new_dict.keys() and len(new_dict["amenities"]) > 0:
         for v in new_dict["amenities"]:
-            amenities = storage.get(Amenity, v)
+            amenit = storage.get(Amenity, v)
             places = storage.all(Place).values()
             for place in places:
                 for amen in place.amenities:
-                    if amen.id == amenities.id:
+                    if amen["id"] == amenit["id"]:
                         lista.append(place.to_dict())
     return jsonify(lista)
