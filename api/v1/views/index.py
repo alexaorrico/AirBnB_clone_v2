@@ -18,7 +18,7 @@ def stats():
     """
     clss = {"amenities": "Amenity", "cities": "City", "places": "Place",
                "reviews": "Review", "states": "State", "users": "User"}
-    for key, value in classes.items():
+    for key, value in clss.items():
         clss[key] = storage.count(value)
 
     return flask.jsonify(clss)
