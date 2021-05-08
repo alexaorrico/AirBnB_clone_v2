@@ -86,3 +86,56 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_fail(self):
+        """Test that the get properly gets objects"""
+        obj = State(name="Test")
+        obj.save()
+        got_obj = models.storage.get('ls', obj.id)
+        self.assertIsNot(obj, got_obj)
+
+        obj.delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that the count properly counts objects"""
+        got_obj_count = models.storage.count()
+        obj_count = len(models.storage.all())
+        self.assertEqual(got_obj_count, obj_count)
+
+        got_obj_count = models.storage.count('State')
+        obj_count = len(models.storage.all('State'))
+        self.assertEqual(got_obj_count, obj_count)
+
+
+    def test_count_too_many_args(self):
+        """Tests failure when too many args"""
+        with self.assertRaises(TypeError):
+            models.storage.count("1", "2")
+
+
+    def test_count_none(self):
+        """Test that count properly counts objects"""
+        self.assertFalse(models.storage.count("NotAClass"))
+
+
+    def test_count_bad_type(self):
+        """Test that count properly counts when given wrong type"""
+        self.assertFalse(models.storage.count({'hi': 'bye'}))
+
+
+    def test_get_type_id(self):
+        """tests get when type of id is wrong"""
+        self.assertEqual(models.storage.get("State", []), None)
+
+
+   def test_get_no_class(self):
+        """tests get when cls does not exist"""
+        self.assertEqual(models.storage.get("NotClass", "11111"), None)
+
+
+    def test_get_no_id(self):
+        """tests get when id does not exist"""
+        self.assertEqual(models.storage.get("State", "1111"), None)

@@ -113,3 +113,47 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+    def test_get_too_many_args(self):
+        """tests get with too many args"""
+        with self.assertRaises(TypeError):
+            models.storage.get()
+
+
+    def test_get_too_few_args(self):
+        """tests get with too few args"""
+        with self.assertRaises(TypeError):
+            models.storage.get("1", "2", "3")
+
+
+    def test_get_type_cls(self):
+        """tests get when type of cls is wrong"""
+        self.assertEqual(models.storage.get([], "1111"), None)
+
+
+    def test_get_type_id(self):
+        """tests get when type of id is wrong"""
+        self.assertEqual(models.storage.get("State", []), None)
+
+
+    def test_get_no_class(self):
+        """tests get when cls does not exist"""
+        self.assertEqual(models.storage.get("NotClass", "11111"), None)
+
+
+    def test_get_no_id(self):
+        """tests get when id does not exist"""
+        self.assertEqual(models.storage.get("State", "1111"), None)
+
+        
+    def test_get_too_many_args(self):
+        """tests get with too many args"""
+        with self.assertRaises(TypeError):
+            models.storage.get()
+
+    def test_get_too_few_args(self):
+        """tests get with too few args"""
+        with self.assertRaises(TypeError):
+            models.storage.get("1", "2", "3")
+
