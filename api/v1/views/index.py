@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
@@ -13,14 +14,13 @@ from models.user import User
 
 @app_views.route("/status")
 def function_hola():
-    """function"""
+    """function sttatus"""
     return jsonify({"status": "OK"})
 
 
 @app_views.route("/stats")
 def function():
-    """function"""
-
+    """function stats"""
     clases = ["Amenity", "City", "Place", "Review", "State", "User"]
     dic = {}
     for cls in clases:
