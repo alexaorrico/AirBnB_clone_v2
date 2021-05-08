@@ -7,7 +7,7 @@ from models.city import City
 from models.state import State
 from models.place import Place
 from models.user import User
-from models.amenities import Amenity
+from models.amenity import Amenity
 import json
 
 @app_views.route("/cities/<city_id>/places/", methods=['GET', 'POST'])
