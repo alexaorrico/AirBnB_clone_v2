@@ -26,16 +26,17 @@ def show_places(city_id):
             new_dict = request.get_json()
             if "user_id" in new_dict.keys():
                 users = storage.all(User).values()
-                if new_dict['user_id'] in users:
-                    if "name" in new_dict.keys():
-                        new_place = City(**new_dict)
-                        storage.new(new_place)
-                        storage.save()
-                        return jsonify(new_place.to_dict()), 201
+                for user in users:
+                    if new_dict['user_id'] == user.id:
+                        if "name" in new_dict.keys():
+                            new_place = City(**new_dict)
+                            storage.new(new_place)
+                            storage.save()
+                            return jsonify(new_place.to_dict()), 201
+                        else:
+                            abort(400, "Missing name")
                     else:
-                        abort(400, "Missing name")
-                else:
-                    abort(404)
+                        abort(404)
             else:
                 abort(400, description="Missing user_id")
         else:
