@@ -24,4 +24,4 @@ def page_not_found(err):
 if __name__ == "__main__":
     env_host = environ.get('HBNB_API_HOST', default='0.0.0.0')
     env_port = environ.get('HBNB_API_PORT', default=5000)
-    app.run(host=env_host, port=int(env_port) threaded=True)
+    app.run(host=env_host, port=int(env_port), threaded=True)
