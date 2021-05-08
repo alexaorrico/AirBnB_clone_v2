@@ -123,5 +123,6 @@ def St_Ci_Am_places():
                     flag = 1
                     break
             if flag == 0:
-                lista.append(place.to_dict())
+                if place not in lista:
+                    lista.append(place.to_dict())
     return jsonify(lista)
