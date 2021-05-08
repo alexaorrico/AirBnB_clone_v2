@@ -62,16 +62,14 @@ def show_place(place_id):
     elif request.method == 'PUT':
         if request.json:
             new_dict = request.get_json()
-            places = storage.all(Place).values()
-            for place in places:
-                if place.id == place_id:
-                    no = ['id', 'user_id', 'city_id', 'created_at', 'updated_id']
-                    for key in new_dict.keys():
-                        if key not in no:
-                            place[key] = new_dict[key]
-                            storage.save()
-                    return jsonify(place.to_dict()), 200
+            place = storage.get(Place, place_id)
+            if place:
+                no = ['id', 'user_id', 'city_id', 'created_at', 'updated_id']
+                for key, value in new_dict.items():
+                    if key not in no:
+                        setattr(place, key, value)
+                storage.save()
+                return jsonify(place.to_dict()), 200
             abort(404)
         else:
             abort(400, description="Not a JSON")
-
