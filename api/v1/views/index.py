@@ -21,9 +21,15 @@ def function_hola():
 @app_views.route("/stats")
 def function():
     """function stats"""
-    clases = ["Amenity", "City", "Place", "Review", "State", "User"]
+    clases = {
+         "amenities": Amenity,
+         "cities": City,
+         "places": Place,
+         "reviews": Review,
+         "states": State,
+         "users": User}
     dic = {}
-    for cls in clases:
-        x = storage.count(eval(cls))
-        dic[cls] = x
+    for key, cls in clases.items():
+        x = storage.count(cls)
+        dic[key] = x
     return jsonify(dic)
