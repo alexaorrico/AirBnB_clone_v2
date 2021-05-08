@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 samuel Martinez
-Sergio Urrego
+Sergio Urrego U
 
 Second part of Airbnb: Joann Vuong
 ## License
