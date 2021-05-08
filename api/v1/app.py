@@ -1,6 +1,6 @@
 #!/usr/bin/pyhton3
 """
-flask application
+flask application api
 """
 from api.v1.views import app_views
 from flask import Flask, jsonify
