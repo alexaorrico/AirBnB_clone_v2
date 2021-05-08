@@ -5,13 +5,13 @@ import flask
 from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', strict_slashes=False)
 def status():
     """ return json """
     return flask.jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """
     Endpoint that retrieves the number of each objects by type
