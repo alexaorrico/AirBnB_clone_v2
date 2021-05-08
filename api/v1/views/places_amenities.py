@@ -34,9 +34,9 @@ def show_amenities(place_id):
                 return jsonify(lista)
             abort(404)
 
-@app_views.route("places/<place_id>/amenities/<amenities_id>", methods=['DELETE', 'POST'])
-@app_views.route("places/<place_id>/amenities/<amenities_id>/", methods=['DELETE', 'POST'])
-def show_amenity(place_id, amenities_id):
+@app_views.route("places/<place_id>/amenities/<amenity_id>", methods=['DELETE', 'POST'])
+@app_views.route("places/<place_id>/amenities/<amenity_id>/", methods=['DELETE', 'POST'])
+def show_amenity(place_id, amenity_id):
     """ returns amenity data from place """
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
