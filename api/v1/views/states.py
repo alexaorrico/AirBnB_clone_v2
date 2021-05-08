@@ -65,16 +65,22 @@ def put_state(state_id=None):
     """put/update state"""
     """ Request dict """
     state_store = storage.get(State, state_id)
-    willy = request.get_json()
+    try:
+        dict_w = request.get_json()
+    except:
+        print("this is aborting 400")
+        abort(400, 'Not a JSON')
     if state_id is None:
-        abort(404)
-    elif willy is None:
-        abort(404)
-    for key, val in willy.items():
+        abort(404, 'Not a JSON')
+    if dict_w is None:
+        abort(400, 'Blahhhhhhhhhh')
+    for key, val in dict_w.items():
+        print("--------------------")
         print(key, val)
-        # if key == 'id' or key == 'created_at' or key == 'updated_at':
-        #     pass
-        # else:
-        #     setattr(willy, key, val)
+        print("--------------------")
+        if key == 'id' or key == 'created_at' or key == 'updated_at':
+            pass
+        else:
+            setattr(state_store, key, val)
     state_store.save()
     return jsonify(state_store.to_dict()), 200
