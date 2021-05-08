@@ -10,6 +10,7 @@ from flask import jsonify, abort, request
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
@@ -19,8 +20,11 @@ def get_places(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    l = [obj.to_dict() for obj in city.places]
-    return jsonify(l)
+    places = city.places
+    pList = []
+    for p in places:
+        pList.append(p.to_dict())
+    return jsonify(pList)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
@@ -29,7 +33,7 @@ def get_place_id(place_id):
     """ Retrieve an object """
     obj = storage.get(Place, place_id)
     if obj:
-        return jsonify(place.to_dict())
+        return jsonify(obj.to_dict())
     abort(404)
 
 
@@ -38,8 +42,8 @@ def get_place_id(place_id):
 def delete_place(place_id):
     """ Delete an object """
     obj = storage.get(Place, place_id)
-    if place:
-        storage.delete(place)
+    if obj:
+        obj.delete()
         storage.save()
         return jsonify({}), 200
     abort(404)
@@ -55,12 +59,12 @@ def post_place(city_id):
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    if not body.get("user_id"):
+    if not body.get('user_id'):
         abort(400, "Missing user_id")
     user = storage.get(User, body['user_id'])
     if not user:
         abort(404)
-    if not body.get("name"):
+    if not body.get('name'):
         abort(400, "Missing name")
     body['city_id'] = city_id
     obj = Place(**body)
@@ -82,5 +86,5 @@ def put_place(place_id):
         if k not in ['id', 'user_id', 'city_id',
                      'created_at', 'updated_at']:
             setattr(obj, k, v)
-    obj.save()
+    storage.save()
     return jsonify(obj.to_dict()), 200
