@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from flask import Flask, jsonify
 app = Flask(__name__)
 app.register_blueprint(app_views)
-
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 @app.teardown_appcontext
 def remove_session(exception):
@@ -19,6 +19,12 @@ def remove_session(exception):
 def page_not_found(e):
     '''handles 404'''
     return jsonify({"error": "Not found"}), 404
+
+
+@app.errorhandler(400)
+def bad_request(e):
+    '''handles 400'''
+    return jsonify({"error": e.description}), 400
 
 
 if __name__ == '__main__':
