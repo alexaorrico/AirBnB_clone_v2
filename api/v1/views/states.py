@@ -80,7 +80,9 @@ def put_state(state_id=None):
         if key == 'id' or key == 'created_at' or key == 'updated_at':
             pass
         else:
-            print("_________________-----------")
-            setattr(state_store, key, val)
-    state_store.save()
-    return jsonify(state_store.to_dict()), 200
+            if state_store is not None:
+                setattr(state_store, key, val)
+                state_store.save()
+                return jsonify(state_store.to_dict()), 200
+    
+    abort(404)
