@@ -75,12 +75,10 @@ class FileStorage:
             key = cls.__name__ + '.' + id
             if (key in self.__objects):
                 return (self.__objects[key])
-            else:
-                return (None)
+        return None
 
     def count(self, cls=None):
         if cls is not None:
-            cls_all = self.all(cls.__name__)
+            cls_all = self.all(cls)
             return (len(cls_all))
-        else:
-            return len(self.all())
+        return len(self.all())
