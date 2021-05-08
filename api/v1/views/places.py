@@ -96,19 +96,16 @@ def St_Ci_Am_places():
         return jsonify(all_places)
 
     lista = []
-    if "states" in new_dict.keys() and len(new_dict["states"] > 0):
+    if "states" in new_dict.keys() and len(new_dict["states"]) > 0:
         for values in new_dict["states"]:
             states = storage.get(State, values)
             if not states:
                 abort(404)
-            if request.method == 'GET':
-                for city in states.cities:
-                    all_places = []
-                    places = storage.get(Place, city.id)
-                    for place in places:
-                        lista.append(place.to_dict())
+            for city in states.cities:
+                for place in city.places:
+                    lista.append(place.to_dict())
     
-    if "cities" in new_dict.keys() and len(new_dict["cities"] > 0):
+    if "cities" in new_dict.keys() and len(new_dict["cities"]) > 0:
         for val in new_dict["cities"]:
             cities = storage.get(City, val)
             if not cities:
@@ -117,7 +114,7 @@ def St_Ci_Am_places():
                 if place not in lista:
                     lista.append(place.to_dict())
     
-    if "amenities" in new_dict.keys() and len(new_dict["amenities"] > 0):
+    if "amenities" in new_dict.keys() and len(new_dict["amenities"]) > 0:
         for v in new_dict["amenities"]:
             amenities = storage.get(Amenity, v)
             if not amenities:
