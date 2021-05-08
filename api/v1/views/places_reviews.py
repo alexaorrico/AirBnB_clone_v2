@@ -12,7 +12,7 @@ import json
 
 @app_views.route("/places/<place_id>/reviews/", methods=['GET', 'POST'])
 @app_views.route("/places/<place_id>/reviews", methods=['GET', 'POST'])
-def show_places(place_id):
+def show_reviews(place_id):
     """ returns list of reviews """
     places = storage.get(Place, place_id)
     if not places:
@@ -44,8 +44,8 @@ def show_places(place_id):
 
 @app_views.route("reviews/<review_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("reviews/<review_id>", methods=['GET', 'DELETE', 'PUT'])
-def show_place(review_id):
-    """ returns state data """
+def show_review(review_id):
+    """ returns review data """
     if request.method == 'GET':
         reviews = storage.all(Review).values()
         for review in reviews:
