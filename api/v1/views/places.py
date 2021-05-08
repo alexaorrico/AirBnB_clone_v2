@@ -81,7 +81,7 @@ def St_Ci_Am_places():
     """ Function to search places containing one of """
     new_dict = request.get_json()
     if new_dict is None:
-        return jsonify("Not a JSON"), 400
+        abort(400, description="Not a JSON")
 
     counter = 0
     for lists in new_dict.values():
