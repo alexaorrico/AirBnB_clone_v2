@@ -31,10 +31,11 @@ def get(state_id):
                  strict_slashes=False)
 def delete(state_id):
     """Delete a state object by id"""
-    obj = storage.get("State", state_id)
+    obj = storage.get(State, state_id)
     if obj:
         obj.delete()
         storage.save()
+        storage.reload()
         return jsonify({}), 200
     abort(404)
 
