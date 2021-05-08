@@ -52,7 +52,7 @@ def post_obj():
     elif object_state is not None:
         new_o = State(**object_state)
         storage.new(new_o)
-        new.save()
+        new_o.save()
         return jsonify(new_o.to_dict()), 201
     else:
         abort(400, "Not a JSON")
