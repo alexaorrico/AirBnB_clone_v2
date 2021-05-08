@@ -124,6 +124,6 @@ def St_Ci_Am_places():
                 abort(404)
             for place in places:
                 for amen in place.amenities:
-                    if amen.id == amenities:
+                    if amen.id == amenities.id:
                         lista.append(place.to_dict())
     return jsonify(lista)
