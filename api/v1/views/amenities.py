@@ -17,7 +17,8 @@ def getter_amenities():
     return jsonify(new_list)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 def getter_id(amenity_id):
     '''getter_id - gets all Amenity objects by id'''
     try:
@@ -57,7 +58,8 @@ def post_amenity():
         abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def put_amenity(amenity_id):
     '''put_amenity - updates a amenity object by id'''
     amenityId = storage.get(Amenity, amenity_id)
