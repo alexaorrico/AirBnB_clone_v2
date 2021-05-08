@@ -67,11 +67,11 @@ def update(state_id=None):
     if req is None:
         abort(400, "Not a JSON")
     else:
-        for key, value in s.items():
+        for key, value in req.items():
             if key in ['id', 'created_at', 'updated_at']:
                 pass
             else:
-                setattr(obj, k, v)
+                setattr(obj, key, value)
         storage.save()
         final = obj.to_dict()
         return jsonify(final), 200
