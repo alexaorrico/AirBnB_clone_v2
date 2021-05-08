@@ -87,11 +87,4 @@ class DBStorage:
 
     def count(self, cls=None):
         """ counts some stuff """
-        from models import storage
-        if cls is None:
-            data = storage.all()
-            count = len(data)
-        else:
-            data = storage.all(cls)
-            count = len(data)
-        return count
+        return len(self.all(cls)) if cls else len(self.all())
