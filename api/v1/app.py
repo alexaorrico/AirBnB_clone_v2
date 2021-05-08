@@ -18,6 +18,12 @@ def teardown_db(self):
     """ a method that calls storage.close """
     storage.close()
 
+@app.pagenotfound(404)
+def custom_404(error):
+    """ Returns JSON 404 """
+    return jsonify({'error': 'Not found'}), 404)
+
+
 if __name__ == '__main__':
     if not HBNB_API_HOST:
         HBNB_API_HOST = "0.0.0.0"
