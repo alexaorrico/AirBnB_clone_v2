@@ -99,8 +99,6 @@ def St_Ci_Am_places():
     if "states" in new_dict.keys() and len(new_dict["states"]) > 0:
         for values in new_dict["states"]:
             states = storage.get(State, values)
-            if not states:
-                abort(404)
             for city in states.cities:
                 for place in city.places:
                     lista.append(place.to_dict())
@@ -108,8 +106,6 @@ def St_Ci_Am_places():
     if "cities" in new_dict.keys() and len(new_dict["cities"]) > 0:
         for val in new_dict["cities"]:
             cities = storage.get(City, val)
-            if not cities:
-                abort(404)
             for place in cities.places:
                 if place not in lista:
                     lista.append(place.to_dict())
@@ -117,11 +113,7 @@ def St_Ci_Am_places():
     if "amenities" in new_dict.keys() and len(new_dict["amenities"]) > 0:
         for v in new_dict["amenities"]:
             amenities = storage.get(Amenity, v)
-            if not amenities:
-                abort(404)
             places = storage.all(Place).values()
-            if not places:
-                abort(404)
             for place in places:
                 for amen in place.amenities:
                     if amen.id == amenities.id:
