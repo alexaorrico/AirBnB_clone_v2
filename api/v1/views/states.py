@@ -35,7 +35,6 @@ def delete(state_id):
     if obj:
         obj.delete()
         storage.save()
-        storage.reload()
         return jsonify({}), 200
     abort(404)
 
@@ -46,10 +45,11 @@ def create():
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    if body.get('name') is None:
+    name = body.get('name')
+    if not name:
         abort(400, "Missing name")
-    d = request.get_json()
-    obj = State(**d)
+
+    obj = State(**body)
     obj.save()
     return jsonify(obj.to_dict()), 201
 
