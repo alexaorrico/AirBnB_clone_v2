@@ -2,7 +2,7 @@
 """Default restful api actions for state"""
 
 from api.v1.views import app_views
-from flask import abort, Flask, jsonify
+from flask import abort, Flask, jsonify, request
 from models import storage
 from models.state import State
 
@@ -33,8 +33,9 @@ def del_state(state_id):
             return ({}, 200)
     abort(404)
 
-@app_views.route('/api/v1/states', methods=['POST'])
-def post_state(state_id):
+
+@app_views.route('/states', methods=['POST'])
+def post_state():
     """Method that transforms HTTP body request to a new state"""
     jreq = request.get_json(silent=True)
 
@@ -44,5 +45,22 @@ def post_state(state_id):
         abort(400, 'Missing name')
     new_state = State(jreq)
     storage.save()
-    return new_state
-    
+    return jsonify(new_state.to_dict())
+
+
+@app_views.route('states/<state_id>', methods=['PUT'])
+def put_state(state_id):
+    """Update state object"""
+    for obj in storage.all(State).values():
+        if obj.id == state_id:
+            state = obj.to_dict()
+            jreq = request.get_json(silent=True)
+            if jreq is None:
+                abort(400, 'Not a JSON')
+            for key, value in jreq.items():
+                if key == 'id' or key == "created_at" or key == "updated_at":
+                    continue
+                setattr(obj, key, value)
+            obj.save()
+            return jsonify(obj.to_dict()), 200
+    abort(404)
