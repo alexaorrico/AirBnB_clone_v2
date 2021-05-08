@@ -30,7 +30,8 @@ def show_reviews(place_id):
                 for user in users:
                     if new_dict['user_id'] == user.id:
                         if "text" in new_dict.keys():
-                            new_review = City(**new_dict)
+                            new_dict['place_id'] = place_id
+                            new_review = Review(**new_dict)
                             storage.new(new_review)
                             storage.save()
                             return jsonify(new_review.to_dict()), 201
