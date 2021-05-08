@@ -65,7 +65,11 @@ def put_state(state_id=None):
     """put/update state"""
     """ Request dict """
     state_store = storage.get(State, state_id)
-    dict_w = request.get_json()
+    try:
+        dict_w = request.get_json()
+    except:
+        print("this is aborting 400")
+        abort(400, 'Not a JSON')
     if not willy:
         abort(404)
     if state_id is None:
