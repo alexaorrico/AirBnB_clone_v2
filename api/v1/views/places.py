@@ -34,7 +34,7 @@ def show_places(city_id):
                             storage.save()
                             return jsonify(new_place.to_dict()), 201
                         else:
-                            abort(400, "Missing name")
+                            abort(400, description="Missing name")
                 abort(404)
             else:
                 abort(400, description="Missing user_id")
