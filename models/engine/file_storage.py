@@ -76,7 +76,7 @@ class FileStorage:
             if c in str(cls):
                 break
         key = str(c) + "." + id
-        if key in models.storage.all():
+        if key in self.all().keys():
             return models.storage.all()[key]
         else:
             return None

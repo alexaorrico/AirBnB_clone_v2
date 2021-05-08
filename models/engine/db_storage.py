@@ -81,7 +81,7 @@ class DBStorage:
             if c in str(cls):
                 break
         key = str(c) + "." + id
-        if key in self.all():
+        if key in self.all().keys():
             return self.all()[key]
         return None
 
