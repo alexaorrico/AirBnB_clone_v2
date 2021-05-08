@@ -71,13 +71,10 @@ def put_state(state_id=None):
         print("this is aborting 400")
         abort(400, 'Not a JSON')
     if state_id is None:
-        abort(404, 'Not a JSON')
+        abort(404)
     if dict_w is None:
-        abort(400, 'Blahhhhhhhhhh')
+        abort(400, 'Not a JSON')
     for key, val in dict_w.items():
-        print("--------------------")
-        print(key, val)
-        print("--------------------")
         if key == 'id' or key == 'created_at' or key == 'updated_at':
             pass
         else:
