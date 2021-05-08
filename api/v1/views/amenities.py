@@ -19,7 +19,7 @@ def getter_amenities():
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'], strict_slashes=False)
-def getter_id(amenity_id):
+def getter_amenity_id(amenity_id):
     '''getter_id - gets all Amenity objects by id'''
     try:
         amenity = storage.get(Amenity, amenity_id).to_dict()
@@ -30,7 +30,7 @@ def getter_id(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def deleter_id(amenity_id):
+def deleter_amenity(amenity_id):
     '''deleter_id - delete an object by id'''
     id = storage.get(Amenity, amenity_id)
 
