@@ -13,7 +13,7 @@ import models
 
 @app_views.route("/places/<place_id>/amenities/", methods=['GET'])
 @app_views.route("/places/<place_id>/amenities", methods=['GET'])
-def show_amenities(place_id):
+def show_place_amenities(place_id):
     """ returns list of amenities """
     if models.storage_t == "db"
         if request.method == 'GET':
@@ -36,7 +36,7 @@ def show_amenities(place_id):
 
 @app_views.route("places/<place_id>/amenities/<amenity_id>", methods=['DELETE', 'POST'])
 @app_views.route("places/<place_id>/amenities/<amenity_id>/", methods=['DELETE', 'POST'])
-def show_amenity(place_id, amenity_id):
+def show_place_amenity(place_id, amenity_id):
     """ returns amenity data from place """
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
