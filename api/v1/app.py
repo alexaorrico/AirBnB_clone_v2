@@ -21,7 +21,7 @@ def teardown_db(self):
 @app.pagenotfound(404)
 def custom_404(error):
     """ Returns JSON 404 """
-    return jsonify({'error': 'Not found'}), 404)
+    return jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
