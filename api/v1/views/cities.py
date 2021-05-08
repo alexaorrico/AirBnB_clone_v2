@@ -57,10 +57,12 @@ def create(state_id):
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
-    if body.get('name') is None:
-        abort(400, "Missing name")
 
     name = body.get('name')
+
+    if not name:
+        abort(400, "Missing name")
+
     obj = City(name=name, state_id=state_id)
     obj.save()
     return jsonify(obj.to_dict()), 201
@@ -69,12 +71,14 @@ def create(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """Updates an object"""
-    body = request.get_json()
-    if not body:
-        abort(400, "Not a JSON")
     obj = storage.get(City, city_id)
     if not obj:
         abort(404)
+
+    body = request.get_json()
+    if not body:
+        abort(400, "Not a JSON")
+
     for k, v in body.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(obj, k, v)
