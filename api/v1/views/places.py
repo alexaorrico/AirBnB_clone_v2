@@ -26,7 +26,7 @@ def show_places(city_id):
             new_dict = request.get_json()
             if "user_id" in new_dict.keys():
                 users = storage.all(User).values()
-                if new_dict['user_id'] in users.keys():
+                if new_dict['user_id'] in users:
                     if "name" in new_dict.keys():
                         new_place = Place(**new_dict)
                         storage.new(new_place)
