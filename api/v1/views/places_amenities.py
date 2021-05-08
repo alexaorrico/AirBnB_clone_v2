@@ -11,8 +11,8 @@ from models.amenity import Amenity
 import json
 import models
 
-@app_views.route("/places/<place_id>/amenities/", methods=['GET'])
-@app_views.route("/places/<place_id>/amenities", methods=['GET'])
+
+@app_views.route("/places/<place_id>/amenities", methods=['GET'], strict_slashes=False)
 def show_place_amenities(place_id):
     """ returns list of amenities from place """
     if models.storage_t == 'db':
@@ -34,8 +34,7 @@ def show_place_amenities(place_id):
                 return jsonify(lista)
             abort(404)
 
-@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=['DELETE', 'POST'])
-@app_views.route("/places/<place_id>/amenities/<amenity_id>/", methods=['DELETE', 'POST'])
+@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=['DELETE', 'POST'], strict_slashes=False)
 def show_place_amenity(place_id, amenity_id):
     """ returns amenity data from place """
     place = storage.get(Place, place_id)
