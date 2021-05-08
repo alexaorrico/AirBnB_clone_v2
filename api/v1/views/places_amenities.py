@@ -53,5 +53,5 @@ def show_place_amenity(place_id, amenity_id):
                 if amenit.id == amenity_id:
                     return jsonify(amenit.to_dict()), 200
             setattr(place, 'amenity_id', amenity_id)
-            return jsonify(amenit.to_dict()), 201
+            return jsonify(amenit.to_dict()), 201 
     abort(404)
