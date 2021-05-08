@@ -47,7 +47,7 @@ def show_place_amenity(place_id, amenity_id):
                     new_dict = {}
                     amenit.delete()
                     storage.save()
-                    return jsonify(amenit), 200
+                    return jsonify(new_dict), 200
         elif request.method == 'POST':
             for amenit in place.amenities:
                 if amenit.id == amenity_id:
