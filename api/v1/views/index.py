@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Index to api"""
+""" Index to api to handle status and stats route"""
 from api.v1.views import app_views
 import flask
 from models import storage
@@ -7,8 +7,8 @@ from models import storage
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """ return json """
-    return flask.jsonify({'status': 'OK'})
+    """ return json with status OK"""
+    return flask.jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', strict_slashes=False)
