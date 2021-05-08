@@ -11,7 +11,8 @@ from models import storage
 def status():
     """ Returns status message in JSON
     """
-    return jsonify({"status": "OK"})
+    if request.method == 'GET':
+        return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'])
@@ -19,14 +20,14 @@ def stats():
     """ Returns stats message in JSON
     """
     if request.method == 'GET':
-        amens = storage.count("Amenity")
+        amenit = storage.count("Amenity")
         cities = storage.count("City")
         places = storage.count("Place")
         reviews = storage.count("Review")
         states = storage.count("State")
         users = storage.count("User")
 
-    return ({"amenities": amens,
+    return ({"amenities": amenit,
              "cities": cities,
              "places": places,
              "reviews": reviews,
