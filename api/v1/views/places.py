@@ -65,8 +65,11 @@ def show_place(place_id):
             places = storage.all(Place).values()
             for place in places:
                 if place.id == place_id:
-                    place.name = new_dict['name']
-                    storage.save()
+                    no = ['id', 'user_id', 'city_id', 'created_at', 'updated_id']
+                    for key in new_dict.keys():
+                        if key not in no:
+                            place[key] = new_dict[key]
+                            storage.save()
                     return jsonify(place.to_dict()), 200
             abort(404)
         else:
