@@ -2,12 +2,13 @@
 """Default restful api actions for state"""
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import abort, Flask, jsonify
 from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/', methods=['GET'])
+@app_views.route('/states/<state_id>')
 def get_state(state_id=None):
     """Method to retrieve list of all state objects or state object by id"""
     #return "In the right place"
@@ -16,7 +17,6 @@ def get_state(state_id=None):
         for obj in storage.all(State).values():
             state_list.append(obj.to_dict())
         return jsonify(state_list)
-        return "State id is None"
     for obj in storage.all(State).values():
         if obj.id == state_id:
             state = obj.to_dict()
