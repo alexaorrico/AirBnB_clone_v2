@@ -1,30 +1,31 @@
 #!/usr/bin/python3
-""" Index to api to handle status and stats route"""
+"""
+flask application api
+"""
 from api.v1.views import app_views
-import flask
+from flask import Flask, jsonify
 from models import storage
+from os import getenv
+
+app = Flask(__name__)
+app.register_blueprint(app_views)
 
 
-@app_views.route('/status', strict_slashes=False)
-def status():
-    """ return json with status OK"""
-    return flask.jsonify({"status": "OK"})
-
-
-@app_views.route('/stats', strict_slashes=False)
-def stats():
+@app.teardown_appcontext
+def toclose(exception):
     """
-    Endpoint that retrieves the number of each objects by type
+    Handle app.teardown and calls close function
     """
-    statsc = {
-            "amenities": "Amenity",
-            "cities": "City",
-            "places": "Place",
-            "reviews": "Review",
-            "states": "State",
-            "users": "User"
-            }
-    for key, value in statsc.items():
-        statsc[key] = storage.count(value)
+    storage.close()
 
-    return flask.jsonify(statsc)
+
+@app.errorhandler(404)
+def not_found(error):
+    """handler for 404 errors that returns a JSON-formatted
+    404 status code response"""
+    return jsonify({"error": "Not found"}), 404
+
+if __name__ == "__main__":
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = getenv("HBNB_API_PORT", "5000")
+    app.run(host=host, port=port, threaded=True)
