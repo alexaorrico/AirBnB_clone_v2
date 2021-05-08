@@ -50,7 +50,7 @@ def del_state(state_id=None):
 def post_state(state_id=None):
     """state"""
     willy = request.get_json()
-    if willy is None:
+    if not willy:
         abort(404)
     elif "name" not in willy.keys():
         abort(400, 'Missing name')
@@ -65,11 +65,9 @@ def put_state(state_id=None):
     """put/update state"""
     """ Request dict """
     state_store = storage.get(State, state_id)
-    try:
-        dict_w = request.get_json()
-    except:
-        print("this is aborting 400")
-        abort(400, 'Not a JSON')
+    dict_w = request.get_json()
+    if not willy:
+        abort(404)
     if state_id is None:
         abort(404)
     if dict_w is None:

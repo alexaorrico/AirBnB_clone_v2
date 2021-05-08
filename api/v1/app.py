@@ -26,6 +26,8 @@ def page_not_found(err):
 def page_not_found(err):
     """400 error"""
     return jsonify({"error": err.description}), 400
+
+
 if __name__ == "__main__":
     env_host = environ.get('HBNB_API_HOST', default='0.0.0.0')
     env_port = environ.get('HBNB_API_PORT', default=5000)
