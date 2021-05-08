@@ -14,7 +14,7 @@ from models.city import City
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-def get(state_id):
+def getAll_cities(state_id):
     """ Returns all objects """
     state = storage.get(State, state_id)
     if not state:
