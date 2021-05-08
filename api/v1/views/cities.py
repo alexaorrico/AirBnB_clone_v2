@@ -15,7 +15,9 @@ def city_for_state(state_id):
     Retrieves the list of all city objects
     """
     state = storage.get('State', state_id)
+    print("Afuera del if")
     if state:
+        print("Entre al if")
         cities = [city.to_dict() for city in state.cities]
         return jsonify(cities), 200
 
