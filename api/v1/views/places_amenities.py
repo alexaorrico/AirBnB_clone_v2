@@ -14,8 +14,8 @@ import models
 @app_views.route("/places/<place_id>/amenities/", methods=['GET'])
 @app_views.route("/places/<place_id>/amenities", methods=['GET'])
 def show_place_amenities(place_id):
-    """ returns list of amenities """
-    if models.storage_t == "db"
+    """ returns list of amenities from place """
+    if models.storage_t == 'db'
         if request.method == 'GET':
             places = storage.get(Place, place_id)
             if places:
@@ -47,7 +47,7 @@ def show_place_amenity(place_id, amenity_id):
                     new_dict = {}
                     amenit.delete()
                     storage.save()
-                    return jsonify(review.to_dict()), 200
+                    return jsonify(amenit.to_dict()), 200
         elif request.method == 'POST':
             for amenit in place.amenities:
                 if amenit.id == amenity_id:
