@@ -9,7 +9,7 @@ from models import storage
 def status():
     """ return json with status OK"""
     status = {"status": "OK"}
-    return(jsonify(status))
+    return flask.jsonify(status)
 
 
 @app_views.route('/stats', strict_slashes=False)
