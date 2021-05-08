@@ -8,8 +8,7 @@ from models import storage
 @app_views.route('/status', strict_slashes=False)
 def status():
     """ return json with status OK"""
-    status = {"status": "OK"}
-    return flask.jsonify(status)
+    return flask.jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', strict_slashes=False)
