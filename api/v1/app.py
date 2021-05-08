@@ -9,6 +9,7 @@ app = Flask('app')
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_appcontext:
     """teardown_appcontext"""
@@ -22,5 +23,3 @@ if __name__ "__main__":
     if not port:
         port = '5000'
     app.run(host=host, port=port, threaded=True)
-
-
