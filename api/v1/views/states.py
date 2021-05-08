@@ -11,7 +11,6 @@ from models.state import State
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id=None):
     """Method to retrieve list of all state objects or state object by id"""
-    #return "In the right place"
     if state_id is None:
         state_list = []
         for obj in storage.all(State).values():
@@ -27,13 +26,9 @@ def get_state(state_id=None):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def del_state(state_id):
     """Deletes state object by id"""
-    state = storage.get(State, state_id)
-    #for obj in storage.all(State).values():
-        #if obj.id == state_id:
-    if state is not None:
-        print(state)
-        storage.delete(state)
+    for obj in storage.all(State).values():
+        if obj.id == state_id:
+        obj.delete()
         storage.save()
         return ({}, 200)
     abort(404)
-    
