@@ -78,6 +78,7 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
+        """function count"""
         if cls is not None:
             cls_all = self.all(cls)
             return (len(cls_all))
