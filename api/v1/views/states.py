@@ -13,7 +13,7 @@ def all_states():
     """Retrieves the list of all State objects: GET /api/v1/states"""
     dict_state = storage.all("State")
     my_list = []
-    for value in dict_state..values():
+    for value in dict_state.values():
         my_list.append(value.to_dict())
 
     return jsonify(my_list)
@@ -57,12 +57,12 @@ def post_obj():
     else:
         abort(400, "Not a JSON")
 
-@app.views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update(state_id=None):
     """ Update state """
     obj = storage.get("State", state_id)
     if obj is None:
-        abort(404):
+        abort(404)
     req = request.get_json(silent=True)
     if req is None:
         abort(400, "Not a JSON")
