@@ -7,6 +7,7 @@ from models.city import City
 from models.state import State
 from models.place import Place
 from models.user import User
+from models.amenities import Amenity
 import json
 
 @app_views.route("/cities/<city_id>/places/", methods=['GET', 'POST'])
@@ -74,3 +75,58 @@ def show_place(place_id):
             abort(404)
         else:
             abort(400, description="Not a JSON")
+
+@app_views.route('/places_search', methods=['POST'])
+def St_Ci_Am_places():
+    """ Function to search places containing one of """
+    new_dict = request.get_json()
+    if new_dict is None:
+        return jsonify("Not a JSON"), 400
+
+    counter = 0
+    for lists in new_dict.values():
+        if lists != []:
+            counter += 1
+
+    if len(new_dict) == 0 or counter == 0:
+        all_places = []
+        places = storage.all(Place)
+        for place in places.values():
+            all_places.append(place.to_dict())
+        return jsonify(all_places)
+
+    lista = []
+    if "states" in new_dict.keys() and len(new_dict["states"] > 0):
+        for values in new_dict["states"]:
+            states = storage.get(State, values)
+            if not states:
+                abort(404)
+            if request.method == 'GET':
+                for city in states.cities:
+                    all_places = []
+                    places = storage.get(Place, city.id)
+                    for place in places:
+                        lista.append(place.to_dict())
+    
+    if "cities" in new_dict.keys() and len(new_dict["cities"] > 0):
+        for val in new_dict["cities"]:
+            cities = storage.get(City, val)
+            if not cities:
+                abort(404)
+            for place in cities.places:
+                if place not in lista:
+                    lista.append(place.to_dict())
+    
+    if "amenities" in new_dict.keys() and len(new_dict["amenities"] > 0):
+        for v in new_dict["amenities"]:
+            amenities = storage.get(Amenity, v)
+            if not amenities:
+                abort(404)
+            places = storage.all(Place).values()
+            if not places:
+                abort(404)
+            for place in places:
+                for amen in place.amenities:
+                    if amen.id == amenities:
+                        lista.append(place.to_dict())
+    return jsonify(lista)
