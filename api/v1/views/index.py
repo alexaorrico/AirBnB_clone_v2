@@ -16,7 +16,6 @@ def stats():
     """
     Endpoint that retrieves the number of each objects by type
     """
-    from models import storage
     clss = {"amenities": "Amenity", "cities": "City", "places": "Place",
                "reviews": "Review", "states": "State", "users": "User"}
     for key, value in classes.items():
