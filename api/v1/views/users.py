@@ -1,6 +1,10 @@
 #!/usr/bin/python3
-""" Serves the users """
-from flask import Flask, jsonify, abort, request
+"""
+Create a new view for User objects that handles
+all default RestFul API actions.
+"""
+
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -17,7 +21,7 @@ def get_user():
 def get_user_by_id(user_id):
     """Retrieve an object by id"""
     obj = storage.get(User, user_id)
-    if not obj:
+    if obj:
         return jsonify(obj.to_dict())
     abort(404)
 
@@ -43,9 +47,9 @@ def create_user():
         abort(400, "Missing email")
     if not body.get("password"):
         abort(400, "Missing password")
-    user = User(**body)
-    user.save()
-    return jsonify(user.to_dict()), 201
+    obj = User(**body)
+    obj.save()
+    return jsonify(obj.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'],
