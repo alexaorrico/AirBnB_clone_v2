@@ -5,10 +5,11 @@ import flask
 from models import storage
 
 
-@app_views.route('/status', strict_slashes=False)
-def status():
-    """ return json with status OK"""
-    return flask.jsonify({"status": "OK"})
+@app_views.route("/status", strict_slashes=False)
+def return_status():
+    """ Returns the status of the api. """
+    status = {"status": "OK"}
+    return(jsonify(status))
 
 
 @app_views.route('/stats', strict_slashes=False)
