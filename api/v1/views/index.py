@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Index """
+""" Index to api"""
 from api.v1.views import app_views
 import flask
 from models import storage
