@@ -15,7 +15,7 @@ import models
 @app_views.route("/places/<place_id>/amenities", methods=['GET'])
 def show_place_amenities(place_id):
     """ returns list of amenities from place """
-    if models.storage_t == 'db'
+    if models.storage_t == 'db':
         if request.method == 'GET':
             places = storage.get(Place, place_id)
             if places:
