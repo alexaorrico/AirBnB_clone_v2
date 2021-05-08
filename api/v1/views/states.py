@@ -49,7 +49,10 @@ def del_state(state_id=None):
 @app_views.route("/states", methods=['POST'], strict_slashes=False)
 def post_state(state_id=None):
     """state"""
-    willy = request.get_json()
+    try:
+        willy = request.get_json()
+    except:
+        abort(400, 'Not a JSON')
     if not willy:
         abort(404)
     elif "name" not in willy.keys():
@@ -68,9 +71,8 @@ def put_state(state_id=None):
     try:
         dict_w = request.get_json()
     except:
-        print("this is aborting 400")
         abort(400, 'Not a JSON')
-    if not willy:
+    if not dict_w:
         abort(404)
     if state_id is None:
         abort(404)
