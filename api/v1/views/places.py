@@ -28,7 +28,7 @@ def show_places(city_id):
                 users = storage.all(User).values()
                 if new_dict['user_id'] in users:
                     if "name" in new_dict.keys():
-                        new_place = Place(**new_dict)
+                        new_place = City(**new_dict)
                         storage.new(new_place)
                         storage.save()
                         return jsonify(new_place.to_dict()), 201
