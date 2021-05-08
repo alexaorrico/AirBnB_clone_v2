@@ -22,10 +22,10 @@ def page_not_found(err):
     return jsonify({"error": "Not found"}), 404
 
 
-@app.errorhandler(400)
-def page_not_found(err):
-    """400 error"""
-    return jsonify({"error": err.description}), 400
+# @app.errorhandler(400)
+# def page_not_found(err):
+#     """400 error"""
+#     return jsonify({"error": err.description}), 400
 
 
 if __name__ == "__main__":
