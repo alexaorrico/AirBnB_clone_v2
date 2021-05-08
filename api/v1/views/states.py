@@ -45,7 +45,7 @@ def deleter_id(state_id):
 def post_state():
     '''post_state - create an state object with post'''
     try:
-        if not request.json():
+        if not request.get_json():
             return jsonify({"error": "Not a JSON"}), 400
         body_dict = request.get_json()
         if "name" not in body_dict:
