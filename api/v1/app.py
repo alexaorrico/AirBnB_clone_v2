@@ -13,7 +13,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def teardown_db(self):
     """ not sure if it should be exception or self """
     """ a method that calls storage.close """
     storage.close()
