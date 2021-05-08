@@ -27,7 +27,7 @@ def show_place_amenities(place_id):
     else:
         if request.method == 'GET':
             places = storage.get(Place, place_id)
-            if place:
+            if places:
                 lista = []
                 for amenity in places.amenity_ids:
                     lista.append(amenity.to_dict())
