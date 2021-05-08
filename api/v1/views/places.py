@@ -29,6 +29,7 @@ def show_places(city_id):
                 for user in users:
                     if new_dict['user_id'] == user.id:
                         if "name" in new_dict.keys():
+                            new_dict['city_id'] = city_id
                             new_place = City(**new_dict)
                             storage.new(new_place)
                             storage.save()
