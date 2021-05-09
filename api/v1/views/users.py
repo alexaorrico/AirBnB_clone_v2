@@ -74,14 +74,13 @@ def put_user(user_id):
     """Updates a user with a given id"""
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']
     user_dict = request.get_json()
+    user = storage.get('User', city_id)
+    if user is None:
+        abort(404)
     if not user_dict:
         return (jsonify({'error': 'Not a JSON'}), 400)
-    user = storage.get('User', city_id)
-    if user:
-        for key in user_dict.keys():
-            if key not in ignore_keys:
-                setattr(user, key, user_dict[key])
-        storage.save()
-        return (jsonify(user.to_dict()), 200)
-    else: 
-        abort(404)
+    for key in user_dict.keys():
+        if key not in ignore_keys:
+            setattr(user, key, user_dict[key])
+    storage.save()
+    return (jsonify(user.to_dict()), 200)
