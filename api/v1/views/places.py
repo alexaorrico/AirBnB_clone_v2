@@ -4,6 +4,7 @@ from models import storage
 from api.v1.views import app_views
 from models.place import Place
 from models.city import City
+from models.user import User
 from flask import jsonify, request, abort
 
 
@@ -59,7 +60,10 @@ def post_place(city_id):
             abort(404)
         if "user_id" not in request.get_json():
             return jsonify({"Missing Name"}), 400
+        #making request a variable to access it
         request = request.get_json()
+        if storage.get(User, request["user_id"]) is None:
+            abort(404)
         request["city_id"] = city_id
         place = Place(**request)
         place.save()
