@@ -99,16 +99,17 @@ def St_Ci_Am_places():
     if "states" in new_dict.keys() and len(new_dict["states"]) > 0:
         for values in new_dict["states"]:
             states = storage.get(State, values)
-            for city in states.cities:
-                for place in city.places:
-                    lista.append(place.to_dict())
+            if states:
+                for city in states.cities:
+                    for place in city.places:
+                        lista.append(place.to_dict())
     
     if "cities" in new_dict.keys() and len(new_dict["cities"]) > 0:
         for val in new_dict["cities"]:
             cities = storage.get(City, val)
-            for place in cities.places:
-                if place not in lista:
-                    lista.append(place.to_dict())
+            if cities:
+                for place in cities.places:
+                        lista.append(place.to_dict())
 
     if "amenities" in new_dict.keys() and len(new_dict["amenities"]) > 0:
         cities = storage.all(City).values()
