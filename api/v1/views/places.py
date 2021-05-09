@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from flask import request, jsonify, abort
 from models import storage, place
+from models.city import City
 from models.place import Place
 
 
@@ -10,7 +11,7 @@ from models.place import Place
                  strict_slashes=False)
 def getallplaces(city_id=None):
     """Gets all places"""
-    city = storage.get('City', city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     res = []
@@ -33,11 +34,11 @@ def getplaces(place_id=None):
                  strict_slashes=False)
 def deleteplaces(place_id=None):
     """Deletes a place"""
-    s = storage.get("Place", place_id)
-    if s is None:
+    place = storage.get("Place", place_id)
+    if place is None:
         abort(404)
     else:
-        storage.delete(s)
+        place.delete()
         storage.save()
         return jsonify({}), 200
 
