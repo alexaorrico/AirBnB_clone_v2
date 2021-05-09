@@ -6,11 +6,13 @@ from api.v1.views import app_views
 from flask import jsonify
 from flask import make_response
 import os
+import json
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
+app.register_blueprint(app_views)
+
 
 
 @app.teardown_appcontext
