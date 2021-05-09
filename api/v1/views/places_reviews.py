@@ -19,7 +19,7 @@ def get_reviews(place_id):
     """ Return all objects """
     place = storage.get(Place, place_id)
     if not place:
-        abort(404)
+        abort(404, "Not found")
     reviews = place.reviews
     rList = []
     for r in reviews:
@@ -55,19 +55,18 @@ def create_review(place_id):
     """ Create an review """
     place = storage.get(Place, place_id)
     if not place:
-        abort(404)
+        abort(404, "Not found")
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
     if not body.get('user_id'):
         abort(400, "Missing user_id")
-    if not body.get('text'):
-        abort(400, "Missing text")
-    user = storage.get(User, body["user_id"])
+    user = storage.get(User, body.get("user_id"))
     if not user:
-        abort(404)
+        abort(404, "Not found")
     if body.get('text'):
-        obj = Review(place_id=place_id, **body)
+        body['place_id'] = place_id
+        obj = Review(**body)
         obj.save()
         return jsonify(obj.to_dict()), 201
     abort(400, "Missing text")
@@ -78,7 +77,7 @@ def update_review(review_id):
     """ Update an object """
     obj = storage.get(Review, review_id)
     if not obj:
-        abort(404)
+        abort(404, "Not found")
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
