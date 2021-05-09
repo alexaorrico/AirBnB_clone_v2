@@ -78,7 +78,9 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
-        """function count"""
+        """call reload() method for deserializing the JSON file to objects
+            new
+        """
         if cls is not None:
             cls_all = self.all(cls)
             return (len(cls_all))
