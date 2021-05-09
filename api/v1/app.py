@@ -13,16 +13,19 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
 @app.teardown_appcontext
-def teardown_appcontext(e):
+def teardown_appcontext(erro):
     """teardown_appcontext"""
     storage.close()
 
 
+@app.errorhandler(404)
+def page_404(error):
+    """ Return a custom 404 error """
+    err_dict = {"error": "Not found"}
+    return jsonify(err_dict), 404
+
+
 if __name__ == "__main__":
-    host = getenv('HBNB_API_HOST')
-    port = getenv('HBNB_API_PORT')
-    if not host:
-        host = '0.0.0.0'
-    if not port:
-        port = '5000'
+    host = getenv('HBNB_API_HOST', default='0.0.0.0')
+    port = getenv('HBNB_API_PORT', default='5000')
     app.run(host=host, port=port, threaded=True)
