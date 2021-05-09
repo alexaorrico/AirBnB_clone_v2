@@ -10,7 +10,7 @@ from models.amenity import Amenity
 def getallamenities():
     """Gets all amenities"""
     res = []
-    for i in storage.all("Amenity").values():
+    for i in storage.all(Amenity).values():
         res.append(i.to_dict())
 
     return jsonify(res)
@@ -18,7 +18,7 @@ def getallamenities():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def getamenity(amenity_id=None):
+def getamenity(amenity_id):
     """Gets an amenity"""
     s = storage.get("Amenity", amenity_id)
     if s is None:
@@ -46,7 +46,7 @@ def createamenity():
     s = request.get_json()
     if s is None:
         return jsonify("Not a JSON"), 400
-    elif "name" not in s:
+    elif 'name' not in s:
         return jsonify("Missing name"), 400
     else:
         new_s = Amenity(**s)
@@ -56,7 +56,7 @@ def createamenity():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def updateamenity(amenity_id=None):
+def updateamenity(amenity_id):
     """Update an amenity"""
     obj = storage.get("Amenity", amenity_id)
     if obj is None:
@@ -64,7 +64,7 @@ def updateamenity(amenity_id=None):
 
     s = request.get_json(silent=True)
     if s is None:
-        abort(400, "Not a JSON")
+        return jsonify("Not a JSON"), 400
     else:
         for k, v in s.items():
             if k in ['id', 'created_at', 'updated_at']:
