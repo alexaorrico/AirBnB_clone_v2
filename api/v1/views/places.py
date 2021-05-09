@@ -68,7 +68,6 @@ def post_place(city_id):
         return "Not a JSON", 400
     if "user_id" not in request.get_json():
         return "Missing user_id", 400
-    #making request a variable to access it
     request = request.get_json()
     if storage.get(User, request["user_id"]) is None:
         abort(404)
