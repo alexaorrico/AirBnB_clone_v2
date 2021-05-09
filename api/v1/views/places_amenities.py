@@ -21,10 +21,9 @@ def get_amen(place_id):
     if not place:
         abort(404, "Not found")
     if storage_t == "db":
-        """ Not sure about place.amenities type, i think it's a list as well"""
-        return jsonify(place.amenities)
+        return jsonify([e.to_dict() for e in place.amenities])
     else:
-        return jsonify(place.amenities_ids)
+        return jsonify([e.to_dict() for e in place.amenities_ids])
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
@@ -36,7 +35,12 @@ def delete_amen(place_id, amenity_id):
     amn = storage.get(Amenity, amenity_id)
     if not pl or not amn:
         abort(404)
-
+    if storage_t == "db":
+        if amn not in place.amenities:
+            abort(404)
+    else:
+        if amn not in place.amenities_ids:
+            abort(404)
     amn.delete()
     storage.save()
     return jsonify({}), 200
@@ -51,12 +55,13 @@ def link_amen(place_id, amenity_id):
     if not place or not amn:
         abort(404, "Not found")
     if storage_t == "db":
-        """ Not sure about place.amenities type, i think it's a list as well"""
         if amn in place.amenities:
             return amn, 200
         place.amenities.append(amn)
+        place.save()
     else:
-        if amn in place.amenities:
+        if amn in place.amenities_ids:
             return amn, 200
         place.amenities_ids.append(amn)
-    return amn, 201
+        place.save()
+    return jsonify(amn.to_dict()), 201
