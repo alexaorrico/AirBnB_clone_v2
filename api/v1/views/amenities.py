@@ -29,13 +29,13 @@ def getamenity(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def deleteamenity(amenity_id=None):
+def deleteamenity(amenity_id):
     """Deletes an amenity"""
-    s = storage.get("Amenity", amenity_id)
+    s = storage.get(Amenity, amenity_id)
     if s is None:
         abort(404)
     else:
-        storage.delete(obj)
+        storage.delete(s)
         storage.save()
         return jsonify({}), 200
 
