@@ -71,6 +71,7 @@ def create_review(place_id):
         return jsonify(obj.to_dict()), 201
     abort(400, "Missing text")
 
+
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_review(review_id):
