@@ -60,7 +60,7 @@ def createplaces(city_id=None):
     u_id = content['user_id']
     if storage.get("User", u_id):
         new_s = Place(**s)
-        storage.save()
+        new_s.save()
     return jsonify(new_s.to_dict()), 201
     
 
