@@ -29,11 +29,11 @@ def states_not_linked():
 def states_linked(state_id=None):
     """states linked to JSON object
     """
-    #  aborts if state_id is not found in storage with 404 (not linked)
     state_obj = storage.get('State', state_id)
     if state_obj is None:
         abort(404, 'Not found')
-    # =================================================================
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if request.method == 'GET':
         return jsonify(state_obj.to_dict())
 
