@@ -12,6 +12,7 @@ def check(id):
     """
     try:
         checker = storage.get(State, id)
+        checker.to_dict()
     except Exception:
         abort(404)
     return checker
@@ -90,4 +91,4 @@ def states(state_id):
     elif request.method == "POST":
         return create_state(request), 201
     elif request.method == 'PUT':
-        return update_state(state_id, request)
+        return update_state(state_id, request), 200
