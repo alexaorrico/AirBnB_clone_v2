@@ -19,7 +19,7 @@ def get_reviews(place_id):
     return jsonify(res)
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
-def getplaces(review_id=None):
+def get_review(review_id=None):
     """Gets a review according with the id"""
     review = storage.get(Review, review_id)
     if review is None:
@@ -29,7 +29,7 @@ def getplaces(review_id=None):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
-def deleteplaces(review_id=None):
+def delete_review(review_id=None):
     """Deletes a review according with the id"""
     review = storage.get(Review, review_id)
     if review is None:
@@ -41,7 +41,7 @@ def deleteplaces(review_id=None):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def jsonify_review_4(place_id):
+def jsonify(place_id):
     try:
         json_post = request.get_json()
         the_obj = storage.get(Place, place_id)
