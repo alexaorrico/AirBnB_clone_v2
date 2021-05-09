@@ -52,9 +52,9 @@ def createplaces(city_id=None):
     s = request.get_json(silent=True)
     if s is None:
         jsonify("Not a JSON"), 400
-    elif "name" not in s:
+    elif 'name' not in s:
         jsonify("Missing name"), 400
-    elif "user_id" not in s:
+    elif 'user_id' not in s:
         jsonify("Missing user_id"), 400
     s["city_id"] = city_id
     u_id = content['user_id']
