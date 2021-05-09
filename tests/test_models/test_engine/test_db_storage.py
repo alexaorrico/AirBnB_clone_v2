@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Contains the TestDBStorageDocs and TestDBStorage classes
+Contains the TestDBStorageDocs and TestDBStorage tests for classes & get/count
+methods
 """
 
 from datetime import datetime

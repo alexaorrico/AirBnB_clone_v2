@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the class DBStorage
-"""
+""" Contains the class DBStorage and the new count and get methods """
 
 import models
 from models.amenity import Amenity

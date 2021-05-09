@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the FileStorage class
-"""
+""" Contains the FileStorage class and the new count and get methods """
 
 import json
 from models.amenity import Amenity
