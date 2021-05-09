@@ -10,6 +10,7 @@ from flask import jsonify, abort, request
 from models import storage
 from models.place import Place
 from models.review import Review
+from models.review import User
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
@@ -66,7 +67,7 @@ def create_review(place_id):
         abort(404)
     if not body.get('text'):
         abort(400, "Missing text")
-    text = body.get('text')
+    body['place_id'] = place_id
     obj = Review(**body)
     obj.save()
     return jsonify(obj.to_dict()), 201
@@ -77,7 +78,7 @@ def create_review(place_id):
 def update_review(review_id):
     """ Update an object """
     obj = storage.get(Review, review_id)
-    if obj is None:
+    if not obj:
         abort(404)
     body = request.get_json()
     if not body:
@@ -86,5 +87,5 @@ def update_review(review_id):
         if k not in ['id', 'user_id', 'place_id',
                      'created_at', 'updated_at']:
             setattr(obj, k, v)
-    storage.save()
+    obj.save()
     return jsonify(obj.to_dict()), 200
