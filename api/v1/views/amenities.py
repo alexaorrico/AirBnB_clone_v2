@@ -12,7 +12,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def getAll():
+def get_Amenities():
     """Retrieve all objects"""
     l = [obj.to_dict() for obj in storage.all(Amenity).values()]
     return jsonify(l)
@@ -20,7 +20,7 @@ def getAll():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def get(amenity_id):
+def get_Amenity_byid(amenity_id):
     """Retrieve an object by id"""
     obj = storage.get(Amenity, amenity_id)
     if obj:
@@ -30,7 +30,7 @@ def get(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete(amenity_id):
+def delete_Amenity(amenity_id):
     """Delete a state object by id"""
     obj = storage.get(Amenity, amenity_id)
     if obj:
@@ -41,7 +41,7 @@ def delete(amenity_id):
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-def create():
+def create_Amenity():
     """Create an object"""
     body = request.get_json()
     if not body:
@@ -57,7 +57,7 @@ def create():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def update(state_id):
+def update_Amenity(state_id):
     """Update an object"""
     body = request.get_json()
     if not body:
