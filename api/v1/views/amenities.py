@@ -2,7 +2,8 @@
 """Amenities"""
 from api.v1.views import app_views
 from flask import request, jsonify, abort
-from models import storage, amenity
+from models import storage
+from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
@@ -42,15 +43,14 @@ def deleteamenity(amenity_id=None):
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def createamenity():
     """Create an amenity"""
-    s = request.get_json(silent=True)
+    s = request.get_json()
     if s is None:
-        abort(400, "Not a JSON")
-    elif "name" not in s.keys():
-        abort(400, "Missing name")
+        return jsonify("Not a JSON"), 400
+    elif "name" not in s:
+        return jsonify("Missing name"), 400
     else:
-        new_s = amenities.Amenity(**s)
-        storage.new(new_s)
-        storage.save()
+        new_s = Amenity(**s)
+        new_s.save()
         return jsonify(new_s.to_dict()), 201
 
 
