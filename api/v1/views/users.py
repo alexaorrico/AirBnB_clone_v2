@@ -42,4 +42,14 @@ def createuser():
     if not user_dict:
         return (jsonify({'error': 'Not a JSON'}), 400)
     elif 'email' not in user_dict:
-        return (jsonify
+        return (jsonify(user.to_dict()), 201)
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def updateuser(user_id):
+    """ Updates a user with PUT """
+    ignore_keys = ['id', 'email', 'created_at', 'updated_at']
+    user_dict = request.get_json()
+    if not user_dict:
+        return (jsonify({'error': 'Not  a JSON'}), 400)
+        
