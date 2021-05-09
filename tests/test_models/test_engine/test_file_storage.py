@@ -130,11 +130,14 @@ class TestFileStorage(unittest.TestCase):
         """returns the object based on the class
         name and its ID, or None if not found"""
         storage = FileStorage()
-        s = State(name='X')
+        s = State()
         s.save()
-        self.assertIs(s, storage.get(State, s.id))
+        found = storage.get(State, s.id)
+        self.assertEqual(s, found)
+        self.assertIs(s, found)
         self.assertIs(None, storage.get(State, "bad id"))
         self.assertIs(None, storage.get("Bad Class", s.id))
+        s.delete()
 
         @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
         def test_count_fs(self):
@@ -146,8 +149,10 @@ class TestFileStorage(unittest.TestCase):
             count_all = storage.count()
             s = State(name='Y')
             s.save()
-            c = City(name='Z')
-            c.save()
+            a = Amenity(name='Z')
+            a.save()
             self.assertEqual(storage.count("bad state"), 0)
             self.assertEqual(storage.count(State), count_state + 1)
             self.assertEqual(storage.count(), count_all + 2)
+            s.delete()
+            a.delete()
