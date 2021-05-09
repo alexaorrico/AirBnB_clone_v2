@@ -125,5 +125,5 @@ def St_Ci_Am_places():
                         flag = 1
                         break
                 if flag == 0:
-                    lista.append(place_i)
+                    lista.append(place)
     return jsonify(lista)
