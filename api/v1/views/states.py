@@ -13,7 +13,8 @@ def states_not_linked():
     """states not linked to an object
     """
     if request.method == 'GET':
-        all_state = [state.to_dict() for state in storage.all('State').values()]
+        all_state = [state.to_dict() for state in storage.
+                     all('State').values()]
         return (jsonify(all_state), 200)
     if request.method == 'POST':
         if not request.get_json():
