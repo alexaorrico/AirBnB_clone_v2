@@ -61,17 +61,16 @@ def create_review(place_id):
         abort(400, "Not a JSON")
     if not body.get('user_id'):
         abort(400, "Missing user_id")
-    user_id = body.get('user_id')
-    user = storage.get(User, user_id)
-    if not user:
-        abort(404)
     if not body.get('text'):
         abort(400, "Missing text")
-    body['place_id'] = place_id
-    obj = Review(**body)
-    obj.save()
-    return jsonify(obj.to_dict()), 201
-
+    user = storage.get(User, body["user_id"])
+    if not user:
+        abort(404)
+    if body.get('text'):
+        obj = Review(place_id=place_id, **body)
+        obj.save()
+        return jsonify(obj.to_dict()), 201
+    abort(400, "Missing text")
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
