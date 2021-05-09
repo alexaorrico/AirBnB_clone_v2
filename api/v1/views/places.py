@@ -113,34 +113,17 @@ def St_Ci_Am_places():
                         places_ids.append(place.id)
 
     if "amenities" in new_dict.keys() and len(new_dict["amenities"]) > 0:
-        if len(places_ids) == 0:
-            cities = storage.all(City).values()
-            for citi in cities:
-                for place in citi.places:
-                    flag = 0
-                    lista_amen = []
-                    place_i = place.to_dict()
-                    for amen in place.amenities:
-                        lista_amen.append(amen)
-                    for v in new_dict["amenities"]:
-                        ameniti = storage.get(Amenity, v)
-                        if ameniti not in lista_amen:
-                            flag = 1
-                    if flag == 0:
-                        if place not in lista:
-                            lista.append(place_i)
-        else:
-            for ids in places_ids:
-                flag = 0
-                place = storage.get(Place, ids)
-                place_i = place.to_dict()
-                for amen in place.amenities:
-                    lista_amen.append(amen)
-                for v in new_dict["amenities"]:
-                    ameniti = storage.get(Amenity, v)
-                    if ameniti not in lista_amen:
-                        flag = 1
-                if flag == 0:
-                    if place not in lista:
-                        lista.append(place_i)
+        for ids in places_ids:
+            flag = 0
+            place = storage.get(Place, ids)
+            place_i = place.to_dict()
+            for amen in place.amenities:
+                lista_amen.append(amen)
+            for v in new_dict["amenities"]:
+                ameniti = storage.get(Amenity, v)
+                if ameniti not in lista_amen:
+                    flag = 1
+            if flag == 0:
+                if place not in lista:
+                    lista.append(place_i)
     return jsonify(lista)
