@@ -74,7 +74,7 @@ def put_user(user_id):
     """Updates a user with a given id"""
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']
     user_dict = request.get_json()
-    user = storage.get('User', city_id)
+    user = storage.get('User', user_id)
     if user is None:
         abort(404)
     if not user_dict:
