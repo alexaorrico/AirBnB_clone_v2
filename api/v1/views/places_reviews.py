@@ -5,7 +5,7 @@ from models.user import User
 from models.place import Place
 from models.review import Review
 from models import storage
-from flask import json, jsonify, abort, request
+from flask import jsonify, abort, request
 
 
 @app_views.route('/places/<place_id>/reviews', methods=["GET"],
@@ -16,7 +16,8 @@ def reviews(place_id):
     if placeobj is None:
         abort(404)
     new_list = []
-    for obj in placeobj:
+    allreviews = storage.all(Review).values()
+    for obj in allreviews:
         if obj.place_id == place_id:
             new_list.append(obj.to_dict())
     return jsonify(new_list)
@@ -26,11 +27,10 @@ def reviews(place_id):
                  strict_slashes=False)
 def review_id(review_id):
     """retrieves a review object"""
-    try:
-        reviewobj = storage.get(Review, review_id).to_dict()
-        return jsonify(reviewobj)
-    except Exception:
+    reviewobj = storage.get(Review, review_id).to_dict()
+    if reviewobj is None:
         abort(404)
+    return jsonify(reviewobj)
 
 
 @app_views.route('/reviews/<review_id>', methods=["DELETE"],
@@ -39,7 +39,7 @@ def review_delete(review_id):
     """deletes a review object"""
     reviewobj = storage.get(Review, review_id)
     if reviewobj is not None:
-        reviewobj.delete()
+        storage.delete(reviewobj)
         storage.save()
         return jsonify({}), 200
     else:
@@ -54,13 +54,14 @@ def review_create(place_id):
     allplaces = storage.get(Place, place_id)
     if allplaces is None:
         abort(404)
-    if not request.get_json():
+    if body_dict is None:
         abort(400, "Not a JSON")
     if "user_id" not in body_dict:
         abort(400, "Missing user_id")
-    if storage.get(User, body_dict["user_id"]) is None:
+    user_id = storage.get(User, body_dict["user_id"])
+    if user_id is None:
         abort(404)
-    if "text" not in body_dict:
+    if "text" not in body_dict.keys():
         abort(400, "Missing text")
     reviewobj = Review(**body_dict)
     reviewobj.save()
