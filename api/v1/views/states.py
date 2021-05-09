@@ -54,7 +54,7 @@ def post_obj():
         new_o = State(**object_state)
         storage.new(new_o)
         new_o.save()
-        return jsonify(new_o.to_dict()), 201       
+        return jsonify(new_o.to_dict()), 201  
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
