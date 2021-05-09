@@ -83,7 +83,7 @@ def updateplaces(place_id=None):
 
     s = request.get_json(silent=True)
     if s is None:
-        abort(400, "Not a JSON")
+        return jsonify("Not a JSON"), 400
     else:
         for k, v in s.items():
             if k in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
