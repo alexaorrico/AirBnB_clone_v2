@@ -66,5 +66,5 @@ def updatestate(state_id):
         if key not in list_ignore:
             setattr(s, key, value)
             # setting attribute to be what's passed in
-    s.save()
-    return jsonify(s.to_dict()), 200
+    obj.save()
+    return jsonify(obj.to_dict()), 200
