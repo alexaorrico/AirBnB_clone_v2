@@ -9,13 +9,12 @@ from models import storage, place
                  strict_slashes=False)
 def getallplaces(city_id=None):
     """Gets all places"""
-    if city_id is None:
+    city = storage.get('City', city_id)
+    if city is None:
         abort(404)
-
     res = []
-    for i in storage.all("Place").values():
+    for i in city.places:
         res.append(i.to_dict())
-
     return jsonify(res)
 
 
