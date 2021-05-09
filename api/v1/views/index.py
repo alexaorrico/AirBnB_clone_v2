@@ -1,12 +1,12 @@
 #!/usr/bin/pythone3
-""" module returns a JSON: "status": "OK\""""
+""" module returns a JSON:OK"""
 from models import storage
 from flask import Flask, Blueprint, jsonify
 from api.v1.views import app_views
 
 
 clases = {"amenities": "Amenity", "cities": "City", "places": "Place",
-        "reviews": "Review", "states": "State", "users": "User"}
+          "reviews": "Review", "states": "State", "users": "User"}
 
 
 @app_views.route('/status', strict_slashes=False)
