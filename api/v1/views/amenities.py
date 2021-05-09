@@ -66,7 +66,6 @@ def update_Amenity(amenity_id):
     if not obj:
         abort(404)
     for k, v in body.items():
-        print(k,v)
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(obj, k, v)
     storage.save()
