@@ -83,12 +83,13 @@ def St_Ci_Am_places():
     if new_dict is None:
         abort(400, description="Not a JSON")
     
-    counter = 0
-    for lists in new_dict.values():
-        if lists != []:
-            counter += 1
+    caso = 0
+    for k in new_dict:
+        if len(new_dict[k]) > 0:
+            caso = 1
+            break
 
-    if len(new_dict) == 0 or counter == 0:
+    if len(new_dict) == 0 or caso == 0:
         all_places = []
         places = storage.all(Place)
         for place in places.values():
