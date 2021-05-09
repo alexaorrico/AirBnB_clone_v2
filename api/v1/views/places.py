@@ -131,6 +131,6 @@ def St_Ci_Am_places():
 
     for each in lista:
         if "amenities" in each.keys():
-            del var["amenities"]
+            del each["amenities"]
         end_list.append(each)
     return jsonify(end_list)
