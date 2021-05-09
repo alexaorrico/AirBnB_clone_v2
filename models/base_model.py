@@ -68,7 +68,7 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if ret_pwd == False and "password" in new_dict:
+        if ret_pwd is False and "password" in new_dict:
             del new_dict["password"]
         return new_dict
 
