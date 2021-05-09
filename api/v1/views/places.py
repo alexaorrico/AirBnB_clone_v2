@@ -12,8 +12,7 @@ from flask import jsonify, request, abort
 def getter_places():
     '''getter_places - gets all Place objects'''
     new_list = []
-    allplaces = list(storage.all("Place").values())
-
+    allplaces = storage.all("Place").values()
     for place in allplaces:
         new_list.append(place.to_dict())
     return jsonify(new_list)
@@ -58,7 +57,7 @@ def deleter_places(place_id):
         abort(404)
 
 
-@app_views.route('/cities/city_id/places',
+@app_views.route('/cities/<city_id>/places',
                  methods=['POST'], strict_slashes=False)
 def post_place(city_id):
     '''post_place - create an place object with post'''
