@@ -64,7 +64,7 @@ def updatestate(state_id):
     for key, value in s.items():
         list_ignore = ["id", "created_at", "updated_at"]
         if key not in list_ignore:
-            setattr(s, key, value)
+            setattr(obj, key, value)
             # setting attribute to be what's passed in
     obj.save()
     return jsonify(obj.to_dict()), 200
