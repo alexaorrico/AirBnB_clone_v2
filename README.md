@@ -154,9 +154,29 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
+
 Second part of Airbnb: Joann Vuong
+
+Third part of Airbnb: Juliana Monroy
+-----
+
+[<img align="center" alt="contact | Twitter" width="22px" src="https://github.com/deut-erium/deut-erium/blob\master/assets/twitter.svg" />](https://twitter.com/julianamonroy03)
+[<img align="center" alt="contact | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3\icons/linkedin.svg" />](https://www.linkedin.com/in/juliana-monroy-5760b9199/)
+[<img align="center" alt="contact | Instagram" width="22px" src="https://github.com/hargun79/hargun79/blob/m\
+aster/Assets/Instagram.svg" />](https://www.instagram.com/julianamonr03/)
+[<img align="center" alt="contact | Instagram" width="27px" src="https://github.com/deut-erium/deut-erium/blob/master/assets/discord.svg" />](https://discord.com/users/deuterium#0883)
+
+Martin Corredor
+-----
+
+[<img align="center" alt="contact | Twitter" width="22px" src="https://github.com/deut-erium/deut-erium/blob\master/assets/twitter.svg" />](https://twitter.com/julianamonroy03)
+[<img align="center" alt="contact | LinkedIn" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3\icons/linkedin.svg" />](https://www.linkedin.com/in/juliana-monroy-5760b9199/)
+[<img align="center" alt="contact | Instagram" width="22px" src="https://github.com/hargun79/hargun79/blob/m\
+aster/Assets/Instagram.svg" />](https://www.instagram.com/julianamonr03/)
+[<img align="center" alt="contact | Instagram" width="27px" src="https://github.com/deut-erium/deut-erium/blob/master/assets/discord.svg" />](https://discord.com/users/deuterium#0883)
+
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
