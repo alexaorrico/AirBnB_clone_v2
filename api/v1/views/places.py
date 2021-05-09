@@ -116,6 +116,7 @@ def St_Ci_Am_places():
             for place in citi.places:
                 flag = 0
                 lista_amen = []
+                place_i = place.to_dict()
                 for amen in place.amenities:
                     lista_amen.append(amen)
                 for v in new_dict["amenities"]:
@@ -124,5 +125,5 @@ def St_Ci_Am_places():
                         flag = 1
                 if flag == 0:
                     if place not in lista:
-                        lista.append(place.to_dict())
+                        lista.append(place_i)
     return jsonify(lista)
