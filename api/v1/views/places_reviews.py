@@ -42,20 +42,18 @@ def delete_review(review_id=None):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def jsonify(place_id):
-    try:
-        json_post = request.get_json()
-        the_obj = storage.get(Place, place_id)
-        if the_obj is None:
-            abort(404)
-        if not json_post:
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
-        if 'user_id' not in json_post:
-            return make_response(jsonify({'error': 'Missing user_id'}), 400)
-        if 'text' not in json_post:
-            return make_response(jsonify({'error': 'Missing text'}), 400)
-        json_post['place_id'] = place_id
-        new = Review(**json_post)
-        new.save()
-        return make_response(jsonify(new.to_dict()), 201)
-    except:
+    """CReate a review"""
+    place = storage.get("Place", place_id)
+    if place is None:
         abort(404)
+    content_review = request.get_json()
+    if content_review is None:
+        jsonify("Not a JSON"), 400
+    elif 'user_id' not in content_review:
+        jsonify("Missing user_id"), 400
+    userid = content_review['user_id']
+    if storage.get("User", u_id):
+        new_s = Review(**content_review)
+        new_s.save()
+        return jsonify(new_s.to_dict()), 201
+    abort(404)

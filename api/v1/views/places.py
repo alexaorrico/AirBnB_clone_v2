@@ -62,8 +62,8 @@ def createplaces(city_id=None):
     if storage.get("User", u_id):
         new_s = Place(**s)
         new_s.save()
-    return jsonify(new_s.to_dict()), 201
-
+        return jsonify(new_s.to_dict()), 201
+    abort(404)
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def updateplaces(place_id=None):
