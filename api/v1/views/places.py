@@ -23,7 +23,7 @@ def getallplaces(city_id=None):
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def getplaces(place_id=None):
     """Gets a place"""
-    s = storage.get("Place", place_id)
+    s = storage.get(Place, place_id)
     if s is None:
         abort(404)
     else:
@@ -34,7 +34,7 @@ def getplaces(place_id=None):
                  strict_slashes=False)
 def deleteplaces(place_id=None):
     """Deletes a place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     else:
