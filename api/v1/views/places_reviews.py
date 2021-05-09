@@ -24,7 +24,7 @@ def get_reviews(place_id):
     rList = []
     for r in reviews:
         rList.append(r.to_dict())
-    return jsonify(r_list)
+    return jsonify(r_list), 200
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
@@ -33,7 +33,7 @@ def review_by_id(review_id):
     """ Retrieve an object """
     obj = storage.get(Review, review_id)
     if obj:
-        return jsonify(obj.to_dict())
+        return jsonify(obj.to_dict()), 200
     abort(404)
 
 
@@ -81,9 +81,9 @@ def update_review(review_id):
     body = request.get_json()
     if not body:
         abort(400, "Not a JSON")
+    ignored = ["id", "user_id", "place_id", "created_at", "updated_at"]
     for k, v in body.items():
-        if k not in ['id', 'user_id', 'place_id',
-                     'created_at', 'updated_at']:
+        if k not in ignored:
             setattr(obj, k, v)
     obj.save()
     return jsonify(obj.to_dict()), 200
