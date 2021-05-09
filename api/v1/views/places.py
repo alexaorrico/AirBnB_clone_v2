@@ -118,12 +118,13 @@ def St_Ci_Am_places():
                 lista_amen = []
                 place_i = place.to_dict()
                 for amen in place.amenities:
-                    lista_amen.append(amen)
+                    lista_amen.append(amen.id)
                 for v in new_dict["amenities"]:
                     ameniti = storage.get(Amenity, v)
-                    if ameniti not in lista_amen:
+                    if ameniti.id not in lista_amen:
                         flag = 1
                         break
                 if flag == 0:
-                    lista.append(place)
+                    if place not in lista:
+                        lista.append(place_i)
     return jsonify(lista)
