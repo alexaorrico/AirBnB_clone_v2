@@ -70,7 +70,7 @@ def createplaces(city_id=None):
     return jsonify(new_s.to_dict()), 201
 
 
-@app_views.route('/places/<place_id>', methods=['PUT'], strict_slaches=False)
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def updateplaces(place_id=None):
     """ Update a place using PUT """
     obj = storage.get("Place", place_id)
