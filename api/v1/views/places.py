@@ -118,10 +118,10 @@ def St_Ci_Am_places():
                 lista_amen = []
                 place_i = place.to_dict()
                 for amen in place.amenities:
-                    lista_amen.append(amen.id)
+                    lista_amen.append(amen)
                 for v in new_dict["amenities"]:
                     ameniti = storage.get(Amenity, v)
-                    if ameniti.id not in lista_amen:
+                    if ameniti not in lista_amen:
                         flag = 1
                         break
                 if flag == 0:
