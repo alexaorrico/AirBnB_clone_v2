@@ -127,4 +127,10 @@ def St_Ci_Am_places():
                 if flag == 0:
                     if place not in lista:
                         lista.append(place_i)
+    end_list = []
+
+    for each in lista:
+        if "amenities" in each.keys():
+            del var["amenities"]
+        end_list.append(each)
     return jsonify(lista)
