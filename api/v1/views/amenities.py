@@ -71,6 +71,6 @@ def updateamenity(amenity_id):
                 pass
             else:
                 setattr(obj, k, v)
-        storage.save()
+        obj.save()
         res = obj.to_dict()
         return jsonify(res), 200
