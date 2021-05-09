@@ -16,15 +16,13 @@ def stats():
     """
     Endpoint that retrieves the number of each objects by type
     """
-    statsc = {
-            "amenities": "Amenity",
-            "cities": "City",
-            "places": "Place",
-            "reviews": "Review",
-            "states": "State",
-            "users": "User"
-            }
-    for key, value in statsc.items():
-        statsc[key] = storage.count(value)
+    stats = {"amenities": "Amenity",
+             "cities": "City",
+             "places": "Place",
+             "reviews": "Review",
+             "states": "State",
+             "users": "User"}
+    for key, value in stats.items():
+        stats[key] = storage.count(value)
 
-    return flask.jsonify(statsc)
+    return flask.jsonify(stats)

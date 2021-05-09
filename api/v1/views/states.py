@@ -46,15 +46,15 @@ def delete_obj(state_id=None):
 def post_obj():
     """Create a State object"""
     object_state = request.get_json(silent=True)
-    if 'name' not in object_state.keys():
-        abort(400, "Missing name")
-    elif object_state is not None:
+    if object_state is None:
+        return jsonify("Not a JSON"), 400
+    elif 'name' not in object_state:
+        return jsonify("Missing name"), 400
+    else:
         new_o = State(**object_state)
         storage.new(new_o)
         new_o.save()
-        return jsonify(new_o.to_dict()), 201
-    else:
-        abort(400, "Not a JSON")
+        return jsonify(new_o.to_dict()), 201       
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
