@@ -123,6 +123,7 @@ def St_Ci_Am_places():
                     ameniti = storage.get(Amenity, v)
                     if ameniti not in lista_amen:
                         flag = 1
+                        break
                 if flag == 0:
                     if place not in lista:
                         lista.append(place_i)
