@@ -81,5 +81,7 @@ def put_user(user_id):
         for key in user_dict.keys():
             if key not in ignore_keys:
                 setattr(user, key, user_dict[key])
-        user.save()
+        storage.save()
         return (jsonify(user.to_dict()), 200)
+    else: 
+        abort(404)
