@@ -53,7 +53,7 @@ def createstate():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def updatestate(state_id=None):
+def updatestate(state_id):
     """ update state with PUT """
     obj = storage.get(State, state_id)
     if obj is None:
