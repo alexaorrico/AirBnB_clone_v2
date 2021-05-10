@@ -102,6 +102,7 @@ class TestImproveDBStorage(unittest.TestCase):
         city_compare = storage.get(City, city.id)
         self.assertEqual(state, state_compare)
         self.assertEqual(city, city_compare)
+        self.assertEqual(storage.get(State, None), None)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_method_count(self):
