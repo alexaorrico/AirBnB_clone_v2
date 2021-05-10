@@ -98,7 +98,7 @@ class TestFileStorage(unittest.TestCase):
         new_user.save()
         self.assertIs(new_state, models.storage.get("State", new_state.id))
         self.assertIs(None, models.storage.get("State", "id_inconrrect"))
-        self.assertIs(None, models.storage.get("Class_incorrect", "id_incorrect"))
+        self.assertIs(None, models.storage.get("Class", "id_incorrect"))
         self.assertIs(new_user, models.storage.get("User", new_user.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
