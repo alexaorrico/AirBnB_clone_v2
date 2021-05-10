@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the FileStorage class
-"""
+""" Contains the FileStorage class and the new count and get methods """
 
 import json
 from models.amenity import Amenity
@@ -68,3 +66,20 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def count(self, cls=None):
+        """ Returns the number of objects in storage matching the class """
+        return (len(self.all(cls)))
+        # ^ return the length of whatever objects are in the class by calling
+        # the all method
+
+    def get(self, cls, id):
+        """ Returns obj based on class and its ID, None if not found """
+        name = cls.__name__ + "." + id
+        # ^ setting a key equal to the name of the class plus the id
+        if name in self.all():
+            # ^ if that key is in the whole dictionary
+            return self.all()[name]
+            # ^ return that key from the whole dict
+        else:
+            return None

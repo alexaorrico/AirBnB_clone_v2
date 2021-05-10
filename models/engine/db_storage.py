@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the class DBStorage
-"""
+""" Contains the class DBStorage and the new count and get methods """
 
 import models
 from models.amenity import Amenity
@@ -74,3 +72,15 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def count(self, cls=None):
+        """ Returns the number of objects in storage matching the class """
+        return (len(self.all(cls)))
+
+    def get(self, cls, id):
+        """ Returns obj based on class and its ID, None if not found """
+        object_name = cls.__name__ + "." + id
+        if object_name in self.all():
+            return self.all()[object_name]
+        else:
+            return None

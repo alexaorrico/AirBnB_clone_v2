@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestFileStorageDocs classes
+Contains the TestFileStorageDocs classes and tests for count/get methods
 """
 
 from datetime import datetime
