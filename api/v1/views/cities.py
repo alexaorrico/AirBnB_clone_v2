@@ -61,7 +61,7 @@ def create_city(request, state_id):
         name_city = request_json['name']
     except Exception:
         abort(400, "Missing name")
-    city = City()(name=name_city, state_id=state_id)
+    city = City(name=name_city, state_id=state_id)
     storage.new(city)
     storage.save()
     return jsonify(city.to_dict())
