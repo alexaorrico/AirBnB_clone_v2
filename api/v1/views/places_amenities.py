@@ -4,7 +4,7 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
-from models.amenities import Amenities
+from models.amenities import Amenity
 from models.place import Place
 import os
 
@@ -17,9 +17,10 @@ def all_amenities(place_id):
         abort(404)
     amenities = []
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        amenities_info = place.amenities
+        amenities = [amenity.to_dict() for amenity in place.amenities]
     else:
-        amenities_info = place.amenities_ids
+        amenities_info = [storage.get(Amenity, amenity_id).to_dict()
+                          for amenity_id in place.amenity_ids]
     for data in amenities_info:
         amenities.append(data.to_dict())
     return jsonify(amenities)
