@@ -18,9 +18,9 @@ def states():
         try:
             kwargs = request.get_json()
         except:
-            return jsonify({"error": "Not a JSON"}, 400)
+            return {"error": "Not a JSON"}, 400
         if "name" not in kwargs:
-            return jsonify({"error": "Missing name"}, 400)
+            return {"error": "Missing name"}, 400
         new_state = State(**kwargs)
         new_state.save()
         return jsonify(new_state.to_dict(), 201)
@@ -51,5 +51,5 @@ def states_id(id):
                 if k not in ["id", "created_at", "updated_at"]:
                     setattr(state, k, v)
             state.save()
-            return jsonify(state.to_dict(), 200)
+        return jsonify(state.to_dict(), 200)
     abort(404)
