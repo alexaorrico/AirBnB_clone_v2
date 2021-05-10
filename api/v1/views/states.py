@@ -36,6 +36,12 @@ def states_id(id):
     """
     state = storage.get(State, id)
     if (state):
+        if request.method == 'GET':
+            state = storage.get(State, state_id)
+            if not state:
+                abort(404)
+            return jsonify(state.to_dict())
+
         if request.method == 'DELETE':
             state.delete()
             storage.save()
@@ -50,16 +56,5 @@ def states_id(id):
                 if k not in ["id", "created_at", "updated_at"]:
                     setattr(state, k, v)
             state.save()
-        elif request.method == 'POST':
-            try:
-                kwargs = request.get_json()
-            except:
-                return {"error": "Not a JSON"}, 400
-            for k in kwargs.items():
-                if k == 'name':
-                    state = State(kwargs)
-                    state.save()
-                    return state.to_dict(), 200
-            return {"error": "Missing name"}, 400
         return state.to_dict()
     abort(404)
