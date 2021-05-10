@@ -90,6 +90,7 @@ class TestFileStorage(unittest.TestCase):
 
 class TestImproveDBStorage(unittest.TestCase):
     """ Test method get and count """
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_mehotd_get(self):
         """ Test mehotd get """
         storage = DBStorage()
@@ -103,6 +104,7 @@ class TestImproveDBStorage(unittest.TestCase):
         self.assertEqual(city, city_compare)
         self.assertEqual(storage.get(State, None), None)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_method_count(self):
         """ Test method count """
         storage = DBStorage()
