@@ -81,11 +81,8 @@ class DBStorage:
         if cls not in classes.values():
             return None
         dic = self.all(cls)
-        if dic is not {}:
-            for each in dic.values():
-                if id == each.id:
-                    return each
-        return None
+        key = '{}.{}'.format(cls.__name__, id)
+        return (dic.get(key))
 
     def count(self, cls=None):
         """ counts the number of objects in storage """
