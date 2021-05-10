@@ -86,10 +86,13 @@ class FileStorage:
             other_dict = models.storage.all(cls)
             for v in other_dict.values():
                 amount += 1
-        else:
+            return amount
+        elif cls is None:
             amount = 0
             for clase in classes.values():
                 other_dict = models.storage.all(clase)
                 for v in other_dict.values():
                     amount += 1
-        return amount
+            return amount
+        else:
+            return None
