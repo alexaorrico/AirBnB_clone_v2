@@ -19,22 +19,30 @@ def user_list():
 @app_views.route('/users/<user_id>', methods=["GET"], strict_slashes=False)
 def user_id(user_id):
     """retrieves a user object"""
-    userobj = storage.get(User, user_id).to_dict()
+    try:
+        userobj = storage.get(User, user_id).to_dict()
+    except:
+        abort(404)
     if userobj is None:
         abort(404)
     return jsonify(userobj)
 
 
 @app_views.route('/users/<user_id>', methods=["DELETE"], strict_slashes=False)
-def user_delete(user_id):
+def user_delete(user_id=None):
     """deletes a user object"""
+    print("BITCHHHHHHHH")
     userobj = storage.get(User, user_id)
-    if userobj is not None:
-        storage.delete(userobj)
-        storage.save()
-        return jsonify({}), 200
-    else:
+    print("ASSSSSHOOOOOOLLLLEEEE")
+    if userobj is None:
+        print("MOTHERFUCKERRRRR")
         abort(404)
+    print("BITCHHHHHHHH")
+    storage.delete(userobj)
+    print(userobj)
+    userobj.save()
+    print("JFANGWANG")
+    return jsonify({}), 200
 
 
 @app_views.route('/users', methods=["POST"], strict_slashes=False)
