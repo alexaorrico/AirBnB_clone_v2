@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """View configuration for Places-Review"""
 from api.v1.views import app_views
-from flask import request, jsonify, abort
+from flask import request, jsonify, abort, make_response
 from models import storage, place
 from models.place import Place
 from models.review import Review
@@ -17,7 +17,7 @@ def get_reviews(place_id):
     res = []
     for i in city.reviews:
         res.append(i.to_dict())
-    return jsonify(res), 200
+    return jsonify(res)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
@@ -37,10 +37,10 @@ def delete_review(review_id=None):
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
-    else:
-        review.delete()
-        storage.save()
-        return jsonify({}), 200
+
+    review.delete()
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
@@ -52,15 +52,15 @@ def post_placereview(place_id):
         abort(404)
     content_review = request.get_json()
     if content_review is None:
-        return jsonify("Not a JSON"), 400
+        return make_response(jsonify("Not a JSON"), 400)
     elif 'user_id' not in content_review:
-        return jsonify("Missing user_id"), 400
+        return make_response(jsonify("Missing user_id"), 400)
     content["place_id"] = place_id
     userid = content_review['user_id']
     if storage.get("User", u_id):
         new_s = Review(**content_review)
         new_s.save()
-        return jsonify(new_s.to_dict()), 201
+        return make_response(jsonify(new_s.to_dict()), 201)
     abort(404)
 
 
@@ -74,7 +74,7 @@ def put_placereview(review_id):
     if review is None:
         abort(404)
     if not content:
-        return (jsonify({'error': 'Not a JSON'}), 400)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key in content.keys():
         if key not in ignore_keys:
             setattr(review, key, content[key])
