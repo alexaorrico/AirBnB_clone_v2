@@ -19,6 +19,11 @@ def page_not_found(err):
     """handeling 404 errors"""
     return jsonify({"error": "Not found"}), 404
 
+@app.errorhandler(400)
+def error_message(err):
+    """handeling 404 errors"""
+    return jsonify({"error": err.description}), 400
+
 if __name__ == '__main__':
     env_host = environ.get('HBNB_API_HOST', '0.0.0.0')
     env_port = environ.get('HBNB_API_PORT', '5000')
