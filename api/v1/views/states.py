@@ -23,7 +23,7 @@ def states():
             return {"error": "Missing name"}, 400
         new_state = State(**kwargs)
         new_state.save()
-        return jsonify(new_state.to_dict(), 201)
+        return new_state.to_dict(), 201
 
     elif request.method == 'GET':
         return jsonify([o.to_dict() for o in storage.all("State").values()])
@@ -51,5 +51,5 @@ def states_id(id):
                 if k not in ["id", "created_at", "updated_at"]:
                     setattr(state, k, v)
             state.save()
-        return jsonify(state.to_dict(), 200)
+        return state.to_dict(), 200
     abort(404)
