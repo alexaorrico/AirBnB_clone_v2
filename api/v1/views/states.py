@@ -6,6 +6,7 @@ from models import storage
 from models.state import State
 import json
 
+
 @app_views.route("/states/", methods=['GET', 'POST'])
 @app_views.route("/states", methods=['GET', 'POST'])
 def show_states():
@@ -28,6 +29,7 @@ def show_states():
                 abort(400, description="Missing name")
         else:
             abort(400, description="Not a JSON")
+
 
 @app_views.route("states/<state_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("states/<state_id>", methods=['GET', 'DELETE', 'PUT'])
