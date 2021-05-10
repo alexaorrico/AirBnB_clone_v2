@@ -2,7 +2,7 @@
 """
 Contains the TestUserDocs classes
 """
-
+import hashlib
 from datetime import datetime
 import inspect
 import models
@@ -78,12 +78,13 @@ class TestUser(unittest.TestCase):
 
     def test_password_attr(self):
         """Test that User has attr password, and it's an empty string"""
-        user = User()
+        user = User(password="password")
         self.assertTrue(hasattr(user, "password"))
+        pasw = hashlib.md5("password".encode()).hexdigest()
         if models.storage_t == 'db':
             self.assertEqual(user.password, None)
         else:
-            self.assertEqual(user.password, "")
+            self.assertEqual(user.password, pasw)
 
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
