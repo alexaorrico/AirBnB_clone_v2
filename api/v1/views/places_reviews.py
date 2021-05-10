@@ -52,7 +52,7 @@ def review_delete(review_id=None):
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
-def place_post(place_id=None):
+def review_post(place_id=None):
     """POST review"""
     if place_id is not None:
         my_place_obj_ = storage.get(Place, place_id)
@@ -81,7 +81,7 @@ def place_post(place_id=None):
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
-def update_obj_places(review_id=None):
+def update_obj_review(review_id=None):
     """PUT review"""
     if review_id is not None:
         my_review_obj = storage.get(Review, review_id)
