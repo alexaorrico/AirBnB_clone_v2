@@ -42,13 +42,13 @@ def places_id_amenities_id(id, am_id):
                     if (amenity in place.amenities):
                         place.amenities.remove(amenity)
                         storage.save()
-                        return {}, 200
+                        return jsonify({}, 200)
                     abort(404)
                 elif storage_t == 'fs':
                     if (am_id in place.amenity_ids):
                         place.amenity_ids.remove(am_id)
                         storage.save()
-                        return {}, 200
+                        return jsonify({}, 200)
                     abort(404)
             abort(404)
         elif request.method == 'POST':
@@ -65,7 +65,7 @@ def places_id_amenities_id(id, am_id):
                         if (am_id not in place.amenity_ids):
                             place.amenity_ids.append(am_id)
                             storage.save()
-                            return jsonify(amenity.to_dict(), 201)
+                            return jsonify(amenity.to_dict(), 200)
                     abort(404)
                 abort(404)
             abort(404)
