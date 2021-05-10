@@ -7,12 +7,13 @@ from flask import jsonify
 from flask import make_response
 import os
 import json
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
+CORS(app)
 
 
 @app.teardown_appcontext
