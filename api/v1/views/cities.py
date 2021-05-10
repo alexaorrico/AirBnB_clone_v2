@@ -20,7 +20,7 @@ def all_states(state_id=None):
             lista = []
             for city in cities:
                 if city.state_id == my_state_obj.id:
-                    my_city_obj = storage.get(City, city_id)
+                    my_city_obj = storage.get(City, city.id)
                     lista.append(my_city_obj.to_dict())
             return jsonify(lista)
 
