@@ -17,11 +17,11 @@ def status_check():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1/stats', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def class_count():
     '''counts number of each kind of class in storage'''
     stats = {}
     classlist = [State, City, User, Place, Review, Amenity]
     for class_type in classlist:
-        stats[type(class_type).__name__] = storage.count(class_type)
+        stats[class_type.__name__] = storage.count(class_type)
     return jsonify(stats)
