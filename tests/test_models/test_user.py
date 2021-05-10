@@ -8,8 +8,11 @@ import inspect
 import models
 from models import user
 from models.base_model import BaseModel
-import pep8
 import unittest
+from unittest.mock import patch
+from io import StringIO
+import pycodestyle
+import os
 User = user.User
 
 
@@ -20,16 +23,23 @@ class TestUserDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.user_f = inspect.getmembers(User, inspect.isfunction)
 
+    def test_pep8(self):
+        case = '\n'
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            with os.popen("pep8 tests/test_models/test_user.py") as cmd:
+                print(cmd.read())
+        self.assertEqual(fake_out.getvalue(), case)
+
     def test_pep8_conformance_user(self):
         """Test that models/user.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/user.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_user(self):
         """Test that tests/test_models/test_user.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_user.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
