@@ -11,7 +11,8 @@ from models.amenity import Amenity
 from models.review import Review
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET', 'POST'], strict_slashes=False)
 def state_id_cities(state_id):
     '''returns list of states or creates new one'''
     state_target = storage.get(State, state_id)
