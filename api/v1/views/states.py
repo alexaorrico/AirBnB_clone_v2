@@ -23,7 +23,7 @@ def states():
             return {"error": "Missing name"}, 400
         new_state = State(**kwargs)
         new_state.save()
-        return jsonify(new_state.to_dict(), 201)
+        return new_state.to_dict(), 201
 
     elif request.method == 'GET':
         return jsonify([o.to_dict() for o in storage.all("State").values()])
