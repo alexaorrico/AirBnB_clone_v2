@@ -59,7 +59,10 @@ def user_update(user_id):
     userobj = storage.get(User, user_id)
     if userobj is None:
         abort(404)
-    body_dict = request.get_json()
+    try:
+        body_dict = request.get_json()
+    except:
+        abort(400, "Not a JSON")
     if body_dict is None:
         abort(400, "Not a JSON")
     body_dict.pop("id", None)
