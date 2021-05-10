@@ -65,7 +65,7 @@ def review_post(place_id=None):
                     my_user_obj_ = storage.get(User, my_json['user_id'])
                     if my_user_obj_ is not None:
                         if "text" in my_json:
-                            name = my_json["name"]
+                            text = my_json["text"]
                             n = Review(text=text, user_id=my_json['user_id'],
                                        place_id=place_id)
                             n.save()
