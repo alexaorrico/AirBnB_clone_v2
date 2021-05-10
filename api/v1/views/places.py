@@ -76,7 +76,7 @@ def places_search():
     states = kwargs.get('states', [])
     cities = kwargs.get('cities', [])
     amenities = kwargs.get('amenities', [])
-    if states == cities == []:
+    if states == cities == amenities == []:
         places = storage.all("Place").values()
     else:
         places = []
