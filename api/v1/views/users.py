@@ -67,4 +67,6 @@ def put_user(user_id):
             if key not in ignore_keys:
                 setattr(user, key, req_dict[key])
         user.save()
-        return (jsonify(user.to_dict()), 200)
+    else:
+        abort(404)
+    return (jsonify(user.to_dict()), 200)
