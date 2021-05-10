@@ -26,7 +26,7 @@ def states_not_linked():
     return make_response(jsonify(state.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def states_linked(state_id=None):
     """states linked to JSON object
     """
@@ -43,10 +43,10 @@ def states_linked(state_id=None):
         return (jsonify({}), 200)
 
     if request.method == 'PUT':
-        if not request.get_json():
+        if request.get_json() is None:
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         for attr, value in request.get_json().items():
             if attr not in ['id', 'created_at', 'updated_at']:
-                setattr(state, attr, val)
-    state.save()
-    return jsonify(state.to_dict())
+                setattr(state_obj, attr, value)
+    state_obj.save()
+    return jsonify(state_obj.to_dict())
