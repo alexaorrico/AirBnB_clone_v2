@@ -63,15 +63,18 @@ def post_place(city_id):
     '''post_place - create an place object with post'''
     if storage.get(City, city_id) is None:
         abort(404)
-    if not request.get_json():
-        return "Not a JSON", 400
-    if "user_id" not in request.get_json():
-        return "Missing user_id", 400
-    request = request.get_json()
+    try:
+        if not request.get_json():
+            abort(400, "Not a JSON")
+        if "user_id" not in request.get_json():
+            abort(400, "Missing user_id")
+        request = request.get_json()
+    except:
+        abort(400, "Not a JSON")
     if storage.get(User, request["user_id"]) is None:
         abort(404)
     if "name" not in request:
-        return "Missing name", 400
+        abort(400, "Missing name")
     request["city_id"] = city_id
     place = Place(**request)
     place.save()
@@ -86,9 +89,12 @@ def put_place(place_id):
 
     if placeId is None:
         abort(404)
-    body_dict = request.get_json()
+    try:
+        body_dict = request.get_json()
+    except:
+        abort(400, "Not a JSON")
     if body_dict is None:
-        return "Not a JSON", 400
+        abort(400, "Not a JSON")
     body_dict.pop("id", None)
     body_dict.pop("created_at", None)
     body_dict.pop("updated_at", None)
