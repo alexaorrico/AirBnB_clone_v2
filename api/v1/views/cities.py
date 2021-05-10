@@ -13,7 +13,7 @@ from models.city import City
 def get_cities(state_id):
     """Retrieves all cities in a particular state"""
     cities = []
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     for city in state.cities:
@@ -25,7 +25,7 @@ def get_cities(state_id):
 @app_views.route('/cities/<string:city_id>')
 def get_city(city_id):
     """Retrives city with matching state_id"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     return jsonify(city.to_dict())
@@ -34,7 +34,7 @@ def get_city(city_id):
 @app_views.route('/cities/<string:city_id>', methods=['DELETE'])
 def delete_city(city_id):
     """Delete city matching city id"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     storage.delete(city)
@@ -45,7 +45,7 @@ def delete_city(city_id):
 @app_views.route('/states/<string:state_id>/cities', methods=['POST'])
 def create_city(state_id):
     """Creates a new city"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     if not request.get_json():
@@ -62,7 +62,7 @@ def create_city(state_id):
 @app_views.route('/cities/<string:city_id>', methods=['PUT'])
 def update_city(city_id):
     """Update a city"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     if not request.get_json():
