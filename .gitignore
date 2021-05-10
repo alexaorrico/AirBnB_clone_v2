@@ -1,0 +1,13 @@
+file.json
+**pycache**
+test_get_count.py
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+
+
+# Made by Brandixitor for a reason :D

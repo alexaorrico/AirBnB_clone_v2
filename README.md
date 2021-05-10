@@ -157,6 +157,12 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
+
 Second part of Airbnb: Joann Vuong
+
+
+AirBnB_Clone_V3:</br>
+Med Salah Bourouba (Brandixitor) - [Github](https://github.com/Brandixitor) </br>
+Hadir Jenny - [Github](https://github.com/JennyHadir)
 ## License
 Public Domain. No copy write protection. 
