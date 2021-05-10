@@ -16,7 +16,7 @@ def all_users():
     users = storage.all(User).values()
     list_users = []
     for user in users:
-        list_users.append(users.to_dict())
+        list_users.append(user.to_dict())
     return jsonify(list_users)
 
 
