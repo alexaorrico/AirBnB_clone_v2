@@ -38,10 +38,11 @@ def delete_amen(place_id, amenity_id):
     if amn not in place.amenities:
         abort(404)
     if storage_t == "db":
-        place.amenities.remove(amn)
+        place.amenities.remove(amenity)
+        place.save()
     else:
         place.amenity_id.remove(amenity_id)
-    storage.save()
+        place.save()
     return jsonify({}), 200
 
 
@@ -56,9 +57,9 @@ def link_amen(place_id, amenity_id):
     if amn in place.amenities:
         return jsonify(amenity.to_dict()), 200
     if storage_t == "db":
-        place.amenities.append(amn)
+        place.amenities.append(amenity)
         place.save()
     else:
-        place.amenities_ids.append(amn)
+        place.amenities_ids.append(amenity_id)
         place.save()
     return jsonify(amn.to_dict()), 201
