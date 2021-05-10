@@ -18,9 +18,8 @@ def states_id_cities(id):
     state = storage.get(State, id)
     if (state):
         if request.method == 'POST':
-            try:
-                kwargs = request.get_json()
-            except:
+            kwargs = request.get_json()
+            if not kwargs:
                 return {"error": "Not a JSON"}, 400
             if "name" not in kwargs:
                 return {"error": "Missing name"}, 400
@@ -46,9 +45,8 @@ def cities_id(id):
             return {}, 200
 
         elif request.method == 'PUT':
-            try:
-                kwargs = request.get_json()
-            except:
+            kwargs = request.get_json()
+            if not kwargs:
                 return {"error": "Not a JSON"}, 400
             for k, v in kwargs.items():
                 if k not in ["id", "state_id", "created_at", "updated_at"]:

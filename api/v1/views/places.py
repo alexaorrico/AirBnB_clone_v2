@@ -9,6 +9,8 @@ from flask import abort, jsonify, request
 from models.city import City
 from models.place import Place
 from models.user import User
+from models.state import State
+from models.amenity import Amenity
 
 
 @app_views.route('/cities/<id>/places', methods=['GET', 'POST'])
@@ -19,9 +21,8 @@ def cities_id_places(id):
     city = storage.get(City, id)
     if (city):
         if request.method == 'POST':
-            try:
-                kwargs = request.get_json()
-            except:
+            kwargs = request.get_json()
+            if not kwargs:
                 return {"error": "Not a JSON"}, 400
             if "user_id" not in kwargs:
                 return {"error": "Missing user_id"}, 400
@@ -52,9 +53,8 @@ def places_id(id):
             return {}, 200
 
         elif request.method == 'PUT':
-            try:
-                kwargs = request.get_json()
-            except:
+            kwargs = request.get_json()
+            if not kwargs:
                 return {"error": "Not a JSON"}, 400
             for k, v in kwargs.items():
                 if k not in ["id", "user_id", "city_id",
@@ -63,3 +63,45 @@ def places_id(id):
             place.save()
         return place.to_dict()
     abort(404)
+
+
+@app_views.route('/places_search', methods=['POST'])
+def places_search():
+    """
+        Flask route at /places_search
+    """
+    kwargs = request.get_json()
+    if not kwargs:
+        return {"error": "Not a JSON"}, 400
+    states = kwargs.get('states', [])
+    cities = kwargs.get('cities', [])
+    amenities = kwargs.get('amenities', [])
+    if states == cities == []:
+        places = storage.all("Place").values()
+    else:
+        places = []
+        for state_id in states:
+            state = storage.get(State, state_id)
+            for city in state.cities:
+                state_cities = state.cities
+                if city.id not in cities:
+                    cities.append(city.id)
+        for city_id in cities:
+            city = storage.get(City, city_id)
+            for place in city.places:
+                places.append(place)
+    search_result = []
+    amenity_objs = []
+    for amenity_id in amenities:
+        amenity = storage.get(Amenity, amenity_id)
+        if amenity:
+            amenity_objs.append(amenity)
+    for place in places:
+        amenities_cnt = 0
+        for amenity in amenity_objs:
+            if amenity not in place.amenities:
+                amenities_cnt += 1
+        if amenities_cnt == 0:
+            search_result.append(place.to_dict())
+
+    return jsonify(search_result)

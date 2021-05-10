@@ -15,9 +15,8 @@ def amenities():
         Flask route at /amenities.
     """
     if request.method == 'POST':
-        try:
-            kwargs = request.get_json()
-        except:
+        kwargs = request.get_json()
+        if not kwargs:
             return {"error": "Not a JSON"}, 400
         if "name" not in kwargs:
             return {"error": "Missing name"}, 400
@@ -42,9 +41,8 @@ def amenities_id(id):
             return {}, 200
 
         elif request.method == 'PUT':
-            try:
-                kwargs = request.get_json()
-            except:
+            kwargs = request.get_json()
+            if not kwargs:
                 return {"error": "Not a JSON"}, 400
             for k, v in kwargs.items():
                 if k not in ["id", "created_at", "updated_at"]:

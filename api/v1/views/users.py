@@ -15,9 +15,8 @@ def users():
         Flask route at /users.
     """
     if request.method == 'POST':
-        try:
-            kwargs = request.get_json()
-        except:
+        kwargs = request.get_json()
+        if not kwargs:
             return {"error": "Not a JSON"}, 400
         if "email" not in kwargs:
             return {"error": "Missing email"}, 400
@@ -44,9 +43,8 @@ def users_id(id):
             return {}, 200
 
         elif request.method == 'PUT':
-            try:
-                kwargs = request.get_json()
-            except:
+            kwargs = request.get_json()
+            if not kwargs:
                 return {"error": "Not a JSON"}, 400
             for k, v in kwargs.items():
                 if k not in ["id", "email", "created_at", "updated_at"]:
