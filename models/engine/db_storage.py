@@ -79,8 +79,8 @@ class DBStorage:
         """retrieves an object in the database"""
         if cls and id:
             return self.__session.query(cls).filter_by(id=id).first()
+        return None
 
     def count(self, cls=None):
         """count the number of objects in the database"""
         return len(self.all(cls))
-
