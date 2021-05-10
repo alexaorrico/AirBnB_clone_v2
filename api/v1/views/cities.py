@@ -17,7 +17,8 @@ from flask import request
 @app_views.route("/states/<state_id>/cities", methods=['GET'], strict_slashes=False)
 def get_cities(state_id=None):
     """states"""
-    if state_id is None:
+    willy = storage.get('State', state_id)
+    if willy is None:
         abort(404)
     cities_dict = []
     for item in storage.all('City').values():
@@ -56,6 +57,9 @@ def del_city(city_id=None):
 @app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
 def post_city(state_id=None):
     """state"""
+    willy2 = storage.get('State', state_id)
+    if willy2 is None:
+        abort(404)
     try:
         willy = request.get_json()
     except:
