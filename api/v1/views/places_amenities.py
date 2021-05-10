@@ -56,10 +56,10 @@ def link_amen(place_id, amenity_id):
     amn = storage.get(Amenity, amenity_id)
     if not place or not amn:
         abort(404, "Not found")
-    if amn in place.amenities:
-        return jsonify(amenity.to_dict()), 200
+    if amn in place.amenities():
+        return jsonify(amn.to_dict()), 200
     if storage_t == "db":
-        place.amenities.append(amenity)
+        place.amenities().append(amn)
         place.save()
     else:
         place.amenities_ids.append(amenity_id)
