@@ -40,7 +40,6 @@ def states_id(id):
             state = storage.get(State, state_id)
             if not state:
                 abort(404)
-            return jsonify(state.to_dict())
 
         if request.method == 'DELETE':
             state.delete()
