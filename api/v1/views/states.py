@@ -51,5 +51,5 @@ def states_id(id):
                 if k not in ["id", "created_at", "updated_at"]:
                     setattr(state, k, v)
             state.save()
-            return state.to_dict()
+        return state.to_dict()
     abort(404)
