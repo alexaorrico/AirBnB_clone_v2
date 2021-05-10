@@ -78,7 +78,7 @@ class DBStorage:
         """
         if cls is not None and id is not None:
             try:
-                return self.__session.query(classes[cls.__name__]).get(id)
+                return self.__session.query(classes[cls]).get(id)
             except:
                 return None
         return None
@@ -87,7 +87,7 @@ class DBStorage:
         """Counts the number of objects in storage."""
         if cls is not None:
             try:
-                return len(self.all(classes[cls.__name__]))
+                return len(self.all(classes[cls]))
             except:
                 return None
         else:
