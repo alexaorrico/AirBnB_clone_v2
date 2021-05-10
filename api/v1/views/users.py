@@ -42,12 +42,15 @@ def user_delete(user_id=None):
 @app_views.route('/users', methods=["POST"], strict_slashes=False)
 def user_create():
     """creates a user object"""
-    body_dict = request.get_json()
-    if body_dict is None:
+    try:
+        body_dict = request.get_json()
+        if body_dict is None:
+            abort(400, "Not a JSON")
+    except Exception:
         abort(400, "Not a JSON")
-    if "email" not in body_dict:
+    if "email" not in body_dict.keys():
         abort(400, "Missing email")
-    if "password" not in body_dict:
+    if "password" not in body_dict.keys():
         abort(400, "Missing password")
     userobj = User(**body_dict)
     userobj.save()
