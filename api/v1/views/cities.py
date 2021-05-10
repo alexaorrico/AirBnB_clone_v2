@@ -15,19 +15,23 @@ from flask import request
 
 
 @app_views.route("/states/<state_id>/cities", methods=['GET'], strict_slashes=False)
-def get_states(state_id=None):
+def get_cities(state_id=None):
     """states"""
     if state_id is None:
         abort(404)
     cities_dict = []
     for item in storage.all('City').values():
-        if storage.get('City', state_id) is state_id:
+        # print("--------------------------------------------")
+        # print(storage.all().get('City', state_id))
+        # print(item.state_id)
+        # print("--------------------------------------------")
+        if item.state_id == state_id:
             cities_dict.append(item.to_dict())
     return jsonify(cities_dict)
 
 
 @app_views.route("/cities/<city_id>", methods=['GET'], strict_slashes=False)
-def get_state(city_id=None):
+def get_city(city_id=None):
     """state"""
     if storage.get('City', city_id) is None:
         abort(404)
@@ -38,7 +42,7 @@ def get_state(city_id=None):
 @app_views.route("/cities/<city_id>",
                  methods=['DELETE'],
                  strict_slashes=False)
-def del_state(city_id=None):
+def del_city(city_id=None):
     """state"""
     willy = storage.get('City', city_id)
     if willy is None:
@@ -50,7 +54,7 @@ def del_state(city_id=None):
 
 
 @app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
-def post_state(state_id=None):
+def post_city(state_id=None):
     """state"""
     try:
         willy = request.get_json()
@@ -61,13 +65,14 @@ def post_state(state_id=None):
     elif "name" not in willy.keys():
         abort(400, 'Missing name')
     else:
-        new_city = City(name=willy['name'])
+        new_city = City(name=willy['name'], state_id=state_id)
+        # new_city = City(state_id=state_id)
         new_city.save()
         return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
-def put_state(city_id=None):
+def put_city(city_id=None):
     """put/update state"""
     """ Request dict """
     city_store = storage.get(City, city_id)
