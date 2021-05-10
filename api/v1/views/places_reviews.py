@@ -16,7 +16,7 @@ def get_reviews(place_id):
     res = []
     for i in city.reviews:
         res.append(i.to_dict())
-    return jsonify(res)
+    return jsonify(res), 200
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def get_review(review_id=None):
