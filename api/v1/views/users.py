@@ -16,7 +16,7 @@ def all_users():
     users = storage.all(User).values()
     list_users = []
     for user in users:
-        list_users.append(user.to_dict())
+        list_users.append(users.to_dict())
     return jsonify(list_users)
 
 
@@ -60,7 +60,7 @@ def user_post():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
-def update_amenity(user_id=None):
+def update_user(user_id=None):
     """PUT user"""
     if user_id is not None:
         my_user_obj = storage.get(User, user_id)
