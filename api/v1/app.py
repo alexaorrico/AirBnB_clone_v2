@@ -6,8 +6,13 @@ from api.v1.views import app_views
 import flask
 from flask import request, jsonify
 from os import environ
+from flask_cors import CORS
 
 app = flask.Flask(__name__)
+
+# CORS instance
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
 app.register_blueprint(app_views)
 
 
