@@ -78,8 +78,8 @@ def put_placereview(review_id):
         abort(404)
     if not content:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    for key in content.keys():
+    for key, val in content.items():
         if key not in ignore_keys:
-            setattr(review, key, content[key])
+            setattr(review, key, val)
     storage.save()
     return (jsonify(review.to_dict()), 200)
