@@ -39,15 +39,15 @@ def delete_amen(place_id, amenity_id):
     if not pl or not amn:
         abort(404)
     if storage_t == "db":
-        if amn not in place.amenities():
+        if amn not in pl.amenities():
             abort(404)
-        place.amenities().remove(amenity)
-        place.save()
+        pl.amenities().remove(amenity)
+        pl.save()
     else:
-        if amn not in place.amenity_ids:
+        if amn.id not in pl.amenity_ids:
             abort(404)
-        place.amenity_ids.remove(amenity_id)
-        place.save()
+        pl.amenity_ids.remove(amenity_id)
+        pl.save()
     return jsonify({}), 200
 
 
