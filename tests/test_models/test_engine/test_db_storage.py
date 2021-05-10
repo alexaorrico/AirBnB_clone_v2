@@ -83,6 +83,37 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """test that new adds an object to the database"""
 
+        # note: we cannot assume order of test is order written
+        self.test_len = len(self.store.all())
+        # self.assertEqual(len(self.store.all()), self.test_len)
+        self.model.save()
+        self.store.reload()
+        self.assertEqual(len(self.store.all()), self.test_len + 1)
+        a = Amenity(name="thing")
+        a.save()
+        self.store.reload()
+        self.assertEqual(len(self.store.all()), self.test_len + 2)
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+        test_len = len(self.store.all())
+        a = Amenity(name="another")
+        a.save()
+        self.store.reload()
+        self.assertEqual(len(self.store.all()), test_len + 1)
+        b = State(name="california")
+        self.assertNotEqual(len(self.store.all()), test_len + 2)
+        b.save()
+        self.store.reload()
+        self.assertEqual(len(self.store.all()), test_len + 2)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_reload(self):
+        self.model.save()
+        a = Amenity(name="different")
+        a.save()
+        self.store.reload()
+        for value in self.store.all().values():
+            self.assertIsInstance(value.created_at, datetime)
