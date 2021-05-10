@@ -29,7 +29,7 @@ def states():
         return jsonify([o.to_dict() for o in storage.all("State").values()])
 
 
-@app_views.route('/states/<id>', methods=['GET', 'DELETE', 'PUT', 'POST'])
+@app_views.route('/states/<id>', methods=['GET', 'DELETE', 'PUT'])
 def states_id(id):
     """
         Flask route at /states/<id>.
