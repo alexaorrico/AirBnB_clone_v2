@@ -48,9 +48,9 @@ def post_placereview(place_id):
         abort(404)
     content_review = request.get_json()
     if content_review is None:
-        jsonify("Not a JSON"), 400
+        return jsonify("Not a JSON"), 400
     elif 'user_id' not in content_review:
-        jsonify("Missing user_id"), 400
+        return jsonify("Missing user_id"), 400
     content["place_id"] = place_id
     userid = content_review['user_id']
     if storage.get("User", u_id):

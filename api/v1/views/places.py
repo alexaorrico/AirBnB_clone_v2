@@ -45,27 +45,30 @@ def deleteplaces(place_id=None):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def createplaces(city_id=None):
+def createplaces(city_id):
     """Create a place"""
     city = storage.get("City", city_id)
-    print("HERE")
     if city is None:
+        print("none")
         abort(404)
-    print("found it")
-    content = request.get_json(silent=True)
+    content = request.get_json()
     if content is None:
-        jsonify("Not a JSON"), 400
+        print("JSON")
+        return jsonify("Not a JSON"), 400
     elif 'name' not in content:
-        jsonify("Missing name"), 400
+        print("name")
+        return jsonify("Missing name"), 400
     elif 'user_id' not in content:
-        jsonify("Missing user_id"), 400
-    content["city_id"] = city_id
-    u_id = content['user_id']
-    if storage.get("User", u_id):
-        new_s = Place(**content)
-        new_s.save()
-        return jsonify(new_s.to_dict()), 201
-    abort(404)
+        print("id")
+        return jsonify("Missing user_id"), 400
+    else: 
+        content["city_id"] = city_id
+        u_id = content['user_id']
+        if storage.get("User", u_id):
+            new_s = Place(**content)
+            new_s.save()
+            return jsonify(new_s.to_dict()), 201
+        abort(404)
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def updateplaces(place_id=None):
