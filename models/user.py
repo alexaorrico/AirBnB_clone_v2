@@ -27,5 +27,8 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
-        kwargs["password"] = md5(str.encode(kwargs["password"])).hexdigest()
+        pwd = kwargs.get("password")
+        if pwd is not None:
+            pwd = md5(str.encode(pwd)).hexdigest()
+            kwargs["password"] = pwd
         super().__init__(*args, **kwargs)
