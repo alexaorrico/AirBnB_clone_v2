@@ -10,10 +10,12 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
+
 @app.errorhandler(404)
 def not_found(error):
     """ Error 404 """
     return (jsonify(error="Not found"), 404)
+
 
 @app.teardown_appcontext
 def Down_World(exception):

@@ -10,10 +10,12 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/status')
 def status_ok():
     """ prints json rep. status: ok """
     return jsonify(status='OK')
+
 
 @app_views.route('/stats')
 def class_counter():
@@ -24,9 +26,9 @@ def class_counter():
     reviews = storage.count(Review)
     states = storage.count(State)
     users = storage.count(User)
-    return jsonify(amenities=amenities, 
-                   cities=cities, 
-                   places=places, 
-                   reviews=reviews, 
-                   states=states, 
+    return jsonify(amenities=amenities,
+                   cities=cities,
+                   places=places,
+                   reviews=reviews,
+                   states=states,
                    users=users)
