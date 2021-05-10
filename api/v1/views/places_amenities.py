@@ -61,11 +61,13 @@ def places_id_amenities_id(id, am_id):
                             place.amenities.append(amenity)
                             storage.save()
                             return jsonify(amenity.to_dict(), 201)
+                        return jsonify(amenity.to_dict(), 200)
                     elif storage_t == 'fs':
                         if (am_id not in place.amenity_ids):
                             place.amenity_ids.append(am_id)
                             storage.save()
-                            return jsonify(amenity.to_dict(), 200)
+                            return jsonify(amenity.to_dict(), 201)
+                        return jsonify(amenity.to_dict(), 200)
                     abort(404)
                 abort(404)
             abort(404)
