@@ -25,7 +25,8 @@ def users_manage():
             abort(400, 'Missing email')
         if 'password' not in content.keys():
             abort(400, 'Missing password')
-        new_instance = User(password=content['password'], email=content['email'])
+        new_instance = User(password=content['password'],
+                            email=content['email'])
         new_instance.save()
         return jsonify(new_instance.to_dict()), 201
     else:
