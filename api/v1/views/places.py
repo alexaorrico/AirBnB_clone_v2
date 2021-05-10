@@ -106,7 +106,7 @@ def St_Ci_Am_places():
                         if "amenities" not in new_dict.keys():
                             lista.append(place.to_dict())
                         else:
-                            places_id.append(place.id)
+                            places_ids.append(place.id)
     if "cities" in new_dict.keys() and len(new_dict["cities"]) > 0:
         for val in new_dict["cities"]:
             cities = storage.get(City, val)
@@ -116,7 +116,7 @@ def St_Ci_Am_places():
                         if "amenities" not in new_dict.keys():
                             lista.append(place.to_dict())
                         else:
-                            places_id.append(place.id)
+                            places_ids.append(place.id)
     if "amenities" in new_dict.keys() and len(new_dict["amenities"]) > 0:
         if len(places_ids) == 0:
             cities = storage.all(City).values()
@@ -135,11 +135,11 @@ def St_Ci_Am_places():
                         if place not in lista:
                             lista.append(place_i)
         else:
-            print(places_ids)
             for ids in places_ids:
                 flag = 0
                 place = storage.get(Place, ids)
                 place_i = place.to_dict()
+                lista_amen = []
                 for amen in place.amenities:
                     lista_amen.append(amen)
                 for v in new_dict["amenities"]:
