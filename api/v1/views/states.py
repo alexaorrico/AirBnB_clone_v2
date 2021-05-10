@@ -9,7 +9,7 @@ from flask import abort, jsonify, request
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def states():
     """
         Flask route at /states.
@@ -29,7 +29,8 @@ def states():
         return jsonify([o.to_dict() for o in storage.all("State").values()])
 
 
-@app_views.route('/states/<id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def states_id(id):
     """
         Flask route at /states/<id>.
@@ -37,7 +38,6 @@ def states_id(id):
     state = storage.get(State, id)
     if (state):
         if request.method == 'GET':
-            state = storage.get(State, state_id)
             if not state:
                 abort(404)
 
@@ -55,5 +55,5 @@ def states_id(id):
                 if k not in ["id", "created_at", "updated_at"]:
                     setattr(state, k, v)
             state.save()
-        return state.to_dict()
+        return jsonify(state.to_dict())
     abort(404)
