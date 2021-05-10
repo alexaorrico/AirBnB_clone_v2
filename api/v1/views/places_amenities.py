@@ -23,7 +23,10 @@ def get_amen(place_id):
     if storage_t == "db":
         return jsonify([e.to_dict() for e in place.amenities])
     else:
-        return jsonify([e.to_dict() for e in place.amenity_ids])
+        l = []
+        for e in place.amenity_ids:
+            l.append(storage.get(Amenity, e).to_dict())
+        return jsonify(l)
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
@@ -56,12 +59,15 @@ def link_amen(place_id, amenity_id):
     amn = storage.get(Amenity, amenity_id)
     if not place or not amn:
         abort(404, "Not found")
-    if amn in place.amenities():
-        return jsonify(amn.to_dict()), 200
+
     if storage_t == "db":
+        if amn in place.amenities():
+            return jsonify(amn.to_dict()), 200
         place.amenities().append(amn)
         place.save()
     else:
+        if amn in place.amenity_ids:
+            return jsonify(amn.to_dict()), 200
         place.amenity_ids.append(amenity_id)
         place.save()
     return jsonify(amn.to_dict()), 201
