@@ -97,8 +97,8 @@ class TestFileStorage(unittest.TestCase):
         new_user = User(email="ale@higuera.com", password="password")
         new_user.save()
         self.assertIs(new_state, models.storage.get("State", new_state.id))
-        self.assertIs(None, models.storage.get("State", "blah"))
-        self.assertIs(None, models.storage.get("blah", "blah"))
+        self.assertIs(None, models.storage.get("State", "id_inconrrect"))
+        self.assertIs(None, models.storage.get("Class_incorrect", "id_incorrect"))
         self.assertIs(new_user, models.storage.get("User", new_user.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -106,9 +106,9 @@ class TestFileStorage(unittest.TestCase):
         """test that new adds an object to the database"""
         initial_count = models.storage.count()
         self.assertEqual(models.storage.count("Blah"), 0)
-        new_state = State(name="Florida")
+        new_state = State(name="Alejandra")
         new_state.save()
-        new_user = User(email="bob@foobar.com", password="password")
+        new_user = User(email="ale@higuera.com", password="password")
         new_user.save()
         self.assertEqual(models.storage.count("State"), initial_count + 1)
         self.assertEqual(models.storage.count(), initial_count + 2)
