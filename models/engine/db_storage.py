@@ -77,10 +77,21 @@ class DBStorage:
 
     def get(self, cls, id):
         """ Retrive an Object! """
-        ks = cls + '.' + id
-        if ks in self.all():
-            return self.all()[ks]
+        objects = self.all()
+        ks = cls.__name__ + '.' + id
+        if ks in objects.keys():
+            return (objects[name])
+        return None
 
     def count(self, cls=None):
         """ Counts the number of objects in storage """
-        return len(self.all(cls))
+        objects = self.all()
+        count = 0
+        if cls:
+            for key, obj in objects.items():
+                if obj.__class__.__name__ == cls.__name__:
+                    count += 1
+        else:
+            for obj in objects.value():
+                count += 1
+        return (count)
