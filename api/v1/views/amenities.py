@@ -23,7 +23,7 @@ def get_amenities(amenity_id):
        Retrieves the list of all Amenity objects
     """
     if (amenity_id is not None):
-        get_amenity = do_check_id(Amenity, amenity_id).to_dict()
+        get_amenity = check_id(Amenity, amenity_id).to_dict()
         return jsonify(get_amenity)
     all_amenities = storage.all(Amenity)
     amenities = []
@@ -36,7 +36,7 @@ def delete_amenity(amenity_id):
     """
         Deletes a Amenity object
     """
-    get_amenity = do_check_id(Amenity, amenity_id)
+    get_amenity = check_id(Amenity, amenity_id)
     storage.delete(get_amenity)
     storage.save()
     response = {}
@@ -64,7 +64,7 @@ def update_amenity(amenity_id, request):
     """
         Updates a Amenity object
     """
-    get_amenity = do_check_id(Amenity, amenity_id)
+    get_amenity = check_id(Amenity, amenity_id)
     body_request = request.get_json()
     if (body_request is None):
         abort(400, 'Not a JSON')
