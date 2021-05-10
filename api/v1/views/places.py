@@ -3,16 +3,16 @@
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
-from models import city
-from models import place
-from models import user
-from models import state
-from api.v1.views.cities import do_get_cities
+from models.city import City
+from models.place import Place
+from models.user import User
+from models.state import State
+from api.v1.views.cities import get_all
 from api.v1.views.places_amenities import do_get_amenities
 import json
 
 
-def check_id(cls, place_id):
+def check(cls, place_id):
     """
         If the place_id is not linked to any Place object, raise a 404 error
     """
@@ -30,9 +30,9 @@ def get_places(city_id, place_id):
        if place_id is not none get a Place object
     """
     if (place_id is not None):
-        get_place = do_check_id(place.Place, place_id).to_dict()
+        get_place = check(Place, place_id).to_dict()
         return jsonify(get_place)
-    my_city = storage.get(city.City, city_id)
+    my_city = storage.get(City, city_id)
     try:
         all_places = my_city.places
     except Exception:
@@ -48,19 +48,19 @@ def delete_place(place_id):
         Deletes a Place object
         Return: an empty dictionary with the status code 200
     """
-    get_place = do_check_id(place.Place, place_id)
+    get_place = check(Place, place_id)
     storage.delete(get_place)
     storage.save()
     response = {}
     return jsonify(response)
 
 
-def do_create_place(request, city_id):
+def create_place(request, city_id):
     """
         Creates a place object
         Return: new place object
     """
-    do_check_id(city.City, city_id)
+    check(City, city_id)
     body_request = request.get_json()
     if (body_request is None):
         abort(400, 'Not a JSON')
@@ -68,12 +68,12 @@ def do_create_place(request, city_id):
         user_id = body_request['user_id']
     except KeyError:
         abort(400, 'Missing user_id')
-    do_check_id(user.User, user_id)
+    check(User, user_id)
     try:
         place_name = body_request['name']
     except KeyError:
         abort(400, 'Missing name')
-    new_place = place.Place(name=place_name, city_id=city_id, user_id=user_id)
+    new_place = Place(name=place_name, city_id=city_id, user_id=user_id)
     storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict())
@@ -83,7 +83,7 @@ def update_place(place_id, request):
     """
         Updates a Place object
     """
-    get_place = do_check_id(place.Place, place_id)
+    get_place = check(Place, place_id)
     body_request = request.get_json()
     if (body_request is None):
         abort(400, 'Not a JSON')
@@ -110,12 +110,12 @@ def search(request):
     cities = body_request.get('cities')
     amenities = body_request.get('amenities')
     if len(body_request) == 0 or (states is None and cities is None):
-        places = storage.all(place.Place)
+        places = storage.all(Place)
         for p in places.values():
             places_list.append(p.to_dict())
     if states is not None and len(states) is not 0:
         for id in states:
-            get_cities = do_get_cities(id, None).json
+            get_cities = get_all(id, None).json
             for city in get_cities:
                 all_cities.append(city.get('id'))
         for id in all_cities:
@@ -130,7 +130,7 @@ def search(request):
     if amenities is not None and len(amenities) is not 0:
         for p in places_list:
             place_id = p.get('id')
-            get_amenities = storage.get(place.Place, place_id)
+            get_amenities = storage.get(Place, place_id)
             amenity_id = get_amenities.amenities
             for a in amenity_id:
                 place_amenities.append(a.id)
@@ -167,4 +167,4 @@ def places_search():
     retrieves all Place objects depending of the JSON
     in the body of the request
     """
-    return do_search(request)
+    return search(request)
