@@ -10,6 +10,7 @@ from models.user import User
 from models.amenity import Amenity
 import json
 
+
 @app_views.route("/cities/<city_id>/places/", methods=['GET', 'POST'])
 @app_views.route("/cities/<city_id>/places", methods=['GET', 'POST'])
 def show_places(city_id):
@@ -42,6 +43,7 @@ def show_places(city_id):
                 abort(400, description="Missing user_id")
         else:
             abort(400, description="Not a JSON")
+
 
 @app_views.route("places/<place_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("places/<place_id>", methods=['GET', 'DELETE', 'PUT'])
@@ -76,13 +78,14 @@ def show_place(place_id):
         else:
             abort(400, description="Not a JSON")
 
+
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def St_Ci_Am_places():
     """ Function to search places containing one of """
     new_dict = request.get_json()
     if new_dict is None:
         abort(400, description="Not a JSON")
-    
+
     counter = 0
     for lists in new_dict.values():
         if lists != []:

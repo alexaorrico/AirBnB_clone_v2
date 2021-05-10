@@ -10,6 +10,7 @@ from models.user import User
 from models.review import Review
 import json
 
+
 @app_views.route("/places/<place_id>/reviews/", methods=['GET', 'POST'])
 @app_views.route("/places/<place_id>/reviews", methods=['GET', 'POST'])
 def show_reviews(place_id):
@@ -42,6 +43,7 @@ def show_reviews(place_id):
                 abort(400, description="Missing user_id")
         else:
             abort(400, description="Not a JSON")
+
 
 @app_views.route("reviews/<review_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("reviews/<review_id>", methods=['GET', 'DELETE', 'PUT'])

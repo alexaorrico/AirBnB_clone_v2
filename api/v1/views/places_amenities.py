@@ -12,7 +12,8 @@ import json
 import models
 
 
-@app_views.route("/places/<place_id>/amenities", methods=['GET'], strict_slashes=False)
+@app_views.route("/places/<place_id>/amenities/",
+                 methods=['GET'], strict_slashes=False)
 def show_place_amenities(place_id):
     """ returns list of amenities from place """
     if models.storage_t == 'db':
@@ -34,7 +35,9 @@ def show_place_amenities(place_id):
                 return jsonify(lista)
             abort(404)
 
-@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=['DELETE', 'POST'], strict_slashes=False)
+
+@app_views.route("/places/<place_id>/amenities/<amenity_id>",
+                 methods=['POST', 'DELETE'], strict_slashes=False)
 def show_place_amenity(place_id, amenity_id):
     """ returns amenity data from place """
     place = storage.get(Place, place_id)
@@ -52,5 +55,5 @@ def show_place_amenity(place_id, amenity_id):
                 if amenit.id == amenity_id:
                     return jsonify(amenit.to_dict()), 200
             setattr(place, 'amenity_id', amenity_id)
-            return jsonify(amenit.to_dict()), 201 
+            return jsonify(amenit.to_dict()), 201
     abort(404)

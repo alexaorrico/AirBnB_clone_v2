@@ -6,6 +6,7 @@ from models import storage
 from models.user import User
 import json
 
+
 @app_views.route("/users/", methods=['GET', 'POST'])
 @app_views.route("/users", methods=['GET', 'POST'])
 def show_users():
@@ -29,6 +30,7 @@ def show_users():
             return jsonify(new_user.to_dict()), 201
         else:
             abort(400, description="Not a JSON")
+
 
 @app_views.route("users/<user_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("users/<user_id>", methods=['GET', 'DELETE', 'PUT'])

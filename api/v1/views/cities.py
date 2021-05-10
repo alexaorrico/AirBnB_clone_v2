@@ -7,6 +7,7 @@ from models.city import City
 from models.state import State
 import json
 
+
 @app_views.route("/states/<state_id>/cities/", methods=['GET', 'POST'])
 @app_views.route("/states/<state_id>/cities", methods=['GET', 'POST'])
 def show_cities(state_id):
@@ -31,6 +32,7 @@ def show_cities(state_id):
                 abort(400, description="Missing name")
         else:
             abort(400, description="Not a JSON")
+
 
 @app_views.route("cities/<city_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("cities/<city_id>", methods=['GET', 'DELETE', 'PUT'])

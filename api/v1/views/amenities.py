@@ -6,6 +6,7 @@ from models import storage
 from models.amenity import Amenity
 import json
 
+
 @app_views.route("/amenities/", methods=['GET', 'POST'])
 @app_views.route("/amenities", methods=['GET', 'POST'])
 def show_amenities():
@@ -28,6 +29,7 @@ def show_amenities():
                 abort(400, description="Missing name")
         else:
             abort(400, description="Not a JSON")
+
 
 @app_views.route("amenities/<amenity_id>/", methods=['GET', 'DELETE', 'PUT'])
 @app_views.route("amenities/<amenity_id>", methods=['GET', 'DELETE', 'PUT'])
