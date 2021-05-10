@@ -131,8 +131,12 @@ class TestImproveFileStorage(unittest.TestCase):
         """ Test method count """
         storage = FileStorage()
         num = 0
+        num_state = 0
         for i in storage.all():
             num += 1
+        for j in storage.all(State):
+            num_state += 1
         new_state = State()
         new_state.save()
         self.assertEqual(num + 1, storage.count())
+        self.assertEqual(num_state + 1, storage.count(State))
