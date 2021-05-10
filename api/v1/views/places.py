@@ -63,10 +63,13 @@ def place_post(city_id=None):
                 if "user_id" in my_json:
                     my_user_obj_ = storage.get(User, user_id)
                     if my_user_obj_ is not None:
-                        name = my_json["name"]
-                        new_place = Place(name=name, user_id=user_id)
-                        new_place.save()
-                        return make_response(jsonify(new_place.to_dict()), 201)
+                        if "name" in my_json:
+                            name = my_json["name"]
+                            n = Place(name=name, user_id=user_id)
+                            n.save()
+                            return make_response(jsonify(n.to_dict()), 201)
+                        else:
+                            abort(400, "Missing name")
                     else:
                         abort(404)
                 else:
