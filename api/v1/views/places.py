@@ -65,7 +65,8 @@ def place_post(city_id=None):
                     if my_user_obj_ is not None:
                         if "name" in my_json:
                             name = my_json["name"]
-                            n = Place(name=name, user_id=my_json['user_id'])
+                            n = Place(name=name, user_id=my_json['user_id'],
+                                      city_id=city_id)
                             n.save()
                             return make_response(jsonify(n.to_dict()), 201)
                         else:
