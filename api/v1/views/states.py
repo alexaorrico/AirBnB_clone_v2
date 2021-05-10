@@ -15,9 +15,8 @@ def states():
         Flask route at /states.
     """
     if request.method == 'POST':
-        try:
-            kwargs = request.get_json()
-        except:
+        kwargs = request.get_json()
+        if not kwargs:
             return {"error": "Not a JSON"}, 400
         if "name" not in kwargs:
             return {"error": "Missing name"}, 400
