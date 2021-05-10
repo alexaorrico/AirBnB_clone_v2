@@ -23,7 +23,8 @@ def get_amen(place_id):
     if storage_t == "db":
         return jsonify([e.to_dict() for e in place.amenities])
     else:
-        return jsonify([e.to_dict() for e in place.amenities_ids])
+        return jsonify([storage.get(Amenity, e).to_dict()
+                        for e in place.amenities_ids])
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
