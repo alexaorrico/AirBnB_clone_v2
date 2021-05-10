@@ -60,5 +60,6 @@ def states_id(id):
                     state = State(kwargs)
                     state.save()
                     return state.to_dict(), 200
+            return {"error": "Missing name"}, 400
         return state.to_dict()
     abort(404)
