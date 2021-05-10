@@ -61,12 +61,9 @@ def post_placereview(place_id):
     if 'text' not in content_review:
         return make_response(jsonify({'error': 'Missing text'}), 400)
     content["place_id"] = place_id
-    userid = content_review['user_id']
-    if storage.get("User", u_id):
-        new_s = Review(**content_review)
-        new_s.save()
-        return make_response(jsonify(new_s.to_dict()), 201)
-    abort(404)
+    new_s = Review(**content_review)
+    new_s.save()
+    return make_response(jsonify(new_s.to_dict()), 201)
 
 
 @app_views.route('reviews/<review_id>', methods=['PUT'],
