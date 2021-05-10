@@ -108,8 +108,8 @@ class TestImproveDBStorage(unittest.TestCase):
     def test_method_count(self):
         """ Test method count """
         storage = DBStorage()
-        num = storage.count()
-        num_states = storage.count(State)
+        num = models.storage.count()
+        num_states = models.storage.count(State)
         new_state = State()
         new_state.save()
         self.assertEqual(num + 1, storage.count())
