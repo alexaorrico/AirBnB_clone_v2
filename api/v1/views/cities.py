@@ -49,7 +49,7 @@ def create(state_id):
     """creates a city object"""
     try:
         if not request.get_json():
-            return jsonify({"error": "Not a JSON"}), 400 
+            return jsonify({"error": "Not a JSON"}), 400
         body_dict = request.get_json()
     except:
         return jsonify({"error": "Not a JSON"}), 400
