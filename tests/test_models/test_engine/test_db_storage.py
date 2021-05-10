@@ -108,3 +108,4 @@ class TestImproveDBStorage(unittest.TestCase):
         new_state = State()
         new_state.save()
         self.assertEqual(num + 1, storage.count())
+        self.assertEqual(num_states + 1, storage.count(State))
