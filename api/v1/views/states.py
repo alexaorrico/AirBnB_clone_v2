@@ -8,7 +8,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states')
+@app_views.route('/states', strict_slashes=False)
 def get_states():
     """Retrieves all states"""
     states = []
@@ -17,19 +17,20 @@ def get_states():
     return jsonify(states)
 
 
-@app_views.route('/states/<string:state_id>')
+@app_views.route('/states/<string:state_id>', strict_slashes=False)
 def get_state(state_id):
     """Retrives state with matching state_id"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'])
+@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Delete state matching state id"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -37,7 +38,8 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'],
+                 strict_slashes=False)
 def create_state():
     """Creates a new state"""
     if not request.get_json():
@@ -51,10 +53,11 @@ def create_state():
         return make_response(jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'])
+@app_views.route('/states/<string:state_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_status(state_id):
     """Update a state"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     if not request.get_json():
