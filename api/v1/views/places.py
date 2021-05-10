@@ -11,13 +11,14 @@ from flask import request, abort, jsonify
 def list_all_places(city_id):
     """lists all places"""
     city = storage.get("City", city_id)
-    if city is None:
+    if city is None or city_id is None:
         abort(404)
 
     places = []
-    for place in storage.all("Place").values():
-        places.append(place.to_dict())
-
+    all_places = storage.all("Place").values()
+    for place in all_places:
+        if place.city_id == city_id:
+            places.append(place.to_dict())
     return jsonify(places)
 
 
@@ -39,7 +40,7 @@ def delete_places(place_id=None):
     if place_obj is None:
         abort(404)
     else:
-        storage.delete(place_obj)
+        storage.delete(obj)
         storage.save()
         return jsonify({}), 200
 
