@@ -61,7 +61,7 @@ def createplaces(city_id):
     elif 'user_id' not in content:
         print("id")
         return jsonify("Missing user_id"), 400
-    else: 
+    else:
         content["city_id"] = city_id
         u_id = content['user_id']
         if storage.get("User", u_id):
@@ -69,6 +69,7 @@ def createplaces(city_id):
             new_s.save()
             return jsonify(new_s.to_dict()), 201
         abort(404)
+
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def updateplaces(place_id=None):
