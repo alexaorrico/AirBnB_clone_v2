@@ -12,12 +12,12 @@ from models.review import Review
 def get_reviews(place_id):
     """Gets all reviwes depending of place_id"""
     place = storage.get("Place", place_id)
-    if place is None:
-        abort(404)
-    res = []
-    for i in city.reviews:
-        res.append(i.to_dict())
-    return jsonify(res), 200
+    if place:
+        res = []
+        for i in city.reviews:
+            res.append(i.to_dict())
+        return jsonify(res), 200
+    abort(404)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
