@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 """new view for Place objects that handles all"""
-from models.place import Place
-from models.user import User
-from models.amenity import Amenity
-from flask import Flask, abort, jsonify, make_response
-from flask import request
 from api.v1.views import app_views
-from models.state import State
-from models.city import City
 from models import storage
+from flask import Flask, abort, jsonify, make_response
+from models.place import Place
+from models.city import City
+from models.user import User
+from flask import request
+from models.state import State
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
@@ -77,7 +76,7 @@ def place_post(city_id=None):
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
-def update_obj(place_id=None):
+def update_obj_places(place_id=None):
     """PUT place"""
     if place_id is not None:
         my_place_obj = storage.get(Place, place_id)
