@@ -51,6 +51,7 @@ def post_placereview(place_id):
         jsonify("Not a JSON"), 400
     elif 'user_id' not in content_review:
         jsonify("Missing user_id"), 400
+    content["place_id"] = place_id
     userid = content_review['user_id']
     if storage.get("User", u_id):
         new_s = Review(**content_review)
