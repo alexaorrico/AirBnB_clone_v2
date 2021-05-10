@@ -48,19 +48,21 @@ def deleteplaces(place_id=None):
 def createplaces(city_id=None):
     """Create a place"""
     city = storage.get("City", city_id)
+    print("HERE")
     if city is None:
         abort(404)
-    s = request.get_json(silent=True)
-    if s is None:
+    print("found it")
+    content = request.get_json(silent=True)
+    if content is None:
         jsonify("Not a JSON"), 400
-    elif 'name' not in s:
+    elif 'name' not in content:
         jsonify("Missing name"), 400
-    elif 'user_id' not in s:
+    elif 'user_id' not in content:
         jsonify("Missing user_id"), 400
-    s["city_id"] = city_id
+    content["city_id"] = city_id
     u_id = content['user_id']
     if storage.get("User", u_id):
-        new_s = Place(**s)
+        new_s = Place(**content)
         new_s.save()
         return jsonify(new_s.to_dict()), 201
     abort(404)
