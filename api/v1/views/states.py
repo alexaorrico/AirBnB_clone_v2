@@ -29,7 +29,7 @@ def states():
         return jsonify([o.to_dict() for o in storage.all("State").values()])
 
 
-@app_views.route('/states/<id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<id>', methods=['GET', 'DELETE', 'PUT', 'POST'])
 def states_id(id):
     """
         Flask route at /states/<id>.
@@ -50,5 +50,15 @@ def states_id(id):
                 if k not in ["id", "created_at", "updated_at"]:
                     setattr(state, k, v)
             state.save()
+        elif request.method == 'POST':
+            try:
+                kwargs = request.get_json()
+            except:
+                return {"error": "Not a JSON"}, 400
+            for k in kwargs.items():
+                if k == 'name':
+                    state = State(kwargs)
+                    state.save()
+                    return state.to_dict(), 200
         return state.to_dict()
     abort(404)
