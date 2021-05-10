@@ -114,9 +114,6 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-
-class TestImproveFileStorage(unittest.TestCase):
-    """ Test method get and count """
     @unittest.skipIf(models.storage_t == 'db', "testing db storage")
     def test_mehotd_get(self):
         """ Test mehotd get """
