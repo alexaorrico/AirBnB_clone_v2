@@ -20,12 +20,13 @@ def all_states(state_id=None):
             lista = []
             for city in cities:
                 if city.state_id == my_state_obj.id:
-                    lista.append(city.to_dict())
+                    my_city_obj = storage.get(City, city_id)
+                    lista.append(my_city_obj.to_dict())
             return jsonify(lista)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
-def city_id_(city_id):
+def city_id_(city_id=None):
     """return city id"""
     if city_id is not None:
         my_city_obj = storage.get(City, city_id)
@@ -36,7 +37,7 @@ def city_id_(city_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
-def city_delete(city_id):
+def city_delete(city_id=None):
     """delete city"""
     if city_id is not None:
         my_city_obj = storage.get(City, city_id)
@@ -48,7 +49,7 @@ def city_delete(city_id):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
-def city_post(state_id):
+def city_post(state_id=None):
     """POST city"""
     my_json = request.get_json(silent=True)
     if my_json is not None:
@@ -64,7 +65,7 @@ def city_post(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
-def update_obj(city_id):
+def update_obj(city_id=None):
     """PUT city"""
     my_city_obj = storage.get(City, city_id)
     update_ = request.get_json(silent=True)
