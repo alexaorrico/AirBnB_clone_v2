@@ -37,12 +37,8 @@ def states_id(id):
     """
     state = storage.get(State, id)
     if (state):
-        if request.method == 'GET':
-            if not state:
-                abort(404)
-
         if request.method == 'DELETE':
-            state.delete()
+            storage.delete(state)
             storage.save()
             return {}, 200
 
@@ -55,5 +51,5 @@ def states_id(id):
                 if k not in ["id", "created_at", "updated_at"]:
                     setattr(state, k, v)
             state.save()
-        return jsonify(state.to_dict())
+            return state.to_dict(), 200
     abort(404)
