@@ -83,37 +83,35 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """test that new adds an object to the database"""
 
-        # note: we cannot assume order of test is order written
-        self.test_len = len(self.store.all())
-        # self.assertEqual(len(self.store.all()), self.test_len)
-        self.model.save()
-        self.store.reload()
-        self.assertEqual(len(self.store.all()), self.test_len + 1)
-        a = Amenity(name="thing")
-        a.save()
-        self.store.reload()
-        self.assertEqual(len(self.store.all()), self.test_len + 2)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-        test_len = len(self.store.all())
-        a = Amenity(name="another")
-        a.save()
-        self.store.reload()
-        self.assertEqual(len(self.store.all()), test_len + 1)
-        b = State(name="california")
-        self.assertNotEqual(len(self.store.all()), test_len + 2)
-        b.save()
-        self.store.reload()
-        self.assertEqual(len(self.store.all()), test_len + 2)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_reload(self):
-        self.model.save()
-        a = Amenity(name="different")
-        a.save()
-        self.store.reload()
-        for value in self.store.all().values():
-            self.assertIsInstance(value.created_at, datetime)
+    def test_get(self):
+        """Test get method"""
+        new_attr = {'name': 'California'}
+        state_1 = State(**new_attr)
+        state_1.save()
+        get_obj = models.storage.get(State, state_1.id)
+        self.assertEqual(get_obj.id, state_1.id)
+        get_obj = models.storage.get(State, "5793527727")
+        self.assertEqual(get_obj, None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+        def test_count(self):
+        """Test count method"""
+        new_attr = {'name': 'Texas'}
+        state_1 = State(**new_attr)
+        state_1.save()
+        objs = models.storage.all()
+        numbers = models.storage.count()
+        self.assertEqual(numbers, len(objs))
+        new_attr = {'name': 'Florida'}
+        state_2 = State(**new_attr)
+        state_2.save()
+        objs = models.storage.all()
+        numbers_state = models.storage.count(State)
+        self.assertEqual(numbers_state, len(objs))
