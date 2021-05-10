@@ -141,4 +141,3 @@ class TestImproveFileStorage(unittest.TestCase):
         new_state.save()
         self.assertEqual(num + 1, storage.count())
         self.assertEqual(num_state + 1, storage.count(State))
-        self.assertEqual(storage.count("string"), None)
