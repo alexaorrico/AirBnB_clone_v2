@@ -4,7 +4,7 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
-from models.amenities import Amenity
+from models.amenity import Amenity
 from models.place import Place
 import os
 
@@ -26,7 +26,7 @@ def all_amenities(place_id):
     return jsonify(amenities)
 
 
-@app_views.route('/places/<place_id>/amenities/<amenity_id', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
 def delete_amenity(place_id, amenity_id):
     """ Detelete amenity """
     place = storage.get("Place", place_id)
