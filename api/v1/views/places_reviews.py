@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """new view for Review object that handles all default"""
+
 from api.v1.views import app_views
 from models import storage
 from flask import Flask, abort, jsonify, make_response
@@ -41,7 +42,7 @@ def review_id_(review_id=None):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def review_delete(review_id=None):
-    """Delete review"""
+    """DELETE review"""
     if review_id is not None:
         my_review_obj = storage.get(Review, review_id)
         if my_review_obj is None:
