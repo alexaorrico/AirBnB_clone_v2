@@ -29,7 +29,7 @@ def all_place(city_id=None):
 
 @app_views.route('/places/<place_id>', methods=['GET'])
 def place_id_(place_id=None):
-    """Return place id"""
+    """Return a place by its id"""
     if place_id is not None:
         my_place_obj = storage.get(Place, place_id)
         if my_place_obj is None:
