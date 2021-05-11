@@ -113,3 +113,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def get(self, cls, id):
+        """Retrieves one object"""
+        obj_id = "{}.{}".format(cls.__name__, i)
+        if obj_id in self.all().keys():
+            return self.all()[obj_id]
+        else:
+            return None
+
+    def count(self,cls=None):
+        """ Counts the objects in a storage Class can be specified """
+        if not cls:
+            return len(self.all())
+        else:
+            return len(v for v in self.all().values() if type(v) is cls)
