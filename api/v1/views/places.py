@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""new view for Place objects that handles all"""
+"""New view for Place objects that handles all"""
 from api.v1.views import app_views
 from models import storage
 from flask import Flask, abort, jsonify, make_response
