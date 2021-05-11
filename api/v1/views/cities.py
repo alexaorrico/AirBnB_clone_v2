@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Config endpoint for REST resource states"""
+
 from flask import Flask, abort, jsonify, make_response
 from flask import request
 from api.v1.views import app_views
