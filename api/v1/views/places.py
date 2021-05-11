@@ -12,7 +12,7 @@ from models.state import State
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
 def all_place(city_id=None):
-    """Return all places"""
+    """Retrieves the list of all Place objects of a City"""
     if city_id is not None:
         my_city_obj = storage.get(City, city_id)
         if my_city_obj is None:
@@ -29,7 +29,7 @@ def all_place(city_id=None):
 
 @app_views.route('/places/<place_id>', methods=['GET'])
 def place_id_(place_id=None):
-    """return place id"""
+    """Return place id"""
     if place_id is not None:
         my_place_obj = storage.get(Place, place_id)
         if my_place_obj is None:
