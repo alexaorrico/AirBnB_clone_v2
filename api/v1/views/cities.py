@@ -27,7 +27,7 @@ def all_states(state_id=None):
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def city_id_(city_id=None):
-    """return city id"""
+    """Return city id"""
     if city_id is not None:
         my_city_obj = storage.get(City, city_id)
         if my_city_obj is None:
