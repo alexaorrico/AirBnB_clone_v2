@@ -40,7 +40,7 @@ def place_id_(place_id=None):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def place_delete(place_id=None):
-    """delete place"""
+    """Delete place by its id"""
     if place_id is not None:
         my_place_obj = storage.get(Place, place_id)
         if my_place_obj is None:
@@ -52,7 +52,7 @@ def place_delete(place_id=None):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
 def place_post(city_id=None):
-    """POST place"""
+    """POST a place"""
     if city_id is not None:
         my_city_obj_ = storage.get(City, city_id)
         if my_city_obj_ is None:
