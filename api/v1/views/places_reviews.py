@@ -13,7 +13,7 @@ from models.state import State
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'])
 def all_review(place_id=None):
-    """return all review"""
+    """Return all reviews"""
     if place_id is not None:
         my_place_obj = storage.get(Place, place_id)
         if my_place_obj is None:
