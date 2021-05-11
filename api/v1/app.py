@@ -5,6 +5,7 @@ from os import environ
 from models import storage
 from api.v1.views import app_views
 from flask import Flask, jsonify
+from flask_cors import CORS
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
