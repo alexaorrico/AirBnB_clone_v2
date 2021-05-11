@@ -33,7 +33,7 @@ def amenity_id(amenity_id=None):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def amenity_delete(amenity_id=None):
-    """delete amenity"""
+    """Delete amenity"""
     if amenity_id is not None:
         my_amenity_obj = storage.get(Amenity, amenity_id)
         if my_amenity_obj is None:
