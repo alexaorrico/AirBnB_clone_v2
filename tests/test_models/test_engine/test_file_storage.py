@@ -113,3 +113,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class test_AnB_v3(unittest.TestCase):
+    """Test the v3 api methods"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_all(self):
+        first_state_id = list(models.storage.all(State).values())[0].id
+        new_obj = storage.get("State", first_state_id)
+        self.assertTrue("{}".format(storage.get("State", first_state_id), 0))
+        self.assertTrue(new_obj.__class__.__name__, "State")
+        self.assertTrue(new_obj.id, first_state_id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_return_dict(self):
+        self.assertIs(type(models.storage.all()), dict)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_no_id(self):
+        first_state_id = None
+        self.assertTrue("{}".format(storage.get("State",
+                                                first_state_id), None))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        self.assertIs(type(models.storage.count()), int)
+        result = models.storage.count(State)
+        new_obj = State(name="California")
+        models.storage.new(new_obj)
+        models.storage.save()
+        new_result = models.storage.count(State)
+        self.assertNotEqual(len(result), len(new_result))
