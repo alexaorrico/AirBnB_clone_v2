@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""new view for Amenity objects that handles all"""
+"""New view for Amenity objects that handles all"""
+
 from models.amenity import Amenity
 from flask import Flask, abort, jsonify, make_response
 from flask import request
