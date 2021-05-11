@@ -12,7 +12,7 @@ from models import storage
 
 @app_views.route('/amenities', methods=['GET'])
 def all_amenities():
-    """return all Amenities"""
+    """Return all Amenities"""
     amenities = storage.all(Amenity).values()
     list_ame = []
     for amenity in amenities:
