@@ -14,7 +14,7 @@ from models.user import User
 
 @app_views.route("/status")
 def function_hola():
-    """Function status"""
+    """Function status return OK"""
     return jsonify({"status": "OK"})
 
 
