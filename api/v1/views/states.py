@@ -9,7 +9,7 @@ from models import storage
 
 @app_views.route('/states', methods=['GET'])
 def all_state():
-    """return all states"""
+    """Return all states"""
     states = storage.all(State).values()
     list_state = []
     for state_ in states:
