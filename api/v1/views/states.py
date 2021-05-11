@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""  
+"""
 New view for State objects that handles all default RestFul API actions
 """
 from models.base_model import BaseModel

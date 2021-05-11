@@ -23,7 +23,7 @@ def all_places():
 @app_views.route('/cities', strict_slashes=False, methods=['GET'])
 def all_cities():
     '''
-    Retrieves the list of all Citiy objects 
+    Retrieves the list of all Citiy objects
     '''
     Cities_List = []
     for value in storage.all('City').values():
