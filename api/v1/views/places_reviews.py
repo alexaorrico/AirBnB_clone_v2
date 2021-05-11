@@ -30,7 +30,7 @@ def all_review(place_id=None):
 
 @app_views.route('/reviews/<review_id>', methods=['GET'])
 def review_id_(review_id=None):
-    """return place id"""
+    """Return place id"""
     if review_id is not None:
         my_review_obj = storage.get(Review, review_id)
         if my_review_obj is None:
@@ -41,7 +41,7 @@ def review_id_(review_id=None):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def review_delete(review_id=None):
-    """delete review"""
+    """Delete review"""
     if review_id is not None:
         my_review_obj = storage.get(Review, review_id)
         if my_review_obj is None:
