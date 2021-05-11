@@ -7,14 +7,17 @@ import os
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
 
 @app.teardown_appcontext
 def v3(error):
     """ close storage"""
     storage.close()
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return {"error": "Not found"}
 
 if __name__ == "__main__":
     """ run appi"""
