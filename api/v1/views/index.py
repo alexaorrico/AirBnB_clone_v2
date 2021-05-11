@@ -20,7 +20,7 @@ def function_hola():
 
 @app_views.route("/stats")
 def function():
-    """function stats"""
+    """Function stats"""
     clases = {
          "amenities": Amenity,
          "cities": City,
