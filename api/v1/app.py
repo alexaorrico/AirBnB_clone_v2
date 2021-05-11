@@ -4,7 +4,6 @@ Module to create API with Flask
 """
 from flask import Flask, jsonify
 from models import storage
-from models.engine import *
 from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
@@ -16,10 +15,11 @@ app = Flask(__name__)
 ''' Register Blueprint '''
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def teardown_appcontext(error):
+def teardown_appcontext(exception):
     '''
     Remove the database, the save the file and exit
     '''
@@ -36,5 +36,5 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     host = getenv("HBNB_API_HOST", "0.0.0.0")
-    port = getenv("HBNB_API_PORT", "5000")
+    port = int(getenv("HBNB_API_PORT", "5000"))
     app.run(host=host, port=port, threaded=True, debug=True)
