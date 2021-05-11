@@ -22,7 +22,7 @@ def all_amenities():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def amenity_id(amenity_id=None):
-    """return amenity"""
+    """Return amenity"""
     if amenity_id is not None:
         my_amenity_obj = storage.get(Amenity, amenity_id)
         if my_amenity_obj is None:
