@@ -70,8 +70,21 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """method to retrieve one object"""
-
+        """Method to retrieve one object"""
+        """Spec_key= one object"""
+        """All func is used to retrieve all dictionaries in a class"""
+        """Dictofobjs is the dictionary of objects"""
+        """Spec_key is the specified key"""
+        """ID will return str representign obj ID"""
+        """Get will return the value of the item with the specified key"""
+        if cls.__name__ not in classes:
+            return None
+        Dictofobjs = self.all(cls)
+        spec_key = cls.__name__ + '.' + str(id)
+        return Dictofobjs.get(spec_key)
 
     def count(self, cls=None):
-        """method to count the number of objects in storage"""
+        """Method to count the number of objects in storage"""
+        """Len func will return number of objects in dictionary"""
+        Dictofobjs = self.all(cls)
+        return len(Dictofobjs)
