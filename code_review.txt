@@ -1,0 +1,11 @@
+tayloradam1999
+
+this gets a class based on cls and id given
+
+this counts based on if a class is given, otherwise runs on all classes
+
+might add in line comments to help understand these methods
+
+not sure why these methods work for DB AND File Storage
+
+all of these are not done with try/except, might switch for error handling
