@@ -15,7 +15,7 @@ portname = os.getenv("HBNB_API_PORT")
 
 @app.errorhandler(404)
 def errorpage(error):
-    return {"error": "Not found"}
+    return {"error": "Not found"}, 404
 
 
 @app.teardown_appcontext
