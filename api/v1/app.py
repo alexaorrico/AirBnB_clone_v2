@@ -1,4 +1,4 @@
-#!/usr/bin/pyhon3
+#!/usr/bin/python3
 """ running flask """
 from flask import Flask
 from models import storage
