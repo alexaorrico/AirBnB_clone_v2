@@ -61,7 +61,7 @@ class FileStorage:
     def get(self, cls, id):
         """ return the object based on the class name and it's id"""
         cls_all = self.all()
-        for value in cls_all.values()
+        for value in cls_all.values():
             if value.id == id:
                 return value
         return None
