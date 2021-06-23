@@ -12,13 +12,13 @@ from models.user import User
 from models import storage
 
 
-@app_views_route('/status')
+@app_views.route('/status')
 def status():
     """ Return OK """
     return jsonify({'status': 'OK'})
 
 
-@app_views_route('/stats')
+@app_views.route('/stats')
 def stats():
     """ Using count() method from storage """
     obj_dict = {}
