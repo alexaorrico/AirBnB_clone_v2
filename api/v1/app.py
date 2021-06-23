@@ -1,16 +1,13 @@
 #!/usr/bin/python3
 """ Setup API, import, register blueprint, declare methods, run server """
-from flask import Flask, escape, request, render_template, Blueprint, jsonify
+from flask import Flask, render_template, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
-from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
-# cors = CORS(app, resources={r"/*": {"origins": '0.0.0.0'}})
 app.register_blueprint(app_views)
-# app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
 @app.teardown_appcontext

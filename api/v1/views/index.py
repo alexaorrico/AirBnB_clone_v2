@@ -21,11 +21,11 @@ def status():
 @app_views.route('/stats')
 def stats():
     """ Using count() method from storage """
-    obj_dict = {}
-    obj_dict['amenities'] = storage.count(Amenity)
-    obj_dict['states'] = storage.count(State)
-    obj_dict['cities'] = storage.count(City)
-    obj_dict['places'] = storage.count(Place)
-    obj_dict['reviews'] = storage.count(Review)
-    obj_dict['users'] = storage.count(User)
+    Dict_of_obj = {}
+    Dict_of_obj['amenities'] = storage.count(Amenity)
+    Dict_of_obj['states'] = storage.count(State)
+    Dict_of_obj['cities'] = storage.count(City)
+    Dict_of_obj['places'] = storage.count(Place)
+    Dict_of_obj['reviews'] = storage.count(Review)
+    Dict_of_obj['users'] = storage.count(User)
     return jsonify(obj_dict)
