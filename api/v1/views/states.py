@@ -14,12 +14,12 @@ def all_states():
         state_list = [state for state in states]
         for state in state_list:
             new_list.append(state.to_dict())
-        return jsonify(new_list)
+        return new_list
 
     if request.method == 'POST':
         if not request.json:
             abort(400, 'Not a JSON')
-        if not 'name' in request.json:
+        if 'name' not in request.json:
             abort(400, 'Missing name')
         obj = State(**request.get_json())
         storage.new(obj)
@@ -33,7 +33,7 @@ def one_state(state_id):
     state = [state for state in states if state.id == state_id]
     if len(state) == 0:
         abort(404)
-    
+
     if request.method == 'GET':
         return state[0].to_dict()
 
