@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Importing, creating variables, dealing with wildcards """
-from flask import BLueprint
+from flask import Blueprint
 
 
 app_views = Blueprint('app_view', __name__, url_prefix='/api/v1')
