@@ -19,7 +19,7 @@ def errorpage(error):
 
 
 @app.teardown_appcontext
-def teardown(error):
+def teardown(self):
     if storage:
         storage.close()
 
