@@ -6,22 +6,23 @@ from models.state import State
 from models import storage
 
 
-@app_views.route('/states/', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'])
 def all_states():
     states = storage.all(State).values()
+
     if request.method == 'GET':
         new_list = []
-        state_list = [state for state in states]
-        for state in state_list:
+        for state in states:
             new_list.append(state.to_dict())
-        return new_list
+        return jsonify(new_list)
 
     if request.method == 'POST':
-        if not request.json:
+        json_dict = request.get_json()
+        if not json_dict:
             abort(400, 'Not a JSON')
-        if 'name' not in request.json:
+        if 'name' not in json_dict.keys():
             abort(400, 'Missing name')
-        obj = State(**request.get_json())
+        obj = State(**json_dict)
         storage.new(obj)
         storage.save()
         return jsonify(obj.to_dict()), 201
@@ -43,6 +44,7 @@ def one_state(state_id):
         for k, v in request.get_json().items():
             if k != 'id' and k != 'created_at' and k != 'updated_at':
                 setattr(state[0], k, v)
+        storage.save()
         return jsonify(state[0].to_dict()), 200
 
     if request.method == 'DELETE':
