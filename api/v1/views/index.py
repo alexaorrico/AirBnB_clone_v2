@@ -28,4 +28,4 @@ def stats():
     Dict_of_obj['places'] = storage.count(Place)
     Dict_of_obj['reviews'] = storage.count(Review)
     Dict_of_obj['users'] = storage.count(User)
-    return jsonify(obj_dict)
+    return jsonify(Dict_of_obj)

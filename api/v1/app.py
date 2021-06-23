@@ -7,7 +7,7 @@ from os import getenv
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
+app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 @app.teardown_appcontext
@@ -27,6 +27,6 @@ if __name__ == "__main__":
     realport = getenv('HBNB_API_PORT')
     if host is None:
         host = '0.0.0.0'
-    if port is None:
-        port = '5000'
-    app.run(host=host, port=realport, threaded=True)
+    if realport is None:
+        realport = '5000'
+    app.run(debug=True, host=host, port=realport, threaded=True)
