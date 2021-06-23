@@ -6,7 +6,7 @@ from models.state import State
 from models import storage
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def all_states():
     states = storage.all(State).values()
 
@@ -17,12 +17,11 @@ def all_states():
         return jsonify(new_list)
 
     if request.method == 'POST':
-        json_dict = request.get_json()
-        if not json_dict:
+        if not request.json:
             abort(400, 'Not a JSON')
-        if 'name' not in json_dict.keys():
+        if 'name' not in request.json:
             abort(400, 'Missing name')
-        obj = State(**json_dict)
+        obj = State(**request.get_json())
         storage.new(obj)
         storage.save()
         return jsonify(obj.to_dict()), 201
