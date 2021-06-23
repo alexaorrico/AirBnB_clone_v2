@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Setup API """
+""" Setup API, import, register blueprint, declare methods, run server """
 from flask import Flask, escape, request, render_template, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
@@ -15,7 +15,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 @app.teardown_appcontext
 def teardown(context):
-    """ will only run when app is done """
+    """ Will only run when app is done """
     storage.close()
 
 
@@ -27,9 +27,9 @@ def error404(e):
 
 if __name__ == "__main__":
     host = getenv('HBNB_API_HOST')
-    port = getenv('HBNB_API_PORT')
+    realport = getenv('HBNB_API_PORT')
     if host is None:
         host = '0.0.0.0'
     if port is None:
         port = '5000'
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, realport=port, threaded=True)
