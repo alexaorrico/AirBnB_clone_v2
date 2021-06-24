@@ -8,9 +8,17 @@ and handles teardown
 from api.v1.views import app_views
 from models import storage
 from flask import Flask
+import os
 
-host = 'HBNB_API_HOST' or 0.0.0.0 if not in defined
-port = 'HBNB_API_PORT' or 5000 if not in defined
+if getenv('HBNB_API_HOST') is none:
+    host = 0.0.0.0
+else:
+    host = 'HBNB_API_HOST'
+
+if getenv('HBNB_API_PORT') is none:
+    port = 5000
+else:
+    port = 'HBNB_API_PORT'
 
 app = Flask(__name__, instance_relative_config=True)
 app.register_blueprint(app_views)
