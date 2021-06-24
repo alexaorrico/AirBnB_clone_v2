@@ -15,8 +15,6 @@ def all_city(state_id):
     cities = storage.all(City).values()
 
     city = [city for city in cities if city.state_id == state_id]
-    if len(city) == 0:
-        abort(404)
 
     state = [state for state in states if state.id == state_id]
     if len(state) == 0:
