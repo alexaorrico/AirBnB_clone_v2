@@ -51,9 +51,9 @@ class FileStorage:
     def get(self, cls, id):
         """retrieves one object"""
         cls_dict = self.all(cls)
-        for k, v in cls_dict.items():
-            if id in v.to_dict().values():
-                return v
+        for k in cls_dict:
+            if id in k:
+                return cls_dict[k]
         return None
 
     def count(self, cls=None):
