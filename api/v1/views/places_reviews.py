@@ -9,8 +9,7 @@ from models.review import Review
 from models.user import User
 
 
-@app_views.route('/places/<place_id>/reviews',
-                 methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
 def all_reviews(place_id):
     places = storage.all(Place).values()
     reviews = storage.all(Review).values()
@@ -43,8 +42,7 @@ def all_reviews(place_id):
         return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/reviews/<review_id>',
-                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'])
 def one_review(review_id):
     reviews = storage.all(Review).values()
     review = [review for review in reviews if review.id == review_id]

@@ -8,7 +8,7 @@ from models import storage
 from models.user import User
 
 
-@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/users', methods=['GET', 'POST'])
 def all_users():
     users = storage.all(User).values()
 
@@ -28,8 +28,7 @@ def all_users():
         return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE', 'GET', 'PUT'],
-                 strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['DELETE', 'GET', 'PUT'])
 def one_user(user_id):
     users = storage.all(User).values()
     user = [user for user in users if user.id == user_id]

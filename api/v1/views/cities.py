@@ -8,8 +8,7 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities',
-                 methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def all_city(state_id):
     states = storage.all(State).values()
     cities = storage.all(City).values()
@@ -36,8 +35,7 @@ def all_city(state_id):
         return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>',
-                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
 def one_city(city_id):
     cities = storage.all(City).values()
     city = [city for city in cities if city.id == city_id]

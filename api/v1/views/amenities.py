@@ -8,7 +8,7 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET', 'POST'])
 def all_amenities():
     amenities = storage.all(Amenity).values()
 
@@ -26,8 +26,7 @@ def all_amenities():
         return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE', 'GET', 'PUT'],
-                 strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE', 'GET', 'PUT'])
 def one_amenity(amenity_id):
     amenities = storage.all(Amenity).values()
     amenity = [amenity for amenity in amenities if amenity.id == amenity_id]

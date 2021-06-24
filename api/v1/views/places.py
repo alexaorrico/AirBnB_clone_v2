@@ -9,8 +9,7 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('/cities/<city_id>/places',
-                 methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'])
 def all_places(city_id):
     places = storage.all(Place).values()
     cities = storage.all(City).values()
@@ -43,8 +42,7 @@ def all_places(city_id):
         return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/places/<place_id>',
-                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'])
 def one_place(place_id):
     places = storage.all(Place).values()
     place = [place for place in places if place.id == place_id]
