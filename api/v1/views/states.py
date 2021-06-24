@@ -11,10 +11,7 @@ def all_states():
     states = storage.all(State).values()
 
     if request.method == 'GET':
-        new_list = []
-        for state in states:
-            new_list.append(state.to_dict())
-        return jsonify(new_list)
+        return jsonify(list(map(lambda x: x.to_dict(), states)))
 
     if request.method == 'POST':
         if not request.json:
@@ -41,7 +38,7 @@ def one_state(state_id):
         if not request.json:
             abort(400, 'Not a JSON')
         for k, v in request.get_json().items():
-            if k != 'id' and k != 'created_at' and k != 'updated_at':
+            if k not in ('id', 'created_at', 'updated_at'):
                 setattr(state[0], k, v)
         storage.save()
         return jsonify(state[0].to_dict()), 200

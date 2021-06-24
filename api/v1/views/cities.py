@@ -19,11 +19,7 @@ def all_city(state_id):
         abort(404)
 
     if request.method == 'GET':
-        new_list = []
-        for city in cities:
-            if city.state_id == state_id:
-                new_list.append(city.to_dict())
-        return jsonify(new_list)
+        return jsonify(list(map(lambda x: x.to_dict(), cities)))
 
     if request.method == 'POST':
         if not request.json:
@@ -53,8 +49,7 @@ def one_city(city_id):
         if not request.json:
             abort(400, 'Not a JSON')
         for k, v in request.get_json().items():
-            if k != 'id' and k != 'created_at'\
-               and k != 'updated_at' and k != 'state_id':
+            if k not in ('id', 'created_at', 'updated_at', 'state_id'):
                 setattr(city[0], k, v)
         storage.save()
         return jsonify(city[0].to_dict()), 200
