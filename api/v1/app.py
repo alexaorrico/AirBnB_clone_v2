@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-# unknown comments so far
+"""
+Creates an instances of Flask,
+creates Blueprint instance,
+and handles teardown
+"""
 
 from api.v1.views import app_views
 from models import storage
@@ -11,7 +15,8 @@ port = "HBNB_API_PORT" or 5000 if not in defined
 app = Flask(__name__, instance_relative_config=True)
 app.register_blueprint(app_views)
 
-@app.teardown_appcontext 
+
+@app.teardown_appcontext
 def teardown(self):
     return storage.close()
 

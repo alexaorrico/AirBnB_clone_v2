@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-# insert vague gesture of commentary here
+"""
+Allows transfer of NBlueprint via variable name
+"""
 
 from flask import Blueprint
 from api.v1.views.index import *
