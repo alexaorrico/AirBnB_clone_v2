@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """return object based on input parameters"""
-        keyString = ("{}.{}".format(cls, id))
+        keyString = ("{}.{}".format(cls.__name__, id))
         if keyString in self.all(cls).keys():
             return self.all(cls)[keyString]
         else:
