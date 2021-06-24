@@ -116,7 +116,7 @@ class TestFileStorage(unittest.TestCase):
 
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get_cls(self):
+    def test_count_cls(self):
         """Test the get function in regard to cls"""
         new = Amenity(name="Chavera")
         new.save()
