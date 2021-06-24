@@ -86,3 +86,38 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def get(self, cls, id):
+        """return object based on input parameters"""
+        keyString = ("{}.{}".format(cls, id))
+        if keyString in self.all(cls).keys():
+            return self.all(cls)[keyString]
+        else:
+            return None
+
+    def count(self, cls=None):
+        counter = 0
+        if cls:
+            for instance in self.all(cls).keys():
+                counter += 1
+            return counter
+        else:
+            for instance in self.all().keys():
+                counter += 1
+            return counter
+
+    """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_cls(self):
+        """Test the get function in regard to cls"""
+        new = Amenity(name="Chavera")
+        new.save()
+        self.assertIs(models.storage.get(Amenity, new.id), new)
+
+    """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_cls(self):
+        """Test the get function in regard to cls"""
+        new = Amenity(name="Chavera")
+        new.save()
+        self.assertNotEqual(models.storage.count(Amenity), 0)
