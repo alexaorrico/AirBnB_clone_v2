@@ -93,17 +93,16 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get gets object"""
-        with patch('sys.stdout', new=StringIO()) as x:
-            HBNBCommand().onecmd("create State name='Fugue'")
-            state_id = x.getvalue()
-        obj = DBStorage.get(State, state_id)
-        self.assertIsInstance(obj, State)
+        new = State(name="Kyle")
+        new.save()
+        obj = models.storage.get(State, new.id)
+        self.assertEquals(obj, new)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count counts object"""
-        count1 = DBStorage.count(State)
+        count1 = models.storage.count(State)
         new = State(name="Mind")
-        storage.save()
-        count2 = DBStorage.count(State)
+        new.save()
+        count2 = models.storage.count(State)
         self.assertNotEqual(count1, count2)
