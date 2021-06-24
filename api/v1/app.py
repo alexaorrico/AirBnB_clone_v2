@@ -1,5 +1,5 @@
- #!/usr/bin/python3
- # unknown comments so far
+#!/usr/bin/python3
+# unknown comments so far
 
 from api.v1.views import app_views
 from models import storage
