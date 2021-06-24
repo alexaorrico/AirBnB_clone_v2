@@ -10,23 +10,15 @@ from models import storage
 from flask import Flask
 import os
 
-if getenv('HBNB_API_HOST') is none:
-    host = 0.0.0.0
-else:
-    host = 'HBNB_API_HOST'
-
-if getenv('HBNB_API_PORT') is none:
-    port = 5000
-else:
-    port = 'HBNB_API_PORT'
-
-app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
 def teardown(self):
-    return storage.close()
+    storage.close()
 
 if __name__ == "__main__":
-    app.run(debug=True, threaded=True, host=host, port=port)
+    app.run(debug=True, threaded=True, 
+            host=(getenv('HBNB_API_HOST', '0.0.0.0'))
+            port=int(getenv('HBNB_API_PORT', '5000')))
