@@ -24,7 +24,8 @@ def all_states():
         return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE', 'GET', 'PUT'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['DELETE', 'GET', 'PUT'],
+                 strict_slashes=False)
 def one_state(state_id):
     states = storage.all(State).values()
     state = [state for state in states if state.id == state_id]
