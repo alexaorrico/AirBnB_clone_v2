@@ -116,7 +116,7 @@ class TestFileStorage(unittest.TestCase):
 
         """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_cls(self):
+    def test_get(self):
         """Test the get function in regard to cls"""
         new = Amenity(name="Chavera")
         new.save()
@@ -124,8 +124,8 @@ class TestFileStorage(unittest.TestCase):
 
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_cls(self):
-        """Test the get function in regard to cls"""
+    def test_count(self):
+        """Test the count function in regard to cls"""
         new = Amenity(name="Chavera")
         new.save()
         self.assertNotEqual(models.storage.count(Amenity), 0)
