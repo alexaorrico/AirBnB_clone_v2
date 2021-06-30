@@ -2,9 +2,10 @@
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
-
+from console import HBNBCommand
 from datetime import datetime
 import inspect
+from io import StringIO
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
@@ -18,6 +19,8 @@ import json
 import os
 import pep8
 import unittest
+from unittest.mock import patch
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +89,20 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get gets object"""
+        new = State(name="Kyle")
+        new.save()
+        obj = models.storage.get(State, new.id)
+        self.assertEquals(obj, new)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count counts object"""
+        count1 = models.storage.count(State)
+        new = State(name="Mind")
+        new.save()
+        count2 = models.storage.count(State)
+        self.assertNotEqual(count1, count2)
