@@ -14,10 +14,12 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
 import unittest
+import MySQLdb as SQLito
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -67,6 +69,27 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_dbs_func_get(self):
+        """Test for the presence of docstrings in DBStorage methods"""
+        state = State(name="yesid")
+        storage.new(state)
+        storage.save()
+        first_state_id = list(storage.all("State").values())
+        id1 = first_state_id
+        self.assertTrue(storage.get("State", state.id), id1)
+
+    def test_dbs_func_count(self):
+        """Test for the presence of docstrings in DBStorage methods"""
+        num1 = storage.count("State")
+        state = State(name="yesid")
+        storage.new(state)
+        storage.save()
+        num2 = storage.count("State")
+        first_state_id = list(storage.all("State").values())[0].id
+        id1 = first_state_id
+        self.assertTrue(storage.get("State", first_state_id), id1)
+        self.assertTrue(num1 + 1, num2)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -86,3 +109,26 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_fs_func_get(self):
+        """Test for the presence of docstrings in DBStorage methods"""
+        state = State(name="yesid")
+        storage.new(state)
+        storage.save()
+        first_state_id = list(storage.all("State").values())[0].id
+        id1 = first_state_id
+        self.assertTrue(storage.get("State", first_state_id), id1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_fs_func_count(self):
+        """Test for the presence of docstrings in DBStorage methods"""
+        num1 = storage.count("State")
+        state = State(name="yesid")
+        storage.new(state)
+        storage.save()
+        num2 = storage.count("State")
+        first_state_id = list(storage.all("State").values())[0].id
+        id1 = first_state_id
+        self.assertTrue(storage.get("State", first_state_id), id1)
+        self.assertTrue(num1 + 1, num2)
