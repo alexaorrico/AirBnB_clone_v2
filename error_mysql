@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#conection mysql error 2002
+/etc/init.d/mysql stop
+mkdir /var/run/mysqld
+rm -f /var/run/mysqld/mysqld.pid
+rm -f /var/run/mysqld/mysqld.sock.lock
+rm -f /var/run/mysqld/mysqld.sock
+touch /var/run/mysqld/mysqld.sock
+chown -R mysql /var/run/mysqld
+chgrp -R mysql /var/run/mysqld
+/etc/init.d/mysql start
+/etc/init.d/mysql restart
