@@ -1,0 +1,39 @@
+Merge pull request #1 from linkjavier/storage_get_count …
+
+Merge storage_get_count to master. The file_storage and db_storage was updated with two new functions. get() and count().
+
+Merge pull request #2 from linkjavier/storage_get_count …
+
+upload task 4 create rout for api
+
+Merge pull request #3 from linkjavier/storage_get_count …
+
+Fixed imports and syntax on app.run
+
+Merge pull request #4 from linkjavier/storage_get_count …
+
+Fixed BinBash
+
+Merge pull request #5 from linkjavier/storage_get_count …
+
+Fixed pep8 warnings
+
+Merge pull request #6 from linkjavier/storage_get_count …
+
+Created an endpoint that retrieves the number of each objects by type
+
+Merge pull request #7 from linkjavier/storage_get_count …
+
+Created a handler for 404 errors that returns a JSON-formatted 404 status code response
+
+Merge pull request #8 from linkjavier/storage_get_count …
+
+Permissions and Pretty JSON
+
+Merge pull request #9 from linkjavier/storage_get_count …
+
+Fixed return 404
+
+Merge pull request #10 from linkjavier/storage_get_count …
+
+New view for State objects that handles all default RestFul API actions
