@@ -1,0 +1,9 @@
+GunterPearson
+
+For get method set cls and id defaults to None
+Check if all returns an empty dictionary
+Check id is of type string
+
+For count method
+Possibly check if calling the all method returns an empty dict
+Reminder, don't forget to write tests
