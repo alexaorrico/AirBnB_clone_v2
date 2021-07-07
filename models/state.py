@@ -14,7 +14,7 @@ class State(BaseModel, Base):
     if models.storage_t == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state")
+        cities = relationship("City", cascade="all, delete", backref="state")
     else:
         name = ""
 
@@ -24,7 +24,7 @@ class State(BaseModel, Base):
 
     if models.storage_t != "db":
         @property
-        def cities(self):
+        def citiess(self):
             """getter for list of city instances related to the state"""
             city_list = []
             all_cities = models.storage.all(City)
