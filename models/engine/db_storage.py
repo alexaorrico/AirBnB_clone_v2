@@ -10,8 +10,8 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
-from models.user import User
 from os import getenv
+from models.user import User
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -74,3 +74,16 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retrieves one object"""
+        if id and cls:
+            return self.all(cls)[str(cls.__name__)+"."+id]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """
+            counts object
+        """
+        return (len(self.all(cls)))
