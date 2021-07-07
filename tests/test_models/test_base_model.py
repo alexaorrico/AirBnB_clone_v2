@@ -58,6 +58,7 @@ class TestBaseModelDocs(unittest.TestCase):
 
 class TestBaseModel(unittest.TestCase):
     """Test the BaseModel class"""
+
     def test_instantiation(self):
         """Test that object is correctly created"""
         inst = BaseModel()
@@ -82,15 +83,16 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
-        tic = datetime.now()
+        tic1 = datetime.now()
         inst1 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
+        toc1 = datetime.now()
+        self.assertTrue(tic1 <= inst1.created_at <= toc1)
         time.sleep(1e-4)
-        tic = datetime.now()
+        tic2 = datetime.now()
         inst2 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
+        toc2 = datetime.now()
+
+        self.assertTrue(tic2 <= inst2.created_at <= toc2)
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
@@ -158,3 +160,10 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(old_created_at, new_created_at)
         self.assertTrue(mock_storage.new.called)
         self.assertTrue(mock_storage.save.called)
+
+
+"""     def _print(self, data):
+        print("######## PRINT MONITOR START #########")
+        print(datetime.now())
+        print("######## PRINT MONITOR STOP #########")
+ """
