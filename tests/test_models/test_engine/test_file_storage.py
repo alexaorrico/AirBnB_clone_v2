@@ -2,7 +2,7 @@
 """
 Contains the TestFileStorageDocs classes
 """
-
+from models import storage
 from datetime import datetime
 import inspect
 import models
@@ -113,3 +113,82 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_reload(self):
+        """Test that reload properly reload objects to __objects"""
+        storage = FileStorage()
+        state1 = State(name="California")
+        storage.new(state1)
+        storage.save()
+        storage.reload()
+        dic = storage.all(State)
+        bool = False
+        for k, v in dic.items():
+            if v.name == 'California':
+                bool = True
+        self.assertEqual(bool, True)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_delete(self):
+        """Test if objs will delete when delete method is called"""
+        storage = FileStorage()
+        city1 = City(name="SF")
+        storage.new(city1)
+        storage.reload()
+        all_cities = storage.all(City).values()
+        bool = False
+        for obj in all_cities:
+            if obj.name == 'SF':
+                storage.delete(obj)
+                bool = True
+        self.assertEqual(bool, True)
+
+        all_cities = storage.all(City).values()
+        for obj in all_cities:
+            if obj.name == "SF":
+                bool = False
+        self.assertEqual(bool, True)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_close(self):
+        """Test close"""
+        storage = FileStorage()
+        amenity1 = Amenity(name="WIFI SERVICE")
+        storage.new(amenity1)
+        storage.save()
+        exists = os.path.isfile('file.json')
+        self.assertEqual(True, exists)
+        storage.reload()
+        dic = storage.all(State)
+        bool = True
+        for obj in dic.values():
+            if obj.name == 'WIFI SERVICE':
+                bool = False
+        self.assertEqual(bool, True)
+        storage.close()
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test get function"""
+        first_state_id = list(storage.all("State").values())[0].id
+        obj = storage.get("State", first_state_id)
+        self.assertTrue(obj.__class__.__name__, "State")
+        self.assertTrue(obj.id, first_state_id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test count function"""
+        count_state = storage.count("State")
+        count_city = storage.count("City")
+        count_place = storage.count("Place")
+        count_review = storage.count("Review")
+        count_user = storage.count("User")
+        count_am = storage.count("Amenity")
+        count = storage.count()
+        self.assertTrue(count >= count_state, True)
+        self.assertTrue(count >= count_city, True)
+        self.assertTrue(count >= count_place, True)
+        self.assertTrue(count >= count_review, True)
+        self.assertTrue(count >= count_user, True)
+        self.assertTrue(count >= count_am, True)
