@@ -2,7 +2,7 @@
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
-
+from models import storage
 from datetime import datetime
 import inspect
 import models
@@ -86,3 +86,10 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """ test to check the get method """
+        new_state = State(name="Chia")
+        new_state.save()
+        self.assertIs(new_state, storage.get("State", new_state.id))
