@@ -6,6 +6,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import hashlib
 
 
 class User(BaseModel, Base):
@@ -27,3 +28,23 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+    def __setattr__(self, name, value):
+        """ it's documented, see? """
+        if name == 'password':
+            value = hashlib.md5(value.encode()).hexdigest()
+        self.__dict__[name] = value
+    '''
+    @property
+    def password(self):
+        """ straight from the netherlands """
+        return self.password
+
+    @password.setter
+    '''
+    '''
+    def password(self, password):
+        """ this ones from china """
+        m = hashlib.md5(password.encode()).hexdigest()
+        return m
+    '''
