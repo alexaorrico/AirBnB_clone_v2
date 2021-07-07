@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -67,6 +69,23 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing file storage")
+    def test_get1(self):
+        """Test validate id returned by get function"""
+        obj = models.storage.all("State")
+        if len(obj) != 0:
+            first_state_id = list(obj.values())[0].id
+            state = storage.get("State", first_state_id)
+            self.assertEqual(first_state_id, state.id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count1(self):
+        """Test validates number of State objects"""
+        objects_c1 = len(models.storage.all("State"))
+        objects_c2 = models.storage.count("State")
+        self.assertEqual(objects_c1, objects_c2)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -113,3 +132,20 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing file storage")
+    def test_get(self):
+        """Test validate id returned by get function"""
+        obj = models.storage.all("State")
+        if len(obj) != 0:
+            first_state_id = list(obj.values())[0].id
+            state = storage.get("State", first_state_id)
+            self.assertEqual(first_state_id, state.id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test validates number of State objects"""
+        objects_c1 = len(models.storage.all("State"))
+        objects_c2 = models.storage.count("State")
+        self.assertEqual(objects_c1, objects_c2)
