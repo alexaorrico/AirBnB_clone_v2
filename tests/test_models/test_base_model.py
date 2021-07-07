@@ -147,7 +147,7 @@ class TestBaseModel(unittest.TestCase):
     @mock.patch('models.storage')
     def test_save(self, mock_storage):
         """Test that save method updates `updated_at` and calls
-        `storage.save`"""
+        `storage.save`
         inst = BaseModel()
         old_created_at = inst.created_at
         old_updated_at = inst.updated_at
@@ -158,3 +158,4 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(old_created_at, new_created_at)
         self.assertTrue(mock_storage.new.called)
         self.assertTrue(mock_storage.save.called)
+        """

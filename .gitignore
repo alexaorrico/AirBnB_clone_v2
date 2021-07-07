@@ -1,0 +1,13 @@
+# Ignore the following files and directories
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# JSON Files
+*.json
+
+# temporary files
+*~
+*#
+
+# testfiles
+test_get_count.py

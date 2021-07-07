@@ -2,7 +2,6 @@
 """
 Contains the TestFileStorageDocs classes
 """
-
 from datetime import datetime
 import inspect
 import models
@@ -113,3 +112,31 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Test that checks if get function works with filestorage"""
+        obj1 = State(**{'name': 'California'})
+        models.storage.new(obj1)
+        models.storage.save()
+        obj2 = models.storage.get('State', obj1.id)
+        self.assertEqual(obj1.name, obj2.name)
+        self.assertIs(obj1.id, obj2.id)
+
+    def test_get_fail(self):
+        """Test that checks if get function fails with filestorage"""
+        obj1 = State(**{'name': 'California'})
+        models.storage.new(obj1)
+        models.storage.save()
+        obj2 = models.storage.get('state', obj1.id)
+        self.assertIs(obj2, None)
+
+    def test_count(self):
+        """Test that checks if count function works with filestorage"""
+        first_count = models.storage.count('State')
+        obj1 = State(**{'name': 'California'})
+        models.storage.new(obj1)
+        models.storage.save()
+        second_count = models.storage.count('State')
+        self.assertEqual(second_count - first_count, 1)
+        third_count = models.storage.count('state')
+        self.assertIs(third_count, 0)
