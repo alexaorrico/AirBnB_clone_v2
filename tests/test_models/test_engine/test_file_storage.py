@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get method returns the correct object or None"""
+        s = State(name="Foo")
+        s.save()
+        c = City(name="Bar", state_id=s.id)
+        c.save()
+        self.assertEqual(c, models.storage.get("City", c.id))
+
+        """Test that get method fails if None in place of class is passed"""
+        self.assertEqual(None, models.storage.get(None, c.id))
+
+        """Test that get method fails if incorrect id is passed"""
+        self.assertEqual(None, models.storage.get("City", "54332"))
+
+        """Test that get method fails if "NULL" id is passed"""
+        self.assertEqual(None, models.storage.get("City", "NULL"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count method returns a type integer"""
+        first_count_all = models.storage.count()
+        first_count_state = models.storage.count("State")
+        o = State(name="Hawaii")
+        o.save()
+        second_count_all = models.storage.count()
+        second_count_state = models.storage.count("State")
+        """Test that count method returns a type integer"""
+        self.assertEqual(int, type(models.storage.count()))
+
+        """Test that count method returns the
+        correct number of total objs passed """
+        self.assertEqual(first_count_all + 1, second_count_all)
+
+        """Test that count method returns the
+        correct num of matching cls inputs """
+        self.assertEqual(first_count_state + 1, second_count_state)
+        self.assertEqual(int, type(models.storage.count()))
