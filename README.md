@@ -160,3 +160,64 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+----
+
+* Third part
+
+# 0x05. AirBnB clone - RESTful API
+
+## Resources:books:
+Read or watch:
+
+* Rest API concept page
+* [Learn REST: A RESTful Tutorial](https://www.restapitutorial.com/)
+* [Designing a RESTful API with Python and Flask](https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
+* [HTTP access control (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+* [Flask cheatsheet](https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/301/flask_cheatsheet.pdf)
+* [What are Flask Blueprints, exactly?](https://stackoverflow.com/questions/24420857/what-are-flask-blueprints-exactly)
+* [Flask](https://palletsprojects.com/p/flask/)
+* [Modular Applications with Blueprints](https://flask.palletsprojects.com/en/1.1.x/blueprints/)
+* [Flask tests](https://flask.palletsprojects.com/en/1.1.x/testing/)
+* [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
+* [AirBnB clone - RESTful API](https://www.youtube.com/watch?v=LrQhULlFJdU&feature=youtu.be)
+
+---
+
+## Learning Objectives:bulb:
+What you should learn from this project:
+
+* What REST means
+* What API means
+* What CORS means
+* What is an API
+* What is a REST API
+* What are other type of APIs
+* Which is the HTTP method to retrieve resource(s)
+* Which is the HTTP method to create a resource
+* Which is the HTTP method to update resource
+* Which is the HTTP method to delete resource
+* How to request Rest API
+
+---
+
+### 0. Restart from scratch!
+### Never fail!
+### [2. Code review](./code_review.txt)
+### 3. Improve storage
+### 4. Status of your API
+### [5. Some stats?](./api/v1/views/index.py)
+### [6. Not found](./api/v1/app.py)
+### 7. State
+### 8. City
+### 9. Amenity
+### 10. User
+### 11. Place
+### 12. Reviews
+### 13. HTTP access control (CORS)
+
+---
+
+## Authors third part
+- **Marisol Ramírez Henao** - [Marisol](https://github.com/Marisol2201)
+- **Sandra Macías** - [Sandra](https://github.com/s-macias)
