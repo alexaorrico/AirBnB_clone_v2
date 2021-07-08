@@ -68,6 +68,11 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        try:
+            if getenv("HBNB_TYPE_STORAGE") == 'db':
+                del new_dict['_User__password']
+        except KeyError:
+            pass
         return new_dict
 
     def delete(self):

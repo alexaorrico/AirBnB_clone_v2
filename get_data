@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+curl -o 100-dump.sql "https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/290/100-hbnb.sql"
+echo 'drop database if exists hbnb_dev_db' | mysql -u root -p
+cat 100-dump.sql | mysql -uroot -p
+rm 100-dump.sql
