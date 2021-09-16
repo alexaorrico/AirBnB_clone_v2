@@ -19,7 +19,7 @@ def api_status():
 
 @app_views.route('/stats')
 def api_stats():
-    """kdnvsj valskd ñd"""
+    """checks the API stats of all classes"""
     classes = {"amenities": "Amenity", "cities": "City",
                "places": "Place", "reviews": "Review", "states": "State", "users": "User"}
     for key in classes:
