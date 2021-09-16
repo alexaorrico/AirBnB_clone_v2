@@ -85,7 +85,7 @@ class FileStorage:
             for k, v in self.__objects.items():
                 count += 1
             return count
-        for k, v in self.__objects:
+        for k, v in self.__objects.items():
             print(v.__class__.__name__)
             if v.__class__ == classes[cls]:
                 count += 1
