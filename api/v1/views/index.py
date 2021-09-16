@@ -20,8 +20,8 @@ def api_status():
 @app_views.route('/stats')
 def api_stats():
     """kdnvsj valskd ñd"""
-    classes = {"Amenity": "Amenity", "City": "City",
-               "Place": "Place", "Review": "Review", "State": "State", "User": "User"}
+    classes = {"amenities": "Amenity", "cities": "City",
+               "places": "Place", "Review": "reviews", "states": "State", "users": "User"}
     for key in classes:
         classes[key] = storage.count(classes[key])
     return jsonify(classes)
