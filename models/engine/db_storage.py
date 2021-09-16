@@ -91,5 +91,5 @@ class DBStorage:
                 return len(self.all(classes[cls]))
             except:
                 return None
-            else:
-                return len(self.all())
+        else:
+            return len(self.all())
