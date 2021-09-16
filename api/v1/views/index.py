@@ -19,3 +19,4 @@ def stats():
                     "states": storage.count('State'), 
                     "users": storage.count('User')
                     }
+  
