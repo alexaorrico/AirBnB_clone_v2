@@ -158,7 +158,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Carolina Ramon - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/CarolinaRP1)  
+Carolina Ramon - [Github](https://github.com/caramonp) / [Twitter](https://twitter.com/CarolinaRP1)  
 Juan Carabali - [Github](https://github.com/SrDri) / [Twitter](https://twitter.com/Juanjch_22)
 
 ## License
