@@ -70,11 +70,11 @@ class FileStorage:
         self.reload()
 
 
-    def get(self, cls, id):
+    def get(self, cls=None, id=None):
         """ Get obj grace a son ID"""
         if cls and id:
             for obj in FileStorage.__objects.values():
-                if obj.__class__ == cls:
+                if obj.__class__ == cls or cls == obj.__class__.__name__:
                     if obj.id == id:
                         return obj
         return None
@@ -83,10 +83,10 @@ class FileStorage:
         """count the number of obj in storage"""
         total = 0
         if cls in classes:
-            for obj in FileStorage.__objects.items():
+            for obj in FileStorage.__objects.values():
                 if obj.__class__ == cls:
                     total += 1
         else:
-            for obj in FileStorage.__objects.items():
+            for obj in FileStorage.__objects.values():
                     total += 1
         return total
