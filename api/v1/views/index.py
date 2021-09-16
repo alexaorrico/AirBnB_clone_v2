@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """returns the status of the API"""
-from typing import Reversible
 import models
 from models import storage
 from models.amenity import Amenity
