@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time.
 
 ## Authors
-Juan Camilo Cadavid - [Github](xxxxxxxxxxxxxxxxxx) / [Twitter](https://twitter.com/alexa_orrico)
+Juan Camilo Cadavid - [Github](https://github.com/Juansu01) / [Twitter](https://twitter.com/TheJuan39)
 Julian Tabares - [Github](https://github.com/Julianeme) / [Twitter](https://twitter.com/AJulian16)
 
 Second part of Airbnb: Joann Vuong
