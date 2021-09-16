@@ -20,4 +20,4 @@ if __name__ == "__main__":
     """ Flask main function """
     my_host = environ.get("HBNB_API_HOST")
     my_port = environ.get("HBNB_API_PORT")
-    app.run(debug=True)
+    app.run(host=my_host, port=my_port, threaded=True, debug=True)
