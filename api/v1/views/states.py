@@ -15,3 +15,4 @@ def get_states():
         single_object = []
         for key, value in all_objects.items():
             single_object.append(value.to_dict)
+        return jsonify(single_object)
