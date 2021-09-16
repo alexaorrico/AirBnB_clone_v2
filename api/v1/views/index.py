@@ -20,7 +20,7 @@ def api_status():
 @app_views.route('/stats')
 def api_stats():
     """kdnvsj valskd ñd"""
-    classes = {"Amenity": "Amenity", "BaseModel": "BaseModel", "City": "City",
+    classes = {"Amenity": "Amenity", "City": "City",
                "Place": "Place", "Review": "Review", "State": "State", "User": "User"}
     for key in classes:
         classes[key] = storage.count(classes[key])
