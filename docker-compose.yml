@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+    mysql:
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        image: mysql:5.7
+        ports:
+            - 3306:3306
+        volumes:
+            - "./:/home"
