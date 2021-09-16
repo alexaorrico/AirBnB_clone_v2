@@ -73,11 +73,11 @@ class FileStorage:
         '''retrieve one object'''
         matchKey = cls.__name__ + '.' + str(id)
         print('matchKey is {}'.format(matchKey))
-        for obj in self.__objects.items():
-            key = obj[0]
+        for k, v in self.__objects:
+            key = k
             print('key is {}'.format(key))
             if key == matchKey:
-                return str(obj)
+                return v
         return None
 
     def count(self, cls=None):
