@@ -72,8 +72,10 @@ class FileStorage:
     def get(self, cls, id):
         '''retrieve one object'''
         matchKey = cls.__class__.__name__ + '.' + str(id)
+        print('matchKey is {}'.format(matchKey))
         for obj in self.__objects.items():
             key = obj.__class__.__name__ + '.' + str(id)
+            print('key is {}'.format(key))
             if key == matchKey:
                 return obj
         return None
