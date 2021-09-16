@@ -77,7 +77,7 @@ class FileStorage:
             key = obj[0]
             print('key is {}'.format(key))
             if key == matchKey:
-                return obj
+                return str(obj)
         return None
 
     def count(self, cls=None):

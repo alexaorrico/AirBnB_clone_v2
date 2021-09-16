@@ -76,12 +76,12 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        matchKey = cls.__class__.__name__ + '.' + str(id)
+        matchKey = cls.__name__ + '.' + str(id)
         objs = self.__session.query(classes[cls]).all()
         for obj in objs:
             key = obj.__class__.__name__ + '.' + obj.id
             if matchKey == key:
-                return obj
+                return str(obj)
         return None
 
     def count(self, cls=None):
