@@ -16,6 +16,16 @@ def get_states():
         for key, value in all_objects.items():
             single_object.append(value.to_dict)
         return jsonify(single_object)
+    
+    if request.method == 'POST':
+        if request.json:
+            new_dict = request.get_json()
+            if "name" in new_dict.keys():
+                new_state = State(**new_dict)
+                storage.new(new_state)
+                storage.save()
+                return jsonify(new_state.to_dict()), 201
+        
 
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
