@@ -1,0 +1,7 @@
+.coverage
+.coveragerc
+.reports
+.scannerwork
+file.json
+sonar-project.properties
+tests/test_console_airbnb.py
