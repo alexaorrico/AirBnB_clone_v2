@@ -74,7 +74,7 @@ class FileStorage:
         matchKey = cls.__class__.__name__ + '.' + str(id)
         print('matchKey is {}'.format(matchKey))
         for obj in self.__objects.items():
-            key = obj.__class__.__name__ + '.' + str(id)
+            key = obj[0]
             print('key is {}'.format(key))
             if key == matchKey:
                 return obj
