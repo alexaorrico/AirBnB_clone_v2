@@ -77,3 +77,11 @@ class FileStorage:
             return objs[obj]
         else:
             return None
+
+    def count(self, cls=None):
+        """count of objects"""
+        count = 0
+        objs = self.all(cls)
+        for obj in objs:
+            count += 1
+        return count
