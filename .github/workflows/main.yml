@@ -25,8 +25,16 @@ jobs:
       run: pip install mysqlclient
     - name: start mysql
       run: sudo service mysql restart
+    - name: root pwd
+      run: sudo mysql
+    - name: root pwd
+      run: UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';
+    - name: root pwd
+      run: quit
+    - name: start mysql
+      run: sudo service mysql restart
     - name: set up user and databe
-      run: cat setup_mysql_test.sql | mysql -u root -p[newpassword]
+      run: cat setup_mysql_test.sql | mysql -u root -p 'password'
     - name: Install pep8
       run: pip install pep8
     - name: Run db_test
