@@ -19,7 +19,7 @@ def tearthisdown(exception):
 
 
 @app.errorhandler(404)
-def page_not+found(err):
+def page_not_found(err):
     '''returns 404'''
     return {"error": "Not found"}, 404
 
