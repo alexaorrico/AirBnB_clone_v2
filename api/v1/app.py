@@ -11,10 +11,6 @@ from flask import Blueprint
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 23494111bbfe13474ef4acdbf23a61d9332cc10c
 @app.teardown_appcontext
 def teardown(exc):
     """Remove the current SQLAlchemy session."""
