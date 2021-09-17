@@ -4,10 +4,14 @@ script that starts a Flask web application:
 """
 
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, Flask, Response
 from models import storage
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status')
 def status():
-    return jsonify({'status': 'OK'})
+    """
+    Status
+    """
+    status = {"status": "OK"}
+    return jsonify(status)
