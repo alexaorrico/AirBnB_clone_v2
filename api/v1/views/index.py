@@ -23,7 +23,8 @@ def api_status():
 def api_stats():
     """checks the API stats of all classes"""
     classes = {"amenities": "Amenity", "cities": "City",
-               "places": "Place", "reviews": "Review", "states": "State", "users": "User"}
+               "places": "Place", "reviews": "Review", 
+               "states": "State", "users": "User"}
     for key in classes:
         classes[key] = storage.count(classes[key])
     return jsonify(classes)

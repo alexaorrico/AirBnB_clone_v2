@@ -7,6 +7,7 @@ from models.state import State
 from models import storage
 import json
 
+
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def get_states():
     """gets all state objects"""
@@ -29,6 +30,7 @@ def get_states():
                 abort(400, description="Missing name")
         else:
             abort(400, description="Not a JSON")
+
 
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
