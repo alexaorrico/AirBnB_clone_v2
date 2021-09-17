@@ -11,6 +11,11 @@ from models.city import City
 from models.user import User
 
 
+@app_views.route("/status")
+def return_status():
+    '''returns api status'''
+    return({"status": "OK"})
+
 @app_views.route("/stats")
 def return_stats():
     '''returns count of objs available of each type'''
