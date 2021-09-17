@@ -13,7 +13,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tearthisdown():
+def tearthisdown(exception):
     storage.close()
 
 if __name__ == "__main__":
