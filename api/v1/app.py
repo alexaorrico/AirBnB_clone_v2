@@ -14,13 +14,10 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def tearthisdown(exception):
+    '''teardown function. This close SQalchemy session'''
     storage.close()
 
 if __name__ == "__main__":
-    thisHost = os.getenv('HBNB_API_HOST')
-    thisPort = os.getenv('HBNB_API_PORT')
-    if thisHost is None:
-        thisHost = '0.0.0.0'
-    if thisPort is None:
-        thisPort = '5000'
-    app.run(host=thisHost, port=thisPort, threaded=True)
+    thishost = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    thisport = os.getenv('HBNB_API_PORT', 5000)
+    app.run(host=thishost, port=thisport, threaded=True)
