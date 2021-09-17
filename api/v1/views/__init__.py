@@ -7,3 +7,4 @@ app_views = Blueprint('app_views', __name__, url_prefix="/api/v1")
 # module will need to import 'site' so we need to make
 # sure that we import views after site has been defined.
 from api.v1.views.index import *
+from api.v1.views.states import *
