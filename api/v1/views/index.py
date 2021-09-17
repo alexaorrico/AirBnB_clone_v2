@@ -8,8 +8,6 @@ from flask import jsonify, request
 from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', strict_slashes=False)
 def status():
-    if request.method == 'GET':
-        resp = {"status": "OK"}
-        return jsonify(resp)
+    return jsonify({'status': 'OK'})
