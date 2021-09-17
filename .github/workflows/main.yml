@@ -15,6 +15,6 @@ jobs:
     - name: Install dependencies
       run: git clone https://github.com/Joshua-Enrico/sql_enviroment.git
     - name: Install dependencies
-      run: source sqlalchemy/bin/activate
+      run: source sql_enviroment/bin/activate
     - name: Run Test
       run: python -m unittest discover tests
