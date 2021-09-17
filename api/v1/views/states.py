@@ -12,6 +12,25 @@ from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, request, jsonify, make_response, abort
 
 
+def __is_valid_json(data):
+    """
+    Checks if the given data is a valid json.
+
+    Args:
+        data : Data to check
+
+    Returns:
+        True: If data is a valid json.
+        False: If data is not a valid json.
+    """
+    try:
+        json.loads(data)
+
+        return True
+    except Exception:
+        return False
+
+
 @app_views.route('/states', methods=['GET'])
 def list() -> json:
     """
@@ -74,3 +93,35 @@ def delete(state_id) -> json:
     storage.save()
 
     return make_response(jsonify({}), 200)
+
+
+@app_views.route('/states/', methods=['POST'])
+def create() -> json:
+    """
+    Creates a new State object.
+
+    Error cases:
+        BadRequest: If the given data is not a
+        valid json or if the key 'name' is not
+        present sends status code 400.
+
+    Returns:
+        json: The new State with the status code 201.
+    """
+    data = request.get_data()
+
+    if not __is_valid_json(data):
+        return make_response('Not a JSON', 400)
+
+    data = json.loads(data)
+
+    if 'name' not in data.keys():
+        return make_response('Missing name', 400)
+
+    state = State(data)
+    for key, value in data.items():
+        state.__setattr__(key, value)
+    storage.new(state)
+    storage.save()
+
+    return make_response(jsonify(state.to_dict()), 201)
