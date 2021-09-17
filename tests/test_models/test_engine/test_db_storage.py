@@ -86,3 +86,41 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get_dbstorage(self):
+        """check if return valid data"""
+        obj = State(name="Some state")
+        obj.save()
+        models.storage.save()
+        return_obj = models.storage.get('State', obj.id)
+        self.assertEqual(obj, return_obj)
+
+    def test_get_fstorage_none(self):
+        """ testing invalid input"""
+        obj = State(name="Some state")
+        obj.save()
+        return_obj = models.storage.get('State', 'not_valid_id')
+        self.assertEqual(return_obj, None)
+        return_obj = models.storage.get('Not_valid_class', obj.id)
+        self.assertEqual(return_obj, None)
+        return_obj = models.storage.get('State', 33333)
+        self.assertEqual(return_obj, None)
+
+    def test_count_fstorage(self):
+        """ testing count method"""
+        old_count = models.storage.count()
+        obj = State(name="Some state")
+        obj.save()
+        new_count = models.storage.count()
+        self.assertEqual(old_count + 1, new_count)
+
+    def test_count_fstorage_cls(self):
+        """testing count method with class name"""
+        old_count = models.storage.count()
+        old_count_cls = models.storage.count('State')
+        obj = State(name="New York")
+        obj.save()
+        new_count = models.storage.count()
+        new_count_cls = models.storage.count('State')
+        self.assertEqual(old_count + 1, new_count)
+        self.assertEqual(old_count_cls + 1, new_count_cls)
