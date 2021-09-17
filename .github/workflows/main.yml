@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Install Python 3
@@ -17,7 +17,8 @@ jobs:
 
     - name: Install dependencies
       run: pip install sqlalchemy
-    - name: Install dependencies
+      run: pip install pep8
+    - name: Activate enviroment
       run: source sql_enviroment/bin/activate
     - name: Run Test
       run: python -m unittest discover tests
