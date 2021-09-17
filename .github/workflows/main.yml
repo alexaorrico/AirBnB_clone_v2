@@ -25,10 +25,8 @@ jobs:
       run: pip install mysqlclient
     - name: start mysql
       run: sudo service mysql start
-    - name: start mysql
-      run: sudo mysql -u root -proot
     - name: set pwd
-      run: SET PASSWORD FOR 'root'@'localhost' = PASSWORD('1');
+      run: echo "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('1');" | sudo mysql -u root -proot
     - name: set up user and databe
       run: cat setup_mysql_test.sql | mysql -u root -p1
     - name: Install pep8
