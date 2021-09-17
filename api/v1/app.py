@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""" API """
+"""API module app"""
 from os import getenv
 from flask.json import jsonify
 from models import storage
