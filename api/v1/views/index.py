@@ -24,6 +24,6 @@ def return_stats():
     classes = [State, City, User, Place, Review, Amenity]
     stats = {}
 
-    for class_type in classes
+    for class_type in classes:
         stats[class_type.__name__] = storage.count(class_type)
     return jsonify(stats)
