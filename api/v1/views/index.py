@@ -19,3 +19,7 @@ def stats():
                     "states": storage.count('State'), 
                     "users": storage.count('User')
                     }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 23494111bbfe13474ef4acdbf23a61d9332cc10c
