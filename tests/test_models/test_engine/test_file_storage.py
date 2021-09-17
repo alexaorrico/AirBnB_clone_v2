@@ -113,3 +113,37 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test for checking new methods of get"""
+        class testing():
+            """for testing get"""
+            pass
+
+        storage = FileStorage()
+        new_obj = State()
+        new_obj.save()
+        id_obj_new = new_obj.id
+        get_obj = storage.get(State, id_obj_new)
+        self.assertEqual(new_obj, get_obj)
+        invalid_get = storage.get(testing, id_obj_new)
+        self.assertEqual(invalid_get, None)
+        fake_id = "35545464-63463456-634634"
+        not_id_get = storage.get(State, fake_id)
+        self.assertEqual(not_id_get, None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test for new object count"""
+        storage = FileStorage()
+        new_state = State(name="california")
+        new_state.save()
+        new_city = City(name="LA", state_id=new_state.id)
+        new_city.save()
+        all_obj_storage = storage.all()
+        count_all = storage.count()
+        self.assertEqual(count_all, len(all_obj_storage))
+        state_all_obj = storage.all(State)
+        count_all_state = storage.count(State)
+        self.assertEqual(count_all_state, len(state_all_obj))
