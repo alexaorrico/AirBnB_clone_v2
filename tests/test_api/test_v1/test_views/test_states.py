@@ -117,3 +117,58 @@ class ShowStatesApiTest(unittest.TestCase):
             headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
         self.assertTrue(self.state == storage.get(State, self.state.id))
         self.assertEqual(json_data['error'], 'Not found')
+
+
+class DeleteStatesApiTest(unittest.TestCase):
+    """
+        Tests of API delete action for State.
+    """
+
+    def setUp(self) -> None:
+        """
+            Set up API delete action tests.
+        """
+        self.state = State(name='toto')
+        self.state_id = self.state.id
+        storage.new(self.state)
+        storage.save()
+        self.url = '{}/states/{}'.format(api_url, self.state.id)
+        self.invalid_url = '{}/states/{}'.format(api_url, 'toto')
+
+    def tearDown(self) -> None:
+        """
+            Tear down table State of database used for tests.
+        """
+        if storage.get(State, self.state.id) is not None:
+            storage.delete(self.state)
+            storage.save()
+
+    def testDelete(self):
+        """
+            Test valid delete action.
+        """
+        response = requests.delete(url=self.url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertTrue(self.state == storage.get(State, self.state_id))
+        self.assertEqual(response.status_code, 200, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(len(json_data), 0)
+        storage.reload()
+        self.assertIsNone(storage.get(State, self.state_id))
+
+    def testNotFound(self):
+        """
+            Test delete action when given wrong state_id or no ID at all.
+        """
+        response = requests.delete(url=self.invalid_url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertEqual(response.status_code, 404, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertTrue(self.state == storage.get(State, self.state.id))
+        self.assertEqual(json_data['error'], 'Not found')
