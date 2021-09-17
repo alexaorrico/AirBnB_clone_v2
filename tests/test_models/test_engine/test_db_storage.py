@@ -113,3 +113,26 @@ class test_DBStorage(unittest.TestCase):
 
         # delete
         self.storage.delete(state)
+
+    def test_count(self):
+        """ Testing cout method """
+        count = storage.count()
+
+        # count int
+        self.assertIsInstance(count, int)
+        # count == 6
+        self.assertEqual(count, 6)
+
+        # after the new record has been created
+        state = State({"name": "California"})
+        self.storage.new(state)
+        count = self.storage.count()
+        self.assertEqual(count, 7)
+
+        # contar only states
+        count = self.storage.count("State")
+
+        # count is int
+        self.assertIsInstance(count, int)
+        # count == 1
+        self.assertEqual(count, 1)
