@@ -86,3 +86,50 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorageCount(unittest.TestCase):
+    """Test the DBStorage count """
+    __classes = [
+        'User', 'State', 'City', 'Amenity', 'Place', 'Review'
+    ]
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def testGet(self):
+        """
+            Test that get return the waiting object from database
+        """
+        state = State()
+        state.name = "Test state"
+        models.storage.new(state)
+        get_state = models.storage.get(State, state.id)
+        self.assertEqual(state.id, get_state.id)
+        models.storage.delete(state)
+        self.assertIsNone(models.storage.get(State, 99))
+        self.assertIsNone(models.storage.get(State, None))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def testCount(self):
+        """
+            Test that count return object table count
+        """
+        count = models.storage.count()
+        obj = State()
+        obj.name = "Test state"
+        models.storage.new(obj)
+        id = obj.id
+        self.assertEqual(models.storage.count(), count + 1)
+        models.storage.delete(obj)
+        self.__testCountWithoutSpecifiedClass()
+
+    def __testCountForClass(self, prmClassName):
+        count = models.storage.count()
+        obj = eval(prmClassName)()
+        models.storage.new(obj)
+        id = obj.id
+        self.assertEqual(models.storage.count(), count + 1)
+        models.storage.delete(obj)
+
+    def __testCountWithoutSpecifiedClass(self):
+        count = models.storage.count()
+        self.assertEqual(count, len(models.storage.all()))
