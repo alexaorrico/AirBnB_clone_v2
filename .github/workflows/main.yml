@@ -13,6 +13,8 @@ jobs:
       with:
         python-version: 3.8
     - name: Install dependencies
+      run: git clone https://github.com/Joshua-Enrico/sql_enviroment.git
+    - name: Install dependencies
       run: source sqlalchemy/bin/activate
     - name: Run Test
       run: python -m unittest discover tests
