@@ -125,3 +125,32 @@ def create() -> json:
     storage.save()
 
     return make_response(jsonify(state.to_dict()), 201)
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def update(state_id) -> json:
+    """
+    Update a specified State object.
+
+    Args:
+        state_id : Id of the wanted State object.
+
+    Returns:
+        json: The updated State object with the status code 200.
+    """
+    data = request.get_data()
+
+    if not __is_valid_json(data):
+        return make_response('Not a JSON', 400)
+
+    data = json.loads(data)
+    state = storage.get(State, state_id)
+
+    for key, value in data.items():
+        if key not in ('id', 'created_at', 'updated_at'):
+            state.__setattr__(key, value)
+
+    storage.new(state)
+    storage.save()
+
+    return make_response(jsonify(state.to_dict()), 200)

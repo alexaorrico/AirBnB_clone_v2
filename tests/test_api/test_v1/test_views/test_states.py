@@ -187,7 +187,7 @@ class CreateStatesApiTest(unittest.TestCase):
 
     def testCreate(self):
         """
-            Test valid create action.
+            Test valid create action tests.
         """
         data = {'name': 'toto'}
         response = requests.post(url=self.url, data=json.dumps(data))
@@ -234,3 +234,81 @@ class CreateStatesApiTest(unittest.TestCase):
             headers['Content-Type'], 'text/html; charset=utf-8',
             WRONG_TYPE_RETURN_MSG)
         self.assertEqual(response.content, b'Not a JSON')
+
+
+class UpdateStatesApiTest(unittest.TestCase):
+    """
+        Tests of API update action for State.
+    """
+
+    def setUp(self) -> None:
+        """
+            Set up API update action tests.
+        """
+        self.state = State(name='toto')
+        self.state_id = self.state.id
+        storage.new(self.state)
+        storage.save()
+        self.url = '{}/states/{}'.format(api_url, self.state_id)
+        self.invalid_url = '{}/states/{}'.format(api_url, 'toto')
+
+    def tearDown(self) -> None:
+        """
+            Tear down table State of database used for tests.
+        """
+        if storage.get(State, self.state.id) is not None:
+            storage.delete(self.state)
+            storage.save()
+
+    def testUpdate(self):
+        """
+            Test valid update action.
+        """
+        data = {'name': 'toto2'}
+        response = requests.put(url=self.url, data=json.dumps(data))
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertTrue(self.state == storage.get(State, self.state_id))
+        self.assertEqual(response.status_code, 200, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        storage.reload()
+        state = storage.get(State, self.state_id)
+        self.assertEqual(state.name, 'toto2')
+        self.assertIn('name', json_data, MISSING_NAME_ATTR_MSG)
+        self.assertIn('created_at', json_data, MISSING_CREATED_AT_ATTR_MSG)
+        self.assertIn('updated_at', json_data, MISSING_UPDATED_AT_ATTR_MSG)
+        self.assertIn('__class__', json_data, MISSING_CLASS_ATTR_MSG)
+        self.assertEqual(json_data['name'], 'toto2')
+        storage.delete(state)
+        storage.save()
+
+    def testNotAJson(self):
+        """
+            Test update action when given an invalid json.
+        """
+        data = {'name': 'toto'}
+        response = requests.put(url=self.url, data=data)
+        headers = response.headers
+
+        self.assertEqual(response.status_code, 400, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'text/html; charset=utf-8',
+            WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(response.content, b'Not a JSON')
+
+    def testNotFound(self):
+        """
+            Test update action when given a wrong ID.
+        """
+        data = {'name': 'toto'}
+        response = requests.put(url=self.invalid_url, data=json.dumps(data))
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertEqual(response.status_code, 404, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertTrue(self.state == storage.get(State, self.state.id))
+        self.assertEqual(json_data['error'], 'Not found')
