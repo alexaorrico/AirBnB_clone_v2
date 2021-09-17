@@ -11,8 +11,8 @@ jobs:
     - name: Install Python 3
       uses: actions/setup-python@v2
       with:
-        python-version: 3.6
+        python-version: 3.8
     - name: Install dependencies
-      run: pip install -r requirements.txt 
+      run: source sqlalchemy/bin/activate
     - name: Run Test
       run: python -m unittest discover tests
