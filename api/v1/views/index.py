@@ -8,4 +8,3 @@ from flask import jsonify
 def status():
     """return the status"""
     return jsonify({"status": "OK"}), 200
-
