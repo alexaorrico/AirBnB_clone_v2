@@ -23,10 +23,20 @@ jobs:
       run: sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
     - name: Install dependencies sqlclient
       run: pip install mysqlclient
+    - name: changin sql pwd
+      run: mysqld_safe --skip-grant-tables &
+    - name: enter carater
+      run: s
+    - name: mysql -u root
+      run: use mysql;
+    - name: mysql -u root
+      run: grant all privileges on *.* to root@localhost identified by '' with grant option;
+    - name: flush priv
+      run: flush privileges;
+    - name: flush priv
+      run: quit;
     - name: start mysql
-      run: sudo service mysql restart
-    - name: start mysql
-      run: sudo service mysql restart
+      run: service mysql start
     - name: set up user and databe
       run: cat setup_mysql_test.sql | mysql -u root
     - name: Install pep8
