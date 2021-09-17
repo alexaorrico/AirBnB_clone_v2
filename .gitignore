@@ -1,0 +1,9 @@
+models/engine/__pycache__/
+models/__pycache__/
+__pycache__/
+file.json
+test_get_count.py
+tests/__pycache__/
+tests/test_models/__pycache__/
+tests/test_models/test_engine/__pycache__/
+!sqlalchemy/
