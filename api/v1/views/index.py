@@ -11,21 +11,19 @@ from models.city import City
 from models.user import User
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def return_status():
     '''returns status'''
     status = {'status': 'OK'}
-    return(jsonify(status))
+    return jsonify(status)
 
 
-@app_views.route("/stats")
+@app_views.route('/stats', strict_slashes=False)
 def return_stats():
     '''returns count of objs available of each type'''
-    classes = {"amenities": Amenity, "cities": City, "places": Place,
-               "reviews": Review, "states": State, "users": User}
+    classes = [State, City, User, Place, Review, Amenity]
     stats = {}
 
-    for key, obj in classes.items():
-        stats[key] = storage.count(obj)
-
-    return(jsonify(stats))
+    for class_type in classes
+        stats[class_type.__name__] = storage.count(class_type)
+    return jsonify(stats)
