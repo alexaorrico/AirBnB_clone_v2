@@ -23,6 +23,8 @@ jobs:
       run: sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
     - name: Install dependencies sqlclient
       run: pip install mysqlclient
+    - name: start mysql
+      run: sudo service mysql restart
     - name: Install pep8
       run: pip install pep8
     - name: Run db_test
