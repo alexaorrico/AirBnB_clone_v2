@@ -17,6 +17,13 @@ def tearthisdown(exception):
     '''teardown function. This close SQalchemy session'''
     storage.close()
 
+
+@app.errorhandler(404)
+def page_not+found(err):
+    '''returns 404'''
+    return {"error": "Not found"}, 404
+
+
 if __name__ == "__main__":
     thishost = os.getenv('HBNB_API_HOST', '0.0.0.0')
     thisport = os.getenv('HBNB_API_PORT', 5000)
