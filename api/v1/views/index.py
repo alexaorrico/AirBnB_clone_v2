@@ -10,6 +10,11 @@ from models.state import State
 from models.city import City
 from models.user import User
 
+@app_views.route('/status')
+def return_status():
+    '''returns status'''
+    status = {'status': 'OK'}
+    return(jsonify(status))
 
 @app_views.route("/stats")
 def return_stats():
