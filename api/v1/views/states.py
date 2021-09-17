@@ -10,4 +10,35 @@ import json
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def get_states():
     """gets all state objects"""
+    if request.method == 'GET':
+        all_objects = storage.all(State)
+        single_object = []
+        for key, value in all_objects.items():
+            single_object.append(value.to_dict)
+        return jsonify(single_object)
 
+    if request.method == 'POST':
+        if request.json:
+            new_dict = request.get_json
+            if "name" in new_dict.keys():
+                new_state = State(**new_dict)
+                storage.new(new_state)
+                storage.save()
+                return jsonify(new_state.to_dict()), 201
+            else:
+                abort(400, description="Missing name")
+        else:
+            abort(400, description="Not a JSON")
+
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
+def get_state_id(state_id):
+    """gets the state object using his id"""
+    if request.method == 'GET':
+        all_objects = storage.all(State)
+        new_dict = dict()
+        for key, value in all_objects.items():
+            if state_id == value.id:
+                new_dict = value.to_dict
+                return jsonify(new_dict)
+        abort(404)
