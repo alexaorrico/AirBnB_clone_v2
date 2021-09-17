@@ -15,3 +15,18 @@ def status():
     """
     status = {"status": "OK"}
     return jsonify(status)
+
+
+@app_views.route('/api/v1/stats')
+def stats():
+    """
+     number of each objects by type
+    """
+    status = {"amenities": storage.count("Amenity"),
+              "cities": storage.count("City"),
+              "places": storage.count("Place"),
+              "reviews": storage.count("Review"),
+              "states": storage.count("State"),
+              "users": storage.count("User")
+              }
+    return jsonify(status)
