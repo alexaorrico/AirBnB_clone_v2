@@ -26,7 +26,7 @@ jobs:
     - name: start mysql
       run: sudo service mysql restart
     - name: set up user and databe
-      run: cat setup_mysql_test.sql | sudo mysql    
+      run: cat setup_mysql_test.sql | mysql    
     - name: Install pep8
       run: pip install pep8
     - name: Run db_test
