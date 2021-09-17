@@ -146,6 +146,9 @@ def update(state_id) -> json:
     data = json.loads(data)
     state = storage.get(State, state_id)
 
+    if state is None:
+        raise NotFound
+
     for key, value in data.items():
         if key not in ('id', 'created_at', 'updated_at'):
             state.__setattr__(key, value)
