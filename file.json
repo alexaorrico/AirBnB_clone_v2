@@ -1,0 +1,15 @@
+{
+  "Place.4a3b216a-c014-48fe-8683-6da276c55806": {
+    "id": "4a3b216a-c014-48fe-8683-6da276c55806",
+    "created_at": "2021-08-09T20:06:19.938002",
+    "updated_at": "2021-08-09T20:06:19.938532",
+    "__class__": "Place"
+  },
+  "State.3277a6c5-b719-4ac0-be1a-7acaa9b8b15d": {
+    "id": "3277a6c5-b719-4ac0-be1a-7acaa9b8b15d",
+    "created_at": "2021-08-09T20:35:23.276408",
+    "updated_at": "2021-08-09T20:35:23.276410",
+    "name": "Nevada",
+    "__class__": "State"
+  }
+}
