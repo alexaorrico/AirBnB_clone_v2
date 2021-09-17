@@ -26,10 +26,12 @@ jobs:
     - name: start mysql
       run: sudo service mysql restart
     - name: root pwd
-      run: sudo mysql
+      run: mysql -u root mysql
     - name: root pwd
       run: UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';
     - name: root pwd
+    - name: flsuh privileges
+      run: FLUSH PRIVILEGES;
       run: quit
     - name: start mysql
       run: sudo service mysql restart
