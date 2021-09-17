@@ -17,8 +17,9 @@ jobs:
 
     - name: Install dependencies
       run: pip install sqlalchemy
-      run: pip install pep8
     - name: Activate enviroment
       run: source sql_enviroment/bin/activate
+    - name: Install pep8
+      run: pip install pep8
     - name: Run Test
       run: python -m unittest discover tests
