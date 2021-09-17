@@ -24,9 +24,7 @@ jobs:
     - name: Install dependencies sqlclient
       run: pip install mysqlclient
     - name: changin sql pwd
-      run: mysqld_safe --skip-grant-tables &
-    - name: enter carater
-      run: s
+      run: sudo mysqld_safe --skip-grant-tables &
     - name: mysql -u root
       run: use mysql;
     - name: mysql -u root
@@ -36,7 +34,7 @@ jobs:
     - name: flush priv
       run: quit;
     - name: start mysql
-      run: service mysql start
+      run: sudo service mysql start
     - name: set up user and databe
       run: cat setup_mysql_test.sql | mysql -u root
     - name: Install pep8
