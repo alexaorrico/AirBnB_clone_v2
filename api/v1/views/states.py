@@ -42,4 +42,3 @@ def get_state_id(state_id):
                 new_dict = value.to_dict
                 return jsonify(new_dict)
         abort(404)
-
