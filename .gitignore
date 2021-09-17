@@ -1,0 +1,26 @@
+models/engine/__pycache__/__init__.cpython-38.pyc
+models/engine/__pycache__/db_storage.cpython-38.pyc
+models/engine/__pycache__/file_storage.cpython-38.pyc
+tests/__pycache__/test_console.cpython-38.pyc
+tests/test_models/__pycache__/__init__.cpython-38.pyc
+tests/test_models/__pycache__/test_amenity.cpython-38.pyc
+tests/test_models/__pycache__/test_base_model.cpython-38.pyc
+tests/test_models/__pycache__/test_city.cpython-38.pyc
+tests/test_models/__pycache__/test_place.cpython-38.pyc
+tests/test_models/__pycache__/test_review.cpython-38.pyc
+tests/test_models/__pycache__/test_state.cpython-38.pyc
+tests/test_models/__pycache__/test_user.cpython-38.pyc
+tests/test_models/test_engine/__pycache__/__init__.cpython-38.pyc
+tests/test_models/test_engine/__pycache__/test_db_storage.cpython-38.pyc
+tests/test_models/test_engine/__pycache__/test_file_storage.cpython-38.pyc
+__pycache__/console.cpython-38.pyc
+models/__pycache__/__init__.cpython-38.pyc
+models/__pycache__/amenity.cpython-38.pyc
+models/__pycache__/base_model.cpython-38.pyc
+models/__pycache__/city.cpython-38.pyc
+models/__pycache__/place.cpython-38.pyc
+models/__pycache__/review.cpython-38.pyc
+models/__pycache__/state.cpython-38.pyc
+models/__pycache__/user.cpython-38.pyc
+api/v1/views/states1 copy.py
+api/v1/views/states1.py
