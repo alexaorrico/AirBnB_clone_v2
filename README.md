@@ -157,7 +157,3 @@ No known bugs at this time.
 Christian Laboy - [Github](https://github.com/B1ueberry121)
 
 David Harvey - [Github](https://github.com/dhreyes)
-
-Second part of Airbnb: Joann Vuong
-## License
-Public Domain. No copy write protection. 
