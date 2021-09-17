@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """handles all default RESTFul API actions"""
-import re
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request
