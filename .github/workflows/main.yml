@@ -26,15 +26,11 @@ jobs:
     - name: start mysql
       run: sudo service mysql start
     - name: start mysql
-      run: sudo mysql -u root -p
-    - name: start mysql
-      run: root
+      run: sudo mysql -u root -proot
     - name: set pwd
       run: SET PASSWORD FOR 'root'@'localhost' = PASSWORD('1');
     - name: set up user and databe
-      run: cat setup_mysql_test.sql | mysql -u root -p 
-    - name: set up user and databe
-      run: 1
+      run: cat setup_mysql_test.sql | mysql -u root -p1
     - name: Install pep8
       run: pip install pep8
     - name: Run db_test
