@@ -92,7 +92,6 @@ class TestFileStorage(unittest.TestCase):
         """ Test that get properly gets objects"""
         first_state_id = list(self.all(State).values())[0].id
         print("First state: {}".format(self.get(State, first_state_id)))
-    
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):

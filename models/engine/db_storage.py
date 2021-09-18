@@ -41,14 +41,13 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def get(self, cls, id):
-       """Returns the specified object"""
-       if cls not in classes.values():
-           return None
-
-       all_cls = models.storage.all(cls)
-       for value in all_cls.values():
-           if (value.id == id):
-               return value
+        """Returns the specified object"""
+        if cls not in classes.values():
+            return None
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
 
     def count(self, cls=None):
         """Returns the count of specififed object"""
