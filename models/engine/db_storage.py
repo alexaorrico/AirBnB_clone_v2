@@ -80,7 +80,7 @@ class DBStorage:
         if cls is None or id is None:
             return None
 
-        obj = self.__session.query(classs[cls]).get(id)
+        obj = self.__session.query(cls).get(id)
 
         if obj:
             return obj
