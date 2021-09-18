@@ -3,6 +3,12 @@
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 @app_views.route("/status")
@@ -14,15 +20,11 @@ def status():
 @app_views.route("/stats")
 def stats():
     """return count objects"""
-    results = {}
-    names = {"Amenity":  "amenities",
-             "City":  "cities",
-             "Place":  "places",
-             "Review":  "reviews",
-             "State":  "states",
-             "User":  "users"}
+    names = {'users': storage.count(User),
+             'places': storage.count(Place),
+             'states': storage.count(State),
+             'cities': storage.count(City),
+             'amenities': storage.count(Amenity),
+             'reviews': storage.count(Review)}
 
-    for key, value in sorted(names.items()):
-        results[value] = storage.count(key)
-
-    return jsonify(results)
+    return jsonify(names)
