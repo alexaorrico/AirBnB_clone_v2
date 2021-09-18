@@ -66,6 +66,7 @@ class FileStorage:
                 del self.__objects[key]
 
     def get(self, cls, id):
+        """ return object class and id or none """
         if cls:
             objectos = self.all(cls)
         else:
@@ -77,6 +78,7 @@ class FileStorage:
                     return obj
 
     def count(self, cls=None):
+        """ return number of objects """
         if cls:
             objectos = self.all(cls)
             counter = len(objectos)
