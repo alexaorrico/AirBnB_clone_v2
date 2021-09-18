@@ -53,7 +53,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Returns an object based on the class and id"""
-        if not id or not cls or not cls.__name__ in classes:
+        if not id or not cls or cls.__name__ not in classes:
             return None
         key = cls.__name__ + "." + str(id)
         objects_dict = models.storage.all()
