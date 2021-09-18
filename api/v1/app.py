@@ -25,11 +25,11 @@ def teardown(self):
 
 
 @app.errorhandler(404)
-def resource_not_found(error):
+def resource_not_found():
     """ Not found
     """
     mensaje = {'error': 'Not found'}
-    return (jsonify(mensaje, 404))
+    return (jsonify(mensaje))
 
 
 if __name__ == '__main__':
