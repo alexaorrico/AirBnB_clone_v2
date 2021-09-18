@@ -2,11 +2,11 @@
 """
 script that starts a Flask web application:
 """
-from os import getenv
+from os import error, getenv
 from models import storage
 from api.v1.views import app_views
 from flask import Blueprint, render_template, abort
-from flask import Flask, jsonify, Response
+from flask import Flask, jsonify, Response, make_response
 
 
 app = Flask(__name__)
@@ -22,6 +22,14 @@ def teardown(self):
         method to handle teardown
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def resource_not_found(error):
+    """ Not found
+    """
+    mensaje = {'error': 'Not found'}
+    return (jsonify(mensaje, 404))
 
 
 if __name__ == '__main__':
