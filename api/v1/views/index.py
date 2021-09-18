@@ -16,14 +16,14 @@ def status():
 def stats():
     """return count objects"""
     results = {}
-    names = {"Amenity": "amenities",
-             "City": "cities",
-             "Place": "places",
-             "Review": "reviews",
-             "State": "states",
-             "User": "users"}
+    names = {"Amenity":  "amenities",
+             "City":  "cities",
+             "Place":  "places",
+             "Review":  "reviews",
+             "State":  "states",
+             "User":  "users"}
 
-    for key, value in names.items():
+    for key, value in sorted(names.items()):
         results[value] = storage.count(key)
 
     return jsonify(results)
