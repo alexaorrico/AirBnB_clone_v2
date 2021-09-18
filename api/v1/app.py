@@ -17,7 +17,7 @@ def close_storage(self):
     """
     storage.close()
   
-@app.handler_error
+@app.handler_error(404)
 def error_status(error):
     """[return the error 404 in json format]
 
