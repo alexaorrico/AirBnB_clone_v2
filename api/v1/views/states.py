@@ -22,17 +22,16 @@ def state_all():
     return jsonify(list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def state_get(state_id):
     """
     Retrieves a State object:
     """
     state = storage.get('State', state_id)
-    if state is not None:
-        return state.to_dict()
-
-    else:
+    if state is None:
         abort(404)
+    else:
+        return state.to_dict()
 
 
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
