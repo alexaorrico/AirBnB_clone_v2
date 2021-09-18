@@ -20,10 +20,6 @@ def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
 
-@app.route('/hello') # example.com/hello/Anthony
-def hello():
-    return 'Hello Crisoy!' # returns hello Anthony!
-
 if __name__ == '__main__':
     my_host = os.getenv('HBNB_API_HOST')
     my_port = os.getenv('HBNB_API_PORT')
