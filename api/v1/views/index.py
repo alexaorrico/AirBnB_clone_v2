@@ -11,11 +11,18 @@ from models.state import State
 
 @app_views.route('/status')
 def index():
+    """
+        Returns a JSON:"status": "OK"
+    """
     return {'status': 'OK'}
 
 
 @app_views.route('/stats')
 def stats():
+    """
+    Endpoint that retrieves the number of each
+    objects by type.
+    """
     return {
         'amenities': storage.count(Amenity),
         'cities': storage.count(City),
