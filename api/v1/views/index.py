@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""Create a Index
-"""
+""" Create a Index """
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
