@@ -76,6 +76,16 @@ test_db_storage.py'])
         z = str(models.storage.all()['State.' + return_obj])
         self.assertNotEqual(z, None)
 
+    def test_get_dbstorage2(self):
+        """Test get storage engine with valid data"""
+        test = (models.storage.count())
+        self.assertEqual(type(test), int)
+        test2 = (models.storage.count(State))
+        self.assertEqual(type(test2), int)
+        first_state_id = list(models.storage.all(State).values())[0].id
+        test3 = models.storage.get(State, first_state_id)
+        self.assertEqual(str(type(test3)), "<class 'models.state.State'>")
+
     def test_get_fstorage_none(self):
         """ testing invalid input"""
         obj = State(name="Some state")

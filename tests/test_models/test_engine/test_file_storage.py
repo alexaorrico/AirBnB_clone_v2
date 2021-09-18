@@ -126,11 +126,12 @@ class TestFileStorage(unittest.TestCase):
     def test_get_dbstorage2(self):
         """Test get storage engine with valid data"""
         test = (models.storage.count())
-        self.assertNotEqual(test, None)
+        self.assertEqual(type(test), int)
         test2 = (models.storage.count(State))
-        self.assertNotEqual(test2, None)
+        self.assertEqual(type(test2), int)
         first_state_id = list(models.storage.all(State).values())[0].id
-        self.assertNotEqual(first_state_id, None)
+        test3 = models.storage.get(State, first_state_id)
+        self.assertEqual(str(type(test3)), "<class 'models.state.State'>")
 
     def test_get_fstorage_none(self):
         """ testing invalid input"""
