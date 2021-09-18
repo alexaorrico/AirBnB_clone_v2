@@ -17,8 +17,8 @@ def close_storage(exc):
     storage.close()
 
 
-@app.errorhandler(404) 
-def invalid_route(e): 
+@app.errorhandler(404)
+def invalid_route(e):
     return jsonify(error="Not found")
 
 
