@@ -11,12 +11,16 @@ app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
 
 
+
 @app.teardown_appcontext
 def close_storage(self):
     """[close de db call close]
     """
     storage.close()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 09c2ab1f0098ca4fbea9572f4570ebd72ef72184
 
 if __name__ == '__main__':
     api_host = getenv('HBNB_API_HOST', default='0.0.0.0')
