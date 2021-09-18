@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """ flask API app """
 from models import storage
-from flask import Flask
+from flask import Flask, json
 from api.v1.views import app_views
+from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
 
@@ -13,6 +14,14 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
+
+@app.errorhandler(HTTPException)
+def handle_404(e):
+    """ return 404 NOT found as JSON """
+    response =  e.get_response()
+    response.data = json.dumps({"error": "Not found"})
+    response.content_type = "application/json"
+    return response
 
 if __name__ == "__main__":
     """ run the flask server """
