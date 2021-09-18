@@ -11,7 +11,7 @@ import os
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix='/api/v1')
+app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
@@ -23,4 +23,4 @@ def teardown_db(exception):
 if __name__ == '__main__':
     my_host = os.getenv('HBNB_API_HOST')
     my_port = os.getenv('HBNB_API_PORT')
-    app.run(host=my_host, port=my_port, threaded=True)
+    app.run(host=my_host, port=int(my_port), threaded=True)
