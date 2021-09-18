@@ -313,9 +313,9 @@ class CreateCitiesApiTest(unittest.TestCase):
         self.assertEqual(json_data['error'], 'Not found')
 
 
-class UpdateStatesApiTest(unittest.TestCase):
+class UpdateCitiesApiTest(unittest.TestCase):
     """
-        Tests of API update action for State.
+        Tests of API update action for City
     """
 
     def setUp(self) -> None:
@@ -335,7 +335,7 @@ class UpdateStatesApiTest(unittest.TestCase):
 
     def tearDown(self) -> None:
         """
-            Tear down table State of database used for tests.
+            Tear down table State & City of database used for tests.
         """
         city = storage.get(City, self.city_id)
         if city is not None:

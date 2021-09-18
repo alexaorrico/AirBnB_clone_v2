@@ -34,7 +34,7 @@ def __is_valid_json(data):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
-def Cities_list(state_id) -> json:
+def cities_list(state_id) -> json:
     """
     Retrieves the list of all City objects.
 
@@ -60,7 +60,7 @@ def Cities_list(state_id) -> json:
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
-def Cities_show(city_id) -> json:
+def city_show(city_id) -> json:
     """
     Retrieves a specified City object.
 
@@ -83,7 +83,7 @@ def Cities_show(city_id) -> json:
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
-def Cities_delete(city_id) -> json:
+def city_delete(city_id) -> json:
     """
     Deletes a specified City object.
 
@@ -109,7 +109,7 @@ def Cities_delete(city_id) -> json:
 
 
 @app_views.route('/states/<state_id>/cities/', methods=['POST'])
-def Cities_create(state_id) -> json:
+def city_create(state_id) -> json:
     """
     Creates a new City object.
 
@@ -146,7 +146,8 @@ def Cities_create(state_id) -> json:
     city = City(state_id=state_id)
 
     for key, value in data.items():
-        city.__setattr__(key, value)
+        if key is not "state_id":
+            city.__setattr__(key, value)
     storage.new(city)
     storage.save()
 
@@ -154,7 +155,7 @@ def Cities_create(state_id) -> json:
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
-def Cities_update(city_id) -> json:
+def city_update(city_id) -> json:
     """
     Update a specified City object.
 
