@@ -3,22 +3,22 @@
 script that starts a Flask web application:
 """
 from os import error, getenv
-from models import storage
+from models import storage, state
 from api.v1.views import app_views
-from flask import Blueprint, render_template, abort
+from flask import abort
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
 
-@app.route('/api/v1/states', methods=['GET'])
-def state():
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
+def state_all():
     """
     Retrieves the list of all State objects
     """
     list = []
-    for state in storage.all["State"].values():
-        list.append(state.to_dict)
+    for state in storage.all("State").values():
+        list.append(state.to_dict())
     return jsonify(list)
 
 
@@ -29,7 +29,7 @@ def state_get(state_id):
     """
     state = storage.get('State', state_id)
     if state is None:
-        abort(404)
+        print("nada")
     else:
         return state.to_dict()
 
@@ -41,7 +41,7 @@ def state_delete(state_id):
     """
     state = storage.get('State', state_id)
     if state is None:
-        abort(404)
+        print("nada de nda")
     else:
         storage.delete(state)
         storage.save()
