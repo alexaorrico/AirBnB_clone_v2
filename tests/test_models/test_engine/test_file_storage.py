@@ -68,13 +68,13 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
     def test_count(self):
-        """Test count from storage"""
+        """Test count from file storage"""
         state_obj = State()
         objects = models.storage.count(state_obj.name)
         self.assertNotEqual(objects, None)
 
     def test_get(self):
-        """Test get object from a storage"""
+        """Test get object from file storage"""
         state_obj = State()
         obj = models.storage.count(state_obj.id)
         self.assertNotEqual(obj, None)
