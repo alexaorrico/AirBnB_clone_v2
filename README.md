@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Edher Ramirez - [Github](https://github.com/Edheramirez) / [Twitter](https://twitter.com/edhe_r)
+Edher Ramirez - [Github](https://github.com/Edheramirez) / [Twitter](https://twitter.com/edhe_r)  
 Stiven González Mahecha - [Github](https://github.com/stevengm45) / [Twitter](https://twitter.com/_stivengonzalez)
 
 Second part of Airbnb: Joann Vuong
