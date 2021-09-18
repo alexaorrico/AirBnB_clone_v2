@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Star the api with Flask"""
 
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -16,7 +16,6 @@ def close_storage(self):
     """[close de db call close]
     """
     storage.close()
-
 
 if __name__ == '__main__':
     api_host = getenv('HBNB_API_HOST', default='0.0.0.0')
