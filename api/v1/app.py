@@ -2,7 +2,7 @@
 """Is the Status of your API file"""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 
@@ -15,6 +15,11 @@ app.register_blueprint(app_views)
 def close_storage(exc):
     """call reload() method for deserializing the JSON file to objects"""
     storage.close()
+
+
+@app.errorhandler(404) 
+def invalid_route(e): 
+    return jsonify(error="Not found")
 
 
 if __name__ == "__main__":

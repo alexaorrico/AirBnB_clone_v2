@@ -1,0 +1,2 @@
+faykris
+Closing pull request, the function will be tested with Holberton checker
