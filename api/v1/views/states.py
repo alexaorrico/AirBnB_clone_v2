@@ -28,10 +28,11 @@ def state_get(state_id):
     Retrieves a State object:
     """
     state = storage.get('State', state_id)
-    if state is None:
-        print("nada")
-    else:
+    if state is not None:
         return state.to_dict()
+
+    else:
+        abort(404)
 
 
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
