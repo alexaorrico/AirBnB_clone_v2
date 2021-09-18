@@ -16,23 +16,13 @@ def close_storage(self):
     """[close de db call close]
     """
     storage.close()
-<<<<<<< HEAD
-    
-@app.handle_error
-def error_status(error):
-    """[return status error 404]
 
-    Args:
-        error: [error status]
-=======
-  
-@app.handler_error
+@app.errorhandler(404)
 def error_status(error):
     """[return the error 404 in json format]
 
     Args:
         error: [status of the server]
->>>>>>> 831c00822fc6b4eb8fe7c65dbe9e28520f7195f7
     """
     return make_response(jsonify({'error': 'Not found'}), 404)
 
