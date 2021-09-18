@@ -80,5 +80,13 @@ class DBStorage:
         return the object based on the class and it's id
         None if not found
         """
-        objs = models.storage(cls)
-        print(objs)
+        if cls is None and id is None:
+            return None
+        find = "{}.{}".format(cls, id)
+        all = self.all(cls)
+        return all.get(find)
+
+    def count(self, cls=None):
+        """ count all objects in DB storage """
+        all = self.all(cls)
+        return (len(all))
