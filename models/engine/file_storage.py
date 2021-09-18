@@ -78,10 +78,9 @@ class FileStorage:
         
     def count(self, cls=None):
         """rerieves number of objets of the class or -1"""
-        if cls is None:
-            param = None
-        else:
-            param = str(cls)
-
-        all_obj = self.all(param)
-        return(len(all_obj))
+        count = 0
+        if cls is not None:
+            return len(self.__session.query(cls).all())
+        for valid_cls in classes:
+            count += len(self.__session.query(classes[valid_cls]).all())
+        return count
