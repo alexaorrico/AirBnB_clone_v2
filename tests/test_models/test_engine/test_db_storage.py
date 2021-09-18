@@ -92,6 +92,7 @@ class TestFileStorage(unittest.TestCase):
 
 
 class test_DBStorage(unittest.TestCase):
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """ Testing get method """
         storage = DBStorage()
@@ -115,6 +116,7 @@ class test_DBStorage(unittest.TestCase):
         # delete
         self.storage.delete(state)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """ Testing cout method """
         count = storage.count()
