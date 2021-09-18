@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def close_storage(self):
+def close_storage(error):
   """[close de db call close]
   """
   storage.close()
