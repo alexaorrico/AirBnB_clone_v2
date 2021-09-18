@@ -22,3 +22,5 @@ models/__pycache__/place.cpython-38.pyc
 models/__pycache__/review.cpython-38.pyc
 models/__pycache__/state.cpython-38.pyc
 models/__pycache__/user.cpython-38.pyc
+api/v1/views/states1 copy.py
+api/v1/views/states1.py
