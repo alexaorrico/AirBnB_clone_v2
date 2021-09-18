@@ -1,0 +1,37 @@
+name: Continuous Integration
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Python 3
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: git clone https://github.com/Joshua-Enrico/sql_enviroment.git
+
+    - name: Install dependencies
+      run: pip install sqlalchemy
+    - name: Activate enviroment
+      run: source sql_enviroment/bin/activate
+    - name: Install dependencies sqldb
+      run: sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+    - name: Install dependencies sqlclient
+      run: pip install mysqlclient
+    - name: start mysql
+      run: sudo service mysql start
+    - name: set pwd
+      run: echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '1';" | sudo mysql -u root -proot
+    - name: set up user and databe
+      run: cat setup_mysql_test.sql | mysql -u root -p1
+    - name: Install pep8
+      run: pip install pep8
+    - name: Run db_test
+      run: HBNB_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest discover tests
+    - name: Run normal test
+      run: python -m unittest discover tests
