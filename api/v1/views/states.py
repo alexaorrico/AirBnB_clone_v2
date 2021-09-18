@@ -22,7 +22,7 @@ def state_all():
     return jsonify(list)
 
 
-@app.route('/api/v1/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def state_get(state_id):
     """
     Retrieves a State object:
@@ -34,7 +34,7 @@ def state_get(state_id):
         return state.to_dict()
 
 
-@app.route('/api/v1/states/<state_id>', methods=['DELETE'])
+@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def state_delete(state_id):
     """
     Deletes a State object
@@ -48,7 +48,7 @@ def state_delete(state_id):
         return jsonify({}), 202
 
 
-@app.route('/api/v1/states', methods=['POST'])
+@app_views.route('/api/v1/states', methods=['POST'])
 def state_post():
     """
     Creates a State
@@ -66,7 +66,7 @@ def state_post():
         return jsonify(new.to_dict()), 201
 
 
-@app.route('/api/v1/states/<state_id>', methods=['PUT'])
+@app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
 def state_put(state_id):
     """
     Updates a State object
