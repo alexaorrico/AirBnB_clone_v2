@@ -77,18 +77,22 @@ class DBStorage:
 
     def get(self, cls, id_):
         """retrieve an object"""
-        if (cls not in self.__models_available) or (id_ is None):
+        if cls is None:
             return None
-        return self.__session.query(
-                self.__models_available[cls]).get(id_)
-
+        for valid_cls in classes:
+            if cls is classes[valid_cls] or cls is valid_cls:
+                get_cls = self.__session.query(classes[valid_cls]).all()
+                for current in get_cls:
+                    if current.id == id:
+                        return current
+        return None
+        
+        
     def count(self, cls=None):
         """retrieve number of objects in that class or in total"""
-        if cls is None:
-            total = 0
-            for val in self.__models_available.values():
-                total += self.__session.query(val).count()
-            return total
-        if cls in self.__models_available.keys():
-            return self.__session.query(self.__models_available[cls]).count()
-        return -1
+        count = 0
+        if cls is not None:
+            return len(self.__session.query(cls).all())
+        for valid_cls in classes:
+            count += len(self.__session.query(classes[valid_cls]).all())
+        return count
