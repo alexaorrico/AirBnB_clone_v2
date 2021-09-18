@@ -8,7 +8,7 @@ from os import getenv
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
+app.register_blueprint(app_views, url_prefix="/api/v1")
 
 
 @app.teardown_appcontext
@@ -16,7 +16,6 @@ def close_storage(self):
     """[close de db call close]
     """
     storage.close()
-
 
 @app.handler_error
 def error_status(error):
