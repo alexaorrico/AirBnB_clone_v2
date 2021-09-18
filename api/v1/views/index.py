@@ -10,5 +10,5 @@ def status():
     """
     Return json status of web flask
     """
-    status = {'status': 'OK'}
-    return jsonify(status)
+    bob = {'status': 'OK'}
+    return jsonify(bob)
