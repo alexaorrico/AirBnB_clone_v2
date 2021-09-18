@@ -39,6 +39,13 @@ class ListCitiesApiTest(unittest.TestCase):
         self.url = '{}/states/{}/cities'.format(api_url, self.state.id)
         self.invalid_url = '{}/states/{}/cities'.format(api_url, 'toto')
 
+    def tearDown(self) -> None:
+        """
+            Tear down table State & City of database used for tests.
+        """
+        storage.delete(self.state)
+        storage.save()
+
     def testList(self):
         """
             Test valid list action.
@@ -54,10 +61,8 @@ class ListCitiesApiTest(unittest.TestCase):
         """
             Test list length.
         """
-        state = State(name='toto')
         state_id = self.state.id
         city = City(name='totoCity', state_id=state_id)
-        storage.new(state)
         storage.new(city)
         storage.save()
         obj_state = storage.get(State, state_id)
@@ -68,7 +73,6 @@ class ListCitiesApiTest(unittest.TestCase):
         self.assertEqual(initial_count, len(json_data))
 
         storage.delete(city)
-        storage.delete(state)
         storage.save()
 
     def testOnlyCity(self):
