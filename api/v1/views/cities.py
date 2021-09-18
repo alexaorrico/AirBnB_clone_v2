@@ -37,6 +37,13 @@ def Cities_list(state_id) -> json:
     """
     Retrieves the list of all City objects.
 
+    Args:
+        state_id : ID of the wanted State object.
+
+    Raises:
+        NotFound: Raises a 404 error if state_id
+        is not linked to any State object.
+
     Returns:
         json: List of City objects with status code 200.
     """
@@ -49,3 +56,26 @@ def Cities_list(state_id) -> json:
     for city in state.cities:
         list.append(city.to_dict())
     return make_response(jsonify(list), 200)
+
+
+@app_views.route('/cities/<city_id>', methods=['GET'])
+def Cities_show(city_id) -> json:
+    """
+    Retrieves a specified City object.
+
+    Args:
+        state_id : ID of the wanted City object.
+
+    Raises:
+        NotFound: Raises a 404 error if state_id
+        is not linked to any State object.
+
+    Returns:
+        json: Wanted State object with status code 200.
+    """
+    city = storage.get(City, city_id)
+
+    if city is None:
+        raise NotFound
+
+    return make_response(jsonify(city.to_dict()), 200)
