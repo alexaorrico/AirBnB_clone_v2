@@ -47,7 +47,7 @@ def amenities_list() -> json:
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
-def amenities_show(amenity_id) -> json:
+def amenity_show(amenity_id) -> json:
     """
     Retrieves a specified Amenity object.
 
@@ -70,7 +70,7 @@ def amenities_show(amenity_id) -> json:
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
-def amenities_delete(amenity_id) -> json:
+def amenity_delete(amenity_id) -> json:
     """
     Deletes a specified Amenity object.
 
@@ -93,3 +93,35 @@ def amenities_delete(amenity_id) -> json:
     storage.save()
 
     return make_response(jsonify({}), 200)
+
+
+@app_views.route('/amenities/', methods=['POST'])
+def amenity_create() -> json:
+    """
+    Creates a new Amenity object.
+
+    Error cases:
+        BadRequest: If the given data is not a
+        valid json or if the key 'name' is not
+        present sends status code 400.
+
+    Returns:
+        json: The new Amenity with the status code 201.
+    """
+    data = request.get_data()
+
+    if not __is_valid_json(data):
+        return make_response('Not a JSON', 400)
+
+    data = json.loads(data)
+
+    if 'name' not in data.keys():
+        return make_response('Missing name', 400)
+
+    amenity = Amenity(data)
+    for key, value in data.items():
+        amenity.__setattr__(key, value)
+    storage.new(amenity)
+    storage.save()
+
+    return make_response(jsonify(amenity.to_dict()), 201)

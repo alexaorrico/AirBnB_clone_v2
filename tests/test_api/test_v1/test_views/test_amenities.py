@@ -187,3 +187,65 @@ class DeleteAmenitiesApiTest(unittest.TestCase):
             headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
         self.assertTrue(self.amenity == storage.get(Amenity, self.amenity_id))
         self.assertEqual(json_data['error'], 'Not found')
+
+
+class CreateAmenitiesApiTest(unittest.TestCase):
+    """
+        Tests of API create action for Amenity.
+    """
+
+    def setUp(self) -> None:
+        """
+            Set up API create action.
+        """
+        self.url = '{}/amenities/'.format(api_url)
+
+    def testCreate(self):
+        """
+            Test valid create action tests.
+        """
+        data = {'name': 'toto'}
+        response = requests.post(url=self.url, data=json.dumps(data))
+        headers = response.headers
+
+        self.assertEqual(response.status_code, 201, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        json_data = response.json()
+        amenity = storage.get(Amenity, json_data['id'])
+        self.assertIsInstance(storage.get(Amenity, json_data['id']), Amenity)
+        self.assertIn('name', json_data, MISSING_NAME_ATTR_MSG)
+        self.assertIn('created_at', json_data, MISSING_CREATED_AT_ATTR_MSG)
+        self.assertIn('updated_at', json_data, MISSING_UPDATED_AT_ATTR_MSG)
+        self.assertIn('__class__', json_data, MISSING_CLASS_ATTR_MSG)
+        self.assertEqual(json_data['name'], 'toto')
+        storage.delete(amenity)
+        storage.save()
+
+    def testMissingNameAttribute(self):
+        """
+            Test create action when given dict without name key for Amenity.
+        """
+        data = {'bidule': 'toto'}
+        response = requests.post(url=self.url, data=json.dumps(data))
+        headers = response.headers
+
+        self.assertEqual(response.status_code, 400, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'text/html; charset=utf-8',
+            WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(response.content, b'Missing name')
+
+    def testNotAJson(self):
+        """
+            Test create action when given wrong data format.
+        """
+        data = {'name': 'toto'}
+        response = requests.post(url=self.url, data=data)
+        headers = response.headers
+
+        self.assertEqual(response.status_code, 400, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'text/html; charset=utf-8',
+            WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(response.content, b'Not a JSON')
