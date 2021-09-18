@@ -3,6 +3,7 @@
 Contains the TestFileStorageDocs classes
 """
 
+from models import storage
 from datetime import datetime
 import inspect
 import models
@@ -113,3 +114,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_count_all(self):
+        """Checks return of count method"""
+        count_insts = models.storage.count()
+        state_california = State(name="California")
+        models.storage.new(state_california)
+        state_california.save()
+        count_insts2 = models.storage.count()
+        self.assertEqual(count_insts + 1, count_insts2)
+
+
+class TestCodeFormat(unittest.TestCase):
+    """Class to do pep8 validation."""
+    def test_pep8(self):
+        """Test that we conform to pep8"""
+        pep8style = pep8.StyleGuide(quiet=True)
+        file1 = 'models/engine/file_storage.py'
+        file2 = 'tests/test_models/test_engine/test_file_storage.py'
+        result = pep8style.check_files([file1, file2])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warning).")
