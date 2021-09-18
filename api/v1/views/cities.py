@@ -151,3 +151,35 @@ def Cities_create(state_id) -> json:
     storage.save()
 
     return make_response(jsonify(city.to_dict()), 201)
+
+
+@app_views.route('/cities/<city_id>', methods=['PUT'])
+def Cities_update(city_id) -> json:
+    """
+    Update a specified City object.
+
+    Args:
+        city_id : ID of the wanted City object.
+
+    Returns:
+        json: The updated City object with the status code 200.
+    """
+    data = request.get_data()
+
+    if not __is_valid_json(data):
+        return make_response('Not a JSON', 400)
+
+    data = json.loads(data)
+    city = storage.get(City, city_id)
+
+    if city is None:
+        raise NotFound
+
+    for key, value in data.items():
+        if key not in ('id', 'state_id', 'created_at', 'updated_at'):
+            city.__setattr__(key, value)
+
+    storage.new(city)
+    storage.save()
+
+    return make_response(jsonify(city.to_dict()), 200)
