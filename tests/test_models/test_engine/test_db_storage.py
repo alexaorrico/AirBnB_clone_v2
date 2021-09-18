@@ -69,7 +69,8 @@ test_db_storage.py'])
 
     def test_count(self):
         """Test count from storage"""
-        objects = models.storage.count()
+        state_obj = State()
+        objects = models.storage.count(state_obj.name)
         self.assertNotEqual(objects, None)
 
     def test_get(self):
