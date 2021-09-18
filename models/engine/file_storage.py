@@ -71,10 +71,16 @@ class FileStorage:
 
     def get(self, cls, id):
         """ retrieves """
-        if cls in classes and id and type(id) == str:
+        if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
-            return d_obj.get(cls + '.' + id, None)
+            for key, value in d_obj.items():
+                if d_obj.split(".")[1] == id:
+                    return value
+        return None
 
     def count(self, cls=None):
         """ counts """
-        return len(self.all(cls))
+        data = self.all(cls)
+        if cls in classes.values():
+            data = self.all(cls)
+        return len(data)
