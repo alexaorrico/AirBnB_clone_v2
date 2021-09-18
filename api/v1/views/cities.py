@@ -3,6 +3,7 @@
     API view related to City objects that handles all the default
     actions.
 """
+from os import stat
 import requests
 from api.v1.views import app_views
 from models import storage
@@ -105,3 +106,48 @@ def Cities_delete(city_id) -> json:
     storage.save()
 
     return make_response(jsonify({}), 200)
+
+
+@app_views.route('/states/<state_id>/cities/', methods=['POST'])
+def Cities_create(state_id) -> json:
+    """
+    Creates a new City object.
+
+    Args:
+        state_id : ID of the wanted State object.
+
+    Raises:
+        NotFound: Raises a 404 error if state_id
+        is not linked to any State object.
+
+    Error cases:
+        BadRequest: If the given data is not a
+        valid json or if the key 'name' is not
+        present sends status code 400.
+
+    Returns:
+        json: The new State with the status code 201.
+    """
+    state = storage.get(State, state_id)
+
+    if state is None:
+        raise NotFound
+
+    data = request.get_data()
+
+    if not __is_valid_json(data):
+        return make_response('Not a JSON', 400)
+
+    data = json.loads(data)
+
+    if 'name' not in data.keys():
+        return make_response('Missing name', 400)
+
+    city = City(state_id=state_id)
+
+    for key, value in data.items():
+        city.__setattr__(key, value)
+    storage.new(city)
+    storage.save()
+
+    return make_response(jsonify(city.to_dict()), 201)

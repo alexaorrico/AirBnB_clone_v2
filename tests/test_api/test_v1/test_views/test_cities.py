@@ -21,6 +21,7 @@ MISSING_NAME_ATTR_MSG = 'Missing name!'
 MISSING_CREATED_AT_ATTR_MSG = 'Missing created_at!'
 MISSING_UPDATED_AT_ATTR_MSG = 'Missing updated_at!'
 MISSING_CLASS_ATTR_MSG = 'Missing class!'
+MISSING_STATE_ID_ATTR_MSG = 'Missing state id'
 
 
 class ListCitiesApiTest(unittest.TestCase):
@@ -53,21 +54,43 @@ class ListCitiesApiTest(unittest.TestCase):
         """
             Test list length.
         """
-        initial_count = len(storage.all(State.cities))
+        state = State(name='toto')
+        state_id = self.state.id
+        city = City(name='totoCity', state_id=state_id)
+        storage.new(state)
+        storage.new(city)
+        storage.save()
+        obj_state = storage.get(State, state_id)
+        initial_count = len(obj_state.cities)
         response = requests.get(url=self.url)
         json_data = response.json()
 
         self.assertEqual(initial_count, len(json_data))
 
+        storage.delete(city)
+        storage.delete(state)
+        storage.save()
+
     def testOnlyCity(self):
         """
             Test valid list action with City content only.
         """
+        state = State(name='toto')
+        state_id = self.state.id
+        city = City(name='totoCity', state_id=state_id)
+        storage.new(state)
+        storage.new(city)
+        storage.save()
+    
         response = requests.get(url=self.url)
         json_data = response.json()
 
         for element in json_data:
             self.assertEqual(element['__class__'], 'City', WRONG_OBJ_TYPE_MSG)
+        
+        storage.delete(city)
+        storage.delete(state)
+        storage.save()
 
     def testNotFound(self):
         """
@@ -204,4 +227,87 @@ class DeleteCitiesApiTest(unittest.TestCase):
         self.assertEqual(
             headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
         self.assertTrue(self.state == storage.get(State, self.state.id))
+        self.assertEqual(json_data['error'], 'Not found')
+
+
+class CreateCitiesApiTest(unittest.TestCase):
+    """
+        Tests of API create action for City.
+    """
+
+    def setUp(self) -> None:
+        """
+            Set up API create action.
+        """
+        self.state = State(name='toto')
+        storage.new(self.state)
+        storage.save()
+        self.state_id = self.state.id
+        self.url = '{}/states/{}/cities'.format(api_url, self.state_id)
+        self.invalid_url = '{}/states/{}/cities'.format(api_url, 'toto')
+
+    def testCreate(self):
+        """
+            Test valid create action tests.
+        """
+        data = {'name': 'toto'}
+        response = requests.post(url=self.url, data=json.dumps(data))
+        headers = response.headers
+
+        self.assertEqual(response.status_code, 201, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        json_data = response.json()
+        city = storage.get(City, json_data['id'])
+        self.assertIsInstance(city, City)
+        self.assertIn('name', json_data, MISSING_NAME_ATTR_MSG)
+        self.assertIn('created_at', json_data, MISSING_CREATED_AT_ATTR_MSG)
+        self.assertIn('updated_at', json_data, MISSING_UPDATED_AT_ATTR_MSG)
+        self.assertIn('__class__', json_data, MISSING_CLASS_ATTR_MSG)
+        self.assertIn('state_id', json_data, MISSING_STATE_ID_ATTR_MSG)
+        self.assertEqual(json_data['name'], 'toto')
+        storage.delete(city)
+        storage.save()
+
+    def testMissingNameAttribute(self):
+        """
+            Test create action when given dict without name key for city.
+        """
+        data = {'bidule': 'toto'}
+        response = requests.post(url=self.url, data=json.dumps(data))
+        headers = response.headers
+
+        self.assertEqual(response.status_code, 400, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'text/html; charset=utf-8',
+            WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(response.content, b'Missing name')
+
+    def testNotAJson(self):
+        """
+            Test create action when given wrong data format.
+        """
+        data = {'name': 'toto'}
+        response = requests.post(url=self.url, data=data)
+        headers = response.headers
+
+        self.assertEqual(response.status_code, 400, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'text/html; charset=utf-8',
+            WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(response.content, b'Not a JSON')
+
+    def testNotFound(self):
+        """
+            Test create action when given wrong city_id or no ID at all.
+        """
+        response = requests.post(url=self.invalid_url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertEqual(response.status_code, 404, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertTrue(self.state == storage.get(State, self.state_id))
+        self.assertIn('error', json_data)
         self.assertEqual(json_data['error'], 'Not found')
