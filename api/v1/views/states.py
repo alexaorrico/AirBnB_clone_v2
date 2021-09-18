@@ -60,8 +60,8 @@ def post():
     return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def put(state_id=None):
+@app_views.route('/states', methods=['PUT'], strict_slashes=False)
+def post():
     """PUT"""
     res = request.get_json()
     if not res:
