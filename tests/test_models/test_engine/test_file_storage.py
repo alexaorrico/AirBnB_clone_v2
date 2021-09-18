@@ -70,6 +70,23 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @classmethod
+    def setUpClass(cls):
+        '''Create instance to test the attributes of a class'''
+        cls.state = State(name="Minnesota")
+        cls.state.save()
+        cls.city = City(name="Roseville", state_id=cls.state.id)
+        cls.cit.save()
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @classmethod
+    def tearDownClass(cls):
+        '''Remove the istance after run tests'''
+        del cls.state
+        del cls.city
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +130,9 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get properly the specify object"""
+        storage = FileStorage()
+        self.assertEqual(self.state, storage.get(State, state_id))

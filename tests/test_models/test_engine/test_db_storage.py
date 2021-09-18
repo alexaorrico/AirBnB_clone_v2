@@ -3,21 +3,24 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
 import inspect
+import json
+import os
+import unittest
+from datetime import datetime
+
 import models
-from models.engine import db_storage
+import pep8
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
+from models.engine import db_storage
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -70,6 +73,23 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @classmethod
+    def setUpClass(cls):
+        '''Create instance to test the attributes of a class'''
+        cls.state = State(name="Minnesota")
+        cls.state.save()
+        cls.city = City(name="Roseville", state_id=new_state.id)
+        cls.cit.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @classmethod
+    def tearDownClass(cls):
+        '''Remove the istance after run tests'''
+        del cls.state
+        del cls.city
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -85,4 +105,20 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects to mysql"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count properly objects"""
+        # count all objects
+        all_objects = storage.all()
+        self.assertEqual(len(all_objects), storage.count())
+        # count all objects from State class
+        all_states = storage.all(State())
+        self.assertEqual(len(all_objects), storage.count(State))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get properly the specify object"""
+        state_id = self.state.id
+        self.assertEqual(self.state, storage.get(State, state_id))
