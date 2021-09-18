@@ -1,15 +1,12 @@
-"""
-    Module REST API routes that returns json responses
-"""
+#!/usr/bin/python3
+''' blueprint routes '''
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify
+from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', strict_slashes=False)
 def status():
-    """
-        Return status of '/status' route
-    """
-    if request.method == 'GET':
-        resp = {"status": "OK"}
-        return jsonify(resp)
+    ''' return status '''
+
+    return (jsonify({"status": "OK"}))
