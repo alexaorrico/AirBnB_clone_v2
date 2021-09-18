@@ -132,3 +132,58 @@ class ShowAmenitiesApiTest(unittest.TestCase):
             headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
         self.assertTrue(self.amenity == storage.get(Amenity, self.amenity.id))
         self.assertEqual(json_data['error'], 'Not found')
+
+
+class DeleteAmenitiesApiTest(unittest.TestCase):
+    """
+        Tests of API delete action for Amenity.
+    """
+
+    def setUp(self) -> None:
+        """
+            Set up API delete action tests.
+        """
+        self.amenity = Amenity(name='toto')
+        self.amenity_id = self.amenity.id
+        storage.new(self.amenity)
+        storage.save()
+        self.url = '{}/amenities/{}'.format(api_url, self.amenity_id)
+        self.invalid_url = '{}/amenities/{}'.format(api_url, 'toto')
+
+    def tearDown(self) -> None:
+        """
+            Tear down table Amenity of database used for tests.
+        """
+        if storage.get(Amenity, self.amenity_id) is not None:
+            storage.delete(self.amenity)
+            storage.save()
+
+    def testDelete(self):
+        """
+            Test valid delete action.
+        """
+        response = requests.delete(url=self.url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertTrue(self.amenity == storage.get(Amenity, self.amenity_id))
+        self.assertEqual(response.status_code, 200, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(len(json_data), 0)
+        storage.reload()
+        self.assertIsNone(storage.get(Amenity, self.amenity_id))
+
+    def testNotFound(self):
+        """
+            Test delete action when given wrong amenity_id or no ID at all.
+        """
+        response = requests.delete(url=self.invalid_url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertEqual(response.status_code, 404, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertTrue(self.amenity == storage.get(Amenity, self.amenity_id))
+        self.assertEqual(json_data['error'], 'Not found')

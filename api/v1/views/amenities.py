@@ -67,3 +67,29 @@ def amenities_show(amenity_id) -> json:
         raise NotFound
 
     return make_response(jsonify(amenity.to_dict()), 200)
+
+
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
+def amenities_delete(amenity_id) -> json:
+    """
+    Deletes a specified Amenity object.
+
+    Args:
+        amenity_id : ID of the wanted Amenity object.
+
+    Raises:
+        NotFound: Raises a 404 error if amenity_id
+        is not linked to any Amenity object.
+
+    Returns:
+        json: Empty dictionary with the status code 200.
+    """
+    amenity = storage.get(Amenity, amenity_id)
+
+    if amenity is None:
+        raise NotFound
+
+    storage.delete(amenity)
+    storage.save()
+
+    return make_response(jsonify({}), 200)
