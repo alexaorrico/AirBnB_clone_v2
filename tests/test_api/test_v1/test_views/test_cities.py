@@ -246,6 +246,12 @@ class CreateCitiesApiTest(unittest.TestCase):
         self.url = '{}/states/{}/cities'.format(api_url, self.state_id)
         self.invalid_url = '{}/states/{}/cities'.format(api_url, 'toto')
 
+    def tearDown(self) -> None:
+        state = storage.get(State, self.state_id)
+        if state is not None:
+            storage.delete(state)
+        storage.save()
+
     def testCreate(self):
         """
             Test valid create action tests.
