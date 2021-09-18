@@ -64,11 +64,11 @@ def Cities_show(city_id) -> json:
     Retrieves a specified City object.
 
     Args:
-        state_id : ID of the wanted City object.
+        city_id : ID of the wanted City object.
 
     Raises:
-        NotFound: Raises a 404 error if state_id
-        is not linked to any State object.
+        NotFound: Raises a 404 error if city_id
+        is not linked to any City object.
 
     Returns:
         json: Wanted State object with status code 200.
@@ -79,3 +79,29 @@ def Cities_show(city_id) -> json:
         raise NotFound
 
     return make_response(jsonify(city.to_dict()), 200)
+
+
+@app_views.route('/cities/<city_id>', methods=['DELETE'])
+def Cities_delete(city_id) -> json:
+    """
+    Deletes a specified City object.
+
+    Args:
+        city_id : ID of the wanted City object.
+
+    Raises:
+        NotFound: Raises a 404 error if city_id
+        is not linked to any City object.
+
+    Returns:
+        json: Empty dictionary with the status code 200.
+    """
+    city = storage.get(City, city_id)
+
+    if city is None:
+        raise NotFound
+
+    storage.delete(city)
+    storage.save()
+
+    return make_response(jsonify({}), 200)

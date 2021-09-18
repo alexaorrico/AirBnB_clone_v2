@@ -84,7 +84,7 @@ class ListCitiesApiTest(unittest.TestCase):
         self.assertEqual('Not found', json_data['error'])
 
 
-class ShowStatesApiTest(unittest.TestCase):
+class ShowCitiesApiTest(unittest.TestCase):
     """
         Tests of API show action for City.
     """
@@ -140,3 +140,68 @@ class ShowStatesApiTest(unittest.TestCase):
                          'application/json', WRONG_TYPE_RETURN_MSG)
         self.assertIn('error', json_data.keys())
         self.assertEqual('Not found', json_data['error'])
+
+
+class DeleteCitiesApiTest(unittest.TestCase):
+    """
+        Tests of API delete action for City.
+    """
+
+    def setUp(self) -> None:
+        """
+            Set up API delete action tests.
+        """
+        self.state = State(name='toto')
+        storage.new(self.state)
+        storage.save()
+        self.state_id = self.state.id
+        self.city = City(name='totoCity', state_id=self.state_id)
+        storage.new(self.city)
+        storage.save()
+        self.city_id = self.city.id
+        self.url = '{}/cities/{}'.format(api_url, self.city.id)
+        self.invalid_url = '{}/cities/{}'.format(api_url, 'toto')
+
+    def tearDown(self) -> None:
+        """
+            Tear down table State & City of database used for tests.
+        """
+        city = storage.get(City, self.city_id)
+        if city is not None:
+            storage.delete(city)
+        state = storage.get(State, self.state_id)
+        if state is not None:
+            storage.delete(state)
+        storage.save()
+
+    def testDelete(self):
+        """
+            Test valid delete action.
+        """
+        response = requests.delete(url=self.url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertTrue(self.city == storage.get(City, self.city_id))
+        self.assertTrue(self.state == storage.get(State, self.state_id))
+        self.assertEqual(self.city.state_id, self.state.id)
+        self.assertEqual(response.status_code, 200, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertEqual(len(json_data), 0)
+        storage.reload()
+        self.assertIsNone(storage.get(City, self.city_id))
+
+    def testNotFound(self):
+        """
+            Test delete action when given wrong city_id or no ID at all.
+        """
+        response = requests.delete(url=self.invalid_url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertEqual(response.status_code, 404, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertTrue(self.state == storage.get(State, self.state.id))
+        self.assertEqual(json_data['error'], 'Not found')
