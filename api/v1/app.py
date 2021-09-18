@@ -8,14 +8,15 @@ from os import getenv
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
+app.register_blueprint(app_views, url_prefix="/api/v1")
+
 
 @app.teardown_appcontext
 def close_storage(self):
-  """[close de db call close]
-  """
-  storage.close()
-  
+    """[close de db call close]
+    """
+    storage.close()
+
 
 if __name__ == '__main__':
     api_host = getenv('HBNB_API_HOST', default='0.0.0.0')

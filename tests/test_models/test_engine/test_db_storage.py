@@ -94,6 +94,7 @@ class TestFileStorage(unittest.TestCase):
 class test_DBStorage(unittest.TestCase):
     def test_get(self):
         """ Testing get method """
+        storage = DBStorage()
 
         # new state test
         state = State(name="California")
