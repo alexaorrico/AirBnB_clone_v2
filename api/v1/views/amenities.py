@@ -34,13 +34,36 @@ def __is_valid_json(data):
 @app_views.route('/amenities', methods=['GET'])
 def amenities_list() -> json:
     """
-    Retrieves the list of all State objects.
+    Retrieves the list of all Amenity objects.
 
     Returns:
-        json: List of State objects with status code 200.
+        json: List of Amenity objects with status code 200.
     """
     amenities = storage.all(Amenity)
     list = []
     for key, amenity in amenities.items():
         list.append(amenity.to_dict())
     return make_response(jsonify(list), 200)
+
+
+@app_views.route('/amenities/<amenity_id>', methods=['GET'])
+def amenities_show(amenity_id) -> json:
+    """
+    Retrieves a specified Amenity object.
+
+    Args:
+        amenity_id : ID of the wanted Amenity object.
+
+    Raises:
+        NotFound: Raises a 404 error if amenity_id
+        is not linked to any Amenity object.
+
+    Returns:
+        json: Wanted Amenity object with status code 200.
+    """
+    amenity = storage.get(Amenity, amenity_id)
+
+    if amenity is None:
+        raise NotFound
+
+    return make_response(jsonify(amenity.to_dict()), 200)

@@ -69,8 +69,66 @@ class ListAmenitiesApiTest(unittest.TestCase):
         json_data = response.json()
 
         for element in json_data:
-            self.assertEqual(element['__class__'], 'Amenity', WRONG_OBJ_TYPE_MSG)
+            self.assertEqual(
+                element['__class__'],
+                'Amenity',
+                WRONG_OBJ_TYPE_MSG
+            )
 
         storage.delete(amenity)
         storage.delete(state)
         storage.save()
+
+
+class ShowAmenitiesApiTest(unittest.TestCase):
+    """
+        Tests of API show action for Amenity.
+    """
+
+    def setUp(self) -> None:
+        """
+            Set up API show action tests.
+        """
+        self.amenity = Amenity(name='toto')
+        storage.new(self.amenity)
+        storage.save()
+        self.url = '{}/amenities/{}'.format(api_url, self.amenity.id)
+        self.invalid_url = '{}/amenities/{}'.format(api_url, 'toto')
+
+    def tearDown(self) -> None:
+        """
+            Tear down table Amenity of database used for tests.
+        """
+        storage.delete(self.amenity)
+        storage.save()
+
+    def testShow(self):
+        """
+            Test valid show action.
+        """
+        response = requests.get(url=self.url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertEqual(response.status_code, 200, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertIn('name', json_data)
+        self.assertIn('created_at', json_data)
+        self.assertIn('updated_at', json_data)
+        self.assertIn('__class__', json_data)
+        self.assertEqual(json_data['name'], self.amenity.name)
+
+    def testNotFound(self):
+        """
+            Test show action when given wrong amenity_id or no ID at all.
+        """
+        response = requests.get(url=self.invalid_url)
+        headers = response.headers
+        json_data = response.json()
+
+        self.assertEqual(response.status_code, 404, WRONG_STATUS_CODE_MSG)
+        self.assertEqual(
+            headers['Content-Type'], 'application/json', WRONG_TYPE_RETURN_MSG)
+        self.assertTrue(self.amenity == storage.get(Amenity, self.amenity.id))
+        self.assertEqual(json_data['error'], 'Not found')
