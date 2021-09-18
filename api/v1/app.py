@@ -4,6 +4,7 @@ from werkzeug.exceptions import NotFound
 from flask import Flask, make_response, jsonify
 from api.v1.views import app_views
 
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
@@ -15,4 +16,5 @@ def handle_not_found(e):
 
 if __name__ == '__main__':
     # runs the Flask application through port 5000 from local host
-    app.run(host='0.0.0.0', port='5000', threaded=True)
+    app.run(host=os.environ['HBNB_API_HOST'],
+            port=os.environ['HBNB_API_PORT'], threaded=True)
