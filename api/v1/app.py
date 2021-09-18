@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+This module contains the principal application
+"""
 from models import storage
 from api.v1.views import app_views
 from flask import Flask
@@ -17,13 +20,7 @@ def close_db(obj):
 
 if __name__ == "__main__":
 
-    host = getenv('HBNB_API_HOST')
-    port = getenv('HBNB_API_PORT')
+    host = getenv('HBNB_API_HOST', default='0.0.0.0')
+    port = getenv('HBNB_API_PORT', default=5000)
 
-    if host is None:
-        host = '0.0.0.0'
-
-    if port is None:
-        port = '5000'
-
-    app.run(host, port, threaded=True)
+    app.run(host, int(port), threaded=True)
