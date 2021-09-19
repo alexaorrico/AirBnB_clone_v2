@@ -128,15 +128,15 @@ class HBNBCommand(cmd.Cmd):
         integers = ["number_rooms", "number_bathrooms", "max_guest",
                     "price_by_night"]
         floats = ["latitude", "longitude"]
-        if len(args) == 0:
+        if len(args) == 0: #check if name
             print("** class name missing **")
         elif args[0] in classes:
-            if len(args) > 1:
-                k = args[0] + "." + args[1]
-                if k in models.storage.all():
-                    if len(args) > 2:
-                        if len(args) > 3:
-                            if args[0] == "Place":
+            if len(args) > 1: #check if id
+                k = args[0] + "." + args[1] # makes key for json dict
+                if k in models.storage.all(): # check if there is an instance of it in the dict
+                    if len(args) > 2: # checks if attribute name is missing
+                        if len(args) > 3: #check if attribute value is given
+                            if args[0] == "Place": # special case for place
                                 if args[2] in integers:
                                     try:
                                         args[3] = int(args[3])
@@ -147,8 +147,8 @@ class HBNBCommand(cmd.Cmd):
                                         args[3] = float(args[3])
                                     except:
                                         args[3] = 0.0
-                            setattr(models.storage.all()[k], args[2], args[3])
-                            models.storage.all()[k].save()
+                            setattr(models.storage.all()[k], args[2], args[3]) #*actual update moment
+                            models.storage.all()[k].save()#saves the db
                         else:
                             print("** value missing **")
                     else:
