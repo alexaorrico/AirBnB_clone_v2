@@ -74,14 +74,9 @@ class FileStorage:
         if cls is None or id is None:
             return None
 
-        # turns "<clss 'models.state.State'>" into "State"
-        cls = str(cls)
-        cls = cls.split('.')[2][:-2]
-
         for key, value in self.__objects.items():
-            if key == "{}.{}".format(cls, id):
+            if key == cls + '.' + id:
                 return value
-
         return None
 
     def count(self, cls=None):
