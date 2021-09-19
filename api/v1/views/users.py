@@ -1,69 +1,75 @@
 #!/usr/bin/python3
-""" return dict repersantation of object """
+"""
+View for Users that handles all RESTful API actions
+"""
+
+from flask import jsonify, request, abort
 from models import storage
-from models.engine.db_storage import classes
+from models.user import User
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
 
-@app_views.route("/users", methods=["GET"], strict_slashes=False)
-def user_get():
-	result = []
-	""" get all the user """
-	for i in storage.all("User").values():
-		result.append(i.to_dict())
-	return jsonify(result)
 
-@app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
-def user_specific(user_id):
-	""" get the specific object from user """
-	for i in storage.all("User").values():
-		if i.id == user_id:
-			return i.to_dict()
-	abort(404)
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+def users_all():
+    """ returns list of all User objects """
+    users_all = []
+    users = storage.all("User").values()
+    for user in users:
+        users_all.append(user.to_json())
+    return jsonify(users_all)
 
-@app_views.route("/users/<user_id>", methods=['DELETE'], strict_slashes=False)
-def user_specific_delete(user_id):
-	""" delete the inputed object from user """
-	task = [task for task in storage.all("User").values() if task.id == user_id]
-	if len(task) == 0:
-		abort(404)
-	storage.delete(task[0])
-	storage.save()
-	return jsonify({}), 200
 
-@app_views.route("/users", methods=['POST'], strict_slashes=False)
-def user_specific_post():
-	""" post the inputed object from user"""
-	if not request.json:
-		return make_response("Not a JSON", 400)
-	if not 'email' in request.json:
-		return make_response("Missing email", 400)
-	if not 'password' in request.json:
-		return make_response("Missing password", 400)
-	obj = classes["User"]
-	try:
-		new_item = obj()
-		for key, value in request.json.items():
-			setattr(new_item, key, value)
-		new_item.save()
-		return new_item.to_dict(), 201
-	except:
-		abort(404)
+@app_views.route('/users/<user_id>', methods=['GET'])
+def user_get(user_id):
+    """ handles GET method """
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
+    user = user.to_json()
+    return jsonify(user)
 
-@app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
-def user_specific_put(user_id):
-	""" update the specific object from user """
-	instance = None
-	if not request.json:
-		return make_response("Not a JSON", 400)
-	check = ["id", "created_at", "updated_at", "email"]
-	for i in storage.all("User").values():
-		if i.id == user_id:
-			instance = i
-			for key, value in request.json.items():
-				if key not in check:
-					setattr(i, key, value)
-					i.save()
-	if not instance:
-		abort(404)
-	return instance.to_dict(), 200
+
+@app_views.route('/users/<user_id>', methods=['DELETE'])
+def user_delete(user_id):
+    """ handles DELETE method """
+    empty_dict = {}
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
+    storage.delete(user)
+    storage.save()
+    return jsonify(empty_dict), 200
+
+
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def user_post():
+    """ handles POST method """
+    data = request.get_json()
+    if data is None:
+        abort(400, "Not a JSON")
+    if 'email' not in data:
+        abort(400, "Missing email")
+    if 'password' not in data:
+        abort(400, "Missing password")
+    user = User(**data)
+    user.save()
+    user = user.to_json()
+    return jsonify(user), 201
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'])
+def user_put(user_id):
+    """ handles PUT method """
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
+    data = request.get_json()
+    if data is None:
+        abort(400, "Not a JSON")
+    for key, value in data.items():
+        ignore_keys = ["id", "email", "created_at", "updated_at"]
+        if key not in ignore_keys:
+            user.bm_update(key, value)
+    user.save()
+    user = user.to_json()
+    return jsonify(user), 200
