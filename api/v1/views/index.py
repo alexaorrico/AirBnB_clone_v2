@@ -12,7 +12,8 @@ def status():
 
 
 @app_views.route("/stats")
-def quantity():
+def number_by_objects():
+    """"""
     objs = storage.all()
     classes = []
     names = []
@@ -31,5 +32,5 @@ def quantity():
 
     print("{}".format(names))
     for i in range(len(classes)):
-        dict[names[i]] = storage.count('State')
+        dict[names[i]] = storage.count(classes[i])
     return jsonify(dict)
