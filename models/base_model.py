@@ -70,6 +70,28 @@ class BaseModel:
             del new_dict["_sa_instance_state"]
         return new_dict
 
+    def to_json(self):
+        """returns a json representation"""
+        bm_json = {}
+        for key, value in (self.__dict__).items():
+            if key == '_sa_instance_state':
+                del key
+                continue
+            if (self.__is_serializable(value)):
+                bm_json[key] = value
+            else:
+                bm_json[key] = str(value)
+        bm_json['__class__'] = type(self).__name__
+        return (bm_json)
+
+    def __is_serializable(self, objser):
+        """checks if object is serializable"""
+        try:
+            obj_str = json.dumps(objser)
+            return obj_str is not None and isinstance(obj_str, str)
+        except:
+            return False
+
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
