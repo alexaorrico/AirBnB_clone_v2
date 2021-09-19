@@ -51,5 +51,5 @@ def retrieve_city(city_id=None):
         json_req = request.get_json()
         if json_req is None:
             abort(400, 'Not a JSON')
-        city.update(req_json)
+        city.update(json_req)
         return jsonify(city.to_json()), 200
