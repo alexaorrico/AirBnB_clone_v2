@@ -49,7 +49,8 @@ def create_city(state_id):
     name = req.get("name")
     if "name" not in req:
         abort(400, "Missing name")
-    if storage.get(State, state_id) is None:
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
     new_city = City()
     new_city.state_id = state_id
