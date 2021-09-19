@@ -72,6 +72,5 @@ def update_city(city_id):
             continue
         else:
             setattr(city, key, value)
-
     city.save()
     return (jsonify(city.to_dict()), 200)
