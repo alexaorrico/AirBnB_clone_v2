@@ -20,9 +20,9 @@ def close_storage(error):
 
 
 @app.errorhandler(404)
-def resource_not_found(e=None):
+def resource_not_found(e):
     """ Will return a 404 json query """
-    return jsonify({'error': 'Not Found'}), 404
+    return jsonify({'error': 'Not found'}), 404
 
 if __name__ == "__main__":
     """ Only executes as main """
