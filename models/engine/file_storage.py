@@ -70,23 +70,39 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ method to get an object
         """
-        for key, value in self.__objects.items():
-            if cls == value.__class__ or cls == value.__class__.__name__:
-                if id == key.split('.')[1]:
-                    return value
-        return None
+        Returns the object based on the class and its ID,
+        or None if not found
+        """
+        obj = None
+        objcls = {}
+        if cls:
+            objcls = FileStorage.__objects.values()
+            for item in objcls:
+                if item.id == id:
+                    obj = item
+            return obj
 
     def count(self, cls=None):
-        """ returns the total number of objects
+        """ Returns the number of objects in storage matching the given class.
+            If no class is passed, returns the count of all objects in storage.
         """
-        count = 0
-        if cls is not None:
-            for key, value in self.__objects.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    count += 1
+        if cls:
+            objs = []
+            objcls = FileStorage.__objects.values()
+            for item in objcls:
+                if type(cls) is str and type(item).__name__ == cls:
+                    objs.append(item)
+                if type(cls) is not str and \
+                   type(item).__name__ == cls.__name__:
+                    objs.append(item)
+            return len(objs)
         else:
-            for key in self.__objects:
-                count += 1
-        return count
+            objs = []
+            for clsname in classes:
+                if clsname == 'BaseModel':
+                    continue
+                objcls = FileStorage.__objects
+                for item in objcls:
+                    objs.append(item)
+            return len(objs)

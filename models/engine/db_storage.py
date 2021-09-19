@@ -76,28 +76,35 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """ method to get an object
         """
-        for clss in classes:
-            if cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    if id == obj.id:
-                        return obj
-        return None
+        Returns the object based on the class and its ID,
+        or None if not found
+        """
+        try:
+            objs = {}
+            if cls:
+                objcls = self.__session.query(classes.get(cls.__name__)).all()
+                for item in objcls:
+                    objs[item.id] = item
+            return objs[id]
+        except Exception:
+            return None
 
     def count(self, cls=None):
-        """ returns the total number of objects
+        """ Returns the number of objects in storage matching the given class.
+            If no class is passed, returns the count of all objects in storage.
         """
-        count = 0
-        if cls is not None:
-            try:
-                return len(self.all(classes[cls]))
-            except:
-                return None
+        objs = {}
+        if cls:
+            objcls = self.__session.query(classes.get(cls.__name__)).all()
+            for item in objcls:
+                objs[item.id] = item
+            return len(objs)
         else:
-            for clss in classes:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    count += 1
-        return count
+            for clsname in classes:
+                if clsname == 'BaseModel':
+                    continue
+                objcls = self.__session.query(classes.get(cls.__name__)).all()
+                for item in objcls:
+                    objs[item.id] = item
+            return len(objs)
