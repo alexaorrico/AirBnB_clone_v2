@@ -47,23 +47,22 @@ def create_place(city_id):
     req = request.get_json()
     if req is False:
         abort(400, "Not a JSON")
-    name = req.get("name")
     if "name" not in req:
         abort(400, "Missing name")
     if storage.get(City, city_id) is None:
         abort(404, "city id not found")
-    if 'user_id' not in req:
-        return jsonify({'error': 'Missing user_id'}), 400
+    if "user_id" not in req:
+        abort(400, "Missing user_id")
     user = storage.get(User, req.get('user_id'))
     if not user:
         abort(404)
     
     new_place = Place()
     new_place.city_id = city_id
-    new_place.name = name
+    for key, value in req.items():
+        setattr(new_place, key, value)
     new_place.save()
     return (jsonify(new_place.to_dict()), 201)
-
 
 @app_views.route('/places/<place_id>', methods=["PUT"], strict_slashes=False)
 def update_place(place_id):
