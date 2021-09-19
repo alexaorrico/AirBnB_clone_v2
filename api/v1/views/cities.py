@@ -71,7 +71,7 @@ def post_city(city_id):
     if obj is None: 
         abort(404)
     for key, value in request.get_json().items():
-        if key not in ['id', 'state_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'state_id', 'created_at', 'updated']:
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
