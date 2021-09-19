@@ -48,7 +48,6 @@ def handle_users_with_id(user_id=None):
         storage.save()
         return jsonify({})
     if request.method == "PUT":
-        print("Hello world")
         # modify the user with corresponding user_id
         json_req = request.get_json()
         if json_req is None:
