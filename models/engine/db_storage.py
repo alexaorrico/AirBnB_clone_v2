@@ -58,7 +58,7 @@ class DBStorage:
         if cls is None:
             return (len(self.all()))
         else:
-            return self.__session.query(cls).count()
+           return len(self.__session.query(classes[cls]).all())
 
     def new(self, obj):
         """add the object to the current database session"""
