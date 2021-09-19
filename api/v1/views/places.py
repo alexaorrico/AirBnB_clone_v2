@@ -49,9 +49,9 @@ def create_obj_place(city_id):
     if city is None:
         abort(404)
     if not request.get_json():
-        return jsonify({'error': 'Not a JSON'}, 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in request.get_json():
-        return jsonify({'error': 'Missing name'}, 400)
+        return make_response(jsonify({"error": "Missing name"}), 400)
 
     js = request.get_json()
     obj = Place(**js)
@@ -64,7 +64,7 @@ def create_obj_place(city_id):
 def post_place(place_id):
     """  """
     if not request.get_json():
-        return jsonify({'error': 'Not a JSON'}, 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)

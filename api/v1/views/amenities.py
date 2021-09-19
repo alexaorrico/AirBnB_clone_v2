@@ -41,9 +41,9 @@ def del_amenity(amenity_id):
 def create_obj_amenity():
     """ create new instance """
     if not request.get_json():
-        return jsonify({'error': 'Not a JSON'}, 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in request.get_json():
-        return jsonify({'error': 'Missing name'}, 400)
+        return make_response(jsonify({"error": "Missing name"}), 400)
     js = request.get_json()
     obj = Amenity(**js)
     obj.save()
@@ -55,7 +55,7 @@ def create_obj_amenity():
 def post_amenity(amenity_id):
     """  """
     if not request.get_json():
-        return jsonify({'error': 'Not a JSON'}, 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Amenity, amenity_id)
     if obj is None:
         abort(404)

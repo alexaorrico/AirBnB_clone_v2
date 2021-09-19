@@ -41,9 +41,11 @@ def del_user(user_id):
 def create_obj_user():
     """ create new instance """
     if not request.get_json():
-        return jsonify({'error': 'Not a JSON'}, 400)
-    if 'name' not in request.get_json():
-        return jsonify({'error': 'Missing name'}, 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if 'email' not in request.get_json():
+        return make_response(jsonify({"error": "Missing email"}), 400)
+    if 'password'not in request.get_json():
+        return make_response(jsonify({"error": "Missing password"}), 400)
     js = request.get_json()
     obj = User(**js)
     obj.save()
@@ -55,7 +57,7 @@ def create_obj_user():
 def post_user(user_id):
     """  """
     if not request.get_json():
-        return jsonify({'error': 'Not a JSON'}, 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(User, user_id)
     if obj is None:
         abort(404)
