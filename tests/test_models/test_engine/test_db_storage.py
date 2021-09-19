@@ -97,10 +97,10 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Test that count the number of objects in storage matching the given class."""
+        """Test that count the number of objects in storage matching the
+        given class.
+        """
         state_class = State(name="Florida")
         state_class.save()
         count = state_class.count("State")
         self.asserEqual(state_class.count("State"), count)
-
-
