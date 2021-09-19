@@ -73,3 +73,46 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def to_json(self, saving_file_storage=False):
+        """
+            returns json representation of self
+        """
+        obj_class = self.__class__.__name__
+        base_dict = {
+            k: v if self.__is_serializable(v) else str(v)
+            for k, v in self.__dict__.items()
+        }
+        base_dict.pop('_sa_instance_state', None)
+        base_dict.update({
+            '__class__': obj_class
+            })
+        if not saving_file_storage and obj_class == 'User':
+            base_dict.pop('password', None)
+        return(base_dict)
+
+    def __is_serializable(self, obj_v):
+        """
+            private: checks if object is serializable
+        """
+        try:
+            obj_to_str = json.dumps(obj_v)
+            return obj_to_str is not None and isinstance(obj_to_str, str)
+        except:
+            return False
+
+    def update(self, attr_dict=None):
+        """
+            updates the basemodel and sets the correct attributes
+        """
+        IGNORE = [
+            'id', 'created_at', 'updated_at', 'email',
+            'state_id', 'user_id', 'city_id', 'place_id'
+        ]
+        if attr_dict:
+            updated_dict = {
+                k: v for k, v in attr_dict.items() if k not in IGNORE
+            }
+            for key, value in updated_dict.items():
+                setattr(self, key, value)
+            self.save()

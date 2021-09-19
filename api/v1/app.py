@@ -18,7 +18,7 @@ def teardown_db(exception):
 @app.errorhandler(HTTPException)
 def handle_404(e):
     """ return 404 NOT found as JSON """
-    response =  e.get_response()
+    response = e.get_response()
     response.data = json.dumps({"error": "Not found"})
     response.content_type = "application/json"
     return response
