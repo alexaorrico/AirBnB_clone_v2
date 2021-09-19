@@ -4,9 +4,9 @@
 Flask web application api
 """
 
-from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
+from flask import Flask, make_response, jsonify
 import os
 
 
@@ -28,4 +28,4 @@ def not_found(error):
 if __name__ == '__main__':
     my_host = os.getenv('HBNB_API_HOST')
     my_port = os.getenv('HBNB_API_PORT')
-    app.run(host=my_host, port=int(my_port), threaded=True, debug=True)
+    app.run(host=my_host, port=int(my_port), threaded=True)
