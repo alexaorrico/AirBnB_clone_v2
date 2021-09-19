@@ -51,10 +51,10 @@ def put_states(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    data = request.get_json()
-    if data is None:
+    req = request.get_json()
+    if req is None:
         abort(400, "Not a JSON")
-    for key, value in data.items():
+    for key, value in req.items():
         if key in ['id', 'created_at', 'updated_at']:
             continue
         else:

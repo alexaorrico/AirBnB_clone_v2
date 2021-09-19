@@ -49,8 +49,7 @@ def create_city(state_id):
     name = req.get("name")
     if "name" not in req:
         abort(400, "Missing name")
-    state = storage.get(State, state_id)
-    if state is None:
+    if storage.get(State, state_id) is None:
         abort(404)
     new_city = City()
     new_city.state_id = state_id
@@ -61,17 +60,18 @@ def create_city(state_id):
 
 @app_views.route('/cities/<city_id>', methods=["PUT"], strict_slashes=False)
 def update_city(city_id):
-    """ Updates a city object """
+    """ Update a city object """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    city_dict = request.get_json()
-    if city_dict is None:
+    req = request.get_json()
+    if req is None:
         abort(400, "Not a JSON")
-    for key, value in city_dict.items():
+    for key, value in req.items():
         if key in ['id', 'created_at', 'updated_at']:
             continue
         else:
             setattr(city, key, value)
+
     city.save()
     return (jsonify(city.to_dict()), 200)
