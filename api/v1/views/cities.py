@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This file contains the cities module
+This file contains the City module
 """
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
@@ -22,7 +22,7 @@ def get_city_for_state(state_id):
 @app_views.route('/cities/<string:city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
-    """ get state by id"""
+    """ get city by id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -32,7 +32,7 @@ def get_city(city_id):
 @app_views.route('/cities/<string:city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_city(city_id):
-    """ delete City by id"""
+    """ delete city by id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
