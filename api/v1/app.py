@@ -4,7 +4,7 @@
 
 """
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -22,7 +22,7 @@ def close_storage(error):
 @app.errorhandler(404)
 def resource_not_found(e=None):
     """ Will return a 404 json query """
-    return make_response(jsonify({'error': 'Not Found'}), 404)
+    return jsonify({'error': 'Not Found'}), 404
 
 if __name__ == "__main__":
     """ Only executes as main """
