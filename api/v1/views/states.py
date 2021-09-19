@@ -5,11 +5,12 @@ from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states(state_id=None):
     """
-        Return all states or one state of method GET and returns 
+        Return all states or one state of method GET and returns
         all state objects
     """
 
@@ -26,7 +27,7 @@ def get_states(state_id=None):
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id=None):
-    """ 
+    """
         Deletes a state with id and returns an empty JSON
     """
     state = storage.get(State, state_id)
