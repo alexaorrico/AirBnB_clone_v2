@@ -10,11 +10,11 @@ from models.amenity import Amenity
 @app_views.route("/amenities", methods=["GET"])
 def amenityAll():
     """Retrieves all amenities with a list of objects"""
-    all_amenities = []
+    amenity_list = []
     s = storage.all('Amenity').values()
     for v in s:
-        all_amenities.append(v.to_dict())
-    return jsonify(all_amenities)
+        amenity_list.append(v.to_dict())
+    return jsonify(amenity_list)
 
 
 @app_views.route("/amenities/<id>", methods=["GET"])
@@ -23,7 +23,7 @@ def amenityId(id):
     s = storage.all('Amenity').values()
     for v in s:
         if v.id == id:
-            return jsonify(v.to_dict())
+        	return jsonify(v.to_dict())
     abort(404)
 
 
@@ -54,7 +54,7 @@ def amenityPost():
 
 @app_views.route('/amenities/<id>', methods=['PUT'])
 def amenityPut(id):
-    """ Update an amenity object """
+    """ Update a amenity object """
     x = request.get_json()
     if x is None:
         abort(400, "Not a JSON")
