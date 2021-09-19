@@ -78,7 +78,7 @@ class TestFileStorage(unittest.TestCase):
         cls.state = State(name="Minnesota")
         cls.state.save()
         cls.city = City(name="Roseville", state_id=cls.state.id)
-        cls.cit.save()
+        cls.city.save()
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     @classmethod
@@ -135,4 +135,4 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test that get properly the specify object"""
         storage = FileStorage()
-        self.assertEqual(self.state, storage.get(State, state_id))
+        self.assertEqual(self.state, storage.get(State, self.state.id))
