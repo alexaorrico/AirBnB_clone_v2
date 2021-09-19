@@ -8,7 +8,6 @@ from models import storage
 @app_views.route('/status', strict_slashes=False)
 def status():
     ''' return status '''
-
     return (jsonify({"status": "OK"}))
 
 
