@@ -21,7 +21,6 @@ def amenities(amenity_id=None):
     return jsonify(all_amenities.to_dict()), 200
     
 
-
 @app_views.route('/amenities/<amenity_id>', methods=["DELETE"],
                  strict_slashes=False)
 def delete_amenity(state_id):
