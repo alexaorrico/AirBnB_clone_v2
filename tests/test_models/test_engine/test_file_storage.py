@@ -122,10 +122,9 @@ class TestFileStorage(unittest.TestCase):
         name and the id to the get method. It should return the same
         object."""
         storage = FileStorage()
-        for key, value in classes.items():
-            instance = value()  # creates an instance of each type
-            instance.save()
-            self.assertIs(storage.get(key, instance.id), instance)
+        instance = State(name='state_test')
+        instance.save()
+        self.assertIs(storage.get(State, instance.id), instance)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_db_count(self):
@@ -135,8 +134,7 @@ class TestFileStorage(unittest.TestCase):
         """
         storage = FileStorage()
         initial_value = storage.count()
-        for key, value in classes.items():
-            instance = value()  # creates an instance of each type
-            instance.save()
+        instance = State(name='state_test')
+        instance.save()
         end_value = storage.count()
-        self.assertEqual(initial_value + len(classes), end_value)
+        self.assertEqual(initial_value + 1, end_value)
