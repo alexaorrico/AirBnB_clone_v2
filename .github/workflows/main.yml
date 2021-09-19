@@ -17,6 +17,8 @@ jobs:
 
     - name: Install dependencies
       run: pip install sqlalchemy
+    - name: Install flask
+      run: pip install Flask
     - name: Activate enviroment
       run: source sql_enviroment/bin/activate
     - name: Install dependencies sqldb
