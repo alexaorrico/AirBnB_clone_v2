@@ -9,18 +9,16 @@ from models.amenity import Amenity
 
 @app_views.route('/amenities', methods=["GET"], strict_slashes=False)
 @app_views.route('/amenities/<amenity_id>', methods=["GET"], strict_slashes=False)
-def amenities(amenity_id=none):
+def amenities(amenity_id=None):
     """Get specific id amenity or all amenities"""
     if amenity_id is None:
-        all_amenities = storage.all(Amenity).values()
-        if all_amenities is None:
-            abort(404)
-        amenities = [amenity.to_dict() for amenity in all_amenities]
-        return jsonify(amenities), 200
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+        amenities = storage.all("Amenity")
+        all_amenities = [value.to_dict() for key, value in amenities.items()]
+        return jsonify(all_amenities), 200
+    all_amenities = storage.get(Amenity, amenity_id)
+    if all_amenities is None:
         abort (404)
-    return jsonify(amenity.to_dict), 200
+    return jsonify(all_amenities.to_dict()), 200
     
 
 
