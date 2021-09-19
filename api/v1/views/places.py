@@ -75,7 +75,7 @@ def update_place(place_id):
     if req is None:
         abort(400, "Not a JSON")
     for key, value in req.items():
-        if key in ['id', 'city_id', 'created_at', 'updated_at']:
+        if key in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             continue
         else:
             setattr(Place, key, value)
