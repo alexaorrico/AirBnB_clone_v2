@@ -16,8 +16,8 @@ def get_cities(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    cities = [obj.to_dict() for obj in state.cities]
-    return jsonify(cities)
+    list_cities = [obj.to_dict() for obj in state.cities]
+    return jsonify(list_cities)
 
 
 @app_views.route('/cities/<string:city_id>', methods=['GET'],
@@ -68,10 +68,10 @@ def post_city(city_id):
     if not request.get_json():
         return jsonify({'error': 'Not a JSON'}, 400)
     obj = storage.get(City, city_id)
-    if obj is None: 
+    if obj is None:
         abort(404)
     for key, value in request.get_json().items():
-        if key not in ['id', 'state_id', 'created_at', 'updated']:
+        if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
