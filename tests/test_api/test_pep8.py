@@ -12,6 +12,7 @@ from models.base_model import BaseModel
 import pep8
 import unittest
 from api.v1 import app
+from api.v1.views import states as test_state
 State = state.State
 
 
@@ -26,6 +27,20 @@ class TestStateDocs(unittest.TestCase):
         """Test that models/state.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['api/v1/app.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+    def test_pep8_conformance_state(self):
+        """Test that models/state.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['api/v1/views/states.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+    def test_pep8_conformance_state(self):
+        """Test that models/state.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['api/v1/views/index.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -45,9 +60,9 @@ class TestStateDocs(unittest.TestCase):
 
     def test_state_class_docstring(self):
         """Test for the State class docstring"""
-        self.assertIsNot(State.__doc__, None,
+        self.assertIsNot(test_state.__doc__, None,
                          "State class needs a docstring")
-        self.assertTrue(len(State.__doc__) >= 1,
+        self.assertTrue(len(test_state.__doc__) >= 1,
                         "State class needs a docstring")
 
     def test_state_func_docstrings(self):
