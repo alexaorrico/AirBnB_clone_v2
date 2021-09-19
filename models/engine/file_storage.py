@@ -81,7 +81,6 @@ class FileStorage:
         for key, value in self.__objects.items():
             if key == "{}.{}".format(cls, id):
                 return value
-
         return None
 
     def count(self, cls=None):
