@@ -25,7 +25,10 @@ class FileStorage:
     __objects = {}
 
     def get(self, cls, id):
-        """Retrieves a single element based on cls and id"""
+        """
+        Retrieves a single element based on cls and id
+        it returns this obj
+        """
         key = None
         if cls in classes:
             key = cls + '.' + id
@@ -34,7 +37,10 @@ class FileStorage:
         return self.__objects.get(key)
 
     def count(self, cls=None):
-        """Counts the objects of a class"""
+        """
+        Counts the objects of a class
+        and returns this number
+        """
         return len(self.all(cls))
 
     def all(self, cls=None):
