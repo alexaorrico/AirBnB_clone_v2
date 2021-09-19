@@ -114,7 +114,7 @@ class TestFileStorage(unittest.TestCase):
         all_objects = storage.all()
         self.assertEqual(len(all_objects), storage.count())
         # count all objects from State class
-        all_states = storage.all(State())
+        all_states = storage.all(States)
         self.assertEqual(len(all_objects), storage.count(State))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
