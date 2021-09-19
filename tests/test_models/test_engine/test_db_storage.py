@@ -80,8 +80,8 @@ class TestFileStorage(unittest.TestCase):
         '''Create instance to test the attributes of a class'''
         cls.state = State(name="Minnesota")
         cls.state.save()
-        cls.city = City(name="Roseville", state_id=new_state.id)
-        cls.cit.save()
+        cls.city = City(name="Roseville", state_id=cls.state.id)
+        cls.city.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     @classmethod
@@ -114,8 +114,8 @@ class TestFileStorage(unittest.TestCase):
         all_objects = storage.all()
         self.assertEqual(len(all_objects), storage.count())
         # count all objects from State class
-        all_states = storage.all(States)
-        self.assertEqual(len(all_objects), storage.count(State))
+        all_states = storage.all(State)
+        self.assertEqual(len(all_states), storage.count(State))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
