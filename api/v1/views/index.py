@@ -2,8 +2,9 @@
 """ Index Module"""
 
 from api.v1.views import app_views
+import json
 
-@app.route('/status')
+@app_views.route("/status")
 def status():
-    return({"status": "OK"})
-
+    status = {"status": "OK"}
+    return (json.dumps(status))
