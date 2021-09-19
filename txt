@@ -2,7 +2,10 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-    <title>TypeError: unhashable type: 'dict' // Werkzeug Debugger</title>
+    <title>sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1048, &quot;Column 'user_id' cannot be null&quot;)
+[SQL: INSERT INTO places (id, created_at, updated_at, city_id, user_id, name, description, number_rooms, number_bathrooms, max_guest, price_by_night, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('cf208b3e-8863-4147-88ba-2cf0138c386a', datetime.datetime(2021, 9, 19, 22, 15, 27, 399148), datetime.datetime(2021, 9, 19, 22, 15, 27, 399167), '541a55f4-7d82-47d9-b54c-a76916479545', None, 'El cerro', None, 0, 0, 0, 0, None, None)]
+(Background on this error at: http://sqlalche.me/e/e3q8) // Werkzeug Debugger</title>
     <link rel="stylesheet" href="?__debugger__=yes&amp;cmd=resource&amp;f=style.css"
         type="text/css">
     <!-- We need to make sure this has a favicon so that the debugger does
@@ -13,23 +16,163 @@
     <script src="?__debugger__=yes&amp;cmd=resource&amp;f=jquery.js"></script>
     <script src="?__debugger__=yes&amp;cmd=resource&amp;f=debugger.js"></script>
     <script type="text/javascript">
-      var TRACEBACK = 139915924849048,
+      var TRACEBACK = 140088373692232,
           CONSOLE_MODE = false,
           EVALEX = true,
           EVALEX_TRUSTED = false,
-          SECRET = "1BTDkY9F79AhFtjQytFe";
+          SECRET = "FNGlz97e8AbERc89yWrM";
     </script>
   </head>
   <body style="background-color: #fff">
     <div class="debugger">
-<h1>TypeError</h1>
+<h1>sqlalchemy.exc.OperationalError</h1>
 <div class="detail">
-  <p class="errormsg">TypeError: unhashable type: 'dict'</p>
+  <p class="errormsg">sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1048, &quot;Column 'user_id' cannot be null&quot;)
+[SQL: INSERT INTO places (id, created_at, updated_at, city_id, user_id, name, description, number_rooms, number_bathrooms, max_guest, price_by_night, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('cf208b3e-8863-4147-88ba-2cf0138c386a', datetime.datetime(2021, 9, 19, 22, 15, 27, 399148), datetime.datetime(2021, 9, 19, 22, 15, 27, 399167), '541a55f4-7d82-47d9-b54c-a76916479545', None, 'El cerro', None, 0, 0, 0, 0, None, None)]
+(Background on this error at: http://sqlalche.me/e/e3q8)</p>
 </div>
 <h2 class="traceback">Traceback <em>(most recent call last)</em></h2>
 <div class="traceback">
   
-  <ul><li><div class="frame" id="frame-139915924849776">
+  <ul><li><div class="frame" id="frame-140088373716248">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py"</cite>,
+      line <em class="line">1246</em>,
+      in <code class="function">_execute_context</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">                        </span>if fn(cursor, statement, parameters, context):</pre>
+<pre class="line before"><span class="ws">                            </span>evt_handled = True</pre>
+<pre class="line before"><span class="ws">                            </span>break</pre>
+<pre class="line before"><span class="ws">                </span>if not evt_handled:</pre>
+<pre class="line before"><span class="ws">                    </span>self.dialect.do_execute(</pre>
+<pre class="line current"><span class="ws">                        </span>cursor, statement, parameters, context</pre>
+<pre class="line after"><span class="ws">                    </span>)</pre>
+<pre class="line after"><span class="ws">        </span>except BaseException as e:</pre>
+<pre class="line after"><span class="ws">            </span>self._handle_dbapi_exception(</pre>
+<pre class="line after"><span class="ws">                </span>e, statement, parameters, cursor, context</pre>
+<pre class="line after"><span class="ws">            </span>)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373715744">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/default.py"</cite>,
+      line <em class="line">588</em>,
+      in <code class="function">do_execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def do_executemany(self, cursor, statement, parameters, context=None):</pre>
+<pre class="line before"><span class="ws">        </span>cursor.executemany(statement, parameters)</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def do_execute(self, cursor, statement, parameters, context=None):</pre>
+<pre class="line current"><span class="ws">        </span>cursor.execute(statement, parameters)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def do_execute_no_params(self, cursor, statement, context=None):</pre>
+<pre class="line after"><span class="ws">        </span>cursor.execute(statement)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def is_disconnect(self, e, connection, cursor):</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373717536">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">250</em>,
+      in <code class="function">execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>res = None</pre>
+<pre class="line before"><span class="ws">        </span>try:</pre>
+<pre class="line before"><span class="ws">            </span>res = self._query(query)</pre>
+<pre class="line before"><span class="ws">        </span>except Exception:</pre>
+<pre class="line before"><span class="ws">            </span>exc, value = sys.exc_info()[:2]</pre>
+<pre class="line current"><span class="ws">            </span>self.errorhandler(self, exc, value)</pre>
+<pre class="line after"><span class="ws">        </span>self._executed = query</pre>
+<pre class="line after"><span class="ws">        </span>if not self._defer_warnings:</pre>
+<pre class="line after"><span class="ws">            </span>self._warning_check()</pre>
+<pre class="line after"><span class="ws">        </span>return res</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373715912">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py"</cite>,
+      line <em class="line">50</em>,
+      in <code class="function">defaulterrorhandler</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">    </span>else:</pre>
+<pre class="line before"><span class="ws">        </span>connection.messages.append(error)</pre>
+<pre class="line before"><span class="ws">    </span>del cursor</pre>
+<pre class="line before"><span class="ws">    </span>del connection</pre>
+<pre class="line before"><span class="ws">    </span>if isinstance(errorvalue, BaseException):</pre>
+<pre class="line current"><span class="ws">        </span>raise errorvalue</pre>
+<pre class="line after"><span class="ws">    </span>if errorclass is not None:</pre>
+<pre class="line after"><span class="ws">        </span>raise errorclass(errorvalue)</pre>
+<pre class="line after"><span class="ws">    </span>else:</pre>
+<pre class="line after"><span class="ws">        </span>raise Exception(errorvalue)</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373716472">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">247</em>,
+      in <code class="function">execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>if isinstance(query, unicode):</pre>
+<pre class="line before"><span class="ws">            </span>query = query.encode(db.unicode_literal.charset, 'surrogateescape')</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">        </span>res = None</pre>
+<pre class="line before"><span class="ws">        </span>try:</pre>
+<pre class="line current"><span class="ws">            </span>res = self._query(query)</pre>
+<pre class="line after"><span class="ws">        </span>except Exception:</pre>
+<pre class="line after"><span class="ws">            </span>exc, value = sys.exc_info()[:2]</pre>
+<pre class="line after"><span class="ws">            </span>self.errorhandler(self, exc, value)</pre>
+<pre class="line after"><span class="ws">        </span>self._executed = query</pre>
+<pre class="line after"><span class="ws">        </span>if not self._defer_warnings:</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373716528">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">411</em>,
+      in <code class="function">_query</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def _get_result(self):</pre>
+<pre class="line before"><span class="ws">        </span>return self._get_db().store_result()</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def _query(self, q):</pre>
+<pre class="line current"><span class="ws">        </span>rowcount = self._do_query(q)</pre>
+<pre class="line after"><span class="ws">        </span>self._post_get_result()</pre>
+<pre class="line after"><span class="ws">        </span>return rowcount</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def _post_get_result(self):</pre>
+<pre class="line after"><span class="ws">        </span>self._rows = self._fetch_row(0)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373717312">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">374</em>,
+      in <code class="function">_do_query</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>return args</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def _do_query(self, q):</pre>
+<pre class="line before"><span class="ws">        </span>db = self._get_db()</pre>
+<pre class="line before"><span class="ws">        </span>self._last_executed = q</pre>
+<pre class="line current"><span class="ws">        </span>db.query(q)</pre>
+<pre class="line after"><span class="ws">        </span>self._do_get_result()</pre>
+<pre class="line after"><span class="ws">        </span>return self.rowcount</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def _query(self, q):</pre>
+<pre class="line after"><span class="ws">        </span>return self._do_query(q)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373717368">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py"</cite>,
+      line <em class="line">292</em>,
+      in <code class="function">query</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>if self.waiter is not None:</pre>
+<pre class="line before"><span class="ws">            </span>self.send_query(query)</pre>
+<pre class="line before"><span class="ws">            </span>self.waiter(self.fileno())</pre>
+<pre class="line before"><span class="ws">            </span>self.read_query_result()</pre>
+<pre class="line before"><span class="ws">        </span>else:</pre>
+<pre class="line current"><span class="ws">            </span>_mysql.connection.query(self, query)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def __enter__(self):</pre>
+<pre class="line after"><span class="ws">        </span>from warnings import warn</pre>
+<pre class="line after"><span class="ws">        </span>warn(&quot;context interface will be changed.  Use explicit conn.commit() or conn.rollback().&quot;,</pre>
+<pre class="line after"><span class="ws">             </span>DeprecationWarning, 2)</pre></div>
+</div>
+
+<li><div class="exc-divider">The above exception was the direct cause of the following exception:</div>
+<li><div class="frame" id="frame-140088373690496">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">2463</em>,
       in <code class="function">__call__</code></h4>
@@ -44,7 +187,7 @@
 <pre class="line after"><span class="ws">        </span>return &quot;&lt;%s %r&gt;&quot; % (self.__class__.__name__, self.name)</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850056">
+<li><div class="frame" id="frame-140088373693016">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">2449</em>,
       in <code class="function">wsgi_app</code></h4>
@@ -61,7 +204,7 @@
 <pre class="line after"><span class="ws">        </span>finally:</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850112">
+<li><div class="frame" id="frame-140088373691168">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">1866</em>,
       in <code class="function">handle_exception</code></h4>
@@ -78,7 +221,7 @@
 <pre class="line after"><span class="ws">        </span>server_error = InternalServerError()</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850168">
+<li><div class="frame" id="frame-140088373693352">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/_compat.py"</cite>,
       line <em class="line">39</em>,
       in <code class="function">reraise</code></h4>
@@ -95,7 +238,7 @@
 <pre class="line after"><span class="ws">    </span>iterkeys = lambda d: d.iterkeys()</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924849944">
+<li><div class="frame" id="frame-140088373988880">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">2446</em>,
       in <code class="function">wsgi_app</code></h4>
@@ -112,7 +255,7 @@
 <pre class="line after"><span class="ws">                </span>error = sys.exc_info()[1]</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850280">
+<li><div class="frame" id="frame-140088373989272">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">1951</em>,
       in <code class="function">full_dispatch_request</code></h4>
@@ -129,7 +272,7 @@
 <pre class="line after"><span class="ws">        </span>the request by converting it into a response and invoking the</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850336">
+<li><div class="frame" id="frame-140088373988432">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">1820</em>,
       in <code class="function">handle_user_exception</code></h4>
@@ -146,7 +289,7 @@
 <pre class="line after"><span class="ws">        </span>associated with it, or that was raised from an error handler.</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850392">
+<li><div class="frame" id="frame-140088373988936">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/_compat.py"</cite>,
       line <em class="line">39</em>,
       in <code class="function">reraise</code></h4>
@@ -163,7 +306,7 @@
 <pre class="line after"><span class="ws">    </span>iterkeys = lambda d: d.iterkeys()</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850000">
+<li><div class="frame" id="frame-140088373987480">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">1949</em>,
       in <code class="function">full_dispatch_request</code></h4>
@@ -180,7 +323,7 @@
 <pre class="line after"><span class="ws">    </span>def finalize_request(self, rv, from_error_handler=False):</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850504">
+<li><div class="frame" id="frame-140088373988096">
   <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/flask/app.py"</cite>,
       line <em class="line">1935</em>,
       in <code class="function">dispatch_request</code></h4>
@@ -197,19 +340,537 @@
 <pre class="line after"><span class="ws">        </span>error handling.</pre></div>
 </div>
 
-<li><div class="frame" id="frame-139915924850560">
-  <h4>File <cite class="filename">"/root/AirBnB_clone_v3/api/v1/views/index.py"</cite>,
-      line <em class="line">24</em>,
-      in <code class="function">count_stats</code></h4>
-  <div class="source "><pre class="line before"><span class="ws">        </span>&quot;reviews&quot;: 718,</pre>
-<pre class="line before"><span class="ws">        </span>&quot;states&quot;: 27,</pre>
-<pre class="line before"><span class="ws">        </span>&quot;users&quot;: 31</pre>
-<pre class="line before"><span class="ws">    </span>}</pre>
+<li><div class="frame" id="frame-140088373988208">
+  <h4>File <cite class="filename">"/root/AirBnB_clone_v3/api/v1/views/places.py"</cite>,
+      line <em class="line">64</em>,
+      in <code class="function">create_place</code></h4>
+  <div class="source "><pre class="line before"><span class="ws">        </span>abort(404)</pre>
 <pre class="line before"><span class="ws"></span> </pre>
-<pre class="line current"><span class="ws">    </span>return jsonify({counts}), 200</pre></div>
+<pre class="line before"><span class="ws">    </span>new_place = Place()</pre>
+<pre class="line before"><span class="ws">    </span>new_place.city_id = city_id</pre>
+<pre class="line before"><span class="ws">    </span>new_place.name = name</pre>
+<pre class="line current"><span class="ws">    </span>new_place.save()</pre>
+<pre class="line after"><span class="ws">    </span>return (jsonify(new_place.to_dict()), 201)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws"></span>@app_views.route('/places/&lt;place_id&gt;', methods=[&quot;PUT&quot;], strict_slashes=False)</pre>
+<pre class="line after"><span class="ws"></span>def update_place(place_id):</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988264">
+  <h4>File <cite class="filename">"/root/AirBnB_clone_v3/models/base_model.py"</cite>,
+      line <em class="line">59</em>,
+      in <code class="function">save</code></h4>
+  <div class="source "><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def save(self):</pre>
+<pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;updates the attribute 'updated_at' with the current datetime&quot;&quot;&quot;</pre>
+<pre class="line before"><span class="ws">        </span>self.updated_at = datetime.utcnow()</pre>
+<pre class="line before"><span class="ws">        </span>models.storage.new(self)</pre>
+<pre class="line current"><span class="ws">        </span>models.storage.save()</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def to_dict(self):</pre>
+<pre class="line after"><span class="ws">        </span>&quot;&quot;&quot;returns a dictionary containing all keys/values of the instance&quot;&quot;&quot;</pre>
+<pre class="line after"><span class="ws">        </span>new_dict = self.__dict__.copy()</pre>
+<pre class="line after"><span class="ws">        </span>if &quot;created_at&quot; in new_dict:</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987368">
+  <h4>File <cite class="filename">"/root/AirBnB_clone_v3/models/engine/db_storage.py"</cite>,
+      line <em class="line">60</em>,
+      in <code class="function">save</code></h4>
+  <div class="source "><pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;add the object to the current database session&quot;&quot;&quot;</pre>
+<pre class="line before"><span class="ws">        </span>self.__session.add(obj)</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def save(self):</pre>
+<pre class="line before"><span class="ws">        </span>&quot;&quot;&quot;commit all changes of the current database session&quot;&quot;&quot;</pre>
+<pre class="line current"><span class="ws">        </span>self.__session.commit()</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def delete(self, obj=None):</pre>
+<pre class="line after"><span class="ws">        </span>&quot;&quot;&quot;delete from the current database session obj if not None&quot;&quot;&quot;</pre>
+<pre class="line after"><span class="ws">        </span>if obj is not None:</pre>
+<pre class="line after"><span class="ws">            </span>self.__session.delete(obj)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373989328">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/scoping.py"</cite>,
+      line <em class="line">162</em>,
+      in <code class="function">do</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span>&quot;&quot;&quot;Old name for backwards compatibility.&quot;&quot;&quot;</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws"></span>def instrument(name):</pre>
+<pre class="line before"><span class="ws">    </span>def do(self, *args, **kwargs):</pre>
+<pre class="line current"><span class="ws">        </span>return getattr(self.registry(), name)(*args, **kwargs)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>return do</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws"></span>for meth in Session.public_methods:</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988824">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py"</cite>,
+      line <em class="line">1036</em>,
+      in <code class="function">commit</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">            </span>if not self.autocommit:</pre>
+<pre class="line before"><span class="ws">                </span>self.begin()</pre>
+<pre class="line before"><span class="ws">            </span>else:</pre>
+<pre class="line before"><span class="ws">                </span>raise sa_exc.InvalidRequestError(&quot;No transaction is begun.&quot;)</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line current"><span class="ws">        </span>self.transaction.commit()</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def prepare(self):</pre>
+<pre class="line after"><span class="ws">        </span>&quot;&quot;&quot;Prepare the current transaction in progress for two phase commit.</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">        </span>If no transaction is in progress, this method raises an</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988768">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py"</cite>,
+      line <em class="line">503</em>,
+      in <code class="function">commit</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>self._state = PREPARED</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def commit(self):</pre>
+<pre class="line before"><span class="ws">        </span>self._assert_active(prepared_ok=True)</pre>
+<pre class="line before"><span class="ws">        </span>if self._state is not PREPARED:</pre>
+<pre class="line current"><span class="ws">            </span>self._prepare_impl()</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">        </span>if self._parent is None or self.nested:</pre>
+<pre class="line after"><span class="ws">            </span>for t in set(self._connections.values()):</pre>
+<pre class="line after"><span class="ws">                </span>t[1].commit()</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988712">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py"</cite>,
+      line <em class="line">482</em>,
+      in <code class="function">_prepare_impl</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">        </span>if not self.session._flushing:</pre>
+<pre class="line before"><span class="ws">            </span>for _flush_guard in range(100):</pre>
+<pre class="line before"><span class="ws">                </span>if self.session._is_clean():</pre>
+<pre class="line before"><span class="ws">                    </span>break</pre>
+<pre class="line current"><span class="ws">                </span>self.session.flush()</pre>
+<pre class="line after"><span class="ws">            </span>else:</pre>
+<pre class="line after"><span class="ws">                </span>raise exc.FlushError(</pre>
+<pre class="line after"><span class="ws">                    </span>&quot;Over 100 subsequent flushes have occurred within &quot;</pre>
+<pre class="line after"><span class="ws">                    </span>&quot;session.commit() - is an after_flush() hook &quot;</pre>
+<pre class="line after"><span class="ws">                    </span>&quot;creating new objects?&quot;</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988544">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py"</cite>,
+      line <em class="line">2479</em>,
+      in <code class="function">flush</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">        </span>if self._is_clean():</pre>
+<pre class="line before"><span class="ws">            </span>return</pre>
+<pre class="line before"><span class="ws">        </span>try:</pre>
+<pre class="line before"><span class="ws">            </span>self._flushing = True</pre>
+<pre class="line current"><span class="ws">            </span>self._flush(objects)</pre>
+<pre class="line after"><span class="ws">        </span>finally:</pre>
+<pre class="line after"><span class="ws">            </span>self._flushing = False</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def _flush_warning(self, method):</pre>
+<pre class="line after"><span class="ws">        </span>util.warn(</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988656">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py"</cite>,
+      line <em class="line">2617</em>,
+      in <code class="function">_flush</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">            </span>transaction.commit()</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">        </span>except:</pre>
+<pre class="line before"><span class="ws">            </span>with util.safe_reraise():</pre>
+<pre class="line current"><span class="ws">                </span>transaction.rollback(_capture_exception=True)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def bulk_save_objects(</pre>
+<pre class="line after"><span class="ws">        </span>self,</pre>
+<pre class="line after"><span class="ws">        </span>objects,</pre>
+<pre class="line after"><span class="ws">        </span>return_defaults=False,</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988600">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/langhelpers.py"</cite>,
+      line <em class="line">68</em>,
+      in <code class="function">__exit__</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span># see #2703 for notes</pre>
+<pre class="line before"><span class="ws">        </span>if type_ is None:</pre>
+<pre class="line before"><span class="ws">            </span>exc_type, exc_value, exc_tb = self._exc_info</pre>
+<pre class="line before"><span class="ws">            </span>self._exc_info = None  # remove potential circular references</pre>
+<pre class="line before"><span class="ws">            </span>if not self.warn_only:</pre>
+<pre class="line current"><span class="ws">                </span>compat.reraise(exc_type, exc_value, exc_tb)</pre>
+<pre class="line after"><span class="ws">        </span>else:</pre>
+<pre class="line after"><span class="ws">            </span>if not compat.py3k and self._exc_info and self._exc_info[1]:</pre>
+<pre class="line after"><span class="ws">                </span># emulate Py3K's behavior of telling us when an exception</pre>
+<pre class="line after"><span class="ws">                </span># occurs in an exception handler.</pre>
+<pre class="line after"><span class="ws">                </span>warn(</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987984">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py"</cite>,
+      line <em class="line">153</em>,
+      in <code class="function">reraise</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>if cause is not None:</pre>
+<pre class="line before"><span class="ws">            </span>assert cause is not value, &quot;Same cause emitted&quot;</pre>
+<pre class="line before"><span class="ws">            </span>value.__cause__ = cause</pre>
+<pre class="line before"><span class="ws">        </span>if value.__traceback__ is not tb:</pre>
+<pre class="line before"><span class="ws">            </span>raise value.with_traceback(tb)</pre>
+<pre class="line current"><span class="ws">        </span>raise value</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def u(s):</pre>
+<pre class="line after"><span class="ws">        </span>return s</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def ue(s):</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987424">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py"</cite>,
+      line <em class="line">2577</em>,
+      in <code class="function">_flush</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">            </span>subtransactions=True</pre>
+<pre class="line before"><span class="ws">        </span>)</pre>
+<pre class="line before"><span class="ws">        </span>try:</pre>
+<pre class="line before"><span class="ws">            </span>self._warn_on_events = True</pre>
+<pre class="line before"><span class="ws">            </span>try:</pre>
+<pre class="line current"><span class="ws">                </span>flush_context.execute()</pre>
+<pre class="line after"><span class="ws">            </span>finally:</pre>
+<pre class="line after"><span class="ws">                </span>self._warn_on_events = False</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">            </span>self.dispatch.after_flush(self, flush_context)</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373989048">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/unitofwork.py"</cite>,
+      line <em class="line">422</em>,
+      in <code class="function">execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">                </span>while set_:</pre>
+<pre class="line before"><span class="ws">                    </span>n = set_.pop()</pre>
+<pre class="line before"><span class="ws">                    </span>n.execute_aggregate(self, set_)</pre>
+<pre class="line before"><span class="ws">        </span>else:</pre>
+<pre class="line before"><span class="ws">            </span>for rec in topological.sort(self.dependencies, postsort_actions):</pre>
+<pre class="line current"><span class="ws">                </span>rec.execute(self)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def finalize_flush_changes(self):</pre>
+<pre class="line after"><span class="ws">        </span>&quot;&quot;&quot;mark processed objects as clean / deleted after a successful</pre>
+<pre class="line after"><span class="ws">        </span>flush().</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373989160">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/unitofwork.py"</cite>,
+      line <em class="line">589</em>,
+      in <code class="function">execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def execute(self, uow):</pre>
+<pre class="line before"><span class="ws">        </span>persistence.save_obj(</pre>
+<pre class="line before"><span class="ws">            </span>self.mapper,</pre>
+<pre class="line before"><span class="ws">            </span>uow.states_for_mapper_hierarchy(self.mapper, False, False),</pre>
+<pre class="line current"><span class="ws">            </span>uow,</pre>
+<pre class="line after"><span class="ws">        </span>)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def per_state_flush_actions(self, uow):</pre>
+<pre class="line after"><span class="ws">        </span>states = list(</pre>
+<pre class="line after"><span class="ws">            </span>uow.states_for_mapper_hierarchy(self.mapper, False, False)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988320">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/persistence.py"</cite>,
+      line <em class="line">245</em>,
+      in <code class="function">save_obj</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">            </span>base_mapper,</pre>
+<pre class="line before"><span class="ws">            </span>uowtransaction,</pre>
+<pre class="line before"><span class="ws">            </span>cached_connections,</pre>
+<pre class="line before"><span class="ws">            </span>mapper,</pre>
+<pre class="line before"><span class="ws">            </span>table,</pre>
+<pre class="line current"><span class="ws">            </span>insert,</pre>
+<pre class="line after"><span class="ws">        </span>)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>_finalize_insert_update_commands(</pre>
+<pre class="line after"><span class="ws">        </span>base_mapper,</pre>
+<pre class="line after"><span class="ws">        </span>uowtransaction,</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373989216">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/persistence.py"</cite>,
+      line <em class="line">1084</em>,
+      in <code class="function">_emit_insert_statements</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>):</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">            </span>records = list(records)</pre>
+<pre class="line before"><span class="ws">            </span>multiparams = [rec[2] for rec in records]</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line current"><span class="ws">            </span>c = cached_connections[connection].execute(statement, multiparams)</pre>
+<pre class="line after"><span class="ws">            </span>if bookkeeping:</pre>
+<pre class="line after"><span class="ws">                </span>for (</pre>
+<pre class="line after"><span class="ws">                    </span>(</pre>
+<pre class="line after"><span class="ws">                        </span>state,</pre>
+<pre class="line after"><span class="ws">                        </span>state_dict,</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988992">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py"</cite>,
+      line <em class="line">982</em>,
+      in <code class="function">execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>try:</pre>
+<pre class="line before"><span class="ws">            </span>meth = object_._execute_on_connection</pre>
+<pre class="line before"><span class="ws">        </span>except AttributeError:</pre>
+<pre class="line before"><span class="ws">            </span>raise exc.ObjectNotExecutableError(object_)</pre>
+<pre class="line before"><span class="ws">        </span>else:</pre>
+<pre class="line current"><span class="ws">            </span>return meth(self, multiparams, params)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def _execute_function(self, func, multiparams, params):</pre>
+<pre class="line after"><span class="ws">        </span>&quot;&quot;&quot;Execute a sql.FunctionElement object.&quot;&quot;&quot;</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">        </span>return self._execute_clauseelement(func.select(), multiparams, params)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987704">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/sql/elements.py"</cite>,
+      line <em class="line">293</em>,
+      in <code class="function">_execute_on_connection</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">            </span># self</pre>
+<pre class="line before"><span class="ws">            </span>return self</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def _execute_on_connection(self, connection, multiparams, params):</pre>
+<pre class="line before"><span class="ws">        </span>if self.supports_execution:</pre>
+<pre class="line current"><span class="ws">            </span>return connection._execute_clauseelement(self, multiparams, params)</pre>
+<pre class="line after"><span class="ws">        </span>else:</pre>
+<pre class="line after"><span class="ws">            </span>raise exc.ObjectNotExecutableError(self)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def unique_params(self, *optionaldict, **kwargs):</pre>
+<pre class="line after"><span class="ws">        </span>&quot;&quot;&quot;Return a copy with :func:`bindparam()` elements replaced.</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988152">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py"</cite>,
+      line <em class="line">1101</em>,
+      in <code class="function">_execute_clauseelement</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">            </span>dialect,</pre>
+<pre class="line before"><span class="ws">            </span>dialect.execution_ctx_cls._init_compiled,</pre>
+<pre class="line before"><span class="ws">            </span>compiled_sql,</pre>
+<pre class="line before"><span class="ws">            </span>distilled_params,</pre>
+<pre class="line before"><span class="ws">            </span>compiled_sql,</pre>
+<pre class="line current"><span class="ws">            </span>distilled_params,</pre>
+<pre class="line after"><span class="ws">        </span>)</pre>
+<pre class="line after"><span class="ws">        </span>if self._has_events or self.engine._has_events:</pre>
+<pre class="line after"><span class="ws">            </span>self.dispatch.after_execute(self, elem, multiparams, params, ret)</pre>
+<pre class="line after"><span class="ws">        </span>return ret</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373988040">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py"</cite>,
+      line <em class="line">1250</em>,
+      in <code class="function">_execute_context</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">                    </span>self.dialect.do_execute(</pre>
+<pre class="line before"><span class="ws">                        </span>cursor, statement, parameters, context</pre>
+<pre class="line before"><span class="ws">                    </span>)</pre>
+<pre class="line before"><span class="ws">        </span>except BaseException as e:</pre>
+<pre class="line before"><span class="ws">            </span>self._handle_dbapi_exception(</pre>
+<pre class="line current"><span class="ws">                </span>e, statement, parameters, cursor, context</pre>
+<pre class="line after"><span class="ws">            </span>)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">        </span>if self._has_events or self.engine._has_events:</pre>
+<pre class="line after"><span class="ws">            </span>self.dispatch.after_cursor_execute(</pre>
+<pre class="line after"><span class="ws">                </span>self,</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987256">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py"</cite>,
+      line <em class="line">1476</em>,
+      in <code class="function">_handle_dbapi_exception</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">                    </span>self._autorollback()</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">            </span>if newraise:</pre>
+<pre class="line before"><span class="ws">                </span>util.raise_from_cause(newraise, exc_info)</pre>
+<pre class="line before"><span class="ws">            </span>elif should_wrap:</pre>
+<pre class="line current"><span class="ws">                </span>util.raise_from_cause(sqlalchemy_exception, exc_info)</pre>
+<pre class="line after"><span class="ws">            </span>else:</pre>
+<pre class="line after"><span class="ws">                </span>util.reraise(*exc_info)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">        </span>finally:</pre>
+<pre class="line after"><span class="ws">            </span>del self._reentrant_error</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987312">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py"</cite>,
+      line <em class="line">398</em>,
+      in <code class="function">raise_from_cause</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span>def raise_from_cause(exception, exc_info=None):</pre>
+<pre class="line before"><span class="ws">    </span>if exc_info is None:</pre>
+<pre class="line before"><span class="ws">        </span>exc_info = sys.exc_info()</pre>
+<pre class="line before"><span class="ws">    </span>exc_type, exc_value, exc_tb = exc_info</pre>
+<pre class="line before"><span class="ws">    </span>cause = exc_value if exc_value is not exception else None</pre>
+<pre class="line current"><span class="ws">    </span>reraise(type(exception), exception, tb=exc_tb, cause=cause)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws"></span>def with_metaclass(meta, *bases):</pre>
+<pre class="line after"><span class="ws">    </span>&quot;&quot;&quot;Create a base class with a metaclass.</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987928">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py"</cite>,
+      line <em class="line">152</em>,
+      in <code class="function">reraise</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">    </span>def reraise(tp, value, tb=None, cause=None):</pre>
+<pre class="line before"><span class="ws">        </span>if cause is not None:</pre>
+<pre class="line before"><span class="ws">            </span>assert cause is not value, &quot;Same cause emitted&quot;</pre>
+<pre class="line before"><span class="ws">            </span>value.__cause__ = cause</pre>
+<pre class="line before"><span class="ws">        </span>if value.__traceback__ is not tb:</pre>
+<pre class="line current"><span class="ws">            </span>raise value.with_traceback(tb)</pre>
+<pre class="line after"><span class="ws">        </span>raise value</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def u(s):</pre>
+<pre class="line after"><span class="ws">        </span>return s</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373987200">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py"</cite>,
+      line <em class="line">1246</em>,
+      in <code class="function">_execute_context</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">                        </span>if fn(cursor, statement, parameters, context):</pre>
+<pre class="line before"><span class="ws">                            </span>evt_handled = True</pre>
+<pre class="line before"><span class="ws">                            </span>break</pre>
+<pre class="line before"><span class="ws">                </span>if not evt_handled:</pre>
+<pre class="line before"><span class="ws">                    </span>self.dialect.do_execute(</pre>
+<pre class="line current"><span class="ws">                        </span>cursor, statement, parameters, context</pre>
+<pre class="line after"><span class="ws">                    </span>)</pre>
+<pre class="line after"><span class="ws">        </span>except BaseException as e:</pre>
+<pre class="line after"><span class="ws">            </span>self._handle_dbapi_exception(</pre>
+<pre class="line after"><span class="ws">                </span>e, statement, parameters, cursor, context</pre>
+<pre class="line after"><span class="ws">            </span>)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373989104">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/default.py"</cite>,
+      line <em class="line">588</em>,
+      in <code class="function">do_execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def do_executemany(self, cursor, statement, parameters, context=None):</pre>
+<pre class="line before"><span class="ws">        </span>cursor.executemany(statement, parameters)</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def do_execute(self, cursor, statement, parameters, context=None):</pre>
+<pre class="line current"><span class="ws">        </span>cursor.execute(statement, parameters)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def do_execute_no_params(self, cursor, statement, context=None):</pre>
+<pre class="line after"><span class="ws">        </span>cursor.execute(statement)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def is_disconnect(self, e, connection, cursor):</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373716304">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">250</em>,
+      in <code class="function">execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>res = None</pre>
+<pre class="line before"><span class="ws">        </span>try:</pre>
+<pre class="line before"><span class="ws">            </span>res = self._query(query)</pre>
+<pre class="line before"><span class="ws">        </span>except Exception:</pre>
+<pre class="line before"><span class="ws">            </span>exc, value = sys.exc_info()[:2]</pre>
+<pre class="line current"><span class="ws">            </span>self.errorhandler(self, exc, value)</pre>
+<pre class="line after"><span class="ws">        </span>self._executed = query</pre>
+<pre class="line after"><span class="ws">        </span>if not self._defer_warnings:</pre>
+<pre class="line after"><span class="ws">            </span>self._warning_check()</pre>
+<pre class="line after"><span class="ws">        </span>return res</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373717480">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py"</cite>,
+      line <em class="line">50</em>,
+      in <code class="function">defaulterrorhandler</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">    </span>else:</pre>
+<pre class="line before"><span class="ws">        </span>connection.messages.append(error)</pre>
+<pre class="line before"><span class="ws">    </span>del cursor</pre>
+<pre class="line before"><span class="ws">    </span>del connection</pre>
+<pre class="line before"><span class="ws">    </span>if isinstance(errorvalue, BaseException):</pre>
+<pre class="line current"><span class="ws">        </span>raise errorvalue</pre>
+<pre class="line after"><span class="ws">    </span>if errorclass is not None:</pre>
+<pre class="line after"><span class="ws">        </span>raise errorclass(errorvalue)</pre>
+<pre class="line after"><span class="ws">    </span>else:</pre>
+<pre class="line after"><span class="ws">        </span>raise Exception(errorvalue)</pre>
+<pre class="line after"><span class="ws"></span> </pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373717144">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">247</em>,
+      in <code class="function">execute</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>if isinstance(query, unicode):</pre>
+<pre class="line before"><span class="ws">            </span>query = query.encode(db.unicode_literal.charset, 'surrogateescape')</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">        </span>res = None</pre>
+<pre class="line before"><span class="ws">        </span>try:</pre>
+<pre class="line current"><span class="ws">            </span>res = self._query(query)</pre>
+<pre class="line after"><span class="ws">        </span>except Exception:</pre>
+<pre class="line after"><span class="ws">            </span>exc, value = sys.exc_info()[:2]</pre>
+<pre class="line after"><span class="ws">            </span>self.errorhandler(self, exc, value)</pre>
+<pre class="line after"><span class="ws">        </span>self._executed = query</pre>
+<pre class="line after"><span class="ws">        </span>if not self._defer_warnings:</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373717200">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">411</em>,
+      in <code class="function">_query</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def _get_result(self):</pre>
+<pre class="line before"><span class="ws">        </span>return self._get_db().store_result()</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def _query(self, q):</pre>
+<pre class="line current"><span class="ws">        </span>rowcount = self._do_query(q)</pre>
+<pre class="line after"><span class="ws">        </span>self._post_get_result()</pre>
+<pre class="line after"><span class="ws">        </span>return rowcount</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def _post_get_result(self):</pre>
+<pre class="line after"><span class="ws">        </span>self._rows = self._fetch_row(0)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373716696">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py"</cite>,
+      line <em class="line">374</em>,
+      in <code class="function">_do_query</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>return args</pre>
+<pre class="line before"><span class="ws"></span> </pre>
+<pre class="line before"><span class="ws">    </span>def _do_query(self, q):</pre>
+<pre class="line before"><span class="ws">        </span>db = self._get_db()</pre>
+<pre class="line before"><span class="ws">        </span>self._last_executed = q</pre>
+<pre class="line current"><span class="ws">        </span>db.query(q)</pre>
+<pre class="line after"><span class="ws">        </span>self._do_get_result()</pre>
+<pre class="line after"><span class="ws">        </span>return self.rowcount</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def _query(self, q):</pre>
+<pre class="line after"><span class="ws">        </span>return self._do_query(q)</pre></div>
+</div>
+
+<li><div class="frame" id="frame-140088373716752">
+  <h4>File <cite class="filename">"/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py"</cite>,
+      line <em class="line">292</em>,
+      in <code class="function">query</code></h4>
+  <div class="source library"><pre class="line before"><span class="ws">        </span>if self.waiter is not None:</pre>
+<pre class="line before"><span class="ws">            </span>self.send_query(query)</pre>
+<pre class="line before"><span class="ws">            </span>self.waiter(self.fileno())</pre>
+<pre class="line before"><span class="ws">            </span>self.read_query_result()</pre>
+<pre class="line before"><span class="ws">        </span>else:</pre>
+<pre class="line current"><span class="ws">            </span>_mysql.connection.query(self, query)</pre>
+<pre class="line after"><span class="ws"></span> </pre>
+<pre class="line after"><span class="ws">    </span>def __enter__(self):</pre>
+<pre class="line after"><span class="ws">        </span>from warnings import warn</pre>
+<pre class="line after"><span class="ws">        </span>warn(&quot;context interface will be changed.  Use explicit conn.commit() or conn.rollback().&quot;,</pre>
+<pre class="line after"><span class="ws">             </span>DeprecationWarning, 2)</pre></div>
 </div>
 </ul>
-  <blockquote>TypeError: unhashable type: 'dict'</blockquote>
+  <blockquote>sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1048, &quot;Column 'user_id' cannot be null&quot;)
+[SQL: INSERT INTO places (id, created_at, updated_at, city_id, user_id, name, description, number_rooms, number_bathrooms, max_guest, price_by_night, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('cf208b3e-8863-4147-88ba-2cf0138c386a', datetime.datetime(2021, 9, 19, 22, 15, 27, 399148), datetime.datetime(2021, 9, 19, 22, 15, 27, 399167), '541a55f4-7d82-47d9-b54c-a76916479545', None, 'El cerro', None, 0, 0, 0, 0, None, None)]
+(Background on this error at: http://sqlalche.me/e/e3q8)</blockquote>
 </div>
 
 <div class="plain">
@@ -222,6 +883,27 @@
       <input type="submit" value="create paste"></span>
     </p>
     <textarea cols="50" rows="10" name="code" readonly>Traceback (most recent call last):
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py&quot;, line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/default.py&quot;, line 588, in do_execute
+    cursor.execute(statement, parameters)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 250, in execute
+    self.errorhandler(self, exc, value)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py&quot;, line 50, in defaulterrorhandler
+    raise errorvalue
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 247, in execute
+    res = self._query(query)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 411, in _query
+    rowcount = self._do_query(q)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 374, in _do_query
+    db.query(q)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py&quot;, line 292, in query
+    _mysql.connection.query(self, query)
+_mysql_exceptions.OperationalError: (1048, &quot;Column 'user_id' cannot be null&quot;)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
   File &quot;/usr/local/lib/python3.4/dist-packages/flask/app.py&quot;, line 2463, in __call__
     return self.wsgi_app(environ, start_response)
   File &quot;/usr/local/lib/python3.4/dist-packages/flask/app.py&quot;, line 2449, in wsgi_app
@@ -242,9 +924,72 @@
     rv = self.dispatch_request()
   File &quot;/usr/local/lib/python3.4/dist-packages/flask/app.py&quot;, line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File &quot;/root/AirBnB_clone_v3/api/v1/views/index.py&quot;, line 24, in count_stats
-    return jsonify({counts}), 200
-TypeError: unhashable type: 'dict'</textarea>
+  File &quot;/root/AirBnB_clone_v3/api/v1/views/places.py&quot;, line 64, in create_place
+    new_place.save()
+  File &quot;/root/AirBnB_clone_v3/models/base_model.py&quot;, line 59, in save
+    models.storage.save()
+  File &quot;/root/AirBnB_clone_v3/models/engine/db_storage.py&quot;, line 60, in save
+    self.__session.commit()
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/scoping.py&quot;, line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py&quot;, line 1036, in commit
+    self.transaction.commit()
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py&quot;, line 503, in commit
+    self._prepare_impl()
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py&quot;, line 482, in _prepare_impl
+    self.session.flush()
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py&quot;, line 2479, in flush
+    self._flush(objects)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py&quot;, line 2617, in _flush
+    transaction.rollback(_capture_exception=True)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/langhelpers.py&quot;, line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py&quot;, line 153, in reraise
+    raise value
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py&quot;, line 2577, in _flush
+    flush_context.execute()
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/unitofwork.py&quot;, line 422, in execute
+    rec.execute(self)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/unitofwork.py&quot;, line 589, in execute
+    uow,
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/persistence.py&quot;, line 245, in save_obj
+    insert,
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/persistence.py&quot;, line 1084, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py&quot;, line 982, in execute
+    return meth(self, multiparams, params)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/sql/elements.py&quot;, line 293, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py&quot;, line 1101, in _execute_clauseelement
+    distilled_params,
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py&quot;, line 1250, in _execute_context
+    e, statement, parameters, cursor, context
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py&quot;, line 1476, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py&quot;, line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py&quot;, line 152, in reraise
+    raise value.with_traceback(tb)
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py&quot;, line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File &quot;/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/default.py&quot;, line 588, in do_execute
+    cursor.execute(statement, parameters)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 250, in execute
+    self.errorhandler(self, exc, value)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py&quot;, line 50, in defaulterrorhandler
+    raise errorvalue
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 247, in execute
+    res = self._query(query)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 411, in _query
+    rowcount = self._do_query(q)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py&quot;, line 374, in _do_query
+    db.query(q)
+  File &quot;/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py&quot;, line 292, in query
+    _mysql.connection.query(self, query)
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1048, &quot;Column 'user_id' cannot be null&quot;)
+[SQL: INSERT INTO places (id, created_at, updated_at, city_id, user_id, name, description, number_rooms, number_bathrooms, max_guest, price_by_night, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('cf208b3e-8863-4147-88ba-2cf0138c386a', datetime.datetime(2021, 9, 19, 22, 15, 27, 399148), datetime.datetime(2021, 9, 19, 22, 15, 27, 399167), '541a55f4-7d82-47d9-b54c-a76916479545', None, 'El cerro', None, 0, 0, 0, 0, None, None)]
+(Background on this error at: http://sqlalche.me/e/e3q8)</textarea>
   </form>
 </div>
 <div class="explanation">
@@ -280,6 +1025,27 @@ TypeError: unhashable type: 'dict'</textarea>
 <!--
 
 Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 250, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py", line 50, in defaulterrorhandler
+    raise errorvalue
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 247, in execute
+    res = self._query(query)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 411, in _query
+    rowcount = self._do_query(q)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 374, in _do_query
+    db.query(q)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py", line 292, in query
+    _mysql.connection.query(self, query)
+_mysql_exceptions.OperationalError: (1048, "Column 'user_id' cannot be null")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
   File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 2463, in __call__
     return self.wsgi_app(environ, start_response)
   File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 2449, in wsgi_app
@@ -300,16 +1066,71 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/usr/local/lib/python3.4/dist-packages/flask/app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/root/AirBnB_clone_v3/api/v1/views/index.py", line 24, in count_stats
-    return jsonify({counts}), 200
-TypeError: unhashable type: 'dict'
+  File "/root/AirBnB_clone_v3/api/v1/views/places.py", line 64, in create_place
+    new_place.save()
+  File "/root/AirBnB_clone_v3/models/base_model.py", line 59, in save
+    models.storage.save()
+  File "/root/AirBnB_clone_v3/models/engine/db_storage.py", line 60, in save
+    self.__session.commit()
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py", line 1036, in commit
+    self.transaction.commit()
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py", line 503, in commit
+    self._prepare_impl()
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py", line 482, in _prepare_impl
+    self.session.flush()
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py", line 2479, in flush
+    self._flush(objects)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py", line 2617, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py", line 153, in reraise
+    raise value
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/session.py", line 2577, in _flush
+    flush_context.execute()
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/persistence.py", line 245, in save_obj
+    insert,
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/orm/persistence.py", line 1084, in _emit_insert_statements
+    c = cached_connections[connection].execute(statement, multiparams)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py", line 982, in execute
+    return meth(self, multiparams, params)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/sql/elements.py", line 293, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py", line 1101, in _execute_clauseelement
+    distilled_params,
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py", line 1250, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py", line 1476, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "/usr/local/lib/python3.4/dist-packages/sqlalchemy/engine/default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 250, in execute
+    self.errorhandler(self, exc, value)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py", line 50, in defaulterrorhandler
+    raise errorvalue
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 247, in execute
+    res = self._query(query)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 411, in _query
+    rowcount = self._do_query(q)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/cursors.py", line 374, in _do_query
+    db.query(q)
+  File "/usr/local/lib/python3.4/dist-packages/MySQLdb/connections.py", line 292, in query
+    _mysql.connection.query(self, query)
+sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (1048, "Column 'user_id' cannot be null")
+[SQL: INSERT INTO places (id, created_at, updated_at, city_id, user_id, name, description, number_rooms, number_bathrooms, max_guest, price_by_night, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)]
+[parameters: ('cf208b3e-8863-4147-88ba-2cf0138c386a', datetime.datetime(2021, 9, 19, 22, 15, 27, 399148), datetime.datetime(2021, 9, 19, 22, 15, 27, 399167), '541a55f4-7d82-47d9-b54c-a76916479545', None, 'El cerro', None, 0, 0, 0, 0, None, None)]
+(Background on this error at: http://sqlalche.me/e/e3q8)
 
 -->
-{
-  "amenities": 47, 
-  "cities": 36, 
-  "places": 154, 
-  "reviews": 718, 
-  "states": 27, 
-  "users": 31
-}

@@ -51,11 +51,13 @@ def create_place(city_id):
     if "name" not in req:
         abort(400, "Missing name")
     if storage.get(City, city_id) is None:
-        abort(404)
+        abort(404, "city id not found")
+    if 'user_id' not in req:
+        return jsonify({'error': 'Missing user_id'}), 400
     user = storage.get(User, req.get('user_id'))
     if not user:
         abort(404)
-
+    
     new_place = Place()
     new_place.city_id = city_id
     new_place.name = name
