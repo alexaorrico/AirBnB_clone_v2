@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
     Start of API module
+
 """
 
 from flask import Flask, jsonify, make_response
@@ -11,13 +12,16 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def close_storage(error):
     """ Calls the close method from storage """
     storage.close()
 
+
 @app.errorhandler(404)
 def resource_not_found(e):
+    """ Will return a 404 json query """
     return make_response(jsonify({'error': 'Not Found'}), 404)
 
 if __name__ == "__main__":
