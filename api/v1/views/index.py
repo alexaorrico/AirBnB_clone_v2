@@ -22,13 +22,11 @@ def quantity():
         if cls not in classes:
             classes.append(cls)
             letter = cls[-1:]
-            if letter !=  'y':
-                name = cls + "s"
-                print("{}".format(name))
+            if letter != 'y':
+                name = cls[:].lower() + "s"
                 names.append(name)
             else:
-                name = letter + "ies"
-                print("{}"[O].format(name))
+                name = cls[0:-1].lower() + "ies"
                 names.append(name)
 
     print("{}".format(names))
