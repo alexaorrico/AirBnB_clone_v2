@@ -27,9 +27,30 @@ def get_place_amenities(place_id):
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                 methods=["DELETE", "POST"],
+                 methods=["DELETE"],
                  strict_slashes=False)
-def delete_and_post_amenity_place(place_id, amenity_id):
+def delete_amenity_place(place_id, amenity_id):
+    """
+        Deletes a amenity place with id and returns an empty JSON
+    """
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
+    if place is None or amenity is None:
+        abort(404)
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        list_res = place.amenities
+    else:
+        list_res = place.amenity_ids
+    if amenity not in list_res:
+        abort(404)
+    list_res.remove(amenity)
+    place.save()
+    return jsonify({}), 200
+
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=["POST"],
+                 strict_slashes=False)
+def post_amenity_place(place_id, amenity_id):
     """
         Stores with id and returns a amenity place in a given place
     """
@@ -37,23 +58,12 @@ def delete_and_post_amenity_place(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if place is None or amenity is None:
         abort(404)
-    if request.method == "DELETE":
-        if getenv('HBNB_TYPE_STORAGE') == 'db':
-            list_res = place.amenities
-        else:
-            list_res = place.amenity_ids
-        if amenity not in list_res:
-            abort(404)
-        list_res.remove(amenity)
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        list_res = place.amenities
+    else:
+        list_res = place.amenity_ids
+    if amenity not in list_res:
+        list_res.append(amenity)
         place.save()
-        return jsonify({}), 200
-    if request.method == "POST":
-        if getenv('HBNB_TYPE_STORAGE') == 'db':
-            list_res = place.amenities
-        else:
-            list_res = place.amenity_ids
-        if amenity not in list_res:
-            list_res.append(amenity)
-            place.save()
-            return jsonify(amenity.to_dict()), 201
-        return jsonify(amenity.to_dict()), 200
+        return jsonify(amenity.to_dict()), 201
+    return jsonify(amenity.to_dict()), 200
