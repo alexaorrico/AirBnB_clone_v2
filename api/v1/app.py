@@ -2,18 +2,24 @@
 """app module"""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-"""register the blueprint app_views to your Flask instance app"""
+
 @app.teardown_appcontext
 def close_storage(exception):
     """close storage connection"""
     storage.close()
+
+
+@app.errorhandler(404)
+def resource_not_found(e):
+    msg = {"error": "Not found"}
+    return jsonify(msg), 404
 
 
 if __name__ == "__main__":
