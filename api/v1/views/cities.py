@@ -59,9 +59,9 @@ def post_city(state_id):
     if not state:
         abort(404)
     elif not data:
-        return (jsonify({'error': 'Not a JSON'}), 400)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     elif 'name' not in data:
-        return (jsonify({'error': 'Missing name'}), 400)
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     else:
         data['state_id'] = state_id
         new_city = City(**data)
@@ -80,7 +80,7 @@ def put_city(city_id):
     if not city:
         abort(404)
     elif not data:
-        return (jsonify({'error': 'Not a JSON'}), 400)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     else:
         for key, value in data.items():
             if key not in key_ignore:
