@@ -2,10 +2,12 @@
 """ flask API app """
 from models import storage
 from flask import Flask, json
+from flask_cors import CORS, cross_origin
 from api.v1.views import app_views
 from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 # app_views BluePrint defined in api.v1.views
 app.register_blueprint(app_views)
