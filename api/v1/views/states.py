@@ -49,11 +49,13 @@ def create_state():
 @app_views.route("/states/<string:state_id>", strict_slashes=False, methods=["PUT"])
 def edit_state(state_id):
     """edits a state"""
+    required_state = storage.get(State, state_id)
+    if (not required_state):
+        abort(404)
     if not request.json:
         return make_response("Not a JSON", 400)
+
     input_dict = request.get_json()
-    print(input_dict)
-    required_state = storage.get(State, state_id)
     for key, value in input_dict.items():
         if (key not in ["id", "created_at", "updated_at"]):
             if (hasattr(required_state, key)):

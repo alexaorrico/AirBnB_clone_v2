@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """module containing main app"""
-import json
 from flask import Flask, jsonify
-from sqlalchemy.sql.operators import json_path_getitem_op
 from models import storage
 from api.v1.views import app_views
 from os import getenv
