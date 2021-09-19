@@ -22,11 +22,12 @@ def all_cities_per_state(state_id=None):
         for city in all_cities.values():
             if city.state_id == state_id:
                 cities.append(city.to_json())
+        # jsonify() return an object that already has the content-type header 'application/json'
         return jsonify(cities)
     if request.method == "POST":
         json_req = request.get_json()
         if json_req is None:
-            abort(400, 'Not a Json')
+            abort(400, 'Not a JSON')
         if json_req.get("name") is None:
             abort(400, 'Missing name')
         json_req["state_id"] = state_id
@@ -34,7 +35,7 @@ def all_cities_per_state(state_id=None):
         new_obj.save()
         return jsonify(new_obj.to_json()), 201
 
-@app_views.route('/cities/<city_id>', strict_slashes=False)
+@app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET', 'POST', 'PUT', 'DELETE'])
 def retrieve_city(city_id=None):
     """ retrieve a city by id """
     from models import storage
@@ -46,8 +47,9 @@ def retrieve_city(city_id=None):
         return jsonify(city.to_json())
     if request.method == "DELETE":
         city.delete()
-        return jsonify({}, 200)
-    if request.method == 'PUT':
+        storage.save()
+        return jsonify({})
+    if request.method == "PUT":
         json_req = request.get_json()
         if json_req is None:
             abort(400, 'Not a JSON')
