@@ -11,7 +11,7 @@ def states_objects():
     """ Retrieves the list of all State objects """
     state_objs = storage.all(State)
     state_json = []
-    for obj in state_objs:
+    for obj in state_objs.values():
         state_json.append(obj.to_dict())
     return jsonify(state_json)
 
@@ -37,7 +37,7 @@ def delete_state_object(state_id):
         abort(404)
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create_state_object(state_id):
+def create_state_object():
     """ Create a new State object """
     if not request.get_json():
         abort(400, description='Not a JSON')
@@ -57,11 +57,11 @@ def update_state_object(state_id):
     if state_obj == None:
         abort(404)
     if not request.get_json():
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
     content = request.get_json()
     nope = ['id', 'created_at', 'updated_at']
     for key, value in content.items():
         if key not in nope:
             setattr(state_obj, key, value)
     storage.save()
-    return make_reponse(jsonify(state_obj.to_dict()), 200)
+    return make_response(jsonify(state_obj.to_dict()), 200)
