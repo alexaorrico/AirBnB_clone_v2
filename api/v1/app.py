@@ -3,7 +3,7 @@
     Start of API module
 """
 
-from flask import Flask, escape, request, Blueprint
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -12,9 +12,13 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def close(self):
+def close_storage(error):
     """ Calls the close method from storage """
     storage.close()
+
+@app.errorhandler(404)
+def resource_not_found(e):
+    return make_response(jsonify({'error': 'Not Found'}), 404)
 
 if __name__ == "__main__":
     """ Only executes as main """
