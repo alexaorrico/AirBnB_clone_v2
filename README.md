@@ -156,6 +156,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+<br>
 OMAR YAHIA - [Github](https://github.com/omaryahia4) / [linkedin](https://www.linkedin.com/in/omar-yahia-78484980/)  
 MAHDI ABID - [Github](https://github.com/mahdixabid) / [linkedin](https://www.linkedin.com/in/mahdixabid/)
 
