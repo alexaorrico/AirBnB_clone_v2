@@ -52,7 +52,7 @@ def delete_place(place_id):
                  strict_slashes=False)
 def post_place(city_id=None):
     """create a new place"""
-    city_obj = storage.get('City', city_id)
+    city_obj = storage.get(City, city_id)
     if city_obj is None:
         abort(404)
     result = request.get_json()
@@ -60,7 +60,7 @@ def post_place(city_id=None):
         return jsonify({"error": "Not a JSON"}), 400
     if 'user_id' not in result:
         return jsonify({"error": "Missing user_id"}), 400
-    user_obj = storage.get('User', result['user_id'])
+    user_obj = storage.get(User, result['user_id'])
     if user_obj is None:
         abort(404)
     if 'name' not in result:
@@ -77,7 +77,7 @@ def post_place(city_id=None):
                  strict_slashes=False)
 def put_place(place_id=None):
     """update a place"""
-    place_obj = storage.get('Place', place_id)
+    place_obj = storage.get(Place, place_id)
     if place_obj is None:
         abort(404)
     result = request.get_json()
