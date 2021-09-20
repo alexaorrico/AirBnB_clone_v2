@@ -19,6 +19,8 @@ jobs:
       run: pip install sqlalchemy
     - name: Install flask
       run: pip install Flask
+    - name: Install flask cors
+      run: pip install flask_cors
     - name: Activate enviroment
       run: source sql_enviroment/bin/activate
     - name: Install dependencies sqldb
