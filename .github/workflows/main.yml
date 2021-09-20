@@ -42,11 +42,11 @@ jobs:
     - name: Run normal test
       run: python -m unittest discover tests
     - name: Create Pull Request
-       uses: peter-evans/create-pull-request@v3
-       with:
-         token: ${{ secrets.GITHUB_TOKEN }}
-         commit-message: Automatic pull request
-         title: '[Example] Add report file'
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: Automatic pull request
+        title: '[Example] Add report file'
     - uses: reitermarkus/automerge@v1.5.2
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
