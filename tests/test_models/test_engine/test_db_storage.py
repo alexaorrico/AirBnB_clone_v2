@@ -78,11 +78,36 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        pass
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        pass
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        pass
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Tests that get method"""
+        t1 = models.storage.get("", "")
+        self.assertEqual(t1, None)
+        t2 = State(name="Betty")
+        t2.save()
+        t1 = models.storage.get("State", t2.id)
+        self.assertEqual(t1, t2)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Tests that count method"""
+        b1 = models.storage.count()
+        b2 = models.storage.count("State")
+        s1 = State(name="Daniel")
+        s1.save()
+        c1 = models.storage.count()
+        c2 = models.storage.count("State")
+        self.assertEqual(b1, c1 - 1)
+        self.assertEqual(b2, c2 - 1)
