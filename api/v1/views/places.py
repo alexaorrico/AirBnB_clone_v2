@@ -80,7 +80,7 @@ def put_place(place_id):
     """Updates a place """
     place = storage.get(Place, place_id)
 
-    if not place:
+    if place is None:
         abort(404)
 
     if not request.get_json():
