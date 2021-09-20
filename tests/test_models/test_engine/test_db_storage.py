@@ -79,6 +79,22 @@ test_db_storage.py'])
             db_storage.delete(b)
             self.assertEqual(test_len + 1, db_storage.count())
 
+    def test_get(self):
+        """test get with valid cls and id"""
+        a = Amenity(name="test_amenity2", id="test_2")
+        a.save()
+        result = db_storage.get("Amenity", "test_2")
+        self.assertEqual(a.name, result.name)
+        self.assertEqual(a.created_at.year, result.created_at.year)
+        self.assertEqual(a.created_at.month, result.created_at.month)
+        self.assertEqual(a.created_at.day, result.created_at.day)
+        self.assertEqual(a.created_at.hour, result.created_at.hour)
+        self.assertEqual(a.created_at.minute, result.created_at.minute)
+        self.assertEqual(a.created_at.second, result.created_at.second)
+        db_storage.delete(a)
+        result = db_storage.get("Amenity", "test_2")
+        self.assertIsNone(result)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
