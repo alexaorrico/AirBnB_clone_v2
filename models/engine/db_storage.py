@@ -32,11 +32,12 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}?use_unicode=1&charset=utf8'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}?use_unicode=1&charset=utf8'.
+            format(HBNB_MYSQL_USER,
+                   HBNB_MYSQL_PWD,
+                   HBNB_MYSQL_HOST,
+                   HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -76,7 +77,8 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls=None, id=None):
-        """ Returns the object based on the class and its ID, or None if not found """
+        """ Returns the object based on the class
+        and its ID, or None if not found """
         if cls is not None and id is not None:
             clases = self.all(cls)
             for obj in clases.values():
@@ -87,7 +89,9 @@ class DBStorage:
             return None
 
     def count(self, cls=None):
-        """ Returns the number of objects in storage matching the given class. If no class is passed, returns the count of all objects in storage."""
+        """ Returns the number of objects in storage
+        matching the given class. If no class is passed,
+        returns the count of all objects in storage."""
         total = 0
         if cls in classes:
             try:
