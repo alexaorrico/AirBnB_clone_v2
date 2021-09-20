@@ -6,7 +6,8 @@ from flask import jsonify, abort, request
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities',
+                 methods=['GET'], strict_slashes=False)
 def all_amenities():
     """liste all amenities"""
     list_amenities = []

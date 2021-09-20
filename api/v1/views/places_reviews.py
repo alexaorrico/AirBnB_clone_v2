@@ -46,6 +46,7 @@ def delete_review(review_id=None):
             return jsonify({}), 200
     abort(404)
 
+
 @app_views.route('/places/<place_id>/reviews',
                  methods=['POST'], strict_slashes=False)
 def post_review(place_id=None):
@@ -81,8 +82,8 @@ def put_review(review_id=None):
         abort(400, "Not a JSON")
 
     for key, value in requeste.items():
-        if key not in ['id', 'user_id',
-                       'place_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id',
+                       'created_at', 'updated_at']:
             setattr(review, key, value)
     storage.save()
     return jsonify(review.to_dict()), 200
