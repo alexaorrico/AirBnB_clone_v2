@@ -64,7 +64,6 @@ def create_obj_review(place_id):
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
-
 @app_views.route('/reviews/<string:review_id>', methods=['PUT'],
                  strict_slashes=False)
 def post_review(review_id):
