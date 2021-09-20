@@ -27,7 +27,7 @@ def get_city_id(city_id):
     all_objects = storage.get(City, city_id)
     if all_objects is None:
         abort(404)
-    return jsonify(all_objects.to_dict())
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/cities/<city_id>',

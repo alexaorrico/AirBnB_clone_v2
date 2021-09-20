@@ -8,14 +8,16 @@ from models import storage
 import json
 
 
-@app_views.route('/states/<state_id>/cities',
-                 methods=['GET'], strict_slashes=False)
-def get_city():
+
+@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+def get_city(state_id):
     """gets all state objects"""
-    all_objects = storage.all(City)
+    all_objects = storage.get(City, state_id)
+    if all_objects is None:
+        abort(404)
     single_object = []
-    for all_objects in all_objects.values():
-        single_object.append(all_objects.to_dict())
+    for city in all_objects.single_object:
+        single_object.append(city.to_dict())
     return jsonify(single_object)
 
 
@@ -23,13 +25,10 @@ def get_city():
                  strict_slashes=False)
 def get_city_id(city_id):
     """gets the state object using his id"""
-    all_objects = storage.all(City)
-    new_dict = {}
-    for key, value in all_objects.items():
-        if city_id == value.id:
-            new_dict = value.to_dict()
-            return jsonify(new_dict)
-    abort(404)
+    all_objects = storage.get(City, city_id)
+    if all_objects is None:
+        abort(404)
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/cities/<city_id>',
