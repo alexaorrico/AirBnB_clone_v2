@@ -11,25 +11,21 @@ import json
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """gets all state objects"""
-    all_objects = storage.all(State)
+    all_objects = storage.all("State")
     single_object = []
-    for all_objects in all_objects.values():
-        single_object.append(all_objects.to_dict)
+    for obj in all_objects.values():
+        single_object.append(obj.to_dict)
     return jsonify(single_object)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'],
+@app_views.route('/states/<string:state_id>', methods=['GET'],
                  strict_slashes=False)
 def get_state_id(state_id):
     """gets the state object using his id"""
-    all_objects = storage.all(State)
-    new_dict = {}
-    for key, value in all_objects.items():
-        if state_id == value.id:
-            new_dict = value.to_dict
-            return jsonify(new_dict)
-    abort(404)
-
+    all_objects = storage.get("State", state_id)
+    if all_objects is None:
+        abort(404)
+    return jsonify(all_objects.to_dict())
 
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
