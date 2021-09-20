@@ -75,7 +75,7 @@ def put_user(user_id):
     all_user = request.get_json()
     if not all_user:
         return (jsonify({'error': 'Not a JSON'}), 400)
-    user = storage.get('User', city_id)
+    user = storage.get('User', user_id)
     if user:
         for key in all_user.keys():
             if key not in ignore_keys:
