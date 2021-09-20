@@ -6,6 +6,16 @@ script that starts a Flask web application:
 from api.v1.views import app_views
 from flask import jsonify, Flask, Response
 from models import storage
+from werkzeug.wrappers import response
+
+all_class = {
+    "amenities": "Amenity",
+    "cities": "City",
+    "places": "Place",
+    "reviews": "Review",
+    "states": "State",
+    "users": "User"
+}
 
 
 @app_views.route('/status')
@@ -17,14 +27,11 @@ def status():
     return jsonify(status)
 
 
-@app_views.route("/stats", strict_slashes=False)
+@app_views.route("/stats")
 def stats():
     """ retrieves the number of each objects by type
     """
-    status = {"amenities": storage.count("Amenity"),
-              "cities": storage.count("City"),
-              "places": storage.count("Place"),
-              "reviews": storage.count("Review"),
-              "states": storage.count("State"),
-              "users": storage.count("User")}
-    return jsonify(status)
+    resp = {}
+    for key, value in all_class.items():
+        resp[key] = storage.count(value)
+    return jsonify(resp)
