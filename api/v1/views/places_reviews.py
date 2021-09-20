@@ -20,7 +20,7 @@ def get_all_reviews(place_id):
     return jsonify(reviews)
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['GET'],
+@app_views.route('/places/<string:review_id>', methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
     """ get review by id"""
@@ -57,7 +57,7 @@ def create_obj_review(place_id):
         return make_response(jsonify({"error": "Missing text"}), 400)
     kwargs = request.get_json()
     kwargs['place_id'] = place_id
-    user = storage.get(User, kwargs['user_id']) 
+    user = storage.get(User, kwargs['user_id'])
     if user is None:
         abort(404)
     obj = Review(**kwargs)
