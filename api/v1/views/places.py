@@ -11,7 +11,7 @@ import json
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
-def get_states():
+def get_places():
     """gets all state objects"""
     all_objects = storage.all(Place)
     single_object = []
