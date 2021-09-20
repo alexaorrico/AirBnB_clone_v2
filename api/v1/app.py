@@ -2,18 +2,25 @@
 """app module"""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-"""register the blueprint app_views to your Flask instance app"""
+
 @app.teardown_appcontext
 def close_storage(exception):
     """close storage connection"""
     storage.close()
+
+
+@app.errorhandler(404)
+def resource_not_found(e):
+    """page not found"""
+    msg = {"error": "Not found"}
+    return make_response(jsonify(msg))
 
 
 if __name__ == "__main__":
