@@ -9,8 +9,8 @@ from api.v1.views import app_views
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
-def review_objects(place_id):
-    """Methods for places by place_id"""
+def review_by_place(place_id):
+    """Methods for reviews by place_id"""
     place = models.storage.get('Place', place_id)
     if place is None:
         abort(404)
@@ -39,7 +39,7 @@ def review_objects(place_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'PUT', 'DELETE'])
-def review_res(review_id):
+def review_updates(review_id):
     """Methods for reviews by review_id"""
     review = models.storage.get('Review', review_id)
     if review is None:
