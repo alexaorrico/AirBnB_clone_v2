@@ -55,7 +55,7 @@ def post_place(city_id):
                  strict_slashes=False)
 def get_place_id(place_id):
     """gets the state object using his id"""
-    obj = storage.get('Place', place_id)
+    obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
     else:
@@ -66,7 +66,7 @@ def get_place_id(place_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id=None):
     """Deletes"""
-    obj = storage.get('Place', place_id)
+    obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
     else:
@@ -81,7 +81,7 @@ def put_place(place_id=None):
     res = request.get_json()
     if not res:
         abort(400, {"Not a JSON"})
-    obj = storage.get('Place', place_id)
+    obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
     i_key = ["id", "created_at", "updated_at"]
