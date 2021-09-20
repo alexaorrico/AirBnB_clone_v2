@@ -26,7 +26,7 @@ def get_users():
     strict_slashes=False)
 def get_id_user(user_id):
     """Returns id user in json format"""
-    user = storage.get('User', user_id)
+    user = storage.get(User, user_id)
     if user:
         return jsonify(user.to_dict())
     abort(404)
@@ -54,9 +54,9 @@ def post_user():
     all_user = request.get_json()
     if not all_user:
         return (jsonify({'error': 'Not a JSON'}), 400)
-    elif 'email' not in all_user:
+    if 'email' not in all_user:
         return (jsonify({'error': 'Missing email'}), 400)
-    elif 'password' not in all_user:
+    if 'password' not in all_user:
         return (jsonify({'error': 'Missing password'}), 400)
     user = User(**all_user)
     user.save()
