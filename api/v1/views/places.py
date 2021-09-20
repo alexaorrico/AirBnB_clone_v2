@@ -60,6 +60,9 @@ def create_obj_place(city_id):
     user = request.get_json().get('user')
     if user is None:
         abort(404)
+    user1 = storage.get(User, user_id)
+    if user1 is None:
+        abort(404)
     obj = Place(name=name, user_id=user_id, user=user)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
