@@ -26,3 +26,7 @@ def handle_404(e):
 if __name__ == "__main__":
     """ run the flask server """
     app.run(host='0.0.0.0', port=5000, threaded=True)
+    # he server is run in single-threaded mode,
+    # and can only handle one request at a time.
+    # Any parallel requests will have to wait until
+    # they can be handled.
