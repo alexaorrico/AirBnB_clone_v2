@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models import storage """1st add"""
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -86,3 +87,11 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+        """2sd add"""
+    @unittest.skipIf(models.storage_t != 'db',
+                     "not testing db storage")
+    def test_count(self):
+        """Test count method"""
+        count_test = models.storage.count()
+        self.assertEqual(len(storage.all()), count_test)
