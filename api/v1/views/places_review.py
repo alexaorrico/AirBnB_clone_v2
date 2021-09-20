@@ -14,7 +14,7 @@ from models import storage
 @app_views.route('/places/<place_id>/reviews',
                  methods=['GET'],
                  strict_slashes=False)
-def all_places(place_id):
+def all_review(place_id):
     """ GET ALL PLACES """
     place = storage.all(Place).values()
     if not place:
