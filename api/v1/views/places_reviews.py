@@ -62,7 +62,7 @@ def create_obj_review(place_id):
     kwargs['place_id'] = place_id
     obj = Review(**kwargs)
     obj.save()
-    return (jsonify(obj.to_dict()), 201)
+    return make_response(jsonify(review.to_dict()), 201)
 
 
 @app_views.route('/reviews/<string:review_id>', methods=['PUT'],
