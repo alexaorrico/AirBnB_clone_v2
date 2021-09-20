@@ -8,7 +8,7 @@ from models.user import User
 
 
 @app_views.route("/users", strict_slashes=False)
-def get_states():
+def get_user():
     """ return all user objects"""
     users = storage.all(User).values()
     resultado = []
