@@ -55,12 +55,13 @@ def create_obj_place(city_id):
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
-    kwargs = request.get_json()
-    kwargs['city_id'] = city_id
-    user = storage.get(User, kwargs['user_id'])
-    if user is None:
+    name = request.get_json().get('name')
+    user_id = request.get_json().get('user_id')
+    user = request.get_json().get('user')
+    user1 = storage.get(User, user_id)
+    if user1 is None:
         abort(404)
-    obj = Place(**kwargs)
+    obj = Place(name=name, user_id=user_id, user=user)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
