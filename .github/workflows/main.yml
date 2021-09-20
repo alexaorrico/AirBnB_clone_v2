@@ -7,8 +7,8 @@ jobs:
       matrix:
         python-version: [3.6, 3.7, 3.8]
     steps:
-    - name: Merge pull requests (automerge-action)
-      uses: pascalgn/automerge-action@v0.14.3
+    - name: Merge me!
+      uses: ridedott/merge-me-action@v2.8.35
     - uses: actions/checkout@v2
     - name: Install Python 3
       uses: actions/setup-python@v2
