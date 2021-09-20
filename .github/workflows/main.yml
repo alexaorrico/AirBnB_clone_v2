@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
+        python-version: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Install Python 3
@@ -50,3 +50,10 @@ jobs:
         pr_reviewer: "kingdonb"
         pr_draft: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: reitermarkus/automerge@v1.5.2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        merge-method: merge
+        do-not-merge-labels: never-merge
+        required-labels: automerge
+        dry-run: true
