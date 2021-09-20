@@ -20,12 +20,12 @@ def get_cities():
 
 @app_views.route('/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
-def get_city_id(state_id):
+def get_city_id(city_id):
     """gets the state object using his id"""
     all_objects = storage.all(City)
     new_dict = {}
     for key, value in all_objects.items():
-        if state_id == value.id:
+        if city_id == value.id:
             new_dict = value.to_dict
             return jsonify(new_dict)
     abort(404)
