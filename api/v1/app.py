@@ -20,7 +20,7 @@ def close_storage(exception):
 def resource_not_found(e):
     """page not found"""
     msg = {"error": "Not found"}
-    return make_response(jsonify(msg))
+    return make_response(jsonify(msg), 404)
 
 
 if __name__ == "__main__":
