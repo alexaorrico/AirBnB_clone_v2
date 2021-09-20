@@ -2,7 +2,7 @@
 """creates a new view for State Objects"""
 from os import name
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 from models.state import State
 from models import storage
 import json
@@ -43,7 +43,7 @@ def delete(state_id=None):
 def post():
     """Creates"""
     res = request.get_json()
-    if not res:
+    if res is None:
         abort(400, {"Not a JSON"})
     if 'name' not in res:
         abort(400, {"Missing name"})
