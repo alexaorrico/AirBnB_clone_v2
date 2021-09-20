@@ -37,7 +37,7 @@ def post_place():
 
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
-def get_state_id(place_id):
+def get_place_id(place_id):
     """gets the state object using his id"""
     all_objects = storage.all(Place)
     new_dict = {}
