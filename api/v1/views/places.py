@@ -1,40 +1,42 @@
 #!/usr/bin/python3
 """creates a new view for State Objects"""
-from models.place import Place
-from os import name
-from api.v1.views import app_views
-from flask import jsonify, request, abort
-from models.place import Place
-from models.city import City
-from models.user import User
+from flask import Flask, jsonify, abort, request
 from models import storage
-import json
-
+from api.v1.views import app_views
+from models.state import State
+from models.state import City
+from models.city import City
+from models.place import Place
+import os
+app = Flask(__name__)
 
 @app_views.route('/cities/<string:city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def get_places(city_id):
+def get_places(city_id=None):
     """get place information for all places in a specified city"""
-    city = storage.get("City", city_id)
+    cities = storage.all(City)
+    city = cities.get(City, city_id)
     if city is None:
         abort(404)
-    places = []
-    for place in city.places:
-        places.append(place.to_dict())
-    return jsonify(places)
+    places_list = []
+    places = storage.all(Place)
+    for place in places.values():
+        if place.city_id == city_id:
+            places_list.append(place.to_dict())
+    return jsonify(places_list), 200
 
 
-@app_views.route('/places/<string:place_id>', methods=['GET'],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def get_place(place_id):
+def get_place(city_id=None):
     """get place information for specified place"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    return jsonify(place.to_dict())
+    return jsonify(place.to_dict()), 200
 
 
-@app_views.route('/places/<string:place_id>', methods=['DELETE'],
+@app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
     """deletes a place based on its place_id"""
@@ -43,14 +45,14 @@ def delete_place(place_id):
         abort(404)
     place.delete()
     storage.save()
-    return (jsonify({}))
+    return (jsonify({})), 200
 
 
 @app_views.route('/cities/<string:city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def post_place(city_id):
+def post_place(city_id=None):
     """create a new place"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     if not request.get_json():
@@ -71,7 +73,7 @@ def post_place(city_id):
 
 @app_views.route('/places/<string:place_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_place(place_id):
+def put_place(place_id=None):
     """update a place"""
     place = storage.get(Place, place_id)
     if place is None:
