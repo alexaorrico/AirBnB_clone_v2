@@ -4,14 +4,14 @@ from models.place import Place
 from os import name
 from api.v1.views import app_views
 from flask import jsonify, request, abort
-from models.state import State
+from models.place import Place
 from models import storage
 import json
 
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
-def get_states():
+def get_places():
     """gets all state objects"""
     all_objects = storage.all(Place)
     single_object = []
@@ -29,7 +29,7 @@ def post_place():
         abort(400, {"Not a JSON"})
     if 'name' not in res:
         abort(400, {"Missing name"})
-    obj = State(name=res['name'])
+    obj = Place(name=res['name'])
     storage.new(obj)
     storage.save()
     return jsonify(obj.to_dict()), 201
@@ -37,7 +37,7 @@ def post_place():
 
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
-def get_state_id(place_id):
+def get_place_id(place_id):
     """gets the state object using his id"""
     all_objects = storage.all(Place)
     new_dict = {}
