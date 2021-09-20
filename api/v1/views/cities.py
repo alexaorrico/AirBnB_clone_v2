@@ -2,11 +2,11 @@
 """creates a new view for State Objects"""
 from os import name
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 from models.city import City
 from models import storage
 import json
-
+from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
