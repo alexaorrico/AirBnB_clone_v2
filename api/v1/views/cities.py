@@ -9,7 +9,7 @@ import json
 
 
 @app_views.route('/states/<state_id>/cities',
-				 methods=['GET'], strict_slashes=False)
+                 methods=['GET'], strict_slashes=False)
 def get_city():
     """gets all state objects"""
     all_objects = storage.all(City)
@@ -46,7 +46,7 @@ def delete_city(city_id=None):
 
 
 @app_views.route('/states/<state_id>/cities',
-				 methods=['POST'], strict_slashes=False)
+                 methods=['POST'], strict_slashes=False)
 def post_city():
     """Creates"""
     res = request.get_json()
