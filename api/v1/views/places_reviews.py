@@ -42,7 +42,7 @@ def get_review(review_id):
     strict_slashes=False)
 def delete_review(review_id):
     """Deletes review"""
-    review = storage.get(Eeview, review_id)
+    review = storage.get(Review, review_id)
     if review:
         review.delete()
         storage.save()
