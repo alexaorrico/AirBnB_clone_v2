@@ -2,11 +2,13 @@
 """
 script that starts a Flask web application:
 """
-from os import error, getenv
-from models import storage, state
+
+from models import storage
+from models.state import State
 from api.v1.views import app_views
 from flask import abort
 from flask import Flask, jsonify, request
+from werkzeug.wrappers import response
 
 app = Flask(__name__)
 
@@ -34,50 +36,54 @@ def state_get(state_id):
         return state.to_dict()
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def state_delete(state_id):
     """
     Deletes a State object
     """
     state = storage.get('State', state_id)
     if state is None:
-        print("nada de nda")
+        abort(404)
     else:
         storage.delete(state)
         storage.save()
-        return jsonify({}), 202
+        return jsonify({}), 200
 
 
-@app_views.route('/api/v1/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def state_post():
     """
     Creates a State
     """
-    state = request.get_json()
-    if state is None:
-        abort(404, "Not a JSON")
-
-    if 'name' not in state:
-        abort(404, "Missing name")
+    state_new = request.get_json()
+    if state_new is None:
+        abort(400, "Not a JSON")
+    elif "name" not in state_new:
+        abort(400, "Missing name")
     else:
-        new = state.State(**state)
-        storage.new(new)
+        my_state = State(**state_new)
         storage.save()
-        return jsonify(new.to_dict()), 201
+        st = my_state.to_dict()
+        return jsonify(st), 201
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
-def state_put(state_id):
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def state_put(state_id=None):
     """
     Updates a State object
     """
-    state = request.get_json()
-    if state is None:
-        abort(404, "Not a JSON")
-
-    if 'name' not in state:
-        abort(404, "Missing name")
-    else:
-        state.save()
-        state.new()
-        return (jsonify(state), 201)
+    states = storage.get("State", state_id)
+    if states:
+        st = request.get_json()
+        if st is None:
+            abort(400, "Not a JSON")
+        else:
+            for key, value in st.items():
+                if key in ['id'] and key in ['created_at'] and key in ['updated_at']:
+                    pass
+                else:
+                    setattr(states, key, value)
+            storage.save()
+            resp = states.to_dict()
+            return jsonify(resp), 200
+    abort(404)
