@@ -13,8 +13,8 @@ def get_states():
     """gets all state objects"""
     all_objects = storage.all(State)
     single_object = []
-    for key, value in all_objects.items():
-        single_object.append(value.to_dict)
+    for all_objects in all_objects.values():
+        single_object.append(all_objects.to_dict)
     return jsonify(single_object)
 
 
