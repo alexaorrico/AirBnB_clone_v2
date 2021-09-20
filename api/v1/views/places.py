@@ -51,11 +51,11 @@ def create_place(city_id):
         if the_obj is None:
             abort(404)
         if not json_post:
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+            return abort(400, {description: "Not a JSON"})
         if 'user_id' not in json_post:
-            return make_response(jsonify({'error': 'Missing user_id'}), 400)
+            return abort(400, {description: "Missing user_id"})
         if 'name' not in json_post:
-            return make_response(jsonify({'error': 'Missing name'}), 400)
+            return abort(400, {description: "Missing name"})
         json_post['city_id'] = city_id
         new = Place(**json_post)
         new.save()
