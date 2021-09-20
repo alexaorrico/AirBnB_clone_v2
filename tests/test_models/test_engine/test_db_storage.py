@@ -67,6 +67,18 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_count(self):
+            """test count all"""
+            test_len = len(db_storage.all())
+            a = Amenity(name="test_amenity")
+            a.save()
+            self.assertEqual(test_len + 1, db_storage.count())
+            b = State(name="State test count")
+            b.save()
+            self.assertEqual(test_len + 2, db_storage.count())
+            db_storage.delete(b)
+            self.assertEqual(test_len + 1, db_storage.count())
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
