@@ -23,21 +23,25 @@ def get_user():
 def get_user_id(user_id):
     """ get user for id """
     users = storage.all("User").values()
-    if not users:
+    resultado = []
+    if user_id is not None:
+        for user in users:
+            if user_id == user.id:
+                return jsonify(user.to_dict())
         return abort(404)
 
-    return jsonify(users.to_dict())
+    return jsonify(resultado)
 
 
 @app_views.route("/users/<user_id>",
                  strict_slashes=False,
                  methods=["DELETE"])
-def delete_user(user_id):
+def delete_user(user_id=None):
     """ Deletes state by id """
     try:
         user = storage.get(User, user_id)
 
-        if user:
+        if user is not None:
             storage.delete(user)
             storage.save()
             return jsonify({}), 200
@@ -55,7 +59,7 @@ def create_user():
 
         if user.get("email") is None:
             return jsonify({"error": "Missing email"}), 400
-        if user.get("password") is None:
+        elif user.get("password") is None:
             return jsonify({"error": "Missing password"}), 400
     except:
         return jsonify({"error": "Not a JSON"}), 400
