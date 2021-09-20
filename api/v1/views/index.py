@@ -13,6 +13,7 @@ def status():
         # return a json
         return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def stats():
     """ retrives the number of each objects by type """
@@ -21,7 +22,7 @@ def stats():
     from models.amenity import Amenity
     from models.city import City
     from models.place import Place
-    from models.review  import Review
+    from models.review import Review
     from models.state import State
     from models.user import User
     objects_stats = {}
