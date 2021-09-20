@@ -115,16 +115,27 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
     def test_get(self):
-        """Test that save properly saves objects to file.json"""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+        """Test get
+        """
+        storage = FileStorage()
+        self.assertIs(storage.get("User", "Hola"), None)
+        self.assertIs(storage.get("hellow", "hellow"), None)
+        my_user = User()
+        my_user.save()
+        self.assertIs(storage.get("User", my_user.id), my_user)
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db')
     def test_count(self):
-        """Test that save properly saves objects to file.json"""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+        """ test count
+        """
+        storage = FileStorage()
+        count = len(storage.all())
+        self.assertEqual(storage.count(), count)
+        len_count = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), len_count)
+        my_state = State()
+        my_state.save()
+        self.assertEqual(storage.count(), count + 1)
+        self.assertEqual(storage.count("State"), len_count + 1)
