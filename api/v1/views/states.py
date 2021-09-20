@@ -79,7 +79,7 @@ def state_put(state_id=None):
             abort(400, "Not a JSON")
         else:
             for key, value in st.items():
-                if key in ['id'] and key in ['created_at'] and key in ['updated_at']:
+                if key in ['id', 'created_at', 'updated_at']:
                     pass
                 else:
                     setattr(states, key, value)
