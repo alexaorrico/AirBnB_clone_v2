@@ -10,6 +10,7 @@ from models.user import User
 from models import storage
 import json
 
+
 @app_views.route('/cities/<string:city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places(city_id):
