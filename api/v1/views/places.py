@@ -24,9 +24,9 @@ def get_places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
-def get_id_place(city_id):
+def get_id_place(place_id):
     """Returns city_id in json format"""
-    place = storage.get(Place, city_id)
+    place = storage.get(Place, place_id)
     if place:
         return jsonify(place.to_dict())
     abort(404)
@@ -64,9 +64,9 @@ def post_place(city_id):
 
 @app_views.route('places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_place(user_id):
+def put_place(place_id):
     """Updates a place """
-    place = storage.get(Place, user_id)
+    place = storage.get(Place, place_id)
 
     if not place:
         abort(404)
