@@ -4,7 +4,8 @@ script that starts a Flask web application:
 """
 from api.v1.views import app_views
 from flask import request, jsonify, abort
-from models import storage, user
+from models import storage
+from models.user import User
 
 
 @app_views.route('/users',
@@ -21,7 +22,7 @@ def user_all():
 
 @app_views.route('/users/<user_id>',
                  methods=['GET'], strict_slashes=False)
-def user_all(user_id):
+def us_all(user_id):
     """
     Retrieves a amenity object:
     """
@@ -40,7 +41,7 @@ def user_delete(user_id):
     user = storage.get('User', user_id)
     if user is None:
         abort(404)
-    storage.delete(user)
+    user.delete()
     storage.save()
     return jsonify({}), 200
 
@@ -57,7 +58,7 @@ def user_post():
     if "password" not in request.get_json().keys():
         abort(400, "Missing password")
     else:
-        my_user = users.User(**request.get_json())
+        my_user = User(**request.get_json())
         storage.new(my_user)
         storage.save()
         resp = my_user.to_dict()
@@ -79,7 +80,7 @@ def user_put(user_id):
     else:
         for key, value in us.items():
             if key in ['id'] and key in ['created_at']\
-                    and key in ['updated_at']:
+                    and key in ['email'] and key in ['updated_at']:
                 pass
             else:
                 setattr(user, key, value)
