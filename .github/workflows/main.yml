@@ -10,7 +10,7 @@ jobs:
     - name: Merge me!
       uses: ridedott/merge-me-action@v2.8.35
       with:
-        token: ${{ secrets.SECRET }}
+        token: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/checkout@v2
     - name: Install Python 3
       uses: actions/setup-python@v2
