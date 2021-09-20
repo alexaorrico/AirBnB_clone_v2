@@ -3,13 +3,9 @@
 script that starts a Flask web application:
 """
 
-from flask import abort, request, jsonify
-
 from api.v1.views import app_views
-from models import storage
-from models.city import City
-from models.state import State
-from models.amenity import Amenity
+from flask import request, jsonify, abort
+from models import storage, amenity
 
 
 @app_views.route('/amenities',
@@ -26,7 +22,7 @@ def amenity_all():
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'], strict_slashes=False)
-def amenity_all(amenity_id):
+def ameny_all(amenity_id):
     """
     Retrieves a amenity object:
     """
@@ -37,7 +33,7 @@ def amenity_all(amenity_id):
 
 
 @ app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
-                 strict_slashes=False)
+                  strict_slashes=False)
 def amenity_delete(amenity_id):
     """
     Deletes a amenity object
@@ -80,7 +76,7 @@ def amenity_put(amenity_id):
         abort(400, "Not a JSON")
     else:
         for key, value in amt.items():
-            if key in ['id'] and key in ['created_at']
+            if key in ['id'] and key in ['created_at']\
                     and key in ['updated_at']:
                 pass
             else:
