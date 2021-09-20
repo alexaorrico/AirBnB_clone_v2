@@ -50,11 +50,11 @@ def create_obj_review(place_id):
     if place is None:
         abort(404)
     if not request.get_json():
-        abort (400, 'Not JSON')
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in request.get_json():
-        abort (400, 'Missing user_id')
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'text' not in request.get_json():
-        abort(400, 'Missing text')
+        return make_response(jsonify({"error": "Missing text"}), 400)
     kwargs = request.get_json()
     kwargs['place_id'] = place_id
     user = storage.get(User, kwargs['user_id'])
@@ -70,7 +70,7 @@ def create_obj_review(place_id):
 def post_review(review_id):
     """ updates by id """
     if not request.get_json():
-        abort (400, 'Not JSON')
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Review, review_id)
     if obj is None:
         abort(404)
