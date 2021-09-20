@@ -14,7 +14,7 @@ def get_city():
     all_objects = storage.all(City)
     single_object = []
     for all_objects in all_objects.values():
-        single_object.append(all_objects.to_dict)
+        single_object.append(all_objects.to_dict())
     return jsonify(single_object)
 
 
@@ -26,7 +26,7 @@ def get_city_id(city_id):
     new_dict = {}
     for key, value in all_objects.items():
         if city_id == value.id:
-            new_dict = value.to_dict
+            new_dict = value.to_dict()
             return jsonify(new_dict)
     abort(404)
 
@@ -35,7 +35,7 @@ def get_city_id(city_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete(city_id=None):
     """Deletes"""
-    obj = storage.get('City', city_id)
+    obj = storage.get(City, city_id)
     if obj is None:
         abort(404)
     else:
@@ -64,7 +64,7 @@ def put(city_id=None):
     res = request.get_json()
     if not res:
         abort(400, {"Not a JSON"})
-    obj = storage.get('City', city_id)
+    obj = storage.get(City, city_id)
     if obj is None:
         abort(404)
     i_key = ["id", "created_at", "updated_at"]
