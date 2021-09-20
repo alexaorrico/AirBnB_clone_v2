@@ -7,6 +7,7 @@ from flask import jsonify, abort, request, make_response
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 @app_views.route('/cities/<string:city_id>/places',
@@ -50,11 +51,16 @@ def create_obj_place(city_id):
         abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if 'user_id' not in request.get_json():
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
-
-    js = request.get_json()
-    obj = Place(**js)
+    name = request.get_json().get('name')
+    user_id = request.get_json().get('user_id')
+    user = request.get_json().get('user')
+    if user is None:
+        abort(404)
+    obj = Place(name=name, user_id=user_id, user=user)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
