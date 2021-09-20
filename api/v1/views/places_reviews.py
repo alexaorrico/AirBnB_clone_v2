@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-User for API.
+Review for API.
 """
 from flask import abort, request, jsonify, make_response
 from api.v1.views import app_views
