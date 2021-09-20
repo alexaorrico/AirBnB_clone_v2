@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.8]
     steps:
     - uses: actions/checkout@v2
     - name: Install Python 3
@@ -41,10 +41,12 @@ jobs:
       run: HBNB_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest discover tests
     - name: Run normal test
       run: python -m unittest discover tests
-    - uses: reitermarkus/automerge@v1.5.2
+    - uses: repo-sync/pull-request@v2
+      name: pull-request
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        merge-method: merge
-        do-not-merge-labels: never-merge
-        required-labels: automerge
-        dry-run: true
+        destination_branch: "main"
+        pr_title: "Pulling ${{ github.ref }} into main"
+        pr_body: "👑 *An automated PR*"
+        pr_reviewer: "kingdonb"
+        pr_draft: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
