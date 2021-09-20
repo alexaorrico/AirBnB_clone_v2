@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """amenities objects that handles all default RESTFul API actions
 """
-from flask import request, jsonify, abort, make_response, request
+from flask import request, jsonify, abort, make_response
 from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
@@ -71,7 +71,7 @@ def put_amenity(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     data = request.get_json()
     key_ignore = ['id', 'state_id', 'created_at', 'updated_at']
-    if not amenity:
+    if amenity is None:
         abort(404)
     if not data:
         return abort(400, 'Not a JSON')
