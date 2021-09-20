@@ -33,16 +33,19 @@ def retrive_city_id(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_city(city_id):
-    """Delete city
-    """
-    city = storage.get(City, city_id)
-    if not city:
+def delete_city(city_id=None):
+    """ Delete city """
+    try:
+        city = storage.get(City, city_id)
+
+        if city is not None:
+            storage.delete(city)
+            storage.save()
+            return jsonify({}), 200
+
         abort(404)
-    else:
-        city.delete()
-        storage.save()
-        return make_response(jsonify({}), status=200)
+    except:
+        abort(404)
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
