@@ -19,6 +19,7 @@ def api_status():
     """returns the status of the API"""
     return jsonify(status='OK')
 
+
 @app_views.route('/stats')
 def api_stats():
     """checks the API stats of all classes"""
