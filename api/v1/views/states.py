@@ -25,7 +25,7 @@ def get_state_id(state_id):
     all_objects = storage.get(State, state_id)
     if all_objects is None:
         abort(404)
-    return jsonify(all_objects.to_dict())
+    return jsonify(all_objects.to_dict()), 200
 
 
 @app_views.route('/states/<state_id>',
@@ -37,7 +37,7 @@ def delete_state(state_id=None):
         abort(404)
     storage.delete(obj)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
