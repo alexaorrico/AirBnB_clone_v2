@@ -50,10 +50,12 @@ def post_amenity_to_place(place_id=None, amenity_id=None):
     lis = storage.get(Amenity, amenity_id)
     if lis is None:
         abort(404)
-    amenity_ids = []
-    for amenity in obj.amenities:
-        if amenity.id == lis.id:
-            return jsonify(amenity_object.to_dict()), 200
-    obj.amenities.append(lis)
-    storage.save()
-    return jsonify(amenity_object.to_dict()), 201
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        obj_amenities = obj.amenities
+    else:
+        obj_amenities = obj.amenity_ids
+    if amenity in obj_amenities:
+        return jsonify(amenity.to_dict())
+    obj_amenities.append(amenity)
+    obj.save()
+    return make_response(jsonify(amenity.to_dict()), 201)
