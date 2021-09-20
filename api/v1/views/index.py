@@ -1,6 +1,5 @@
-#!/usr/bin/python3
-"""returns the status of the API"""
-
+#!/usr/bin/env python           
+"""check the status of the API"""
 import models
 from models import storage
 from models.amenity import Amenity
