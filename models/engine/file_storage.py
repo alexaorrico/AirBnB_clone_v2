@@ -83,8 +83,8 @@ class FileStorage:
         """
         count = 0
         if cls:
-            for obj in self.__objects:
-                if cls == obj.__class__.__name__:
+            for key, value in self.__objects.items():
+                if cls == value.__class__.__name__ or cls == value.__class__:
                     count += 1
         else:
             for obj in self.__objects:
