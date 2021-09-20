@@ -29,7 +29,7 @@ def post_place():
         abort(400, {"Not a JSON"})
     if 'name' not in res:
         abort(400, {"Missing name"})
-    obj = State(name=res['name'])
+    obj = Place(name=res['name'])
     storage.new(obj)
     storage.save()
     return jsonify(obj.to_dict()), 201
