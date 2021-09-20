@@ -12,6 +12,7 @@ from models.review import Review
 @app_views.route('/places/<string:place_id>/reviews',
                  methods=['GET'], strict_slashes=False)
 def get_all_reviews(place_id):
+    """ get reviews from a spcific place """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -50,11 +51,16 @@ def create_obj_review(place_id):
         abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
-
-    js = request.get_json()
-    obj = Review(**js)
+    if 'user_id' not in request.get_json():
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
+    if 'text' not in request.get_json():
+        return make_response(jsonify({"error": "Missing text"}), 400)
+    kwargs = request.get_json()
+    user = storage.get(User, kwargs['user_id'])
+    if user is None:
+        abort(404)
+    kwargs['place_id'] = place_id
+    obj = Review(**kwargs)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
