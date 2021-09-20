@@ -158,7 +158,7 @@ No known bugs at this time.
 * Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
-* kalkidan Demes - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/Demeskalkidan)
-* Yosef Kefale - [Github](https://github.com/livejo)
+* kalkidan Demes -  [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/Demeskalkidan)
+* Yosef Kefale -  [Github](https://github.com/livejo)
 ## License
 Public Domain. No copy write protection. 
