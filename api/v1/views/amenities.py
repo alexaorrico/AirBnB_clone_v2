@@ -33,10 +33,10 @@ def amenity_all(amenity_id):
     amenity = storage.get('Amenity', amenity_id)
     if amenity is None:
         abort(404)
-    return (jsonify(amenity.to_dict()), 200)
+    return jsonify(amenity.to_dict()), 200
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+@ app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def amenity_delete(amenity_id):
     """
@@ -50,8 +50,8 @@ def amenity_delete(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-def state_post():
+@ app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+def amenity_post():
     """
     Creates a Amenity
     """
@@ -67,8 +67,8 @@ def state_post():
         return jsonify(resp), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
-def state_put(amenity_id):
+@ app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+def amenity_put(amenity_id):
     """
     Updates a Amenity object
     """
@@ -80,7 +80,7 @@ def state_put(amenity_id):
         abort(400, "Not a JSON")
     else:
         for key, value in amt.items():
-            if key in ['id'] and key in ['created_at']\
+            if key in ['id'] and key in ['created_at']
                     and key in ['updated_at']:
                 pass
             else:
