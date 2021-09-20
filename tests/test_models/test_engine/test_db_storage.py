@@ -67,25 +67,25 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage != 'db', "not testing db storage")
     def test_count(self):
             """test count all"""
-            test_len = len(db_storage.all())
+            test_len = len(models.storage.all())
             a = Amenity(name="test_amenity")
             a.save()
-            self.assertEqual(test_len + 1, db_storage.count())
+            self.assertEqual(test_len + 1, models.storage.count())
             b = State(name="State test count")
             b.save()
-            self.assertEqual(test_len + 2, db_storage.count())
-            db_storage.delete(b)
-            self.assertEqual(test_len + 1, db_storage.count())
+            self.assertEqual(test_len + 2, models.storage.count())
+            models.storage.delete(b)
+            self.assertEqual(test_len + 1, models.storage.count())
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage != 'db', "not testing db storage")
     def test_get(self):
         """test get with valid cls and id"""
         a = Amenity(name="test_amenity2", id="test_2")
         a.save()
-        result = db_storage.get("Amenity", "test_2")
+        result = models.storage.get("Amenity", "test_2")
         self.assertEqual(a.name, result.name)
         self.assertEqual(a.created_at.year, result.created_at.year)
         self.assertEqual(a.created_at.month, result.created_at.month)
@@ -93,8 +93,8 @@ test_db_storage.py'])
         self.assertEqual(a.created_at.hour, result.created_at.hour)
         self.assertEqual(a.created_at.minute, result.created_at.minute)
         self.assertEqual(a.created_at.second, result.created_at.second)
-        db_storage.delete(a)
-        result = db_storage.get("Amenity", "test_2")
+        models.storage.delete(a)
+        result = models.storage.get("Amenity", "test_2")
         self.assertIsNone(result)
 
 

@@ -97,17 +97,17 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """test count all"""
-        test_len = len(self.all())
+        test_len = len(models.storage.all())
         a = Amenity(name="test_amenity")
         a.save()
-        self.assertEqual(test_len + 1, self.count())
+        self.assertEqual(test_len + 1, models.storage.count())
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """test get with valid cls and id"""
         a = Amenity(name="test_amenity3", id="test_3")
         a.save()
-        result = self.get("Amenity", "test_3")
+        result = models.storage.get("Amenity", "test_3")
         self.assertEqual(a.name, result.name)
         self.assertEqual(a.created_at, result.created_at)
 
