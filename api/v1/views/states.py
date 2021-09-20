@@ -14,7 +14,7 @@ def get_state(state_id=None):
         required_state = storage.get(State, state_id)
         if (not required_state):
             abort(404)
-        return jsonify( required_state.to_dict())
+        return jsonify(required_state.to_dict())
     else:
         states = storage.all(State)
         result = []
