@@ -43,8 +43,8 @@ def amenityId(amenity_id):
             abort(400, 'Not a JSON')
         ignore = ['id', 'created_at', 'updated_at']
         for k, v in ame_json.items():
-        if k not in ignore:
-            setattr(amenity, k, v)
+            if k not in ignore:
+                setattr(amenity, k, v)
         models.storage.save()
         return jsonify(amenity.to_dict())
 
