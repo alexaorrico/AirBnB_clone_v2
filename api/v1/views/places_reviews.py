@@ -24,12 +24,10 @@ def manipulate_review(review_id=None):
     if request.method == "GET":
         return jsonify(obj_review.to_dict())
     if request.method == "DELETE":
-        # delete review corresponding to review_id
         obj_review.delete()
         storage.save()
         return jsonify({})
     if request.method == "PUT":
-        # modify the user with corresponding user_id
         json_req = request.get_json()
         if json_req is None:
             abort(400, 'Not a JSON')
@@ -47,7 +45,6 @@ def manipulate_place_id(place_id=None):
 
     place_obj = storage.get('Place', place_id)
     if place_obj is None:
-        # no corresponding place id is found
         abort(404, 'Not found')
     if request.method == "GET":
         all_reviews = storage.all('Review')
