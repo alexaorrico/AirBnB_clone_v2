@@ -7,7 +7,8 @@ from models.amenity import Amenity
 
 
 @app_views.route("/amenities", strict_slashes=False, methods=["GET"])
-@app_views.route("/amenities/<string:amenity_id>", strict_slashes=False, methods=["GET"])
+@app_views.route("/amenities/<string:amenity_id>",
+                 strict_slashes=False, methods=["GET"])
 def get_amenites(amenity_id=None):
     """retrives all amenities"""
     if (not amenity_id):
@@ -23,12 +24,13 @@ def get_amenites(amenity_id=None):
         return jsonify(required_amenity.to_dict())
 
 
-@app_views.route("/amenities/<string:amenity_id>", strict_slashes=False, methods=["DELETE"])
+@app_views.route("/amenities/<string:amenity_id>",
+                 strict_slashes=False, methods=["DELETE"])
 def delete_amenity(amenity_id):
     """deletes an amenity instance"""
     required_amenity = storage.get(Amenity, amenity_id)
     if (not required_amenity):
-            abort(404)
+        abort(404)
     storage.delete(required_amenity)
     storage.save()
     return jsonify({}), 200
@@ -39,7 +41,7 @@ def create_amenity():
     """creates an amenity"""
     if not request.json:
         return make_response("Not a JSON", 400)
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         return make_response("Missing name", 400)
 
     new_amenity = Amenity(**(request.get_json()))
@@ -47,7 +49,8 @@ def create_amenity():
     return new_amenity.to_dict(), 201
 
 
-@app_views.route("/amenities/<string:amenity_id>", strict_slashes=False, methods=["PUT"])
+@app_views.route("/amenities/<string:amenity_id>",
+                 strict_slashes=False, methods=["PUT"])
 def edit_amenity(amenity_id):
     """edits an amenity"""
     required_amenity = storage.get(Amenity, amenity_id)

@@ -7,7 +7,8 @@ from api.v1.views import app_views
 
 
 @app_views.route("/states", strict_slashes=False, methods=["GET"])
-@app_views.route("/states/<string:state_id>", strict_slashes=False, methods=["GET"])
+@app_views.route("/states/<string:state_id>",
+                 strict_slashes=False, methods=["GET"])
 def get_state(state_id=None):
     """retrives information about states"""
     if (state_id):
@@ -23,7 +24,8 @@ def get_state(state_id=None):
         return jsonify(result)
 
 
-@app_views.route("/states/<string:state_id>", strict_slashes=False, methods=["DELETE"])
+@app_views.route("/states/<string:state_id>",
+                 strict_slashes=False, methods=["DELETE"])
 def delete_state(state_id):
     """deletes a state"""
     required_state = storage.get(State, state_id)
@@ -39,14 +41,15 @@ def create_state():
     """Creates a new state"""
     if not request.json:
         return make_response("Not a JSON", 400)
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         return make_response("Missing name", 400)
     instance = State(**(request.get_json()))
     instance.save()
     return instance.to_dict(), 201
 
 
-@app_views.route("/states/<string:state_id>", strict_slashes=False, methods=["PUT"])
+@app_views.route("/states/<string:state_id>",
+                 strict_slashes=False, methods=["PUT"])
 def edit_state(state_id):
     """edits a state"""
     required_state = storage.get(State, state_id)

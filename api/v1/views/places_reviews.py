@@ -8,7 +8,8 @@ from models.user import User
 from api.v1.views import app_views
 
 
-@app_views.route("/places/<string:place_id>/reviews", strict_slashes=False, methods=["GET"])
+@app_views.route("/places/<string:place_id>/reviews",
+                 strict_slashes=False, methods=["GET"])
 def get_place_reviews(place_id):
     """retrives reviews"""
     required_place = storage.get(Place, place_id)
@@ -20,7 +21,8 @@ def get_place_reviews(place_id):
     return jsonify(result)
 
 
-@app_views.route("/reviews/<string:review_id>", strict_slashes=False, methods=["GET"])
+@app_views.route("/reviews/<string:review_id>",
+                 strict_slashes=False, methods=["GET"])
 def get_review(review_id):
     """retrives a review"""
     required_review = storage.get(Review, review_id)
@@ -29,7 +31,8 @@ def get_review(review_id):
     return jsonify(required_review.to_dict())
 
 
-@app_views.route("/reviews/<string:review_id>", strict_slashes=False, methods=["DELETE"])
+@app_views.route("/reviews/<string:review_id>",
+                 strict_slashes=False, methods=["DELETE"])
 def delete_review(review_id):
     """deletes a review"""
     required_review = storage.get(Review, review_id)
@@ -40,7 +43,8 @@ def delete_review(review_id):
     return jsonify({}), 200
 
 
-@app_views.route("/places/<string:place_id>/reviews", strict_slashes=False, methods=["POST"])
+@app_views.route("/places/<string:place_id>/reviews",
+                 strict_slashes=False, methods=["POST"])
 def create_review(place_id):
     """creates a new review"""
     required_place = storage.get(Place, place_id)
@@ -48,7 +52,7 @@ def create_review(place_id):
         abort(404)
     if not request.json:
         return make_response("Not a JSON", 400)
-    if not 'user_id' in request.json:
+    if 'user_id' not in request.json:
         return make_response("Missing user_id", 400)
 
     properties = request.get_json()
@@ -56,7 +60,7 @@ def create_review(place_id):
     if (not required_user):
         abort(404)
 
-    if not 'text' in request.json:
+    if 'text' not in request.json:
         return make_response("Missing text", 400)
 
     properties["place_id"] = place_id
@@ -65,7 +69,8 @@ def create_review(place_id):
     return new_review.to_dict(), 201
 
 
-@app_views.route("/reviews/<string:review_id>", strict_slashes=False, methods=["PUT"])
+@app_views.route("/reviews/<string:review_id>",
+                 strict_slashes=False, methods=["PUT"])
 def edit_review(review_id):
     """edits a review"""
     required_review = storage.get(Review, review_id)
@@ -76,7 +81,13 @@ def edit_review(review_id):
 
     input_dict = request.get_json()
     for key, value in input_dict.items():
-        if not (key in ["id", "created_at", "updated_at", "user_id", "place_id"]):
+        if not (
+            key in [
+                "id",
+                "created_at",
+                "updated_at",
+                "user_id",
+                "place_id"]):
             if (hasattr(required_review, key)):
                 setattr(required_review, key, value)
     required_review.save()

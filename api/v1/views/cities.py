@@ -6,7 +6,9 @@ from models import storage
 from models.state import State
 from models.city import City
 
-@app_views.route("/states/<string:state_id>/cities", strict_slashes=False, methods=["GET"])
+
+@app_views.route("/states/<string:state_id>/cities",
+                 strict_slashes=False, methods=["GET"])
 def get_state_cities(state_id):
     """retrive cities of a state"""
     required_state = storage.get(State, state_id)
@@ -18,7 +20,8 @@ def get_state_cities(state_id):
     return jsonify(result)
 
 
-@app_views.route("/cities/<string:city_id>", strict_slashes=False, methods=["GET"])
+@app_views.route("/cities/<string:city_id>",
+                 strict_slashes=False, methods=["GET"])
 def get_city(city_id):
     """retrives a city instance"""
     required_city = storage.get(City, city_id)
@@ -27,18 +30,20 @@ def get_city(city_id):
     return jsonify(required_city.to_dict())
 
 
-@app_views.route("/cities/<string:city_id>", strict_slashes=False, methods=["DELETE"])
+@app_views.route("/cities/<string:city_id>",
+                 strict_slashes=False, methods=["DELETE"])
 def delete_city(city_id):
     """deletes a city instance"""
     required_city = storage.get(City, city_id)
     if (not required_city):
-            abort(404)
+        abort(404)
     storage.delete(required_city)
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route("/states/<string:state_id>/cities", strict_slashes=False, methods=["POST"])
+@app_views.route("/states/<string:state_id>/cities",
+                 strict_slashes=False, methods=["POST"])
 def create_city(state_id):
     """creates a city"""
     required_state = storage.get(State, state_id)
@@ -46,7 +51,7 @@ def create_city(state_id):
         abort(404)
     if not request.json:
         return make_response("Not a JSON", 400)
-    if not 'name' in request.json:
+    if 'name' not in request.json:
         return make_response("Missing name", 400)
 
     properties = request.get_json()
@@ -56,7 +61,8 @@ def create_city(state_id):
     return new_city.to_dict(), 201
 
 
-@app_views.route("/cities/<string:city_id>", strict_slashes=False, methods=["PUT"])
+@app_views.route("/cities/<string:city_id>",
+                 strict_slashes=False, methods=["PUT"])
 def edit_city(city_id):
     """edits a city"""
     required_city = storage.get(City, city_id)
@@ -64,7 +70,7 @@ def edit_city(city_id):
         abort(404)
     if not request.json:
         return make_response("Not a JSON", 400)
-    
+
     input_dict = request.get_json()
     for key, value in input_dict.items():
         if (key not in ["id", "created_at", "updated_at"]):

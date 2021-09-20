@@ -6,7 +6,9 @@ from models.place import Place
 from models.amenity import Amenity
 from api.v1.views import app_views
 
-@app_views.route("/places/<string:place_id>/amenities", strict_slashes=False, methods=["GET"])
+
+@app_views.route("/places/<string:place_id>/amenities",
+                 strict_slashes=False, methods=["GET"])
 def get_place_amenities(place_id):
     """retrives amenities that belong to a place"""
     required_place = storage.get(Place, place_id)
@@ -19,7 +21,8 @@ def get_place_amenities(place_id):
     return jsonify(result)
 
 
-@app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>", strict_slashes=False, methods=["DELETE"])
+@app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
+                 strict_slashes=False, methods=["DELETE"])
 def delete_place_amenity(place_id, amenity_id):
     required_place = storage.get(Place, place_id)
     if (not required_place):
@@ -46,7 +49,8 @@ def delete_place_amenity(place_id, amenity_id):
         return jsonify({}), 200
 
 
-@app_views.route("/places/<place_id>/amenities/<amenity_id>", strict_slashes=False, methods=["POST"])
+@app_views.route("/places/<place_id>/amenities/<amenity_id>",
+                 strict_slashes=False, methods=["POST"])
 def link_place_amenity(place_id, amenity_id):
     """Link a Amenity object to a Place"""
     required_place = storage.get(Place, place_id)
