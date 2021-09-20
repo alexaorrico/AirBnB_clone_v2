@@ -10,7 +10,7 @@ from flask import jsonify, request
 from models import storage, state
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/', methods=['GET'], strict_slashes=False)
 def state_all():
     """
     Retrieves the list of all State objects
@@ -21,7 +21,7 @@ def state_all():
     return jsonify(list)
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def state_get(state_id):
     """
     Retrieves a State object:
@@ -33,21 +33,21 @@ def state_get(state_id):
         return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+@app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-def state_delete(state_id):
+def state_delete(state_id=None):
     """
     Deletes a State object
     """
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
-    state.delete()
+    storage.delete(state)
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route('/states/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def state_post():
     """
     Creates a State
@@ -64,7 +64,7 @@ def state_post():
         return jsonify(resp), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def state_put(state_id=None):
     """
     Updates a State object
