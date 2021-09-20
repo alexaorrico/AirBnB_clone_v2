@@ -25,7 +25,11 @@ def not_found(error):
     """ Return an 'error: not found' JSON response """
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+@app.errorhandler(400)
+def bad_request(error):
+    return make_response(jsonify({'error': error.description}), 400)
+
 if __name__ == '__main__':
     my_host = os.getenv('HBNB_API_HOST')
     my_port = os.getenv('HBNB_API_PORT')
-    app.run(host=my_host, port=int(my_port), threaded=True)
+    app.run(host=my_host, port=int(my_port), threaded=True, debug=True)
