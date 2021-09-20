@@ -24,8 +24,29 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 
-class TestDBStorageDocs(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    def test_get(self):
+        """Test get"""
+        my_state = State(name="Holanda")
+        my_user = User(email="dapm@gmail.com", password="1234")
+        my_user.save()
+        self.assertIs(my_state, models.storage.get("State", my_state.id))
+        self.assertIs(my_user, models.storage.get("User", my_user.id))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    def test_count(self):
+        """test count"""
+        my_count = models.storage.count()
+        self.assertEqual(models.storage.count("Hello"), 0)
+        my_state = State(name="Holanda")
+        my_state.save()
+        my_user = User(email="dapm@gmail.com", password="1234")
+        my_user.save()
+        self.assertEqual(models.storage.count("State"), my_count + 1)
+        self.assertEqual(models.storage.count(), my_count + 2)
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
