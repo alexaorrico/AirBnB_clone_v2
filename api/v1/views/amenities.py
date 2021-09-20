@@ -13,8 +13,7 @@ def amenityAll():
     """Retrieves all amenities with a list of objects"""
     if req.method == 'GET':
         amenities = models.storage.all('Amenity')
-        for ameniti in amenities.values()
-            amenities = [ameniti.to_dict()]
+        amenities = [am.to_dict() for am in amenities.values()]
         return jsonify(amenities)
 
     if req.method == 'POST':
