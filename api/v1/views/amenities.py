@@ -20,10 +20,8 @@ def amenityAll():
         reqj = req.get_json()
         if reqj is None:
             abort(400, 'Not a JSON')
-
         if reqj.get('name', None) is None:
             abort(400, 'Missing name')
-
         amenity = Amenity(**reqj)
         amenity.save()
         return jsonify(amenity.to_dict()), 201
