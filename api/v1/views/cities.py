@@ -13,7 +13,7 @@ def get_state_city_objects(state_id):
     """ Return cities for a given state object """
     try:
         state_obj = storage.get(State, state_id)
-        state_cities = [c.to_dict() for c in state_obj.cities()]
+        state_cities = [c.to_dict() for c in state_obj.cities]
         return jsonify(state_cities)
     except:
         abort(404)
@@ -21,9 +21,8 @@ def get_state_city_objects(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def city_objects(city_id):
     """ Retrieves the list of all City objects """
-    city_objs = storage.all(City)
-    city_json = [c.to_dict() for c in city_objs]
-    return jsonify(city_json)
+    city_obj = storage.get(City, city_id)
+    return jsonify(city_obj.to_dict())
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                    strict_slashes=False)
@@ -59,7 +58,7 @@ def create_city_object(state_id):
         return make_response(jsonify(city.to_dict()), 201)
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_city_object(state_id):
+def update_city_object(city_id):
     """ Update the attributes of a State object """
     city_obj = storage.get(City, city_id)
     if city_obj == None:
@@ -70,6 +69,6 @@ def update_city_object(state_id):
     nope = ['id', 'created_at', 'updated_at']
     for key, value in content.items():
         if key not in nope:
-            setattr(state_obj, key, value)
+            setattr(city_obj, key, value)
     storage.save()
-    return make_reponse(jsonify(state_obj.to_dict()), 200)
+    return make_response(jsonify(state_obj.to_dict()), 200)
