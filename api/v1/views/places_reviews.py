@@ -70,6 +70,7 @@ def post_review(place_id=None):
         return jsonify(new_review.to_dict()), 201
     abort(404)
 
+
 @app_views.route('/reviews/<review_id>',
                  methods=['PUT'], strict_slashes=False)
 def put_review(review_id=None):
