@@ -1,16 +1,14 @@
 #!/usr/bin/python3
 """creates a new view for State Objects"""
-from flask import Flask, jsonify, abort, request
-from models import storage
 from api.v1.views import app_views
-from models.state import State
-from models.state import City
+from flask import jsonify, abort, make_response, request
+from models import storage
+from models import place
 from models.city import City
 from models.place import Place
-import os
-app = Flask(__name__)
+from models.user import User
 
-@app_views.route('/cities/<string:city_id>/places', methods=['GET'],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places(city_id=None):
     """get place information for all places in a specified city"""
@@ -45,7 +43,7 @@ def delete_place(place_id=None):
     abort(404)
 
 
-@app_views.route('/cities/<string:city_id>/places', methods=['POST'],
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def post_place(city_id=None):
     """create a new place"""
@@ -70,7 +68,7 @@ def post_place(city_id=None):
     return jsonify(new_obj.to_dict()), 201
 
 
-@app_views.route('/places/<string:place_id>', methods=['PUT'],
+@app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_place(place_id=None):
     """update a place"""
