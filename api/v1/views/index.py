@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """returns the status of the API"""
+
 import models
 from models import storage
 from models.amenity import Amenity
@@ -17,7 +18,6 @@ from api.v1.views import app_views
 def api_status():
     """returns the status of the API"""
     return jsonify(status='OK')
-
 
 @app_views.route('/stats')
 def api_stats():
