@@ -96,16 +96,16 @@ class TestFileStorage(unittest.TestCase):
 
     def test_count(self):
         """test count all"""
-        test_len = len(self.file_storage.all())
+        test_len = len(self.all())
         a = Amenity(name="test_amenity")
         a.save()
-        self.assertEqual(test_len + 1, self.file_storage.count())
+        self.assertEqual(test_len + 1, self.count())
 
     def test_get(self):
         """test get with valid cls and id"""
         a = Amenity(name="test_amenity3", id="test_3")
         a.save()
-        result = self.file_storage.get("Amenity", "test_3")
+        result = self.get("Amenity", "test_3")
         self.assertEqual(a.name, result.name)
         self.assertEqual(a.created_at, result.created_at)
 
