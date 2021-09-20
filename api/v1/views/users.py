@@ -10,7 +10,7 @@ from api.v1.views import app_views
 
 @app_views.route('/users', methods=['GET', 'POST'])
 def user_objects():
-    """Returns user objects as JSON response"""
+    """Retrieves all amenities with a list of objects"""
     if req.method == 'GET':
         users = models.storage.all('User')
         users = [u.to_dict() for u in users.values()]
@@ -31,7 +31,7 @@ def user_objects():
 
 @app_views.route('/users/<user_id>', methods=['GET', 'PUT', 'DELETE'])
 def user_res(user_id):
-    """Returns a User object as JSON response"""
+    """id Amenity retrieve json object"""
     user = models.storage.get('User', user_id)
     if user is None:
         abort(404)
