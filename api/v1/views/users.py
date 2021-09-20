@@ -17,14 +17,14 @@ def user_objects():
         return jsonify(users)
 
     if req.method == 'POST':
-        body = req.get_json()
-        if body is None:
+        reqj = req.get_json()
+        if reqj is None:
             abort(400, 'Not a JSON')
-        if body.get('email', None) is None:
+        if reqj.get('email', None) is None:
             abort(400, 'Missing email')
-        if body.get('password', None) is None:
+        if reqj.get('password', None) is None:
             abort(400, 'Missing password')
-        user = User(**body)
+        user = User(**reqj)
         user.save()
         return jsonify(user.to_dict()), 201
 
