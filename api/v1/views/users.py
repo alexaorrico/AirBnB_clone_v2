@@ -2,9 +2,7 @@
 """
 User for API.
 """
-
-from flask import abort, request, jsonify
-
+from flask import abort, request, jsonify, make_response
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -70,15 +68,20 @@ def post_user():
     methods=['PUT'],
     strict_slashes=False)
 def put_user(user_id):
-    """Updates a user with a given id"""
-    ignore_keys = ['id', 'email', 'created_at', 'updated_at']
-    all_user = request.get_json()
-    if not all_user:
-        return (jsonify({'error': 'Not a JSON'}), 400)
-    user = storage.get('User', user_id)
-    if user:
-        for key in all_user.keys():
-            if key not in ignore_keys:
-                setattr(user, key, all_user[key])
-        user.save()
-        return (jsonify(user.to_dict()), 200)
+    """Updates a user """
+    user = storage.get(User, user_id)
+
+    if not user:
+        abort(404)
+
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    ignore = ['id', 'email', 'created_at', 'updated_at']
+
+    data = request.get_json()
+    for key, value in data.items():
+        if key not in ignore:
+            setattr(user, key, value)
+    storage.save()
+    return make_response(jsonify(user.to_dict()), 200)
