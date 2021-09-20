@@ -22,9 +22,11 @@ def amenityAll():
             abort(400, 'Not a JSON')
         if body.get('name', None) is None:
             abort(400, 'Missing name')
-        amenity = Amenity(**body)
-        amenity.save()
-        return jsonify(amenity.to_dict()), 201
+        new_state = State(**body)
+        storage.new(new_state)
+        storage.save()
+        return jsonify(new_state.to_dict()), 201
+
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'])
