@@ -9,21 +9,18 @@ from flask import Flask, jsonify, abort, request
 @app_views.route("/states", methods=["GET"])
 def statesAll():
     """Retrieves all states with a list of objects"""
-    ll = []
-    s = storage.all('State').values()
-    for v in s:
-        ll.append(v.to_dict())
-    return jsonify(ll)
+    all_list = [obj.to_dict() for obj in storage.all(State).values()]
+    return jsonify(all_list)
 
 
 @app_views.route("/states/<id>", methods=["GET"])
 def stateId(id):
     """id state retrieve json object"""
-    s = storage.all('State').values()
-    for v in s:
-        if v.id == id:
-            return jsonify(v.to_dict())
-    abort(404)
+    sto = storage.get(State, state_id)
+    if sto is None:
+        abort(404)
+    return jsonify(sto.to_dict())
+
 
 
 @app_views.route("/states/<id>", methods=["DELETE"])
