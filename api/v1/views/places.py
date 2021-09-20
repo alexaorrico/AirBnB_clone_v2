@@ -51,7 +51,6 @@ def post_place(city_id):
         abort(400, description="Not a JSON")
 
 
-
 @app_views.route('/places/<place_id>', methods=['GET'],
                  strict_slashes=False)
 def get_place_id(place_id):
