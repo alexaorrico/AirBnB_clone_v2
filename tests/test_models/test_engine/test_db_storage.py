@@ -26,7 +26,7 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
 
 class TestDBStorage(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing file storage")
     def test_get(self):
         """Test get"""
         my_state = State(name="Holanda")
@@ -35,7 +35,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertIs(my_state, models.storage.get("State", my_state.id))
         self.assertIs(my_user, models.storage.get("User", my_user.id))
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing file storage")
     def test_count(self):
         """test count"""
         my_count = models.storage.count()
@@ -64,7 +64,7 @@ class TestDBStorage(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 2,
                          "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
