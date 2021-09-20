@@ -10,14 +10,19 @@ from flask.json import jsonify
 from api.v1.views import app_views
 from flask import request, abort
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['GET', 'POST', 'PUT', 'DELETE'])
+
+@app_views.route(
+    '/reviews/<review_id>',
+    strict_slashes=False,
+    methods=['GET', 'POST', 'PUT', 'DELETE']
+    )
 def manipulate_review(review_id=None):
     from models import storage
     obj_review = storage.get('Review', review_id)
     if obj_review is None:
         abort(404, 'Not Found')
     if request.method == "GET":
-        return jsonify(obj_review.to_json())
+        return jsonify(obj_review.to_dict())
     if request.method == "DELETE":
         # delete review corresponding to review_id
         obj_review.delete()
@@ -29,9 +34,14 @@ def manipulate_review(review_id=None):
         if json_req is None:
             abort(400, 'Not a JSON')
         obj_review.update(json_req)
-        return jsonify(user.to_json()), 200
+        return jsonify(user.to_dict()), 200
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['GET', 'POST'])
+
+@app_views.route(
+    '/places/<place_id>/reviews',
+    strict_slashes=False,
+    methods=['GET', 'POST']
+    )
 def manipulate_place_id(place_id=None):
     from models import storage
 
@@ -44,7 +54,7 @@ def manipulate_place_id(place_id=None):
         l = []
         for review in all_reviews.values():
             if review.place_id == place_id:
-                l.append(review.to_json())
+                l.append(review.to_dict())
         return jsonify(l)
     if request.method == "POST":
         json_req = request.get_json()
@@ -61,6 +71,4 @@ def manipulate_place_id(place_id=None):
         json_req["place_id"] = place_id
         new_obj = Review(**json_req)
         new_obj.save()
-        return jsonify(new_obj.to_json()), 201
-
-
+        return jsonify(new_obj.to_dict()), 201

@@ -12,10 +12,12 @@ cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 # app_views BluePrint defined in api.v1.views
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
+
 
 @app.errorhandler(HTTPException)
 def handle_404(e):

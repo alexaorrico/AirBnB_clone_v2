@@ -8,6 +8,7 @@ from flask.json import jsonify
 from api.v1.views import app_views
 from flask import request, abort
 
+
 @app_views.route('/users', strict_slashes=False, methods=['GET', 'POST'])
 def get_all_users():
     """ manipulate on User model """
@@ -17,7 +18,7 @@ def get_all_users():
         users = storage.all('User')
         l = []
         for user in users.values():
-            l.append(user.to_json())
+            l.append(user.to_dict())
         return(jsonify(l))
     # add new user to the database
     if request.method == "POST":
@@ -31,9 +32,14 @@ def get_all_users():
             abort(400, 'Missing password')
         new_user = User(**json_req)
         new_user.save()
-        return jsonify(new_user.to_json()), 201
+        return jsonify(new_user.to_dict()), 201
 
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['GET', 'POST', 'DELETE', 'PUT'])
+
+@app_views.route(
+    '/users/<user_id>',
+    strict_slashes=False,
+    methods=['GET', 'POST', 'DELETE', 'PUT']
+    )
 def handle_users_with_id(user_id=None):
     """ User manipulation based on user_id """
     from models import storage
@@ -41,7 +47,7 @@ def handle_users_with_id(user_id=None):
     if user is None:
         abort(404, 'Not Found')
     if request.method == "GET":
-        return jsonify(user.to_json())
+        return jsonify(user.to_dict())
     if request.method == "DELETE":
         # delete user corresponding to user_id
         user.delete()
@@ -53,4 +59,4 @@ def handle_users_with_id(user_id=None):
         if json_req is None:
             abort(400, 'Not a JSON')
         user.update(json_req)
-        return jsonify(user.to_json()), 200
+        return jsonify(user.to_dict()), 200
