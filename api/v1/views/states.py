@@ -2,7 +2,7 @@
 """creates a new view for State Objects"""
 from os import name
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 from models.state import State
 from models import storage
 import json
@@ -34,17 +34,16 @@ def delete(state_id=None):
     obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
-    else:
-        storage.delete(obj)
-        storage.save()
-    return jsonify({}), 200
+    storage.delete(obj)
+    storage.save()
+    return jsonify({})
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post():
     """Creates"""
     res = request.get_json()
-    if not res:
+    if res is None:
         abort(400, {"Not a JSON"})
     if 'name' not in res:
         abort(400, {"Missing name"})
@@ -57,15 +56,13 @@ def post():
 @app_views.route('/states', methods=['PUT'], strict_slashes=False)
 def put(state_id=None):
     """PUT"""
-    res = request.get_json()
-    if not res:
-        abort(400, {"Not a JSON"})
-    obj = storage.get(State, state_id)
-    if obj is None:
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
-    i_key = ["id", "created_at", "updated_at"]
-    for key, value in res.items():
-        if key not in i_key:
-            setattr(obj, key, value)
-    storage.save()
-    return jsonify(obj.to_dict()), 200
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    for at, val in request.get_json().items():
+        if at not in ['id', 'created_at', 'updated_at']:
+            setattr(state, at, val)
+    state.save()
+    return jsonify(state.to_dict())
