@@ -12,11 +12,11 @@ from api.v1.views import app_views
 def amenityAll():
     """Retrieves all amenities with a list of objects"""
     if req.method == 'GET':
-        amenity_list = []
+        ll = []
         s = storage.all('Amenity').values()
         for v in s:
-            amenity_list.append(v.to_dict())
-        return jsonify(amenity_list)
+            ll.append(v.to_dict())
+        return jsonify(ll)
 
     if req.method == 'POST':
         body = req.get_json()
