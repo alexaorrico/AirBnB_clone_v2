@@ -30,7 +30,7 @@ def get_state_id(state_id):
 
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete(state_id=None):
+def delete_state(state_id=None):
     """Deletes"""
     obj = storage.get(State, state_id)
     if obj is None:
@@ -41,7 +41,7 @@ def delete(state_id=None):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def post():
+def post_state():
     """Creates"""
     res = request.get_json()
     if res is None:
