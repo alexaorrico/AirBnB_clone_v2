@@ -6,10 +6,8 @@ script that starts a Flask web application:
 from models import storage
 from api.v1.views import app_views
 from flask import abort
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 from models import storage, state
-
-app = Flask(__name__)
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -24,7 +22,7 @@ def state_all():
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def state_get(state_id):
+def state_get(state_id=None):
     """
     Retrieves a State object:
     """
@@ -32,12 +30,12 @@ def state_get(state_id):
     if state is None:
         abort(404)
     else:
-        return state.to_dict()
+        return jsonify(state.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-def state_delete(state_id):
+def state_delete(state_id=None):
     """
     Deletes a State object
     """
@@ -73,18 +71,18 @@ def state_put(state_id=None):
     Updates a State object
     """
     states = storage.get("State", state_id)
-    if states:
-        st = request.get_json()
-        if st is None:
-            abort(400, "Not a JSON")
-        else:
-            for key, value in st.items():
-                if key in ['id'] and key in ['created_at']\
-                        and key in ['updated_at']:
-                    pass
-                else:
-                    setattr(states, key, value)
-            storage.save()
-            resp = states.to_dict()
-            return jsonify(resp), 200
-    abort(404)
+    if states is None:
+        abort(404)
+    st = request.get_json()
+    if st is None:
+        abort(400, "Not a JSON")
+    else:
+        for key, value in st.items():
+            if key in ['id'] and key in ['created_at']\
+                    and key in ['updated_at']:
+                pass
+            else:
+                setattr(states, key, value)
+        storage.save()
+        resp = states.to_dict()
+        return jsonify(resp), 200
