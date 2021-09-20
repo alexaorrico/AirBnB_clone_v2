@@ -27,7 +27,7 @@ def get_places(city_id):
                  strict_slashes=False)
 def get_place(place_id):
     """get place information for specified place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     return jsonify(place.to_dict())
@@ -37,7 +37,7 @@ def get_place(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     """deletes a place based on its place_id"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     place.delete()
@@ -72,7 +72,7 @@ def post_place(city_id):
                  strict_slashes=False)
 def put_place(place_id):
     """update a place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     if not request.get_json():
