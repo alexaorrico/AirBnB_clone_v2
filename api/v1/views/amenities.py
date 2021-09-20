@@ -17,12 +17,12 @@ def amenityAll():
         return jsonify(amenities)
 
     if req.method == 'POST':
-        reqj = req.get_json()
-        if reqj is None:
+        body = req.get_json()
+        if body is None:
             abort(400, 'Not a JSON')
-        if reqj.get('name', None) is None:
+        if body.get('name', None) is None:
             abort(400, 'Missing name')
-        amenity = Amenity(**reqj)
+        amenity = Amenity(**body)
         amenity.save()
         return jsonify(amenity.to_dict()), 201
 
