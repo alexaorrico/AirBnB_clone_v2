@@ -8,7 +8,7 @@ from models.amenity import Amenity
 from api.v1.views import app_views
 
 
-@app_views.route('/amenities', methods=['GET', 'POST'])
+@app_views.route('/amenities', methods=['GET')
 def amenityAll():
     """Retrieves all amenities with a list of objects"""
     if req.method == 'GET':
@@ -16,6 +16,10 @@ def amenityAll():
         amenities = [am.to_dict() for am in amenities.values()]
         return jsonify(amenities)
 
+
+@app_views.route('/amenities', methods=['POST'])
+def amenityPost():
+    """Creates a new amenity"""
     if req.method == 'POST':
         reqj = req.get_json()
         if reqj is None:
@@ -25,7 +29,6 @@ def amenityAll():
         amenity = Amenity(**reqj)
         amenity.save()
         return jsonify(amenity.to_dict()), 201
-
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'])
 def amenityId(amenity_id):
