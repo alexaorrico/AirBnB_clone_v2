@@ -87,6 +87,7 @@ def post_place(place_id):
 @app_views.route('/places_search', methods=['POST'],
                  strict_slashes=False)
 def search_places_by_id():
+    """ search places by id """
     if request.get_json() is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
