@@ -56,19 +56,19 @@ def create_obj_review(place_id):
     if 'text' not in request.get_json():
         return make_response(jsonify({"error": "Missing text"}), 400)
     kwargs = request.get_json()
-    user = storage.get(User, kwargs['user_id'])
+    kwargs['place_id'] = place_id
+    user = storage.get(User, kwargs['user_id']) 
     if user is None:
         abort(404)
-    kwargs['place_id'] = place_id
     obj = Review(**kwargs)
     obj.save()
-    return make_response(jsonify(review.to_dict()), 201)
+    return (jsonify(obj.to_dict()), 201)
 
 
 @app_views.route('/reviews/<string:review_id>', methods=['PUT'],
                  strict_slashes=False)
 def post_review(review_id):
-    """  """
+    """ updates by id """
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Review, review_id)
