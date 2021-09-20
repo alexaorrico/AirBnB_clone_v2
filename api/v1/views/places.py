@@ -2,6 +2,7 @@
 """
 User for API.
 """
+from api.v1.views.users import get_users
 from models.city import City
 from flask import abort, request, jsonify, make_response
 from api.v1.views import app_views
@@ -51,12 +52,22 @@ def delete_place(place_id):
 def post_place(city_id):
     """Creates places"""
     places = request.get_json()
+
     if not places:
         return (jsonify({'error': 'Not a JSON'}), 400)
     if 'user_id' not in places:
         return (jsonify({'error': 'Missing user_id'}), 400)
     if 'name' not in places:
         return (jsonify({'error': 'Missing name'}), 400)
+
+    get_city = storage.get("City", city_id)
+    if get_city is None:
+        abort(404)
+
+    get_user = storage.get("User", places['user_id'])
+    if get_user is None:
+        abort(404)
+
     new_place = Place(**places)
     storage.new(new_place)
     storage.save()
