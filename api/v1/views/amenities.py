@@ -41,7 +41,6 @@ def amenityId(amenity_id):
         amenity_json = req.get_json()
         if amenity_json is None:
             abort(400, 'Not a JSON')
-        ignore = ['id', 'created_at', 'updated_at']
         for key, val in amenity_json.items():
             if key not in ignore:
                 amenity.__setattr__(key, val)
