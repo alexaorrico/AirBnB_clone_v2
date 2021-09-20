@@ -1,64 +1,58 @@
 #!/usr/bin/python3
 """View between Place objects and Amenity"""
 
+import models
+from flask import jsonify, abort
+from flask import request as req
+from models.amenity import Amenity
 from api.v1.views import app_views
-from flask import jsonify, abort, request
-from models import storage
-from models.place import Place
-from os import getenv
-
-bd = getenv('HBNB_TYPE_STORAGE')
 
 
-@app_views.route('/places/<place_id>/amenities', methods=['GET'])
-def places_amenitiesAll(id):
-    """ Retrieves [] of all Places amenities objects of a Place """
-    ll = []
-    place = storage.all('Place')
-    for x in place:
-        if place[x].id == id:
-            vv = place[x].amenities
-            for i in vv:
-                ll.append(i.to_dict())
-            return (jsonify(ll))
-    abort(404)
+@app_views.route('/places/<place_id>/amenities')
+def place_amenity_objects(place_id):
+    """Methods for places by place_id"""
+    place = models.storage.get('Place', place_id)
+    if place is None:
+        abort(404)
+
+    amenities = [obj.to_dict() for obj in place.amenities]
+    return jsonify(amenities)
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                 methods=['DELETE'])
-def places_amenitiesDel(place_id, amenity_id):
-    """Delete an amenity object from a place"""
-    ss = storage.get("Place", place_id)
-    aa = storage.get("Amenity", amenity_id)
-    if not aa or not ss:
+                 methods=['POST', 'DELETE'])
+def place_amenity_res(place_id, amenity_id):
+    """Methods for amenities by place_id and amenity_id"""
+    place = models.storage.get('Place', place_id)
+    if place is None:
         abort(404)
-    for x in ss.amenities:
-        if x.id == aa.id:
-            if bd == 'db':
-                ss.amenities.remove(aa)
-            else:
-                ss.amenity_ids.remove(aa)
-            ss.save()
-            return jsonify({})
-    abort(404)
-
-
-@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['POST'])
-def places_amenitiesPost(place_id, amenity_id):
-    """POST new amenity in id place """
-    ss = storage.get("Place", place_id)
-    aa = storage.get("Amenity", amenity_id)
-    print(aa)
-    print("+++++++++++")
-    print(ss)
-    if not aa or not ss:
+    amenity = models.storage.get('Amenity', amenity_id)
+    if amenity is None:
         abort(404)
-    for x in ss.amenities:
-        if x.id == aa.id:
-            return jsonify(aa.to_dict())
-    if db == 'db':
-        ss.amenities.append(aa)
-    else:
-        ss.amenity_id.append(aa)
-    ss.save()
-    return jsonify(aa.to_dict()), 201
+
+    amenity_linked = False
+    for a in place.amenities:
+        if a.id == amenity.id:
+            amenity_linked = True
+            break
+    if not amenity_linked:
+        abort(404)
+
+    if req.method == 'DELETE':
+        if models.storage_t == 'db':
+            place.amenities.remove(amenity)
+        else:
+            place.amenity_ids.rewmove(amenity.id)
+        models.storage.save()
+        return jsonify({})
+
+    if req.method == 'POST':
+        if amenity_linked:
+            return jsonify(amenity.to_dict()), 200
+
+        if models.storage_t == 'db':
+            place.amenities.push(amenity)
+        else:
+            place.amenity_ids.push(amenity.id)
+        models.storage.save()
+        return jsonify(amenity.to_dict()), 201

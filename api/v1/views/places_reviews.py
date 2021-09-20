@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This module declares city routes"""
+"""View between Place objects and Reviews"""
+
 import models
 from flask import jsonify, abort
 from flask import request as req
