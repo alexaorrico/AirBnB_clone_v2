@@ -19,6 +19,7 @@ def jsonify_app():
     """ Function that returns a JSON """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def some_stats():
     """ Retrieves the number of each objects by type """

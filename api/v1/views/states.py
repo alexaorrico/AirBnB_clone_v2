@@ -15,6 +15,7 @@ def states_objects():
         state_json.append(obj.to_dict())
     return jsonify(state_json)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states_object(state_id):
     """ Return a State object matching the given state_id """
@@ -24,8 +25,9 @@ def get_states_object(state_id):
     except:
         abort(404)
 
+
 @app_views.route('/states/<state_id>', methods=['DELETE'],
-                   strict_slashes=False)
+                 strict_slashes=False)
 def delete_state_object(state_id):
     """ Delete a State object """
     try:
@@ -35,6 +37,7 @@ def delete_state_object(state_id):
         return make_response(jsonify({}), 200)
     except:
         abort(404)
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state_object():
@@ -50,11 +53,12 @@ def create_state_object():
         state.save()
         return make_response(jsonify(state.to_dict()), 201)
 
+
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state_object(state_id):
     """ Update the attributes of a State object """
     state_obj = storage.get(State, state_id)
-    if state_obj == None:
+    if state_obj is None:
         abort(404)
     if not request.get_json():
         abort(400, 'Not a JSON')
