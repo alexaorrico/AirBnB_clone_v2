@@ -8,13 +8,6 @@ from models.user import User
 from api.v1.views import app_views
 
 
-import models
-from flask import jsonify, abort
-from flask import request as req
-from models.user import User
-from api.v1.views import app_views
-
-
 @app_views.route('/users', methods=['GET', 'POST'])
 def usersAll():
     """Returns user objects as JSON response"""
