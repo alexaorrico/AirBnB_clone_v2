@@ -7,6 +7,7 @@ from models import storage
 from models.amenity import Amenity
 from models.place import Place
 
+
 @app_views.route('/places/<string:place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def get_amenities(place_id):
@@ -33,6 +34,7 @@ def delete_amenity(place_id, amenity_id):
     place.amenities.remove(amenity)
     storage.save()
     return jsonify({})
+
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['POST'], strict_slashes=False)

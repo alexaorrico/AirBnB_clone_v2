@@ -93,6 +93,15 @@ class TestStateDocs(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
+    def test_pep8_conformance_places_amenities(self):
+        """Test that tests/test_models/test_state.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['api/v1/views/places_amenities.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+# file docstring
+
     def test_state_module_docstring_app(self):
         """Test for the state.py module docstring"""
         self.assertIsNot(app.__doc__, None,
@@ -148,6 +157,15 @@ class TestStateDocs(unittest.TestCase):
                          "State class needs a docstring")
         self.assertTrue(len(users.__doc__) >= 1,
                         "State class needs a docstring")
+
+    def test_state_class_docstring_amenities_rev(self):
+        """Test for the State class docstring"""
+        self.assertIsNot(places_amenities.__doc__, None,
+                         "State class needs a docstring")
+        self.assertTrue(len(users.__doc__) >= 1,
+                        "State class needs a docstring")
+
+# dosctring tests
 
     def test_state_func_docstrings(self):
         """Test for the presence of docstrings in State methods"""
