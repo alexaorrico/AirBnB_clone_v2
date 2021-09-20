@@ -13,11 +13,14 @@ from models.review import Review
                  methods=['GET'], strict_slashes=False)
 def get_all_reviews(place_id):
     """ get reviews from a spcific place """
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    reviews = [obj.to_dict() for obj in place.reviews]
-    return jsonify(reviews)
+    reviews = place.reviews
+    r_list = []
+    for r in reviews:
+        r_list.append(r.to_dict())
+    return jsonify(r_list)
 
 
 @app_views.route('/reviews/<string:review_id>', methods=['GET'],
@@ -42,7 +45,7 @@ def del_review(review_id):
     return jsonify({})
 
 
-@app_views.route('/plassces/<string:place_id>/reviews', methods=['POST'],
+@app_views.route('/places/<string:place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def create_obj_review(place_id):
     """ create new instance """
