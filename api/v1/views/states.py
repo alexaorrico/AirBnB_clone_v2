@@ -14,7 +14,7 @@ def get_states():
     all_objects = storage.all(State)
     single_object = []
     for obj in all_objects.values():
-        single_object.append(obj.to_dict)
+        single_object.append(obj.to_dict())
     return jsonify(single_object)
 
 
