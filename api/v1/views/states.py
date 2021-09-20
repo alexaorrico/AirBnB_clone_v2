@@ -19,6 +19,7 @@ def all_states():
 
     return jsonify(list_obj)
 
+
 @app_views.route('/states/<state_id>',
                  methods=['GET'],
                  strict_slashes=False)
@@ -30,6 +31,7 @@ def get_state(state_id):
 
     return jsonify(state.to_dict())
 
+
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
@@ -40,9 +42,9 @@ def delete_instance(state_id):
         storage.save()
         return make_response(jsonify({}), 200)
     else:
-        abort (404) 
+        abort(404)
 
-        
+
 @app_views.route('/states',
                  methods=['POST'],
                  strict_slashes=False)
@@ -50,7 +52,7 @@ def create_state():
     """Creates a State: POST /api/v1/states"""
 
     if not request.get_json():
-        abort (400, description="Not a JSON")
+        abort(400, description="Not a JSON")
     else:
         data = request.get_json()
 
@@ -58,7 +60,7 @@ def create_state():
         new_state = State(**data)
         new_state.save()
     else:
-        abort (400, description="Missing name")
+        abort(400, description="Missing name")
 
     return make_response(jsonify(new_state.to_dict()), 201)
 
@@ -71,19 +73,19 @@ def update_state(state_id):
     print("0")
     if not request.get_json():
         print("1")
-        abort (400, description="Not a JSON")
+        abort(400, description="Not a JSON")
 
     obj = storage.get(State, state_id)
-    
+
     if not obj:
         print("2")
-        abort (404)
+        abort(404)
 
     print("3")
     data = request.get_json()
 
     ignore = ['id', 'created_at', 'updated_at']
- 
+
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
