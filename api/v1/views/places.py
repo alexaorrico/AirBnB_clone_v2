@@ -152,7 +152,7 @@ def post_place(city_id):
     if 'name' not in places:
         return (jsonify({'error': 'Missing name'}), 400)
 
-    get_city = storage.get("City", city_id)
+    get_city = storage.get(City, city_id)
     if get_city is None:
         abort(404)
 
