@@ -57,12 +57,10 @@ def create_obj_review(place_id):
     user = storage.get(User, kwargs['user_id'])
     if user is None:
         abort(404)
-    if 'text' not in kwargs:
-        return make_response(jsonify({'error': 'Missing text'}), 400)
     kwargs['place_id'] = place_id
-    review = Review(**kwargs)
-    review.save()
-    return (jsonify(review.to_dict()), 201)
+    obj = Review(**kwargs)
+    obj.save()
+    return (jsonify(obj.to_dict()), 201)
 
 
 @app_views.route('/reviews/<string:review_id>', methods=['PUT'],
