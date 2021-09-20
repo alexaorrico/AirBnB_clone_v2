@@ -7,21 +7,22 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET'])
+@app_views.route('/amenities/', methods=['GET'], strict_slashes=False)
 def retrive_amenity():
     """ retrieves the list of all City
     """
-    amenities = storage.all(Amenity).value()
-    list_amenity = []
+    amenities = storage.all("Amenity").values()
+    amenity_list = []
     for amenity in amenities:
-        list_amenity.append(amenity.to_dict())
-    return jsonify(list_amenity)
+        amenity_list.append(amenity.to_dict())
+
+    return jsonify(amenity_list)
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def retrive_amenities_id(amenity_id):
     """ Retrives amenity id """
-    amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.all("Amenity").values()
     list_amenity = []
     if amenity_id is not None:
         for ame in amenity:
@@ -48,17 +49,14 @@ def delete_amenity(amenity_id):
 
 
 @app_views.route('/amenities', methods=['POST'])
-def post_amenity(state_id):
+def post_amenity():
     """ request post for amenity """
-    amenity = storage.get(Amenity, state_id)
     data = request.get_json()
 
     if not data:
         return abort(400, 'Not a JSON')
     if 'name' not in data:
         return abort(400, 'Missing name')
-    if amenity is None:
-        abort(404)
 
     new_amenity = Amenity(**data)
     storage.new(new_amenity)
