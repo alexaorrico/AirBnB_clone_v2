@@ -11,7 +11,7 @@ import json
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """gets all state objects"""
-    all_objects = storage.all('State')
+    all_objects = storage.all(State)
     single_object = []
     for obj in all_objects.values():
         single_object.append(obj.to_dict)
@@ -22,7 +22,7 @@ def get_states():
                  strict_slashes=False)
 def get_state_id(state_id):
     """gets the state object using his id"""
-    all_objects = storage.get('State', state_id)
+    all_objects = storage.get(State, state_id)
     if all_objects is None:
         abort(404)
     return jsonify(all_objects.to_dict())
@@ -31,7 +31,7 @@ def get_state_id(state_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete(state_id=None):
     """Deletes"""
-    obj = storage.get('State', state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     else:
@@ -60,7 +60,7 @@ def put(state_id=None):
     res = request.get_json()
     if not res:
         abort(400, {"Not a JSON"})
-    obj = storage.get('State', state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     i_key = ["id", "created_at", "updated_at"]
