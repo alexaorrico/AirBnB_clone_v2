@@ -13,7 +13,7 @@ from models.review import Review
                  methods=['GET'], strict_slashes=False)
 def get_all_reviews(place_id):
     """ get reviews from a spcific place """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     reviews = place.reviews
