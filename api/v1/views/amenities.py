@@ -63,7 +63,8 @@ def amenity_post():
         return jsonify(resp), 201
 
 
-@ app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@ app_views.route('/amenities/<amenity_id>',
+                  methods=['PUT'], strict_slashes=False)
 def amenity_put(amenity_id):
     """
     Updates a Amenity object
