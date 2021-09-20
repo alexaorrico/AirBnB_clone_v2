@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """module for places view"""
+from models.amenity import Amenity
 from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.state import State
 from api.v1.views import app_views
 from flask import abort, request, jsonify, make_response
 
@@ -90,3 +92,46 @@ def edit_place(place_id):
                 setattr(required_place, key, value)
     required_place.save()
     return required_place.to_dict(), 200
+
+
+@app_views.route("/places_search", strict_slashes=False, methods=["POST"])
+def search_place():
+    """search for places"""
+    if not request.json:
+        return make_response("Not a JSON", 400)
+
+    input_dict = request.get_json()
+    result = []
+
+    if len(input_dict) == 0:
+        result = list(storage.all(Place).values())
+
+    if (not input_dict.get("states")) and (
+            not input_dict.get("cities")):
+        result = list(storage.all(Place).values())
+
+    if input_dict.get("states"):
+        for state_id in input_dict["states"]:
+            for city in storage.get(State, state_id).cities:
+                for place in storage.get(City, city.id).places:
+                    if (place not in result):
+                        result.append(place)
+
+    if input_dict.get("cities"):
+        for city_id in input_dict["cities"]:
+            for place in storage.get(City, city_id).places:
+                if (place not in result):
+                    result.append(place)
+
+    if input_dict.get("amenities"):
+        for place in range(len(result)):
+            place_amenities = [a.id for a in result[place].amenities]
+            for amenity in input_dict["amenities"]:
+                if not (amenity in place_amenities):
+                    result.pop(place)
+                    break
+
+    for place in range(len(result)):
+        result[place] = result[place].to_dict()
+
+    return jsonify(result)
