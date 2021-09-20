@@ -14,78 +14,77 @@ app = Flask(__name__)
                  strict_slashes=False)
 def get_places(city_id=None):
     """get place information for all places in a specified city"""
-    cities = storage.all(City)
-    city = cities.get(City, city_id)
-    if city is None:
+    cities = storage.get(City, city_id)
+    if not cities:
         abort(404)
-    places_list = []
-    places = storage.all(Place)
-    for place in places.values():
-        if place.city_id == city_id:
-            places_list.append(place.to_dict())
-    return jsonify(places_list), 200
+    places = []
+    for value in cities.places:
+        places.append(value.to_dict())
+    return jsonify(places)
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_place(city_id=None):
     """get place information for specified place"""
-    place = storage.get(Place, place_id)
-    if place is None:
+    get_place = storage.get(Place, place_id)
+    if get_place is None:
         abort(404)
-    return jsonify(place.to_dict()), 200
+    return jsonify(get_place.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_place(place_id):
+def delete_place(place_id=None):
     """deletes a place based on its place_id"""
-    place = storage.get(Place, place_id)
-    if place is None:
-        abort(404)
-    place.delete()
-    storage.save()
-    return (jsonify({})), 200
+    get_place = storage.get(Place, place_id)
+    if get_place is not None:
+        storage.delete(get_place)
+        storage.save()
+        return make_response(jsonify({}), 200)
+    abort(404)
 
 
 @app_views.route('/cities/<string:city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def post_place(city_id=None):
     """create a new place"""
-    city_obj = storage.get(City, city_id)
-    if city_obj is None:
+    cities = storage.get(City, city_id)
+    if not cities:
         abort(404)
-    result = request.get_json()
-    if result is None:
-        return jsonify({"error": "Not a JSON"}), 400
-    if 'user_id' not in result:
-        return jsonify({"error": "Missing user_id"}), 400
-    user_obj = storage.get(User, result['user_id'])
-    if user_obj is None:
+    get_places = request.get_json()
+    if not get_places:
+        abort(400, 'Not a JSON')
+    elif 'user_id' not in get_places:
+        abort(400, 'Missing user_id')
+    elif 'name' not in get_places:
+        abort(400, 'Missing name')
+
+    user = storage.get(User, get_places['user_id'])
+    if not user:
         abort(404)
-    if 'name' not in result:
-        return jsonify({"error": "Missing name"}), 400
-    place_obj = Place(city_id=city_id)
-    for key, value in result.items():
-        setattr(place_obj, key, value)
-    storage.new(place_obj)
+    new_obj = Place(name=get_places['name'], city_id=cities.id,
+                    user_id=user.id)
+    storage.new(new_obj)
     storage.save()
-    return jsonify(place_obj.to_dict()), 201
+    return jsonify(new_obj.to_dict()), 201
 
 
 @app_views.route('/places/<string:place_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_place(place_id=None):
     """update a place"""
-    place_obj = storage.get(Place, place_id)
-    if place_obj is None:
+    place = storage.get(Place, place_id)
+    if not place:
         abort(404)
-    result = request.get_json()
-    if result is None:
-        return jsonify({"error": "Not a JSON"}), 400
-    invalid_keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
-    for key, value in result.items():
-        if key not in invalid_keys:
-            setattr(place_obj, key, value)
-    storage.save()
-    return jsonify(place_obj.to_dict()), 200
+
+    get_places = request.get_json()
+    if not get_places:
+        abort(400, 'Not a JSON')
+
+    for key, value in get_places.items():
+        if key not in ["id", "user_id", "city_id",
+                       "created_at", "updated_at"]:
+            setattr(place, key, value)
+    place.save()
+    return jsonify(place.to_dict()), 200
