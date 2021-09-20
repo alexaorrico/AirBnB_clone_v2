@@ -87,9 +87,6 @@ class FileStorage:
             for obj in FileStorage.__objects.values():
                 if obj.__class__ == cls:
                     total += 1
-        else:
-            for obj in FileStorage.__objects.values():
-                    total += 1
         if cls is None:
             total = len(self.__objects)
         return total
