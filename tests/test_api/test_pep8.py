@@ -17,6 +17,7 @@ from api.v1.views import amenities
 from api.v1.views import cities
 from api.v1.views import index
 from api.v1.views import places_reviews
+from api.v1.views import places_amenities
 from api.v1.views import places
 from api.v1.views import users
 State = state.State
@@ -151,6 +152,78 @@ class TestStateDocs(unittest.TestCase):
     def test_state_func_docstrings(self):
         """Test for the presence of docstrings in State methods"""
         for func in self.state_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_index(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(index, inspect.isfunction)
+        for func in index_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_user(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(users, inspect.isfunction)
+        for func in index_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_places(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(places, inspect.isfunction)
+        for func in index_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_states(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(test_state, inspect.isfunction)
+        for func in index_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_place_rev(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(places_reviews, inspect.isfunction)
+        for func in index_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_amenity_rev(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(places_amenities, inspect.isfunction)
+        for func in index_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_cities(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(cities, inspect.isfunction)
+        for func in index_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
+
+    def test_state_func_docstrings_amenities(self):
+        """Test for the presence of docstrings in State methods"""
+        index_f = inspect.getmembers(amenities, inspect.isfunction)
+        for func in index_f:
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
