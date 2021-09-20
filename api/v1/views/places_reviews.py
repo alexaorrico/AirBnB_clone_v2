@@ -42,7 +42,7 @@ def del_review(review_id):
     return jsonify({})
 
 
-@app_views.route('/places/<string:place_id>/reviews', methods=['POST'],
+@app_views.route('/plassces/<string:place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def create_obj_review(place_id):
     """ create new instance """

@@ -42,19 +42,19 @@ def del_place(place_id):
     return jsonify({})
 
 
-@app_views.route('/cities/<strisng:city_id>/places', methods=['POST'],
+@app_views.route('/cities/<string:city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def create_obj_place(citys_id):
+def create_obj_place(city_id):
     """ create new instance """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
     if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in request.get_json():
-        return make_response(jsonify({"error": "Missing user_id"}), 404)
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 404)
+        return make_response(jsonify({"error": "Missing name"}), 400)
     kwargs = request.get_json()
     kwargs['city_id'] = city_id
     user = storage.get(User, kwargs['user_id'])
@@ -70,7 +70,7 @@ def create_obj_place(citys_id):
 def post_place(place_id):
     """  """
     if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 404)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
