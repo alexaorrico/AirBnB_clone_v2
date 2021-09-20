@@ -79,7 +79,7 @@ test_db_storage.py'])
             self.assertEqual(test_len + 2, db_storage.count())
             db_storage.delete(b)
             self.assertEqual(test_len + 1, db_storage.count())
-    
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """test get with valid cls and id"""
