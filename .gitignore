@@ -1,0 +1,7 @@
+.vscode/
+*~
+*.pyc
+*/__pycache__/
+*.json
+test.py
+private_key
