@@ -17,16 +17,14 @@ def amenityAll():
         return jsonify(amenities)
 
     if req.method == 'POST':
-        body = req.get_json()
-        if body is None:
+        reqj = req.get_json()
+        if reqj is None:
             abort(400, 'Not a JSON')
-        if body.get('name', None) is None:
+        if reqj.get('name', None) is None:
             abort(400, 'Missing name')
-        new_state = State(**body)
-        storage.new(new_state)
-        storage.save()
-        return jsonify(new_state.to_dict()), 201
-
+        amenity = Amenity(**reqj)
+        amenity.save()
+        return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'])
