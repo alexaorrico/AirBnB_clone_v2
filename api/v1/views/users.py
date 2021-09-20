@@ -7,7 +7,7 @@ from models import storage
 from models.user import User
 
 
-@app_views.route("/users", strict_slashes=False)
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_user():
     """ return all user objects"""
     users = storage.all(User).values()
@@ -19,7 +19,7 @@ def get_user():
     return jsonify(resultado)
 
 
-@app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def get_user_id(user_id):
     """ get user for id """
     users = storage.all("User").values()
