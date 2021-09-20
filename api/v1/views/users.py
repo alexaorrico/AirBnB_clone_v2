@@ -38,11 +38,13 @@ def get_id_user(user_id):
     strict_slashes=False)
 def delete_user(user_id):
     """Deletes a user"""
-    user = storage.get('User', user_id)
+    user = storage.get(User, user_id)
     if user:
         user.delete()
         storage.save()
-    return (jsonify({}), 200)
+        return (jsonify({}), 200)
+    else:
+        abort(404)
 
 
 @app_views.route(
