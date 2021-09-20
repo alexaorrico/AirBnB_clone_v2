@@ -44,7 +44,7 @@ def stateId(state_id):
         ignore = ['id', 'created_at', 'updated_at']
         for key, val in state_json.items():
             if key not in ignore:
-                setattr(state, key, value)
+                state.__setattr__(key, val)
         models.storage.save()
         return jsonify(state.to_dict())
 
