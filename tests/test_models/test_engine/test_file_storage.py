@@ -109,7 +109,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(a.name, result.name)
         self.assertEqual(a.created_at, result.created_at)
 
-
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
