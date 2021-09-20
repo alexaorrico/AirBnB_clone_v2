@@ -13,6 +13,7 @@ from models.user import User
 @app_views.route('/cities/<string:city_id>/places',
                  methods=['GET'], strict_slashes=False)
 def get_all_places(city_id):
+    """ list cities by id """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -23,7 +24,7 @@ def get_all_places(city_id):
 @app_views.route('/places/<string:place_id>', methods=['GET'],
                  strict_slashes=False)
 def get_place(place_id):
-    """ get place by id"""
+    """ get place by id """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -33,7 +34,7 @@ def get_place(place_id):
 @app_views.route('/places/<string:place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_place(place_id):
-    """ delete place by id"""
+    """ delete place by id """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -68,7 +69,7 @@ def create_obj_place(city_id):
 @app_views.route('/places/<string:place_id>', methods=['PUT'],
                  strict_slashes=False)
 def post_place(place_id):
-    """  """
+    """ update by id """
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Place, place_id)
