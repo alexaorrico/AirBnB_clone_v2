@@ -42,9 +42,9 @@ def del_place(place_id):
     return jsonify({})
 
 
-@app_views.route('/cities/<string:city_id>/places', methods=['POST'],
+@app_views.route('/cities/<strisng:city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def create_obj_place(city_id):
+def create_obj_place(citys_id):
     """ create new instance """
     city = storage.get(City, city_id)
     if city is None:
