@@ -55,7 +55,7 @@ def amenityPost():
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
-@app_views.route('/amenities/<id>', methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def amenityPut(id):
     """ Update a amenity object """
     if not request.get_json():
