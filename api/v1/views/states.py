@@ -60,7 +60,7 @@ def put_sate(state_id=None):
     res = request.get_json()
     if not res:
         abort(400, {"Not a JSON"})
-    obj = storage.get(Amenity, state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     i_key = ["id", "created_at", "updated_at"]
