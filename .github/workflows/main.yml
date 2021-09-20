@@ -9,11 +9,12 @@ jobs:
     steps:
     - name: Merge me!
       uses: ridedott/merge-me-action@v2.8.35
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/checkout@v2
     - name: Install Python 3
       uses: actions/setup-python@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
         python-version: 3.8
     - name: Install dependencies
       run: git clone https://github.com/Joshua-Enrico/sql_enviroment.git
