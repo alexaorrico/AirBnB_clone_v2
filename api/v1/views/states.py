@@ -8,29 +8,27 @@ from models import storage
 import json
 
 
-@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """gets all state objects"""
-    if request.method == 'GET':
-        all_objects = storage.all(State)
-        single_object = []
-        for key, value in all_objects.items():
-            single_object.append(value.to_dict)
-        return jsonify(single_object)
+    all_objects = storage.all(State)
+    single_object = []
+    for key, value in all_objects.items():
+        single_object.append(value.to_dict)
+    return jsonify(single_object)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+@app_views.route('/states/<state_id>', methods=['GET'],
                  strict_slashes=False)
 def get_state_id(state_id):
     """gets the state object using his id"""
-    if request.method == 'GET':
-        all_objects = storage.all(State)
-        new_dict = {}
-        for key, value in all_objects.items():
-            if state_id == value.id:
-                new_dict = value.to_dict
-                return jsonify(new_dict)
-        abort(404)
+    all_objects = storage.all(State)
+    new_dict = {}
+    for key, value in all_objects.items():
+        if state_id == value.id:
+            new_dict = value.to_dict
+            return jsonify(new_dict)
+    abort(404)
 
 
 @app_views.route('/states/<state_id>',
@@ -60,7 +58,7 @@ def post():
     return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states', methods=['PUT'], strict_slashes=False)
 def put(state_id=None):
     """PUT"""
     res = request.get_json()
