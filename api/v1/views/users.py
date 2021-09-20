@@ -10,31 +10,28 @@ from api.v1.views import app_views
 
 @app_views.route('/users', methods=['GET', 'POST'])
 def user_objects():
-    """Retrieves all amenities with a list of objects"""
+    """Returns user objects as JSON response"""
     if req.method == 'GET':
         users = models.storage.all('User')
         users = [u.to_dict() for u in users.values()]
         return jsonify(users)
 
     if req.method == 'POST':
-        reqj = req.get_json()
-        if reqj is None:
+        body = req.get_json()
+        if body is None:
             abort(400, 'Not a JSON')
-
-        if reqj.get('email', None) is None:
+        if body.get('email', None) is None:
             abort(400, 'Missing email')
-
-        if reqj.get('password', None) is None:
+        if body.get('password', None) is None:
             abort(400, 'Missing password')
-
-        user = User(**reqj)
+        user = User(**body)
         user.save()
         return jsonify(user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['GET', 'PUT', 'DELETE'])
 def user_res(user_id):
-    """id Amenity retrieve json object"""
+    """Returns a User object as JSON response"""
     user = models.storage.get('User', user_id)
     if user is None:
         abort(404)
@@ -47,9 +44,9 @@ def user_res(user_id):
         if user_json is None:
             abort(400, 'Not a JSON')
         ignore = ['id', 'email', 'created_at', 'updated_at']
-        for k, v in user_json.items():
-            if k not in ignore:
-                setattr(amenity, k, v)
+        for key, val in user_json.items():
+            if key not in ignore:
+                user.__setattr__(key, val)
         models.storage.save()
         return jsonify(user.to_dict())
 
