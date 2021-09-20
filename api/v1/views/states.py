@@ -4,11 +4,10 @@ script that starts a Flask web application:
 """
 
 from models import storage
-from models.state import State
 from api.v1.views import app_views
 from flask import abort
 from flask import Flask, jsonify, request
-from werkzeug.wrappers import response
+from models import storage, state
 
 app = Flask(__name__)
 
@@ -36,7 +35,8 @@ def state_get(state_id):
         return state.to_dict()
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def state_delete(state_id):
     """
     Deletes a State object
@@ -55,16 +55,16 @@ def state_post():
     """
     Creates a State
     """
-    state_new = request.get_json()
-    if state_new is None:
+    if request.get_json() is None:
         abort(400, "Not a JSON")
-    elif "name" not in state_new:
+    elif "name" not in request.get_json().keys():
         abort(400, "Missing name")
     else:
-        my_state = State(**state_new)
+        my_state = state.State(**request.get_json())
+        storage.new(my_state)
         storage.save()
-        st = my_state.to_dict()
-        return jsonify(st), 201
+        resp = my_state.to_dict()
+        return jsonify(resp), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -79,7 +79,8 @@ def state_put(state_id=None):
             abort(400, "Not a JSON")
         else:
             for key, value in st.items():
-                if key in ['id', 'created_at', 'updated_at']:
+                if key in ['id'] and key in ['created_at']\
+                        and key in ['updated_at']:
                     pass
                 else:
                     setattr(states, key, value)
