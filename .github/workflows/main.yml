@@ -41,13 +41,10 @@ jobs:
       run: HBNB_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest discover tests
     - name: Run normal test
       run: python -m unittest discover tests
-  automerge:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: reitermarkus/automerge@v1.5.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          merge-method: merge
-          do-not-merge-labels: never-merge
-          required-labels: automerge
-          dry-run: true
+    - uses: reitermarkus/automerge@v1.5.2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        merge-method: merge
+        do-not-merge-labels: never-merge
+        required-labels: automerge
+        dry-run: true
