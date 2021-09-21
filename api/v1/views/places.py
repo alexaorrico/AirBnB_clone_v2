@@ -69,7 +69,7 @@ def place_post(city_id):
     if "name" not in request.get_json().keys():
         abort(400, "Missing name")
     else:
-        my_place['city_id'] = city.id
+        my_place['city_id'] = city_id
         plaace = Place(**my_place)
         plaace.save()
         resp = jsonify(plaace.to_dict())
