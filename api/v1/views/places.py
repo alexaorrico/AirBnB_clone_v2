@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-""" Handle RESTful API request for states"""
+""" Handle RESTful API request for places"""
 
-from models.state import State
 from models.place import Place
+from models.user import User
 from models.city import City
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
@@ -14,21 +14,26 @@ from models import storage
                  strict_slashes=False)
 def all_places(city_id):
     """ GET ALL PLACES """
+    # verify if city_id exist if not return 404
     city = storage.all(City).values()
     if not city:
         abort(404)
+    # list all the places linked to the city
     places_list = city.places
+    # Create a new list with the dict of the objects
     places_dict = []
     for place in places_list:
         places_dict.append(place.to_dict())
-
+    # return  the list of places
     return jsonify(places_dict)
+
 
 @app_views.route('/places/<place_id>',
                  methods=['GET'],
                  strict_slashes=False)
 def get_places(place_id):
-    """ Retrieves a specific user """
+    """ Retrieves a specific place """
+    # verify if place_id exist if not return 404
     instance = storage.get(Place, place_id)
     if not instance:
         abort(404)
@@ -39,6 +44,7 @@ def get_places(place_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
+    """delete a place"""
     obj = storage.get(Place, place_id)
     if obj:
         storage.delete(obj)
@@ -52,26 +58,30 @@ def delete_place(place_id):
                  methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
-    """Creates a amenity """
-
+    """Creates a place """
+    # validate reques type
     if not request.get_json():
         abort(400, description="Not a JSON")
+
+    # convert data request to Dict
+    data = request.get_json()
+
+    # search if the city_id and user_id exist if not return 404
     city = storage.get(City, city_id)
-    if not city:
+    user = storage.get(User, data['user_id'])
+    if not city or not user:
         abort(404)
 
-    data = request.get_json()
+    # update data dict with city_id
     data['city_id'] = city_id
 
-    if not 'name' in data:
+    # validate requiered attributes
+    if 'name' not in data:
         abort(400, description="Missing name")
-    if not 'user_id' in data:
+    if 'user_id' not in data:
         abort(400, description="Missing user_id")
 
-    user = storage.get(User, data['user_id'])
-    if not user:
-        abort(404)
-
+    # create a new_instance of class and saves
     new_instance = Place(**data)
     new_instance.save()
 
@@ -82,23 +92,26 @@ def create_place(city_id):
                  methods=['PUT'],
                  strict_slashes=False)
 def update_place(place_id):
-    """update a State: POST /api/v1/states"""
+    """update a place"""
+    # validate reques type
     if not request.get_json():
         abort(400, description="Not a JSON")
 
+    # call the object and verify if exist if not return 404
     obj = storage.get(Place, place_id)
-
     if not obj:
         abort(404)
-
+    # loads request
     data = request.get_json()
-
+    # fields to ignore from update
     ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
 
+    # update the data
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
             setattr(obj, key, value)
+    # save update
     storage.save()
 
     return make_response(jsonify(obj.to_dict()), 200)
