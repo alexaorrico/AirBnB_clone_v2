@@ -15,7 +15,8 @@ from models import storage
 def all_places(city_id):
     """ GET ALL PLACES """
     # verify if city_id exist if not return 404
-    city = storage.all(City).values()
+    city = storage.get(City, city_id)
+    print( city.__str__)
     if not city:
         abort(404)
     # list all the places linked to the city
@@ -24,6 +25,10 @@ def all_places(city_id):
     places_dict = []
     for place in places_list:
         places_dict.append(place.to_dict())
+    
+
+    # places_dict = [place.to_dict() for place in city.places]
+    
     # return  the list of places
     return jsonify(places_dict)
 
