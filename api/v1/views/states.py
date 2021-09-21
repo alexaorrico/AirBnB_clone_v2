@@ -11,7 +11,7 @@ from models import storage
                  methods=['GET'],
                  strict_slashes=False)
 def all_states():
-    """ GET ALL STATES """
+    """ GET ALL AMENITIES """
     objs = storage.all(State).values()
     list_obj = []
     for obj in objs:
@@ -91,6 +91,6 @@ def update_state(state_id):
         if key not in ignore:
             print("por aca")
             setattr(obj, key, value)
-    storage.save()
+    obj.save()
 
     return make_response(jsonify(obj.to_dict()), 200)
