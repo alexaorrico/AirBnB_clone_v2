@@ -51,19 +51,21 @@ def delete_user(user_id):
                  strict_slashes=False)
 def create_users():
     """Creates a amenity """
-
+    # validate data tyoe request
     if not request.get_json():
         abort(400, description="Not a JSON")
-    else:
-        data = request.get_json()
+    # loads data request to a dict
+    data = request.get_json()
 
+    # validate minimal parameters to create a instance
     if not 'name' in data:
         abort(400, description="Missing name")
     if not 'email' in data:
         abort(400, description="Missing email")
     if not 'password' in data:
         abort(400, description="Missing password")
- 
+
+    # create a new_instance of the class
     new_instance = User(**data)
     new_instance.save()
 
@@ -75,22 +77,28 @@ def create_users():
                  strict_slashes=False)
 def update_user(user_id):
     """update a State: POST /api/v1/states"""
+
+    # validate data type request
     if not request.get_json():
         abort(400, description="Not a JSON")
 
+    # validate if user_id exists
     obj = storage.get(User, user_id)
-
     if not obj:
         abort(404)
 
+    # loads request to dict
     data = request.get_json()
 
+    # fields that have not update
     ignore = ['id', 'created_at', 'updated_at']
 
-    data = request.get_json()
+    # update attributes in object
     for key, value in data.items():
         if key not in ignore:
             setattr(obj, key, value)
-    storage.save()
+
+    # saves object
+    obj.save()
 
     return make_response(jsonify(obj.to_dict()), 200)
