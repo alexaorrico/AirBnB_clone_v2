@@ -1,35 +1,41 @@
 #!/usr/bin/python3
 """
-API for HBNB
+Api for AirBnB_clone
 """
-
-from os import getenv
-from flask import Flask, jsonify
-from flask_cors import CORS
 from api.v1.views import app_views
+from flask import Blueprint, Flask, jsonify
 from models import storage
+from os import getenv
 
 app = Flask(__name__)
-CORS(app, resources={'/*': {'origins': ['0.0.0.0']}})
-
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown(exception):
-    ''' Close SQLAlchemy session '''
-
+def teardown(exception=None):
+    """
+    Application teardown
+    """
     storage.close()
 
 
 @app.errorhandler(404)
-def handle_not_found(err=None):
+def page_not_found(exception=None):
     """
-    Handler for 404 errors that returns
-    a JSON-formatted 404 status code response
+    Display an jsonify error
     """
-    return (jsonify({'error': 'Not found'}), 404)
+    return jsonify({"error": "Not found"}), 404
 
 if __name__ == '__main__':
-    app.run(getenv('HBNB_API_HOST', '0.0.0.0'),
-            int(getenv('HBNB_API_PORT', '5000')), threaded=True)
+    """
+    Execute api
+    """
+    host = getenv('HBNB_API_HOST')
+    if (host is None):
+        host = '0.0.0.0'
+
+    port = getenv('HBNB_API_PORT')
+    if (port is None):
+        port = '5000'
+
+    app.run(host, port, threaded=True)
