@@ -91,51 +91,27 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
 
-class test_DBStorage(unittest.TestCase):
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get(self):
-        """ Testing get method """
-        storage = DBStorage()
+class Test_FileStorage(unittest.TestCase):
+    """Test class"""
+    @unittest.skipIf(models.storage_t != 'db', "no test in db storage")
+    def test_all_returns_dict(self):
+        """Test dictionary"""
+        self.assertIs(type(models.storage.all()), dict)
 
-        # new state test
-        state = State(name="California")
-        self.storage.new(state)
-        state_id = state.id
+    @unittest.skipIf(models.storage_t != 'db', "no test in db storage")
+    def test_all_class(self):
+        """Test all"""
 
-        # state is instance
-        self.assertIsInstance(state, State)
+    @unittest.skipIf(models.storage_t != 'db', "no test in db storage")
+    def test_new(self):
+        """test new"""
 
-        # state storage.get()
-        state = storage.get("State", state_id)
-        self.assertEqual(state.id, state_id)
+    @unittest.skipIf(models.storage_t != 'db', "no test in db storage")
+    def test_save(self):
+        """Test save file.json"""
 
-        # no exist
-        fake_state = storage.get("State", "fake_id")
-        self.assertIsNone(fake_state)
-
-        # delete
-        self.storage.delete(state)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_count(self):
-        """ Testing cout method """
-        count = storage.count()
-
-        # count int
-        self.assertIsInstance(count, int)
-        # count == 6
-        self.assertEqual(count, 6)
-
-        # after the new record has been created
-        state = State({"name": "California"})
-        self.storage.new(state)
-        count = self.storage.count()
-        self.assertEqual(count, 7)
-
-        # contar only states
-        count = self.storage.count("State")
-
-        # count is int
-        self.assertIsInstance(count, int)
-        # count == 1
-        self.assertEqual(count, 1)
+    def test_counter(self):
+        """Test number of State instances"""
+        first_inst = State()
+        second_inst = State()
+        self.assertEqual(storage.count(State), 1)
