@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ handles all default RESTFul API actions """
-from os import abort, stat
 from flask import json
 from sqlalchemy.sql.sqltypes import String
 from models.user import User

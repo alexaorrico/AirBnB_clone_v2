@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ handles all default RESTFul API actions """
-from os import abort, stat
+from os import stat
 from models.city import City
 from flask.json import jsonify
 from api.v1.views import app_views

@@ -5,6 +5,7 @@ from flask import Flask, json
 from flask_cors import CORS
 from api.v1.views import app_views
 from werkzeug.exceptions import HTTPException
+from os import getenv
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
@@ -28,5 +29,6 @@ def handle_404(e):
     return response
 
 if __name__ == "__main__":
-    """ run the flask server """
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    _host = getenv('HBNB_API_HOST', '0.0.0.0')
+    _port = getenv('HBNB_API_PORT', 5000)
+    app.run(host=_host, port=_port, threaded=True)
