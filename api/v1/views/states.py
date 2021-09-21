@@ -21,7 +21,6 @@ def get_states():
 @app_views.route('/states/<state_id>',
                  strict_slashes=False,
                  methods=['GET'])
-@app_views.errorhandler(404)
 def get_state_id(state_id):
     """Retrieves a State object"""
     state = storage.get('State', state_id)

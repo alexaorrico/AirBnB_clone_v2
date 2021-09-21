@@ -22,7 +22,6 @@ def get_amenities():
 @app_views.route('/amenities/<amenity_id>',
                  strict_slashes=False,
                  methods=['GET'])
-@app_views.errorhandler(404)
 def get_amenity_id(amenity_id):
     """ Retrieves a Amenity object """
     amenity = storage.get('Amenity', amenity_id)
