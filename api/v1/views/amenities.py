@@ -86,6 +86,6 @@ def update_amenity(amenity_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(obj, key, value)
-    storage.save()
+    obj.save()
 
     return make_response(jsonify(obj.to_dict()), 200)
