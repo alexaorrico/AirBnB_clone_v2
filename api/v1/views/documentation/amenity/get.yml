@@ -1,0 +1,25 @@
+GET method, get all amenities of a place
+---
+tags:
+  - Amenities
+responses:
+  200:
+    description: Succsesful resquest
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: "string"
+          created_at:
+            type: string
+            description: datetime of instance creation
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: The unique id of the state instance
+          name:
+            type: string
+            description: Place name

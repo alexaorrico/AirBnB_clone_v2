@@ -1,0 +1,17 @@
+Post a new amenity.
+---
+tags:
+  - Amenities
+parameters:
+  - name: amenity_id
+    in: body
+    requires:
+      - name
+    properties:
+      name:
+        type: string
+responses:
+  400:
+    description: Not Valid JSON 😳
+  201:
+    description: Successful request ✔️
