@@ -20,7 +20,7 @@ def get_states():
         data = request.get_json()
         if not data:
             abort(400, 'Not a JSON')
-        if not 'name' in data:
+        if 'name' not in data:
             abort(400, 'Missing name')
         state = State(name=data.get('name'))
         state.save()
