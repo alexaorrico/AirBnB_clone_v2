@@ -114,6 +114,6 @@ def update_place(place_id):
         if key not in ignore:
             setattr(obj, key, value)
     # save update
-    storage.save()
+    obj.save()
 
     return make_response(jsonify(obj.to_dict()), 200)
