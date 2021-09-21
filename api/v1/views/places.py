@@ -8,6 +8,7 @@ from models.city import City
 from models.place import Place
 from models.user import User
 
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places(city_id=None):
@@ -23,7 +24,7 @@ def get_places(city_id=None):
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def get_place(city_id=None):
+def get_place(place_id=None):
     """get place information for specified place"""
     get_place = storage.get(Place, place_id)
     if get_place is None:
