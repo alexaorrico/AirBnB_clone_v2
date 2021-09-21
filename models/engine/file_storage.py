@@ -4,6 +4,8 @@ Contains the FileStorage class
 """
 
 import json
+
+from sqlalchemy.sql.elements import Null
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -68,3 +70,27 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """ retrieve one object based on the class and id"""
+        all_class = models.storage.all(cls)
+
+        if all_class != Null:
+            for value in all_class.values():
+                if (value.id == id):
+                    return value
+        else:
+            return None
+
+    def count(self, cls=None):
+        """ count the number of objects in storage """
+        all_class = classes.values()
+
+        if cls:
+            count = 0
+            count = len(models.storage.all(cls).values())
+        else:
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+
+        return count
