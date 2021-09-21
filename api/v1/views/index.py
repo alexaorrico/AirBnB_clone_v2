@@ -16,7 +16,6 @@ def status():
 @app_views.route('/stats', strict_slashes=False)
 def stats():
     """ retrives the number of each objects by type """
-    print('hello!')
     from models import storage
     from models.amenity import Amenity
     from models.city import City
