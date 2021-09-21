@@ -6,13 +6,13 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
 
-__CLASS = User
 
 @app_views.route('/users',
                  methods=['GET'],
                  strict_slashes=False)
 def all_users():
     """ GET ALL USERS """
+    
     objs = storage.all(User).values()
     list_obj = []
     for obj in objs:
@@ -37,6 +37,7 @@ def get_users(user_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
+    """delete a user"""
     obj = storage.get(User, user_id)
     if obj:
         storage.delete(obj)
@@ -58,11 +59,11 @@ def create_users():
     data = request.get_json()
 
     # validate minimal parameters to create a instance
-    if not 'name' in data:
+    if 'name' not in data:
         abort(400, description="Missing name")
-    if not 'email' in data:
+    if 'email'not in data:
         abort(400, description="Missing email")
-    if not 'password' in data:
+    if 'password' not in data:
         abort(400, description="Missing password")
 
     # create a new_instance of the class
