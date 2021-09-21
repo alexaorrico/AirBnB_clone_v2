@@ -82,7 +82,7 @@ def place_put(place_id):
     """
     Updates a place object
     """
-    hello = storage.get("Place", place_id)
+    place = storage.get("Place", place_id)
     if place is None:
         abort(404)
     my_place = request.get_json()
@@ -95,5 +95,5 @@ def place_put(place_id):
             else:
                 setattr(place, key, value)
         storage.save()
-        resp = obj.to_dict()
+        resp = place.to_dict()
         return jsonify(resp), 200
