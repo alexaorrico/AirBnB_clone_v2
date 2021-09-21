@@ -15,6 +15,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -39,30 +40,6 @@ class DBStorage:
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
-
-    def get(self, cls, id):
-        """ Fetches a particular object based on its class and it's id.
-        If not found, None is returned """
-        if cls is None or id is None:
-            return None
-
-        obj = self.__session.query(cls).get(id)
-
-        if obj:
-            return obj
-
-        return None
-
-    def count(self, cls=None):
-        """ Returns the count of object form the specified class, or of
-        all the objects in storage is a class is not specified """
-        num = 0
-        if cls is None:
-            for obj_cls in classes.keys():
-                num += self.__session.query(classes[obj_cls]).count()
-        else:
-            num = self.__session.query(cls).count()
-        return num
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -98,3 +75,25 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retrieves one object"""
+        if cls is None or id is None:
+            return None
+
+        obj = self.__session.query(cls).get(id)
+
+        if obj:
+            return obj
+
+        return None
+
+    def count(self, cls=None):
+        """method coutns the number of objects in storage"""
+        num = 0
+        if cls is None:
+            for obj_cls in classes.keys():
+                num += self.__session.query(classes[obj_cls]).count()
+        else:
+            num = self.__session.query(cls).count()
+        return num
