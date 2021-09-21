@@ -69,11 +69,12 @@ test_file_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
+    storage = FileStorage()
+
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
-        storage = FileStorage()
         new_dict = storage.all()
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
@@ -81,7 +82,6 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
-        storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
         test_dict = {}
@@ -97,7 +97,6 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-        storage = FileStorage()
         new_dict = {}
         for key, value in classes.items():
             instance = value()
@@ -113,3 +112,12 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_count(self, cls=None):
+        """tests that the count function works as it should"""
+        if cls is None:
+            count = len(storage.all())
+            self.assertEqual(count, len(models.storage.all()))
+        else:
+            count = len(storage.all(cls))
+            self.assertEqual(count, len(models.storage.all(cls)))
