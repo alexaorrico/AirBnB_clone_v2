@@ -68,6 +68,7 @@ def post_place(city_id):
     if get_user is None:
         abort(404)
 
+    places['city_id'] = city_id
     new_place = Place(**places)
     storage.new(new_place)
     storage.save()
