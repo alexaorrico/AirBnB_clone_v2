@@ -57,7 +57,8 @@ def post_amen():
     return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def put_amen(amenity_id=None):
     """PUT"""
     res = request.get_json()
