@@ -14,20 +14,27 @@ from models import storage
                  strict_slashes=False)
 def all_places(city_id):
     """ GET ALL PLACES """
+
     # verify if city_id exist if not return 404
     city = storage.get(City, city_id)
-
     if not city:
         abort(404)
-    # list all the places linked to the city
-    places_list = city.places
-    # Create a new list with the dict of the objects
-    places_dict = []
-    for place in places_list:
-        places_dict.append(place.to_dict())
+ 
+    # list all places
+    places = storage.all(Place).values()
+
+    # list to return only with places to the city
+    list_places = []
+
+    # loop to search into places
+    for place in places:
+        values = place.to_dict()
+        # validate if place belongs to request city
+        if values['city_id'] == city_id:
+            list_places.append(place.to_dict())
 
     # return  the list of places
-    return jsonify(places_dict)
+    return jsonify(list_places)
 
 
 @app_views.route('/places/<place_id>',
