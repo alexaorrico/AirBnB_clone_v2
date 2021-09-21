@@ -25,6 +25,26 @@ class FileStorage:
     __objects = {}
 
     def get(self, cls, id):
+        """
+        Retrieves a single element based on cls and id
+        it returns this obj
+        """
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
+    def count(self, cls=None):
+        """
+        Counts the objects of a class
+        and returns this number
+        """
+        return len(self.all(cls))
+
+    def get(self, cls, id):
         """Retrieves a single element based on cls and id.
         Args:
             cls: the class
@@ -93,23 +113,3 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-
-    def get(self, cls, id):
-        """retrieves one object"""
-        if cls is None or id is None:
-            return None
-
-        # turns "<clss 'models.state.State'> into "State"
-        cls = str(cls)
-        cls = cls.split('.')[2][:-2]
-
-        for key, value in self.__objects.items():
-            if key == cls + '.' + id:
-                return value
-        return None
-
-    def count(self, cls=None):
-        """counts the number of objects in storage"""
-        # we call all because it returns a dict with all objs
-        total = len(self.all(cls))
-        return total

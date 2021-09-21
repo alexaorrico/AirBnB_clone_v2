@@ -41,6 +41,25 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
+    def get(self, cls, id):
+        """
+        Retrieves a single element based on cls and id
+        it returns this obj
+        """
+        if cls not in classes.values():
+            return None
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
+    def count(self, cls=None):
+        """
+        Counts the objects of a class
+        and returns this number
+        """
+        return len(self.all(cls))
+
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
@@ -75,25 +94,3 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
-
-    def get(self, cls, id):
-        """retrieves one object"""
-        if cls is None or id is None:
-            return None
-
-        obj = self.__session.query(cls).get(id)
-
-        if obj:
-            return obj
-
-        return None
-
-    def count(self, cls=None):
-        """method coutns the number of objects in storage"""
-        num = 0
-        if cls is None:
-            for obj_cls in classes.keys():
-                num += self.__session.query(classes[obj_cls]).count()
-        else:
-            num = self.__session.query(cls).count()
-        return num
