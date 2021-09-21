@@ -14,6 +14,7 @@ def teardown_appcontext(code):
     """handles teardown_appcontext"""
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """handler for 404 errors JSON format"""
