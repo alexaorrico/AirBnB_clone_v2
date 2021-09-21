@@ -34,6 +34,8 @@ def get_city(city_id=None):
             abort(400, 'Not a Json')
         if json_req.get("name") is None:
             abort(400, 'Missing name')
+        if json_req.get("user_id") is None:
+            abort(400, 'Missing user_id')
         json_req["city_id"] = city_id
         new_obj = Place(**json_req)
         new_obj.save()
@@ -60,6 +62,7 @@ def CUD_place(place_id=None):
         place.delete()
         return jsonify({}, 200)
     if request.method == 'PUT':
+        print("HERE NOW")
         json_req = request.get_json()
         if json_req is None:
             abort(400, 'Not a JSON')
