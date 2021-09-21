@@ -85,16 +85,15 @@ def place_put(place_id):
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    pl = request.get_json()
-    if pl is None:
+    my_place = request.get_json()
+    if my_place is None:
         abort(400, "Not a JSON")
     else:
-        for key, value in pl.items():
-            if key in ['id'] and key in ['user_id'] and key in ['created_at']\
-                    and key in ['city_id'] and key in ['updated_at']:
+        for key, value in my_place.items():
+            if key in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
                 pass
             else:
                 setattr(place, key, value)
         storage.save()
-        resp = user.to_dict()
+        resp = obj.to_dict()
         return jsonify(resp), 200
