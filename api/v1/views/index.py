@@ -2,8 +2,8 @@
 """
 Flask route that returns json status response
 """
-from api.v1.views import app_views
 from flask import request, jsonify
+from api.v1.views import app_views
 
 
 @app_views.route('/status')

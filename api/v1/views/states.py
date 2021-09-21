@@ -4,8 +4,8 @@ from models.state import State
 from api.v1.views import app_views
 from models import storage
 from flask.json import jsonify
-from flask import abort
 from flask import request
+from flask import abort
 
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
@@ -21,7 +21,6 @@ def get_states():
 @app_views.route('/states/<state_id>',
                  strict_slashes=False,
                  methods=['GET'])
-@app_views.errorhandler(404)
 def get_state_id(state_id):
     """Retrieves a State object"""
     state = storage.get('State', state_id)

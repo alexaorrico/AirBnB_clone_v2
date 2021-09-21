@@ -2,7 +2,7 @@
 """ flask API app """
 from models import storage
 from flask import Flask, json
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from api.v1.views import app_views
 from werkzeug.exceptions import HTTPException
 
