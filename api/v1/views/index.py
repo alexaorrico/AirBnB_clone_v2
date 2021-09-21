@@ -4,6 +4,7 @@
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
+from os import environ
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -25,7 +26,7 @@ def status():
 
 @app_views.route('/api/v1/stats')
 def stats():
-    """status"""
+    """stats"""
     dict = {}
     for cls, value in classes.items():
         tot = storage.count(value)
@@ -34,4 +35,11 @@ def stats():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='5000', threaded=True)
+    """"main function"""
+    host = environ.get('HBNB_API_HOST')
+    port = environ.get('HBNB_API_PORT')
+    if not host:
+        host = '0.0.0.0'
+    if not port:
+        port = '5000'
+    app.run(host=host, port=port, threaded=True)
