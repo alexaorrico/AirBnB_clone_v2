@@ -6,6 +6,8 @@ from models.review import Review
 from models.place import Place
 from models.user import User
 from api.v1.views import app_views
+from models.state import State
+from models.city import City
 from flask import jsonify, abort, request, make_response
 from models import storage
 
