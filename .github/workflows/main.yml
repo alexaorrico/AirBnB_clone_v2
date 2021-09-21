@@ -46,11 +46,5 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: Automatic pull request
-        title: '[Example] Add report file'
+        title: 'Automatic pull request'
     - uses: reitermarkus/automerge@v1.5.2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        merge-method: merge
-        do-not-merge-labels: never-merge
-        required-labels: automerge
-        dry-run: true
