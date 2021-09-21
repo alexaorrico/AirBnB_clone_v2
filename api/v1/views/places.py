@@ -82,7 +82,7 @@ def place_put(place_id):
     """
     Updates a place object
     """
-    place = storage.get("Place", place_id)
+    hello = storage.get("Place", place_id)
     if place is None:
         abort(404)
     my_place = request.get_json()
