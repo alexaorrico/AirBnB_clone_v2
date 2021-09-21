@@ -74,26 +74,3 @@ def place_post(city_id):
         plaace.save()
         resp = jsonify(plaace.to_dict())
         return (resp), 201
-
-
-@app_views.route('/places/<place_id>',
-                 methods=['PUT'], strict_slashes=False)
-def place_put(place_id):
-    """
-    Updates a place object
-    """
-    hello = storage.get("Place", place_id)
-    if place is None:
-        abort(404)
-    my_place = request.get_json()
-    if my_place is None:
-        abort(400, "Not a JSON")
-    else:
-        for key, value in my_place.items():
-            if key in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
-                pass
-            else:
-                setattr(place, key, value)
-        storage.save()
-        resp = obj.to_dict()
-        return jsonify(resp), 200
