@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """ Handle RESTful API request for states"""
 
-from models.city import City
-from models.state import State
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
+from models.city import City
+from models.state import State
 from models import storage
 
 
@@ -29,7 +29,7 @@ def all_cities(state_id):
                  methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
-    """ Retrieves a specific State """
+    """ Retrieves a specific City """
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -41,6 +41,7 @@ def get_city(city_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
+    """delete a city"""
     obj = storage.get(City, city_id)
     if obj:
         storage.delete(obj)
@@ -54,7 +55,7 @@ def delete_city(city_id):
                  methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
-    """Creates a State: POST /api/v1/states"""
+    """Creates a new city """
 
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -79,7 +80,8 @@ def create_city(state_id):
                  methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
-    """update a State: POST /api/v1/states"""
+    """update a City """
+
     if not request.get_json():
         abort(400, description="Not a JSON")
 
@@ -96,6 +98,6 @@ def update_city(city_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(obj, key, value)
-    storage.save()
+    obj.save()
 
     return make_response(jsonify(obj.to_dict()), 200)
