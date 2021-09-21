@@ -12,7 +12,7 @@ from models.user import User
 
 @app_views.route('\status')
 def json_return():
-    return jsonfy({'status': "OK"})
+    return jsonify({'status': "OK"})
 
 @app_views.route('\stats')
 def return_num_objects():
@@ -20,6 +20,6 @@ def return_num_objects():
                 "reviews": Review, "states": State, "users": User}
     counter_objects = {}
     for i, j in classes.items():
-        counter_onjects[i] = storage.count[j]
+        counter_onjects[i] = storage.count(j)
 
-    return (jsonify(counter_objects))
+    return jsonify(counter_objects)
