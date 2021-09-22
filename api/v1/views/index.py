@@ -22,6 +22,6 @@ def return_num_objects():
                "reviews": Review, "states": State, "users": User}
     counter_objects = {}
     for i, j in classes.items():
-        counter_onjects[i] = storage.count(j)
+        counter_objects[i] = storage.count(j)
 
     return jsonify(counter_objects)
