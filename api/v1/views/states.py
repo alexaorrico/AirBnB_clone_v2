@@ -11,7 +11,7 @@ from models.state import State
 def get_states():
     """retrieves the list of all state objects"""
     states = []
-    for key, value in storage.all("State").values():
+    for value in storage.all("State").values():
         states.append(value.to_dict())
     return jsonify(states), 200
 
@@ -20,7 +20,7 @@ def get_states():
                  strict_slashes=False)
 def get_state(state_id=None):
     """retrieves a state object"""
-    state_dic = storage.get(State, state_id)
+    state_dic = storage.get("State", state_id)
     if state_dic is None:
         abort(404)
     return jsonify(state_dic.to_dict()), 200
@@ -30,12 +30,11 @@ def get_state(state_id=None):
                  strict_slashes=False)
 def delete_state(state_id=None):
     """Deletes a state object"""
-    state_del = storage.get(State, state_id)
+    state_del = storage.get("State", state_id)
     if state_del is None:
         abort(404)
-    else:
-        storage.delete(state_del)
-        storage.save()
+    state_del.delete()
+    storage.save()
     return jsonify({}), 200
 
 
@@ -65,5 +64,5 @@ def put_state(state_id=None):
         if key not in ["id", "created_at", "updated_at"]:
             setattr(obj, key, value)
 
-    storage.save()
+    obj.save()
     return jsonify(obj.to_dict()), 200
