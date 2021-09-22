@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ built api """
-from api.vi.views import app_views
+from api.v1.views import app_views
 from flask import jsonify
 from models.amenity import Amenity
 from models.review import Review
