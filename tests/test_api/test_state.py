@@ -53,6 +53,7 @@ class FlaskTestCase(unittest.TestCase):
         self.assertTrue("updated_at" in dic)
 
 
+
     def test_get_method_by_id(self):
         tester = app.test_client(self)
         response = tester.post('/api/v1/states', json=self.data)
