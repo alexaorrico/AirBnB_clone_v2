@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""states.py actions and handles"""
+"""Actions and handles. Apparently needs to be more documented."""
 
 from api.v1.views import app_views
 from models import storage
