@@ -12,7 +12,7 @@ from models import storage
                  strict_slashes=False)
 def all_users():
     """ GET ALL USERS """
-    
+
     objs = storage.all(User).values()
     list_obj = []
     for obj in objs:
