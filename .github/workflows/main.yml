@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.8]
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.labels.*.name, 'dependencies')
     steps:
     - uses: actions/checkout@v2
     - name: Install Python 3
@@ -53,7 +54,6 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         pr_label: "feature, automated pr"
         pr_title: "[Example] Simple demo"
-    if: github.event.pull_request.user.login == 'dependabot[bot]' && contains(github.event.pull_request.labels.*.name, 'dependencies')
     - uses: alexwilson/enable-github-automerge-action@main
       with:
         github-token: "${{ secrets.GITHUB_TOKEN }}"
