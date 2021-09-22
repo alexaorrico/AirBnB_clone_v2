@@ -10,4 +10,5 @@ models/engine/__pycache__
 **/__pycache__
 models/engine/__pycache__/
 tests/test_models/test_engine/__pycache__/test_db_storage.cpython-38.pyc
-modified:   tests/test_models/test_engine/__pycache__/
+tests/test_models/test_engine/__pycache__/
+.vscode/
