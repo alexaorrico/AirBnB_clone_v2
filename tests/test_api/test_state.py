@@ -24,6 +24,7 @@ class FlaskTestCase(unittest.TestCase):
         response = tester.get('/api/v1/states', content_type='html/text')
         self.assertEqual(response.content_type, 'application/json')
 
+
     def test_post_methoc(self):
         tester = app.test_client(self)
         response = tester.post('/api/v1/states', json=self.data)
