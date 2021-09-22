@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-"""Actions and handles. Apparently needs to be more documented."""
+"""Module for actions and handles Apparently needs to be more documented."""
 
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from models.state import State
 
 
@@ -32,7 +32,7 @@ def delete_state(state_id):
     """Deletes a state object"""
     state_del = storage.get(State, state_id)
     if state_del is None:
-        abort 404
+        abort(404)
     else:
         storage.delete(state_del)
         storage.save()
