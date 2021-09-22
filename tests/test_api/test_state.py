@@ -54,6 +54,7 @@ class FlaskTestCase(unittest.TestCase):
 
 
 
+
     def test_get_method_by_id(self):
         tester = app.test_client(self)
         response = tester.post('/api/v1/states', json=self.data)
