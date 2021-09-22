@@ -10,11 +10,11 @@ from models.city import City
 from models import storage
 from models.user import User
 
-@app_views.route('\status')
+@app_views.route('/status')
 def json_return():
     return jsonify({'status': "OK"})
 
-@app_views.route('\stats')
+@app_views.route('/stats')
 def return_num_objects():
     classes = {"amenities": Amenity, "cities": City, "places": Place,
                 "reviews": Review, "states": State, "users": User}
