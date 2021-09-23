@@ -8,6 +8,7 @@ from models import storage, place
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.review import Review
 
 
 @app_views.route('/places/<place_id>/reviews',
@@ -68,7 +69,7 @@ def review_post(place_id):
         abort(400, "Missing user_id")
     if "name" not in request.get_json().keys():
         abort(400, "Missing name")
-        if "text" not in request.get_json().keys():
+    if "text" not in request.get_json().keys():
         abort(400, "Missing text")
     else:
         my_place['place_id'] = place_id
@@ -84,7 +85,7 @@ def review_put(review_id):
     """
     Updates a place object
     """
-    review = storage.get("Place", place_id)
+    review = storage.get("Review", review_id)
     if review is None:
         abort(404)
     my_review = request.get_json()
@@ -92,7 +93,8 @@ def review_put(review_id):
         abort(400, "Not a JSON")
     else:
         for key, value in my_review.items():
-            if key in ['id', 'user_id', 'created_at', 'updated_at', 'place_id']:
+            if key in ['id', 'user_id', 'created_at',
+                       'updated_at', 'place_id']:
                 pass
             else:
                 setattr(review, key, value)
