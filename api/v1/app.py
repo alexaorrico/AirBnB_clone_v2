@@ -7,9 +7,11 @@ from models import storage
 from api.v1.views import app_views
 from flask import Blueprint, render_template, abort
 from flask import Flask, jsonify, Response, make_response
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app, orgins='0.0.0.0')
 app.register_blueprint(app_views)
 
 hbnb_api_host = getenv('HBNB_API_HOST', default='0.0.0.0')
