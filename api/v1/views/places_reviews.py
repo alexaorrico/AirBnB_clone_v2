@@ -3,7 +3,7 @@
 script that starts a Flask web application:
 """
 from api.v1.views import app_views
-from flask import request, jsonify, abort
+from flask import request, jsonify, abort, make_response
 from models import storage, place
 from models.place import Place
 from models.city import City
@@ -58,25 +58,23 @@ def review_post(place_id):
     """
     Creates a Review
     """
-
-    my_place = request.get_json()
-    place = storage.get('Place', place_id)
+    my_request = request.get_json()
+    place = storage.get("Place", place_id)
     if place is None:
         abort(404)
     if not request.get_json():
         abort(400, "Not a JSON")
-    if "user_id" not in request.get_json().keys():
+    if 'user_id' not in my_request:
         abort(400, "Missing user_id")
-    if "name" not in request.get_json().keys():
-        abort(400, "Missing name")
-    if "text" not in request.get_json().keys():
+    user = storage.get("User", my_request['user_id'])
+    if user is None:
+        abort(404)
+    if 'text' not in my_request:
         abort(400, "Missing text")
-    else:
-        my_place['place_id'] = place_id
-        revieww = Review(**my_place)
-        revieww.save()
-        resp = jsonify(revieww.to_dict())
-        return (resp), 201
+    my_request['place_id'] = place_id
+    review = Review(**my_request)
+    review.save()
+    return jsonify(review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>',
