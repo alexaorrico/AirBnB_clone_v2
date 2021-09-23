@@ -83,7 +83,7 @@ def review_post(place_id):
                  methods=['PUT'], strict_slashes=False)
 def review_put(review_id):
     """
-    Updates a place object
+    Updates place object
     """
     review = storage.get("Review", review_id)
     if review is None:
