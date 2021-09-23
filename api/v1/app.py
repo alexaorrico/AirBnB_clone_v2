@@ -11,7 +11,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app, orgins='0.0.0.0')
+CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 hbnb_api_host = getenv('HBNB_API_HOST', default='0.0.0.0')
