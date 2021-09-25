@@ -18,7 +18,7 @@ def close_db(error):
     storage.close()
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route('/0-hbnb', strict_slashes=False)
 def hbnb():
     """ HBNB is alive! """
     states = storage.all(State).values()
