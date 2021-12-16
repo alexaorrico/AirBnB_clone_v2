@@ -1,0 +1,5 @@
+file.json
+*.pyc
+*__pycache__*
+*main*
+*dump.sql
