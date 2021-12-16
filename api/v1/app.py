@@ -11,3 +11,11 @@ from flask import Flask, make_response, jsonify
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
+
+
+@app.teardown_appcontext
+def close_storage(exception):
+    """"
+    calls storage.close() method
+    """
+    storage.close()
