@@ -157,6 +157,7 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Jeffrey Winikoff - [Github](https://github.com/jswini) / [Email](jeffrey.winikoff@holbertonschool.com)
+Se Yong Kim - [Github](github link) / [Email] (insert email here)
 
 Second part of Airbnb: Joann Vuong
 ## License
