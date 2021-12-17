@@ -21,11 +21,11 @@ def places_reviews(places_id):
                 all_places.append(key.to_dict())
             return jsonify(all_places)
         abort(404)
-    
+
     if request.method == 'POST':
         if not request.is_json:
             return "Not a JSON", 400
-        
+
         place_info = storage.get(Place, places_id)
         if place_info is not None:
             kwargs = {"place_id": places_id}
@@ -35,13 +35,13 @@ def places_reviews(places_id):
 
             if "user_id" not in dict_info.keys():
                 return "Missing user_id", 400
-            
+
             if not storage.get(User, dict_info.get("user_id")):
                 abort(404)
-            
-            if "text" no in dict_info.keys():
+
+            if "text" not in dict_info.keys():
                 return "Missing text", 400
-        
+
             all_places.save()
             return jsonify(all_places.to_dict()), 201
         abort(404)
@@ -55,14 +55,14 @@ def review_ident(review_id):
         if review_info is not None:
             return jsonify(review_info.to_dict())
         abort(404)
-    
+
     if request.method == "PUT":
         review_info = storage.get(Review, review_id)
         ignoreKeys = ['id', 'created_at', 'updated_at', 'user_id', 'place_id']
         if review_info is not None:
             if not request.is_json:
                 return "Not a JSON", 400
-            
+
             for key, value in request.get_json().items():
                 if key not in ignoreKeys:
                     setattr(review_info, key, value)
