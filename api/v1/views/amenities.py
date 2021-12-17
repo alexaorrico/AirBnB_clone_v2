@@ -48,11 +48,14 @@ def amenities_id(amenity_id):
     if request.method == "PUT":
         amenity_data = storage.get(Amenity, amenity_id)
         if amenity_data is not None:
+            ignoreKeys = ['id', 'created_at', 'updated_at']
+
             if not request.is_json:
                 return "Not a JSON", 400
 
             for k, v in request.get_json().items():
-                setattr(amenity_data, k, v)
+                if k not in ignoreKeys:
+                    setattr(amenity_data, k, v)
             storage.save()
             return jsonify(amenity_data.to_dict())
         abort(404)
