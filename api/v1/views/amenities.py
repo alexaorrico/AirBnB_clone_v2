@@ -17,7 +17,7 @@ def amenities():
         allAmenities = []
         for key in storage.all("Amenity").values():
             allAmenities.append(key.to_dict())
-        return (allAmenities)
+        return jsonify(allAmenities)
 
     if request.method == "POST":
         if not request.is_json:
@@ -34,7 +34,7 @@ def amenities_id(amenity_id):
     if request.method == 'GET':
         amenity_data = storage.get(Amenity. amenity_id)
         if amenity_data is not None:
-            return amenity_data.to_dict()
+            return jsonify(amenity_data.to_dict())
         abort(404)
 
     if request.method == "PUT":
@@ -46,7 +46,7 @@ def amenities_id(amenity_id):
             for k, v in request.get_json().items():
                 setattr(amenity_data, k, v)
             storage.save()
-            return amenity_data.to_dict()
+            return jsonify(amenity_data.to_dict())
         abort(404)
 
     if request.method == "DELETE":
@@ -54,5 +54,5 @@ def amenities_id(amenity_id):
         if amenity_data:
             amenity_data.delete()
             storage.save()
-            return {}, 200
+            return jsonify({}), 200
         abort(404)
