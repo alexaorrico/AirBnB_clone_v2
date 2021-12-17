@@ -22,23 +22,31 @@ def allPlaces(city_id):
         abort(404)
 
     if request.method == "POST":
-        kwargs = {"city_id": city_id}
-        kwargs.update(request.get_json())
-        allPlaces = Place(**kwargs)
-        dict_data = allPlaces.to_dict()
-
-        if "user_id" not in dict_data.keys():
-            return "Missing user_id", 400
-        
-        if not storage.get(User, dict_data.get("user_id")):
+        if storage.get(City, city_id) is None:
             abort(404)
-        
-        if "name" not in dict_data.keys():
-            return "Missing name", 400
-        
-        allPlaces.save()
-        return jsonify(allPlaces.to_dict()), 201
-    abort(404)
+
+        if not request.is_json:
+            abort(400, description='Not a JSON')
+
+        jsonReq = request.get_json()
+        jsonReq['city_id'] = city_id
+
+        if 'user_id' not in jsonReq:
+            abort(400, description='Missing name')
+
+        if storage.get(User, jsonReq['user_id']) is None:
+            abort(404)
+
+        if 'name' not in jsonReq:
+            abort(400, description='Missing name')
+
+        newPlace = Place(**jsonReq)
+
+        storage.new(newPlace)
+        storage.save()
+
+        return jsonify(newPlace.to_dict()), 201
+
 
 @app_views.route('/places/<places_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def places_ident(places_id):
@@ -60,11 +68,11 @@ def places_ident(places_id):
                 setattr(place_info, key, value)
         storage.save()
         return jsonify(place_info.to_dict()), 200
-    abort(404)
+        abort(404)
 
     if request.method == "DELETE":
         place_info = storage.get(Place, places_id)
-        if place_info is not None:
+        if place_info:
             storage.delete(place_info)
             storage.save()
             return jsonify({}), 200
