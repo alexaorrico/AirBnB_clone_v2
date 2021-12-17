@@ -15,7 +15,7 @@ def amenities():
     """gets a list of all amenities"""
     if request.method == "GET":
         allAmenities = []
-        for key in storage.all("Amenity").values():
+        for key in storage.all(Amenity).values():
             allAmenities.append(key.to_dict())
         return jsonify(allAmenities)
 
@@ -23,16 +23,24 @@ def amenities():
         if not request.is_json:
             return "Not a JSON", 400
 
-        allAmenities = Amenity(**request.get_json())
-        if "name" not in allAmenities.to_dict().keys():
-            return "Missing name", 201
+        jsonReq = request.get_json()
+
+        if 'name' not in jsonReq:
+            return "Missing name", 400
+
+        newAmenity = Amenity(**jsonReq)
+
+        storage.new(newAmenity)
+        storage.save()
+
+        return jsonify(newAmenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def amenities_id(amenity_id):
     """Updates an amenities objects id"""
     if request.method == 'GET':
-        amenity_data = storage.get(Amenity. amenity_id)
+        amenity_data = storage.get(Amenity, amenity_id)
         if amenity_data is not None:
             return jsonify(amenity_data.to_dict())
         abort(404)
