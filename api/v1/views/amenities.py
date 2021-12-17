@@ -60,7 +60,7 @@ def amenities_id(amenity_id):
     if request.method == "DELETE":
         amenity_data = storage.get(Amenity, amenity_id)
         if amenity_data:
-            amenity_data.delete()
+            storage.delete(amenity_data)
             storage.save()
             return jsonify({}), 200
         abort(404)
