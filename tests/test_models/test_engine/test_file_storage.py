@@ -118,6 +118,10 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test that get is properly returning an object"""
         storage = FileStorage()
+        
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get is properly returning an object"""
         obj = State(name="A")
         obj_id = obj.to_dict()["id"]
         storage.new(obj)
@@ -131,6 +135,9 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test that count is counting the number of objects in storage"""
         storage = FileStorage()
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count is counting the number of objects in storage"""
         num = storage.count()
         obj = State(name="A")
         storage.new(obj)
