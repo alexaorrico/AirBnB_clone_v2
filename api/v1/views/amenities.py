@@ -15,7 +15,7 @@ def amenities():
     """gets a list of all amenities"""
     if request.method == "GET":
         allAmenities = []
-        for key in storage.all("Amenity").values():
+        for key in storage.all(Amenity).values():
             allAmenities.append(key.to_dict())
         return jsonify(allAmenities)
 
@@ -32,7 +32,7 @@ def amenities():
 def amenities_id(amenity_id):
     """Updates an amenities objects id"""
     if request.method == 'GET':
-        amenity_data = storage.get(Amenity. amenity_id)
+        amenity_data = storage.get(Amenity, amenity_id)
         if amenity_data is not None:
             return jsonify(amenity_data.to_dict())
         abort(404)
