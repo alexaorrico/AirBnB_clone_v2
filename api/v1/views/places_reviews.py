@@ -9,7 +9,8 @@ from models.user import User
 from models.place import Place
 
 
-@app_views.route('/places/<places_id>/reviews', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/places/<places_id>/reviews', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def places_reviews(places_id):
     """retrieves a list of all place objects"""
     if request.method == "GET":
@@ -47,7 +48,8 @@ def places_reviews(places_id):
         abort(404)
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+@app_views.route('/reviews/<review_id>', methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
 def review_ident(review_id):
     """"updates a review object"""
     if request.method == "GET":

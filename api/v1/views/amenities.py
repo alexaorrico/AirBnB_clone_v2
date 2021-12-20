@@ -36,7 +36,8 @@ def amenities():
         return jsonify(newAmenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
 def amenities_id(amenity_id):
     """Updates an amenities objects id"""
     if request.method == 'GET':

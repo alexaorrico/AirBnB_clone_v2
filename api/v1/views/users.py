@@ -34,7 +34,8 @@ def allUsers():
         return jsonify(newUser.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
 def user_id(user_id):
     """updates user_id"""
     if request.method == 'GET':

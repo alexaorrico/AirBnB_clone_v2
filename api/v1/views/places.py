@@ -8,7 +8,8 @@ from models.user import User
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def allPlaces(city_id):
     """retrieves a list of all place objects"""
     if request.method == "GET":
@@ -48,7 +49,8 @@ def allPlaces(city_id):
         return jsonify(newPlace.to_dict()), 201
 
 
-@app_views.route('/places/<places_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+@app_views.route('/places/<places_id>', methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
 def places_ident(places_id):
     """updates a place object"""
     if request.method == "GET":
