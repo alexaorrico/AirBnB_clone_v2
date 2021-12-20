@@ -76,12 +76,14 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """This method retrieves 1 object"""
+        """This method retrieves 1 object based on id of member class"""
+        print(self.__session)
         if cls in classes:
-            return self.all(cls)
-        elif id in self.__session:
+            if id in cls:
+                print(id)
             return self.id
         else:
+            print(self.id)
             return "None"
 
     def count(self, cls=None):
