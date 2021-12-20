@@ -77,22 +77,32 @@ class DBStorage:
 
     def get(self, cls, id):
         """This method retrieves 1 object based on id of member class"""
-        print(self.__session)
+        """ print(self.__session)
         if cls in classes:
             if id in cls:
                 print(id)
             return self.id
         else:
             print(self.id)
-            return "None"
+            return "None" """
+        object_list = self.__session.query(cls).filter_by(id = id)
+        for object in object_list:
+            if object.id == str(id):
+                return object
+            else:
+                return None
 
     def count(self, cls=None):
         """This method counts the number of objects in the DB"""
-        count = 0
+        """ count = 0
         for key in classes:
             if key == cls:
                 count += 1
         for item in self.all():
             if item is not None:
                 count += 1
+        return count """
+        count = 0
+        class_dict = self.all(cls)
+        count = len(class_dict)
         return count
