@@ -41,6 +41,7 @@ def del_city(id):
         abort(404)
     else:
         storage.delete(get_city)
+        storage.save()
         return empty_dict, 200
 
 
@@ -52,17 +53,18 @@ def create_city(id):
     get_state = storage.get(State, id)
     if get_state is None:
         abort(404)
-    if not request.is_json:
+    elif not request.is_json:
         abort(400, description="Not a JSON")
-    if 'name' not in city_json:
-        abort(404, description="Missing name")
-    
+    elif 'name' not in city_json:
+        abort(400, description="Missing name")
+    else:
         ###########################################
         ###########################################
         # how to actually create new city object? #
         ###########################################
         ###########################################
-    
+        return 201
+
 
 @app_view.route('/api/v1/cities/<city_id>', methods=["PUT"],
                 strict_slashes=False)
@@ -73,9 +75,11 @@ def update_city(id):
     ignored_keys = ['id', 'state_id', 'created_at', 'updated_at']
     if get_city is None:
         abort(404)
-    if not request.is_json:
+    elif not request.is_json:
         abort(400, description="Not a JSON")
-    for key, value in city_json.items:
-        if key not in ignored_keys:
-            setattr(get_city, key, value)
-    return jsonify(get_city.to_dict()), 201
+    else:
+        for key, value in city_json.items:
+            if key not in ignored_keys:
+                setattr(get_city, key, value)
+            storage.save()
+        return jsonify(get_city.to_dict()), 200
