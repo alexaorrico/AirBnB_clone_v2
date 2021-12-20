@@ -6,6 +6,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 
+
 @app_views.route('/api/v1/states/<state_id>/cities', methods=["GET"],
                  strict_slashes=False)
 def get_cities_from_state(id):
@@ -56,13 +57,12 @@ def create_city(id):
         abort(400, description="Not a JSON")
     if 'name' not in city_json:
         abort(404, description="Missing name")
-    
         ###########################################
         ###########################################
         # how to actually create new city object? #
         ###########################################
         ###########################################
-    
+
 
 @app_view.route('/api/v1/cities/<city_id>', methods=["PUT"],
                 strict_slashes=False)
