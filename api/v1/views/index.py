@@ -11,12 +11,12 @@ from models import storage
 @app_views.route("/status", methods=["GET"])
 def status():
     """
-    returns json string
+    status of api
     """
     return jsonify({"status": "OK"})
 
 @app_views.route("/stats", methods=["GET"])
-def stats_class_count():
+def stats():
     """Retrieves the number of each object by type"""
     dic = {
             'amenities': storage.count('Amenity'),
