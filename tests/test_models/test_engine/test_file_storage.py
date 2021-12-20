@@ -6,7 +6,6 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
-from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -69,6 +68,7 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -115,21 +115,28 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_fs_storage_get(self):
-        """Test get method to return object"""
-        storage = FileStorage()
-        new_obj = State(name="OK")
-        obj = storage.get("State", "fake")
-        self.assertIsNone(obj)
+    def test_get(self):
+        """Tests get method"""
+        from models import storage
+        dummy = State(name="Test")
+        dummy.save()
+        get_dummy = storage.get(State, dummy.id)
+        self.assertTrue(dummy is get_dummy, "did not get dummy")
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_fs_storage_count(self):
-        """Test count method to return number of objects"""
-        storage = FileStorage()
-        storage.reload()
-        all_count = storage.count()
-        cls_count = storage.count("State")
-        self.assertIsInstance(all_count, int)
-        self.assertIsInstance(cls_count, int)
-        self.assertGreaterEqual(all_count, cls_count)
+    def test_count_all(self):
+        """Tests count method with no cls"""
+        from models import storage
+        start = storage.count()
+        dummy = State(name="Test")
+        dummy.save()
+        end = storage.count()
+        self.assertEqual(start + 1, end, "Count didn't update")
+
+    def test_count_cls(self):
+        """Tests count with a specific class"""
+        from models import storage
+        start = storage.count(State)
+        dummy = State(name="Test")
+        dummy.save()
+        end = storage.count(State)
+        self.assertEqual(start + 1, end, "Count didn't update")
