@@ -33,7 +33,7 @@ def allPlaces(city_id):
         jsonReq['city_id'] = city_id
 
         if 'user_id' not in jsonReq:
-            abort(400, description='Missing name')
+            abort(400, description='Missing user_id')
 
         if storage.get(User, jsonReq['user_id']) is None:
             abort(404)
