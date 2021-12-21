@@ -68,6 +68,7 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -113,3 +114,29 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Tests get method"""
+        from models import storage
+        dummy = State(name="Test")
+        dummy.save()
+        get_dummy = storage.get(State, dummy.id)
+        self.assertTrue(dummy is get_dummy, "did not get dummy")
+
+    def test_count_all(self):
+        """Tests count method with no cls"""
+        from models import storage
+        start = storage.count()
+        dummy = State(name="Test")
+        dummy.save()
+        end = storage.count()
+        self.assertEqual(start + 1, end, "Count didn't update")
+
+    def test_count_cls(self):
+        """Tests count with a specific class"""
+        from models import storage
+        start = storage.count(State)
+        dummy = State(name="Test")
+        dummy.save()
+        end = storage.count(State)
+        self.assertEqual(start + 1, end, "Count didn't update")
