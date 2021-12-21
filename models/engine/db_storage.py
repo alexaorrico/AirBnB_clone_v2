@@ -85,7 +85,7 @@ class DBStorage:
         else:
             print(self.id)
             return "None" """
-        object_list = self.__session.query(cls).filter_by(id = id)
+        object_list = self.__session.query(cls).filter_by(id=id)
         for object in object_list:
             if object.id == str(id):
                 return object
