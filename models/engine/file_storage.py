@@ -71,11 +71,12 @@ class FileStorage:
 
     def get(self, cls, id):
         """This method retrieves 1 object"""
-        if cls in classes:
-            if id in cls:
-                return self.id
-        else:
-            return None
+        #if cls in classes:
+        objects_dict = self.all(cls)
+        for key in objects_dict:
+            if id in key:
+                return objects_dict[key]
+        return None
 
     def count(self, cls=None):
         """This method counts the number of objects in the DB"""
