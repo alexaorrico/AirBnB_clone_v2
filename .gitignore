@@ -1,2 +1,4 @@
 __pycache__
 file.json
+.vscode/settings.json
+models/engine/__pycache__/file_storage.cpython-38.pyc
