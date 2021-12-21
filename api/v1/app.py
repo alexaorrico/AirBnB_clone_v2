@@ -2,7 +2,7 @@
 """Script checking status of API"""
 
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -15,6 +15,15 @@ app.register_blueprint(app_views)
 def teardown(self):
     """Call on storage.close that handles teardowns"""
     storage.close()
+
+@app.errorhandler(404)
+def not_found_error(e):
+    '''
+    this method displays a json 404 error
+    '''
+    not_found_text = {"error": "Not found"}
+    return jsonify(not_found_text)
+
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST")
