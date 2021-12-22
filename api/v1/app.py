@@ -23,7 +23,7 @@ def not_found_error(e):
     this method displays a json 404 error
     '''
     not_found_text = {"error": "Not found"}
-    return jsonify(not_found_text)
+    return (jsonify(not_found_text), 404)
 
 
 if __name__ == "__main__":
