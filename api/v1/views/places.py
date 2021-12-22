@@ -62,6 +62,10 @@ def places_ident(places_id):
     if request.method == "PUT":
         ignoreKeys = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
         place_info = storage.get(Place, places_id)
+
+        if place_info is None:
+            abort(404)
+
         if not request.is_json:
             return "Not a JSON", 400
 
@@ -70,7 +74,6 @@ def places_ident(places_id):
                 setattr(place_info, key, value)
         storage.save()
         return jsonify(place_info.to_dict()), 200
-        abort(404)
 
     if request.method == "DELETE":
         place_info = storage.get(Place, places_id)
