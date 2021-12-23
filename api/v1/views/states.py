@@ -18,7 +18,7 @@ def all_states():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states(state_id):
     """Gets a state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     else:
@@ -27,7 +27,7 @@ def get_states(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_states(state_id):
     """Deletes the states"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -50,8 +50,8 @@ def post_states():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_states(state_id):
     """Put States"""
-    state = storage.get("State", state_id)
-    if state_id is None:
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
     data = request.get_json()
     if data is None:
@@ -60,8 +60,7 @@ def put_states(state_id):
         if key in ['id', 'created_at', 'updated_at']:
             pass
         else:
-            new_info = {"name":state_id}
-            data.update(new_info)
+            setattr(state, key, value)
     storage.save()
-    # = state.to_dict()
-    return jsonify(data), 200
+    all_state = state.to_dict()
+    return jsonify(all_state), 200
