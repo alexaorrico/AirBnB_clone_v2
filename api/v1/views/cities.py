@@ -15,7 +15,7 @@ def all_cities(state_id):
     finds all city objects and returns them
     '''
     all_cities = []
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
