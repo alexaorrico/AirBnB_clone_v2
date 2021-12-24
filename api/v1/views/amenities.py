@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from models.amenity import Amenity
 
 
-@app_view.route('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def all_amenities():
     """All amenities"""
     all_amenities = []
