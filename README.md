@@ -154,11 +154,14 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+<strong>First Part of Airbnb Clone</strong><br>
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
-Second part of Airbnb: Joann Vuong
-Third part of Airbnb::
+<br>
+<strong>Second part of Airbnb Clone</strong><br>
+Joann Vuong
+<br>
+<strong>Third part of Airbnb Clone</strong><br>
 Leslie Danai Shumba - [Github](http://github.com/layan2k) / [Twitter](https://twitter.com/layan_2k)
 Richard Osei Juantuah - [Github](https://github.com/mrbridge-mrbridge) / [Twitter](https://twitter.com/mr__bridge)
 ## License
