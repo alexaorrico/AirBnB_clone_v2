@@ -83,9 +83,16 @@ class Place(BaseModel, Base):
         def amenities(self):
             """getter attribute returns the list of Amenity instances"""
             from models.amenity import Amenity
-            amenity_list = []
-            all_amenities = models.storage.all(Amenity)
-            for amenity in all_amenities.values():
-                if amenity.place_id == self.id:
-                    amenity_list.append(amenity)
-            return amenity_list
+            amenities_of_place = []
+            for value in models.storage.all(Amenity).values():
+                if value.id in self.amenity_ids:
+                    amenities_of_place.append(value)
+            return amenities_of_place
+
+        @amenities.setter
+        def amenities(self, value):
+            """Adds an amenity to this Place"""
+            from models.amenity import Amenity
+            if type(value) is Amenity:
+                if value.id not in self.amenity_ids:
+                    self.amenity_ids.append(value.id)
