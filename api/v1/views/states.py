@@ -70,6 +70,7 @@ def add_state(state_id=None):
 def update_state(state_id=None):
     '''Updates the state with the given id.
     '''
+    xkeys = ('id', 'created_at', 'updated_at')
     all_states = storage.all(State).values()
     res = list(filter(lambda x: x.id == state_id, all_states))
     if res:
@@ -78,7 +79,7 @@ def update_state(state_id=None):
             raise BadRequest(description='Not a JSON')
         old_state = res[0]
         for key, value in data.items():
-            if key not in ('id', 'created_at', 'updated_at'):
+            if key not in xkeys:
                 setattr(old_state, key, value)
         old_state.save()
         return jsonify(old_state.to_dict()), 200

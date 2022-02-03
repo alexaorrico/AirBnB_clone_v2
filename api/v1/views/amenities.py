@@ -70,6 +70,7 @@ def add_amenity(amenity_id=None):
 def update_amenity(amenity_id=None):
     '''Updates the amenity with the given id.
     '''
+    xkeys = ('id', 'created_at', 'updated_at')
     all_amenities = storage.all(Amenity).values()
     res = list(filter(lambda x: x.id == amenity_id, all_amenities))
     if res:
@@ -78,7 +79,7 @@ def update_amenity(amenity_id=None):
             raise BadRequest(description='Not a JSON')
         old_amenity = res[0]
         for key, value in data.items():
-            if key not in ('id', 'created_at', 'updated_at'):
+            if key not in xkeys:
                 setattr(old_amenity, key, value)
         old_amenity.save()
         return jsonify(old_amenity.to_dict()), 200

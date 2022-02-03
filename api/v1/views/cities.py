@@ -115,6 +115,7 @@ def add_city(state_id=None, city_id=None):
 def update_city(state_id=None, city_id=None):
     '''Updates the city with the given id.
     '''
+    xkeys = ('id', 'state_id', 'created_at', 'updated_at')
     if city_id:
         old_city = storage.get(City, city_id)
         if old_city:
@@ -122,7 +123,7 @@ def update_city(state_id=None, city_id=None):
             if not data:
                 raise BadRequest(description='Not a JSON')
             for key, value in data.items():
-                if key not in ('id', 'state_id', 'created_at', 'updated_at'):
+                if key not in xkeys:
                     setattr(old_city, key, value)
             old_city.save()
             return jsonify(old_city.to_dict()), 200

@@ -72,6 +72,7 @@ def add_user(user_id=None):
 def update_user(user_id=None):
     '''Updates the user with the given id.
     '''
+    xkeys = ('id', 'created_at', 'updated_at')
     all_users = storage.all(User).values()
     res = list(filter(lambda x: x.id == user_id, all_users))
     if res:
@@ -80,7 +81,7 @@ def update_user(user_id=None):
             raise BadRequest(description='Not a JSON')
         old_user = res[0]
         for key, value in data.items():
-            if key not in ('id', 'created_at', 'updated_at'):
+            if key not in xkeys:
                 setattr(old_user, key, value)
         old_user.save()
         return jsonify(old_user.to_dict()), 200
