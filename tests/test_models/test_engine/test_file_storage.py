@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+import sys
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +114,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        '''test that get method works properly'''
+        storage = FileStorage()
+        getobj = storage.get(State, '02314')
+        self.assertEqual(getobj, None)
+
+        newobj = City(name='figuig')
+        newobj.save()
+        obj_id = newobj.id
+        getobj = storage.get(City, obj_id)
+        self.assertEqual(getobj, newobj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        '''test that count method works properly'''
+        storage = FileStorage()
+        state_count = storage.count(State)
+        storage_count = len(storage.all(State))
+        self.assertEqual(state_count, storage_count)
+
+        newobj = State(name='oujda')
+        newobj.save()
+        state_count = storage.count(State)
+        storage_count += 1
+        self.assertEqual(state_count, storage_count)
+
+        state_count = storage.count()
+        storage_count = len(storage.all())
+        self.assertEqual(state_count, storage_count)
