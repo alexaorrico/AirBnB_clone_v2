@@ -25,46 +25,6 @@ def handle_cities(state_id=None, city_id=None):
     else:
         raise MethodNotAllowed(list(handlers.keys()))
 
-# region
-# @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
-# def handle_states(state_id=None):
-#     '''The method handler for the states endpoint.
-#     '''
-#     handlers = {
-#         'GET': get_states,
-#         'DELETE': remove_state,
-#         'POST': add_state,
-#         'PUT': update_state,
-#     }
-#     if request.method in handlers:
-#         return handlers[request.method](state_id)
-#     else:
-#         raise MethodNotAllowed(list(handlers.keys()))
-
-
-# @app_views.route(
-#     '/states/<state_id>/cities',
-#     methods=['GET', 'DELETE', 'PUT']
-# )
-# @app_views.route(
-#     '/cities/<city_id>',
-#     methods=['GET', 'DELETE', 'PUT']
-# )
-# def handle_cities(city_id=None):
-#     '''The method handler for the cities endpoint.
-#     '''
-#     handlers = {
-#         'GET': get_states,
-#         'DELETE': remove_state,
-#         'POST': add_state,
-#         'PUT': update_state,
-#     }
-#     if request.method in handlers:
-#         return handlers[request.method](city_id)
-#     else:
-#         raise MethodNotAllowed(list(handlers.keys()))
-# endregion
-
 
 def get_cities(state_id=None, city_id=None):
     '''Gets the city with the given id or all cities in
