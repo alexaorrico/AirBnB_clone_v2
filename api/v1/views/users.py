@@ -58,7 +58,7 @@ def add_user(user_id=None):
     '''Adds a new user.
     '''
     data = request.get_json()
-    if not data:
+    if data is None or type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'email' not in data:
         raise BadRequest(description='Missing email')
@@ -77,7 +77,7 @@ def update_user(user_id=None):
     res = list(filter(lambda x: x.id == user_id, all_users))
     if res:
         data = request.get_json()
-        if not data:
+        if data is None or type(data) is not dict:
             raise BadRequest(description='Not a JSON')
         old_user = res[0]
         for key, value in data.items():

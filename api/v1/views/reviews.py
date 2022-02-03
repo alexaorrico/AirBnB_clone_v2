@@ -63,7 +63,7 @@ def add_review(place_id=None, review_id=None):
     if not place:
         raise NotFound()
     data = request.get_json()
-    if not data:
+    if data is None or type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'user_id' not in data:
         raise BadRequest(description='Missing user_id')
@@ -86,7 +86,7 @@ def update_review(place_id=None, review_id=None):
         old_review = storage.get(Review, review_id)
         if old_review:
             data = request.get_json()
-            if not data:
+            if data is None or type(data) is not dict:
                 raise BadRequest(description='Not a JSON')
             for key, value in data.items():
                 if key not in xkeys:
