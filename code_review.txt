@@ -1,2 +1,0 @@
-rayd
-- correction of test cases [find 1 fail]
