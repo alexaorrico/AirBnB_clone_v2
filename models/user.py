@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ holds class User"""
+import hashlib
 import models
+from typing import Any
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
@@ -35,3 +37,12 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+    def __setattr__(self, __name: str, __value: Any) -> None:
+        '''Sets an attribute of this class to a given value.'''
+        if __name == 'password':
+            if type(__value) is str:
+                m = hashlib.md5(bytes(__value, 'utf-8'))
+                self.__dict__['password'] = m.hexdigest()
+        else:
+            self.__dict__[__name] = __value
