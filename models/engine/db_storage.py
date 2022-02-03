@@ -3,6 +3,7 @@
 Contains the class DBStorage
 """
 
+from tkinter.messagebox import NO
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -74,3 +75,15 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """method to retrieve one object"""
+        if cls not in classes:
+            return None
+        key = "{}.{}".format(cls.__name__, id)
+        obj_dict = self.all()
+        return (obj_dict.get(key))
+
+    def count(self, cls=None):
+        """method to count the number of objects in storage"""
+        return (len(self.all(cls)))
