@@ -33,20 +33,13 @@ def get_cities(state_id=None, city_id=None):
     if state_id:
         state = storage.get(State, state_id)
         if state:
-            cities = []
-            for city in state.cities:
-                obj = city.to_dict()
-                if 'places' in obj:
-                    del obj['places']
-                cities.push(obj)
-            return jsonify(cities)
+            all_cities = state.cities
+            all_cities = list(map(lambda x: x.to_dict(), all_cities))
+            return jsonify(all_cities)
     elif city_id:
         city = storage.get(City, city_id)
         if city:
-            obj = city.to_dict()
-            if 'places' in obj:
-                del obj['places']
-            return jsonify(obj)
+            return jsonify(city.to_dict())
     raise NotFound()
 
 
@@ -76,10 +69,7 @@ def add_city(state_id=None, city_id=None):
     setattr(data, 'state_id', state_id)
     new_city = City(**data)
     new_city.save()
-    obj = new_city.to_dict()
-    if 'places' in obj:
-        del obj['places']
-    return jsonify(obj), 201
+    return jsonify(new_city.to_dict()), 201
 
 
 def update_city(state_id=None, city_id=None):
@@ -96,8 +86,5 @@ def update_city(state_id=None, city_id=None):
                 if key not in xkeys:
                     setattr(old_city, key, value)
             old_city.save()
-            obj = old_city.to_dict()
-            if 'places' in obj:
-                del obj['places']
-            return jsonify(obj), 200
+            return jsonify(old_city.to_dict()), 200
     raise NotFound()
