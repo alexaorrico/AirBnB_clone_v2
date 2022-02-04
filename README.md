@@ -159,8 +159,8 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 
-###Version 3:
- * Wuhibeselassie Tamire
- * William Agyemang-Yeboah
+### Version 3:
+ * Wuhibeselassie Tamire - [Github](https://github.com/wuhibe) / [GMail](wuhibetamire710@gmail.com)
+ * William Agyemang-Yeboah - [Github](https://github.com/William-886) / [Gmail](kingliamm93@gmail.com)
 ## License
 Public Domain. No copy write protection.
