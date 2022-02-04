@@ -80,7 +80,7 @@ def updateCity(city_id=None):
 
     body = request.get_json()
     if body is None:
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
     for key in body.keys():
         if key not in ['id', 'created_at', 'updated_at', 'state_id']:
             setattr(obj, key, body[key])
