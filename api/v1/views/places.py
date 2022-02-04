@@ -37,12 +37,13 @@ def get_places(city_id=None, place_id=None):
         if city:
             places = []
             if storage_t == 'db':
-                places.extend(list(map(lambda x: x.to_dict(), city.places)))
+                places = city.places
             else:
-                places.extend(list(filter(
+                places = list(filter(
                     lambda x: x.city_id == city_id,
                     storage.all(Place).values()
-                )))
+                ))
+            places = list(map(lambda x: x.to_dict(), places))
             return jsonify(places)
     elif place_id:
         place = storage.get(Place, place_id)
