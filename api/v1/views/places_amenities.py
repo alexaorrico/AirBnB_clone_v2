@@ -10,7 +10,10 @@ from models.place import Place
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
-@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['DELETE', 'POST'])
+@app_views.route(
+    '/places/<place_id>/amenities/<amenity_id>',
+    methods=['DELETE', 'POST']
+)
 def handle_places_amenities(place_id=None, amenity_id=None):
     '''The method handler for the places endpoint.
     '''
@@ -40,10 +43,10 @@ def remove_place_amenity(place_id=None, amenity_id=None):
     '''Removes an amenity with a given id from a place with a given id.
     '''
     if place_id and amenity_id:
-        place : Place = storage.get(Place, place_id)
+        place = storage.get(Place, place_id)
         if not place:
             raise NotFound()
-        amenity : Amenity = storage.get(Amenity, amenity_id)
+        amenity = storage.get(Amenity, amenity_id)
         if not amenity:
             raise NotFound()
         place_amenity_link = list(
@@ -72,10 +75,10 @@ def add_place_amenity(place_id=None, amenity_id=None):
     '''Adds an amenity with a given id to a place with a given id.
     '''
     if place_id and amenity_id:
-        place : Place = storage.get(Place, place_id)
+        place = storage.get(Place, place_id)
         if not place:
             raise NotFound()
-        amenity : Amenity = storage.get(Amenity, amenity_id)
+        amenity = storage.get(Amenity, amenity_id)
         if not amenity:
             raise NotFound()
         if storage_t == 'db':

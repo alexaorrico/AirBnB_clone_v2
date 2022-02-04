@@ -113,7 +113,7 @@ def find_places():
     )
     if keys_status[0]:
         for state_id in data['states']:
-            state : State = storage.get(State, state_id)
+            state = storage.get(State, state_id)
             if not state:
                 continue
             for city in state.cities:
@@ -124,7 +124,7 @@ def find_places():
                 places_id.extend(list((map(lambda x: x.id, new_places))))
     if keys_status[1]:
         for city_id in data['cities']:
-            city : City = storage.get(City, city_id)
+            city = storage.get(City, city_id)
             if city:
                 new_places = list(
                     filter(lambda x: x.id not in places_id, city.places)
