@@ -8,13 +8,8 @@ from models import storage
 from api.v1.views import app_views
 
 app = Flask(__name__)
-app_views = app
 
-"""app.register_blueprint(app_views)
-app.register_blueprint(app_views)"""
-
-app_views = Blueprint('app_views', app)
-
+app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def tear(self):
@@ -24,11 +19,9 @@ def tear(self):
 
 if __name__ == "__main__":
 
-    if getenv("HBNB_API_HOST") is None:
-        HBNB_API_HOST = "0.0.0.0"
+    HBNB_API_HOST = getenv("HBNB_API_HOST") or "0.0.0.0"
 
-    if getenv("HBNB_API_PORT") is None:
-        HBNB_API_PORT = 5000
+    HBNB_API_PORT = getenv("HBNB_API_PORT") or 5000 
 
     app.run(host=HBNB_API_HOST, port=int(
         HBNB_API_PORT), debug=True, threaded=True)
