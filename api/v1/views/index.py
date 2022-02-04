@@ -3,8 +3,10 @@
 Script that starts a Flask web application
 """
 from api.v1.views import app_views
-from flask import jsonify
+
 from models import storage
+from flask import jsonify
+
 
 classes = ["Amenity", "City", "Place", "Review", "State", "User"]
 
