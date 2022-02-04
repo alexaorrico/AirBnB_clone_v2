@@ -17,7 +17,8 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class FileStorage:
-    """serializes instances to a JSON file & deserializes back to instances"""
+    """serializes instances to a JSON file &
+    deserializes back to instances"""
 
     # string - path to the JSON file
     __file_path = "file.json"
@@ -54,7 +55,8 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
+                self.__objects[key] = classes[
+                    jo[key]["__class__"]](**jo[key])
         except:
             pass
 
@@ -68,3 +70,13 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """ retrieves one object """
+        if cls and id:
+            return self.all(cls).get('{}.{}'.format(cls, id))
+        return None
+
+    def count(self, cls=None):
+        """ number of objects in storage matching the given class. """
+        return (self.all(cls).__len__())
