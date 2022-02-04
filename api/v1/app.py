@@ -24,7 +24,7 @@ def teardown(exception):
 def errorhandler(error):
     '''404 error handler'''
     return make_response(jsonify({'error': 'Not found'}), 400)
-    
+
 
 if __name__ == '__main__':
     host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
