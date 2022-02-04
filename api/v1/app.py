@@ -2,7 +2,7 @@
 """
 Script that starts a Flask web application
 """
-from flask import Flask
+from flask import Flask, Response, jsonify
 from os import getenv
 from models import storage
 from api.v1.views import app_views
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 def tear(self):
     """Method to handle tearmod"""
     storage.close()
+
+
+@app.error_handler
+def error_message():
+    """ Return JSON file error message """
+    return jsonify({"Error": "400"})
 
 
 if __name__ == "__main__":
