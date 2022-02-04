@@ -3,6 +3,6 @@
 Script that starts a Flask web application
 """
 from flask import Blueprint
-import api.v1.views.index
+from api.v1.views.index import *
 
-app_views = Blueprint(url_prefix='/api/v1')
+app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
