@@ -2,3 +2,4 @@
 file.json
 .env
 env.sh
+test_get_count.py
