@@ -3,11 +3,11 @@
 Script that starts a Flask web application
 """
 
-#from api.v1.views import app_views
+from api.v1.views import app_views
 # Si descomentamos la linea 6, aparece una asignación circular.
-from flask import Flask, jsonify
+from flask import jsonify
 
-app_views = Flask(__name__)
+#app_views = Flask(__name__)
 
 
 @app_views.route('/status')
