@@ -34,7 +34,7 @@ def deleteState(state_id=None):
         if res is not None:
             storage.delete(res)
             storage.save()
-            return jsonify({})
+            return make_response(jsonify({}), 200)
     abort(400)
 
 
@@ -43,9 +43,9 @@ def postState():
     '''posts a new state'''
     body = request.get_json()
     if body is None:
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
     if 'name' not in body.keys():
-        abort(404, 'Missing name')
+        abort(400, 'Missing name')
     obj = State(**body)
     obj.save()
     return make_response(jsonify(obj.to_dict()), 201)
@@ -57,6 +57,8 @@ def updateState(state_id=None):
     if state_id is None:
         abort(404)
     obj = storage.get(State, state_id)
+    if obj is None:
+        abort(404)
 
     body = request.get_json()
     if body is None:
