@@ -34,9 +34,10 @@ def get_reviews(place_id=None, review_id=None):
     if place_id:
         place = storage.get(Place, place_id)
         if place:
-            all_reviews = place.reviews
-            all_reviews = list(map(lambda x: x.to_dict(), all_reviews))
-            return jsonify(all_reviews)
+            reviews = []
+            for review in place.reviews:
+                reviews.append(review.to_dict())
+            return jsonify(reviews)
     elif review_id:
         review = storage.get(Review, review_id)
         if review:
@@ -47,12 +48,11 @@ def get_reviews(place_id=None, review_id=None):
 def remove_review(place_id=None, review_id=None):
     '''Removes a review with the given id.
     '''
-    if review_id:
-        review = storage.get(Review, review_id)
-        if review:
-            storage.delete(review)
-            storage.save()
-            return jsonify({}), 200
+    review = storage.get(Review, review_id)
+    if review:
+        storage.delete(review)
+        storage.save()
+        return jsonify({}), 200
     raise NotFound()
 
 
@@ -83,14 +83,14 @@ def update_review(place_id=None, review_id=None):
     '''
     xkeys = ('id', 'user_id', 'place_id', 'created_at', 'updated_at')
     if review_id:
-        old_review = storage.get(Review, review_id)
-        if old_review:
+        review = storage.get(Review, review_id)
+        if review:
             data = request.get_json()
             if data is None or type(data) is not dict:
                 raise BadRequest(description='Not a JSON')
             for key, value in data.items():
                 if key not in xkeys:
-                    setattr(old_review, key, value)
-            old_review.save()
-            return jsonify(old_review.to_dict()), 200
+                    setattr(review, key, value)
+            review.save()
+            return jsonify(review.to_dict()), 200
     raise NotFound()
