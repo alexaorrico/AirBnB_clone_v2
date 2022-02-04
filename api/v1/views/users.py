@@ -32,23 +32,22 @@ def handle_users(user_id=None):
 def get_users(user_id=None):
     '''Gets the user with the given id or all users.
     '''
-    all_users = storage.all(User).values()
     if user_id:
-        res = list(filter(lambda x: x.id == user_id, all_users))
-        if res:
-            return jsonify(res[0].to_dict())
+        user = storage.get(User, user_id)
+        if user:
+            return jsonify(user.to_dict())
         raise NotFound()
-    all_users = list(map(lambda x: x.to_dict(), all_users))
-    return jsonify(all_users)
+    all_users = storage.all(User).values()
+    users = list(map(lambda x: x.to_dict(), all_users))
+    return jsonify(users)
 
 
 def remove_user(user_id=None):
     '''Removes a user with the given id.
     '''
-    all_users = storage.all(User).values()
-    res = list(filter(lambda x: x.id == user_id, all_users))
-    if res:
-        storage.delete(res[0])
+    user = storage.get(User, user_id)
+    if user:
+        storage.delete(user)
         storage.save()
         return jsonify({}), 200
     raise NotFound()
@@ -72,17 +71,15 @@ def add_user(user_id=None):
 def update_user(user_id=None):
     '''Updates the user with the given id.
     '''
-    xkeys = ('id', 'created_at', 'updated_at')
-    all_users = storage.all(User).values()
-    res = list(filter(lambda x: x.id == user_id, all_users))
-    if res:
+    xkeys = ('id', 'email', 'created_at', 'updated_at')
+    user = storage.get(User, user_id)
+    if user:
         data = request.get_json()
         if data is None or type(data) is not dict:
             raise BadRequest(description='Not a JSON')
-        old_user = res[0]
         for key, value in data.items():
             if key not in xkeys:
-                setattr(old_user, key, value)
-        old_user.save()
-        return jsonify(old_user.to_dict()), 200
+                setattr(user, key, value)
+        user.save()
+        return jsonify(user.to_dict()), 200
     raise NotFound()
