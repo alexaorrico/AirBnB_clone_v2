@@ -2,7 +2,8 @@
 """
 Script that starts a Flask web application
 """
-from flask import Flask, render_template
+from flask import Flask, Blueprint
+from os import getenv
 from models import storage
 from api.v1.views import app_views
 
