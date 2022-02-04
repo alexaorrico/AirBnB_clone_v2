@@ -20,6 +20,7 @@ def tear(self):
     """Method to handle tearmod"""
     storage.close()
 
+
 if __name__ == "__main__":
 
     if getenv("HBNB_API_HOST") is None:
@@ -28,5 +29,5 @@ if __name__ == "__main__":
     if getenv("HBNB_API_PORT") is None:
         HBNB_API_PORT = 5000
 
-    app.run(host=HBNB_API_HOST, port=int(HBNB_API_PORT), debug=True, threaded=True)
-
+    app.run(host=HBNB_API_HOST, port=int(
+        HBNB_API_PORT), debug=True, threaded=True)
