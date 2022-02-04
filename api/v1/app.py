@@ -17,10 +17,11 @@ def tear(self):
     storage.close()
 
 
-@app.error_handler
-def error_message():
+@app.errorhandler(404)
+def error_message(e):
     """ Return JSON file error message """
-    return jsonify({"Error": "400"})
+    #return render_template('profile/timeline.html')
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
