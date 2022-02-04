@@ -3,7 +3,6 @@
 Contains the class DBStorage
 """
 
-from cgi import print_directory
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
