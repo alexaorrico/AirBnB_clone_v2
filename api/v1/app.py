@@ -8,7 +8,7 @@ from models import storage
 from api.v1.views import app_views
 
 app = Flask(__name__)
-app.config["JSONIFY_PRETTYPRINT_REGULAR"]=True
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 app.register_blueprint(app_views)
 
 
@@ -21,7 +21,6 @@ def tear(self):
 @app.errorhandler(404)
 def error_message(e):
     """ Return JSON file error message """
-    #return render_template('profile/timeline.html')
     return jsonify({"error": "Not found"}), 404
 
 
