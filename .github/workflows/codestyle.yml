@@ -1,0 +1,98 @@
+name: CodeStyle
+on: [push]
+jobs:
+  Python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pep8==1.7.0
+          pip install pycodestyle==2.7.0
+      - name: Analyse the code with pycodestyle (PEP8)
+        run: |
+          Src_Files=()
+          Ignored_Files=()
+          readarray -t Src_Files < <(find . -type f | grep -oE '^.*\.py$')
+          readarray -t Ignored_Files < <([ -f '.gh_styles_py_ignore' ] && cat '.gh_styles_py_ignore')
+          chmod 777 ~/.local/lib/python3.8/site-packages/pep8.py
+          for ((i = 0; i < "${#Src_Files[@]}"; i++)) do
+            file="${Src_Files[i]}"
+            skip="0"
+            for ((j = 0; j < "${#Ignored_Files[@]}"; j++)) do
+              if [[ "${Ignored_Files[j]}" == $file ]]; then
+                skip="1"
+                break
+              fi
+            done
+            if [[ "$skip" == "0" ]]; then
+              echo -e "\n========== $file =========="
+              pycodestyle $file
+              ~/.local/lib/python3.8/site-packages/pep8.py $file
+            fi
+          done
+      - run: echo "This job's status is ${{ job.status }}."
+  HTML-CSS-SVG:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          main_dir="$PWD"
+          [ -d ~/tmp ] || mkdir ~/tmp
+          cd ~/tmp && git clone https://github.com/holbertonschool/W3C-Validator.git
+          [ -d ~/tmp/W3C-Validator ] && cd "$main_dir"
+      - name: Validate HTML, CSS and SVG files
+        run: |
+          Src_Files=()
+          Ignored_Files=()
+          readarray -t Src_Files < <(find . -type f | grep -oE '^.*\.(html|htm|css|svg)$')
+          readarray -t Ignored_Files < <([ -f '.gh_styles_web_ignore' ] && cat '.gh_styles_web_ignore')
+          for ((i = 0; i < "${#Src_Files[@]}"; i++)) do
+            file="${Src_Files[i]}"
+            skip="0"
+            for ((j = 0; j < "${#Ignored_Files[@]}"; j++)) do
+              if [[ "${Ignored_Files[j]}" == $file ]]; then
+                skip="1"
+                break
+              fi
+            done
+            if [[ "$skip" == "0" ]]; then
+              echo -e "\n========== $file =========="
+              ~/tmp/W3C-Validator/w3c_validator.py "$file"
+            fi
+          done
+  # JavaScript:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repository code
+  #       uses: actions/checkout@v2
+  #     - name: Install dependencies
+  #       run: |
+  #         main_dir="$PWD"
+  #         [ -d ~/tmp ] || mkdir ~/tmp
+  #         cd ~/tmp && git clone https://github.com/holbertonschool/W3C-Validator.git
+  #         [ -d ~/tmp/W3C-Validator ] && cd "$main_dir"
+  #     - name: Validate HTML, CSS and SVG files
+  #       run: |
+  #         Src_Files=()
+  #         Ignored_Files=()
+  #         readarray -t Src_Files < <(find . -type f | grep -oE '^.*\.(js)$')
+  #         readarray -t Ignored_Files < <([ -f '.gh_styles_js_ignore' ] && cat '.gh_styles_js_ignore')
+  #         for ((i = 0; i < "${#Src_Files[@]}"; i++)) do
+  #           file="${Src_Files[i]}"
+  #           skip="0"
+  #           for ((j = 0; j < "${#Ignored_Files[@]}"; j++)) do
+  #             if [[ "${Ignored_Files[j]}" == $file ]]; then
+  #               skip="1"
+  #               break
+  #             fi
+  #           done
+  #           if [[ "$skip" == "0" ]]; then
+  #             echo -e "\n========== $file =========="
+  #             ~/tmp/W3C-Validator/w3c_validator.py "$file"
+  #           fi
+  #         done

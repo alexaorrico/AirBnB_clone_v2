@@ -1,0 +1,8 @@
+./web_static/4-index.html
+./web_flask/templates/5-number.html
+./web_flask/templates/6-number_odd_or_even.html
+./web_flask/templates/7-states_list.html
+./web_flask/templates/8-cities_by_states.html
+./web_flask/templates/9-states.html
+./web_flask/templates/10-hbnb_filters.html
+./web_flask/templates/100-hbnb.html
