@@ -8,6 +8,7 @@ from models import storage
 from api.v1.views import app_views
 
 app = Flask(__name__)
+app.config["JSONIFY_PRETTYPRINT_REGULAR"]=True
 app.register_blueprint(app_views)
 
 
@@ -31,4 +32,4 @@ if __name__ == "__main__":
     HBNB_API_PORT = getenv("HBNB_API_PORT") or 5000
 
     app.run(host=HBNB_API_HOST, port=int(
-        HBNB_API_PORT), debug=True, threaded=True)
+        HBNB_API_PORT), threaded=True)
