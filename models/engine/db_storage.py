@@ -88,6 +88,6 @@ class DBStorage:
         """Count objects to class selected or all in storage"""
         new_dict = self.all(cls)
         count = 0
-        for object in new_dict.values():
+        for object_all in new_dict.values():
             count += 1
         return count

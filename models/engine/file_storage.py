@@ -81,6 +81,6 @@ class FileStorage:
         """Count the number of objects in storage"""
         count = 0
         new_dict = self.all(cls)
-        for object in new_dict.values():
+        for object_all in new_dict.values():
             count += 1
         return count
