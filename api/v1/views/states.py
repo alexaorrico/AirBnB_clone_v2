@@ -38,7 +38,7 @@ def delete_object(state_id):
         if state.id == state_id:
             state.delete()
             storage.save()
-            return jsonify({}), 404
+            return jsonify({}), 200
     abort(404)
 
 
