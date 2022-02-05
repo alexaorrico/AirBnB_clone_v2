@@ -41,11 +41,12 @@ def get_users(user_id=None):
 def remove_user(user_id=None):
     '''Removes a user with the given id.
     '''
-    user = storage.get(User, user_id)
-    if user:
-        storage.delete(user)
-        storage.save()
-        return jsonify({}), 200
+    if user_id:
+        user = storage.get(User, user_id)
+        if user:
+            storage.delete(user)
+            storage.save()
+            return jsonify({}), 200
     raise NotFound()
 
 
@@ -68,14 +69,15 @@ def update_user(user_id=None):
     '''Updates the user with the given id.
     '''
     xkeys = ('id', 'email', 'created_at', 'updated_at')
-    user = storage.get(User, user_id)
-    if user:
-        data = request.get_json()
-        if data is None or type(data) is not dict:
-            raise BadRequest(description='Not a JSON')
-        for key, value in data.items():
-            if key not in xkeys:
-                setattr(user, key, value)
-        user.save()
-        return jsonify(user.to_dict()), 200
+    if user_id:
+        user = storage.get(User, user_id)
+        if user:
+            data = request.get_json()
+            if data is None or type(data) is not dict:
+                raise BadRequest(description='Not a JSON')
+            for key, value in data.items():
+                if key not in xkeys:
+                    setattr(user, key, value)
+            user.save()
+            return jsonify(user.to_dict()), 200
     raise NotFound()
