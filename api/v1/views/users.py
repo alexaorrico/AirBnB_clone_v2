@@ -4,7 +4,9 @@ from flask import jsonify, request
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
 from api.v1.views import app_views
-from models import storage
+from models import storage, storage_t
+from models.place import Place
+from models.review import Review
 from models.user import User
 
 
@@ -56,6 +58,15 @@ def remove_user(user_id=None):
     if user_id:
         user = storage.get(User, user_id)
         if user:
+            if storage_t != 'db':
+                places = storage.all(Place).values()
+                reviews = storage.all(Review).values()
+                for place in places:
+                    if place.user_id == user_id:
+                        storage.delete(place)
+                for review in reviews:
+                    if review.user_id == user_id:
+                        storage.delete(review)
             storage.delete(user)
             storage.save()
             return jsonify({}), 200
