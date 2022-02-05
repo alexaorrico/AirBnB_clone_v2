@@ -78,7 +78,9 @@ class DBStorage:
     def get(self, cls, id):
         """ retrieves one object """
         if cls and id:
-            return self.__session.query(cls).filter(cls.id == id).first()
+            if type(cls) is str and cls in classes:
+                cls = classes[cls]
+                return self.__session.query(cls).filter(cls.id == id).first()
         return None
 
     def count(self, cls=None):
