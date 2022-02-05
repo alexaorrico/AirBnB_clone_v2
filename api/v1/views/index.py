@@ -7,4 +7,5 @@ from api.v1.views import app_views
 
 @app_views.route('/status', methods=['GET'])
 def status():
+    """ Status code """
     return jsonify({'status': 'OK'})
