@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""view for State objects"""
+"""view for Cities objects"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
@@ -20,7 +20,7 @@ def all_cities(state_id):
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
 def city_by_id(city_id):
-    """Retrieves a state by a given ID"""
+    """Retrieves a city by a given ID"""
     city = storage.get('City', city_id)
     if city is None:
         abort(404)
