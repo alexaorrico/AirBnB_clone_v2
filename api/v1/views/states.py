@@ -48,11 +48,11 @@ def create_object():
     try:
         request_data = request.get_json()
     except Exception:
-        abort(400, 'Not a JSON')
+        return jsonify({"error": "Not a JSON"}), 400
     obj = State(**request_data)
     dict_obj = obj.to_dict()
     if 'name' not in dict_obj:
-        abort(400, 'Missing name')
+        return jsonify({"error": "Missing name"}), 400
     obj.save()
     return jsonify(dict_obj), 201
 
