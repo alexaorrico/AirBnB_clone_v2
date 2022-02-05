@@ -76,7 +76,11 @@ def remove_user(user_id=None):
 def add_user(user_id=None):
     '''Adds a new user.
     '''
-    data = request.get_json()
+    data = {}
+    try:
+        data = request.get_json()
+    except Exception:
+        data = None
     if data is None or type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'email' not in data:
@@ -99,7 +103,11 @@ def update_user(user_id=None):
     if user_id:
         user = storage.get(User, user_id)
         if user:
-            data = request.get_json()
+            data = {}
+            try:
+                data = request.get_json()
+            except Exception:
+                data = None
             if data is None or type(data) is not dict:
                 raise BadRequest(description='Not a JSON')
             for key, value in data.items():
