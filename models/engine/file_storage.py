@@ -85,10 +85,14 @@ class FileStorage:
         count the number of classes in storage
         """
 <<<<<<< HEAD
+<<<<<<< HEAD
         times = 0
         if cls:
             return len(self.all(cls))
         return len(self.all())
+=======
+        return len(self.all(cls).values())
+>>>>>>> fixing storage
 =======
         return len(self.all(cls).values())
 >>>>>>> fixing storage
