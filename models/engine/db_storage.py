@@ -72,11 +72,8 @@ class DBStorage:
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
-        if obj is not None and issubclass(type(obj), BaseModel):
-            self.__session.query(type(obj)).filter(
-                type(obj).id == obj.id).delete(
-                synchronize_session=False
-            )
+        if obj is not None:
+            self.__session.delete(obj)
 
     def reload(self):
         """reloads data from the database"""
