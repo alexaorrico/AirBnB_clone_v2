@@ -1,0 +1,23 @@
+###
+GET http://192.168.29.35:5000/api/v1/amenities/ HTTP/1.1
+
+###
+GET http://192.168.29.35:5000/api/v1/amenities/0402015a-f37c-4295-b24c-7f5ea557cae8 HTTP/1.1
+
+###
+POST http://192.168.29.35:5000/api/v1/amenities/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "test"
+}
+###
+PUT http://192.168.29.35:5000/api/v1/amenities/0402015a-f37c-4295-b24c-7f5ea557cae8 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "updated name"
+}
+
+###
+DELETE http://192.168.29.35:5000/api/v1/amenities/0402015a-f37c-4295-b24c-7f5ea557cae8 HTTP/1.1
