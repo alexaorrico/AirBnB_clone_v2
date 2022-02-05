@@ -27,5 +27,11 @@ def stats():
     return jsonify(processed_stats), 200
 
 
+@app_views.route('/nop', strict_slashes=False)
+def nop():
+    """ Not found page """
+    return jsonify({'error': 'Not found'}), 404
+
+
 if __name__ == '__main__':
     pass
