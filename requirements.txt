@@ -1,6 +1,15 @@
+black==22.1.0
 click==8.0.3
 Flask==2.0.2
+greenlet==1.1.2
 itsdangerous==2.0.1
 Jinja2==3.0.3
 MarkupSafe==2.0.1
+mypy-extensions==0.4.3
+pathspec==0.9.0
+pep8==1.7.1
+platformdirs==2.4.1
+SQLAlchemy==1.4.31
+tomli==2.0.0
+typing_extensions==4.0.1
 Werkzeug==2.0.2
