@@ -8,12 +8,8 @@ from models import storage
 from models.user import User
 
 
-ALLOWED_METHODS = ['GET', 'DELETE', 'POST', 'PUT']
-'''Methods allowed for the users endpoint.'''
-
-
-@app_views.route('/users', methods=ALLOWED_METHODS)
-@app_views.route('/users/<user_id>', methods=ALLOWED_METHODS)
+@app_views.route('/users', methods=['GET', 'POST'])
+@app_views.route('/users/<user_id>', methods=['DELETE', 'PUT'])
 def handle_users(user_id=None):
     '''The method handler for the users endpoint.
     '''
