@@ -170,7 +170,7 @@ def find_places():
                             new_places.append(place)
                 places.extend(new_places)
     del places_id
-    if not all([keys_status[0], keys_status[1]]) or not data:
+    if all([not keys_status[0], not keys_status[1]]) or not data:
         places = all_places
     if keys_status[2]:
         amenity_ids = []
@@ -190,5 +190,10 @@ def find_places():
                     del_indices.append(place.id)
                     break
         places = list(filter(lambda x: x.id not in del_indices, places))
-    places = list(map(lambda x: x.to_dict(), places))
-    return jsonify(places)
+    result = []
+    for place in places:
+        obj = place.to_dict()
+        if 'amenities' in obj:
+            del obj['amenities']
+        result.append(obj)
+    return jsonify(result)
