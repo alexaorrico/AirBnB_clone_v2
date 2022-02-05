@@ -1,0 +1,25 @@
+###
+GET http://192.168.29.35:5000/api/v1/users/ HTTP/1.1
+
+###
+GET http://192.168.29.35:5000/api/v1/users/77c9a43a-0742-41fa-8fe4-710ee1687155 HTTP/1.1
+
+###
+POST http://192.168.29.35:5000/api/v1/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "user@gmail.com",
+    "password": "123456"
+}
+###
+PUT http://192.168.29.35:5000/api/v1/users/77c9a43a-0742-41fa-8fe4-710ee1687155 HTTP/1.1
+Content-Type: application/json
+
+{
+    "first_name": "user name",
+    "last_name": "user last name"
+}
+
+###
+DELETE http://192.168.29.35:5000/api/v1/users/77c9a43a-0742-41fa-8fe4-710ee1687155 HTTP/1.1
