@@ -72,7 +72,7 @@ def add_review(place_id=None, review_id=None):
         raise NotFound()
     if 'text' not in data:
         raise BadRequest(description='Missing text')
-    setattr(data, 'place_id', place_id)
+    data['place_id'] = place_id
     new_review = Review(**data)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
