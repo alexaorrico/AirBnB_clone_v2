@@ -45,30 +45,27 @@ def delete_object(state_id):
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_object():
     """Creates a State object"""
-    try:
-        request_data = request.get_json()
-    except Exception:
+    request_data = request.get_json()
+    if not request_data:
         return jsonify({"error": "Not a JSON"}), 400
-    obj = State(**request_data)
-    dict_obj = obj.to_dict()
-    if 'name' not in dict_obj:
+    if 'name' not in request_data:
         return jsonify({"error": "Missing name"}), 400
+    obj = State(**request_data)
     obj.save()
-    return jsonify(dict_obj), 201
+    return jsonify(obj.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_object(state_id):
     """Update a State object"""
     states = storage.all('State')
-    try:
-        request_data = request.get_json()
-    except Exception:
+    request_data = request.get_json()
+    if not request_data:
         return jsonify({"error": "Not a JSON"}), 400
     for state in states.values():
         if state.id == state_id:
             for k, v in request_data.items():
                 setattr(state, k, v)
-                storage.save()
-                return jsonify(state.to_dict()), 200
+            storage.save()
+            return jsonify(state.to_dict()), 200
     abort(404)
