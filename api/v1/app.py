@@ -11,10 +11,12 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-@app.teardown_appcontext
+
+@app.teardown_appcontext  # Application context
 def teardown(exception):
     """ Call storage.close() """
     storage.close()
+
 
 if __name__ == '__main__':
 
@@ -22,8 +24,8 @@ if __name__ == '__main__':
     port = getenv('HBNB_API_PORT')
 
     if not host:
-        host = "0.0.0.0"  #default host
+        host = "0.0.0.0"  # Default host
     if not port:
-        port = "5000"  #default port
+        port = "5000"  # Default port
 
     app.run(host, port, threaded=True)
