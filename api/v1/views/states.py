@@ -71,3 +71,4 @@ def update_object(state_id):
                 setattr(state, k, v)
                 storage.save()
                 return jsonify(state.to_dict()), 200
+    abort(404)
