@@ -2,7 +2,7 @@
 '''
 Main file to run program
 '''
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views.index import app_views
 from os import getenv
@@ -16,6 +16,13 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     '''Close connection'''
     storage.close()
+
+
+@app.errorhandler(404)
+def error_notfound(error):
+    """featuring 404 error page
+    response: json file"""
+    return make_response(jsonify({'error': "Not found"}), 404)
 
 
 if __name__ == '__main__':
