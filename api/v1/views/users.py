@@ -31,10 +31,22 @@ def get_users(user_id=None):
     if user_id:
         user = storage.get(User, user_id)
         if user:
-            return jsonify(user.to_dict())
+            obj = user.to_dict()
+            if 'places' in obj:
+                del obj['places']
+            if 'reviews' in obj:
+                del obj['reviews']
+            return jsonify(obj)
         raise NotFound()
     all_users = storage.all(User).values()
-    users = list(map(lambda x: x.to_dict(), all_users))
+    users = []
+    for user in all_users:
+        obj = user.to_dict()
+        if 'places' in obj:
+            del obj['places']
+        if 'reviews' in obj:
+            del obj['reviews']
+        users.append(obj)
     return jsonify(users)
 
 
@@ -79,5 +91,10 @@ def update_user(user_id=None):
                 if key not in xkeys:
                     setattr(user, key, value)
             user.save()
-            return jsonify(user.to_dict()), 200
+            obj = user.to_dict()
+            if 'places' in obj:
+                del obj['places']
+            if 'reviews' in obj:
+                del obj['reviews']
+            return jsonify(obj), 200
     raise NotFound()
