@@ -58,6 +58,7 @@ class TestBaseModelDocs(unittest.TestCase):
 
 class TestBaseModel(unittest.TestCase):
     """Test the BaseModel class"""
+
     def test_instantiation(self):
         """Test that object is correctly created"""
         inst = BaseModel()
@@ -90,7 +91,7 @@ class TestBaseModel(unittest.TestCase):
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
-        self.assertTrue(inst1.created_at - tic < toc - tic)
+        self.assertTrue(inst2.created_at - tic < toc - tic)
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
