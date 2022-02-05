@@ -84,7 +84,7 @@ test_db_storage.py'])
         self.assertEqual(type(totalState), int)
         state_id0 = list(models.storage.all(State).values())[0].id
         classGet = models.storage.get(State, state_id0)
-        self.assertEqual(type(classGet), "<class 'models.state.State'>")
+        self.assertEqual(str(type(classGet)), "<class 'models.state.State'>")
 
     def test_get_fs(self):
         """Test fstorage"""
