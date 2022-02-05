@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-"""Status of your API"""
+'''
+Create a folder api at the
+root of the project with an
+empty file __init__.py
+'''
 
 from os import getenv
 from models import storage
