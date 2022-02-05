@@ -9,6 +9,7 @@ from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.state import State
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'])
@@ -35,15 +36,15 @@ def get_places(city_id=None, place_id=None):
     if city_id:
         city = storage.get(City, city_id)
         if city:
-            places = []
+            all_places = []
             if storage_t == 'db':
-                places = city.places
+                all_places = list(city.places)
             else:
-                places = list(filter(
+                all_places = list(filter(
                     lambda x: x.city_id == city_id,
                     storage.all(Place).values()
                 ))
-            places = list(map(lambda x: x.to_dict(), places))
+            places = list(map(lambda x: x.to_dict(), all_places))
             return jsonify(places)
     elif place_id:
         place = storage.get(Place, place_id)
@@ -75,8 +76,8 @@ def add_place(city_id=None, place_id=None):
         raise BadRequest(description='Not a JSON')
     if 'user_id' not in data:
         raise BadRequest(description='Missing user_id')
-    city = storage.get(City, data['user_id'])
-    if not city:
+    user = storage.get(User, data['user_id'])
+    if not user:
         raise NotFound()
     if 'name' not in data:
         raise BadRequest(description='Missing name')
