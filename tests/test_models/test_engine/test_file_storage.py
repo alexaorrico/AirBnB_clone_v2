@@ -115,7 +115,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
 
-
     def test_filestorage_count_cls(self):
         '''
             Tests the count method with class name
@@ -123,12 +122,3 @@ class TestFileStorage(unittest.TestCase):
         all_obj = models.storage.all('State')
         count_all_obj = models.storage.count('State')
         self.assertEqual(len(all_obj), count_all_obj)
-
-    def test_get_db(self):
-        """ Tests method for obtaining an instance db storage"""
-        dic = {"name": "Calabar"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
