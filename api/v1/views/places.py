@@ -75,12 +75,12 @@ def add_place(city_id=None, place_id=None):
         raise BadRequest(description='Not a JSON')
     if 'user_id' not in data:
         raise BadRequest(description='Missing user_id')
-    city = storage.get(City, data['user'])
+    city = storage.get(City, data['user_id'])
     if not city:
         raise NotFound()
     if 'name' not in data:
         raise BadRequest(description='Missing name')
-    setattr(data, 'city_id', city_id)
+    data['city_id'] = city_id
     new_place = Place(**data)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
