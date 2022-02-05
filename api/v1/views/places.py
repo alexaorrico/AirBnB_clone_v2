@@ -111,28 +111,23 @@ def find_places():
     data = request.get_json()
     if data is None or type(data) is not dict:
         raise BadRequest(description='Not a JSON')
+    all_places = storage.all(Place).values()
     places = []
-    all_places = []
     places_id = []
     keys_status = (
-        all(
-            'states' in data,
-            type(data['states']) is list,
-            len(data['states'])
-        ),
-        all(
-            'cities' in data,
-            type(data['cities']) is list,
-            len(data['cities'])
-        ),
-        all(
-            'amenities' in data,
-            type(data['amenities']) is list,
-            len(data['amenities'])
-        )
+        all([
+            'states' in data and type(data['states']) is list,
+            'states' in data and len(data['states'])
+        ]),
+        all([
+            'cities' in data and type(data['cities']) is list,
+            'cities' in data and len(data['cities'])
+        ]),
+        all([
+            'amenities' in data and type(data['amenities']) is list,
+            'amenities' in data and len(data['amenities'])
+        ])
     )
-    if storage_t != 'db':
-        all_places = storage.all(Place).values()
     if keys_status[0]:
         for state_id in data['states']:
             if not state_id:
@@ -175,7 +170,7 @@ def find_places():
                             new_places.append(place)
                 places.extend(new_places)
     del places_id
-    if not (any([keys_status[0], keys_status[1]]) or data):
+    if not all([keys_status[0], keys_status[1]]) or not data:
         places = all_places
     if keys_status[2]:
         amenity_ids = []
