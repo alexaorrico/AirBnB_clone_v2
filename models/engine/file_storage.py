@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 import json
+from tarfile import _Bz2ReadableFileobj
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -72,11 +73,15 @@ class FileStorage:
     def get(self, cls, id):
         """Return the object in funtion of the clase and its id or None else is not found"""
         if id is not None and cls is not None and type(cls) is str and type(id) is str:
-            con = cls + '.' + id
-            obj = self.__objects(con, None)
-            return obj
+            key = cls + '.' + id
+            return self.__objects.get(key, None)  # pythonico o que?
         else:
             return None
 
     def count(self, cls=None):
-        pass
+        """A method to count the number of objects in storage:
+          Returns:
+            [int]: [ the number of objects in storage matching the given class.
+            If no class is passed, returns the count of all objects in storage.]
+        """
+        return len(self.all())
