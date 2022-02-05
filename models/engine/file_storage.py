@@ -74,24 +74,13 @@ class FileStorage:
         cls: __class__
         id: string rep the object id
         """
-        if cls not in classes.values():
-            return None
-
-        allClass = models.storage.all(cls)
-        for val in allClass.values():
-            if (val.id == id):
-                return val
-        return None
+        if cls in classes.values():
+            key = cls.__class__.__name__+ '.' + id
+        elif cls in classes:
+            key = cls + '.' + id
+        return self.__objects.get(key)
 
     def count(self, cls=None):
         """
         """
-        all_classes = classes.values()
-        if not cls:
-            counter = 0
-            for cls_count in all_classes:
-                counter += len(models.storage.all(cls_count).values())
-            else:
-                counter = len(models.storage.all(cls_count).values())
-            return counter
-
+        return len(self.all(cls))
