@@ -74,7 +74,7 @@ def add_city(state_id=None, city_id=None):
         raise BadRequest(description='Not a JSON')
     if 'name' not in data:
         raise BadRequest(description='Missing name')
-    setattr(data, 'state_id', state_id)
+    data['state_id'] = state_id
     city = City(**data)
     city.save()
     return jsonify(city.to_dict()), 201
