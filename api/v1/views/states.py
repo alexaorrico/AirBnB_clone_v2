@@ -64,7 +64,7 @@ def update_object(state_id):
     try:
         request_data = request.get_json()
     except Exception:
-        abort(400, 'Not a JSON')
+        return jsonify({"error": "Not a JSON"}), 400
     for state in states.values():
         if state.id == state_id:
             for k, v in request_data.items():
