@@ -9,7 +9,7 @@ from models.user import User
 
 
 @app_views.route('/users', methods=['GET', 'POST'])
-@app_views.route('/users/<user_id>', methods=['DELETE', 'PUT'])
+@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
 def handle_users(user_id=None):
     '''The method handler for the users endpoint.
     '''
