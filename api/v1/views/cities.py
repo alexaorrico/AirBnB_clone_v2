@@ -19,7 +19,7 @@ def cities(state_id):
 
 
 @app_views.route('/cities/<string:city_id>', strict_slashes=False)
-def city_id(city_id):
+def get_city(city_id):
     """json data of a single city"""
     city = storage.get('City', city_id)
     if city:
