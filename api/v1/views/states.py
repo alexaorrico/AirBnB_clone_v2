@@ -57,7 +57,7 @@ def update_state(state_id):
     '''Update a register from table state filtered by id'''
     state = storage.get(State, state_id)
     if state is None:
-        abort(400)
+        abort(404)
     req = request.get_json(silent=True)
     if req is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
