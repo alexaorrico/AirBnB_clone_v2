@@ -3,15 +3,14 @@
 Import Blueprint to create routes for State
 '''
 from api.v1.views import app_views
-from flask import Response, abort, jsonify, make_response, request
-import json
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
-    '''Get all States'''
+    '''Get all register from table states'''
     states = []
     for state in storage.all(State).values():
         states.append(state.to_dict())
@@ -30,7 +29,7 @@ def show_state(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
-    '''Delete a state'''
+    '''Delete a register from table states'''
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -41,7 +40,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
-    '''Create new state'''
+    '''Create new state for the table states'''
     state = request.get_json()
     if not state:
         abort(400, {'Not a JSON'})
@@ -55,7 +54,7 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
-    '''Update a state'''
+    '''Update a register from table state filtered by id'''
     state = storage.get(State, state_id)
     if state is None:
         abort(400)
