@@ -49,7 +49,7 @@ def statePost():
     nwe_date = State(**date)
     storage.new(nwe_date)
     storage.save()
-    return jsonify(nwe_date.to_dict()), 201
+    return jsonify(storage.get(State, nwe_date.id).to_dict()), 201
 
 
 @app_views.route('/states/<id>', methods=['PUT'])
@@ -66,4 +66,4 @@ def statePut(id):
         if x not in ignore:
             setattr(state, x, y)
     state.save()
-    return jsonify(state.to_dict()), 200
+    return jsonify(storage.get(State, state.id).to_dict()), 200
