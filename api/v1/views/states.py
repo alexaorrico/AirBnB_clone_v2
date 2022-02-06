@@ -6,7 +6,7 @@ from crypt import methods
 from pickle import GET, PUT
 from models import storage
 from api.v1.views import app_views
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, abort, make_response, request
 from models.state import State
 
 
@@ -47,26 +47,25 @@ def state_post(id):
     date = request.get_json()
     if not date:
         abort(400, "Not a JSON")
-    if not date.get('name'):
+    if 'name' not in date.keys():
         abort(400, "Missing name")
     new_date = State(**date)
-    storage.new(new_date)
     storage.save()
-    return jsonify(new_date.to_dict()), 201
+    return make_response(jsonify(new_date.to_dict()), 201)
 
 
 @app_views.route("/states/<id>", methods=["PUT"])
 def state_put(id):
     """update a state object"""
-    dat = request.get_json()
-    if not dat:
-        abort(400, "Not a JSON")
-    Ignore = ['id', 'created_at', 'updated_at']
-    state = storage.get("State", id)
+    state = storage.get(State, id)
     if state is None:
-        abort(404)
-    for x, y in dat.items():
-        if x not in Ignore:
-            setattr(state, x, y)
+        abort(400)
+    if not request.get_json():
+         abort(400, "Not a JSON")
+    dat = request.get_json()
+    Ignore = ['id', 'created_at', 'updated_at']
+    for key, value in dat.items():
+        if key not in Ignore:
+            setattr(state, key, value)
     state.save()
-    return jsonify(state.to_dict()), 200
+    return make_response(jsonify(state.to_dict()), 200)
