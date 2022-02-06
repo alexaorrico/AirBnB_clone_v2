@@ -2,22 +2,22 @@
 GET http://0.0.0.0:5000/api/v1/states/0e391e25-dd3a-45f4-bce3-4d1dea83f3c7/cities HTTP/1.1
 
 ###
-GET http://0.0.0.0:5000/api/v1/cities/f14fefb3-c6e4-42f6-8a5a-ee704a101f8b HTTP/1.1
+GET http://0.0.0.0:5000/api/v1/cities/d6311a66-8d1c-4807-8eef-96207dd3e4bd HTTP/1.1
 
 ###
 POST http://0.0.0.0:5000/api/v1/states/0e391e25-dd3a-45f4-bce3-4d1dea83f3c7/cities HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "test"
+    "name": "Alabama"
 }
 ###
-PUT http://0.0.0.0:5000/api/v1/cities/1533fcae-51d1-4618-b98c-c79f9672c78f HTTP/1.1
+PUT http://0.0.0.0:5000/api/v1/cities/d6311a66-8d1c-4807-8eef-96207dd3e4bd HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "updated city"
+    "name": "Alambam O.g"
 }
 
 ###
-DELETE http://0.0.0.0:5000/api/v1/cities/1533fcae-51d1-4618-b98c-c79f9672c78f HTTP/1.1
+DELETE http://0.0.0.0:5000/api/v1/cities/d6311a66-8d1c-4807-8eef-96207dd3e4bd HTTP/1.1
