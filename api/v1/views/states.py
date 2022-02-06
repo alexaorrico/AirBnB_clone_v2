@@ -3,8 +3,7 @@
 Import Blueprint to create routes for State
 '''
 from api.v1.views import app_views
-from flask import Response, abort, jsonify, make_response, request
-import json
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.state import State
 
