@@ -45,7 +45,7 @@ def state_del(id):
 def state_post(id):
     """create new state"""
     date = request.get_json()
-    if date is None:
+    if not date:
         abort(400, "Not a JSON")
     if not date.get('name'):
         abort(400, "Missing name")
@@ -59,7 +59,7 @@ def state_post(id):
 def state_put(id):
     """update a state object"""
     dat = request.get_json()
-    if dat is None:
+    if not dat:
         abort(400, "Not a JSON")
     Ignore = ['id', 'created_at', 'updated_at']
     state = storage.get("State", id)
