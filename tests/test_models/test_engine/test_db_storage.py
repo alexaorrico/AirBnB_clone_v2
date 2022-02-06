@@ -17,10 +17,52 @@ from models.user import User
 import json
 import os
 import pep8
+
 import unittest
+from models.engine.file_storage import FileStorage
+from models.engine import file_storage
+import pycodestyle
+
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
+
+
+class Test_style(unittest.TestCase):
+    """[Class created to test style and syntax requirements for the
+    base_model class]
+    """
+    @classmethod
+    def setUpClass(cls) -> None:
+        """[list the functions to docstring test]
+        """
+        cls.methods_ds = inspect.getmembers(FileStorage, inspect.isfunction)
+
+    def test_pycode(self):
+        """[Function that check Syntax from Peep8 branch called pycodestyle]
+        """
+        foo = pycodestyle.StyleGuide(quiet=True).check_files([
+            'models/engine/file_storage.py'])
+        self.assertEqual(foo.total_errors, 0,
+                         "Found code style error (and warnings).")
+
+    def test_docstring(self):
+        """[Function to test docstring of the class and the module]
+        """
+        self.assertIsNot(file_storage.__doc__, None,
+                         "file_storage.py needs a docstring")
+        self.assertIsNot(FileStorage.__doc__, None,
+                         "class needs a docstring")
+        self.assertTrue(len(file_storage.__doc__) > 0,
+                        "file_storage.py needs a docstring")
+        self.assertTrue(len(FileStorage.__doc__) > 0,
+                        "class needs a docstring")
+        for method in self.methods_ds:
+            self.assertIsNot(method[1].__doc__, None,
+                             f"{method[0]} needs docstring")
+            self.assertTrue(len(method[1].__doc__) >
+                            0, f"{method[0]} needs docstring")
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -97,7 +139,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertIs(models.storage.get(
             'State', created_state.id), created_state)
         self.assertIs(models.storage.get(
-            'User', created_user.id), created_state)
+            'User', created_user.id), created_user)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):

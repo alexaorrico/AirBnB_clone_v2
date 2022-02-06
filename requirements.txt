@@ -8,6 +8,7 @@ itsdangerous==2.0.1
 Jinja2==3.0.3
 MarkupSafe==2.0.1
 mysqlclient==2.1.0
+pep8==1.7.1
 pycodestyle==2.8.0
 six==1.16.0
 SQLAlchemy==1.4.31
