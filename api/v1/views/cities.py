@@ -12,11 +12,10 @@ def cities(state_id):
     """list all cities by state"""
     state = storage.get('State', state_id)
     if state is None:
-        abort(400)
-    cities = state.cities
-    if cities:
-        return jsonify([value.to_dict() for value in cities]), 200
-    abort(404)
+        abort(404, 'Not found')
+    cities = [obj.to_dict() for obj in (storage.all('City')).values()
+              if obj.state_id == state_id]
+    return jsonify(cities), 200
 
 
 @app_views.route('/cities/<string:city_id>', strict_slashes=False)
