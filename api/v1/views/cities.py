@@ -2,6 +2,7 @@
 """ Module for City objects that handles all default RESTFul API actions """
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response, request
+from models.state import State
 from models.city import City
 from models import storage
 
