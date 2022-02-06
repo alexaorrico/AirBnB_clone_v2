@@ -10,23 +10,25 @@ from models import storage
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-@app_views.route('/states/<state_id>', methods=['GET'])
-def retrieve_state(state_id=None):
-    """ Retrieves the list of all State objects:"""
+def retureve_states():
+    """ Retrieves the list of all State objects"""
     all_states_obj = storage.all(State).values()
-    if state_id is None:
-        states_list = []
-        for item in all_states_obj:
-            states_list.append(item.to_dict())
-        return jsonify(states_list)
-    else:
-        state = storage.get(State, state_id)
-        if not state:
-            abort(404)
-        return jsonify(state.to_dict())
+    states_list = []
+    for item in all_states_obj:
+        states_list.append(item.to_dict())
+    return jsonify(states_list)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+def retrieve_state(state_id=None):
+    """ Retrieves a state"""
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404)
+    return jsonify(state.to_dict())
+
+
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """ Deletes a State object """
     state = storage.get(State, state_id)
@@ -43,9 +45,9 @@ def create_state():
     request_data = request.get_json()
 
     if not request_data:
-        abort(400, '{"error": "Not a JSON"}')
+        abort(400, description="Not a JSON")
     elif 'name' not in request_data:
-        abort(400, '{"error": "Missing name"}')
+        abort(400, description="Missing name")
 
     new_state = State()
     new_state.name = request_data['name']
@@ -54,7 +56,7 @@ def create_state():
     return make_response(jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """ Updates a State object """
     state = storage.get(State, state_id)
@@ -63,7 +65,7 @@ def update_state(state_id):
 
     request_data = request.get_json()
     if not request_data:
-        abort(400, '{"error": "Not a JSON"}')
+        abort(400, description="Not a JSON")
 
     ignore = ['id', 'created_at', 'updated_at']
 
