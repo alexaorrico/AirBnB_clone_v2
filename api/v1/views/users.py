@@ -10,7 +10,7 @@ from models import storage
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_users():
     """ Retrieves list of all User objects """
-    all_users = storage.all(Users).values()
+    all_users = storage.all(User).values()
     users_list = []
 
     for user in all_users:
