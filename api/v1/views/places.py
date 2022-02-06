@@ -51,6 +51,9 @@ def create_place(city_id):
         abort(404)
     if dictionary.get('user_id') is None:
         abort(400, 'Missing user_id')
+    user = storage.get('Cuser', dictionary.get('user_id'))
+    if user is None:
+        abort(404)
     if dictionary.get('name') is None:
         abort(400, 'Missing name')
     dictionary['city_id'] = city_id
