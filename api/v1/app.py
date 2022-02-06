@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""app"""
 
 from os import getenv
 from models import storage

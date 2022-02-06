@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""routes app"""
 
 from flask import Blueprint
 
