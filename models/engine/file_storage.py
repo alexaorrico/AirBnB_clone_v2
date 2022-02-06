@@ -84,7 +84,6 @@ class FileStorage:
         """
         count the number of classes in storage
         """
-        times = 0
         if cls:
             return len(self.all(cls))
         return len(self.all())
