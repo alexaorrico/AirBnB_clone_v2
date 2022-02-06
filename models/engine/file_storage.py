@@ -91,26 +91,3 @@ class FileStorage:
                 count += 1
 
         return count
-
-    def get(self, cls=None, id=None):
-        """Returns obj based on class name and its ID"""
-        if cls is not None and id is not None:
-            for v in self.__objects.values():
-                if cls == v.__class__ or cls == v.__class__.__name__:
-                    if v.id == id:
-                        return v
-
-        return None
-
-    def count(self, cls=None):
-        """Returns the amount of objects"""
-        count = 0
-        if cls is not None and cls in classes:
-            for v in self.__objects.values():
-                if cls == v.__class__ or cls == v.__class__.__name__:
-                    count += 1
-        else:
-            for i in self.__objects.values():
-                count += 1
-
-        return count
