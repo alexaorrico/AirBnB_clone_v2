@@ -9,6 +9,7 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from models.state import State
 
+
 @app_views.route("/states", methods=["GET"])
 def state():
     """state"""
@@ -17,6 +18,7 @@ def state():
     for i in j:
         lists.append(i.to_dict())
     return jsonify(lists)
+
 
 @app_views.route("/states/<id>", methods=["GET"])
 def stateid(id):
@@ -31,7 +33,7 @@ def stateid(id):
 @app_views.route("/states/<id>", methods=["DELETE"])
 def state_del(id):
     """delete state with id"""
-    state = storage.get('State', id )
+    state = storage.get('State', id)
     if state is None:
         abort(404)
     state.delete()
@@ -68,4 +70,3 @@ def state_put(id):
             setattr(state, x, y)
     state.save()
     return jsonify(state.to_dict()), 200
-
