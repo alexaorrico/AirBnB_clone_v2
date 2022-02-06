@@ -63,7 +63,7 @@ def statePut(id):
     if state is None:
         abort(404)
     for x, y in x.items():
-        if x not in ignore:
+        if x != ignore:
             setattr(state, x, y)
     state.save()
     return jsonify(state.to_dict()), 200
