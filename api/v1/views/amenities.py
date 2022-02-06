@@ -59,7 +59,7 @@ def update_amenity(amenity_id):
     '''Update an amenity'''
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
-        abort(400)
+        abort(404)
     req = request.get_json(silent=True)
     if req is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
