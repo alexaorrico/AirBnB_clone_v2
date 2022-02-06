@@ -3,7 +3,6 @@
 Contains the class DBStorage
 """
 
-from re import L
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -81,7 +80,8 @@ class DBStorage:
         if cls is None:
             return None
 
-        objs = self.all(cls)  # first get a ll class objects by calling all() method
+        # first get a ll class objects by calling all() method
+        objs = self.all(cls)
 
         for obj in objs:
             obj_class = obj.__class__
