@@ -57,11 +57,11 @@ def state_post(id):
 @app_views.route("/states/<id>", methods=["PUT"])
 def state_put(id):
     """update a state object"""
-    state = storage.get(State, id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(400)
     if not request.get_json():
-         abort(400, "Not a JSON")
+        abort(400, "Not a JSON")
     dat = request.get_json()
     Ignore = ['id', 'created_at', 'updated_at']
     for key, value in dat.items():
