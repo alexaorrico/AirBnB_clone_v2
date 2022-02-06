@@ -4,7 +4,7 @@
 from os import getenv
 from models import storage
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify, make_response
 
 
 app = Flask(__name__)
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 def teardown_call(self):
     """call"""
     storage.close()
+
+
+@app.errorhandler(404)
+def error_found():
+    """found"""
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
