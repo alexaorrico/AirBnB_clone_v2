@@ -33,7 +33,8 @@ def insert_amenity():
     return make_response(jsonify(user.to_dict()), 201)
 
 
-@app_views.route('/amenities/<string:id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/amenities/<string:id>', strict_slashes=False,
+                 methods=['PUT'])
 def update_amenity(id):
     """ Updates one amenity """
     dictionary = request.get_json()
