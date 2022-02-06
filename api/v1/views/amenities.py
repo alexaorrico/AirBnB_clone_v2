@@ -26,11 +26,13 @@ def amenity_id(id):
 def insert_amenity():
     """ Creates a new amenity """
     dictionary = request.get_json()
+    if dictionary is None:
+        abort(400, 'Not a JSON')
     if dictionary.get('name') is None:
         abort(400, 'Missing name')
-    user = Amenity(**dictionary)
-    user.save()
-    return make_response(jsonify(user.to_dict()), 201)
+    amenity = Amenity(**dictionary)
+    amenity.save()
+    return make_response(jsonify(amenity.to_dict()), 201)
 
 
 @app_views.route('/amenities/<string:id>', strict_slashes=False,
@@ -58,4 +60,4 @@ def delete_amenity(id):
         abort(404, 'Not found')
     single_amenity.delete()
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
