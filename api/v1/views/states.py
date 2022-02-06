@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 """state"""
 
-from ast import Delete
-from crypt import methods
-from pickle import GET, PUT
 from models import storage
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
@@ -31,9 +28,9 @@ def stateid(id):
 
 
 @app_views.route("/states/<id>", methods=['DELETE'], strict_slashes=False)
-def state_del(id):
+def state_del(state_id):
     """delete state with id"""
-    state = storage.get('State', id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -56,13 +53,13 @@ def state_post():
 
 
 @app_views.route("/states/<id>", methods=['PUT'], strict_slashes=False)
-def state_put(id):
+def state_put(state_id):
     """update a state object"""
     dat = request.get_json()
     if dat is None:
         abort(400, "Not a JSON")
     Ignore = ['id', 'created_at', 'updated_at']
-    state = storage.get("State", id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     for x, y in dat.items():
