@@ -7,51 +7,52 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False)
+@app_views.route('/states/<string:state_id>/cities', strict_slashes=False)
 def all_city(state_id):
     """list all cities by state"""
-    state = (storage.get('State', state_id))
-    city = state.cities
-    if city:
-        return jsonify([value.to_dict() for value in city]), 200
+    state = storage.get('State', state_id)
+    if state is None:
+        abort(400)
+    cities = state.cities
+    if cities:
+        return jsonify([value.to_dict() for value in cities]), 200
     abort(404)
 
 
-@app_views.route('/cities/<city_id>', strict_slashes=False)
+@app_views.route('/cities/<string:city_id>', strict_slashes=False)
 def city_id(city_id):
     """json data of a single city"""
-    city = (storage.get('City', city_id))
+    city = storage.get('City', city_id)
     if city:
         return jsonify(city.to_dict()), 200
     abort(404)
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/cities/<string:city_id>', methods=['DELETE'], strict_slashes=False)
 def del_city(city_id):
     """delete json data of a single city"""
     city = (storage.get('City', city_id))
     if city:
         city.delete()
         storage.save()
-        return {}, 200
+        return jsonify({}), 200
     abort(404)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
+@app_views.route('/states/<string:state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def creat_city(state_id):
     """create a new city"""
     dictionary = request.get_json()
-    states = (storage.get('State', state_id))
-    if states is None:
-        abort(404)
     if dictionary is None:
         abort(400, 'Not a JSON')
+    state = storage.get('State', state_id)
+    if state is None:
+        abort(404)
     if dictionary.get('name') is None:
         abort(400, 'Missing name')
-    city = City()
-    city.name = dictionary.get('name')
-    city.state_id = state_id
+    dictionary['state_id'] = state_id
+    city = City(**dictionary)
     city.save()
     return jsonify(city.to_dict()), 201
 

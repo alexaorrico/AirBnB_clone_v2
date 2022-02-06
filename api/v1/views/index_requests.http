@@ -1,18 +1,18 @@
 ###
-GET http://192.168.29.35:5000/api/v1/states/ HTTP/1.1
+GET http://0.0.0.0:5000/api/v1/states/ HTTP/1.1
 
 ###
-GET http://192.168.29.35:5000/api/v1/states/8e8fedc0-b2ed-4c8b-97e2-9a1b9a6958af HTTP/1.1
+GET http://0.0.0.0:5000/api/v1/states/8e8fedc0-b2ed-4c8b-97e2-9a1b9a6958af HTTP/1.1
 
 ###
-POST http://192.168.29.35:5000/api/v1/states/ HTTP/1.1
+POST http://0.0.0.0:5000/api/v1/states/ HTTP/1.1
 Content-Type: application/json
 
 {
     "name": "adsfsfd"
 }
 ###
-PUT http://192.168.29.35:5000/api/v1/states/8e8fedc0-b2ed-4c8b-97e2-9a1b9a6958af HTTP/1.1
+PUT http://0.0.0.0:5000/api/v1/states/8e8fedc0-b2ed-4c8b-97e2-9a1b9a6958af HTTP/1.1
 Content-Type: application/json
 
 {
@@ -20,4 +20,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://192.168.29.35:5000/api/v1/states/8e8fedc0-b2ed-4c8b-97e2-9a1b9a6958af HTTP/1.1
+DELETE http://0.0.0.0:5000/api/v1/states/8e8fedc0-b2ed-4c8b-97e2-9a1b9a6958af HTTP/1.1
