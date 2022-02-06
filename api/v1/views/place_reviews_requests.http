@@ -1,0 +1,25 @@
+###
+GET http://0.0.0.0:5000/api/v1/places/89ddd0bc-2250-4094-8f6d-59b35c0f6891/reviews HTTP/1.1
+
+###
+GET http://0.0.0.0:5000/api/v1/reviews/8cc4ed94-2526-48df-b90b-a531304a8c6a HTTP/1.1
+
+###
+POST http://0.0.0.0:5000/api/v1/places/89ddd0bc-2250-4094-8f6d-59b35c0f6891/reviews HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_id": "8394fd35-8a8a-479f-a398-48f53b4a6554",
+    "text": "this is the the text of this newsuper cool review"
+}
+
+###
+PUT http://0.0.0.0:5000/api/v1/reviews/9cbd5ab3-6ea1-4598-856a-5e8851036738 HTTP/1.1
+Content-Type: application/json
+
+{
+    "text": "Super cool new review updated :)."
+}
+
+###
+DELETE http://0.0.0.0:5000/api/v1/reviews/9cbd5ab3-6ea1-4598-856a-5e8851036738 HTTP/1.1
