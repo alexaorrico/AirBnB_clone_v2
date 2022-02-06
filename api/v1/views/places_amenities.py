@@ -8,7 +8,7 @@ from models.review import Review
 
 
 @app_views.route('/places/<place_id>/amenities', strict_slashes=False)
-def all_reviews(place_id):
+def all_amenities_(place_id):
     """Retrieves the list of all amenities of a place given an ID"""
     amenities_list = []
     place = storage.get('Place', place_id)
