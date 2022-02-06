@@ -42,7 +42,7 @@ def state_del(id):
 
 
 @app_views.route("/states/<id>", methods=["POST"])
-def state_post(id):
+def state_post():
     """create new state"""
     date = request.get_json()
     if date is None:
