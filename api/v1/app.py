@@ -18,7 +18,7 @@ def teardown_call(self):
 
 
 @app.errorhandler(404)
-def error_found():
+def error_found(e):
     """found"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
