@@ -7,8 +7,10 @@ from os import getenv
 from api.v1.views import app_views
 from models import storage
 from flask import Flask, jsonify, make_response
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 
