@@ -76,7 +76,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """ retrieves one object if is class is included """
-        if cls in values:
+        if cls in classes.keys():
             for object in (models.storage.all(cls)).values():
                 if object.id == id:
                     return object
