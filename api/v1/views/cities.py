@@ -27,8 +27,8 @@ def get_all_cities(state_id=None):
     all_cities = storage.all(City).values()
     city_list = []
     for city in all_cities:
-        if state_id == city.to_dict()['state_id']
-        city_list.append(city.to_dict())
+        if state_id == city.to_dict()['state_id']:
+            city_list.append(city.to_dict())
     return jsonify(city_list)
 
 
@@ -67,7 +67,7 @@ def create_city(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_state(city_id):
+def update_city(city_id):
     """ Updates a City object """
     city = storage.get(City, state_id)
     if not city:
