@@ -27,7 +27,7 @@ def teardown_appcontext(self):
 @app.errorhandler(404)
 def error_404(e):
     """ Function that shows a state 404 """
-    return jsonify({"error": "Not found"}, 404)
+    return (jsonify(error="Not found"), 404)
 
 
 if __name__ == "__main__":
