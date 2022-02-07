@@ -151,10 +151,11 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 
 ## Bugs
-No known bugs at this time. 
+No known bugs at this time.
 
 ## Authors
-Cristian Oliveros - [Github](https://github.com/cristian-oli) / [Twitter](https://twitter.com/Cristia27036897)  
+Cristian Oliveros - [Github](https://github.com/cristian-oli) / [Twitter](https://twitter.com/Cristia27036897)
+Alejandra Hincapie - [Github](https://github.com/lahincapie)
 
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
