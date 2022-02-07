@@ -17,20 +17,20 @@ def states_all():
     return jsonify(lists)
 
 
-@app_views.route("/states/<id>", methods=["GET"])
-def state_id(id):
+@app_views.route("/states/<state_id>", methods=["GET"])
+def state_id(state_id):
     """id state retrieve json object"""
-    date = storage.all('State').values()
-    for x in date:
-        if x.id == id:
-            return jsonify(x.to_dict())
-    abort(404)
+    state_obj = storage.get(State, state_id)
+    if state_obj:
+        return jsonify(state_obj.to_dict())
+    else:
+        abort(404)
 
 
-@app_views.route("/states/<id>", methods=["DELETE"])
-def state_delete(id):
+@app_views.route("/states/<state_id>", methods=["DELETE"])
+def state_delete(state_id):
     """delete state with id"""
-    state = storage.get('State', id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -44,26 +44,26 @@ def statePost():
     date = request.get_json()
     if date is None:
         abort(400, "Not a JSON")
-    if not date.get('name'):
+    elif "name" not in date:
         abort(400, "Missing name")
-    nwe_date = State(**date)
-    storage.new(nwe_date)
-    storage.save()
-    return jsonify(nwe_date.to_dict()), 201
+    else:
+        nwe_date = State(**date)
+        nwe_date.save()
+        return jsonify(nwe_date.to_dict()), 201
 
 
-@app_views.route('/states/<id>', methods=['PUT'])
-def statePut(id):
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def statePut(state_id):
     """Update a State object"""
     x = request.get_json()
     if x is None:
         abort(400, "Not a JSON")
     ignore = ['id', 'created_at', 'updated_at']
-    state = storage.get("State", id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     for x, y in x.items():
-        if x not in ignore:
+        if x != ignore:
             setattr(state, x, y)
     state.save()
     return jsonify(state.to_dict()), 200
