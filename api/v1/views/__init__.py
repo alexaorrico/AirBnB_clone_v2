@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 """smth"""
 
 from flask import Blueprint
