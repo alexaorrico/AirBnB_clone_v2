@@ -1,4 +1,4 @@
-#!/usr/bAin/python3
+#!/usr/bin/python3
 """ Module for Place objects that handles all default RESTFul API actions """
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response, request
