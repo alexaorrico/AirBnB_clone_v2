@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """return the first row in state table"""
-        if cls == State:
+        if cls in classes.values():
             first_state = self.__session.query(cls)
             return first_state.first()
         else:
@@ -85,7 +85,7 @@ class DBStorage:
 
     def count(self, cls=None):
         """return the number of the objects"""
-        if cls == State:
+        if cls in classes.values():
             return self.__session.query(cls).count()
         i = 0
         for cls in classes:
