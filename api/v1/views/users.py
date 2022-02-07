@@ -41,38 +41,54 @@ def get_users(user_id=None):
 def remove_user(user_id):
     '''Removes a user with the given id.
     '''
-    if user_id:
-        user = storage.get(User, user_id)
-        if user:
-            storage.delete(user)
-            storage.save()
-            return jsonify({}), 200
+    user = storage.get(User, user_id)
+    if user:
+        storage.delete(user)
+        storage.save()
+        return jsonify({}), 200
     raise NotFound()
 
 
-@app_views.route('/users', methods=['POST'])
-def add_user():
-    '''Adds a new user.
-    '''
-    data = {}
-    try:
-        data = request.get_json()
-    except Exception:
-        data = None
-    if data is None or type(data) is not dict:
+# @app_views.route('/users', methods=['POST'])
+# def add_user():
+#     '''Adds a new user.
+#     '''
+#     data = {}
+#     try:
+#         data = request.get_json()
+#     except Exception:
+#         data = None
+#     if data is None or type(data) is not dict:
+#         raise BadRequest(description='Not a JSON')
+#     if 'email' not in data:
+#         raise BadRequest(description='Missing email')
+#     if 'password' not in data:
+#         raise BadRequest(description='Missing password')
+#     user = User(**data)
+#     user.save()
+#     obj = user.to_dict()
+#     # if 'places' in obj:
+#     #     del obj['places']
+#     # if 'reviews' in obj:
+#     #     del obj['reviews']
+#     return jsonify(obj), 201
+
+
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def create_user():
+    """
+    Creates a use object
+    """
+    data = request.get_json()
+    if not data:
         raise BadRequest(description='Not a JSON')
     if 'email' not in data:
-        raise BadRequest(description='Missing email')
+        return BadRequest(description='Missing email')
     if 'password' not in data:
-        raise BadRequest(description='Missing password')
+        return BadRequest(description='Missing password')
     user = User(**data)
     user.save()
-    obj = user.to_dict()
-    # if 'places' in obj:
-    #     del obj['places']
-    # if 'reviews' in obj:
-    #     del obj['reviews']
-    return jsonify(obj), 201
+    return jsonify(user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
