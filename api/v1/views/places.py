@@ -91,7 +91,7 @@ def search_place():
     of the JSON in the body of the request"""
 
     request_data = request.get_json()
-    places_list = []
+    
 
     if request_data is None:
         abort(404, description="No a JSON")
@@ -106,10 +106,12 @@ def search_place():
        not cities and
        not amenities):
         places = storage.all(Place).values()
+        places_list = []
         for place in places:
             places_list.append(place.to_dict())
         return jsonify(places_list)
 
+    places_list = []
     if states:
         obj = [storage.get(State, state_id) for state_id in states]
         for state in obj:
