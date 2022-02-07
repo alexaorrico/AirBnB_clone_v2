@@ -65,15 +65,11 @@ def create_place(city_id):
     if not user:
         abort(404)
 
-    if 'password' not in request_data:
-        abort(400, description="Missing password")
-
     if 'name' not in request_data:
         abort(400, description="Missing name")
 
     new_place = Place()
     new_place.user_id = request_data['user_id']
-    new_place.password = request_data['password']
     new_place.name = request_data['name']
 
     storage.new(new_place)
