@@ -19,10 +19,11 @@ def close_storage(self):
 @app.errorhandler(404)
 def error_handler(self):
     """return a json if error 404"""
-    return make_response(jsonify({"error" : "Not found"}))
+    return make_response(jsonify({"error": "Not found"}))
 
 
 if __name__ == "__main__":
     hbnb_api_host = getenv('HBNB_API_HOST', default='0.0.0.0')
     hbnb_api_port = getenv('HBNB_API_PORT', default=5000)
-    app.run(host=hbnb_api_host, port=int(hbnb_api_port), threaded=True)
+    app.run(host=hbnb_api_host, port=int(hbnb_api_port),
+            threaded=True, debug=True)
