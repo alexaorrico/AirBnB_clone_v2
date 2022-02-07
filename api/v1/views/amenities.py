@@ -11,9 +11,11 @@ from models import storage
                  methods=['GET'], strict_slashes=False)
 def get_amenities():
     """Retrieves the list of all Amenity objects: GET /api/v1/amenities"""
-    amenity_obj = storage.all(Amenity)
-    for a in amenity_obj.values():
-        return jsonify(a.to_dict())
+    list = []
+    amenity_obj = storage.all(Amenity).values()
+    for a in amenity_obj:
+        list.append(a.to_dict())
+    return jsonify(list)
 
 
 @app_views.route("/amenities/<amenity_id>",
