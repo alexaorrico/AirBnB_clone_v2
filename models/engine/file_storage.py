@@ -55,11 +55,11 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it's inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -74,7 +74,8 @@ class FileStorage:
         if cls is None:
             return None
 
-        objs = self.all(cls)  # first get a ll class objects by calling all() method
+        # first get a ll class objects by calling all() method
+        objs = self.all(cls)
 
         for obj in objs:
             obj_class = obj.__class__
