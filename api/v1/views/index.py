@@ -2,15 +2,16 @@
 """
 API index views module
 """
+from email.policy import strict
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify
 
 
-@app_views.route('/status/')
+@app_views.route('/status', strict_slash=False)
 def status():
     """
-    Returns json response as the status 
+    Returns json response as the status
 
     Returns:
         JSON: json object
@@ -20,7 +21,8 @@ def status():
     }
     return jsonify(status)
 
-@app_views.route('/stats/')
+
+@app_views.route('/stats', strict_slash=False)
 def count():
     """[summary]
     """
@@ -35,5 +37,5 @@ def count():
     count = {}
     for cls in models_avail.keys():
         count[models_avail[cls]] = storage.count(cls)
-    
+
     return jsonify(count)
