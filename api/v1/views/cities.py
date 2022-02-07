@@ -4,7 +4,6 @@ from api.v1.views import app_views
 from api.v1.views import *
 from flask import jsonify, make_response, abort, request
 from models import storage
-from models.city import City
 
 model = "City"
 parent_model = "State"
@@ -24,7 +23,7 @@ def retrieve_city(city_id):
 
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"])
-def delete_city(city_id):
+def del_city(city_id):
     """[DELETE] - deletes a city object with specified id"""
     return del_model(model, city_id)
 
@@ -39,6 +38,6 @@ def create_city(state_id):
 
 @app_views.route("/cities/<city_id>", methods=["PUT"])
 def update_city(city_id):
-    """[PUT] - updates a state object"""
+    """[PUT] - updates a city object"""
     auto_data = ["id", "created_at", "updated_at"]
     return update_model(model, city_id, auto_data)
