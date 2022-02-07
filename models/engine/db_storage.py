@@ -78,12 +78,10 @@ class DBStorage:
     def get(self, cls, id):
         """This a method returns the object based on the class and its ID
         or None """
-        if cls not in classes.values():
-            return None
-
-        classValue = models.storage.all(cls)
+        classValue = self.all()
         for value in classValue.values():
-            if (value.id == id):
+            if (cls == value.__class__ or
+                    cls == value.__class__.__name__) and id == value.id:
                 return value
         return None
 
@@ -91,12 +89,12 @@ class DBStorage:
         """ This a method Returns the number of objects
         in storage matching the given class. If no class is passed,
         returns the count of all objects in storage"""
-        classValue = classes.values()
+        classValue = self.all()
 
-        if not cls:
-            count = 0
-            for clas in classValue:
-                count += len(models.storage.all(clas).values())
-        else:
-            count = len(models.storage.all(cls).values())
+        if cls is None:
+            return(len(classValue))
+        count = 0
+        for value in classValue.values():
+            if cls == value.__class__ or cls == value.__class__.__name__:
+                count += 1
         return count
