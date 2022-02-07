@@ -62,6 +62,7 @@ def create_place(city_id):
         abort(404)
     if 'name' not in req:
         abort(400, {'Missing name'})
+    req['city_id'] = city_id
     new_place = Place(**req)
     storage.new(new_place)
     storage.save()
