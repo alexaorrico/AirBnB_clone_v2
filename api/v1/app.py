@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-"""App.py"""
+#!/usr/bin/python3
+"""Module of the APP configuration"""
 from flask import Flask
 import os
 from models import storage
