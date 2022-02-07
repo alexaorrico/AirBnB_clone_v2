@@ -5,6 +5,8 @@ from werkzeug.exceptions import NotFound, BadRequest
 
 from api.v1.views import app_views
 from models import storage
+from models.place import Place
+from models.review import Review
 from models.user import User
 
 
@@ -63,13 +65,13 @@ def add_user():
         raise BadRequest(description='Missing email')
     if 'password' not in data:
         raise BadRequest(description='Missing password')
-    new_user = User(**data)
-    new_user.save()
-    obj = new_user.to_dict()
-    if 'places' in obj:
-        del obj['places']
-    if 'reviews' in obj:
-        del obj['reviews']
+    user = User(**data)
+    user.save()
+    obj = user.to_dict()
+    # if 'places' in obj:
+    #     del obj['places']
+    # if 'reviews' in obj:
+    #     del obj['reviews']
     return jsonify(obj), 201
 
 
@@ -78,24 +80,23 @@ def update_user(user_id):
     '''Updates the user with the given id.
     '''
     xkeys = ('id', 'email', 'created_at', 'updated_at')
-    if user_id:
-        user = storage.get(User, user_id)
-        if user:
-            data = {}
-            try:
-                data = request.get_json()
-            except Exception:
-                data = None
-            if data is None or type(data) is not dict:
-                raise BadRequest(description='Not a JSON')
-            for key, value in data.items():
-                if key not in xkeys:
-                    setattr(user, key, value)
-            user.save()
-            obj = user.to_dict()
-            if 'places' in obj:
-                del obj['places']
-            if 'reviews' in obj:
-                del obj['reviews']
-            return jsonify(obj), 200
+    user = storage.get(User, user_id)
+    if user:
+        data = {}
+        try:
+            data = request.get_json()
+        except Exception:
+            data = None
+        if data is None or type(data) is not dict:
+            raise BadRequest(description='Not a JSON')
+        for key, value in data.items():
+            if key not in xkeys:
+                setattr(user, key, value)
+        user.save()
+        obj = user.to_dict()
+        # if 'places' in obj:
+        #     del obj['places']
+        # if 'reviews' in obj:
+        #     del obj['reviews']
+        return jsonify(obj), 200
     raise NotFound()
