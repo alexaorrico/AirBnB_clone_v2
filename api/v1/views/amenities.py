@@ -18,7 +18,7 @@ def get_amenities():
 
 @app_views.route("/amenities/<amenity_id>",
                  methods=['GET'], strict_slashes=False)
-def get_amenity(amenities_id=None):
+def get_amenity(amenities_id):
     """Retrieves a Amenity object: GET /api/v1/amenities/<amenity_id>"""
     amenity_obj = storage.get(Amenity, amenities_id)
     if amenity_obj:
@@ -29,7 +29,7 @@ def get_amenity(amenities_id=None):
 
 @app_views.route("/amenities/<amenity_id>",
                  methods=['DELETE'], strict_slashes=False)
-def delete_amenities(amenity_id=None):
+def delete_amenities(amenity_id):
     """Deletes a Amenity object:: DELETE /api/v1/amenities/<amenity_id>"""
     amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj:
@@ -68,7 +68,7 @@ def updates_amenities(amenity_id):
                 ignore = ["id", "created_at", "updated_at"]
                 if key != ignore:
                     setattr(amenity_obj, key, value)
-            amenity_obj.save()
+            storage.save()
             return (jsonify(amenity_obj.to_dict()), 200)
         else:
             abort(400, "Not a JSON")
