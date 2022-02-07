@@ -10,23 +10,25 @@ from models.review import Review
 from models.user import User
 
 
-@app_views.route('/users', methods=['GET', 'POST'])
-@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
-def handle_users(user_id=None):
-    '''The method handler for the users endpoint.
-    '''
-    handlers = {
-        'GET': get_users,
-        'DELETE': remove_user,
-        'POST': add_user,
-        'PUT': update_user,
-    }
-    if request.method in handlers:
-        return handlers[request.method](user_id)
-    else:
-        raise MethodNotAllowed(list(handlers.keys()))
+# @app_views.route('/users', methods=['GET', 'POST'])
+# @app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
+# def handle_users(user_id=None):
+#     '''The method handler for the users endpoint.
+#     '''
+#     handlers = {
+#         'GET': get_users,
+#         'DELETE': remove_user,
+#         'POST': add_user,
+#         'PUT': update_user,
+#     }
+#     if request.method in handlers:
+#         return handlers[request.method](user_id)
+#     else:
+#         raise MethodNotAllowed(list(handlers.keys()))
 
 
+@app_views.route('/users', methods=['GET'])
+@app_views.route('/users/<user_id>', methods=['GET'])
 def get_users(user_id=None):
     '''Gets the user with the given id or all users.
     '''
@@ -52,7 +54,8 @@ def get_users(user_id=None):
     return jsonify(users)
 
 
-def remove_user(user_id=None):
+@app_views.route('/users/<user_id>', methods=['DELETE'])
+def remove_user(user_id):
     '''Removes a user with the given id.
     '''
     if user_id:
@@ -72,6 +75,7 @@ def remove_user(user_id=None):
     raise NotFound()
 
 
+@app_views.route('/users', methods=['POST'])
 def add_user(user_id=None):
     '''Adds a new user.
     '''
@@ -96,7 +100,8 @@ def add_user(user_id=None):
     return jsonify(obj), 201
 
 
-def update_user(user_id=None):
+@app_views.route('/users/<user_id>', methods=['PUT'])
+def update_user(user_id):
     '''Updates the user with the given id.
     '''
     xkeys = ('id', 'email', 'created_at', 'updated_at')
