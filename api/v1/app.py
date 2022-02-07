@@ -17,9 +17,9 @@ def close_storage(self):
 
 
 @app.errorhandler(404)
-def error_handler(error):
+def error_handler(self):
     """return a json if error 404"""
-    return make_response(jsonify({"error": "Not found"}))
+    return make_response(jsonify({"error" : "Not found"}))
 
 
 if __name__ == "__main__":
