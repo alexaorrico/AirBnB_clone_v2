@@ -80,6 +80,7 @@ class DBStorage:
         cls: __class__
         id: string rep the object id
         """
+
         cls_dic = self.all(cls)
         for key in cls_dic.values():
             if key.id == id:
