@@ -12,10 +12,10 @@ from models.city import City
 def allCities(state_id):
     '''Retrieves the list of all City objects of a State:
     GET /api/v1/states/<state_id>/cities'''
-    state = storage.get('State', state_id)
+    listCities = storage.get('State', state_id)
     listCities = []
-    if state:
-        for city in state.cities:
+    if listCities:
+        for city in listCities.values():
             listCities.append(city.to_dict())
         return jsonify(listCities)
     else:
