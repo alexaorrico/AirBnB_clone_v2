@@ -20,9 +20,9 @@ def get_amenities():
 
 @app_views.route("/amenities/<amenity_id>",
                  methods=['GET'], strict_slashes=False)
-def get_amenity(amenities_id):
+def get_amenity(amenity_id):
     """Retrieves a Amenity object: GET /api/v1/amenities/<amenity_id>"""
-    amenity_obj = storage.get(Amenity, amenities_id)
+    amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj:
         return jsonify(amenity_obj.to_dict())
     else:
@@ -48,8 +48,9 @@ def create_amenities():
     """Creates a Amenity: POST /api/v1/amenities"""
     obj_request = request.get_json()
     if obj_request:
-        if 'name' in obj_request:
+        if 'name' in obj_request.keys():
             new_amenity_obj = Amenity(**obj_request)
+            storage.new(new_amenity_obj)
             new_amenity_obj.save()
             return (jsonify(new_amenity_obj.to_dict()), 201)
         else:
