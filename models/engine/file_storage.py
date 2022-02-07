@@ -2,9 +2,8 @@
 """
 Contains the FileStorage class
 """
-import json
 
-import models
+import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -60,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if its inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -71,21 +70,17 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Returns the object based on the class and its ID, or None if
-        or Nonr if not found
-        """
-        if cls not in classes.values():
+        '''retrieves an object of type cls with the passed id
+        or none if not found'''
+        if cls is None:
             return None
-
-        all_cls = models.storage.all(cls)
-        for value in all_cls.values():
-            if value.id == id:
-                return value
-
+        objs = self.all(cls)
+        for obj in objs.values():
+            if obj.id == id:
+                return obj
         return None
 
     def count(self, cls=None):
-        """Returns the number of objects in storage matching the given class.
-        If no class is passed, returns the count of all objects in storage
-        """
+        '''counts ho many objects of type cls in storage or
+        counts all objects of all classes if cls is None'''
         return len(self.all(cls))

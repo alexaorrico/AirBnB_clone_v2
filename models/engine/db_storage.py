@@ -3,17 +3,16 @@
 Contains the class DBStorage
 """
 
-from os import getenv
-
 import models
-import sqlalchemy
 from models.amenity import Amenity
-from models.base_model import Base, BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from os import getenv
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -77,30 +76,14 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Returns the object based on the class and its ID, or None if
-        or Nonr if not found
-        """
-        if cls not in classes.values():
-            return None
-
-        all_cls = models.storage.all(cls)
-        for value in all_cls():
-            if value.id == id:
-                return value
-
-        return None
+        '''retrieves an object of type cls with the passed id
+        or none if not found'''
+        obj = None
+        if cls is not None and issubclass(cls, BaseModel):
+            obj = self.__session.query(cls).filter(cls.id == id).first()
+        return obj
 
     def count(self, cls=None):
-        """Returns the number of objects in storage matching the given class.
-        If no class is passed, returns the count of all objects in storage
-        """
-        all_class = classes.values()
-
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
-        else:
-            count += len(models.storage.all(cls).values())
-
-        return count
+        '''counts ho many objects of type cls in storage or
+        counts all objects of all classes if cls is None'''
+        return len(self.all(cls))

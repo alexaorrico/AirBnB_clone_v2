@@ -3,6 +3,7 @@
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
+import hashlib
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
@@ -27,3 +28,11 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+    def __setattr__(self, __name: str, __value):
+        """Overrides the __setattr__ method"""
+        if __name == "password":
+            md5_hash = hashlib.md5(bytes(__value, "utf-8"))
+            self.__dict__[__name] = md5_hash.hexdigest()
+        else:
+            self.__dict__[__name] = __value
