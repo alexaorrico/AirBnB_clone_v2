@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Mudule which contains the FLASK_APP and represents the entry point"""
-
+from flask_cors import CORS
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
@@ -8,6 +8,8 @@ from os import environ
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
 
 app.register_blueprint(app_views)
 
