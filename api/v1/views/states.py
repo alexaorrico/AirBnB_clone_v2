@@ -2,8 +2,6 @@
 """
 states api view module
 """
-from email.policy import strict
-import re
 from api.v1.views import app_views
 from flask import (
     abort,
