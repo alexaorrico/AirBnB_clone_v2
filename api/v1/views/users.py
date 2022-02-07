@@ -3,8 +3,10 @@
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response, request
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
 from models import storage
-
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -40,7 +42,7 @@ def delete_user(user_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/user', methods=['POST'],
+@app_views.route('/users', methods=['POST'],
                  strict_slashes=False)
 def create_user():
     """ Creates a User """
@@ -48,8 +50,9 @@ def create_user():
 
     if not request_data:
         abort(400, description="Not a JSON")
+
     if 'email' not in request_data:
-        abort(400, description="Missing name")
+        abort(400, description="Missing email")
     if 'password' not in request_data:
         abort(400, description="Missing password")
 
