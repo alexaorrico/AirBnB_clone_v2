@@ -63,13 +63,13 @@ def add_user():
         raise BadRequest(description='Missing email')
     if 'password' not in data:
         raise BadRequest(description='Missing password')
-    if 'places' in data:
-        del data['places']
-    if 'reviews' in data:
-        del data['reviews']
     new_user = User(**data)
     new_user.save()
     obj = new_user.to_dict()
+    if 'places' in obj:
+        del obj['places']
+    if 'reviews' in obj:
+        del obj['reviews']
     return jsonify(obj), 201
 
 
