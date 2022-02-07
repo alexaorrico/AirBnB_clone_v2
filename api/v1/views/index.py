@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ This a index file"""
+
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
@@ -14,7 +15,7 @@ def status():
     return ({"status": "OK"})
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """ Valid method of objects """
     num_obj = {}
