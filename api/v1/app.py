@@ -18,6 +18,11 @@ def page_not_found(e):
     """ handle page not found error """
     return jsonify({"error": "Not found"}), 404
 
+@app.teardown_appcontext
+def teardown(e):
+    """ teardown """
+    storage.close()
+
 
 if __name__ == "__main__":
     app.run(getenv('HBNB_API_HOST'), getenv('HBNB_API_PORT'), threaded=True)
