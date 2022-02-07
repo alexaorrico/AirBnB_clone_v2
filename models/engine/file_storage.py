@@ -2,9 +2,9 @@
 """
 Contains the FileStorage class
 """
-
 import json
 
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -78,7 +78,7 @@ class FileStorage:
             return None
 
         all_cls = models.storage.all(cls)
-        for value in all_cls():
+        for value in all_cls.values():
             if value.id == id:
                 return value
 
