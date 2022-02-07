@@ -30,13 +30,13 @@ def getUserById(user_id=None):
                  strict_slashes=False)
 def deleteUser(user_id=None):
     '''deletes an user'''
-    user = storage.get(User, user_id)
-    
-    if not user:
-        abort(404)
-
-    storage.delete(user)
-    storage.save()
+    if user_id is not None:
+        res = storage.get(User, user_id)
+        if res is not None:
+            storage.delete(res)
+            storage.save()
+            return make_response(jsonify({}), 200)
+    abort(404)
 
 
 @app_views.route('/users',
