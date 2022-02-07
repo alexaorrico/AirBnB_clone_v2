@@ -4,7 +4,7 @@ Main file to run program
 '''
 from flask import Flask, make_response, jsonify
 from models import storage
-from api.v1.views.index import app_views
+from api.v1.views import app_views
 from os import getenv
 
 
