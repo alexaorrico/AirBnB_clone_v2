@@ -24,7 +24,7 @@ def del_model(obj, id):
     """[DELETE] - deletes a model"""
     obj = storage.get(obj, id)
     if not obj:
-        return make_response(jsonify({"error": "Not found"}))
+        return make_response(jsonify({"error": "Not found"}), 404)
 
     storage.delete(obj)
     storage.save()
