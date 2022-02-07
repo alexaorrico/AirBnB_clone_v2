@@ -7,15 +7,15 @@ from models.state import State
 from models.city import City
 
 
-
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def allCities(state_id):
     '''Retrieves the list of all City objects of a State:
     GET /api/v1/states/<state_id>/cities'''
+    
     state = storage.get('State', state_id)
+    listCities = []
     if state:
-        listCities = []
         for city in state.cities:
             listCities.append(city.to_dict())
         return jsonify(listCities)
