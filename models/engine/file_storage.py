@@ -84,38 +84,6 @@ class FileStorage:
         """
         count the number of classes in storage
         """
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> adding to branch
-<<<<<<< HEAD
-=======
->>>>>>> adding to branch
-        times = 0
->>>>>>> 24f2156464172880e4bd7c6cf7f1b7f15084b919
         if cls:
             return len(self.all(cls))
         return len(self.all())
-=======
-        return len(self.all(cls).values())
->>>>>>> fixing storage
-=======
-        return len(self.all(cls).values())
->>>>>>> fixing storage
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        return len(self.all(cls).values())
->>>>>>> fixing storage
-=======
-        return len(self.all(cls).values())
->>>>>>> fixing storage
-=======
->>>>>>> adding to branch
-=======
->>>>>>> adding to branch
