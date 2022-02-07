@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''Contains the users view for the API.'''
-from flask import jsonify, request, abort
+from flask import jsonify, request
 from werkzeug.exceptions import NotFound, BadRequest
 
 from api.v1.views import app_views
@@ -10,27 +10,31 @@ from models.review import Review
 from models.user import User
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
-def get_all_users():
-    """
-    Retrieves the list of all User objects:
-    """
+@app_views.route('/users', methods=['GET'])
+@app_views.route('/users/<user_id>', methods=['GET'])
+def get_users(user_id=None):
+    '''Gets the user with the given id or all users.
+    '''
+    if user_id:
+        user = storage.get(User, user_id)
+        if user:
+            obj = user.to_dict()
+            if 'places' in obj:
+                del obj['places']
+            if 'reviews' in obj:
+                del obj['reviews']
+            return jsonify(obj)
+        raise NotFound()
+    all_users = storage.all(User).values()
     users = []
-    for user in storage.all("User").values():
-        users.append(user.to_dict())
+    for user in all_users:
+        obj = user.to_dict()
+        if 'places' in obj:
+            del obj['places']
+        if 'reviews' in obj:
+            del obj['reviews']
+        users.append(obj)
     return jsonify(users)
-
-
-@app_views.route('/users/<string:user_id>', methods=['GET'],
-                 strict_slashes=False)
-def retrieve_user(user_id):
-    """
-    Retrieves a User object
-    """
-    user = storage.get("User", user_id)
-    if not user:
-        abort(404)
-    return jsonify(user.to_dict())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'])
