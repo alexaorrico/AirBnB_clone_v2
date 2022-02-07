@@ -3,6 +3,8 @@
 Contains the class DBStorage
 """
 
+from hashlib import new
+from pickle import NONE
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -74,3 +76,16 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retrieve one object given a id"""
+        if id is None:
+            return
+        storage = self.all(cls)
+        for value in storage.values():
+            if value.id == id:
+                return value
+
+    def count(self, cls=None):
+        """return the count the number of objects in storage"""
+        return len(self.all(cls))
