@@ -102,3 +102,6 @@ class TestFileStorage(unittest.TestCase):
         state = State(name="Kenya")
         state.save()
         self.assertEqual(models.storage.count("State"), current_count + 1)
+        result = storage.all("State")
+        count = storage.count("State")
+        self.assertEqual(len(result), count)
