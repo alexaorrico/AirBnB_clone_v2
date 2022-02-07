@@ -58,15 +58,14 @@ def remove_user(user_id=None):
     if user_id:
         user = storage.get(User, user_id)
         if user:
-            if storage_t != 'db':
-                places = storage.all(Place).values()
-                reviews = storage.all(Review).values()
-                for place in places:
-                    if place.user_id == user_id:
-                        storage.delete(place)
-                for review in reviews:
-                    if review.user_id == user_id:
-                        storage.delete(review)
+            places = storage.all(Place).values()
+            reviews = storage.all(Review).values()
+            for place in places:
+                if place.user_id == user_id:
+                    storage.delete(place)
+            for review in reviews:
+                if review.user_id == user_id:
+                    storage.delete(review)
             storage.delete(user)
             storage.save()
             return jsonify({}), 200
@@ -87,13 +86,14 @@ def add_user(user_id=None):
         raise BadRequest(description='Missing email')
     if 'password' not in data:
         raise BadRequest(description='Missing password')
-    if 'created_at' in data:
-        del data['created_at']
-    if 'updated_at' in data:
-        del data['updated_at']
     new_user = User(**data)
     new_user.save()
-    return jsonify(new_user.to_dict()), 201
+    obj = new_user.to_dict()
+    if 'places' in obj:
+        del obj['places']
+    if 'reviews' in obj:
+        del obj['reviews']
+    return jsonify(obj), 201
 
 
 def update_user(user_id=None):
