@@ -9,21 +9,23 @@ from models.state import State
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states():
     """ list of states"""
-    states = storage.all("State")
-    result = []
-    for state in states.values():
-        result.append(state.to_dict())
-    return jsonify(result)
+    if request.method == 'GET':
+        states = storage.all("State")
+        result = []
+        for state in states.values():
+            result.append(state.to_dict())
+        return jsonify(result)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """ fetches object """
-    states = storage.all("State")
-    for key in states.keys():
-        if key.split('.')[-1] == state_id:
-            return jsonify(states.get(key).to_dict())
-    abort(404)
+    if request.method == 'GET':
+        states = storage.all("State")
+        for key in states.keys():
+            if key.split('.')[-1] == state_id:
+                return jsonify(states.get(key).to_dict())
+        abort(404)
 
 
 @app_views.route('/states/<state_id>',
