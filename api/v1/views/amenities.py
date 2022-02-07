@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" This a index file"""
+""" Amenity objects"""
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
@@ -24,7 +24,8 @@ def allAmenity(state_id):
         abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def objAmenity(amenity_id):
     '''Retrieves a Amenity object. :
     GET /api/v1/amenities/<amenity_id>'''
@@ -35,7 +36,8 @@ def objAmenity(amenity_id):
         abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def deleteAmenity(amenity_id):
     '''Deletes a Amenities object:
     DELETE /api/v1/amenities/<amenity_id>'''
@@ -72,7 +74,8 @@ def createAmenity(state_id):
         abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def updateAmenity(amenity_id):
     '''Updates a Amenity object:
     PUT /api/v1/amenities/<amenity_id>'''
