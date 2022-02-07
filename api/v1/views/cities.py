@@ -2,8 +2,15 @@
 """
 This is module cities
 """
-from api.v1.views import (app_views, City, storage)
-from flask import (abort, jsonify, request)
+from api.v1.views import (
+  app_views,
+  City,
+  storage)
+from flask import (
+  abort,
+  jsonify,
+  request
+  )
 
 
 @app_views.route("/states/<state_id>/cities", methods=["GET"],
@@ -41,27 +48,9 @@ def state_all_cities(state_id):
           updated_at:
             type: string
             description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
     responses:
       200:
         description: A list of dictionaries of city object
-        schema:
-          $ref: '#/definitions/City'
-        examples:
-            [{"__class__": "City", "created_at": "2017-03-25T02:17:06",
-              "id": "1da255c0-f023-4779-8134-2b1b40f87683",
-              "name": "New Orleans",
-              "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
-              "updated_at": "2017-03-25T02:17:06"},
-             {"__class__": "City", "created_at": "2017-03-25T02:17:06",
-              "id": "45903748-fa39-4cd0-8a0b-c62bfe471702",
-              "name": "Lafayette",
-              "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
-              "updated_at": "2017-03-25T02:17:06"}]
-
     """
     state = storage.get("State", state_id)
     if state is None:
@@ -104,21 +93,9 @@ def one_city(city_id):
           updated_at:
             type: string
             description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
     responses:
       200:
         description: A list of a dictionary of a city object
-        schema:
-          $ref: '#/definitions/City'
-        examples:
-            [{"__class__": "City", "created_at": "2017-03-25T02:17:06",
-              "id": "1da255c0-f023-4779-8134-2b1b40f87683",
-              "name": "New Orleans",
-              "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
-              "updated_at": "2017-03-25T02:17:06"}]
     """
     city = storage.get("City", city_id)
     if city is None:
@@ -134,18 +111,10 @@ def delete_one_city(city_id):
     definitions:
       City:
         type: object
-      Color:
-        type: string
-      items:
-        $ref: '#/definitions/Color'
 
     responses:
       200:
         description: An empty dictionary
-        schema:
-          $ref: '#/definitions/City'
-        examples:
-            {}
     """
     city = storage.get("City", city_id)
     if city is None:
@@ -189,25 +158,13 @@ def create_one_city(state_id):
           updated_at:
             type: string
             description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
     responses:
       201:
         description: A list of a dictionary of a city object
-        schema:
-          $ref: '#/definitions/City'
-        examples:
-            [{"__class__": "City", "created_at": "2017-03-25T02:17:06",
-              "id": "1da255c0-f023-4779-8134-2b1b40f87683",
-              "name": "New Orleans",
-              "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
-              "updated_at": "2017-03-25T02:17:06"}]
     """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
@@ -256,29 +213,17 @@ def update_one_city(city_id):
             description: the id of the state
           updated_at:
             type: string
-            description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
+            description: The date the object was updateS
     responses:
       200:
         description: A list of a dictionary of a city object
-        schema:
-          $ref: '#/definitions/City'
-        examples:
-            [{"__class__": "City", "created_at": "2017-03-25T02:17:06",
-              "id": "1da255c0-f023-4779-8134-2b1b40f87683",
-              "name": "New Orleans",
-              "state_id": "2b9a4627-8a9e-4f32-a752-9a84fa7f4efd",
-              "updated_at": "2017-03-25T02:17:06"}]
     """
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
