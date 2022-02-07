@@ -8,32 +8,32 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states():
-    """ list of state obj """
-    st = storage.all("State")
-    r = []
-    for state in st.values():
-        r.append(state.to_dict())
-    return jsonify(r)
+    """ list of states"""
+    states = storage.all("State")
+    result = []
+    for state in states.values():
+        result.append(state.to_dict())
+    return jsonify(result)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
-    """ fetches  object """
-    st = storage.all("State")
-    for key in st.keys():
+    """ fetches object """
+    states = storage.all("State")
+    for key in states.keys():
         if key.split('.')[-1] == state_id:
-            return jsonify(st.get(key).to_dict())
+            return jsonify(states.get(key).to_dict())
     abort(404)
 
 
 @app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
-    """ del obj """
-    st = storage.all("State")
-    for key in st.keys():
+    """ obj del """
+    states = storage.all("State")
+    for key in states.keys():
         if key.split('.')[-1] == state_id:
-            storage.delete(st.get(key))
+            storage.delete(states.get(key))
             storage.save()
             return jsonify({}), 200
     abort(404)
@@ -41,31 +41,31 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
-    """ creates """
+    """ obj creation """
     dic = request.get_json()
     if not dic:
         abort(400, "Not a JSON")
     if not ('name' in dic.keys()):
         abort(400, "Missing name")
-    st = State(**dic)
-    st.save()
-    return jsonify(st.to_dict()), 201
+    state = State(**dic)
+    state.save()
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
-    """ updates obk """
-    st = storage.all("State")
+    """ update obj """
+    states = storage.all("State")
     state = None
-    for key in st.keys():
+    for key in states.keys():
         if key.split('.')[-1] == state_id:
-            state = st.get(key)
+            state = states.get(key)
     if not state:
         abort(404)
-    nDict = request.get_json()
-    if not nDict:
+    new_dict = request.get_json()
+    if not new_dict:
         abort(400, "Not a JSON")
-    for key, value in nDict.items():
+    for key, value in new_dict.items():
         if key in ('id', 'created_at', 'updated_at'):
             continue
         else:
