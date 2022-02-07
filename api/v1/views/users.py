@@ -54,14 +54,14 @@ def create_users():
     if obj_request:
         if 'email' not in obj_request.keys():
             return "Missing email", 400
-        elif 'password' not in obj_request.keys():
+        if 'password' not in obj_request.keys():
             return "Missing password", 400
-        else:
-            new_user_obj = User(**obj_request)
-            storage.new(new_user_obj)
-            storage.save()
-            current_state = storage.get(User, new_user_obj.id)
-            return jsonify(current_state.to_dict()), 201
+
+        new_user_obj = User(**obj_request)
+        storage.new(new_user_obj)
+        storage.save()
+        current_state = storage.get(User, new_user_obj.id)
+        return jsonify(current_state.to_dict()), 201
     else:
         return "Not a JSON", 400
 
@@ -69,7 +69,7 @@ def create_users():
 @app_views.route("/users/<user_id>",
                  methods=['PUT'],
                  strict_slashes=False)
-def updates_amenities(user_id):
+def updates_users(user_id):
     """Updates a User object: PUT /api/v1/users/<user_id>"""
     user_obj = storage.get(User, user_id)
     obj_request = request.get_json()
