@@ -69,6 +69,7 @@ def create_place(city_id):
         abort(400, description="Missing name")
 
     new_place = Place()
+    new_place.city_id = city_id
     new_place.user_id = request_data['user_id']
     new_place.name = request_data['name']
 
