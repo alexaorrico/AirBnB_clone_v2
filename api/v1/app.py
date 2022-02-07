@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-documentar
+app entry point
 """
 from flask import Flask
 from models import storage
@@ -16,8 +16,9 @@ port = getenv("HBNB_API_PORT") or 5000
 
 @app.teardown_appcontext
 def teardown_appcontext(self):
-    """ Register a function to be called when the request
-         context ends or fails
+    """Register a function to be called when the request
+        fails,method that is called when
+        the application crashes.
     """
     storage.close()
 
