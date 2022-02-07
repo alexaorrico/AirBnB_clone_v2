@@ -84,5 +84,10 @@ class DBStorage:
     
     def count(self, cls=None):
         """ slgo """
-        return len(self.all(cls))
+	c = 0
+        if cl and cl in classes.values():
+            return self.__session.query(cl).count()
+        for cls in classes:
+            c += self.__session.query(classes[cls]).count()
+        return c
         
