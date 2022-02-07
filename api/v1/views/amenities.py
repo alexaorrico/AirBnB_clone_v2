@@ -56,7 +56,7 @@ def create_amenities():
         abort(400, "Not a JSON")
 
 
-@app_views.route("//amenities/<amenity_id>",
+@app_views.route("/amenities/<amenity_id>",
                  methods=['PUT'], strict_slashes=False)
 def updates_amenities(amenity_id):
     """Updates a Amenity object: PUT /api/v1/amenities/<amenity_id>"""
@@ -64,15 +64,12 @@ def updates_amenities(amenity_id):
     obj_request = request.get_json()
     if amenity_obj:
         if obj_request:
-            if 'name' in obj_request:
-                for key, value in obj_request.items():
-                    ignore = ["id", "state_id", "created_at", "updated_at"]
-                    if key != ignore:
-                        setattr(amenity_obj, key, value)
-                amenity_obj.save()
-                return (jsonify(amenity_obj.to_dict()), 200)
-            else:
-                abort(400, "Missing name")
+            for key, value in obj_request.items():
+                ignore = ["id", "created_at", "updated_at"]
+                if key != ignore:
+                    setattr(amenity_obj, key, value)
+            amenity_obj.save()
+            return (jsonify(amenity_obj.to_dict()), 200)
         else:
             abort(400, "Not a JSON")
     else:
