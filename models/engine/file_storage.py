@@ -74,20 +74,12 @@ class FileStorage:
         Returns the object based on the class
         and its ID, or None if not found
         """
-        if cls is not None and id is not None:
-            if type(cls) is str and cls in classes and type(id) is str:
-                dict_key = cls + '.' + id
-                obj = self.__objects.get(key, None)
-                return obj
+        res = self.__session.query(cls).get(id)
+        if res is None:
             return None
-        return None
+        return res
 
     def count(self, cls=None):
         """Returns count of a cls object or all objects"""
-        total = 0
-        if type(cls) == str and cls in classes:
-            all_objs = self.all(cls)
-            total = len(all_objs)
-        elif cls is None:
-            total = len(self.__objects)
-        return total
+        objects = self.all(cls)
+        return (len(objects))
