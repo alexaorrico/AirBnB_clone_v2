@@ -32,5 +32,5 @@ class User(BaseModel, Base):
     def __setattr__(self, name, value):
         """md5 encryption"""
         if name == "password":
-            encryption = md5(value.encode()).hexdigest()
-        super().__setattr__(name, encryption)
+            value = md5(value.encode()).hexdigest()
+        super().__setattr__(name, value)
