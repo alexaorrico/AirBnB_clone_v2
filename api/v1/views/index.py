@@ -1,24 +1,28 @@
 #!/usr/bin/python3
-"""index"""
+"""smth"""
 from api.v1.views import app_views
-from flask import jsonify
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.user import User
+from models.state import State
 from models import storage
 
 
 @app_views.route('/status')
 def status():
-    """ returns status for the api """
-    return jsonify({"status": "OK"})
+    """smth"""
+    return {"status": "OK"}
 
 
 @app_views.route('/stats')
 def stats():
-    """ retrieves the number of each objects by type """
-    stats = {}
-    stats['amenities'] = storage.count("Amenity")
-    stats['cities'] = storage.count("City")
-    stats['places'] = storage.count("Place")
-    stats['reviews'] = storage.count("Review")
-    stats['states'] = storage.count("State")
-    stats['users'] = storage.count("User")
-    return jsonify(stats)
+    """smth """
+    js = {"amenities": storage.count(Amenity),
+            "cities": storage.count(City),
+            "places": storage.count(Place),
+            "reviews": storage.count(Review),
+            "states": storage.count(State),
+            "users": storage.count(User)}
+    return js
