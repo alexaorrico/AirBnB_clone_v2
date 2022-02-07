@@ -29,7 +29,9 @@ def error_404(error):
 @app.errorhandler(400)
 def error_400(error):
     '''Handles the 400 HTTP error code.'''
-    msg = error.description if error.description else 'Bad request'
+    msg = 'Bad request'
+    if isinstance(error, Exception) and hasattr(error, 'description'):
+        msg = error.description
     return jsonify(error=msg), 400
 
 
