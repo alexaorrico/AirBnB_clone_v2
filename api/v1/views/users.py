@@ -1,30 +1,11 @@
 #!/usr/bin/python3
 '''Contains the users view for the API.'''
 from flask import jsonify, request
-from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
+from werkzeug.exceptions import NotFound, BadRequest
 
 from api.v1.views import app_views
-from models import storage, storage_t
-from models.place import Place
-from models.review import Review
+from models import storage
 from models.user import User
-
-
-# @app_views.route('/users', methods=['GET', 'POST'])
-# @app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
-# def handle_users(user_id=None):
-#     '''The method handler for the users endpoint.
-#     '''
-#     handlers = {
-#         'GET': get_users,
-#         'DELETE': remove_user,
-#         'POST': add_user,
-#         'PUT': update_user,
-#     }
-#     if request.method in handlers:
-#         return handlers[request.method](user_id)
-#     else:
-#         raise MethodNotAllowed(list(handlers.keys()))
 
 
 @app_views.route('/users', methods=['GET'])
