@@ -68,7 +68,7 @@ def remove_user(user_id):
 
 
 @app_views.route('/users', methods=['POST'])
-def add_user(user_id=None):
+def add_user():
     '''Adds a new user.
     '''
     data = {}
