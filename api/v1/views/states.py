@@ -36,7 +36,7 @@ def get_state(state_id):
 @swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """del state """
-state = storage.get(State, state_id)
+    state = storage.get(State, state_id)
 
     if not state:
         abort(404)
