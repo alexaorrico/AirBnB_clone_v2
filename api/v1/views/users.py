@@ -2,7 +2,7 @@
 '''users blueprint'''
 
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.user import User
 
@@ -30,13 +30,13 @@ def getUserById(user_id=None):
                  strict_slashes=False)
 def deleteUser(user_id=None):
     '''deletes an user'''
-    if user_id is not None:
-        res = storage.get(User, user_id)
-        if res is not None:
-            storage.delete(res)
-            storage.save()
-            return make_response(jsonify({}), 200)
-    abort(404)
+    user = storage.get(User, user_id)
+    
+    if not user:
+        abort(404)
+
+    storage.delete(user)
+    storage.save()
 
 
 @app_views.route('/users',
