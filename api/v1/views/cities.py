@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Import City module"""
 from api.v1.views import app_views
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request, abort
 from models import storage
 from models.city import City
 from models.state import State
@@ -17,7 +17,7 @@ def get_all_cities(state_id):
     citiesList = []
     for city in state.cities:
         citiesList.append(city.to_dict())
-    return jsonfy(list_cities)
+    return jsonify(citiesList)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
