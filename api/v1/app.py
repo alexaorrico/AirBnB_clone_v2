@@ -23,5 +23,11 @@ def teardown_appcontext(self):
     storage.close()
 
 
+@app.errorhandler(404)
+def error_404(e):
+    """ Function that shows a state 404"""
+    return jsonify({"error": "Not found"}), 404
+
+
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
