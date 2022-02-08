@@ -82,7 +82,7 @@ def update_review(review_id):
     if place_onj:
         if obj_request:
             for key, value in obj_request.items():
-                ignore = ["id", "user_id", "city_id",
+                ignore = ["id", "user_id", "place_id",
                           "created_at", "updated_at"]
                 if key != ignore:
                     setattr(place_onj, key, value)
