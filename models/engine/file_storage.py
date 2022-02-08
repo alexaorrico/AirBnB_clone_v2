@@ -59,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it's inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -68,28 +68,40 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+        
+        
+    def get(self, cls, id_):
+        """
+        Retrieve one object
 
-    def get(self, cls, id):
-        """gets an object"""
-        if cls is None:
+        Arguments:
+            cls: string representing a class name
+            id_: string representing the object id
+
+        Return:
+           object of cls and id passed in argument
+        """
+        if (cls not in self.__models_available.keys()) or (id_ is None):
             return None
-
-        objs = self.all(cls)  # first get a ll class objects by calling all() method
-
-        for obj in objs:
-            obj_class = obj.__class__
-            obj_id = obj.id
-
-            if obj_class is cls and obj_id is id:
-                return obj
-
+        all_objs = self.all(cls)
+        for k in all_objs.keys():
+            if k == id_:
+                return all_objs[k]
         return None
 
     def count(self, cls=None):
         """
-        count the number of
-        objects in storage
-        """
-        objs = self.all(cls)
+        Number of objects in a certain class
 
-        return len(objs.keys())
+        Arguments:
+            cls: String representing a class name (default None)
+
+        Return:
+            number of objects in that class or in total.
+            -1 if the class is not valid
+        """
+        if cls is None:
+            return len(self.__objects)
+        if cls in self.__models_available:
+            return len(self.all(cls))
+        return -1
