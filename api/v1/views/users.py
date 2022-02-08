@@ -60,7 +60,7 @@ def createUser():
         if dataRequest.key('password') is None:
             abort(400, 'Missing password')
         newUser = User(**dataRequest)
-        storage.newUser(newUser)
+        storage.new(newUser)
         storage.save()
         return jsonify(newUser.to_dict()), 201
     else:
