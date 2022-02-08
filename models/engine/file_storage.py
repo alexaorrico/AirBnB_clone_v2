@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
         
         
-    def get(self, cls, id_):
+    def get(self, cls, id):
         """
         Retrieve objects
         
@@ -81,11 +81,11 @@ class FileStorage:
         Return:
            object of cls and id passed in argument
         """
-        if (cls not in self.__models_available.keys()) or (id_ is None):
+        if (cls not in self.__models_available.keys()) or (id is None):
             return None
         all_objs = self.all(cls)
         for k in all_objs.keys():
-            if k == id_:
+            if k == id:
                 return all_objs[k]
         return None
 
