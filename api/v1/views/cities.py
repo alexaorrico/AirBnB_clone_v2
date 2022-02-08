@@ -2,13 +2,13 @@
 """This is module cities"""
 from api.v1.views import (
   app_views,
-  City,
   storage)
 from flask import (
   abort,
   jsonify,
   request
   )
+from models.city import City
 
 
 @app_views.route("/states/<state_id>/cities", methods=["GET"],
