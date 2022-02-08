@@ -10,7 +10,12 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
-    '''Get all register from table states'''
+    """Get all register from table states
+    ---
+    response:
+        200:
+            description: List all states
+    """
     states = []
     for state in storage.all(State).values():
         states.append(state.to_dict())
@@ -19,7 +24,16 @@ def all_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def show_state(state_id):
-    '''Show a state filter by id'''
+    """Show a state filter by id
+    ---
+    parameters:
+        - name: state_id
+          in: path
+          type: string
+          required: true
+    response:
+        200:
+            description: List a state filtered by state_id"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -29,7 +43,17 @@ def show_state(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
-    '''Delete a register from table states'''
+    """Delete a register from table states
+    ---
+    parameters:
+        - name: state_id
+          in: path
+          type: string
+          required: true
+    response:
+        200:
+            description: Delete a state filtered by state_id
+    """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
