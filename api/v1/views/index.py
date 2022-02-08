@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-API index views module
-"""
+"""API index views module"""
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify

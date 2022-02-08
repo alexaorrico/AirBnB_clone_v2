@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-states api view module
-"""
+"""states api view module"""
 from api.v1.views import app_views
 from flask import (
     abort,

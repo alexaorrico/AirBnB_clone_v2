@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-AirBnB Clone API config file
-"""
+"""AirBnB Clone API config file"""
 
 from api.v1.views import app_views
 from flask import Flask, make_response, jsonify

@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-This is module cities
-"""
+"""This is module cities"""
 from api.v1.views import (
   app_views,
   City,
