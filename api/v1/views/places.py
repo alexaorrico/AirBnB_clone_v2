@@ -62,11 +62,11 @@ def updatePlace(place_id):
     if obj:
         data_request = request.get_json()
         if isinstance(data_request, dict):
-            noKeys = ['id', 'state_id', 'created_at', 'updated_at']
+            noKeys = ['id', 'user_id', 'created_at', 'updated_at']
             for key, value in data_request.items():
                 if key not in noKeys:
                     setattr(obj, key, value)
-            obj.save()
+            storage.save()
             return jsonify(obj.to_dict()), 200
         else:
             abort(400, 'Not a JSON')
