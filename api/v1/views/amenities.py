@@ -9,6 +9,22 @@ from models.city import City
 from models.amenity import Amenity
 
 
+@app_views.route('/amenities', methods=['GET'],
+                 strict_slashes=False)
+def allAmenity(state_id):
+    '''Retrieves the list of all Amenity objects of a State:
+    GET /api/v1/states/<state_id>/amenities'''
+
+    allAmenity = storage.get('Amenity', amenity_id)
+    listAmenity = []
+    if allAmenity:
+        for amenity in allAmenity.values():
+            listAmenity.append(amenity.to_dict())
+        return jsonify(listAmenity)
+    else:
+        abort(404)
+
+
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
 def objAmenity(amenity_id):
