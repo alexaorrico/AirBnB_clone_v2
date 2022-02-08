@@ -58,7 +58,7 @@ def deletePlace(place_id):
 def updatePlace(place_id):
     '''Updates a Amenity object:
     PUT /api/v1/amenities/<amenity_id>'''
-    obj = storage.get('Place', place_id)
+    obj = storage.get(Place, place_id)
     if obj:
         data_request = request.get_json()
         if isinstance(data_request, dict):
