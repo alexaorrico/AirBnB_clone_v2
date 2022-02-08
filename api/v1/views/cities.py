@@ -71,10 +71,10 @@ def createCity(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def updateCity(state_id):
+def updateCity(city_id):
     '''Updates a City object:
     PUT /api/v1/cities/<city_id>'''
-    obj = storage.get('City', state_id)
+    obj = storage.get('City', city_id)
     if obj:
         data_request = request.get_json()
         if isinstance(data_request, dict):
