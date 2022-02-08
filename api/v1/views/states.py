@@ -29,28 +29,30 @@ def id_state(state_id):
         abort(404)
 
 
-@app_views.route("/states/<state_id>", \
-    methods=["DELETE"], strict_slashes=False)
+@app_views.route("/states/<state_id>",
+                 methods=["DELETE"],
+                 strict_slashes=False)
 def delete_state(state_id):
     """ delete state"""
     state = storage.get(State, state_id)
     if state:
         storage.delete(state)
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     else:
         abort(404)
 
 
-@app_views.route("/states", \
-    methods=["POST"], strict_slashes=False)
+@app_views.route("/states",
+                 methods=["POST"],
+                 strict_slashes=False)
 def post_state():
     """ creat state"""
     data = request.get_json()
     if type(data) is not dict:
-        abort(400, "Not a JSON")
-    if "name" not in data:
-        abort(400, "Missing name")
+        return "Not a JSON", 400
+    if "name" not in data.keys():
+        return"Missing name", 400
 
     new_state = State(**data)
     storage.new(new_state)
@@ -58,8 +60,9 @@ def post_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/states/<state_id>", \
-    methods=["PUT"], strict_slashes=False)   
+@app_views.route("/states/<state_id>",
+                 methods=["PUT"],
+                 strict_slashes=False)
 def put_state(state_id):
     """update state"""
     up_date = storage.get(State, state_id)
@@ -73,6 +76,6 @@ def put_state(state_id):
             storage.save()
             return jsonify(up_date.to_dict()), 200
         else:
-            abort(400, "Not a JSON")
+            return"Not a JSON", 400
     else:
         abort(404)
