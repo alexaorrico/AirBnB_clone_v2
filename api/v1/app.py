@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
+cors = CORS(app, resources={r"*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
@@ -25,7 +25,6 @@ def error_not_found(self):
 
 
 if __name__ == "__main__":
-    """ Run Flask Server """
     app.run(host=getenv("HBNB_API_HOST", "0.0.0.0"),
             port=getenv("HBNB_API_PORT", 5000),
             threaded=True, debug=True)
