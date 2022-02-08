@@ -22,6 +22,18 @@ def allAmenity():
     return jsonify(listAmenity)
 
 
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
+def objAmenity(amenity_id):
+    '''Retrieves a Amenity object. :
+    GET /api/v1/amenities/<amenity_id>'''
+    amenity = storage.get('Amenity', amenity_id)
+    if amenity:
+        return jsonify(amenity.to_dict())
+    else:
+        abort(404)
+
+
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def deleteAmenity(amenity_id):
@@ -36,28 +48,20 @@ def deleteAmenity(amenity_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>/amenities', methods=['POST'],
+@app_views.route('amenities', methods=['POST'],
                  strict_slashes=False)
-def createAmenity(state_id):
+def createAmenity():
     '''Creates a Amenity:
     POST /api/v1/states/<state_id>/amenities'''
-    state = storage.get('State', state_id)
-    if state:
-        data_request = request.get_json()
-        if isinstance(data_request, dict):
-            for k in data_request.keys():
-                if k == "name":
-                    obj = Amenity(**data_request)
-                    setattr(obj, 'state_id', state_id)
-                    storage.new(obj)
-                    storage.save()
-                    return jsonify(obj.to_dict()), 201
-                else:
-                    abort(400, 'Missing name')
-        else:
-            abort(400, 'Not a JSON')
+    dataRequest = request.get_json()
+    if dataRequest:
+        if dataRequest.get('name'):
+            newAmenity = Amenity(**dataRequest)
+            newAmenity.save()
+            return jsonify(newAmenity.to_dict()), 201
+        abort(400, 'Missing name')
     else:
-        abort(404)
+        abort(400, "Not a JSON")
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
