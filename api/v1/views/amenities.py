@@ -15,14 +15,11 @@ def allAmenity(state_id):
     '''Retrieves the list of all Amenity objects of a State:
     GET /api/v1/states/<state_id>/amenities'''
 
-    allAmenity = storage.get('Amenity', amenity_id)
+    allAmenity = storage.all('Amenity', amenity_id)
     listAmenity = []
-    if allAmenity:
-        for amenity in allAmenity.values():
-            listAmenity.append(amenity.to_dict())
-        return jsonify(listAmenity)
-    else:
-        abort(404)
+    for amenity in allAmenity.values():
+        listAmenity.append(amenity.to_dict())
+    return jsonify(listAmenity)
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
