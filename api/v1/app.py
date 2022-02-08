@@ -21,7 +21,7 @@ def teardown_close(self):
 @app.errorhandler(404)
 def error_not_found(error):
     """Method no found page"""
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return make_response(jsonify({'error': 'Not found'})), 404
 
 
 if __name__ == "__main__":
