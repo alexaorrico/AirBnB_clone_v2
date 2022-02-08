@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ This is the app folder"""
 
-from flask import Flask, Blueprint, make_response, jsonify
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
