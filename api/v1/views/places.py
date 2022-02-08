@@ -53,26 +53,6 @@ def deletePlace(place_id):
         abort(404)
 
 
-@app_views.route('/cities/<city_id>/places, methods=['POST'],
-                 strict_slashes=False)
-def createPlace(city_id):
-    '''Creates a User:
-    POST /api/v1/states/<state_id>/user'''
-    city = storage.get(City, city_id)
-    dataRequest = request.get_json(city)
-    if dataRequest:
-        if dataRequest.get('email') is None:
-            abort(400, 'Missing email')
-        if dataRequest.get('password') is None:
-            abort(400, 'Missing password')
-        newUser = User(**dataRequest)
-        storage.new(newUser)
-        storage.save()
-        return jsonify(newUser.to_dict()), 201
-    else:
-        abort(400, "Not a JSON")
-
-
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def updatePlace(place_id):
