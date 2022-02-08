@@ -77,6 +77,8 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieve an object"""
+        if type(cls) is not str and type(id) is not str:
+            return None
 
         if cls is not None and id is not None:
             if cls in classes:
