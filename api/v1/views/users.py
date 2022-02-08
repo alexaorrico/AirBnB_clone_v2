@@ -20,12 +20,12 @@ def allUsers():
     return jsonify(listUser)
 
 
-@app_views.route('/users/<users_id>', methods=['GET'],
+@app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def objUsers(user_id):
     '''Retrieves a User object. :
     GET /api/v1/users/<users_id>'''
-    users = storage.get('User', users_id)
+    users = storage.get('User', user_id)
     if users:
         return jsonify(users.to_dict())
     else:
