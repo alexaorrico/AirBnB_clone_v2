@@ -60,19 +60,23 @@ def postUser():
 @app_views.route('/users/<user_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-def updateUser(user_id=None):
-    '''updates a user'''
-    if user_id is None:
-        abort(404)
-    obj = storage.get(User, user_id)
-    if obj is None:
+def put_user(user_id):
+    """
+    Updates a user
+    """
+    user = storage.get(User, user_id)
+
+    if not user:
         abort(404)
 
-    body = request.get_json()
-    if body is None:
-        abort(400, description='Not a JSON')
-    for key in body.keys():
-        if key not in ['id', 'created_at', 'updated_at', 'email']:
-            setattr(obj, key, body[key])
-    obj.save()
-    return make_response(jsonify(obj.to_dict()), 200)
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    ignore = ['id', 'email', 'created_at', 'updated_at']
+
+    data = request.get_json()
+    for key, value in data.items():
+        if key not in ignore:
+            setattr(user, key, value)
+    storage.save()
+    return make_response(jsonify(user.to_dict()), 200)
