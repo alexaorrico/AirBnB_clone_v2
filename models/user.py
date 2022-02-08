@@ -42,6 +42,6 @@ class User(BaseModel, Base):
         if __name == 'password':
             if type(__value) is str:
                 m = hashlib.md5(bytes(__value, 'utf-8'))
-                self.__dict__['password'] = m.hexdigest()
+                super().__setattr__(__name, m.hexdigest())
         else:
-            self.__dict__[__name] = __value
+            super().__setattr__(__name, __value)
