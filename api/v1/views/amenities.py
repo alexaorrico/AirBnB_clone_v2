@@ -21,8 +21,21 @@ def get_Amenities():
     return jsonify(list_amenities)
 
 
+
 @app_views.route("/amenities/<amenity_id>",
-                 methods=["GET", "DELETE"],
+                 methods=["GET"],
+                 strict_slashes=False)
+def get_id_amenity(amenity_id):
+    """ return id delete"""
+    amenity = storage.get("Amenity", amenity_id)
+    if amenity:
+        return jsonify(amenity.to_dict())
+    else:
+        abort(404)
+
+
+@app_views.route("/amenities/<amenity_id>",
+                 methods=["DELETE"],
                  strict_slashes=False)
 def id_amenity(amenity_id):
     """ return id delete"""
