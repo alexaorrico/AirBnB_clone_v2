@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-""" Amenity objects"""
+""" User objects"""
 
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from models import storage
 from models.user import User
 
@@ -18,3 +18,15 @@ def allUsers():
     for user in allUsers.values():
         listUser.append(user.to_dict())
     return jsonify(listUser)
+
+
+@app_views.route('/users/<users_id>', methods=['GET'],
+                 strict_slashes=False)
+def objUsers(user_id):
+    '''Retrieves a User object. :
+    GET /api/v1/users/<users_id>'''
+    users = storage.get('User', users_id)
+    if users:
+        return jsonify(users.to_dict())
+    else:
+        abort(404)
