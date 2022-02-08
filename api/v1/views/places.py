@@ -50,30 +50,6 @@ def deletePlace(place_id):
         abort(404)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'],
-                 strict_slashes=False)
-def createPlace(city_id):
-    '''Creates a City:
-    POST /api/v1//cities/<city_id>/places'''
-    city = storage.get('City', city_id)
-    if city:
-        data_request = request.get_json()
-        if isinstance(data_request, dict):
-            for k in data_request.keys():
-                if k == "name":
-                    obj = Place(**data_request)
-                    setattr(obj, 'state_id', state_id)
-                    storage.new(obj)
-                    storage.save()
-                    return jsonify(obj.to_dict()), 201
-                else:
-                    abort(400, 'Missing name')
-        else:
-            abort(400, 'Not a JSON')
-    else:
-        abort(404)
-
-
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def updatePlace(place_id):
