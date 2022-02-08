@@ -39,9 +39,9 @@ def objUsers(user_id):
 def deleteUser(user_id):
     '''Deletes a Amenities object:
     DELETE /api/v1/amenities/<amenity_id>'''
-    User = storage.get('User', user_id)
-    if User:
-        storage.delete(User)
+    UserI = storage.get('User', user_id)
+    if UserI:
+        storage.delete(UserI)
         storage.save()
         return make_response(jsonify({}), 200)
     else:
