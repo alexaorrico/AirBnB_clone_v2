@@ -87,7 +87,7 @@ def update_place(place_id):
                     if key != ignore:
                         setattr(place_onj, key, value)
                 place_onj.save()
-                return jsonify(place_onj.to_dict())
+                return jsonify(place_onj.to_dict()), 200
             else:
                 return "Missing name", 400
         else:
