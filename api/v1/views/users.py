@@ -5,8 +5,6 @@ from werkzeug.exceptions import NotFound, BadRequest
 
 from api.v1.views import app_views
 from models import storage
-from models.place import Place
-from models.review import Review
 from models.user import User
 
 
@@ -49,46 +47,29 @@ def remove_user(user_id):
     raise NotFound()
 
 
-# @app_views.route('/users', methods=['POST'])
-# def add_user():
-#     '''Adds a new user.
-#     '''
-#     data = {}
-#     try:
-#         data = request.get_json()
-#     except Exception:
-#         data = None
-#     if data is None or type(data) is not dict:
-#         raise BadRequest(description='Not a JSON')
-#     if 'email' not in data:
-#         raise BadRequest(description='Missing email')
-#     if 'password' not in data:
-#         raise BadRequest(description='Missing password')
-#     user = User(**data)
-#     user.save()
-#     obj = user.to_dict()
-#     # if 'places' in obj:
-#     #     del obj['places']
-#     # if 'reviews' in obj:
-#     #     del obj['reviews']
-#     return jsonify(obj), 201
-
-
-@app_views.route('/users', methods=['POST'], strict_slashes=False)
-def create_user():
-    """
-    Creates a use object
-    """
-    data = request.get_json()
-    if not data:
+@app_views.route('/users', methods=['POST'])
+def add_user():
+    '''Adds a new user.
+    '''
+    data = {}
+    try:
+        data = request.get_json()
+    except Exception:
+        data = None
+    if data is None or type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'email' not in data:
-        return BadRequest(description='Missing email')
+        raise BadRequest(description='Missing email')
     if 'password' not in data:
-        return BadRequest(description='Missing password')
+        raise BadRequest(description='Missing password')
     user = User(**data)
     user.save()
-    return jsonify(user.to_dict()), 201
+    obj = user.to_dict()
+    if 'places' in obj:
+        del obj['places']
+    if 'reviews' in obj:
+        del obj['reviews']
+    return jsonify(obj), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
@@ -109,10 +90,12 @@ def update_user(user_id):
             if key not in xkeys:
                 setattr(user, key, value)
         user.save()
+        storage.save()
+        storage.reload()
         obj = user.to_dict()
-        # if 'places' in obj:
-        #     del obj['places']
-        # if 'reviews' in obj:
-        #     del obj['reviews']
+        if 'places' in obj:
+            del obj['places']
+        if 'reviews' in obj:
+            del obj['reviews']
         return jsonify(obj), 200
     raise NotFound()
