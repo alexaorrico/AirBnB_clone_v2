@@ -21,7 +21,6 @@ def get_Amenities():
     return jsonify(list_amenities)
 
 
-
 @app_views.route("/amenities/<amenity_id>",
                  methods=["GET"],
                  strict_slashes=False)
@@ -70,7 +69,7 @@ def post_amenitie():
                  strict_slashes=False)
 def put_amenity(amenity_id):
     """ Update amenity item """
-    up_date = storage.get(Amenity)
+    up_date = storage.get("Amenity", amenity_id)
     if up_date:
         data = request.get_json()
         if type(data) is dict:
