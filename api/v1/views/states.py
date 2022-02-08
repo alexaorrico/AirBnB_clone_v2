@@ -55,7 +55,7 @@ def post_state():
     data = request.get_json()
     if type(data) is not dict:
         return "Not a JSON", 400
-    if "name" not in data.keys():
+    if "name" not in data:
         return"Missing name", 400
 
     new_state = State(**data)
