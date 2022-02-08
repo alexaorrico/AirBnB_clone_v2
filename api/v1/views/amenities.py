@@ -2,7 +2,7 @@
 """ Amenity objects"""
 
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 from models.city import City
@@ -43,7 +43,7 @@ def deleteAmenity(amenity_id):
     if amenity:
         storage.delete(amenity)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
     else:
         abort(404)
 
