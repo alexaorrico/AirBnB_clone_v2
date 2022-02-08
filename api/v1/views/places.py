@@ -32,7 +32,7 @@ def allPlaces(city_id):
 def objPlace(place_id):
     '''Retrieves a Place object. :
     GET /api/v1//places/<place_id>'''
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place:
         return jsonify(place.to_dict())
     else:
@@ -44,7 +44,7 @@ def objPlace(place_id):
 def deletePlace(place_id):
     '''Deletes a Place object:
     DELETE /api/v1//places/<place_id>'''
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place:
         storage.delete(place)
         storage.save()
