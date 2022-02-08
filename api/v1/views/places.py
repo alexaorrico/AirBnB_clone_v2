@@ -85,6 +85,7 @@ def update_place(place_id):
     storage.save()
     return jsonify(place.to_dict()), 200
 
+
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
     """new endpoint: POST /api/v1/places_search that retrieves all Place
