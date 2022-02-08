@@ -70,7 +70,7 @@ def add_city(state_id=None, city_id=None):
     if not state:
         raise NotFound()
     data = request.get_json()
-    if data is None or type(data) is not dict:
+    if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'name' not in data:
         raise BadRequest(description='Missing name')
@@ -88,7 +88,7 @@ def update_city(state_id=None, city_id=None):
         city = storage.get(City, city_id)
         if city:
             data = request.get_json()
-            if data is None or type(data) is not dict:
+            if type(data) is not dict:
                 raise BadRequest(description='Not a JSON')
             for key, value in data.items():
                 if key not in xkeys:

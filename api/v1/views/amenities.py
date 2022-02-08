@@ -58,7 +58,7 @@ def add_amenity(amenity_id=None):
     '''Adds a new amenity.
     '''
     data = request.get_json()
-    if data is None or type(data) is not dict:
+    if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'name' not in data:
         raise BadRequest(description='Missing name')
@@ -75,7 +75,7 @@ def update_amenity(amenity_id=None):
     res = list(filter(lambda x: x.id == amenity_id, all_amenities))
     if res:
         data = request.get_json()
-        if data is None or type(data) is not dict:
+        if type(data) is not dict:
             raise BadRequest(description='Not a JSON')
         old_amenity = res[0]
         for key, value in data.items():

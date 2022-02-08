@@ -72,7 +72,7 @@ def add_place(city_id=None, place_id=None):
     if not city:
         raise NotFound()
     data = request.get_json()
-    if data is None or type(data) is not dict:
+    if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'user_id' not in data:
         raise BadRequest(description='Missing user_id')
@@ -94,7 +94,7 @@ def update_place(city_id=None, place_id=None):
     place = storage.get(Place, place_id)
     if place:
         data = request.get_json()
-        if data is None or type(data) is not dict:
+        if type(data) is not dict:
             raise BadRequest(description='Not a JSON')
         for key, value in data.items():
             if key not in xkeys:
@@ -109,7 +109,7 @@ def find_places():
     '''Finds places based on a list of State, City, or Amenity ids.
     '''
     data = request.get_json()
-    if data is None or type(data) is not dict:
+    if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     all_places = storage.all(Place).values()
     places = []

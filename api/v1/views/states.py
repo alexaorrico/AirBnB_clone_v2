@@ -58,7 +58,7 @@ def add_state(state_id=None):
     '''Adds a new state.
     '''
     data = request.get_json()
-    if data is None or type(data) is not dict:
+    if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'name' not in data:
         raise BadRequest(description='Missing name')
@@ -75,7 +75,7 @@ def update_state(state_id=None):
     res = list(filter(lambda x: x.id == state_id, all_states))
     if res:
         data = request.get_json()
-        if data is None or type(data) is not dict:
+        if type(data) is not dict:
             raise BadRequest(description='Not a JSON')
         old_state = res[0]
         for key, value in data.items():

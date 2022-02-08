@@ -56,7 +56,7 @@ def add_user():
         data = request.get_json()
     except Exception:
         data = None
-    if data is None or type(data) is not dict:
+    if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'email' not in data:
         raise BadRequest(description='Missing email')
@@ -84,14 +84,12 @@ def update_user(user_id):
             data = request.get_json()
         except Exception:
             data = None
-        if data is None or type(data) is not dict:
+        if type(data) is not dict:
             raise BadRequest(description='Not a JSON')
         for key, value in data.items():
             if key not in xkeys:
                 setattr(user, key, value)
         user.save()
-        storage.save()
-        storage.reload()
         obj = user.to_dict()
         if 'places' in obj:
             del obj['places']
