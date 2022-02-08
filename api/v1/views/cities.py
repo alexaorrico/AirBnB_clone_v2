@@ -12,10 +12,9 @@ from models.city import City
 def allCities(state_id):
     '''Retrieves the list of all City objects of a State:
     GET /api/v1/states/<state_id>/cities'''
-
     state = storage.get('State', state_id)
-    listCities = []
     if state:
+        listCities = []
         for city in state.cities:
             listCities.append(city.to_dict())
         return jsonify(listCities)
@@ -52,15 +51,23 @@ def deleteCity(city_id):
 def createCity(state_id):
     '''Creates a City:
     POST /api/v1/states/<state_id>/cities'''
-    dataRequest = request.get_json()
-    if dataRequest:
-        if dataRequest.get('name'):
-            newCity = City(**dataRequest)
-            newCity.save()
-            return jsonify(newCity.to_dict()), 201
-        abort(400, 'Missing name')
+    state = storage.get('State', state_id)
+    if state:
+        data_request = request.get_json()
+        if isinstance(data_request, dict):
+            for k in data_request.keys():
+                if k == "name":
+                    obj = City(**data_request)
+                    setattr(obj, 'state_id', state_id)
+                    storage.new(obj)
+                    storage.save()
+                    return jsonify(obj.to_dict()), 201
+                else:
+                    abort(400, 'Missing name')
+        else:
+            abort(400, 'Not a JSON')
     else:
-        abort(400, "Not a JSON")
+        abort(404)
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
