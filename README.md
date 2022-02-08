@@ -160,6 +160,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 
 Next part of AirBnB-clone: Njakai F - [Github](https://github.com/brk-a)
+Together with Eugene S - [Github](https://github.com/wechu07)
 
 ## License
 Public Domain. No copy write protection. 
