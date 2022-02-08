@@ -9,7 +9,9 @@ from api.v1.views import app_views
 from models.state import State
 
 
-@app_views.route("/states", methods=["GET"], strict_slashes=False)
+@app_views.route("/states",
+                 methods=["GET"],
+                 strict_slashes=False)
 def get_state():
     """ list all state"""
     get_states = storage.all("State").values()
@@ -19,7 +21,9 @@ def get_state():
     return jsonify(list_states)
 
 
-@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>",
+                 methods=["GET"],
+                 strict_slashes=False)
 def id_state(state_id):
     """ return id of state"""
     state = storage.get(State, state_id)
