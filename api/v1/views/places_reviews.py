@@ -80,7 +80,7 @@ def create_place(place_id):
 @app_views.route("/reviews/<review_id>", methods=["PUT"], strict_slashes=False)
 def update_review(review_id):
     """updates a city object"""
-    place_onj = storage.get(Place, review_id)
+    place_onj = storage.get("Review", review_id)
     obj_request = request.get_json()
     if place_onj:
         if obj_request:
