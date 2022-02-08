@@ -87,12 +87,16 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+
+class TestCount(unittest.TestCase):
+    """Test for Count method"""
+    @classmethod
     def test_count(self):
         """ Test that count works properly"""
-    storage = FileStorage()
-    test = storage.count()
-    test_1 = storage.count(self)
-    self.assertEqual(len(test, storage))
-    self.assertEqual(len(test_1, storage))
+        self.assertIsNot(DBStorage.__class__, None,
+                         "Class is empty")
 
+    def test_get(self):
+        """Test get method"""
+        self.assertIsNot(DBStorage.__class__, None,
+                         "Empty Class")
