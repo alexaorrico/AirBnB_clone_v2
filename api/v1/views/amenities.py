@@ -28,10 +28,9 @@ def id_amenity(amenity_id):
     """ return id delete"""
     dict_amenity = storage.get("Amenity", amenity_id)
     if dict_amenity:
-        temp = {}
-        storage.delete()
+        storage.delete(dict_amenity)
         storage.save()
-        return jsonify(temp)
+        return jsonify({})
     else:
         abort(404)
 
