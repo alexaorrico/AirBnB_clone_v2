@@ -114,16 +114,15 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-
-class TestCount(unittest.TestCase):
-    """Test for Count method"""
-    @classmethod
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """ Test that count works properly"""
-        self.assertIsNot(FileStorage.__class__, None,
-                         "Class is empty")
+        storage = FileStorage()
+        count_city = len(storage.all(City))
+        self.assertEqual(storage.count(City), count_city)
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test get method"""
-        self.assertIsNot(FileStorage.__class__, None,
-                         "Empty Class")
+        storage = FileStorage()
+        self.assertIs(storage.get('foo', 'bar'), None)
