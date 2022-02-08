@@ -53,7 +53,7 @@ def createUser():
     POST /api/v1/states/<state_id>/user'''
     dataRequest = request.get_json()
     if dataRequest:
-        if dataRequest.get('email') is None::
+        if dataRequest.get('email') is None:
             abort(400, 'Missing email')
         if dataRequest.get('password') is None:
             abort(400, 'Missing password')
