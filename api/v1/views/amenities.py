@@ -14,11 +14,12 @@ from models.amenity import Amenity
 def allAmenity(state_id):
     '''Retrieves the list of all Amenity objects of a State:
     GET /api/v1/states/<state_id>/amenities'''
-    state = storage.get('State', state_id)
-    if state:
-        listAmenity = []
-        for city in state.amenities:
-            listAmenity.append(amenities.to_dict())
+
+    allAmenity = storage.get('Amenity', amenity_id)
+    listAmenity = []
+    if allAmenity:
+        for amenity in allAmenity.values():
+            listAmenity.append(amenity.to_dict())
         return jsonify(listAmenity)
     else:
         abort(404)
