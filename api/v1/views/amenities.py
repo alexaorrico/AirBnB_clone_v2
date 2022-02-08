@@ -26,19 +26,14 @@ def get_Amenities():
                  strict_slashes=False)
 def id_amenity(amenity_id):
     """ return id delete"""
-    dict_amenity = storage.all("Amenity")
-    list_amenities = []
-    for element in dict_amenity:
-        val = dict_amenity[element].to_dict()
-        if val["id"] == amenity_id:
-            if request.method == "GET":
-                return jsonify(val)
-        elif request.method == "DELETE":
-            temp = {}
-            dict_amenity[element].delete()
-            storage.save()
-            return jsonify(temp)
-    abort(404)
+    dict_amenity = storage.get("Amenity", amenity_id)
+    if dict_amenity:
+        temp = {}
+        storage.delete()
+        storage.save()
+        return jsonify(temp)
+    else:
+        abort(404)
 
 
 @app_views.route("/amenities",
