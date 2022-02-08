@@ -22,18 +22,6 @@ def allAmenity():
     return jsonify(listAmenity)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'],
-                 strict_slashes=False)
-def objAmenity(amenity_id):
-    '''Retrieves a Amenity object. :
-    GET /api/v1/amenities/<amenity_id>'''
-    amenity = storage.get('Amenity', amenity_id)
-    if amenity:
-        return jsonify(amenity.to_dict())
-    else:
-        abort(404)
-
-
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def deleteAmenity(amenity_id):
