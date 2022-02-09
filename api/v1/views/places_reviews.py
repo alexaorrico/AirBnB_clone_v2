@@ -18,19 +18,19 @@ def reviwPlaces(place_id):
     '''Retrieves the list of all place objects of a State:
     GET /api/v1//places/<place_id>'''
 
-    allplace = storage.get('Place', place_id)
-    listPlaces = []
-    if allCities:
-        for place in allplace.places:
-            listPlaces.append(place.to_dict())
-        return jsonify(listPlaces)
+    allView = storage.get('Place', place_id)
+    listReview = []
+    if allView:
+        for view in allView.places:
+            listReview.append(view.to_dict())
+        return jsonify(listReview)
     else:
         abort(404)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
-def viwPlace(review_id):
+def viewPlace(review_id):
     '''Retrieves a review object. :
     GET /api/v1//reviews/<review_id>'''
     view = storage.get(Review, review_id)
@@ -40,7 +40,7 @@ def viwPlace(review_id):
         abort(404)
 
 
-@app_views.route('review', methods=['DELETE'],
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def deleteView(review_id):
     '''Deletes a review object:
@@ -100,5 +100,4 @@ def updateView(review_id):
             return jsonify(obj.to_dict()), 200
         else:
             abort(400, 'Not a JSON')
-    else:
-        abort(404)
+
