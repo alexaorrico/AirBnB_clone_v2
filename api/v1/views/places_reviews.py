@@ -50,6 +50,35 @@ def deleteView(review_id):
         abort(404)
 
 
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
+                 strict_slashes=False)
+def createView(city_id):
+    '''Creates a review'''
+    city = storage.get('Place', place_id)
+    data_request = request.get_json()
+    if city:
+        if isinstance(data_request, dict):
+            if 'user_id' in data_request.keys:
+                user = storage.get('User', data_request.user_id)
+                if user:
+                    for k in data_request.keys():
+                        if k == "name":
+                            obj = Place(**data_request)
+                            storage.new(obj)
+                            storage.save()
+                            return jsonify(obj.to_dict()), 201
+                        else:
+                            abort(400, 'Missing text')
+                else:
+                    abort(404)
+            else:
+                abort(400, 'Missing user_id')
+        else:
+            abort(400, 'Not a JSON')
+    else:
+        abort(404)
+
+
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def updateView(review_id):
@@ -69,3 +98,5 @@ def updateView(review_id):
             abort(400, 'Not a JSON')
     else:
         abort(404)
+    
+
