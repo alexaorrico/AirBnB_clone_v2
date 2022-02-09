@@ -81,7 +81,7 @@ def put_user(user_id):
                 up_date.save()
                 return jsonify(up_date.to_dict())
             else:
-                abort(400, "Missing name")
+                abort(400, "Missing password")
         else:
             abort(400, "Not a JSON")
     else:
