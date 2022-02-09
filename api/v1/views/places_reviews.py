@@ -69,5 +69,3 @@ def updateView(review_id):
             abort(400, 'Not a JSON')
     else:
         abort(404)
-    
-
