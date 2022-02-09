@@ -73,15 +73,12 @@ def put_user(user_id):
     data = request.get_json()
     if up_date:
         if data:
-            if "password" in data:
-                for k, v in data.items():
-                    ignore = ["id", "email", "created_at", "updated_at"]
-                    if k != ignore:
-                        setattr(up_date, k, v)
+            for k, v in data.items():
+                ignore = ["id", "email", "created_at", "updated_at"]
+                if k != ignore:
+                    setattr(up_date, k, v)
                 up_date.save()
                 return jsonify(up_date.to_dict())
-            else:
-                abort(400, "Missing password")
         else:
             abort(400, "Not a JSON")
     else:
