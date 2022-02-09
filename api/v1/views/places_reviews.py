@@ -52,7 +52,7 @@ def deleteView(review_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def createView(city_id):
+def createView(place_id):
     '''Creates a review'''
     city = storage.get('Place', place_id)
     data_request = request.get_json()
@@ -98,5 +98,3 @@ def updateView(review_id):
             abort(400, 'Not a JSON')
     else:
         abort(404)
-    
-
