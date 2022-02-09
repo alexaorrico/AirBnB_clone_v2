@@ -67,8 +67,10 @@ def post_places(city_id=None):
                 setattr(new_place, "city_id", city_id)
                 new_place.save()
                 return jsonify(new_place.to_dict(), 201)
+            else:
+                abort("Missing user_id", 400)
         else:
-            abort("Missing name", 400)
+            abort("Not a JSON", 400)
     else:
         abort(404)
 
