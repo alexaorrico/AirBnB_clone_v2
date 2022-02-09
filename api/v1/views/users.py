@@ -3,17 +3,18 @@
 This is module users
 """
 from api.v1.views import (
-  app_views,
-  storage)
+    app_views,
+    storage)
 from flask import (
-  abort,
-  jsonify,
-  make_response,
-  request)
+    abort,
+    jsonify,
+    make_response,
+    request)
 from models.user import User
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/users', methods=['GET'])
+@app_views.route('/users/<user_id>', methods=['GET'])
 def view_user(user_id=None):
     """
     Retrieves a list of all users or of one specified by user_id
@@ -64,7 +65,7 @@ def view_user(user_id=None):
     return jsonify(s.to_json())
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id=None):
     """
     Deletes a user based on the user_id
@@ -85,7 +86,7 @@ def delete_user(user_id=None):
     return jsonify({}), 200
 
 
-@app_views.route('/users', methods=['POST'], strict_slashes=False)
+@app_views.route('/users', methods=['POST'])
 def create_user():
     """Example endpoint creates a user
     Creates a user based on the JSON body
@@ -134,7 +135,7 @@ def create_user():
     """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
@@ -147,7 +148,7 @@ def create_user():
     return jsonify(s.to_json()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id=None):
     """Example endpoint updates a user
     Updates a user based on the JSON body
@@ -204,7 +205,7 @@ def update_user(user_id=None):
     """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400

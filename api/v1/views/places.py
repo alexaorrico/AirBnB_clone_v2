@@ -3,19 +3,19 @@
 This is module places
 """
 from api.v1.views import (
-  app_views,  
-  storage
-  )
+    app_views,
+    storage
+)
 from flask import (
-  abort,
-  jsonify,
-  make_response,
-  request)
+    abort,
+    jsonify,
+    make_response,
+    request)
 import os
-from models.place import  Place
+from models.place import Place
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'],
-                 strict_slashes=False)
+
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
 def view_places_in_city(city_id):
     """
     Retrieves all places within a city
@@ -77,7 +77,7 @@ def view_places_in_city(city_id):
     return jsonify(result)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'])
 def view_place(place_id=None):
     """
     Retrieves one place with the given id
@@ -131,7 +131,7 @@ def view_place(place_id=None):
     responses:
       200:
         description: A list of a dictionary of a place obj
-  
+
     """
     s = storage.get("Place", place_id)
     if s is None:
@@ -139,8 +139,7 @@ def view_place(place_id=None):
     return jsonify(s.to_json())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id=None):
     """Example endpoint deleting one place
     Deletes a place based on the place_id of the JSON body
@@ -160,8 +159,7 @@ def delete_place(place_id=None):
     return jsonify({}), 200
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place(city_id):
     """
     Create a single place based on the JSON body
@@ -221,7 +219,7 @@ def create_place(city_id):
         abort(404)
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
@@ -238,7 +236,7 @@ def create_place(city_id):
     return jsonify(s.to_json()), 201
 
 
-@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id=None):
     """
     Updates a place based on the JSON body
@@ -296,7 +294,7 @@ def update_place(place_id=None):
     """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
@@ -311,7 +309,7 @@ def update_place(place_id=None):
     return jsonify(a.to_json()), 200
 
 
-@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+@app_views.route('/places_search', methods=['POST'])
 def list_places():
     """
     Retrieves a list of all places of a JSON body
@@ -367,7 +365,7 @@ def list_places():
      """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
@@ -405,8 +403,8 @@ def list_places():
                             flag = False
                             break
                     if flag:
-                                # using amenities make it instance attribute,
-                                # not just class check out to_json
+                        # using amenities make it instance attribute,
+                        # not just class check out to_json
                         all_places.append(e)
         else:
             all_places = all_places2

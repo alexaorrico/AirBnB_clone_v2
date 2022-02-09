@@ -3,18 +3,18 @@
 This is module amenities
 """
 from api.v1.views import (
-  app_views,
-  storage)
+    app_views,
+    storage)
 from flask import (
-  abort,
-  jsonify,
-  make_response,
-  request)
+    abort,
+    jsonify,
+    make_response,
+    request)
 from models.amenity import Amenity
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>', methods=['GET'],
-                 strict_slashes=False)
+
+@app_views.route('/amenities', methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def view_amenity(amenity_id=None):
     """
     Retrieves a list of all amenties or of one specified by amenity_id
@@ -65,8 +65,7 @@ def view_amenity(amenity_id=None):
     return jsonify(s.to_json())
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenity(amenity_id=None):
     """Example endpoint deleting one amenity
     Deletes a review based on the amenity_id
@@ -86,7 +85,7 @@ def delete_amenity(amenity_id=None):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+@app_views.route('/amenities', methods=['POST'])
 def create_amenity():
     """Example endpoint Creates an amenity
     Creates an amenity based on amenity_id with the JSON body
@@ -132,7 +131,7 @@ def create_amenity():
     """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
@@ -143,8 +142,7 @@ def create_amenity():
     return jsonify(s.to_json()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update_amenity(amenity_id=None):
     """Example endpoint updates an amenity
     Updates an amenity based on amenity_id with the JSON body
@@ -190,7 +188,7 @@ def update_amenity(amenity_id=None):
     """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400

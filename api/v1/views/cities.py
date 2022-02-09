@@ -1,18 +1,17 @@
 #!/usr/bin/python3
 """This is module cities"""
 from api.v1.views import (
-  app_views,
-  storage)
+    app_views,
+    storage)
 from flask import (
-  abort,
-  jsonify,
-  request
-  )
+    abort,
+    jsonify,
+    request
+)
 from models.city import City
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET"],
-                 strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["GET"])
 def state_all_cities(state_id):
     """Example endpoint returning a list of all the cities of a state
     Retrieves all the cities of a given state_id
@@ -57,7 +56,7 @@ def state_all_cities(state_id):
     return jsonify(all_cities)
 
 
-@app_views.route("/cities/<city_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=["GET"])
 def one_city(city_id):
     """Example endpoint returning one city
     Retrieves one city of a given city_id
@@ -101,7 +100,7 @@ def one_city(city_id):
     return jsonify(city.to_json())
 
 
-@app_views.route("/cities/<city_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=["DELETE"])
 def delete_one_city(city_id):
     """Example endpoint deleting one city
     Deletes a state based on the city_id
@@ -121,8 +120,7 @@ def delete_one_city(city_id):
     return jsonify({})
 
 
-@app_views.route("/states/<state_id>/cities", methods=["POST"],
-                 strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["POST"])
 def create_one_city(state_id):
     """Example endpoint creating one city
     Creates one city tied with the given state_id based on the JSON body
@@ -178,7 +176,7 @@ def create_one_city(state_id):
     return jsonify(c.to_json()), 201
 
 
-@app_views.route("/cities/<city_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=["PUT"])
 def update_one_city(city_id):
     """Example endpoint updates one city
     Updates one city tied with the given state_id based on the JSON body
