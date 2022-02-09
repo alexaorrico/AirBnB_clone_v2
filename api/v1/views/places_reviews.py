@@ -5,10 +5,6 @@
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
 from models.review import Review
 
 
@@ -21,7 +17,7 @@ def reviwPlaces(place_id):
     allView = storage.get('Place', place_id)
     listReview = []
     if allView:
-        for view in allView.places:
+        for view in allView.reviews:
             listReview.append(view.to_dict())
         return jsonify(listReview)
     else:
@@ -100,4 +96,7 @@ def updateView(review_id):
             return jsonify(obj.to_dict()), 200
         else:
             abort(400, 'Not a JSON')
+    else:
+        abort(404)
+    
 
