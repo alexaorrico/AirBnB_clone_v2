@@ -3,6 +3,7 @@
 Methods for places RESTFul
 """
 
+from tkinter import N
 from flask import jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
@@ -58,26 +59,24 @@ def id_place(place_id):
 def post_places(city_id=None):
     """ Create a new place """
     places_ob = storage.get("City", city_id)
-    if places_ob:
-        if request.is_json:
-            if "name" not in request.json:
-                return jsonify("Missing name", 400)
-            if "user_id" in request.json:
-                return jsonify("Missing user_id", 400)
-            req_post = request.get_json()
-            new_user = req_post.get("user_id")
-            user = storage.get("User", new_user)
-            if user is None:
-                abort(404)
-            new_place = Place(**req_post)
-            setattr(new_place, "city_id", city_id)
-            new_place.save()
-            return jsonify(new_place.to_dict(), 201)
-        else:
-            abort("Not a JSON", 400)
-    else:
+    if places_ob is None:
         abort(404)
-
+    if not request.is_json:
+        abort("Not a JSON", 400)
+    if "name" not in request.json:
+        return jsonify("Missing name", 400)
+    if "user_id" in request.json:
+        return jsonify("Missing user_id", 400)
+    req_post = request.get_json()
+    new_user = req_post.get("user_id")
+    user = storage.get("User", new_user)
+    if user is None:
+        abort(404)
+    new_place = Place(**req_post)
+    setattr(new_place, "city_id", city_id)
+    new_place.save()
+    return jsonify(new_place.to_dict(), 201)
+            
 
 @app_views.route("/places/<place_id>",
                  methods=["PUT"],
