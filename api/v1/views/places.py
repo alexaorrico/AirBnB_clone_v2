@@ -60,20 +60,27 @@ def createUser(city_id):
     city = storage.get(City, city_id)
     data_request = request.get_json()
     if city:
-        if city.get('user_id') is None:
-            abort(400, 'Missing user_id')
-        if city.get('name') is None:
-            abort(400, 'Missing name')
-        if city.get('email') is None:
-                abort(400, 'Missing email')
-        if city.get('password') is None:
-            abort(400, 'Missing password')
-        newUser = User(**dataRequest)
-        storage.new(newUser)
-        storage.save()
-        return jsonify(newUser.to_dict()), 201
+        data_request = request.get_json()
+        if isinstance(data_request, dict):
+            if 'user_id' in data_request.keys:
+                user = storage.get('User', data_request.user_id)
+                if user:
+                    for k in data_request.keys():
+                        if k == "name":
+                            obj = Place(**data_request)
+                            storage.new(obj)
+                            storage.save()
+                            return jsonify(obj.to_dict()), 201
+                        else:
+                            abort(400, 'Missing name')
+                else:
+                    abort(404)
+            else:
+                abort(400, 'Missing user_id')
+        else:
+            abort(400, 'Not a JSON')
     else:
-        abort(400)
+        abort(404)
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
