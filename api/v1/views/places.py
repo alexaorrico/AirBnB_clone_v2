@@ -62,11 +62,11 @@ def post_places(city_id=None):
     if places_ob is None:
         abort(404)
     if not request.is_json:
-        abort("Not a JSON", 400)
+        return jsonify({"error": "Not a JSON"}), 400
     if "name" not in request.json:
-        return jsonify("Missing name", 400)
+        return jsonify({"error": "Missing name"}), 400
     if "user_id" in request.json:
-        return jsonify("Missing user_id", 400)
+        return jsonify({"error": "Missing user_id",}), 400
     req_post = request.get_json()
     new_user = req_post.get("user_id")
     user = storage.get("User", new_user)
