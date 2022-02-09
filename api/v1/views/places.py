@@ -57,23 +57,24 @@ def id_place(place_id):
                  strict_slashes=False)
 def post_places(city_id=None):
     """ Create a new place """
-    data = request.get_json()
-    list_places = []
     places_ob = storage.get("City", city_id)
     if places_ob:
-        if data:
-            if "name" not in data:
+        if request.is_json:
+            if "name" not in request.json:
                 return jsonify("Missing name", 400)
-            if "user_id" in data:
+            if "user_id" in request.json:
                 return jsonify("Missing user_id", 400)
-            new_user = data.get("user_id")
+            req_post = request.get_json()
+            new_user = req_post.get("user_id")
             user = storage.get("User", new_user)
-            if user is not None:
+            if user is None:
                 abort(404)
-            new_place = Place(**data)
+            new_place = Place(**req_post)
             setattr(new_place, "city_id", city_id)
             new_place.save()
             return jsonify(new_place.to_dict(), 201)
+        else:
+            abort("Not a JSON", 400)
     else:
         abort(404)
 
