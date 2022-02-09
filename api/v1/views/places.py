@@ -14,12 +14,12 @@ from models.place import Place
                  strict_slashes=False)
 def get_allplaces(city_id=None):
     """ List all cities """
-    get_cities = storage.all("City")
+    get_cities = storage.get("City", city_id)
     list_places = []
     if get_cities:
         all_places = storage.all("Place").values()
         for element in all_places:
-            if element.city_id == type(city_id):
+            if element.city_id == str(city_id):
                 list_places.append(element.to_dict())
         return jsonify(list_places)
     else:
