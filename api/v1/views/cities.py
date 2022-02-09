@@ -60,7 +60,7 @@ def post_city(state_id):
     data = request.get_json()
     if state_ob:
         if data:
-            if "name" not in data:
+            if "name" in data:
                 new_city = City(**data)
                 setattr(new_city, "state_id", state_id)
                 new_city.save()
