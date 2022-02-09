@@ -60,7 +60,6 @@ def createUser(city_id):
     city = storage.get(City, city_id)
     data_request = request.get_json()
     if city:
-        data_request = request.get_json()
         if isinstance(data_request, dict):
             if 'user_id' in data_request.keys:
                 user = storage.get('User', data_request.user_id)
