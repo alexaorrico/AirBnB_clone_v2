@@ -10,8 +10,8 @@ from models.review import Review
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def reviwPlaces(place_id):
-    '''Retrieves the list of all place objects of a State:
+def allRevie(place_id):
+    '''Retrieves the list of all review objects of a State:
     GET /api/v1//places/<place_id>'''
 
     allView = storage.get('Place', place_id)
@@ -26,7 +26,7 @@ def reviwPlaces(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
-def viewPlace(review_id):
+def getReview(review_id):
     '''Retrieves a review object. :
     GET /api/v1//reviews/<review_id>'''
     view = storage.get(Review, review_id)
@@ -46,35 +46,6 @@ def deleteView(review_id):
         storage.delete(view)
         storage.save()
         return make_response(jsonify({})), 200
-    else:
-        abort(404)
-
-
-@app_views.route('/cities/<city_id>/places', methods=['POST'],
-                 strict_slashes=False)
-def createPlace(city_id):
-    '''Creates a review'''
-    city = storage.get('Place', place_id)
-    data_request = request.get_json()
-    if city:
-        if isinstance(data_request, dict):
-            if 'user_id' in data_request.keys:
-                user = storage.get('User', data_request.user_id)
-                if user:
-                    for k in data_request.keys():
-                        if k == "name":
-                            obj = Place(**data_request)
-                            storage.new(obj)
-                            storage.save()
-                            return jsonify(obj.to_dict()), 201
-                        else:
-                            abort(400, 'Missing text')
-                else:
-                    abort(404)
-            else:
-                abort(400, 'Missing user_id')
-        else:
-            abort(400, 'Not a JSON')
     else:
         abort(404)
 
