@@ -73,7 +73,7 @@ def put_user(user_id):
     data = request.get_json()
     if up_date:
         if data:
-            if "name" in data:
+            if "password" in data:
                 for k, v in data.items():
                     ignore = ["id", "email", "created_at", "updated_at"]
                     if k != ignore:
