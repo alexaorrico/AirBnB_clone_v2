@@ -53,6 +53,29 @@ def deletePlace(place_id):
         abort(404)
 
 
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
+def createUser(city_id):
+    '''Creates a PLace'''
+    city = storage.get(City, city_id)
+    data_request = request.get_json()
+    if city:
+        if city.get('user_id') is None:
+            abort(400, 'Missing user_id')
+        if city.get('name') is None:
+            abort(400, 'Missing name')
+        if city.get('email') is None:
+                abort(400, 'Missing email')
+        if city.get('password') is None:
+            abort(400, 'Missing password')
+        newUser = User(**dataRequest)
+        storage.new(newUser)
+        storage.save()
+        return jsonify(newUser.to_dict()), 201
+    else:
+        abort(400)
+
+
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def updatePlace(place_id):
