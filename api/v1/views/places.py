@@ -62,15 +62,18 @@ def post_places(city_id=None):
     places_ob = storage.get("City", city_id)
     if places_ob:
         if data:
-            if "name" in data and "user_id" in data:
-                new_place = Place(**data)
-                setattr(new_place, "city_id", city_id)
-                new_place.save()
-                return jsonify(new_place.to_dict(), 201)
-            else:
-                abort(400)
-        else:
-            abort("Missing name", 400)
+            if "name" not in data:
+                return jsonify("Missing name", 400)
+            if "user_id" in data:
+                return jsonify("Missing user_id", 400)
+            new_user = data.get("user_id")
+            user = storage.get("User", new_user)
+            if user is not None:
+                abort(404)
+            new_place = Place(**data)
+            setattr(new_place, "city_id", city_id)
+            new_place.save()
+            return jsonify(new_place.to_dict(), 201)
     else:
         abort(404)
 
