@@ -33,6 +33,6 @@ def count():
 
     count = {}
     for cls in models_avail.keys():
-        count[models_avail[cls]] = storage.count(cls)
+        count[models_avail[cls]] = storage.count()
 
     return jsonify(count)
