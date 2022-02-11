@@ -113,3 +113,49 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestGETCount(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        """sets up the class for this round of tests"""
+        storage.delete_all()
+        cls.s = State(name="California")
+        cls.c = City(state_id=cls.s.id,
+                     name="San Francisco")
+        cls.u = User(email="betty@holbertonschool.com",
+                     password="pwd")
+        cls.p = Place(user_id=cls.u.id,
+                       city_id=cls.c.id,
+                       name="a house")
+        cls.a = Amenity("wifi")
+
+        objs = [cls.s, cls.c, cls.u, cls.p, cls.a]
+        for obj in objs:
+            obj.save()
+
+    def setUp(self):
+        """ Defining data for each test"""
+        self.s = TestGetCount.s
+        self.c = TestGetCount.c
+        self.p = TestGetCount.p
+        self.a = TestGetCount.a
+
+    def test_get_correctness(self):
+        """ Tests the correctness of get method"""
+        duplica = storage.get('State', self.s.id)
+        expected = self.s.id
+        self.assertEqual(expected, duplica.id)
+        
+    def test_count_specific_class(self):
+        count_places = storage.count('Place')
+        expected = 1
+        self.assertTrue(count_places == expected)
+
+    def test_count_all(self):
+        all_count = storage.count()
+        expected = 5
+        self.assertEqual(expected, all_count)
+if __name__ == '__main__':
+    unittest.main
