@@ -127,8 +127,8 @@ class TestGETCount(unittest.TestCase):
         cls.u = User(email="betty@holbertonschool.com",
                      password="pwd")
         cls.p = Place(user_id=cls.u.id,
-                       city_id=cls.c.id,
-                       name="a house")
+                      city_id=cls.c.id,
+                      name="a house")
         cls.a = Amenity("wifi")
 
         objs = [cls.s, cls.c, cls.u, cls.p, cls.a]
@@ -147,7 +147,7 @@ class TestGETCount(unittest.TestCase):
         duplica = storage.get('State', self.s.id)
         expected = self.s.id
         self.assertEqual(expected, duplica.id)
-        
+
     def test_count_specific_class(self):
         count_places = storage.count('Place')
         expected = 1
@@ -157,5 +157,7 @@ class TestGETCount(unittest.TestCase):
         all_count = storage.count()
         expected = 5
         self.assertEqual(expected, all_count)
+
+
 if __name__ == '__main__':
     unittest.main
