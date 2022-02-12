@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-""" flask app main file """
+"""
+  flask app main file
+  main file for configuring our api
+"""
+
 from flask import Flask, jsonify, make_response
 from os import environ
 from api.v1.views import app_views
@@ -15,7 +19,10 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(exe):
-    """ closes the db connection """
+    """
+    closes the db connection
+    uses close method of storage
+    """
     storage.close()
 
 
@@ -23,6 +30,7 @@ def teardown(exe):
 def notfound(exception):
     """
     handles the notfound error
+    all unhandled routes
     """
     return make_response(jsonify({"error": "Not found"}), 404)
 
