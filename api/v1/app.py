@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ flask app main file """
 from flask import Flask
 from os import environ
