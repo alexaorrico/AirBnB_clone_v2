@@ -14,6 +14,7 @@ from models import storage
 def status():
     """
     function for status route
+    handles: /status
     """
     if request.method == 'GET':
         return jsonify({"status": "OK"})
@@ -23,6 +24,7 @@ def status():
 def stats():
     """
     returns total of each entity
+    handles: /stats
     """
     if request.method == 'GET':
         stats = {"amenities": "Amenity",
