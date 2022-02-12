@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
 Contains the FileStorage class
 """
@@ -67,4 +68,26 @@ class FileStorage:
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
-        self.reload()
+    self.reload()
+     def get(self, cls, id):
+                 """This a method returns the object based on the class and its ID
+                         or None """
+                                 for key, value in self.__objects.items():
+                                                 if (cls == value.__class__ or
+                                                                             cls == value.__class__.__name__) and id == value.id:
+                                                                     return value
+                                                                         return None
+
+                                                                         def count(self, cls=None):
+                                                                                     """ This a method Returns the number of objects
+                                                                                             in storage matching the given class. If no class is passed,
+                                                                                                     returns the count of all objects in storage"""
+                                                                                                             classValue = classes.values()
+
+                                                                                                                     if cls is None:
+                                                                                                                                     return(len(self.__objects))
+                                                                                                                                         count = 0
+                                                                                                                                                 for value in self.__objects.values():
+                                                                                                                                                                 if cls == value.__class__ or cls == value.__class__.__name__:
+                                                                                                                                                                                     count += 1
+                                                                                                                                                                                             return count

@@ -73,4 +73,45 @@ class DBStorage:
 
     def close(self):
         """call remove() method on the private session attribute"""
-        self.__session.remove()
+
+self.__session.remove(
+
+    def get(self, cls, id):
+            classValue = self.all()
+                    for value in classValue.values():
+                                if (cls == value.__class__ or
+                                                        cls == value.__class__.__name__) and id == value.id:
+                                                return value
+                                                        return None
+
+                                                            def count(self, cls=None):
+                                                                    classValue = self.all()
+
+                                                                            if cls is None:
+                                                                                        return(len(classValue))
+                                                                                                count = 0
+                                                                                                        for value in classValue.values():
+                                                                                                                    if cls == value.__class__ or cls == value.__class__.__name__:
+                                                                                                                                    count += 1
+                                                                                                                                            return count
+                                                                                                                                    
+
+                                                                                                                                        def get(self, cls, id):
+                                                                                                                                                classValue = self.all()
+                                                                                                                                                        for value in classValue.values():
+                                                                                                                                                                    if (cls == value.__class__ or
+                                                                                                                                                                                            cls == value.__class__.__name__) and id == value.id:
+                                                                                                                                                                                    return value
+                                                                                                                                                                                            return None
+
+                                                                                                                                                                                                def count(self, cls=None):
+                                                                                                                                                                                                        classValue = self.all()
+
+                                                                                                                                                                                                                if cls is None:
+                                                                                                                                                                                                                            return(len(classValue))
+                                                                                                                                                                                                                                    count = 0
+                                                                                                                                                                                                                                            for value in classValue.values():
+                                                                                                                                                                                                                                                        if cls == value.__class__ or cls == value.__class__.__name__:
+                                                                                                                                                                                                                                                                        count += 1
+                                                                                                                                                                                                                                                                                return count
+                                                                                                                                                                                                                                                                                )
