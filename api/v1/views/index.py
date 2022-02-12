@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-""" contain routes on app_views blueprint """
+""" 
+  contain routes on app_views blueprint 
+   /status => route handler
+   /stats => route handler
+"""
 
 from api.v1.views import app_views
 from flask import jsonify, request
