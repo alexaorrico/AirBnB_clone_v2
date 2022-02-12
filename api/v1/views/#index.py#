@@ -14,7 +14,6 @@ def status():
     if request.method == 'GET':
         return jsonify({"status": "OK"})
 
-
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """
@@ -26,8 +25,8 @@ def stats():
                  "places": "Place",
                  "reviews": "Review",
                  "states": "State",
-                 "users": "User"}
-        for k, v in stats.items():
-            stats[k] = storage.count(v)
+             "users": "User"}
+    for k, v in stats.items():
+        stats[k] = storage.count(v)
 
-        return jsonify(stats)
+    return jsonify(stats)
