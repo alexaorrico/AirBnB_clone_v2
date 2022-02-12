@@ -18,6 +18,7 @@ def teardown(exe):
     """ closes the db connection """
     storage.close()
 
+
 @app.errorhandler(404)
 def notfound(exception):
     """
