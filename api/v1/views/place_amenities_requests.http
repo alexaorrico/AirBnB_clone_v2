@@ -1,0 +1,7 @@
+###
+GET http://0.0.0.0:5000/api/v1/places/02d9a2b5-7dca-423f-8406-707bc76abf7e/amenities HTTP/1.1
+
+
+###
+POST http://0.0.0.0:5000/api/v1/places/fd6add8c-ef38-48cd-8980-bb7aeba1d521/amenities/ca9cfced-be37-4db0-95b2-fb660c0d49ab HTTP/1.1
+

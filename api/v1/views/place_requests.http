@@ -1,5 +1,5 @@
 ###
-GET http://0.0.0.0:5000/api/v1/cities/660c9bbd-76c4-454f-b9a4-87efab0e948f/places HTTP/1.1
+GET http://0.0.0.0:5000/api/v1/cities/a5e4fa5a-2a0d-4c7c-b824-d318409e11e8/places HTTP/1.1
 
 ###
 GET http://0.0.0.0:5000/api/v1/places/52a506f4-2285-4632-9bb8-bdfccd0bc159 HTTP/1.1
