@@ -4,9 +4,11 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, make_response, request
 from models import storage
 from models.place import Place
+from flasgger.utils import swag_from
 
 
 @app_views.route('/cities/<string:city_id>/places', strict_slashes=False)
+@swag_from('documentation/place/get_places.yml', methods=['GET'])
 def city_places(city_id):
     """list all places by city"""
     city = storage.get('City', city_id)

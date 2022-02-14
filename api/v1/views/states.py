@@ -4,9 +4,11 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, make_response, request
 from models import storage
 from models.state import State
+from flasgger.utils import swag_from
 
 
 @app_views.route('/states', strict_slashes=False)
+@swag_from('documentation/state/get_state.yml', methods=['GET'])
 def states():
     """ list of states """
     states = storage.all('State')
@@ -14,8 +16,9 @@ def states():
 
 
 @app_views.route('/states/<string:id>', strict_slashes=False)
+@swag_from('documentation/state/get_id_state.yml', methods=['get'])
 def state_id(id):
-    """ json data of a sngle state """
+    """ json data of a single state """
     single_state = storage.get('State', id)
     if single_state:
         return jsonify(single_state.to_dict()), 200
@@ -23,6 +26,7 @@ def state_id(id):
 
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
+@swag_from('documentation/state/post_state.yml', methods=['POST'])
 def insert_state():
     """ Creates a new state """
     dictionary = request.get_json()
@@ -36,6 +40,7 @@ def insert_state():
 
 
 @app_views.route('/states/<string:id>', strict_slashes=False, methods=['PUT'])
+@swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def update_state(id):
     """ Updates an state """
     dictionary = request.get_json()
@@ -52,6 +57,7 @@ def update_state(id):
 
 @app_views.route('/states/<string:id>', strict_slashes=False,
                  methods=['DELETE'])
+@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(id):
     """ Deletes an state """
     single_state = storage.get('State', id)
