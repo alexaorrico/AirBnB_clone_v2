@@ -45,7 +45,7 @@ def all_states():
     state_list = []
 
     for state in all_states:
-      state_list.append(state.to_dict()) 
+        state_list.append(state.to_dict())
 
     return jsonify(state_list), 200
 
@@ -171,19 +171,19 @@ def create_state():
         description: A list of a single dictionary of a State
     """
     if request.get_json:
-      kwargs = request.get_json()
+        kwargs = request.get_json()
     else:
         return "Not a JSON", 400
 
     if kwargs:
         if 'name' not in kwargs.keys():
-          return 'Missing name', 400
-    
+            return 'Missing name', 400
+
     try:
-      state = State(**kwargs)
-      state.save()
+        state = State(**kwargs)
+        state.save()
     except TypeError:
-      return "Not a JSON", 400
+        return "Not a JSON", 400
 
     return make_response(jsonify(state.to_dict()), 201)
 
@@ -225,20 +225,26 @@ def update_state(state_id=None):
         description: A list of a single dictionary of a State
     """
     if request.get_json:
-      kwargs = request.get_json()
+        kwargs = request.get_json()
     else:
         return "Not a JSON", 400
 
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
+    if kwargs:
+        if 'name' not in kwargs.keys():
+            return 'Missing name', 400
+
     try:
-      for k in ("id", "created_at", "updated_at"):
-        kwargs.pop(k, None)
-        for k, v in kwargs.items():
-          setattr(state, k, v)
+        state = storage.get(State, state_id)
+        if state is None:
+            abort(404)
+
+        for k in ("id", "created_at", "updated_at"):
+          kwargs.pop(k, None)
+          for k, v in kwargs.items():
+            setattr(state, k, v)
         state.save()
-    except TypeError:
-      return "Not a JSON", 400
+
+    except AttributeError:
+        return "Not a JSON", 400
 
     return jsonify(state.to_dict()), 200
