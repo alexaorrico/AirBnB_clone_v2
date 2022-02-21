@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """states api view module"""
+from email.policy import strict
 from api.v1.views import app_views
 from flask import (
     abort,
@@ -11,7 +12,7 @@ from models import storage
 from models.state import State  # state model
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
     """
         Example endpoint returning a list of all the states
@@ -41,11 +42,11 @@ def all_states():
       200:
         description: A list of dictionarys, each dict is a State
     """
-    all_states = [state.to_json for state in storage.all('State').values()]
-    return jsonify(all_states)
+    all_states = [state.to_json() for state in storage.all(State).values()]
+    return make_response(jsonify(all_states), 200)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id=None):
     """
     Retrieves a state by a given id
@@ -87,10 +88,10 @@ def get_state(state_id=None):
     if state is None:
         abort(404)
 
-    return jsonify(state.to_json)
+    return jsonify(state.to_json())
 
 
-app_views.route('/states/<state_id>', methods=['DELETE'])
+app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 
 
 def delete_state(state_id=None):
@@ -138,7 +139,7 @@ def delete_state(state_id=None):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """
     Creates a State object based on the JSON body
@@ -181,7 +182,7 @@ def create_state():
     return jsonify(state.to_json()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], stric_slashes=False)
 def update_state(state_id=None):
     """
     Updates a State object based on the JSON body
