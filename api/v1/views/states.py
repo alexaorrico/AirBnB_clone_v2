@@ -239,9 +239,9 @@ def update_state(state_id=None):
             abort(404)
 
         for k in ("id", "created_at", "updated_at"):
-          kwargs.pop(k, None)
-          for k, v in kwargs.items():
-            setattr(state, k, v)
+            kwargs.pop(k, None)
+            for k, v in kwargs.items():
+                setattr(state, k, v)
         state.save()
 
     except AttributeError:
