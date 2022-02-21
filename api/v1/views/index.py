@@ -26,9 +26,10 @@ def status():
     return jsonify(status)
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def count():
-    """[summary]
+    """
+    returns a count of all database objects
     """
 
     models_avail = {
