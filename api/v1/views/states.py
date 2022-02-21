@@ -171,9 +171,9 @@ def create_state():
       201:
         description: A list of a single dictionary of a State
     """
-    try:
-        kwargs = request.get_json()
-    except Exception:
+    if request.get_json:
+      kwargs = request.get_json()
+    else:
         return "Not a JSON", 400
 
     if 'name' not in kwargs.keys():
