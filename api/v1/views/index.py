@@ -26,8 +26,10 @@ def count():
 
     models_avail = {
         "User": "users",
-        "Amenity": "amenities", "city": "cities",
-        "Place": "places", "Review": "reviews",
+        "Amenity": "amenities", 
+        "City": "cities",
+        "Place": "places", 
+        "Review": "reviews",
         "State": "states",
     }
 
