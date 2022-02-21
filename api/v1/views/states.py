@@ -42,7 +42,7 @@ def all_states():
       200:
         description: A list of dictionarys, each dict is a State
     """
-    all_states = [state.to_json() for state in storage.all(State).values()]
+    all_states = [state.to_dict() for state in storage.all('State')]
     return make_response(jsonify(all_states), 200)
 
 
@@ -88,7 +88,7 @@ def get_state(state_id=None):
     if state is None:
         abort(404)
 
-    return jsonify(state.to_json())
+    return jsonify(state.to_dict())
 
 
 app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
@@ -179,7 +179,7 @@ def create_state():
     state = State(**kwargs)
     state.save()
 
-    return jsonify(state.to_json()), 201
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], stric_slashes=False)
@@ -231,4 +231,4 @@ def update_state(state_id=None):
     for k, v in kwargs.items():
         setattr(state, k, v)
     state.save()
-    return jsonify(state.to_json()), 200
+    return jsonify(state.to_dict()), 200

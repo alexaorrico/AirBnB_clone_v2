@@ -11,8 +11,6 @@ from api.v1.views import app_views
 from models import storage
 from flask import jsonify
 
-mod_objs = [Amenity, City, Place, Review, State, User]
-
 
 @app_views.route('/status')
 def status():
@@ -41,6 +39,7 @@ def count():
         "Review": "reviews",
         "State": "states",
     }
+    mod_objs = [Amenity, City, Place, Review, State, User]
 
     count = {}
     i = -1
