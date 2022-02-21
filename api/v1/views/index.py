@@ -13,6 +13,7 @@ from flask import jsonify
 
 mod_objs = [Amenity, City, Place, Review, State, User]
 
+
 @app_views.route('/status')
 def status():
     """
@@ -34,17 +35,17 @@ def count():
 
     models_avail = {
         "User": "users",
-        "Amenity": "amenities", 
+        "Amenity": "amenities",
         "City": "cities",
-        "Place": "places", 
+        "Place": "places",
         "Review": "reviews",
         "State": "states",
     }
 
     count = {}
-    i = 0
+    i = -1
     for cls in models_avail.keys():
-        count[models_avail[cls]] = storage.count(mod_objs[i])
         i += 1
+        count[models_avail[cls]] = storage.count(mod_objs[i])
 
     return jsonify(count)
