@@ -5,7 +5,6 @@ import re
 import unittest
 import requests
 
-
 class TestErrorHandling(unittest.TestCase):
     def setUp(self):
         """

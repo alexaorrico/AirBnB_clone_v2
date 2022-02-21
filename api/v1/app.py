@@ -34,7 +34,7 @@ def not_found(error):
     e = {
         "error": "Not Found"
     }
-    return jsonify(e), 404
+    return jsonify(e, error)
 
 
 if __name__ == '__main__':
