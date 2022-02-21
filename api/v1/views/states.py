@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """states api view module"""
-from email.policy import strict
 from api.v1.views import app_views
 from flask import (
     abort,
@@ -176,11 +175,15 @@ def create_state():
     else:
         return "Not a JSON", 400
 
-    if 'name' not in kwargs.keys():
-        return 'Missing name', 400
-
-    state = State(**kwargs)
-    state.save()
+    if kwargs:
+        if 'name' not in kwargs.keys():
+          return 'Missing name', 400
+    
+    try:
+      state = State(**kwargs)
+      state.save()
+    except TypeError:
+      return "Not a JSON", 400
 
     return make_response(jsonify(state.to_dict()), 201)
 
@@ -229,9 +232,13 @@ def update_state(state_id=None):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    for k in ("id", "created_at", "updated_at"):
+    try:
+      for k in ("id", "created_at", "updated_at"):
         kwargs.pop(k, None)
-    for k, v in kwargs.items():
-        setattr(state, k, v)
-    state.save()
+        for k, v in kwargs.items():
+          setattr(state, k, v)
+        state.save()
+    except TypeError:
+      return "Not a JSON", 400
+
     return jsonify(state.to_dict()), 200
