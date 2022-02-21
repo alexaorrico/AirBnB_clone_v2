@@ -42,8 +42,8 @@ def all_states():
       200:
         description: A list of dictionarys, each dict is a State
     """
-    all_states = [state.to_dict() for state in storage.all('State')]
-    return make_response(jsonify(all_states), 200)
+    all_states = [state.to_dict() for state in storage.all('State').values]
+    return jsonify(all_states), 200
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
@@ -84,7 +84,7 @@ def get_state(state_id=None):
         """
     if state_id is None:
         abort(404)
-    state = storage.get('State', state_id)  # get state object
+    state = storage.get(State, state_id)  # get state object
     if state is None:
         abort(404)
 
@@ -223,7 +223,7 @@ def update_state(state_id=None):
     except None:
         return "Not a JSON", 400
 
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     for k in ("id", "created_at", "updated_at"):
