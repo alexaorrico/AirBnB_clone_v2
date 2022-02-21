@@ -224,7 +224,7 @@ def update_state(state_id=None):
       201:
         description: A list of a single dictionary of a State
     """
-    if kwargs.get_json:
+    if request.get_json:
       kwargs = request.get_json()
     else:
         return "Not a JSON", 400
