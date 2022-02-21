@@ -42,7 +42,12 @@ def all_states():
       200:
         description: A list of dictionarys, each dict is a State
     """
-    all_states = [state.to_dict() for state in storage.all('State').values]
+    all_states = storage.all(State).values
+    state_list = []
+
+    for state in all_states:
+      state_list = state_list.append(state.to_dict()) 
+
     return jsonify(all_states), 200
 
 
@@ -96,7 +101,7 @@ app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 
 def delete_state(state_id=None):
     """
-    Retrieves a state by a given id
+    Retrieves a state by a given id and deletes it
     ---
     parameters:
       - name: state_id
@@ -131,7 +136,7 @@ def delete_state(state_id=None):
     """
     if state_id is None:
         abort(404)
-    state = storage.get('State', state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -170,7 +175,7 @@ def create_state():
     """
     try:
         kwargs = request.get_json()
-    except None:
+    except Exception:
         return "Not a JSON", 400
 
     if 'name' not in kwargs.keys():
@@ -182,7 +187,7 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], stric_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id=None):
     """
     Updates a State object based on the JSON body
@@ -218,9 +223,9 @@ def update_state(state_id=None):
       201:
         description: A list of a single dictionary of a State
     """
-    try:
-        kwargs = request.get_json()
-    except None:
+    if kwargs.get_json:
+      kwargs = request.get_json()
+    else:
         return "Not a JSON", 400
 
     state = storage.get(State, state_id)
