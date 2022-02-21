@@ -33,3 +33,6 @@ class TestErrorHandling(unittest.TestCase):
         """
         res = self.setUp()
         self.assertEqual(res.headers['content-type'], 'application/json')
+
+class TestStates(unittest.TestCase):
+    pass
