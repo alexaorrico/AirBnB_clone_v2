@@ -18,22 +18,23 @@ def teardown_app(exception):
     """
     storage.close()
 
-    @app.errorhandler(404)
-    def not_found(error):
-        """
-        Handle non existing pages
 
-        Args:
-            error: [description]
+@app.errorhandler(404)
+def not_found(error):
+    """
+    Handle non existing pages
 
-        Returns:
-            JSON: json object
-        """
+    Args:
+    error: [description]
 
-        e = {
-            "error": "Not Found"
-        }
-        return jsonify(e, 404)
+    Returns:
+    JSON: json object
+    """
+
+    e = {
+        "error": "Not Found"
+    }
+    return jsonify(e, 404)
 
 
 if __name__ == '__main__':
