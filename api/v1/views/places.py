@@ -10,10 +10,16 @@ from flask import (
     abort,
     jsonify,
     make_response,
-    request)
-import os
+    request
+)
+from models.city import City
 from models.place import Place
 
+# this helps incase you use a .env file
+try:
+    from decouple import config as getenv
+except ImportError:
+    from os import getenv
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
 def view_places_in_city(city_id):
@@ -70,10 +76,10 @@ def view_places_in_city(city_id):
       200:
         description: A list of dictionaries of place object
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    result = [place.to_json() for place in city.places]
+    result = [place.to_dict() for place in city.places]
     return jsonify(result)
 
 
@@ -133,10 +139,10 @@ def view_place(place_id=None):
         description: A list of a dictionary of a place obj
 
     """
-    s = storage.get("Place", place_id)
+    s = storage.get(Place, place_id)
     if s is None:
         abort(404)
-    return jsonify(s.to_json())
+    return jsonify(s.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
@@ -152,7 +158,7 @@ def delete_place(place_id=None):
       200:
         description: An empty dictionary
     """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     storage.delete(place)
@@ -214,7 +220,7 @@ def create_place(city_id):
       201:
         description: A list of a dictionary of a place obj
      """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     try:
@@ -233,7 +239,7 @@ def create_place(city_id):
     r["city_id"] = city_id
     s = Place(**r)
     s.save()
-    return jsonify(s.to_json()), 201
+    return jsonify(s.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
@@ -298,7 +304,7 @@ def update_place(place_id=None):
         r = None
     if r is None:
         return "Not a JSON", 400
-    a = storage.get("Place", place_id)
+    a = storage.get(Place, place_id)
     if a is None:
         abort(404)
     for k in ("id", "user_id", "city_id", "created_at", "updated_at"):
@@ -306,7 +312,7 @@ def update_place(place_id=None):
     for k, v in r.items():
         setattr(a, k, v)
     a.save()
-    return jsonify(a.to_json()), 200
+    return jsonify(a.to_dict()), 200
 
 
 @app_views.route('/places_search', methods=['POST'])
@@ -370,7 +376,7 @@ def list_places():
     if r is None:
         return "Not a JSON", 400
     if not r:
-        return jsonify([e.to_json() for e in storage.all("Place").values()])
+        return jsonify([e.to_dict() for e in storage.all(Place).values()])
 
     all_cities_id = r.get("cities", None)
     states = r.get("states", None)
@@ -392,7 +398,7 @@ def list_places():
             all_places2 = [p for p in all_places2 if
                            p.city_id in all_cities_id]
         if all_amenities:
-            if os.getenv('HBNB_TYPE_STORAGE', 'fs') != 'db':
+            if getenv('HBNB_TYPE_STORAGE', 'fs') != 'db':
                 all_places = [p for p in all_places2 if
                               set(all_amenities) <= set(p.amenities_id)]
             else:
@@ -404,9 +410,9 @@ def list_places():
                             break
                     if flag:
                         # using amenities make it instance attribute,
-                        # not just class check out to_json
+                        # not just class check out to_dict
                         all_places.append(e)
         else:
             all_places = all_places2
-    return jsonify([p.to_json() for p in all_places])
+    return jsonify([p.to_dict() for p in all_places])
 # what to do for junk states, cities, amenities

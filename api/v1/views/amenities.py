@@ -56,13 +56,13 @@ def view_amenity(amenity_id=None):
         description: A list of dicts or dict, each dict is an amenity
     """
     if amenity_id is None:
-        all_amenities = [state.to_json() for state
-                         in storage.all("Amenity").values()]
+        all_amenities = [state.to_dict() for state
+                         in storage.all(Amenity).values()]
         return jsonify(all_amenities)
-    s = storage.get("Amenity", amenity_id)
+    s = storage.get(Amenity, amenity_id)
     if s is None:
         abort(404)
-    return jsonify(s.to_json())
+    return jsonify(s.to_dict())
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
@@ -78,7 +78,7 @@ def delete_amenity(amenity_id=None):
       200:
         description: An empty dictionary
     """
-    amenity = storage.get("Amenity", amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     storage.delete(amenity)
@@ -139,7 +139,7 @@ def create_amenity():
         return "Missing name", 400
     s = Amenity(**r)
     s.save()
-    return jsonify(s.to_json()), 201
+    return jsonify(s.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
@@ -192,7 +192,7 @@ def update_amenity(amenity_id=None):
         r = None
     if r is None:
         return "Not a JSON", 400
-    a = storage.get("Amenity", amenity_id)
+    a = storage.get(Amenity, amenity_id)
     if a is None:
         abort(404)
     for k in ("id", "created_at", "updated_at"):
@@ -200,4 +200,4 @@ def update_amenity(amenity_id=None):
     for k, v in r.items():
         setattr(a, k, v)
     a.save()
-    return jsonify(a.to_json()), 200
+    return jsonify(a.to_dict()), 200

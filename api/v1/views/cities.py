@@ -9,6 +9,7 @@ from flask import (
     request
 )
 from models.city import City
+from models.state import State
 
 
 @app_views.route("/states/<state_id>/cities", methods=["GET"])
@@ -49,10 +50,10 @@ def state_all_cities(state_id):
       200:
         description: A list of dictionaries of city object
     """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    all_cities = [city.to_json() for city in state.cities]
+    all_cities = [city.to_dict() for city in state.cities]
     return jsonify(all_cities)
 
 
@@ -94,10 +95,10 @@ def one_city(city_id):
       200:
         description: A list of a dictionary of a city object
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    return jsonify(city.to_json())
+    return jsonify(city.to_dict())
 
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"])
@@ -113,7 +114,7 @@ def delete_one_city(city_id):
       200:
         description: An empty dictionary
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     storage.delete(city)
@@ -173,7 +174,7 @@ def create_one_city(state_id):
     c = City(**r)
     c.state_id = state_id
     c.save()
-    return jsonify(c.to_json()), 201
+    return jsonify(c.to_dict()), 201
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"])
@@ -214,7 +215,7 @@ def update_one_city(city_id):
       200:
         description: A list of a dictionary of a city object
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     try:
@@ -228,4 +229,4 @@ def update_one_city(city_id):
     for k, v in r.items():
         setattr(city, k, v)
     city.save()
-    return jsonify(city.to_json()), 200
+    return jsonify(city.to_dict()), 200
