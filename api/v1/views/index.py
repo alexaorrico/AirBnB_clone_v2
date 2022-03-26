@@ -16,6 +16,7 @@ def status():
     """ returns the status 'ok' if api is running """
     return jsonify({'status': 'OK'})
 
+
 @app_views.route('/stats', strict_slashes=False, methods=['GET'])
 def stats():
     """ returns the number of classes of each type """
