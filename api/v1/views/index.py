@@ -4,7 +4,7 @@ This module shows roots for our site
 """
 from Flask import Flask, jsonify
 from api.v1.views import app_views
-app = flask(__name__)
+app = Flask(__name__)
 
 
 @app_views.route('/status')
