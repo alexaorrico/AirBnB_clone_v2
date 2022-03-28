@@ -15,6 +15,7 @@ def all_states(text="is-cool"):
         list_all_states.append(all_states[state].to_dict())
     return jsonify(list_all_states)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """ Returns the State obj in JSON. """
@@ -23,12 +24,14 @@ def get_state(state_id):
         abort(404)
     return jsonify(state["State.{}".format(state_id)].to_dict())
 
+
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ Deletes the State obj from storage. """
     deleted = {}
     storage.delete(storage.get(State, state_id)["State.{}".format(state_id)])
     return jsonify(deleted), 200
+
 
 @app_views.route('/states', methods=['POST'])
 def create_state(text="is_cool"):
@@ -40,3 +43,19 @@ def create_state(text="is_cool"):
     new_state = State(**content)
     new_state.save()
     return jsonify(new_state.to_dict())
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def update_state(state_id):
+    """ Updates a new State obj. """
+    if not request.json or not 'name' in request.json:
+        abort(404)
+    content = request.get_json()
+    my_key = "State." + state_id
+    objects = storage.all()
+    new_dict = objects[my_key]
+    for key, value in content.items():
+        if key != "id" or key != "created_at" or key != "updated_at":
+            setattr(new_dict, key, value)
+    storage.save()
+    return jsonify(new_dict.to_dict()), 200
