@@ -15,7 +15,7 @@ def status(text="is_cool"):
     """returns JSON status"""
     return jsonify({"status": "OK"})
 
-@app_views.route('/api/v1/stats')
+@app_views.route('/stats')
 def count_objects(text="is_cool"):
     """returns count of objects by type"""
     count = {
@@ -24,6 +24,7 @@ def count_objects(text="is_cool"):
         "places": storage.count(Place),
         "reviews": storage.count(Review),
         "states": storage.count(State),
-        "users": storage.count(User)
+        "users": storage.count(User),
+        "all": storage.count()
         }
     return jsonify(count)
