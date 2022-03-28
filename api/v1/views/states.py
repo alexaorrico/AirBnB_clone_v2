@@ -37,7 +37,7 @@ def delete_state(state_id):
 @app_views.route('/states', methods=['POST'])
 def create_state(text="is_cool"):
     """ Creates a new State obj. """
-    if request.json or 'name' not in request.json:
+    if not request.json or not 'name' in request.json:
         abort(404)
     content = request.get_json()
 
@@ -49,7 +49,7 @@ def create_state(text="is_cool"):
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """ Updates a new State obj. """
-    if request.json or 'name' not in request.json:
+    if not request.json or not 'name' in request.json:
         abort(404)
     content = request.get_json()
     my_key = "State." + state_id
