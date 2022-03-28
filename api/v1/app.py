@@ -7,6 +7,7 @@ from models import storage
 from api.v1.views import app_views
 
 app = Flask(__name__)
+app.url_map.strict_slashes=False
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
@@ -14,8 +15,8 @@ def teardown(exception):
     """calls storage.close on teardown"""
     storage.close()
 
-@app.errorhandler(404) 
-def error_404(error): 
+@app.errorhandler(404)
+def error_404(error):
     """handles 404 errors by returning JSON formatted status code"""
     return jsonify({"error": "Not found"})
 
