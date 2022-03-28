@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states', methods=['GET'])
 def all_states(text="is-cool"):
     """ Returns list of all State objs. """
@@ -36,7 +37,7 @@ def delete_state(state_id):
 @app_views.route('/states', methods=['POST'])
 def create_state(text="is_cool"):
     """ Creates a new State obj. """
-    if not request.json or not 'name' in request.json:
+    if request.json or 'name' not in request.json:
         abort(404)
     content = request.get_json()
 
@@ -48,7 +49,7 @@ def create_state(text="is_cool"):
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """ Updates a new State obj. """
-    if not request.json or not 'name' in request.json:
+    if request.json or 'name' not in request.json:
         abort(404)
     content = request.get_json()
     my_key = "State." + state_id
