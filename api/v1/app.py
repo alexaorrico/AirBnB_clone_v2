@@ -14,7 +14,9 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(exception):
+    '''This method closes the storage object'''
     storage.close()
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='5000', threaded=True)
