@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from flask import jsonify
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +114,21 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that gets an object properly"""
+        storage = FileStorage()
+        new_dict = {"name": "California"}
+        instance = State(**new_dict)
+        instance.save()
+        state = storage.get(State, instance.id)
+        res = list(state.keys())[0]
+        self.assertAlmostEqual(res, "State." + instance.id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that counts an object properly"""
+        storage = FileStorage()
+
+        self.assertAlmostEqual(storage.count(State),  2)
