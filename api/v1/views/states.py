@@ -4,8 +4,7 @@ methods and routes for working with state data
 '''
 from models.state import State
 from models import storage
-from flask import jsonify, abort
-import requests
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 
 
@@ -38,10 +37,9 @@ def delete_state(state_id):
     deletes a state if given the id
     '''
     state = storage.get(State, state_id)
-    if state_id in state is None:
+    if state is None:
         abort(404)
-    else:
-        storage.delete(state)
+    storage.delete(state)
     storage.save()
     return ({}), 200
 
@@ -51,7 +49,7 @@ def add_state():
     '''
     adds a state to the DB
     '''
-    state = requests.get_json()
+    state = request.get_json()
     if state is None:
         abort(400, 'not a JSON')
     if 'name' not in state:
@@ -70,7 +68,7 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    state_info = requests.get_json()
+    state_info = request.get_json()
     if state_info is None:
         abort(400, 'not a JSON')
     for key, value in state_info.items():
