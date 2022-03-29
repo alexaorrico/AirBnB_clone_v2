@@ -62,6 +62,8 @@ def create_state(text="is_cool"):
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def update_state(state_id):
     """ Updates an existing State obj. """
+    if not request.json:
+            abort(400, "Not a JSON")
     try:
         state = storage.all(State)["State.{}".format(state_id)]
     except (TypeError, KeyError):
@@ -74,7 +76,7 @@ def update_state(state_id):
     try:
         json.dumps(content)
     except (TypeError, OverflowError):
-        abort(400, ("Not a JSON"))
+        abort(400, {'message': 'Not a JSON'})
     ignored_keys = ['id', 'created_at', 'updated_at']
     for key, value in content.items():
         if key not in ignored_keys:
