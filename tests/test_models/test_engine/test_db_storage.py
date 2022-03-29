@@ -106,4 +106,23 @@ class TestFileStorage(unittest.TestCase):
         new_instance.save()
         self.assertEqual(storage.count(State), len(storage.all(State)))
 
-        # self.assertAlmostEqual(storage.count(State),  1)
+        amen = Amenity()
+        amen.save()
+        self.assertEqual(storage.count(Amenity), len(storage.all(Amenity)))
+
+        city = City()
+        city.save()
+        self.assertEqual(storage.count(City), len(storage.all(City)))
+
+        place = Place()
+        place.save()
+        self.assertEqual(storage.count(Place), len(storage.all(Place)))
+
+        review = Review()
+        review.save()
+        self.assertEqual(storage.count(Review), len(storage.all(Review)))
+
+        user = User()
+        user.save()
+        self.assertEqual(storage.count(User), len(storage.all(User)))
+        self.assertEqual(storage.count(BaseModel), len(storage.all(BaseModel)))
