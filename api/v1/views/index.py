@@ -11,12 +11,29 @@ from models.user import User
 from models.amenity import Amenity
 from models.review import Review
 from models.place import Place
-from flask.json import jsonify
+from flask import jsonify
+from flask import Flask
 
-@app_views.route('/status', strict_slashes=False)
+
+@app_views.route('/status', methods=['GET'])
 def return_status():
     """
     returns status
     """
-    return jsonify(status="OK")
-# add dict(???) for task 5
+    return (jsonify({'status': 'OK'}))
+
+@app_views.route('/stats')
+def stats():
+    """
+    creates an endpoint that retrieves the
+    number of each objects by type
+    """
+    dic_stats = {
+        "amenities": storage.count('Amenity'),
+        "cities": storage.count('City'),
+        "places": storage.count('Place'),
+        "reviews": storage.count('Review'),
+        "states": storage.count('State'),
+        "users": storage.count('User')
+    }
+    return (jsonify(dic_stats))
