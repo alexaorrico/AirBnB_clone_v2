@@ -60,17 +60,27 @@ def create_state(text="is_cool"):
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
-def state_update(state_id):
-    """Updates a state"""
-    if request.method == 'PUT':
-        if not request.json:
-            abort(400, "Not a JSON")
-        state_dict = request.get_json()
-        state = storage.get(State, state_id)
-        if state is None:
-            return abort(404)
-        for key, value in state_dict.items():
-            if key != 'id' and key != 'created_at' and key != 'updated_at':
-                setattr(state, key, value)
-        storage.save()
-        return jsonify(state.to_dict())
+def update_state(state_id):
+    """ Updates an existing State obj. """
+    try:
+        state = storage.all(State)["State.{}".format(state_id)]
+    except (TypeError, KeyError):
+        abort(404)
+    if not state:
+        abort(404)
+
+    try:
+        content = request.get_json()
+    except:
+        abort(400, {'message': 'Not a JSON'})
+
+    try:
+        json.dumps(content)
+    except (TypeError, OverflowError):
+        abort(400, {'message': 'Not a JSON'})
+    ignored_keys = ['id', 'created_at', 'updated_at']
+    for key, value in content.items():
+        if key not in ignored_keys:
+            setattr(state, key, value)
+    storage.save()
+    return jsonify(state.to_dict()), 200
