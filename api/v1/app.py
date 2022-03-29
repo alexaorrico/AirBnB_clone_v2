@@ -2,14 +2,14 @@
 
 """setting up api functions"""
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from models import storage
 import os
 
 
 app = Flask(__name__)
-CORS(app, origins=["http://0.0.0.0/*"], allow_headers='*')
+CORS(app)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
@@ -23,7 +23,7 @@ def teardown(exception):
 @app.errorhandler(404)
 def error_404(error):
     """handles 404 errors by returning JSON formatted status code"""
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if "HBNB_API_HOST" in os.environ:
