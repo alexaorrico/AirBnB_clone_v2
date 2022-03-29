@@ -79,6 +79,8 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def update_city(city_id):
     """ Updates a City obj to Storage. """
+    if not request.json:
+        abort(400, {'message': 'Not a JSON'})
     try:
         city = storage.all(City)["City.{}".format(city_id)]
     except (TypeError, KeyError):
@@ -86,10 +88,8 @@ def update_city(city_id):
     if not city:
         abort(404)
     content = request.get_json()
-    try:
-        json.dumps(content)
-    except (TypeError, OverflowError):
-        abort(400, {'message': 'Not a JSON'})
+    json.dumps(content)
+
     ignored_keys = ['id', 'created_at', 'updated_at', 'state_id']
     for key, value in content.items():
         if key not in ignored_keys:

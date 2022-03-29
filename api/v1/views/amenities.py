@@ -66,6 +66,8 @@ def create_amenity(text="is_cool"):
 /amenities/<amenity_id>', strict_slashes=False, methods=['PUT'])
 def update_amenity(amenity_id):
     """ Updates an Amenity obj and saves to Storage. """
+    if not request.json:
+        abort(400, {'message': 'Not a JSON'})
     try:
         amenity = storage.all(Amenity)["Amenity.{}".format(amenity_id)]
     except (TypeError, KeyError):
@@ -73,10 +75,8 @@ def update_amenity(amenity_id):
     if not amenity:
         abort(404)
     content = request.get_json()
-    try:
-        json.dumps(content)
-    except (TypeError, OverflowError):
-        abort(400, {'message': 'Not a JSON'})
+    json.dumps(content)
+
     ignored_keys = ['id', 'created_at', 'updated_at']
     for key, value in content.items():
         if key not in ignored_keys:

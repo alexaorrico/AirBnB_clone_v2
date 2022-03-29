@@ -64,6 +64,8 @@ def create_user(text="is_cool"):
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def update_user(user_id):
     """ Updates a User obj and saves to Storage. """
+    if not request.json:
+        abort(400, {'message': 'Not a JSON'})
     try:
         user = storage.all(User)["User.{}".format(user_id)]
     except (TypeError, KeyError):
@@ -71,10 +73,8 @@ def update_user(user_id):
     if not user:
         abort(404)
     content = request.get_json()
-    try:
-        json.dumps(content)
-    except (TypeError, OverflowError):
-        abort(400, {'message': 'Not a JSON'})
+    json.dumps(content)
+
     ignored_keys = ['id', 'email', 'created_at', 'updated_at']
     for key, value in content.items():
         if key not in ignored_keys:
