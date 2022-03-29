@@ -69,10 +69,7 @@ def update_state(state_id):
     if not state:
         abort(404)
 
-    try:
-        content = request.get_json()
-    except:
-        abort(400, {'message': 'Not a JSON'})
+    content = request.get_json()
 
     try:
         json.dumps(content)
