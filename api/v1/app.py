@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-
+create a variable app, instance of Flask
+register the blueprint app_views to your Flask instance app
 """
 from models import storage
 from views import app_views
