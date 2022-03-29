@@ -8,26 +8,26 @@ from models.state import State
 import os
 
 
-@app_views.route('/states', strict_slashes=False, methods=['GET'])
-def all_states(text="is-cool"):
-    """ Returns list of all State objs. """
-    all_states = storage.all(State).values()
-    list_all_states = []
-    for state in all_states:
-        list_all_states.append(state.to_dict())
-    return jsonify(list_all_states)
+@app_views.route("/states", methods=['GET'])
+def all_states():
+    """Returns all states"""
+    states = storage.all(State)
+    statelist = []
+    for state in states.values():
+        statelist.append(state.to_dict())
+    return jsonify(statelist)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
-def get_state(state_id):
-    """ Returns the State obj in JSON. """
-    try:
-        state = storage.all(State)["State.{}".format(state_id)]
-    except (TypeError, KeyError):
-        abort(404)
-    if not state:
-        abort(404)
-    return state.to_dict()
+@app_views.route("/states/<state_id>", methods=['GET'])
+def get_state(state_id=None):
+    """Returns a list of one State"""
+    if request.method == 'GET':
+        if state_id is not None:
+            obj = storage.get(State, state_id)
+            if obj is not None:
+                return obj.to_dict()
+            else:
+                return abort(404)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
