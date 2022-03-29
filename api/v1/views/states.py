@@ -11,7 +11,7 @@ import os
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def all_states(text="is-cool"):
     """ Returns list of all State objs. """
-    all_states = list(storage.all(State).values())
+    all_states = storage.all(State).values()
     list_all_states = []
     for state in all_states:
         list_all_states.append(state.to_dict())
@@ -27,11 +27,10 @@ def get_state(state_id):
         abort(404)
     if not state:
         abort(404)
-    return jsonify(state.to_dict())
+    return state.to_dict()
 
 
-@app_views.route('\
-/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ Deletes the State obj from storage. """
     try:
