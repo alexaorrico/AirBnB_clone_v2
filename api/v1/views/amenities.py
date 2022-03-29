@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """ API view for Amenity objects. """
-import os
-import json
-from flask import jsonify, request, abort
 from api.v1.views import app_views
+from flask import jsonify, request, abort
+import json
 from models import storage
 from models.amenity import Amenity
 

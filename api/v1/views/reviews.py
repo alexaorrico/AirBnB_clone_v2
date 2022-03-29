@@ -27,7 +27,7 @@ def all_reviews(place_id):
     return jsonify(review_list)
 
 
-@app_views.route('/reviews/<review_id', strict_slashes=False, methods=['GET'])
+@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['GET'])
 def get_review(review_id):
     """ Returns the Review obj in JSON. """
     try:
