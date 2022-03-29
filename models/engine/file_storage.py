@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from flask import jsonify
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -75,11 +76,8 @@ class FileStorage:
         new_dict = {}
         for key, value in objects.items():
             if id == value.id:
-                new_dict[key] = value
-        if new_dict == {}:
-            return None
-        else:
-            return new_dict
+                return value
+        return None
 
     def count(self, cls=None):
         """counts number of objects in storage"""
