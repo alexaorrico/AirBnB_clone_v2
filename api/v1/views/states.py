@@ -45,7 +45,7 @@ def create_state(text="is_cool"):
     content = request.get_json()
     try:
         json.dumps(content)
-        if not 'name' in content:
+        if 'name' not in content:
             abort(400, {'message': 'Missing name'})
     except (TypeError, OverflowError):
         abort(400, {'message': 'Not a JSON'})
@@ -63,7 +63,7 @@ def update_state(state_id):
     content = request.get_json()
     try:
         json.dumps(content)
-        if not 'name' in content:
+        if 'name' not in content:
             abort(400, {'message': 'Missing name'})
     except (TypeError, OverflowError):
         abort(400, {'message': 'Not a JSON'})
