@@ -15,14 +15,15 @@ from flask import jsonify
 from flask import Flask
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', strict_slashes=False, methods=['GET'])
 def return_status():
     """
     returns status
     """
-    return (jsonify({'status': 'OK'}))
+    return jsonify({'status': 'OK'})
 
-@app_views.route('/stats')
+
+@app_views.route('/stats', strict_slashes=False, methods=['GET'])
 def stats():
     """
     creates an endpoint that retrieves the
@@ -36,4 +37,4 @@ def stats():
         "states": storage.count('State'),
         "users": storage.count('User')
     }
-    return (jsonify(dic_stats))
+    return jsonify(dic_stats)
