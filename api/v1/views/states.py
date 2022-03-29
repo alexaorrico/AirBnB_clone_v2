@@ -45,7 +45,7 @@ def create_state(text="is_cool"):
     content = request.get_json()
     try:
         json.dumps(content)
-        if not 'name' in request.json:
+        if not 'name' in content:
             abort(400, {'message': 'Missing name'})
     except (TypeError, OverflowError):
         abort(400, {'message': 'Not a JSON'})
@@ -57,18 +57,19 @@ def create_state(text="is_cool"):
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """ Updates an existing State obj. """
+    state = storage.get(State, state_id)["State.{}".format(state_id)]
+    if not state:
+        abort(404)
     content = request.get_json()
     try:
         json.dumps(content)
-        if not 'name' in request.json:
+        if not 'name' in content:
             abort(400, {'message': 'Missing name'})
     except (TypeError, OverflowError):
         abort(400, {'message': 'Not a JSON'})
-    my_key = "State." + state_id
-    objects = storage.all()
-    new_dict = objects[my_key]
+    ignored_keys = ['id', 'created_at', 'updated_at']
     for key, value in content.items():
-        if key != "id" or key != "created_at" or key != "updated_at":
-            setattr(new_dict, key, value)
+        if key not in ignored_keys:
+            setattr(state, key, value)
     storage.save()
-    return jsonify(new_dict.to_dict()), 200
+    return jsonify(state.to_dict()), 200
