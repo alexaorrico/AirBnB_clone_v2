@@ -63,7 +63,7 @@ def create_state(text="is_cool"):
 def update_state(state_id):
     """ Updates an existing State obj. """
     if not request.json:
-            abort(400, "Not a JSON")
+        abort(400, {'message': 'Not a JSON'})
     try:
         state = storage.all(State)["State.{}".format(state_id)]
     except (TypeError, KeyError):
@@ -73,10 +73,7 @@ def update_state(state_id):
 
     content = request.get_json()
 
-    try:
-        json.dumps(content)
-    except (TypeError, OverflowError):
-        abort(400, {'message': 'Not a JSON'})
+    json.dumps(content)
     ignored_keys = ['id', 'created_at', 'updated_at']
     for key, value in content.items():
         if key not in ignored_keys:
