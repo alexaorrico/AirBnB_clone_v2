@@ -95,15 +95,15 @@ class TestFileStorage(unittest.TestCase):
         instance = State(**new_dict)
         instance.save()
         state = storage.get(State, instance.id)
-        self.assertAlmostEqual(state, instance)
+        self.assertEqual(state, instance)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """Test that counts an object properly"""
-        self.assertAlmostEqual(storage.count(State), len(storage.all(State)))
+        self.assertEqual(storage.count(State), len(storage.all(State)))
         new_dict2 = {"name": "Florida"}
         new_instance = State(**new_dict2)
         new_instance.save()
-        self.assertAlmostEqual(storage.count(State), len(storage.all(State)))
+        self.assertEqual(storage.count(State), len(storage.all(State)))
 
         # self.assertAlmostEqual(storage.count(State),  1)
