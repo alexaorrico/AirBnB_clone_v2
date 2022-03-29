@@ -1,8 +1,8 @@
 #!/bin/bash/python3
 """
 """
-from models.State import State
-from models.Cities import Cities
+from models.state import State
+from models.city import City
 from models import storage
 from flask import abort
 from flask import jsonify
@@ -15,20 +15,23 @@ from api.v1.views import app_views
 def all_cities(state_id):
     """Gets all cities"""
     all_cities = []
-    state = storage.all(state).values()
-    for i in state.cities().values:
-        all_cities.append(i.to.dict())
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    cities = storage.all("City").values()
+    for city in cities:
+        all_cities.append(city.to_dict())
     return jsonify(all_cities)
 
 
 @app_views.route('cities/<city_id>', methods=['GET'], strict_slashes=False)
 def retrieve_city(city_id):
     """Retrieves a city object"""
-    city = storage.get(city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     else:
-        return jsonify(city)
+        return jsonify(city.to_dict())
 
 
 @app_views.route('cities/<city_id>', methods=['DELETE'],
@@ -49,9 +52,11 @@ def make_city(state_id):
     """Makes a city"""
     state = storage.get(State, state_id)
     if state is None:
-        abort(400, 'not a JSON')
+        abort(404)
     city_name = request.get_json()
-    if 'city_name' not in state:
+    if city_name is None:
+        abort(400, 'not a JSON')
+    if 'name' not in city_name:
         abort(400, 'Missing Name')
     city = city(**state_id, **city_name)
     storage.new(city)
