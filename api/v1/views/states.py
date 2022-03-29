@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ API view for State objects. """
 import os
+import json
 from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
@@ -29,29 +30,40 @@ def get_state(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ Deletes the State obj from storage. """
+    state = storage.get(State, state_id)["State.{}".format(state_id)]
+    if not state:
+        abort(404)
     deleted = {}
-    storage.delete(storage.get(State, state_id)["State.{}".format(state_id)])
+    storage.delete(state)
+    storage.save()
     return jsonify(deleted), 200
 
 
 @app_views.route('/states', methods=['POST'])
 def create_state(text="is_cool"):
     """ Creates a new State obj. """
-    if not request.json or not 'name' in request.json:
-        abort(404)
     content = request.get_json()
-
+    try:
+        json.dumps(content)
+        if not 'name' in request.json:
+            abort(400, {'message': 'Missing name'})
+    except (TypeError, OverflowError):
+        abort(400, {'message': 'Not a JSON'})
     new_state = State(**content)
     new_state.save()
-    return jsonify(new_state.to_dict())
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
-    """ Updates a new State obj. """
-    if not request.json or not 'name' in request.json:
-        abort(404)
+    """ Updates an existing State obj. """
     content = request.get_json()
+    try:
+        json.dumps(content)
+        if not 'name' in request.json:
+            abort(400, {'message': 'Missing name'})
+    except (TypeError, OverflowError):
+        abort(400, {'message': 'Not a JSON'})
     my_key = "State." + state_id
     objects = storage.all()
     new_dict = objects[my_key]
