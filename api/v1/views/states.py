@@ -74,10 +74,10 @@ def update_state(state_id):
     try:
         json.dumps(content)
     except (TypeError, OverflowError):
-        abort(400, {'message': 'Not a JSON'})
+        abort(400, ("Not a JSON"))
     ignored_keys = ['id', 'created_at', 'updated_at']
     for key, value in content.items():
         if key not in ignored_keys:
             setattr(state, key, value)
     storage.save()
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 200
