@@ -129,5 +129,8 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test that counts an object properly"""
         storage = FileStorage()
-
-        self.assertAlmostEqual(storage.count(State),  2)
+        self.assertAlmostEqual(storage.count(State), len(storage.all(State)))
+        new_dict2 = {"name": "Florida"}
+        new_instance = State(**new_dict2)
+        new_instance.save()
+        self.assertAlmostEqual(storage.count(State), len(storage.all(State)))
