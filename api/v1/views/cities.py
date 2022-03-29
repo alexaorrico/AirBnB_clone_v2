@@ -15,6 +15,8 @@ def all_cities(state_id):
     city_list = []
     try:
         state = storage.get(State, state_id)["State.{}".format(state_id)]
+    except (TypeError, KeyError):
+        abort(404)
     if not state:
         abort(404)
     all_cities = storage.all(City)
