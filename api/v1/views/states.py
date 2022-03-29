@@ -2,7 +2,7 @@
 """
 new view for State objects that handles all default RESTFul API actions
 """
-from crypt import methods
+
 import json
 from models.state import State
 from models import storage
@@ -13,7 +13,7 @@ from flask.json import jsonify
 
 @app_views.route('/states', strict_slashes=False)
 @app_views.route('states/<state_id>', strict_slashes=False)
-def fetch_states(state_id=None):
+def get_states(state_id=None):
     """
     Retrieves the list of all State objects
     """
