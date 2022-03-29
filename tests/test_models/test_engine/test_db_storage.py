@@ -95,4 +95,26 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """ Testing object count """
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_error(self):
+        """ Test get method """
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_error(self):
+        """ Testing object count """
+        
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete(self):
+        """ Test delete method """
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete_error(self):
+        """ Test delete method """
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_updatedb(self):
+        """ Test update method """
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_updatedb_error(self):
+        """ Test update method """
