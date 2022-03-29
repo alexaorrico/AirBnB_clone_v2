@@ -73,7 +73,6 @@ class FileStorage:
     def get(self, cls, id):
         """retrieves one object"""
         objects = self.all(cls)
-        new_dict = {}
         for key, value in objects.items():
             if id == value.id:
                 return value
