@@ -29,7 +29,7 @@ def all_places(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def retrieve_city(place_id):
+def retrieve_place(place_id):
     '''
     gets 1 place object
     '''
