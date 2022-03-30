@@ -88,5 +88,3 @@ class DBStorage:
                 if (n.id == id):
                     return n
         return None
-
-
