@@ -7,7 +7,9 @@ Module to check the status of the API
 from models import storage
 from api.v1.views import app_views
 from flask import Flask, make_response, jsonify
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app, origins=["http://0.0.0.0:5000", "/*"])
 
 app.register_blueprint(app_views)
 
