@@ -27,7 +27,7 @@ def all_places(city_id):
     return jsonify(all_places)
 
 
-@app_views.route('/places/<place_id>', methods-['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def retrieve_city(place_id):
     '''
     gets 1 place object
