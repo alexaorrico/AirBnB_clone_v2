@@ -73,7 +73,7 @@ def update_city(city_id):
         abort(404)
     city_name = request.get_json()
     if not request.get_json():
-        abort(404, 'not a JSON')
+        abort(400, 'not a JSON')
     for key, value in city_name.items():
         if key in ['id', 'state_id', 'created_at', 'updated_at']:
             pass

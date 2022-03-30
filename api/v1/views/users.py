@@ -52,9 +52,11 @@ def add_user():
     user = request.get_json()
     if user is None:
         abort(400, 'not a JSON')
-    if 'name' not in user:
-        abort(400, 'Missing Name')
-    new_user = User(**state)
+    if 'email' not in user:
+        abort(400, 'Missing email')
+    if 'password' not in user:
+        abort(400, 'Missing password')
+    new_user = User(**user)
     storage.new(new_user)
     storage.save()
     return (jsonify(new_user.to_dict()), 201)
@@ -65,14 +67,14 @@ def update_state(user_id):
     '''
     updates a user in the DB
     '''
-    user = storage.get(User, use_id)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
     user_info = request.get_json()
     if user_info is None:
         abort(400, 'not a JSON')
     for key, value in user_info.items():
-        if key in ['id', 'created_at', 'updated_at']:
+        if key in ['id', 'email', 'created_at', 'updated_at']:
             pass
         else:
             setattr(user, key, value)
