@@ -8,7 +8,8 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', strict_slashes=False,  methods=['GET'])
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['GET'])
 def get_amenity(amenity_id=None):
     """
     Retrieves list of all Amenity objects
@@ -28,7 +29,8 @@ def get_amenity(amenity_id=None):
             abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_amenity(amenity_id=None):
     """
     Delete an Amenity object
