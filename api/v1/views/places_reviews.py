@@ -71,7 +71,7 @@ def create_review(place_id=None):
     if user is None:
         abort(404)
     if 'text' not in json:
-        abort(400, "MIssing text")
+        abort(400, "Missing text")
     review = Review(**json)
     review.place_id = place_id
     review.save()
