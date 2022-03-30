@@ -82,3 +82,5 @@ class FileStorage:
         """returns the number of objects in storage matching the given class"""
         obj_cls = self.all(cls)
         return len(obj_cls)
+
+    
