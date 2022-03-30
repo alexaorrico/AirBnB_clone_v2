@@ -10,6 +10,7 @@ from flask.json import jsonify
 from flask import abort
 from flask import request
 
+
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
     """
@@ -21,6 +22,7 @@ def get_users():
         info.append(user.to_dict())
     return jsonify(info)
 
+
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def get_one_user(user_id=None):
     """
@@ -30,6 +32,7 @@ def get_one_user(user_id=None):
     if user is not None:
         return jsonify(user.to_dict())
     abort(404)
+
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
 def delete_user(user_id):
@@ -42,6 +45,7 @@ def delete_user(user_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/users', strict_slashes=False, methods=['POST'])
 def create_user():
@@ -59,6 +63,7 @@ def create_user():
     user.save()
     return jsonify(user.to_dict()), 201
 
+
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def update_user(user_id):
     """
@@ -71,7 +76,8 @@ def update_user(user_id):
     if json is None:
         abort(400, "Not a JSON")
     for key, value in json.items():
-        if key != 'created_at' and key != 'updated_at' and key != 'email' and key != 'id':
+        if key != 'created_at' and key != 'updated_at' \
+                        and key != 'email' and key != 'id':
             setattr(user, key, value)
     user.save()
     return jsonify(user.to_dict()), 200
