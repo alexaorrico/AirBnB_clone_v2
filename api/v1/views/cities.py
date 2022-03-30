@@ -11,7 +11,9 @@ from flask import abort
 from flask import request
 from flask.json import jsonify
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def get_cities_from_state(state_id=None):
     """
     retrieves list of cities in a state
@@ -26,6 +28,7 @@ def get_cities_from_state(state_id=None):
                 return jsonify(info)
     abort(404)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_cities(city_id=None):
     """
@@ -35,6 +38,7 @@ def get_cities(city_id=None):
     if city is not None:
         return jsonify(city.to_dict())
     abort(404)
+
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['DELETE'])
 def delete_city(city_id):
@@ -48,7 +52,9 @@ def delete_city(city_id):
         return jsonify({}), 200
     abort(404)
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
+
+@app_views.route('/states/<state_id>/cities', strict_slashes=False,
+                 methods=['POST'])
 def create_city(state_id=None):
     """
     creates a new city
@@ -66,6 +72,7 @@ def create_city(state_id=None):
     city.save()
     return jsonify(city.to_dict()), 201
 
+
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def update_city(city_id):
     """
@@ -78,7 +85,8 @@ def update_city(city_id):
     if json is None:
         abort(400, "Not a JSON")
     for key, value in json.items():
-        if key != "updated_at" and key != "created_at" and key != "state_id" and key != "id":
+        if key != "updated_at" and key != "created_at" and key != \
+                            "state_id" and key != "id":
             setattr(city, key, value)
     city.save()
     return jsonify(city.to_dict()), 200
