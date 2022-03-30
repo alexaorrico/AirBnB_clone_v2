@@ -12,7 +12,9 @@ from flask.json import jsonify
 from api.v1.views import app_views
 from models.user import User
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
+                 strict_slashes=False)
 def get_review_from_place(place_id=None):
     """
     Retrieves the list of all Review objects of a Place
@@ -25,6 +27,7 @@ def get_review_from_place(place_id=None):
         return jsonify(info)
     abort(404)
 
+
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def get_review(review_id=None):
     """
@@ -35,7 +38,9 @@ def get_review(review_id=None):
         return jsonify(review.to_dict())
     abort(404)
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['DELETE'])
+
+@app_views.route('/reviews/<review_id>', strict_slashes=False,
+                 methods=['DELETE'])
 def delete_review(review_id=None):
     """
     Deletes a Review object
@@ -47,7 +52,9 @@ def delete_review(review_id=None):
         return jsonify({}), 200
     abort(404)
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['POST'])
+
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False,
+                 methods=['POST'])
 def create_review(place_id=None):
     """
     Creates a Review
@@ -70,6 +77,7 @@ def create_review(place_id=None):
     review.save()
     return jsonify(review.to_dict()), 201
 
+
 @app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['PUT'])
 def update_review(review_id):
     """
@@ -82,7 +90,8 @@ def update_review(review_id):
     if json is None:
         abort(400, "Not a JSON")
     for key, value in json.items():
-                if key != 'updated_at' and key != 'created_at' and key != 'id' and key != 'user_id' and key != 'place_id':
-                    setattr(review, key, value)
+        if key != 'updated_at' and key != 'created_at' and \
+                        key != 'id' and key != 'user_id' and key != 'place_id':
+            setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict()), 200
