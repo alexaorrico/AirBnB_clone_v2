@@ -11,7 +11,7 @@ from flask import abort
 from flask import request
 from flask.json import jsonify
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def get_cities_from_state(state_id=None):
     """
     retrieves list of cities in a state
@@ -26,7 +26,7 @@ def get_cities_from_state(state_id=None):
                 return jsonify(info)
     abort(404)
 
-@app_views.route('/cities/<city_id>', strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_cities(city_id=None):
     """
     gets city by city_id

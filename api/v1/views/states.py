@@ -11,8 +11,8 @@ from flask import request
 from flask import abort
 from flask.json import jsonify
 
-@app_views.route('/states', strict_slashes=False)
-@app_views.route('states/<state_id>', strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states(state_id=None):
     """
     Retrieves the list of all State objects
