@@ -1,4 +1,4 @@
-#!/usr/bin/py
+#!/usr/bin/python
 """
 This module shows roots for our site
 """
