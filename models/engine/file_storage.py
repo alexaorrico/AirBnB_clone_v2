@@ -75,9 +75,9 @@ class FileStorage:
         This method is designed to retreive an object
         '''
         objects_dict = models.storage.all(cls)
-        for key in objects_dict:
-            if id in key:
-                return objects_dict[key]
+        for key in objects_dict.values():
+            if key.id == id:
+                return key
             else:
                 return None
 
