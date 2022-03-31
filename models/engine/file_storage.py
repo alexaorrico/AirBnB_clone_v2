@@ -76,10 +76,9 @@ class FileStorage:
         '''
         objects_dict = models.storage.all(cls)
         for key in objects_dict.values():
-            if key.id == id:
+            if key.id == str(id):
                 return key
-            else:
-                return None
+        return None
 
     def count(self, cls=None):
         '''
