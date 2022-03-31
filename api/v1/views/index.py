@@ -23,6 +23,9 @@ def status():
 
 @app_views.route('/stats')
 def stats():
+    '''
+    returns the stats of how many items are in each class
+    '''
     stats = {'amenities': storage.count(Amenity),
              'cities': storage.count(City),
              'places': storage.count(Place),
