@@ -73,7 +73,7 @@ class FileStorage:
         '''
         This method is designed to retreive an object
         '''
-        objects_dict = self.all(cls)
+        objects_dict = models.storage.all(cls)
         for key in objects_dict:
             if id in key:
                 return objects_dict[key]
