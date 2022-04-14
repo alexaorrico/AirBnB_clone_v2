@@ -156,7 +156,11 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Aaron Balogun - [Github](https://github.com/AmidBidee) / [Twitter](https://twitter.com/krummitz_)
+Emediong Francis - [Github]() / [twitter]()
 
 Second part of Airbnb: Joann Vuong
+
+Third version of Airbnb_Clone: Aaron Balogun, Emediong Francis
 ## License
 Public Domain. No copy write protection. 

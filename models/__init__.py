@@ -3,7 +3,11 @@
 initialize the models package
 """
 
-from os import getenv
+# this helps incase you use a .env file
+try:
+    from decouple import config as getenv
+except ImportError:
+    from os import getenv
 
 
 storage_t = getenv("HBNB_TYPE_STORAGE")
