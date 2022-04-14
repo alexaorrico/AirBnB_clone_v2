@@ -86,3 +86,45 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDbStorageMeth(unittest.TestCase):
+    """Test methods in DBStorage"""
+    @classmethod
+    def setUpClass(cls):
+        """called to initialize an obj with id=1"""
+        cls.obj = State(name="Oklahoma")
+        cls.obj2 = City(state_id=cls.obj.id, name="Tulsa")
+        cls.obj.save()
+        cls.obj2.save()
+
+    @classmethod
+    def tearDownClass(cls):
+        """cleaning up"""
+        models.storage.delete(cls.obj)
+        models.storage.delete(cls.obj2)
+
+    @unittest.skipIf(models.storage_t != 'db', "db storage excluded")
+    def test_get(self):
+        """test the get method"""
+        state_id = list(models.storage.all(State).values())[0].id
+        ret = models.storage.get(State, state_id)
+        self.assertEqual(ret.__class__.__name__, 'State')
+
+    @unittest.skipIf(models.storage_t != 'db', "db storage excluded")
+    def test_count(self):
+        """test the count method"""
+        ret = models.storage.count()
+        self.assertEqual(ret, 2)
+
+    @unittest.skipIf(models.storage_t != 'db', "db storage excluded")
+    def test_count_city(self):
+        """test the count method"""
+        ret = models.storage.count('City')
+        self.assertEqual(ret, 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "db storage excluded")
+    def test_count_none(self):
+        """test the count method"""
+        ret = models.storage.count('User')
+        self.assertEqual(ret, 0)
