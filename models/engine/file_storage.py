@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from flask import jsonify
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -68,3 +69,23 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """retrieves one object"""
+        objects = self.all(cls)
+        for key, value in objects.items():
+            if id == value.id:
+                return value
+        return None
+
+    def count(self, cls=None):
+        """counts number of objects in storage"""
+        count = 0
+        if cls is not None:
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    count += 1
+        else:
+            for key, value in self.__objects.items():
+                count += 1
+        return count
