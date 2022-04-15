@@ -74,10 +74,10 @@ class DBStorage:
     def get(self, cls, id):
         """Method to retrive one object return object based on the class
         and its ID or None if not found"""
-        if cls not in classes.values():
-            return None
+        # if cls not in classes.values():
+        #     return None
         for key, value in models.storage.all(cls).items():
-            if (key == cls + '.' + id):
+            if (value.id == id):
                 return value
         return None
 
@@ -91,7 +91,6 @@ class DBStorage:
                 n = n + len(models.storage.all(obj).values())
         else:
             n = len(models.storage.all(cls).values())
-
         return n
 
     def close(self):
