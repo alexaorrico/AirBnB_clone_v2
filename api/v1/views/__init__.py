@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """import blueprint and creates varaible"""
+# init file
 
 from flask import Blueprint
 from api.v1.views.index import *
