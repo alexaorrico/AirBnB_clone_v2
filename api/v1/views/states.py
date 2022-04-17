@@ -14,7 +14,7 @@ def listallState():
     return (temp)
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
-def deletestate():
+def deletestate(state_id=None):
     """Deletes a State object"""
     s = storage.get("State", state_id)
     if s is None:
@@ -34,3 +34,13 @@ def createstate():
         return (400, Missing name)
     else:
         return (jsonify({}), 201)
+
+@app_views.route('/states/<state_id>', method=['PUT'])
+def updatestate(state_id=None):
+    """Updates a State object"""
+    st = storage.get("State", state_id)
+    if st is None:
+        abort(404)
+    s = storage.request.get_json("State", silent=True)
+    if s == None:
+        abort(400, "Not a JSON")
