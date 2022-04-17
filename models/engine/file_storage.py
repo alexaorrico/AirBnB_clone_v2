@@ -40,6 +40,28 @@ class FileStorage:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
+    def count(self, cls=None):
+        """count the objects in the current database session"""
+        counter = 0
+        if cls is not None:
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    counter = counter + 1
+            return counter
+        else:
+            for objs in self.__objects:
+                counter = counter + 1
+            return (counter)
+
+    def get(self, cls, id):
+        """add the object to the current database session"""
+        if cls is not None:
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    if value.id == id:
+                        return (value)
+        return (None)
+
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
@@ -68,31 +90,3 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-
-
-     def get(self, cls, id):
-         """ return the specified object if exsist
-        """
-         dic = self.__objects
-         for key in dic:
-             value = dic[key]
-             if (cls == value.__class__ or cls == value.__class__.__name__):
-                 if (value.id == id):
-                     return (value)
-        return(None)
-
-    def count(self, cls=None):
-        """ return number of objects of specified class
-        """
-        count = 0
-        dic = self.__objects
-        if not cls:
-            for elem in dic:
-                count = count + 1
-            return (count)
-        else:
-            for key in dic:
-                value = dic[key]
-                if (cls == value.__class__ or cls == value.__class__.__name__):
-                    count = count + 1
-            return (count)
