@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """new view for State objects that handles all default RESTFul API"""
 from models import storage, state
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 
 
 @app_views.route('/states', methods=['GET'])
@@ -23,3 +23,14 @@ def deletestate():
         storage.delete(obj)
         storage.save()
         return (jsonify({}), 200)
+
+@app_views.route('/states', methods=['POST'])
+def createstate():
+    """Creates a State"""
+    s = storage.request.get_json("State", silent=True)
+    if s == None:
+        return (400, "Not a JSON")
+    elif "name" not in  s.keys():
+        return (400, Missing name)
+    else:
+        return (jsonify({}), 201)
