@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""view init file"""
 from flask import Blueprint
 
 app_views = Blueprint('index', __name__, url_prefix='/api/v1')
