@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception as e:
             pass
 
     def delete(self, obj=None):
@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """Returns a model based on its class and ID.
-        
+
         Args:
             cls (obj): Class of the model to return.
             id (str): String representing the model ID.
@@ -85,7 +85,7 @@ class FileStorage:
 
     def count(self, cls=None):
         """Returns the number of objects in file storage.
-        
+
         Args:
             cls (obj): Specified class to return number of objects that
                        belong to it (Optional).

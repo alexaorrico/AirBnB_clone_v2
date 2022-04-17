@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Returns a model based on its class and ID.
-        
+
         Args:
             cls (obj): Class of the model to return.
             id (str): String representing the model ID.
@@ -91,12 +91,12 @@ class DBStorage:
 
     def count(self, cls=None):
         """Returns the number of objects in file storage.
-        
+
         Args:
             cls (obj): Specified class to return number of objects that
                        belong to it (Optional).
         """
         if cls is not None:
             return len(self.all(cls))
-            
+
         return len(self.all())
