@@ -1,5 +1,5 @@
 from api.v1.views import app_views
-import jsonify
+from flask import jsonify
 
 
 @app_views.route('/status')
