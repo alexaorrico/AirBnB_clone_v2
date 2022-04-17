@@ -15,6 +15,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 def teardown_appcontext(response_or_exc):
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
