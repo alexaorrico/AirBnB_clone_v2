@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" App module """
 import os
 from flask import Flask, jsonify
 from flask import make_response
@@ -13,11 +15,13 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 @app.teardown_appcontext
 def teardown_appcontext(response_or_exc):
+    """ Tear down function """
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
+    """ 404 - Not found function """
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
