@@ -157,6 +157,5 @@ No known bugs at this time.
 Olaoluwa Olunuga - [Github](https://github.com/olaholunuga) / [Twitter]()  
 Zakari Usman - [Github](https://github.com/Zakaripbh) / [Twitter]()
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
