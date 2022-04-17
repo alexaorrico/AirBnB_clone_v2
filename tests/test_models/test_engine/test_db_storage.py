@@ -5,7 +5,8 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
-import models
+import uuid
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -38,10 +39,11 @@ class TestDBStorageDocs(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
-        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
+        """Test tests/test_models/test_engine/test_db_storage.py\
+conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine\
+/test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -66,3 +68,25 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+class TestDBStorage(unittest.TestCase):
+    """Tests DB storage"""
+    def test_get(self):
+        """Test get method of storage"""
+        state = State(name="California")
+        storage.new(state)
+        re_state = storage.get(State, state.id)
+        self.assertEqual(state.id, re_state.id)
+
+    def test_get_none(self):
+        """test for get for none existing id"""
+        state = storage.get(State, uuid.uuid4())
+        self.assertIsNone(state)
+
+    def test_count(self):
+        """Test count method of storage"""
+        all_objs = storage.count()
+        self.assertIsInstance(all_objs, int)
+        state_objs = storage.count(State)
+        self.assertIsInstance(state_objs, int)
