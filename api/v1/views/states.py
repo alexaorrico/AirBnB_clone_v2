@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """new view for State objects that handles all default RESTFul API"""
 from api.v1.views import app_views
-from models import storage, state
+from models import storage
+from models.state import State
 from flask import abort, jsonify, request
 
 
@@ -21,7 +22,7 @@ def deletestate(state_id=None):
     if s is None:
         abort(404)
     else:
-        storage.delete(obj)
+        storage.delete(stat)
         storage.save()
         return (jsonify({}), 200)
 
@@ -39,8 +40,8 @@ def createstate():
 @app_views.route('/states/<state_id>', method=['PUT'])
 def updatestate(state_id=None):
     """Updates a State object"""
-    st = storage.get("State", state_id)
-    if st is None:
+    stat = storage.get("State", state_id)
+    if stat is None:
         abort(404)
     s = storage.request.get_json("State", silent=True)
     elif s == None:
@@ -50,7 +51,7 @@ def updatestate(state_id=None):
             if i in ['id', 'created_at', 'updated_at']:
                 pass
             else:
-                setattri(st, i, j)
+                setattr(stat, i, j)
             storage.save()
-            temp = obj.to_dict()
+            temp = stat.to_dict()
             return (jsonify(temp), 200)

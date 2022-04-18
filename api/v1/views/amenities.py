@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """new view for Amenity objects that handles all default RESTFul API"""
 from api.v1.views import app_views
-from models import storage, amenity
+from models import storage
+from models.amenity import Amenity
 from flask import abort, jsonify, request
 
 
@@ -21,7 +22,7 @@ def deleteamenity(amenity_id=None):
     if a is None:
         abort(404)
     else:
-        storage.delete(obj)
+        storage.delete(amnty)
         storage.save()
         return (jsonify({}), 200)
 
@@ -39,8 +40,8 @@ def createamenity():
 @app_views.route('/amenities/<amenity_id>', method=['PUT'])
 def updateamenity(amenity_id=None):
     """Updates a Amenity object"""
-    am = storage.get("Amenity", amenity_id)
-    if am is None:
+    amnty = storage.get("Amenity", amenity_id)
+    if amnty is None:
         abort(404)
     a = storage.request.get_json("Amenity", silent=True)
     elif a == None:
@@ -50,7 +51,7 @@ def updateamenity(amenity_id=None):
             if i in ['id', 'created_at', 'updated_at']:
                 pass
             else:
-                setattri(am, i, j)
+                setattr(amnty, i, j)
             storage.save()
-            temp = obj.to_dict()
+            temp = amnty.to_dict()
             return (jsonify(temp), 200)
