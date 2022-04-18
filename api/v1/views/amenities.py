@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""new view for State objects that handles all default RESTFul API"""
+"""new view for Amenity objects that handles all default RESTFul API"""
 from models import storage, amenity
 from flask import abort, jsonify, request
 
