@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""new view for State objects that handles all default RESTFul API"""
+"""new view for City objects that handles all default RESTFul API"""
 from models import storage, city
 from flask import abort, jsonify, request
 
@@ -14,7 +14,7 @@ def listallcities(city_id=None):
         return (jsonify(city.to_dict()), 200)
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
-def deletecities(city_id=None):
+def deletecity(city_id=None):
     """Deletes a City object"""
     c = storage.get("City", city_id)
     if c is None:
@@ -25,18 +25,21 @@ def deletecities(city_id=None):
         return (jsonify({}), 200)
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
-def createstate():
+def createcity():
     """Creates a City"""
-    s = storage.request.get_json("State", silent=True)
-    if s == None:
+    s = storage.get("State", state_id)
+    if s is None:
+        abort(404)
+    c = storage.request.get_json("City", silent=True)
+    if c == None:
         return (400, "Not a JSON")
-    elif "name" not in  s.keys():
+    elif "name" not in  c.keys():
         return (400, "Missing name")
     else:
         return (jsonify({}), 201)
 
 @app_views.route('/cities/<city_id>', method=['PUT'])
-def updatestate(city_id=None):
+def updatecity(city_id=None):
     """Updates a City object"""
     ct = storage.get("City", city_id)
     if ct is None:
@@ -44,4 +47,3 @@ def updatestate(city_id=None):
     c = storage.request.get_json("City", silent=True)
     if c == None:
         abort(400, "Not a JSON")
-
