@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """new view for Amenity objects that handles all default RESTFul API"""
+from api.v1.views import app_views
 from models import storage, amenity
 from flask import abort, jsonify, request
 
