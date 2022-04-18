@@ -113,3 +113,8 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+   def test_get(self):
+        """ Test that gets an obj """
+       
+    def test_count(self):
+        """ Test that count the object created """
