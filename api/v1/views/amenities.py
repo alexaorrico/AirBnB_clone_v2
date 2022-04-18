@@ -9,7 +9,8 @@ from api.v1.views import app_views
 
 amenity_objs = storage.all('Amenity')
 
-@app_views.route('/amenities', methods=['GET'])
+
+@app_views.route('/amenities/', methods=['GET'])
 def get_amenity():
     """Retrieves a list of all amenity objects."""
     amenities = [obj.to_dict() for obj in amenity_objs.values()]
@@ -53,7 +54,8 @@ def create_Amenity():
         abort(400, 'Missing name')
 
     amenity = (Amenity(**request.get_json()))
-    storage.new(Amenity)
+    storage.new(amenity)
+    storage.save()
     return amenity.to_dict(), 201, {'ContentType': 'application/json'}
 
 
@@ -69,6 +71,5 @@ def update_Amenity(amenity_id):
         abort(404)
 
     amenity = Amenity(**request.get_json())
-    amenity.save()
 
-    return Amenity.to_dict(), 200, {'ContentType': 'application/json'}
+    return amenity.to_dict(), 200, {'ContentType': 'application/json'}
