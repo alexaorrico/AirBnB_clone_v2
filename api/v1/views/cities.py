@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 """ cities view module """
 
+import json
 from api.v1.views import app_views
 from flask import jsonify, abort, request
+from flask import make_response
 from models import storage
 from models.state import State
 from models.city import City
+
 
 
 @app_views.route('/states/<state_id>/cities', strict_slashes=False,
@@ -26,7 +29,7 @@ def cities(state_id):
                 result.append(the_cities[city].to_dict())
         except KeyError:
             abort(404)
-    return jsonify(result), 200
+    return jsonify(result)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
@@ -34,7 +37,7 @@ def get_city(city_id):
     """ Get data for a city """
     try:
         the_city = storage.all(City)[City.__name__ + '.' + city_id]
-        return jsonify(the_city.to_dict()), 200
+        return jsonify(the_city.to_dict())
     except KeyError:
         abort(404)
 
@@ -45,7 +48,7 @@ def del_city(city_id):
     try:
         storage.all().pop(City.__name__ + '.' + city_id)
         storage.save()
-        return jsonify({}), 200
+        return jsonify({})
     except KeyError:
         abort(404)
 
@@ -63,10 +66,10 @@ def create_city(state_id):
     if content_type == 'application/json':
         data = request.get_json()
     else:
-        abort(404, description='Not a JSON')
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     if not data['name']:
-        abort(404, description='Missing name')
+        return make_response(jsonify({'error': 'Missing name'}), 400)
 
     data['state_id'] = state_id
     city = City(**data)
@@ -87,10 +90,10 @@ def edit_city(city_id):
     if content_type == 'application/json':
         data = request.get_json()
     else:
-        abort(404, description='Not a JSON')
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     if not data['name']:
-        abort(404, description='Missing name')
+        return make_response(jsonify({'error': 'Missing name'}), 400)
 
     city = City(**data)
     city.save()
