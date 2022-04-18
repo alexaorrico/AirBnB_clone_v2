@@ -2,6 +2,7 @@
 """ cities view module """
 
 from api.v1.views import app_views
+from flask import make_response
 from flask import jsonify, abort, request
 from models import storage
 from models.user import User
@@ -36,7 +37,7 @@ def delete_user(user_id):
     try:
         storage.all().pop(User.__name__ + '.' + user_id)
         storage.save()
-        return jsonify({}), 200
+        return jsonify({})
     except KeyError:
         abort(404)
 
@@ -50,18 +51,18 @@ def create_user():
     if content_type == 'application/json':
         data = request.get_json()
     else:
-        abort(400, description='Not a JSON')
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     if 'email' not in data:
-        abort(400, 'Missing email')
+        return make_response(jsonify({'error': 'Missing email'}), 400)
 
     if 'password' not in data:
-        abort(400, 'Missing password')
+        return make_response(jsonify({'error': 'Missing password'}), 400)
 
     user = User(**data)
     user.save()
 
-    return jsonify(storage.get(User, user.id).to_dict()), 201
+    return make_response(jsonify(user.to_dict()), 201)
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
@@ -76,12 +77,12 @@ def edit_user(user_id):
     if content_type == 'application/json':
         data = request.get_json()
     else:
-        abort(400, description='Not a JSON')
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     if not data['name']:
-        abort(404, description='Missing name')
+        return make_response(jsonify({'error': 'Missing name'}), 404)
 
     user = User(**data)
     user.save()
 
-    return jsonify(storage.get(User, user.id).to_dict()), 200
+    return jsonify(storage.get(User, user.id).to_dict())
