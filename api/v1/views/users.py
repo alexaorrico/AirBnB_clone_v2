@@ -7,7 +7,7 @@ from models import storage
 from models.user import User
 
 
-@app_views.route('/users', methods=['GET'])
+@app_views.route('/users', strict_slashes=False, methods=['GET'])
 def get_users():
     """ Get all users """
     all = storage.all(User)
@@ -20,7 +20,7 @@ def get_users():
     return jsonify(users)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'])
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=['GET'])
 def get_a_user(user_id):
     """ Get a user with a given user_id """
     if User.__name__ + '.' + user_id not in storage.all(User).keys():
@@ -30,7 +30,7 @@ def get_a_user(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'])
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
 def delete_user(user_id):
     """ Delete a user if user exists """
     try:
@@ -41,7 +41,7 @@ def delete_user(user_id):
         abort(404)
 
 
-@app_views.route('/users', methods=['POST'])
+@app_views.route('/users', strict_slashes=False, methods=['POST'])
 def create_user():
     """ Create a new user
         email and password is compulsory
@@ -64,7 +64,7 @@ def create_user():
     return jsonify(storage.get(User, user.id).to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'])
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def edit_user(user_id):
     """ Edit a user information """
     users = storage.all(User)
