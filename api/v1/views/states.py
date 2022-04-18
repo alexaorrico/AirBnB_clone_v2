@@ -46,4 +46,10 @@ def updatestate(state_id=None):
         abort(400, "Not a JSON")
     else:
         for i, j in s.items:
-
+            if i in [id, created_at, updated_at]:
+                pass
+            else:
+                setattri(obj, i, j)
+            storage.save()
+            temp = obj.to_dict()
+            return (jsonify(temp), 200)
