@@ -64,14 +64,14 @@ def create_place(city_id):
 
     user_id = request.get_json().get('user_id')
     user_id = 'User.' + user_id
-    if user_id not in storage.all('User').key():
+    if user_id not in storage.all('User').keys():
         abort(400, 'Missing user_id')
 
 
     place = (Place(**request.get_json()))
     storage.new(place)
     storage.save()
-    return Place.to_dict(), 201, {'ContentType': 'application/json'}
+    return place.to_dict(), 201, {'ContentType': 'application/json'}
 
 
 @app_views.route('/places/<place_id>', methods=["PUT"])
@@ -85,10 +85,14 @@ def update_place(place_id):
     if place_id not in place_objs.keys():
         abort(404)
 
+    """
     place = place_objs[place_id]
     ignored_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for k, v in request.get_json().items():
         if k not in ignored_keys:
             place[k] = v
+    """
+
+    place = Place(**request.get_json())
 
     return place.to_dict(), 200, {'ContentType': 'application/json'}
