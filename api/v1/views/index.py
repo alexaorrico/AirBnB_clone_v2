@@ -1,23 +1,34 @@
 #!/usr/bin/python3
-
-from flask import jsonify, Blueprint
+"""
+an endpoint that retrieves the number of each objects by type
+"""
+from flask import jsonify
+from models import classes
 from models import storage
 from api.v1.views import app_views
-from models.state import State
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
-def get_status():
-    """ check the status of route """
-    return jsonify({'status': 'OK'})
-
-
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def object_status():
-    """Create an endpoint that retrieves the number of each objects by type
+@app_views.route("/status")
+def status():
     """
-    objects = {"amenities": 'Amenity', "cities": 'City', "places": 'Place',
-               "reviews": 'Review', "states": 'State', "users": 'User'}
-    for key, value in objects.items():
-        objects[key] = storage.count(value)
-    return jsonify(objects)
+    return status in json
+    """
+    stat = {"status": "OK"}
+    return (jsonify(stat))
+
+
+@app_views.route("/stats")
+def stats():
+    """
+    endpoint that retrieves number of obj by type
+    """
+    dic = {"amenities": 0, "cities": 0, "places": 0,
+           "reviews": 0, "states": 0, "users": 0}
+    cls = ["Amenity", "City", "Place", "Review", "State", "User"]
+    st = ["amenities", "cities", "places", "reviews", "states", "users"]
+    for c in range(len(cls)):
+        try:
+            dic[st[c]] = storage.count(cls[c])
+        except Exception:
+            continue
+    return (jsonify(dic))
