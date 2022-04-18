@@ -31,7 +31,7 @@ def createstate():
     if s == None:
         return (400, "Not a JSON")
     elif "name" not in  s.keys():
-        return (400, Missing name)
+        return (400, "Missing name")
     else:
         return (jsonify({}), 201)
 
@@ -42,5 +42,8 @@ def updatestate(state_id=None):
     if st is None:
         abort(404)
     s = storage.request.get_json("State", silent=True)
-    if s == None:
+    elif s == None:
         abort(400, "Not a JSON")
+    else:
+        for i, j in s.items:
+
