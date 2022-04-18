@@ -16,7 +16,7 @@ def cities(state_id):
 
     if State.__name__ + '.' + state_id not in states.keys():
         abort(404)
-
+    print('yesy')
     the_cities = storage.all(City)
     result = []
     for city in the_cities.keys():
