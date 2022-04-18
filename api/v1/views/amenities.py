@@ -44,3 +44,12 @@ def updateamenity(amenity_id=None):
     a = storage.request.get_json("Amenity", silent=True)
     elif a == None:
         abort(400, "Not a JSON")
+    else:
+        for i, j in a.items:
+            if i in ['id', 'created_at', 'updated_at']:
+                pass
+            else:
+                setattri(am, i, j)
+            storage.save()
+            temp = obj.to_dict()
+            return (jsonify(temp), 200)
