@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """new view for City objects that handles all default RESTFul API"""
-from models import storage, city
+from models import storage
+from models.city import City
 from flask import abort, jsonify, request
 
 
@@ -8,7 +9,7 @@ from flask import abort, jsonify, request
 def listallcities(city_id=None):
     """Retrieves a City object"""
     c = storage.get("City", city_id)
-    if c == None:
+    if c is None:
         abort(404)
     else:
         return (jsonify(city.to_dict()), 200)
@@ -44,6 +45,6 @@ def updatecity(city_id=None):
     ct = storage.get("City", city_id)
     if ct is None:
         abort(404)
-    c = storage.request.get_json("City", silent=True)
-    if c == None:
+    c = request.get_json("City", silent=True)
+    if c is None:
         abort(400, "Not a JSON")
