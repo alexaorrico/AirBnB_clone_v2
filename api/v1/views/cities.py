@@ -3,7 +3,7 @@
 
 import json
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, request_tearing_down
 from flask import make_response
 from models import storage
 from models.state import State
@@ -86,16 +86,16 @@ def edit_city(city_id):
     if City.__name__ + '.' + city_id not in the_cities.keys():
         abort(404)
 
-    content_type = request.headers.get('Content-Type')
-    if content_type == 'application/json':
-        data = request.get_json()
-    else:
+    if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
-    if not data['name']:
+    if 'name' not in request.get_json().keys():
         return make_response(jsonify({'error': 'Missing name'}), 400)
 
-    city = City(**data)
+    city = storage.get('City', city_id)
+    ignored_keys = ['id', 'created_at', 'updated_at']
+    for k, v in request.get_json.items():
+        if k not in ignored_keys:
+            setattr(city, k, v)
     city.save()
-
-    return jsonify(storage.get(City, city.id).to_dict())
+    return jsonify(city.to_dict())
