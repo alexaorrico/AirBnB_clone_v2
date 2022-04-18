@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """new view for State objects that handles all default RESTFul API"""
+from api.v1.views import app_views
 from models import storage, state
 from flask import abort, jsonify, request
 
@@ -46,10 +47,10 @@ def updatestate(state_id=None):
         abort(400, "Not a JSON")
     else:
         for i, j in s.items:
-            if i in [id, created_at, updated_at]:
+            if i in ['id', 'created_at', 'updated_at']:
                 pass
             else:
-                setattri(obj, i, j)
+                setattri(st, i, j)
             storage.save()
             temp = obj.to_dict()
             return (jsonify(temp), 200)
