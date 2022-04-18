@@ -8,7 +8,7 @@ from models.state import State
 from api.v1.views import app_views
 
 
-states = State.to_dict()
+states = State().to_dict()
 
 
 @app_views.errorhandler(404)
@@ -57,7 +57,7 @@ def create_state():
     return State(**request.get_json()), 201
 
 
-@app_views.route('/states/<state_id>', method=["PUT"])
+@app_views.route('/states/<state_id>', methods=["PUT"])
 def update_state(state_id):
     """Modifies a state object."""
     state_id = "State." + state_id
