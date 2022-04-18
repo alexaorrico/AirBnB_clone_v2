@@ -18,7 +18,7 @@ def get_states():
     return jsonify(states)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_state(state_id):
     """Returns a specified state model."""
     states_objs = storage.all('State')
@@ -32,7 +32,8 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['DELETE'])
 def delete_state(state_id):
     """Deletes a specified state model."""
     states_objs = storage.all('State')
@@ -47,7 +48,7 @@ def delete_state(state_id):
     return jsonify({}), 200, {'ContentType': 'application/json'}
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states/', strict_slashes=False, methods=['POST'])
 def create_state():
     """Creates a new state object."""
     if not request.json:
@@ -60,7 +61,7 @@ def create_state():
     return state.to_dict(), 201, {'ContentType': 'application/json'}
 
 
-@app_views.route('/states/<state_id>', methods=["PUT"])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=["PUT"])
 def update_state(state_id):
     """Modifies a state object."""
     states_objs = storage.all('State')

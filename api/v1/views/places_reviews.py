@@ -9,7 +9,8 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'])
+@app_views.route('/places/<place_id>/reviews',
+                 strict_slashes=False, methods=['GET'])
 def reviews(place_id):
     """ Get reviews for a place """
 
@@ -29,7 +30,7 @@ def reviews(place_id):
     return jsonify(result), 200
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET'])
+@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['GET'])
 def get_review(review_id):
     """ Get a particular review """
     try:
@@ -39,7 +40,8 @@ def get_review(review_id):
         abort(404)
 
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'])
+@app_views.route('/reviews/<review_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def del_review(review_id):
     """ Delete a review """
     try:
@@ -50,7 +52,8 @@ def del_review(review_id):
         abort(404)
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST'])
+@app_views.route('/places/<place_id>/reviews',
+                 strict_slashes=False, methods=['POST'])
 def create_review(place_id):
     """ Create a new review """
     places = storage.all(Place)
@@ -81,7 +84,7 @@ def create_review(place_id):
     return jsonify(storage.get(Review, review.id).to_dict())
 
 
-@app_views.route('/reviews/<review_id>', methods=['PUT'])
+@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['PUT'])
 def edit_review(review_id):
     """ Edit a given city, with a given data """
     the_reviews = storage.all(Review)
