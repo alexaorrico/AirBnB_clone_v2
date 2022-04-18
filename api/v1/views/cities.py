@@ -6,7 +6,7 @@ from flask import abort, jsonify, request
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def listallcities(city_id=None):
-    """list of all State objects"""
+    """Retrieves a City object"""
     c = storage.get("City", city_id)
     if c == None:
         abort(404)
@@ -15,7 +15,7 @@ def listallcities(city_id=None):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def deletecities(city_id=None):
-    """Deletes a State object"""
+    """Deletes a City object"""
     c = storage.get("City", city_id)
     if c is None:
         abort(404)
@@ -26,7 +26,7 @@ def deletecities(city_id=None):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def createstate():
-    """Creates a State"""
+    """Creates a City"""
     s = storage.request.get_json("State", silent=True)
     if s == None:
         return (400, "Not a JSON")
@@ -37,11 +37,11 @@ def createstate():
 
 @app_views.route('/cities/<city_id>', method=['PUT'])
 def updatestate(city_id=None):
-    """Updates a State object"""
+    """Updates a City object"""
     ct = storage.get("City", city_id)
     if ct is None:
         abort(404)
-    c = storage.request.get_json("State", silent=True)
+    c = storage.request.get_json("City", silent=True)
     if c == None:
         abort(400, "Not a JSON")
 
