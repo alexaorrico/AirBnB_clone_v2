@@ -3,6 +3,7 @@
 from flask import abort
 from flask import jsonify
 from flask import request
+from flask import make_response
 from models import storage
 from models.place import Place
 from api.v1.views import app_views
@@ -45,7 +46,7 @@ def delete_place(place_id):
     storage.all().pop(place_id)
     storage.save()
 
-    return jsonify({}), 200, {'ContentType': 'application/json'}
+    return jsonify({})
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
@@ -56,22 +57,20 @@ def create_place(city_id):
     if city_id not in storage.all('City').keys():
         abort(404)
     if not request.json:
-        abort(400, "Not a JSON")
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if "user_id" not in request.get_json().keys():
-        abort(400, 'Missing user_id')
+        return make_response(jsonify({'error': 'Missing user_id'}), 400)
     if "name" not in request.get_json().keys():
-        abort(400, 'Missing name')
+        return make_response(jsonify({'error': 'Missing name'}), 400)
 
     user_id = request.get_json().get('user_id')
     user_id = 'User.' + user_id
     if user_id not in storage.all('User').keys():
-        abort(400, 'Missing user_id')
+        return make_response(jsonify({'error': 'Missing user_id'}), 400)
 
-
-    place = (Place(**request.get_json()))
-    storage.new(place)
-    storage.save()
-    return place.to_dict(), 201, {'ContentType': 'application/json'}
+    place = Place(**request.get_json())
+    place.save()
+    return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>', methods=["PUT"])
@@ -81,18 +80,14 @@ def update_place(place_id):
     place_id = "Place." + place_id
 
     if not request.json:
-        abort(400, "Not a JSON")
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if place_id not in place_objs.keys():
         abort(404)
-
-    """
-    place = place_objs[place_id]
+    
+    place = place_objs.get(place_id)
     ignored_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for k, v in request.get_json().items():
         if k not in ignored_keys:
-            place[k] = v
-    """
-
-    place = Place(**request.get_json())
-
-    return place.to_dict(), 200, {'ContentType': 'application/json'}
+            setattr(place, k, v)
+    place.save()
+    return jsonify(place.to_dict())
