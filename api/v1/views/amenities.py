@@ -12,7 +12,7 @@ from api.v1.views import app_views
 @app_views.route('/amenities/', strict_slashes=False,
                  methods=['GET'])
 def get_amenities():
-    """Retrieves a list of all amenity objects."""
+    """Retrieves a list of all Amenity objects."""
     amenity_objs = storage.all('Amenity')
     amenities = [obj.to_dict() for obj in amenity_objs.values()]
 
@@ -23,7 +23,7 @@ def get_amenities():
                  methods=['GET'])
 def get_amenity(amenity_id):
     """Retrieves a Amenity object."""
-    amenity = storage.get("Amenity", amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
 
@@ -34,7 +34,7 @@ def get_amenity(amenity_id):
                  methods=['DELETE'])
 def delete_Amenity(amenity_id):
     """Deletes a specified Amenity model."""
-    amenity = storage.get("Amenity", amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
 
     if amenity is None:
         abort(404)
@@ -63,14 +63,13 @@ def create_Amenity():
                  methods=["PUT"])
 def update_Amenity(amenity_id):
     """Modifies a Amenity object."""
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
 
     if amenity is None:
         abort(404)
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 404)
 
-    amenity = amenity_objs.get(amenity_id)
     ignored_keys = ['id', 'created_at', 'updated_at']
     for k, v in request.get_json().items():
         if k not in ignored_keys:
