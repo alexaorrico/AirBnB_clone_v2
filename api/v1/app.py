@@ -11,10 +11,7 @@ from api.v1.views import app_views
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
-
-app.url_map.strict_slashes = False
-# cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
-CORS(app, resources={r"/*": {"origins": "http://0.0.0.0:*"}})
+cors = CORS(app, resources={"/*": {"origins": "http://0.0.0.0:*"}})
 
 
 @app.teardown_appcontext
