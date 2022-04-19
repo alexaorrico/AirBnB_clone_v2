@@ -44,7 +44,7 @@ def updatestate(state_id=None):
     if stat is None:
         abort(404)
     s = storage.request.get_json("State", silent=True)
-    elif s == None:
+    if s == None:
         abort(400, "Not a JSON")
     else:
         for i, j in s.items:
@@ -54,4 +54,4 @@ def updatestate(state_id=None):
                 setattr(stat, i, j)
             storage.save()
             temp = stat.to_dict()
-            return (jsonify(temp), 200)
+            return (jsonifyi(temp), 200)
