@@ -40,13 +40,13 @@ def reviews(place_id):
 @app_views.route("/reviews/<review_id>", methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def review_id(review_id):
-    """ Do different methods on a place object"""
+    """ Do different methods on a Review object"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(place.to_dict())
+        return jsonify(review.to_dict())
 
     elif request.method == 'DELETE':
         storage.delete(review)

@@ -40,7 +40,7 @@ def places(city_id):
 @app_views.route("/places/<place_id>", methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def place_id(place_id):
-    """ Do different methods on a place object"""
+    """ Do different methods on a Place object"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
