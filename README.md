@@ -154,9 +154,15 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+AirBnB v2:
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+AirBnB v3:
+Bruno Rodríguez - [Github](https://github.com/brunonra-dev)
+Angel Piva - [Github](https://github.com/AngelPiva)
+
 ## License
 Public Domain. No copy write protection. 
