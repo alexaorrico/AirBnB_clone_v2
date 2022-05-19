@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-from flask import Flask
+""" API """
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -7,10 +8,18 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def close_session(exception):
     """Close the SQLAlchemy session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """ Handle the 404 errors """
+    return make_response(jsonify({"error": "Not Found"}), 404)
+
 
 if __name__ == "__main__":
     if getenv("HBNB_API_HOST"):
