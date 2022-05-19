@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+""" State """
 import json
 from models import storage
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from models.state import State
 from api.v1.views import app_views
 
@@ -27,6 +28,5 @@ def states_id(state_id):
 
     elif request.method == 'DELETE':
         storage.delete(state)
-        del state
         storage.save()
         return jsonify({})
