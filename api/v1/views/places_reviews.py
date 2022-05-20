@@ -5,6 +5,7 @@ from models import storage
 from flask import jsonify, abort, request, make_response
 from models.review import Review
 from models.place import Place
+from models.user import User
 from api.v1.views import app_views
 
 
@@ -23,13 +24,19 @@ def reviews(place_id):
         return jsonify(list_reviews)
 
     if request.method == 'POST':
+        list_user_id = []
+        users = storage.all(User).values()
+        for user in users:
+            list_user_id.append(user.id)
         response = request.get_json()
         if response is None:
             abort(400, "Not a JSON")
-        if response.get("text") is None:
-            abort(400, "Missing text")
         if response.get("user_id") is None:
             abort(400, "Missing user_id")
+        if response.get("user_id") not in list_user_id:
+            abort(404)
+        if response.get("text") is None:
+            abort(400, "Missing text")
 
         new = Review(**response)
         new.place_id = place.id
