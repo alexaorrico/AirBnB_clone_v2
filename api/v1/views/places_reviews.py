@@ -19,8 +19,8 @@ def reviews(place_id):
 
     if request.method == 'GET':
         list_reviews = []
-        for place in place.reviews:
-            list_places.append(place.to_dict())
+        for review in place.reviews:
+            list_places.append(review.to_dict())
         return jsonify(list_reviews)
 
     if request.method == 'POST':
