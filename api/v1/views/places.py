@@ -19,6 +19,9 @@ def places(city_id):
     if request.method == 'GET':
         list_places = []
         for place in city.places:
+            user = storage.get(User, place.user_id)
+            if not user:
+                abort(404)
             list_places.append(place.to_dict())
         return jsonify(list_places)
 
@@ -26,10 +29,10 @@ def places(city_id):
         response = request.get_json()
         if response is None:
             abort(400, "Not a JSON")
-        if response.get("name") is None:
-            abort(400, "Missing name")
         if response.get("user_id") is None:
             abort(400, "Missing user_id")
+        if response.get("name") is None:
+            abort(400, "Missing name")
 
         new = Place(**response)
         new.city_id = city.id
