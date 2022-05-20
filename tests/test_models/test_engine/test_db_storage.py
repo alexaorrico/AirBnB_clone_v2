@@ -68,21 +68,43 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', " testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "testing file storage")
+    def test_get(self):
+        """Test get method."""
+        storage = DBStorage()
+        all = storage.all()
+        for key in all:
+            obj = all[key]
+            id = obj.id
+            self.assertEqual(obj, storage.get(id, obj.__class__))
+
+    @unittest.skipIf(models.storage_t != 'db', "testing file storage")
+    def test_count(self):
+        """Test count method."""
+        storage = DBStorage()
+        count = len(storage.all())
+        self.assertEqual(count, storage.count())
+        self.assertEqual(type(storage.count()), int)
+        for cls in classes:
+            count = len(storage.all(cls))
+            self.assertEqual(count, storage.count(cls))
+            self.assertEqual(type(storage.count(cls)), int)
