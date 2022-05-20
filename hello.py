@@ -1,2 +1,3 @@
 #!/usr/bin/python3
-print("HELLO WORLD")
+print("HELLO HOLBERTON")
+print("HELLO HOLBIES")
