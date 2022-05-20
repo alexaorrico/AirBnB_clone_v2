@@ -19,9 +19,6 @@ def places(city_id):
     if request.method == 'GET':
         list_places = []
         for place in city.places:
-            user = storage.get(User, place.user_id)
-            if not user:
-                abort(404)
             list_places.append(place.to_dict())
         return jsonify(list_places)
 
