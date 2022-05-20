@@ -162,8 +162,8 @@ No known bugs at this time.
 * Joann Vuong
 
 > Third part of Airbnb:
-* Michael Chambilla - [Github](https://github.com/Mcfreestyle) / [Twitter](https://twitter.com/MichaelChambil3)
-* Humberto Tejada - [Github](https://github.com/humtej1204) / [Twiter](https://twitter.com/tejada_espinoza)
+* Michael Chambilla Clemente - [Github](https://github.com/Mcfreestyle) / [Twitter](https://twitter.com/MichaelChambil3)
+* Humberto Tejada Espinoza - [Github](https://github.com/humtej1204) / [Twiter](https://twitter.com/tejada_espinoza)
 
 
 ## License
