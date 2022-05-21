@@ -3,7 +3,7 @@
 This is the app module
 """
 
-from flask import Flask
+from flask import Flask, jsonify
 from os import getenv
 from models import storage
 from api.v1.views import app_views
@@ -20,6 +20,13 @@ def session_close(exception):
     This function close session
     """
     storage.close()
+
+@app.errorhandler(404)
+def wrong_route(e):
+    """
+    handles error 404
+    """
+    return jsonify(error="Not found"), 404
 
 
 if __name__ == "__main__":
