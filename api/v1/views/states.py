@@ -11,7 +11,9 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states():
-    """Get all states objects"""
+    """
+    Get all states objects
+    """
     arrayOfStates = []
     for value in storage.all(State).values():
         arrayOfStates.append(value.to_dict())
@@ -20,7 +22,9 @@ def states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def oneState(state_id):
-    """Get one state based on his id"""
+    """
+    Get one state based on his id
+    """
     try:
         state = storage.get(State, state_id).to_dict()
         return jsonify(state), 200
@@ -30,7 +34,9 @@ def oneState(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def deleteState(state_id):
-    """Delete one state"""
+    """
+    Delete one state
+    """
     state = storage.get(State, state_id)
     if state:
         storage.delete(state)
@@ -42,7 +48,9 @@ def deleteState(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def createState():
-    """Creates a state"""
+    """
+    Creates a state
+    """
     if not request.is_json:
         return jsonify(error='Not a JSON'), 400
 
@@ -58,7 +66,9 @@ def createState():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def updateState(state_id):
-    """Update a state"""
+    """
+    Update a state
+    """
     state = storage.get(State, state_id)
     if not state:
         abort(404)
