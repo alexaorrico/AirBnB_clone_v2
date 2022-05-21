@@ -17,7 +17,7 @@ def getUsers():
     """
     usersInstances = storage.all(User).values()
     users = [user.to_dict() for user in usersInstances]
-    return jsonify(users)
+    return jsonify(users), 200
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['GET'])
@@ -27,7 +27,7 @@ def getUserById(user_id):
     """
     user = storage.get(User, user_id)
     if user:
-        return jsonify(user.to_dict())
+        return jsonify(user.to_dict()), 200
     else:
         abort(404)
 
@@ -55,9 +55,9 @@ def postUser():
         argsDict = request.args
         argsDict = request.get_json()
         if 'email' not in argsDict:
-            abort(jsonify(message="Missing email"), 400)
+            return jsonify(message="Missing email"), 400
         if 'password' not in argsDict:
-            abort(jsonify(massage="Missing password"), 400)
+            return jsonify(massage="Missing password"), 400
         email = argsDict['email']
         password = argsDict['password']
         newUser = User(email=email, password=password)
@@ -65,7 +65,7 @@ def postUser():
         newUserDict = storage.get(User, newUser.id).to_dict()
         return jsonify(newUserDict), 201
     else:
-        abort(jsonify(message="Not a JSON"), 400)
+        return jsonify(message="Not a JSON"), 400
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
@@ -85,6 +85,6 @@ def updateUser(user_id):
             user.save()
             return jsonify(user.to_dict()), 200
         else:
-            abort(jsonify(message="Not a JSON"), 400)
+            return jsonify(message="Not a JSON"), 400
     else:
         abort(404)
