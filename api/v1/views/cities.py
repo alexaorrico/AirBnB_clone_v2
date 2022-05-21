@@ -20,7 +20,7 @@ def getCityByState(state_id):
         dict_cities = storage.all(City)
         cities_by_state = [v.to_dict() for v in dict_cities.
                            values() if v.state_id == state_id]
-        return jsonify(cities_by_state)
+        return jsonify(cities_by_state), 200
     else:
         abort(404)
 
@@ -32,7 +32,7 @@ def getCityById(city_id):
     """
     city = storage.get(City, city_id)
     if city:
-        return jsonify(city.to_dict())
+        return jsonify(city.to_dict()), 200
     else:
         abort(404)
 
@@ -67,9 +67,9 @@ def createCity(state_id):
                 newCityDict = storage.get(City, newCity.id).to_dict()
                 return jsonify(newCityDict), 201
             else:
-                abort(jsonify(message='Missing name'), 400)
+                return jsonify(message='Missing name'), 400
         else:
-            abort(jsonify(message='Not a JSON'), 400)
+            return jsonify(message='Not a JSON'), 400
     else:
         abort(404)
 
@@ -91,6 +91,6 @@ def updateCity(city_id):
             city.save()
             return jsonify(city.to_dict()), 200
         else:
-            abort(jsonify(message='Not a JSON'), 400)
+            return jsonify(message='Not a JSON'), 400
     else:
         abort(404)
