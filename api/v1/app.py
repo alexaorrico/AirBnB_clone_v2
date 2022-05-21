@@ -21,6 +21,7 @@ def session_close(exception):
     """
     storage.close()
 
+
 @app.errorhandler(404)
 def wrong_route(e):
     """

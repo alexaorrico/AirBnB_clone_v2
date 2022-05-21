@@ -13,7 +13,6 @@ from models.state import State
 from models.user import User
 
 
-
 @app_views.route('/status', strict_slashes=False)
 def index():
     """
