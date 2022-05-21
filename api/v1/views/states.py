@@ -41,7 +41,7 @@ def deleteState(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def createState():
-    "Creates a state"
+    """Creates a state"""
     if not request.is_json:
         return jsonify(error='Not a JSON'), 400
 
