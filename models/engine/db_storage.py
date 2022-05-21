@@ -80,7 +80,7 @@ class DBStorage:
         Otherwise returns None"""
         objs = self.all(cls)
         if objs:
-            return objs['{}.{}'.format(cls, id)]
+            return objs['{}.{}'.format(cls.__name__, id)]
         else:
             return None
 
