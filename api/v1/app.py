@@ -20,11 +20,12 @@ def close(bruh):
     """Method that calls close storage"""
     storage.close()
 
+
 @app.response_404
 def error404(404):
     """ 404 handler """
 
-    return {"error": "Not found"}
+    return {"error": "Not found"}, 404
 
 
 if __name__ == '__main__':
