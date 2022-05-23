@@ -21,7 +21,7 @@ def close(bruh):
     storage.close()
 
 
-@app.response_404
+@app.errorhandler(404)
 def error404(e):
     """ 404 handler """
     return ({"error": "Not found"}, 404)
