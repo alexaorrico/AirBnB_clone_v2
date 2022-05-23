@@ -3,6 +3,7 @@
 index
 """
 
+from flask import jsonify
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models.city import City
@@ -28,4 +29,5 @@ def stats():
             "reviews": storage.count(Review),
             "states": storage.count(State),
             "users": storage.count(User), }
-    return JSON
+    x = {k: storage.count(v) for k, v in JSON.items()}
+    return jsonify(x)
