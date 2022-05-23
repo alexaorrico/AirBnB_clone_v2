@@ -6,6 +6,10 @@ from models import storage
 from models.city import City
 
 
+model = "City"
+parent_model = "States"
+
+
 def get_models(parent_model, parent_model_id, parent_getter):
     """GET api"""
     parent = storage.get(parent_model, parent_model_id)
