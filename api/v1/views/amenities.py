@@ -17,7 +17,7 @@ def amenities():
 
     if request.method == 'GET':
         amenitiesList = []
-        amenities = storage.all('Amenity')
+        amenities = storage.all(Amenity)
 
         for amenity in amenities.values():
             amenitiesList.append(amenity.to_dict())
@@ -25,15 +25,15 @@ def amenities():
         return jsonify(amenitiesList)
 
     elif request.method == 'POST':
-        requestDict = request.get_json()
+        body_request_dict = request.get_json()
 
-        if not requestDict:
+        if not body_request_dict:
             abort(400, 'Not a JSON')
 
-        if "name" not in requestDict:
+        if "name" not in body_request_dict:
             abort(400, 'Missing name')
 
-        newAmenity = Amenity(**requestDict)
+        newAmenity = Amenity(**body_request_dict)
         storage.new(newAmenity)
         storage.save()
 
@@ -45,7 +45,7 @@ def amenities_amenity_id(amenity_id):
     """
         Retrieves a amenities object
     """
-    amenity = storage.get("Amenity", amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
 
     if amenity is None:
         abort(404)
@@ -59,14 +59,13 @@ def amenities_amenity_id(amenity_id):
         return {}, 200
 
     if request.method == 'PUT':
-        requestDict = request.get_json()
+        body_request_dict = request.get_json()
 
-        if not requestDict:
+        if not body_request_dict:
             return 'Not a JSON', 400
 
-        ignoredList = ["id", "created_at", "updated_at"]
-        for key, value in requestDict.items():
-            if key not in ignoredList:
+        for key, value in body_request_dict.items():
+            if key not in ["id", "created_at", "updated_at"]:
                 setattr(amenity, key, value)
 
         amenity.save()
