@@ -38,7 +38,7 @@ def invalid_route(error):
     """
         comment
     """
-    return jsonify({"error": "Not found"}), (404)
+    return ({"error": "Not found"}), (404)
 
 
 if __name__ == "__main__":
