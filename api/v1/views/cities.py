@@ -4,7 +4,6 @@
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
-from models.state import State
 from models.city import City
 
 
@@ -13,7 +12,7 @@ from models.city import City
 def states_state_id_cities(state_id):
     """Retrieves all City objects of a State"""
 
-    state_catch = storage.get(State, state_id)
+    state_catch = storage.get('State', state_id)
 
     # If the state_id is not linked to any State object, raise a 404 error
     if state_catch is None:
@@ -25,7 +24,7 @@ def states_state_id_cities(state_id):
         cities_list = []
         for city in cities.values():
             cities_dict = city.to_dict()
-            if cities_dict[state_id] == state_id:
+            if cities_dict['state_id'] == state_id:
                 cities_list.append(cities_dict)
         return jsonify(cities_list)
 
@@ -42,7 +41,7 @@ def states_state_id_cities(state_id):
             abort(400, 'Missing name')
 
         # create new object State with body_request_dict
-        body_request_dict[state_id] = state_id
+        body_request_dict['state_id'] = state_id
         new_city = City(**body_request_dict)
 
         storage.new(new_city)
@@ -52,7 +51,7 @@ def states_state_id_cities(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def city_id():
+def city_id(city_id):
     """Retrieves City object"""
     city_catch = storage.get(City, city_id)
 
