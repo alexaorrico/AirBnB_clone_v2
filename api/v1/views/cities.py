@@ -8,10 +8,10 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
-def state_id():
-    """Retrieves all State objects"""
+def states_state_id_cities(state_id):
+    """Retrieves all City objects of a State"""
 
     state_catch = storage.get(State, state_id)
 
@@ -19,10 +19,17 @@ def state_id():
     if state_catch is None:
         abort(404)
 
+    # retrieves City object
+    if request.method == 'GET':
+        cities = storage.all(City)
+        cities_list = []
+        for city in cities.values():
+            cities_dict = city.to_dict()
+            if cities_dict[state_id] == state_id:
+                cities_list.append(cities_dict)
+        return jsonify(cities_list)
 
-def cities():
-    """Create a City"""
-    if request.method == 'POST':
+    elif request.method == 'POST':
         # transform the HTTP body request to a dictionary
         body_request_dict = request.get_json()
 
@@ -35,6 +42,7 @@ def cities():
             abort(400, 'Missing name')
 
         # create new object State with body_request_dict
+        body_request_dict[state_id] = state_id
         new_city = City(**body_request_dict)
 
         storage.new(new_city)
