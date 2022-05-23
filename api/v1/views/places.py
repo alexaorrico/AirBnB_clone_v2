@@ -40,7 +40,7 @@ def cities_city_id_places(city_id):
         if 'user_id' not in body_request_dict:
             abort(400, 'Missing user_id')
 
-        user_catch = storage.get('User', user_id)
+        user_catch = storage.get('User', body_request_dict['user_id'])
 
         # If the user_id is not linked to any User object, raise a 404 error
         if user_catch is None:
