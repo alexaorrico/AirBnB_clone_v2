@@ -1,78 +1,44 @@
 #!/usr/bin/python3
 """Module for City api"""
 from api.v1.views import app_views
+from api.v1.views import *
 from flask import jsonify, make_response, abort, request
 from models import storage
 from models.city import City
 
-
 model = "City"
-parent_model = "States"
+parent_model = "State"
 
 
-def get_models(parent_model, parent_model_id, parent_getter):
+@app_views.route("/states/<state_id>/cities", strict_slashes=False,
+                 methods=["GET"])
+def get_cities(state_id):
     """GET api"""
-    parent = storage.get(parent_model, parent_model_id)
-    if not parent:
-        return make_response(jsonify({"error": "Not found"}), 404)
-    return jsonify([c.to_dict() for c in getattr(parent, parent_getter)])
+    return get_models(parent_model, state_id, "cities")
 
 
-def get_model(model, model_id):
+@app_views.route("/cities/<city_id>", methods=["GET"])
+def get_city(city_id):
     """GET api"""
-    obj = storage.get(model, model_id)
-    if not obj:
-        return make_response(jsonify({"error": "Not found"}), 404)
-    return jsonify(obj.to_dict())
+    return get_model(model, city_id)
 
 
-def delete_model(model, model_id):
+@app_views.route("/cities/<city_id>", methods=["DELETE"])
+def delete_city(city_id):
     """DELETE api"""
-    obj = storage.get(model, model_id)
-    if not obj:
-        return make_response(jsonify({"error": "Not found"}), 404)
-    storage.delete(obj)
-    storage.save()
-    return make_response(jsonify({}), 200)
+    return delete_model(model, city_id)
 
 
-def post_model(model, parent_model, parent_model_id, required_data):
+@app_views.route("/states/<state_id>/cities", strict_slashes=False,
+                 methods=["POST"])
+def post_city(state_id):
     """POST api"""
-    from models.engine.db_storage import classes
-    if parent_model:
-        parent = storage.get(parent_model, parent_model_id)
-        if not parent:
-            return make_response(jsonify({"error": "Not found"}), 404)
-    data = request.get_json(force=True, silent=True)
-    if not data:
-        abort(400, 'Not a JSON')
-
-    for requirement in required_data:
-        if requirement not in data:
-            message = "Missing " + requirement
-            abort(400, message)
-
-    if "user_id" in required_data:
-        if not storage.get("User", data.get("user_id")):
-            return make_response(jsonify({"error": "Not found"}), 404)
-    if parent_model:
-        data[parent_model.lower() + '_id'] = parent_model_id
-    obj = classes[model](**data)
-    obj.save()
-    return make_response(jsonify(obj.to_dict()), 201)
+    required_data = {"name"}
+    return post_model(model, parent_model, state_id, required_data)
 
 
-def put_model(model, model_id, ignore_data):
+@app_views.route("/cities/<city_id>", methods=["PUT"])
+def put_city(city_id):
     """PUT api"""
-    obj = storage.get(model, model_id)
-    if not obj:
-        return make_response(jsonify({"error": "Not found"}), 404)
-    data = request.get_json(force=True, silent=True)
-    if not data:
-        abort(400, 'Not a JSON')
-
-    for key, value in data.items():
-        if key not in ignore_data:
-            setattr(obj, key, value)
-    obj.save()
-    return make_response(jsonify(obj.to_dict()), 200)
+    ignore_data = ["id", "created_at", "updated_at"]
+    return put_model(model, city_id, ignore_data)
