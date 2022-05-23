@@ -79,11 +79,16 @@ class DBStorage:
         """
             retrieve one object:
         """
-        if cls and id:
-            obj = "{}.{}".format(cls, id)
-            all_obj = self.all(cls)
-            return all_obj.get(obj)
-        return None
+        if cls is None or id is None:
+            return (None)
+
+        cls_catch = None
+        cls_all = self.all(cls)
+        for key, value in cls_all.items():
+            if value.id == id:
+                cls_catch = value
+
+        return (cls_catch)
 
     def count(self, cls=None):
         """
