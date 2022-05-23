@@ -10,18 +10,17 @@ from models.user import User
 
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
-def User():
+def users():
     """
         Retrieves the list of all User objects and create a new User"
     """
 
     if request.method == 'GET':
         UserList = []
-        User = storage.all(User)
+        User_all = storage.all(User)
 
-        for User in User.values():
-            UserList.append(User.to_dict())
-
+        for key, value in User_all.items():
+            UserList.append(value.to_dict())
         return jsonify(UserList)
 
     elif request.method == 'POST':
@@ -30,8 +29,11 @@ def User():
         if not body_request_dict:
             abort(400, 'Not a JSON')
 
-        if "name" not in body_request_dict:
-            abort(400, 'Missing name')
+        if 'email' not in body_request_dict:
+            abort(400, 'Missing email')
+
+        if 'password' not in body_request_dict:
+            abort(400, 'Missing password')
 
         newUser = User(**body_request_dict)
         storage.new(newUser)
@@ -45,16 +47,16 @@ def User_User_id(User_id):
     """
         Retrieves a User object
     """
-    User = storage.get(User, User_id)
+    User_catch = storage.get(User, User_id)
 
-    if User is None:
+    if User_catch is None:
         abort(404)
 
     if request.method == 'GET':
-        return User.to_dict()
+        return User_catch.to_dict()
 
     if request.method == 'DELETE':
-        storage.delete(User)
+        storage.delete(User_catch)
         storage.save()
         return {}, 200
 
@@ -66,7 +68,7 @@ def User_User_id(User_id):
 
         for key, value in body_request_dict.items():
             if key not in ["id", "created_at", "updated_at"]:
-                setattr(User, key, value)
+                setattr(User_catch, key, value)
 
-        User.save()
-        return User.to_dict(), 200
+        User_catch.save()
+        return User_catch.to_dict(), 200
