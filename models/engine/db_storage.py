@@ -80,17 +80,14 @@ class DBStorage:
         or None if not found"""
         if cls is None or id is None:
             return None
-        objects = self.__session.query(cls)
-        for obj in objects:
-            if obj.id == id:
+        objects = self.all(cls)
+        for obj in objects.values():
+            if id == obj.id:
                 return obj
         return None
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching the given class.
         If no class is passed, returns the count of all objects in storage."""
-        cont = 0
-        for item in classes:
-            if cls is None or cls is classes[item] or cls is item:
-                cont += len(self.__session.query(classes[item]).all())
-        return cont
+        objects = self.all(cls)
+        return len(objects)
