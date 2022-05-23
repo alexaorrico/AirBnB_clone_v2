@@ -16,12 +16,11 @@ def users():
     """
 
     if request.method == 'GET':
-        UserList = []
-        User_all = storage.all(User)
-
-        for key, value in User_all.items():
-            UserList.append(value.to_dict())
-        return jsonify(UserList)
+        user_all = storage.all(User)
+        users_json = []
+        for key, value in user_all.items():
+            users_json.append(value.to_dict())
+        return jsonify(users_json)
 
     elif request.method == 'POST':
         body_request_dict = request.get_json()
@@ -35,28 +34,27 @@ def users():
         if 'password' not in body_request_dict:
             abort(400, 'Missing password')
 
-        newUser = User(**body_request_dict)
-        storage.new(newUser)
+        new_state = User(**body_request_dict)
+        storage.new(new_state)
         storage.save()
+        return new_state.to_dict(), 201
 
-        return newUser.to_dict(), 201
 
-
-@app_views.route('/User/<User_id>', methods=['GET', 'DELETE', 'PUT'])
-def User_User_id(User_id):
+@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
+def user_id(user_id):
     """
         Retrieves a User object
     """
-    User_catch = storage.get(User, User_id)
+    user_catch = storage.get(User, user_id)
 
-    if User_catch is None:
+    if user_catch is None:
         abort(404)
 
     if request.method == 'GET':
-        return User_catch.to_dict()
+        return user_catch.to_dict()
 
     if request.method == 'DELETE':
-        storage.delete(User_catch)
+        storage.delete(user_catch)
         storage.save()
         return {}, 200
 
@@ -64,11 +62,11 @@ def User_User_id(User_id):
         body_request_dict = request.get_json()
 
         if not body_request_dict:
-            return 'Not a JSON', 400
+            abort(400, 'Not a JSON')
 
         for key, value in body_request_dict.items():
-            if key not in ["id", "created_at", "updated_at"]:
-                setattr(User_catch, key, value)
+            if key not in ['id', 'email', 'created_at', 'updated_at']:
+                setattr(user_catch, key, value)
 
-        User_catch.save()
-        return User_catch.to_dict(), 200
+        user_catch.save()
+        return user_catch.to_dict(), 200
