@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" view for Amenity objects that handles all default RESTFul API actions """
+"""
+    view for State objects that handles all default RESTFul API actions
+"""
 
 from api.v1.views import app_views
 from flask import jsonify, request, abort
@@ -8,76 +10,64 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
-def Amenitys():
-    """ Retrieves the list of all Amenity objects and create a new Amenity"""
+def amenities():
+    """
+        Retrieves the list of all amenities objects and create a new amenities"
+    """
 
-    # retrieves Amenity object
     if request.method == 'GET':
-        Amenitys = storage.all(Amenity)
-        Amenitys_list = []
-        for key, value in Amenitys.items():
-            Amenitys_list.append(value.to_dict())
-        return jsonify(Amenitys_list)
+        amenitiesList = []
+        amenities = storage.all('Amenity')
 
-    # create a Amenity
+        for amenity in amenities.values():
+            amenitiesList.append(amenity.to_dict())
+
+        return jsonify(amenitiesList)
+
     elif request.method == 'POST':
-        # transform the HTTP body request to a dictionary
-        body_request_dict = request.get_json()
+        requestDict = request.get_json()
 
-        # If the HTTP body request is not valid JSON
-        if not body_request_dict:
+        if not requestDict:
             abort(400, 'Not a JSON')
 
-        # If the dictionary doesn’t contain the key name
-        if 'name' not in body_request_dict:
+        if "name" not in requestDict:
             abort(400, 'Missing name')
 
-        # create new object Amenity with body_request_dict
-        new_Amenity = Amenity(**body_request_dict)
-
-        storage.new(new_Amenity)
+        newAmenity = Amenity(**requestDict)
+        storage.new(newAmenity)
         storage.save()
-        return new_Amenity.to_dict(), 201
+
+        return newAmenity.to_dict(), 201
 
 
-@app_views.route('/Amenitys/<Amenity_id>', methods=['GET', 'DELETE', 'PUT'],
-                 strict_slashes=False)
-def Amenity_id(Amenity_id):
+@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'])
+def amenities_amenity_id(amenity_id):
     """
-        Retrieves a Amenity object
+        Retrieves a amenities object
     """
-    Amenity_catch = storage.get(Amenity, Amenity_id)
+    amenity = storage.get("Amenity", amenity_id)
 
-    # If the Amenity_id is not linked to any Amenity object, raise a 404 error
-    if Amenity_catch is None:
+    if amenity is None:
         abort(404)
 
-    # Retrieves a Amenity object
     if request.method == 'GET':
-        return Amenity_catch.to_dict()
+        return amenity.to_dict()
 
-    # Deletes a Amenity object
     if request.method == 'DELETE':
-        empty_dict = {}
-        storage.delete(Amenity_catch)
+        storage.delete(amenity)
         storage.save()
-        return empty_dict, 200
+        return {}, 200
 
-    # update a Amenity object
     if request.method == 'PUT':
-        # transform the HTTP body request to a dictionary
-        body_request_dict = request.get_json()
+        requestDict = request.get_json()
 
-        # If the HTTP body request is not valid JSON
-        if not body_request_dict:
-            abort(400, 'Not a JSON')
+        if not requestDict:
+            return 'Not a JSON', 400
 
-        # Update the Amenity object with all key-value pairs of the dictionary
-        # Ignore keys: id, created_at and updated_at
+        ignoredList = ["id", "created_at", "updated_at"]
+        for key, value in requestDict.items():
+            if key not in ignoredList:
+                setattr(amenity, key, value)
 
-        for key, value in body_request_dict.items():
-            if key not in ['id', 'created_at', 'updated_at']:
-                setattr(Amenity_catch, key, value)
-
-        Amenity_catch.save()
-        return Amenity_catch.to_dict(), 200
+        amenity.save()
+        return amenity.to_dict(), 200
