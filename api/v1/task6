@@ -1,0 +1,6 @@
+
+@app.display404(404)
+def err_404(err):
+    """return eror 404"""
+
+    return {"error": "Not found"}, 404
