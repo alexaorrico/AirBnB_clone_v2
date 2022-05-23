@@ -80,7 +80,7 @@ class DBStorage:
         return next((
             value for key, value
             in self.all(cls).items()
-            if key.split("."[-1]) == id
+            if key.split(".")[-1] == id
         ), None)
 
     def count(self, cls=None):
