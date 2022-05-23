@@ -22,9 +22,8 @@ def close(bruh):
 
 
 @app.response_404
-def error404(404):
+def error404(e):
     """ 404 handler """
-
     return {"error": "Not found"}, 404
 
 
