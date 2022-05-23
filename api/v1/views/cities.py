@@ -1,49 +1,68 @@
 #!/usr/bin/python3
-"""City api"""
-from flask import request, jsonify
+"""Module for City api"""
 from api.v1.views import app_views
-from models.city import City
-from api.v1.views.cosasc import do
+from flask import jsonify, make_response, abort, request
 from models import storage
+from models.city import City
 
 
-@app_views.route("/states/<id>/cities", methods=["GET", "POST"])
-def states_id_cities(id):
-    """Get or create method"""
-    city = [c for c in storage.all("State").values() if c.id == id]
+@app_views.route("/states/<state_id>/cities", methods=["GET"])
+def get_cities(state_id):
+    """GET /state api route"""
+    state = storage.get("State", state_id)
+    if not state:
+        return make_response(jsonify({"error": "Not found"}), 404)
+    return jsonify([c.to_dict() for c in state.cities])
+
+
+@app_views.route("/cities/<city_id>", methods=["GET"])
+def get_city(city_id):
+    """GET /city api route"""
+    city = storage.get("City", city_id)
     if not city:
-        return {"error": "Not found"}, 404
-    if request.method == "GET":
-        return (jsonify([
-            s.to_dict() for s
-            in storage.all("City").values()
-            if s.state_id == id
-        ]), 200)
-    elif request.method == "POST":
-        try:
-            data = request.get_json()
-            if "name" not in data:
-                return "Missing name", 400
-        except:
-            return "Not a JSON", 400
-        found = False
-        for state in storage.all("State").values():
-            if state.id == id:
-                found = True
-                break
-        if not found:
-            return {"error": "Not found"}, 404
-
-        new = City()
-        for key in data:
-            setattr(new, key, data[key])
-        setattr(new, "state_id", id)
-        new.save()
-        return new.to_dict(), 201
-    return {"error": "Not found"}, 404
+        return make_response(jsonify({"error": "Not found"}), 404)
+    return jsonify(city.to_dict())
 
 
-@app_views.route("/cities/<id>", methods=["GET", "PUT", "DELETE"])
-def cities_id(id):
-    """Modiffing """
-    return do(City, id)
+@app_views.route("/cities/<city_id>", methods=["DELETE"])
+def delete_city(city_id):
+    """DELETE /city api route"""
+    city = storage.get("City", city_id)
+    if not city:
+        return make_response(jsonify({"error": "Not found"}), 404)
+    storage.delete(city)
+    storage.save()
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route("/states/<state_id>/cities", methods=["POST"])
+def post_city(state_id):
+    """POST /cities api route"""
+    state = storage.get("State", state_id)
+    if not state:
+        return make_response(jsonify({"error": "Not found"}), 404)
+    data = request.get_json(force=True, silent=True)
+    if not data:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if "name" not in data:
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    data['state_id'] = state_id
+    c = City(**data)
+    c.save()
+    return make_response(jsonify(c.to_dict()), 201)
+
+
+@app_views.route("/cities/<city_id>", methods=["PUT"])
+def put_city(city_id):
+    """PUT /cities api route"""
+    city = storage.get("City", city_id)
+    if not city:
+        return make_response(jsonify({"error": "Not found"}), 404)
+    data = request.get_json(force=True, silent=True)
+    if not data:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    for key, value in data.items():
+        if key not in ["id", "created_at", "updated_at"]:
+            setattr(city, key, value)
+    city.save()
+    return make_response(jsonify(city.to_dict()), 200)
