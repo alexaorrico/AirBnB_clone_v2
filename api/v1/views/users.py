@@ -10,19 +10,19 @@ from models.user import User
 
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
-def amenities():
+def User():
     """
-        Retrieves the list of all amenities objects and create a new amenities"
+        Retrieves the list of all User objects and create a new User"
     """
 
     if request.method == 'GET':
-        amenitiesList = []
-        amenities = storage.all(User)
+        UserList = []
+        User = storage.all(User)
 
-        for User in amenities.values():
-            amenitiesList.append(User.to_dict())
+        for User in User.values():
+            UserList.append(User.to_dict())
 
-        return jsonify(amenitiesList)
+        return jsonify(UserList)
 
     elif request.method == 'POST':
         body_request_dict = request.get_json()
@@ -40,10 +40,10 @@ def amenities():
         return newUser.to_dict(), 201
 
 
-@app_views.route('/amenities/<User_id>', methods=['GET', 'DELETE', 'PUT'])
-def amenities_User_id(User_id):
+@app_views.route('/User/<User_id>', methods=['GET', 'DELETE', 'PUT'])
+def User_User_id(User_id):
     """
-        Retrieves a amenities object
+        Retrieves a User object
     """
     User = storage.get(User, User_id)
 
