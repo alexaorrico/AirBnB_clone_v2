@@ -154,9 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Forked from: github.com/alexaorrico
-Guzman Caraballo. https://github.com/asadoconfritas
-Eric Altez. https://github.com/EricAltez
+* Forked from: github.com/alexaorrico
+* Guzman Caraballo. https://github.com/asadoconfritas
+* Eric Altez. https://github.com/EricAltez
 
 ## License
 Public Domain. No copy write protection. 
