@@ -89,6 +89,7 @@ class TestFileStorage(unittest.TestCase):
 
 
 class TestDBStorage(unittest.TestCase):
+    """Test the DB storage"""
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_get(self):
         """Test that checks if get methods works"""
