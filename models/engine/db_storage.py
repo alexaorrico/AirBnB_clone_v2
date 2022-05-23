@@ -77,7 +77,8 @@ class DBStorage:
 
     def get(self, cls, id):
         """
-            retrieve one object:
+        Get an instance of a specific class (cls) and id and
+        return the instance
         """
         if cls is None or id is None:
             return (None)
@@ -92,6 +93,6 @@ class DBStorage:
 
     def count(self, cls=None):
         """
-            counts the number of objects in storage
+        Count all object cls in the DB return it
         """
-        return (len(self.all(cls)))
+        return len(self.all(cls))
