@@ -116,7 +116,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        "test that function return "
+        """test that function return"""
         storage = FileStorage()
         FileStorage._FileStorage__objects = {}
         newStateInstance = State()
@@ -131,7 +131,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        "test that fuction return the number of instance"
+        """test that fuction return the number of instance"""
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
