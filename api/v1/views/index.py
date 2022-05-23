@@ -29,5 +29,4 @@ def stats():
             "reviews": storage.count(Review),
             "states": storage.count(State),
             "users": storage.count(User), }
-    x = {k: storage.count(v) for k, v in JSON.items()}
-    return jsonify(x)
+    return JSON
