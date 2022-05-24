@@ -14,7 +14,9 @@ def get_amenity(amenity_id):
     """ Get all or one Amenity object """
     if amenity_id is None:
         all_amenities = storage.all(Amenity)
-        return jsonify([amenity.to_dict() for amenity in all_amenities.values()])
+        return jsonify([
+            amenity.to_dict() for amenity in all_amenities.values()
+            ])
 
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
@@ -48,7 +50,8 @@ def post_amenity():
     return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def put_amenity(amenity_id):
     """ Update a Amenity object """
     amenity = storage.get(Amenity, amenity_id)
