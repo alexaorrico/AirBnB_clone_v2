@@ -26,7 +26,7 @@ def get_place_amenity(place_id):
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_amenity(place_id, amenity_id):
+def delete_place_amenity(place_id, amenity_id):
     """ Delete a Amenity object """
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
@@ -37,7 +37,7 @@ def delete_amenity(place_id, amenity_id):
         if amenity not in place.amenities:
             abort(404)
     else:
-        if amenity.id not in place.amenity_id:
+        if amenity.id not in place.amenity_ids:
             abort(404)
 
     amenity.delete()
@@ -47,7 +47,7 @@ def delete_amenity(place_id, amenity_id):
 
 @app_views.route('places/<place_id>/amenities/<amenity_id>',
                  methods=['POST'], strict_slashes=False)
-def post_amenity(place_id, amenity_id):
+def post_place_amenity(place_id, amenity_id):
     """ Create a new Amenity object """
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
