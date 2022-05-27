@@ -32,7 +32,7 @@ class FileStorage:
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     new_dict[key] = value
             return new_dict
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
@@ -80,6 +80,6 @@ class FileStorage:
     def count(self, cls=None):
         """Return the number of objs in storage matching a giving class."""
         if cls:
-            return len(FileStorage.all(cls))
+            return len(self.all(cls))
         else:
-            return len(FileStorage.all(self))
+            return len(self.all())
