@@ -2,7 +2,6 @@
 """Create an index"""
 from flask import jsonify
 from api.v1.views import app_views
-# app_views.url_map.strict_slashes = False
 
 
 @app_views.route('/status', strict_slashes=False)
@@ -40,3 +39,13 @@ def stats():
         result.update({name: size})
 
     return jsonify(result)
+
+
+@app_views.app_errorhandler(404)  # Because it has the blueprint.
+def nop(error):
+    """
+    ----------------
+    Return a 404 msg
+    ----------------
+    """
+    return jsonify({'error': 'Not found'})
