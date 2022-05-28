@@ -15,6 +15,7 @@ def aux_func(cls, met, id=None):
     Return the jsonify obj
     ----------------------
     """
+    objs = storage.all(cls)
     if met == "GET":
         if id:
             obj = storage.get(cls, id)
@@ -24,7 +25,6 @@ def aux_func(cls, met, id=None):
                 abort(404)
         else:
             result = []
-            objs = storage.all(cls)
             for obj in objs.values():
                 result.append(obj.to_dict())
             return jsonify(result)
