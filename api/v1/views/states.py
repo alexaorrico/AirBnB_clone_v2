@@ -11,6 +11,8 @@ from flask import jsonify, request, abort
 from api.v1.views import app_views
 
 methods = ["GET", "DELETE", "POST", "PUT"]
+
+
 @app_views.route("/states", methods=methods)
 @app_views.route("/states/<id>", methods=methods)
 def states(id=None):

@@ -12,6 +12,8 @@ from api.v1.views import app_views
 from api.v1.views.aux_func import aux_func
 
 methods = ["GET", "DELETE", "POST", "PUT"]
+
+
 @app_views.route("/cities/<city_id>", methods=methods)
 def cities_id(city_id):
     """
