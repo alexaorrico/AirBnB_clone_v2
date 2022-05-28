@@ -154,6 +154,12 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time.
 
 ## Authors
+<<<<<<< HEAD
+=======
+
+Daniel Ruiz - [Github](https://github.com/ruizdani301) / [Twitter](https://twitter.com/ruizdani301)
+Jhon pulido lasso - [Github](https://github.com/jhonpulido1990) / [Twitter](https://twitter.com/pulidolasso)
+>>>>>>> 7cd1b3752309f8a45b256928337f99cf087b2d51
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Jhon Jairo Pulido -  [Github](https://github.com/jhonpulido1990) / [Twitter](https://twitter.com/pulidolasso)
