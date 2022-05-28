@@ -8,7 +8,6 @@ New view for Amenities
 
 from flask import jsonify, request, abort
 from api.v1.views import app_views
-from api.v1.views.aux_func import aux_func
 
 methods = ["GET", "DELETE", "POST", "PUT"]
 
@@ -23,6 +22,7 @@ def amenities(amenity_id=None):
     """
     from models.amenity import Amenity
     from models import storage
+    from api.v1.views.aux_func import aux_func
 
     amenities = storage.all(Amenity)
     met = request.method

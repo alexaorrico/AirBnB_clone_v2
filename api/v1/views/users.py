@@ -12,6 +12,8 @@ from api.v1.views.aux_func import aux_func
 
 
 methods = ["GET", "DELETE", "POST", "PUT"]
+
+
 @app_views.route("/users", methods=methods)
 @app_views.route("/users/<user_id>", methods=methods)
 def users(user_id=None):
