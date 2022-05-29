@@ -18,18 +18,18 @@ def states():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def state_id(state_id):
     """ Retrieves a State object """
-    states = storage.get('State', state_id)
-    if not states:
+    state = storage.get('State', state_id)
+    if not state:
         abort(404)
-    return jsonify(states.to_dict())
+    return jsonify(state.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def state_delete(state_id):
     """ Deletes a State object """
-    states = storage.get('State', state_id)
-    if not states:
+    state = storage.get('State', state_id)
+    if not state:
         abort(404)
     states.delete()
     storage.save()
@@ -53,14 +53,14 @@ def state_post():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def state_id_put(state_id):
     """ Updates a State object """
-    states = storage.get('State', state_id)
-    if not states:
+    state = storage.get('State', state_id)
+    if not state:
         abort(404)
     request = request.get_json()
     if not request:
         abort(400, 'Not a JSON')
     for key, value in request.items():
         if key != 'id' and key != 'created_at' and key != 'updated_at':
-            setattr(states, key, value)
+            setattr(state, key, value)
     storage.save()
-    return make_response(jsonify(states.to_dict()), 200)
+    return make_response(jsonify(state.to_dict()), 200)
