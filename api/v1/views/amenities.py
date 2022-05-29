@@ -10,7 +10,8 @@ from models.amenity import Amenity
 
 
 @app_views.route("/amenities", methods=['GET'], strict_slashes=False)
-@app_views.route("/amenities/<amenity_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=['GET'],
+                 strict_slashes=False)
 def amenity_No(amenity_id=None):
     """ Retrieves the list of all Amenity objects """
     lista = []
