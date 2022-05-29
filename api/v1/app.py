@@ -19,7 +19,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def call_storage_close(exception:None):
+def call_storage_close(exception):
     """
     Close the current SQLAlchemy Session
     """
@@ -33,7 +33,8 @@ def errot_notfound(message):
     """
     return make_response(jsonify({"error": "Not found"}), 404)
 
+
 if __name__ == '__main__':
-    app.run(port= port,
+    app.run(port=port,
             host=host,
             threaded=True)
