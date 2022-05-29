@@ -7,27 +7,27 @@ from os import getenv
 
 
 app = Flask(__name__)
+
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_db(exception=None):
+def teardown_db(exception):
     """
-    teardown_appcontext closes the app
+    teardown_appcontext closes the Session Object
     """
     storage.close()
 
 
 @app.errorhandler(404)
-def errot_notfound(message):
+def not_found_error(message):
     """
     404 error
     """
-    respuesta = jsonify({"error": "Not found"})
-    respuesta.status_code = 404
-    return respuesta
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
     app.run(host=getenv("HBNB_API_HOST"),
+            port=getenv("HBNB_API_PORT"),
             threaded=True)
