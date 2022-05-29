@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Flask, jsonify
+from flask import Flask,jsonify,Blueprint
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -32,6 +32,6 @@ def not_found_error(message):
 
 if __name__ == '__main__':
 
-    app.run(host=getenv("HBNB_API_HOST"),
-            port=getenv("HBNB_API_PORT"),
+    app.run(host=host,
+            port=port,
             threaded=True)
