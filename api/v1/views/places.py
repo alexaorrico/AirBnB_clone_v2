@@ -34,7 +34,7 @@ def place_abor2(place_id=None):
     if place is None:
         abort(404)
     else:
-        return jsonify(place)
+        return jsonify(place.to_dict())
 
 
 @app_views.route("/places/<place_id>", methods=['DELETE'],
