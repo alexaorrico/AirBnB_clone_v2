@@ -3,6 +3,7 @@
     default RESTFul API actions
 """
 
+
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, abort, request
 from models.user import User
