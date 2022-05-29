@@ -12,7 +12,7 @@ from os import getenv
 app = Flask(__name__)
 
 app.url_map.strict_slashes = False
-port = getenv(int("HBNB_API_PORT"), 5000)
+port = getenv("HBNB_API_PORT", 5000)
 host = getenv("HBNB_API_HOST", '0.0.0.0')
 
 app.register_blueprint(app_views)
