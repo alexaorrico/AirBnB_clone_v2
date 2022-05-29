@@ -11,7 +11,7 @@ from os import getenv
 
 app = Flask(__name__)
 
-app.url_map.strict_slashes = False
+# app.url_map.strict_slashes = False
 port = getenv("HBNB_API_PORT", 5000)
 host = getenv("HBNB_API_HOST", '0.0.0.0')
 
@@ -19,7 +19,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def call_storage_close(exception):
+def close_session(exception):
     """
     Close the current SQLAlchemy Session
     """
@@ -27,9 +27,9 @@ def call_storage_close(exception):
 
 
 @app.errorhandler(404)
-def errot_notfound(message):
+def not_found_err_handler(err):
     """
-    Handles 404 status code
+    Handles 404  page not found error
     """
     return make_response(jsonify({"error": "Not found"}), 404)
 
