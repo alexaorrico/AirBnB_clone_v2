@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Module: Task 4. Status of your API
-returns the status of your API
+return the status of your API
 """
 
 from flask import Flask, jsonify
@@ -31,7 +31,7 @@ def errot_notfound(message):
     """
     Handles 404 status code
     """
-    return jsonify({"error": "Not found"}), 404
+    return jsonify({"error": "Not found"}).status_code(404)
 
 if __name__ == '__main__':
     app.run(port= port,
