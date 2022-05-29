@@ -7,15 +7,19 @@ from flask import jsonify
 from models import storage
 
 
-@app_views.route("/status", methods=['GET'], strict_slashes=False)
+@app_views.route("/status", strict_slashes=False)
 def status_route():
-    """returns a JSON: "status": "OK" """
+    """
+    Returns a JSON: "status": "OK"
+    """
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def gstats():
-    """Gets stats for models  """
+@app_views.route('/stats', strict_slashes=False)
+def stats():
+    """
+    Retrieves the number of each objects by type
+    """
     dict_stats = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),

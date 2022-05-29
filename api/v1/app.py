@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-starts a Flask web application:
-web application must be listening on 0.0.0.0, port 5000
+Module: Task 4. Status of your API
+returns the status of your API
 """
 
 from flask import Flask, jsonify
@@ -10,23 +10,30 @@ from api.v1.views import app_views
 from os import getenv
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
+
+# app.url_map.strict_slashes = False
+port = getenv("HBNB_API_PORT")
+host = getenv("HBNB_API_HOST")
+
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_db(exception=None):
-    """closes or otherwise deallocates the resource"""
+def call_storage_close(exception:None):
+    """
+    Close the current SQLAlchemy Session
+    """
     storage.close()
 
 
 @app.errorhandler(404)
 def errot_notfound(message):
-    """ handler for 404 errors """
-    respuesta = jsonify({"error": "Not found"})
-    respuesta.status_code = 404
-    return respuesta
+    """
+    Handles 404 status code
+    """
+    return jsonify({"error": "Not found"}), 404
 
 if __name__ == '__main__':
-    app.run(port=int(getenv("HBNB_API_PORT")),
-            host=getenv("HBNB_API_HOST"), threaded=True)
+    app.run(port= port,
+            host=host,
+            threaded=True)
