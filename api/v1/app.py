@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module: Task 4. Status of your API
+Module: Status of your API, stats, and 404 err handler
 return the status of your API
 """
 
@@ -11,7 +11,7 @@ from os import getenv
 
 app = Flask(__name__)
 
-# app.url_map.strict_slashes = False
+# sets default port and host
 port = getenv("HBNB_API_PORT", 5000)
 host = getenv("HBNB_API_HOST", '0.0.0.0')
 
@@ -31,6 +31,7 @@ def not_found_err_handler(err):
     """
     Handles 404  page not found error
     """
+    # returns the err message and response status code
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
