@@ -3,7 +3,6 @@
     default RESTFul API actions
 """
 
-import json
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, abort, request
 from models.user import User
@@ -64,6 +63,9 @@ def post_place(city_id):
         return jsonify({'error': "Missing user_id"}), 400
     if "name" not in json_data.keys():
         return jsonify({'error': "Missing name"}), 400
+    user = storage.get("User", json_data['user_id'])
+    if user is None:
+        abort(404)
     json_data['city_id'] = city_id
     place = Place(**json_data)
     storage.save()
