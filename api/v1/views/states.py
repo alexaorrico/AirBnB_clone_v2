@@ -5,8 +5,9 @@
 
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, abort, request
+from models import storage
 from models.state import State
-from models.__init__ import storage
+
 
 
 @app_views.route("/states", methods=['GET'], strict_slashes=False)
@@ -17,7 +18,7 @@ def state_No(state_id=None):
     if state_id is None:
         for value in storage.all("State").values():
             lista.append(value.to_dict())
-        return jsonify(lista)
+        return jsonify(lista), 200
     else:
         state = storage.get("State", state_id)
         if state is None:
