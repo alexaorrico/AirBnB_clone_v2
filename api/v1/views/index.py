@@ -12,4 +12,4 @@ def status_route():
     """
     returns a JSON: "status": "OK"
     """
-    return jsonify({"status": "OK"})
+    return jsonify({"status": "OK"}), 200
