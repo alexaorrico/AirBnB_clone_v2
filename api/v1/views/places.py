@@ -51,7 +51,7 @@ def place_del(place_id=None):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def post_place(city_id):
+def post_place(city_id=None):
     """ post method place, You must use request.get_json from Flask """
     city = storage.get('City', city_id)
     if city is None:
