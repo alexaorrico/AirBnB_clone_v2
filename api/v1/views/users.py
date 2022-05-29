@@ -3,11 +3,11 @@
     default RESTFul API actions
 """
 
-import json
+
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, abort, request
 from models.user import User
-from models.__init__ import storage
+from models import storage
 
 
 @app_views.route("/users/<user_id>", methods=['GET'],
