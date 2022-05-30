@@ -3,6 +3,8 @@
 from flask import jsonify, abort, make_response, request
 from api.v1.views import app_views
 from models.place import Place
+from models.city import City
+from models.user import User
 from models import storage
 
 
@@ -10,7 +12,7 @@ from models import storage
                  strict_slashes=False)
 def list_places(city_id):
     """ Retrieves the list of all Place objects of a City """
-    city = storage.get('City', city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     return jsonify([place.to_dict() for place in city.places])
@@ -19,7 +21,7 @@ def list_places(city_id):
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def place(place_id):
     """ Retrieves a Place object """
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     return jsonify(place.to_dict())
@@ -29,7 +31,7 @@ def place(place_id):
                  strict_slashes=False)
 def place_delete(place_id):
     """ Deletes a Place object """
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     place.delete()
@@ -41,7 +43,7 @@ def place_delete(place_id):
                  strict_slashes=False)
 def new_place(city_id):
     """ Creates a new Place """
-    city = storage.get('City', city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     new_place = request.get_json()
@@ -49,7 +51,7 @@ def new_place(city_id):
         abort(400, 'Not a JSON')
     if 'user_id' not in new_place:
         abort(400, 'Missing user_id')
-    if not storage.get('User', new_place['user_id']):
+    if not storage.get(User, new_place['user_id']):
         abort(404)
     if 'name' not in new_place:
         abort(400, 'Missing name')
@@ -63,7 +65,7 @@ def new_place(city_id):
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def place_id_put(place_id):
     """ Updates a Place object """
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     request_json = request.get_json()

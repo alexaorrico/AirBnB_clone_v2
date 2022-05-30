@@ -17,7 +17,7 @@ def amenities():
                  strict_slashes=False)
 def amenity_id(amenity_id):
     """ Retrieves a Amenity object """
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
@@ -27,7 +27,7 @@ def amenity_id(amenity_id):
                  strict_slashes=False)
 def delete_amenity(amenity_id):
     """ Deletes a Amenity object """
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     amenity.delete()
@@ -53,11 +53,11 @@ def create_amenity():
                  strict_slashes=False)
 def put_amenity(amenity_id):
     """ Updates a Amenity object """
-    amenity = storage.get('Amenity', amenity_id)
-    if not amenity:
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
     request_json = request.get_json()
-    if not request_json:
+    if request_json is None:
         abort(400, "Not a JSON")
     for key, value in request_json.items():
         if key != 'id' and key != 'created_at' and key != 'updated_at':
