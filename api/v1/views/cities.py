@@ -76,6 +76,7 @@ def cities_by_state(state_id=None):
                                                   'application/json'}
         else:
             new_city = City(**city_data)
+            new_city.state_id = state_id
             # No sabemos si hay que guardar
             new_city.save()
             return jsonify(new_city.to_dict()), 201, {'Content-Type':
