@@ -14,7 +14,7 @@ from api.v1.views.aux_func import aux_func
 
 methods = ["GET", "DELETE", "POST", "PUT"]
 @app_views.route("/reviews/<review_id>", methods=methods)
-def review_id(review_id):
+def review_id(review_id=None):
     """
     -----------------
     Route for reviews
@@ -24,6 +24,7 @@ def review_id(review_id):
     met = request.method
     if met in ["GET", "DELETE"]:
         res = aux_func(Review, met, review_id)
+        return res
     elif met == "PUT":
         if review_id:
             key = "Review.{}".format(review_id)
@@ -44,7 +45,8 @@ def review_id(review_id):
                 except Exception as err:
                     return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}
-    return res
+    else:
+        abort(404)
 
 
 @app_views.route("/places/<place_id>/reviews", methods=methods)
@@ -62,24 +64,25 @@ def place_reviews(place_id=None):
         else:
             abort(404)
     elif request.method == 'POST':
-        if not place_obj:
-            abort(404)
         data_review = request.get_json()
         if not data_review:
             return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
+        elif not place_obj:
+            abort(404)
         elif "user_id" not in data_review.keys():
             return jsonify("Missing user_id"), 400, {'Content-Type':
                                                      'application/json'}
+        user = storage.get(User, data_review["user_id"])
+        if not user:
+            abort(404)
         elif "text" not in data_review.keys():
             return jsonify("Missing text"), 400, {'Content-Type':
                                                   'application/json'}
-        elif storage.get(User, request.get_json()['user_id']) and place_obj:
+        else:
             new_review = Review(**data_review)
             new_review.place_id = place_id
             # No sabemos si hay que guardar
             new_review.save()
             return jsonify(new_review.to_dict()), 201, {'Content-Type':
                                                         'application/json'}
-        else:
-            abort(404)
