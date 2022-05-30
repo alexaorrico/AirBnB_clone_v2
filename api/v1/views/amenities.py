@@ -8,7 +8,7 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route("/amenities/", methods=['GET'], strict_slashes=False)
+@app_views.route("/amenities/", strict_slashes=False)
 def get_amenities():
     """ Retrieves the list of all Amenity objects """
     amenities_list = []
@@ -17,13 +17,13 @@ def get_amenities():
     return jsonify(amenities_list)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['GET'],
+@app_views.route("/amenities/<amenity_id>",
                  strict_slashes=False)
 def get_amenity(amenity_id):
     """ Retrieves a Amenity object """
-    estado = storage.get('Amenity', amenity_id)
-    if estado:
-        return jsonify(estado.to_dict())
+    _status = storage.get('Amenity', amenity_id)
+    if _status:
+        return jsonify(_status.to_dict())
     else:
         abort(404)
 
@@ -32,9 +32,9 @@ def get_amenity(amenity_id):
                  strict_slashes=False)
 def delete_amenity(amenity_id):
     """ Delete a Amenity object """
-    estado = storage.get('Amenity', amenity_id)
-    if estado:
-        storage.delete(estado)
+    _status = storage.get('Amenity', amenity_id)
+    if _status:
+        storage.delete(_status)
         storage.save()
         return jsonify({})
     else:
@@ -48,13 +48,13 @@ def create_amenity():
         abort(400, "Not a JSON")
     if 'name' not in request.json:
         abort(400, "Missing name")
-    datos = request.get_json()
-    estado = Amenity(**datos)
-    storage.new(estado)
+    _data = request.get_json()
+    _status = Amenity(**_data)
+    storage.new(_status)
     storage.save()
-    respuesta = jsonify(estado.to_dict())
-    respuesta.status_code = 201
-    return respuesta
+    _response = jsonify(_status.to_dict())
+    _response.status_code = 201
+    return _response
 
 
 @app_views.route("/amenities/<amenity_id>", methods=['PUT'],
@@ -63,14 +63,14 @@ def update_amenity(amenity_id):
     """ Delete a Amenity object """
     if not request.is_json:
         abort(400, "Not a JSON")
-    estado = storage.get('Amenity', amenity_id)
-    if estado:
-        datos = request.get_json()
-        if type(datos) is dict:
-            omitir = ['id', 'created_at', 'updated_at']
-            for name, value in datos.items():
-                if name not in omitir:
-                    setattr(estado, name, value)
+    _status = storage.get('Amenity', amenity_id)
+    if _status:
+        _data = request.get_json()
+        if type(_data) is dict:
+            to_avoid = ['id', 'created_at', 'updated_at']
+            for name, value in _data.items():
+                if name not in to_avoid:
+                    setattr(_status, name, value)
             storage.save()
-            return jsonify(estado.to_dict())
+            return jsonify(_status.to_dict())
     abort(404)
