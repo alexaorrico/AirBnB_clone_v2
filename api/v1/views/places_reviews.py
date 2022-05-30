@@ -3,7 +3,7 @@
     default RESTFul API actions
 """
 
-import json
+
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, abort, request
 from models.review import Review
@@ -30,11 +30,10 @@ def review_abor(place_id=None):
 def review_abor2(review_id=None):
     """ Retrieves the list of all places objects """
     review = storage.get("Review", review_id)
-    lista = []
     if review is None:
         abort(404)
     else:
-        return jsonify(review)
+        return jsonify(review.to_dict())
 
 
 @app_views.route("/reviews/<review_id>", methods=['DELETE'],
@@ -51,7 +50,7 @@ def review_del(review_id=None):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def post_review(place_id):
+def post_review(place_id=None):
     """ post method review, You must use request.get_json from Flask """
     place = storage.get('Place', place_id)
     if place is None:
@@ -63,6 +62,12 @@ def post_review(place_id):
         return jsonify({'error': "Missing user_id"}), 400
     if "text" not in json_data.keys():
         return jsonify({'error': "Missing text"}), 400
+    user = storage.get("User", json_data['user_id'])
+    if user is None:
+        abort(404)
+    place_ver = storage.get("Place", json_data['place_id'])
+    if place_ver is None:
+        abort(404)
     json_data['place_id'] = place_id
     review = Review(**json_data)
     storage.save()
