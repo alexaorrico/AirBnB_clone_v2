@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""reviews.py"""
+"""places_reviews.py"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -14,10 +14,10 @@ from models.place import Place
 def get_reviews(place_id):
     """get reviews for a specified place"""
     place = storage.get("Place", place_id)
-    if place is None:
+    if Place is None:
         abort(404)
     reviews = []
-    for review in place.reviews:
+    for review in Place.reviews:
         reviews.append(review.to_dict())
     return jsonify(reviews)
 
