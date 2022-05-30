@@ -70,18 +70,19 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ A method to retrieve one object """
-        dicti = self.all(cls)
+        """Returns the object based on the class and its
+        ID, or None if not found"""
+        dictt = self.all(cls)
         for key, value in classes.items():
             if cls == value:
                 cls = key
         key = "{}.{}".format(cls, id)
-        if key in dicti:
-            return(dicti[key])
-        else:
-            return(None)
+        if key in dictt:
+            return(dictt[key])
+        return(None)
 
     def count(self, cls=None):
-        """ method to count the number of objects in storage """
-        dicti = self.all(cls)
-        return(len(dicti))
+        """Returns the number of objects in storage
+           matching the given class."""
+        dictt = self.all(cls)
+        return(len(dictt))
