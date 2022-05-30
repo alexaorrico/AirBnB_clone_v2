@@ -47,14 +47,16 @@ def places_city(city_id=None):
                 """
                 return jsonify("Missing user_id"), 400, {'Content-Type':
                                                          'application/json'}
-                user = storage.get(User, place_data["user_id"])
-                if not user:
-                    abort(404)
+            user = storage.get(User, place_data["user_id"])
+            if not user:
+                abort(404)
             if "name" not in place_data.keys():
                 return jsonify("Missing name"), 400, {'Content-Type':
                                                       'application/json'}
             else:
                 new_place = Place(**place_data)
+                new_place.user_id = user.id
+                new_place.city_id = city_id
                 # No sabemos si hay que guardar
                 new_place.save()
                 return jsonify(new_place.to_dict()), 201, {'Content-Type':
