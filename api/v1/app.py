@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Module: Status of your API, stats, and 404 err handler
-return the status of your API
+return the status of API
 """
 
 from flask import Flask, jsonify, make_response
@@ -21,6 +21,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def close_session(exception):
     """
+    closes or otherwise deallocates the resource if it exists,
     Close the current SQLAlchemy Session
     """
     storage.close()
@@ -29,7 +30,8 @@ def close_session(exception):
 @app.errorhandler(404)
 def not_found_err_handler(err):
     """
-    Handles 404  page not found error
+    error handler for 404 error
+    Handles 404: not found error
     """
     # returns the err message and response status code
     return make_response(jsonify({"error": "Not found"}), 404)
