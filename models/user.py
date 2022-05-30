@@ -30,7 +30,7 @@ class User(BaseModel, Base):
         super().__init__(*args, **kwargs)
 
     def __setattr__(self, name, value):
-        """ Comments """
-        if name == 'Password':
+        """md5 encryption"""
+        if name == "password":
             value = md5(value.encode()).hexdigest()
         super().__setattr__(name, value)
