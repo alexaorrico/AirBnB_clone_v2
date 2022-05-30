@@ -79,7 +79,4 @@ class FileStorage:
 
     def count(self, cls=None):
         """Return the number of objs in storage matching a giving class."""
-        if cls:
-            return len(self.all(cls))
-        else:
-            return len(self.all())
+        return len(self.all(cls))

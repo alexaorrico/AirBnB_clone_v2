@@ -95,10 +95,4 @@ class DBStorage:
         count the number of objects in storage
         --------------------------------------
         """
-        if cls is not None:
-            all_objects = self.all(cls)
-        else:
-            all_objects = self.all()
-
-        size = len(all_objects)
-        return size
+        return len(self.all(cls))
