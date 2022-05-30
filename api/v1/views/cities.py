@@ -60,16 +60,17 @@ def cities_by_state(state_id=None):
     if request.method == 'GET':
         if state_obj:
             cities = [city.to_dict() for city in state_obj.cities]
-            return jsonify(cities)
+            return jsonify(cities), 200, {'Content-Type':
+                                          'application/json'}
         else:
             abort(404)
     elif request.method == 'POST':
-        if not state_obj:
-            abort(404)
         city_data = request.get_json()
         if not city_data:
             return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
+        elif not state_obj:
+            abort(404)
         elif "name" not in city_data.keys():
             return jsonify("Missing name"), 400, {'Content-Type':
                                                   'application/json'}
