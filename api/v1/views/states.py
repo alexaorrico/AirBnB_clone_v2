@@ -30,16 +30,16 @@ def states(id=None):
         try:
             data = request.get_json()
             if "name" not in data.keys():
-                return jsonify("Missing name"), 400, {'ContentType':
+                return jsonify("Missing name"), 400, {'Content-Type':
                                                       'application/json'}
             else:
                 new_state = State(**data)
                 # No sabemos si hay que guardar
                 new_state.save()
-                return jsonify(new_state.to_dict()), 201, {'ContentType':
+                return jsonify(new_state.to_dict()), 201, {'Content-Type':
                                                            'application/json'}
         except Exception as err:
-            return jsonify("Not a JSON"), 400, {'ContentType':
+            return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
     elif met == "PUT":
         if id:
@@ -55,9 +55,9 @@ def states(id=None):
                             setattr(state, attr, value)
                     # No sabemos si hay que guardar
                     storage.save()
-                    return jsonify(state.to_dict()), 201, {'ContentType':
+                    return jsonify(state.to_dict()), 200, {'Content-Type':
                                                            'application/json'}
                 except Exception as err:
-                    return jsonify("Not a JSON"), 400, {'ContentType':
+                    return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}
     return res

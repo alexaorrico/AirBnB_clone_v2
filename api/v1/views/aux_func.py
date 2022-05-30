@@ -35,5 +35,5 @@ def aux_func(cls, met, id=None):
                 objs[key].delete()
                 # No sabemos si hay que guardar
                 storage.save()
-                return jsonify({}), 200, {'ContentType': 'application/json'}
+                return jsonify({}), 200, {'Content-Type': 'application/json'}
         abort(404)
