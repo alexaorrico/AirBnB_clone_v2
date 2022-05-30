@@ -98,7 +98,7 @@ def places_by_id(place_id=None):
                     # No sabemos si hay que guardar
 
                     storage.save()
-                    return jsonify(place.to_dict()), 201, {'ContentType':
+                    return jsonify(place.to_dict()), 200, {'ContentType':
                                                            'application/json'}
                 except Exception as err:
                     return jsonify("Not a JSON"), 400, {'ContentType':

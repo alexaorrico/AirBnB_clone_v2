@@ -59,7 +59,7 @@ def amenities(amenity_id=None):
                             setattr(amenity, attr, value)
                     # No sabemos si hay que guardar
                     storage.save()
-                    return jsonify(amenity.to_dict()), 201, {
+                    return jsonify(amenity.to_dict()), 200, {
                         'ContentType': 'application/json'}
                 except Exception as err:
                     return jsonify("Not a JSON"), 400, {'ContentType':

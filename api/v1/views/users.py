@@ -60,7 +60,7 @@ def users(user_id=None):
                             setattr(user, attr, value)
                     # No sabemos si hay que guardar
                     storage.save()
-                    return jsonify(user.to_dict()), 201, {'ContentType':
+                    return jsonify(user.to_dict()), 200, {'ContentType':
                                                           'application/json'}
                 except Exception as err:
                     return jsonify("Not a JSON"), 400, {'ContentType':

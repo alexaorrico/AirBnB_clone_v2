@@ -39,7 +39,7 @@ def review_id(review_id):
                             setattr(review, attr, value)
                     # No sabemos si hay que guardar
                     storage.save()
-                    return jsonify(review.to_dict()), 201, {'ContentType':
+                    return jsonify(review.to_dict()), 200, {'ContentType':
                                                             'application/json'}
                 except Exception as err:
                     return jsonify("Not a JSON"), 400, {'ContentType':
