@@ -39,10 +39,10 @@ def review_id(review_id):
                             setattr(review, attr, value)
                     # No sabemos si hay que guardar
                     storage.save()
-                    return jsonify(review.to_dict()), 200, {'ContentType':
+                    return jsonify(review.to_dict()), 200, {'Content-Type':
                                                             'application/json'}
                 except Exception as err:
-                    return jsonify("Not a JSON"), 400, {'ContentType':
+                    return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}
     return res
 
@@ -66,20 +66,20 @@ def place_reviews(place_id=None):
             abort(404)
         data_review = request.get_json()
         if not data_review:
-            return jsonify("Not a JSON"), 400, {'ContentType':
+            return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
         elif "user_id" not in data_review.keys():
-            return jsonify("Missing user_id"), 400, {'ContentType':
+            return jsonify("Missing user_id"), 400, {'Content-Type':
                                                      'application/json'}
         elif "text" not in data_review.keys():
-            return jsonify("Missing text"), 400, {'ContentType':
+            return jsonify("Missing text"), 400, {'Content-Type':
                                                   'application/json'}
         elif storage.get(User, request.get_json()['user_id']) and place_obj:
             new_review = Review(**data_review)
             new_review.place_id = place_id
             # No sabemos si hay que guardar
             new_review.save()
-            return jsonify(new_review.to_dict()), 201, {'ContentType':
+            return jsonify(new_review.to_dict()), 201, {'Content-Type':
                                                         'application/json'}
         else:
             abort(404)

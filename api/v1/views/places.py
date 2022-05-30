@@ -45,22 +45,22 @@ def places_city(city_id=None):
                 Verify that in data user_id exist and that is correct
                 -----------------------------------------------------
                 """
-                return jsonify("Missing user_id"), 400, {'ContentType':
+                return jsonify("Missing user_id"), 400, {'Content-Type':
                                                          'application/json'}
                 user = storage.get(User, place_data["user_id"])
                 if not user:
                     abort(404)
             if "name" not in place_data.keys():
-                return jsonify("Missing name"), 400, {'ContentType':
+                return jsonify("Missing name"), 400, {'Content-Type':
                                                       'application/json'}
             else:
                 new_place = Place(**place_data)
                 # No sabemos si hay que guardar
                 new_place.save()
-                return jsonify(new_place.to_dict()), 201, {'ContentType':
+                return jsonify(new_place.to_dict()), 201, {'Content-Type':
                                                            'application/json'}
         except Exception:
-            return jsonify("Not a JSON"), 400, {'ContentType':
+            return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
 
 
@@ -98,10 +98,10 @@ def places_by_id(place_id=None):
                     # No sabemos si hay que guardar
 
                     storage.save()
-                    return jsonify(place.to_dict()), 200, {'ContentType':
+                    return jsonify(place.to_dict()), 200, {'Content-Type':
                                                            'application/json'}
                 except Exception as err:
-                    return jsonify("Not a JSON"), 400, {'ContentType':
+                    return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}
     else:
         abort(404)

@@ -31,19 +31,19 @@ def users(user_id=None):
         try:
             data_user = request.get_json()
             if "email" not in data_user.keys():
-                return jsonify("Missing email"), 400, {'ContentType':
+                return jsonify("Missing email"), 400, {'Content-Type':
                                                        'application/json'}
             elif "password" not in data_user.keys():
-                return jsonify("Missing password"), 400, {'ContentType':
+                return jsonify("Missing password"), 400, {'Content-Type':
                                                           'application/json'}
             else:
                 new_user = User(**data_user)
                 # No sabemos si hay que guardar
                 new_user.save()
-                return jsonify(new_user.to_dict()), 201, {'ContentType':
+                return jsonify(new_user.to_dict()), 201, {'Content-Type':
                                                           'application/json'}
         except Exception as err:
-            return jsonify("Not a JSON"), 400, {'ContentType':
+            return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
     elif request.method == "PUT":
         if user_id:
@@ -60,8 +60,8 @@ def users(user_id=None):
                             setattr(user, attr, value)
                     # No sabemos si hay que guardar
                     storage.save()
-                    return jsonify(user.to_dict()), 200, {'ContentType':
+                    return jsonify(user.to_dict()), 200, {'Content-Type':
                                                           'application/json'}
                 except Exception as err:
-                    return jsonify("Not a JSON"), 400, {'ContentType':
+                    return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}

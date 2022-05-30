@@ -41,10 +41,10 @@ def cities_id(city_id):
                             setattr(city, attr, value)
                     # No sabemos si hay que guardar
                     storage.save()
-                    return jsonify(city.to_dict()), 200, {'ContentType':
+                    return jsonify(city.to_dict()), 200, {'Content-Type':
                                                           'application/json'}
                 except Exception as err:
-                    return jsonify("Not a JSON"), 400, {'ContentType':
+                    return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}
     return res
 
@@ -69,14 +69,14 @@ def cities_by_state(state_id=None):
                 abort(404)
             city_data = request.get_json()
             if "name" not in city_data.keys():
-                return jsonify("Missing name"), 400, {'ContentType':
+                return jsonify("Missing name"), 400, {'Content-Type':
                                                       'application/json'}
             else:
                 new_city = City(**city_data)
                 # No sabemos si hay que guardar
                 new_city.save()
-                return jsonify(new_city.to_dict()), 201, {'ContentType':
+                return jsonify(new_city.to_dict()), 201, {'Content-Type':
                                                           'application/json'}
         except Exception:
-            return jsonify("Not a JSON"), 400, {'ContentType':
+            return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}

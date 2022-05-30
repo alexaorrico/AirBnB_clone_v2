@@ -34,7 +34,7 @@ def amenities(amenity_id=None):
         try:
             data = request.get_json()
             if "name" not in data.keys():
-                return jsonify("Missing name"), 400, {'ContentType':
+                return jsonify("Missing name"), 400, {'Content-Type':
                                                       'application/json'}
             else:
                 new_amenity = Amenity(**data)
@@ -43,7 +43,7 @@ def amenities(amenity_id=None):
                 return jsonify(new_amenity.to_dict()), 201, {
                     'ContentType': 'application/json'}
         except Exception as err:
-            return jsonify("Not a JSON"), 400, {'ContentType':
+            return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
     elif request.method == "PUT":
         if id:
@@ -62,5 +62,5 @@ def amenities(amenity_id=None):
                     return jsonify(amenity.to_dict()), 200, {
                         'ContentType': 'application/json'}
                 except Exception as err:
-                    return jsonify("Not a JSON"), 400, {'ContentType':
+                    return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}
