@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Module: Status of your API, stats, and 404 err handler
-return the status of API
+return the status of API.
 """
 from flask import Flask, jsonify, make_response
 from models import storage
