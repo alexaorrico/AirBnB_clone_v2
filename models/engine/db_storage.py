@@ -76,7 +76,7 @@ class DBStorage:
     def get(self, cls, id):
         """Retrieves one object based in class and id"""
         cls_dict = self.all(cls)
-        for instance in cls_dict:
+        for instance in cls_dict.values():
             if instance.id == id:
                 return instance
         return None
