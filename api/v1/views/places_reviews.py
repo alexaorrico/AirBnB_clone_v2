@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Review view """
-import re
 from flask import jsonify, abort, make_response, request
 from api.v1.views import app_views
 from models.review import Review
