@@ -116,6 +116,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_GET(self):
+        """test request to method get"""
         storage = FileStorage()
         new_obj = State()
         storage.save()
@@ -126,6 +127,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
+        """test request to method count"""
         storage = FileStorage()
         cant = len(storage.all())
         result = storage.count()
