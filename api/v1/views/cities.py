@@ -64,19 +64,18 @@ def cities_by_state(state_id=None):
         else:
             abort(404)
     elif request.method == 'POST':
-        try:
-            if not state_obj:
-                abort(404)
-            city_data = request.get_json()
-            if "name" not in city_data.keys():
-                return jsonify("Missing name"), 400, {'Content-Type':
-                                                      'application/json'}
-            else:
-                new_city = City(**city_data)
-                # No sabemos si hay que guardar
-                new_city.save()
-                return jsonify(new_city.to_dict()), 201, {'Content-Type':
-                                                          'application/json'}
-        except Exception:
+        if not state_obj:
+            abort(404)
+        city_data = request.get_json()
+        if not city_data:
             return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
+        elif "name" not in city_data.keys():
+            return jsonify("Missing name"), 400, {'Content-Type':
+                                                  'application/json'}
+        else:
+            new_city = City(**city_data)
+            # No sabemos si hay que guardar
+            new_city.save()
+            return jsonify(new_city.to_dict()), 201, {'Content-Type':
+                                                      'application/json'}
