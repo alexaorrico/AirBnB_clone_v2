@@ -59,7 +59,8 @@ def user_id_put(user_id):
     if not request_json:
         abort(400, "Not a JSON")
     for key, value in request_json.items():
-        if key != 'id' and key != 'email' and key != 'created_at' and key != 'updated_at':
+        if key != 'id' and key != 'email' and \
+                key != 'created_at' and key != 'updated_at':
             setattr(user, key, value)
     storage.save()
     return make_response(jsonify(user.to_dict()), 200)
