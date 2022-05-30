@@ -57,8 +57,8 @@ def state_id_put(state_id):
     request_json = request.get_json()
     if not request_json:
         abort(400, "Not a JSON")
-    for k, v in request_json.items():
-        if k != 'id' and k != 'created_at' and k != 'updated_at':
-            setattr(state, k, v)
+    for key, value in request_json.items():
+        if key != 'id' and key != 'created_at' and key != 'updated_at':
+            setattr(state, key, value)
     storage.save()
     return make_response(jsonify(state.to_dict()), 200)
