@@ -67,8 +67,6 @@ def post_review(place_id=None):
         abort(404)
     json_data['place_id'] = place_id
     review = Review(**json_data)
-    storage.save()
-    return jsonify(review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
