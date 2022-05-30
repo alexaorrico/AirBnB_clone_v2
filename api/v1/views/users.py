@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""State objects that handles all default RestFul API actions"""
+"""
+Users objects that handles all default RestFul API actions
+"""
 
 from models.base_model import BaseModel
 from api.v1.views import app_views
@@ -8,21 +10,24 @@ from models import storage
 from models.user import User
 
 
-@app_views.route("/users/", methods=['GET'], strict_slashes=False)
+@app_views.route("/users/", strict_slashes=False)
 def get_users():
-    """ Retrieves the list of all State objects """
+    """
+    Retrieves the list of all Users objects
+    """
     users_list = []
     for key, value in storage.all("User").items():
         users_list.append(value.to_dict())
     return jsonify(users_list)
 
 
-@app_views.route("/users/<user_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/users/<user_id>", strict_slashes=False)
 def get_user(user_id):
-    """ Retrieves a State object """
-    estado = storage.get('User', user_id)
-    if estado:
-        return jsonify(estado.to_dict())
+    """
+    Retrieves a User object
+    """
+    if storage.get('User', user_id):
+        return jsonify(storage.get('User', user_id).to_dict())
     else:
         abort(404)
 
@@ -30,10 +35,11 @@ def get_user(user_id):
 @app_views.route("/users/<user_id>", methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
-    """ Delete a State object """
-    estado = storage.get('User', user_id)
-    if estado:
-        storage.delete(estado)
+    """
+    Delete a User object
+    """
+    if storage.get('User', user_id):
+        storage.delete(storage.get('User', user_id))
         storage.save()
         return jsonify({})
     else:
@@ -42,35 +48,38 @@ def delete_user(user_id):
 
 @app_views.route("/users/", methods=['POST'], strict_slashes=False)
 def create_user():
-    """ Creatte a State object """
+    """
+    Create a User object
+    """
     if not request.is_json:
         abort(400, "Not a JSON")
     if 'email' not in request.json:
         abort(400, "Missing email")
     if 'password' not in request.json:
         abort(400, "Missing password")
-    datos = request.get_json()
-    estado = User(**datos)
-    storage.new(estado)
+    _data = request.get_json()
+    _status = User(**_data)
+    storage.new(_status)
     storage.save()
-    respuesta = jsonify(estado.to_dict())
-    respuesta.status_code = 201
-    return respuesta
+    _response = jsonify(_status.to_dict())
+    _response.status_code = 201
+    return _response
 
 
 @app_views.route("/users/<user_id>", methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
-    """ Delete a State object """
+    """
+    Update a User object
+    """
     if not request.is_json:
         abort(400, "Not a JSON")
-    estado = storage.get('User', user_id)
-    if estado:
-        datos = request.get_json()
-        if type(datos) is dict:
+    if storage.get('User', user_id):
+        _data = request.get_json()
+        if type(_data) is dict:
             omitir = ['id', 'email', 'created_at', 'updated_at']
-            for name, value in datos.items():
+            for name, value in _data.items():
                 if name not in omitir:
-                    setattr(estado, name, value)
+                    setattr(storage.get('User', user_id), name, value)
             storage.save()
-            return jsonify(estado.to_dict())
+            return jsonify(storage.get('User', user_id).to_dict())
     abort(404)
