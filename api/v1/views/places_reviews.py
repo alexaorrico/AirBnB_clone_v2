@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, abort, request
 from models.review import Review
 from models.place import Place
-from models.__init__ import storage
+from models import storage
 
 
 @app_views.route("/places/<place_id>/reviews", methods=['GET'],
@@ -64,9 +64,6 @@ def post_review(place_id=None):
         return jsonify({'error': "Missing text"}), 400
     user = storage.get("User", json_data['user_id'])
     if user is None:
-        abort(404)
-    place_ver = storage.get("Place", json_data['place_id'])
-    if place_ver is None:
         abort(404)
     json_data['place_id'] = place_id
     review = Review(**json_data)
