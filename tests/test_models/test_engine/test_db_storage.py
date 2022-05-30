@@ -98,4 +98,6 @@ class TestDBStorage(unittest.TestCase):
         storage = DBStorage()
         cant = len(storage.all())
         result = storage.count()
+        new_obj = State()
         self.assertEquals(cant, result)
+        self.assertIsInstance(type(new_obj), State)
