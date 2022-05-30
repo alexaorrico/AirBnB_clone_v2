@@ -16,11 +16,12 @@ app = Flask(__name__)
 port = getenv("HBNB_API_PORT", 5000)
 host = getenv("HBNB_API_HOST", '0.0.0.0')
 
+# Cross-Origin Resource Sharing
+cors = CORS(app, resources={r'/*': {'origins': host}})
+
 # app_views BluePrint defined in api.v1.views
 app.register_blueprint(app_views)
 
-# Cross-Origin Resource Sharing
-cors = CORS(app, resources={r'/*': {'origins': host}})
 
 @app.teardown_appcontext
 def close_session(exception):
