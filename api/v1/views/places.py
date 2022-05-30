@@ -10,8 +10,7 @@ from models import storage
 from models.place import Place
 
 
-@app_views.route("/cities/<city_id>/places",
-                 strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", strict_slashes=False)
 def get_places(city_id):
     """
     Retrieves the list of all places in a city objects
@@ -37,7 +36,8 @@ def get_place(place_id):
         abort(404)
 
 
-@app_views.route("/places/<place_id>", methods=['DELETE'],
+@app_views.route("/places/<place_id>",
+                 methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
     """
@@ -88,7 +88,8 @@ def update_place(place_id):
     if obj_place:
         _data = request.get_json()
         if type(_data) is dict:
-            ls_to_avoid = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
+            ls_to_avoid = ['id', 'user_id', 'city_id',
+                           'created_at', 'updated_at']
             for name, value in _data.items():
                 if name not in ls_to_avoid:
                     setattr(obj_place, name, value)
