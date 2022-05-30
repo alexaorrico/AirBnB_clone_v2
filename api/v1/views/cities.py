@@ -2,7 +2,7 @@
 """ City view """
 from flask import jsonify, abort, make_response, request
 from api.v1.views import app_views
-from models.state import City
+from models.city import City
 from models import storage
 
 
