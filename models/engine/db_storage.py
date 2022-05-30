@@ -78,6 +78,9 @@ class DBStorage:
     def get(self, cls, id):
         """ A method to retrieve one object """
         dicti = self.all(cls)
+        for key, value in classes.items():
+            if cls == value:
+                cls = key
         key = "{}.{}".format(cls, id)
         if key in dicti:
             return(dicti[key])
