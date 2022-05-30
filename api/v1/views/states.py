@@ -41,7 +41,7 @@ def states(id=None):
         except Exception as err:
             return jsonify("Not a JSON"), 400, {'ContentType':
                                                 'application/json'}
-    elif request.method == "PUT":
+    elif met == "PUT":
         if id:
             key = "State.{}".format(id)
             if key not in states.keys():
