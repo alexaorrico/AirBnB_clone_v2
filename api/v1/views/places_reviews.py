@@ -13,11 +13,11 @@ from models.place import Place
                  strict_slashes=False)
 def get_reviews(place_id):
     """get reviews for a specified place"""
-    place = storage.get("Place", place_id)
-    if place is None:
+    Place = storage.get("Place", place_id)
+    if Place is None:
         abort(404)
     reviews = []
-    for review in place.reviews:
+    for review in Place.reviews:
         reviews.append(review.to_dict())
     return jsonify(reviews)
 
