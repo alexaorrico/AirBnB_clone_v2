@@ -8,6 +8,7 @@ from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 
@@ -15,8 +16,11 @@ app = Flask(__name__)
 port = getenv("HBNB_API_PORT", 5000)
 host = getenv("HBNB_API_HOST", '0.0.0.0')
 
+# app_views BluePrint defined in api.v1.views
 app.register_blueprint(app_views)
 
+# Cross-Origin Resource Sharing
+cors = CORS(app, resources={r'/*': {'origins': host}})
 
 @app.teardown_appcontext
 def close_session(exception):
