@@ -3,7 +3,6 @@
 Module: Status of your API, stats, and 404 err handler
 return the status of API
 """
-
 from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
@@ -25,7 +24,7 @@ app.register_blueprint(app_views)
 def close_session(exception):
     """
     closes or otherwise deallocates the resource if it exists,
-    Close the current SQLAlchemy Session
+    Close the current SQLAlchemy Session.
     """
     storage.close()
 
