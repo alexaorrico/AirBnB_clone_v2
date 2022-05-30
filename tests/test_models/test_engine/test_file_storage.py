@@ -116,35 +116,18 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
-        """ Test get method """
-        class testing():
-            """for testing get"""
-            pass
-
+    def test_count(self):
+        """ Test the count method """
         storage = FileStorage()
-        new_obj = State()
-        new_obj.save()
-        id_obj = new_obj.id
-        get_obj = storage.get(State, id_obj)
-        self.assertEqual(new_obj, get_obj)
-        invalid_get = storage.get(testing, id_obj)
-        self.assertEqual(invalid_get, None)
-        fake_id = "123456789abcdefghijklmnopqrstuvwxyz"
-        not_id_get = storage.get(State, fake_id)
-        self.assertEqual(not_id_get, None)
+        new_dict = storage.all()
+        num_obj = storage.count()
+        self.assertEqual(len(new_dict), num_obj)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count(self):
-        """Test that count properly counts all objects"""
-        storage = FileStorage()
-        new_state = State(name="Ukraine")
-        new_state.save()
-        new_city = City(name="Chernobyl", state_id=new_state.id)
-        new_city.save()
-        all_obj_storage = storage.all()
-        count_all = storage.count()
-        self.assertEqual(count_all, len(all_obj_storage))
-        state_all_obj = storage.all(State)
-        count_all_state = storage.count(State)
-        self.assertEqual(count_all_state, len(state_all_obj))
+    def test_get(self):
+        """Test the get method"""
+        cls = State(name="Chernobyl")
+        storage.new(cls)
+        storage.save()
+        state = storage.get('State', cls.id)
+        self.assertTrue(state)
