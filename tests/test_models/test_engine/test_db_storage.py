@@ -5,8 +5,6 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
-from pyexpat import model
-from unicodedata import name
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
@@ -20,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -89,14 +88,23 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not db testing storage")
-    def test_get(self):
-        """Test that return a request method GET"""
-        user = User(name="User1")
-        user.save()
-        self.assertEqual(len(models.storage.all()), models.storage.count())
+    def test_get_db(self):
+        """ Tests method for obtaining an instance db storage"""
+        dic = {"name": "Cundinamarca"}
+        instance = State(**dic)
+        storage.new(instance)
+        storage.save()
+        get_instance = storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Test that count properly counts all objects"""
-        self.assertEqual(len(models.storage.all()), models.storage.count())
+        """ Tests count method db storage """
+        dic = {"name": "Vecindad"}
+        state = State(**dic)
+        storage.new(state)
+        dic = {"name": "Mexico", "state_id": state.id}
+        city = City(**dic)
+        storage.new(city)
+        storage.save()
+        c = storage.count()
+        self.assertEqual(len(storage.all()), c)
