@@ -88,14 +88,36 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not db testing storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_get(self):
-        """Test that return a request method GET"""
-        # user = User(name="User1")
-        # user.save()
-        # self.assertEqual(len(models.storage.all()), models.storage.count())
+        """Test for checking new methods of get"""
+        class testing():
+            """for testing get"""
+            pass
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+        storage = models.storage
+        new_obj = State(name="NY")
+        new_obj.save()
+        id_obj = new_obj.id
+        get_obj = storage.get(State, id_obj)
+        self.assertEqual(new_obj, get_obj)
+        invalid_get = storage.get(testing, id_obj)
+        self.assertEqual(invalid_get, None)
+        fake_id = "abcdefghijklmnopqrstuvwxyzABCDEF"
+        not_id_get = storage.get(State, fake_id)
+        self.assertEqual(not_id_get, None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_count(self):
-        """Test that count properly counts all objects"""
-        # self.assertEqual(len(models.storage.all()), models.storage.count())
+        """test for new object count"""
+        storage = models.storage
+        new_state = State(name="Ukraine")
+        new_state.save()
+        new_city = City(name="Chernobyl", state_id=new_state.id)
+        new_city.save()
+        all_obj_storage = storage.all()
+        count_all = storage.count()
+        self.assertEqual(count_all, len(all_obj_storage))
+        state_all_obj = storage.all(State)
+        count_all_state = storage.count(State)
+        self.assertEqual(count_all_state, len(state_all_obj))
