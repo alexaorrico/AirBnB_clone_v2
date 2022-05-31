@@ -264,8 +264,8 @@ Public Domain. No copy write protection.
 
 ## Installation :computer:
 	
-- Clone this repository: `git clone "https://github.com/Imanolasolo/AirBnB_clone_v2"`	
-- Access AirBnb directory: `cd AirBnB_clone_v2.`
+- Clone this repository: `git clone "https://github.com/Imanolasolo/AirBnB_clone_v3"`	
+- Access AirBnb directory: `cd AirBnB_clone_v3`
   
 ## Tasks
 + [x] 0\. **Restart from scratch!**
