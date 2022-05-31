@@ -90,7 +90,28 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get properly get objects from class and id"""
+        new_state = State({"name": "MyState"})
+        id = new_state.id
+        get_state = db_storage.get(State, id)
+        self.assertEqual("MyState", get_state.name,
+                         "Not work get method in db storage")
+        obj = db_storage.get("None", id)
+        self.assertEqual(obj, None), "Fail get method in db_storage Not object"
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count properly count all objects from a class"""
+        size_before = db_storage.count(State)
+        size_total_before = db_storage.count()
+        new_state = State({"name": "Antioquia"})
+        size_after = db_storage.count(State)
+        size_total_after = db_storage.count()
+
+        self.assertEqual(size_after, size_before + 1,
+                         "Not work count method in db storage with cls")
+        self.assertEqual(size_total_after, size_total_before + 1,
+                         "Not work count method in db storage all")
+
+        size = db_storage.count("Not a class")
+        self.assertEqual(size, 0,
+                         "Not work count method in db storage not class")
