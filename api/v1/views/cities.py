@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, abort, request
 from models.state import State
 from models.city import City
-from models.__init__ import storage
+from models import storage
 
 
 @app_views.route("/states/<state_id>/cities", methods=['GET'],
