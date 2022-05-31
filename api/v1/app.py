@@ -10,9 +10,17 @@ from flask_cors import CORS
 from flasgger import Swagger
 
 app = Flask(__name__)
+swagger_template = {
+    'swagger': '2.0',
+    'info': {
+        'title': 'HBNB',
+        'description': 'RESTFul API for HBNB',
+        'version': '1.0.0'
+    },
+}
 app.register_blueprint(app_views)
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-Swagger(app)
+swagger = Swagger(app, template=swagger_template)
 
 
 @app.teardown_appcontext
