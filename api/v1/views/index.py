@@ -30,8 +30,9 @@ def stats():
     from models.state import State
     from models.user import User
 
-    classes = {"Amenity": Amenity, "City": City,
-               "Place": Place, "Review": Review, "State": State, "User": User}
+    classes = {"amenities": Amenity, "cities": City,
+               "places": Place, "reviews": Review, "states": State,
+               "users": User}
 
     result = {}
     for name, cls in classes.items():

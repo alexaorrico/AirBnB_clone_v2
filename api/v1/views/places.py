@@ -35,33 +35,34 @@ def places_city(city_id=None):
         else:
             abort(404)
     elif request.method == 'POST':
-        try:
-            if not city:
-                abort(404)
-            place_data = request.get_json()
-            if "user_id" not in place_data.keys():
-                """
-                -----------------------------------------------------
-                Verify that in data user_id exist and that is correct
-                -----------------------------------------------------
-                """
-                return jsonify("Missing user_id"), 400, {'ContentType':
-                                                         'application/json'}
-                user = storage.get(User, place_data["user_id"])
-                if not user:
-                    abort(404)
-            if "name" not in place_data.keys():
-                return jsonify("Missing name"), 400, {'ContentType':
-                                                      'application/json'}
-            else:
-                new_place = Place(**place_data)
-                # No sabemos si hay que guardar
-                new_place.save()
-                return jsonify(new_place.to_dict()), 201, {'ContentType':
-                                                           'application/json'}
-        except Exception:
-            return jsonify("Not a JSON"), 400, {'ContentType':
+        place_data = request.get_json()
+        if not place_data:
+            return jsonify("Not a JSON"), 400, {'Content-Type':
                                                 'application/json'}
+        elif not city:
+            abort(404)
+        if "user_id" not in place_data.keys():
+            """
+            -----------------------------------------------------
+            Verify that in data user_id exist and that is correct
+            -----------------------------------------------------
+            """
+            return jsonify("Missing user_id"), 400, {'Content-Type':
+                                                     'application/json'}
+        user = storage.get(User, place_data["user_id"])
+        if not user:
+            abort(404)
+        elif "name" not in place_data.keys():
+            return jsonify("Missing name"), 400, {'Content-Type':
+                                                  'application/json'}
+        else:
+            new_place = Place(**place_data)
+            # new_place.user_id = user.id
+            new_place.city_id = city_id
+            # No sabemos si hay que guardar
+            new_place.save()
+            return jsonify(new_place.to_dict()), 201, {'Content-Type':
+                                                       'application/json'}
 
 
 @app_views.route("/places/<place_id>", methods=methods)
@@ -98,10 +99,10 @@ def places_by_id(place_id=None):
                     # No sabemos si hay que guardar
 
                     storage.save()
-                    return jsonify(place.to_dict()), 201, {'ContentType':
+                    return jsonify(place.to_dict()), 200, {'Content-Type':
                                                            'application/json'}
                 except Exception as err:
-                    return jsonify("Not a JSON"), 400, {'ContentType':
+                    return jsonify("Not a JSON"), 400, {'Content-Type':
                                                         'application/json'}
     else:
         abort(404)
