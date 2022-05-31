@@ -29,7 +29,6 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
-
     @property
     def password(self):
         return self._password
