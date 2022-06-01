@@ -10,7 +10,63 @@ from models import storage
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def list_cities(state_id):
-    """ Retrieves the list of all City objects of a State """
+    """
+    Retrieves the list of all City objects of a State
+    ---
+    tags:
+      - City
+    parameters:
+      - name: state_id
+        in: path
+        required: true
+    responses:
+      200:
+        description: All cities from a given state
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              __class__:
+                type: string
+              created_at:
+                type: string
+              id:
+                type: string
+              name:
+                type: string
+              state_id:
+                type: string
+              updated_at:
+                type: string
+          example:
+            [
+              {
+                "__class__": "City",
+                "created_at": "2022-05-31T20:42:53.350872",
+                "id": "2805d07b-7c2e-4bb9-ad28-a852f17e52e2",
+                "name": "Miami",
+                "state_id": "aa95665c-6295-4b5a-8d15-96686e9da62e",
+                "updated_at": "2022-05-31T20:42:53.350872"
+              },
+              {
+                "__class__": "City",
+                "created_at": "2022-05-31T20:42:53.350872",
+                "id": "f94f7d71-4f52-44ae-80ca-12936d27b7b8",
+                "name": "Orlando",
+                "state_id": "aa95665c-6295-4b5a-8d15-96686e9da62e",
+                "updated_at": "2022-05-31T20:42:53.350872"
+              }
+            ]
+      404:
+        description: No state found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Not found"
+    """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -19,7 +75,46 @@ def list_cities(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def cities(city_id):
-    """ Retrieves a City object """
+    """
+    Retrieves a City object
+    ---
+    tags:
+      - City
+    parameters:
+      - name: city_id
+        in: path
+        required: true
+    responses:
+      200:
+        description: City found
+        schema:
+          type: object
+          properties:
+            __class__:
+              type: string
+            created_at:
+              type: string
+            id:
+              type: string
+            name:
+              type: string
+            updated_at:
+              type: string
+          example:
+            __class__: "City"
+            created_at: "2022-05-31T20:42:53.350872"
+            id: "f94f7d71-4f52-44ae-80ca-12936d27b7b8"
+            name: "Prattville"
+            updated_at: "2022-05-31T20:42:53.350872"
+      404:
+        description: No city found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Not found"
+    """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -28,7 +123,29 @@ def cities(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def cities_delete(city_id):
-    """ Delete a City object """
+    """
+    Delete a City object
+    ---
+    tags:
+      - City
+    parameters:
+      - name: city_id
+        in: path
+        required: true
+    responses:
+      200:
+        description: City deleted
+        schema:
+          type: object
+      404:
+        description: No city found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Not found"
+    """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -40,7 +157,55 @@ def cities_delete(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def new_city(state_id):
-    """ Creates a new City """
+    """
+    Creates a new City
+    ---
+    tags:
+      - City
+    parameters:
+      - name: create_city
+        in: body
+        required: true
+        schema:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+          example:
+            name: "Rome"
+    responses:
+      201:
+        description: City created
+        schema:
+          type: object
+          properties:
+            __class__:
+              type: string
+            created_at:
+              type: string
+            id:
+              type: string
+            name:
+              type: string
+            updated_at:
+              type: string
+          example:
+            __class__: "City"
+            created_at: "2022-05-31T20:42:53.350872"
+            id: "6149e15b-90a4-4d42-9d00-8342774d18b6"
+            name: "Rome"
+            updated_at: "2022-05-31T20:42:53.350872"
+      400:
+        description: User error
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Missing name"
+    """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -58,7 +223,62 @@ def new_city(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def city_id_put(city_id):
-    """ Updates a City object """
+    """
+    Updates a City object
+    ---
+    tags:
+      - City
+    parameters:
+      - name: city_id
+        in: path
+        required: true
+      - name: update_city
+        description: City's information to be updated
+        in: body
+        required: true
+        example:
+          {
+            "name": "Akron"
+          }
+    responses:
+      200:
+        description: City updated
+        schema:
+          type: object
+          properties:
+            __class__:
+              type: string
+            created_at:
+              type: string
+            id:
+              type: string
+            name:
+              type: string
+            updated_at:
+              type: string
+          example:
+            __class__: "City"
+            created_at: "2022-05-31T20:42:53.350872"
+            id: "547e94f1-ff98-4cbb-b2e6-c1878f9464a7"
+            name: "Akron"
+            updated_at: "2022-05-31T20:42:53.350872"
+      400:
+        description: Invalid JSON
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Not a JSON"
+      404:
+        description: No city found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: "Not found"
+    """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)

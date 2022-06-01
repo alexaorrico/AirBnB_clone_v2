@@ -12,7 +12,7 @@ def states():
     Retrieves the list of all State objects
     ---
     tags:
-      - States
+      - State
     responses:
       200:
         description: List of all State
@@ -35,17 +35,17 @@ def states():
             [
               {
                 "__class__": "State",
-                "created_at": "2017-03-25 19:42:40",
+                "created_at": "2022-05-31T20:42:53.350872",
                 "id": "421a55f1-7d82-45d9-b54c-a76916479545",
                 "name": "Alabama",
-                "updated_at": "2017-03-25 19:42:40"
+                "updated_at": "2022-05-31T20:42:53.350872"
               },
               {
                 "__class__": "State",
-                "created_at": "2022-05-24 10:55:55",
+                "created_at": "2022-05-31T20:42:53.350872",
                 "id": "aa95665c-6295-4b5a-8d15-96686e9da62e",
                 "name": "Florida",
-                "updated_at": "2022-05-24 10:55:55"
+                "updated_at": "2022-05-31T20:42:53.350872"
               }
             ]
     """
@@ -59,7 +59,7 @@ def state_id(state_id):
     Retrieves a State object
     ---
     tags:
-      - States
+      - State
     parameters:
       - name: state_id
         in: path
@@ -82,10 +82,10 @@ def state_id(state_id):
               type: string
           example:
             __class__: "State"
-            created_at: "2022-05-28 20:38:25"
+            created_at: "2022-05-31T20:42:53.350872"
             id: "d2398800-dd87-482b-be21-50a3063858ad"
             name: "Chernobyl"
-            updated_at: "2022-05-28 20:38:25"
+            updated_at: "2022-05-31T20:42:53.350872"
       404:
         description: No state found
         schema:
@@ -108,12 +108,16 @@ def state_delete(state_id):
     Deletes a State object
     ---
     tags:
-      - States
+      - State
     parameters:
       - name: state_id
         in: path
         required: true
     responses:
+      200:
+        description: State deleted
+        schema:
+          type: object
       404:
         description: No state found
         schema:
@@ -122,11 +126,6 @@ def state_delete(state_id):
             error:
               type: string
               example: "Not found"
-      200:
-        description: State deleted
-        schema:
-          type: object
-          properties:
     """
     state = storage.get(State, state_id)
     if state is None:
@@ -142,9 +141,9 @@ def state_post():
     Create a new state
     ---
     tags:
-      - States
+      - State
     parameters:
-      - name: create_body
+      - name: create_state
         in: body
         required: true
         schema:
@@ -174,10 +173,10 @@ def state_post():
               type: string
           example:
             __class__: "State"
-            created_at: "2022-05-31T19:20:17.341497"
+            created_at: "2022-05-31T20:42:53.350872"
             id: "6b240c6f-c6a5-4545-b611-60b8ecaa9a4c"
             name: "Chernobyl"
-            updated_at: "2022-05-31T19:20:17.341497"
+            updated_at: "2022-05-31T20:42:53.350872"
       400:
         description: Invalid JSON
         schema:
@@ -204,12 +203,12 @@ def state_id_put(state_id):
     Updates a State object
     ---
     tags:
-      - States
+      - State
     parameters:
       - name: state_id
         in: path
         required: true
-      - name: update_body
+      - name: update_state
         description: State's information to be updated
         in: body
         required: true
@@ -235,10 +234,10 @@ def state_id_put(state_id):
               type: string
           example:
             __class__: "State"
-            created_at: "2017-03-25T02:17:06.000000"
+            created_at: "2022-05-31T20:42:53.350872"
             id: "0d9148c0-f394-412d-addc-1e5eb4f3e8db"
             name: "Mississippi"
-            updated_at: "2017-03-25T02:17:06.000000"
+            updated_at: "2022-05-31T20:42:53.350872"
       400:
         description: Invalid JSON
         schema:
