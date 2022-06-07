@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """index"""
 
-from os import stat
 from flask import jsonify
 from models import storage
 from models.engine.db_storage import classes
