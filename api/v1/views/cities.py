@@ -2,7 +2,6 @@
 """cities api"""
 
 
-from sqlalchemy import JSON
 from api.v1.views import app_views
 from models.engine.db_storage import classes
 from models import storage
