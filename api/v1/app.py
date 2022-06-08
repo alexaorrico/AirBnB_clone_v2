@@ -9,8 +9,8 @@ from os import getenv
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources=r"/*")
 app.register_blueprint(app_views)
+CORS(app, resources=r"/*")
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 @app.errorhandler(404)

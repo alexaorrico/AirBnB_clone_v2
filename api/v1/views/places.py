@@ -8,7 +8,7 @@ from flask import jsonify, abort, request
 
 @app_views.route("/cities/<city_id>/places", methods=["GET", "POST"])
 @app_views.route("/places/<place_id>", methods=["GET", "PUT", "DELETE"])
-def amenities_view(city_id=None, place_id=None):
+def places_view(city_id=None, place_id=None):
     if city_id:
         city_obj = storage.get(classes["Amenity"], city_id)
         if not city_obj:

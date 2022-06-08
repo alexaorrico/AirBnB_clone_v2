@@ -9,7 +9,7 @@ from flask import jsonify, abort, request
 
 @app_views.route("/users", methods=["GET", "POST"])
 @app_views.route("/users/<user_id>", methods=["GET", "PUT", "DELETE"])
-def amenities_view(user_id=None):
+def users_view(user_id=None):
     if user_id:
         user_obj = storage.get(classes["User"], user_id)
         if not user_obj:
