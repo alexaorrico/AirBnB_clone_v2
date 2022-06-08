@@ -30,7 +30,7 @@ def state_view(state_id=None):
             try:
                 obj_json = request.get_json()
             except:
-                return jsonify({"error": "Not fount"}), 400
+                return jsonify({"error": "Not found"}), 400
 
             for key, value in obj_json.items():
                 if key not in ["updated_at", "id", "created_at"]:
