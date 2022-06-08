@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """amenities api"""
 
-from crypt import methods
 from api.v1.views import app_views
 from models.engine.db_storage import classes
 from models import storage
