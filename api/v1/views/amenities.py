@@ -6,8 +6,8 @@ from models.engine.db_storage import classes
 from models import storage
 from flask import jsonify, abort, request
 
-@app_views.route("/amenities", methods=["GET", "POST"], strict_slashes=False)
-@app_views.route("/amenities/<amenity_id>", methods=["GET", "PUT", "DELETE"], strict_slashes=False)
+@app_views.route("/amenities", methods=["GET", "POST"])
+@app_views.route("/amenities/<amenity_id>", methods=["GET", "PUT", "DELETE"])
 def amenities_view(amenity_id=None):
     if amenity_id:
         amenity_obj = storage.get(classes["Amenity"], amenity_id)
