@@ -51,12 +51,18 @@ def amenities_view(user_id=None):
             # if  not falsee:
             #     return jsonify({"error": "Not a JSON"}), 400
 
-            obj_json: dict = request.get_json()
+            obj_json = request.get_json()
 
-            if any(["email", "password"]) not in obj_json.keys():
+            if "email" not in obj_json.keys():
                 return jsonify({"error": "Missing name"}), 400
 
-            new_user = classes["User"](first_name = obj_json.get("first_name"), last_name = obj_json.get("last_name"), email = obj_json.get("email"), password = obj_json.get("password"))
+            if "password" not in obj_json.keys():
+                return jsonify({"error": "Missing password"}), 400
+
+            new_user = classes["User"](first_name = obj_json.get("first_name"), 
+                                            last_name = obj_json.get("last_name"), 
+                                            email = obj_json.get("email"),
+                                            password = obj_json.get("password"))
             new_user.save()
 
             new_user_dict = new_user.to_dict()
