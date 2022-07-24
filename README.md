@@ -1,4 +1,5 @@
-# AirBnB Clone - MySQL
+<h1 align="center">AirBnB Clone - MySQL</h1>
+
 
 ![179302040-4a1a3e16-5d76-440e-8b52-380e1c80b58e](https://user-images.githubusercontent.com/88312276/180626647-2145ab12-7f76-4199-b1d6-eb9bd83bb9b5.png)
 
