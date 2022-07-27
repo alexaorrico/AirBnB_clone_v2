@@ -1,12 +1,12 @@
-# AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+<h1 align="center">AirBnB Clone - MySQL</h1>
 
-#### Functionalities of this command interpreter:
-* Create a new object (ex: a new User or a new Place)
-* Retrieve an object from a file, a database etc...
-* Do operations on objects (count, compute stats, etc...)
-* Update attributes of an object
-* Destroy an object
+
+![179302040-4a1a3e16-5d76-440e-8b52-380e1c80b58e](https://user-images.githubusercontent.com/88312276/180626647-2145ab12-7f76-4199-b1d6-eb9bd83bb9b5.png)
+
+## Description
+The goal of this project is to eventually deploy a simple copy of the AirhBnB website. In earlier versions, the console was initially implemented, and the front-end was designed using HTML5/CSS3 and served using Python Flask. In this version, A complete RESTful API has been built, integraging file and database (MySQL) storage in the back-end.
+
+![06fccc41df40ab8f9d49](https://user-images.githubusercontent.com/88312276/180626632-8fc9ef95-c40d-43b7-a5c0-9aeca2728b5e.png)
 
 ## Table of Content
 * [Environment](#environment)
@@ -155,7 +155,9 @@ No known bugs at this time.
 
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)  
+Joesph Emmanuel - [Github](https://github.com/dnjoe96) / [Twitter](https://twitter.com/JosephBlue1)  
+Chigozirim Igweamaka - [Github](https://github.com/iChigozirim) / [Twitter](https://twitter.com/iChigozirim_)
 
 Second part of Airbnb: Joann Vuong
 ## License
