@@ -1,0 +1,12 @@
+Cannot uninstall requirement pep8, not installed
+Exception information:
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/pip/basecommand.py", line 122, in main
+    status = self.run(options, args)
+  File "/usr/lib/python3/dist-packages/pip/commands/uninstall.py", line 59, in run
+    requirement_set.uninstall(auto_confirm=options.yes)
+  File "/usr/lib/python3/dist-packages/pip/req.py", line 1036, in uninstall
+    req.uninstall(auto_confirm=auto_confirm)
+  File "/usr/lib/python3/dist-packages/pip/req.py", line 506, in uninstall
+    raise UninstallationError("Cannot uninstall requirement %s, not installed" % (self.name,))
+pip.exceptions.UninstallationError: Cannot uninstall requirement pep8, not installed
