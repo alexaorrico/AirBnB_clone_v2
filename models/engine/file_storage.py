@@ -72,8 +72,10 @@ class FileStorage:
     def get(self, cls, id):
         """Function to retrieve one obj"""
         try:
-            obj = self.all(cls)
-            return obj[0]
+            objs = self.all(cls)
+            for obj in objs:
+                if obj['id'] == id:
+                    return obj
         except:
             return None
 
