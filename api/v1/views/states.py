@@ -19,8 +19,8 @@ def states():
     lista_states = []
     if request.method == 'GET':
         states = storage.all(State)
-        for state in states:
-            obj = state.to_dict()
+        for key,value in states.items():
+            obj = value.to_dict()
             lista_states.append(obj)
         return jsonify(lista_states)
 
