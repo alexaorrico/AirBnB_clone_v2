@@ -40,7 +40,7 @@ def states(state_id=None):
             if 'name' in body:
                 value = {}
                 value['name'] = body['name']
-                new_state = State(value)
+                new_state = State(**value)
                 new_state.save()
                 return jsonify(new_state.to_dict()), 201
             else:
