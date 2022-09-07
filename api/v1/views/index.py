@@ -9,4 +9,4 @@ from flask import jsonify
 def status():
     dictionary = {}
     dictionary['status'] == "Ok"
-    return json.dump(dictionary)
+    return jsonify(dictionary)
