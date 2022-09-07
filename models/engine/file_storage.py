@@ -76,7 +76,8 @@ class FileStorage:
             for obj in objs:
                 if obj['id'] == id:
                     return obj
-        except:
+        except Exception as error:
+            print(error)
             return None
 
     def count(self, cls=None):
