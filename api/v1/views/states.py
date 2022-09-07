@@ -16,8 +16,12 @@ classes = {"amenities": Amenity, "cities": City,
 @app_views.route('/states', methods=['GET'])
 def states():
     """def function que devuelve una lista de todos los State"""
+    lista_states = []
     if request.method == 'GET':
         states = storage.all(State)
-        return jsonify(states)
+        for state in states:
+            obj = state.to_dict()
+            lista_states.append(obj)
+        return jsonify(lista_states)
 
     
