@@ -8,5 +8,5 @@ from flask import jsonify
 @app_views.route('/status')
 def status():
     dictionary = {}
-    dictionary['status'] == "Ok"
+    dictionary['status'] = "Ok"
     return jsonify(dictionary)
