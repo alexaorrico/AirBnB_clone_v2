@@ -34,7 +34,6 @@ def states(state_id=None):
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
-    """POST"""
     elif request.method == 'POST':
         try:
             body = request.get_json()
@@ -52,8 +51,6 @@ def states(state_id=None):
             return jsonify({
                     "error": "Not a JSON"
                 }), 400
-
-    """PUT"""
     elif request.method == 'PUT':
         try:
             body = request.get_json()
@@ -69,8 +66,6 @@ def states(state_id=None):
             return jsonify({
                     "error": "Not a JSON"
                 }), 404
-        
-    """"DELETE"""
     else:
         states = storage.all()
         for key,value in states.items():
