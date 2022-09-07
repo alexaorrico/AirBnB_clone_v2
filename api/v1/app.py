@@ -20,14 +20,14 @@ def teardown_appcontext(self):
     storage.close()
 
 if __name__ == "__main__":
-    if getenv(HBNB_API_HOST) is None:
+    if getenv('HBNB_API_HOST') is None:
         host = '0.0.0.0'
     else:
-        host = getenv(HBNB_API_HOST)
+        host = getenv('HBNB_API_HOST')
 
     if getenv(HBNB_API_PORT) is None:
         port = 5000
     else:
-        port = getenv(HBNB_API_PORT)
+        port = getenv('HBNB_API_PORT')
 
     app.run(hsot, port, threaded=True)
