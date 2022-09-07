@@ -9,6 +9,7 @@ from models.user import User
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, request, abort
+import json
 
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
@@ -32,6 +33,7 @@ def states(state_id=None):
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
+
     elif request.method == 'POST':
         body = request.get_json()
         try:
@@ -49,6 +51,7 @@ def states(state_id=None):
                 {
                     "error": "Not a JSON"
                 }), 400
+
     else:
         states = storage.all()
         for key,value in states.items():
