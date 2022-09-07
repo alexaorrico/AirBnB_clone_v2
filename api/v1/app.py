@@ -20,7 +20,7 @@ def teardown_appcontext(self):
 
 @app.errorhandler(404)
 def handle_exception(e):
-    return Response(jsonify({"error": "Not found"}), status=404)
+    return jsonify({"error": "Not found"}, 404
 
 if __name__ == "__main__":
     if getenv('HBNB_API_HOST') is None:
