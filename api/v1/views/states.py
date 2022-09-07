@@ -32,7 +32,7 @@ def states(state_id=None):
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
-    elif request.method == 'DELETE':
+    else:
         states = storage.all()
         for key,value in states.items():
             if states[key].id == state_id:
