@@ -2,7 +2,6 @@
 # Index
 
 from api.v1.views import app_views
-from flask_api import status
 from flask import jsonify
 
 
