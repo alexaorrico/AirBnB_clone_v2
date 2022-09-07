@@ -15,12 +15,14 @@ classes = {"amenities": Amenity, "cities": City,
 
 @app_views.route('/status')
 def status():
+    """def function que devuelve un json referenciando al status"""
     dictionary = {}
     dictionary['status'] = "Ok"
     return jsonify(dictionary)
 
 @app_views.route('/stats')
 def countype():
+    """def function que devuelve un contador de objetos de cada clase"""
     dic = {}
     for key, value in classes.items():
         count = storage.count(value)
