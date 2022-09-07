@@ -85,7 +85,7 @@ class FileStorage:
             for obj in objs:
                 counter += 1
             return counter
-        except as error:
+        except Exception as error:
             objs = self.all()
             for obj in objs:
                 counter += 1
