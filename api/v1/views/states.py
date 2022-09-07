@@ -48,7 +48,7 @@ def states(state_id=None):
         except Exception as err:
              return jsonify(
                 {
-                    "error": "Not a JSON"
+                    "error": err
                 }), 400
 
     else:
