@@ -81,7 +81,7 @@ class FileStorage:
         """Function to return the amount of obj from one class"""
         try:
             counter = 0
-            objs = self.__session.query(classes[cls]).all()
+            objs = self.__session.query(cls).all()
             for obj in objs:
                 counter += 1
             return counter
