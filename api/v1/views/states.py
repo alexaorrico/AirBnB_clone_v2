@@ -15,11 +15,12 @@ classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
-@app_views.route('/states/<state_id>', methods=['GET','DELETE'])
+@app_views.route('/states/<state_id>', methods=['GET','DELETE', 'PUT'])
 @app_views.route('/states', methods=['GET', 'POST'])
 def states(state_id=None):
     """def function que devuelve una lista de todos los State"""
     lista_states = []
+    """"GET"""
     if request.method == 'GET':
         if state_id is None:
             states = storage.all(State)
@@ -33,7 +34,7 @@ def states(state_id=None):
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
-
+    """POST"""
     elif request.method == 'POST':
         try:
             body = request.get_json()
@@ -52,6 +53,24 @@ def states(state_id=None):
                     "error": "Not a JSON"
                 }), 400
 
+    """PUT"""
+    elif request.method == 'PUT':
+        try:
+            body = request.get_json()
+            states = storage.all(State)
+            for key, value in states.items():
+                if states[key].id == state_id:
+                    for k,v body.items():
+                        if k is not 'id' and k is not 'created_at' and k is not 'updated_at':
+                            setattr(value, k, v)
+                    value.save()
+                    return jsonify(value.to_dict()), 200
+        except Exception as err:
+            return jsonify({
+                    "error": "Not a JSON"
+                }), 404
+        
+    """"DELETE"""
     else:
         states = storage.all()
         for key,value in states.items():
