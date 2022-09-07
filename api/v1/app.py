@@ -9,8 +9,6 @@ from flask import Flask
 from flask import Blueprint
 from os import getenv
 
-app_views = Blueprint('app_views', __name__)
-
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
