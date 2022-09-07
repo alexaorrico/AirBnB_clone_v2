@@ -29,7 +29,7 @@ def states(state_id=None):
         else:
             states = storage.all(State)
             for key,value in states.items():
-                if value['id'] == state_id:
+                if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
 
