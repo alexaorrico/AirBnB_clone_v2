@@ -6,7 +6,7 @@ Creating and starting API
 from models import storage
 from api.v1.views import app_views
 from flask import Flask
-from flask import Blueprint
+from flask import Blueprint, Response
 from os import getenv
 from flask import jsonify
 
@@ -20,7 +20,7 @@ def teardown_appcontext(self):
 
 @app.errorhandler(404)
 def handle_exception(e):
-    return jsonify({"error": "Not found"})
+    return Response(jsonify({"error": "Not found"}), status=404)
 
 if __name__ == "__main__":
     if getenv('HBNB_API_HOST') is None:
