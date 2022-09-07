@@ -38,14 +38,14 @@ def states(state_id=None):
         body = request.get_json()
         try:
             if 'name' in body:
-                new_state = State()
+                new_state = State({name: body['name']})
                 new_state.save()
                 return jsonify(new_state.to_dict()), 201
             else:
                 return jsonify({
                     "error": "Missing name"
                 }), 400
-        except ValueError as err:
+        except Exception as err:
              return jsonify(
                 {
                     "error": "Not a JSON"
