@@ -20,7 +20,7 @@ def states(state_id=None):
     """def function que devuelve una lista de todos los State"""
     lista_states = []
     if request.method == 'GET':
-        if state_id is not None:
+        if state_id is None:
             states = storage.all(State)
             for key,value in states.items():
                 obj = value.to_dict()
