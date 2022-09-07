@@ -73,11 +73,10 @@ class FileStorage:
         """Function to retrieve one obj"""
         try:
             objs = self.all(cls)
-            for obj in objs:
-                if obj['id'] == id:
-                    return obj
+            for key, value in objs.items():
+                if objs[key].id == id:
+                    return value
         except Exception as error:
-            print(error)
             return None
 
     def count(self, cls=None):
