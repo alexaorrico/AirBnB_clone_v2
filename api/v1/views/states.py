@@ -46,7 +46,8 @@ def states(state_id=None):
                     "error": "Missing name"
                 }), 400
         except Exception as err:
-             return err
+            print(err)
+            return "hola"
 
     else:
         states = storage.all()
