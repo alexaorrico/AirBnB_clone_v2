@@ -35,8 +35,8 @@ def states(state_id=None):
             abort(404)
 
     elif request.method == 'POST':
-        body = request.get_json()
         try:
+            body = request.get_json()
             if 'name' in body:
                 value = {}
                 value['name'] = body['name']
@@ -48,8 +48,9 @@ def states(state_id=None):
                     "error": "Missing name"
                 }), 400
         except Exception as err:
-            print(err)
-            return "hola"
+            return jsonify({
+                    "error": "Not a JSON"
+                }), 400
 
     else:
         states = storage.all()
