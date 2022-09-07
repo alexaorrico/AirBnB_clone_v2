@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from flask import Flask
 from flask import Blueprint
 from os import getenv
-from werkzeug.exceptions import HTTPException
+from flask import jsonify
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -18,9 +18,9 @@ def teardown_appcontext(self):
     '''Method to handle that calls storage.close()'''
     storage.close()
 
-@app.errorhandler(HTTPException)
+@app.errorhandler(404)
 def handle_exception(e):
-    return "hola gay"
+    return jsonify({"error": "Not found"})
 
 if __name__ == "__main__":
     if getenv('HBNB_API_HOST') is None:
