@@ -13,7 +13,7 @@ from flask import jsonify, request
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
-@app_views.route('/states' methods=['GET'])
+@app_views.route('/states', methods=['GET'])
 def states():
     """def function que devuelve una lista de todos los State"""
     if request.method == 'GET':
