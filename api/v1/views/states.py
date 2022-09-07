@@ -38,6 +38,7 @@ def states(state_id=None):
         body = request.get_json()
         try:
             if 'name' in body:
+                value = {}
                 value['name'] = body['name']
                 new_state = State(value)
                 new_state.save()
