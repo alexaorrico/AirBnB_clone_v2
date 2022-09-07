@@ -49,7 +49,6 @@ def states(state_id=None):
                 {
                     "error": "Not a JSON"
                 }), 400
-    return True
     else:
         states = storage.all()
         for key,value in states.items():
