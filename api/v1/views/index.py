@@ -6,7 +6,7 @@ from flask_api import status
 from flask import jsonify
 
 
-@app_views.route('/status'):
+@app_views.route('/status')
 def status():
     dictionary = {}
     dictionary['status'] == "Ok"
