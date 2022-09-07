@@ -46,10 +46,7 @@ def states(state_id=None):
                     "error": "Missing name"
                 }), 400
         except Exception as err:
-             return jsonify(
-                {
-                    "error": err
-                }), 400
+             return err
 
     else:
         states = storage.all()
