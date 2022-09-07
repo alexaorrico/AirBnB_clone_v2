@@ -15,7 +15,7 @@ classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
-@app_views.route('/states/<state_id>', methods=['GET','DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 @app_views.route('/states', methods=['GET', 'POST'])
 def states(state_id=None):
     """def function que devuelve una lista de todos los State"""
@@ -24,13 +24,13 @@ def states(state_id=None):
     if request.method == 'GET':
         if state_id is None:
             states = storage.all(State)
-            for key,value in states.items():
+            for key, value in states.items():
                 obj = value.to_dict()
                 lista_states.append(obj)
             return jsonify(lista_states)
         else:
             states = storage.all(State)
-            for key,value in states.items():
+            for key, value in states.items():
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
@@ -58,7 +58,8 @@ def states(state_id=None):
             for key, value in states.items():
                 if states[key].id == state_id:
                     for k, v in body.items():
-                        if k is not 'id' and k is not 'created_at' and k is not 'updated_at':
+                        if k is not 'id' and k is not 'created_at' and
+                        k is not 'updated_at':
                             setattr(value, k, v)
                     value.save()
                     return jsonify(value.to_dict()), 200
@@ -68,10 +69,9 @@ def states(state_id=None):
                 }), 404
     else:
         states = storage.all()
-        for key,value in states.items():
+        for key, value in states.items():
             if states[key].id == state_id:
                 storage.delete(states[key])
                 storage.save()
                 return jsonify({})
         abort(404)
-    
