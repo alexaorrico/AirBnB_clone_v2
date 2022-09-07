@@ -37,7 +37,7 @@ def states(state_id=None):
     elif request.method == 'POST':
         body = request.get_json()
         try:
-            print(body)
+            print(type(body))
             if 'name' in body:
                 new_state = State({"name": body['name']})
                 new_state.save()
