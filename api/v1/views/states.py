@@ -8,20 +8,29 @@ from models.state import State
 from models.user import User
 from models import storage
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, request, abort
 
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
+
+@app_views.route('/states/<state_id>', methods=['GET'])
 @app_views.route('/states', methods=['GET'])
-def states():
+def states(state_id=None):
     """def function que devuelve una lista de todos los State"""
     lista_states = []
     if request.method == 'GET':
-        states = storage.all(State)
-        for key,value in states.items():
-            obj = value.to_dict()
-            lista_states.append(obj)
-        return jsonify(lista_states)
+        if state_id is not None:
+            states = storage.all(State)
+            for key,value in states.items():
+                obj = value.to_dict()
+                lista_states.append(obj)
+            return jsonify(lista_states)
+        else:
+            states = storage.all(State)
+            for key,value in states.items():
+                if value['id'] == state_id:
+                    return jsonify(value.to_dict())
+            abort(404)
 
     
