@@ -30,4 +30,4 @@ if __name__ == "__main__":
     else:
         port = getenv('HBNB_API_PORT')
 
-    app.run(hsot, port, threaded=True)
+    app.run(host, port, threaded=True)
