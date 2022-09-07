@@ -72,8 +72,8 @@ class FileStorage:
     def get(self, cls, id):
         """Function to retrieve one obj"""
         try:
-            obj = self.__session.query(classes[cls]).filter(classes[cls].id).all()
-            return obj
+            obj = self.all(cls)
+            return obj[0]
         except:
             return None
 
