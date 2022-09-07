@@ -14,7 +14,7 @@ classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET','DELETE'])
 @app_views.route('/states', methods=['GET'])
 def states(state_id=None):
     """def function que devuelve una lista de todos los State"""
@@ -32,5 +32,11 @@ def states(state_id=None):
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
-
+    elif request.method == 'DELETE':
+        states = storage.all()
+        for key,value in states.items():
+            if states[key].id == state_id:
+                storage.delete(states[key])
+                return jsonify({})
+        abort(404)
     
