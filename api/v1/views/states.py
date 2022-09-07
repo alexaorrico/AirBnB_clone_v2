@@ -15,7 +15,7 @@ classes = {"amenities": Amenity, "cities": City,
 
 
 @app_views.route('/states/<state_id>', methods=['GET','DELETE'])
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET', 'POST'])
 def states(state_id=None):
     """def function que devuelve una lista de todos los State"""
     lista_states = []
@@ -32,6 +32,24 @@ def states(state_id=None):
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
             abort(404)
+    elif request.method == 'POST':
+        body = request.get_json()
+        try:
+            bodyDic = json.loads(body)
+            if 'name' in bodyDic:
+                new_state = State()
+                new_state.save()
+                return jsonify(new_state.to_dict()), 201
+            else:
+                return jsonify({
+                    "error": "Missing name"
+                }), 400
+        except ValueError as err:
+             return jsonify(
+                {
+                    "error": "Not a JSON"
+                }), 400
+    return True
     else:
         states = storage.all()
         for key,value in states.items():
