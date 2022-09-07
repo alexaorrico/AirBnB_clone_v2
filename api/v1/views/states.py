@@ -37,10 +37,9 @@ def states(state_id=None):
     elif request.method == 'POST':
         body = request.get_json()
         try:
-            print(body['name'])
-            print(body.name)
+            
             if 'name' in body:
-                new_state = State({"name": body['name']})
+                new_state = State({"name": "valentin"})
                 new_state.save()
                 return jsonify(new_state.to_dict()), 201
             else:
