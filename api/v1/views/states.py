@@ -3,7 +3,7 @@
 State instance 
 """
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -47,4 +47,4 @@ def del_state(state_id):
     else:
         state.delete()
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
