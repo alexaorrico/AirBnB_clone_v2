@@ -55,7 +55,7 @@ def states(state_id=None):
                 }), 400
     elif request.method == 'PUT':
         try:
-            body = request.get_json()
+            body = json.loads(request.get_json())
             notAttr = ['id', 'created_at', 'updated_at']
             states = storage.all(State)
             for key, value in states.items():
@@ -66,7 +66,7 @@ def states(state_id=None):
                     value.save()
                     return jsonify(value.to_dict()), 200
             abort(404)
-        except Exception as err:
+        except ValueError as error:
             return jsonify({
                     "error": "Not a JSON"
                 }), 400
