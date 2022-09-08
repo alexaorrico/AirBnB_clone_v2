@@ -1,6 +1,5 @@
 #!/usr/bin/python
 """ holds class City"""
-from tkinter import CASCADE
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
