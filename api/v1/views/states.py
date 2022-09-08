@@ -53,24 +53,6 @@ def states(state_id=None):
             return jsonify({
                     "error": "Not a JSON"
                 }), 400
-    elif request.method == 'PUT':
-        try:
-            body = request.get_json()
-            prueba = json.loads(str(body))
-            notAttr = ['id', 'created_at', 'updated_at']
-            states = storage.all(State)
-            for key, value in states.items():
-                if states[key].id == state_id:
-                    for k, v in body.items():
-                        if k not in notAttr:
-                            setattr(value, k, v)
-                    value.save()
-                    return jsonify(value.to_dict()), 200
-            abort(404)
-        except ValueError as error:
-            return jsonify({
-                    "error": "Not a JSON"
-                }), 400
     else:
         states = storage.all()
         for key, value in states.items():
@@ -79,3 +61,25 @@ def states(state_id=None):
                 storage.save()
                 return jsonify({}), 200
         abort(404)
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+def states(state_id=None):
+    """def"""
+    try:
+        body = request.get_json()
+        notAttr = ['id', 'created_at', 'updated_at']
+        states = storage.all(State)
+        for key, value in states.items():
+            if states[key].id == state_id:
+                for k, v in body.items():
+                    if k not in notAttr:
+                        setattr(value, k, v)
+                value.save()
+                return jsonify(value.to_dict()), 200
+        abort(404)
+    except Exception as error:
+        return jsonify({
+                "error": "Not a JSON"
+            }), 400
