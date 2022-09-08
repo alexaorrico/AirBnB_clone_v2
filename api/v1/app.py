@@ -23,8 +23,7 @@ def notfound_404(error):
     """
     Retrieves the number of each objects by type.
     """
-    return make_response(jsonify({"error": "Not found"}), category="error",
-                         status=404)
+    return make_response(jsonify({"error": "Not found"}), 404)
     
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
