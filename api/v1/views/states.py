@@ -35,7 +35,7 @@ def states(state_id=None):
             for key, value in states.items():
                 if states[key].id == state_id:
                     return jsonify(value.to_dict())
-            abort(404)
+            return jsonify({'error': 'Not found'}), 404
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -69,7 +69,7 @@ def states_delete(state_id=None):
             storage.delete(states[key])
             storage.save()
             return jsonify({}), 200
-    abort(404)
+    return jsonify({'error': 'Not found'}), 404
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'],
