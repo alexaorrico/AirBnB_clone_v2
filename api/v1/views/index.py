@@ -15,13 +15,13 @@ classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """def function que devuelve un json referenciando al status"""
     return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def countype():
     """def function que devuelve un contador de objetos de cada clase"""
     dic = {}
