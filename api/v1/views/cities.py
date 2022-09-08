@@ -70,6 +70,7 @@ def createcity(state_id=None):
     """Function to create an obj"""
     try:
         body = request.get_json()
+        return jsonify(body)
         states = storage.all(State)
         for key, value in states.items():
             if value.id == state_id:
