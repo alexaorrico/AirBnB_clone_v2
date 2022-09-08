@@ -31,9 +31,7 @@ def cityobjs(state_id=None):
             for key, value in states.items():
                 if value.id == state_id:
                     for i in value.cities:
-                        return jsonify(i.to_dict())
-                    # for k, v in value.cities.items():
-                    #     list_of_cities.append(v.to_dict()) 
+                        list_of_cities.append(i.to_dict())
             if len(list_of_cities) == 0:
                 abort(404)
             else:
