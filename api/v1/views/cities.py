@@ -71,18 +71,20 @@ def createcity(state_id=None):
     try:
         body = request.get_json()
         states = storage.all(State)
-        if states[key].id != state_id:
-            abort(404)
-        if 'name' in body:
-            value = {}
-            value['name'] == body['name']
-            new_city = City(**value)
-            new_city.save()
-            return jsonify(new_city.to_dict())
-        else:
-            return jsonify({
-                    "error": "Missing name"
-                }), 400
+        for key, value in states.items():
+            if value.id == state_id:
+                if 'name' in body:
+                    value = {}
+                    value['name'] == body['name']
+                    value['state_id'] = state_id
+                    new_city = City(**value)
+                    new_city.save()
+                    return jsonify(new_city.to_dict())
+                else:
+                    return jsonify({
+                            "error": "Missing name"
+                        }), 400
+        abort(404)
     except Exception as err:
         return jsonify({
                     "error": "Not a JSON"
