@@ -2,7 +2,8 @@
 """
 API instance 
 """
-from flask import Flask, jsonify
+from unicodedata import category
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -22,7 +23,8 @@ def notfound_404(error):
     """
     Retrieves the number of each objects by type.
     """
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), category="error",
+                         status=404)
     
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
