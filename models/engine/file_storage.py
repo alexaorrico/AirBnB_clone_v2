@@ -87,3 +87,24 @@ class FileStorage:
                     return value
             # Se retorna None en caso que no coincidan las IDs
             return None
+
+    def count(self, cls=None):
+        """
+        A method to count the number of objects in storage.
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
+        # Traigo todos los objetos
+        objects = self.all()
+        # Creo variable contadora y se setea en 0
+        cont = 0
+
+        if cls is None:
+            for key, value in objects.items():
+                cont += 1
+            return cont
+        else:
+            # Si no es None es porque se paso una clase por lo tanto llamamos
+            # al metodo all y usamos len para traer la cantidad de la clase
+            # especifica que se pase en "cls"
+            return len(self.all(cls))
