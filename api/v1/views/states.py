@@ -65,3 +65,24 @@ def create_state():
         state = State(**body)
         # state.save()
         return make_response(jsonify(state.to_dict()), 201)
+    
+@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
+def update_state(state_id):
+    """
+    Updates a State object
+    """
+    
+    body = request.get_json()
+    
+    if body is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    
+    state = storage.get("State", state_id)
+    
+    if state is None:
+        abort(404)
+    else:
+        for key, value in body.items():
+            return key
+            
+
