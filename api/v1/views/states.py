@@ -62,6 +62,6 @@ def create_state():
     elif "name" not in body.keys():
         return make_response(jsonify({"error": "Missing name"}), 400)
     else:
-        state = State(body)
+        state = State(**body)
         # state.save()
         return make_response(jsonify(state.to_dict()), 201)
