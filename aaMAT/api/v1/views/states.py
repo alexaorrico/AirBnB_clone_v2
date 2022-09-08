@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 """adasda"""
-from os import abort
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from flask import jsonify, abort
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def getStates():
 	"""aaasdasdasd"""
 	states = []
 	for state in storage.all("State").values():
 		states.append(state.to_dict())
-	return jsonify(state)
+	return jsonify(states)
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def getStateById(state_id):
 	"""asdasdasda"""
 	state = storage.get("State", state_id)
