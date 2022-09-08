@@ -15,7 +15,7 @@ HBNB_API_HOST = getenv('HBNB_API_HOST', '0.0.0.0')
 HBNB_API_PORT = getenv('HBNB_API_PORT' , '5000')
 
 @app.teardown_appcontext
-def storage_close():
+def storage_close(self):
     """
     Calls storage.close()
     """
