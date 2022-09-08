@@ -47,4 +47,4 @@ def del_state(state_id):
     else:
         storage.delete(state)
         # storage.save()
-        return jsonify(state)
+        return make_response(jsonify({}), 200)
