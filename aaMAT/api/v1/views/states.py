@@ -18,6 +18,7 @@ def getStates():
 def getStateById(state_id):
 	"""asdasdasda"""
 	state = storage.get("State", state_id)
+	print(state)
 	if state is None:
 		abort(404)
 	state = state.to_dict()
