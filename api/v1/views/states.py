@@ -69,7 +69,7 @@ def states(state_id=None):
         except Exception as err:
             return jsonify({
                     "error": "Not a JSON"
-                }), 404
+                }), 400
     else:
         states = storage.all()
         for key, value in states.items():
