@@ -66,10 +66,42 @@ def createcity(state_id=None):
     try:
         body = request.get_json()
         states = storage.all(State)
+        if states[key].id != state_id:
+            abort(404)
+        if 'name' in body:
+            value = {}
+            value['name'] == body['name']
+            new_city = City(**value)
+            new_city.save()
+            return jsonify(new_city.to_dict())
+        else:
+            return jsonify({
+                    "error": "Missing name"
+                }), 400
     except Exception as err:
         return jsonify({
                     "error": "Not a JSON"
                 }), 400
 
-# Continuar desde POST method
+
+@app_views.route('/cities/<city.id>', methods=['PUT'])
+def updatecity(city_id=None):
+    """Function to update a city obj"""
+    try:    
+        body = request.get_json()
+        cities = storage.all(City)
+        for key, value in cities.items():
+            if cities[key].id == city_id:
+                for k, v in body.items():
+                    if k is not 'id' and k is not 'created at' and
+                    k is not 'updated at':
+                        setattr(value, k, v)
+                value.save()
+                return jsonify(value.to_dict()), 200
+    except Exception as err:
+        return jsonify({
+                    "error": "Not a JSON"
+                }), 404
+
+
 
