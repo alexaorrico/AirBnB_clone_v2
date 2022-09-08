@@ -53,12 +53,13 @@ def states(state_id=None):
                 }), 400
     elif request.method == 'PUT':
         try:
+            notAttr = ['id', 'created_at', 'updated_at']
             body = request.get_json()
             states = storage.all(State)
             for key, value in states.items():
                 if states[key].id == state_id:
                     for k, v in body.items():
-                        if k is not 'id' and k is not 'created_at' and k is not 'updated_at':
+                        if k not in notAttr:
                             setattr(value, k, v)
                     value.save()
                     return jsonify(value.to_dict()), 200

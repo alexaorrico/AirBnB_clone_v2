@@ -96,13 +96,13 @@ def createcity(state_id=None):
 def updatecity(city_id=None):
     """Function to update a city obj"""
     try:
-        notAttt = ['id', 'created_at', 'updated_at']
+        notAttr = ['id', 'created_at', 'updated_at']
         body = request.get_json()
         cities = storage.all(City)
         for key, value in cities.items():
             if cities[key].id == city_id:
                 for k, v in body.items():
-                    if k not in notAttt:
+                    if k not in notAttr:
                         setattr(value, k, v)
                 value.save()
                 return jsonify(value.to_dict()), 200
