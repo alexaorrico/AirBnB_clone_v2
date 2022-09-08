@@ -87,7 +87,7 @@ def createcity(state_id=None):
         abort(404)
     except Exception as err:
         return jsonify({
-                    "error": "Not a JSON" + err
+                    "error": err
                 }), 400
 
 
