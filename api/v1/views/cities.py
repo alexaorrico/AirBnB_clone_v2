@@ -14,6 +14,7 @@ import json
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
@@ -86,7 +87,7 @@ def createcity(state_id=None):
                         }), 400
         abort(404)
     except Exception as err:
-         return jsonify({
+        return jsonify({
             "error": err
         }), 400
 
@@ -94,13 +95,14 @@ def createcity(state_id=None):
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def updatecity(city_id=None):
     """Function to update a city obj"""
-    try:    
+    try:
+        notAttt = ['id', 'created_at', 'updated_at']
         body = request.get_json()
         cities = storage.all(City)
         for key, value in cities.items():
             if cities[key].id == city_id:
                 for k, v in body.items():
-                    if k is not 'id' and k is not 'created at' and k is not 'updated at':
+                    if k not in notAttt:
                         setattr(value, k, v)
                 value.save()
                 return jsonify(value.to_dict()), 200
@@ -108,6 +110,3 @@ def updatecity(city_id=None):
         return jsonify({
                     "error": "Not a JSON"
                 }), 404
-
-
-
