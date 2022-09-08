@@ -75,7 +75,7 @@ def createcity(state_id=None):
             if value.id == state_id:
                 if 'name' in body:
                     dic = {}
-                    dic['name'] == body["name"]
+                    dic['name'] = body["name"]
                     dic['state_id'] = state_id
                     new_city = City(**dic)
                     new_city.save()
