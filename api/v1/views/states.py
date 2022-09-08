@@ -87,7 +87,7 @@ def state_put(state_id=None):
                         setattr(value, k, v)
                 value.save()
                 return jsonify(value.to_dict()), 200
-        abort(404)
+        return jsonify({}), 404
     except Exception as error:
         return jsonify({
                 "error": "Not a JSON"
