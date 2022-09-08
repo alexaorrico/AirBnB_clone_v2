@@ -15,7 +15,8 @@ classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],  strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
     if request.method == 'GET':
@@ -66,7 +67,8 @@ def deleteobj(city_id=None):
         abort(404)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def createcity(state_id=None):
     """Function to create an obj"""
     try:
