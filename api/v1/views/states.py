@@ -63,5 +63,5 @@ def create_state():
         return make_response(jsonify({"error": "Missing name"}), 400)
     else:
         state = State(body)
-        state.save()
+        state.state.save()
         return make_response(jsonify(state.to_dict()), 201)
