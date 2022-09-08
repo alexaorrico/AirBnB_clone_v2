@@ -13,12 +13,14 @@ from flask import jsonify
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
+
 @app_views.route('/status')
 def status():
     """def function que devuelve un json referenciando al status"""
     dictionary = {}
     dictionary['status'] = "Ok"
     return jsonify(dictionary)
+
 
 @app_views.route('/stats')
 def countype():
