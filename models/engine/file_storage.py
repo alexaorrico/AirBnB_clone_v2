@@ -24,6 +24,14 @@ class FileStorage:
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
+    def get(self, cls, id):
+        """ returns Object based on Class and Id """
+        if cls is not None and id is not None:
+            return self.__objects["{}.{}".format(cls, id)]
+        else:
+            return None 
+
+
     def all(self, cls=None):
         """returns the dictionary __objects"""
         if cls is not None:
@@ -33,6 +41,7 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
+
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
