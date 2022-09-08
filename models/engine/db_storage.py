@@ -88,8 +88,8 @@ class DBStorage:
         """
         count = 0
         if cls and cls in classes.values():
-            return len(self.__session.query(cls).all())
+            count = len(self.__session.query(cls).all())
         else:
             for key in classes.values():
-                count += self.__session.query(key).count()
+                count += len(self.__session.query(key).all())
         return count

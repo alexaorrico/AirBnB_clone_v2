@@ -80,7 +80,6 @@ class FileStorage:
         """ Counts number of objects in storage matching given class
         If no class is passed, returns the count of all objects in storage
         """
-        count = 0
-        if cls:
+        if cls and cls in classes.values():
             return len(self.all(cls))
         return len(self.all())
