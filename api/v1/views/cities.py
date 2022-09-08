@@ -84,7 +84,7 @@ def createcity(state_id=None):
                 }), 400
 
 
-@app_views.route('/cities/<city.id>', methods=['PUT'])
+@app_views.route('/cities/<city_id>', methods=['PUT'])
 def updatecity(city_id=None):
     """Function to update a city obj"""
     try:    
