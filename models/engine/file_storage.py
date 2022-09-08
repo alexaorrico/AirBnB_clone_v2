@@ -23,11 +23,10 @@ class FileStorage:
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
-
+ 
     def get(self, cls, id):
         """ returns Object based on Class and Id """
         if cls is not None and id is not None:
-            print(self.__objects["{}.{}".format(cls.__name__, id)])
             return self.__objects["{}.{}".format(cls.__name__, id)]
         else:
             return None 
