@@ -83,6 +83,7 @@ def update_state(state_id):
         abort(404)
     else:
         for key, value in body.items():
+            print(key)
             return key
             
 
