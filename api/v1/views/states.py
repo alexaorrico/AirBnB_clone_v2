@@ -56,7 +56,7 @@ def states(state_id=None):
     elif request.method == 'PUT':
         try:
             body = request.get_json()
-            prueba = json.loads(body)
+            prueba = json.loads(str(body))
             notAttr = ['id', 'created_at', 'updated_at']
             states = storage.all(State)
             for key, value in states.items():
