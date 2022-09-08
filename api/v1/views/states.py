@@ -68,7 +68,7 @@ def states(state_id=None):
             abort(404)
         except Exception as err:
             return jsonify({
-                    err
+                    "error": "Not a JSON"
                 }), 400
     else:
         states = storage.all()
