@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """adasda"""
+from crypt import methods
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from models.state import State
 
 
@@ -35,3 +36,15 @@ def deleteState(state_id):
 	storage.delete(state)
 	storage.save()
 	return jsonify({}), 200
+
+@app_views.route("/states", methods=['POST'], strict_slashes=False)
+def create_state():
+	json_req = request.get_json()
+	if json_req is None:
+		abort(400, 'Not a JSON')
+	if json_req.get("name") is None:
+		abort(404, 'Missing name')
+	new_obj = State(**json_req)
+	storage.new(new_obj)
+	storage.save()
+	return jsonify(new_obj.to_dict()), 201
