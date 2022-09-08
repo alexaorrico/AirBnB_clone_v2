@@ -93,8 +93,7 @@ def updatecity(city_id=None):
         for key, value in cities.items():
             if cities[key].id == city_id:
                 for k, v in body.items():
-                    if k is not 'id' and k is not 'created at' and
-                    k is not 'updated at':
+                    if k is not 'id' and k is not 'created at' and k is not 'updated at':
                         setattr(value, k, v)
                 value.save()
                 return jsonify(value.to_dict()), 200
