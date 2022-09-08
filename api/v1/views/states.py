@@ -46,5 +46,22 @@ def del_state(state_id):
         abort(404)
     else:
         storage.delete(state)
-        storage.save()
+        # storage.save() NOANDA
         return make_response(jsonify({}), 200)
+
+@app_views.route("/states", methods=["POST"], strict_slashes=False)
+def create_state():
+    """
+    Creates a State
+    """
+    
+    body = request.get_json()
+    
+    if body is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    elif body["name"] not in body:
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    else:
+        state = State(body)
+        state.save()
+        return make_response(jsonify(state.to_dict()), 201)
