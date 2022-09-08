@@ -15,9 +15,9 @@ import json
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
-           
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
-@app_views.route('/states', methods=['GET', 'POST'])
+
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def states(state_id=None):
     """def function que devuelve una lista de todos los State"""
     lista_states = []
