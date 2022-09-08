@@ -65,9 +65,11 @@ def createcity(state_id=None):
     """Function to create an obj"""
     try:
         body = request.get_json()
-        
+        states = storage.all(State)
     except Exception as err:
         return jsonify({
                     "error": "Not a JSON"
                 }), 400
+
+# Continuar desde POST method
 
