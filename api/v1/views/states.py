@@ -59,7 +59,7 @@ def create_state():
     
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "name" in body.keys():
+    elif "name" not in body.keys():
         return make_response(jsonify({"error": "Missing name"}), 400)
     else:
         state = State(body)
