@@ -22,6 +22,7 @@ def teardown_appcontext(self):
 
 @app.errorhandler(404)
 def handle_exception(e):
+    """method that handled error"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
