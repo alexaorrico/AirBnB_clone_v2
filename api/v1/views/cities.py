@@ -30,7 +30,7 @@ def cityobjs(state_id=None):
             states = storage.all(State)
             for key, value in states.items():
                 if value.id == state_id:
-                    for k, v in value.cities:
+                    for k, v in value.cities.items():
                         list_of_cities.append(v.to_dict()) 
             if len(list_of_cities) == 0:
                 abort(404)
