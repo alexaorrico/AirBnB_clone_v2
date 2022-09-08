@@ -73,6 +73,7 @@ def update_state(state_id):
     """
     
     body = request.get_json()
+    no_update = ["id", "created_at", "updated_at"]
     
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
@@ -83,6 +84,14 @@ def update_state(state_id):
         abort(404)
     else:
         for key, value in body.items():
-            return jsonify(body)
+            if key not in no_update:
+                setattr(state, key, value)
+            else:
+                pass
+        
+        # storage.save()
+        return make_response(jsonify(state.to_dict()), 200)
+                
+            
             
 
