@@ -100,8 +100,8 @@ class DBStorage:
         #     print(error)
         #     return counter
         if cls is None:
-            states = storage.all()
+            states = self.all()
             return len(states)
         else:
-            states = storage.all(cls)
+            states = self.all(cls)
             return len(states)
