@@ -74,10 +74,10 @@ def createcity(state_id=None):
         for key, value in states.items():
             if value.id == state_id:
                 if 'name' in body:
-                    value = {}
-                    value['name'] == body["name"]
-                    value['state_id'] = state_id
-                    new_city = City(**value)
+                    dic = {}
+                    dic['name'] == body["name"]
+                    dic['state_id'] = state_id
+                    new_city = City(**dic)
                     new_city.save()
                     return jsonify(new_city.to_dict())
                 else:
