@@ -45,6 +45,6 @@ def del_state(state_id):
     if state is None:
         abort(404)
     else:
-        storage.delete(state)
-        storage.save()
+        # storage.delete(state)
+        # storage.save()
         return "AAAAAAAAAAAAAAAAAAAAAAAA"
