@@ -27,11 +27,14 @@ def state_by_id(state_id):
     Retrieves the list of all State objects
     """
 
-    for state in storage.all("State").values():
-        if state_id == State.id:
-            return jsonify(state.to_dict())
+    state = storage.get("State", state_id)
     
-    abort(404)
+    if state is None:
+        abort(404)
+    else:
+        return jsonify(state.to_dict())
+            
     
         
         
+
