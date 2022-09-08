@@ -81,6 +81,8 @@ class FileStorage:
                 if objects[key].id == id:
                     return value
             return None
+        else:
+            return None
         
     def count(self, cls=None):
         """
