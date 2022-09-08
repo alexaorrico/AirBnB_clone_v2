@@ -73,7 +73,9 @@ def createcity(state_id=None):
         states = storage.all(State)
         for key, value in states.items():
             if value.id == state_id:
+                print("hola")
                 if 'name' in body:
+                    print("hola1")
                     value = {}
                     value['name'] == body['name']
                     value['state_id'] = state_id
