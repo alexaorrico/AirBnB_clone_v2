@@ -29,14 +29,6 @@ def handle_exception(e):
 
 
 if __name__ == "__main__":
-    if getenv('HBNB_API_HOST') is None:
-        host = '0.0.0.0'
-    else:
-        host = getenv('HBNB_API_HOST')
-
-    if getenv('HBNB_API_PORT') is None:
-        port = 5000
-    else:
-        port = getenv('HBNB_API_PORT')
-
-    app.run(host, port, threaded=True)
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = getenv("HBNB_API_PORT", "5000")
+    app.run(host=host, port=port, threaded=True)
