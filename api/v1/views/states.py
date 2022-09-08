@@ -45,7 +45,6 @@ def create_state():
 		abort(400, 'Not a JSON')
 	if json_req.get("name") is None:
 		abort(404, 'Missing name')
-	state = storage.get("State")
-	new_obj = state(**json_req)
+	new_obj = State(**json_req)
 	new_obj.save()
 	return jsonify(new_obj.to_dict()), 201
