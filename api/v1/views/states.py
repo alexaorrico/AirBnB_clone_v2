@@ -38,7 +38,7 @@ def deleteState(state_id):
 	storage.save()
 	return jsonify({}), 200
 
-@app_views.route("/states", methods=['POST'])
+@app_views.route("/states", methods=['POST'], strict_slashes=False)
 def create_state():
 	json_req = request.get_json()
 	if json_req is None:
@@ -47,4 +47,4 @@ def create_state():
 		abort(404, 'Missing name')
 	new_obj = State(**json_req)
 	new_obj.save()
-	return jsonify(new_obj.to_json()), 201
+	return jsonify(new_obj.to_dict()), 201
