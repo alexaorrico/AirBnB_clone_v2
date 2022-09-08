@@ -79,7 +79,7 @@ class DBStorage:
         """method to retrieve one object"""
         if cls and id:
             dic = self.all(cls)
-            key = cls + "." + id
+            key = "{}.{}".format(cls.__name__, id)
             return dic.get(key)
         return None
     
