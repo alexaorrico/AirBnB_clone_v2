@@ -65,7 +65,7 @@ def states(state_id=None):
                             setattr(value, k, v)
                     value.save()
                     return jsonify(value.to_dict()), 200
-            abort(404)
+            return jsonify("hola")
         except Exception as err:
             return jsonify({
                     "error": "Not a JSON"
@@ -76,5 +76,5 @@ def states(state_id=None):
             if states[key].id == state_id:
                 storage.delete(states[key])
                 storage.save()
-                return jsonify({})
+                return jsonify({}), 200
         abort(404)
