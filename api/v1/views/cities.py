@@ -3,16 +3,14 @@
 City instance
 """
 
-
 from crypt import methods
 from flask import Flask, jsonify, request, abort, make_response
 from api.v1.views import app_views
 from models import storage
-from models.state import State
 from models.state import City
 
 
-@app_views.route("/api/v1/states/<state_id>/cities", methods=["GET"],
+@app_views.route("/states/<state_id>/cities", methods=["GET"],
                  strict_slashes=False)
 def cities_state(state_id):
     """Retrieves the list of all City objects of a State"""
@@ -74,4 +72,3 @@ def post_city(state_id):
         # city.save()
         return make_response(jsonify(city.to_dict()), 201)
 
-@app_views.route("")
