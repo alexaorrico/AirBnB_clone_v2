@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Index
+"""file states"""
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -11,10 +11,11 @@ from api.v1.views import app_views
 from flask import jsonify, request, abort
 import json
 
+
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
-
+           
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 @app_views.route('/states', methods=['GET', 'POST'])
 def states(state_id=None):
