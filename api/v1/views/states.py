@@ -58,8 +58,8 @@ def states(state_id=None):
             for key, value in states.items():
                 if states[key].id == state_id:
                     for k, v in body.items():
-                        if k is not 'id' and k is not 'created_at' and
-                        k is not 'updated_at':
+                        if k is not 'id' and k is not 'created_at'
+                        and k is not 'updated_at':
                             setattr(value, k, v)
                     value.save()
                     return jsonify(value.to_dict()), 200
