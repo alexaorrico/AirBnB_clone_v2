@@ -86,7 +86,7 @@ def createcity(state_id=None):
                         }), 400
         abort(404)
     except Exception as err:
-        return err
+        return jsonify(err)
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
