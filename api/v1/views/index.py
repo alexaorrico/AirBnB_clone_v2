@@ -13,9 +13,9 @@ def status():
 @app_views.route('/stats')
 def stats():
     dic = {}
-    classes = {"amenity": "Amenity", "city": "City",
-               "place": "Place", "review": "Review",
-               "state": "State", "user": "User"}
+    classes = {"amenities": "Amenity", "cities": "City",
+               "places": "Place", "reviews": "Review",
+               "states": "State", "users": "User"}
     for key, value in classes.items():
         dic[key] = storage.count(value)
     return dic
