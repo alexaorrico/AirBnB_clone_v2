@@ -17,7 +17,8 @@ def getStates():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def getStateById(state_id):
 	"""asdasdasda"""
-	state = storage.get("State", state_id)
+	key = "State" + "." + "{}".format(state_id)
+	state = storage.get(key)
 	print(state)
 	if state is None:
 		abort(404)
