@@ -4,7 +4,7 @@ from ast import Return
 from crypt import methods
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models.state import State
 
 
@@ -48,4 +48,4 @@ def create_state():
 	new_obj = State(**json_req)
 	storage.new(new_obj)
 	storage.save()
-	return jsonify(new_obj.to_dict()), 201
+	return make_response(jsonify(new_obj.to_dict()), 201)
