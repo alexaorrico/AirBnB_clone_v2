@@ -15,7 +15,7 @@ classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'])
+@app_views.route('/states/<state_id>/cities', methods=['GET'],  strict_slashes=False)
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
     if request.method == 'GET':
@@ -39,7 +39,7 @@ def cityobjs(state_id=None):
                 return jsonify(list_of_cities)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'])
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def citybjs(city_id=None):
     """Function that returns an obj if it matches city_id"""
     if request.method == 'GET':
@@ -53,7 +53,7 @@ def citybjs(city_id=None):
             abort(404)
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'])
+@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def deleteobj(city_id=None):
     """Function to delete an obj"""
     if request.method == 'DELETE':
@@ -66,7 +66,7 @@ def deleteobj(city_id=None):
         abort(404)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
 def createcity(state_id=None):
     """Function to create an obj"""
     try:
@@ -92,7 +92,7 @@ def createcity(state_id=None):
         }), 400
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'])
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def updatecity(city_id=None):
     """Function to update a city obj"""
     try:
