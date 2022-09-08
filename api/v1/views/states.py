@@ -14,7 +14,11 @@ def state():
     Retrieves the list of all State objects
     """
     
+    states = []
+    
     for state in storage.all("State").values():
-        print("AAAAAAAAAA", state)
+        states.append(state.to_dict())
+        
+    return jsonify(states)
         
     
