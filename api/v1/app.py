@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from flask import Flask
 from flask import Blueprint, Response
 from os import getenv
-from flask import jsonify
+from flask import jsonify, make_response
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -22,10 +22,7 @@ def teardown_appcontext(self):
 
 @app.errorhandler(404)
 def handle_exception(e):
-    return jsonify(
-        {
-            "error": "Not found"
-        }), 404
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == "__main__":

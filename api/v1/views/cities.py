@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# City class
+"""file cities"""
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
