@@ -65,7 +65,7 @@ def states(state_id=None):
 
 @app_views.route('/states/<state_id>', methods=['PUT'],
                  strict_slashes=False)
-def states(state_id=None):
+def state(state_id=None):
     """def"""
     try:
         body = request.get_json()
