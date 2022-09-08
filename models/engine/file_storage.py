@@ -78,7 +78,7 @@ class FileStorage:
         
         if cls and id:
             for key, value in objects.items():
-                if objects[key].id == id:
+                if key.id == id:
                     return value
             return None
         else:
