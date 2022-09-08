@@ -87,15 +87,21 @@ class DBStorage:
 
     def count(self, cls=None):
         """Function to return the amount of obj from one class"""
-        try:
-            counter = 0
-            objs = self.all(cls)
-            for obj in objs:
-                counter += 1
-            return counter
-        except Exception as error:
-            objs = self.all()
-            for obj in objs:
-                counter += 1
-            print(error)
-            return counter
+        # try:
+        #     counter = 0
+        #     objs = self.all(cls)
+        #     for obj in objs:
+        #         counter += 1
+        #     return counter
+        # except Exception as error:
+        #     objs = self.all()
+        #     for obj in objs:
+        #         counter += 1
+        #     print(error)
+        #     return counter
+        if cls is None:
+            states = storage.all()
+            return len(states)
+        else:
+            states = storage.all(cls)
+            return len(states)
