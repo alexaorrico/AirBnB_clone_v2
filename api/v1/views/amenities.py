@@ -70,7 +70,7 @@ def create_amenity():
 @app_views.route("/amenities/<amenity_id>", methods=["PUT"],
                  strict_slashes=False)
 def update_amenity(amenity_id):
-    """Updates a City instance"""
+    """Updates a Amenity instance"""
 
     body = request.get_json()
     no_update = ["id", "created_at", "updated_at"]
