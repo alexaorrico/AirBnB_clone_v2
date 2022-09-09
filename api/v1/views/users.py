@@ -61,14 +61,14 @@ def create_user():
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "email" not in body:
+    elif "email" not in body.keys():
         return make_response(jsonify({"error": "Missing email"}), 400)
-    elif "password" not in body:
+    elif "password" not in body.keys():
         return make_response(jsonify({"error": "Missing password"}), 400)
-    else:
-        user = User(**body)
-        user.save()
-        return make_response(jsonify(user.to_dict()), 201)
+    
+    user = User(**body)
+    user.save()
+    return make_response(jsonify(user.to_dict()), 201)
 
 
 @app_views.route("/users/<user_id>", methods=["PUT"],
