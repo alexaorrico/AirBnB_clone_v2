@@ -62,7 +62,7 @@ def create_city(state_id):
             city = City(**body)
             city.state_id = state_id
             city.save()
-            return make_response(jsonify(city.to_dict()), 201)}
+            return make_response(jsonify(city.to_dict()), 201)
     except Exception as e:
          return make_response(jsonify({"error": "Not a JSON"}), 400)
 
