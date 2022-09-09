@@ -57,15 +57,18 @@ def users(user_id=None):
             return jsonify(new_user.to_dict()), 201
     else:
         try:
+            notAttr = ['id', 'email', 'created_at', 'updated_at']
             body = request.get_json()
-            notAttr['id', 'created_at', 'updated_at', 'email']
-            user = storage.get("User", user_id)
-            if user is None:
-                abort(404)
-            for key in body.keys():
-                if key not in notAttr:
-                    setattr(users, key, body[key])
-            storage.save()
-            return jsonify(user.to_dict()), 200
+            users = storage.all(User)
+            for key, value in users.items():
+                if users[key].id == user_id:
+                    for k, v in body.items():
+                        if k not in notAttr:
+                            setattr(value, k, v)
+                    value.save()
+                    return jsonify(value.to_dict()), 200
+            return jsonify({"error": "Not found"}), 404
         except Exception as error:
-            return jsonify({"error": "Not a JSON"}), 400
+            return jsonify({
+                "error": "Not a JSON"
+            }), 400
