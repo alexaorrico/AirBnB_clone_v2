@@ -65,7 +65,7 @@ def users(user_id=None):
         body = request.get_json()
         no_update = ["id", "email", "created_at", "updated_at"]
         if body is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+            return make_response(jsonify({"error": "Not a JSON"}), 400)
 
         user = storage.get("User", user_id)
 
