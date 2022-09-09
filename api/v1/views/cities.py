@@ -21,6 +21,7 @@ def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
     if request.method == 'GET':
         if state_id is None:
+            print("hola")
             abort(404)
         else:
             list_of_cities = []
