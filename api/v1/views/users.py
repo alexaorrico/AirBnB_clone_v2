@@ -37,21 +37,13 @@ def users(user_id=None):
                     return jsonify(value.to_dict())
             abort(404)
     elif request.method == 'DELETE':
-        user = storage.get("User", user_id)
-
-        if user is None:
-            abort(404)
-        else:
-            user.delete()
-            storage.save()
-            return make_response(jsonify({}), 200)
-        # users = storage.all()
-        # for key, value in users.items():
-        #     if users[key].id == user_id:
-        #         storage.delete(users[key])
-        #         storage.save()
-        #         return jsonify({}), 200
-        # abort(404)
+        users = storage.all()
+        for key, value in users.items():
+            if users[key].id == user_id:
+                storage.delete(users[key])
+                storage.save()
+                return jsonify({}), 200
+        abort(404)
     elif request.method == 'POST':
         body = request.get_json()
         if body is None:
