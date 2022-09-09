@@ -102,5 +102,5 @@ def update_review(review_id):
         else:
             pass
 
-    body.save()
-    return make_response(jsonify(review.to_dict()), 201)
+    storage.save()
+    return make_response(jsonify(review.to_dict()), 200)
