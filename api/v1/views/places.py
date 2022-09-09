@@ -4,6 +4,7 @@ User instance
 """
 
 from crypt import methods
+from dataclasses import asdict
 from flask import Flask, jsonify, request, abort, make_response
 from api.v1.views import app_views
 from models import storage
@@ -81,6 +82,8 @@ def create_place(city_id):
         if city is None:
             abort(404)
 
+        body["city_id"] = city_id
+        
         place = Place(**body)
         storage.save()
         return make_response(jsonify(place.to_dict()), 201)
