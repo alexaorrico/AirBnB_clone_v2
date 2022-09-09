@@ -24,20 +24,15 @@ def cityobjs(state_id=None):
             abort(404)
         else:
             list_of_cities = []
-            # cities = storage.all(City)
-            # for key, value in cities.items():
-            #     if cities[key].state_id == state_id:
-            #         obj = value.to_dict()
-            #         list_of_cities.append(obj)
             states = storage.all(State)
             for key, value in states.items():
                 if value.id == state_id:
                     for i in value.cities:
                         list_of_cities.append(i.to_dict())
+                    print(list_of_cities)
+            
             if len(list_of_cities) == 0:
-                return jsonify({
-                    "error": "Not found"
-                }), 404
+                return jsonify({'error': 'Not found'}), 404
             else:
                 return jsonify(list_of_cities)
 
