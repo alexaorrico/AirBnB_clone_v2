@@ -67,7 +67,8 @@ def create_review(place_id):
     if "text" not in body.keys():
         return make_response(jsonify({"error": "Missing text"}), 400)
 
-    if storage.get("User", body["user_id"]) is None:
+    user = storage.get("User", body["user_id"])
+    if user is None:
         abort(404)
 
     place = storage.get("Place", place_id)
@@ -90,9 +91,6 @@ def update_review(review_id):
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-
-    if storage.get("Review", body["review_id"]) is None:
-        abort(404)
 
     review = storage.get("Review", review_id)
 
