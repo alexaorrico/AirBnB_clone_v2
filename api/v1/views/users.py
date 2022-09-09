@@ -70,10 +70,10 @@ def users(user_id=None):
             body = request.get_json()
             user = storage.get(User, user_id)
             if user is None:
-                abort(404) 
+                abort(404)
             for k, v in body.items():
-                    if k not in notAttr:
-                        setattr(value, k, v)
+                if k not in notAttr:
+                    setattr(value, k, v)
             value.save()
             return jsonify(value.to_dict()), 200
         except Exception as error:
