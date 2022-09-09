@@ -62,31 +62,6 @@ def users(user_id=None):
                     value[key] = body[key]
                     new_user = User(**value)
                     return jsonify(new_user.to_dict()), 200
-
-        #     if 'email' in body:
-        #         value = {}
-        #         value['email'] = body['email']
-        #         new_user = User(**value)
-        #         new_user.save()
-        #         return jsonify(new_user.to_dict()), 201
-        #     else:
-        #         return jsonify({
-        #             "error": "Missing email"
-        #         }), 400
-        #     if 'password' in body:
-        #         value = {}
-        #         value['password'] = body['password']
-        #         new_user = User(**value)
-        #         new_user.save()
-        #         return jsonify(new_user.to_dict()), 201
-        #     else:
-        #         return jsonify({
-        #             "error": "Missing password"
-        #         }), 400
-        # except Exception as error:
-        #     return jsonify({
-        #             "error": "Not a JSON"
-        #         }), 400
     else:
         try:
             notAttr['id', 'created_at', 'updated_at', 'email']
