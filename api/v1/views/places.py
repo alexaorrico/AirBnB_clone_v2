@@ -3,8 +3,7 @@
 User instance
 """
 
-from crypt import methods
-from dataclasses import asdict
+
 from flask import Flask, jsonify, request, abort, make_response
 from api.v1.views import app_views
 from models import storage
