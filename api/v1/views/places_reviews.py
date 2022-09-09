@@ -75,8 +75,8 @@ def create_review(place_id):
     if place is None:
         abort(404)
     else:
+        body['place_id'] = place_id
         review = Review(**body)
-        review.place_id = place_id
         review.save()
         return make_response(jsonify(review.to_dict()), 201)
 
