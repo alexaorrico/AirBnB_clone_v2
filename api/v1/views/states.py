@@ -21,7 +21,7 @@ def states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def states_id(state_id):
-    state = storage.get(State, id)
+    state = storage.get(State, state_id)
     if state is None:
         not_found(404)
-    return(jsonify(state.to_dict()))
+    return (jsonify(state.to_dict()))
