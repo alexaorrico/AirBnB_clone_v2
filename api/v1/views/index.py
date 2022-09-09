@@ -10,12 +10,18 @@ from models import storage
 
 @app_views.route('/status')
 def status():
+    """
+    Returns a JSON message
+    """
     message = {"status": "OK"}
     return jsonify(message)
 
 
 @app_views.route('/stats')
 def stats():
+    """
+    Create an endpoint that retrieves the number of each objects by type
+    """
     cls = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
