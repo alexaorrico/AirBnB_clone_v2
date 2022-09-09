@@ -99,7 +99,7 @@ def updatecity(city_id=None):
                         setattr(value, k, v)
                 value.save()
                 return jsonify(value.to_dict()), 200
-        return jsonify({'error': 'Not found'}), 404
+        abort(404)
     except Exception as err:
         return jsonify({
                     "error": "Not a JSON"
