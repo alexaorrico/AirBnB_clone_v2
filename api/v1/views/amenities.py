@@ -89,5 +89,5 @@ def update_amenity(amenity_id):
             else:
                 pass
 
-        storage.save()
+        amenity.save()
         return make_response(jsonify(amenity.to_dict()), 200)
