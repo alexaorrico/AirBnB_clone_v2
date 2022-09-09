@@ -52,10 +52,10 @@ def users(user_id=None):
             return jsonify({"error": "Missing email"}), 400
         if "password" not in body:
             return jsonify({"error": "Missing password"}), 400
-            else:
-                new_user.new()
-                new_user.save()
-                return jsonify(new_user.to_dict()), 201
+        else:
+            new_user.new()
+            new_user.save()
+            return jsonify(new_user.to_dict()), 201
     else:
         try:
             body = request.get_json()
