@@ -44,7 +44,7 @@ def create_state():
     if json_req is None:
         abort(400, 'Not a JSON')
     if json_req.get("name") is None:
-        abort(404, 'Missing name')
+        abort(400, 'Missing name')
     new_obj = State(**json_req)
     storage.new(new_obj)
     storage.save()
