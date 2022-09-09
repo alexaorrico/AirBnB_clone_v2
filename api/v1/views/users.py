@@ -54,15 +54,17 @@ def delete_user(user_id):
         return make_response(jsonify({}), 200)
 
 
-@app_views.route("/users", methods=["POST "], strict_slashes=False)
+@app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user():
     """Creates a City instance"""
     body = request.get_json()
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "name" not in body.keys():
-        return make_response(jsonify({"error": "Missing name"}), 400)
+    elif "email" not in body.keys():
+        return make_response(jsonify({"error": "Missing email"}), 400)
+    elif "password" not in body.keys():
+        return make_response(jsonify({"error": "Missing password"}), 400)
     else:
         user = User(**body)
         user.save()
