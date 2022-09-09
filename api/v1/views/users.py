@@ -93,5 +93,5 @@ def update_user(user_id):
         else:
             pass
 
-    storage.save()
+    user.save()
     return make_response(jsonify(user.to_dict()), 200)
