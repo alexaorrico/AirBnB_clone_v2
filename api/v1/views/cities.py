@@ -78,7 +78,7 @@ def createcity(state_id=None):
                     return jsonify({
                             "error": "Missing name"
                         }), 400
-        return jsonify({'error': 'Not found'}), 404
+        abort(404)
     except Exception as err:
         return jsonify({
             "error": "Not a JSON"
