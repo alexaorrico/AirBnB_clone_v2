@@ -86,7 +86,7 @@ def update_user(user_id):
 
     if user is None:
         abort(404)
-    
+
     for key in body.keys():
         if key not in no_update:
             setattr(user, key, body[key])
