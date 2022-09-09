@@ -70,8 +70,8 @@ def users(user_id=None):
             if user is None:
                 abort(404)
             for key in body.keys():
-                if k not in notAttr:
-                    setattr(user, k, body[k])
+                if key not in notAttr:
+                    setattr(user, key, body[key])
             storage.save()
             return jsonify(user.to_dict()), 200
         except Exception as error:
