@@ -16,8 +16,10 @@ classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/users', methods=['GET', 'POST'],
+                 strict_slashes=False)
+@app_views.route('/users/<user_id>',
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def users(user_id=None):
     """Users funtions"""
     if request.method == 'GET':
