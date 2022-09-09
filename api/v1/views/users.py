@@ -45,35 +45,23 @@ def users(user_id=None):
                 return jsonify({}), 200
         abort(404)
     elif request.method == 'POST':
-        body = request.get_json()
-
-        if body is None:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
-        elif "email" not in body.keys():
-            return make_response(jsonify({"error": "Missing email"}), 400)
-        elif "password" not in body.keys():
-            return make_response(jsonify({"error": "Missing password"}), 400)
-
-        user = User(**body)
-        user.save()
-        return make_response(jsonify(user.to_dict()), 201)
-        # try:
-        #     body = request.get_json()
-        #     if 'email' not in body.keys():
-        #         return jsonify({
-        #             "error": "Missing email"
-        #         }), 400
-        #     elif "password" not in body.keys():
-        #         return jsonify({
-        #             "error": "Missing password"
-        #         }), 400
-        #     new_user = User(**body)
-        #     new_user.save()
-        #     return jsonify(new_user.to_dict()), 201
-        # except Exception as error:
-        #     return jsonify({
-        #             "error": "Not a JSON"
-        #         }), 400
+        try:
+            body = request.get_json()
+            if 'email' not in body.keys():
+                return jsonify({
+                    "error": "Missing email"
+                }), 400
+            elif "password" not in body.keys():
+                return jsonify({
+                    "error": "Missing password"
+                }), 400
+            new_user = User(**body)
+            new_user.save()
+            return jsonify(new_user.to_dict()), 201
+        except Exception as error:
+            return jsonify({
+                    "error": "Not a JSON"
+                }), 400
     else:
         try:
             notAttr['id', 'created_at', 'updated_at', 'email']
