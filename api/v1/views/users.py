@@ -43,7 +43,7 @@ def user_by_id(user_id):
                  strict_slashes=False)
 def delete_user(user_id):
     """Deletes a amenity instance"""
-    
+
     user = storage.get("Amenity", user_id)
 
     if user_id is None:
