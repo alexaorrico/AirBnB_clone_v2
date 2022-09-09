@@ -49,7 +49,7 @@ def delete_user(user_id):
     if user is None:
         abort(404)
     else:
-        user.delete(user_id)
+        user.delete()
         storage.save()
         return make_response(jsonify({}), 200)
 
@@ -65,7 +65,7 @@ def create_user():
         return make_response(jsonify({"error": "Missing email"}), 400)
     elif "password" not in body.keys():
         return make_response(jsonify({"error": "Missing password"}), 400)
-    
+
     user = User(**body)
     user.save()
     return make_response(jsonify(user.to_dict()), 201)
