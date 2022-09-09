@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 import json
+import unittest
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -68,3 +69,7 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+
+if __name__ == '__main__':
+    unittest.main
