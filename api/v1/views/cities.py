@@ -20,22 +20,21 @@ classes = {"amenities": Amenity, "cities": City,
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
     if request.method == 'GET':
-        if state_id is None:
-            print("hola")
-            abort(404)
-        else:
-            list_of_cities = []
-            states = storage.all(State)
-            for key, value in states.items():
-                if value.id == state_id:
-                    for i in value.cities:
-                        list_of_cities.append(i.to_dict())
-                    print(list_of_cities)
+        # if state_id is None:
+        #     abort(404)
+        # else:
+        list_of_cities = []
+        states = storage.all(State)
+        for key, value in states.items():
+            if value.id == state_id:
+                for i in value.cities:
+                    list_of_cities.append(i.to_dict())
+                print(list_of_cities)
             
-            if len(list_of_cities) == 0:
-                return jsonify({'error': 'Not found'}), 404
-            else:
-                return jsonify(list_of_cities)
+        if len(list_of_cities) == 0:
+            return jsonify({'error': 'Not found'}), 404
+        else:
+            return jsonify(list_of_cities)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
