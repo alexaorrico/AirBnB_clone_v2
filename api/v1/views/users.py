@@ -46,7 +46,6 @@ def users(user_id=None):
         abort(404)
     elif request.method == 'POST':
         try:
-            notAttr = ['email', 'password']
             body = request.get_json()
             if 'email' not in body.keys():
                 return jsonify({
@@ -56,10 +55,9 @@ def users(user_id=None):
                 return jsonify({
                     "error": "Missing password"
                 }), 400
-            else:
-                new_user = User(**body)
-                new_user.save()
-                return jsonify(new_user.to_dict()), 201
+            new_user = User(**body)
+            new_user.save()
+            return jsonify(new_user.to_dict()), 201
         except Exception as error:
             return jsonify({
                     "error": "Not a JSON"
