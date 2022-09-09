@@ -18,17 +18,16 @@ classes = {"amenities": Amenity, "cities": City,
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
-    if request.method == 'GET':
-        list_of_cities = []
-        states = storage.all(State)
-        for key, value in states.items():
-            if value.id == state_id:
-                for i in value.cities:
-                    list_of_cities.append(i.to_dict())            
-        if len(list_of_cities) == 0:
-            abort(404)
-        else:
-            return jsonify(list_of_cities)
+    list_of_cities = []
+    states = storage.all(State)
+    for key, value in states.items():
+        if value.id == state_id:
+            for i in value.cities:
+                list_of_cities.append(i.to_dict())            
+    if len(list_of_cities) == 0:
+        abort(404)
+    else:
+        return jsonify(list_of_cities)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
