@@ -69,11 +69,11 @@ def users(user_id=None):
             user = storage.get("User", user_id)
             if user is None:
                 abort(404)
-            for k, v in body.items():
+            for key in body.keys():
                 if k not in notAttr:
-                    setattr(v, k, v)
-            v.save()
-            return jsonify(v.to_dict()), 200
+                    setattr(user, k, body[k])
+            storage.save()
+            return jsonify(user.to_dict()), 200
         except Exception as error:
             return jsonify({
                 "error": "Not a JSON"
