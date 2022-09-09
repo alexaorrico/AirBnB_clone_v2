@@ -61,9 +61,9 @@ def create_user():
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "email" not in body.keys():
+    elif "email" not in body:
         return make_response(jsonify({"error": "Missing email"}), 400)
-    elif "password" not in body.keys():
+    elif "password" not in body:
         return make_response(jsonify({"error": "Missing password"}), 400)
     else:
         user = User(**body)
@@ -93,5 +93,5 @@ def update_user(user_id):
         else:
             pass
 
-    user.save()
+    storage.save()
     return make_response(jsonify(user.to_dict()), 200)
