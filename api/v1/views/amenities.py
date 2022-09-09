@@ -3,7 +3,6 @@
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
-from models import amenity
 from models.state import State
 from models.amenity import Amenity
 
@@ -26,6 +25,7 @@ def getAmenityById(amenity_id):
         abort(404)
     amenity = amenity.to_dict()
     return jsonify(amenity)
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
