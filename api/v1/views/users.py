@@ -48,20 +48,18 @@ def users(user_id=None):
         try:
             notAttr = ['email', 'password']
             body = request.get_json()
-            for key, value in body.items():
-                if key in notAttr and key == 'email':
-                    return jsonify({
-                        "error": "Missing email"
-                    }), 400
-                elif key in notAttr and key == 'password':
-                    return jsonify({
-                        "error": "Missing password"
-                    }), 400
-                else:
-                    value = {}
-                    value[key] = body[key]
-                    new_user = User(**value)
-                    return jsonify(new_user.to_dict()), 200
+            if 'email' not in body.keys():
+                return jsonify({
+                    "error": "Missing email"
+                }), 400
+            elif "password" not in body.keys():
+                return jsonify({
+                    "error": "Missing password"
+                }), 400
+            else:
+                new_user = User(**body)
+                new_user.save()
+                return jsonify(new_user.to_dict()), 201
         except Exception as error:
             return jsonify({
                     "error": "Not a JSON"
