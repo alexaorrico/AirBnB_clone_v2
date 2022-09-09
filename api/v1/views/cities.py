@@ -71,7 +71,7 @@ def create_city(state_id):
         
         body["state_id"] = state_id
         city = City(**body)
-        # city.save()
+        city.save()
         return make_response(jsonify(city.to_dict()), 201)
 
 @app_views.route("/cities/<city_id>", methods=["PUT"],
@@ -96,5 +96,5 @@ def update_city(city_id):
             else:
                 pass
 
-        # storage.save()
+        storage.save()
         return make_response(jsonify(city.to_dict()), 200)
