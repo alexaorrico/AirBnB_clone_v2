@@ -47,7 +47,7 @@ def delete_amenity(amenity_id):
     if amenity is None:
         abort(404)
     else:
-        storage.delete(amenity)
+        storage.delete()
         storage.save()
         return make_response(jsonify({}), 200)
 
@@ -61,10 +61,10 @@ def create_amenity():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     elif "name" not in body.keys():
         return make_response(jsonify({"error": "Missing name"}), 400)
-
-    amenity = Amenity(**body)
-    storage.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+    else:
+        amenity = Amenity(**body)
+        storage.save()
+        return make_response(jsonify(amenity.to_dict()), 201)
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["PUT"],
