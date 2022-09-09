@@ -76,12 +76,12 @@ def create_place(city_id):
         user = storage.get("User", user_id)
         if user is None:
             abort(404)
-        
+
         city = storage.get("City", city_id)
         if city is None:
             abort(404)
         # TERMINAR
-        return 
+        return
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"],
