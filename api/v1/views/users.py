@@ -81,8 +81,8 @@ def users(user_id=None):
         # storage.save()
         # return make_response(jsonify(user.to_dict()), 200)
         try:
-            notAttr['id', 'created_at', 'updated_at', 'email']
             body = request.get_json()
+            notAttr['id', 'created_at', 'updated_at', 'email']
             user = storage.get("User", user_id)
             if user is None:
                 abort(404)
@@ -92,6 +92,4 @@ def users(user_id=None):
             storage.save()
             return jsonify(user.to_dict()), 200
         except Exception as error:
-            return jsonify({
-                "error": "Not a JSON"
-            }), 400
+            return jsonify({"error": "Not a JSON"}), 400
