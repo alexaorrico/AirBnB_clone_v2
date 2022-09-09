@@ -36,8 +36,8 @@ def cityobjs(state_id=None):
                         list_of_cities.append(i.to_dict())
             if len(list_of_cities) == 0:
                 return jsonify({
-                    "error": "Not a JSON"
-                }), 400
+                    "error": "Not found"
+                }), 404
             else:
                 return jsonify(list_of_cities)
 
