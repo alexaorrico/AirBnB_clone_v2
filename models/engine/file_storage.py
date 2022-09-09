@@ -27,11 +27,12 @@ class FileStorage:
     def get(self, cls, id):
         """ returns Object based on Class and Id """
         if cls is not None and id is not None:
-            print(self.__objects["{}.{}".format(cls.__name__, id)])
-            return self.__objects["{}.{}".format(cls.__name__, id)]
+            return self.__objects.get("{}.{}".format(cls.__name__, id))
         else:
             return None 
 
+    def count(self, cls=None):
+        return len(self.all(cls))
 
     def all(self, cls=None):
         """returns the dictionary __objects"""
