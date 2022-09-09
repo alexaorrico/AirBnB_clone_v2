@@ -59,12 +59,12 @@ def users(user_id=None):
         try:
             body = request.get_json()
             notAttr['id', 'created_at', 'updated_at', 'email']
-            user = storage.get("User", users_id)
+            user = storage.get("User", user_id)
             if user is None:
                 abort(404)
             for key in body.keys():
                 if key not in notAttr:
-                    setattr(user, key, body[key])
+                    setattr(users, key, body[key])
             storage.save()
             return jsonify(user.to_dict()), 200
         except Exception as error:
