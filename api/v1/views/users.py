@@ -34,7 +34,7 @@ def users(user_id=None):
             users = storage.all(User)
             for key, value in users.items():
                 if users[key].id == user_id:
-                    return jsonify(value.to_dict())
+                    return value.to_dict()
             abort(404)
     elif request.method == 'DELETE':
         users = storage.all()
