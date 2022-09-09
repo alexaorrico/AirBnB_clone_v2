@@ -59,6 +59,7 @@ class TestPlaceDocs(unittest.TestCase):
 
 class TestPlace(unittest.TestCase):
     """Test the Place class"""
+
     def test_is_subclass(self):
         """Test that Place is a subclass of BaseModel"""
         place = Place()
@@ -163,7 +164,10 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(type(place.longitude), float)
             self.assertEqual(place.longitude, 0.0)
 
+    """
     @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
+    """
+
     def test_amenity_ids_attr(self):
         """Test Place has attr amenity_ids, and it's an empty list"""
         place = Place()
