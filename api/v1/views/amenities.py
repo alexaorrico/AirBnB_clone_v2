@@ -15,8 +15,11 @@ import json
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
-@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+
+@app_views.route('/amenities', methods=['GET', 'POST'],
+                 strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def amenities(amenity_id=None):
     """Function to return all amenities objects"""
     if request.method == "GET":
@@ -34,7 +37,7 @@ def amenities(amenity_id=None):
                     return jsonify(value.to_dict)
             abort(404)
     elif request.method == 'DELETE':
-        if storage.get(Amenity, amenity_id) == None:
+        if storage.get(Amenity, amenity_id) is None:
             abort(404)
         else:
             return jsonify({}), 200
@@ -56,7 +59,7 @@ def amenities(amenity_id=None):
                     "error": "Not a JSON"
                 }), 400
     else:
-        if storage.get(Amenity, amenity_id) == None:
+        if storage.get(Amenity, amenity_id) is None:
             abort(404)
         else:
             try:
