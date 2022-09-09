@@ -19,7 +19,7 @@ def users():
     users = []
 
     for user in storage.all("User").values():
-        amenities.append(user.to_dict())
+        users.append(user.to_dict())
 
     return jsonify(users)
 
