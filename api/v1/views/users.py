@@ -27,8 +27,7 @@ def users(user_id=None):
             list_of_users = []
             users = storage.all(User)
             for key, value in users.items():
-                obj = value.to_dict()
-                list_of_users.append(obj)
+                list_of_users.append(value.to_dict())
             return jsonify(list_of_users)
         else:
             users = storage.all(User)
@@ -37,24 +36,26 @@ def users(user_id=None):
                     return value.to_dict()
             abort(404)
     elif request.method == 'DELETE':
-        users = storage.all()
-        for key, value in users.items():
-            if users[key].id == user_id:
-                storage.delete(users[key])
-                storage.save()
-                return jsonify({}), 200
-        abort(404)
+        user = storage.get("User", user_id)
+        if user is None:
+            abort(404)
+        else:
+            storage.delete(user)
+            storage.save()
+            return jsonify({}), 200
     elif request.method == 'POST':
         body = request.get_json()
         if body is None:
             return jsonify({"error": "Not a JSON"}), 400
-        if 'email' not in body.keys():
-            return jsonify({"error": "Missing email"}), 400
-        elif "password" not in body.keys():
-            return jsonify({"error": "Missing password"}), 400
         new_user = User(**body)
-        new_user.save()
-        return jsonify(new_user.to_dict()), 201
+        if 'email' not in body:
+            return jsonify({"error": "Missing email"}), 400
+        if "password" not in body:
+            return jsonify({"error": "Missing password"}), 400
+            else:
+                new_user.new()
+                new_user.save()
+                return jsonify(new_user.to_dict()), 201
     else:
         try:
             body = request.get_json()
