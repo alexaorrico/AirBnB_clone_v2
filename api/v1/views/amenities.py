@@ -47,7 +47,7 @@ def delete_amenity(amenity_id):
     if amenity is None:
         abort(404)
     else:
-        amenity.delete()
+        storage.delete(amenity)
         storage.save()
         return make_response(jsonify({}), 200)
 
@@ -59,7 +59,7 @@ def create_amenity():
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "name" not in body:
+    elif "name" not in body.keys():
         return make_response(jsonify({"error": "Missing name"}), 400)
 
     amenity = Amenity(**body)
