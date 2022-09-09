@@ -20,6 +20,7 @@ def cities_state(state_id):
     list_cities = []
     for i in states.cities:
         list_cities.append(i.to_dict)
+    return jsonify(list_cities)
 
 
 @app_views.route("/cities/<city_id>", methods=["GET"],
@@ -51,20 +52,20 @@ def delete_city(city_id):
                  strict_slashes=False)
 def create_city(state_id):
     """Creates a City instance"""
-    try:
-        body = request.get_json()
-        if "name" not in body.keys():
-            return make_response(jsonify({"error": "Missing name"}), 400)
-        state = storage.get("State", state_id)
-        if state is None:
-            abort(404)
-        else:
-            city = City(**body)
-            city.state_id = state_id
-            city.save()
-            return make_response(jsonify(city.to_dict()), 201)
-    except Exception as e:
-         return make_response(jsonify({"error": "Not a JSON"}), 400)
+    body = request.get_json()
+    if body is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    elif "name" not in body.keys():
+        return make_response(jsonify({"error": "Missing name"}), 400)
+
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
+    else:
+        city = City(**body)
+        city.state_id = state_id
+        city.save()
+        return make_response(jsonify(city.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"],
