@@ -37,10 +37,13 @@ def amenities(amenity_id=None):
                     return jsonify(value.to_dict)
             abort(404)
     elif request.method == 'DELETE':
-        if storage.get(Amenity, amenity_id) is None:
-            abort(404)
-        else:
-            return jsonify({}), 200
+        amenities = storage.all(Amenity)
+        for key, value in amenities.items():
+            if amenities.id == amenity_id:
+                storage.delete(amenities[key])
+                storage.save()
+                return jsonify({}), 200
+        abort(404)
     elif request.method == 'POST':
         try:
             body = request.get_json()
@@ -59,22 +62,19 @@ def amenities(amenity_id=None):
                     "error": "Not a JSON"
                 }), 400
     else:
-        if storage.get(Amenity, amenity_id) is None:
-            abort(404)
-        else:
-            try:
-                notAttr = ['id', 'created_at', 'updated_at']
-                body = request.get_json()
-                amenities = storage.all(Amenity)
-                for key, value in amenities.items():
-                    if value.id == amenity_id:
-                        for k, v in body.items():
-                            if k not in notAttr:
-                                setattr(value, k, v)
-                        value.save()
-                        return jsonify(value.to_dict()), 200
-                return jsonify({"error": "Not found"}), 404
-            except Exception as error:
-                return jsonify({
-                    "error": "Not a JSON"
-                }), 400
+        try:
+            notAttr = ['id', 'created_at', 'updated_at']
+            body = request.get_json()
+            amenities = storage.all(Amenity)
+            for key, value in amenities.items():
+                if amenities[key].id == amenity_id:
+                    for k, v in body.items():
+                        if k not in notAttr:
+                            setattr(value, k, v)
+                    value.save()
+                    return jsonify(value.to_dict()), 200
+            return jsonify({"error": "Not found"}), 404
+        except Exception as error:
+            return jsonify({
+                "error": "Not a JSON"
+            }), 400
