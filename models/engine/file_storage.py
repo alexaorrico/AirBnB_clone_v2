@@ -29,9 +29,11 @@ class FileStorage:
         if cls is not None and id is not None:
             return self.__objects.get("{}.{}".format(cls.__name__, id))
         else:
-            return None 
+            return None
 
     def count(self, cls=None):
+        """ returns count of objects in specified class
+        if no class specified, counts all objects """
         return len(self.all(cls))
 
     def all(self, cls=None):
@@ -43,7 +45,6 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
-
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
