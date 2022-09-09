@@ -84,8 +84,5 @@ def update_user(user_id):
     for key in obj_dict.keys():
         if key not in ignore_keys:
             setattr(user, key, obj_dict[key])
-    user.save
-    return (jsonify(user.to_dict()), 200)
-    user.password = obj_dict["password"]
     user.save()
     return (jsonify(user.to_dict()), 200)

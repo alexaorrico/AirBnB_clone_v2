@@ -76,6 +76,10 @@ def update_state(state_id):
         error = {"error": "Not a JSON"}
         return (jsonify(error), 400)
     obj_dict = request.get_json()
-    state.name = obj_dict["name"]
+    ignore_keys = ['id', 'created_at',
+                   'updated_at']
+    for key in obj_dict.keys():
+        if key not in ignore_keys:
+            setattr(state, key, obj_dict[key])
     state.save()
     return (jsonify(state.to_dict()), 200)

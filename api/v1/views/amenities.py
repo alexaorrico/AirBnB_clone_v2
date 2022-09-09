@@ -77,6 +77,10 @@ def update_amenity(amenity_id):
         error = {"error": "Not a JSON"}
         return (jsonify(error), 400)
     obj_dict = request.get_json()
-    amenity.name = obj_dict["name"]
+    ignore_keys = ['id', 'created_at',
+                   'updated_at']
+    for key in obj_dict.keys():
+        if key not in ignore_keys:
+            setattr(amenity, key, obj_dict[key])
     amenity.save()
     return (jsonify(amenity.to_dict()), 200)
