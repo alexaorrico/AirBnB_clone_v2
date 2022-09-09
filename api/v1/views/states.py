@@ -11,6 +11,9 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states():
+    """
+    Retrieves the list of all State objects
+    """
     states = storage.all("State")
     states_list = []
     for state in states.values():
@@ -20,6 +23,9 @@ def states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def states_id(state_id):
+    """
+    Retrieves a State object
+    """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -29,6 +35,9 @@ def states_id(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
+    """
+    Deletes a State object
+    """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -39,6 +48,9 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
+    """
+    Creates a State
+    """
     if not request.get_json():
         error = {"error": "Not a JSON"}
         return (jsonify(error), 400)
@@ -53,6 +65,9 @@ def create_state():
 @app_views.route('/states/<state_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_state(state_id):
+    """
+    Updates a State object
+    """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
