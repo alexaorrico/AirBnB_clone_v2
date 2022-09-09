@@ -31,7 +31,7 @@ def user_by_id(user_id):
     Retrieves the list of all State objects
     """
 
-    user = storage.get("Amenity", user_id)
+    user = storage.get("User", user_id)
 
     if user is None:
         abort(404)
@@ -44,7 +44,7 @@ def user_by_id(user_id):
 def delete_user(user_id):
     """Deletes a amenity instance"""
 
-    user = storage.get("Amenity", user_id)
+    user = storage.get("User", user_id)
 
     if user_id is None:
         abort(404)
