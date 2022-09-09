@@ -53,7 +53,6 @@ def users(user_id=None):
         if "password" not in body:
             return jsonify({"error": "Missing password"}), 400
         else:
-            new_user.new()
             new_user.save()
             return jsonify(new_user.to_dict()), 201
     else:
