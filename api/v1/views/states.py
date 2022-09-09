@@ -5,7 +5,7 @@ State
 
 from api.v1.app import not_found
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, request
 from models import storage
 from models.state import State
 
@@ -36,3 +36,18 @@ def delete_state(state_id):
     state.delete()
     storage.save()
     return (jsonify({}), 200)
+
+
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def create_state():
+    if not request.get_json():
+        error = {"error": "Not a JSON"}
+        return (jsonify(error), 400)
+    elif "name" not in request.get_json():
+        no_name = {"error": "Missing name"}
+        return (jsonify(no_name), 400)
+    else:
+        obj_dict = request.get_json()
+        obj = State(obj_dict)
+        obj.save()
+        return (jsonify(obj.to_dict()), 201)
