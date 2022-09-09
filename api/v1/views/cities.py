@@ -32,7 +32,7 @@ def cityobjs(state_id=None):
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def cityobjs(city_id=None):
+def citybjs(city_id=None):
     """Function that returns an obj if it matches city_id"""
     if request.method == 'GET':
         if city_id is None:
