@@ -29,7 +29,7 @@ def reviews_place(place_id):
 
 @app_views.route("/reviews/<review_id>", methods=["GET"],
                  strict_slashes=False)
-def review_obj(review_id):
+def review(review_id):
     """Retrieves a Review object"""
 
     review = storage.get("Review", review_id)
@@ -54,17 +54,17 @@ def delete_review(review_id):
         return make_response(jsonify({}), 200)
 
 
-@app_views.route("/places/<place_id>/reviews", methods=["POST"],
+"""@app_views.route("/places/<place_id>/reviews", methods=["POST"],
                  strict_slashes=False)
 def create_review(place_id):
-    """Creates a Review"""
+    # Creates a Review"
     body = request.get_json()
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if "user_id" not in body.keys():
+    elif "user_id" not in body.keys():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    if "text" not in body.keys():
+    elif "text" not in body.keys():
         return make_response(jsonify({"error": "Missing text"}), 400)
 
     user = storage.get("User", body["user_id"])
@@ -78,7 +78,7 @@ def create_review(place_id):
         body['place_id'] = place_id
         review = Review(**body)
         review.save()
-        return make_response(jsonify(review.to_dict()), 201)
+        return make_response(jsonify(review.to_dict()), 201)"""
 
 
 @app_views.route("/reviews/<review_id>", methods=["POST"],
