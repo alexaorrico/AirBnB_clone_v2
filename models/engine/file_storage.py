@@ -27,7 +27,7 @@ class FileStorage:
     def get(self, cls, id):
         """ returns Object based on Class and Id """
         if cls is not None and id is not None:
-            return self.__objects["{}.{}".format(cls.__name__, id)]
+            return self.__objects.get("{}.{}".format(cls.__name__, id))
         else:
             return None 
 
