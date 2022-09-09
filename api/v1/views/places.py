@@ -22,11 +22,12 @@ def places(city_id):
 
     if city is None:
         abort(404)
-    else:
-        for place in storage.all("Place").values():
+    
+    for place in storage.all("Place").values():
+        if place.city_id == city_id:
             places.append(place.to_dict())
 
-        return jsonify(places)
+    return jsonify(places)
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
@@ -72,7 +73,7 @@ def create_place(city_id):
         return make_response(jsonify({"error": "Missing name"}), 400)
     elif "user_id" not in body.keys():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    
+
     user = storage.get("User", user_id)
     if user is None:
         abort(404)
