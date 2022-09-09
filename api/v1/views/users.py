@@ -7,7 +7,7 @@ from models.user import User
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
-def getStates():
+def getUsers():
     """aaasdasdasd"""
     users = []
     for user in storage.all("User").values():
@@ -16,7 +16,7 @@ def getStates():
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
-def getStateById(user_id):
+def getUserById(user_id):
     """asdasdasda"""
     user = storage.get(User, user_id)
     if user is None:
@@ -27,7 +27,7 @@ def getStateById(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
-def deleteState(user_id):
+def deleteUser(user_id):
     """asdasdasda"""
 
     user = storage.get(User, user_id)
@@ -39,7 +39,7 @@ def deleteState(user_id):
 
 
 @app_views.route("/states", methods=['POST'], strict_slashes=False)
-def create_state():
+def create_user():
     json_req = request.get_json()
     if json_req is None:
         abort(400, 'Not a JSON')
@@ -54,7 +54,7 @@ def create_state():
 
 
 @app_views.route("/users/<user_id>", methods=['PUT'], strict_slashes=False)
-def update_state(user_id):
+def update_user(user_id):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
