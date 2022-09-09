@@ -46,7 +46,7 @@ def delete_user(user_id):
 
     user = storage.get("User", user_id)
 
-    if user_id is None:
+    if user is None:
         abort(404)
     else:
         user.delete(user_id)
