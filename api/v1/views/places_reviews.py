@@ -96,7 +96,7 @@ def update_review(review_id):
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
-    for key in body.items():
+    for key in body.keys():
         if key not in no_update:
             setattr(review, key, body[key])
         else:
