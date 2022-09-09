@@ -54,10 +54,10 @@ def delete_review(review_id):
         return make_response(jsonify({}), 200)
 
 
-@app_views.route("/places/<place_id>/reviews", methods=["POST"],
+"""@app_views.route("/places/<place_id>/reviews", methods=["POST"],
                  strict_slashes=False)
 def create_review(place_id):
-    """Creates a Review"""
+    ""Creates a Review""
     body = request.get_json()
 
     if body is None:
@@ -78,13 +78,13 @@ def create_review(place_id):
         body['place_id'] = place_id
         review = Review(**body)
         review.save()
-        return make_response(jsonify(review.to_dict()), 201)
+        return make_response(jsonify(review.to_dict()), 201)"""
 
 
-"""@app_views.route("/reviews/<review_id>", methods=["PUT"],
+@app_views.route("/reviews/<review_id>", methods=["PUT"],
                  strict_slashes=False)
 def update_review(review_id):
-   # ""Updates a Review object
+    """Updates a Review object"""
 
     review = storage.get("Review", review_id)
     
@@ -104,4 +104,4 @@ def update_review(review_id):
             pass
 
     storage.save()
-    return make_response(jsonify(review.to_dict()), 201)"""
+    return make_response(jsonify(review.to_dict()), 201)
