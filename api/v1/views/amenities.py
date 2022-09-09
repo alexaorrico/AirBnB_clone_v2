@@ -7,7 +7,6 @@ from crypt import methods
 from flask import Flask, jsonify, request, abort, make_response
 from api.v1.views import app_views
 from models import storage
-from models import amenity
 from models.amenity import Amenity
 
 
