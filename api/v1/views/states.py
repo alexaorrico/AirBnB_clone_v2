@@ -42,11 +42,24 @@ def create_state():
     if not request.get_json():
         error = {"error": "Not a JSON"}
         return (jsonify(error), 400)
-    elif "name" not in request.get_json():
+    if "name" not in request.get_json():
         no_name = {"error": "Missing name"}
         return (jsonify(no_name), 400)
-    else:
-        obj_dict = request.get_json()
-        obj = State(obj_dict)
-        obj.save()
-        return (jsonify(obj.to_dict()), 201)
+    obj_dict = request.get_json()
+    state = State(**obj_dict)
+    state.save()
+    return (jsonify(state.to_dict()), 201)
+
+@app_views.route('/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_state(state_id):
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    if not request.get_json():
+        error = {"error": "Not a JSON"}
+        return (jsonify(error), 400)
+    obj_dict = request.get_json()
+    state.name = obj_dict["name"]
+    state.save()
+    return (jsonify(state.to_dict()), 200)
