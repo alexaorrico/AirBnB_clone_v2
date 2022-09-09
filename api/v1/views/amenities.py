@@ -59,7 +59,7 @@ def create_amenity():
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "name" not in body.keys():
+    elif "name" not in body:
         return make_response(jsonify({"error": "Missing name"}), 400)
 
     amenity = Amenity(**body)
@@ -89,5 +89,5 @@ def update_amenity(amenity_id):
             else:
                 pass
 
-        amenity.save()
+        storage.save()
         return make_response(jsonify(amenity.to_dict()), 200)
