@@ -75,4 +75,3 @@ def amenities(amenity_id=None):
                 return jsonify({
                     "error": "Not a JSON"
                 }), 400
-
