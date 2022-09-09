@@ -62,9 +62,9 @@ def create_review(place_id):
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "user_id" not in body.keys():
+    if "user_id" not in body.keys():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    elif "text" not in body.keys():
+    if "text" not in body.keys():
         return make_response(jsonify({"error": "Missing text"}), 400)
 
     if storage.get("User", body["user_id"]) is None:
