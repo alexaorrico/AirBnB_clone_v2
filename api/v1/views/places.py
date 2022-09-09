@@ -72,19 +72,18 @@ def create_place(city_id):
         return make_response(jsonify({"error": "Missing name"}), 400)
     elif "user_id" not in body.keys():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    else:
-        user = storage.get("User", user_id)
-        if user is None:
-            abort(404)
+    
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
 
-        city = storage.get("City", city_id)
-        if city is None:
-            abort(404)
+    city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
 
-        body["city_id"] = city_id
-        place = Place(**body)
-        storage.save()
-        return make_response(jsonify(place.to_dict()), 201)
+    place = Place(**body)
+    storage.save()
+    return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"],
