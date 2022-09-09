@@ -58,54 +58,43 @@ def deleteobj(city_id=None):
         abort(404)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
+@app_views.route("/states/<state_id>/cities", methods=["POST"],
                  strict_slashes=False)
-def createcity(state_id=None):
-    """Function to create an obj"""
-    try:
-        body = request.get_json()
-        states = storage.all(State)
-        for key, value in states.items():
-            if value.id == state_id:
-                if 'name' in body:
-                    dic = {}
-                    dic['name'] = body["name"]
-                    dic['state_id'] = state_id
-                    new_city = City(**dic)
-                    new_city.save()
-                    return jsonify(new_city.to_dict())
-                else:
-                    return jsonify({
-                            "error": "Missing name"
-                        }), 400
-        return jsonify({'error': 'Not found'}), 404
-    except Exception as err:
-        return jsonify({
-            "error": "Not a JSON"
-        }), 400
-
-
-@app_views.route("/cities/<city_id>", methods=["PUT"],
-                 strict_slashes=False)
-def update_city(city_id):
-    """Updates a City instance"""
-
+def create_city(state_id):
+    """Creates a City instance"""
     body = request.get_json()
-    no_update = ["id", "state_id", "created_at", "updated_at"]
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
+    elif "name" not in body.keys():
+        return make_response(jsonify({"error": "Missing name"}), 400)
 
-    city = storage.get("City", city_id)
-
-    if city is None:
+    state = storage.get("State", state_id)
+    if state is None:
         abort(404)
     else:
-        for key, value in body.items():
-            if key not in no_update:
-                setattr(city, key, value)
-            else:
-                pass
+        city = City(**body)
+        city.state_id = state_id
+        city.save()
+        return make_response(jsonify(city.to_dict()), 201)
 
-        storage.save()
-        return make_response(jsonify(city.to_dict()), 200)
+
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def updatecity(city_id=None):
+    """Function to update a city obj"""
+    try:
+        notAttr = ['id', 'created_at', 'updated_at']
+        body = request.get_json()
+        cities = storage.all(City)
+        for key, value in cities.items():
+            if cities[key].id == city_id:
+                for k, v in body.items():
+                    if k not in notAttr:
+                        setattr(value, k, v)
+                value.save()
+                return jsonify(value.to_dict()), 200
+        abort(404)
+    except Exception as err:
+        return jsonify({
+                    "error": "Not a JSON"
+                }), 400
