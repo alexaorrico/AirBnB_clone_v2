@@ -49,7 +49,7 @@ def delete_user(user_id):
     if user_id is None:
         abort(404)
     else:
-        storage.delete(user_id)
+        user.delete(user_id)
         storage.save()
         return make_response(jsonify({}), 200)
 
