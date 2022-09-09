@@ -64,15 +64,16 @@ def create_city(state_id):
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     elif "name" not in body.keys():
         return make_response(jsonify({"error": "Missing name"}), 400)
-    else:
-        state = storage.get("State", state_id)
-        if state is None:
-            abort(404)
         
-        body["state_id"] = state_id
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
+    else:    
         city = City(**body)
-        city.save()
-        return make_response(jsonify(city.to_dict()), 201)
+        city.state_id = state_id
+    storage.new(city)
+    city.save()
+    return make_response(jsonify(city.to_dict()), 201)
 
 @app_views.route("/cities/<city_id>", methods=["PUT"],
                  strict_slashes=False)
