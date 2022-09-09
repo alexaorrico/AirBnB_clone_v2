@@ -54,9 +54,12 @@ def create_user():
     if not request.get_json():
         error = {"error": "Not a JSON"}
         return (jsonify(error), 400)
-    if "name" not in request.get_json():
-        no_name = {"error": "Missing name"}
-        return (jsonify(no_name), 400)
+    if "email" not in request.get_json():
+        no_email = {"error": "Missing email"}
+        return (jsonify(no_email), 400)
+    if "password" not in request.get_json():
+        no_password = {"error": "Missing password"}
+        return (jsonify(no_password), 400)
     obj_dict = request.get_json()
     user = User(**obj_dict)
     user.save()
@@ -76,6 +79,6 @@ def update_user(user_id):
         error = {"error": "Not a JSON"}
         return (jsonify(error), 400)
     obj_dict = request.get_json()
-    user.name = obj_dict["name"]
+    user.password = obj_dict["password"]
     user.save()
     return (jsonify(user.to_dict()), 200)
