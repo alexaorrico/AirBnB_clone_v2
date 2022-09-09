@@ -59,7 +59,7 @@ def users(user_id=None):
         try:
             body = request.get_json()
             notAttr['id', 'created_at', 'updated_at', 'email']
-            user = storage.get("User", user_id)
+            user = storage.get("User", users_id)
             if user is None:
                 abort(404)
             for key in body.keys():
