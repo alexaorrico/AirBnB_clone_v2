@@ -18,7 +18,9 @@ import json
 import os
 import pep8
 import unittest
+import MySQLdb
 DBStorage = db_storage.DBStorage
+storage = DBStorage()
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -69,31 +71,30 @@ test_db_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    """
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    """
+    @classmethod
+    def setUp(self):
+        """Create the MySQLdb instantation"""
+        storage.reload()
 
+    @classmethod
+    def tearDown(self):
+        """Tear down the MySQLdb"""
+        storage.close()
+
+    """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    """
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    """
-
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    """
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    """
-
     def test_new(self):
         """test that new adds an object to the database"""
-    """
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    """
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
