@@ -45,18 +45,17 @@ def citybjs(city_id=None):
             abort(404)
 
 
-@app_views.route("/cities/<city_id>", methods=["DELETE"],
-                 strict_slashes=False)
-def delete_city(city_id):
-    """Deletes a city instance"""
-    city = storage.get("City", city_id)
-
-    if city is None:
+@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
+def deleteobj(city_id=None):
+    """Function to delete an obj"""
+    if request.method == 'DELETE':
+        cities = storage.all(City)
+        for key, value in cities.items():
+            if cities[key].id == city_id:
+                storage.delete(cities[key])
+                storage.save()
+                return jsonify({})
         abort(404)
-    else:
-        storage.delete(city)
-        storage.save()
-        return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
