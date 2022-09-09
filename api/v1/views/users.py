@@ -62,6 +62,10 @@ def users(user_id=None):
                     value[key] = body[key]
                     new_user = User(**value)
                     return jsonify(new_user.to_dict()), 200
+        except Exception as error:
+            return jsonify({
+                    "error": "Not a JSON"
+                }), 400
     else:
         try:
             notAttr['id', 'created_at', 'updated_at', 'email']
