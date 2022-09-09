@@ -45,38 +45,45 @@ def citybjs(city_id=None):
             abort(404)
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
-def deleteobj(city_id=None):
-    """Function to delete an obj"""
-    if request.method == 'DELETE':
-        cities = storage.all(City)
-        for key, value in cities.items():
-            if cities[key].id == city_id:
-                storage.delete(cities[key])
-                storage.save()
-                return jsonify({})
-        abort(404)
-
-
-@app_views.route("/states/<state_id>/cities", methods=["POST"],
+@app_views.route("/cities/<city_id>", methods=["DELETE"],
                  strict_slashes=False)
-def create_city(state_id):
-    """Creates a City instance"""
-    body = request.get_json()
+def delete_city(city_id):
+    """Deletes a city instance"""
+    city = storage.get("City", city_id)
 
-    if body is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "name" not in body.keys():
-        return make_response(jsonify({"error": "Missing name"}), 400)
-
-    state = storage.get("State", state_id)
-    if state is None:
+    if city is None:
         abort(404)
     else:
-        city = City(**body)
-        city.state_id = state_id
-        city.save()
-        return make_response(jsonify(city.to_dict()), 201)
+        storage.delete(city)
+        storage.save()
+        return make_response(jsonify({}), 200)
+
+
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
+def createcity(state_id=None):
+    """Function to create an obj"""
+    try:
+        body = request.get_json()
+        states = storage.all(State)
+        for key, value in states.items():
+            if value.id == state_id:
+                if 'name' in body:
+                    dic = {}
+                    dic['name'] = body["name"]
+                    dic['state_id'] = state_id
+                    new_city = City(**dic)
+                    new_city.save()
+                    return jsonify(new_city.to_dict())
+                else:
+                    return jsonify({
+                            "error": "Missing name"
+                        }), 400
+        return jsonify({'error': 'Not found'}), 404
+    except Exception as err:
+        return jsonify({
+            "error": "Not a JSON"
+        }), 400
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
