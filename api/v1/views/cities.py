@@ -22,7 +22,7 @@ def cities_state(state_id):
         abort(404)
 
     for city in state.cities:
-        cities.append(city.to_dict)
+        cities.append(city.to_dict())
     
     return jsonify(cities)
 
