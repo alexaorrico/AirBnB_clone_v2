@@ -68,15 +68,14 @@ def users(user_id=None):
         try:
             notAttr['id', 'created_at', 'updated_at', 'email']
             body = request.get_json()
-            users = storage.all(User)
-            for key, value in users.items():
-                if users[key].id == user_id:
-                    for k, v in body.items():
-                        if k not in notAttr:
-                            setattr(value, k, v)
-                    value.save()
-                    return jsonify(value.to_dict()), 200
-            return jsonify({"error": "Not found"}), 404
+            user = storage.get(User, user_id)
+            if user is None:
+                abort(404) 
+            for k, v in body.items():
+                    if k not in notAttr:
+                        setattr(value, k, v)
+            value.save()
+            return jsonify(value.to_dict()), 200
         except Exception as error:
             return jsonify({
                 "error": "Not a JSON"
