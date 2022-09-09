@@ -22,7 +22,7 @@ def places(city_id):
 
     if city is None:
         abort(404)
-    
+
     for place in storage.all("Place").values():
         if place.city_id == city_id:
             places.append(place.to_dict())
@@ -102,12 +102,12 @@ def update_place(place_id):
 
     if place is None:
         abort(404)
-    else:
-        for key, value in body.items():
-            if key not in no_update:
-                setattr(place, key, value)
-            else:
-                pass
 
-        storage.save()
-        return make_response(jsonify(place.to_dict()), 200)
+    for key, value in body.items():
+        if key not in no_update:
+            setattr(place, key, value)
+        else:
+            pass
+
+    storage.save()
+    return make_response(jsonify(place.to_dict()), 200)
