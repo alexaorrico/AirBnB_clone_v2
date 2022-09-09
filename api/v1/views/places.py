@@ -80,8 +80,10 @@ def create_place(city_id):
         city = storage.get("City", city_id)
         if city is None:
             abort(404)
-        # TERMINAR
-        return
+
+        place = Place(**body)
+        storage.save()
+        return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"],
