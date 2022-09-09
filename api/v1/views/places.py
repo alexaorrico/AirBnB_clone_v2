@@ -81,8 +81,6 @@ def create_place(city_id):
         city = storage.get("City", city_id)
         if city is None:
             abort(404)
-
-        body["city_id"] = city_id
         
         place = Place(**body)
         storage.save()
