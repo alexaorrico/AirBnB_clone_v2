@@ -25,7 +25,7 @@ def amenities(amenity_id=None):
     if request.method == "GET":
         if amenity_id is None:
             list_of_amenities = []
-            amenities = storage.get(Amenity)
+            amenities = storage.all(Amenity)
             for key, value in amenities.items():
                 obj = value.to_dict()
                 list_of_amenities.append(obj)
@@ -33,13 +33,13 @@ def amenities(amenity_id=None):
         else:
             amenities = storage.all(Amenity)
             for key, value in amenities.items():
-                if value.id == amenity_id:
-                    return jsonify(value.to_dict)
+                if amenities[key].id == amenity_id:
+                    return jsonify(value.to_dict())
             abort(404)
     elif request.method == 'DELETE':
-        amenities = storage.all(Amenity)
+        amenities = storage.all()
         for key, value in amenities.items():
-            if amenities.id == amenity_id:
+            if amenities[key].id == amenity_id:
                 storage.delete(amenities[key])
                 storage.save()
                 return jsonify({}), 200
