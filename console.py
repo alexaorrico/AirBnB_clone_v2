@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
                     except Exception:
                         try:
                             value = float(value)
-                        except:
+                        except Exception:
                             continue
                 new_dict[key] = value
         return new_dict
