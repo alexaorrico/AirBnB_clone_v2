@@ -68,7 +68,7 @@ def create_state():
         return make_response(jsonify({"error": "Missing name"}), 400)
     else:
         state = State(**body)
-        # state.save()
+        state.save()
         return make_response(jsonify(state.to_dict()), 201)
 
 
@@ -95,5 +95,5 @@ def update_state(state_id):
             else:
                 pass
 
-        # storage.save()
+        storage.save()
         return make_response(jsonify(state.to_dict()), 200)
