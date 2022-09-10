@@ -76,7 +76,6 @@ def postplaces(city_id=None):
     if user is None:
         abort(404)
     new_place = Place(**body)
-    new_place.city_id = city_id
     new_place.save()
     return jsonify(new_place.to_dict()), 201
 
