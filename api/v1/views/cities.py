@@ -57,7 +57,7 @@ def createcity(state_id=None):
     """Function to create an obj"""
     try:
         body = request.get_json()
-        elif "name" not in body.keys():
+        if "name" not in body.keys():
             return jsonify({
                 "error": "Missing Name"
             }), 400
