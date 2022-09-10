@@ -19,14 +19,15 @@ classes = {"amenities": Amenity, "cities": City,
                  strict_slashes=False)
 def places(city_id=None):
     """Functon places"""
-    try:
-        list_of_places = []
-        cities = storage.get("City", city_id)
-        for place in cities.places:
-            list_of_places.append(place.to_dict())
-        return jsonify(list_of_places)
-    except Exception as error:
+    list_of_places = []
+    cities = storage.get("City", city_id)
+    if cities is None:
         abort(404)
+    places = storage.all(Place)
+    for place in places.values():
+        if place.city_id == city_id:
+            list_of_places.append(place.to_dict())
+    return jsonify(list_of_places)
 
 
 @app_views.route('places/<place_id>', methods=['GET'], strict_slashes=False)
