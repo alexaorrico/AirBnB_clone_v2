@@ -100,4 +100,4 @@ def putplaces(place_id=None):
         if key not in notAttr:
             setattr(place, key, value)
     storage.save()
-    return jsonify(place.to_dict())
+    return jsonify(place.to_dict()), 200
