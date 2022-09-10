@@ -16,11 +16,14 @@ def close(exception):
     """close sessions"""
     storage.close()
 
+
 @app.errorhandler(404)
 def handle_bad_request(e):
+    """hanlder error 404"""
     error = {}
     error['error'] = "Not found"
     return jsonify(error), 404
+
 
 if getenv("HBNB_API_HOST") is not None:
     api_host = getenv("HBNB_API_HOST")
