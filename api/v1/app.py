@@ -3,7 +3,7 @@
 (route) will be to return the status of your API"""
 
 
-from api.v1.views import ap_views
+from api.v1.views import app_views
 from models import storage
 from flask import Flask
 from os import getenv
@@ -19,12 +19,6 @@ def close(self):
 
 
 if __name__ == "__main__":
-    if host is None:
-        host = "0.0.0.0"
-    else:
-        host = getenv("HBNB_API_HOST")
-    if port is None:
-        port = "5000"
-    else:
-        port = getenv("HBNB_API_HOST")
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = getenv("HBNB_API_PORT", "5000")
     app.run(host=host, port=port, threaded=True)
