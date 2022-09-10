@@ -71,7 +71,7 @@ def postplaces(city_id=None):
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    user_id = body.get("user_id") 
+    user_id = body.get("user_id")
     user = storage.get("User", user_id)
     if user is None:
         abort(404)
