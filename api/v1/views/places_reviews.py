@@ -74,7 +74,6 @@ def create_review(place_id):
         no_text = {"error": "Missing text"}
         return (jsonify(no_text), 400)
     obj_dict['place_id'] = place.id
-    obj_dict['user_id'] = user.id
     review = Review(**obj_dict)
     review.save()
     return (jsonify(review.to_dict()), 201)
@@ -86,7 +85,7 @@ def update_review(review_id):
     """
     Updates a Review object
     """
-    review = storage.get(Review, reviews_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     if not request.get_json():
