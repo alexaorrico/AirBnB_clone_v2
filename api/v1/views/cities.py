@@ -78,9 +78,13 @@ def createcity(state_id=None):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def updatecity(city_id=None):
     """Function to update a city obj"""
-    try:
         notAttr = ['id', 'state_id', 'created_at', 'updated_at']
         body = request.get_json()
+        if body is None:
+            return jsonify({
+                "error": "Not a JSON"
+            }), 400
+
         city = storage.get("City", city_id)
         if city is None:
             abort(404)
@@ -89,7 +93,3 @@ def updatecity(city_id=None):
                 setattr(city, key, value)
         storage.save()
         return jsonify(city.to_dict()), 200
-    except Exception as error:
-        return jsonify({
-            "error": "Not a JSON"
-        }), 400
