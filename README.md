@@ -156,8 +156,9 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-Sebastian Freire - [Github](https://github.com/SFreire2022) / <4437@holbertonschool.com>
-Mauricio Percovich - [Github](https://github.com/) / <4368@holbertonschool.com>
+Alejandro Reginensi - [Github](https://github.com/alereginensi)
+Agustin Labadie - [Github](https://github.com/labalabadie)
+Leandro Irigoyen - [Github](https://github.com/leandroirigoyen)
 
 third part of Airbnb: Sebastian Freire / Mauricio Percovich
 ## License
