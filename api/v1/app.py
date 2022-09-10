@@ -4,6 +4,7 @@ from models import storage
 from flask import Flask
 from api.v1.views import app_views
 from os import getenv
+from flask import jsonify
 
 
 app = Flask(__name__)
@@ -15,6 +16,11 @@ def close(exception):
     """close sessions"""
     storage.close()
 
+@app.errorhandler(404)
+def handle_bad_request(e):
+    error = {}
+    error['error'] = "Not found"
+    return jsonify(error), 404
 
 if getenv("HBNB_API_HOST") is not None:
     api_host = getenv("HBNB_API_HOST")
