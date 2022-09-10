@@ -66,7 +66,7 @@ def createcity(state_id=None):
         }), 400
 
     state = storage.get("State", state_id)
-    if city is None:
+    if state is None:
         abort(404)
     else:
         new_city = City(**body)
