@@ -9,7 +9,7 @@ from models import storage
 def status():
     """status api"""
     new_dict = {}
-    new_dict['status'] = "ok"
+    new_dict['status'] = "OK"
     return jsonify(new_dict)
 
 
