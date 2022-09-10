@@ -19,24 +19,14 @@ classes = {"amenities": Amenity, "cities": City,
                  strict_slashes=False)
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
-    cities = []
-    state = storage.get("State", state_id)
-
-    if state is None:
+    try:
+        list_of_cities = []
+        state = storage.get("State", state_id)
+        for city in state.cities:
+            list_of_cities.append(city.to_dict())
+        return jsonify(list_of_cities)
+    except Exception as error:
         abort(404)
-
-    for city in state.cities:
-        cities.append(city.to_dict())
-
-    return jsonify(cities)
-    # try:
-    #     list_of_cities = []
-    #     state = storage.get("State", state_id)
-    #     for city in state.cities:
-    #         list_of_cities.append(city.to_dict())
-    #     return jsonify(list_of_cities)
-    # except Exception as error:
-    #     abort(404)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
@@ -66,23 +56,38 @@ def deleteobj(city_id=None):
 def createcity(state_id=None):
     """Function to create an obj"""
     body = request.get_json()
-    if body is None:
-        return jsonify({
-            "error": "Not a JSON"
-        }), 400
-    elif "name" not in body.keys():
-        return jsonify({
-            "error": "Missing Name"
-        }), 400
 
-    city = storage.get(City)
-    if city is None:
+    if body is None:
+        return jsonify({"error": "Not a JSON"}), 400
+    elif "name" not in body.keys():
+        return jsonify({"error": "Missing name"}), 400
+
+    state = storage.get("State", state_id)
+    if state is None:
         abort(404)
     else:
-        new_city = City(**body)
-        new_city.state_id = state_id
-        new_city.save()
-        return jsonify(new_city.to_dict()), 201
+        city = City(**body)
+        city.state_id = state_id
+        city.save()
+        return jsonify(city.to_dict()), 201
+    # body = request.get_json()
+    # if body is None:
+    #     return jsonify({
+    #         "error": "Not a JSON"
+    #     }), 400
+    # elif "name" not in body.keys():
+    #     return jsonify({
+    #         "error": "Missing Name"
+    #     }), 400
+
+    # city = storage.get(City)
+    # if city is None:
+    #     abort(404)
+    # else:
+    #     new_city = City(**body)
+    #     new_city.state_id = state_id
+    #     new_city.save()
+    #     return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
