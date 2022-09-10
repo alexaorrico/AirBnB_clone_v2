@@ -3,7 +3,7 @@
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
-from models import state
+
 
 @app_views.route('/status', strict_slashes=False)
 def status():
@@ -11,6 +11,7 @@ def status():
     new_dict = {}
     new_dict['status'] = "ok"
     return jsonify(new_dict)
+
 
 @app_views.route('/stats')
 def stats():
