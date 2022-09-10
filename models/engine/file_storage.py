@@ -74,7 +74,7 @@ class FileStorage:
         or None if not found"""
         if cls is not None and type(id) is str and id is not None:
             all_classes = self.all(cls)
-            for object in all_classes:
+            for object in all_classes.values():
                 if object.id == id:
                     return object
             return None
