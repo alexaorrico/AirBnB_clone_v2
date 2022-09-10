@@ -32,11 +32,11 @@ def cityobjs(state_id=None):
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def citybjs(city_id=None):
     """Function that returns an obj if it matches city_id"""
-    cities = storage.all(City)
-    for key, value in cities.items():
-        if cities[key].id == city_id:
-            return value.to_dict()
-    abort(404)
+    city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
+    else:
+        return jsonify(city.to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
