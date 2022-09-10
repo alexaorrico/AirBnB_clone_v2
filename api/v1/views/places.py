@@ -55,53 +55,30 @@ def placesdel(place_id=None):
 def postplaces(city_id=None):
     """Post places"""
     body = request.get_json()
-    user_id = body.get("user_id")
-
     if body is None:
-        return jsonify({"error": "Not a JSON"}), 400
-    elif "name" not in body.keys():
-        return jsonify({"error": "Missing name"}), 400
-    elif "user_id" not in body.keys():
-        return jsonify({"error": "Missing user_id"}), 400
-
-    user = storage.get("User", user_id)
-    if user is None:
-        abort(404)
+        return jsonify({
+            "error": "Not a JSON"
+        }), 400
+    elif 'user_id' not in body.keys():
+        return jsonify({
+            "error": "Missing user_id"
+        }), 400
+    elif 'name' not in body.keys():
+        return jsonify({
+            "error": "Missing name"
+        }), 400
 
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-
-    place = Place(**body)
-    storage.save()
-    return jsonify(place.to_dict()), 201
-    # body = request.get_json()
-    # if body is None:
-    #     return jsonify({
-    #         "error": "Not a JSON"
-    #     }), 400
-    # elif 'user_id' not in body.keys():
-    #     return jsonify({
-    #         "error": "Missing user_id"
-    #     }), 400
-    # elif 'name' not in body.keys():
-    #     return jsonify({
-    #         "error": "Missing name"
-    #     }), 400
-
-    # city = storage.get("City", city_id)
-    # if city is None:
-    #     abort(404)
-    # for k, v in body.items():
-    #     if k == 'user_id':
-    #         value = v
-    # user = storage.get("User", v)
-    # if user is None:
-    #     abort(404)
-    # new_place = Place(**body)
-    # new_place.city_id = city_id
-    # new_place.save()
-    # return jsonify(new_place.to_dict()), 201
+    user_id = body.get("user_id") 
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
+    new_place = Place(**body)
+    new_place.city_id = city_id
+    new_place.save()
+    return jsonify(new_place.to_dict()), 201
 
 
 @app_views.route('places/<place_id>', methods=['PUT'], strict_slashes=False)
