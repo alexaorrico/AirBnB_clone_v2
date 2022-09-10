@@ -82,7 +82,7 @@ def updatecity(city_id=None):
     no_update = ["id", "state_id", "created_at", "updated_at"]
 
     if body is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return jsonify({"error": "Not a JSON"}), 400
 
     city = storage.get("City", city_id)
 
@@ -96,7 +96,7 @@ def updatecity(city_id=None):
                 pass
 
         storage.save()
-        return make_response(jsonify(city.to_dict()), 200)
+        return jsonify(city.to_dict()), 200
     # notAttr = ['id', 'state_id', 'created_at', 'updated_at']
     # body = request.get_json()
     # if body is None:
