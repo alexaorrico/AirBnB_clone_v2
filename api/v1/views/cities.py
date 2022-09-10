@@ -42,13 +42,13 @@ def citybjs(city_id=None):
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def deleteobj(city_id=None):
     """Function to delete an obj"""
-    cities = storage.all(City)
-    for key, value in cities.items():
-        if cities[key].id == city_id:
-            storage.delete(cities[key])
-            storage.save()
-            return jsonify({}), 200
-    abort(404)
+    city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
+    else:
+        storage.delete(city)
+        storage.save()
+        return jsonify({}), 200
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
