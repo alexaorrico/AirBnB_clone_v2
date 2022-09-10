@@ -19,7 +19,7 @@ classes = {"amenities": Amenity, "cities": City,
                  strict_slashes=False)
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
-    try:    
+    try:
         list_of_cities = []
         state = storage.get("State", state_id)
         for city in state.cities:
@@ -27,6 +27,7 @@ def cityobjs(state_id=None):
         return jsonify(list_of_cities)
     except Exception as error:
         abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def citybjs(city_id=None):
