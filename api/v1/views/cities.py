@@ -68,11 +68,10 @@ def createcity(state_id=None):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    else:
-        new_city = City(**body)
-        new_city.state_id = state_id
-        new_city.save()
-        return jsonify(new_city.to_dict()), 201
+    new_city = City(**body)
+    new_city.state_id = state_id
+    new_city.save()
+    return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
