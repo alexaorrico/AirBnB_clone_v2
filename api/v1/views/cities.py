@@ -55,24 +55,24 @@ def deleteobj(city_id=None):
                  strict_slashes=False)
 def createcity(state_id=None):
     """Function to create an obj"""
-    body = request.get_json()
-    if body is None:
+    try:
+        body = request.get_json()
+        elif "name" not in body.keys():
+            return jsonify({
+                "error": "Missing Name"
+            }), 400
+        state = storage.get("State", state_id)
+        if state is None:
+            abort(404)
+        else:
+            new_city = City(**body)
+            new_city.state_id = state_id
+            new_city.save()
+            return jsonify(new_city.to_dict()), 201
+    except Exception as error:
         return jsonify({
-            "error": "Not a JSON"
-        }), 400
-    elif "name" not in body.keys():
-        return jsonify({
-            "error": "Missing Name"
-        }), 400
-
-    state = storage.get("State", state_id)
-    if state is None:
-        abort(404)
-    else:
-        new_city = City(**body)
-        new_city.state_id = state_id
-        new_city.save()
-        return jsonify(new_city.to_dict()), 201
+                "error": "Not a JSON"
+            }), 400
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
