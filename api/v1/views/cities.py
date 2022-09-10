@@ -56,38 +56,23 @@ def deleteobj(city_id=None):
 def createcity(state_id=None):
     """Function to create an obj"""
     body = request.get_json()
-
     if body is None:
-        return jsonify({"error": "Not a JSON"}), 400
+        return jsonify({
+            "error": "Not a JSON"
+        }), 400
     elif "name" not in body.keys():
-        return jsonify({"error": "Missing name"}), 400
+        return jsonify({
+            "error": "Missing Name"
+        }), 400
 
     state = storage.get("State", state_id)
-    if state is None:
+    if city is None:
         abort(404)
     else:
-        city = City(**body)
-        city.state_id = state_id
-        city.save()
-        return jsonify(city.to_dict()), 201
-    # body = request.get_json()
-    # if body is None:
-    #     return jsonify({
-    #         "error": "Not a JSON"
-    #     }), 400
-    # elif "name" not in body.keys():
-    #     return jsonify({
-    #         "error": "Missing Name"
-    #     }), 400
-
-    # city = storage.get(City)
-    # if city is None:
-    #     abort(404)
-    # else:
-    #     new_city = City(**body)
-    #     new_city.state_id = state_id
-    #     new_city.save()
-    #     return jsonify(new_city.to_dict()), 201
+        new_city = City(**body)
+        new_city.state_id = state_id
+        new_city.save()
+        return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
