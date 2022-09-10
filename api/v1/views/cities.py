@@ -19,77 +19,66 @@ classes = {"amenities": Amenity, "cities": City,
                  strict_slashes=False)
 def cityobjs(state_id=None):
     """Function that retrieves all city obj of a State"""
-    list_of_cities = []
-    states = storage.all(State)
-    for key, value in states.items():
-        if value.id == state_id:
-            for i in value.cities:
-                list_of_cities.append(i.to_dict())
-    if len(list_of_cities) == 0:
-        return jsonify({'error': 'Not found'}), 404
-    else:
+    try:    
+        list_of_cities = []
+        state = storage.get("State", state_id)
+        for city in state.cities:
+            list_of_cities.append(city.to_dict())
         return jsonify(list_of_cities)
-
+    except Exception as error:
+        abort(404)
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def citybjs(city_id=None):
     """Function that returns an obj if it matches city_id"""
-    if request.method == 'GET':
-        if city_id is None:
-            abort(404)
-        else:
-            cities = storage.all(City)
-            for key, value in cities.items():
-                if cities[key].id == city_id:
-                    return jsonify(value.to_dict())
-            abort(404)
+    cities = storage.all(City)
+    for key, value in cities.items():
+        if cities[key].id == city_id:
+            return value.to_dict()
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def deleteobj(city_id=None):
     """Function to delete an obj"""
-    if request.method == 'DELETE':
-        cities = storage.all(City)
-        for key, value in cities.items():
-            if cities[key].id == city_id:
-                storage.delete(cities[key])
-                storage.save()
-                return jsonify({})
-        abort(404)
+    cities = storage.all(City)
+    for key, value in cities.items():
+        if cities[key].id == city_id:
+            storage.delete(cities[key])
+            storage.save()
+            return jsonify({}), 200
+    abort(404)
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def createcity(state_id=None):
     """Function to create an obj"""
-    try:
-        body = request.get_json()
-        states = storage.all(State)
-        for key, value in states.items():
-            if value.id == state_id:
-                if 'name' in body:
-                    dic = {}
-                    dic['name'] = body["name"]
-                    dic['state_id'] = state_id
-                    new_city = City(**dic)
-                    new_city.save()
-                    return jsonify(new_city.to_dict())
-                else:
-                    return jsonify({
-                            "error": "Missing name"
-                        }), 400
-        return jsonify({'error': 'Not found'}), 404
-    except Exception as err:
+    body = request.get_json()
+    if body is None:
         return jsonify({
             "error": "Not a JSON"
         }), 400
+    elif "name" not in body.keys():
+        return jsonify({
+            "error": "Missing Name"
+        }), 400
+
+    city = storage.get(City)
+    if city is None:
+        abort(404)
+    else:
+        new_city = City(**body)
+        new_city.state_id = state_id
+        new_city.save()
+        return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def updatecity(city_id=None):
     """Function to update a city obj"""
     try:
-        notAttr = ['id', 'created_at', 'updated_at']
+        notAttr = ['id', 'state_id', 'created_at', 'updated_at']
         body = request.get_json()
         cities = storage.all(City)
         for key, value in cities.items():
