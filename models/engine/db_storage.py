@@ -88,4 +88,5 @@ class DBStorage:
 
     @staticmethod
     def classes():
+        """ this method returns all the available classes """
         return classes
