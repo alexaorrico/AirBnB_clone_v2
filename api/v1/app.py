@@ -19,6 +19,7 @@ def close(exception):
 
 @app.errorhandler(404)
 def handle_bad_request(e):
+    """hanlder error 404"""
     error = {}
     error['error'] = "Not found"
     return jsonify(error), 404
