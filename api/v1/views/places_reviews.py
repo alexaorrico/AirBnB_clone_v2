@@ -40,7 +40,7 @@ def reviewid(review_id=None):
 
 @app_views.route('reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
-def reviewdel(review_id):
+def reviewdel(review_id=None):
     """review delete"""
     review = storage.get("Review", review_id)
     if review is None:
@@ -53,7 +53,7 @@ def reviewdel(review_id):
 
 @app_views.route('places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def reviewpost(review_id):
+def reviewpost(review_id=None):
     """review post"""
     body = request.get_json()
     if body is None:
