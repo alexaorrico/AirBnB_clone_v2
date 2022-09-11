@@ -47,16 +47,18 @@ def states_del(state_id):
         abort(404)
 
 # Create new
-@app_views.route('/states/<state_id>',
+@app_views.route('/states/',
                  methods = ['POST'],
                  strict_slashes=False)
-def states_new(state_id):
+def states_new():
     try:
-        data = request.get_json()
+        obj_JSON = request.get_json()
+        new_obj = State(**obj_JSON)
+        if not obj_JSON.get('name'):
+            abort(400, description="Missing name")
     except BadRequest:
         abort(400, description="Not a JSON")
-    if not data.get('name'):
-        abort(400, description="Missing name")
 
-    storage.new(data)
-    return storage.get(State, state_id)
+    storage.new(new_obj)
+    storage.save()
+    return jsonify(storage.get(new_obj.__class__, new_obj.id).to_dict())
