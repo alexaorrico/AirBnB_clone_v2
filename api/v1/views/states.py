@@ -15,12 +15,13 @@ def states_get():
         states_list.append(value.to_dict())
     return jsonify(states_list)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'])
 def states_id(state_id=None):
     """return state by id"""
     state = storage.get(State, state_id)
     if state is not None:
-        return(jsonify(state.to_dict()))
+        return jsonify(state.to_dict())
     else:
         abort(404)
 
@@ -35,7 +36,7 @@ def states_delete(state_id=None):
             storage.save()
             return {}, 200
         else:
-            abort (404)
+            abort(404)
 
 
 @app_views.route('/states/', methods=['POST'])
@@ -48,12 +49,12 @@ def states_post():
             new_state.save()
             return jsonify(new_state.to_dict()), 201
         else:
-            abort (400, description="Missing name")
+            abort(400, description="Missing name")
     else:
-        abort (400, description="Not a JSON")
+        abort(400, description="Not a JSON")
 
 
-"""@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def states_put(state_id=None):
     update object if exists
     state = storage.get(State, state_id)
@@ -68,6 +69,6 @@ def states_put(state_id=None):
                 storage.save()
                 return jsonify(state.to_dict()), 200
         else:
-            abort (404)
+            abort(404)
     else:
-        abort (400, description="Not a JSON")"""
+        abort(400, description="Not a JSON")
