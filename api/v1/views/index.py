@@ -11,3 +11,11 @@ def status():
     new_dict = {}
     new_dict['status'] = "OK"
     return jsonify(new_dict)
+
+@app_views.route('/stats')
+def stats():
+	"""with count we ring number of object"""
+	objs_count = {}
+	objs_count['states'] = storage.count("State")
+	
+	return jsonify(objs_count)
