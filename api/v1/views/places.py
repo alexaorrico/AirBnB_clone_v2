@@ -81,11 +81,12 @@ def places_put(place_id=None):
     response = request.get_json()
     if response is None:
         abort(400, description='Not a JSON')
-    response('id', None)
-    response('user_id', None)
-    response('city_id', None)
-    response('created_at', None)
-    response('updated_at', None)
+    response.pop('id', None)
+    response.pop('user_id', None)
+    response.pop('city_id', None)
+    response.pop('created_at', None)
+    response.pop('updated_at', None)
     for key, value in response.items():
         setattr(place, key, value)
+    storage.save()
     return jsonify(place.to_dict()), 200
