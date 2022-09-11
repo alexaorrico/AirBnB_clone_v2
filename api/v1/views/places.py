@@ -66,6 +66,7 @@ def places_post(city_id=None):
         abort(404)
     if 'name' not in response.keys():
         abort(400, 'Missing name')
+    response['city_id'] = city_id
     new_place = Place(**response)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
