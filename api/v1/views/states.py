@@ -6,11 +6,11 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states/', methods=['GET'], strictslashes=False)
-@app_views.route('/states/<state_id>', methods=['GET'], strictslashes=False)
+@app_views.route('/states/', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def states_get(state_id=None):
     """function for method get"""
-    if state_id is None
+    if state_id is None:
         states = storage.all("State")
         states_list = []
         for value in states.values():
@@ -24,7 +24,7 @@ def states_get(state_id=None):
             abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strictslashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def states_delete(state_id=None):
     """delete state by id"""
     if state_id is not None:
@@ -37,7 +37,7 @@ def states_delete(state_id=None):
             abort(404)
 
 
-@app_views.route('/states/', methods=['POST'], strictslashes=False)
+@app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def states_post():
     """add new state"""
     response = request.get_json()
@@ -52,7 +52,7 @@ def states_post():
         abort(400, description="Not a JSON")
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strictslashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def states_put(state_id=None):
     """update object if exists"""
     state = storage.get(State, state_id)
