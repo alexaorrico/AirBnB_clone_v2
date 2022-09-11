@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''
 Creating and starting API
+CORS - https://www.desarrollolibre.net/blog/flask/configurar-los-cors-en-flask
 '''
 
 from models import storage
