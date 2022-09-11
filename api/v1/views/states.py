@@ -17,7 +17,7 @@ def states_get(state_id=None):
             states_list.append(value.to_dict())
         return jsonify(states_list)
     else:
-        state = storage.get(State, state_id)
+        state = storage.get("State", state_id)
         if state is not None:
             return jsonify(state.to_dict())
         else:
