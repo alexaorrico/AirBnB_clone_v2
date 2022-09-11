@@ -71,7 +71,7 @@ def amenity_put(amenity_id):
             for key, value in response.items():
                 setattr(amenity, key, value)
             amenity.save()
-            return jsonify(amenity.to_dict())
+            return jsonify(amenity.to_dict()), 200
         else:
             abort(400, description="Not a JSON")
     else:
