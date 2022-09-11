@@ -56,26 +56,25 @@ def reviewdel(review_id=None):
 def reviewpost(review_id=None):
     """review post"""
     body = request.get_json()
+    place = storage.get("Place", place_id)
+    if place is None:
+        abort(404)
     if body is None:
         return jsonify({
             "error": "Not a JSON"
         }), 400
-    elif 'user_id' not in body.keys():
+    if 'user_id' not in body.keys():
         return jsonify({
             "error": "Missing user_id"
         }), 400
-    elif 'text' not in body.keys():
-        return jsonify({
-            "error": "Missing text"
-        }), 400
-
-    place = storage.get("Place", place_id)
-    if place is None:
-        abort(404)
     user_id = body.get("user_id")
     user = storage.get("User", user_id)
     if user is None:
         abort(404)
+    if 'text' not in body.keys():
+        return jsonify({
+            "error": "Missing text"
+        }), 400
     new_review = Review(**body)
     new_review.place_id = place_id
     new_review.save()
