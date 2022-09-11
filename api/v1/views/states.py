@@ -47,7 +47,7 @@ def states(state_id=None):
                 abort (404)
         else:
             abort (400, description="Not a JSON")
-    else:
+    elif request.method == 'GET':
         if state_id is not None:
             state = storage.get(State, state_id)
             if state is not None:
