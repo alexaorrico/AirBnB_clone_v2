@@ -84,11 +84,10 @@ def create_place(city_id):
     if city is None:
         abort(404)
         
-    body['city_id'] = city_id
-    body['user_id'] = user_id
+    body["city_id"] = city_id
+    body["user_id"] = user_id
 
     place = Place(**body)
-    storage.new(place)
     storage.save()
     return make_response(jsonify(place.to_dict()), 201)
 
