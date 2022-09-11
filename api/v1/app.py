@@ -5,7 +5,7 @@
 
 from api.v1.views import app_views
 from models import storage
-from flask import Flask
+from flask import Flask, jsonify
 from os import getenv
 
 app = Flask(__name__)
@@ -13,7 +13,7 @@ app.register_blueprint(app_views)
 
 
 @app.errorhandler(404)
-def err_not_fnd():
+def err_not_fnd(self):
     """error: 404: page not found"""
     return jsonify(("error": "Not found"), 404)
 
