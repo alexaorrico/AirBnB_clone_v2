@@ -17,6 +17,19 @@ def status():
 def stats():
     """ return object count for each class """
     ret_dict = {}
+    display_name_dict = {"Amenity": "amenities",
+                         "City": "cities",
+                         "Place": "places",
+                         "Review": "reviews",
+                         "State": "states",
+                         "User": "users"}
+
     for this_class in storage.classes().values():
-        ret_dict[this_class.__name__] = storage.count(this_class)
+        if this_class.__name__ in display_name_dict.keys():
+            display_name = display_name_dict.get(this_class.__name__)
+            print("OK")
+        else:
+            print("ouch")
+            display_name = this_class.__name__
+        ret_dict[display_name] = storage.count(this_class)
     return jsonify(ret_dict)
