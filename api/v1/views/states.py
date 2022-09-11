@@ -20,15 +20,15 @@ def states(state_id=None):
                     return {}, 200
             abort (404)
     elif request.method == 'POST':
-        try:
-            response = request.get_json()
-            if 'name' in response.keys():
+        response = request.get_json()
+        if type(response) is dict:
+            if 'name' in response:
                 new_state = State(**response)
                 new_state.save()
                 return new_state.to_dict(), 201
             else:
                 abort (400, description="Missing name")
-        except Exception:
+        else:
             abort (400, description="Not a JSON")
         return test
     elif request.method == 'PUT':
