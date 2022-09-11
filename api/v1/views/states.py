@@ -62,3 +62,22 @@ def states_new():
     storage.new(new_obj)
     storage.save()
     return jsonify(storage.get(new_obj.__class__, new_obj.id).to_dict())
+
+# Update
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def put(state_id):
+    """ Handles PUT request. Updates a State obj with status 200, else 400 """
+    ignore_keys = ['id', 'created_at', 'updated_at']
+    obj = storage.get(State, state_id)
+    attrs = request.get_json(force=True, silent=True)
+    if not obj:
+        abort(404)
+    if attrs is None:
+        abort(400, "Not a JSON")
+    else:
+        for key, value in attrs.items():
+            if key in ignore_keys:
+                continue
+            setattr(obj, key, value)
+        storage.save()
+        return jsonify(obj.to_dict()), 200
