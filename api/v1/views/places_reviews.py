@@ -10,7 +10,7 @@ from models.user import User
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def getCity(place_id):
+def getPlaceReview(place_id):
     """aaasdasdasd"""
     reviews = []
     place = storage.get(Place, place_id)
@@ -23,7 +23,7 @@ def getCity(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
-def getCityById(review_id):
+def getPlaceReviewById(review_id):
     """asdasdasda"""
     review = storage.get(Review, review_id)
     if review is None:
@@ -34,7 +34,7 @@ def getCityById(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
-def deleteCity(review_id):
+def deletePlaceReview(review_id):
     """asdasdasda"""
     review = storage.get(Review, review_id)
     if review is None:
@@ -46,7 +46,7 @@ def deleteCity(review_id):
 
 @app_views.route("/places/<place_id>/reviews", methods=['POST'],
                  strict_slashes=False)
-def CreateCity(place_id):
+def CreatePlaceReview(place_id):
     json_req = request.get_json()
     if json_req is None:
         abort(400, 'Not a JSON')
@@ -67,7 +67,7 @@ def CreateCity(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
-def updateCity(review_id):
+def updatePlaceReview(review_id):
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
