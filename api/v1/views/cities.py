@@ -7,7 +7,11 @@ from models.city import City
 from os import getenv
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route(
+        '/states/<state_id>/cities',
+        methods=['GET'],
+        strict_slashes=False
+        )
 def cities_bystate(state_id):
     """return cities by states"""
     state = storage.get('State', state_id)
@@ -41,7 +45,11 @@ def cities_delete(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route(
+        '/states/<state_id>/cities',
+        methods=['POST'],
+        strict_slashes=False
+        )
 def cities_post(state_id=None):
     """add new cities"""
     response = request.get_json()
