@@ -11,7 +11,7 @@ from models.place import Place
         methods=['GET'],
         strict_slashes=False
         )
-def places_bycity(city_id=None):
+def places_bycity(place_id=None):
     """return places of a city"""
     place = storage.get('Place', place_id)
     if place is None:
