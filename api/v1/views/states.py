@@ -21,11 +21,11 @@ def states(state_id=None):
                 abort (404)
     elif request.method == 'POST':
         response = request.get_json()
-        if type(response) is dict:
+        if response is not None:
             if 'name' in response:
                 new_state = State(**response)
                 new_state.save()
-                return new_state.to_dict(), 201
+                return jsonify(new_state.to_dict()), 201
             else:
                 abort (400, description="Missing name")
         else:
@@ -33,15 +33,16 @@ def states(state_id=None):
         return test
     elif request.method == 'PUT':
         response = request.get_json()
-        if type(response) is dict:
+        if response is not None:
             state = storage.get(State, state_id)
             if state is not None:
                 response.pop("id", None)
                 response.pop("created_at", None)
                 response.pop("updated_at", None)
-                state.__dict__.update(response)
+                for key, value in response.items():
+                    setattr(state, key, value)
                 state.save()
-                return state.to_dict(), 200
+                return jsonify(state.to_dict()), 200
             else:
                 abort (404)
         else:
@@ -50,7 +51,7 @@ def states(state_id=None):
         if state_id is not None:
             state = storage.get(State, state_id)
             if state is not None:
-                return(jsonify(value.to_dict()))
+                return(jsonify(state.to_dict()))
             else:
                 abort(404)
         else:
