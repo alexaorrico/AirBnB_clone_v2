@@ -53,7 +53,7 @@ def reviewdel(review_id=None):
 
 @app_views.route('places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def reviewpost(review_id=None):
+def reviewpost(review_id):
     """review post"""
     body = request.get_json()
     if body is None:
@@ -75,11 +75,10 @@ def reviewpost(review_id=None):
         return jsonify({
             "error": "Missing text"
         }), 400
-    body['place_id'] = place_id
-    body['user_id'] = user_id
     new_review = Review(**body)
+    new_review.place_id = place_id
     new_review.save()
-    return make_response(jsonify(new_review.to_dict()), 201)
+    return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('reviews/review_id', methods=['PUT'], strict_slashes=False)
