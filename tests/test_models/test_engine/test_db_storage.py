@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!usr/bin/python3
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
@@ -90,7 +90,7 @@ class TestFileStorage(unittest.TestCase):
 
     """Test the FileStorage class"""
 
-	@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
@@ -147,14 +147,19 @@ class TestFileStorage(unittest.TestCase):
         self.assertTrue('"Column \'email\' cannot be null"'
                         in str(context.exception))
 	
-	@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-	@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """testing the method get"""
         q1 = State(name='Trial')
@@ -163,6 +168,7 @@ class TestFileStorage(unittest.TestCase):
         q2 = storage.get("State", q1.id)
         self.assertTrue(q2)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test count method"""
         count_a = storage.count()
@@ -171,7 +177,3 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         count_b = storage.count()
         self.assertNotEqual(count_a, count_b)
-
-
-if __name__ == '__main__':
-    unittest.main
