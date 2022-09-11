@@ -56,7 +56,7 @@ def states_post():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def states_put(state_id=None):
-    update object if exists
+    """update object if exists"""
     state = storage.get(State, state_id)
     if state is not None:
         response = request.get_json()
