@@ -3,10 +3,9 @@
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
-from models import review
-from models import place
 from models.place import Place
 from models.review import Review
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
@@ -26,7 +25,7 @@ def getCity(place_id):
                  strict_slashes=False)
 def getCityById(review_id):
     """asdasdasda"""
-    review = storage.get(Place, review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     review = review.to_dict()
@@ -37,7 +36,7 @@ def getCityById(review_id):
                  strict_slashes=False)
 def deleteCity(review_id):
     """asdasdasda"""
-    review = storage.get(Place, review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     review.delete()
@@ -56,7 +55,11 @@ def CreateCity(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
+    user = storage.get(User, json_req['user_id'])
+    if user is None:
+        abort(404)
     json_req['place_id'] = place.id
+    json_req['user_id'] = user.id
     new_obj = Review(**json_req)
     new_obj.save()
     return jsonify(new_obj.to_dict()), 201
