@@ -70,7 +70,7 @@ def amenity_put(amenity_id):
             response.pop("updated_at", None)
             for key, value in response.items():
                 setattr(amenity, key, value)
-            amenity.save()
+            storage.save()
             return jsonify(amenity.to_dict()), 200
         else:
             abort(400, description="Not a JSON")
