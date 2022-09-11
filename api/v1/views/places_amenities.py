@@ -21,7 +21,7 @@ storage_t = getenv("HBNB_TYPE_STORAGE")
                  strict_slashes=False)
 def review(place_id=None):
     if storage_t == "db":
-        place = storage.get(Place, place_id)
+        place = storage.get("Place", place_id)
         if place is None:
             abort(404)
         list_ameniti = []
