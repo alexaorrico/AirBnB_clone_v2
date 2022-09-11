@@ -41,7 +41,7 @@ def states(state_id=None):
                 response.pop("updated_at", None)
                 for key, value in response.items():
                     setattr(state, key, value)
-                state.save()
+                storage.save()
                 return jsonify(state.to_dict()), 200
             else:
                 abort (404)
