@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!usr/bin/python3
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
@@ -95,6 +95,58 @@ class TestFileStorage(unittest.TestCase):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
+	@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+
+    def test_state_no_name(self):
+        """... checks to create a state with no name"""
+        with self.assertRaises(Exception) as context:
+            s = State()
+            s.save()
+        self.assertTrue('"Column \'name\' cannot be null"'
+                        in str(context.exception))
+
+    def test_city_no_state(self):
+        """... checks to create a city with invalid state"""
+        with self.assertRaises(Exception) as context:
+            c = City(name="Tapioca", state_id="NOT VALID")
+            c.save()
+        self.assertTrue('a child row: a foreign key constraint fails'
+                        in str(context.exception))
+
+    def test_place_no_user(self):
+        """... checks to create a place with no city"""
+        with self.assertRaises(Exception) as context:
+            p = Place()
+            p.save()
+        self.assertTrue('"Column \'city_id\' cannot be null"'
+                        in str(context.exception))
+
+    def test_review_no_text(self):
+        """... checks to create a Review with no text"""
+        with self.assertRaises(Exception) as context:
+            r = Review()
+            r.save()
+        self.assertTrue('"Column \'text\' cannot be null"'
+                        in str(context.exception))
+
+    def test_amenity_no_name(self):
+        """... checks to create an amenity with no name"""
+        with self.assertRaises(Exception) as context:
+            a = Amenity()
+            a.save()
+        self.assertTrue('"Column \'name\' cannot be null"'
+                        in str(context.exception))
+
+    def test_user_no_name(self):
+        """... checks to create a user with no email"""
+        with self.assertRaises(Exception) as context:
+            u = User()
+            u.save()
+        self.assertTrue('"Column \'email\' cannot be null"'
+                        in str(context.exception))
+	
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
