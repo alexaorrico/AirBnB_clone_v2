@@ -1,16 +1,13 @@
 #!/usr/bin/python3
 """adasda"""
-from hashlib import new
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
-from models import city
 from models.state import State
 from models.city import City
-from models.amenity import Amenity
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], 
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def getCity(state_id):
     """aaasdasdasd"""
@@ -40,12 +37,12 @@ def deleteCity(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    storage.delete(city)
+    city.delete()
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route("/states/<state_id>/cities", methods=['POST'], 
+@app_views.route("/states/<state_id>/cities", methods=['POST'],
                  strict_slashes=False)
 def CreateCity(state_id):
     json_req = request.get_json()
@@ -65,7 +62,7 @@ def CreateCity(state_id):
 @app_views.route("/amenities/<amenity_id>", methods=['PUT'],
                  strict_slashes=False)
 def updateCity(city_id):
-    city = storage.get(Amenity, city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     json_req = request.get_json()
