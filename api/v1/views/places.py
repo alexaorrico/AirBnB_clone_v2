@@ -50,23 +50,14 @@ def place_by_id(place_id):
 def delete_place(place_id):
     """Deletes a amenity instance"""
 
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
 
     if place is None:
         abort(404)
     else:
-        storage.delete(place)
+        place.delete()
         storage.save()
         return make_response(jsonify({}), 200)
-    
-    # place = storage.get("Place", place_id)
-
-    # if place is None:
-    #     abort(404)
-    # else:
-    #     place.delete()
-    #     storage.save()
-    #     return make_response(jsonify({}), 200)
 
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
@@ -74,26 +65,54 @@ def delete_place(place_id):
 def create_place(city_id):
     """Creates a City instance"""
     body = request.get_json()
-    user_id = body.get("user_id")
 
     if body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    elif "name" not in body.keys():
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    elif "user_id" not in body.keys():
-        return make_response(jsonify({"error": "Missing user_id"}), 400)
-
-    user = storage.get("User", user_id)
-    if user is None:
-        abort(404)
 
     city = storage.get("City", city_id)
+
     if city is None:
         abort(404)
 
-    place = Place(**body)
+    if "user_id" not in body:
+        return (jsonify({'error': 'Missing user_id'}), 400)
+
+    user_id = body.get("user_id")
+    user = storage.get("User", user_id)
+    if user is None:
+        abort(404)
+    if "name" not in body:
+        return (jsonify({'error': 'Missing name'}), 400)
+    body['city_id'] = city_id
+    body['user_id'] = user_id
+    obj = Place(**body)
+    storage.new(obj)
     storage.save()
-    return make_response(jsonify(place.to_dict()), 201)
+    return make_response(jsonify(obj.to_dict()), 201)
+    
+    
+    
+    # body = request.get_json()
+    # user_id = body.get("user_id")
+
+    # if body is None:
+    #     return make_response(jsonify({"error": "Not a JSON"}), 400)
+    # elif "name" not in body.keys():
+    #     return make_response(jsonify({"error": "Missing name"}), 400)
+    # elif "user_id" not in body.keys():
+    #     return make_response(jsonify({"error": "Missing user_id"}), 400)
+
+    # user = storage.get("User", user_id)
+    # if user is None:
+    #     abort(404)
+
+    # city = storage.get("City", city_id)
+    # if city is None:
+    #     abort(404)
+
+    # place = Place(**body)
+    # storage.save()
+    # return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"],
