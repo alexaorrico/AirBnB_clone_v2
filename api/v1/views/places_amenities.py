@@ -17,9 +17,9 @@ classes = {"amenities": Amenity, "cities": City,
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 
-@app_views.route('/api/v1/places/<place_id>/amenities', methods=['GET'],
+@app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
-def review(place_id=None):
+def review(place_id):
     if storage_t == "db":
         place = storage.get("Place", place_id)
         if place is None:
