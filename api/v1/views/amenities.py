@@ -48,7 +48,7 @@ def amenity_post():
         if 'name' in response.keys():
             new_amenity = Amenity(**response)
             new_amenity.save()
-            return jsonify(new_amenity.to_dict())
+            return jsonify(new_amenity.to_dict()), 201
         else:
             abort(400, description='Missing name')
     else:
