@@ -30,7 +30,7 @@ class BaseModel:
         """Initialization of the base model"""
         if kwargs:
             for key, value in kwargs.items():
-                if key != "__class__" and key != 'password':
+                if key != "__class__":
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
@@ -42,9 +42,9 @@ class BaseModel:
                 self.updated_at = datetime.utcnow()
             if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
-            if kwargs.get('password', None) is not None:
-                pwd_encrypt = hashlib.md5(kwargs.get('password')).encode('utf8').hexdigest()
-                setattr(self, "password", pwd_encrypt)
+            # if kwargs.get('password', None) is not None:
+            #     pwd_encrypt = hashlib.md5(kwargs.get('password')).encode('utf8').hexdigest()
+            #     setattr(self, "password", pwd_encrypt)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
