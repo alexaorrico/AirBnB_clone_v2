@@ -43,7 +43,8 @@ class BaseModel:
             if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
             if kwargs.get('password', None) is not None:
-                pwd_encrypt = hashlib.md5(kwargs.get('password')).encode('utf8').hexdigest()
+                pwd_encrypt = hashlib.md5(kwargs.get('password'))
+                .encode('utf8').hexdigest()
                 setattr(self, "password", pwd_encrypt)
         else:
             self.id = str(uuid.uuid4())
