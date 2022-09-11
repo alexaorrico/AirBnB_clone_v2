@@ -63,7 +63,7 @@ def reviewpost(review_id=None):
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    if 'user_id' not in body.keys():
+    if 'user_id' not in body:
         return jsonify({
             "error": "Missing user_id"
         }), 400
@@ -71,12 +71,13 @@ def reviewpost(review_id=None):
     user = storage.get("User", user_id)
     if user is None:
         abort(404)
-    if 'text' not in body.keys():
+    if 'text' not in body:
         return jsonify({
             "error": "Missing text"
         }), 400
+    body['place_id'] = place_id
+    body['user_id'] = user_id
     new_review = Review(**body)
-    new_review.place_id = place_id
     new_review.save()
     return jsonify(new_review.to_dict()), 201
 
