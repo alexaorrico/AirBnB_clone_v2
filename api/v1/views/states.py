@@ -54,6 +54,7 @@ def states(state_id=None):
             else:
                 abort(404)
         else:
+            states = storage.all("State")
             states_list = []
             for value in states.values():
                 states_list.append(value.to_dict())
