@@ -20,10 +20,10 @@ classes = {"amenities": Amenity, "cities": City,
 def review(place_id=None):
     """review function"""
     list_of_reviews = []
-    places = storage.get("Place", place_id)
-    if places is None:
+    place = storage.get("Place", place_id)
+    if place is None:
         abort(404)
-    for review in places.reviews:
+    for review in place.reviews:
         list_of_reviews.append(review.to_dict())
     return jsonify(list_of_reviews)
 
