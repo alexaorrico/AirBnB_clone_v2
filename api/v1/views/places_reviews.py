@@ -28,7 +28,6 @@ def review(place_id=None):
     return jsonify(list_of_reviews)
 
 
-
 @app_views.route('reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def reviewid(review_id=None):
     """review id"""
