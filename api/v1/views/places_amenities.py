@@ -20,7 +20,7 @@ storage_t = getenv("HBNB_TYPE_STORAGE")
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
-def review(place_id):
+def amenis(place_id):
     if storage_t == "db":
         place = storage.get("Place", place_id)
         if place is None:
