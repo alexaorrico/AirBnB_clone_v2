@@ -6,7 +6,9 @@ from models import storage
 from models.state import State
 from models.city import City
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+
+@app_views.route(
+        '/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def cities_state(state_id=None):
     """Retrieves the list of all City objects of a State"""
     states = storage.all('State')
@@ -21,7 +23,8 @@ def cities_state(state_id=None):
                 return jsonify(city_list)
         abort(404)
     else:
-        abort (404)
+        abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def _cities(city_id=None):
@@ -33,6 +36,7 @@ def _cities(city_id=None):
             city_list.append(value.to_dict())
             return jsonify(city_list)
     abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete(city_id=None):
@@ -47,7 +51,9 @@ def delete(city_id=None):
             abort(404)
     abort(404)
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+
+@app_views.route(
+        '/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
 def _post(state_id=None):
     """ Creates a City: POST """
     states = storage.all('State')
@@ -61,13 +67,13 @@ def _post(state_id=None):
             new_city.save()
             return jsonify(new_city.to_dict()), 201
         else:
-            abort (400, description="Missing name")
+            abort(400, description="Missing name")
     else:
-        abort (400, description="Not a JSON")
+        abort(400, description="Not a JSON")
     return new_city
 
+
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def _put(city_id=None):
 def _put(city_id=None):
     """ Updates a City object: PUT """
     response = request.get_json()
@@ -82,6 +88,6 @@ def _put(city_id=None):
             city.save()
             return jsonify(city.to_dict()), 200
         else:
-            abort (404)
+            abort(404)
     else:
-        abort (400, description="Not a JSON")
+        abort(400, description="Not a JSON")
