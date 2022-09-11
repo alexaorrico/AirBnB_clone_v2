@@ -28,7 +28,3 @@ def amenis(place_id):
         list_ameniti = []
         for i in place.amenities:
             list_ameniti.append(i.to_dict())
-    else:
-        from models.engine.file_storage import FileStorage
-        storage = FileStorage()
-        storage.reload()
