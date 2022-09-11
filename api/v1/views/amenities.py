@@ -30,33 +30,36 @@ def amenity_by_id(amenity_id):
     Retrieves the list of all State objects
     """
 
-    amenities = storage.all(Amenity)
+    amenity = storage.get("Amenity", amenity_id)
 
-    for key, value in amenities.items():
-        if amenities[key].id == amenity_id:
-            return value.to_dict()
-    abort(404)
-
-    # amenity = storage.get("Amenity", amenity_id)
-
-    # if amenity is None:
-    #     abort(404)
-    # else:
-    #     return jsonify(amenity.to_dict())
+    if amenity is None:
+        abort(404)
+    else:
+        return jsonify(amenity.to_dict())
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
                  strict_slashes=False)
 def delete_amenity(amenity_id):
     """Deletes a amenity instance"""
-    amenity = storage.get("Amenity", amenity_id)
+    
+    amenity = storage.get(Amenity, amenity_id)
 
     if amenity is None:
         abort(404)
     else:
-        amenity.delete()
+        storage.delete(amenity)
         storage.save()
         return make_response(jsonify({}), 200)
+    
+    # amenity = storage.get("Amenity", amenity_id)
+
+    # if amenity is None:
+    #     abort(404)
+    # else:
+    #     amenity.delete()
+    #     storage.save()
+    #     return make_response(jsonify({}), 200)
 
 
 @app_views.route("/amenities", methods=["POST "], strict_slashes=False)
