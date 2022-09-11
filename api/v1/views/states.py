@@ -46,7 +46,7 @@ def states(state_id=None):
             abort (400, description="Not a JSON")
     else:
         if state_id is not None:
-            for value in states.values():
+            for key, value in states.items():
                 if value.id == state_id:
                     return(jsonify(value.to_dict()))
             abort(404)
