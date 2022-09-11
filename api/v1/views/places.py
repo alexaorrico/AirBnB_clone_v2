@@ -18,25 +18,16 @@ def places(city_id):
     """
 
     city = storage.get("City", city_id)
+    places = []
 
     if city is None:
         abort(404)
-    places = []
-    for place in city.places:
-        places.append(place.to_dict())
+
+    for place in storage.all("Place").values():
+        if place.city_id == city_id:
+            places.append(place.to_dict())
+
     return jsonify(places)
-    
-    # city = storage.get("City", city_id)
-    # places = []
-
-    # if city is None:
-    #     abort(404)
-
-    # for place in storage.all("Place").values():
-    #     if place.city_id == city_id:
-    #         places.append(place.to_dict())
-
-    # return jsonify(places)
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
@@ -59,14 +50,23 @@ def place_by_id(place_id):
 def delete_place(place_id):
     """Deletes a amenity instance"""
 
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
 
     if place is None:
         abort(404)
     else:
-        place.delete()
+        storage.delete(place)
         storage.save()
         return make_response(jsonify({}), 200)
+    
+    # place = storage.get("Place", place_id)
+
+    # if place is None:
+    #     abort(404)
+    # else:
+    #     place.delete()
+    #     storage.save()
+    #     return make_response(jsonify({}), 200)
 
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
