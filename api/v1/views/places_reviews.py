@@ -50,8 +50,8 @@ def CreatePlaceReview(place_id):
     json_req = request.get_json()
     if json_req is None:
         abort(400, 'Not a JSON')
-    if json_req.get("name") is None:
-        abort(400, 'Missing name')
+    if json_req.get("text") is None:
+        abort(400, 'Missing text')
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
