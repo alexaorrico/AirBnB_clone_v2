@@ -10,15 +10,15 @@ from models.state import State
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def states(state_id=None):
     """retrieves an objects into a valid JSON"""
-    states = storage.all("State")
     if request.method == 'DELETE':
         if state_id is not None:
-            for value in states.values():
-                if value.id == state_id:
-                    storage.delete(value)
-                    storage.save()
-                    return {}, 200
-            abort (404)
+            state = storage.get(State, state_id)
+            if state is not None:
+                storage.delete(state)
+                storage.save()
+                return {}, 200
+            else:
+                abort (404)
     elif request.method == 'POST':
         response = request.get_json()
         if type(response) is dict:
@@ -34,23 +34,27 @@ def states(state_id=None):
     elif request.method == 'PUT':
         response = request.get_json()
         if type(response) is dict:
-            response.pop("id", None)
-            response.pop("created_at", None)
-            response.pop("updated_at", None)
-            for value in states.values():
-                if value.id == state_id:
-                    value.__dict__.update(response)
-                    return value.to_dict(), 200
-            abort (404)
+            state = storage.get(State, state_id)
+            if state is not None:
+                response.pop("id", None)
+                response.pop("created_at", None)
+                response.pop("updated_at", None)
+                state.__dict__.update(response)
+                state.save()
+                return state.to_dict(), 200
+            else:
+                abort (404)
         else:
             abort (400, description="Not a JSON")
     else:
         if state_id is not None:
-            for key, value in states.items():
-                if value.id == state_id:
-                    return(jsonify(value.to_dict()))
-            abort(404)
+            state = storage.get(State, state_id)
+            if state is not None:
+                return(jsonify(value.to_dict()))
+            else:
+                abort(404)
         else:
+            states = storage.all("State")
             states_list = []
             for value in states.values():
                 states_list.append(value.to_dict())
