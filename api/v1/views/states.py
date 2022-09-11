@@ -21,7 +21,7 @@ def states(state_id=None):
                 abort (404)
     elif request.method == 'POST':
         response = request.get_json()
-        if type(response) is dict:
+        if response is not None:
             if 'name' in response:
                 new_state = State(**response)
                 new_state.save()
@@ -33,7 +33,7 @@ def states(state_id=None):
         return test
     elif request.method == 'PUT':
         response = request.get_json()
-        if type(response) is dict:
+        if response is not None:
             state = storage.get(State, state_id)
             if state is not None:
                 response.pop("id", None)
