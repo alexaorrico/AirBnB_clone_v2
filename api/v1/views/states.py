@@ -6,27 +6,25 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states/', methods=['GET'])
-def states_get():
+@app_views.route('/states/', methods=['GET'], strictslashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strictslashes=False)
+def states_get(state_id=None):
     """function for method get"""
-    states = storage.all("State")
-    states_list = []
-    for value in states.values():
-        states_list.append(value.to_dict())
-    return jsonify(states_list)
-
-
-@app_views.route('/states/<state_id>', methods=['GET'])
-def states_id(state_id=None):
-    """return state by id"""
-    state = storage.get(State, state_id)
-    if state is not None:
-        return jsonify(state.to_dict())
+    if state_id is None
+        states = storage.all("State")
+        states_list = []
+        for value in states.values():
+            states_list.append(value.to_dict())
+        return jsonify(states_list)
     else:
-        abort(404)
+        state = storage.get(State, state_id)
+        if state is not None:
+            return jsonify(state.to_dict())
+        else:
+            abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'], strictslashes=False)
 def states_delete(state_id=None):
     """delete state by id"""
     if state_id is not None:
@@ -39,7 +37,7 @@ def states_delete(state_id=None):
             abort(404)
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states/', methods=['POST'], strictslashes=False)
 def states_post():
     """add new state"""
     response = request.get_json()
@@ -54,7 +52,7 @@ def states_post():
         abort(400, description="Not a JSON")
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strictslashes=False)
 def states_put(state_id=None):
     """update object if exists"""
     state = storage.get(State, state_id)
