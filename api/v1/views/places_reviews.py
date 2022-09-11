@@ -51,30 +51,48 @@ def reviewdel(review_id=None):
         return jsonify({}), 200
 
 
-@app_views.route('places/<place_id>/reviews', methods=['POST'],
-                 strict_slashes=False)
-def reviewpost(review_id=None):
-    """review post"""
+@app_views.route("/places/<place_id>/reviews", strict_slashes=False,
+                 methods=['POST'])
+def post_review(place_id):
+    """
+    Create a Review object.
+    """
+    # Hacemos la request de la data que se pase en formato json y la
+    # pasamos a un dic de python para poder trabajar con ella
     body = request.get_json()
+
+    # If the HTTP request body is not valid JSON, raise a 400 error
     if body is None:
-        return jsonify({
-            "error": "Not a JSON"
-        }), 400
-    place = storage.get("Place", place_id)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    # Traemos place por su "id"
+    place = storage.get(Place, place_id)
+
+    # If the place_id is not linked to any Place object, raise a 404 error
     if place is None:
         abort(404)
-    if 'user_id' not in body:
-        return jsonify({
-            "error": "Missing user_id"
-        }), 400
+
+    # Si el body no tiene la variable "user_id" se imprime el error y su stat
+    if "user_id" not in body:
+        return (jsonify({'error': 'Missing user_id'}), 400)
+
+    # Usamos el metodo get() de python para obtener el user_id
     user_id = body.get("user_id")
-    user = storage.get("User", user_id)
+    # creamos un usuario usando el metodo get() que creamos nosotros
+    user = storage.get(User, user_id)
+    # If the user_id is not linked to any User object, raise a 404 error
     if user is None:
         abort(404)
-    if 'text' not in body.keys():
-        return jsonify({
-            "error": "Missing text"
-        }), 400
+
+    # Si el body no tiene la variable "text" se imprime el error y su status
+    if "text" not in body:
+        return (jsonify({'error': 'Missing text'}), 400)
+
+    # Si se paso "text" y "user_id" se crea el objeto y se guarda en la base de
+    # datos Se crea el nuevo objeto pasandole como "kwargs" el diccionario que
+    # traemos con la request en "body".
+    # Se agrega las "id" al dic "body", ya que en el body de la request
+    # solo se mandan los datos de json no estan las id en el body
     body['place_id'] = place_id
     body['user_id'] = user_id
 
