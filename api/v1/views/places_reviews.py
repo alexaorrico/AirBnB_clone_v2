@@ -97,4 +97,4 @@ def reviewput(review_id=None):
         if key not in notAttr:
             setattr(review, key, value)
     storage.save()
-    return make_response(jsonify(review.to_dict()), 200)
+    return jsonify(review.to_dict()), 200
