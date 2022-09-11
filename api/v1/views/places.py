@@ -73,7 +73,7 @@ def create_place(city_id):
         return make_response(jsonify({"error": "Missing name"}), 400)
     elif "user_id" not in body.keys():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    
+
     user_id = body.get("user_id")
 
     user = storage.get("User", user_id)
