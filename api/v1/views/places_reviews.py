@@ -57,22 +57,36 @@ def reviewpost(review_id=None):
     """review post"""
     body = request.get_json()
     if body is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return jsonify({
+            "error": "Not a JSON"
+        }), 400
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
     if 'user_id' not in body:
-        return (jsonify({'error': 'Missing user_id'}), 400)
+        return jsonify({
+            "error": "Missing user_id"
+        }), 400
     user_id = body.get("user_id")
     user = storage.get("User", user_id)
     if user is None:
         abort(404)
     if 'text' not in body.keys():
-        return (jsonify({'error': 'Missing text'}), 400)
-    new_review = Review(**body)
-    new_review.place_id = place_id
-    new_review.save()
-    return jsonify(new_review.to_dict()), 201
+        return jsonify({
+            "error": "Missing text"
+        }), 400
+    body['place_id'] = place_id
+    body['user_id'] = user_id
+
+    # Se crea una instancia de la clase Review
+    obj = Review(**body)
+
+    storage.new(obj)
+    # Se guarda el nuevo objeto dentro del storage
+    storage.save()
+
+    # Se devuelve el objeto creado y un status code de 201
+    return make_response(jsonify(obj.to_dict()), 201)
 
 
 @app_views.route('reviews/review_id', methods=['PUT'], strict_slashes=False)
