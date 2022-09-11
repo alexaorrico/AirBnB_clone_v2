@@ -27,9 +27,7 @@ def stats():
     for this_class in storage.classes().values():
         if this_class.__name__ in display_name_dict.keys():
             display_name = display_name_dict.get(this_class.__name__)
-            print("OK")
         else:
-            print("ouch")
             display_name = this_class.__name__
         ret_dict[display_name] = storage.count(this_class)
     return jsonify(ret_dict)
