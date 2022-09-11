@@ -53,28 +53,22 @@ def reviewdel(review_id=None):
 
 @app_views.route('places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def reviewpost(review_id):
+def reviewpost(review_id=None):
     """review post"""
     body = request.get_json()
     if body is None:
-        return jsonify({
-            "error": "Not a JSON"
-        }), 400
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
     if 'user_id' not in body:
-        return jsonify({
-            "error": "Missing user_id"
-        }), 400
+        return (jsonify({'error': 'Missing user_id'}), 400)
     user_id = body.get("user_id")
     user = storage.get("User", user_id)
     if user is None:
         abort(404)
-    if 'text' not in body:
-        return jsonify({
-            "error": "Missing text"
-        }), 400
+    if 'text' not in body.keys():
+        return (jsonify({'error': 'Missing text'}), 400)
     new_review = Review(**body)
     new_review.place_id = place_id
     new_review.save()
