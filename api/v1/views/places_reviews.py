@@ -79,7 +79,7 @@ def reviewpost(review_id=None):
     body['user_id'] = user_id
     new_review = Review(**body)
     new_review.save()
-    return jsonify(new_review.to_dict()), 201
+    return make_response(jsonify(new_review.to_dict()), 201)
 
 
 @app_views.route('reviews/review_id', methods=['PUT'], strict_slashes=False)
