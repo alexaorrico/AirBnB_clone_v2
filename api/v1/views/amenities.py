@@ -14,18 +14,13 @@ def amenities():
     """
     Retrieves the list of all Amenity objects
     """
-    amenities = storage.all(Amenity)
-    amenities_list = []
-    for key, value in amenities.items():
-        amenities_list.append(value.to_dict())
-    return jsonify(amenities_list)
 
-    # amenities = []
+    amenities = []
 
-    # for amenity in storage.all("Amenity").values():
-    #     amenities.append(amenity.to_dict())
+    for amenity in storage.all("Amenity").values():
+        amenities.append(amenity.to_dict())
 
-    # return jsonify(amenities)
+    return jsonify(amenities)
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET"],
@@ -35,12 +30,19 @@ def amenity_by_id(amenity_id):
     Retrieves the list of all State objects
     """
 
-    amenity = storage.get("Amenity", amenity_id)
+    amenities = storage.all(Amenity)
 
-    if amenity is None:
-        abort(404)
-    else:
-        return jsonify(amenity.to_dict())
+    for key, value in amenities.items():
+        if amenities[key].id == amenity_id:
+            return value.to_dict()
+    abort(404)
+
+    # amenity = storage.get("Amenity", amenity_id)
+
+    # if amenity is None:
+    #     abort(404)
+    # else:
+    #     return jsonify(amenity.to_dict())
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
