@@ -17,15 +17,16 @@ classes = {"amenities": Amenity, "cities": City,
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 
-@app_views.route('places/<place_id>/reviews', methods=['GET'],
+@app_views.route('/api/v1/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def review(place_id=None):
     if storage_t == "db":
-        list_amenities = []
-        amanities = storage.all(Amenity)
-        for i in amenities:
-            list_amenities.append(i.to_dict())
-        return jsonify(list_amenities)
+        place = storage.get(Place, place_id)
+        if place is None:
+            abort(404)
+        list_ameniti = []
+        for i in place.amenities:
+            list_ameniti.append(i.to_dict())
     else:
         from models.engine.file_storage import FileStorage
         storage = FileStorage()
