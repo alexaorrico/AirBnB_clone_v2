@@ -37,25 +37,26 @@ def states_get(state_id):
                  methods = ['DELETE'], 
                  strict_slashes=False)
 def states_del(state_id):
-    """ delete linked state object  """
+    """ delete linked state object """
     obj = storage.get(State, state_id)
-    if obj not None:
+    if obj is not None:
         storage.delete(obj)
-    else: abort(404)
+        storage.save()
+        return {}
+    else:
+        abort(404)
 
 # Create new
 @app_views.route('/states/<state_id>',
                  methods = ['POST'],
                  strict_slashes=False)
 def states_new(state_id):
-    try: 
+    try:
         data = request.get_json()
-    except BadRequest: 
+    except BadRequest:
         abort(400, description="Not a JSON")
     if not data.get('name'):
         abort(400, description="Missing name")
 
     storage.new(data)
     return storage.get(State, state_id)
-
-
