@@ -12,6 +12,11 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
+@app.errorhandler(404)
+def err_not_fnd():
+    return jsonify("error": "Not found")
+
+
 @app.teardown_appcontext
 def close(self):
     """closes session"""
