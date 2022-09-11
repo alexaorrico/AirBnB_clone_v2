@@ -18,16 +18,25 @@ def places(city_id):
     """
 
     city = storage.get("City", city_id)
-    places = []
 
     if city is None:
         abort(404)
-
-    for place in storage.all("Place").values():
-        if place.city_id == city_id:
-            places.append(place.to_dict())
-
+    places = []
+    for place in city.places:
+        places.append(place.to_dict())
     return jsonify(places)
+    
+    # city = storage.get("City", city_id)
+    # places = []
+
+    # if city is None:
+    #     abort(404)
+
+    # for place in storage.all("Place").values():
+    #     if place.city_id == city_id:
+    #         places.append(place.to_dict())
+
+    # return jsonify(places)
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
