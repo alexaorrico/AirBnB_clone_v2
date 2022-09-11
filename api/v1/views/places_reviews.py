@@ -11,7 +11,7 @@ from models.place import Place
         methods=['GET'],
         strict_slashes=False
         )
-def places_bycity(place_id=None):
+def reviews_place(place_id=None):
     """return places of a city"""
     place = storage.get('Place', place_id)
     if place is None:
@@ -23,7 +23,7 @@ def places_bycity(place_id=None):
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
-def places_byid(review_id=None):
+def reviews(review_id=None):
     """return place by id"""
     review = storage.get('Review', review_id)
     if review is None:
@@ -36,7 +36,7 @@ def places_byid(review_id=None):
         methods=['DELETE'],
         strict_slashes=False
         )
-def places_delete(review_id=None):
+def reviews_delete(review_id=None):
     """delete place by id"""
     review = storage.get('Review', review_id)
     if review is None:
@@ -51,7 +51,7 @@ def places_delete(review_id=None):
         methods=['POST'],
         strict_slashes=False
         )
-def places_post(place_id=None):
+def reviews_post(place_id=None):
     """add new place"""
     response = request.get_json()
     place = storage.get('Review', place_id)
@@ -74,7 +74,7 @@ def places_post(place_id=None):
 
 @app_views.route(
         '/reviews/<reviews_id>', methods=['PUT'], strict_slashes=False)
-def places_put(review_id=None):
+def reviews_put(review_id=None):
     """update places obj"""
     review = storage.get('Review', review_id)
     if review is None:
