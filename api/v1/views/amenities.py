@@ -14,13 +14,18 @@ def amenities():
     """
     Retrieves the list of all Amenity objects
     """
+    amenities = storage.all(Amenity)
+    amenities_list = []
+    for key, value in amenities.items():
+        amenities_list.append(value.to_dict())
+    return jsonify(amenities_list)
 
-    amenities = []
+    # amenities = []
 
-    for amenity in storage.all("Amenity").values():
-        amenities.append(amenity.to_dict())
+    # for amenity in storage.all("Amenity").values():
+    #     amenities.append(amenity.to_dict())
 
-    return jsonify(amenities)
+    # return jsonify(amenities)
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET"],
