@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -66,6 +67,21 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+class TestDBStorage(unittest.TestCase):
+    """test the dbstorage"""
+
+    def test_count(self):
+        """test methods storage.get"""
+        self.assertEqual(type(storage.count()), int)
+
+    def test_get(self):
+        """test method storage.get"""
+        dicti = {"name": 'test'}
+        self.new = State(**dicti)
+        self.new.save()
+        self.assertEqual(storage.get('State', self.new.id), self.new)
 
 
 class TestFileStorage(unittest.TestCase):
