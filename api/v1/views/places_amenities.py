@@ -28,3 +28,4 @@ def amenis(place_id):
         list_ameniti = []
         for i in place.amenities:
             list_ameniti.append(i.to_dict())
+        return jsonify(list_ameniti)
