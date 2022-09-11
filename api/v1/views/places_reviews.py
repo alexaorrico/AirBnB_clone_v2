@@ -89,36 +89,20 @@ def reviewpost(place_id=None):
     return make_response(jsonify(obj.to_dict()), 201)
 
 
-@app_views.route('/reviews/<review_id>', methods=['PUT'],
-                 strict_slashes=False)
-def update_review_id(review_id):
-    """
-    Make a PUT request HTTP to update data.
-    """
-    # Hacemos la request de la data que se pase en formato json y la
-    # pasamos a un dic de python para poder trabajar con ella
+@app_views.route('reviews/<review_id>', methods=['PUT'], strict_slashes=False)
+def reviewput(review_id=None):
+    """review put"""
+    notAttr = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
     body = request.get_json()
-
-    # If the HTTP request body is not valid JSON, raise a 400 error
     if body is None:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-
-    # Se trae el objeto review del que se pase la "id"
-    review = storage.get(Review, review_id)
-
-    # If the review_id is not linked to any Review object, raise a 404 error
+        return jsonify({
+            "error": "Not a JSON"
+        }), 400
+    review = storage.get("Review", review_id)
     if review is None:
         abort(404)
-    else:
-        # keys to ignore - not change
-        keys_ignore = ["id", "user_id", "place_id", "created_at", "updated_at"]
-
-        for key, value in body.items():
-            if key not in keys_ignore:
-                setattr(review, key, value)
-            else:
-                pass
-        # Se guarda el nuevo objeto dentro del storage
-        storage.save()
-        # Se devuelve el objeto creado y un status code de 200
-        return make_response(jsonify(review.to_dict()), 200)
+    for key, value in body.items():
+        if key not in notAttr:
+            setattr(review, key, value)
+    storage.save()
+    return jsonify(review.to_dict()), 200
