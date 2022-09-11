@@ -53,13 +53,13 @@ def CreateCity(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
+    json_req['state_id'] = state.id
     new_obj = City(**json_req)
-    new_obj.state_id = state_id
     new_obj.save()
     return jsonify(new_obj.to_dict()), 201
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['PUT'],
+@app_views.route("/cities/<city_id>", methods=['PUT'],
                  strict_slashes=False)
 def updateCity(city_id):
     city = storage.get(City, city_id)
@@ -69,7 +69,7 @@ def updateCity(city_id):
     if json_req is None:
         abort(400, 'Not a JSON')
     for key, value in json_req.items():
-        if key not in ["id", "created_at", "updated_at"]:
+        if key not in ["id", "created_at", "updated_at", "state_id"]:
             setattr(city, key, value)
     city.save()
     return jsonify(city.to_dict()), 200
