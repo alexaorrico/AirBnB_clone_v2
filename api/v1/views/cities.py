@@ -4,6 +4,7 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.city import City
+from os import getenv
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
@@ -13,8 +14,11 @@ def cities_bystate(state_id):
     if state is None:
         abort(404)
     list_cities = []
-    for city in state.cities:
-        list_cities.append(city.to_dict())
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        for city in state.cities:
+            list_cities.append(city.to_dict())
+    else:
+        list_cities = state.cities()
     return jsonify(list_cities)
 
 
@@ -58,6 +62,8 @@ def cities_post(state_id=None):
 def cities(city_id=None):
     """update city obj"""
     city = storage.get('City', city_id)
+    if city is None:
+        abort(404)
     response = request.get_json()
     if response is None:
         abort(400, description='Not a json')
@@ -66,4 +72,5 @@ def cities(city_id=None):
     response.pop('created_at', None)
     for key, value in response.items():
         setattr(city, key, value)
+    storage.save()
     return jsonify(city.to_dict()), 200
