@@ -8,7 +8,7 @@ from models.state import State
 from models.user import User
 from models import storage
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, make_response
 import json
 
 classes = {"amenities": Amenity, "cities": City,
@@ -97,4 +97,4 @@ def reviewput(review_id=None):
         if key not in notAttr:
             setattr(review, key, value)
     storage.save()
-    return jsonify(review.to_dict()), 200
+    return make_response(jsonify(review.to_dict()), 200)
