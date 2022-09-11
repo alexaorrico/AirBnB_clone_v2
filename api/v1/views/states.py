@@ -45,7 +45,7 @@ def states_post():
     """add new state"""
     response = request.get_json()
     if response is not None:
-        if 'name' in response:
+        if 'name' in response.keys():
             new_state = State(**response)
             new_state.save()
             return jsonify(new_state.to_dict()), 201
@@ -70,6 +70,6 @@ def states_put(state_id=None):
                 storage.save()
                 return jsonify(state.to_dict()), 200
         else:
-            abort(404)
+            abort(400, description="Not a JSON")
     else:
-        abort(400, description="Not a JSON")
+        abort(404)
