@@ -8,4 +8,6 @@ from models import storage
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """Status"""
-    return jsonify({"status": "OK"})
+    new_dict = {}
+    new_dict['status'] = "OK"
+    return jsonify(new_dict)
