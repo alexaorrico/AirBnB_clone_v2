@@ -154,8 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Mauro Labella 
-Alvaro Sabini
+- Mauro Labella 
+- Alvaro Sabini
 
 
 ## License
