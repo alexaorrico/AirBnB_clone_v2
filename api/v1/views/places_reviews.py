@@ -53,7 +53,7 @@ def reviewdel(review_id=None):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def reviewpost(review_id=None):
+def reviewpost(place_id=None):
     """review post"""
     body = request.get_json()
     if body is None:
