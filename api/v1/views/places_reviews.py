@@ -20,12 +20,13 @@ classes = {"amenities": Amenity, "cities": City,
 def review(place_id=None):
     """review function"""
     list_of_reviews = []
-    place = storage.get("Place", place_id)
-    if place is None:
+    places = storage.get("Place", place_id)
+    if places is None:
         abort(404)
-    for review in place.reviews:
+    for review in places.reviews:
         list_of_reviews.append(review.to_dict())
     return jsonify(list_of_reviews)
+
 
 
 @app_views.route('reviews/<review_id>', methods=['GET'], strict_slashes=False)
