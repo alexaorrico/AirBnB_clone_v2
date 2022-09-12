@@ -32,7 +32,7 @@ def amenis(place_id):
     else:
         place = storage.get("Place", place_id)
         if place is None:
-            abort(404)
+            return jsonify("error":"hola")
         list_ameniti = []
         for i in place.amenities:
             list_ameniti.append(i.to_dict())
