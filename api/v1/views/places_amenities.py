@@ -28,6 +28,22 @@ def amenis(place_id):
     for i in place.amenities:
         list_ameniti.append(i.to_dict())
     return jsonify(list_ameniti)
+
+
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 strict_slashes=False, methods=['DELETE'])
+def del_place_amenity(place_id, amenity_id):
+    """Delete amenity by place and amenity id"""
+    place = storage.get(Place, place_id)
+    if the_place is None:
+        abort(404)
+    amenity = storage.get(Amenity, amenity_id)
+    if the_amenity is None:
+        abort(404)
+    storage.delete(the_amenity)
+    storage.save()
+    return jsonify({}), 200
+
 # @app_views.route('places/<place_id>/amenities/<amenity_id>',
 #                  methods=['DELETE'],
 #                  strict_slashes=False)
