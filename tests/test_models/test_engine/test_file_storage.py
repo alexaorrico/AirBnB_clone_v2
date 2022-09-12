@@ -67,6 +67,18 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        """ test get function """
+        self.assertTrue(models.storage.get("Base Model", "no_id") is None)
+        self.assertTrue(models.storage.get(None, "no_id") is None)
+        self.assertTrue(models.storage.get("State", None) is None)
+        self.assertTrue(models.storage.get(None, None) is None)
+
+    def test_count(self):
+        """ test get function """
+        self.assertTrue(models.storage.count("Base Model") >= 0)
+        self.assertTrue(models.storage.count("Review") >= 0)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
