@@ -74,7 +74,6 @@ test_db_storage.py'])
         self.assertTrue(models.storage.get("State", None) is None)
         self.assertTrue(models.storage.get(None, None) is None)
 
-
     def test_count(self):
         """ test get function """
         self.assertTrue(models.storage.count("Base Model") >= 0)
