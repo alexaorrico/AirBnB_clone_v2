@@ -18,18 +18,27 @@ classes = {"amenities": Amenity, "cities": City,
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 
-@app_views.route('/places/<place_id>/amenities', strict_slashes=False,
-                 methods=['GET'])
-def place_amenities(place_id):
-    """Get the amenities by place"""
-    place = storage.get(Place, place_id)
-    if place is None:
-        abort(404)
-    list_a = []
-    for i in place.amenities:
-        list_a.append(i.to_dict())
-    return jsonify(list_a)
+# @app_views.route('/places/<place_id>/amenities', strict_slashes=False,
+#                  methods=['GET'])
+# def place_amenities(place_id):
+#     """Get the amenities by place"""
+#     place = storage.get(Place, place_id)
+#     if place is None:
+#         abort(404)
+#     list_a = []
+#     for i in place.amenities:
+#         list_a.append(i.to_dict())
+#     return jsonify(list_a)
 
+
+@app_views.route('/places/<p_id>/amenities', strict_slashes=False,
+                 methods=['GET'])
+def place_amenities(p_id):
+        """Get the amenities by place"""
+        the_amenity = storage.get(Place, p_id)
+        if the_amenity is not None:
+            return jsonify([a.to_dict() for a in the_amenity.amenities])
+        abort(404)
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  strict_slashes=False, methods=['DELETE'])
