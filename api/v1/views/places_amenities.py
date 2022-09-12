@@ -23,7 +23,7 @@ storage_t = getenv("HBNB_TYPE_STORAGE")
 def place_amenities(place_id):
     """Get the amenities by place"""
     place = storage.get(Place, place_id)
-    if amenity is None:
+    if place is None:
         abort(404)
     list_a = []
     for i in place.amenities:
