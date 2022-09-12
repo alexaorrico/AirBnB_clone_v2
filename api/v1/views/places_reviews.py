@@ -28,7 +28,7 @@ def reviews(review_id=None):
     review = storage.get('Review', review_id)
     if review is None:
         abort(404)
-    return jsonify(review)
+    return jsonify(review.to_dict())
 
 
 @app_views.route(
