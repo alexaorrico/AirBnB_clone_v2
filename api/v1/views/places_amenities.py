@@ -51,7 +51,7 @@ def del_amenity(place_id, amenity_id):
 def add_amenity(place_id, amenity_id):
     """POST a new amenity on a place"""
     place = storage.get(Place, place_id)
-    if the_place is None:
+    if place is None:
         abort(404)
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
