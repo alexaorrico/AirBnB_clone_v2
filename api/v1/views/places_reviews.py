@@ -83,11 +83,11 @@ def reviews_put(review_id=None):
     response = request.get_json()
     if response is None:
         abort(400, description='Not a JSON')
-    response('id', None)
-    response('user_id', None)
-    response('place_id', None)
-    response('created_at', None)
-    response('updated_at', None)
+    response.pop('id', None)
+    response.pop('user_id', None)
+    response.pop('place_id', None)
+    response.pop('created_at', None)
+    response.pop('updated_at', None)
     for key, value in response.items():
         setattr(review, key, value)
     return jsonify(review.to_dict()), 200
