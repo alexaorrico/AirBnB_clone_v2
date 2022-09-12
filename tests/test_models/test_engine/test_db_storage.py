@@ -74,14 +74,19 @@ class TestDBStorage(unittest.TestCase):
 
     def test_count(self):
         """test methods storage.get"""
-        self.assertEqual(type(storage.count()), int)
+        count = storage.count()
+        dicti = {"name": 'test'}
+        new = State(**dicti)
+        new.save()
+        new_count = storage.count()
+        self.assertNotEqual(count, new_count)
 
     def test_get(self):
         """test method storage.get"""
         dicti = {"name": 'test'}
-        self.new = State(**dicti)
-        self.new.save()
-        self.assertEqual(storage.get('State', self.new.id), self.new)
+        new = State(**dicti)
+        new.save()
+        self.assertEqual(storage.get('State', new.id), new)
 
 
 class TestFileStorage(unittest.TestCase):
