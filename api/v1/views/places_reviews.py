@@ -62,7 +62,7 @@ def reviews_post(place_id=None):
         abort(400, description='Not a JSON')
     if 'user_id' not in response.keys():
         abort(400, 'Missing user_id')
-    user = storage.get('User', response[user_id])
+    user = storage.get('User', response['user_id'])
     if user is None:
         abort(404)
     if 'text' not in response.keys():
@@ -83,11 +83,11 @@ def reviews_put(review_id=None):
     response = request.get_json()
     if response is None:
         abort(400, description='Not a JSON')
-    response('id', None)
-    response('user_id', None)
-    response('place_id', None)
-    response('created_at', None)
-    response('updated_at', None)
+    response.pop('id', None)
+    response.pop('user_id', None)
+    response.pop('place_id', None)
+    response.pop('created_at', None)
+    response.pop('updated_at', None)
     for key, value in response.items():
         setattr(review, key, value)
     return jsonify(review.to_dict()), 200
