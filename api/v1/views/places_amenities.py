@@ -29,3 +29,11 @@ def amenis(place_id):
         for i in place.amenities:
             list_ameniti.append(i.to_dict())
         return jsonify(list_ameniti)
+    else:
+        place = storage.get("Place", place_id)
+        if place is None:
+            abort(404)
+        list_ameniti = []
+        for i in place.amenities:
+            list_ameniti.append(i.to_dict())
+        return jsonify(list_ameniti)
