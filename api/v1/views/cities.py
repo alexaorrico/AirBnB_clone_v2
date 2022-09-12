@@ -73,7 +73,7 @@ def cities_new():
 
 # Update
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def put(city_id):
+def cities_put(city_id):
     """ Handles PUT request. Updates a State obj with status 200, else 400 """
     ignore_keys = ['id', 'created_at', 'updated_at']
     obj = storage.get(City, city_id)

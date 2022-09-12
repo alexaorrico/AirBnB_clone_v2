@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 """ API redirections """
-
+from models.state import State
+from werkzeug.exceptions import BadRequest
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
-from models.state import State
-from werkzeug.exceptions import BadRequest
+
 
 # Status
 @app_views.route('/states/status')
 def states_status():
     """ returns status OK if app is working """
     return jsonify({"Status": "OK"})
+
 
 # All
 @app_views.route('/states', strict_slashes=False)
@@ -22,19 +23,23 @@ def states_all():
         ret_list.append(obj.to_dict())
     return jsonify(ret_list)
 
+
 # Get by id
-@app_views.route('/states/<state_id>', 
-                 methods = ['GET'], 
+@app_views.route('/states/<state_id>',
+                 methods=['GET'],
                  strict_slashes=False)
 def states_get(state_id):
     """ retrieves a specific state object based on id """
     obj = storage.get(State, state_id)
-    if (obj): return jsonify(obj.to_dict())
-    else: abort(404)
+    if (obj):
+        return jsonify(obj.to_dict())
+    else:
+        abort(404)
+
 
 # Delete by id
-@app_views.route('/states/<state_id>', 
-                 methods = ['DELETE'], 
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'],
                  strict_slashes=False)
 def states_del(state_id):
     """ delete linked state object """
@@ -46,9 +51,10 @@ def states_del(state_id):
     else:
         abort(404)
 
+
 # Create new
 @app_views.route('/states/',
-                 methods = ['POST'],
+                 methods=['POST'],
                  strict_slashes=False)
 def states_new():
     try:
@@ -63,9 +69,10 @@ def states_new():
     storage.save()
     return jsonify(storage.get(new_obj.__class__, new_obj.id).to_dict())
 
+
 # Update
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def put(state_id):
+def states_put(state_id):
     """ Handles PUT request. Updates a State obj with status 200, else 400 """
     ignore_keys = ['id', 'created_at', 'updated_at']
     obj = storage.get(State, state_id)
