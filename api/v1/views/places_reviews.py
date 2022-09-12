@@ -56,8 +56,6 @@ def reviews_post(place_id=None):
     """add new place"""
     response = request.get_json()
     place = storage.get('Place', place_id)
-    if user is None:
-        abort(404)
     if place is None:
         abort(404)
     if response is None:
