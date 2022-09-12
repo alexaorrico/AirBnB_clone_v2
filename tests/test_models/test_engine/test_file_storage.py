@@ -74,7 +74,12 @@ class TestFSstorage(unittest.TestCase):
 
     def test_count(self):
         """test count method"""
-        self.assertEqual(type(storage.count()), int)
+        count = storage.count()
+        dicti = {"name": 'test'}
+        self.new = State(**dicti)
+        self.new.save()
+        new_count = storage.count()
+        self.assertNotEqual(count, new_count)
 
     def test_get(self):
         """test get method"""
