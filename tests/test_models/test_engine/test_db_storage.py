@@ -113,11 +113,13 @@ class DBStorageTests(unittest.TestCase):
         user.save()
         self.assertEqual(models.storage.count("State"), count + 1)
         self.assertEqual(models.storage.count(), count + 2)
+
     def get_from_db(self):
         """Check if instance is get fron the database"""
         new_o = State(name="Colorado")
         obj = storage.get("State", "no_id")
         self.assertIsNone(obj)
+
     def test_db_storage_count(self):
         """Total objects in db"""
         storage.reload()

@@ -120,6 +120,7 @@ class TestFileStorage(unittest.TestCase):
         new_o = State(name="Colorado")
         obj = storage.get("State", "no_id")
         self.assertIsNone(obj)
+
     def test_db_storage_count(self):
         """Total objects in db"""
         storage.reload()
@@ -128,6 +129,7 @@ class TestFileStorage(unittest.TestCase):
         cls_count = storage.count("State")
         self.assertIsInstance(cls_count, int)
         self.assertGreaterEqual(all_count, cls_count)
+
     def get_from_filestorage(self):
         """Get function tests"""
         storage = FileStorage()
@@ -137,6 +139,7 @@ class TestFileStorage(unittest.TestCase):
         FileStorage._FileStorage__objects = new_dict
         self.assertTrue(storage.get(None, None) is None)
         self.assertTrue(storage.get("User", None) is None)
+
     def test_count_fileStorage(self):
         """Total objects in db FileStorage"""
         storage = FileStorage()
