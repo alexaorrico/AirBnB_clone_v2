@@ -90,4 +90,5 @@ def reviews_put(review_id=None):
     response.pop('updated_at', None)
     for key, value in response.items():
         setattr(review, key, value)
+    storage.save()
     return jsonify(review.to_dict()), 200
