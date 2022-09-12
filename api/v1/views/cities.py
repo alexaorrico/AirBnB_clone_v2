@@ -28,19 +28,21 @@ def cities_all():
 
 
 # Get by id
-@app_views.route('/cities/<city_id>', 
-                 methods = ['GET'], 
+@app_views.route('/cities/<city_id>',
+                 methods=['GET'],
                  strict_slashes=False)
 def cities_get(city_id):
     """ retrieves a specific state object based on id """
     obj = storage.get(City, city_id)
-    if (obj): return jsonify(obj.to_dict())
-    else: abort(404)
+    if (obj):
+        return jsonify(obj.to_dict())
+    else:
+        abort(404)
 
 
 # Delete by id
-@app_views.route('/cities/<city_id>', 
-                 methods = ['DELETE'], 
+@app_views.route('/cities/<city_id>',
+                 methods=['DELETE'],
                  strict_slashes=False)
 def cities_del(city_id):
     """ delete linked state object """
@@ -55,7 +57,7 @@ def cities_del(city_id):
 
 # Create new
 @app_views.route('/cities/',
-                 methods = ['POST'],
+                 methods=['POST'],
                  strict_slashes=False)
 def cities_new():
     try:
