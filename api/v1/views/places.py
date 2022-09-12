@@ -101,7 +101,7 @@ def putplaces(place_id=None):
 
 
 
-@app_views.route('places_search', methods=['PUT'], strict_slashes=False)
+@app_views.route('/places_search', methods=['PUT'], strict_slashes=False)
 def search(place_id=None):
     body = request.get_json()
     if body is None:
