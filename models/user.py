@@ -17,7 +17,8 @@ class User(BaseModel, Base):
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
-        places = relationship("Place", backref="user", cascade="all, delete-orphan")
+        places = relationship("Place", backref="user",
+                              cascade="all, delete-orphan")
         reviews = relationship("Review", backref="user")
     else:
         email = ""
@@ -28,3 +29,13 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+    @property
+    def password(self):
+        """getter for password"""
+        return self.__password
+
+    @password.setter
+    def password(self, passwrd):
+        """getter for password (hashed)"""
+        self.password = hashlib.md5(passwrd.encode('utf-8')).hexdigest()
