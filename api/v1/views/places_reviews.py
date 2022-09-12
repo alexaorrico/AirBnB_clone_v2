@@ -19,7 +19,7 @@ def reviews_place(place_id=None):
         abort(404)
     list_reviews = []
     for review in place.reviews:
-        list_reviews.append(Review.to_dict())
+        list_reviews.append(review.to_dict())
     return jsonify(list_reviews)
 
 
@@ -67,9 +67,7 @@ def reviews_post(place_id=None):
         abort(404)
     if 'text' not in response.keys():
         abort(400, 'Missing text')
-    user = storage.get('Review', response['place_id'])
-    if user is None:
-        abort(404)
+    response['place_id'] = place_id
     new_review = Review(**response)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
