@@ -54,26 +54,30 @@ def reviews_delete(review_id=None):
 def reviews_post(place_id=None):
     """add new place"""
     response = request.get_json()
-    place = storage.get('Review', place_id)
+    place = storage.get('Place', place_id)
+    if user is None:
+        abort(404)
     if place is None:
         abort(404)
     if response is None:
         abort(400, description='Not a JSON')
-    if 'place_id' not in response.keys():
-        abort(400, 'Missing place_id')
+    if 'user_id' not in response.keys():
+        abort(400, 'Missing user_id')
+    user = storage.get('User', response[user_id])
+    if user is None:
+        abort(404)
+    if 'text' not in response.keys():
+        abort(400, 'Missing text')
     user = storage.get('Review', response['place_id'])
     if user is None:
         abort(404)
-    if 'name' not in response.keys():
-        abort(400, 'Missing name')
-    response['place_id'] = place_id
     new_review = Review(**response)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route(
-        '/reviews/<reviews_id>', methods=['PUT'], strict_slashes=False)
+        '/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def reviews_put(review_id=None):
     """update places obj"""
     review = storage.get('Review', review_id)
@@ -84,7 +88,7 @@ def reviews_put(review_id=None):
         abort(400, description='Not a JSON')
     response('id', None)
     response('user_id', None)
-    response('city_id', None)
+    response('place_id', None)
     response('created_at', None)
     response('updated_at', None)
     for key, value in response.items():
