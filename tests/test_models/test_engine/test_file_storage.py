@@ -113,3 +113,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+ def get_from_db(self):
+        """Check if instance is get fron the database"""
+        new_o = State(name="Colorado")
+        obj = storage.get("State", "no_id")
+        self.assertIsNone(obj)
+    def test_db_storage_count(self):
+        """Total objects in db"""
+        storage.reload()
+        all_count = storage.count(None)
+        self.assertIsInstance(all_count, int)
+        cls_count = storage.count("State")
+        self.assertIsInstance(cls_count, int)
+        self.assertGreaterEqual(all_count, cls_count)
+    def get_from_filestorage(self):
+        """Get function tests"""
+        storage = FileStorage()
+        dic = {}
+        new_obj = classes["Place"]()
+        dic[new_obj.class.name + "." + new_obj.id] = new_obj
+        FileStorage._FileStorageobjects = new_dict
+        self.assertTrue(storage.get(None, None) is None)
+        self.assertTrue(storage.get("User", None) is None)
+    def test_count_fileStorage(self):
+        """Total objects in db FileStorage"""
+        storage = FileStorage()
+        dic = {}
+        new_obj = classes["State"]()
+        dic[new_obj.class.name + "." + dic.id] = dic
+        FileStorage._FileStorageobjects = new_dict
+        self.assertTrue(storage.count("State") > 0)
