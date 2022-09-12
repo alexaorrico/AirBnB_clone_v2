@@ -21,19 +21,12 @@ storage_t = getenv("HBNB_TYPE_STORAGE")
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def amenis(place_id):
-    if storage_t == "db":
-        place = storage.get("Place", place_id)
-        if place is None:
-            abort(404)
-        list_ameniti = []
-        for i in place.amenities:
-            list_ameniti.append(i.to_dict())
-        return jsonify(list_ameniti)
-    else:
-        place = storage.get("Place", place_id)
-        if place is None:
-            return jsonify({"error": "Not found"}), 200
-        list_ameniti = []
-        for i in place.amenities:
-            list_ameniti.append(i.to_dict())
-        return jsonify(list_ameniti)
+    place = storage.get("Place", place_id)
+    if place is None:
+        abort(404)
+    list_ameniti = []
+    for i in place.amenities:
+        list_ameniti.append(i.to_dict())
+    return jsonify(list_ameniti)
+
+
