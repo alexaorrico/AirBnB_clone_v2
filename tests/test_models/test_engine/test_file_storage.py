@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -33,15 +34,15 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_pep8_conformance_file_storage(self):
         """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
+        result = pep8s.check_files(["models/engine/file_storage.py"])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
+        result = pep8s.check_files(["tests/test_models/test_engine/\
+test_file_storage.py"])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -70,7 +71,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -78,7 +79,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -94,7 +95,7 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -113,3 +114,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def get_from_db(self):
+        """Check if instance is get fron the database"""
+        new_o = State(name="Colorado")
+        obj = storage.get("State", "no_id")
+        self.assertIsNone(obj)
+    def test_db_storage_count(self):
+        """Total objects in db"""
+        storage.reload()
+        all_count = storage.count(None)
+        self.assertIsInstance(all_count, int)
+        cls_count = storage.count("State")
+        self.assertIsInstance(cls_count, int)
+        self.assertGreaterEqual(all_count, cls_count)
+    def get_from_filestorage(self):
+        """Get function tests"""
+        storage = FileStorage()
+        dic = {}
+        new_obj = classes["Place"]()
+        dic[new_obj.__class__.__name__ + "." + new_obj.id] = new_obj
+        FileStorage._FileStorage__objects = new_dict
+        self.assertTrue(storage.get(None, None) is None)
+        self.assertTrue(storage.get("User", None) is None)
+    def test_count_fileStorage(self):
+        """Total objects in db FileStorage"""
+        storage = FileStorage()
+        dic = {}
+        new_obj = classes["State"]()
+        dic[new_obj.__class__.__name__ + "." + dic.id] = dic
+        FileStorage._FileStorage__objects = new_dict
+        self.assertTrue(storage.count("State") > 0)

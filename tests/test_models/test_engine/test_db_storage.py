@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -86,3 +87,42 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class DBStorageTests(unittest.TestCase):
+    """Test Cases"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def get_tests(self):
+        """Object by id or None"""
+        obj = State(name="Texas")
+        obj.save()
+        user = User(email="4375@holbertonstudents.com", password="root")
+        user.save()
+        self.assertIs(None, models.storage.get("State", "test"))
+        self.assertIs(None, models.storage.get("test", "test"))
+        self.assertIs(obj, models.storage.get("User", user.id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def count_tests(self):
+        """New Objects"""
+        count = models.storage.count()
+        self.assertEqual(models.storage.count("test"), 0)
+        obj = State(name="Texas")
+        obj.save()
+        user = User(email="4375@holbertonstudents.com", password="root")
+        user.save()
+        self.assertEqual(models.storage.count("State"), count + 1)
+        self.assertEqual(models.storage.count(), count + 2)
+    def get_from_db(self):
+        """Check if instance is get fron the database"""
+        new_o = State(name="Colorado")
+        obj = storage.get("State", "no_id")
+        self.assertIsNone(obj)
+    def test_db_storage_count(self):
+        """Total objects in db"""
+        storage.reload()
+        all_count = storage.count(None)
+        self.assertIsInstance(all_count, int)
+        cls_count = storage.count("State")
+        self.assertIsInstance(cls_count, int)
+        self.assertGreaterEqual(all_count, cls_count)
