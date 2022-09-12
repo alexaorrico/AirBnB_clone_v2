@@ -62,7 +62,7 @@ def reviews_post(place_id=None):
         abort(400, description='Not a JSON')
     if 'user_id' not in response.keys():
         abort(400, 'Missing user_id')
-    user = storage.get('User', response[user_id])
+    user = storage.get('User', response['user_id'])
     if user is None:
         abort(404)
     if 'text' not in response.keys():
