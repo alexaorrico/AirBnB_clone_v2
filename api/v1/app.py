@@ -3,7 +3,6 @@ from os import getenv
 from models import storage
 from api.v1.views import app_views
 from flask import Flask
-from werkzeug.exceptions import HTTPException
 import json
 
 
@@ -17,7 +16,7 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.errorhandler(HTTPException)
+@app.errorhandler(404)
 def handle_exception(e):
     return json.dumps({'error': 'Not found'}, indent=4)
 
