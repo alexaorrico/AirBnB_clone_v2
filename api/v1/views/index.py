@@ -2,7 +2,6 @@
 """Index module"""
 from api.v1.views import app_views
 import json
-from flask import url_for
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
