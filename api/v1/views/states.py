@@ -10,11 +10,15 @@ from flask import Flask, jsonify
 def states():
     """return list of all objects State"""
     new_list = list()
-    for value in storage.all('State').values():
+    lst_states = storage.all('State')
+    for value in lst_states.values():
         new_list.append(value.to_dict())
     return jsonify(new_list)
+<<<<<<< HEAD
 
 @app_views.route('/states/<state_id>', strict_slashes=False)
 def states_id(state_id=None):
     """Return dictionary of specific state"""
     return storage.get("State", state_id)
+=======
+>>>>>>> fd34c8e8a4e53217bc77f0dbc5abc6fe37ec0daa
