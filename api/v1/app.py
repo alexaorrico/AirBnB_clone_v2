@@ -18,7 +18,7 @@ def teardown_db(exception):
 
 @app.errorhandler(404)
 def handle_exception(e):
-    return json.dumps({'error': 'Not found'}, indent=4)
+    return json.dumps({'error': 'Not found'}, indent=4), 404
 
 
 if __name__ == '__main__':
