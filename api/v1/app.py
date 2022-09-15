@@ -13,6 +13,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_appcontext():
+    """call method to close"""
     storage.close()
 
 if __name__ == "__main__":
