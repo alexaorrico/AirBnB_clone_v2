@@ -9,8 +9,9 @@ import json
 @app_views.route('/states', strict_slashes=False)
 def states():
     """"""
-    states = storage.all(State).values()
-    print(states)
+    states = []
+    for state in storage.all(State).values():
+        states.append(state.to_dict())
     return json.dumps(states, indent=4)
 
 
