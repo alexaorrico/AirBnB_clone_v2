@@ -37,7 +37,6 @@ def states_id(state_id):
         abort(404)
     if request.method == 'DELETE':
         state = storage.get(State, state_id)
-        print(state)
         if state is not None:
             state.delete()
             storage.save()
@@ -45,7 +44,6 @@ def states_id(state_id):
         abort(404)
     if request.method == 'PUT':
         state = storage.get(State, state_id)
-        print(state)
         if state is None:
             abort(404)
         try:
