@@ -3,6 +3,7 @@
 Contains the class DBStorage
 """
 
+from calendar import c
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -92,6 +93,10 @@ class DBStorage:
     def count(self, cls=None):
         """method to count the number of objects in storage"""
         if cls is None:
-            return count(models.storage.all())
-
-        return count(models.storage.all(cls))
+            clss = classes.values()
+            counter = 0
+            for cla in clss:
+                counter += len(models.storage.all(clss).values())
+        else:
+            counter = len(models.storage.all(cls).values())
+        return counter
