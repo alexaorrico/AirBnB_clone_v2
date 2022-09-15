@@ -13,6 +13,7 @@ def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
 
+
 if __name__ == '__main__':
     db_host = getenv('HBNB_API_HOST', default='0.0.0.0')
     db_port = getenv('HBNB_API_PORT', default='5000')
