@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" something for now"""
+""" Module for start the API """
 
 from flask import Flask, Blueprint, render_template
 from models import storage
