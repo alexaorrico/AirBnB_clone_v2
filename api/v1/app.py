@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def teardown():
+def teardown(error):
     """ calls storege.close to close
     sqlalqemy """
     storage.close()
