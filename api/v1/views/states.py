@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from models import storage
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort
 
 
 @app_views.route('/states', strict_slashes=False)
@@ -18,4 +18,7 @@ def states():
 @app_views.route('/states/<state_id>', strict_slashes=False)
 def states_id(state_id):
     """Return dictionary of specific state"""
-    return storage.get("State", state_id).to_dict()
+    ret = storage.get("State", state_id)
+    if ret:
+        return ret.to_dict()
+    abort(404)
