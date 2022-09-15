@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Module for start the API """
 
-from flask import Flask, Blueprint, render_template
+from flask import Flask 
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -17,10 +17,10 @@ def teardown_appcontext():
     storage.close()
 
 if __name__ == "__main__":
-    host = getenv('HBNB_API_HOST')
-    port = getenv('HBNB_API_PORT')
-    if not host:
+    host_env = getenv('HBNB_API_HOST')
+    port_env = getenv('HBNB_API_PORT')
+    if not host_env:
         host = "0.0.0.0"
-    if not port:
+    if not port_env:
         port = 5000
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host_env, port=int(port_env), threaded=True)
