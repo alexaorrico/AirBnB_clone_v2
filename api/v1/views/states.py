@@ -26,26 +26,19 @@ def states():
     return json.dumps(new_state.to_dict(), indent=4), 201
 
 
-
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def states_id(state_id):
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
     if request.method == 'GET':
-        for state in storage.all(State).values():
-            if state.id == state_id:
-                return json.dumps(state.to_dict(), indent=4)
-        abort(404)
+        return json.dumps(state.to_dict(), indent=4)
     if request.method == 'DELETE':
-        state = storage.get(State, state_id)
-        if state is not None:
-            state.delete()
-            storage.save()
-            return {}
-        abort(404)
+        state.delete()
+        storage.save()
+        return {}
     if request.method == 'PUT':
-        state = storage.get(State, state_id)
-        if state is None:
-            abort(404)
         try:
             data = request.get_json()
         except Exception:
@@ -55,4 +48,3 @@ def states_id(state_id):
                 setattr(state, k, v)
         storage.save()
         return json.dumps(state.to_dict(), indent=4), 200
-
