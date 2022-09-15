@@ -14,3 +14,8 @@ def states():
     for value in lst_states.values():
         new_list.append(value.to_dict())
     return jsonify(new_list)
+
+@app_views.route('/states/<state_id>', strict_slashes=False)
+def states_id(state_id):
+    """Return dictionary of specific state"""
+    return storage.get("State", state_id).to_dict()
