@@ -3,6 +3,9 @@ from os import getenv
 from models import storage
 from api.v1.views import app_views
 from flask import Flask
+from werkzeug.exceptions import HTTPException
+import json
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -12,6 +15,11 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
+
+
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    return json.dumps({'error': 'Not found'}, indent=4)
 
 
 if __name__ == '__main__':
