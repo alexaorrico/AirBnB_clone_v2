@@ -3,13 +3,13 @@
 
 from flask import Flask, Blueprint, render_template
 from models import storage
-from api.v1.views import app_view
+from api.v1.views import app_views
 from os import getenv
 
 
 
 app = Flask(__name__)
-app.register_bluprint(app_view)
+app.register_bluprint(app_views)
 
 @app.teardown_appcontext
 def teardown_appcontext():
