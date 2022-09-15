@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Module for start the API """
 
-from flask import Flask 
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -15,6 +15,11 @@ app.register_blueprint(app_views)
 def teardown_appcontext(self):
     """call method to close"""
     storage.close()
+
+@app.errorhandler(404)
+def page_not_found(err):
+    err_dict = {"error": "not fount"}
+    return jsonify(err_dict)
 
 if __name__ == "__main__":
     host_env = getenv('HBNB_API_HOST')
