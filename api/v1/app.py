@@ -9,7 +9,7 @@ from os import getenv
 
 
 app = Flask(__name__)
-app.register_bluprint(app_views)
+app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_appcontext():
