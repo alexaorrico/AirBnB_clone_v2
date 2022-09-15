@@ -5,6 +5,7 @@ App.py
 import os
 from flask import Flask
 from flask import Blueprint
+from flask import jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -15,7 +16,16 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 
 @app.teardown_appcontext
 def hello(self):
+    """Storage.close
+    """
     storage.close()
+
+
+@app.errorhandler(404)
+def page_nf(e):
+    """Error from page not found"""
+    err_ = {"error": "Not found"}
+    return jsonify(err_)
 
 
 if __name__ == "__main__":
