@@ -20,7 +20,7 @@ def teardown_appcontext(self):
 def page_not_found(err):
     """error handler"""
     err_dict = {"error": "not fount"}
-    return jsonify(err_dict)
+    return jsonify(err_dict), 404
 
 if __name__ == "__main__":
     host_env = getenv('HBNB_API_HOST')
