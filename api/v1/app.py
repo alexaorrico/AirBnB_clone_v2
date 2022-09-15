@@ -18,6 +18,7 @@ def teardown_appcontext(self):
 
 @app.errorhandler(404)
 def page_not_found(err):
+    """error handler"""
     err_dict = {"error": "not fount"}
     return jsonify(err_dict)
 
