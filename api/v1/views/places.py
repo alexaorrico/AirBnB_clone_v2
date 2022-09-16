@@ -85,9 +85,8 @@ def places_search():
                 cities.append(new_city)
     if cities == []:
         for place in storage.all(Place).values():
-            places.append(place.to_dict())
-        return jsonify(places)
-    elif 'amenities' not in data.keys() or data['amenities'] == []:
+            places.append(place)
+    if 'amenities' not in data.keys() or data['amenities'] == []:
         for city in cities:
             for place in city.places:
                 places.append(place.to_dict())
