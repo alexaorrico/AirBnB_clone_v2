@@ -2,9 +2,8 @@
 from os import getenv
 from models import storage
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
-import json
 
 
 app = Flask(__name__)
@@ -20,7 +19,7 @@ def teardown_db(exception):
 
 @app.errorhandler(404)
 def handle_exception(e):
-    return json.dumps({'error': 'Not found'}, indent=4), 404
+    return jsonify({'error': 'Not found'}), 404
 
 
 if __name__ == '__main__':

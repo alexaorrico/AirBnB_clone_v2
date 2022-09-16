@@ -5,8 +5,7 @@ from models.place import Place
 from models.city import City
 from models.user import User
 from models import storage
-from flask import request, abort
-import json
+from flask import request, abort, jsonify
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'],
@@ -20,7 +19,7 @@ def places(city_id):
         places = []
         for city in city.places:
             places.append(city.to_dict())
-        return json.dumps(places, indent=4)
+        return jsonify(places)
     try:
         data = request.get_json()
     except Exception:
@@ -35,7 +34,7 @@ def places(city_id):
     data['city_id'] = city_id
     new_place = Place(**data)
     new_place.save()
-    return json.dumps(new_place.to_dict(), indent=4), 201
+    return jsonify(new_place.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -46,11 +45,11 @@ def get_place(place_id):
     if place is None:
         abort(404)
     if request.method == 'GET':
-        return json.dumps(place.to_dict(), indent=4)
+        return jsonify(place.to_dict())
     if request.method == 'DELETE':
         place.delete()
         storage.save()
-        return {}
+        return jsonify({})
     if request.method == 'PUT':
         try:
             data = request.get_json()
@@ -61,4 +60,4 @@ def get_place(place_id):
                or k != 'created_at' or k != 'updated_at':
                 setattr(place, k, v)
         storage.save()
-        return json.dumps(place.to_dict(), indent=4), 200
+        return jsonify(place.to_dict()), 200
