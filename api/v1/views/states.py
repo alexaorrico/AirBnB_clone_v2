@@ -49,7 +49,7 @@ def create_state():
         abort(400, "Missing name")
 
     new_instance = State(name=name_city)
-    return jsonify(new_instance.to_dict()), 200
+    return jsonify(new_instance.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
