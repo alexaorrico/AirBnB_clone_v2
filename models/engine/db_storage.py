@@ -57,7 +57,10 @@ class DBStorage:
 
     def save(self):
         """commit all changes of the current database session"""
-        self.__session.commit()
+        try:
+            self.__session.commit()
+        except Exception as e:
+            print(e)
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
