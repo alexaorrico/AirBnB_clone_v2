@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Index
+Your first endpoint (route) will be to return the
+status of your API:
 """
 from api.v1.views import app_views
 from flask import jsonify

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-App.py
+import Blueprint from flask
 """
 from flask import Blueprint
 from api.v1.views.index import *

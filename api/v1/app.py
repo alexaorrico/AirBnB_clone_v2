@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-App.py
+Magic right? (No need to have a pretty rendered output,
+it’s a JSON, only the structure is important)
 """
 import os
 from flask import Flask
