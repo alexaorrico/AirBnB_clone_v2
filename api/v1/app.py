@@ -29,6 +29,8 @@ def page_nf(e):
 
 
 if __name__ == "__main__":
+    """Host and Port
+    """
     host = os.getenv('HBNB_API_HOST')
     port = os.getenv('HBNB_API_PORT')
     if not host:
