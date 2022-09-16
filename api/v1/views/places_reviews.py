@@ -6,21 +6,21 @@ from models import storage
 from flask import jsonify, abort, request
 
 
-@app_views.route('/places/<places_id>/reviews', strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False)
 def reviews_by_places(place_id):
     """return list of all object reviews"""
     place = storage.get('Place', place_id)
     if not place:
         abort(404)
     reviews = list()
-    list_review = storage.all('Place')
+    list_review = storage.all('Review')
     for value in list_review.values():
-        if place_id == value.city_id:
+        if place_id == value.place_id:
             reviews.append(value.to_dict())
     return jsonify(reviews)
 
 
-@app_views.route('/reviews/<reviews_id>', strict_slashes=False)
+@app_views.route('/reviews/<review_id>', strict_slashes=False)
 def review_by_id(review_id):
     """Get review by ID"""
     review = storage.get('Review', review_id)
@@ -67,10 +67,10 @@ def create_review(place_id):
     return jsonify(new_instance.to_dict()), 201
 
 
-@app_views.route('/reviews/<reviews>', strict_slashes=False, methods=['PUT'])
-def update_review(reviews_id):
+@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['PUT'])
+def update_review(review_id):
     """Update a review by a given ID"""
-    new_review = storage.get('Review', reviews_id)
+    new_review = storage.get('Review', review_id)
     if not new_review:
         abort(404)
 
