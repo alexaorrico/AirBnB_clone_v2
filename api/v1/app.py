@@ -24,7 +24,9 @@ def hello(self):
 @app.errorhandler(404)
 def page_nf(e):
     """Error from page not found"""
-    err_ = {"error": "Not found"}
+    err_ = {
+        "error": "Not found"
+        }
     return jsonify(err_)
 
 
