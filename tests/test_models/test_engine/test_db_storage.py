@@ -44,7 +44,7 @@ class TestDBStorageDocs(unittest.TestCase):
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertNotEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+                            "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
         """Test for the db_storage.py module docstring"""
@@ -74,7 +74,6 @@ test_db_storage.py'])
         """
         self.assertIsNotNone(DBStorage.get.__doc__)
         self.assertIsNotNone(DBStorage.count.__doc__)
-
 
 
 class TestFileStorage(unittest.TestCase):
