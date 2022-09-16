@@ -14,9 +14,8 @@ def amenities():
         for amenity in storage.all(Amenity).values():
             amenities.append(amenity.to_dict())
         return jsonify(amenities)
-    try:
-        data = request.get_json()
-    except Exception:
+    data = request.get_json()
+    if data is None:
         return 'Not a JSON', 400
     if 'name' not in data.keys():
         return 'Missing name', 400
@@ -37,11 +36,10 @@ def amenity_id(amenity_id):
     if request.method == 'DELETE':
         amenity.delete()
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     if request.method == 'PUT':
-        try:
-            data = request.get_json()
-        except Exception:
+        data = request.get_json()
+        if data is None:
             return 'Not a JSON', 400
         for k, v in data.items():
             if k != 'id' or k != 'created_at' or k != 'updated_at':
