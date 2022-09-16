@@ -45,7 +45,7 @@ def delete_places(place_id):
                  strict_slashes=False, methods=['POST'])
 def create_places(city_id):
     """Create a new place"""
-    from models.place import Place 
+    from models.place import Place
     city = storage.get('City', city_id)
     if not city:
         abort(404)
