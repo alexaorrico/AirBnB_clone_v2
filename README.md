@@ -1,6 +1,6 @@
 # 0x05. AirBnB clone - RESTful API
 
-> We are creating a copy of the AirBnB[https://www.airbnb.com.pe/] project.
+> We are creating a copy of the [AirBnB](https://www.airbnb.com.pe/) project.
 
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
@@ -155,12 +155,14 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 
 ## Bugs
-No known bugs at this time. 
+No known bugs at this time.
 
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Leslie Paz - [Github](https://github.com/Leslor)
+Christian Varas - [Github](https://github.com/ChristianVaras)
 
 Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
