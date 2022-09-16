@@ -113,3 +113,12 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_docstrings_file_storage(self):
+        """checking for docs strings"""
+        self.assertIsNotNone(FileStorage.get.__doc__)
+        self.assertIsNotNone(FileStorage.count.__doc__)
+
+
+if __name__ == '__main__':
+    unittest.main()
