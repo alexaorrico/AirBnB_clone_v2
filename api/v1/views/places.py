@@ -79,7 +79,9 @@ def places_search():
                 cities.append(city)
     if 'cities' in data.keys():
         for city_id in data['cities']:
-            cities.append(storage.get(City, city_id))
+            new_city = storage.get(City, city_id)
+            if new_city not in cities:
+                cities.append(new_city)
     if cities == []:
         for place in storage.all(Place).values():
             places.append(place.to_dict())
