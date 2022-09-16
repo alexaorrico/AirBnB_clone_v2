@@ -4,8 +4,7 @@ from api.v1.views import app_views
 from models.state import State
 from models.city import City
 from models import storage
-from flask import request, abort
-import json
+from flask import request, abort, jsonify
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
@@ -19,7 +18,7 @@ def cities(state_id):
         cities = []
         for city in state.cities:
             cities.append(city.to_dict())
-        return json.dumps(cities, indent=4)
+        return jsonify(cities)
     try:
         data = request.get_json()
     except Exception:
@@ -29,7 +28,7 @@ def cities(state_id):
     data['state_id'] = state_id
     new_city = City(**data)
     new_city.save()
-    return json.dumps(new_city.to_dict(), indent=4), 201
+    return jsonify(new_city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -40,11 +39,11 @@ def get_city(city_id):
     if city is None:
         abort(404)
     if request.method == 'GET':
-        return json.dumps(city.to_dict(), indent=4)
+        return jsonify(city.to_dict())
     if request.method == 'DELETE':
         city.delete()
         storage.save()
-        return {}
+        return jsonify({})
     if request.method == 'PUT':
         try:
             data = request.get_json()
@@ -55,4 +54,4 @@ def get_city(city_id):
                or k != 'updated_at':
                 setattr(city, k, v)
         storage.save()
-        return json.dumps(city.to_dict(), indent=4), 200
+        return jsonify(city.to_dict()), 200

@@ -3,8 +3,7 @@
 from api.v1.views import app_views
 from models.user import User
 from models import storage
-from flask import request, abort
-import json
+from flask import request, abort, jsonify
 
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
@@ -14,7 +13,7 @@ def users():
         users = []
         for user in storage.all(User).values():
             users.append(user.to_dict())
-        return json.dumps(users, indent=4)
+        return jsonify(users)
     try:
         data = request.get_json()
     except Exception:
@@ -27,7 +26,7 @@ def users():
         return 'Missing password', 400
     new_user = User(**data)
     new_user.save()
-    return json.dumps(new_user.to_dict(), indent=4), 201
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -38,11 +37,11 @@ def user_id(user_id):
     if user is None:
         abort(404)
     if request.method == 'GET':
-        return json.dumps(user.to_dict(), indent=4)
+        return jsonify(user.to_dict())
     if request.method == 'DELETE':
         user.delete()
         storage.save()
-        return {}
+        return jsonify({})
     if request.method == 'PUT':
         try:
             data = request.get_json()
@@ -53,4 +52,4 @@ def user_id(user_id):
                or k != 'updated_at':
                 setattr(user, k, v)
         storage.save()
-        return json.dumps(user.to_dict(), indent=4), 200
+        return jsonify(user.to_dict()), 200

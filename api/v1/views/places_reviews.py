@@ -6,8 +6,7 @@ from models.place import Place
 from models.city import City
 from models.user import User
 from models import storage
-from flask import request, abort
-import json
+from flask import request, abort, jsonify
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'],
@@ -21,7 +20,7 @@ def reviews(place_id):
         reviews = []
         for review in place.reviews:
             reviews.append(review.to_dict())
-        return json.dumps(reviews, indent=4)
+        return jsonify(reviews)
     try:
         data = request.get_json()
     except Exception:
@@ -36,7 +35,7 @@ def reviews(place_id):
     data['place_id'] = place_id
     new_review = Review(**data)
     new_review.save()
-    return json.dumps(new_review.to_dict(), indent=4), 201
+    return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -47,11 +46,11 @@ def get_review(review_id):
     if review is None:
         abort(404)
     if request.method == 'GET':
-        return json.dumps(review.to_dict(), indent=4)
+        return jsonify(review.to_dict())
     if request.method == 'DELETE':
         review.delete()
         storage.save()
-        return {}
+        return jsonify({})
     if request.method == 'PUT':
         try:
             data = request.get_json()
@@ -62,4 +61,4 @@ def get_review(review_id):
                or k != 'created_at' or k != 'updated_at':
                 setattr(review, k, v)
         storage.save()
-        return json.dumps(review.to_dict(), indent=4), 200
+        return jsonify(review.to_dict()), 200

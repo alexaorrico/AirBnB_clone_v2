@@ -3,8 +3,7 @@
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models import storage
-from flask import request, abort
-import json
+from flask import request, abort, jsonify
 
 
 @app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
@@ -14,7 +13,7 @@ def amenities():
         amenities = []
         for amenity in storage.all(Amenity).values():
             amenities.append(amenity.to_dict())
-        return json.dumps(amenities, indent=4)
+        return jsonify(amenities)
     try:
         data = request.get_json()
     except Exception:
@@ -23,7 +22,7 @@ def amenities():
         return 'Missing name', 400
     new_amenity = Amenity(**data)
     new_amenity.save()
-    return json.dumps(new_amenity.to_dict(), indent=4), 201
+    return jsonify(new_amenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -34,11 +33,11 @@ def amenity_id(amenity_id):
     if amenity is None:
         abort(404)
     if request.method == 'GET':
-        return json.dumps(amenity.to_dict(), indent=4)
+        return jsonify(amenity.to_dict())
     if request.method == 'DELETE':
         amenity.delete()
         storage.save()
-        return {}
+        return jsonify({})
     if request.method == 'PUT':
         try:
             data = request.get_json()
@@ -48,4 +47,4 @@ def amenity_id(amenity_id):
             if k != 'id' or k != 'created_at' or k != 'updated_at':
                 setattr(amenity, k, v)
         storage.save()
-        return json.dumps(amenity.to_dict(), indent=4), 200
+        return jsonify(amenity.to_dict()), 200
