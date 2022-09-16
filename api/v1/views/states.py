@@ -15,6 +15,7 @@ def states():
         new_list.append(value.to_dict())
     return jsonify(new_list)
 
+
 @app_views.route('/states/<state_id>', strict_slashes=False)
 def states_id(state_id):
     """Return dictionary of specific state"""
@@ -23,7 +24,9 @@ def states_id(state_id):
         return ret.to_dict()
     abort(404)
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
     """Deletes an specific state"""
     ret = storage.get('State', state_id)
@@ -33,6 +36,7 @@ def delete_state(state_id):
         return jsonify({}), 200
     abort(404)
 
+
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def create_state():
     """Create a new state"""
@@ -41,11 +45,12 @@ def create_state():
     if not content:
         abort(400, "Not a JSON")
     name_city = content.get('name')
-    if not "name" in content.keys():
+    if "name" not in content.keys():
         abort(400, "Missing name")
 
     new_instance = State(name=name_city)
     return jsonify(new_instance.to_dict()), 200
+
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def update_state(state_id):

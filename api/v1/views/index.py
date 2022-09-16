@@ -13,6 +13,7 @@ def status():
     ret = {"status": "OK"}
     return jsonify(ret)
 
+
 @app_views.route('/stats')
 def stats():
     """retrieves the number of eack objects by type"""
