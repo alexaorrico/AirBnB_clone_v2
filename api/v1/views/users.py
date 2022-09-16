@@ -14,9 +14,8 @@ def users():
         for user in storage.all(User).values():
             users.append(user.to_dict())
         return jsonify(users)
-    try:
-        data = request.get_json()
-    except Exception:
+    data = request.get_json()
+    if data is None:
         return 'Not a JSON', 400
     if 'name' not in data.keys():
         return 'Missing name', 400
@@ -41,11 +40,10 @@ def user_id(user_id):
     if request.method == 'DELETE':
         user.delete()
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     if request.method == 'PUT':
-        try:
-            data = request.get_json()
-        except Exception:
+        data = request.get_json()
+        if data is None:
             return 'Not a JSON', 400
         for k, v in data.items():
             if k != 'id' or k != 'email' or k != 'created_at'\

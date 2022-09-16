@@ -21,9 +21,8 @@ def reviews(place_id):
         for review in place.reviews:
             reviews.append(review.to_dict())
         return jsonify(reviews)
-    try:
-        data = request.get_json()
-    except Exception:
+    data = request.get_json()
+    if data is None:
         return 'Not a JSON', 400
     if 'user_id' not in data.keys():
         return 'Missing user_id', 400
@@ -50,11 +49,10 @@ def get_review(review_id):
     if request.method == 'DELETE':
         review.delete()
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     if request.method == 'PUT':
-        try:
-            data = request.get_json()
-        except Exception:
+        data = request.get_json()
+        if data is None:
             return 'Not a JSON', 400
         for k, v in data.items():
             if k != 'id' or k != 'user_id' or k != 'place_id'\

@@ -19,9 +19,8 @@ def cities(state_id):
         for city in state.cities:
             cities.append(city.to_dict())
         return jsonify(cities)
-    try:
-        data = request.get_json()
-    except Exception:
+    data = request.get_json()
+    if data is None:
         return 'Not a JSON', 400
     if 'name' not in data.keys():
         return 'Missing name', 400
@@ -43,11 +42,10 @@ def get_city(city_id):
     if request.method == 'DELETE':
         city.delete()
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     if request.method == 'PUT':
-        try:
-            data = request.get_json()
-        except Exception:
+        data = request.get_json()
+        if data is None:
             return 'Not a JSON', 400
         for k, v in data.items():
             if k != 'id' or k != 'state_id' or k != 'created_at'\
