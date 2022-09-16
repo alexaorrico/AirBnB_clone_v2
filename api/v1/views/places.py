@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module with the view for Place objects"""
 from api.v1.views import app_views
+from models.amenity import Amenity
 from models.place import Place
 from models.city import City
 from models.user import User
@@ -94,10 +95,9 @@ def places_search():
     else:
         for city in cities:
             for place in city.places:
-                check = 0
                 for amenity_id in data['amenities']:
-                    if amenity_id not in place.amenities.id:
-                        check = 1
-                if check == 0:
+                    new_amenity = storage.get(Amenity, amenity_id)
+                    if amenity_id != new_amenity.id:
+                        continue
                     places.append(place.to_dict())
         return jsonify(places)
