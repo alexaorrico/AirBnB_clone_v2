@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""App module"""
 from os import getenv
 from models import storage
 from api.v1.views import app_views
@@ -19,6 +20,7 @@ def teardown_db(exception):
 
 @app.errorhandler(404)
 def handle_exception(e):
+    """Handle page not found"""
     return jsonify({'error': 'Not found'}), 404
 
 
