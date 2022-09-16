@@ -76,6 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
+        """Get a specific object"""
         objs = self.__session.query(classes[cls.__name__]).all()
         for instance in objs:
             if instance.id == id:
@@ -83,6 +84,7 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
+        """Count objects dependening of the class"""
         count = 0
         if cls:
             objs = self.__session.query(classes[cls.__name__]).all()
