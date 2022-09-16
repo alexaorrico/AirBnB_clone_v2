@@ -68,11 +68,15 @@ def places_search():
     data = request.get_json()
     if data is None:
         return 'Not a JSON', 400
+    states = []
     cities = []
     places = []
     if 'states' in data.keys():
         for state_id in data['states']:
-            cities.append(storage.get(State, state_id))
+            states.append(storage.get(State, state_id))
+        for state in states:
+            for city in state.cities:
+                cities.append(city)
     if 'cities' in data.keys():
         for city_id in data['cities']:
             cities.append(storage.get(City, city_id))
@@ -90,7 +94,7 @@ def places_search():
             for place in city.places:
                 check = 0
                 for amenity_id in data['amenities']:
-                    if amenity_id not in place.amenities:
+                    if amenity_id not in place.amenities.id:
                         check = 1
                 if check == 0:
                     places.append(place.to_dict())
