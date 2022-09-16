@@ -17,8 +17,12 @@ from models.user import User
 def status_():
     """Initial status
     """
-    stats = {"status": "OK"}
-    return jsonify(stats)
+    stats = {
+        "status": "OK"
+        }
+    return {
+        "status": "OK"
+    }
 
 
 @app_views.route('/stats', strict_slashes=False)
