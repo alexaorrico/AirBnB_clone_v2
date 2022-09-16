@@ -17,8 +17,6 @@ def users():
     data = request.get_json()
     if data is None:
         return 'Not a JSON', 400
-    if 'name' not in data.keys():
-        return 'Missing name', 400
     if 'email' not in data.keys():
         return 'Missing email', 400
     if 'password' not in data.keys():
