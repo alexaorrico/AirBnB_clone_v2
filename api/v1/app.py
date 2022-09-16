@@ -27,7 +27,7 @@ def page_nf(e):
     err_ = {
         "error": "Not found"
         }
-    return jsonify(err_)
+    return jsonify(err_), 404
 
 
 if __name__ == "__main__":
