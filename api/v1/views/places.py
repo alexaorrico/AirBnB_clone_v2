@@ -21,7 +21,7 @@ def places_by_city(city_id):
 
 
 @app_views.route('/places/<place_id>', strict_slashes=False)
-def city_by_id(place_id):
+def place_by_id(place_id):
     """Get places by ID"""
     place = storage.get('Place', place_id)
     if not place:
@@ -31,7 +31,7 @@ def city_by_id(place_id):
 
 @app_views.route('/places/<place_id>',
                  strict_slashes=False, methods=['DELETE'])
-def delete_cities(place_id):
+def delete_places(place_id):
     """Deletes an specific place"""
     ret = storage.get('Place', place_id)
     if ret:
@@ -43,7 +43,7 @@ def delete_cities(place_id):
 
 @app_views.route('/cities/<city_id>/places',
                  strict_slashes=False, methods=['POST'])
-def create_cities(city_id):
+def create_places(city_id):
     """Create a new place"""
     from models.place import Place 
     city = storage.get('City', city_id)
@@ -68,7 +68,7 @@ def create_cities(city_id):
 
 
 @app_views.route('/places/<places_id>', strict_slashes=False, methods=['PUT'])
-def update_city(places_id):
+def update_place(places_id):
     """Update a state by a given ID"""
     new_place = storage.get('Place', places_id)
     if not new_place:
