@@ -46,3 +46,21 @@ def create_state():
 
     new_instance = State(name=name_city)
     return jsonify(new_instance.to_dict()), 200
+
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
+def update_state(state_id):
+    new_state = storage.get('State', state_id)
+    if not new_state:
+        abort(404)
+    content = request.get_json()
+
+    if not content:
+        abort(400, "Not a JSON")
+    to_ignore = ['id', 'created_at', 'update_at']
+    for key, value in content.items():
+        if key in to_ignore:
+            continue
+        else:
+            setattr(new_state, key, value)
+    storage.save()
+    return jsonify(new_state.to_dict()), 200
