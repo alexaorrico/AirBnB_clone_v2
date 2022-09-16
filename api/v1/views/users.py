@@ -46,8 +46,10 @@ def create_User():
     if not content:
         abort(400, "Not a JSON")
     name_user = content.get('name')
-    if "name" not in content.keys():
-        abort(400, "Missing name")
+    if "email" not in content.keys():
+        abort(400, "Missing email")
+    if "password" not in content.keys():
+        abort(400, "Missing password")
 
     new_instance = User(name=name_user)
     return jsonify(new_instance.to_dict()), 201
@@ -64,7 +66,7 @@ def update_user(user_id):
     if not content:
         abort(400, "Not a JSON")
 
-    to_ignore = ['id', 'created_at', 'update_at']
+    to_ignore = ['id', 'email', 'created_at', 'update_at']
     for key, value in content.items():
         if key in to_ignore:
             continue
