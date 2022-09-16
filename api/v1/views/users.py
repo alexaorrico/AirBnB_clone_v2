@@ -45,13 +45,14 @@ def create_User():
     content = request.get_json(force=True, silent=True)
     if not content:
         abort(400, "Not a JSON")
-    name_user = content.get('name')
     if "email" not in content.keys():
         abort(400, "Missing email")
     if "password" not in content.keys():
         abort(400, "Missing password")
+    email_user = content.get('email')
+    password_user = content.get('password')
 
-    new_instance = User(name=name_user)
+    new_instance = User(email=email_user, password=password_user)
     return jsonify(new_instance.to_dict()), 201
 
 
