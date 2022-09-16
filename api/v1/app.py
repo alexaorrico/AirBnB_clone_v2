@@ -3,10 +3,12 @@ from os import getenv
 from models import storage
 from api.v1.views import app_views
 from flask import Flask
+from flask_cors import CORS
 import json
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={"/api/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 
