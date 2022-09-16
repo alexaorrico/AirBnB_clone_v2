@@ -20,3 +20,12 @@ def cities_by_states(state_id):
             cities.append(value.to_dict())
     return jsonify(cities)
 
+
+@app_views.route('/cities/<city_id>', strict_slashes=False)
+def city_by_id(city_id):
+    """Get cities by ID"""
+    from models.city import City
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404)
+    return jsonify(city.to_dict())
