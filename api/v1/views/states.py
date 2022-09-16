@@ -29,6 +29,7 @@ def states():
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def states_id(state_id):
+    """Get a state instance from the storage"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
