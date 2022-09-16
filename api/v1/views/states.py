@@ -41,7 +41,7 @@ def delete_state(state_id):
 def create_state():
     """Create a new state"""
     from models.state import State
-    content = request.get_json()
+    content = request.get_json(force=True, silent=True)
     if not content:
         abort(400, "Not a JSON")
     name_city = content.get('name')
@@ -58,10 +58,11 @@ def update_state(state_id):
     new_state = storage.get('State', state_id)
     if not new_state:
         abort(404)
-    content = request.get_json()
 
+    content = request.get_json(force=True, silent=True)
     if not content:
         abort(400, "Not a JSON")
+
     to_ignore = ['id', 'created_at', 'update_at']
     for key, value in content.items():
         if key in to_ignore:
