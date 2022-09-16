@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """view cities object"""
 
-from sre_parse import State
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
