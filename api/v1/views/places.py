@@ -97,7 +97,7 @@ def places_search():
             for place in city.places:
                 for amenity_id in data['amenities']:
                     new_amenity = storage.get(Amenity, amenity_id)
-                    if amenity_id != new_amenity.id:
+                    if new_amenity not in place.amenities:
                         continue
                     places.append(place.to_dict())
         return jsonify(places)
