@@ -11,7 +11,7 @@ from models.user import User
 
 @app_views.route('cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def places_get():
+def places_get(city_id):
     """Retrieves the list of all Place"""
     city = storage.get(City, city_id)
     if city is None:
@@ -26,7 +26,7 @@ def places_get():
 
 @app_views.route('cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def places_post():
+def places_post(city_id):
     """Creates a Place"""
     city = storage.get(City, city_id)
     if city is None:
