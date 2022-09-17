@@ -23,8 +23,10 @@ def users_post():
     transform_dict = request.get_json()
     if transform_dict is None:
         abort(400, "Not a JSON")
-    if 'name' not in transform_dict.keys():
-        abort(400, "Missing name")
+    if 'email' not in transform_dict.keys():
+        abort(400, "Missing email")
+    if 'password' not in transform_dict.keys():
+        abort(400, "Missing password")
     else:
         new_user = User(**transform_dict)
         new_user.save()
