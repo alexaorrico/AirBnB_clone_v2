@@ -33,7 +33,7 @@ def amenities_post():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def state_id_get(amenity_id):
+def amenity_id_get(amenity_id):
     """Retrieves a Amenity object and 404 if it's an error"""
     amenity = storage.get(Amenity, amenity_id)
     if state is None:
@@ -43,7 +43,7 @@ def state_id_get(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def state_id_delete(amenity_id):
+def amenity_id_delete(amenity_id):
     """Deletes a Amenity object and 404 if it's an error"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
@@ -55,7 +55,7 @@ def state_id_delete(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def state_id_put(amenity_id):
+def amenity_id_put(amenity_id):
     """Updates a Amenity object"""
     ignore_list = ['id', 'created_at', 'updated_at']
     amenity = storage.get(Amenity, amenity_id)
