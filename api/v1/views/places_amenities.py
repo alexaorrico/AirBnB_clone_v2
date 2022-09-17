@@ -12,7 +12,7 @@ from models.user import User
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def places_amenities_get(place_id):
-    """Retrieves the list of all Reviews"""
+    """Retrieves the list of all Place & Amenity"""
     place = storage.get(Place, place_id)
     if place is None:
         return abort(404)
@@ -23,14 +23,14 @@ def places_amenities_get(place_id):
     return jsonify(all_amenities)
 
 
-@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def places_amenities_id_delete(place_id, amenity_id):
     """Deletes a Review object and 404 if it's an error"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    
+
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -42,7 +42,8 @@ def places_amenities_id_delete(place_id, amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('places/<place_id>/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('places/<place_id>/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def places_amenities_id_put(place_id, amenity_id):
     """Updates a Review object"""
     place = storage.get(Place, place_id)
