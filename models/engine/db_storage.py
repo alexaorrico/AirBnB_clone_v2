@@ -37,8 +37,8 @@ class DBStorage:
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
-        if HBNB_ENV == "test":
-            Base.metadata.drop_all(self.__engine)
+        if getenv("HBNB_ENV") == "test":
+            Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -89,3 +89,9 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+         """Retrieve one object"""
+         if cls is None or id is None:
+             return None
+         #objs = self.__session.query(classes[clss]).all
