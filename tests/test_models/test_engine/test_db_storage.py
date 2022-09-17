@@ -88,7 +88,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     class TestDBStorage(unittest.TestCase):
-    """Test get and count methods."""
+        """Test get and count methods."""
 
     def test_get(self):
         """Tests function get """
