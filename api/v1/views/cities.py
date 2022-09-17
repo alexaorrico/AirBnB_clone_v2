@@ -4,66 +4,75 @@
 from api.v1.views import app_views
 from models import storage
 from flask import jsonify, abort, request
+from models.city import City
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
-def states_get():
-    """Retrieves the list of all State"""
+@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+def cities_get(state_id):
+    """Retrieves the list of all City"""
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
+    
     cities_list = []
-    all_states = storage.all(State)
-    for key, value in all_states.items():
+    all_cities = storage.all(City)
+    for key, value in all_cities.items():
         cities_list.append(value.to_dict())
     return jsonify(cities_list)
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
-def states_post():
-    """Creates a State"""
+@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+def cities_post(state_id):
+    """Creates a City"""
     transform_dict = request.get_json()
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
     if transform_dict is None:
         abort(400, "Not a JSON")
     if 'name' not in transform_dict.keys():
         abort(400, "Missing name")
     else:
-        new_state = State(**transform_dict)
-        new_state.save()
-        return jsonify(new_state.to_dict()), 201
+        transform_dict['state_id'] = state_id
+        new_city = City(**transform_dict)
+        new_city.save()
+        return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def state_id_get(state_id):
-    """Retrieves a State object and 404 if it's an error"""
-    state = storage.get(State, state_id)
-    if state is None:
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+def cities_id_get(city_id):
+    """Retrieves a City object and 404 if it's an error"""
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
-    return jsonify(state.to_dict())
+    return jsonify(city.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
-def state_id_delete(state_id):
-    """Deletes a State object and 404 if it's an error"""
-    state = storage.get(State, state_id)
-    if state is None:
+def cities_id_delete(city_id):
+    """Deletes a City object and 404 if it's an error"""
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
-    state.delete()
+    city.delete()
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def state_id_put(state_id):
-    """Updates a State object"""
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def cities_id_put(city_id):
+    """Updates a City object"""
     ignore_list = ['id', 'created_at', 'updated_at']
-    state = storage.get(State, state_id)
-    if state is None:
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
     transform_dict = request.get_json()
     if transform_dict is None:
         abort(400, "Not a JSON")
     for key, value in transform_dict.items():
         if key not in ignore_list:
-            setattr(state, key, value)
-        state.save()
-        return jsonify(state.to_dict()), 200
+            setattr(city, key, value)
+        city.save()
+        return jsonify(city.to_dict()), 200
