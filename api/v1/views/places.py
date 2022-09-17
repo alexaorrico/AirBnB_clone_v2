@@ -22,6 +22,7 @@ def places_get(city_id):
         all_places.append(place.to_dict())
     return jsonify(all_places)
 
+
 @app_views.route('cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def places_post(city_id):
