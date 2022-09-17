@@ -5,12 +5,10 @@ from api.v1.views import app_views
 from models.state import State
 from models import storage
 
-
-@app_views.route('/states', methods=['GET'])
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """Retrieves state object"""
     list_obj = []
-    for i in storage.all(State).values():
+    for i in storage.all('State').values():
             list_obj.append(i.to_dict())
     return jsonify(list_obj)
