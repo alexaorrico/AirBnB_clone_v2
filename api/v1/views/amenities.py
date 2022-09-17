@@ -36,7 +36,7 @@ def amenities_post():
 def amenity_id_get(amenity_id):
     """Retrieves a Amenity object and 404 if it's an error"""
     amenity = storage.get(Amenity, amenity_id)
-    if state is None:
+    if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
 
