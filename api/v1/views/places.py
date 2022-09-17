@@ -17,12 +17,10 @@ def places_get(city_id):
     if city is None:
         return abort(404)
 
-    places_list = []
-    all_places = storage.all(Place)
-    for key, value in all_places.items():
-        places_list.append(value.to_dict())
-    return jsonify(places_list)
-
+    all_places = []
+    for place in city.places:
+        all_places.append(place.to_dict())
+    return jsonify(all_places)
 
 @app_views.route('cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
