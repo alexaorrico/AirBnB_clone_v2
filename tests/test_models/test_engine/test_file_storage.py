@@ -114,7 +114,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    class TestFileStorageGetCount(unittest.TestCase):
+class TestFileStorageGetCount(unittest.TestCase):
         """Tests for get and count methods"""
 
     def test_get(self):
