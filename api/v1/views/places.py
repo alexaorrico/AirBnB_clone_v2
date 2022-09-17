@@ -38,13 +38,13 @@ def places_post(city_id):
     if 'user_id' not in transform_dict.keys():
         abort(400, "Missing user_id")
 
-    user_id = storage.get(User, dico['user_id'])
+    user_id = storage.get(User, transform_dict['user_id'])
     if user_id is None:
         return abort(404)
     if 'name' not in transform_dict.keys():
         abort(400, "Missing name")
     else:
-        dico['city_id'] = city_id
+        transform_dict['city_id'] = city_id
         new_place = Place(**transform_dict)
         new_place.save()
         return jsonify(new_place.to_dict()), 201
