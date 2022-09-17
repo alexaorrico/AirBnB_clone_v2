@@ -116,10 +116,20 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """ Pending to implement"""
-        pass
+    """ Test storage"""
+    state_obj = State(name ="Namekusei")
+    state_obj.save()
+    failTry = models.storage.get('State', 'fakeid')
+    self.assertEqual(failtry, None )
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """ Pending to implement"""
-        pass
+    """ Pending to implement"""
+    count = models.storage.count()
+    count_class = models.storage.count('State')
+    new_state = State(name='Namekusei')
+    new_state.save()
+    new_count = models.storage.count()
+    new_count_class = models.storage.count('State')
+    self.assertEqual(count + 1, new_count)
+    self.assertEqual(count_class + 1, new_count_class)
