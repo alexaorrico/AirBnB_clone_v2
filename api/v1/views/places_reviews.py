@@ -17,17 +17,16 @@ def reviews_get(place_id):
     if place is None:
         return abort(404)
 
-    reviews_list = []
-    all_reviews = storage.all(Review)
-    for key, value in all_reviews.items():
-        reviews_list.append(value.to_dict())
-    return jsonify(reviews_list)
+    all_reviews = []
+    for review in place.reviews:
+        all_reviews.append(review.to_dict())
+    return jsonify(all_reviews)
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def reviews_post(place_id):
-    """Creates a Place"""
+    """Creates a Review"""
     place = storage.get(Place, place_id)
     if place is None:
         return abort(404)
@@ -52,7 +51,7 @@ def reviews_post(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def review_id_get(review_id):
-    """Retrieves a Place object and 404 if it's an error"""
+    """Retrieves a Review object and 404 if it's an error"""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -62,7 +61,7 @@ def review_id_get(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def review_id_delete(review_id):
-    """Deletes a Place object and 404 if it's an error"""
+    """Deletes a Review object and 404 if it's an error"""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -73,7 +72,7 @@ def review_id_delete(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def review_id_put(review_id):
-    """Updates a Place object"""
+    """Updates a Review object"""
     ignore_list = ['id', 'created_at', 'user_id', 'city_id', 'updated_at']
     review = storage.get(Review, review_id)
     if review is None:
