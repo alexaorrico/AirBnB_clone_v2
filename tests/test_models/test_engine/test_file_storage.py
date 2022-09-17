@@ -138,3 +138,13 @@ class TestFileStorage(unittest.TestCase):
         state = State(name="Bourgogne")
         state.save()
         self.assertEqual(models.storage.count(State), nb_states + 1)
+     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    
+    def test_get(self):
+        """test with no valid id"""
+        state = State(name='Louisiana')
+        state.save()
+        user = User()
+        user.save()
+        self.assertIs(state, models.storage.get(State, state.id))
+        self.assertIs(user, models.storage.get(User, user.id))
