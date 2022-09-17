@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from crypt import methods
 from flask import Flask, request, jsonify, abort
 from models import storage
 from models.state import State
@@ -16,10 +15,20 @@ def all_states():
     return jsonify(states_list)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE'])
 def state_by_id(state_id):
-    state_objects = storage.all(State)
-    for key, val in state_objects.items():
-        if val.id == state_id:
-            return val.to_dict()
-    abort(404)
+    if request.method == 'GET':
+        state_objects = storage.all(State)
+        for key, val in state_objects.items():
+            if val.id == state_id:
+                return val.to_dict()
+        abort(404)
+
+    if request.method == 'DELETE':
+        state_objects = storage.all(State)
+        for key, val in state_objects.items():
+            if val.id == state_id:
+                storage.delete(val)
+                storage.save()
+                return {}, 200
