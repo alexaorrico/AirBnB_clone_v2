@@ -1,7 +1,9 @@
+#!/usr/bin/python3
+"""state view"""
 import json
-from os import abort
+import re
 from turtle import st
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
 from models.city import City
@@ -40,3 +42,9 @@ def delete_state_by_id(state_id):
             storage.save()
             return jsonify({}), 200
     abort(404)
+
+@app_views.route('/states', methods=['POST'],strict_slashes=False)
+def post_state():
+    form = request.get_json()
+
+
