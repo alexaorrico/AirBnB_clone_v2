@@ -26,5 +26,4 @@ if __name__ == "__main__":
     """ run fask app"""
     host = getenv('HBNB_API_HOST', '0.0.0.0')
     port = getenv('HBNB_API_PORT', '5000')
-    app.run(host=host, port=port, threaded=True )
-    
+    app.run(debug=True, host=host, port=port, threaded=True )
