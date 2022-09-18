@@ -12,7 +12,7 @@ from models.user import User
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def places_amenities_get(place_id):
-    """Retrieves the list of all Place & Amenity"""
+    """Retrieves the list of all Place & Amenities"""
     place = storage.get(Place, place_id)
     if place is None:
         return abort(404)
@@ -26,7 +26,7 @@ def places_amenities_get(place_id):
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def places_amenities_id_delete(place_id, amenity_id):
-    """Deletes a Review object and 404 if it's an error"""
+    """Deletes Place & Amenity object and 404 if it's an error"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -45,7 +45,7 @@ def places_amenities_id_delete(place_id, amenity_id):
 @app_views.route('places/<place_id>/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
 def places_amenities_id_put(place_id, amenity_id):
-    """Updates a Review object"""
+    """Updates Place & Amenity object"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)

@@ -9,7 +9,7 @@ from models.user import User
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def users_get():
-    """Retrieves the list of all State"""
+    """Retrieves the list of all User"""
     users_list = []
     all_users = storage.all(User)
     for key, value in all_users.items():
@@ -19,7 +19,7 @@ def users_get():
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def users_post():
-    """Creates a State"""
+    """Creates a User"""
     transform_dict = request.get_json()
     if transform_dict is None:
         abort(400, "Not a JSON")
@@ -35,7 +35,7 @@ def users_post():
 
 @app_views.route('users/<user_id>', methods=['GET'], strict_slashes=False)
 def users_id_get(user_id):
-    """Retrieves a State object and 404 if it's an error"""
+    """Retrieves a User object and 404 if it's an error"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -45,7 +45,7 @@ def users_id_get(user_id):
 @app_views.route('users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def users_id_delete(user_id):
-    """Deletes a State object and 404 if it's an error"""
+    """Deletes a User object and 404 if it's an error"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -56,7 +56,7 @@ def users_id_delete(user_id):
 
 @app_views.route('users/<user_id>', methods=['PUT'], strict_slashes=False)
 def users_id_put(user_id):
-    """Updates a State object"""
+    """Updates a User object"""
     ignore_list = ['id', 'created_at', 'updated_at']
     user = storage.get(User, user_id)
     if user is None:
