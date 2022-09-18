@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import json
 from flask import Flask, request, jsonify, abort
 from models import storage
 from models.state import State
@@ -16,7 +17,7 @@ def all_states():
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
-                 methods=['GET', 'DELETE'])
+                 methods=['GET', 'DELETE', 'PUT'])
 def state_by_id(state_id):
     if request.method == 'GET':
         state_objects = storage.all(State)
@@ -32,3 +33,21 @@ def state_by_id(state_id):
                 storage.delete(val)
                 storage.save()
                 return {}, 200
+        abort(404)
+
+    if request.method == 'PUT':
+        try:
+            valid_request = request.get_json()
+        except Exception:
+            return 'Not a JSON', 400
+
+        ignored_keys = ['id', 'created_at', 'updated_at']
+        state_objects = storage.all(State)
+        for key, val in state_objects.items():
+            if val.id == state_id:
+                for key in valid_request:
+                    if key not in ignored_keys:
+                        setattr(val, key, valid_request[key])
+                storage.save()
+                return val.to_dict(), 200
+        abort(404)
