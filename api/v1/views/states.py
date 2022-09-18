@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Module handling requests for State objects """
 
 import json
 from flask import Flask, request, jsonify, abort
@@ -9,6 +10,7 @@ from api.v1.views import app_views
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def all_states():
+    """ Handles GET request for all states """
     state_objects = storage.all(State)
     states_list = []
     for key, val in state_objects.items():
@@ -19,6 +21,7 @@ def all_states():
 @app_views.route('/states/<state_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
 def state_by_id(state_id):
+    """ Handles GET, DELETE and PUT requests for state by id """
     if request.method == 'GET':
         state_objects = storage.all(State)
         for key, val in state_objects.items():
