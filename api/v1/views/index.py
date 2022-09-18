@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 """script that starts a Flask web application"""
-
+from crypt import methods
+from os import getenv
 from flask import Flask, jsonify
 from api.v1.views import app_views
 
 app = Flask(__name__)
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def status():
     """status view"""
     return jsonify({
