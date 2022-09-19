@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)  xsx
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)  
 Farah McCurdy - [Github](https://github.com/farahmc)  
 Jacqueline Lu - [Github](https://github.com/Jql11)  
 Karoline Silva - [Github](https://github.com/Karolne-S)  
