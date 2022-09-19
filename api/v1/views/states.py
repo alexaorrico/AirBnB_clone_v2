@@ -8,18 +8,34 @@ from models.state import State
 from api.v1.views import app_views
 
 
-@app_views.route('/states', strict_slashes=False, methods=['GET'])
+@app_views.route('/states', strict_slashes=False,
+                 methods=['GET', 'POST'])
 def all_states():
     """ Handles GET request for all states """
-    state_objects = storage.all(State)
-    states_list = []
-    for key, val in state_objects.items():
-        states_list.append(val.to_dict())
-    return jsonify(states_list)
+    if request.method == 'GET':
+        state_objects = storage.all(State)
+        states_list = []
+        for key, val in state_objects.items():
+            states_list.append(val.to_dict())
+        return jsonify(states_list)
+
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        state = State()
+        if data is None:
+            return 'Not a JSON', 400
+        if 'name' not in data.keys():
+            return 'Missing name', 400
+        ignored_keys = ['id', 'created_at', 'updated_at']
+        for key in data:
+            if key not in ignored_keys:
+                setattr(state, key, data[key])
+        state.save()
+        return(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
-                 methods=['GET', 'DELETE', 'PUT'])
+                 methods=['POST', 'GET', 'DELETE', 'PUT'])
 def state_by_id(state_id):
     """ Handles GET, DELETE and PUT requests for state by id """
     if request.method == 'GET':
