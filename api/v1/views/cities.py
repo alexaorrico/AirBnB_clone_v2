@@ -2,11 +2,10 @@
 
 """ Module handling requests for City objects """
 
-from crypt import methods
-from flask import request, jsonify, abort
-from models import city, storage
+from models import storage
 from api.v1.views import app_views
 from models.state import State, City
+from flask import request, jsonify, abort
 
 ignored_keys = ['id', 'created_at', 'updated_at', 'state_id']
 

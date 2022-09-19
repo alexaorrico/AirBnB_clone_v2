@@ -1,27 +1,27 @@
 #!/usr/bin/python3
 
-""" Module handling requests for State objects """
+""" Module handling requests for Amenity objects """
 
 from models import storage
-from models.state import State
+from models.amenity import Amenity
 from api.v1.views import app_views
 from flask import request, jsonify, abort
 
 
-@app_views.route('/states', strict_slashes=False,
+@app_views.route('/amenities', strict_slashes=False,
                  methods=['GET', 'POST'])
-def all_states():
-    """ Handles GET and POST request for all states """
+def all_amenity():
+    """ Handles GET and POST request for all amenities """
     if request.method == 'GET':
-        state_objects = storage.all(State)
-        states_list = []
-        for key, val in state_objects.items():
-            states_list.append(val.to_dict())
-        return jsonify(states_list)
+        amenity_objects = storage.all(Amenity)
+        amenity_list = []
+        for key, val in amenity_objects.items():
+            amenity_list.append(val.to_dict())
+        return jsonify(amenity_list)
 
     if request.method == 'POST':
         data = request.get_json(silent=True)
-        state = State()
+        amenity = Amenity()
         if data is None:
             return 'Not a JSON', 400
         if 'name' not in data.keys():
@@ -29,27 +29,27 @@ def all_states():
         ignored_keys = ['id', 'created_at', 'updated_at']
         for key in data:
             if key not in ignored_keys:
-                setattr(state, key, data[key])
-        state.save()
-        return(state.to_dict()), 201
+                setattr(amenity, key, data[key])
+        amenity.save()
+        return(amenity.to_dict()), 201
     abort(404)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False,
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
-def state_by_id(state_id):
-    """ Handles GET, DELETE and PUT requests for state by id """
+def amenity_by_id(amenity_id):
+    """ Handles GET, DELETE and PUT requests for amenity by id """
     if request.method == 'GET':
-        state_objects = storage.all(State)
-        for key, val in state_objects.items():
-            if val.id == state_id:
+        amenity_objects = storage.all(Amenity)
+        for key, val in amenity_objects.items():
+            if val.id == amenity_id:
                 return val.to_dict()
         abort(404)
 
     if request.method == 'DELETE':
-        state_objects = storage.all(State)
-        for key, val in state_objects.items():
-            if val.id == state_id:
+        amenity_objects = storage.all(Amenity)
+        for key, val in amenity_objects.items():
+            if val.id == amenity_id:
                 storage.delete(val)
                 storage.save()
                 return {}, 200
@@ -62,9 +62,9 @@ def state_by_id(state_id):
             return 'Not a JSON', 400
 
         ignored_keys = ['id', 'created_at', 'updated_at']
-        state_objects = storage.all(State)
-        for key, val in state_objects.items():
-            if val.id == state_id:
+        amenity_objects = storage.all(Amenity)
+        for key, val in amenity_objects.items():
+            if val.id == amenity_id:
                 for key in valid_request:
                     if key not in ignored_keys:
                         setattr(val, key, valid_request[key])
