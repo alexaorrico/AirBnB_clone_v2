@@ -22,6 +22,15 @@ def errorHandler(error):
 
 # was unsure if we had environmental variables setup yet
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000', threaded=True)
+    if os.getenv(HBNB_API_HOST):
+        hostAddress = os.getenv(HBNB_API_HOST)
+    else:
+        hostAddress = ('0.0.0.0')
+    if os.getenv(HBNB_API_PORT):
+        portAddress = os.getenv(HBNB_API_PORT)
+    else:
+        portAddress = '5000'
+
+    app.run(hostAddress, portAddress, threaded=True)
     # app.run(os.getenv(HBNB_API_HOST),
     # os.getenv(HBNB_API_PORT), threaded=True)
