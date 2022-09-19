@@ -27,26 +27,51 @@ def get_states():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_by_id(state_id):
     """return state for a given id"""
-    states = storage.all(State).values()
-    for state in states:
-        if state.id == state_id:
-            return jsonify(state.to_dict())
-    abort(404)
-
-
-@app_views.route('/states/<state_id>',
-                 methods=['DELETE'], strict_slashes=False)
-def delete_state_by_id(state_id):
+    my_state = storage.get(State, state_id)
+    if my_state == None:
+        abort(400)
+    return jsonify(my_state.to_dict())
+    
+@app_views.route('/states/<state_id>', methods=['DELETE'],strict_slashes=False)
+def delete_state_by_id(state_id):    
     """delete state for a given id and return an empty dictionary"""
-    states = storage.all(State).values()
-    for state in states:
-        if state.id == state_id:
-            storage.delete(state)
-            storage.save()
-            return jsonify({}), 200
-    abort(404)
-
+    my_state = storage.get(State, state_id)
+    storage.delete(my_state)
+    storage.save()
+    if my_state == None:
+        abort(400)
+    return jsonify({}), 200
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
-    form = request.get_json()
+    """post a new state as a dictionary"""
+    try:
+        form = request.get_json()
+    except Exception as e:
+        abort(400, "Not a JSON")
+
+    if form['name'] is None:
+        abort(400, "Missing name")
+    my_state = State(**form)
+    storage.new(my_state)
+    storage.save()
+    return jsonify(my_state.to_dict()), 201
+
+@app_views.route('/states/<state_id>', methods=['PUT'],strict_slashes=False)
+def update_state_by_id(state_id):    
+    """delete state for a given id and return an empty dictionary"""
+    try:
+        data = request.get_json()
+    except Exception as e:
+        abort(400, 'Not a JSON')
+    my_state = storage.get(State, state_id)
+    if my_state:
+        for key, value in data.items():
+            if key not in ("id", "created_at", "updated_at"):
+                setattr(my_state, key, value)
+        storage.save()
+    else:
+        abort(404)
+    return jsonify(my_state.to_dict()), 200
+
+   
