@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3S
 """ flask framwork"""
 from flask import Flask, make_response, jsonify
 from models import storage
@@ -19,7 +19,6 @@ def teardown(error):
 @app.errorhandler(404)
 def not_found(e):
     """ handle errors"""
-    error_404 = {"error": "Not found"}
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
