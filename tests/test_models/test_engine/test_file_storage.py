@@ -119,6 +119,24 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsNotNone(FileStorage.get.__doc__)
         self.assertIsNotNone(FileStorage.count.__doc__)
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method from FileStorage"""
+        new_user = User(email='test@gmail.com', password='123')
+        new_user.save()
+        self.assertEqual(models.storage.get(User, '2'), None)
+        self.assertIs(models.storage.get(User, new_user.id), new_user)
+
+    @unittest.skipIf(models.storage_t == 'db', 'not testing file storage')
+    def test_count(self):
+        """Test the method count from FIleStorage"""
+        new_user = User(email='test@gmail.com', password='123')
+        new_user.save()
+        new_state = State(name="Polorado")
+        new_state.save()
+        self.assertEqual(models.storage.count(User), 1)
+        self.assertEqual(models.storage.count(), 2)
+
 
 if __name__ == '__main__':
     unittest.main()

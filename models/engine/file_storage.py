@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 import json
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -11,6 +12,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -80,7 +82,7 @@ class FileStorage:
     def count(self, cls=None):
         """Count the number of instances of a class or the number of classes"""
         if cls is None:
-            list_classes = self.all().values()
+            list_classes = models.storage.all().values()
         else:
-            list_classes = self.all(cls).values()
+            list_classes = models.storage.all(cls).values()
         return len(list_classes)

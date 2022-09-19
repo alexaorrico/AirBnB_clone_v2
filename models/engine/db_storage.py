@@ -16,6 +16,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -38,7 +39,7 @@ class DBStorage:
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
-            Base.metadata.drop_all(self.__engine)
+            Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -86,7 +87,7 @@ class DBStorage:
     def count(self, cls=None):
         """Count the number of instances of a class or the number of classes"""
         if cls is None:
-            list_classes = self.all().values()
+            list_classes = models.storage.all().values()
         else:
-            list_classes = self.all(cls).values()
+            list_classes = models.storage.all(cls).values()
         return len(list_classes)
