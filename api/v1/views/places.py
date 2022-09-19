@@ -109,7 +109,7 @@ def places_search():
                     if check == 0:
                         place = place.to_dict()
                         del place['amenities']
-                        places_amenities.append(place)
+                        places.append(place)
             return jsonify(places)
         else:
             places_amenities = []
