@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """ Module handling requests for State objects """
 
 import json
@@ -11,7 +12,7 @@ from api.v1.views import app_views
 @app_views.route('/states', strict_slashes=False,
                  methods=['GET', 'POST'])
 def all_states():
-    """ Handles GET request for all states """
+    """ Handles GET and POST request for all states """
     if request.method == 'GET':
         state_objects = storage.all(State)
         states_list = []
@@ -32,10 +33,11 @@ def all_states():
                 setattr(state, key, data[key])
         state.save()
         return(state.to_dict()), 201
+    abort(404)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
-                 methods=['POST', 'GET', 'DELETE', 'PUT'])
+                 methods=['GET', 'DELETE', 'PUT'])
 def state_by_id(state_id):
     """ Handles GET, DELETE and PUT requests for state by id """
     if request.method == 'GET':
