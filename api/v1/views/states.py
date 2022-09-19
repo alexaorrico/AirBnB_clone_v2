@@ -17,7 +17,7 @@ def get_states(state_id):
             list_obj.append(i.to_dict())
         return jsonify(list_obj)
     save = storage.get(State, state_id)
-    if not save: 
+    if not save:
         return make_response(jsonify({"error": "Not found"}), 404)
     return jsonify(save.to_dict())
 
