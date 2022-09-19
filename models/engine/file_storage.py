@@ -74,14 +74,14 @@ class FileStorage:
         """retrieve one object based on class and ID,
         or None if not found"""
 
-        my_cls = classes.get(cls)
-        if my_cls is None:
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls not in classes.values():
             return None
 
-        all_classes = models.storage.all(cls)
-        for item in all_classes:
-            if (item.id == id):
-                return item
+        for key, dbObject in models.storage.all(cls).items():
+            if (str(id) in key):
+                return dbObject
         return None
 
     def count(self, cls=None):
