@@ -9,9 +9,15 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tearDownDB():
+def tearDownDB(self):
     """removes sqlalchemy session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def errorHandler(error):
+    """returns a 404 error msg"""
+    return jsonify(error='Not found'), 404
 
 
 # was unsure if we had environmental variables setup yet
