@@ -38,9 +38,9 @@ class FileStorage:
         """return the object based on given id, None if not fount"""
         if cls in classes.values():
             obj = self.all(cls)
-            value = obj[id]
-            if value:
-                return value
+            for key, value in obj.items():
+            	if id in key:
+                	return value
         return None
 
     def count(self, cls=None):
