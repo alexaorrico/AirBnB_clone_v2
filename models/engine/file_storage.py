@@ -50,7 +50,7 @@ class FileStorage:
             classList = [cls]
         count = 0
         for clss in classList:
-            count = count + self.all(clss)
+            count = count + len(self.all(clss))
         return count
 
     def new(self, obj):
