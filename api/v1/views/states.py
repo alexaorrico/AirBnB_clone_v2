@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+from os import stat
+from models import state
 from models.base_model import *
 from flask import *
 from api.v1.views import app_views
@@ -20,8 +22,18 @@ def get_states(state_id):
     if not save:
         error = make_response(jsonify({"error": "Not found"}), 404)
         return error.to_dict()
-    save = save.to_dict()
-    return (save)
+    return jsonify(save.to_dict())
+
+
+@app_views.route("/states<state_id>", strict_slashes=False, methods=["DELETE"])
+def delete_state(state_id=None):
+    """Deletes a State object"""
+    state = storage.get(State, state_id)
+    if not state:
+        return abort(404)
+    storage.delete(state)
+    storage.save()
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route("/states", strict_slashes=False, methods=["POST"])
@@ -35,3 +47,22 @@ def post_state():
     s = State(**data)
     s.save()
     return make_response(jsonify(s.to_dict()), 201)
+
+
+@app_views.route("/states<state_id>", strict_slashes=False, methods=["PUT"])
+def put_state(state_id=None):
+    """Updates a State object"""
+    state = storage.get(State, state_id)
+    data = request.get_json(force=True, silent=True)
+    if not data:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    ignore_keys = ["id", "created_at", "updated_at"]
+    if not state:
+        abort(404)
+    else:
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(state, key, value)
+        storage.save()
+        return make_response(jsonify(state.to_dict()), 200)
