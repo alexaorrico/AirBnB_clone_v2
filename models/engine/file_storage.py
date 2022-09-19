@@ -39,8 +39,8 @@ class FileStorage:
         if cls in classes.values():
             obj = self.all(cls)
             for key, value in obj.items():
-            	if id in key:
-                	return value
+                if id in key:
+                    return value
         return None
 
     def count(self, cls=None):
