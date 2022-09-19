@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-from os import stat
 from models import state
-from models.base_model import *
 from flask import *
 from api.v1.views import app_views
 from models.state import State
