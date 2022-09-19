@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """ flask framwork"""
-from flask import Flask, abort
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -20,7 +20,7 @@ def teardown(error):
 def not_found(e):
     """ handle errors"""
     error_404 = {"error": "Not found"}
-    return error_404, 404
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
