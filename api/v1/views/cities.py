@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module cities"""
 from models import city
 from models.city import City
 from models.state import State
