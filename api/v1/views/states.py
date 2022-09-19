@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from models import state
+"""Module states"""
 from flask import *
 from api.v1.views import app_views
 from models.state import State
@@ -16,10 +16,9 @@ def get_states(state_id):
         for i in storage.all('State').values():
             list_obj.append(i.to_dict())
         return jsonify(list_obj)
-    save = save = storage.get(State, state_id)
-    if not save:
-        error = make_response(jsonify({"error": "Not found"}), 404)
-        return error.to_dict()
+    save = storage.get(State, state_id)
+    if not save: 
+        return make_response(jsonify({"error": "Not found"}), 404)
     return jsonify(save.to_dict())
 
 
@@ -28,7 +27,7 @@ def delete_state(state_id=None):
     """Deletes a State object"""
     state = storage.get(State, state_id)
     if not state:
-        return abort(404)
+        return make_response(jsonify({"error": "Not found"}), 404)
     storage.delete(state)
     storage.save()
     return make_response(jsonify({}), 200)
@@ -47,7 +46,7 @@ def post_state():
     return make_response(jsonify(s.to_dict()), 201)
 
 
-@app_views.route("/states<state_id>", strict_slashes=False, methods=["PUT"])
+@app_views.route("/states/<state_id>", strict_slashes=False, methods=["PUT"])
 def put_state(state_id=None):
     """Updates a State object"""
     state = storage.get(State, state_id)
@@ -57,7 +56,7 @@ def put_state(state_id=None):
 
     ignore_keys = ["id", "created_at", "updated_at"]
     if not state:
-        abort(404)
+        return make_response(jsonify({"error": "Not found"}), 404)
     else:
         for key, value in data.items():
             if key not in ignore_keys:
