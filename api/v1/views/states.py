@@ -65,5 +65,5 @@ def state_id_put(state_id):
     for key, value in transform_dict.items():
         if key not in ignore_list:
             setattr(state, key, value)
-        state.save()
-        return jsonify(state.to_dict()), 200
+    state.save()
+    return jsonify(state.to_dict()), 200

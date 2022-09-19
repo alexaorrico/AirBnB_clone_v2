@@ -16,11 +16,10 @@ def cities_get(state_id):
     if state is None:
         return abort(404)
 
-    cities_list = []
-    all_cities = storage.all(City)
-    for key, value in all_cities.items():
-        cities_list.append(value.to_dict())
-    return jsonify(cities_list)
+    all_cities = []
+    for city in state.cities:
+        all_cities.append(city.to_dict())
+    return jsonify(all_cities)
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
@@ -54,7 +53,7 @@ def cities_id_get(city_id):
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def cities_id_delete(city_id):
-    """Deletes a City object and 404 if it's an error"""
+    """ Function that deletes a City """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -76,5 +75,5 @@ def cities_id_put(city_id):
     for key, value in transform_dict.items():
         if key not in ignore_list:
             setattr(city, key, value)
-        city.save()
-        return jsonify(city.to_dict()), 200
+    city.save()
+    return jsonify(city.to_dict()), 200
