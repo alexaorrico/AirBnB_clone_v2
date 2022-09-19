@@ -23,7 +23,7 @@ This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.
 
 ## Installation
 * Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
+* Access AirBnb directory: `cd holbertonschool-AirBnB_clone_v3`
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
@@ -54,7 +54,7 @@ Classes inherited from Base Model:
 * [state.py](/models/state.py)
 * [user.py](/models/user.py)
 
-#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
+#### `/models/engine` directory contains File Storage class that handles JSON serialization and deserialization :
 [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
@@ -156,6 +156,9 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Farah McCurdy - [Github](https://github.com/farahmc)
+Jacqueline Lu - [Github](https://github.com/Jql11)
+Karoline Silva - [Github](https://github.com/Karolne-S)
 
 Second part of Airbnb: Joann Vuong
 ## License
