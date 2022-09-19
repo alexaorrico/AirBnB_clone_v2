@@ -30,6 +30,11 @@ class TestFileStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
 
+    def setUp(self):
+        """Function used to empty file.json"""
+        FileStorage._FileStorage__objects = {}
+        FileStorage().save()
+
     def test_pep8_conformance_file_storage(self):
         """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
@@ -122,6 +127,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test the get method from FileStorage"""
+        self.setUp()
         new_user = User(email='test@gmail.com', password='123')
         new_user.save()
         self.assertEqual(models.storage.get(User, '2'), None)
@@ -130,6 +136,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', 'not testing file storage')
     def test_count(self):
         """Test the method count from FIleStorage"""
+        self.setUp()
         new_user = User(email='test@gmail.com', password='123')
         new_user.save()
         new_state = State(name="Polorado")
