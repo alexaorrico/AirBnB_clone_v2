@@ -73,3 +73,65 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def api_put(self, listToIgnore, resuestDataAsDict, ObjToUpdate):
+        """handles the API put command for all types
+        Return Values: 200: Success 
+        404: invalid object
+        400: invalid Json"""
+        if not self.test_request_data(resuestDataAsDict):
+            return ({'error': 'Not a JSON'}, 400)
+        if ObjToUpdate is None:
+            return(None, 404)
+        for key, value in resuestDataAsDict.items():
+            if key in listToIgnore:
+                continue
+            setattr(ObjToUpdate, key, value)
+        ObjToUpdate.save()
+        return (ObjToUpdate.to_dict(), 200)
+
+    def api_post(self, listOfTestAttrs, resuestDataAsDict):
+        """handles the API post command for all types
+        Return Values: 200: Success 
+        404: missing Attribute
+        400: invalid Json"""
+        if not self.test_request_data(resuestDataAsDict):
+            return ({'error': 'Not a JSON'}, 400)
+        for attribute in listOfTestAttrs:
+            if resuestDataAsDict.get(attribute) is None:
+                return ({'error': 'Missing {}'.
+                         format(attribute)}, 404)
+        newState = self(**resuestDataAsDict)
+        newState.save()
+        return (newState.to_dict(), 200)
+
+    def test_request_data(self, requestDataAsDict):
+        """used to test if the request data is accurate."""
+        if requestDataAsDict is None or type(requestDataAsDict) != dict:
+            return (False)
+        return (True)
+
+    def api_delete(self, objectToDelete):
+        """handles the API delete command for all types
+        return Values: 200: success
+        404: invalid object.
+        """
+        if objectToDelete is None:
+            return (None, 404)
+        objectToDelete.delete()
+        return ({}, 200)
+
+    def api_get_single(self, ObjToRetrieve):
+        """handles the API get command for specific object
+        return Values: 200: success
+        404: invalid object.
+        """
+        if ObjToRetrieve is None:
+            return (None, 404)
+        return (ObjToRetrieve.to_dict(), 200)
+
+    def api_get_all(self, listOfObjsToRetrieve):
+        """handles the API get command for all objects
+        return Values: 200: success
+        """
+        return ([obj.to_dict() for obj in listOfObjsToRetrieve], 200)
