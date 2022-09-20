@@ -74,12 +74,13 @@ class BaseModel:
         """delete the current instance from the storage"""
         models.storage.delete(self)
 
-    def api_put(self, listToIgnore, resuestDataAsDict, ObjToUpdate):
+    @staticmethod
+    def api_put(listToIgnore, resuestDataAsDict, ObjToUpdate):
         """handles the API put command for all types
         Return Values: 200: Success 
         404: invalid object
         400: invalid Json"""
-        if not self.test_request_data(resuestDataAsDict):
+        if not BaseModel.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
         if ObjToUpdate is None:
             return(None, 404)
@@ -90,12 +91,13 @@ class BaseModel:
         ObjToUpdate.save()
         return (ObjToUpdate.to_dict(), 200)
 
-    def api_post(self, listOfTestAttrs, resuestDataAsDict):
+    @staticmethod
+    def api_post(listOfTestAttrs, resuestDataAsDict):
         """handles the API post command for all types
         Return Values: 200: Success 
         404: missing Attribute
         400: invalid Json"""
-        if not self.test_request_data(resuestDataAsDict):
+        if not BaseModel.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
@@ -105,13 +107,15 @@ class BaseModel:
         newState.save()
         return (newState.to_dict(), 200)
 
-    def test_request_data(self, requestDataAsDict):
+    @classmethod
+    def test_request_data(cls, requestDataAsDict):
         """used to test if the request data is accurate."""
         if requestDataAsDict is None or type(requestDataAsDict) != dict:
             return (False)
         return (True)
 
-    def api_delete(self, objectToDelete):
+    @staticmethod
+    def api_delete(objectToDelete):
         """handles the API delete command for all types
         return Values: 200: success
         404: invalid object.
@@ -121,7 +125,8 @@ class BaseModel:
         objectToDelete.delete()
         return ({}, 200)
 
-    def api_get_single(self, ObjToRetrieve):
+    @staticmethod
+    def api_get_single(ObjToRetrieve):
         """handles the API get command for specific object
         return Values: 200: success
         404: invalid object.
@@ -130,7 +135,8 @@ class BaseModel:
             return (None, 404)
         return (ObjToRetrieve.to_dict(), 200)
 
-    def api_get_all(self, listOfObjsToRetrieve):
+    @staticmethod
+    def api_get_all(listOfObjsToRetrieve):
         """handles the API get command for all objects
         return Values: 200: success
         """
