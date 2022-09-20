@@ -97,29 +97,22 @@ class BaseModel:
         Return Values: 200: Success 
         404: missing Attribute
         400: invalid Json"""
-        print("in api_post")
         if not cls.test_request_data(resuestDataAsDict):
-            print("return correctly")
             return ({'error': 'Not a JSON'}, 400)
         print("\t PR: after if not")
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
-                print("\treturn missing attribure")
                 return ({'error': 'Missing {}'.
                          format(attribute)}, 400)
         newState = cls(**resuestDataAsDict)
         newState.save()
-        print("reach final return")
         return (newState.to_dict(), 200)
 
     @classmethod
     def test_request_data(cls, requestDataAsDict):
         """used to test if the request data is accurate."""
-        print("in test_request_data")
         if requestDataAsDict is None or type(requestDataAsDict) != dict:
-            print("\t return Fales")
             return (False)
-        print("\t return True")
         return (True)
 
     @staticmethod
