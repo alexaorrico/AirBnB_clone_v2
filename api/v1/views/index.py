@@ -10,6 +10,7 @@ from models.state import State
 from models.user import User
 from models.amenity import Amenity
 
+
 @app_views.route('/status')
 def status():
     """return status code JSON"""
@@ -27,5 +28,4 @@ def stats():
         "states": storage.count(State),
         "users": storage.count(User),
         }
-    return jsonify(classes)
-    
+    return jsonify(classes)    
