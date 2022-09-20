@@ -65,7 +65,7 @@ def review_by_id(review_id):
                 return {}, 200
 
             if request.method == 'PUT':
-                valid_request = request.get_json
+                valid_request = request.get_json(silent=True)
                 if valid_request is None:
                     return 'Not a JSON', 400
                 for k in valid_request:
