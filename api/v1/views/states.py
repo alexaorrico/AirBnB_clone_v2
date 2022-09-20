@@ -8,6 +8,7 @@ from flask import abort, jsonify, request
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states',
                  methods=['GET', 'POST'],
                  strict_slashes=False)
@@ -15,13 +16,14 @@ def get_all_states():
     """Retrieves the list of all State objects"""
     if request.method == 'GET':
         returnedValue, code = State.api_get_all(
-                        storage.all("State").values()
+                    storage.all("State").values()
         )
     if request.method == 'POST':
         returnedValue, code = State.api_post(
                     ['name'],
                     request.get_json())
     return (jsonify(returnedValue), code)
+
 
 @app_views.route('/states/<string:state_id>',
                  methods=['GET', 'DELETE', 'PUT'],
