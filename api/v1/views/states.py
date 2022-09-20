@@ -43,9 +43,9 @@ def post_state():
     new_name = newStateData.get('name')
     if new_name is None:
         return (jsonify({'error': 'Missing name'}), 400)
-    new_state = State(**newStateData)
-    new_state.save()
-    return (jsonify(new_state.to_dict()), 201)
+    newState = State(**newStateData)
+    newState.save()
+    return (jsonify(newState.to_dict()), 201)
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
                  strict_slashes=False)
@@ -62,4 +62,5 @@ def put_state_by_id(state_id):
             if key in keysToIgnore:
                 continue
             setattr(stateToUpdate, key, value)
+    stateToUpdate.save()
     return (jsonify(stateToUpdate.to_dict()), 200)
