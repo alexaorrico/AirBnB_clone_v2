@@ -21,11 +21,9 @@ def get_all_states():
         )
     if request.method == 'POST':
         print("in POST request")
-        testVariable = request.get_json()
-        print(testVariable)
         returnedValue, code = State.api_post(
                     ["name"],
-                    testVariable)
+                    request.get_json(silent=True))
     print(returnedValue)
     return (jsonify(returnedValue), code)
 
@@ -44,7 +42,7 @@ def state_by_id(state_id):
     if request.method == 'PUT':
         returnedValue, code = State.api_put(
                     ['id', 'created_at', 'updated_at'],
-                    request.get_json(),
+                    request.get_json(silent=True),
                     storage.get("State", state_id))
     if code == 404:
         abort(404)
