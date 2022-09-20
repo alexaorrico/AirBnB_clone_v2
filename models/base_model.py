@@ -98,6 +98,7 @@ class BaseModel:
         404: missing Attribute
         400: invalid Json"""
         if not BaseModel.test_request_data(resuestDataAsDict):
+            print("return correctly")
             return ({'error': 'Not a JSON'}, 400)
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
