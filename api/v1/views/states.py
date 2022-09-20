@@ -20,6 +20,7 @@ def get_all_states():
                     storage.all("State").values()
         )
     if request.method == 'POST':
+        print("in POST request")
         returnedValue, code = State.api_post(
                     ['name'],
                     request.get_json())

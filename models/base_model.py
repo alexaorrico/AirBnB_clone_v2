@@ -97,6 +97,7 @@ class BaseModel:
         Return Values: 200: Success 
         404: missing Attribute
         400: invalid Json"""
+        print("in api_post")
         if not BaseModel.test_request_data(resuestDataAsDict):
             print("return correctly")
             return ({'error': 'Not a JSON'}, 400)
@@ -106,6 +107,7 @@ class BaseModel:
                          format(attribute)}, 400)
         newState = cls(**resuestDataAsDict)
         newState.save()
+        print("reach final return")
         return (newState.to_dict(), 200)
 
     @classmethod
