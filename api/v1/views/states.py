@@ -22,7 +22,7 @@ def get_all_states():
     if request.method == 'POST':
         print("in POST request")
         returnedValue, code = State.api_post(
-                    ['name'],
+                    ["name"],
                     request.get_json())
     print(returnedValue)
     return (jsonify(returnedValue), code)
