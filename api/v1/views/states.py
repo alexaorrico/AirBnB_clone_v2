@@ -56,9 +56,8 @@ def state_by_id(state_id):
         abort(404)
 
     if request.method == 'PUT':
-        try:
-            valid_request = request.get_json()
-        except Exception:
+        valid_request = request.get_json(silent=True)
+        if valid_request is None:
             return 'Not a JSON', 400
 
         ignored_keys = ['id', 'created_at', 'updated_at']
