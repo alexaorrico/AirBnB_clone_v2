@@ -20,17 +20,7 @@ def errorHandler(error):
     return jsonify(error='Not found'), 404
 
 
-# was unsure if we had environmental variables setup yet
 if __name__ == '__main__':
-    if os.getenv(HBNB_API_HOST):
-        hostAddress = os.getenv(HBNB_API_HOST)
-    else:
-        hostAddress = ('0.0.0.0')
-    if os.getenv(HBNB_API_PORT):
-        portAddress = os.getenv(HBNB_API_PORT)
-    else:
-        portAddress = '5000'
-
-    app.run(hostAddress, portAddress, threaded=True)
-    # app.run(os.getenv(HBNB_API_HOST),
-    # os.getenv(HBNB_API_PORT), threaded=True)
+    app.run(host=os.getenv('HBNB_API_HOST') or '0.0.0.0',
+                        port=os.getenv('HBNB_API_PORT') or '5000',
+                        threaded=True)
