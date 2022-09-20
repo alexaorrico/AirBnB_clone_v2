@@ -15,18 +15,14 @@ from models.amenity import Amenity
                  strict_slashes=False)
 def get_all_amenities():
     """Retrieves the list of all Amenity objects"""
-    print("in correct route")
     if request.method == 'GET':
         returnedValue, code = Amenity.api_get_all(
                     storage.all("Amenity").values()
         )
     if request.method == 'POST':
-        print("in POST!")
         returnedValue, code = Amenity.api_post(
                     ["name"],
                     request.get_json(silent=True))
-    print(returnedValue)
-    print(code)
     return (jsonify(returnedValue), code)
 
 
