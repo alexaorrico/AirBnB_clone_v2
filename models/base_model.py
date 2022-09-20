@@ -91,7 +91,8 @@ class BaseModel:
         ObjToUpdate.save()
         return (ObjToUpdate.to_dict(), 200)
 
-    def api_post(self, listOfTestAttrs, resuestDataAsDict):
+    @classmethod
+    def api_post(cls, listOfTestAttrs, resuestDataAsDict):
         """handles the API post command for all types
         Return Values: 200: Success 
         404: missing Attribute
@@ -102,7 +103,7 @@ class BaseModel:
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
                          format(attribute)}, 404)
-        newState = self(**resuestDataAsDict)
+        newState = cls(**resuestDataAsDict)
         newState.save()
         return (newState.to_dict(), 200)
 
