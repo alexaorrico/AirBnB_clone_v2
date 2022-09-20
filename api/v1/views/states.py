@@ -37,8 +37,7 @@ def state_by_id(state_id):
         returnedValue, code = State.api_delete(
                     storage.get("State", state_id))
     if request.method == 'PUT':
-        print("in put method")
-        returnObject, code = State.api_put(
+        returnedValue, code = State.api_put(
                     ['id', 'created_at', 'updated_at'],
                     request.get_json(),
                     storage.get("State", state_id))
