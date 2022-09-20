@@ -77,10 +77,12 @@ class DBStorage:
 
     def get(self, cls, id):
         """ retrieve one object matching given id """
-        for clss in classes:
-            if cls == classes[clss]:
-                objects_list = self.__session.query(classes[clss]).all()
+        try:
+            if cls is not None:
+                objects_list = self.__session.query(cls).all()
                 for obj in objects_list:
                     if id == obj.id:
                         return obj
-        return None
+        except:
+            return None
+
