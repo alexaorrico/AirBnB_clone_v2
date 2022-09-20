@@ -14,6 +14,7 @@ from models.state import State
                  strict_slashes=False)
 def get_all_states():
     """Retrieves the list of all State objects"""
+    print("in correct route")
     if request.method == 'GET':
         returnedValue, code = State.api_get_all(
                     storage.all("State").values()
