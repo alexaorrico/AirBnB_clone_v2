@@ -132,3 +132,12 @@ class TestFileStorage(unittest.TestCase):
         got_obj_count = models.storage.count('State')
         obj_count = len(models.storage.all('State'))
         self.assertEqual(got_obj_count, obj_count)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_plus_one(self):
+        """testing that count methods tracks new additions"""
+        count = models.storage.count('State')
+        newState = State(name='Victoria')
+        models.storage.new(newState)
+        models.storage.save()
+        self.assertEqual(models.storage.count('State'), count + 1)
