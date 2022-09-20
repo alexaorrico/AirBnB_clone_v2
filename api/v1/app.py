@@ -1,4 +1,4 @@
-#!/usr/bin/python3S
+#!/usr/bin/python3
 """ flask framwork"""
 from flask import Flask, make_response, jsonify
 from models import storage
