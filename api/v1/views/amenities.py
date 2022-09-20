@@ -30,7 +30,7 @@ def get_all_amenities():
     return (jsonify(returnedValue), code)
 
 
-@app_views.route('/states/<string:amenity_id>',
+@app_views.route('/amenities/<string:amenity_id>',
                  methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def amenity_by_id(amenity_id):
