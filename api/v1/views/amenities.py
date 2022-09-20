@@ -6,9 +6,9 @@ from api.v1.views import app_views
 from flask import *
 
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False,
-                 defaults={'state_id': None})
-@app_views.route('/amenities/<amenity_id>/', methods=['GET'], strict_slashes=False,)
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>/', methods=['GET'],
+                 strict_slashes=False,)
 def get_amenity(amenity_id):
     """Retrieves amenity object"""
     if amenity_id is None:
