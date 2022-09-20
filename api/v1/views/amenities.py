@@ -1,79 +1,65 @@
 #!/usr/bin/python3
-"""objects that handles all default RestFul API actions for cities"""
-
-from flask import abort, request, jsonify, make_response
-from api.v1.views import app_views
+"""Module amenities"""
+from models.amenity import Amenity
 from models import storage
-from models.city import City
-from models.state import State
+from api.v1.views import app_views
+from flask import *
 
 
-@app_views.route("/states/<string:state_id>/cities", strict_slashes=False)
-def get_cities(state_id):
-    """Method for list all cities from state"""
-    new_list = []
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    for city in state.cities:
-        new_list.append(city.to_dict())
-    return jsonify(new_list)
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>/', methods=['GET'],
+                 strict_slashes=False,)
+def get_amenity(amenity_id):
+    """Retrieves amenity object"""
+    if amenity_id is None:
+        list_amenities = []
+        for amenity in storage.all('Amenity').values():
+            list_amenities.append(amenity.to_dict())
+        return jsonify(list_amenities)
+    save = storage.get(Amenity, amenity_id)
+    if not save:
+        return make_response(jsonify({"error": "Not found"}), 404)
+    return jsonify(save.to_dict())
 
 
-@app_views.route("/cities/<string:city_id>", strict_slashes=False)
-def one_city(city_id):
-    """Method for list one city"""
-    city = storage.get(City, city_id)
-    if city is None:
-        abort(404)
-    return jsonify(city.to_dict())
-
-
-@app_views.route("/cities/<string:city_id>", methods=["DELETE"],
-                 strict_slashes=False)
-def city_delete(city_id):
-    """Method that deletes a city object"""
-    city = storage.get(City, city_id)
-    if not city:
-        abort(404)
-    storage.delete(city)
+@app_views.route("/amenities/<amenity_id>", strict_slashes=False,
+                 methods=["DELETE"])
+def delete_amenity(amenity_id=None):
+    """Deletes a Amenity object"""
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
+        return make_response(jsonify({"error": "Not found"}), 404)
+    storage.delete(amenity)
     storage.save()
-    return make_response(jsonify(({})), 200)
+    return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['POST'],
-                 strict_slashes=False)
-def city_post(state_id):
-    """Method that creates a city"""
-    state = storage.get(State, state_id)
-    data = request.get_json()
-    if not state:
-        abort(404)
+@app_views.route("/amenities", strict_slashes=False, methods=["POST"])
+def post_amenity():
+    """Creates a Amenity"""
+    data = request.get_json(force=True, silent=True)
     if not data:
-        abort(400, description="Not a JSON")
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in data:
-        abort(400, description="Missing name")
-    data['state_id'] = state_id
-    instance = State(**data)
-    instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    s = Amenity(**data)
+    s.save()
+    return make_response(jsonify(s.to_dict()), 201)
 
 
-@app_views.route("/cities/<string:city_id>", methods=['PUT'],
-                 strict_slashes=False)
-def city_put(city_id):
-    """Method that puts a city"""
-    city = storage.get(City, city_id)
-    data = request.get_json()
-    if not city:
-        abort(404)
+@app_views.route("/amenities", strict_slashes=False, methods=["PUT"])
+def put_amenity(amenity_id=None):
+    """Updates an Amenity object"""
+    amenity = storage.get(Amenity, amenity_id)
+    data = request.get_json(force=True, silent=True)
     if not data:
-        abort(400, description="Not a JSON")
-
-    ignore = ['id', 'created_at', 'updated_at', 'state_id']
-
-    for key, value in data.items():
-        if key not in ignore:
-            setattr(city, key, value)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    ignore_keys = ["id", "created_at", "updated_at"]
+    if not amenity:
+        return make_response(jsonify({"error": "Not found"}), 404)
+    else:
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(amenity, key, value)
         storage.save()
-        return make_response(jsonify(city.to_dict()), 200)
+        return make_response(jsonify(amenity.to_dict()), 200)
