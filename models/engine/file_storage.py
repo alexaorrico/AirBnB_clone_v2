@@ -80,3 +80,9 @@ class FileStorage:
                     get_obj = obj
             return get_obj
 
+    def count(self, cls=None):
+        """ number of objects in storage matching given class or all objects"""
+        obj_count = 0
+        for obj in self.all(cls):
+            obj_count +=1
+        return obj_count

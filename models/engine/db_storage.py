@@ -86,3 +86,16 @@ class DBStorage:
         except:
             return None
 
+    def count(self, cls=None):
+        """ number of objects in storage matching given class or all objects"""
+        obj_count = 0
+        if cls is not None:
+            objects_list = self.__session.query(cls).all()
+            for obj in objects_list:
+                obj_count += 1
+        else:
+            for value in classes.values():
+                objects_list = self.__session.query(value)
+                for obj in objects_list:
+                    obj_count += 1
+        return obj_count
