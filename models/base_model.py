@@ -97,6 +97,7 @@ class BaseModel:
         Return Values: 200: Success
         404: missing Attribute
         400: invalid Json"""
+        print("inside api_post")
         if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
         print("\t PR: after if not")

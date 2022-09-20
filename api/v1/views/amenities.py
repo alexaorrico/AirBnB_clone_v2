@@ -21,9 +21,12 @@ def get_all_amenities():
                     storage.all("Amenity").values()
         )
     if request.method == 'POST':
+        print("in POST!")
         returnedValue, code = Amenity.api_post(
                     ["name"],
                     request.get_json(silent=True))
+    print(returnedValue)
+    print(code)
     return (jsonify(returnedValue), code)
 
 
