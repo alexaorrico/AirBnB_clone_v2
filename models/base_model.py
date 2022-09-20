@@ -77,13 +77,13 @@ class BaseModel:
     @classmethod
     def api_put(cls, listToIgnore, resuestDataAsDict, ObjToUpdate):
         """handles the API put command for all types
-        Return Values: 200: Success 
+        Return Values: 200: Success
         404: invalid object
         400: invalid Json"""
         if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
         if ObjToUpdate is None:
-            return(None, 404)
+            return (None, 404)
         for key, value in resuestDataAsDict.items():
             if key in listToIgnore:
                 continue
@@ -94,7 +94,7 @@ class BaseModel:
     @classmethod
     def api_post(cls, listOfTestAttrs, resuestDataAsDict):
         """handles the API post command for all types
-        Return Values: 200: Success 
+        Return Values: 200: Success
         404: missing Attribute
         400: invalid Json"""
         if not cls.test_request_data(resuestDataAsDict):
