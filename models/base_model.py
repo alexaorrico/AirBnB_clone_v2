@@ -74,13 +74,13 @@ class BaseModel:
         """delete the current instance from the storage"""
         models.storage.delete(self)
 
-    @staticmethod
-    def api_put(listToIgnore, resuestDataAsDict, ObjToUpdate):
+    @classmethod
+    def api_put(cls, listToIgnore, resuestDataAsDict, ObjToUpdate):
         """handles the API put command for all types
         Return Values: 200: Success 
         404: invalid object
         400: invalid Json"""
-        if not BaseModel.test_request_data(resuestDataAsDict):
+        if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
         if ObjToUpdate is None:
             return(None, 404)
@@ -98,7 +98,7 @@ class BaseModel:
         404: missing Attribute
         400: invalid Json"""
         print("in api_post")
-        if not BaseModel.test_request_data(resuestDataAsDict):
+        if not cls.test_request_data(resuestDataAsDict):
             print("return correctly")
             return ({'error': 'Not a JSON'}, 400)
         for attribute in listOfTestAttrs:
