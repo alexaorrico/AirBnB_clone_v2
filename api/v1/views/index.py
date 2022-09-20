@@ -8,15 +8,14 @@ from flask import Flask, jsonify
 from models import storage
 
 
-@app_views_route('/status', strict_slashes=False)
+@app_views.route('/status', strict_slashes=False)
 def jsonStatus():
     return jsonify(status=' ok')
 
 
-@app_views_route('/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """ retrieves number of objects by type """
-    count_dict = {}
     classes = {
         "amenities": "Amenity",
         "cities": "City",
@@ -27,5 +26,5 @@ def stats():
     }
 
     for key, dbObject in classes.items():
-        count_dict[key] = storage.count(dbObject)
-    return jsonify(count_dict)
+        classes[key] = storage.count(dbObject)
+    return jsonify(classes)
