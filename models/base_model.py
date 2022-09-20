@@ -102,7 +102,7 @@ class BaseModel:
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
-                         format(attribute)}, 404)
+                         format(attribute)}, 400)
         newState = cls(**resuestDataAsDict)
         newState.save()
         return (newState.to_dict(), 200)
