@@ -104,6 +104,7 @@ class BaseModel:
         print("\t PR: after if not")
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
+                print("\treturn missing attribure")
                 return ({'error': 'Missing {}'.
                          format(attribute)}, 400)
         newState = cls(**resuestDataAsDict)
