@@ -16,6 +16,7 @@ def jsonStatus():
 @app_views_route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """ retrieves number of objects by type """
+    count_dict = {}
     classes = {
         "amenities": "Amenity",
         "cities": "City",
@@ -26,5 +27,5 @@ def stats():
     }
 
     for key, dbObject in classes.items():
-        classes[key] = storage.count(dbObject)
-    return jsonify(classes)
+        count_dict[key] = storage.count(dbObject)
+    return jsonify(count_dict)
