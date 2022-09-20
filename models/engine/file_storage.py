@@ -84,5 +84,5 @@ class FileStorage:
         """ number of objects in storage matching given class or all objects"""
         obj_count = 0
         for obj in self.all(cls):
-            obj_count +=1
+            obj_count += 1
         return obj_count
