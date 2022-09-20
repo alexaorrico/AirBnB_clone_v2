@@ -14,7 +14,7 @@ def get_all_users():
     return (jsonify(
             [obj.to_dict() for obj in storage.all("User").values()]))
 
-@app_views.route('/users/<string:<user_id>', methods=['GET'],
+@app_views.route('/users/<string:user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user_by_id(user_id):
     """Retrieves a User object: <user_id>"""
