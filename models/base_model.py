@@ -91,8 +91,7 @@ class BaseModel:
         ObjToUpdate.save()
         return (ObjToUpdate.to_dict(), 200)
 
-    @staticmethod
-    def api_post(listOfTestAttrs, resuestDataAsDict):
+    def api_post(self, listOfTestAttrs, resuestDataAsDict):
         """handles the API post command for all types
         Return Values: 200: Success 
         404: missing Attribute
