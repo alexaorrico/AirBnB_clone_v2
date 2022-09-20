@@ -99,7 +99,6 @@ class BaseModel:
         400: invalid Json"""
         if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
-        print("\t PR: after if not")
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
