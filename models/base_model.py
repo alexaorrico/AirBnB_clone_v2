@@ -101,6 +101,7 @@ class BaseModel:
         if not cls.test_request_data(resuestDataAsDict):
             print("return correctly")
             return ({'error': 'Not a JSON'}, 400)
+        print("\t PR: after if not")
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
@@ -113,8 +114,11 @@ class BaseModel:
     @classmethod
     def test_request_data(cls, requestDataAsDict):
         """used to test if the request data is accurate."""
+        print("in test_request_data")
         if requestDataAsDict is None or type(requestDataAsDict) != dict:
+            print("\t return Fales")
             return (False)
+        print("\t return True")
         return (True)
 
     @staticmethod
