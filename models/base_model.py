@@ -12,6 +12,8 @@ from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
+from models.exceptions import BaseModelInvalidObject
+
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
 if models.storage_t == "db":
@@ -122,17 +124,6 @@ class BaseModel:
             resuestDataAsDict[classIdComparison[cls.__name__]] = objectId
 
     @classmethod
-    def ensure_objectId_is_valid(cls, objectId):
-        """checks the corisponding object ID"""
-        classIdComparison = {"City": "State",
-                             "Place": "User",
-                             "Review": "User"}
-        if objectId is not None and models.storage.get(
-                classIdComparison[cls.__name__], objectId) is None:
-            return (False)
-        return (True)
-
-    @classmethod
     def test_request_data(cls, requestDataAsDict):
         """used to test if the request data is accurate."""
         if requestDataAsDict is None or type(requestDataAsDict) != dict:
@@ -150,21 +141,26 @@ class BaseModel:
         objectToDelete.delete()
         return ({}, 200)
 
-    @staticmethod
-    def api_get_single(ObjToRetrieve):
+    @classmethod
+    def storage_retrieve_single(cls, idOfObject):
         """handles the API get command for specific object
         return Values: 200: success
         404: invalid object.
         """
-        if ObjToRetrieve is None:
-            return (None, 404)
-        return (ObjToRetrieve.to_dict(), 200)
+        cls.ensure_objectId_is_valid(idOfObject)
+        return (models.storage.get(cls, idOfObject).to_dict())
 
     @staticmethod
-    def api_get_all(listOfObjsToRetrieve):
-        """handles the API get command for all objects
-        return Values: 200: success
+    def storage_retrieve_all_type(typeOfObjsToRetrieve):
+        """handles the return of a single type from
+        storage
         """
-        if len(listOfObjsToRetrieve) == 0:
-            return (None, 404)
-        return ([obj.to_dict() for obj in listOfObjsToRetrieve], 200)
+        return ([obj.to_dict()
+                    for obj in models.storage.all(
+                        typeOfObjsToRetrieve)])
+
+    @classmethod
+    def ensure_objectId_is_valid(cls, idOfObject):
+        """checks the corisponding object ID"""
+        if models.storage.get(cls, idOfObject) is None:
+            raise BaseModelInvalidObject

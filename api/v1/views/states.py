@@ -6,13 +6,22 @@ State Objects
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
+from models.exceptions import BaseModelInvalidObject
 from models.state import State
 
 
 @app_views.route('/states',
-                 methods=['GET', 'POST'],
+                 methods=['GET'],
                  strict_slashes=False)
 def get_all_states():
+    """Retrieves the list of all State objects"""
+    return (jsonify(State.api_get_all()), 200)
+
+
+@app_views.route('/states',
+                 methods=['POST'],
+                 strict_slashes=False)
+def post_states():
     """Retrieves the list of all State objects"""
     print("in correct route")
     if request.method == 'GET':
@@ -27,7 +36,18 @@ def get_all_states():
 
 
 @app_views.route('/states/<string:state_id>',
-                 methods=['GET', 'DELETE', 'PUT'],
+                 methods=['GET'],
+                 strict_slashes=False)
+def get_state_by_id(state_id):
+    """handles get State object: state_id"""
+    try:
+        return (jsonify(
+            State.api_get_single(state_id), 200))
+    except BaseModelInvalidObject:
+        abort(404)
+
+@app_views.route('/states/<string:state_id>',
+                 methods=['DELETE', 'PUT'],
                  strict_slashes=False)
 def state_by_id(state_id):
     """handles State object: state_id"""
