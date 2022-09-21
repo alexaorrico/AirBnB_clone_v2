@@ -13,7 +13,7 @@ from models.place import Place
 @app_views.route('/cities/<string:city_id>/places',
                  methods=['GET', 'POST'],
                  strict_slashes=False)
-def get_cityList_createCity(city_id):
+def get_placeList_createPlace(city_id):
     """retrieves a list of city objects or creates new city"""
     if request.method == 'GET':
         try:
@@ -37,7 +37,7 @@ def get_cityList_createCity(city_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def get_post_delete_city(place_id):
+def get_post_delete_place(place_id):
     """retrieves, deletes or updates a city object"""
     if request.method == 'GET':
         returnedValue, code = Place.api_get_all(
