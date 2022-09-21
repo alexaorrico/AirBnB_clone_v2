@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""module for flask application"""
 import os
 from flask import Flask, Blueprint, jsonify
 from models import storage
@@ -22,5 +23,5 @@ def errorHandler(error):
 
 if __name__ == '__main__':
     app.run(host=os.getenv('HBNB_API_HOST') or '0.0.0.0',
-                            port=os.getenv('HBNB_API_PORT') or '5000',
-                            threaded=True)
+            port=os.getenv('HBNB_API_PORT') or '5000',
+            threaded=True)
