@@ -154,9 +154,10 @@ class BaseModel:
         """handles the return of a single type from
         storage
         """
+        retrievedObjects = models.storage.all(
+                        typeOfObjsToRetrieve)
         return ([obj.to_dict()
-                    for obj in models.storage.all(
-                        typeOfObjsToRetrieve)])
+                    for obj in retrievedObjects])
 
     @classmethod
     def ensure_objectId_is_valid(cls, idOfObject):
