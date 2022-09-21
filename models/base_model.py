@@ -143,9 +143,8 @@ class BaseModel:
 
     @classmethod
     def storage_retrieve_single(cls, idOfObject):
-        """handles the API get command for specific object
-        return Values: 200: success
-        404: invalid object.
+        """handles the return of a single object from
+        storage
         """
         cls.ensure_objectId_is_valid(idOfObject)
         return (models.storage.get(cls, idOfObject).to_dict())
