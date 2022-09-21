@@ -16,7 +16,8 @@ def get_cityList_createCity(state_id):
         try:
             returnedValue, code = City.api_get_all(
                 storage.get("State", state_id).reviews)
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             abort(404)
     if request.method == 'POST':
         try:
@@ -24,7 +25,8 @@ def get_cityList_createCity(state_id):
                 ['name'], 
                 request.get_json(silent=True),
                 state_id)
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             abort(404)
     if code == 404:
         abort(404)

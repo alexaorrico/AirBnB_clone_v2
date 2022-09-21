@@ -18,7 +18,8 @@ def get_all_reviews(place_id):
         try:
             returnedValue, code = Review.api_get_all(
                         storage.get("Place", place_id).reviews)
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             abort(404)
     if request.method == 'POST':
         try:
@@ -26,7 +27,8 @@ def get_all_reviews(place_id):
                         ["user_id", "text"],
                         request.get_json(silent=True),
                         place_id)
-        except AttributeError:
+        except AttributeError as e:
+            print(e)
             abort(404)
     if code == 404:
         abort(404)
