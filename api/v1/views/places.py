@@ -19,8 +19,7 @@ def get_placeList_createPlace(city_id):
         try:
             returnedValue, code = Place.api_get_all(
                 storage.get("City", city_id).places)
-        except AttributeError as e:
-            print(e)
+        except AttributeError:
             abort(404)
     if request.method == 'POST':
         try:
@@ -28,11 +27,11 @@ def get_placeList_createPlace(city_id):
                 ['user_id', 'name'], 
                 request.get_json(silent=True),
                 city_id)
-        except AttributeError as e:
-            print(e)
+        except AttributeError:
             abort(404)
     if code == 404:
         abort(404)
+    storage.save()
     return (jsonify(returnedValue), code)
 
 

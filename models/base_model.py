@@ -126,19 +126,6 @@ class BaseModel:
         if objectId is not None and models.storage.get(classIdComparison[cls.__name__], objectId) is None:
             return (False)
         return (True)
-    # @classmethod
-    # def test_attribute_for_model(cls, attribute, objectId):
-    #     """used to test if an attribute is a model"""
-    #     arrayOfModels = ["Amenity", "City", "Place", "Review", "State", "User"]
-    #     for modelName in arrayOfModels:
-    #         if modelName.lower() in attribute.lower():
-    #             if models.storage.get(cls, objectId) is not None:
-    #                 print("\n\tin models.storage.get not None\n")
-    #                 return (True)
-    #             else:
-    #                 print("\n\tin models.storage.get is None\n")
-    #                 return (False)
-    #     return (True)
 
     @classmethod
     def test_request_data(cls, requestDataAsDict):

@@ -8,7 +8,8 @@ from models import storage
 from models.city import City
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['GET', 'POST'],
+@app_views.route('/states/<string:state_id>/cities',
+                 methods=['GET', 'POST'],
                  strict_slashes=False)
 def get_cityList_createCity(state_id):
     """retrieves a list of city objects or creates new city"""
@@ -16,8 +17,7 @@ def get_cityList_createCity(state_id):
         try:
             returnedValue, code = City.api_get_all(
                 storage.get("State", state_id).cities)
-        except AttributeError as e:
-            print(e)
+        except AttributeError:
             abort(404)
     if request.method == 'POST':
         try:
@@ -25,11 +25,11 @@ def get_cityList_createCity(state_id):
                 ['name'], 
                 request.get_json(silent=True),
                 state_id)
-        except AttributeError as e:
-            print(e)
+        except AttributeError:
             abort(404)
     if code == 404:
         abort(404)
+    storage.save()
     return (jsonify(returnedValue), code)
 
 

@@ -13,22 +13,19 @@ from models.review import Review
                  strict_slashes=False)
 def get_all_reviews(place_id):
     """Retrieves the list of all Review objects"""
-    print("in correct route")
     if request.method == 'GET':
         try:
             returnedValue, code = Review.api_get_all(
-                        storage.get("Place", place_id).reviews)
-        except AttributeError as e:
-            print(e)
+                storage.get("Place", place_id).reviews)
+        except AttributeError:
             abort(404)
     if request.method == 'POST':
         try:
             returnedValue, code = Review.api_post(
-                        ["user_id", "text"],
-                        request.get_json(silent=True),
-                        place_id)
-        except AttributeError as e:
-            print(e)
+                ["user_id", "text"],
+                request.get_json(silent=True),
+                place_id)
+        except AttributeError:
             abort(404)
     if code == 404:
         abort(404)
