@@ -49,8 +49,8 @@ class FileStorage:
         if cls is not None:
             classList = [cls]
         count = 0
-        for clss in classList:
-            count = count + len(self.all(clss))
+        for each_class in classList:
+            count = count + len(self.all(each_class))
         return count
 
     def new(self, obj):
