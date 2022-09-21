@@ -92,7 +92,7 @@ class BaseModel:
         return (ObjToUpdate.to_dict(), 200)
 
     @classmethod
-    def api_post(cls, listOfTestAttrs, resuestDataAsDict):
+    def api_post(cls, listOfTestAttrs, resuestDataAsDict, objectId=None):
         """handles the API post command for all types
         Return Values: 200: Success
         404: missing Attribute
@@ -100,12 +100,26 @@ class BaseModel:
         if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
         for attribute in listOfTestAttrs:
+            if not cls.test_attribute_for_model(attribute, objectId):
+                return (None, 404)
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
                          format(attribute)}, 400)
-        newState = cls(**resuestDataAsDict)
-        newState.save()
-        return (newState.to_dict(), 200)
+        newObjct = cls(**resuestDataAsDict)
+        newObjct.save()
+        return (newObjct.to_dict(), 200)
+
+    @classmethod
+    def test_attribute_for_model(cls, attribute, objectId):
+        """used to test if an attribute is a model"""
+        arrayOfModels = ["Amenity", "City", "Place", "Review", "State", "User"]
+        for modelName in arrayOfModels:
+            if modelName.lower in attribute.lower:
+                if models.storage.get(cls, objectId) is not None:
+                    return (True)
+                else:
+                    return (False)
+        return (True)
 
     @classmethod
     def test_request_data(cls, requestDataAsDict):
@@ -140,4 +154,6 @@ class BaseModel:
         """handles the API get command for all objects
         return Values: 200: success
         """
+        if len(listOfObjsToRetrieve) == 0:
+            return (None, 404)
         return ([obj.to_dict() for obj in listOfObjsToRetrieve], 200)
