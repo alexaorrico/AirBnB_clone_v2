@@ -156,9 +156,8 @@ class BaseModel:
         """
         retrievedObjects = models.storage.all(
                         typeOfObjsToRetrieve)
-        print(retrievedObjects)
         return ([obj.to_dict()
-                    for obj in retrievedObjects])
+                    for obj in retrievedObjects.values()])
 
     @classmethod
     def ensure_objectId_is_valid(cls, idOfObject):
