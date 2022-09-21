@@ -4,6 +4,7 @@ Contains class BaseModel
 """
 
 from datetime import datetime
+import re
 import models
 from os import getenv
 import sqlalchemy
@@ -99,9 +100,10 @@ class BaseModel:
         400: invalid Json"""
         if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
+        if objectId is not None and models.storage.get(cls, objectId) is None:
+            return (None, 404)
+        cls.append_id_to_dictionary(resuestDataAsDict)
         for attribute in listOfTestAttrs:
-            if not cls.test_attribute_for_model(attribute, objectId):
-                return (None, 404)
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
                          format(attribute)}, 400)
@@ -111,18 +113,24 @@ class BaseModel:
         return (newObjct.to_dict(), 200)
 
     @classmethod
-    def test_attribute_for_model(cls, attribute, objectId):
-        """used to test if an attribute is a model"""
-        arrayOfModels = ["Amenity", "City", "Place", "Review", "State", "User"]
-        for modelName in arrayOfModels:
-            if modelName.lower() in attribute.lower():
-                if models.storage.get(cls, objectId) is not None:
-                    print("\n\tin models.storage.get not None\n")
-                    return (True)
-                else:
-                    print("\n\tin models.storage.get is None\n")
-                    return (False)
-        return (True)
+    def append_id_to_dictionary(cls, resuestDataAsDict):
+        """addends an ID to dictionary (Bad solution)"""
+        classIdComparison = {"City":"state_id", "Place":"user_id", "Review":"user_id"}
+        if cls.__name__ in classIdComparison.keys():
+            resuestDataAsDict[cls.__name__] = classIdComparison[cls.__name__]
+    # @classmethod
+    # def test_attribute_for_model(cls, attribute, objectId):
+    #     """used to test if an attribute is a model"""
+    #     arrayOfModels = ["Amenity", "City", "Place", "Review", "State", "User"]
+    #     for modelName in arrayOfModels:
+    #         if modelName.lower() in attribute.lower():
+    #             if models.storage.get(cls, objectId) is not None:
+    #                 print("\n\tin models.storage.get not None\n")
+    #                 return (True)
+    #             else:
+    #                 print("\n\tin models.storage.get is None\n")
+    #                 return (False)
+    #     return (True)
 
     @classmethod
     def test_request_data(cls, requestDataAsDict):
