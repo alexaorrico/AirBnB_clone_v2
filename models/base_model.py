@@ -105,6 +105,7 @@ class BaseModel:
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
                          format(attribute)}, 400)
+        print(resuestDataAsDict)
         newObjct = cls(**resuestDataAsDict)
         newObjct.save()
         return (newObjct.to_dict(), 200)
@@ -116,8 +117,10 @@ class BaseModel:
         for modelName in arrayOfModels:
             if modelName.lower() in attribute.lower():
                 if models.storage.get(cls, objectId) is not None:
+                    print("\n\tin models.storage.get not None\n")
                     return (True)
                 else:
+                    print("\n\tin models.storage.get is None\n")
                     return (False)
         return (True)
 
