@@ -36,7 +36,7 @@ def get_state_by_id(state_id):
     """handles get State object: state_id"""
     try:
         return (jsonify(
-            State.api_get_single(state_id), 200))
+            State.api_get_single(state_id)), 200)
     except BaseModelInvalidObject:
         abort(404)
 
