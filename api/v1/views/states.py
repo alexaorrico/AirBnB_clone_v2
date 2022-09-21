@@ -2,6 +2,7 @@
 """create a route /status on the object app_views that returns a JSON"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
+import models
 from models import storage
 from models.amenity import Amenity
 from models.city import City
@@ -46,11 +47,8 @@ def show_create_states():
             abort(400, description="Not a JSON")
 
 
-@app_views.route(
-    '/states/<state_id>',
-    methods=['GET', 'DELETE', 'PUT'],
-    strict_slashes=False
-)
+@app_views.route('/states/<state_id>',
+    methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def show_delete_update_state_from_id(state_id):
     """
     GET REQUEST: returns JSON string containing the state object
@@ -64,36 +62,28 @@ def show_delete_update_state_from_id(state_id):
 
     ERROR HANDLING: throws a 404 error if state_id not found
     """
-
     state_obj = storage.get(State, state_id)
     if state_obj:
-        # return JSON string of object's dict representation
         if request.method == 'GET':
             return jsonify(state_obj.to_dict())
 
-        # delete object from storage and return empty dict
         if request.method == 'DELETE':
             storage.delete(state_obj)
-            # storage.save()
+            models.storage.save()
             return {}
 
-        # update object or throw 400 error if request body not a json
-        # get http request body as dict
-        body = request.get_json()
-        updates_dict = {}
-        if body:
-            for k, v in body.items():
-                # check protected keys are not updated
-                if k not in ["id", "created_at", "updated_at"]:
-                    # add unprotected keys and values to a new dict
-                    updates_dict[k] = v
-            # call update method of state_obj and pass in request body
-            state_obj.__dict__.update(updates_dict)
-            state_obj.save()
-            return jsonify(state_obj.to_dict())
-
-        else:
-            abort(400, description="Not a JSON")
+        if request.method == 'PUT':
+#            body = request.get_json()
+            updates_dict = {}
+            if request.get_json():
+                for k, v in request.get_json().items():
+                    if k not in ["id", "created_at", "updated_at"]:
+                        updates_dict[k] = v
+                state_obj.__dict__.update(updates_dict)
+                state_obj.save()
+                return jsonify(state_obj.to_dict())
+            else:
+                abort(400, description="Not a JSON")
 
     else:
         abort(404)
