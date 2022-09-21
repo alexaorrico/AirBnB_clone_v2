@@ -14,16 +14,21 @@ from models.user import User
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def show_create_states():
     """
-    GET REQUEST: return json string containing all State objects in storage
-    POST REQUEST: creates a new State from request and returns new object's dict in JSON string
-    ERROR HANDLING: throws 400 error if 'name' key not in body response dict, or body response not
-    a valid json
+    GET REQUEST: return json string containing all State objects
+    in storage
+
+    POST REQUEST: creates a new State from request and returns new
+    object's dict in JSON string
+
+    ERROR HANDLING: throws 400 error if 'name' key not in body response
+    dict, or body response not a valid json
     """
     if request.method == 'GET':
         # retrieve a dictionary of all states in storage
         all_states_dict = storage.all(State)
         all_states_list = []
-        # add each dictionary value (State object) to a list after calling to_dict() on it
+        # add each dict value (State object) to a list after calling
+        # to_dict() on it
         for state_obj in all_states_dict.values():
             all_states_list.append(state_obj.to_dict())
         return jsonify(all_states_list)
@@ -41,12 +46,22 @@ def show_create_states():
             abort(400, description="Not a JSON")
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route(
+    '/states/<state_id>',
+    methods=['GET', 'DELETE', 'PUT'],
+    strict_slashes=False
+)
 def show_delete_update_state_from_id(state_id):
     """
-    GET REQUEST: returns JSON string containing the state object correspondong to state_id
-    DELETE REQUEST: deletes a state object with corresponding state_id from storage and returns an emtpy dict
-    PUT REQUEST: updates a state object with corresponding state_id from storage and returns a dict containing updated object
+    GET REQUEST: returns JSON string containing the state object
+    correspondong to state_id
+
+    DELETE REQUEST: deletes a state object with corresponding state_id from
+    storage and returns an emtpy dict
+
+    PUT REQUEST: updates a state object with corresponding state_id from
+    storage and returns a dict containing updated object
+
     ERROR HANDLING: throws a 404 error if state_id not found
     """
 
@@ -79,7 +94,6 @@ def show_delete_update_state_from_id(state_id):
 
         else:
             abort(400, description="Not a JSON")
-
 
     else:
         abort(404)
