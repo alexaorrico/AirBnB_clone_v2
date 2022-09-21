@@ -44,44 +44,42 @@ def show_create_states():
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def show_delete_update_state_from_id(state_id):
     """
-    GET REQUEST: returns JSON string containing the state object with correspondong to state_id
+    GET REQUEST: returns JSON string containing the state object correspondong to state_id
     DELETE REQUEST: deletes a state object with corresponding state_id from storage and returns an emtpy dict
     PUT REQUEST: updates a state object with corresponding state_id from storage and returns a dict containing updated object
     ERROR HANDLING: throws a 404 error if state_id not found
     """
-    all_states_dict = storage.all(State)
 
-    for state_obj in all_states_dict.values():
-        if state_obj.id == state_id:
+    state_obj = storage.get(State, state_id)
+    if state_obj:
+        # return JSON string of object's dict representation
+        if request.method == 'GET':
+            return jsonify(state_obj.to_dict())
 
-            # return JSON string of object's dict representation
-            if request.method == 'GET':
-                return jsonify(state_obj.to_dict())
+        # delete object from storage and return empty dict
+        if request.method == 'DELETE':
+            storage.delete(state_obj)
+            # storage.save()
+            return {}
 
-            # delete object from storage and return empty dict
-            if request.method == 'DELETE':
-                state_obj.delete()
-                return {}
+        # update object or throw 400 error if request body not a json
+        # get http request body as dict
+        body = request.get_json()
+        updates_dict = {}
+        if body:
+            for k, v in body.items():
+                # check protected keys are not updated
+                if k not in ["id", "created_at", "updated_at"]:
+                    # add unprotected keys and values to a new dict
+                    updates_dict[k] = v
+            # call update method of state_obj and pass in request body
+            state_obj.__dict__.update(updates_dict)
+            state_obj.save()
+            return jsonify(state_obj.to_dict())
 
-            # update object or throw 400 error if request body not a json
-            # get http request body as dict
-            body = request.get_json()
-            updates_dict = {}
-            if body:
-                print(body)
-                for k, v in body.items():
-                    # check protected keys are not updated
-                    if k not in ["id", "created_at", "updated_at"]:
-                        # add unprotected keys and values to a new dict
-                        updates_dict[k] = v
-                # call update method of state_obj and pass in request body
-                state_obj.__dict__.update(updates_dict)
-                state_obj.save()
-                return jsonify(state_obj.to_dict())
-                    
-            else:
-                abort(400, description="Not a JSON")
-            
-            
+        else:
+            abort(400, description="Not a JSON")
 
-    abort(404)
+
+    else:
+        abort(404)
