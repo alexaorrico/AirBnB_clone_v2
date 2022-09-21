@@ -114,7 +114,7 @@ class BaseModel:
         """used to test if an attribute is a model"""
         arrayOfModels = ["Amenity", "City", "Place", "Review", "State", "User"]
         for modelName in arrayOfModels:
-            if modelName.lower in attribute.lower:
+            if modelName.lower() in attribute.lower():
                 if models.storage.get(cls, objectId) is not None:
                     return (True)
                 else:
