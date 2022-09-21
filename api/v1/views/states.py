@@ -48,7 +48,8 @@ def show_create_states():
 
 
 @app_views.route('/states/<state_id>',
-    methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+                 methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def show_delete_update_state_from_id(state_id):
     """
     GET REQUEST: returns JSON string containing the state object
@@ -73,7 +74,6 @@ def show_delete_update_state_from_id(state_id):
             return {}
 
         if request.method == 'PUT':
-#            body = request.get_json()
             updates_dict = {}
             if request.get_json():
                 for k, v in request.get_json().items():
