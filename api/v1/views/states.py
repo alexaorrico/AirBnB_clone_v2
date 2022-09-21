@@ -23,15 +23,9 @@ def get_all_states():
                  strict_slashes=False)
 def post_states():
     """Retrieves the list of all State objects"""
-    print("in correct route")
-    if request.method == 'GET':
-        returnedValue, code = State.api_get_all(
-                    storage.all("State").values()
-        )
-    if request.method == 'POST':
-        returnedValue, code = State.api_post(
-                    ["name"],
-                    request.get_json(silent=True))
+    returnedValue, code = State.api_post(
+                ["name"],
+                request.get_json(silent=True))
     return (jsonify(returnedValue), code)
 
 
