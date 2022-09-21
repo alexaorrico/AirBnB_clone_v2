@@ -102,7 +102,7 @@ class BaseModel:
             return ({'error': 'Not a JSON'}, 400)
         if not cls.ensure_objectId_is_valid(objectId):
             return (None, 404)
-        cls.append_id_to_dictionary(resuestDataAsDict)
+        cls.append_id_to_dictionary(resuestDataAsDict, objectId)
         for attribute in listOfTestAttrs:
             if resuestDataAsDict.get(attribute) is None:
                 return ({'error': 'Missing {}'.
@@ -113,11 +113,11 @@ class BaseModel:
         return (newObjct.to_dict(), 200)
 
     @classmethod
-    def append_id_to_dictionary(cls, resuestDataAsDict):
+    def append_id_to_dictionary(cls, resuestDataAsDict, objectId):
         """addends an ID to dictionary (Bad solution)"""
         classIdComparison = {"City":"state_id", "Place":"user_id", "Review":"user_id"}
         if cls.__name__ in classIdComparison.keys():
-            resuestDataAsDict[cls.__name__] = classIdComparison[cls.__name__]
+            resuestDataAsDict[classIdComparison[cls.__name__]] = objectId
 
     @classmethod
     def ensure_objectId_is_valid(cls, objectId):
