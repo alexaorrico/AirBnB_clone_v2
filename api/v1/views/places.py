@@ -42,7 +42,7 @@ def get_placeList_createPlace(city_id):
 def get_post_delete_place(place_id):
     """retrieves, deletes or updates a city object"""
     if request.method == 'GET':
-        returnedValue, code = Place.api_get_all(
+        returnedValue, code = Place.api_get_single(
             storage.get('City', place_id))
     if request.method == 'DELETE':
         returnedValue, code = Place.api_delete(

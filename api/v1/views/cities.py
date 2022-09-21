@@ -39,7 +39,7 @@ def get_cityList_createCity(state_id):
 def get_post_delete_city(city_id):
     """retrieves, deletes or updates a city object"""
     if request.method == 'GET':
-        returnedValue, code = City.api_get_all(
+        returnedValue, code = City.api_get_single(
             storage.get('City', city_id))
     if request.method == 'DELETE':
         returnedValue, code = City.api_delete(
