@@ -85,7 +85,6 @@ class DBStorage:
             return None
 
         for key, dbObject in models.storage.all(cls).items():
-            print(str(id) + " in " + key)
             if (str(id) in key):
                 return dbObject
         return None

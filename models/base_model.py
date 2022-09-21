@@ -100,7 +100,7 @@ class BaseModel:
         400: invalid Json"""
         if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
-        if objectId is not None and models.storage.get(cls, objectId) is None:
+        if not cls.ensure_objectId_is_valid(objectId):
             return (None, 404)
         cls.append_id_to_dictionary(resuestDataAsDict)
         for attribute in listOfTestAttrs:
@@ -118,6 +118,14 @@ class BaseModel:
         classIdComparison = {"City":"state_id", "Place":"user_id", "Review":"user_id"}
         if cls.__name__ in classIdComparison.keys():
             resuestDataAsDict[cls.__name__] = classIdComparison[cls.__name__]
+
+    @classmethod
+    def ensure_objectId_is_valid(cls, objectId):
+        """checks the corisponding object ID"""
+        classIdComparison = {"City":"State", "Place":"User", "Review":"User"}
+        if objectId is not None and models.storage.get(classIdComparison[cls.__name__], objectId) is None:
+            return (False)
+        return (True)
     # @classmethod
     # def test_attribute_for_model(cls, attribute, objectId):
     #     """used to test if an attribute is a model"""
