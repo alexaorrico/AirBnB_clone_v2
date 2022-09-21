@@ -15,13 +15,19 @@ def get_all_reviews(place_id):
     """Retrieves the list of all Review objects"""
     print("in correct route")
     if request.method == 'GET':
-        returnedValue, code = Review.api_get_all(
-                    storage.get("Place", place_id).reviews)
+        try:
+            returnedValue, code = Review.api_get_all(
+                        storage.get("Place", place_id).reviews)
+        except AttributeError:
+            abort(404)
     if request.method == 'POST':
-        returnedValue, code = Review.api_post(
-                    ["user_id", "text"],
-                    request.get_json(silent=True),
-                    place_id)
+        try:
+            returnedValue, code = Review.api_post(
+                        ["user_id", "text"],
+                        request.get_json(silent=True),
+                        place_id)
+        except AttributeError:
+            abort(404)
     if code == 404:
         abort(404)
     storage.save()
