@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""module for flask application"""
+"""module for flask application """
 import os
 from flask import Flask, Blueprint, jsonify
 from models import storage
