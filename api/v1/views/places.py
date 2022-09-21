@@ -24,7 +24,7 @@ def get_placeList_createPlace(city_id):
     if request.method == 'POST':
         try:
             returnedValue, code = Place.api_post(
-                ['user_id', 'name'], 
+                ['user_id', 'name'],
                 request.get_json(silent=True),
                 city_id)
         except AttributeError:
@@ -48,11 +48,10 @@ def get_post_delete_place(place_id):
             storage.get("City", place_id))
     if request.method == 'PUT':
         returnedValue, code = Place.api_put(
-            ['id','user_id', 'city_id', 'created_at', 'updated_at'],
+            ['id', 'user_id', 'city_id', 'created_at', 'updated_at'],
             request.get_json(silent=True),
             storage.get('City', place_id))
     if code == 404:
         abort(404)
     storage.save()
     return (jsonify(returnedValue), code)
-

@@ -22,7 +22,7 @@ def get_cityList_createCity(state_id):
     if request.method == 'POST':
         try:
             returnedValue, code = City.api_post(
-                ['name'], 
+                ['name'],
                 request.get_json(silent=True),
                 state_id)
         except AttributeError:

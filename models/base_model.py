@@ -115,15 +115,20 @@ class BaseModel:
     @classmethod
     def append_id_to_dictionary(cls, resuestDataAsDict, objectId):
         """addends an ID to dictionary (Bad solution)"""
-        classIdComparison = {"City":"state_id", "Place":"user_id", "Review":"user_id"}
+        classIdComparison = {"City": "state_id",
+                             "Place": "user_id",
+                             "Review": "user_id"}
         if cls.__name__ in classIdComparison.keys():
             resuestDataAsDict[classIdComparison[cls.__name__]] = objectId
 
     @classmethod
     def ensure_objectId_is_valid(cls, objectId):
         """checks the corisponding object ID"""
-        classIdComparison = {"City":"State", "Place":"User", "Review":"User"}
-        if objectId is not None and models.storage.get(classIdComparison[cls.__name__], objectId) is None:
+        classIdComparison = {"City": "State",
+                             "Place": "User",
+                             "Review": "User"}
+        if objectId is not None and models.storage.get(
+                classIdComparison[cls.__name__], objectId) is None:
             return (False)
         return (True)
 
