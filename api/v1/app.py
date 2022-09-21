@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""module for flask app"""
 import os
 from flask import Flask, Blueprint, jsonify
 from models import storage
