@@ -110,7 +110,7 @@ class BaseModel:
         print(resuestDataAsDict)
         newObjct = cls(**resuestDataAsDict)
         newObjct.save()
-        return (newObjct.to_dict(), 200)
+        return (newObjct.to_dict(), 201)
 
     @classmethod
     def append_id_to_dictionary(cls, resuestDataAsDict, objectId):
