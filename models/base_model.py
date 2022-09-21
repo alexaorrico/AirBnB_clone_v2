@@ -156,6 +156,7 @@ class BaseModel:
         """
         retrievedObjects = models.storage.all(
                         typeOfObjsToRetrieve)
+        print(retrievedObjects)
         return ([obj.to_dict()
                     for obj in retrievedObjects])
 
