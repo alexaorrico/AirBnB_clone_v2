@@ -86,3 +86,57 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_passed_object(self):
+        """Test that get properly gets the correct object"""
+        testState = State(name="Test")
+        testState.save()
+        retrievedState = models.storage.get(State, testState.id)
+        self.assertIs(testState, retrievedState)
+        testState.delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_passed_string(self):
+        """Test that get properly gets the correct object"""
+        testState = State(name="Test")
+        testState.save()
+        retrievedState = models.storage.get('State', testState.id)
+        self.assertIs(testState, retrievedState)
+        testState.delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_fail_wrong_Type(self):
+        """Test that get properly gets None Value"""
+        obj = State(name="Test")
+        obj.save()
+        got_obj = models.storage.get('ls', obj.id)
+        self.assertIs(None, got_obj)
+        obj.delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_fail_wrong_id(self):
+        """Test that get properly gets None Value"""
+        obj = State(name="Test")
+        obj.save()
+        got_obj = models.storage.get('State', 123)
+        self.assertIs(None, got_obj)
+        obj.delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that the count properly counts objects"""
+        got_obj_count = models.storage.count()
+        obj_count = len(models.storage.all())
+        self.assertEqual(got_obj_count, obj_count)
+        got_obj_count = models.storage.count('State')
+        obj_count = len(models.storage.all('State'))
+        self.assertEqual(got_obj_count, obj_count)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_plus_one(self):
+        models.storage.reload()
+        count = models.storage.count()
+        newState = State(name='victoria')
+        newState.save()
+        self.assertEqual(models.storage.count(), count + 1)
