@@ -101,10 +101,6 @@ class BaseModel:
         if not cls.test_request_data(resuestDataAsDict):
             return ({'error': 'Not a JSON'}, 400)
         if objectId is not None and models.storage.get(cls, objectId) is None:
-            print("\ncls: ", end="")
-            print(cls, end="")
-            print("objectId: " + objectId + "\n")
-            print("early 404 return")
             return (None, 404)
         cls.append_id_to_dictionary(resuestDataAsDict)
         for attribute in listOfTestAttrs:

@@ -82,13 +82,12 @@ class DBStorage:
         if type(cls) is str:
             cls = classes.get(cls)
         if cls not in classes.values():
-            print("early return in get method")
             return None
 
         for key, dbObject in models.storage.all(cls).items():
+            print(str(id) + " in " + key)
             if (str(id) in key):
                 return dbObject
-        print("last return in get method")
         return None
 
     def count(self, cls=None):
