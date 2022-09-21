@@ -115,8 +115,7 @@ class State(BaseModel, Base):
         404: invalid object.
         """
         return (super(State, cls).
-                storage_retrieve_single(idOfObject,
-                                    cls=State))
+                storage_retrieve_single(idOfObject))
 
     @classmethod
     def api_get_all(cls):
