@@ -41,15 +41,15 @@ def Review_by_id(review_id):
     """handles Review object: Review_id"""
     if request.method == 'GET':
         returnedValue, code = Review.api_get_single(
-                        storage.get("Review", review_id))
+            storage.get("Review", review_id))
     if request.method == 'DELETE':
         returnedValue, code = Review.api_delete(
-                    storage.get("Review", review_id))
+            storage.get("Review", review_id))
     if request.method == 'PUT':
         returnedValue, code = Review.api_put(
-                    ['id', 'user_id', 'place_id', 'created_at', 'updated_at'],
-                    request.get_json(silent=True),
-                    storage.get("Review", review_id))
+            ['id', 'user_id', 'place_id', 'created_at', 'updated_at'],
+            request.get_json(silent=True),
+            storage.get("Review", review_id))
     if code == 404:
         abort(404)
     storage.save()
