@@ -15,7 +15,7 @@ def get_cityList_createCity(state_id):
     if request.method == 'GET':
         try:
             returnedValue, code = City.api_get_all(
-                storage.get("State", state_id).reviews)
+                storage.get("State", state_id).cities)
         except AttributeError as e:
             print(e)
             abort(404)

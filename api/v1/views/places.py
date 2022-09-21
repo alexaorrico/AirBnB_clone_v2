@@ -18,7 +18,7 @@ def get_placeList_createPlace(city_id):
     if request.method == 'GET':
         try:
             returnedValue, code = Place.api_get_all(
-                storage.get("City", city_id).reviews)
+                storage.get("City", city_id).places)
         except AttributeError as e:
             print(e)
             abort(404)
