@@ -12,7 +12,7 @@ from models.exceptions import *
 @app_views.route('/amenities',
                  methods=['GET'],
                  strict_slashes=False)
-def get_all_states():
+def get_all_amenity():
     """Retrieves the list of all Amenity objects"""
     return (jsonify(Amenity.api_get_all()), 200)
 
@@ -20,7 +20,7 @@ def get_all_states():
 @app_views.route('/amenities',
                  methods=['POST'],
                  strict_slashes=False)
-def post_states():
+def post_amenity():
     """Creates a Amenity"""
     try:
         return (jsonify(
@@ -36,7 +36,7 @@ def post_states():
 @app_views.route('/amenities/<string:amenity_id>',
                  methods=['GET'],
                  strict_slashes=False)
-def get_state_by_id(amenity_id):
+def get_amenity_by_id(amenity_id):
     """handles get Amenity object: amenity_id"""
     try:
         return (jsonify(
@@ -48,7 +48,7 @@ def get_state_by_id(amenity_id):
 @app_views.route('/amenities/<string:amenity_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
-def delete_state_by_id(amenity_id):
+def delete_amenity_by_id(amenity_id):
     """handles Amenity object: amenity_id"""
     try:
         return (jsonify(
@@ -60,7 +60,7 @@ def delete_state_by_id(amenity_id):
 @app_views.route('/amenities/<string:amenity_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-def put_state_by_id(amenity_id):
+def put_amenity_by_id(amenity_id):
     """handles update of Amenity object: amenity_id"""
     try:
         return (Amenity.api_put(

@@ -12,7 +12,7 @@ from models.user import User
 @app_views.route('/users',
                  methods=['GET'],
                  strict_slashes=False)
-def get_all_states():
+def get_all_users():
     """Retrieves the list of all User objects"""
     return (jsonify(User.api_get_all()), 200)
 
@@ -20,7 +20,7 @@ def get_all_states():
 @app_views.route('/users',
                  methods=['POST'],
                  strict_slashes=False)
-def post_states():
+def post_users():
     """Creates a User"""
     try:
         return (jsonify(
@@ -36,7 +36,7 @@ def post_states():
 @app_views.route('/users/<string:user_id>',
                  methods=['GET'],
                  strict_slashes=False)
-def get_state_by_id(user_id):
+def get_user_by_id(user_id):
     """handles get User object: user_id"""
     try:
         return (jsonify(
@@ -48,7 +48,7 @@ def get_state_by_id(user_id):
 @app_views.route('/users/<string:user_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
-def delete_state_by_id(user_id):
+def delete_user_by_id(user_id):
     """handles User object: user_id"""
     try:
         return (jsonify(
@@ -60,7 +60,7 @@ def delete_state_by_id(user_id):
 @app_views.route('/users/<string:user_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-def put_state_by_id(user_id):
+def put_user_by_id(user_id):
     """handles update of User object: user_id"""
     try:
         return (User.api_put(
