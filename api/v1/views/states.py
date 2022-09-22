@@ -82,7 +82,7 @@ def access_state_from_id(state_id):
 #                    updates_dict[k] = v
 #                    print("our new dict is: {}".format(updates_dict))
 #                    state_obj.update("hello")
-#$                    updates_dict = {}
+#                    updates_dict = {}
                 state_obj.save()
                 return jsonify(state_obj.to_dict())
             else:
