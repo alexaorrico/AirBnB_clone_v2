@@ -13,7 +13,7 @@ from models.user import User
 
 
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
-def show_create_states():
+def access_states():
     """
     GET REQUEST: return json string containing all State objects
     in storage
@@ -25,16 +25,13 @@ def show_create_states():
     dict, or body response not a valid json
     """
     if request.method == 'GET':
-        # retrieve a dictionary of all states in storage
-        all_states_dict = storage.all(State)
         all_states_list = []
-        # add each dict value (State object) to a list after calling
-        # to_dict() on it
+        all_states_dict = storage.all(State)
         for state_obj in all_states_dict.values():
             all_states_list.append(state_obj.to_dict())
         return jsonify(all_states_list)
 
-    else:
+    if request.method == 'POST':
         if request.get_json():
             body = request.get_json()
             if 'name' in body:
@@ -50,7 +47,7 @@ def show_create_states():
 @app_views.route('/states/<state_id>',
                  methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def show_delete_update_state_from_id(state_id):
+def access_state_from_id(state_id):
     """
     GET REQUEST: returns JSON string containing the state object
     correspondong to state_id
@@ -79,7 +76,9 @@ def show_delete_update_state_from_id(state_id):
                 for k, v in request.get_json().items():
                     if k not in ["id", "created_at", "updated_at"]:
                         updates_dict[k] = v
+                print(str(state_obj))
                 state_obj.__dict__.update(updates_dict)
+                print(str(state_obj))
                 state_obj.save()
                 return jsonify(state_obj.to_dict())
             else:
