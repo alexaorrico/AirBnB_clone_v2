@@ -41,10 +41,10 @@ def post_review(place_id):
 @app_views.route('/reviews/<string:review_id>',
                  methods=['GET'],
                  strict_slashes=False)
-def get_review_by_id(place_id):
+def get_review_by_id(review_id):
     """retrieves, deletes or updates a city object"""
     try:
-        return (jsonify(Review.api_get_single(place_id)), 200)
+        return (jsonify(Review.api_get_single(review_id)), 200)
     except BaseModelInvalidObject:
         abort(404)
 
@@ -52,10 +52,10 @@ def get_review_by_id(place_id):
 @app_views.route('/reviews/<string:review_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
-def delete_review_by_id(place_id):
+def delete_review_by_id(review_id):
     """retrieves, deletes or updates a city object"""
     try:
-        return (jsonify(Review.api_delete(place_id)), 200)
+        return (jsonify(Review.api_delete(review_id)), 200)
     except BaseModelInvalidObject:
         abort(404)
 
@@ -63,12 +63,12 @@ def delete_review_by_id(place_id):
 @app_views.route('/reviews/<string:review_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-def put_review_by_id(place_id):
+def put_review_by_id(review_id):
     """retrieves, deletes or updates a city object"""
     try:
         return (jsonify(Review.api_put(
                 request.get_json(silent=True),
-                place_id)), 200)
+                review_id)), 200)
     except BaseModelInvalidDataDictionary:
         return (jsonify({'error': "Not a JSON"}), 400)
     except BaseModelInvalidObject:
