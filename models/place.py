@@ -143,7 +143,6 @@ class Place(BaseModel, Base):
         """verifys data in post dictionary"""
         from models.city import City
         from models.user import User
-        print("inside post_data_verify")
         City.ensure_objectId_is_valid(idOfObject)
         cls.ensure_dict_is_correct_type(postData)
         cls.ensure_dict_contains_req_attrs(postData)
