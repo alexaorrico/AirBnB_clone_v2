@@ -43,3 +43,43 @@ class City(BaseModel, Base):
                 storage_retrieve_all_subtype(
                     idOfObject,
                     cls.DICT_CLASSNAME_AND_SUB))
+
+    @classmethod
+    def api_get_single(cls, idOfObject):
+        """handles the API get command for specific object
+        return Values: 200: success
+        404: invalid object.
+        """
+        cls.ensure_objectId_is_valid(idOfObject)
+        return (super(City, cls).
+                storage_retrieve_single(idOfObject))
+
+    @classmethod
+    def api_delete(cls, idOfObject):
+        """handles the API delete command for all types
+        return Values: empyt dictionary on success or 
+        raise exception
+        """
+        cls.ensure_objectId_is_valid(idOfObject)
+        return (super(City, cls).
+                storage_delete_single(idOfObject))
+    
+    @classmethod
+    def api_put(cls, putDataAsDict, idOfObject):
+        """handles the API put command for all types
+        Return Values: item dictionary or
+        raise exception"""
+        cls.ensure_objectId_is_valid(idOfObject)
+        return (super(City, cls).
+                storage_update_item(putDataAsDict,
+                                    idOfObject))
+
+    @classmethod
+    def api_post(cls, postDataAsDict, idOfObject):
+        """handles the API post command for all types
+        Return Values: newObject dictionary
+        or Riase exception"""
+        from models.state import State
+        State.ensure_objectId_is_valid(idOfObject)
+        return (super(City, cls).
+                storage_create_item(postDataAsDict))

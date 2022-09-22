@@ -33,6 +33,7 @@ def post_states():
     except BaseModelInvalidDataDictionary:
         return (jsonify({'error': "Not a JSON"}), 400)
 
+
 @app_views.route('/states/<string:state_id>',
                  methods=['GET'],
                  strict_slashes=False)
@@ -43,6 +44,7 @@ def get_state_by_id(state_id):
             State.api_get_single(state_id)), 200)
     except BaseModelInvalidObject:
         abort(404)
+
 
 @app_views.route('/states/<string:state_id>',
                  methods=['DELETE'],
@@ -55,18 +57,17 @@ def delete_state_by_id(state_id):
     except BaseModelInvalidObject:
         abort(404)
 
+
 @app_views.route('/states/<string:state_id>',
                  methods=['PUT'],
                  strict_slashes=False)
 def put_state_by_id(state_id):
     """handles update of State object: state_id"""
     try:
-        return(State.api_put(
+        return (State.api_put(
                 request.get_json(silent=True),
-                state_id),
-                200)
+                state_id), 200)
     except BaseModelInvalidDataDictionary:
         return (jsonify({'error': "Not a JSON"}), 400)
     except BaseModelInvalidObject:
         abort(404)
-    

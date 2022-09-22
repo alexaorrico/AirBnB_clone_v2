@@ -99,7 +99,9 @@ class BaseModel:
     @classmethod
     def storage_delete_single(cls, idOfObject):
         """handles the delete command for a single
-        object of any type from storage
+        object of any type from storage\n
+        Does NOT verify Id Of Object, must be verified
+        before passing
         """
         models.storage.get(cls, idOfObject).delete()
         models.storage.save()
