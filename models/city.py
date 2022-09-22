@@ -81,5 +81,7 @@ class City(BaseModel, Base):
         or Riase exception"""
         from models.state import State
         State.ensure_objectId_is_valid(idOfObject)
+        cls.ensure_dict_is_correct_type(postDataAsDict)
+        postDataAsDict["state_id"] = idOfObject
         return (super(City, cls).
                 storage_create_item(postDataAsDict))
