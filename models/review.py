@@ -80,7 +80,7 @@ class Review(BaseModel, Base):
         Return Values: newObject dictionary
         or Riase exception"""
         cls.api_post_data_verify(idOfObject, postDataAsDict)
-        postDataAsDict["city_id"] = idOfObject
+        postDataAsDict["place_id"] = idOfObject
         return (super(Review, cls).
                 storage_create_item(postDataAsDict))
 
