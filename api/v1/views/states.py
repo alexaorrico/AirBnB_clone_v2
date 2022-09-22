@@ -30,12 +30,12 @@ def access_states():
         for state_obj in all_states_dict.values():
             all_states_list.append(state_obj.to_dict())
         return jsonify(all_states_list)
-
     if request.method == 'POST':
         if request.get_json():
             body = request.get_json()
             if 'name' in body:
-                new_state = State(name=body['name'])
+                new_state_name = body['name']
+                new_state = State(name=new_state_name)
                 new_state.save()
                 return jsonify(new_state.to_dict()), 201
             else:
@@ -63,6 +63,7 @@ def access_state_from_id(state_id):
     state_obj = storage.get(State, state_id)
     if state_obj:
         if request.method == 'GET':
+            print(state_obj.to_dict())
             return jsonify(state_obj.to_dict())
 
         if request.method == 'DELETE':
@@ -73,12 +74,15 @@ def access_state_from_id(state_id):
         if request.method == 'PUT':
             updates_dict = {}
             if request.get_json():
+                print("we have a request")
                 for k, v in request.get_json().items():
-                    if k not in ["id", "created_at", "updated_at"]:
-                        updates_dict[k] = v
-                print(str(state_obj))
-                state_obj.__dict__.update(updates_dict)
-                print(str(state_obj))
+                    if k not in ['id', 'created_at', 'updated_at']:
+                        state_obj.update(v)
+#                    print("looping over request items")
+#                    updates_dict[k] = v
+#                    print("our new dict is: {}".format(updates_dict))
+#                    state_obj.update("hello")
+#$                    updates_dict = {}
                 state_obj.save()
                 return jsonify(state_obj.to_dict())
             else:

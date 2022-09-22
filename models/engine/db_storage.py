@@ -62,7 +62,13 @@ class DBStorage:
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
-            self.__session.delete(obj)
+            if obj.__class__ is State:
+                all_cities_dict = self.all(City)
+                for city in all_cities_dict.values():
+                    if city.state_id == obj.id:
+                        self.__session.delete(city)
+            else:
+                self.__session.delete(obj)
 
     def reload(self):
         """reloads data from the database"""
@@ -98,3 +104,8 @@ class DBStorage:
                 for obj in objects_list:
                     obj_count += 1
         return obj_count
+
+    def update(self, obj=None):
+        """updates an object in db storage"""
+        if obj:
+            self.__session.update(obj)
