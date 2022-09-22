@@ -65,7 +65,8 @@ def put_state_by_id(state_id):
                 request.get_json(silent=True),
                 state_id),
                 200)
-    except:
+    except BaseModelInvalidDataDictionary:
+        return (jsonify({'error': "Not a JSON"}), 400)
+    except BaseModelInvalidObject:
         abort(404)
-        storage.save()
-        return (jsonify(returnedValue), code)
+    
