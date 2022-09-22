@@ -3,7 +3,6 @@
 import imp
 import models
 from models.base_model import BaseModel, Base
-from models.state import State
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
@@ -36,6 +35,7 @@ class City(BaseModel, Base):
         """handles the API get command for all objects
         return a list Always, sometime empty.
         """
+        from models.state import State
         State.ensure_objectId_is_valid(idOfObject)
         stateRequested = models.storage.get("State", idOfObject)
         return (super(City, cls).
