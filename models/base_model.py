@@ -122,12 +122,24 @@ class BaseModel:
         return ([obj.to_dict()
                     for obj in retrievedObjects.values()])
 
-    @staticmethod
-    def storage_retrieve_all_subtype(object, subTypeToRetrieve):
+    @classmethod
+    def storage_retrieve_all_subtype(cls, idOfObject, ObjectInfoToRetrieve):
         """handles the return of a single type from
         storage
+        Pass 2 parameters\n
+        (valid Id of object) <- not checked in this method,\n
+        (ObjectInfoToRetrieve) is a dictionary with the following
+        format:\n
+        {
+            "name": "classType",
+            "subtype": "subType"
+        }
         """
-        retrievedObjects = getattr(object, subTypeToRetrieve)
+        cls.ensure_dict_is_correct_type(ObjectInfoToRetrieve)
+        retrievedObjects = getattr(
+            models.storage.get(ObjectInfoToRetrieve["name"],
+                               idOfObject),
+            ObjectInfoToRetrieve["subtype"])
         return ([obj.to_dict()
                     for obj in retrievedObjects])
 

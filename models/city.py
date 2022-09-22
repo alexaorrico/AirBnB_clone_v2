@@ -16,6 +16,8 @@ class City(BaseModel, Base):
                          "state_id",
                          "created_at",
                          "updated_at"]
+    DICT_CLASSNAME_AND_SUB = {"name": "State",
+                              "subtype": "cities"}
 
     if models.storage_t == "db":
         __tablename__ = 'cities'
@@ -39,5 +41,5 @@ class City(BaseModel, Base):
         State.ensure_objectId_is_valid(idOfObject)
         return (super(City, cls).
                 storage_retrieve_all_subtype(
-                    models.storage.get("State", idOfObject),
-                    "cities"))
+                    idOfObject,
+                    cls.DICT_CLASSNAME_AND_SUB))
