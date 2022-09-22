@@ -41,21 +41,25 @@ def get_state_by_id(state_id):
         abort(404)
 
 @app_views.route('/states/<string:state_id>',
-                 methods=['DELETE', 'PUT'],
+                 methods=['DELETE'],
                  strict_slashes=False)
 def state_by_id(state_id):
     """handles State object: state_id"""
-    if request.method == 'GET':
-        returnedValue, code = State.api_get_single(
-                        storage.get("State", state_id))
-    if request.method == 'DELETE':
-        returnedValue, code = State.api_delete(
-                    storage.get("State", state_id))
-    if request.method == 'PUT':
-        returnedValue, code = State.api_put(
-                    ['id', 'created_at', 'updated_at'],
-                    request.get_json(silent=True),
-                    storage.get("State", state_id))
+    try:
+        return (jsonify(
+            State.api_delete(state_id), 200))
+    except BaseModelInvalidObject:
+        abort(404)
+
+@app_views.route('/states/<string:state_id>',
+                 methods=['PUT'],
+                 strict_slashes=False)
+def state_by_id(state_id):
+    """handles State object: state_id"""
+    returnedValue, code = State.api_put(
+                ['id', 'created_at', 'updated_at'],
+                request.get_json(silent=True),
+                storage.get("State", state_id))
     if code == 404:
         abort(404)
     storage.save()

@@ -77,16 +77,14 @@ class State(BaseModel, Base):
             return (False)
         return (True)
 
-    @staticmethod
-    def api_delete(objectToDelete):
+    @classmethod
+    def api_delete(cls, idOfObject):
         """handles the API delete command for all types
-        return Values: 200: success
-        404: invalid object.
+        return Values: empyt dictionary on success or 
+        raise exception
         """
-        if objectToDelete is None:
-            return (None, 404)
-        objectToDelete.delete()
-        return ({}, 200)
+        return (super(State, cls).
+                storage_delete_single(idOfObject))
 
     @classmethod
     def api_get_single(cls, idOfObject):

@@ -130,16 +130,14 @@ class BaseModel:
             return (False)
         return (True)
 
-    @staticmethod
-    def api_delete(objectToDelete):
-        """handles the API delete command for all types
-        return Values: 200: success
-        404: invalid object.
+    @classmethod
+    def storage_delete_single(cls, idOfObject):
+        """handles the delete command for a single
+        object of any type from storage
         """
-        if objectToDelete is None:
-            return (None, 404)
-        objectToDelete.delete()
-        return ({}, 200)
+        cls.ensure_objectId_is_valid(idOfObject)
+        models.storage.get(cls, idOfObject).delete()
+        return ({})
 
     @classmethod
     def storage_retrieve_single(cls, idOfObject):
