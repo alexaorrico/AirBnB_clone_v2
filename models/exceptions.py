@@ -3,16 +3,16 @@ class BaseModelInvalidObject(Exception):
     from BaseModel.
 
     Attributes:
-        object -- the invalid object.
+        object -- the invalid object id.
         message -- explanation of the error
     """
 
-    def __init__(self, object,
+    def __init__(self, objectId,
                 message="Tried to update an object that doesn't\
                     exist in storage",
                 code="-1"):
         """init for exception"""
-        self.object = object
+        self.objectId = objectId
         self.message = message
         self.code = code
         super().__init__(self.message)
@@ -21,7 +21,7 @@ class BaseModelInvalidObject(Exception):
         """str definition"""
         return ('{} -> {} -> {}'.format(
             self.code,
-            self.object,
+            self.objectId,
             self.message))
 
 class BaseModelInvalidDataDictionary(Exception):

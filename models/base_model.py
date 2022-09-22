@@ -162,4 +162,4 @@ class BaseModel:
     def ensure_objectId_is_valid(cls, idOfObject):
         """checks the corisponding object ID"""
         if models.storage.get(cls, idOfObject) is None:
-            raise BaseModelInvalidObject
+            raise BaseModelInvalidObject(idOfObject)
