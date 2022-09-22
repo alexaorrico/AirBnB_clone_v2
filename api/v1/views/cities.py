@@ -1,10 +1,7 @@
 #!/usr/bin/python3
 """module to start flask app"""
-from multiprocessing.util import ForkAwareThreadLock
-from os import stat
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
-from models import storage
+from flask import abort, jsonify, request
 from models.city import City
 from models.exceptions import *
 

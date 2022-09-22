@@ -5,7 +5,6 @@ State Objects
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage
 from models.exceptions import *
 from models.state import State
 
