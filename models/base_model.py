@@ -122,6 +122,15 @@ class BaseModel:
         return ([obj.to_dict()
                     for obj in retrievedObjects.values()])
 
+    @staticmethod
+    def storage_retrieve_all_subtype(object, subTypeToRetrieve):
+        """handles the return of a single type from
+        storage
+        """
+        retrievedObjects = getattr(object, subTypeToRetrieve)
+        return ([obj.to_dict()
+                    for obj in retrievedObjects])
+
     @classmethod
     def update_object_from_dictionary(cls, objToUpdate, dictOfAttrs):
         """updates a verified object from a dictionary"""

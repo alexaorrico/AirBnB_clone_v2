@@ -37,7 +37,7 @@ class City(BaseModel, Base):
         """
         from models.state import State
         State.ensure_objectId_is_valid(idOfObject)
-        stateRequested = models.storage.get("State", idOfObject)
         return (super(City, cls).
-                storage_retrieve_all_type(
-                    stateRequested.cities))
+                storage_retrieve_all_subtype(
+                    models.storage.get("State", idOfObject),
+                    "cities"))
