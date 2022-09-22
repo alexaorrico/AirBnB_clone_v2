@@ -9,7 +9,7 @@ from models.exceptions import *
 from models.review import Review
 
 
-@app_views.route('/cities/<string:place_id>/places',
+@app_views.route('/places/<string:place_id>/reviews',
                  methods=['GET'],
                  strict_slashes=False)
 def get_review_List(place_id):
@@ -20,7 +20,7 @@ def get_review_List(place_id):
         abort(404)
 
 
-@app_views.route('/cities/<string:place_id>/places',
+@app_views.route('/places/<string:place_id>/reviews',
                  methods=['POST'],
                  strict_slashes=False)
 def post_review(place_id):
