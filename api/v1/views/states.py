@@ -43,7 +43,7 @@ def get_state_by_id(state_id):
 @app_views.route('/states/<string:state_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
-def state_by_id(state_id):
+def delete_state_by_id(state_id):
     """handles State object: state_id"""
     try:
         return (jsonify(
@@ -54,7 +54,7 @@ def state_by_id(state_id):
 @app_views.route('/states/<string:state_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-def state_by_id(state_id):
+def put_state_by_id(state_id):
     """handles State object: state_id"""
     returnedValue, code = State.api_put(
                 ['id', 'created_at', 'updated_at'],
