@@ -19,7 +19,9 @@ class State(BaseModel, Base):
         name = ""
 
     REQUIRED_ATTRS = ["name"]
-    SKIP_UPDATE_ATTRS = ["id", "created_at", "updated_at"]
+    SKIP_UPDATE_ATTRS = ["id",
+                         "created_at",
+                         "updated_at"]
 
     def __init__(self, *args, **kwargs):
         """initializes state"""
@@ -41,6 +43,7 @@ class State(BaseModel, Base):
         """handles the API put command for all types
         Return Values: item dictionary or
         raise exception"""
+        cls.ensure_objectId_is_valid(idOfObject)
         return (super(State, cls).
                 storage_update_item(putDataAsDict,
                                     idOfObject))
@@ -59,6 +62,7 @@ class State(BaseModel, Base):
         return Values: empyt dictionary on success or 
         raise exception
         """
+        cls.ensure_objectId_is_valid(idOfObject)
         return (super(State, cls).
                 storage_delete_single(idOfObject))
 
@@ -68,6 +72,7 @@ class State(BaseModel, Base):
         return Values: 200: success
         404: invalid object.
         """
+        cls.ensure_objectId_is_valid(idOfObject)
         return (super(State, cls).
                 storage_retrieve_single(idOfObject))
 

@@ -81,7 +81,6 @@ class BaseModel:
         """handles updating an item for storage
         """
         cls.ensure_dict_is_correct_type(updateDataAsDict)
-        cls.ensure_objectId_is_valid(idOfObject)
         return (cls.update_object_from_dictionary(
             models.storage.get(cls, idOfObject),
             updateDataAsDict).
@@ -102,7 +101,6 @@ class BaseModel:
         """handles the delete command for a single
         object of any type from storage
         """
-        cls.ensure_objectId_is_valid(idOfObject)
         models.storage.get(cls, idOfObject).delete()
         models.storage.save()
         return ({})
@@ -112,7 +110,6 @@ class BaseModel:
         """handles the return of a single object from
         storage
         """
-        cls.ensure_objectId_is_valid(idOfObject)
         return (models.storage.get(cls, idOfObject).to_dict())
 
     @staticmethod
