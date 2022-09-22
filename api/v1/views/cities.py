@@ -74,7 +74,7 @@ from models.exceptions import *
 @app_views.route('/states/<string:state_id>/cities',
                  methods=['GET'],
                  strict_slashes=False)
-def get_cityList_createCity(state_id):
+def get_cityList(state_id):
     """retrieves a list of city objects"""
     try:
         return (jsonify(City.api_get_all(state_id)), 200)
@@ -84,7 +84,7 @@ def get_cityList_createCity(state_id):
 @app_views.route('/states/<string:state_id>/cities',
                  methods=['POST'],
                  strict_slashes=False)
-def get_cityList_createCity(state_id):
+def post_City(state_id):
     """retrieves a list of city objects or creates new city"""
     try:
         returnedValue, code = City.api_post(
