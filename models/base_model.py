@@ -137,6 +137,7 @@ class BaseModel:
         """
         cls.ensure_objectId_is_valid(idOfObject)
         models.storage.get(cls, idOfObject).delete()
+        models.storage.save()
         return ({})
 
     @classmethod
