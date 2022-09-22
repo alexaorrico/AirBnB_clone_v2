@@ -8,9 +8,9 @@ class BaseModelInvalidObject(Exception):
     """
 
     def __init__(self, objectId,
-                message="Tried to update an object that doesn't\
+                 message="Tried to update an object that doesn't\
                     exist in storage",
-                code="-1"):
+                 code="-1"):
         """init for exception"""
         self.objectId = objectId
         self.message = message
@@ -24,6 +24,7 @@ class BaseModelInvalidObject(Exception):
             self.objectId,
             self.message))
 
+
 class BaseModelInvalidDataDictionary(Exception):
     """Exception raised for errors in the updating storage
     from BaseModel
@@ -34,9 +35,9 @@ class BaseModelInvalidDataDictionary(Exception):
     """
 
     def __init__(self, dictionary,
-                message="Tried to update an object without\
+                 message="Tried to update an object without\
                     correct dictionary",
-                code="-2"):
+                 code="-2"):
         """init for exception"""
         self.dictionary = dictionary
         self.message = message
@@ -61,9 +62,9 @@ class BaseModelMissingAttribute(Exception):
     """
 
     def __init__(self, attribute,
-                message="Tried to update an object without\
+                 message="Tried to update an object without\
                     correct attributes",
-                code="-3"):
+                 code="-3"):
         """init for exception"""
         self.attribute = attribute
         self.message = message

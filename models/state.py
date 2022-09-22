@@ -59,7 +59,7 @@ class State(BaseModel, Base):
     @classmethod
     def api_delete(cls, idOfObject):
         """handles the API delete command for all types
-        return Values: empyt dictionary on success or 
+        return Values: empyt dictionary on success or
         raise exception
         """
         cls.ensure_objectId_is_valid(idOfObject)

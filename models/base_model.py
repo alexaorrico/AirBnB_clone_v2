@@ -122,7 +122,7 @@ class BaseModel:
         retrievedObjects = models.storage.all(
                         typeOfObjsToRetrieve)
         return ([obj.to_dict()
-                    for obj in retrievedObjects.values()])
+                 for obj in retrievedObjects.values()])
 
     @classmethod
     def storage_retrieve_all_subtype(cls, idOfObject, ObjectInfoToRetrieve):
@@ -143,7 +143,7 @@ class BaseModel:
                                idOfObject),
             ObjectInfoToRetrieve["subtype"])
         return ([obj.to_dict()
-                    for obj in retrievedObjects])
+                 for obj in retrievedObjects])
 
     @classmethod
     def update_object_from_dictionary(cls, objToUpdate, dictOfAttrs):
