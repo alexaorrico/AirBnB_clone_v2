@@ -47,7 +47,6 @@ def city_delete(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    empty_dict = {}
     storage.delete(city)
     storage.save()
-    return jsonify(empty_dict), 200
+    return jsonify({}), 200
