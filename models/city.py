@@ -79,9 +79,14 @@ class City(BaseModel, Base):
         """handles the API post command for all types
         Return Values: newObject dictionary
         or Riase exception"""
-        from models.state import State
-        State.ensure_objectId_is_valid(idOfObject)
-        cls.ensure_dict_is_correct_type(postDataAsDict)
+        cls.api_post_data_verify(idOfObject, postDataAsDict)
         postDataAsDict["state_id"] = idOfObject
         return (super(City, cls).
                 storage_create_item(postDataAsDict))
+
+    @classmethod
+    def api_post_data_verify(cls, idOfObject, postData):
+        """verifys data in post dictionary"""
+        from models.state import State
+        State.ensure_objectId_is_valid(idOfObject)
+        cls.ensure_dict_is_correct_type(postData)
