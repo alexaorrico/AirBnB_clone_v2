@@ -1,48 +1,72 @@
 #!/usr/bin/python3
 """
 flask application module for retrieval of
-State Objects
+Amenity Objects
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage
-from models import amenity
 from models.amenity import Amenity
+from models.exceptions import *
 
 
 @app_views.route('/amenities',
-                 methods=['GET', 'POST'],
+                 methods=['GET'],
                  strict_slashes=False)
-def get_all_amenities():
+def get_all_states():
     """Retrieves the list of all Amenity objects"""
-    if request.method == 'GET':
-        returnedValue, code = Amenity.api_get_all(
-                    storage.all("Amenity").values()
-        )
-    if request.method == 'POST':
-        returnedValue, code = Amenity.api_post(
-                    ["name"],
-                    request.get_json(silent=True))
-    return (jsonify(returnedValue), code)
+    return (jsonify(Amenity.api_get_all()), 200)
+
+
+@app_views.route('/amenities',
+                 methods=['POST'],
+                 strict_slashes=False)
+def post_states():
+    """Creates a Amenity"""
+    try:
+        return (jsonify(
+            Amenity.api_post(
+                request.get_json(silent=True))),
+                201)
+    except BaseModelMissingAttribute as attr:
+        return (jsonify({'error': 'Missing {}'.format(attr)}), 400)
+    except BaseModelInvalidDataDictionary:
+        return (jsonify({'error': "Not a JSON"}), 400)
 
 
 @app_views.route('/amenities/<string:amenity_id>',
-                 methods=['GET', 'DELETE', 'PUT'],
+                 methods=['GET'],
                  strict_slashes=False)
-def amenity_by_id(amenity_id):
-    """handles Amenity object: amenity_id"""
-    if request.method == 'GET':
-        returnedValue, code = Amenity.api_get_single(
-                        storage.get("Amenity", amenity_id))
-    if request.method == 'DELETE':
-        returnedValue, code = Amenity.api_delete(
-                    storage.get("Amenity", amenity_id))
-    if request.method == 'PUT':
-        returnedValue, code = Amenity.api_put(
-                    ['id', 'created_at', 'updated_at'],
-                    request.get_json(silent=True),
-                    storage.get("Amenity", amenity_id))
-    if code == 404:
+def get_state_by_id(amenity_id):
+    """handles get Amenity object: amenity_id"""
+    try:
+        return (jsonify(
+            Amenity.api_get_single(amenity_id)), 200)
+    except BaseModelInvalidObject:
         abort(404)
-    storage.save()
-    return (jsonify(returnedValue), code)
+
+
+@app_views.route('/amenities/<string:amenity_id>',
+                 methods=['DELETE'],
+                 strict_slashes=False)
+def delete_state_by_id(amenity_id):
+    """handles Amenity object: amenity_id"""
+    try:
+        return (jsonify(
+            Amenity.api_delete(amenity_id)), 200)
+    except BaseModelInvalidObject:
+        abort(404)
+
+
+@app_views.route('/amenities/<string:amenity_id>',
+                 methods=['PUT'],
+                 strict_slashes=False)
+def put_state_by_id(amenity_id):
+    """handles update of Amenity object: amenity_id"""
+    try:
+        return (Amenity.api_put(
+                request.get_json(silent=True),
+                amenity_id), 200)
+    except BaseModelInvalidDataDictionary:
+        return (jsonify({'error': "Not a JSON"}), 400)
+    except BaseModelInvalidObject:
+        abort(404)

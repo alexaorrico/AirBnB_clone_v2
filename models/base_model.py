@@ -4,13 +4,14 @@ Contains class BaseModel
 """
 
 from datetime import datetime
-import re
 import models
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
+
+from models.exceptions import *
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -76,95 +77,98 @@ class BaseModel:
         models.storage.delete(self)
 
     @classmethod
-    def api_put(cls, listToIgnore, resuestDataAsDict, ObjToUpdate):
-        """handles the API put command for all types
-        Return Values: 200: Success
-        404: invalid object
-        400: invalid Json"""
-        if not cls.test_request_data(resuestDataAsDict):
-            return ({'error': 'Not a JSON'}, 400)
-        if ObjToUpdate is None:
-            return (None, 404)
-        for key, value in resuestDataAsDict.items():
-            if key in listToIgnore:
-                continue
-            setattr(ObjToUpdate, key, value)
-        ObjToUpdate.save()
-        return (ObjToUpdate.to_dict(), 200)
+    def storage_update_item(cls, updateDataAsDict, idOfObject):
+        """handles updating an item for storage
+        """
+        cls.ensure_dict_is_correct_type(updateDataAsDict)
+        return (cls.update_object_from_dictionary(
+            models.storage.get(cls, idOfObject),
+            updateDataAsDict).
+            to_dict())
 
     @classmethod
-    def api_post(cls, listOfTestAttrs, resuestDataAsDict, objectId=None):
-        """handles the API post command for all types
-        Return Values: 200: Success
-        404: missing Attribute
-        400: invalid Json"""
-        if not cls.test_request_data(resuestDataAsDict):
-            return ({'error': 'Not a JSON'}, 400)
-        if not cls.ensure_objectId_is_valid(objectId):
-            return (None, 404)
-        cls.append_id_to_dictionary(resuestDataAsDict, objectId)
-        for attribute in listOfTestAttrs:
-            if resuestDataAsDict.get(attribute) is None:
-                return ({'error': 'Missing {}'.
-                         format(attribute)}, 400)
-        print(resuestDataAsDict)
+    def storage_create_item(cls, resuestDataAsDict):
+        """handles creating a new time for storage
+        """
+        cls.ensure_dict_is_correct_type(resuestDataAsDict)
+        cls.ensure_dict_contains_req_attrs(resuestDataAsDict)
         newObjct = cls(**resuestDataAsDict)
         newObjct.save()
-        return (newObjct.to_dict(), 201)
+        return (newObjct.to_dict())
 
     @classmethod
-    def append_id_to_dictionary(cls, resuestDataAsDict, objectId):
-        """addends an ID to dictionary (Bad solution)"""
-        classIdComparison = {"City": "state_id",
-                             "Place": "user_id",
-                             "Review": "user_id"}
-        if cls.__name__ in classIdComparison.keys():
-            resuestDataAsDict[classIdComparison[cls.__name__]] = objectId
+    def storage_delete_single(cls, idOfObject):
+        """handles the delete command for a single
+        object of any type from storage\n
+        Does NOT verify Id Of Object, must be verified
+        before passing
+        """
+        models.storage.get(cls, idOfObject).delete()
+        models.storage.save()
+        return ({})
 
     @classmethod
-    def ensure_objectId_is_valid(cls, objectId):
+    def storage_retrieve_single(cls, idOfObject):
+        """handles the return of a single object from
+        storage
+        """
+        return (models.storage.get(cls, idOfObject).to_dict())
+
+    @staticmethod
+    def storage_retrieve_all_type(typeOfObjsToRetrieve):
+        """handles the return of a single type from
+        storage
+        """
+        retrievedObjects = models.storage.all(
+                        typeOfObjsToRetrieve)
+        return ([obj.to_dict()
+                 for obj in retrievedObjects.values()])
+
+    @classmethod
+    def storage_retrieve_all_subtype(cls, idOfObject, ObjectInfoToRetrieve):
+        """handles the return of a single type from
+        storage
+        Pass 2 parameters\n
+        (valid Id of object) <- not checked in this method,\n
+        (ObjectInfoToRetrieve) is a dictionary with the following
+        format:\n
+        {
+            "name": "classType",
+            "subtype": "subType"
+        }
+        """
+        cls.ensure_dict_is_correct_type(ObjectInfoToRetrieve)
+        retrievedObjects = getattr(
+            models.storage.get(ObjectInfoToRetrieve["name"],
+                               idOfObject),
+            ObjectInfoToRetrieve["subtype"])
+        return ([obj.to_dict()
+                 for obj in retrievedObjects])
+
+    @classmethod
+    def update_object_from_dictionary(cls, objToUpdate, dictOfAttrs):
+        """updates a verified object from a dictionary"""
+        for attr, value in dictOfAttrs.items():
+            if attr not in cls.SKIP_UPDATE_ATTRS:
+                setattr(objToUpdate, attr, value)
+        objToUpdate.save()
+        return (objToUpdate)
+
+    @classmethod
+    def ensure_objectId_is_valid(cls, idOfObject):
         """checks the corisponding object ID"""
-        classIdComparison = {"City": "State",
-                             "Place": "User",
-                             "Review": "User"}
-        if objectId is not None and models.storage.get(
-                classIdComparison[cls.__name__], objectId) is None:
-            return (False)
-        return (True)
+        if models.storage.get(cls, idOfObject) is None:
+            raise BaseModelInvalidObject(idOfObject)
 
     @classmethod
-    def test_request_data(cls, requestDataAsDict):
-        """used to test if the request data is accurate."""
-        if requestDataAsDict is None or type(requestDataAsDict) != dict:
-            return (False)
-        return (True)
+    def ensure_dict_contains_req_attrs(cls, dictToTest):
+        """tests the dictionary agains required attrs"""
+        for attribute in cls.REQUIRED_ATTRS:
+            if dictToTest.get(attribute) is None:
+                raise BaseModelMissingAttribute(attribute)
 
-    @staticmethod
-    def api_delete(objectToDelete):
-        """handles the API delete command for all types
-        return Values: 200: success
-        404: invalid object.
-        """
-        if objectToDelete is None:
-            return (None, 404)
-        objectToDelete.delete()
-        return ({}, 200)
-
-    @staticmethod
-    def api_get_single(ObjToRetrieve):
-        """handles the API get command for specific object
-        return Values: 200: success
-        404: invalid object.
-        """
-        if ObjToRetrieve is None:
-            return (None, 404)
-        return (ObjToRetrieve.to_dict(), 200)
-
-    @staticmethod
-    def api_get_all(listOfObjsToRetrieve):
-        """handles the API get command for all objects
-        return Values: 200: success
-        """
-        if len(listOfObjsToRetrieve) == 0:
-            return (None, 404)
-        return ([obj.to_dict() for obj in listOfObjsToRetrieve], 200)
+    @classmethod
+    def ensure_dict_is_correct_type(cls, dictToTest):
+        """tests that the dictionary is a dictionary"""
+        if dictToTest is None or type(dictToTest) != dict:
+            raise BaseModelInvalidDataDictionary(dictToTest)
