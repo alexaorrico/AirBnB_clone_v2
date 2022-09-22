@@ -12,7 +12,7 @@ from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
-from models.exceptions import BaseModelInvalidObject
+from models.exceptions import *
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -95,24 +95,14 @@ class BaseModel:
         return (ObjToUpdate.to_dict(), 200)
 
     @classmethod
-    def api_post(cls, listOfTestAttrs, resuestDataAsDict, objectId=None):
-        """handles the API post command for all types
-        Return Values: 200: Success
-        404: missing Attribute
-        400: invalid Json"""
-        if not cls.test_request_data(resuestDataAsDict):
-            return ({'error': 'Not a JSON'}, 400)
-        if not cls.ensure_objectId_is_valid(objectId):
-            return (None, 404)
-        cls.append_id_to_dictionary(resuestDataAsDict, objectId)
-        for attribute in listOfTestAttrs:
-            if resuestDataAsDict.get(attribute) is None:
-                return ({'error': 'Missing {}'.
-                         format(attribute)}, 400)
-        print(resuestDataAsDict)
+    def storage_create_item(cls, resuestDataAsDict):
+        """handles creating a new time for storage
+        """
+        cls.ensure_dict_is_correct_type(resuestDataAsDict)
+        cls.ensure_dict_contains_req_attrs(resuestDataAsDict)
         newObjct = cls(**resuestDataAsDict)
         newObjct.save()
-        return (newObjct.to_dict(), 201)
+        return (newObjct.to_dict())
 
     @classmethod
     def append_id_to_dictionary(cls, resuestDataAsDict, objectId):
@@ -122,13 +112,6 @@ class BaseModel:
                              "Review": "user_id"}
         if cls.__name__ in classIdComparison.keys():
             resuestDataAsDict[classIdComparison[cls.__name__]] = objectId
-
-    @classmethod
-    def test_request_data(cls, requestDataAsDict):
-        """used to test if the request data is accurate."""
-        if requestDataAsDict is None or type(requestDataAsDict) != dict:
-            return (False)
-        return (True)
 
     @classmethod
     def storage_delete_single(cls, idOfObject):
@@ -163,3 +146,16 @@ class BaseModel:
         """checks the corisponding object ID"""
         if models.storage.get(cls, idOfObject) is None:
             raise BaseModelInvalidObject(idOfObject)
+
+    @classmethod
+    def ensure_dict_contains_req_attrs(cls, dictToTest):
+        """tests the dictionary agains required attrs"""
+        for attribute in cls.REQUIRED_ATTRS:
+            if dictToTest.get(attribute) is None:
+                raise BaseModelMissingAttribute(attribute)
+
+    @classmethod
+    def ensure_dict_is_correct_type(cls, dictToTest):
+        """tests that the dictionary is a dictionary"""
+        if dictToTest is None or type(dictToTest) != dict:
+            raise BaseModelInvalidDataDictionary(dictToTest)

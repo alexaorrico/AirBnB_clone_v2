@@ -18,6 +18,8 @@ class State(BaseModel, Base):
     else:
         name = ""
 
+    REQUIRED_ATTRS = ["name"]
+
     def __init__(self, *args, **kwargs):
         """initializes state"""
         super().__init__(*args, **kwargs)
@@ -51,24 +53,12 @@ class State(BaseModel, Base):
         return (ObjToUpdate.to_dict(), 200)
 
     @classmethod
-    def api_post(cls, listOfTestAttrs, resuestDataAsDict, objectId=None):
+    def api_post(cls, postDataAsDict):
         """handles the API post command for all types
-        Return Values: 200: Success
-        404: missing Attribute
-        400: invalid Json"""
-        if not cls.test_request_data(resuestDataAsDict):
-            return ({'error': 'Not a JSON'}, 400)
-        if not cls.ensure_objectId_is_valid(objectId):
-            return (None, 404)
-        cls.append_id_to_dictionary(resuestDataAsDict, objectId)
-        for attribute in listOfTestAttrs:
-            if resuestDataAsDict.get(attribute) is None:
-                return ({'error': 'Missing {}'.
-                         format(attribute)}, 400)
-        print(resuestDataAsDict)
-        newObjct = cls(**resuestDataAsDict)
-        newObjct.save()
-        return (newObjct.to_dict(), 201)
+        Return Values: newObject dictionary
+        or Riase exception"""
+        return (super(State, cls).
+                storage_delete_single(postDataAsDict))
 
     @classmethod
     def test_request_data(cls, requestDataAsDict):

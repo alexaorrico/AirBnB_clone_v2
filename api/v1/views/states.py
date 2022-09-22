@@ -6,7 +6,7 @@ State Objects
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
-from models.exceptions import BaseModelInvalidObject
+from models.exceptions import *
 from models.state import State
 
 
@@ -22,12 +22,16 @@ def get_all_states():
                  methods=['POST'],
                  strict_slashes=False)
 def post_states():
-    """Retrieves the list of all State objects"""
-    returnedValue, code = State.api_post(
-                ["name"],
-                request.get_json(silent=True))
-    return (jsonify(returnedValue), code)
-
+    """Creates a State"""
+    try:
+        return (jsonify(
+            State.api_post(
+                request.get_json(silent=True))),
+                201)
+    except BaseModelMissingAttribute as attr:
+        return (jsonify({'error': 'Missing {}'.format(attr)}), 400)
+    except BaseModelInvalidDataDictionary:
+        return (jsonify({'error': "Not a JSON"}), 400)
 
 @app_views.route('/states/<string:state_id>',
                  methods=['GET'],
