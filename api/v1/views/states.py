@@ -59,12 +59,13 @@ def delete_state_by_id(state_id):
                  methods=['PUT'],
                  strict_slashes=False)
 def put_state_by_id(state_id):
-    """handles State object: state_id"""
-    returnedValue, code = State.api_put(
-                ['id', 'created_at', 'updated_at'],
+    """handles update of State object: state_id"""
+    try:
+        return(State.api_put(
                 request.get_json(silent=True),
-                storage.get("State", state_id))
-    if code == 404:
+                state_id),
+                200)
+    except:
         abort(404)
-    storage.save()
-    return (jsonify(returnedValue), code)
+        storage.save()
+        return (jsonify(returnedValue), code)

@@ -4,7 +4,6 @@ Contains class BaseModel
 """
 
 from datetime import datetime
-import re
 import models
 from os import getenv
 import sqlalchemy
@@ -78,21 +77,15 @@ class BaseModel:
         models.storage.delete(self)
 
     @classmethod
-    def api_put(cls, listToIgnore, resuestDataAsDict, ObjToUpdate):
-        """handles the API put command for all types
-        Return Values: 200: Success
-        404: invalid object
-        400: invalid Json"""
-        if not cls.test_request_data(resuestDataAsDict):
-            return ({'error': 'Not a JSON'}, 400)
-        if ObjToUpdate is None:
-            return (None, 404)
-        for key, value in resuestDataAsDict.items():
-            if key in listToIgnore:
-                continue
-            setattr(ObjToUpdate, key, value)
-        ObjToUpdate.save()
-        return (ObjToUpdate.to_dict(), 200)
+    def storage_update_item(cls, updateDataAsDict, idOfObject):
+        """handles updating an item for storage
+        """
+        cls.ensure_dict_is_correct_type(updateDataAsDict)
+        cls.ensure_objectId_is_valid(idOfObject)
+        return (cls.update_object_from_dictionary(
+            models.storage.get(cls, idOfObject),
+            updateDataAsDict).
+            to_dict())
 
     @classmethod
     def storage_create_item(cls, resuestDataAsDict):
@@ -103,15 +96,6 @@ class BaseModel:
         newObjct = cls(**resuestDataAsDict)
         newObjct.save()
         return (newObjct.to_dict())
-
-    @classmethod
-    def append_id_to_dictionary(cls, resuestDataAsDict, objectId):
-        """addends an ID to dictionary (Bad solution)"""
-        classIdComparison = {"City": "state_id",
-                             "Place": "user_id",
-                             "Review": "user_id"}
-        if cls.__name__ in classIdComparison.keys():
-            resuestDataAsDict[classIdComparison[cls.__name__]] = objectId
 
     @classmethod
     def storage_delete_single(cls, idOfObject):
@@ -140,6 +124,15 @@ class BaseModel:
                         typeOfObjsToRetrieve)
         return ([obj.to_dict()
                     for obj in retrievedObjects.values()])
+
+    @classmethod
+    def update_object_from_dictionary(cls, objToUpdate, dictOfAttrs):
+        """updates a verified object from a dictionary"""
+        for attr, value in dictOfAttrs.items():
+            if attr not in cls.SKIP_UPDATE_ATTRS:
+                setattr(objToUpdate, attr, value)
+        objToUpdate.save()
+        return (objToUpdate)
 
     @classmethod
     def ensure_objectId_is_valid(cls, idOfObject):

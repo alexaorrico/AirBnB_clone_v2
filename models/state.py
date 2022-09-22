@@ -19,6 +19,7 @@ class State(BaseModel, Base):
         name = ""
 
     REQUIRED_ATTRS = ["name"]
+    SKIP_UPDATE_ATTRS = ["id", "created_at", "updated_at"]
 
     def __init__(self, *args, **kwargs):
         """initializes state"""
@@ -36,21 +37,13 @@ class State(BaseModel, Base):
             return city_list
 
     @classmethod
-    def api_put(cls, listToIgnore, resuestDataAsDict, ObjToUpdate):
+    def api_put(cls, putDataAsDict, idOfObject):
         """handles the API put command for all types
-        Return Values: 200: Success
-        404: invalid object
-        400: invalid Json"""
-        if not cls.test_request_data(resuestDataAsDict):
-            return ({'error': 'Not a JSON'}, 400)
-        if ObjToUpdate is None:
-            return (None, 404)
-        for key, value in resuestDataAsDict.items():
-            if key in listToIgnore:
-                continue
-            setattr(ObjToUpdate, key, value)
-        ObjToUpdate.save()
-        return (ObjToUpdate.to_dict(), 200)
+        Return Values: item dictionary or
+        raise exception"""
+        return (super(State, cls).
+                storage_update_item(putDataAsDict,
+                                    idOfObject))
 
     @classmethod
     def api_post(cls, postDataAsDict):
@@ -59,13 +52,6 @@ class State(BaseModel, Base):
         or Riase exception"""
         return (super(State, cls).
                 storage_create_item(postDataAsDict))
-
-    @classmethod
-    def test_request_data(cls, requestDataAsDict):
-        """used to test if the request data is accurate."""
-        if requestDataAsDict is None or type(requestDataAsDict) != dict:
-            return (False)
-        return (True)
 
     @classmethod
     def api_delete(cls, idOfObject):
