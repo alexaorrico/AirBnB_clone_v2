@@ -58,7 +58,7 @@ class State(BaseModel, Base):
         Return Values: newObject dictionary
         or Riase exception"""
         return (super(State, cls).
-                storage_delete_single(postDataAsDict))
+                storage_create_item(postDataAsDict))
 
     @classmethod
     def test_request_data(cls, requestDataAsDict):
