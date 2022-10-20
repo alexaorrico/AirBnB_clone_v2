@@ -154,6 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+### Version 3
+Abuka Victor - [Github](https://github.com/abuka-victor) / [Twitter](https://twitter.com/abukaofficial)  
+### Version 2
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
