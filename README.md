@@ -248,7 +248,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 ## Contributors
-Olumide Micheal - [Github](https://github.com/codewithmide) /[Twitter](https://twitter.com/OlumideMicheal_)
+Olumide Micheal - [Github](https://github.com/codewithmide) / [Twitter](https://twitter.com/OlumideMicheal_)
 
 ## License
 Public Domain. No copy write protection. 
