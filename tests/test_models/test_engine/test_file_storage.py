@@ -118,9 +118,9 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test that get properly returns object requested"""
         storage = FileStorage()
-        inst1 = classes.values()[0]()
-        inst2 = classes.values()[1]()
-        inst3 = classes.values()[2]()
+        inst1 = classes[0]()
+        inst2 = classes[1]()
+        inst3 = classes[2]()
         inst1.save()
         inst2.save()
         get1 = storage.get(inst1.__class__.__name__, inst1.id)
