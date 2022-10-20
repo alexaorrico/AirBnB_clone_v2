@@ -11,10 +11,12 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/status')
 def status():
     """returns status"""
-    return jsonify({"status":"OK"})
+    return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats')
 def stats():
@@ -26,4 +28,3 @@ def stats():
                     "states": storage.count(State),
                     "users": storage.count(User)
                     })
-
