@@ -15,10 +15,12 @@ def teardown(self):
     """Closes storage session"""
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(e):
     """page not found"""
     return make_response(jsonify({'error': 'Not found'}), 400)
+
 
 if __name__ == '__main__':
     api_host = getenv('HBNB_API_HOST', default='0.0.0.0')
