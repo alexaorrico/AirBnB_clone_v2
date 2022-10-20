@@ -90,9 +90,11 @@ class DBStorage:
         n = 0
         if cls is not None:
             objs = self.__session.query(cls)
-            n += len(objs)
+            for inst in objs:
+                n += 1
         else:
             for obj in classes.values():
                 objs = self.__session.query(obj)
-                n += len(objs)
+                for inst in objs:
+                    n += 1
         return n
