@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Suara Ayomide [Github](github.com/aysuarex)\
-Tijani Ridwanlahi [Github](github.com/Tijani1402)\
+Tijani Ridwanlahi [Github](github.com/Tijani1402)
 
 Third Part of AirBnB
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
