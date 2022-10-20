@@ -113,3 +113,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get properly returns object requested"""
+        storage = FileStorage()
+        inst1 = classes.values()[0]()
+        inst2 = classes.values()[1]()
+        inst3 = classes.values()[2]()
+        inst1.save()
+        inst2.save()
+        get1 = storage.get(inst1.__class__.__name__, inst1.id)
+        get2 = storage.get(inst2.__class__.__name__, inst2.id)
+        get3 = storage.get(inst3.__class__.__name__, inst3.id)
+        self.assertEqual(inst1, get1)
+        self.assertEqual(inst2, get2)
+        self.assertEqual(None, self.get(inst1.__class__.__name__, 'abc98'))
+        self.assertEqual(None, self.get(inst3.__class__.__name__, inst3.id))
+
+
+    
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count properly counts number of objects"""
+        storage = FileStorage()
+        for i in range(10):
+            inst = classes.values()[0]()
+            inst.save()
+        for j in range(5):
+            inst = classes.values()[1]()
+            inst.save()
+        class FakeClass:
+            """Fake class for testing"""
+            pass
+        Fake = FakeClass()
+        self.assertEqual(storage.count(classes.values()[0]()), 10)
+        self.assertEqual(storage.count(), 15)
+        self.assertEqual(storage.count(classes.values()[3]()), 0)
+        self.assertEqual(storage.count(Fake), 0)
