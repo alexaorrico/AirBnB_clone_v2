@@ -3,21 +3,10 @@
 Contains the class DBStorage
 """
 
-import models
-from models.amenity import Amenity
-from models.base_model import BaseModel, Base
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
@@ -26,6 +15,7 @@ class DBStorage:
     __session = None
 
     def __init__(self):
+        from models.base_model import BaseModel, Base
         """Instantiate a DBStorage object"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
@@ -42,6 +32,18 @@ class DBStorage:
 
     def all(self, cls=None):
         """query on the current database session"""
+        import models
+        from models.amenity import Amenity
+        from models.base_model import BaseModel, Base
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
+
+        classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -66,6 +68,7 @@ class DBStorage:
 
     def reload(self):
         """reloads data from the database"""
+        from models.base_model import BaseModel, Base
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
@@ -74,3 +77,20 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """method to retrieve one object"""
+        all_data = self.all(cls)
+        obj = cls + '.' + id
+        for key, value in all_data.items():
+            if key == obj:
+                return (value)
+        return (None)
+
+    def count(self, cls=None):
+        """A method to count the number of objects in storage"""
+        if cls:
+            all_data = self.all(cls)
+            count = len(all_data)
+            return (count)
+        return (None)
