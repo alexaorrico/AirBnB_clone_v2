@@ -2,8 +2,8 @@
 """
 Contains the FileStorage class
 """
-
 import json
+
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
@@ -48,14 +48,15 @@ class FileStorage:
         from models.user import User
 
         classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+                   "Place": Place, "Review": Review,
+                   "State": State, "User": User}
 
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -73,16 +74,15 @@ class FileStorage:
         """A method to retrieve one object"""
         all_data = self.all(cls)
         obj = str(cls) + '.' + id
-        for key, value in all_data.items(): 
+        for key, value in all_data.items():
             if key == obj:
-                return(value)
-        return(None)
+                return (value)
+        return (None)
 
     def count(self, cls=None):
         """A method to count the number of objects in storage"""
         if cls:
             all_data = self.all(cls)
             count = len(all_data)
-            return(count)
+            return (count)
         return (None)
-
