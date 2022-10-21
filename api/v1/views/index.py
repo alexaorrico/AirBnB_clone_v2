@@ -15,15 +15,3 @@ def app_status():
     return(jsonify(status="OK"))
 
 
-@app_views.route("/stats")
-def stats():
-    """
-    Returns statistics about the number of objects available.
-    """
-    total = {"amenities": storage.count("Amenity"),
-             "cities": storage.count("City"),
-             "places": storage.count("Place"),
-             "reviews": storage.count("Review"),
-             "states": storage.count("State"),
-             "users": storage.count("User")}
-    return jsonify(total)
