@@ -159,6 +159,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 
-Daniel Shibabaw [Github](https://github.com/ShagizMan)
+Daniel Shibabaw - [Github](https://github.com/ShagizMan)
 ## License
 Public Domain. No copy write protection. 
