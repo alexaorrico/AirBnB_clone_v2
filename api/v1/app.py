@@ -3,7 +3,6 @@
 Root file of our application
 """
 from flask import Flask
-from models import storage
 from os import getenv
 from api.v1.views import app_views
 
