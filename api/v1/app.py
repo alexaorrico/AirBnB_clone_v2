@@ -2,7 +2,7 @@
 '''Contains a Flask web application API.
 '''
 import os
-from flask import Flask, jsonify
+from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 
 from models import storage
