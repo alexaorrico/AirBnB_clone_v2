@@ -2,7 +2,7 @@
 """ an api """
 
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -15,6 +15,16 @@ app.register_blueprint(app_views)
 def close_session(x):
     """closes the current db transaction"""
     storage.close()
+
+
+def handle_404(x):
+    """ returns json formatted error message """
+    return jsonify({
+            "error": "Not found"
+        }), 404
+
+
+app.register_error_handler(404, handle_404)
 
 
 if __name__ == "__main__":
