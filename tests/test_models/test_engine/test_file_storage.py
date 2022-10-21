@@ -129,7 +129,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(inst1, get1)
         self.assertEqual(inst2, get2)
         self.assertEqual(None, self.get(inst1.__class__.__name__, 'abc98'))
-        self.assertEqual(None, self.get(inst3.__class__.__name__, inst3.id))
+        self.assertEqual(None, get3.__class__.__name__, inst3.id)
 
 
     
