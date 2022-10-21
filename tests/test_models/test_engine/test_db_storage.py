@@ -68,7 +68,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -86,3 +86,33 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that the get method gets the correct item"""
+        storage = DBStorage()
+        storage.reload()
+        test_state = State(name="Homeland")
+        test_state.save()
+        get_test_state = storage.get(State, test_state.id)
+        self.assertEqual(get_test_state.name, test_state.name)
+        storage.delete(get_test_state)
+        storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test if the count method returns the correct count"""
+        storage = DBStorage()
+        storage.reload()
+        pre_count_all = storage.count()
+        pre_count_states = storage.count(State)
+        test_state = State(name="Homeland")
+        test_state.save()
+        storage.reload()
+        post_count_all = storage.count()
+        post_count_states = storage.count(State)
+        self.assertGreater(post_count_all, pre_count_all)
+        self.assertGreater(post_count_states, pre_count_states)
+        get_test_state = storage.get(State, test_state.id)
+        storage.delete(get_test_state)
+        storage.save()
