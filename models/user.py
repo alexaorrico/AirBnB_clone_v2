@@ -18,6 +18,10 @@ class User(BaseModel, Base):
         last_name = Column(String(128), nullable=True)
         places = relationship("Place", backref="user")
         reviews = relationship("Review", backref="user")
+        __table_args__ = (
+                {'mysql_default_charset': 'latin1'}
+                )
+
     else:
         email = ""
         password = ""

@@ -9,25 +9,23 @@ from sqlalchemy.orm import relationship
 
 if models.storage_t == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60,
-                                 collation='latin1_swedish_ci'),
+                          Column('place_id', String(60),
                                  ForeignKey('places.id', onupdate='CASCADE',
                                             ondelete='CASCADE'),
                                  primary_key=True),
-                          Column('amenity_id', String(60,
-                                 collation='latin1_swedish_ci'),
+                          Column('amenity_id', String(60),
                                  ForeignKey('amenities.id', onupdate='CASCADE',
                                             ondelete='CASCADE'),
-                                 primary_key=True))
+                                 primary_key=True), mysql_charset="latin1")
 
 
 class Place(BaseModel, Base):
     """Representation of Place """
     if models.storage_t == 'db':
         __tablename__ = 'places'
-        city_id = Column(String(60, collation='latin1_swedish_ci'),
+        city_id = Column(String(60),
                          ForeignKey('cities.id'), nullable=False)
-        user_id = Column(String(60, collation='latin1_swedish_ci'),
+        user_id = Column(String(60),
                          ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True)
@@ -41,6 +39,10 @@ class Place(BaseModel, Base):
         amenities = relationship("Amenity", secondary="place_amenity",
                                  backref="place_amenities",
                                  viewonly=False)
+        __table_args__ = (
+                {'mysql_default_charset': 'latin1'}
+                )
+
     else:
         city_id = ""
         user_id = ""

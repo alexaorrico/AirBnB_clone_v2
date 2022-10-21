@@ -15,6 +15,10 @@ class State(BaseModel, Base):
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")
+        __table_args__ = (
+                {'mysql_default_charset': 'latin1'}
+                )
+
     else:
         name = ""
 
