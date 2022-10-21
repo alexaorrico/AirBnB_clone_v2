@@ -81,7 +81,9 @@ class FileStorage:
         n = 0
         if cls is not None:
             for obj in self.__objects.values():
-                if obj.__class__.__name__ == cls.__name__:
+                if obj.__class__.__name__ == type(cls).__name__:
+                    n += 1
+                elif obj.__class__.__name__ == cls.__name__:
                     n += 1
         else:
             n = len(self.__objects)
