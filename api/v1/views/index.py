@@ -9,10 +9,10 @@ from models import storage
 @app_views.route("/status", methods=["GET"])
 def status():
     """Function for the status of the route"""
-    if method == "GET":
+    if request.method == "GET":
         return jsonify({"status": "OK"})
 
-@app_views.route("/api/v1/stats", methods=["GET"])
+@app_views.route("/stats", methods=["GET"])
 def stats():
     """Function to count all objects of classes"""
     if request.method == 'GET':
