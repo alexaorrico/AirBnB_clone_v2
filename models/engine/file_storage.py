@@ -4,17 +4,6 @@ Contains the FileStorage class
 """
 
 import json
-from models.amenity import Amenity
-from models.base_model import BaseModel
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
@@ -50,6 +39,17 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
+        from models.amenity import Amenity
+        from models.base_model import BaseModel
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+        from models.user import User
+
+        classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
@@ -72,7 +72,7 @@ class FileStorage:
     def get(self, cls, id):
         """A method to retrieve one object"""
         all_data = self.all(cls)
-        obj = cls + '.' + id
+        obj = str(cls) + '.' + id
         for key, value in all_data.items(): 
             if key == obj:
                 return(value)
