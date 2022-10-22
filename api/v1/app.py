@@ -17,7 +17,7 @@ def teardown(exc):
 
 
 @app.errorhandler(404)
-def not_fount(e):
+def not_found(e):
     """App error handling"""
     return make_response(jsonify({"error": "Not found"}), 404)
 

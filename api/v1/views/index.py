@@ -17,7 +17,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stat', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def count_table_rows():
     my_count = {
         "amenities": storage.count(Amenity),
