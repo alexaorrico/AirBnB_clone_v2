@@ -32,7 +32,7 @@ names_dict = {
         }
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """ return status of api """
     return jsonify({
@@ -40,7 +40,7 @@ def status():
         })
 
 
-@app_views.route('stats')
+@app_views.route('stats', strict_slashes=False)
 def count():
     """ returns count of all objects """
     dct = {}
