@@ -5,12 +5,8 @@
 from api.v1.views import state_views
 from flask import jsonify, abort, request
 from models import storage
-# from models.amenity import Amenity
-# from models.city import City
-# from models.place import Place
-# from models.review import Review
+from models.city import City
 from models.state import State
-# from models.user import User
 
 
 @state_views.route('states', strict_slashes=False)
@@ -87,4 +83,15 @@ def update_state_with_id_eq_state_id(state_id):
     updated_state.save()
     return jsonify(
             updated_state.to_dict()
+            )
+
+
+@state_views.route('states/<state_id>/cities', strict_slashes=False)
+def get_cities_of_state(state_id):
+    """ returns list of cities associated with state """
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404)
+    return jsonify(
+                [city.to_dict() for city in state.cities]
             )
