@@ -3,8 +3,8 @@
     App module
 """
 from api.v1.views import app_views
-from os import getenv
 from flask import Flask
+from os import getenv
 from api import storage
 
 app = Flask(__name__)
