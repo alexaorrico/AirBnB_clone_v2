@@ -63,6 +63,6 @@ def state_cities(state_id):
       abort(400, description="Missing name")
     
     city = (**req_data)
-    city.state_id = state_id
+    city[state_id] = state_id
     city.save()
     return make_response(jsonify(city.to_dict()), 201)
