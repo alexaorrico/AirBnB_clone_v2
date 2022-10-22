@@ -5,7 +5,7 @@ from api.v1.views import app_views
 @app_views.route('/status')
 def view_app():
     """
-        use of flask blueprint to return 'ok' meesage
+        use of flask blueprint to return 'ok' message
     """
     return {'status': 'ok'}
 
