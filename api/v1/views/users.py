@@ -81,7 +81,7 @@ def update_user_with_id_eq_user_id(user_id):
             }), 400
 
     user_dict = user.to_dict()
-    dont_update = ["id", "created_at", "updated_at"]
+    dont_update = ["id", "email", "created_at", "updated_at"]
     for skip in dont_update:
         data[skip] = user_dict[skip]
     user_dict.update(data)
