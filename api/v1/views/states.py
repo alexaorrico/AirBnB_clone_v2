@@ -7,13 +7,13 @@ from api.v1.views import state_views
 from models.state import State
 
 
-@state_views.route('/states', methods=['GET', 'POST'])
-@state_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@state_views.route('/', methods=['GET', 'POST'])
+@state_views.route('/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def states(state_id=None):
     """Returns states in storage"""
     if state_id is None:
         if request.method == 'GET':
-            states_dict = [x.to_dict() for x in storage.all(State)]
+            states_dict = [v.to_dict() for k, v in storage.all(State).items()]
             return jsonify(states_dict)
         else:
             state_dict = request.get_json()
