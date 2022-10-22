@@ -42,7 +42,8 @@ class DBStorage:
         from models.user import User
 
         classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+                   "Place": Place, "Review": Review,
+                   "State": State, "User": User}
 
         new_dict = {}
         for clss in classes:
