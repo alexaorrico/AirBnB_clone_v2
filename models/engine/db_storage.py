@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Database engine
+Database storage engine
 """
 
 import os
