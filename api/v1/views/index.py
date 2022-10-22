@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" index module showing the status endpoint """
 import json
 
 from api.v1.views import app_views

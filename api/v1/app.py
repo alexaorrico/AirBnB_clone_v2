@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+""" The main flask app for the endpoint """
 import os
 
 from flask import Flask
