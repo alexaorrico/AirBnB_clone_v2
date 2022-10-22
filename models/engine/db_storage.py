@@ -41,17 +41,22 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def get(self, cls, id):
-        '''A method to retrieve one object'''
+        """ Returns the object based on the class and its ID,
+            or None if not found
+        """
         if cls is not None and type(cls) is str and id is not None and\
            type(id) is str and cls in classes:
             cls = classes[cls]
-            objects = self.__session.query(cls).filter(cls.id == id).first()
-            return objects
+            result = self.__session.query(cls).filter(cls.id == id).first()
+            return result
         else:
             return None
 
     def count(self, cls=None):
-        """Count number of objects in storage"""
+        """ Returns the number of objects in storage matching the given class.
+            If no class is passed,
+            returns the count of all objects in dbstorage
+        """
         total = 0
         if type(cls) == str and cls in classes:
             cls = classes[cls]
