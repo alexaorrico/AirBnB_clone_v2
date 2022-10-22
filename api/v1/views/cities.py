@@ -62,7 +62,7 @@ def state_cities(state_id):
     if "name" not in req_data:
       abort(400, description="Missing name")
     
+    req_data[state_id] = state_id
     city = (**req_data)
-    city[state_id] = state_id
     city.save()
     return make_response(jsonify(city.to_dict()), 201)
