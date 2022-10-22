@@ -76,4 +76,17 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        return None
+        list_of_objs = self.all(cls)
+        print("-----------------------")
+        print(list_of_objs)
+        print("-----------------------")
+        for key, value in list_of_objs.items():
+            if key.lower() == 'id':
+                print(value)
+
+    def count(self, cls=None):
+        if cls:
+            list_of_objs = self.all(cls)
+            return len(list_of_objs)
+        return len(self.all())
+
