@@ -154,7 +154,6 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-
 Melaku Alehegn - [Github](https://github.com/melakualehegn)
 Abrham Addis   - [Github](https://github.com/abrhamadddis)
 
