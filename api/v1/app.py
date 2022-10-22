@@ -2,11 +2,11 @@
 """
     App module
 """
+from api import storage
 from api.v1.views import app_views
 from flask import Flask
-from os import getenv
 import json
-from api import storage
+from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
