@@ -82,7 +82,6 @@ class FileStorage:
         all_class = classes.values()
 
         if not cls:
-            count = 0
             for aclass in all_class:
                 count += len(models.storage.all(aclass).values())
         else:
