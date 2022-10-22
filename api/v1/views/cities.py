@@ -95,3 +95,32 @@ def get_cities_of_state(state_id):
     return jsonify(
                 [city.to_dict() for city in state.cities]
             )
+
+
+@city_views.route('states/<state_id>/cities', strict_slashes=False,
+                  methods=["POST"])
+def create_linked_to_state_city(state_id):
+    """ returns list of cities associated with state """
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404)
+    try:
+        data = request.get_json()
+    except Exception:
+        return jsonify({
+                "error": "Not a JSON"
+            }), 400
+    name = data.get("name")
+    if not name:
+        return jsonify({
+                "error": "Missing name"
+            }), 400
+
+    city = City(**data)
+    # state.cities.append(city)
+    city.state_id = state.id
+    city.save()
+    state.save()
+    return(
+        jsonify(city.to_dict())
+        ), 201
