@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Flask app module"""
-from flask import Flask
+from flask import Flask, request
 from models import storage
 from api.v1.views import app_views
 from flask import make_response, jsonify
@@ -16,6 +16,7 @@ def tear_down(exception):
 
 @app.errorhandler(404)
 def not_found(error):
+    print(request.path)
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == "__main__":

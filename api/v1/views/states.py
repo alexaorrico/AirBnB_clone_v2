@@ -1,27 +1,27 @@
 #!/usr/bin/python3
 """Index file"""
 
-from flask import jsonify
+from flask import jsonify, abort, request
 from models import storage
 from api.v1.views import app_views
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'])
-def states():
+@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+def states(state_id=None):
     """Returns states in storage"""
-    states_dict = [x.to_dict() for x in storage.all(State)]
-    return jsonify(states_dict)
-
-@app_views.route('/stats', methods=['GET'])
-def stat():
-    """Returns statistics of objects"""
-    sts_dict = {
-                "amenities": storage.count(Amenity), 
-                "cities": storage.count(City), 
-                "places": storage.count(Place), 
-                "reviews": storage.count(Review), 
-                "states": storage.count(State), 
-                "users": storage.count(User)
-                }
-    return jsonify(sts_dict)
+    if state_id is None:
+        if request.method == 'GET':
+            states_dict = [x.to_dict() for x in storage.all(State)]
+            return jsonify(states_dict)
+        else:
+            state_dict = request.get_json()
+            print(state_dict)
+    else:
+        states_dict = storage.get(State, state_id).to_dict()
+        if states_dict is None:
+            abort(404)
+        else:
+            return jsonify(states_dict)
+    if
