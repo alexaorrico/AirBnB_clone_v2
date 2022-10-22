@@ -6,6 +6,9 @@ from api import storage
 from api.v1.views import app_views
 from flask import Flask
 from os import getenv
+import json
+from api import storage
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
@@ -16,6 +19,15 @@ def teardown_app(exception):
         closes the storage
     """
     storage.close()
+
+
+@app.errorhandler(404)
+@app.route('/nop', strict_slashes=False)
+def handleErr(e):
+    """ returns a JSON-formatted 404 status code response."""
+    msg = {'error': 'Not found'}
+    jsonMsg = json.dumps(msg)
+    return (jsonMsg, 404)
 
 
 if __name__ == '__main__':
