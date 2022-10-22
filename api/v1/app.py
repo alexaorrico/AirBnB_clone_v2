@@ -20,12 +20,13 @@ def teardown_app(exception):
     storage.close()
 
 
+@app.errorhandler(404)
 @app.route('/nop', strict_slashes=False)
-def errorHandler():
+def handleErr(e):
     """ returns a JSON-formatted 404 status code response."""
     msg = {'error': 'Not found'}
     jsonMsg = json.dumps(msg)
-    return jsonMsg
+    return (jsonMsg, 404)
 
 
 if __name__ == '__main__':
