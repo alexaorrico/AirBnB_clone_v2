@@ -25,8 +25,7 @@ def teardown_app(exception):
 def handleErr(e):
     """ returns a JSON-formatted 404 status code response."""
     msg = {'error': 'Not found'}
-    jsonMsg = json.dumps(msg)
-    return (jsonMsg, 404)
+    return (msg, 404)
 
 
 if __name__ == '__main__':
