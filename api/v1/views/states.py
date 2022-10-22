@@ -9,7 +9,8 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def fetch_states():
-  """ Retrieves the list of all State objects. """
+  """ Retrieves the list of all State objects and/or
+  creates a new one. """
   if request.method = 'GET':
     all_states = storage.all(State).values()
     list_states = []
@@ -33,7 +34,7 @@ def fetch_states():
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def fetch_state_id(state_id=None):
-  """ Retrieves a State object given its id.
+  """ Retrieves, updates or deletes a State object given its id.
   Returns 404 error if id is not found.
   """
   state = storage.get(State, state_id)
@@ -57,6 +58,6 @@ def fetch_state_id(state_id=None):
     
     for key, value in req_data.items():
       if key not in ignore_keys:
-        setatrr(state, key, value)
+        setattr(state, key, value)
     storage.save()    
     return make_response(jsonify(state.to_dict()), 200)
