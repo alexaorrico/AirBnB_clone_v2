@@ -1,0 +1,18 @@
+__pycache__
+/__pycache__
+file.json
+
+venv/
+.vscode/
+__pycache__/
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
