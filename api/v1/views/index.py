@@ -2,13 +2,13 @@
 """ index views """
 from api.v1.views import app_views
 from flask import jsonify
-from models import State
-from models import Place
+from modelstate import State
+from models.place import Place
 from models import storage
-from models import User
-from models import Review
-from models import City
-from models import Amenity
+from models.user import User
+from models.review import Review
+from models.city import City
+from models.amenity import Amenity
 
 
 @app_views.route('/status', strict_slashes=False)
