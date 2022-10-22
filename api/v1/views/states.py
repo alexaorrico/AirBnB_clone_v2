@@ -42,6 +42,7 @@ def delete_state(state_id=None):
 def post_state(state_id=None):
     """creates a new instance of state"""
     req = request.get_json()
+    print(req)
     if req is None:
         abort(400, message="Not a JSON")
 
@@ -49,7 +50,9 @@ def post_state(state_id=None):
         if 'name' not in req.keys():
             abort(400, message="Missing name")
         else:
-            state = State(req)
+            print("weird")
+            state = State(**req)
+            print(state.name)
             return jsonify(state.to_dict()), 201
     elif request.method == "PUT":
         state = storage.get(State, state_id)
