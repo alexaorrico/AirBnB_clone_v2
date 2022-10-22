@@ -1,6 +1,7 @@
 #!/usr/bin/python3
-"""index page for flask
-displays status and stats
+"""
+index page for flask
+displays status
 """
 from flask import Flask, jsonify
 from api.v1.views import app_views
