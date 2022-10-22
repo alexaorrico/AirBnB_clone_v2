@@ -3,16 +3,14 @@
 Contains the class DBStorage
 """
 
-import models
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -49,7 +47,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -71,14 +69,14 @@ class DBStorage:
         Session = scoped_session(sess_factory)
         self.__session = Session
     
-    def get(self, cls, id):
+    def get(self, cls, obj_id):
         """retreive an an object from storage"""
         try:
             objs = self.__session.query(cls).all()
             for i in objs:
-                if i.id == id:
+                if i.id == obj_id:
                     return i
-        except:
+        except Exception:
             return None
 
     def count(self, cls=None):
