@@ -3,9 +3,11 @@
 from flask import Flask, request
 from models import storage
 from api.v1.views import app_views
+from api.v1.views import state_views
 from flask import make_response, jsonify
 
 app = Flask(__name__)
+app_views.register_blueprint(state_views)
 app.register_blueprint(app_views)
 
 
