@@ -20,7 +20,9 @@ def states(state_id=None):
             if state_dict is None:
                 abort(404)
             else:
-                reutrn jsonify(State(**state_dict).to_dict())
+                new_state = State(**state_dict)
+                new_state.save()
+                return jsonify(new_state.to_dict())
     else:
         state = storage.get(State, state_id)
         if state is None:
