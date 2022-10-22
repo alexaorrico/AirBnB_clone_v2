@@ -9,7 +9,7 @@ from models.state import State
 
 
 @app_views.route('/states/', methods=['GET'], strict_slashes=False)
-def get_all_states(self):
+def get_all_states():
     """Method getting all the states """
     data = storage.all(State)
     new = [val.to_dict() for key, val in data.items()]
@@ -39,7 +39,7 @@ def delete_state(state_id=None):
 
 
 @app_views.route('/states/<state_id', methods=['POST'], strict_slashes=False)
-def create_state(self):
+def create_state():
     """Create  a state not exists"""
     args = request.get_json()
     if not args:
