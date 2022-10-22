@@ -13,6 +13,9 @@ def tear_down(exception):
     """Release Resources"""
     storage.close()
 
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, threaded=True)
