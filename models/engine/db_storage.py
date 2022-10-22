@@ -84,7 +84,6 @@ class DBStorage:
         if cls is None:
             objs = self.all(cls)
             return len(objs)
-        cls = cls.name
         objs = self.__session.query(cls).all()
         return len(objs)
 
