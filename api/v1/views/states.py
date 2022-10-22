@@ -11,12 +11,12 @@ from models import storage
 @app_views.route('/states', strict_slashes=False)
 def get_states():
     """Endpoint to retreive all states"""
-    states = []
-    objs = storage.all(State)
-    for v in objs.values():
+    list_states = []
+    objs = storage.all(State).values()
+    for v in objs:
         v = v.to_dict()
-        states.append(v)
-    return states
+        list_states.append(v)
+    return jsonify(list_states)
 
 
 @app_views.route('/states/<string:state_id>', strict_slashes=False)
@@ -26,7 +26,7 @@ def get_state_by_id(state_id):
     if obj is None:
         abort(404)
     obj = obj.to_dict()
-    return obj
+    return jsonify(obj)
 
 
 @app_views.route('/states/<string:state_id>',
@@ -50,9 +50,8 @@ def add_new_obj():
         abort(400, description="Missing name")
     data = request.get_json()
     new_state = State(**data)
-    storage.new(new_state)
-    storage.save()
-    return new_state.to_dict(), 201
+    new_state.save()
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<string:state_id>',
@@ -68,4 +67,4 @@ def update_obj(state_id):
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state, k, v)
     storage.save()
-    return state.to_dict(), 200
+    return jsonify(state.to_dict()), 200
