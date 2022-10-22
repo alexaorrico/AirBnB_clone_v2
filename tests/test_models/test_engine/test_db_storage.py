@@ -86,3 +86,35 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+# tests for v3
+class TestDBStorage(unittest.TestCase):
+    """Test DBstorage"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    def test_get(self):
+        """Test if get returns an object or not"""
+        new_city = City(name="Washington")
+        new_city.save()
+        new_user = User(email="userbla@gmail.com", password="password")
+        new_user.save()
+        self.assertIs(new_city, models.storage.get("City", new_city.id))
+        self.assertIs(None, models.storage.get("City", "dfituosdh"))
+        self.assertIs(None, models.storage.get("qkgkq", "qdsjfghjks"))
+        self.assertIs(new_user, models.storage.get("user", new_user.id))
+        self.assertIs(None, models.storage.get("User", "sdogiuzo"))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    def test_count(self):
+        """Test if count returns the number of objects"""
+        first = models.storage.count()
+        self.assertEqual(models.storage.count("shdgkshj", 0))
+        new_city = City(name="Washington")
+        new_city.save()
+        new_user = User(email="userbla@gmail.com", password="password")
+        new_user.save()
+        new_user2 = User(email="userbla2@gmail.com", password="password")
+        new_user2.save()
+        self.assertEqual(models.storage.count("City"), first + 1)
+        # self.assertEqual(models.storage.count("User"), first + 2)
+        self.assertEqual(models.storage.count(), first + 3)
