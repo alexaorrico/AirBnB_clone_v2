@@ -19,7 +19,7 @@ def delete_amenity_place(amenity_id):
         amenity = storage.get(Amenity, amenity_id)
         place = storage.get(Place, place_id)
         if amenity.place_id != place_id:
-i           abort(404)
+           abort(404)
         amenity.delete()
         storage.save()
         return make_response(jsonify({}), 200)
