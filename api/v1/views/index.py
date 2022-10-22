@@ -12,12 +12,12 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stat')
+@app_views.route('/stat', strict_slashes=False)
 def count_table_rows():
     my_count = {
         "amenities": storage.count(Amenity),
