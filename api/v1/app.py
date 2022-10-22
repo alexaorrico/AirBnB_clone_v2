@@ -4,7 +4,7 @@
 """
 from api import storage
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 import json
 from os import getenv
 
@@ -25,7 +25,7 @@ def teardown_app(exception):
 def handleErr(e):
     """ returns a JSON-formatted 404 status code response."""
     msg = {'error': 'Not found'}
-    return (msg, 404)
+    return (jsonify(msg), 404)
 
 
 if __name__ == '__main__':
