@@ -10,7 +10,7 @@ from models.state import City, State
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def handle_cities(city_id):
-  """ Retrieves or deletes a city object given its id."""
+  """ Retrieves, updates or deletes a city object given its id. """
   city = storage.get(City, city_id)
   if not city:
     abort(404)
