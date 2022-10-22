@@ -1,4 +1,4 @@
-!/usr/bin/python3
+#!/usr/bin/python3
 '''
 index page for flask
 displays status and stats
