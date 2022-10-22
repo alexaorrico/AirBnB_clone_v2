@@ -10,6 +10,7 @@ from api.v1.views import app_views
 def show_status():
     return json.dumps({"status": "OK"})
 
+
 @app_views.route('/api/v1/stats')
 def show_count():
     new_dict = {
