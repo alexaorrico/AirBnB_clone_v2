@@ -15,12 +15,12 @@ def get_state(state_id=None):
         all_state = storage.all(State)
         for state in all_state.values():
             list_all.append(state.to_dict())
-        return jsonify(list_all)
+        return jsonify(list_all), 200
     else:
         state = storage.get(State, state_id)
         if state is None:
             abort(404)
-        return jsonify(state.to_dict())
+        return jsonify(state.to_dict()), 200
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
@@ -31,7 +31,7 @@ def delete_state(state_id=None):
     if state is None:
         abort(404)
     storage.delete(state)
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST', 'PUT'], strict_slashes=False)
@@ -41,14 +41,14 @@ def post_state(state_id=None):
     """creates a new instance of state"""
     req = request.get_json()
     if req is None:
-        abort(400)
+        abort(400, message="Not a JSON")
 
     if request.method == "POST":
         if 'name' not in req.keys():
-            abort(400)
+            abort(400, message="Missing name")
         else:
             state = State(req)
-            return jsonify(state.to_dict())
+            return jsonify(state.to_dict()), 201
     elif request.method == "PUT":
         state = storage.get(State, state_id)
         if state is None:
@@ -57,4 +57,4 @@ def post_state(state_id=None):
             if i not in ["id", "created_at", "updated_at"]:
                 setattr(state, i, j)
         storage.save()
-        return jsonify(state.to_dict())
+        return jsonify(state.to_dict()), 200
