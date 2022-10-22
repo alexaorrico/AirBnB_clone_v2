@@ -1,12 +1,22 @@
 #!/usr/bin/python3
 """Starts a Flask Application"""
 from flask import Flask
+from flask import jsonify
+from flask import make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+
+@app.errorhandler(404)
+def not_found(e):
+    """response to 404 errors"""
+    return jsonify({
+                    'error': 'Not found'
+                   }), 404
 
 
 if __name__ == "__main__":
