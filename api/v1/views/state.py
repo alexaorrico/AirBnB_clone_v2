@@ -84,14 +84,3 @@ def update_state_with_id_eq_state_id(state_id):
     return jsonify(
             updated_state.to_dict()
             )
-
-
-@state_views.route('states/<state_id>/cities', strict_slashes=False)
-def get_cities_of_state(state_id):
-    """ returns list of cities associated with state """
-    state = storage.get(State, state_id)
-    if not state:
-        abort(404)
-    return jsonify(
-                [city.to_dict() for city in state.cities]
-            )
