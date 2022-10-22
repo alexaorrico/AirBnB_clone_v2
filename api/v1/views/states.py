@@ -17,7 +17,10 @@ def states(state_id=None):
             return jsonify(states_dict)
         else:
             state_dict = request.get_json()
-            print(state_dict)
+            if state_dict is None:
+                abort(404)
+            else:
+                reutrn jsonify(State(**state_dict).to_dict())
     else:
         state = storage.get(State, state_id)
         if state is None:

@@ -18,7 +18,9 @@ def tear_down(exception):
 
 @app.errorhandler(404)
 def not_found(error):
-    print(request.path)
+    if  (request.path.startswith('/api/v1/states/') and 
+         request.method == 'POST'):
+        return ('Not a JSON')
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == "__main__":
