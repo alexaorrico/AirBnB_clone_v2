@@ -9,7 +9,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states", methods=['GET','POST'], strict_slashes=False)
+@app_views.route("/states", methods=['GET', 'POST'], strict_slashes=False)
 def all_states():
     if request.method == 'GET':
         return jsonify([i.to_dict() for i in storage.all(State).values()])
@@ -26,14 +26,12 @@ def all_states():
             return make_response(jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route("/states/<string:id>", methods=["GET", "DELETE", "PUT"],
-        strict_slashes=False)
+@app_views.route("/states/<string:id>", methods=["GET", "DELETE", "PUT"])
 def D_G_P_state(id):
     """"get, delete and update an instance of state"""
     d = storage.get(State, id)
     if d is None:
-        #abort(404)
-        return jsonify({"Error": "{}.{}".format(d,id)})
+        abort(404)
     if request.method == 'GET':
         return jsonify(d.to_dict())
     if request.method == 'DELETE':
