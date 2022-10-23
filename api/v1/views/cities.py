@@ -1,30 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@kevohm 
-Innocent9712
-/
-AirBnB_clone_v3
-Public
-forked from alexaorrico/AirBnB_clone_v2
-Code
-Pull requests
-Actions
-Projects
-Security
-Insights
-AirBnB_clone_v3/api/v1/views/cities.py /
-@Innocent9712
-Innocent9712 Fix bug
-Latest commit 98decf8 8 hours ago
- History
- 1 contributor
-Executable File  77 lines (66 sloc)  2.33 KB
-
 #!/usr/bin/python3
 """cities.py"""
 
@@ -102,18 +75,3 @@ def put_city(city_id):
             setattr(city, attr, val)
     city.save()
     return jsonify(city.to_dict())
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-AirBnB_clone_v3/cities.py at master · Innocent9712/AirBnB_clone_v3
