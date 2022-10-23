@@ -1,3 +1,6 @@
+#!/usr/bin/pythoon3
+""" view for states objects """
+
 from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
@@ -12,7 +15,9 @@ def get_all_states():
         states.append(state.to_dict())
     return jsonify(states)
 
-@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/states/<string:state_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_state(state_id):
     try:
         state = storage.get(State, state_id)
@@ -20,7 +25,9 @@ def get_state(state_id):
     except KeyError:
         abort(404)
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     try:
         state = storage.get(State, state_id)
@@ -30,22 +37,24 @@ def delete_state(state_id):
     except KeyError:
         abort(404)
 
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     try:
         data = request.get_json()
         if data.get("name") is None:
-            return make_response(jsonify({"error" : "Missing name"}), 400)
+            return make_response(jsonify({"error": "Missing name"}), 400)
         state = State(**data)
         state.save()
         response = jsonify(state.to_dict())
         response.status_code = 201
         return response
     except Exception:
-        return make_response(jsonify({"error" : "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_state(state_id):
     try:
         data = request.get_json()
@@ -59,4 +68,4 @@ def update_state(state_id):
     except KeyError:
         abort(404)
     except Exception:
-        return make_response(jsonify({"error" : "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
