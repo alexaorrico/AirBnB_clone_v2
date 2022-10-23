@@ -73,7 +73,7 @@ class FileStorage:
     def get(self, cls, id):
         """A method to retrieve one object"""
         all_data = self.all(cls)
-        obj = str(cls) + '.' + id
+        obj = '{}.{}'.format(cls, id)
         for key, value in all_data.items():
             if key == obj:
                 return (value)
