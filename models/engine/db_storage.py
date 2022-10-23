@@ -89,4 +89,3 @@ class DBStorage:
             list_of_objs = self.all(cls)
             return len(list_of_objs)
         return len(self.all())
-
