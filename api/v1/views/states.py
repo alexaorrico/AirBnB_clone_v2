@@ -26,7 +26,8 @@ def all_states():
             return make_response(jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route("/states/<string:id>", methods=["GET", "DELETE", "PUT"])
+@app_views.route("/states/<string:id>", methods=["GET", "DELETE", "PUT"],
+                 strict_slashes=False)
 def D_G_P_state(id):
     """"get, delete and update an instance of state"""
     d = storage.get(State, id)
