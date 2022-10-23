@@ -2,7 +2,7 @@
 """ A new view for State objects that handles
 all default RESTFul API actions. """
 from api.v1.views import app_views
-from flask import request, jsonify, abort, make_response
+from flask import request, jsonify, abort, make_response, Response
 from models import storage
 from models.state import State
 
