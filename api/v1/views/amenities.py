@@ -7,7 +7,7 @@ from models import storage
 
 
 @app_views.route("/amenities", strict_slashes=False, methods=["GET"])
-def get_amenities( ):
+def get_amenities():
     """ retrieves the list of all Amenity"""
     amenities = storage.all(Amenity)
     all_amenities = []
@@ -41,7 +41,10 @@ def delete_amenity(amenity_id):
 @app_views.route("/amenities", strict_slashes=False, methods=["POST"])
 def create_amenity():
     """creates a Amenity object"""
-    data = request.get_json()
+    try:
+       data = request.get_json()
+    except Exception:
+       abort(400, description="Not a JSON")
     if not data:
         abort(400, description="Not a JSON")
     if "name" not in data.keys():
@@ -56,9 +59,12 @@ def create_amenity():
 def update_amenity(amenity_id):
     """updates an Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
-    if not amenity:
+    if not storage.get:
         abort(404)
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except Exception:
+        abort(400, description="Not a JSON")
     if not data:
         abort(400, description="Not a JSON")
     for attr, val in data.items():
