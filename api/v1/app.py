@@ -11,7 +11,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown(self):
+def teardown(excp):
     """Closes storage session"""
     storage.close()
 
@@ -23,6 +23,6 @@ def not_found(e):
 
 
 if __name__ == '__main__':
-    api_host = getenv('HBNB_API_HOST', default='0.0.0.0')
-    api_port = getenv('HBNB_API_PORT', default=5000)
-    app.run(host=api_host, port=int(api_port), threaded=True)
+    api_host = getenv('HBNB_API_HOST') or '0.0.0.0'
+    api_port = getenv('HBNB_API_PORT') or 5000
+    app.run(host=api_host, port=api_port, threaded=True)
