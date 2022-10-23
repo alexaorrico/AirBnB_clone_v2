@@ -42,9 +42,9 @@ def delete_amenity(amenity_id):
 def create_amenity():
     """creates a Amenity object"""
     try:
-       data = request.get_json()
+        data = request.get_json()
     except Exception:
-       abort(400, description="Not a JSON")
+        abort(400, description="Not a JSON")
     if not data:
         abort(400, description="Not a JSON")
     if "name" not in data.keys():
