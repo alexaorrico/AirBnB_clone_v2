@@ -26,7 +26,7 @@ def post_state():
     state_req = request.json
     if 'name' not in state_req:
         abort(400, "Missing name")
-    state = State(**data)
+    state = State(**state_req)
     storage.new(state)
     storage.save()
 
