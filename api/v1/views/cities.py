@@ -21,7 +21,8 @@ def get_cities(state_id):
     return jsonify(all_city)
 
 
-@app_views.route('/cities/<string:city_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/cities/<string:city_id>',
+                 strict_slashes=False, methods=['GET'])
 def get_city(city_id):
     """retreieves a city by id"""
     city = storage.get(City, city_id)
@@ -30,7 +31,8 @@ def get_city(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.route('/cities/<string:city_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/cities/<string:city_id>',
+                 strict_slashes=False, methods=['DELETE'])
 def delete_city(city_id):
     """deletes a city"""
     city = storage.get(City, city_id)
@@ -39,3 +41,21 @@ def delete_city(city_id):
     storage.delete(city)
     storage.save()
     return make_response(jsonify({}), 200)
+
+
+@app_views.route('/states/<string:state_id>/cities',
+                 strict_slashes=False, methods=['POST'])
+def post_city(state_id):
+    """creates a new city"""
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404)
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    if 'name' not in request.get_json():
+        abort(400, description='Missing name')
+    data = request.get_json()
+    new_city = City(**data)
+    new_city.state_id = state_id
+    new_city.save()
+    return jsonify(new_city.to_dict()), 201
