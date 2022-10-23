@@ -6,7 +6,7 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 
 
-@app_views.route('/users/', strict_slashes=False, methods=['GET'])
+@app_views.route('/users', strict_slashes=False, methods=['GET'])
 def get_users():
     """Endpoint to retreive all users"""
     all_users = []
@@ -14,3 +14,12 @@ def get_users():
     for v in users.values():
         all_users.append(v.to_dict())
     return jsonify(all_users)
+
+
+@app_views.route('/users/<string:user_id>', strict_slashes=False,)
+def get_user(user_id):
+    """Endpoint to retreive a user"""
+    user = storage.get(User, user_id)
+    if not user:
+        abort(404)
+    return jsonify(user.to_dict())
