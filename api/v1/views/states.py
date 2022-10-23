@@ -7,33 +7,36 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states", methods=["GET", "POST"])
+@app_views.route("/states", methods=["GET", "POST"], strict_slashes=False)
 def get_states():
-    """ Retrieves the list of all State objects."""
+    """ Retrieves the list of all State objects.
+    Posts a new state object.
+    """
 
     if request.method == "GET":
-        all_states = storage.all(State)
+        all_states = storage.all('State').values()
         list_states = []
         for state in all_states:
             list_states.append(state.to_dict())
         return jsonify(list_states)
 
     if request.method == "POST":
-        if request.is_json is False:
+        if not request.json:
             abort(400, "Not a JSON")
-        state_req = request.get_json()
+        state_req = request.json
         if "name" not in state_req:
             abort(400, "Missing name")
         new_state = State(**state_req)
-        new_state.save()
+        storage.new(new_state)
+
         return make_response(jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
-def handle_state(state_id=None):
+def handle_state(state_id):
     """Get, Delete or Update a state by id"""
 
-    state = storage.get(State, state_id)
+    state = storage.get('State', state_id)
 
     if state is None:
         abort(404)
@@ -42,14 +45,16 @@ def handle_state(state_id=None):
         return jsonify(state.to_dict())
 
     if request.method == "DELETE":
-        state.delete()
+        storag.delete(state)
         storage.save()
+
         return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
-        if request.is_json is False:
+        if not request.json:
             abort(400, "Not a JSON")
-        state_req = request.get_json()
+
+        state_req = request.json()
         ignore_keys = ['id', 'created_at', 'updated_at']
         for key, val in state_req.items():
             if key not in ignore_keys:
