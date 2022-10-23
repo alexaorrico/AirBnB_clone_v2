@@ -16,10 +16,11 @@ def get_city_by_state(id):
     if state is None:
         abort(404)
     else:
+        values = []
         for value in cities.values():
             if value.state_id == state.id:
-                return jsonify(value.to_dict())
-        abort(404)
+                values.append(values)
+        return jsonify(values)
 
 
 @app_views.route('cities/<string:id>', methods=['GET'],
