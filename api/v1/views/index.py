@@ -17,7 +17,7 @@ def status():
         return jsonify(resp)
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/api/v1/stats', methods=['GET'])
 def stats():
     """
     function to return the count of all class objects
