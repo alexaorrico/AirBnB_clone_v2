@@ -8,7 +8,7 @@ import inspect
 import models
 from models import user
 from models.base_model import BaseModel
-import pep8
+import pycodestyle
 import unittest
 User = user.User
 
@@ -20,17 +20,18 @@ class TestUserDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.user_f = inspect.getmembers(User, inspect.isfunction)
 
-    def test_pep8_conformance_user(self):
-        """Test that models/user.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/user.py'])
+    def test_pycodestyle_conformance_user(self):
+        """Test that models/user.py conforms to pycodestyle."""
+        pycodestyles = pycodestyle.StyleGuide(quiet=True)
+        result = pycodestyles.check_files(['models/user.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_pep8_conformance_test_user(self):
-        """Test that tests/test_models/test_user.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_user.py'])
+    def test_pycodestyle_conformance_test_user(self):
+        """Test that tests/test_models/test_user.py
+        conforms to pycodestyle."""
+        pycodestyles = pycodestyle.StyleGuide(quiet=True)
+        result = pycodestyles.check_files(['tests/test_models/test_user.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -95,7 +96,8 @@ class TestUser(unittest.TestCase):
             self.assertEqual(user.first_name, "")
 
     def test_last_name_attr(self):
-        """Test that User has attr last_name, and it's an empty string"""
+        """Test that User has attr last_name,
+        and it's an empty string"""
         user = User()
         self.assertTrue(hasattr(user, "last_name"))
         if models.storage_t == 'db':
@@ -110,7 +112,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in u.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
