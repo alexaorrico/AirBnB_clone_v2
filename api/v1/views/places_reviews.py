@@ -9,17 +9,16 @@ from flask import abort, jsonify, request, make_response
 
 
 @app_views.route("/places/<place_id>/reviews", strict_slashes=False,
-                 methods=["GET", "POST"])
+                 methods=["GET"])
 def get_place_review(place_id):
     """retrieves the list of all Review objects of a place"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    if request.method == "GET":
-        all_place_reviews = []
-        for review in place.reviews:
-            all_place_reviews.append(review.to_dict())
-        return jsonify(all_place_reviews)
+    all_place_reviews = []
+    for review in place.reviews:
+        all_place_reviews.append(review.to_dict())
+    return jsonify(all_place_reviews)
 
 
 @app_views.route("/places/<place_id>/reviews", strict_slashes=False,
