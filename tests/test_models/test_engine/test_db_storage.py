@@ -17,6 +17,7 @@ from models.user import User
 import json
 import os
 import pep8
+import MySQLdb
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -69,6 +70,25 @@ test_db_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        """Set up MySQLdb"""
+        self.db = MySQLdb.connect(host="localhost",
+                                  port=3306,
+                                  user='hbnb_test',
+                                  passwd='hbnb_test_pwd',
+                                  db='hbnb_test_db',
+                                  charset='utf8')
+        self.cur = self.db.cursor()
+        self.storage = DBStorage()
+        self.storage.reload()
+
+    @classmethod
+    def tearDown(self):
+        """Tear down MySQLdb"""
+        self.cur.close()
+        self.db.close()
+     
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -87,4 +107,12 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get retrives an object"""
+        pass
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that get retrives an object"""
+        pass
