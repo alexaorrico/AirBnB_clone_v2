@@ -48,7 +48,7 @@ def create_amenity():
         abort(400, description="Missing name")
     amenity = Amenity(**data)
     amenity.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+    return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route("/amenities/<amenity_id>", strict_slashes=False,
@@ -65,4 +65,4 @@ def update_amenity(amenity_id):
         if attr not in ["id", "created_at", "updated_at"]:
             setattr(amenity, attr, val)
     amenity.save()
-    return make_response(jsonify(amenity.to_dict()), 200)
+    return jsonify(amenity.to_dict()), 200)
