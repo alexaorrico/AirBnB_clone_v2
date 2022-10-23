@@ -17,6 +17,10 @@ swagger = Swagger(app)
 # global strict slashes
 app.url_map.strict_slashes = False
 
+# flask server environmental setup
+host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+port = os.getenv('HBNB_API_PORT', 5000)
+
 # Cross-Origin Resource Sharing
 cors = CORS(app, resources={r'/*': {'origins': host}})
 
@@ -65,4 +69,4 @@ if __name__ == "__main__":
     # initializes global error handling
     setup_global_errors()
     # start Flask app
-    app.run(host= os.getenv('HBNB_API_HOST', '0.0.0.0'), port = os.getenv('HBNB_API_PORT', 5000))
+    app.run(host=host, port=port)
