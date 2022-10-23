@@ -9,6 +9,7 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
+    """Retrieves the list of all State objects"""
     all_states = storage.all(State)
     states = []
     for state in all_states.values():
@@ -19,6 +20,7 @@ def get_all_states():
 @app_views.route('/states/<string:state_id>', methods=['GET'],
                  strict_slashes=False)
 def get_state(state_id):
+    """Retrieves a State objects"""
     try:
         state = storage.get(State, state_id)
         return jsonify(state.to_dict())
@@ -29,6 +31,7 @@ def get_state(state_id):
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
+    """Deletes a State objects"""
     try:
         state = storage.get(State, state_id)
         state.delete()
@@ -40,6 +43,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
+    """Creates a State objects"""
     try:
         data = request.get_json()
         if data.get("name") is None:
@@ -56,6 +60,7 @@ def create_state():
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_state(state_id):
+    """Updates a State objects"""
     try:
         data = request.get_json()
         state = storage.get(State, state_id)

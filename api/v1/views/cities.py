@@ -11,6 +11,7 @@ from models.state import State
 @app_views.route('/states/<string:state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities_by(state_id):
+    """Retrieves the list of all City objects of a State"""
     state = storage.get(State, state_id)
     city_dict = []
     for city in state.cities:
@@ -21,6 +22,7 @@ def get_cities_by(state_id):
 @app_views.route('/cities/<string:city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
+    """Retrieves a City object"""
     try:
         city = storage.get(City, city_id)
         return jsonify(city.to_dict())
@@ -31,6 +33,7 @@ def get_city(city_id):
 @app_views.route('/cities/<string:city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
+    """Deletes a City object"""
     try:
         city = storage.get(City, city_id)
         city.delete()
@@ -43,6 +46,7 @@ def delete_city(city_id):
 @app_views.route('/states/<string:state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
+    """Creates a City object"""
     try:
         state = storage.get(State, state_id)
         data = request.get_json()
@@ -62,6 +66,7 @@ def create_city(state_id):
 @app_views.route('/cities/<string:city_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
+    """Updates a City object"""
     try:
         data = request.get_json()
         city = storage.get(City, city_id)
