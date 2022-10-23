@@ -76,4 +76,4 @@ def update_city(city_id):
         if k not in ignore:
             setattr(city, k, v)
     city.save()
-    return jsonify(city.to_dict), 200
+    return jsonify(city.to_dict()), 200
