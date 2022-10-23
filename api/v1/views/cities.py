@@ -33,7 +33,7 @@ def get_city(id):
         return jsonify(city.to_dict())
 
 
-@app_views.route('cities/<string:id>', methods=['DELETE']
+@app_views.route('cities/<string:id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_city(id):
     """delete an instance of city class"""
