@@ -10,3 +10,7 @@ from flask import Flask, Blueprint, jsonify
 def status():
     '''return status'''
     return jsonify({"status": "OK"})
+
+
+if __name__ == "__main__":
+    pass
