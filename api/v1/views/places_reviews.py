@@ -44,4 +44,4 @@ def a_review(review_id):
             if attr not in ["id", "user_id", "place_id", "created_at",
                             "updated_at"]:
                 setattr(review, attr, val)
-        return jsonify(review.to_dict()), 201
+        return jsonify(review.to_dict()), 200
