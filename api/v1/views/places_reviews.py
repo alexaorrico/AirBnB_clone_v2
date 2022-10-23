@@ -21,7 +21,7 @@ def get_place_review(place_id):
 
 
 @app_views.route("/reviews/<review_id>", strict_slashes=False,
-                 methods=["GET", "DELETE"])
+                 methods=["GET", "DELETE", "PUT"])
 def a_review(review_id):
     """Retrieves,Deletes a Review object"""
     review = storage.get(Review, review_id)
@@ -33,3 +33,15 @@ def a_review(review_id):
         storage.delete(review)
         storage.save()
         return jsonify({}), 200
+    elif request.method == "PUT":
+        try:
+            data = request.get_json()
+            if not data:
+                abort(400, description="Not a JSON")
+        except Exception:
+            abort(400, description="Not a JSON")
+        for attr, val in data.items():
+            if attr not in ["id", "user_id", "place_id", "created_at",
+                            "updated_at"]:
+                setattr(review, attr, val)
+        return jsonify(review.to_dict()), 201
