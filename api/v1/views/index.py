@@ -4,7 +4,17 @@
 
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify
-from models.engine import count, db_storage
+from models import storage
+
+
+classes = {
+    "amenities": "Amenity",
+    "cities": "City",
+    "places": "Place",
+    "reviews": "Review",
+    "states": "State",
+    "users": "User"
+}
 
 
 @app_views.route('/status', strict_slashes=False)
@@ -13,13 +23,13 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     my_list = {}
-    for stats in db_storage.classes:
-        num = db_storage.count(stats)
-        my_list.update({'stats': num})
-    return jsonify({my_list})
+    for key, value in classes.items():
+        num = storage.count(value)
+        my_list[key] = num
+    return jsonify(my_list)
 
 
 if __name__ == "__main__":
