@@ -1,5 +1,3 @@
-
-
 #!/usr/bin/python3
 """Module containing views for State objects """
 from api.v1.views import app_views
