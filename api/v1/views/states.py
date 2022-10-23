@@ -15,12 +15,12 @@ def states(state_id=None):
         if request.method == 'GET':
             states_dict = [v.to_dict() for k, v in storage.all(State).items()]
             return jsonify(states_dict)
-        else:
+        elif request.method == 'POST':
             state_dict = request.get_json()
             if (state_dict is None):
                 abort(404)
             else:
-                if (state_dict.get('name', None) is None:
+                if (state_dict.get('name', None)) is None:
                     abort(404)
                 new_state = State(**state_dict)
                 new_state.save()
@@ -37,9 +37,10 @@ def states(state_id=None):
             if state_dict is None:
                 abort(404)
             else:
-                if (state_dict.get('name', None) is None:
+                if (state_dict.get('name', None)) is None:
                     abort(404)
                 for k, v in state_dict.items():
                     if k not in ['id', 'created_at', 'updated_at']:
-                        state.__dict__[k] = v
+                        setattr(self, k, v)
+                    state.save()
                 return jsonify(state.to_dict()), 200
