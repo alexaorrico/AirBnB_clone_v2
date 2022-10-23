@@ -1,4 +1,4 @@
-#!/usr/bin/pythoon3
+#!/usr/bin/python3
 """ view for place objects """
 
 from flask import jsonify, abort, request, make_response
