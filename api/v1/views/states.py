@@ -17,15 +17,29 @@ def states(state_id=None):
             return jsonify(states_dict)
         else:
             state_dict = request.get_json()
-            if state_dict is None:
+            if (state_dict is None):
                 abort(404)
             else:
+                if (state_dict.get('name', None) is None:
+                    abort(404)
                 new_state = State(**state_dict)
                 new_state.save()
-                return jsonify(new_state.to_dict())
+                return jsonify(new_state.to_dict()), 201
     else:
         state = storage.get(State, state_id)
         if state is None:
             abort(404)
-        else:
+            return
+        if request.method == 'GET':
             return jsonify(state.to_dict())
+        if request.method == 'PUT':
+            state_dict = request.get_json()
+            if state_dict is None:
+                abort(404)
+            else:
+                if (state_dict.get('name', None) is None:
+                    abort(404)
+                for k, v in state_dict.items():
+                    if k not in ['id', 'created_at', 'updated_at']:
+                        state.__dict__[k] = v
+                return jsonify(state.to_dict()), 200

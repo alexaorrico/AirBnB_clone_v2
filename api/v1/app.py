@@ -5,6 +5,7 @@ from models import storage
 from api.v1.views import app_views
 from api.v1.views import state_views
 from flask import make_response, jsonify
+from os import getenv
 
 app = Flask(__name__)
 app_views.register_blueprint(state_views)
@@ -24,4 +25,8 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    hst = getenv('HBNB_API_HOST')
+    prt = getenv('HBNB_API_PORT')
+    HOST = '0.0.0.0' if not hst else hst
+    HOST = 5000 if not prt else prt
+    app.run(host=HOST, port=PORT, threaded=True)
