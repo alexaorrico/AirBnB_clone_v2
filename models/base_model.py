@@ -32,11 +32,19 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
-            if kwargs.get("created_at", None) and type(self.created_at) is str:
+            if kwargs.get(
+                    "created_at",
+                    None) and isinstance(
+                    self.created_at,
+                    str):
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
             else:
                 self.created_at = datetime.utcnow()
-            if kwargs.get("updated_at", None) and type(self.updated_at) is str:
+            if kwargs.get(
+                    "updated_at",
+                    None) and isinstance(
+                    self.updated_at,
+                    str):
                 self.updated_at = datetime.strptime(kwargs["updated_at"], time)
             else:
                 self.updated_at = datetime.utcnow()
@@ -73,3 +81,18 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def update(self, *args, **kwargs):
+        """updates the current instance in the storage"""
+        for k, v in kwargs.items():
+            if k not in [
+                'id',
+                'state_id',
+                'created_at',
+                'place_id',
+                'updated_at',
+                'email',
+                'city_id',
+                    'user_id']:
+                setattr(self, k, v)
+            self.save()

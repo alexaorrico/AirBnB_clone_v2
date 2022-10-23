@@ -1,42 +1,54 @@
 #!/usr/bin/python3
-"""Module for State related endpoints"""
+"""
+This module creates a new view for State objects
+that handles all default RESTFul API actions
+"""
+from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
-from api.v1.views import *
-from flask import jsonify, make_response, abort, request
-from models import storage
 from models.state import State
+from models import storage
 
 
-model = "State"
+@app_views.route('/states', methods=['GET', 'POST'])
+def states_route():
+    """
+    states_route handles get, post request to states
+    """
+    if request.method == 'GET':
+        states = list(map(lambda obj: obj.to_dict(),
+                      storage.all(State).values()))
+        return make_response(jsonify(states), 200)
+    elif request.method == 'POST':
+        form_data = request.get_json(silent=True)
+        if form_data is None:
+            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+        if 'name' not in form_data:
+            return make_response(jsonify({'error': 'Missing name'}), 400)
+        new_state = State(**form_data)
+        new_state.save()
+        return make_response(jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route("/states", strict_slashes=False,
-                 methods=["GET"], defaults={"state_id": None})
-@app_views.route("/states/<state_id>", methods=["GET"])
-def get_state(state_id):
-    """GET /state api route"""
-    if not state_id:
-        list_objs = [v.to_dict() for v in storage.all(model).values()]
-        return jsonify(list_objs)
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+def state_route(state_id):
+    """
+    state_route handles get, put, delete request to a specific
+    state
 
-    return get_model(model, state_id)
+    :param state_id: is the id of the state
+    """
+    state = storage.get(State, state_id)
 
-
-@app_views.route("/states/<state_id>", methods=["DELETE"])
-def delete_state(state_id):
-    """DELETE /state api route"""
-    return delete_model(model, state_id)
-
-
-@app_views.route("/states", strict_slashes=False, methods=["POST"])
-def post_state():
-    """POST /state api route"""
-    required_data = {"name"}
-    return post_model(model, None, None, required_data)
-
-
-@app_views.route("/states/<state_id>", methods=["PUT"])
-def put_state(state_id):
-    """PUT /state api route"""
-    ignore_data = ["id", "created_at", "updated_at"]
-    return put_model(model, state_id, ignore_data)
+    if state is None:
+        abort(404)
+    if request.method == 'GET':
+        return make_response(jsonify(state.to_dict()), 200)
+    elif request.method == 'DELETE':
+        state.delete()
+        return make_response(jsonify({}), 200)
+    elif request.method == 'PUT':
+        form_data = request.get_json(silent=True)
+        if form_data is None:
+            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+        state.update(**form_data)
+        return make_response(jsonify(state.to_dict()), 200)

@@ -1,48 +1,54 @@
 #!/usr/bin/python3
-"""Module for User related endpoints"""
+"""This module handles user routes"""
+from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
-from api.v1.views import *
-from flask import jsonify, make_response, abort, request
-from models import storage
 from models.user import User
-
-model = "User"
-
-
-@app_views.route("/users", strict_slashes=False,
-                 methods=["GET"], defaults={"user_id": None})
-@app_views.route("/users/<user_id>", methods=["GET"])
-def get_user(user_id):
-    """GET /user api route"""
-    if not user_id:
-        list_objs = [v.to_dict() for v in storage.all(model).values()]
-        return jsonify(list_objs)
-
-    return get_model(model, user_id)
+from models import storage
 
 
-@app_views.route("/users/<user_id>", methods=["DELETE"])
-def delete_user(user_id):
-    """DELETE /user api route"""
-    return delete_model(model, user_id)
+@app_views.route('/users', methods=['GET', 'POST'])
+def users_route():
+    """
+    users route handles get, post request to users
+    """
+    if request.method == 'GET':
+        user = list(map(lambda obj: obj.to_dict(),
+                        storage.all(User).values()))
+        return make_response(jsonify(user), 200)
+    elif request.method == 'POST':
+        form_data = request.get_json(silent=True)
+        if form_data is None:
+            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+        required_info = ['email', 'password']
+        for info in required_info:
+            if info not in form_data:
+                return make_response(
+                    jsonify({'error': 'Missing {}'.format(info)}), 400)
+        new_user = User(**form_data)
+        new_user.save()
+        return make_response(jsonify(new_user.to_dict()), 201)
 
 
-@app_views.route("/users", strict_slashes=False, methods=["POST"])
-def post_user():
-    """POST /user api route"""
-    required_data = {"email", "password"}
-    return post_model(model, None, None, required_data)
+@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
+def user_route(user_id):
+    """
+    user_route handles get, put, delete requests to a specific
+    user
 
+    :param user_id: is the id of the user
+    """
+    user = storage.get(User, user_id)
 
-@app_views.route("/users/<user_id>", methods=["PUT"])
-def put_user(user_id):
-    """PUT /user api route"""
-    ignore_data = ["id", "created_at", "updated_at", "email"]
-    return put_model(model, user_id, ignore_data)
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
+    if user is None:
+        abort(404)
+    if request.method == 'GET':
+        return make_response(jsonify(user.to_dict()), 200)
+    elif request.method == 'DELETE':
+        user.delete()
+        return make_response(jsonify({}), 200)
+    elif request.method == 'PUT':
+        form_data = request.get_json(silent=True)
+        if form_data is None:
+            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+        user.update(**form_data)
+        return make_response(jsonify(user.to_dict()), 200)
