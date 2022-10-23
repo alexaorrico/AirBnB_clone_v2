@@ -19,7 +19,7 @@ def get_city_by_state(id):
         values = []
         for value in cities.values():
             if value.state_id == state.id:
-                values.append(value)
+                values.append(value.to_dict())
         return jsonify(values)
 
 
