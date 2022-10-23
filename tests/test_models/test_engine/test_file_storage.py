@@ -113,3 +113,67 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get properly gets objects from storage"""
+        # get existing object
+        storage = FileStorage()
+        for key, value in classes.items():
+            saved_first_obj = list(storage.all(value).values())[0]
+            first_obj = storage.get(value, saved_first_obj.id)
+            self.assertIs(first_obj, saved_first_obj)
+
+        # get newly created object, try to get
+        # + & delete existing object and try to get
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            storage.new(instance)
+            self.assertIs(storage.get(value, instance.id), instance)
+            storage._FileStorage__objects.pop(instance_key, None)
+            self.assertIs(storage.get(value, instance.id), None)
+
+        FileStorage._FileStorage__objects = save
+
+        # get exisitng object with a wrong class
+        first_state_id = list(storage.all(State).values())[0].id
+        fake_obj = storage.get(City, first_state_id)
+        self.assertIs(fake_obj, None)
+
+        # get object with wrong id
+        self.assertIs(storage.get(State, "1234"), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count properly returns object count from storage"""
+        # count all objects in storage correctly
+        storage = FileStorage()
+        self.assertTrue(len(storage.all()) == storage.count())
+
+        # count all objects of each of classes in storage correctly
+        for key, value in classes.items():
+            self.assertTrue(len(storage.all(value)) == storage.count(value))
+
+        # add 1 object for each class, assert all count increased accordingly
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        for key, value in classes.items():
+            instance = value()
+            storage.new(instance)
+
+            # assert that each of those class count increased by one each
+            self.assertTrue(len(storage.all(value)) == 1)
+
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            FileStorage._FileStorage__objects.pop(instance_key, None)
+
+            # assert that deleting objects reduces count for obj of each class
+            self.assertTrue(len(storage.all(value)) == 0)
+
+        # assert that deleting objects reduces count for all objects in storage
+        self.assertTrue(len(storage.all()) == 0)
+
+        FileStorage._FileStorage__objects = save
