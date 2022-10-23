@@ -7,9 +7,9 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/states', methods=['GET', POST], strict_slashes=False)
 def states():
-    if request.metod == 'GET':
+    if request.method == 'GET':
         states_obj = storage.all('State')
         states_obj = [obj.to_dict() for obj in states_obj.values()]
         return jsonify(states_obj)
