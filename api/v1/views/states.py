@@ -2,13 +2,12 @@
 '''a new view for State objects'''
 
 from api.v1.views import app_views
-from flask import  jsonify, abort, request, make_response
+from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 
 
-
-@app_views.route('/states', methods= ['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     '''return all states'''
     mylist = []
@@ -17,13 +16,16 @@ def get_states():
         mylist.append(state.to_dict())
     return jsonify(mylist)
 
-@app_views.route('/states/<string:state_id>', methods= ['GET'], strict_slashes=False)
+
+@app_views.route('/states/<string:state_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_state_id(state_id):
     '''get information about specific state'''
-    state =storage.get("State", state_id).to_dict()
+    state = storage.get("State", state_id).to_dict()
     if state is None:
         abort(404)
     return jsonify(state)
+
 
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
