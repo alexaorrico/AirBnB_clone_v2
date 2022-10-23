@@ -1,32 +1,38 @@
 #!/usr/bin/python3
-"""
-view for State objects that handles all default RESTFul API actions
-"""
+
+"""Module to handle state request Blueprint"""
 
 from api.v1.views import app_views
-from flask import jsonify, request, make_response, abort
+from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
 
 
-@app_views.route("/states", methods=['GET', 'POST'], strict_slashes=False)
-def all_states():
-    if request.method == 'GET':
-        return jsonify([i.to_dict() for i in storage.all(State).values()])
-    if request.method == 'POST':
-        if request.get_json():
-            body = request.get_json()
-        else:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
-        if "name" not in body:
-            return make_request(jsonify({"error": "Missing name"}), 400)
-        new_state = State(**body)
-        new_state.save()
-        if storage.get(State, new_state.id) is not None:
-            return make_response(jsonify(new_state.to_dict()), 201)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
+def get_states():
+    """return json array of all states"""
+    states = storage.all(State).values()
+    return jsonify([val.to_dict() for val in states])
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def create_state():
+    """Create a new state"""
+    if request.get_json():
+        body = request.get_json()
+    else:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if "name" not in body:
+        return make_response(jsonify({"error": "Missing name"}), 400)
+
+    new_state = State(**body)
+    new_state.save()
+    if storage.get(State, new_state.id) is not None:
+        return make_response(jsonify(new_state.to_dict()), 201)
+
+
+@app_views.route('/states/<string:state_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_state(state_id):
     """Method to get a state"""
     state = storage.get(State, state_id)
@@ -36,7 +42,8 @@ def get_state(state_id):
         return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'])
+@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """delete a single state"""
     state = storage.get(State, state_id)
@@ -47,7 +54,8 @@ def delete_state(state_id):
     return jsonify({})
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'])
+@app_views.route('/states/<string:state_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_state(state_id):
     """update properties of a single state"""
     state = storage.get(State, state_id)
