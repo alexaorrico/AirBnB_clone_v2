@@ -10,11 +10,12 @@ from models.review import Review
 from models.place import Place
 
 from api.v1.views import app_views
+from flask import jsonify
 
 
 @app_views.route('/status')
 def show_status():
-    return json.dumps({"status": "OK"})
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/api/v1/stats')
@@ -27,4 +28,4 @@ def show_count():
         "states": storage.count(State),
         "users": storage.count(User)
     }
-    return json.dumps(new_dict)
+    return jsonify(new_dict)
