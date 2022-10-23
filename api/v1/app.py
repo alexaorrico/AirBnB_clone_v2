@@ -16,7 +16,7 @@ def db_close(exc):
     storage.close()
 
 
-@app.errorhandler(Exception)
+@app.errorhandler(404)
 def server_error(err):
     """ Handle unavailabe route"""
     return make_response(jsonify({"error": "Not found"}), 404)
