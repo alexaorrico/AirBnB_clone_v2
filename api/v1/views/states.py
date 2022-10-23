@@ -26,27 +26,40 @@ def all_states():
             return make_response(jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route("/states/<string:id>", methods=["GET", "DELETE", "PUT"],
-                 strict_slashes=False)
-def D_G_P_state(id):
-    """"get, delete and update an instance of state"""
-    d = storage.get(State, id)
-    if d is None:
+@app_views.route('/states/<string:state_id>', methods=['GET'])
+def get_state(state_id):
+    """Method to get a state"""
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
     if request.method == 'GET':
-        return jsonify(d.to_dict())
-    if request.method == 'DELETE':
-        storage.delete(d)
-        storage.save()
-        return jsonify({})
-    if request.method == "PUT":
-        if request.get_json():
-            body = request.get_json()
-        else:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
-        _e_k = ["id", "created_at", "updated_at"]
-        for k, v in body.items():
-            if k not in _e_k:
-                setattr(d, k, v)
-        d.save()
-        return make_response(jsonify(d.to_dict()), 200)
+        return jsonify(state.to_dict())
+
+
+@app_views.route('/states/<string:state_id>', methods=['DELETE'])
+def delete_state(state_id):
+    """delete a single state"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    storage.delete(state)
+    storage.save()
+    return jsonify({})
+
+
+@app_views.route('/states/<string:state_id>', methods=['PUT'])
+def update_state(state_id):
+    """update properties of a single state"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    if request.get_json():
+        body = request.get_json()
+    else:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    _exceptions = ["id", "created_at", "updated_at"]
+    for k, v in body.items():
+        if k not in _exceptions:
+            setattr(state, k, v)
+    state.save()
+    return make_response(jsonify(state.to_dict()), 200)
