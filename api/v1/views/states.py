@@ -39,7 +39,7 @@ def D_G_P_state(id):
         storage.save()
         return jsonify({})
     if request.method == "PUT":
-        if request.get_json:
+        if request.get_json():
             body = request.get_json()
         else:
             return make_response(jsonify({"error": "Not a JSON"}), 400)
