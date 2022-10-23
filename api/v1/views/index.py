@@ -14,11 +14,13 @@ from models.user import User
 
 @app_views.route('/status', strict_slashes=False)
 def status():
+    """Method to get status"""
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', strict_slashes=False)
 def count_table_rows():
+    """method to get stats"""
     my_count = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
@@ -28,3 +30,7 @@ def count_table_rows():
         "users": storage.count(User)
     }
     return jsonify(my_count)
+
+
+if __name__ == "__main__":
+    pass
