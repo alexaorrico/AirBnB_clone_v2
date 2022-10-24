@@ -134,4 +134,5 @@ class TestFileStorage(unittest.TestCase):
         new_state = models.storage.get(State, "32343-4324-dsfd-324")
         self.assertEqual(new_state, None)
         
+        
 
