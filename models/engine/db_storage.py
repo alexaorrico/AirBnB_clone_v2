@@ -89,7 +89,7 @@ class DBStorage:
         """count the number of objects in storage"""
         number = 0
         # if class is provided, counted only objects of the class
-        if cls is not None and type(cls) == str and class in classes:
+        if cls is not None and type(cls) == str and cls in classes:
             cls = classes[cls]
             number = self.__session.query(cls).count()
         # if class is not provides, count objects all all classes
