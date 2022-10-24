@@ -51,10 +51,6 @@ def post_place(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    try:
-        request.get_json()
-    except Exception:
-        abort(400, description="Not a JSON")
     data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
@@ -75,10 +71,6 @@ def put_place(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    try:
-        request.get_json()
-    except Exception:
-        abort(400, description="Not a JSON")
     data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
