@@ -15,12 +15,11 @@ def get_city_by_state(id):
     cities = storage.all(City)
     if state is None:
         abort(404)
-    else:
-        values = []
-        for value in cities.values():
-            if value.state_id == state.id:
-                values.append(value.to_dict())
-        return jsonify(values)
+    values = []
+    for value in cities.values():
+        if value.state_id == state.id:
+            values.append(value.to_dict())
+    return jsonify(values)
 
 
 @app_views.route('cities/<string:id>', methods=['GET'],
@@ -30,8 +29,7 @@ def get_city(id):
     city = storage.get(City, id)
     if city is None:
         abort(404)
-    else:
-        return jsonify(city.to_dict())
+    return jsonify(city.to_dict())
 
 
 @app_views.route('cities/<string:id>', methods=['DELETE'],
@@ -41,10 +39,9 @@ def del_city(id):
     city = storage.get(City, id)
     if city is None:
         abort(404)
-    else:
-        storage.delete(city)
-        storage.save()
-        return make_response(jsonify({}), 200)
+    storage.delete(city)
+    storage.save()
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('states/<string:id>/cities', methods=['POST'],
