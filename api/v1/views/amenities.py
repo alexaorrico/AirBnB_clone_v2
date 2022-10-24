@@ -11,7 +11,7 @@ from models.amenity import Amenity
 def fetch_amenities():
   """ Retrieves the list of all Amenity objects
   or creates a new one. """
-  if request.method = 'GET':
+  if request.method == 'GET':
     all_amenities = storage.all(Amenity).values()
     list_amenities = []
 
@@ -19,7 +19,7 @@ def fetch_amenities():
       list_amenities.append(amenity.to_dict())
     return jsonify(list_amenities)
   
-  if request.method = 'POST':
+  if request.method == 'POST':
     req_data = request.get_json()
     if not req_data:
       abort(400, description="Not a JSON")
@@ -27,7 +27,7 @@ def fetch_amenities():
     if "name" not in req_data:
       abort(400, description="Missing name")
       
-    amenity = (**req_data)
+    amenity = Amenity(**req_data)
     amenity.save()
     return make_response(jsonify(amenity.to_dict()), 201)
 
@@ -41,15 +41,15 @@ def fetch_amenity_id(amenity_id):
   if not amenity:
     abort(404)
     
-  if request.method = 'GET':
+  if request.method == 'GET':
     return jsonify(amenity.to_dict())
   
-  if request.method = 'DELETE':
+  if request.method == 'DELETE':
     storage.delete(amenity)
     storage.save()
     return make_response(jsonify({}), 200)
   
-  if request.method = 'PUT':
+  if request.method == 'PUT':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')

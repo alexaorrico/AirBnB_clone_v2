@@ -11,7 +11,7 @@ from models.user import User
 def handle_users():
   """ Retrieves the list of all User objects and/or
   creates a new one. """
-  if request.method = 'GET':
+  if request.method == 'GET':
     all_users = storage.all(User).values()
     list_users = []
 
@@ -19,7 +19,7 @@ def handle_users():
       list_users.append(user.to_dict())
     return jsonify(list_users)
   
-  if request.method = 'POST':
+  if request.method == 'POST':
     req_data = request.get_json()
     if not req_data:
       abort(400, description="Not a JSON")
@@ -30,7 +30,7 @@ def handle_users():
     if "password" not in req_data:
       abort(400, description="Missing password")
 
-    user = (**req_data)
+    user = User(**req_data)
     user.save()
     return make_response(jsonify(user.to_dict()), 201)
 
@@ -44,15 +44,15 @@ def handle_user_id(user_id):
   if not user:
     abort(404)
     
-  if request.method = 'GET':
+  if request.method == 'GET':
     return jsonify(user.to_dict())
   
-  if request.method = 'DELETE':
+  if request.method == 'DELETE':
     storage.delete(user)
     storage.save()
     return make_response(jsonify({}), 200)
   
-  if request.method = 'PUT':
+  if request.method == 'PUT':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')

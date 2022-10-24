@@ -16,15 +16,15 @@ def handle_cities(city_id):
   if not city:
     abort(404)
 
-  if request.method = 'GET':
+  if request.method == 'GET':
     return jsonify(city.to_dict())
 
-  if request.method = 'DELETE':
+  if request.method == 'DELETE':
     storage.delete(city)
     storage.save()
     return make_response(jsonify({}), 200)
   
-  if request.method = 'PUT':
+  if request.method == 'PUT':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')
@@ -48,13 +48,13 @@ def state_cities(state_id):
   if not state:
     abort(404)
     
-  if request.method = 'GET':
+  if request.method == 'GET':
     list_cities = []
     for city in state.cities:
       list_cities.append(city.to_dict())
     return jsonify(list_cities)
   
-  if request.method = 'POST':
+  if request.method == 'POST':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')
@@ -63,6 +63,6 @@ def state_cities(state_id):
       abort(400, description="Missing name")
     
     req_data[state_id] = state_id
-    city = (**req_data)
+    city = City(**req_data)
     city.save()
     return make_response(jsonify(city.to_dict()), 201)

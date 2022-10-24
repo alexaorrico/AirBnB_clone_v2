@@ -17,15 +17,15 @@ def handle_places(place_id):
   if not place:
     abort(404)
 
-  if request.method = 'GET':
+  if request.method == 'GET':
     return jsonify(place.to_dict())
 
-  if request.method = 'DELETE':
+  if request.method == 'DELETE':
     storage.delete(place)
     storage.save()
     return make_response(jsonify({}), 200)
   
-  if request.method = 'PUT':
+  if request.method == 'PUT':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')
@@ -49,13 +49,13 @@ def city_places(city_id):
   if not city:
     abort(404)
     
-  if request.method = 'GET':
+  if request.method == 'GET':
     list_places = []
     for place in city.places:
       list_places.append(place.to_dict())
     return jsonify(list_places)
   
-  if request.method = 'POST':
+  if request.method == 'POST':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')
@@ -71,6 +71,6 @@ def city_places(city_id):
       abort(400, description="Missing name")
     
     req_data['city_id'] = city_id
-    place = (**req_data)
+    place = Place(**req_data)
     place.save()
     return make_response(jsonify(place.to_dict()), 201)

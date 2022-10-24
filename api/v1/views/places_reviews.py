@@ -17,15 +17,15 @@ def handle_reviews(review_id):
   if not review:
     abort(404)
 
-  if request.method = 'GET':
+  if request.method == 'GET':
     return jsonify(review.to_dict())
 
-  if request.method = 'DELETE':
+  if request.method == 'DELETE':
     storage.delete(review)
     storage.save()
     return make_response(jsonify({}), 200)
   
-  if request.method = 'PUT':
+  if request.method == 'PUT':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')
@@ -49,11 +49,11 @@ def place_reviews(place_id):
   if not place:
     abort(404)
     
-  if request.method = 'GET':
+  if request.method == 'GET':
     list_reviews = [review.to_dict() for review in place.reviews]
     return jsonify(list_places)
   
-  if request.method = 'POST':
+  if request.method == 'POST':
     req_data = request.get_json()
     if not req_data:
       abort(400, description='Not a JSON')
@@ -72,6 +72,6 @@ def place_reviews(place_id):
       abort(400, description="Missing text")
     
     req_data['place_id'] = place_id
-    review = (**req_data)
+    review = Review(**req_data)
     review.save()
     return make_response(jsonify(review.to_dict()), 201)
