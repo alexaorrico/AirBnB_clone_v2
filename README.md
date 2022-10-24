@@ -154,8 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Leulseged Bekele - [Github](https://github.com/leul1992) / [Linkedin](https://www.linkedin.com/in/leulseged-ayalew-352a461a0)
+
+Yohannis Aweke - [Github](https://github.com/jooon2994) / [Linkedin](www.linkedin.com/in/yohannis-aweke-b59416251)
 
 Second part of Airbnb: Joann Vuong
 ## License
@@ -163,3 +164,4 @@ Public Domain. No copy write protection.
 
 ## Author for RESTful API
 Leulseged Bekele - [Github](https://github.com/leul1992) / [Linkedin](https://www.linkedin.com/in/leulseged-ayalew-352a461a0)
+Yohannis Aweke - [Github](https://github.com/jooon2994) / [Linkedin](www.linkedin.com/in/yohannis-aweke-j1994)
