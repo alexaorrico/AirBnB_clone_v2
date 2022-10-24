@@ -5,11 +5,11 @@ Contains the TestReviewDocs classes
 
 from datetime import datetime
 import inspect
-import models
 from models import review
 from models.base_model import BaseModel
 import pep8
 import unittest
+import os
 Review = review.Review
 
 
@@ -67,39 +67,34 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(review, "created_at"))
         self.assertTrue(hasattr(review, "updated_at"))
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_place_id_attr(self):
         """Test Review has attr place_id, and it's an empty string"""
         review = Review()
         self.assertTrue(hasattr(review, "place_id"))
-        if models.storage_t == 'db':
-            self.assertEqual(review.place_id, None)
-        else:
-            self.assertEqual(review.place_id, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_user_id_attr(self):
         """Test Review has attr user_id, and it's an empty string"""
         review = Review()
         self.assertTrue(hasattr(review, "user_id"))
-        if models.storage_t == 'db':
-            self.assertEqual(review.user_id, None)
-        else:
-            self.assertEqual(review.user_id, "")
+        self.assertEqual(review.user_id, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_text_attr(self):
         """Test Review has attr text, and it's an empty string"""
         review = Review()
         self.assertTrue(hasattr(review, "text"))
-        if models.storage_t == 'db':
-            self.assertEqual(review.text, None)
-        else:
-            self.assertEqual(review.text, "")
+        self.assertEqual(review.text, "")
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         r = Review()
         new_d = r.to_dict()
         self.assertEqual(type(new_d), dict)
-        self.assertFalse("_sa_instance_state" in new_d)
         for attr in r.__dict__:
             if attr is not "_sa_instance_state":
                 self.assertTrue(attr in new_d)
