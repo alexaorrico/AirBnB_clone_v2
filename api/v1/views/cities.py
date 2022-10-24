@@ -51,34 +51,36 @@ def del_city(id):
                  strict_slashes=False)
 def add_city_linked_to_state(id):
     """add an instance of city linked to a state_id"""
-    state = storage.get(State, id)
-    if state is None:
-        abort(404)
-    if request.get_json():
-        body = request.get_json()
-    else:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if "name" not in body:
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    body.update({'state_id': id})
-    new_city = City(**body)
-    new_city.save()
-    return make_response(jsonify(new_city.to_dict()), 201)
+    if request.method == 'POST':
+        state = storage.get(State, id)
+        if state is None:
+            abort(404)
+        if request.get_json():
+            body = request.get_json()
+        else:
+            return make_response(jsonify({"error": "Not a JSON"}), 400)
+        if "name" not in body:
+            return make_response(jsonify({"error": "Missing name"}), 400)
+        body.update({'state_id': id})
+        new_city = City(**body)
+        new_city.save()
+        return make_response(jsonify(new_city.to_dict()), 201)
 
 
 @app_views.route('cities/<string:id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(id):
     """ update an instatnce of city """
-    city = storage.get(City, id)
-    if city is None:
-        abort(404)
-    if request.get_json():
-        body = request.get_json()
-    else:
-        return make_respone(jsonify({"error": "Not a JSON"}), 400)
-    for k, v in body.items():
-        if k not in ['id', 'state_id', 'created_at', 'updated_at']:
-            setattr(city, k, v)
-    city.save()
-    return make_response(jsonify(city.to_dict()), 200)
+    if request.method == 'PUT':
+        city = storage.get(City, id)
+        if city is None:
+            abort(404)
+        if request.get_json():
+            body = request.get_json()
+        else:
+            return make_respone(jsonify({"error": "Not a JSON"}), 400)
+        for k, v in body.items():
+            if k not in ['id', 'state_id', 'created_at', 'updated_at']:
+                setattr(city, k, v)
+        city.save()
+        return make_response(jsonify(city.to_dict()), 200)
