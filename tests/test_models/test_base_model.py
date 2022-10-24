@@ -6,6 +6,7 @@ import models
 import pep8 as pycodestyle
 import time
 import unittest
+import os
 from unittest import mock
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
@@ -126,6 +127,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(d['__class__'], 'BaseModel')
         self.assertEqual(d['name'], "Holberton")
         self.assertEqual(d['my_number'], 89)
+        self.assertNotIn('_sa_instance_state', d)
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
