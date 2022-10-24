@@ -8,6 +8,16 @@ from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
+#!/usr/bin/python3
+"""
+Contains the class DBStorage
+"""
+
+import models
+from models.amenity import Amenity
+from models.base_model import BaseModel, Base
+from models.city import City
+from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
@@ -74,3 +84,15 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """ fetch a specified object from file """
+        objs = self.__session.query(cls).all()
+        for obj in objs:
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """ count number of objects """
+        return len(self.all(cls))
