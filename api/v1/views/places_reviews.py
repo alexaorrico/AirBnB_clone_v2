@@ -66,9 +66,6 @@ def place_reviews(place_id):
         if not user:
             abort(404)
 
-        if "name" not in req_data:
-            abort(400, description="Missing name")
-
         if "text" not in req_data:
             abort(400, description="Missing text")
 
