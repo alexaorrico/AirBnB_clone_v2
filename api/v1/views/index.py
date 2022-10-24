@@ -13,8 +13,8 @@ def status():
     function for status route that returns the status
     """
     if request.method == 'GET':
-        response = {"status": "OK"}
-        return jsonify(response)
+        resp = {"status": "OK"}
+        return jsonify(resp)
 
 
 @app_views.route('/stats', methods=['GET'])
@@ -24,7 +24,7 @@ def stats():
     """
     if request.method == 'GET':
         response = {}
-        content = {
+        class_list = {
             "Amenity": "amenities",
             "City": "cities",
             "Place": "places",
@@ -32,6 +32,6 @@ def stats():
             "State": "states",
             "User": "users"
         }
-        for key, value in content.items():
+        for key, value in class_list.items():
             response[value] = storage.count(key)
         return jsonify(response)
