@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-""" The main flask app for the endpoint """
-import os
 
+""" The main flask app for the endpoint """
+from os import getenv
 from flask import Flask, jsonify, request
 from models import storage
 from api.v1.views import app_views
+from flask import make_response
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-
+CORS(app, resources={r"/*": {"origins":"0.0.0.0"}})
 
 @app.errorhandler(404)
 def _handle_api_error(ex):
