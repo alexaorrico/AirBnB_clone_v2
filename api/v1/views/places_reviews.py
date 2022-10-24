@@ -9,6 +9,7 @@ from models import storage, Classes
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
+@swag_from('swagger_yaml/reviews_by_place.yml', methods=['GET', 'POST'])
 def reviews_per_place(place_id=None):
     """
         reviews route to handle http method for requested reviews by place
@@ -45,6 +46,7 @@ def reviews_per_place(place_id=None):
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'])
+@swag_from('swagger_yaml/reviews_id.yml', methods=['GET', 'DELETE', 'PUT'])
 def reviews_with_id(review_id=None):
     """
         reviews route to handle http methods for given review by ID

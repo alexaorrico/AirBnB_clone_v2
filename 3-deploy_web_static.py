@@ -23,7 +23,7 @@ def do_pack():
         local("tar --create --verbose -z --file={} ./web_static"
               .format(file_name))
         return file_name
-    except NameError:
+    except:
         return None
 
 
@@ -50,7 +50,7 @@ def do_deploy(archive_path):
         run("ln -sf {}/{} /data/web_static/current"
             .format(path, folder[0]))
         return True
-    except FileNotFoundError:
+    except:
         return False
 
 
