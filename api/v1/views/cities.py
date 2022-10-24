@@ -55,10 +55,9 @@ def add_city_linked_to_state(id):
         state = storage.get(State, id)
         if state is None:
             abort(404)
-        if request.get_json():
-            body = request.get_json()
-        else:
+        if not request.get_json():
             return make_response(jsonify({"error": "Not a JSON"}), 400)
+        body = request.get_json()
         if "name" not in body:
             return make_response(jsonify({"error": "Missing name"}), 400)
         body.update({'state_id': id})
@@ -75,10 +74,9 @@ def update_city(id):
         city = storage.get(City, id)
         if city is None:
             abort(404)
-        if request.get_json():
-            body = request.get_json()
-        else:
+        if not request.get_json():
             return make_respone(jsonify({"error": "Not a JSON"}), 400)
+        body = request.get_json()
         for k, v in body.items():
             if k not in ['id', 'state_id', 'created_at', 'updated_at']:
                 setattr(city, k, v)
