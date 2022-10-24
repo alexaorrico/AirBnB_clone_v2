@@ -159,4 +159,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
+
+## Author for RESTful API
+Leulseged Bekele - [Github](https://github.com/leul1992) / [Linkedin](https://www.linkedin.com/in/leulseged-ayalew-352a461a0)
