@@ -5,10 +5,12 @@ from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-
+# CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown(exc):
@@ -23,5 +25,5 @@ def not_found(e):
 
 
 if __name__ == "__main__":
-    app.run(host=getenv("HBNB_API_HOST") or "0.0.0.0",
+    app.run(host=getenv("HBNB_API_HOST", "0.0.0.0"),
             port=getenv("HBNB_API_PORT") or 5000, threaded=True)
