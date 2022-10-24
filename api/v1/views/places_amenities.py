@@ -40,7 +40,7 @@ def place_amenities_id(place_id, amenity_id):
         abort(404)
 
     if request.method == 'DELETE':
-        if getenv("HBNB_TYPE_STORAGE") == 'db':
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
             if amenity not in place.amenities:
                 abort(404)
             place.amenities.remove(amenity)
