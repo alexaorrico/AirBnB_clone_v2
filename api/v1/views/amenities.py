@@ -7,7 +7,8 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def handle_amenities():
     """ Retrieves the list of all Amenity objects
     or creates a new one.
@@ -28,6 +29,7 @@ def handle_amenities():
         amenity = Amenity(**req_data)
         amenity.save()
         return make_response(jsonify(amenity.to_dict()), 201)
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
@@ -57,5 +59,6 @@ def handle_amenity_id(amenity_id):
         for key, value in req_data.items():
             if key not in ignore_keys:
                 setattr(amenity, key, value)
+
         storage.save()
         return make_response(jsonify(amenity.to_dict()), 200)
