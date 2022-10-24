@@ -34,6 +34,23 @@ class FileStorage:
             return new_dict
         return self.__objects
 
+    def get(self, cls, id):
+        """
+        On the curret database session get an object of the given class.
+        Args:
+            cls (str): Name of object type. If None, no queries.
+            id (str): ID of object to query. If None, no queries.
+        Return:
+             The object based on the class name and its ID.
+        """
+        CLASS = classes[cls.__name__]
+        if CLASS is None:
+            return None
+        for value in self.all(CLASS).values():
+            if value.id == id:
+                return value
+        return None
+
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
@@ -68,3 +85,18 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage according to the given class
+        name. If name is None returns the count of all objects in storage.
+        Args:
+            cls (str): The name of the class of None for all.
+        """
+    if cls is None:
+        return len(self.all())
+    else:
+        CLASS = classes[cls.__name__]
+        if CLASS is None:
+            return len(self.all())
+    return len(self.all(CLASS))
