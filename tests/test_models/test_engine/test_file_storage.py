@@ -120,6 +120,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+    # tests for v3
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                      "not testing file storage")
     def test_get(self):
@@ -135,7 +136,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                      "not testing file storage")
-    def test_get(self):
+    def test_count(self):
         """test that get returns objects remanded"""
         storage = FileStorage()
         first = len(storage.all())
