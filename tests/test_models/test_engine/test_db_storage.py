@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models.engine import file_storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -19,6 +20,7 @@ import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
+FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -86,3 +88,35 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+# tests for v3
+class TestDBStorage(unittest.TestCase):
+    """Test DBstorage"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    def test_get(self):
+        """Test if get returns an object or not"""
+        new_state = State(name="mystate")
+        new_state.save()
+        new_user = User(email="userbla@gmail.com", password="password")
+        new_user.save()
+        self.assertIs(new_state, models.storage.get("State", new_state.id))
+        self.assertIs(None, models.storage.get("State", "dfituosdh"))
+        self.assertIs(None, models.storage.get("qkgkq", "qdsjfghjks"))
+        self.assertIs(new_user, models.storage.get("User", new_user.id))
+        self.assertIs(None, models.storage.get("User", "sdogiuzo"))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db')
+    def test_count(self):
+        """Test if count returns the number of objects"""
+        first = models.storage.count()
+        self.assertEqual(models.storage.count("shdgkshj", 0))
+        new_state = State(name="mystate")
+        new_state.save()
+        new_user = User(email="userbla@gmail.com", password="password")
+        new_user.save()
+        new_user2 = User(email="userbla2@gmail.com", password="password")
+        new_user2.save()
+        self.assertEqual(models.storage.count("State"), first + 1)
+        self.assertEqual(models.storage.count("User"), first + 2)
+        self.assertEqual(models.storage.count(), first + 3)
