@@ -44,30 +44,32 @@ def del_amenity(id):
                  strict_slashes=False)
 def add_amenity():
     """ create an instance of amenity """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    body = request.get_json()
-    if "name" not in body:
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    new_amenity = Amenity(**body)
-    new_amenity.save()
-    if storage.get(Amenity, new_amenity.id) is not None:
-        return make_response(jsonify(new_amenity.to_dict()), 201)
+    if reqeust.method == 'POST':
+        if not request.get_json():
+            return make_response(jsonify({"error": "Not a JSON"}), 400)
+        body = request.get_json()
+        if "name" not in body:
+            return make_response(jsonify({"error": "Missing name"}), 400)
+        new_amenity = Amenity(**body)
+        new_amenity.save()
+        if storage.get(Amenity, new_amenity.id) is not None:
+            return make_response(jsonify(new_amenity.to_dict()), 201)
 
 
 @app_views.route('/amenities/<string:id>', methods=['PUT'],
                  strict_slashes=False)
 def update_amenity(id):
     """ update an instance of amenity """
-    amenity = storage.get(Amenity, id)
-    if amenity is None:
-        abort(404)
-    if not request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    body = request.get_json()
-    keys_except = ['id', 'created_at', 'updated_at']
-    for key, value in body.items():
-        if key not in keys_except:
-            setattr(amenity, key, value)
-    amenity.save()
-    return make_response(jsonify(amenity.to_dict()), 200)
+    if request.method  == 'PUT':
+        amenity = storage.get(Amenity, id)
+        if amenity is None:
+           abort(404)
+        if not request.get_json():
+           return make_response(jsonify({"error": "Missing name"}), 400)
+        body = request.get_json()
+        keys_except = ['id', 'created_at', 'updated_at']
+        for key, value in body.items():
+           if key not in keys_except:
+               setattr(amenity, key, value)
+        amenity.save()
+        return make_response(jsonify(amenity.to_dict()), 200)
