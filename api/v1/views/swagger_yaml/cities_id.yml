@@ -1,0 +1,49 @@
+flasgger endpoint for GET, DELETE, PUT city object
+GET: returns requested city with id <city_id>
+DELETE: deletes the city object with id <city_id>
+---
+paths:
+  /cities/{city_id}:
+tags:
+  - GET, DELETE, PUT cities/{city_id}
+get:
+delete:
+put:
+parameters:
+  - name: city_id
+    in: path
+    data: string
+    required: true
+    description: the unique city id of city to update
+  - name: name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: name attribute of the city to update
+responses:
+  200:
+    description: the objects's attributes names and values in JSON format
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        state_id:
+          type: string
+          description: unique state id of the related state of the object
+        id:
+          type: string
+          description: unique id of the object
+        name:
+          type: string
+          description: name attribute of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated

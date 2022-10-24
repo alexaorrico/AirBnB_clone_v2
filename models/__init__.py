@@ -7,15 +7,15 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-"""Classes - dictionary = { Class Name (string) : Class Type }"""
+"""CNC - dictionary = { Class Name (string) : Class Type }"""
 
 if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
     from models.engine import db_storage
-    Classes = db_storage.DBStorage.Classes
+    CNC = db_storage.DBStorage.CNC
     storage = db_storage.DBStorage()
 else:
     from models.engine import file_storage
-    Classes = file_storage.FileStorage.Classes
+    CNC = file_storage.FileStorage.CNC
     storage = file_storage.FileStorage()
 
 storage.reload()

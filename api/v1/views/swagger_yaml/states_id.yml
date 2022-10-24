@@ -1,0 +1,46 @@
+flasgger endpoint for GET, DELETE, PUT state object
+GET: returns requested state with id <state_id>
+DELETE: deletes the state object with id <state_id>
+---
+paths:
+  /states/{state_id}:
+tags:
+  - GET, DELETE, PUT states/{state_id}
+get:
+delete:
+put:
+parameters:
+  - name: state_id
+    in: path
+    data: string
+    required: true
+    description: the unique state id of state to update
+  - name: name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: name attribute of the state to update
+responses:
+  200:
+    description: the objects's attributes names and values in JSON format
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        name:
+          type: string
+          description: name attribute of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated

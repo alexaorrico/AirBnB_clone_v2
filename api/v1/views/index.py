@@ -24,7 +24,7 @@ def stats():
     """
     if request.method == 'GET':
         response = {}
-        class_list = {
+        PLURALS = {
             "Amenity": "amenities",
             "City": "cities",
             "Place": "places",
@@ -32,6 +32,6 @@ def stats():
             "State": "states",
             "User": "users"
         }
-        for key, value in class_list.items():
+        for key, value in PLURALS.items():
             response[value] = storage.count(key)
         return jsonify(response)

@@ -3,7 +3,7 @@
 Handles I/O, writing and reading, of JSON for storage of all class instances
 """
 import json
-from models import Classes, base_model, amenity, city, place, review, state, user
+from models import base_model, amenity, city, place, review, state, user
 from datetime import datetime
 
 strptime = datetime.strptime
@@ -14,7 +14,7 @@ class FileStorage:
     """
         handles long term storage of all class instances
     """
-    Classes = {
+    CNC = {
         'BaseModel': base_model.BaseModel,
         'Amenity': amenity.Amenity,
         'City': city.City,
@@ -23,7 +23,7 @@ class FileStorage:
         'State': state.State,
         'User': user.User
     }
-    """Classes - this variable is a dictionary with:
+    """CNC - this variable is a dictionary with:
     keys: Class Names
     values: Class type (used for instantiation)
     """
@@ -74,7 +74,7 @@ class FileStorage:
             return
         for o_id, d in new_objs.items():
             k_cls = d['__class__']
-            FileStorage.__objects[o_id] = FileStorage.Classes[k_cls](**d)
+            FileStorage.__objects[o_id] = FileStorage.CNC[k_cls](**d)
 
     def delete(self, obj=None):
         """
