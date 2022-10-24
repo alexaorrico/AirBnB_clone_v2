@@ -1,31 +1,31 @@
 #!/usr/bin/python3
 """View for Amenities objects that handles all default RESTFul API actions"""
-
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models.amenity import Amenity
-from models import  storage
+from models import storage
+
 
 @app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
 def get_amenities():
-	"""Create a new view for Amenity objects that
+    """Create a new view for Amenity objects that
     handles all default RESTFul API actions"""
-	if request.method == 'GET':
-		return jsonify([value.to_dict() for value in
-                  storage.all('Amenity').values()])
+    if request.method == 'GET':
+        return jsonify([value.to_dict() for value in 
+                        storage.all('Amenity').values()])
 
-	elif request.method == 'POST':
-		post = request.get_json()
-		if post is None or type(post) != dict:
-			return jsonify({'error': 'Not a JSON'}), 400
-		elif post.get('name') is None:
-			return jsonify({'error': 'Missing name'}), 400
+    elif request.method == 'POST':
+        post = request.get_json()
+        if post is None or type(post) != dict:
+            return jsonify({'error': 'Not a JSON'}), 400
+        elif post.get('name') is None:
+            return jsonify({'error': 'Missing name'}), 400
 
-		new_amenity = Amenity(**post)
-		new_amenity.save()
-		return jsonify(new_amenity.to_dict()), 201
+        new_amenity = Amenity(**post)
+        new_amenity.save()
+        return jsonify(new_amenity.to_dict()), 201
 
-@app_views.route('/amenities/<string:amenity_id>',
+@app_views.route('/amenities/<string:amenity_id>', 
                  methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
 def get_amenity_id(amenity_id):
     amenity = storage.get('Amenity', amenity_id)
