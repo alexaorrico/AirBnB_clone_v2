@@ -22,7 +22,8 @@ def get_single_amenity(id):
     amenity = storage.get(Amenity, id)
     if amenity is None:
         abort(404)
-    return jsonify(amenity.to_dict())
+    if request.method == 'GET':
+        return jsonify(amenity.to_dict())
 
 
 @app_views.route('/amenities/<string:id>', methods=['DELETE'],
@@ -48,7 +49,8 @@ def add_amenity():
         make_response(jsonify({"error": "Missing name"}), 400)
     new_amenity = Amenity(**body)
     new_amenity.save()
-    return make_response(jsonify(new_amenity.to_dict()), 201)
+    if storage.get(Amenity, new_amenity.id) is not None:
+        return make_response(jsonify(new_amenity.to_dict()), 201)
 
 
 @app_views.route('/amenities/<string:id>', methods=['PUT'],
