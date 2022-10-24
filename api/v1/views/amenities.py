@@ -19,10 +19,10 @@ def amenity_methods():
                  strict_slashes=False)
 def get_single_amenity(id):
     """"get an instance of amenity """
-    amenity = storage.get(Amenity, id)
-    if amenity is None:
-        abort(404)
     if request.method == 'GET':
+        amenity = storage.get(Amenity, id)
+        if amenity is None:
+            abort(404)
         return jsonify(amenity.to_dict())
 
 
@@ -30,12 +30,13 @@ def get_single_amenity(id):
                  strict_slashes=False)
 def del_amenity(id):
     """ delete an instance of amenity """
-    amenity = storage.get(Amenity, id)
-    if amenity is None:
-        abort(404)
-    storage.delete(amenity)
-    storage.save()
-    return make_response(jsonify({}), 200)
+    if requestt.method == 'DELETE':
+        amenity = storage.get(Amenity, id)
+        if amenity is None:
+            abort(404)
+        storage.delete(amenity)
+        storage.save()
+        return make_response(jsonify({}), 200)
 
 
 @app_views.route('/amenities', methods=['POST'],
