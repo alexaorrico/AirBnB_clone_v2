@@ -23,6 +23,7 @@ class TestIndexDocs(unittest.TestCase):
         print('.......  Index API  .......')
         print('.................................\n\n')
 
+
     def test_doc_file(self):
         """... documentation for the file"""
         actual = module.__doc__

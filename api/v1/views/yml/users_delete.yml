@@ -1,0 +1,14 @@
+Deletes a user object
+---
+tags:
+    - User
+parameters:
+    - name: user_id
+      in: path
+      type: string
+      required: true
+responses:
+  200:
+    description: User deleted
+  404:
+    description: Resource not found
