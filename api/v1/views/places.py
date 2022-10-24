@@ -65,4 +65,25 @@ def post_place(city_id):
     place = Place(**data)
     place.city_id = city.id
     place.save()
-    return jsonify(place.to_dict())
+    return jsonify(place.to_dict()), 201
+
+
+@app_views.route("/places/<place_id>", strict_slashes=False,
+                 methods=["PUT"])
+def put_place(place_id):
+    """updates a place object"""
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    try:
+        request.get_json()
+    except Exception:
+        abort(400, description="Not a JSON")
+    data = request.get_json()
+    if not data:
+        abort(400, description="Not a JSON")
+    for attr, val in data.items():
+        if attr not in ["id", "user_id", "city_id",
+                        "created_at", "updated_at"]:
+            setattr(place, attr, val)
+    return jsonify(place.to_dict()), 200
