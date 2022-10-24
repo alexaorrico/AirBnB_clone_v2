@@ -11,8 +11,9 @@ from models.amenity import Amenity
                  strict_slashes=False)
 def amenity_methods():
     """ get all instance of amenity """
-    amenities = storage.all(Amenity)
-    return jsonify([i.to_dict() for i in amenities.values()])
+    if request.method == 'GET':
+        amenities = storage.all(Amenity)
+        return jsonify([i.to_dict() for i in amenities.values()])
 
 
 @app_views.route('/amenities/<string:id>', methods=['GET'],
@@ -44,10 +45,10 @@ def del_amenity(id):
 def add_amenity():
     """ create an instance of amenity """
     if not request.get_json():
-        make_response(jsonify({"error": "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     body = request.get_json()
     if "name" not in body:
-        make_response(jsonify({"error": "Missing name"}), 400)
+        return make_response(jsonify({"error": "Missing name"}), 400)
     new_amenity = Amenity(**body)
     new_amenity.save()
     if storage.get(Amenity, new_amenity.id) is not None:
@@ -62,7 +63,7 @@ def update_amenity(id):
     if amenity is None:
         abort(404)
     if not request.get_json():
-        make_response(jsonify({"error": "Missing name"}), 400)
+        return make_response(jsonify({"error": "Missing name"}), 400)
     body = request.get_json()
     keys_except = ['id', 'created_at', 'updated_at']
     for key, value in body.items():
