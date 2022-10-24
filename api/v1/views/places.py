@@ -7,7 +7,7 @@ from models.place import Place
 from flask import jsonify, abort, request
 
 
-@app_views.route("/cities/<city_id>/plalces", strict_slashes=False,
+@app_views.route("/cities/<city_id>/places", strict_slashes=False,
                  methods=["GET"])
 def get_places(city_id):
     """get the places in a city"""
