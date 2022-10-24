@@ -113,3 +113,25 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+    
+    def test_count(self):
+        """Test count method"""
+        count_all = models.storage.count()
+        self.assertEqual(count_all, models.storage.count())
+        count_state = models.storage.count(State)
+        self.assertEqual(count_state, models.storage.count(State))
+        count_amenity = models.storage.count(Amenity)
+        self.assertEqual(count_amenity, models.storage.count(Amenity))
+
+    def test_get(self):
+        """Test get method"""
+        first_state_id = list(models.storage.all(State).values())[0].id
+        first_state = models.storage.get(State, first_state_id).to_dict()
+        id_str = first_state['__class__'] + '.' + first_state_id
+        self.assertTrue(id_str in models.storage.all().keys())
+        self.assertEqual(first_state, models.storage.get(
+            State, first_state_id).to_dict())
+        new_state = models.storage.get(State, "32343-4324-dsfd-324")
+        self.assertEqual(new_state, None)
+        
+
