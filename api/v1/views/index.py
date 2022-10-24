@@ -23,7 +23,7 @@ def stats():
     function to return the count of all class objects
     """
     if request.method == 'GET':
-        response = {}
+        result = {}
         class_list = {
             "Amenity": "amenities",
             "City": "cities",
@@ -32,6 +32,6 @@ def stats():
             "State": "states",
             "User": "users"
         }
-        for key, value in class_list.items():
-            response[value] = storage.count(key)
-        return jsonify(response)
+        for key in class_list.keys():
+            result[key] = storage.count(result.get(key))
+        return jsonify(result)
