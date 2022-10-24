@@ -4,7 +4,7 @@ from api.v1.views import app_views
 from models.city import City
 from models import storage
 from models.place import Place
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 
 
 @app_views.route("/cities/<city_id>/places", strict_slashes=False,
@@ -41,7 +41,7 @@ def delete_place(place_id):
             abort(404)
         storage.delete(place)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
 
 
 @app_views.route("/cities/<city_id>/places", strict_slashes=False,
@@ -86,4 +86,5 @@ def put_place(place_id):
         if attr not in ["id", "user_id", "city_id",
                         "created_at", "updated_at"]:
             setattr(place, attr, val)
+    place.save()
     return jsonify(place.to_dict()), 200
