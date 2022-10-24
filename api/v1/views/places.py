@@ -29,9 +29,12 @@ def a_place(place_id):
         if not place:
             abort(404)
         return jsonify(place.to_dict())
-# @app_views.route("/places/<place_id>", strict_slashes=False,
-#                 methods=["DELETE"])
-# def delete_place(place_id):
+
+
+@app_views.route("/places/<place_id>", strict_slashes=False,
+                 methods=["DELETE"])
+def delete_place(place_id):
+    """deletes a place"""
     if request.method == "DELETE":
         place = storage.get(Place, place_id)
         if not place:
