@@ -60,13 +60,13 @@ class DBStorage:
         Return:
              The object based on the class name and its ID.
         """
-    CLASS = classes[cls.__name__]
-    if CLASS is None:
+        CLASS = classes[cls.__name__]
+        if CLASS is None:
+            return None
+        for value in self.all(CLASS).values():
+            if value.id == id:
+                return value
         return None
-    for value in self.all(CLASS).values():
-        if value.id == id:
-            return value
-    return None
 
     def new(self, obj):
         """add the object to the current database session"""
