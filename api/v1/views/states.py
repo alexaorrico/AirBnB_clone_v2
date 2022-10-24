@@ -21,5 +21,5 @@ def get_states(state_id=None):
     else:
         state = storage.get(state_id)
         if not state:
-           abort(404)
+            abort(404)
         return jsonify(state.to_dict())
