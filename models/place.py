@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#hi there
 """ holds class Place"""
 import models
 from models.base_model import BaseModel, Base
