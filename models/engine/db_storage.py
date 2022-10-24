@@ -81,4 +81,14 @@ class DBStorage:
 
     def count(self, cls=None):
         """query on the current database session"""
-        return self.__session.query(cls).count()
+        total = 0
+        if cls is None:
+            for clss in classes:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    total += 1
+        else:
+            objs = self.__session.query(cls).all()
+            for obj in objs:
+                total += 1
+        return total

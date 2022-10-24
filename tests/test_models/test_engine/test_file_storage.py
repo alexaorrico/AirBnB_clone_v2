@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -113,3 +114,62 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_fails(self):
+        """"Tests if method retrieves one object"""
+        storage = FileStorage()
+        self.assertIs(storage.get(User, "Geoff"), None)
+        self.assertEqual(storage.get(State, "California"), None)
+        self.assertEqual(storage.get(Review, "Fake key"), None)
+        self.assertEqual(storage.get(Amenity, "Not amenity"), None)
+        self.assertEqual(storage.get(Place, "Not a palce"), None)
+        self.assertEqual(storage.get(City, "State"), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_success(self):
+        """ test for successful object retrival """
+        storage = FileStorage()
+        new_state = State()
+        new_city = City()
+        new_state.save()
+        new_city.save()
+
+        found_city = storage.get(City, new_city.id)
+        found_state = storage.get(State, new_state.id)
+        wrong_city = storage.get(City, "1234")
+        wrong_state = storage.get(State, "12345")
+        self.assertEqual(found_state, new_state)
+        self.assertIs(found_state, new_state)
+        self.assertIsInstance(found_state, State)
+        self.assertNotEqual(found_state, None)
+        self.assertIsNot(found_state, None)
+
+        self.assertEqual(found_city, new_city)
+        self.assertIs(found_city, new_city)
+        self.assertIsInstance(found_city, City)
+        self.assertNotEqual(found_city, None)
+        self.assertIsNot(found_city, None)
+        new_state.delete()
+        new_city.delete()
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count(self):
+        """""Test if count method counts number of objects in storage"""
+        storage = FileStorage()
+        count = storage.count()
+        count_u = storage.count(User)
+        count_s = storage.count(State)
+        new_state = State(name='CT')
+        new_state.save()
+        new_user = User(email="new@fake.com", password="abc")
+        new_user.save()
+        self.assertEqual(storage.count(), count + 2)
+        self.assertNotEqual(storage.count(User), count_u)
+        self.assertIsInstance(storage.count(), int)
+        self.assertNotEqual(storage.count(State), count_s)
+        self.assertIsInstance(storage.count(State), int)
+        self.assertNotEqual(storage.count(), None)
+        self.assertEqual(storage.count(), storage.count(None))
+        new_user.delete()
+        new_state.delete()
