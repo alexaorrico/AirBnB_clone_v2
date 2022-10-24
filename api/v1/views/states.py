@@ -8,7 +8,7 @@ from models import storage
 
 @app_views.route("/states", strict_slashes=False,
                  methods=["GET"])
-def get_states(state_id=None):
+def get_states():
     """Retrieves all states"""
     states = storage.all(State)
     all_states = []
