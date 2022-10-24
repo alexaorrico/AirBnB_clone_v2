@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Boateng Bismark (bismarkb609@gmail.com)
+Boateng Bismark (bismarkb609@gmail.com) <br>
 Kingsley Ocran (ocrankingsley@gmail.com)
   
   
