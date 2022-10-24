@@ -1,63 +1,53 @@
 #!/usr/bin/python3
-"""
-Flask route that returns json status response
-"""
-from api.v1.views import app_views
+"""View for City objects that handles all default RESTFul API actions"""
 from flask import abort, jsonify, request
-from models import storage, CNC
-from flasgger.utils import swag_from
+from api.v1.views import app_views
+from models import storage
+from models.state import State
+from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
-@swag_from('swagger_yaml/cities_by_state.yml', methods=['GET', 'POST'])
-def cities_per_state(state_id=None):
-    """
-        cities route to handle http method for requested cities by state
-    """
-    state_obj = storage.get('State', state_id)
-    if state_obj is None:
-        abort(404, 'Not found')
+@app_views.route('/states/<string:state_id>/cities', methods=['GET', 'POST'], strict_slashes=False)
+def cities(state_id):
+    """Retrieves the list of all City objects of a State"""
+    state = storage.get('State', state_id)
 
+    if state is None:
+        abort(404)
     if request.method == 'GET':
-        all_cities = storage.all('City')
-        state_cities = [obj.to_json() for obj in all_cities.values()
-                        if obj.state_id == state_id]
-        return jsonify(state_cities)
-
-    if request.method == 'POST':
-        req_json = request.get_json()
-        if req_json is None:
-            abort(400, 'Not a JSON')
-        if req_json.get("name") is None:
-            abort(400, 'Missing name')
-        City = CNC.get("City")
-        req_json['state_id'] = state_id
-        new_object = City(**req_json)
-        new_object.save()
-        return jsonify(new_object.to_json()), 201
+        return jsonify(state.to_dict())
+    elif request.method == 'POST':
+        post = request.get_json()
+        if post is None or type(post) != dict:
+            return jsonify({'error': 'Not a JSON'}), 400
+        elif post.get('name') is None:
+            return jsonify({'error': 'Missing name'}), 400
+        new_state = City(state_id=state_id, **post)
+        new_state.save()
+        return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
-@swag_from('swagger_yaml/cities_id.yml', methods=['GET', 'DELETE', 'PUT'])
-def cities_with_id(city_id=None):
-    """
-        cities route to handle http methods for given city
-    """
-    city_obj = storage.get('City', city_id)
-    if city_obj is None:
-        abort(404, 'Not found')
-
+@app_views.route('/cities/<string:city_id>',
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+def get_city_id(city_id):
+    """Retrieves/Updates a city object"""
+    city = storage.get('City', city_id)
+    if city is None:
+        abort(404)
     if request.method == 'GET':
-        return jsonify(city_obj.to_json())
+        return jsonify(city.to_dict()), 200
 
-    if request.method == 'DELETE':
-        city_obj.delete()
-        del city_obj
+    elif request.method == 'DELETE':
+        storage.delete(city)
+        storage.save()
         return jsonify({}), 200
 
-    if request.method == 'PUT':
-        req_json = request.get_json()
-        if req_json is None:
-            abort(400, 'Not a JSON')
-        city_obj.bm_update(req_json)
-        return jsonify(city_obj.to_json()), 200
+    elif request.method == 'PUT':
+        put = request.get_json()
+        if put is None or type(put) != dict:
+            return jsonify({'error': 'Not a JSON'}), 400
+        for key, value in put.items():
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(city, key, value)
+                storage.save()
+        return jsonify(city.to_dict()), 200
