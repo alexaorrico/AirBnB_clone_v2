@@ -28,3 +28,15 @@ def a_place(place_id):
     if not place:
         abort(404)
     return jsonify(place.to_dict())
+
+
+@app_views.route("/places/<place_id>", strict_slashes=False,
+                 methods=["DELETE"])
+def delete_place(place_id):
+    """deletes a place"""
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    storage.delete(place)
+    storage.save()
+    return jsonify({}), 200
