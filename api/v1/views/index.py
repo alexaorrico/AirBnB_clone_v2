@@ -32,6 +32,6 @@ def stats():
             "State": "states",
             "User": "users"
         }
-          for key, value in class_list.items():
+        for key, value in class_list.items():
             result[value] = storage.count(key)
         return jsonify(response)
