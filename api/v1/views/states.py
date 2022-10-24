@@ -13,13 +13,13 @@ from models import storage
 def get_states(state_id=None):
     """Retrieves all states"""
     if not state_id:
-        states = storage.all(States)
+        states = storage.all(State)
         all_states = []
         for state in states.values():
             all_states.append(state.to_dict())
         return jsonify(all_states)
     else:
-        state = storage.get(state_id)
+        state = storage.get(State, state_id)
         if not state:
             abort(404)
         return jsonify(state.to_dict())
