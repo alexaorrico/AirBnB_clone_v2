@@ -32,12 +32,14 @@ def place_amenities(place_id):
 def place_amenities_id(place_id, amenity_id):
     """ Deletes or links an Amenity object to a Place. """
     place = storage.get(Place, place_id)
-    amenity = storage.get(Amenity, amenity_id)
-
-    if not place or not amenity:
+    if not place:
         abort(404)
 
-    if request.methods == 'DELETE':
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
+        abort(404)
+
+    if request.method == 'DELETE':
         if getenv("HBNB_TYPE_STORAGE") == 'db':
             if amenity not in place.amenities:
                 abort(404)
@@ -50,7 +52,7 @@ def place_amenities_id(place_id, amenity_id):
         storage.save()
         return make_response(jsonify({}), 200)
 
-    if request.methods == 'POST':
+    if request.method == 'POST':
         if getenv("HBNB_TYPE_STORAGE") == 'db':
             if amenity not in place.amenities:
                 place.amenities.append(amenity)
