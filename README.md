@@ -163,4 +163,4 @@ Public Domain. No copy write protection.
 
 ## Author for RESTful API
 Leulseged Bekele - [Github](https://github.com/leul1992) / [Linkedin](https://www.linkedin.com/in/leulseged-ayalew-352a461a0)
-Yohannis Aweke - [Github](https://github.com/jooon2994) / [Linkedin](www.linkedin.com/in/yohannis-aweke-b59416251)
+Yohannis Aweke - [Github](https://github.com/jooon2994) / [Linkedin](www.linkedin.com/in/yohannis-aweke-y1994)
