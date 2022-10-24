@@ -14,7 +14,7 @@ class DBStorage:
     """
         handles long term storage of all class instances
     """
-    CNC = {
+    Classes = {
         'Amenity': amenity.Amenity,
         'City': city.City,
         'Place': place.Place,
@@ -48,13 +48,13 @@ class DBStorage:
         """
         obj_dict = {}
         if cls is not None:
-            a_query = self.__session.query(DBStorage.CNC[cls])
+            a_query = self.__session.query(DBStorage.Classes[cls])
             for obj in a_query:
                 obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
                 obj_dict[obj_ref] = obj
             return obj_dict
 
-        for c in DBStorage.CNC.values():
+        for c in DBStorage.Classes.values():
             a_query = self.__session.query(c)
             for obj in a_query:
                 obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
@@ -91,7 +91,7 @@ class DBStorage:
         """
            deletes all stored objects, for testing purposes
         """
-        for c in DBStorage.CNC.values():
+        for c in DBStorage.Classes.values():
             a_query = self.__session.query(c)
             all_objs = [obj for obj in a_query]
             for obj in range(len(all_objs)):
