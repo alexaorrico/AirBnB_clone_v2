@@ -30,7 +30,7 @@ def get_single_amenity(id):
                  strict_slashes=False)
 def del_amenity(id):
     """ delete an instance of amenity """
-    if requestt.method == 'DELETE':
+    if request.method == 'DELETE':
         amenity = storage.get(Amenity, id)
         if amenity is None:
             abort(404)
@@ -43,7 +43,7 @@ def del_amenity(id):
                  strict_slashes=False)
 def add_amenity():
     """ create an instance of amenity """
-    if reqeust.method == 'POST':
+    if request.method == 'POST':
         if not request.get_json():
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         body = request.get_json()
