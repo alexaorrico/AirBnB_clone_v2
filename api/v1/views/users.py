@@ -55,7 +55,6 @@ def add_user():
         return make_response(jsonify(new_user.to_dict()), 201)
 
 
-
 @app_views.route('/users/<string:id>', methods=['PUT'],
                  strict_slashes=False)
 def update_user(id):
