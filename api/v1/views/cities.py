@@ -10,7 +10,7 @@ from models.city import City
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def handle_cities(city_id):
+def handle_city_id(city_id):
     """ Retrieves, updates or deletes a city object given its id. """
     city = storage.get(City, city_id)
     if not city:
@@ -26,14 +26,15 @@ def handle_cities(city_id):
 
     if request.method == 'PUT':
         req_data = request.get_json()
-    if not req_data:
-        abort(400, description='Not a JSON')
+        if not req_data:
+            abort(400, description='Not a JSON')
 
-    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
+        ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
 
-    for key, value in req_data.items():
-        if key not in ignore_keys:
-            setattr(city, key, value)
+        for key, value in req_data.items():
+            if key not in ignore_keys:
+                setattr(city, key, value)
+
         storage.save()
         return make_response(jsonify(city.to_dict()), 200)
 
@@ -60,7 +61,7 @@ def state_cities(state_id):
         if "name" not in req_data:
             abort(400, description="Missing name")
 
-        req_data[state_id] = state_id
+        req_data['state_id'] = state_id
         city = City(**req_data)
         city.save()
         return make_response(jsonify(city.to_dict()), 201)
