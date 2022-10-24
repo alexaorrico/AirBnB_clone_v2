@@ -56,11 +56,13 @@ def place_amenities_id(place_id, amenity_id):
         if getenv("HBNB_TYPE_STORAGE") == 'db':
             if amenity not in place.amenities:
                 place.amenities.append(amenity)
-            return make_response(jsonify(amenity.to_dict()), 200)
+            else:
+                return make_response(jsonify(amenity.to_dict()), 200)
         else:
             if amenity_id not in place.amenity_ids:
                 place.amenity_ids.append(amenity_id)
-            return make_response(jsonify(amenity.to_dict()), 200)
+            else:
+                return make_response(jsonify(amenity.to_dict()), 200)
 
         storage.save()
         return make_response(jsonify(amenity.to_dict()), 201)
