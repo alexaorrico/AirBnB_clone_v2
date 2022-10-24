@@ -5,9 +5,9 @@ Contains the TestStateDocs classes
 
 from datetime import datetime
 import inspect
-import models
 from models import state
 from models.base_model import BaseModel
+import os
 import pep8
 import unittest
 State = state.State
@@ -59,6 +59,8 @@ class TestStateDocs(unittest.TestCase):
 
 class TestState(unittest.TestCase):
     """Test the State class"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_is_subclass(self):
         """Test that State is a subclass of BaseModel"""
         state = State()
@@ -66,27 +68,33 @@ class TestState(unittest.TestCase):
         self.assertTrue(hasattr(state, "id"))
         self.assertTrue(hasattr(state, "created_at"))
         self.assertTrue(hasattr(state, "updated_at"))
+        del state
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_name_attr(self):
         """Test that State has attribute name, and it's as an empty string"""
         state = State()
         self.assertTrue(hasattr(state, "name"))
-        if models.storage_t == 'db':
-            self.assertEqual(state.name, None)
-        else:
-            self.assertEqual(state.name, "")
+        self.assertEqual(state.name, "")
+        del state
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         s = State()
         new_d = s.to_dict()
         self.assertEqual(type(new_d), dict)
-        self.assertFalse("_sa_instance_state" in new_d)
         for attr in s.__dict__:
             if attr is not "_sa_instance_state":
-                self.assertTrue(attr in new_d)
+                with self.subTest(attr=attr):
+                    self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
+        del s
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
@@ -97,9 +105,13 @@ class TestState(unittest.TestCase):
         self.assertEqual(type(new_d["updated_at"]), str)
         self.assertEqual(new_d["created_at"], s.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], s.updated_at.strftime(t_format))
+        del s
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_str(self):
         """test that the str method has the correct output"""
         state = State()
         string = "[State] ({}) {}".format(state.id, state.__dict__)
         self.assertEqual(string, str(state))
+        del state
