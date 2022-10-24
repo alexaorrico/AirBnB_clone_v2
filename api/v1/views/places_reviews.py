@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ New view for review object that handles all
 default RESTFul API actions. """
-
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 from models import storage
@@ -12,7 +11,7 @@ from models.review import Review
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def handle_reviews(review_id):
+def handle_review_id(review_id):
     """ Retrieves, updates or deletes a review object given its id. """
     review = storage.get(Review, review_id)
     if not review:
@@ -36,6 +35,7 @@ def handle_reviews(review_id):
         for key, value in req_data.items():
             if key not in ignore_keys:
                 setattr(review, key, value)
+
         storage.save()
         return make_response(jsonify(review.to_dict()), 200)
 
@@ -52,7 +52,7 @@ def place_reviews(place_id):
 
     if request.method == 'GET':
         list_reviews = [review.to_dict() for review in place.reviews]
-        return jsonify(list_places)
+        return jsonify(list_reviews)
 
     if request.method == 'POST':
         req_data = request.get_json()

@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ New view for amenities object that handles all
 default RESTFul API actions. """
-
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 from models import storage
@@ -11,7 +10,8 @@ from models.amenity import Amenity
 @app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
 def handle_amenities():
     """ Retrieves the list of all Amenity objects
-    or creates a new one. """
+    or creates a new one.
+    """
     if request.method == 'GET':
         all_amenities = storage.all(Amenity).values()
         list_amenities = [amenity.to_dict() for amenity in all_amenities]
@@ -22,7 +22,7 @@ def handle_amenities():
         if not req_data:
             abort(400, description="Not a JSON")
 
-        if "name" not in req_data:
+        if 'name' not in req_data:
             abort(400, description="Missing name")
 
         amenity = Amenity(**req_data)

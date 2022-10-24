@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ New view for users object that handles all
 default RESTFul API actions. """
-
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 from models import storage
@@ -10,8 +9,9 @@ from models.user import User
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def handle_users():
-    """ Retrieves the list of all User objects and/or
-    creates a new one. """
+    """ Retrieves the list of all User objects.
+    Creates a new user.
+    """
     if request.method == 'GET':
         all_users = storage.all(User).values()
         list_users = [user.to_dict() for user in all_users]
@@ -60,5 +60,6 @@ def handle_user_id(user_id):
         for key, value in req_data.items():
             if key not in ignore_keys:
                 setattr(user, key, value)
+
         storage.save()
         return make_response(jsonify(user.to_dict()), 200)
