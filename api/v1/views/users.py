@@ -73,4 +73,3 @@ def update_user(user_id):
         setattr(user, key, request_data[key])
     user.save()
     return jsonify(user.to_dict()), 200
-    

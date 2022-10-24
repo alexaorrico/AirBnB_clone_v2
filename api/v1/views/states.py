@@ -65,4 +65,3 @@ def update_state(state_id):
         setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict()), 200
-    

@@ -153,4 +153,3 @@ def places_search():
     # for i in results:
     # print(results)
     return jsonify(results)
-    

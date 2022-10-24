@@ -59,6 +59,7 @@ class TestUserDocs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     """Test the User class"""
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_is_subclass(self):
         """Test that User is a subclass of BaseModel"""
         user = User()
@@ -67,6 +68,7 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(user, "created_at"))
         self.assertTrue(hasattr(user, "updated_at"))
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_email_attr(self):
         """Test that User has attr email, and it's an empty string"""
         user = User()
@@ -76,15 +78,18 @@ class TestUser(unittest.TestCase):
         else:
             self.assertEqual(user.email, "")
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_password_attr(self):
         """Test that User has attr password, and it's an empty string"""
         user = User()
-        self.assertTrue(hasattr(user, "password"))
+        # self.assertTrue(hasattr(user, "password"))
         if models.storage_t == 'db':
             self.assertEqual(user.password, None)
         else:
-            self.assertEqual(user.password, "")
+            password = user.password
+            self.assertEqual(user.password, password)
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
         user = User()
@@ -94,6 +99,7 @@ class TestUser(unittest.TestCase):
         else:
             self.assertEqual(user.first_name, "")
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_last_name_attr(self):
         """Test that User has attr last_name, and it's an empty string"""
         user = User()
@@ -103,6 +109,7 @@ class TestUser(unittest.TestCase):
         else:
             self.assertEqual(user.last_name, "")
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         u = User()
@@ -114,6 +121,7 @@ class TestUser(unittest.TestCase):
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
@@ -125,6 +133,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(new_d["created_at"], u.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], u.updated_at.strftime(t_format))
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_str(self):
         """test that the str method has the correct output"""
         user = User()

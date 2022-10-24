@@ -86,4 +86,3 @@ def update_review(review_id):
         setattr(review, key, request_data[key])
     review.save()
     return jsonify(review.to_dict()), 200
-    

@@ -12,6 +12,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -55,7 +56,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -65,31 +66,29 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
 
-    def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
-        self.reload()
+    def get(self, cls, id):
+        """Method to retrive one object return object
+        based on the class and its ID"""
+        from models import storage
 
-    def get(self, cls=None, id=None):
-        """Returns obj based on class name and its ID"""
-        if cls is not None and id is not None:
-            for v in self.__objects.values():
-                if cls == v.__class__ or cls == v.__class__.__name__:
-                    if v.id == id:
-                        return v
-
+        for key, value in storage.all(cls).items():
+            if (value.id == id):
+                return value
         return None
 
     def count(self, cls=None):
-        """Returns the amount of objects"""
-        count = 0
-        if cls is not None and cls in classes:
-            for v in self.__objects.values():
-                if cls == v.__class__ or cls == v.__class__.__name__:
-                    count += 1
-        else:
-            for i in self.__objects.values():
-                count += 1
+        """Returns number of objects in storage matching the given class
+        if no class passed returns the count of all objects in storage"""
+        from models import storage
 
-        return count
-        
-        
+        if cls is None:
+            n = 0
+            for obj in classes.values():
+                n = n + len(storage.all(obj).values())
+        else:
+            n = len(storage.all(cls).values())
+        return n
+
+    def close(self):
+        """call reload() method for deserializing the JSON file to objects"""
+        self.reload()

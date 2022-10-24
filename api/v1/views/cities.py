@@ -89,4 +89,3 @@ def update_city(city_id):
         setattr(city, key, request_data[key])
     city.save()
     return jsonify(city.to_dict()), 200
-    
