@@ -18,3 +18,12 @@ def get_places(city_id):
     for place in city.places:
         all_places.append(place.to_dict())
     return jsonify(all_places)
+
+@app_views.route("/places/<place_id>", strict_slashes=True,
+                 methods=["GET"])
+def a_place(place_id):
+    """retrieves a place"""
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    return jsonify(place.to_dict())
