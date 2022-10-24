@@ -49,13 +49,14 @@ def post_place(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    if not request.json():
+    if not request.get_json():
         abort(400, description="Not a JSON")
-    data = request.json()
+    data = request.get_json()
     if 'user_id' not in data:
         abort(400, description="Missing user_id")
     if 'name' not in data:
         abort(400, description="Missing name")
     place = Place(**data)
+    place.city_id = city.id
     place.save()
     return jsonify(place.to_dict())
