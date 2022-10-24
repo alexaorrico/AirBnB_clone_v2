@@ -154,8 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Olyad - [Github](https://github.com/OL-YAD)   
-Getacher - [Github]() 
+Olyad - [Github](https://github.com/OL-YAD) 
+Getacher - [Github](https://github.com/GetacherD) 
 
 Second part of Airbnb: Joann Vuong
 ## License
