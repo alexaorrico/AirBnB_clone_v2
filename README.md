@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Chioma Udoh - [Github](https://github.com/Chioma2000) / [Twitter](https://twitter.com/jozinnachioma)
+Efa-Iwa Eleng - [Github](https://github.com/efaeleng) / [Twitter](https://twitter.com/efaeleng)
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
