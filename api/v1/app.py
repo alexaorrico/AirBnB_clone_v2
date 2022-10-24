@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """app.py to connect to API"""
+
+
 from os import getenv
 from models import storage
 from api.v1.views import app_views
@@ -22,6 +24,7 @@ def teardown_appcontext(code):
 @app.errorhandler(404)
 def page_not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
     app.run(host=getenv('HBNB_API_HOST'),
