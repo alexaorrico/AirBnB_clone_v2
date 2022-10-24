@@ -60,7 +60,7 @@ def add_amenity():
                  strict_slashes=False)
 def update_amenity(id):
     """ update an instance of amenity """
-    if request.method  == 'PUT':
+    if request.method == 'PUT':
         amenity = storage.get(Amenity, id)
         if amenity is None:
            abort(404)
