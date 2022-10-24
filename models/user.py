@@ -6,7 +6,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-
+from hashlib import md5
 
 class User(BaseModel, Base):
     """Representation of a user """
@@ -18,8 +18,16 @@ class User(BaseModel, Base):
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
-        places = relationship("Place", backref="user")
-        reviews = relationship("Review", backref="user")
+        places = relationship("Place",
+				cascade="all,delete", 
+				backref=backref("user"),
+				passive_deletes=True,
+				single_parent=True)
+        reviews = relationship("Review",
+				backref=backref("user")
+				cascade="all,delete",
+				passive_deletes=True,
+				single_parent=True)
     else:
         email = ""
         password = ""
@@ -28,4 +36,12 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
+	"""if "password" in kwargs:
+            kwargs["password"] = \
+                md5(kwargs["password"].encode('utf-8')).digest()"""
         super().__init__(*args, **kwargs)
+    def __setattr__(self, att_name, value):
+        """setattr for encrypt on new password"""
+        if att_name == "password":
+            value = md5(value.encode()).hexdigest()
+        super().__setattr__(att_name, value)
