@@ -405,7 +405,7 @@ class TestHBNBcmdFunc(unittest.TestCase):
         try:
             self.obj
             self.assertTrue(False)
-        except:
+        except FileNotFoundError:
             self.assertIsNone(None)
 
 
@@ -482,7 +482,7 @@ class TestHBNBcmdDotNotation(unittest.TestCase):
         try:
             self.obj2
             self.assertTrue(False)
-        except:
+        except FileNotFoundError:
             self.assertIsNone(None)
 
 
