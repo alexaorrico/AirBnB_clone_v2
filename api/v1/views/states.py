@@ -9,7 +9,6 @@ from models import storage, Classes
 
 
 @app_views.route('/states', methods=['GET', 'POST'])
-@swag_from('swagger_yaml/states_no_id.yml', methods=['GET', 'POST'])
 def states_no_id():
     """
         states route to handle http method for requested states no id provided
@@ -32,7 +31,6 @@ def states_no_id():
 
 
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
-@swag_from('swagger_yaml/states_id.yml', methods=['PUT', 'GET', 'DELETE'])
 def states_with_id(state_id=None):
     """
         states route to handle http method for requested state by id
