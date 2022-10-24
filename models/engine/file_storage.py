@@ -10,6 +10,18 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
+#!/usr/bin/python3
+"""
+Contains the FileStorage class
+"""
+
+import json
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 from models.user import User
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -68,3 +80,15 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """ fetch a specified object from file """
+        for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    if value.id == id:
+                        return value
+        return None
+
+    def count(self, cls=None):
+        """ count number of objects """
+        return len(self.all(cls))
