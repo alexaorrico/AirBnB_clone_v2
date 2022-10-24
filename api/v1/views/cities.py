@@ -11,37 +11,40 @@ from models.city import City
                  strict_slashes=False)
 def get_city_by_state(id):
     """ get all instances of city linkedto a state"""
-    state = storage.get(State, id)
-    cities = storage.all(City)
-    if state is None:
-        abort(404)
-    values = []
-    for value in cities.values():
-        if value.state_id == state.id:
-            values.append(value.to_dict())
-    return jsonify(values)
+    if request.method == 'GET':
+        state = storage.get(State, id)
+        cities = storage.all(City)
+        if state is None:
+            abort(404)
+        values = []
+        for value in cities.values():
+            if value.state_id == state.id:
+                values.append(value.to_dict())
+        return jsonify(values)
 
 
 @app_views.route('cities/<string:id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(id):
     """ get an instance of city """
-    city = storage.get(City, id)
-    if city is None:
-        abort(404)
-    return jsonify(city.to_dict())
+    if request.method == 'GET':
+        city = storage.get(City, id)
+        if city is None:
+            abort(404)
+        return jsonify(city.to_dict())
 
 
 @app_views.route('cities/<string:id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_city(id):
     """delete an instance of city class"""
-    city = storage.get(City, id)
-    if city is None:
-        abort(404)
-    storage.delete(city)
-    storage.save()
-    return make_response(jsonify({}), 200)
+    if request.method == 'DELETE':
+        city = storage.get(City, id)
+        if city is None:
+            abort(404)
+        storage.delete(city)
+        storage.save()
+        return make_response(jsonify({}), 200)
 
 
 @app_views.route('states/<string:id>/cities', methods=['POST'],
