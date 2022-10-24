@@ -38,6 +38,7 @@ def handle_city_id(city_id):
         storage.save()
         return make_response(jsonify(city.to_dict()), 200)
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def state_cities(state_id):

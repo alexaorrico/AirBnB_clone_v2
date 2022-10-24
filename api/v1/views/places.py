@@ -39,6 +39,7 @@ def handle_place_id(place_id):
         storage.save()
         return make_response(jsonify(place.to_dict()), 200)
 
+
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'],
                  strict_slashes=False)
 def city_places(city_id):

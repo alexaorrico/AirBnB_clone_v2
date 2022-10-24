@@ -32,6 +32,7 @@ def handle_users():
         user.save()
         return make_response(jsonify(user.to_dict()), 201)
 
+
 @app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def handle_user_id(user_id):
