@@ -51,13 +51,13 @@ def post_place(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    data = request.get_json()
-    if not data:
+    if not request.get_json():
         abort(400, description="Not a JSON")
-    if 'user_id' not in data:
+    if 'user_id' not in request.get_json():
         abort(400, description="Missing user_id")
-    if 'name' not in data:
+    if 'name' not in request.get_json():
         abort(400, description="Missing name")
+    data = request.get_json()
     place = Place(**data)
     place.city_id = city.id
     place.save()
@@ -71,12 +71,12 @@ def put_place(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    data = request.get_json()
-    if not data:
+    if not request.get_json():
         abort(400, description="Not a JSON")
+    data = request.get_json()
+    ignores = ["id", "user_id", "city_id", "created_at", "updated_at"]
     for attr, val in data.items():
-        if attr not in ["id", "user_id", "city_id",
-                        "created_at", "updated_at"]:
+        if attr not in ignores:
             setattr(place, attr, val)
     place.save()
     return jsonify(place.to_dict()), 200
