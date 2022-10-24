@@ -6,9 +6,9 @@ from api.v1.views import app_views
 from flask import jsonify
 
 
-
 classes = {Amenity: "amenities", City: "cities", Place: "places",
            Review: "reviews", State: "states", User: "users"}
+
 
 @app.route('/status', methods=['GET'], strict_slashes=False)
 def status_code():
@@ -18,6 +18,7 @@ def status_code():
     status = {"status": "OK"}
     response = jsonify(status)
     return response
+
 
 @app_views.route("/stats", strict_slashes=False)
 def count_objects():
