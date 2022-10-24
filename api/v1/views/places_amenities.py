@@ -5,12 +5,12 @@ that handles all default RESTFul API actions.
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 from models import storage
-from models.places import Place
-from models.amenities import Amenity
+from models.place import Place
+from models.amenity import Amenity
 from os import getenv
 
 
-@app_views.route('/api/v1/places/<place_id>/amenities', methods=['GET'],
+@app_views.route('/places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
 def place_amenities(place_id):
     """ Retrieves the list of all Amenity objects of a Place. """
@@ -27,7 +27,7 @@ def place_amenities(place_id):
     return jsonify(list_amenities)
 
 
-@app_views.route('/api/v1/places/<place_id>/amenities/<amenity_id>',
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE', 'POST'], strict_slashes=False)
 def place_amenities_id(place_id, amenity_id):
     """ Deletes or links an Amenity object to a Place. """
