@@ -13,7 +13,7 @@ from flask import Flask, make_response, jsonify, request
 from werkzeug.exceptions import BadRequest, NotFound
 
 
-@app_views.route('amenities', methods=['GET'])
+@app_views.route('/amenities', methods=['GET'])
 def all_amenities():
     """
     Retrieves the list of all Amenity objects
@@ -29,7 +29,7 @@ def all_amenities():
     return make_response(jsonify(amenities_list), 200)
 
 
-@app_views.route('amenities/<amenity_id>', methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def single_amenity(amenity_id):
     """
     Retrieves a specified Amenity object.
@@ -52,7 +52,7 @@ def single_amenity(amenity_id):
     return make_response(jsonify(amenity.to__dict()), 200)
 
 
-@app_views.route('amenities/<amenity_id>', methods=['DELETE'])
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenity(amenity_id):
     """
     Deletes a specified Amenity object.
@@ -79,7 +79,7 @@ def delete_amenity(amenity_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('amenities/', methods=['POST'])
+@app_views.route('/amenities/', methods=['POST'])
 def add_amenity():
     """
     Creates a new Amenity object.
@@ -105,7 +105,7 @@ def add_amenity():
     return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('amenities/<amenity_id>', methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update_amenity(amenity_id):
     """
     Update a specified Amenity object.
