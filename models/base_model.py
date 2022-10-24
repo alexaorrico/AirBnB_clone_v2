@@ -60,17 +60,22 @@ class BaseModel:
 
     def to_dict(self,save_fs=None):
         """returns a dictionary containing all keys/values of the instance"""
-        new_dict = self.__dict__.copy()
+      new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
-            new_dict["created_at"] = new_dict["created_at"].strftime(time)
+            new_dict["created_at"] = new_dict["created_at"].isoformat()
         if "updated_at" in new_dict:
-            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
+            new_dict["updated_at"] = new_dict["updated_at"].isoformat()
+        if '_password' in new_dict:
+            new_dict['password'] = new_dict['_password']
+            new_dict.pop('_password', None)
+        if 'amenities' in new_dict:
+            new_dict.pop('amenities', None)
+        if 'reviews' in new_dict:
+            new_dict.pop('reviews', None)
         new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
-        if save_fs is None:
-            if 'password' in new_dict:
-                del new_dict['password']
+        new_dict.pop('_sa_instance_state', None)
+        if not save_to_disk:
+            new_dict.pop('password', None)
         return new_dict
 
     def delete(self):
