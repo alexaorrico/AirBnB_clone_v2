@@ -60,7 +60,7 @@ def add_city_linked_to_state(id):
         body = request.get_json()
         if "name" not in body:
             return make_response(jsonify({"error": "Missing name"}), 400)
-        body.update({'state_id': id})
+        setattr(body, 'state_id', id)
         new_city = City(**body)
         new_city.save()
         return make_response(jsonify(new_city.to_dict()), 201)
