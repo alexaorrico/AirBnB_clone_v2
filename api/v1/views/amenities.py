@@ -115,7 +115,7 @@ def update_amenity(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     
     if not request.get_json:
-        return make_response("Not a JSON", 400)
+        return make_response('Not a JSON', 400)
     
     if amenity is None:
         raise NotFound
