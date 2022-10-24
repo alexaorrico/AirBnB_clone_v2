@@ -4,7 +4,7 @@
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage, CNC
+from models import storage, Classes
 from flasgger.utils import swag_from
 
 
@@ -28,7 +28,7 @@ def users_no_id(user_id=None):
             abort(400, 'Missing email')
         if req_json.get('password') is None:
             abort(400, 'Missing password')
-        User = CNC.get('User')
+        User = Classes.get('User')
         new_object = User(**req_json)
         new_object.save()
         return jsonify(new_object.to_json()), 201

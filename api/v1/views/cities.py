@@ -4,7 +4,7 @@ Flask route that returns json status response
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage, CNC
+from models import storage, Classes
 from flasgger.utils import swag_from
 
 
@@ -30,7 +30,7 @@ def cities_per_state(state_id=None):
             abort(400, 'Not a JSON')
         if req_json.get("name") is None:
             abort(400, 'Missing name')
-        City = CNC.get("City")
+        City = Classes.get("City")
         req_json['state_id'] = state_id
         new_object = City(**req_json)
         new_object.save()

@@ -5,7 +5,7 @@ Flask route that returns json status response
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from flasgger.utils import swag_from
-from models import storage, CNC
+from models import storage, Classes
 from os import environ
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
@@ -38,7 +38,7 @@ def places_per_city(city_id=None):
             abort(404, 'Not found')
         if req_json.get("name") is None:
             abort(400, 'Missing name')
-        Place = CNC.get("Place")
+        Place = Classes.get("Place")
         req_json['city_id'] = city_id
         new_object = Place(**req_json)
         new_object.save()
