@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" This module retrieves state objects
+"""
+This module contains a view for User object that handles all default
+RESTful API actions(basically CRUD operations)
 """
 
 from api.v1.views import app_views
