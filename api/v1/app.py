@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""to connect to API"""
+"""app.py to connect to API"""
 import os
 from models import storage
 from api.v1.views import app_views
