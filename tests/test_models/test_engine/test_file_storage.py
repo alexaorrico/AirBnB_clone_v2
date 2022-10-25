@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -32,14 +32,14 @@ class TestFileStorageDocs(unittest.TestCase):
 
     def test_pep8_conformance_file_storage(self):
         """Test that models/engine/file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
@@ -113,3 +113,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+@unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+class TestFileStorageGetCount(unittest.TestCase):
+    """Tests for get and count methods"""
+
+    def test_get(self):
+        """Tests for get method."""
+        s = State(name="California")
+        s.save()
+        self.assertIs(s, models.storage.get(State, s.id))
+        self.assertIs(None, models.storage.get(State, "fake_id"))
+
+    def test_count_method(self):
+        """Tests for count method"""
+        self.assertEqual(models.storage.count(State),
+                         len(models.storage.all(State)))
+        current = models.storage.count(State)
+        s = State(name="Texas")
+        s.save()
+        self.assertEqual(models.storage.count(State), current + 1)
