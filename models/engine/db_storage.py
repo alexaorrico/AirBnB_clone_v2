@@ -52,8 +52,10 @@ class DBStorage:
         return (new_dict)
 
     def get(self, cls, id):
-        """Retrieves a object matching the class and ID"""
-        if cls is None:
+        """
+        Retrieves a object matching the class and ID
+        """
+        if cls not in classes.values():
             return None
 
         objs = self.all(cls)
