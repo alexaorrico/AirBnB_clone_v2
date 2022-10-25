@@ -20,6 +20,12 @@ def shutdown(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """Return error in JSON and status"""
+    return make_response(jsonify({"error":"Not Found"}), 404)
+
+
 if __name__ == "__main__":
     host = getenv('HBNB_API_HOST')
     port = getenv('HBNB_API_PORT')
