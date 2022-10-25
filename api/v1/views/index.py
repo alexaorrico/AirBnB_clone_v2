@@ -30,6 +30,5 @@ def count():
               }
     all_count = {}
     for i, j in all_cls.items():
-        if storage.count(j) > 0:
-            all_count[i] = storage.count(j)
+        all_count[i] = storage.count(j)
     return jsonify(all_count)
