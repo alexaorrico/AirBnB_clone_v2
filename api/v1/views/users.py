@@ -3,7 +3,8 @@
 a new view for User object that handles
 all default RESTFul API actions
 """
-import json
+
+
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -11,7 +12,7 @@ from flask import Flask, make_response, jsonify, request
 from werkzeug.exceptions import BadRequest, NotFound
 
 
-@app_views.route('/users', methods=['GET'])
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 def all_users():
     """
     Retrieves the list of all User objects
@@ -27,7 +28,7 @@ def all_users():
     return make_response(jsonify(list), 200)
 
 
-@app_views.route('/users/<user_id>', methods=['GET'])
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def single_user(user_id):
     """
     Retrieves a specified User object.
@@ -50,7 +51,7 @@ def single_user(user_id):
     return make_response(jsonify(user.to__dict()), 200)
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'])
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """
     Deletes a specified User object.
@@ -77,7 +78,7 @@ def delete_user(user_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/users', methods=['POST'])
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
 def add_user():
     """
     Creates a new User object.
@@ -106,7 +107,7 @@ def add_user():
     return make_response(jsonify(user.to_dict()), 201)
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'])
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
     """
     Update a specified Amenity object.

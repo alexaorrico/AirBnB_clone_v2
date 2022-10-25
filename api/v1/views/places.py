@@ -3,7 +3,8 @@
 a new view for Place objects that handles
 all default RESTFul API actions:
 """
-import json
+
+
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -13,7 +14,7 @@ from flask import Flask, make_response, jsonify, request
 from werkzeug.exceptions import BadRequest, NotFound
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
 def all_places(city_id):
     """
     he list of all Place objects of a City:
@@ -41,7 +42,7 @@ def all_places(city_id):
     return make_response(jsonify(place_list), 200)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def single_place(place_id):
     """
     Retrieves a specified Placeobject.
@@ -64,7 +65,7 @@ def single_place(place_id):
     return make_response(jsonify(place.to__dict()), 200)
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
     """
     Deletes a specified Place object.
@@ -91,7 +92,7 @@ def delete_place(place_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'])
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def add_place(city_id):
     """
     Creates a new Place object.
@@ -132,7 +133,7 @@ def add_place(city_id):
     return make_response(jsonify(place.to_dict()), 201)
 
 
-@app_views.route('/places/<place_id>', methods=['PUT'])
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
     """
     Update a specified  Place object.
