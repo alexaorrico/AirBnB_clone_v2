@@ -39,7 +39,7 @@ def post_place_review(place_id):
     data = request.get_json()
     new = Review(**data)
     new.save()
-    return make_response(jsonify(new.to_dict()), 201)
+    return jsonify(new.to_dict()), 201
 
 
 @app_views.route("/reviews/<review_id>", strict_slashes=False,
