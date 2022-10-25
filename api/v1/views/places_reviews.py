@@ -28,15 +28,15 @@ def post_place_review(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    data = request.get_json()
-    if not data:
+    if not request.get_json():
         abort(400, description="Not a JSON")
-    if "user_id" not in data.keys():
+    if "user_id" not in request.get_json():
         abort(400, description="Missing user_id")
-    if not storage.get(User, data["user_id"]):
+    if not storage.get(User, request.get_json()['user_id']):
         abort(404)
-    if "text" not in data.keys():
+    if "text" not in request.get_json():
         abort(400, description="Missing text")
+    data = request.get_json()
     new = Review(**data)
     new.save()
     return make_response(jsonify(new.to_dict()), 201)
