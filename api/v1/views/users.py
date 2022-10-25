@@ -12,7 +12,7 @@ from models.user import User
 
 @app_views.route("/users", methods=["GET"], strict_slashes=False)
 def get_all_users():
-    """This method gets all instances of user"""
+    """ This method gets all instances of user """
     users_list = storage.all("User")
     all_users = []
     for obj in users_list.values():
@@ -22,7 +22,7 @@ def get_all_users():
 
 @app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
 def get_user_by_id(user_id):
-    """This function gets a user by id."""
+    """ This function gets a user by id """
     user = storage.get("User", user_id)
     if not user:
         abort(404, "Not found")
@@ -33,7 +33,7 @@ def get_user_by_id(user_id):
     "/users/<user_id>", methods=["DELETE"], strict_slashes=False
 )
 def delete_user_by_id(user_id):
-    """This function deletes a user by id"""
+    """ This function deletes a user by id """
     user = storage.get("User", user_id)
     if not user:
         abort(404, "Not found")
@@ -44,7 +44,7 @@ def delete_user_by_id(user_id):
 
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user_by_id():
-    """This function creates a new user"""
+    """ This function creates a new user """
     new_user = request.get_json()
     if not new_user:
         abort(400, "Not a JSON")
@@ -62,7 +62,7 @@ def create_user_by_id():
 
 @app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
 def update_user_by_id(user_id):
-    """This function updates user by its id."""
+    """ This function updates user by its id """
     user = storage.get("User", user_id)
     if not user:
         abort(404, "Not found")
