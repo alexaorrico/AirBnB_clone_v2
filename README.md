@@ -155,5 +155,5 @@ No known bugs at this time.
 
 ## Authors
 Koketso Malatji,
-Ayikobua Ferdinant
+My partner didn't contribute anything towards the project
 
