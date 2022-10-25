@@ -12,7 +12,7 @@ from models.place import Place
                  strict_slashes=False)
 def get_place_amenities(place_id):
     """Fetch place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     amenities = []
@@ -29,8 +29,8 @@ def get_place_amenities(place_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_place_amenity(place_id, amenity_id):
     """Delete an amenity object from a place"""
-    place = storage.get("Place", place_id)
-    amenity = storage.get("Amenity", amenity_id)
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
     if place is None or amenity is None:
         abort(404)
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
@@ -48,8 +48,8 @@ def delete_place_amenity(place_id, amenity_id):
                  methods=['POST'], strict_slashes=False)
 def post_place_amenity(place_id, amenity_id):
     """Add an amenity object to a place"""
-    place = storage.get("Place", place_id)
-    amenity = storage.get("Amenity", amenity_id)
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
     if place is None or amenity is None:
         abort(404)
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
