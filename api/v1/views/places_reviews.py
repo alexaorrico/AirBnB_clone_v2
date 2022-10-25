@@ -6,11 +6,11 @@ all default RESTFul API actions:
 
 
 from api.v1.views import app_views
+from flask import Flask, make_response, jsonify, request
 from models import storage
 from models.user import User
 from models.place import Place
 from models.review import Review
-from flask import Flask, make_response, jsonify, request
 from werkzeug.exceptions import BadRequest, NotFound
 
 
