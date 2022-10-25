@@ -64,8 +64,9 @@ class FileStorage:
         number_of_obj = 0
 
         for key, value in self.__objects.items():
-            if not cls or cls == value.__class__
-            or cls == value.__class__.__name__:
+            if cls == value.__class__ or cls == value.__class__.__name__:
+                number_of_obj += 1
+            elif not cls:
                 number_of_obj += 1
         return number_of_obj
 
