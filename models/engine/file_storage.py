@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-	Contains the FileStorage class
+Contains the FileStorage class
 """
 
 import json
@@ -49,7 +49,6 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
-
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
@@ -71,8 +70,6 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
-
-
     def get(self, cls, id):
         """
         Returns an object based on the class and its ID, or None if not found
@@ -81,12 +78,14 @@ class FileStorage:
             return None
 
         all_objs = models.storage.all(cls)
-        for  value in all_objs.values():
+        for value in all_objs.values():
             if (value.id == id):
                 return value
 
         return None
 
     def count(self, cls=None):
-        """Counts the number of objects in storage"""
+        """
+        Counts the number of objects in storage
+        """
         return (len(self.all(cls)))
