@@ -2,9 +2,9 @@
 """This module retrieves state objects
 """
 
+from api.v1.views import app_views
 from flask import abort, jsonify, request, make_response
 from models import storage
-from api.v1.views import app_views
 from models.state import State
 
 

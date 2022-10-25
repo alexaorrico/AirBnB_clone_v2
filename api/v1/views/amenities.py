@@ -18,7 +18,9 @@ def get_all_amenities():
     return jsonify(all_amenities)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["GET"], strict_slashes=False)
+@app_views.route(
+    "/amenities/<amenity_id>", methods=["GET"], strict_slashes=False
+    )
 def get_amenity_by_id(amenity_id):
     """This function get the state by its id."""
     amenity = storage.get("Amenity", amenity_id)
@@ -27,7 +29,9 @@ def get_amenity_by_id(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route(
+    "/amenities/<amenity_id>", methods=["DELETE"], strict_slashes=False
+    )
 def delete_amenity_by_id(amenity_id):
     """This function delete_amenity_by_id"""
     amenity = storage.get("Amenity", amenity_id)
@@ -52,7 +56,9 @@ def create_amenities_by_id():
     return make_response(amenity.to_dict(), 201)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route(
+    "/amenities/<amenity_id>", methods=["PUT"], strict_slashes=False
+    )
 def update_amenity_by_id(amenity_id):
     """This function updates amenity by its id."""
     amenity = storage.get("Amenity", amenity_id)
