@@ -113,3 +113,45 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test get() that get any object with an specific cls and id"""
+        FileStorage._FileStorage__objects = {}
+        storage = FileStorage()
+        state1 = State()
+        storage.new(state1)
+        storage.save()
+        state2 = storage.get(State, state1.id)
+        self.assertEqual(state1.id, state2.id)
+
+        # test without a valid class
+        result = storage.get(None, state1.id)
+        self.assertEqual(result, None)
+
+        # test without a valid id
+        result = storage.get(State, "this is not a valid ID")
+        self.assertEqual(result, None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test count() to get the lenght of a type cls in storage"""
+        FileStorage._FileStorage__objects = {}
+        storage = FileStorage()
+        city1 = City()
+        storage.new(city1)
+        city2 = City()
+        storage.new(city2)
+        state1 = State()
+        storage.new(state1)
+        user1 = User()
+        storage.new(user1)
+        user2 = User()
+        storage.new(user2)
+        storage.save()
+
+        self.assertEqual(2, storage.count(City))
+        self.assertEqual(1, storage.count(State))
+        self.assertEqual(2, storage.count(User))
+
+        os.remove("file.json")
