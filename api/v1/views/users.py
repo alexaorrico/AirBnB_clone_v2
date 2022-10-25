@@ -48,15 +48,13 @@ def create_user_by_id():
     new_user = request.get_json()
     if not new_user:
         abort(400, "Not a JSON")
-    if "name" not in new_user:
-        abort(400, "Name is missing")
     if "email" not in new_user:
         abort(400, "Email is missing")
     if "password" not in new_user:
         abort(400, "Password is missing")
     user = User(**new_user)
     storage.new(user)
-    storage.save
+    storage.save()
     return make_response(user.to_dict(), 201)
 
 
@@ -69,7 +67,7 @@ def update_user_by_id(user_id):
     new_user = request.get_json()
     if not new_user:
         abort(400, "Not a JSON")
-    ignore_list = ["id", "email","created_at", "updated_at"]
+    ignore_list = ["id", "email", "created_at", "updated_at"]
     for key, value in new_user.items():
         if key not in ignore_list:
             setattr(user, key, value)
