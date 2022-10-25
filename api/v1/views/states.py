@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-This module contains a view for User object that handles all default
-RESTful API actions(basically CRUD operations)
+"""This module retrieves state objects
 """
 
 from flask import abort, jsonify, request, make_response
