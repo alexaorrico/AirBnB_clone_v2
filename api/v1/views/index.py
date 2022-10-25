@@ -18,7 +18,7 @@ def status():
         })
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=["GET"])
 def count():
     all_cls = {
                "amenities": Amenity,
