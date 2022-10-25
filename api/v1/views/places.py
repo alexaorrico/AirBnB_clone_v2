@@ -15,14 +15,11 @@ from models.user import User
                  methods=['GET'], strict_slashes=False)
 def get_places(city_id):
     """return json array of all places of a city"""
-    list_places = []
     city = storage.get(City, city_id)
-    if not city:
+    if city is None:
         abort(404)
-    for place in storage.all(Place).values():
-        if place.city_id == city_id:
-            list_places.append(place.to_dict())
-    return jsonify(list_places)
+    places = city.places
+    return jsonify([val.to_dict() for val in places])
 
 
 @app_views.route('/cities/<string:city_id>/places',
@@ -62,7 +59,7 @@ def get_place(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     """delete a single place"""
-    place = storage.get(City, place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     storage.delete(place)
