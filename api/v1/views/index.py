@@ -19,7 +19,7 @@ def status():
 
 
 @app_views.route('/stats', methods=["GET"])
-def count():
+def stats():
     """Count of each Object type"""
     all_name = ["amenities", "cities", "places", "reviews", "states", "users"]
     all_type = [Amenity, City, Place, Review, State, User]
