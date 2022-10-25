@@ -82,3 +82,28 @@ def update_place(place_id):
         abort(404)
     except Exception:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+
+@app_views.route('/place_search', methods=['GET'],
+                 strict_slashes=False)
+def place_search(city_id):
+    """Retrieves a Place object based on the JSON in request body"""
+    try:
+        data = request.get_json()
+        for key in data.keys():
+            city = storage.get(City, city_id)
+            state = storage.get(State, city_id)
+            amenity = storage.get(Amenity, city_id)
+        if data.get("name") is None:
+            return make_response(jsonify({"error": "Missing name"}), 400)
+        if data.get("user_id") is None:
+            return make_response(jsonify({"error": "Missing user_id"}), 400)
+        data["city_id"] = city_id
+        place = Place(**data)
+        place.save()
+        response = jsonify(place.to_dict())
+        return make_response(response, 201)
+    except KeyError:
+        abort(404)
+    except Exception:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)

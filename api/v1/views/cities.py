@@ -13,9 +13,9 @@ from models.state import State
 def get_cities_by(state_id):
     """Retrieves the list of all City objects of a State"""
     state = storage.get(State, state_id)
-    city_dict = []
-    for city in state.cities:
-        city_dict.append(city.to_dict())
+    if state is None:
+        abort(404)
+    city_dict = [city.to_dict() for city in state.cities]
     return jsonify(city_dict)
 
 

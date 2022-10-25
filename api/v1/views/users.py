@@ -46,8 +46,10 @@ def create_user():
     """Creates a User object"""
     try:
         data = request.get_json()
-        if data.get("name") is None:
-            return make_response(jsonify({"error": "Missing name"}), 400)
+        if data.get("email") is None:
+            return make_response(jsonify({"error": "Missing email"}), 400)
+        if data.get("password") is None:
+            return make_response(jsonify({"error": "Missing password"}), 400)
         user = User(**data)
         user.save()
         response = jsonify(user.to_dict())
@@ -65,7 +67,7 @@ def update_user(user_id):
         data = request.get_json()
         user = storage.get(User, user_id)
         for key, value in data.items():
-            if key in ['id', 'created_at', 'updated_at']:
+            if key in ['id', 'email', 'created_at', 'updated_at']:
                 continue
             setattr(user, key, value)
         user.save()
