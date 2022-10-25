@@ -21,10 +21,10 @@ def get_place_review(place_id):
     return jsonify(all_place_reviews)
 
 
-"""@app_views.route("/places/<place_id>/reviews", strict_slashes=False,
+@app_views.route("/places/<place_id>/reviews", strict_slashes=False,
                  methods=["POST"])
 def post_place_review(place_id):
-    create a new review
+    """create a new review"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -39,7 +39,7 @@ def post_place_review(place_id):
         abort(400, description="Missing text")
     new = Review(**data)
     new.save()
-    return make_response(jsonify(new.to_dict()), 201)"""
+    return make_response(jsonify(new.to_dict()), 201)
 
 
 @app_views.route("/reviews/<review_id>", strict_slashes=False,
@@ -63,15 +63,23 @@ def delete_review(review_id):
     storage.delete(review)
     storage.save()
     return jsonify({}), 200
-"""    elif request.method == "PUT":
-        try:
-            data = request.get_json()
-            if not data:
-                abort(400, description="Not a JSON")
-        except Exception:
+
+
+@app_views.route("/reviews/<review_id>", strict_slashes=False,
+                 methods=["PUT"])
+def put_review(review_id):
+    """updates a review"""
+    review = storage.get(Review, review_id)
+    if not review:
+        abort(404)
+    try:
+        data = request.get_json()
+        if not data:
             abort(400, description="Not a JSON")
-        for attr, val in data.items():
-            if attr not in ["id", "user_id", "place_id", "created_at",
-                            "updated_at"]:
-                setattr(review, attr, val)
-        return jsonify(review.to_dict()), 200"""
+    except Exception:
+        abort(400, description="Not a JSON")
+    ignore = ["id", "user_id", "place_id", "created_at", "updated_at"]
+    for attr, val in data.items():
+        if attr not in ignore:
+            setattr(review, attr, val)
+    return jsonify(review.to_dict()), 200
