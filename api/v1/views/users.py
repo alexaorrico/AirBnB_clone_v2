@@ -2,6 +2,7 @@
 
 """Module to handle user request Blueprint"""
 
+import hashlib
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
@@ -26,7 +27,8 @@ def create_user():
         return make_response(jsonify({"error": "Missing email"}), 400)
     if "password" not in body:
         return make_response(jsonify({"error": "Missing password"}), 400)
-
+    body["password"] = hashlib.sha256(body["password"]
+                                      .encode('utf-8')).hexdigest()
     new_user = User(**body)
     new_user.save()
     if storage.get(User, new_user.id) is not None:
