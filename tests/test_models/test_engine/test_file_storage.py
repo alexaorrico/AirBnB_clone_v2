@@ -113,3 +113,35 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing for file storage")
+    def test_get(self):
+        """Test that get properly fetches the object from the storage"""
+        storage = FileStorage()
+        first_state_id = list(storage.all(State).values())[0].id
+        new = storage.get(State, first_state_id)
+        self.assertEqual(new.id, first_state_id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing for filestorage")
+    def test_get_invalid_class(self):
+        """Test the get method with invalid class"""
+        storage = FileStorage()
+        first_state_id = list(storage.all(State).values())[0].id
+        invalid_class = "invalid"
+        new = storage.get(invalid_class, first_state_id)
+        self.assertEqual(None, new)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing for filestorage")
+    def test_count(self):
+        """Test that count returns the number of objects"""
+        storage = FileStorage()
+        num = storage.count(State)
+        self.assertEqual(type(num), int)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing for file storage")
+    def test_count_with_no_argument(self):
+        """Test that count return number of all objects
+        if no argument is passes"""
+        storage = FileStorage()
+        num = storage.count()
+        self.assertEqual(int, type(num))
