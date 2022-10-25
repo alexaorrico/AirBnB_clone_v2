@@ -86,3 +86,45 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """"Test if methods retieves objects"""
+        state = State(name="Alabama")
+        state.save()
+        found_state = models.storage.get(State, state.id)
+        wrong_state = models.storage.get(State, "70")
+        self.assertIs(found_state, state)
+        self.assertEqual(found_state, state)
+        self.assertIsInstance(found_state, State)
+        self.assertEqual(wrong_state, None)
+        self.assertNotEqual(found_state, None)
+
+        new_user = User(email="new@false.com", password="password")
+        new_user.save()
+        found_user = models.storage.get(User, new_user.id)
+        wrong_user = models.storage.get(User, "77")
+        self.assertEqual(found_user, new_user)
+        self.assertIs(found_user, new_user)
+        self.assertIsInstance(found_user, User)
+        self.assertIsNone(wrong_user)
+        self.assertNotEqual(found_user, None)
+        state.delete()
+        new_user.delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test if count method counts number of objects in storage"""
+        counter = models.storage.count()
+        new_state = State(name="California")
+        new_state.save()
+        self.assertNotEqual(models.storage.count(State), 0)
+        self.assertEqual(storage.count(Amenity), 1)
+        new_amenity = Amenity(name="Smoking allowed")
+        new_amenity.save()
+        self.assertNotEqual(models.storage.count(Amenity), 0)
+        self.assertIsInstance(models.storage.count(), int)
+        self.assertIsInstance(models.storage.count(Amenity), int)
+        self.assertNotEqual(models.storage.count(Amenity), None)
+        new_state.delete()
+        new_amenity.delete()
