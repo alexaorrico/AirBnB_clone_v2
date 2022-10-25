@@ -5,6 +5,7 @@ initialization of app
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
+from os import getenv
 
 app = Flask(__name__)
 
@@ -20,8 +21,8 @@ def shutdown(exception):
 
 
 if __name__ == "__main__":
-    host = environ.get('HBNB_API_HOST')
-    port = environ.get('HBNB_API_PORT')
+    host = getenv('HBNB_API_HOST')
+    port = getenv('HBNB_API_PORT')
     if not host:
         host = '0.0.0.0'
     if not port:
