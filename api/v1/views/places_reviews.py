@@ -13,7 +13,7 @@ from models.place import Place
                  strict_slashes=False)
 def get_reviews(place_id):
     """Fetch reviews for a specified place"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     reviews = []
@@ -26,7 +26,7 @@ def get_reviews(place_id):
                  strict_slashes=False)
 def get_review(review_id):
     """Fetch review information for specified review"""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     return jsonify(review.to_dict())
@@ -36,7 +36,7 @@ def get_review(review_id):
                  strict_slashes=False)
 def delete_review(review_id):
     """Delete a review based on its review_id"""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     review.delete()
@@ -48,7 +48,7 @@ def delete_review(review_id):
                  strict_slashes=False)
 def post_review(place_id):
     """Create a new review"""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     if not request.get_json():
@@ -71,7 +71,7 @@ def post_review(place_id):
                  strict_slashes=False)
 def put_review(review_id):
     """Update a review"""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     if not request.get_json():
