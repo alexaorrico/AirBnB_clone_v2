@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Olyad - [Github](https://github.com/OL-YAD)   
-Getacher -[Github]https://github.com/GetacherD) 
+Getacher - [Github](https://github.com/GetacherD)
+
 
 
