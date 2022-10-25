@@ -39,7 +39,7 @@ def post_place_review(place_id):
     data = request.get_json()
     new = Review(**data)
     new.save()
-    return (jsonify(new.to_dict()), 201)
+    return jsonify(new.to_dict()), 201
 
 
 @app_views.route("/reviews/<review_id>", strict_slashes=False,
@@ -62,7 +62,7 @@ def delete_review(review_id):
         abort(404)
     storage.delete(review)
     storage.save()
-    return (jsonify({}), 200)
+    return jsonify({}), 200
 
 
 @app_views.route("/reviews/<review_id>", strict_slashes=False,
