@@ -15,9 +15,10 @@ app.register_blueprint(app_views)
 CORS(
     app,
     resources={
-        r"/*": { "origins": "0.0.0.0"}
+        r"/*": {"origins": "0.0.0.0"}
     }
 )
+
 
 @app.teardown_app_context
 def shutdown(exception):

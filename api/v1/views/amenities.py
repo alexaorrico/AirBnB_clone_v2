@@ -5,7 +5,6 @@ all default RESTFul API actions
 """
 
 
-
 from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
@@ -29,7 +28,11 @@ def all_amenities():
     return make_response(jsonify(amenities_list), 200)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['GET'],
+    strict_slashes=False
+)
 def single_amenity(amenity_id):
     """
     Retrieves a specified Amenity object.
@@ -52,7 +55,11 @@ def single_amenity(amenity_id):
     return make_response(jsonify(amenity.to__dict()), 200)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['DELETE'],
+    strict_slashes=False
+)
 def delete_amenity(amenity_id):
     """
     Deletes a specified Amenity object.
@@ -105,7 +112,11 @@ def add_amenity():
     return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route(
+    '/amenities/<amenity_id>',
+    methods=['PUT'],
+    strict_slashes=False
+)
 def update_amenity(amenity_id):
     """
     Update a specified Amenity object.

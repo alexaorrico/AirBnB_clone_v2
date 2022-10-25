@@ -14,7 +14,11 @@ from flask import Flask, make_response, jsonify, request
 from werkzeug.exceptions import BadRequest, NotFound
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/cities/<city_id>/places',
+    methods=['GET'],
+    strict_slashes=False
+)
 def all_places(city_id):
     """
     he list of all Place objects of a City:
@@ -65,7 +69,11 @@ def single_place(place_id):
     return make_response(jsonify(place.to__dict()), 200)
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+    '/places/<place_id>',
+    methods=['DELETE'],
+    strict_slashes=False
+)
 def delete_place(place_id):
     """
     Deletes a specified Place object.
@@ -92,7 +100,11 @@ def delete_place(place_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route(
+    '/cities/<city_id>/places',
+    methods=['POST'],
+    strict_slashes=False
+)
 def add_place(city_id):
     """
     Creates a new Place object.
