@@ -11,19 +11,20 @@ from models import storage
 from models.user import User
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=["GET"], strict_slashes=False)
 def status():
+    """status of server"""
     return jsonify({
             "status": "OK"
         })
 
 
-@app_views.route('/stats', methods=["GET"])
+@app_views.route('/stats', methods=["GET"], strict_slashes=False)
 def stats():
     """Count of each Object type"""
     all_name = ["amenities", "cities", "places", "reviews", "states", "users"]
-    all_type = [Amenity, City, Place, Review, State, User]
+    classes = [Amenity, City, Place, Review, State, User]
     all_count = {}
-    for i in range(len(all_type)):
-        all_count[all_name[i]] = storage.count(all_type[i])
+    for i in range(len(classes)):
+        all_count[all_name[i]] = storage.count(classes[i])
     return jsonify(all_count)
