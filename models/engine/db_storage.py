@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """method to retrieve one object"""
-        all_obj = classes.storage.all(cls)
+        all_obj = models.storage.all(cls)
 
         for key, value in all_obj.items():
             if value.id == id:
