@@ -20,15 +20,10 @@ def status():
 
 @app_views.route('/stats', methods=["GET"])
 def count():
-    all_cls = {
-               "amenities": Amenity,
-               "cities": City,
-               "places": Place,
-               "reviews": Review,
-               "states": State,
-               "users": User
-              }
+    """Count of each Object type"""
+    all_name = ["amenities", "cities", "places", "reviews", "states", "users"]
+    all_type = [Amenity, City, Place, Review, State, User]
     all_count = {}
-    for i, j in all_cls.items():
-        all_count[i] = storage.count(j)
+    for i in range(len(all_type)):
+        all_count[all_name[i]] = storage.count(all_type[i])
     return jsonify(all_count)
