@@ -33,9 +33,9 @@ def all_places(city_id):
 
     if city is None:
         raise NotFound
-    
+
     places = city.places
-    
+
     for place in places.items():
         place_list.append(place.to__dict())
     return make_response(jsonify(place_list), 200)
@@ -143,7 +143,7 @@ def update_place(place_id):
     Returns:
         json: The updated Placey object with the status code 200.
     """
-   place = storage.get(Place, place_id)
+    place = storage.get(Place, place_id)
 
     if not request.get_json:
         return make_response('Not a JSON', 400)
