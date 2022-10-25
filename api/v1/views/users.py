@@ -108,17 +108,17 @@ def add_user():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_amenity(amenity_id):
+def update_user(user_id):
     """
-    Update a specified Amenity object.
+    Update a specified User object.
 
     Args:
-        user_id : Id of the wanted Amenity object.
+        user_id : Id of the wanted User object.
 
     Returns:
-        json: The updated Amenity object with the status code 200.
+        json: The updated User object with the status code 200.
     """
-    user = storage.get(User, amenity_id)
+    user = storage.get(User, user_id)
 
     if not request.get_json:
         return make_response('Not a JSON', 400)
