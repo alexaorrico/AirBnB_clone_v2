@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" This module retrieves state objects
+"""This module retrieves state objects
 """
 
 from api.v1.views import app_views
