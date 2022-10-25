@@ -1,7 +1,9 @@
 #!/usr/bin/python3
-"""create ?
+"""
+__init__ file for importing app views
 """
 
+from api.v1.views.users import *
 from flask import Blueprint
 
 app_views = Blueprint("app_view", __name__, url_prefix="/api/v1")
