@@ -104,5 +104,5 @@ class DBStorage:
         count = 0
         for key in self.all(cls).keys():
             count += 1
-        
+
         return count
