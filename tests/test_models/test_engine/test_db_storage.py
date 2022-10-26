@@ -80,6 +80,14 @@ class TestFileStorage(unittest.TestCase):
         """Test that all returns all rows when no class is passed"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test that count counts the objects of class"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """test that get gets and object with specifice class and id"""
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
