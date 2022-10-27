@@ -86,3 +86,40 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test get() that get any object with an specific cls and id"""
+        from models import storage
+
+        state = State(name="State test")
+        storage.new(state)
+        storage.save()
+        result = storage.get(State, state.id)
+        self.assertEqual(result.id, state.id)
+        self.assertEqual(result.created_at, state.created_at)
+
+        # test without a valid class
+        result = storage.get(None, state.id)
+        self.assertEqual(result, None)
+
+        # test without a valid id
+        result = storage.get(State, "this is not a valid ID")
+        self.assertEqual(result, None)
+
+        storage.delete(state)
+        storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test count() to get the lenght of a type cls in storage"""
+        from models import storage
+
+        total1 = len(storage.all(State))
+        state = State(name="State test")
+        storage.new(state)
+        storage.save()
+        total2 = len(storage.all(State))
+        self.assertTrue(total1 + 1 == total2)
+        storage.delete(state)
+        storage.save()
