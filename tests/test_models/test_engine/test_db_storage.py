@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -25,7 +26,6 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
 
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
-    @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
@@ -68,21 +68,61 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestDbStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def setUpClass(cls):
+        storage.delete_all()
+        cls.s = State(name="California")
+        cls.c = City(state_id=cls.s.id,
+                     name="San Francisco")
+        cls.u = User(email="betty@holbertonschool.com",
+                     password="pwd")
+        cls.p1 = Place(user_id=cls.u.id,
+                       city_id=cls.c.id,
+                       name="a house")
+        cls.p2 = Place(user_id=cls.u.id,
+                       city_id=cls.c.id,
+                       name="a house two")
+        cls.a1 = Amenity(name="Wifi")
+        cls.a2 = Amenity(name="Cable")
+        cls.a3 = Amenity(name="Bucket Shower")
+        objs = [cls.s, cls.c, cls.u, cls.p1, cls.p2, cls.a1, cls.a2, cls.a3]
+        for obj in objs:
+            obj.save()
+
+    def setUp(self):
+        """initializes new user for testing"""
+        self.s = TestDbStorage.s
+        self.c = TestDbStorage.c
+        self.u = TestDbStorage.u
+        self.p1 = TestDbStorage.p1
+        self.p2 = TestDbStorage.p2
+        self.a1 = TestDbStorage.a1
+        self.a2 = TestDbStorage.a2
+        self.a3 = TestDbStorage.a3
+
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_count_all(self):
+        """Test if count without no class"""
+        count_all = storage.count()
+        expected = 8
+        self.asseertEqual(expected, count_all)
+
+    def test_get_place(self):
+        """Test if get returns properly"""
+        temp = storage.get('Place', self.p1.id)
+        expected = self.p1.id
+        self.assertEqual(expected, temp.id)
