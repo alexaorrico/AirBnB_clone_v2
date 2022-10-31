@@ -7,6 +7,7 @@ all default RESTFul API actions:
 
 from api.v1.views import app_views
 from flask import Flask, make_response, jsonify, request
+from flasgger.utils import swag_from
 from models import storage
 from models.user import User
 from models.place import Place
@@ -19,6 +20,7 @@ from werkzeug.exceptions import BadRequest, NotFound
     methods=['GET'],
     strict_slashes=False
 )
+@swag_from('documentation/reviews/all_reviews.yml', methods=['GET'])
 def all_reviews(place_id):
     """
     he list of all Place objects of a City:
@@ -51,6 +53,7 @@ def all_reviews(place_id):
     methods=['GET'],
     strict_slashes=False
 )
+@swag_from('documentation/reviews/single_review.yml', methods=['GET'])
 def single_review(review_id):
     """
     Retrieves a specified Review object.
@@ -78,6 +81,7 @@ def single_review(review_id):
     methods=['DELETE'],
     strict_slashes=False
 )
+@swag_from('documentation/reviews/delete_review.yml', methods=['DELETE'])
 def delete_review(review_id):
     """
     Deletes a specified Review object.
@@ -109,6 +113,7 @@ def delete_review(review_id):
     methods=['POST'],
     strict_slashes=False
 )
+@swag_from('documentation/reviews/add_review.yml', methods=['POST'])
 def add_review(place_id):
     """
     Creates a new Review object.
@@ -154,6 +159,7 @@ def add_review(place_id):
     methods=['PUT'],
     strict_slashes=False
 )
+@swag_from('documentation/reviews/update_review.yml', methods=['PUT'])
 def update_review(review_id):
     """
     Update a specified  Review object.
