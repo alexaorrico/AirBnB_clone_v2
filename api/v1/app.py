@@ -2,14 +2,18 @@
 """
 initialization of app
 """
-from flask_cors import CORS
+
 from api.v1.views import app_views
-from os import getenv
+from flask_cors import CORS
 from flask import Flask, jsonify, make_response
+from flasgger import Swagger
 from models import storage
+from os import getenv
+
 
 
 app = Flask(__name__)
+app.config['JSON_PRETTYPRINT_REGULAR'] = True
 
 app.register_blueprint(app_views)
 cors = CORS(
@@ -33,6 +37,12 @@ def not_found(error):
     """Return error in JSON and status"""
     return make_response(jsonify({"error": "Not Found"}), 404)
 
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone RESTFUL API',
+    'uiversion': 3
+}
+
+Swagger(app)
 
 if __name__ == "__main__":
     host = getenv('HBNB_API_HOST')
