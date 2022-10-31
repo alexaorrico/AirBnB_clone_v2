@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Oluwaseun Alatise - [Github](https://github.com/holynation) / [Twitter](https://twitter.com/@Alat_oluwaseun)  
-Anabel Emebo - [Github](https://github.com/Anabel) / [Twitter](https://twitter.com/)
+Anabel Emebo - [Github](https://github.com/Annahillz) / [Twitter](https://twitter.com/@Annahillz1)
 
 Second part of Airbnb: Anabel Emebo
 ## License
