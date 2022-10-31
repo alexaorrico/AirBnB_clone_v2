@@ -1,0 +1,120 @@
+.filters {
+    display: flex;
+    position: relative;
+    height: 70px;
+    width: calc(100% - 2 * 1px - 2 * 10px);
+    margin: 0 10px;
+    align-items: center;
+    background: white;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+}
+
+.filters > button {
+    position: absolute;
+    width: 20%;
+    height: 48px;
+    right: 30px;
+    /* top: 15%; */
+    font-size: 18px;
+    color: #FFFFFF;
+    background: #FF5A5F;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filters > button:hover {
+    opacity: 0.9;
+}
+
+.filters > .locations,
+.filters > .amenities {
+    display: grid;
+    position: relative;
+    width: 25%;
+    height: calc(100% - 14px);
+    grid-template-rows: calc(50% - 10px) calc(50% - 10px);
+    padding: 10px 5px 5px 30px;
+    align-items: center;
+}
+
+.filters > *:first-child {
+    border-right: 1px solid #DDDDDD;
+}
+
+.filters h2 {
+    margin-left: 15%;
+    /* margin-left: clamp(5px, 15%, 30px); */
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.filters > .locations > h3,
+.filters > .amenities > h3 {
+    font-weight: 600;
+    margin: 0;
+}
+
+.filters > .locations > h4,
+.filters > .amenities > h4 {
+    font-weight: 400;
+    font-size: var(--font-small);
+    margin: 10px 0 0 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.filters > .locations > .popover,
+.filters > .amenities > .popover {
+    display: none;
+    position: absolute;
+    top: 70px;
+    width: calc(100% - 10px);
+    height: 300px;
+    max-height: 300px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    background: #FAFAFA;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    overflow-y: scroll;
+    scrollbar-width: 5px;
+    z-index: 5;
+}
+
+.filters > .locations > .popover > ul,
+.filters > .amenities > .popover > ul{
+    list-style: none;
+    padding: 0 20px;
+}
+
+.filters > .locations .popover > ul > li,
+.filters > .amenities .popover > ul > li {
+    margin: 5px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.filters > .locations .popover > ul > li > h2 {
+    margin: 5px;
+}
+
+.filters > .locations .popover > ul > li:not(:first-child) {
+    margin-top: 20px;
+}
+
+.filters > .locations .popover > ul > li > ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.filters > .locations:hover .popover,
+.filters > .amenities:hover .popover,
+.popover:hover {
+    display: block;
+}
