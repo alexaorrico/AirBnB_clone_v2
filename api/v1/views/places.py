@@ -20,19 +20,6 @@ from werkzeug.exceptions import BadRequest, NotFound
     strict_slashes=False
 )
 def all_places(city_id):
-    """
-    he list of all Place objects of a City:
-
-    Args:
-        city_id : ID of the specified City object.
-
-    Raises:
-        NotFound: Raises a 404 error if city_id
-        is not linked to any User object.
-
-    Returns:
-        json: Wanted Place object with status code 200.
-    """
     city = storage.all(City, city_id)
     place_list = []
 
@@ -48,19 +35,7 @@ def all_places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def single_place(place_id):
-    """
-    Retrieves a specified Placeobject.
-
-    Args:
-        place_id : ID of the specified Place object.
-
-    Raises:
-        NotFound: Raises a 404 error if place_id
-        is not linked to any Place object.
-
-    Returns:
-        json: Wanted Place object with status code 200.
-    """
+    
     place = storage.get(Place, place_id)
 
     if place is None:
@@ -75,19 +50,7 @@ def single_place(place_id):
     strict_slashes=False
 )
 def delete_place(place_id):
-    """
-    Deletes a specified Place object.
-
-    Args:
-        place_id : ID of the wanted Place object.
-
-    Raises:
-        NotFound: Raises a 404 error if place_id
-        is not linked to any Place object.
-
-    Returns:
-        json: Empty dictionary with the status code 200.
-    """
+    
 
     place = storage.get(Place, place_id)
 
@@ -106,17 +69,7 @@ def delete_place(place_id):
     strict_slashes=False
 )
 def add_place(city_id):
-    """
-    Creates a new Place object.
-
-    Error cases:
-        BadRequest: If the given data is not a
-        valid json or if the key 'name' is not
-        present sends status code 400.
-
-    Returns:
-        json: The new Place with the status code 201.
-    """
+   
     city = storage.get(City, city_id)
 
     if city is None:
@@ -147,15 +100,7 @@ def add_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    """
-    Update a specified  Place object.
-
-    Args:
-        user_id : Id of the wanted A Place object.
-
-    Returns:
-        json: The updated Placey object with the status code 200.
-    """
+    
     place = storage.get(Place, place_id)
 
     if not request.get_json:
