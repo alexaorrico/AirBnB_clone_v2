@@ -77,11 +77,12 @@ class FileStorage:
         Returns: object based on the class and its ID or  None if not found.
         """
         if id and cls:
-            cls = classes[cls]
-            object = self.__session.query(cls).filter(cls.id == id).first()
-            return object
-        else:
-            return None
+            clsses = self.all(cls)
+            for objct in clsses.values():
+                if id == str(objct.id):
+                    return objct
+                else:
+                    return None
 
     def count(self, cls=None):
         """
