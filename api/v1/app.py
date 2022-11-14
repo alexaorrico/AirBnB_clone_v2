@@ -12,13 +12,12 @@ from os import getenv
 
 
 app = Flask(__name__)
-app.config["JSON_PRETTYPRINT_REGULAR"] = True
 
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"api/v1/*": {"origins": "0.0.0.0"}})
 
 
-@app.teardown_app_context
+@app.teardown_appcontext
 def shutdown(exception):
     """
     closes storage
@@ -26,18 +25,14 @@ def shutdown(exception):
     storage.close()
 
 
-@app.errorhandler(404)
+@app.errorhandler(Exception)
 def not_found(error):
     """Return error in JSON and status"""
     return make_response(jsonify({"error": "Not Found"}), 404)
 
 
-app.config["SWAGGER"] = {
-    "title": "AirBnB clone RESTFUL API",
-    "uiversion": 3,
-}
+swagger = Swagger(app)
 
-Swagger(app)
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST")
