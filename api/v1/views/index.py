@@ -5,30 +5,29 @@
 from api.v1.views import app_views
 from flask import jsonify
 
+from models import storage
 
 classes = {
-    Amenity: "amenities",
-    City: "cities",
-    Place: "places",
-    Review: "reviews",
-    State: "states",
-    User: "users"
+    "amenities": storage.count("Amenity"),
+    "cities": storage.count("City"),
+    "places": storage.count("Place"),
+    "reviews": storage.count("Review"),
+    "states": storage.count("State"),
+    "users": storage.connt("User"),
 }
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route("/status", methods=["GET"], strict_slashes=False)
 def status_code():
     """
     status route
     """
     status = {"status": "OK"}
-    response = jsonify(status)
-    return response
+    return jsonify(status)
 
 
-@app_views.route("/stats", strict_slashes=False)
+@app_views.route("/stats", methods=["GET"], strict_slashes=False)
 def count_objects():
-    count_dict = {}
-    for obj, value in classes.items():
-        count_dict[value] = storage.count(obj)
-    return jsonify(count_dict)
+    respons = jsonify(classes)
+    respons.status_code = 200
+    return respons
