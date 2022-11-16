@@ -78,9 +78,9 @@ class FileStorage:
         """
         if id and cls:
             clsses = self.all(cls)
-            for objct in clsses.values():
-                if id == str(objct.id):
-                    return objct
+            for objct in clsses.keys():
+                if id == objct:
+                    return clsses[objct]
                 else:
                     return None
 
