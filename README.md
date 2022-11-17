@@ -155,5 +155,6 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-[Natnael Yewondatir
-[Astewul Derseh
+Natnael Yewondatir
+and
+Astewul Derseh
