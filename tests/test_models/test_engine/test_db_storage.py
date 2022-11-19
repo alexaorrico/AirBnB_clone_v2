@@ -11,6 +11,7 @@ from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
+from models import storage
 from models.review import Review
 from models.state import State
 from models.user import User
@@ -86,3 +87,20 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_save(self):
+        """Tests the get method"""
+        rev = Review()
+        rev2 = storage.get(Review, rev.id)
+        self.assertEqual(rev.id, rev2.id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_save(self):
+        """Tests the get method"""
+        initial_number = storage.count(Review)
+        rev = Review()
+        storage.new(rev)
+        storage.save()
+        final_number = storage.count(Review)
+        self.assertEqual(initial_number + 1, final_number)
