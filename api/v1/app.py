@@ -5,7 +5,7 @@ from os import getenv
 
 
 app = Flask(__name__)
-app.registerblueprint(app_views)
+app.register_blueprint(app_views)
 
 host = getenv('HBNB_API_HOST', '0.0.0.0')
 port = getenv('HBNB_API_PORT', 5000)
