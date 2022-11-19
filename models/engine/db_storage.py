@@ -84,8 +84,7 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     record[key] = obj
             return record
-            return { "error": "No record with matching ID" }
-        return { "error": "Invalid class selected" }
+        return None
 
     def count(self, cls=None):
         """ Method to count the number of objects in
