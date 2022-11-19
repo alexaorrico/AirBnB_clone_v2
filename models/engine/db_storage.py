@@ -77,14 +77,15 @@ class DBStorage:
 
     def get(self, cls, id):
         """ Method to retrieve an object with specified id """
+        record = {}
         if cls in classes.keys():
-            for class in self.__session.query(classes[cls]).all():
-                for obj in class:
-                    if obj.id == id:
-                        return obj
-                return { "error": "No record with matching ID" }
+            for obj in self.__session.query(classes[cls]).all():
+                if obj.id == id:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    record[key] = obj
+            return record
+            return { "error": "No record with matching ID" }
         return { "error": "Invalid class selected" }
-        
 
     def count(self, cls=None):
         """ Method to count the number of objects in
