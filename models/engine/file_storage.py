@@ -78,7 +78,7 @@ class FileStorage:
                     if id == value.__class__.id:
                         new_dict[key] = value
             return new_dict
-        return { "error": "Invalid class selected" }
+        return None
 
     def count(self, cls=None):
         """ Method to count the number of objects in
