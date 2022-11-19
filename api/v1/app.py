@@ -17,7 +17,7 @@ host = getenv('HBNB_API_HOST', '0.0.0.0')
 port = getenv('HBNB_API_PORT', 5000)
 
 @app.teardown_appcontext
-def teardown_sess():
+def teardown_sess(Exception):
     """
     Function to terminate db session after each request
     """
