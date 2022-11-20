@@ -9,7 +9,7 @@ from flasgger.utols import swag_from
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
-    """Returns list of all state objects"""
+    """Returns all state objects"""
     allstates = storage.all(State).values()
     states_list = []
     for state in allstates:
@@ -19,7 +19,7 @@ def get_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
-    """Returns state matching ID"""
+    """Returns all states matching ID"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
