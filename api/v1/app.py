@@ -3,7 +3,6 @@
 """
 This module is responsible for setting up the environment for the API
 """
-
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -26,11 +25,9 @@ def teardown_sess(Exception):
 
 
 @app.errorhandler(404)
-"""Handles requests with errors"""
-
-
 def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    """ Returns 404 error response"""
+    return make_response(jsonify({'error': "Not found"}), 404)
 
 if __name__ == "__main__":
     """Main app to run from console"""
