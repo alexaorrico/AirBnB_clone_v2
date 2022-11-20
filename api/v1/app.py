@@ -24,6 +24,14 @@ def teardown_sess(Exception):
     """
     storage.close()
 
+
+@app.errorhandler(404)
+"""Handles requests with errors"""
+
+
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 if __name__ == "__main__":
     """Main app to run from console"""
     app.run(host=host, port=port, threaded=True)
