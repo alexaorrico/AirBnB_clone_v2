@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+""" Import Blueprint and runs flask"""
 from flask import Flask
 from models import storage
 from app.v1.views import app_views
