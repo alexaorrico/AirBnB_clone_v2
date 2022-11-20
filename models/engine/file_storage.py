@@ -28,7 +28,7 @@ class FileStorage:
         """returns the dictionary __objects"""
         if cls is not None:
             new_dict = {}
-            for key, value in self.__objects.items():
+            for key, value in type(self).__objects.items():
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     new_dict[key] = value
             return new_dict
@@ -38,7 +38,7 @@ class FileStorage:
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
-            self.__objects[key] = obj
+            type(self).__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
@@ -57,6 +57,34 @@ class FileStorage:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
         except:
             pass
+
+    def get(self, cls, id):
+        """Returns the object based on the class and its ID, or None if not found"""
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
+            key = f"{cls}.{id}"
+            obj = self.__objects.get(key, None)
+            return obj
+        elif cls in classes.values():
+            print("class ==")
+            key = f"{cls.__name__}.{id}"
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
+            return None
+
+    def count(self, cls=None):
+        """Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
+        obj_count = 0
+        if type(cls) == str and cls in classes:
+            obj_count = len(self.all(classes[cls]))
+        elif cls in classes.values():
+            obj_count = len(self.all(cls))
+        elif cls is None:
+            obj_count = len(self.__objects)
+        return obj_count
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
