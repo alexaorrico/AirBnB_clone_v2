@@ -156,7 +156,7 @@ No known bugs at this time.
 ## Authors
 
 Nkosinathi Tolom - CasleyDon1
-Beka Beleke - bekatadesse
+Beka Beleke - @bekatadesse
 
 Second part of Airbnb: Joann Vuong
 ## License
