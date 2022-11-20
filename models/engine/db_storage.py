@@ -84,6 +84,7 @@ i
         for value in all_classes.values():
             if (value.id == id):
                 return value
+
         return None
 
     def count(self, cls=None):
