@@ -157,6 +157,5 @@ No known bugs at this time.
 Messih Grmay - [Github](https://github.com/mesihg) \
 Bright Adu-boahene - [Github](https://github.com/NehlTech)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
