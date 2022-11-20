@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Messih Grmay - [Github](https://github.com/mesihg) 
+Messih Grmay - [Github](https://github.com/mesihg) \
 Bright Adu-boahene - [Github](https://github.com/NehlTech)
 
 Second part of Airbnb: Joann Vuong
