@@ -55,6 +55,25 @@ class DBStorage:
         """add the object to the current database session"""
         self.__session.add(obj)
 
+    def get(self, cls, id):
+        """A method to retrieve one object"""
+        new_dict = self.all(cls)
+        try:
+            return new_dict[cls + "." + id]
+        except KeyError:
+            return None
+
+    def count(self, cls=None):
+        """
+            Returns the number of objects in storage matching the given class
+            If no class is passed, returns the count of all objects in storage.
+        """
+        new_dict = self.all(cls)
+        if cls is not None:
+            return len([key for key, value in new_dict if cls == value.__class__ or cls == value.__class__.__name__])
+        else:
+            return len(new_dict.keys())
+
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
