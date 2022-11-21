@@ -71,7 +71,7 @@ class FileStorage:
         found.
         """
         objects = self.all(cls)
-        for key, value in objects.items():
+        for key in objects.keys():
             if key.find(id) != -1:
                 return objects[key]
         return None
