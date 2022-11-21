@@ -45,10 +45,10 @@ def post_state():
     data = request.get_json()
 
     if not data:
-        abort(404, description="Not a JSON")
+        abort(400, description="Not a JSON")
 
     if 'name' not in data:
-        abort(404, description="Missing name")
+        abort(400, description="Missing name")
 
     state = State(**data)
     state.save()
@@ -64,7 +64,7 @@ def put_state(state_id):
         abort(404)
     data = request.get_json()
     if not data:
-        abort(404, description="Not a JSON")
+        abort(400, description="Not a JSON")
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
