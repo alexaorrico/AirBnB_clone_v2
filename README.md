@@ -166,8 +166,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Kalunnenna1- [Github](https://github.com/Kalunnenna1) / 
-Mahlatse Mtsweni - [Github](https://github.com/mgmtsweni) / 
+Kalunnenna1- [Github](https://github.com/Kalunnenna1) / email: nnennakalualie@yahoo.com
+Mahlatse Mtsweni - [Github](https://github.com/mgmtsweni) / email: Mtswenigift@@gmail.com
 
 ## License
 Public Domain. No copy write protection. 
