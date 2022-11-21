@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', strict_slashes=False)
 def get_city(city_id):
     """Returns City object by id"""
     city = storage.get(City, city_id)
@@ -17,8 +17,7 @@ def get_city(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', strict_slashes=False)
 def cities_in_state(state_id):
     """Returns all Cities in the State that matches the ID"""
     state = storage.get(State, state_id)
