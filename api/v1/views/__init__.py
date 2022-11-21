@@ -8,4 +8,3 @@ from api.v1.views.users import *  # noqa
 from api.v1.views.places import *  # noqa
 from api.v1.views.places_reviews import *  # noqa
 from api.v1.views.places_amenities import *  # noqa
-

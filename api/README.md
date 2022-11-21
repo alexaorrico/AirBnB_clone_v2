@@ -1,23 +1,43 @@
-## API
-1. Create a folder api at the root of the project with an empty file __init__.py
-2. Create a folder v1 inside api:
-* create an empty file __init__.py
-* create a file app.py:
-* create a variable app, instance of Flask
-* import storage from models
-* import app_views from api.v1.views
-* register the blueprint app_views to your Flask instance app
-* declare a method to handle @app.teardown_appcontext that calls storage.close()
-* inside if __name__ == "__main__":, run your Flask server (variable app) with:
-* host = environment variable HBNB_API_HOST or 0.0.0.0 if not defined
-* port = environment variable HBNB_API_PORT or 5000 if not defined
-* threaded=True
+# API with Swagger
 
-3. Create a folder views inside v1:
-* create a file __init__.py:
-* import Blueprint from flask doc
-* create a variable app_views which is an instance of Blueprint (url prefix must be /api/v1)
-* wildcard import of everything in the package api.v1.views.index => PEP8 will complain about it, don’t worry, it’s normal and this file (v1/views/__init__.py) won’t be check.
-* create a file index.py
-* import app_views from api.v1.views
-* create a route /status on the object app_views that returns a JSON: "status": "OK" (see example)
+## Description
+
+This Directory contains API files and documenation
+
+## Environment
+
+* __OS:__ Ubuntu 14.04 LTS
+* __language:__ Python 3.4.3
+* __application server:__ Flask 0.12.2, Jinja2 2.9.6
+* __web server gateway:__ gunicorn (version 19.7.1)
+* __database:__ mysql Ver 14.14 Distrib 5.7.18
+* __documentation:__ Swagger (flasgger==0.6.6)
+* __Style:__
+  * __python:__ PEP 8 (v. 1.7.0)
+
+## Testing API
+
+* Execute program:
+
+```
+HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd \
+HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db \
+HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app
+```
+
+* Testing with Swagger:
+
+  * In browser visit path: `/apidocs` or:
+  * localhost: `http://0.0.0.0:5000/apidocs`
+  * your dowmain: `http://yourdomain/apidocs`
+
+* Testing from CLI:
+
+```
+curl -X GET http://0.0.0.0:5000/api/v1/[YOUR API REQUEST]
+```
+
+example:
+```
+curl -X GET http://0.0.0.0:5000/api/v1/states/
+```
