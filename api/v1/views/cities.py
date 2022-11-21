@@ -6,7 +6,9 @@ from models import storage
 from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def all_city(state_id):
     """retrieve all city"""
     citi = []
@@ -39,7 +41,8 @@ def del_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def post_city(state_id):
     """Creates a city """
     state = storage.get(State, state_id)
@@ -47,9 +50,9 @@ def post_city(state_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        abort(404, description="Not a JSON")
+        abort(400, description="Not a JSON")
     if 'name' not in data:
-        abort(404, description="Missing name")
+        abort(400, description="Missing name")
 
     data['state_id'] = state_id
     city = City(**data)
@@ -66,7 +69,7 @@ def put_city(city_id):
 
     data = request.get_json()
     if not data:
-        abort(404, description="Not a JSON")
+        abort(400, description="Not a JSON")
 
     for key, value in data.items():
         if key not in ['id', 'state_id', 'created_id', 'updates_at']:
