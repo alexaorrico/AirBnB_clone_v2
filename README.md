@@ -126,16 +126,33 @@ TestBaseModel class:
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
 * `def test_user_class_docstring(self)` - Test for the User class docstring
 
+## Testing API
+***
+#### Execute program:
+```s
+HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app
+```
+#### Testing from CLI:
+* Status
+```s
+curl -X GET http://0.0.0.0:5000/api/v1/status
+```
+* Stasts
+```s
+curl -X GET http://0.0.0.0:5000/api/v1/stats
+```
+* Error 404
+```s
+curl -X GET http://0.0.0.0:5000/api/v1/nop
+```
 
 ## Examples of use
 ```
 vagrantAirBnB_clone$./console.py
 (hbnb) help
-
 Documented commands (type help <topic>):
 ========================================
 EOF  all  create  destroy  help  quit  show  update
-
 (hbnb) all MyModel
 ** class doesn't exist **
 (hbnb) create BaseModel
@@ -156,6 +173,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Gonzalo Flores - [Githud] (https://github.com/sevensquad7) 
+Giuliano Flores - [Github] (https://github.com/mrgiulls)
 
 Second part of Airbnb: Joann Vuong
 ## License
