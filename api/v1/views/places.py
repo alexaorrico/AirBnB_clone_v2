@@ -99,14 +99,18 @@ def update_place(place_id):
     return make_response(jsonify(place.to_dict()), 200)
 
 
-@app_views.route('/places_search', methods=['POST'],
-                 strict_slashes=False)
-def search_place():
-    """search for a place depending on the JSON request body"""
-    if not request.get_json():
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def places_search():
+    """
+    Retrieves all Place objects depending of the JSON in the body
+    of the request
+    """
+
+    if request.get_json() is None:
         abort(400, description="Not a JSON")
 
-    data = request.json()
+    data = request.get_json()
+
     if data and len(data):
         states = data.get('states', None)
         cities = data.get('cities', None)
@@ -124,7 +128,7 @@ def search_place():
 
     list_places = []
     if states:
-        states_obj = [storage.get(State, state_id) for state_id in states]
+        states_obj = [storage.get(State, s_id) for s_id in states]
         for state in states_obj:
             if state:
                 for city in state.cities:
@@ -133,7 +137,7 @@ def search_place():
                             list_places.append(place)
 
     if cities:
-        city_obj = [storage.get(City, city_id) for city_id in cities]
+        city_obj = [storage.get(City, c_id) for c_id in cities]
         for city in city_obj:
             if city:
                 for place in city.places:
@@ -149,9 +153,9 @@ def search_place():
                                for am in amenities_obj])]
 
     places = []
-    for place in list_places:
-        places_dict = place.to_dict()
-        places_dict.pop('amenities', None)
-        places.append(places_dict)
+    for p in list_places:
+        d = p.to_dict()
+        d.pop('amenities', None)
+        places.append(d)
 
     return jsonify(places)
