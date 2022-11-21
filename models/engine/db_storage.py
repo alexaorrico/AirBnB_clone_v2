@@ -80,7 +80,7 @@ class DBStorage:
         if cls in classes.values():
             return self.__session.query(cls).filter(cls.id == id).first()
         return None
-        
+
     def count(self, cls=None):
         """counts the number of objects"""
         objectCount = len(self.all(cls))
