@@ -91,4 +91,13 @@ class DBStorage:
         """
         Counts the number of objects of a given class name in storage
         """
-        return len(self.all(cls))
+        all_classes = classes.values()
+
+        if not cls:
+            counter = 0
+            for clas in all_classes:
+                counter += len(models.storage.all(clas).values())
+        else:
+            counter = len(models.storage.all(cls).values())
+
+        return counter
