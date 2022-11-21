@@ -13,19 +13,12 @@ def status():
 
 @app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def no_of_obj():
-    """ retrieves the number of each object by type
-    obj = {}
-    classes = ["amenities", "cities", "places", "reviews", "states", "users"]
-    for cls in classes:
-        obj[cls] = storage.count(cls)
-
-    return jsonify(obj)"""    
-
+    """ retrieves the number of each object by type """
     names = ["amenities", "cities", "places", "reviews", "states", "users"]
     classes = ["Amenity", "City", "Place", "Review", "State", "User"]
 
-    num_objs = {}
+    objs = {}
     for i in range(len(classes)):
-        num_objs[names[i]] = storage.count(classes[i])
+        objs[names[i]] = storage.count(classes[i])
 
-    return jsonify(num_objs)
+    return jsonify(objs)

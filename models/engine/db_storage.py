@@ -87,17 +87,14 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
-        """ a method to count t enumber of objects in storage
-        all_class = classes.values()
+        """ a method to count t enumber of objects in storage"""
+        klasses = classes.values()
+        count = 0
 
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
+        if cls is None:
+            for clas in klasses:
+                count += len(self.all(clas).values())
         else:
-            count = len(models.storage.all(cls).values())
+            count = len(self.all(cls).values())
 
         return count
-        """
-        clas = self.all(cls)
-        return len(clas.values())
