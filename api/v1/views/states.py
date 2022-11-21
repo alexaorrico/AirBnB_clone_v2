@@ -25,7 +25,8 @@ def state_id(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def del_state(state_id):
     """deletes an instance of state"""
     state = storage.get(State, state_id)
@@ -45,7 +46,7 @@ def post_state():
 
     if not data:
         abort(404, description="Not a JSON")
-    
+
     if 'name' not in data:
         abort(404, description="Missing name")
 
