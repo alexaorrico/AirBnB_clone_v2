@@ -4,7 +4,7 @@ from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
-from flasgger.utols import swag_from
+#from flasgger.utols import swag_from
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -42,9 +42,24 @@ def delete_state(state_id):
 
     return make_response(jsonify({}), 200)
 
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def create_states():
+    """
+    post a State object
+    """
+    if not request.json:
+        abort(400, "Not a JSON")
+    data = request.json
+    if 'name' not in data.keys():
+        abort(400, "Missing name")
+    instance = State(**data)
+    storage.new(instance)
+    storage.save()
+
+    return make_response(jsonify(instance.to_dict()), 201)
 
 @app_views.route('/states/<state_id>', methods=['POST'], strict_slashes=False)
-def put_state(state_id):
+def create_state(state_id):
     """Creates a State Object"""
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -59,9 +74,9 @@ def put_state(state_id):
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def put_state(state_id):
+def update_state(state_id):
     """Updates the state object"""
-    state = Storage.get(State, state_id)
+    state = storage.get(State, state_id)
 
     if not state:
         abort(404)
