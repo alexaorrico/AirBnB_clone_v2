@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Emmanuel Ayibamieye - [Github](https://github.com/Twhite2) / [Twitter](https://twitter.com/Tmieyewhite)  
+Emmanuel Ayibamieye- [Github](https://github.com/Twhite2) / [Twitter](https://twitter.com/Tmieyewhite)  
 Cynthia Amaji - [Github](https://github.com/cyntTech) / [Twitter](https://twitter.com/cyntTech)
 
 ## License
