@@ -1,57 +1,64 @@
 #!/usr/bin/python3
 """
-Flask route that returns json status response
+    Handles API functions for State objects
 """
+
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
-from flasgger import Swagger, swag_from
-from models import storage, CNC
+from flask import Flask, jsonify, abort, request
+from models.state import State
+from models import storage
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
-@swag_from('swagger_yaml/states_no_id.yml', methods=['GET', 'POST'])
-def states_no_id():
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
+def get_states():
     """
-        states route to handle http method for requested states no id provided
+        Returns all states
     """
     if request.method == 'GET':
-        all_states = storage.all('State')
-        all_states = list(obj.to_json() for obj in all_states.values())
-        return jsonify(all_states)
-
+        states_list = []
+        for state in storage.all(State).values():
+            states_list.append(state.to_dict())
+        return jsonify(states_list)
     if request.method == 'POST':
-        req_json = request.get_json()
-        if req_json is None:
-            abort(400, 'Not a JSON')
-        if req_json.get("name") is None:
-            abort(400, 'Missing name')
-        State = CNC.get("State")
-        new_object = State(**req_json)
-        new_object.save()
-        return jsonify(new_object.to_json()), 201
+        info = request.get_json(silent=True)
+        if not info:
+            abort(400, description='Not a JSON')
+        if 'name' not in info:
+            abort(400, description='Missing name')
+        state = State(**info)
+        state.save()
+        return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
-@swag_from('swagger_yaml/states_id.yml', methods=['PUT', 'GET', 'DELETE'])
-def states_with_id(state_id=None):
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
+def handle_a_state(state_id):
     """
-        states route to handle http method for requested state by id
+        Returns a state specified by id
     """
-    state_obj = storage.get('State', state_id)
-    if state_obj is None:
-        abort(404, 'Not found')
-
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
     if request.method == 'GET':
-        return jsonify(state_obj.to_json())
-
+        return jsonify(state.to_dict())
     if request.method == 'DELETE':
-        state_obj.delete()
-        del state_obj
-        return jsonify({})
-
+        for city in state.cities:
+            for place in city.places:
+                for review in place.reviews:
+                    storage.delete(review)
+                storage.delete(place)
+            storage.delete(city)
+        storage.delete(state)
+        storage.save()
+        return jsonify({}), 200
     if request.method == 'PUT':
-        req_json = request.get_json()
-        if req_json is None:
+        info = request.get_json(silent=True)
+        if not info:
             abort(400, 'Not a JSON')
-        state_obj.bm_update(req_json)
-        return jsonify(state_obj.to_json())
+        for key, value in info.items():
+            if key in ['id', 'created_at', 'updated_at']:
+                pass
+            else:
+                setattr(state, key, value)
+        state.save()
+        return jsonify(state.to_dict()), 200
