@@ -4,7 +4,6 @@ from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
-#from flasgger.utols import swag_from
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -42,6 +41,7 @@ def delete_state(state_id):
 
     return make_response(jsonify({}), 200)
 
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_states():
     """
@@ -57,6 +57,7 @@ def create_states():
     storage.save()
 
     return make_response(jsonify(instance.to_dict()), 201)
+
 
 @app_views.route('/states/<state_id>', methods=['POST'], strict_slashes=False)
 def create_state(state_id):
