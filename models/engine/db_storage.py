@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """ Method to retrieve an object with specified id """
         record = {}
-        if cls in classes.keys():
+        if cls in classes.values():
             for obj in self.__session.query(classes[cls]).all():
                 if obj.id == id:
                     key = obj.__class__.__name__ + '.' + obj.id
@@ -91,11 +91,11 @@ class DBStorage:
             the current database session or specified table
         """
         count = 0
-        if (cls != None) and (cls in classes.keys()):
+        if (cls != None) and (cls in classes.values()):
             for obj in self.__session.query(classes[cls]).all():
                 count += 1
             return count
-        elif (cls != None) and (cls not in classes.keys()):
+        elif (cls != None) and (cls not in classes.values()):
             return 0
         else:
             for cls in classes:
