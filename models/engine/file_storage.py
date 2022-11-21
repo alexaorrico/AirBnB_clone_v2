@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """ Method to retrieve an object with specified id """
-        if cls in classes.keys():
+        if cls in classes.values():
             new_dict = {}
             for key, value in self.__objects.items():
                 if cls == value.__class__ or cls == value.__class__.__name__:
@@ -85,12 +85,12 @@ class FileStorage:
             the current FileStorage or specified class
         """
         count = 0
-        if (cls != None) and (cls in classes.keys()):
+        if (cls != None) and (cls in classes.values()):
             for obj in self.__objects.values():
                 if (cls == obj.__class__) or (cls == obj.__class__.__name__):
                     count += 1
             return count
-        elif (cls != None) and (cls not in classes.keys()):
+        elif (cls != None) and (cls not in classes.values()):
             return 0
         else:
             for clss in self.__objects:
