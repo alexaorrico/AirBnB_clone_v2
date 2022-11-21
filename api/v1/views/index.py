@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 This module contains some utility functions for the API.
 A method to check that the API is working, and another to keep track of all
@@ -20,14 +19,14 @@ from models import storage
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status_okay():
     """
-    Returns Status OK code.
+    Returns response that assertains that the API is up and running.
     """
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def number_objects():
-    """Returns number of objects by type"""
+    """Returns number of objects in storage based on their classes"""
     classes = [Amenity, City, Place, Review, State, User]
     names = ["amenities", "cities", "places", "reviews", "states", "users"]
 
