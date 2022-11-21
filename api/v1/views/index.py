@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """Define routes for blueprint
 """
 
@@ -35,13 +34,3 @@ def stats():
         json_dict.update({name: storage.count(cls)})
 
     return jsonify(json_dict)
-=======
-""" Creates the index file """
-from flask import jsonify
-from api.v1.views import app_views
-
-@app.views.route('/status', methods=['GET'], strict_slashes=False)
-def status():
-    """ Status of blueprint API ""
-    return jsonify({status: "OK"})
->>>>>>> 7f463f781d2f2c16e360fbc7e590cd9adf4bcd7c
