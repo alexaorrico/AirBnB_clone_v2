@@ -9,6 +9,7 @@ from api.v1.views import app_views
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
+    """Retrieves a list of all user objects"""
     data = [
         user.to_dict() for user in storage.all(User).values()
     ]
@@ -18,6 +19,7 @@ def get_users():
 @app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user(user_id):
+    """Retrieves a user object"""
     res = storage.get(User, user_id)
     if res is None:
         abort(404)
@@ -27,6 +29,7 @@ def get_user(user_id):
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
+    """Deletes a user object"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -37,6 +40,7 @@ def delete_user(user_id):
 
 @app_views.route('/users', strict_slashes=False, methods=['POST'])
 def create_user():
+    """Creates a user object"""
     body = request.get_json()
     if type(body) != dict:
         return abort(400, {'message': 'Not a JSON'})
@@ -52,6 +56,7 @@ def create_user():
 @app_views.route('/users/<user_id>', strict_slashes=False,
                 methods=['PUT'])
 def update_user(user_id):
+    """Updates a user object"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)

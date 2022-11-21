@@ -10,6 +10,7 @@ from flask import jsonify, abort, request
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
+    """Retrieves all state objects"""
     data = []
     for val in storage.all(State).values():
         data.append(val.to_dict())
@@ -18,6 +19,7 @@ def get_states():
 
 @app_views.route('/states/<path:state_id>')
 def get_state(state_id):
+    """Retrieves a state object"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -26,6 +28,7 @@ def get_state(state_id):
 
 @app_views.route('/states/<path:state_id>', methods=['DELETE'])
 def delete_state(state_id):
+    """Deletes a state object"""
     if state_id is None:
         abort(404)
     state = storage.get(State, state_id)
@@ -38,6 +41,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
+    """Creates a State"""
     res = request.get_json()
     if type(res) != dict:
         return abort(400, {'message': 'Not a JSON'})
@@ -52,6 +56,7 @@ def post_state():
 @app_views.route('/states/<path:state_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_state(state_id):
+    """Updates a state object"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
