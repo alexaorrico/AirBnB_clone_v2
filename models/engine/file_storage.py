@@ -59,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it's inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -68,3 +68,16 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """returns an object"""
+        class_obj = self.all(cls)
+        key = cls.__name__ + '.' + id
+        if key in class_obj:
+            return class_obj[key]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """count class objects"""
+        return len(self.all(cls))
