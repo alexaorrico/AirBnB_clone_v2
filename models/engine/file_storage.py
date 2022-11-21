@@ -74,7 +74,7 @@ class FileStorage:
         """ Method to retrieve an object with specified id """
         if cls in classes.values():
             for value in models.storage.all(cls):
-                if id == value.id:
+                if value.id == id:
                     return value
         return None
 
@@ -83,11 +83,12 @@ class FileStorage:
             the current FileStorage or specified class
         """
         if (cls != None) and (cls in classes.values()):
-            count = 0
-            for obj in classes.values():
-                count += len(models.storage.all(obj).values())
+            count = len(models.storage.all(cls).values())
         elif (cls != None) and (cls not in classes.values()):
             count = 0
         else:
-            count = len(models.storage.all(cls).values())
+            count = 0
+            for obj in classes.values():
+                count += len(models.storage.all(obj).values())
+
         return count
