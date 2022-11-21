@@ -87,16 +87,9 @@ class DBStorage:
             id (str): object ID.
         """
         my_cls = dict()
-        my_objs = models.storage.all().copy()
-        for key, value in my_objs.items():
-            cls_name = key.split('.')[0]
-            cls_id = key.split('.')[1]
-            if cls_id == id and cls_name == cls.__name__:
-                # my_cls[cls_name] = cls_id
-                # return (cls.__name__, cls_id)
-                pass
+        my_cls = self.__session.query(cls).filter_by(id=id).first()
 
-        return my_objs[cls.__name__]
+        return my_cls
 
     def count(self, cls=None):
         """
