@@ -3,7 +3,7 @@
 from models.city import City
 from models.state import State
 from models import storage
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
@@ -54,7 +54,7 @@ def post_city(state_id):
     data['state_id'] = state_id
     city = City(**data)
     city.save()
-    return jsonify(city.to_dict()), 201
+    return make_response(jsonify(city.to_dict()), 201)
 
 
 @app_views.route('cities/<city_id>', methods=['PUT'], strict_slashes=False)
@@ -65,7 +65,7 @@ def put_city(city_id):
         abort(404)
 
     data = request.get_json()
-    if data is None:
+    if not data:
         abort(404, description="Not a JSON")
 
     for key, value in data.items():
