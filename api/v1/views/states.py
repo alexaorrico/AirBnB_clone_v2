@@ -48,7 +48,6 @@ def state_id_delete(state_id):
     return make_response(jsonify({}), 200)
 
 
-
 @app_views.route("/states/", methods=["POST"])
 def state_post():
     """
@@ -65,7 +64,6 @@ def state_post():
     new_state = State(**request.get_json())
     new_state.save()
     return make_response(jsonify(new_state.to_dict()), 201)
-
 
 
 @app_views.route("/states/<string:state_id>", methods=["PUT"])
