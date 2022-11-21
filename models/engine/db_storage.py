@@ -86,10 +86,17 @@ class DBStorage:
         Args:
             id (str): object ID.
         """
-        for clss in self.__session:
-            if clss == cls and cls.id == id:
-                return clss
-            # return None
+        my_cls = dict()
+        my_objs = models.storage.all().copy()
+        for key, value in my_objs.items():
+            cls_name = key.split('.')[0]
+            cls_id = key.split('.')[1]
+            if cls_id == id and cls_name == cls.__name__:
+                # my_cls[cls_name] = cls_id
+                # return (cls.__name__, cls_id)
+                pass
+
+        return my_objs[cls.__name__]
 
     def count(self, cls=None):
         """
@@ -103,8 +110,5 @@ class DBStorage:
         Args:
             cls (class, optional): Class object. Defaults to None.
         """
-        total = 0
-        for obj in self.__session:
-            if obj.__class__.__name__ == cls:
-                total += 1
-        return total
+        my_objs = self.all(cls)
+        return (len(my_objs))
