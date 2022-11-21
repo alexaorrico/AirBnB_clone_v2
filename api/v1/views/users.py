@@ -62,7 +62,7 @@ def create_user():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_state(user_id):
+def update_user(user_id):
     """Updates the user object"""
     user = storage.get(User, user_id)
 
