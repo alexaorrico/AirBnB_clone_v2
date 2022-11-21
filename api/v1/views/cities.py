@@ -13,7 +13,7 @@ def all_city(state_id):
     """retrieve all city"""
     citi = []
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
     for city in state.cities:
         citi.append(city.to_dict())
@@ -24,7 +24,7 @@ def all_city(state_id):
 def get_city(city_id):
     """Retrieves a city object"""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
     return jsonify(city.to_dict())
 
@@ -33,7 +33,7 @@ def get_city(city_id):
 def del_city(city_id):
     """deletes an instance of city using the given id"""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
 
     storage.delete(city)
@@ -46,7 +46,7 @@ def del_city(city_id):
 def post_city(state_id):
     """Creates a city """
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
     data = request.get_json()
     if data is None:
@@ -64,7 +64,7 @@ def post_city(state_id):
 def put_city(city_id):
     """updates a city object"""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
 
     data = request.get_json()
