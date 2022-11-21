@@ -1,17 +1,25 @@
 #!/usr/bin/python3
 """ Import Blueprint and runs flask"""
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
+from os import getenv
 
 app = Flask(__name__)
-app.reg_blueprint(app_views)
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
 def teardown_db(self):
     """teardown"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """ Returns JSON response with 404 status """
+    return make_response(jsonify({"error": "Not found"}), 404)
+
 
 
 if __name__ == '__main__':
