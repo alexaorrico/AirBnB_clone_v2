@@ -28,6 +28,7 @@ def not_found(error):
     """ Returns 404 error response"""
     return make_response(jsonify({'error': "Not found"}), 404)
 
+
 if __name__ == "__main__":
     """Main app to run from console"""
     app.run(host=host, port=port, threaded=True)
