@@ -94,6 +94,6 @@ class FileStorage:
             return 0
         else:
             for clss in self.__objects:
-                for obj in clss.values():
+                for obj in clss.keys():
                     count += 1
             return count
