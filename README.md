@@ -158,5 +158,28 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+Third Part of Airbnb:
+Keshinro Mus'ab - [Github](https://github.com/Keshtech2002) / [Twitter](https://twitter.com/MusKhayr)
+Isreal Akemi - [Github](https://github.com/) / [Twitter](https://twitter.com/)
+
+## Learning Objectives
+- What REST means
+- What API means
+- What CORS means
+- What is an API
+- What is a REST API
+- What are other type of APIs
+- Which is the HTTP method to retrieve resource(s)
+- Which is the HTTP method to create a resource
+- Which is the HTTP method to update resource
+- Which is the HTTP method to delete resource
+- How to request REST API
+
+## Install Flask
+```
+$ pip3 install Flask
+```
+
 ## License
 Public Domain. No copy write protection. 
