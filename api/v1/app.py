@@ -4,7 +4,7 @@ Sets up first endpoint that returns stats of the API
 """
 
 
-from flask import Flask, Blueprint
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from models import storage
@@ -21,6 +21,14 @@ def teardown(exception):
     Calls storage.close
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(exception):
+        """
+        404 Page Not Found Error Handler
+        """
+        return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
