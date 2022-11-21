@@ -5,14 +5,14 @@ from flask import jsonify
 from models import storage
 
 
-@app_views.route("/status", methods=['GET'])
+@app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
     """ Status of API """
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats", methods=['GET'])
-def stats():
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
+def no_of_obj():
     """ retrieves the number of each object by type"""
     obj = {}
     classes = ["amenities", "cities", "places", "reviews", "states", "users"]
