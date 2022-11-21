@@ -93,6 +93,7 @@ class FileStorage:
         elif (cls != None) and (cls not in classes.values()):
             return 0
         else:
+            print(self.__objects)
             for clss in self.__objects:
                 for obj in clss.keys():
                     count += 1
