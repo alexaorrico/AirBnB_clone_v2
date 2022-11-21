@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
 """
-This module contains some utility functions for the API
+This module contains some utility functions for the API.
+A method to check that the API is working, and another to keep track of all
+objects in storage.
 """
 
 from api.v1.views import app_views

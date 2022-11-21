@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 """
-This module is responsible for setting up the environment for the API
+Creates Flask instance and contains handlers for 404 Not found Error and Method
+for terminating storage session.
 """
 from flask import Flask, make_response, jsonify
 from models import storage
@@ -16,7 +17,7 @@ port = getenv('HBNB_API_PORT', 5000)
 
 
 @app.teardown_appcontext
-def teardown_sess(Exception):
+def teardown_routine(Exception):
     """
     Function to terminate db session after each request
     """

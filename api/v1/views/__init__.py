@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 Blueprint instantiation as well as necessary imports
 """
