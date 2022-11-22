@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """ holds class Place"""
 import models
 from models.base_model import BaseModel, Base
@@ -76,3 +76,4 @@ class Place(BaseModel, Base):
                 if amenity.place_id == self.id:
                     amenity_list.append(amenity)
             return amenity_list
+
