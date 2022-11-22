@@ -11,3 +11,11 @@ from models import storage
 def status():
     """Returns OK status"""
     return jsonify({'status': 'OK'})
+
+@app_views.route('/stats')
+def get_stats():
+    """
+    Endpoint that retrieves the number of ojbects of each
+    type.
+    """
+    storage.count
