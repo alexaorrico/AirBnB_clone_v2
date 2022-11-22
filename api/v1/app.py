@@ -2,7 +2,7 @@
 """
     Flask file which starts application
 """
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from os import getenv
 from api.v1.views import app_views
@@ -15,6 +15,11 @@ app.register_blueprint(app_views)
 def teardown(error):
     """ method which calls close method on storage"""
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_error(error):
+    return make_response(jsonify({'error': 'Not found'}))
 
 
 if __name__ == "__main__":
