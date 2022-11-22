@@ -86,3 +86,61 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+@unittest.skipIf(models.storage_t != 'db', 'not testing db storage')
+class TestCountGet(unittest.TestCase):
+    """testing Count and Get methods"""
+
+    @classmethod
+    def setUpClass(cls):
+        """set up objects for this class"""
+        cls.state = State(name="State_test")
+        cls.city = City(state_id=cls.state.id,
+                        name="City_test")
+        cls.user = User(email="test@gmail.com",
+                        password="pwd")
+        cls.place1 = Place(user_id=cls.user.id,
+                           city_id=cls.city.id,
+                           name="Place1")
+        cls.place2 = Place(user_id=cls.user.id,
+                           city_id=cls.city.id,
+                           name="Place2")
+        cls.amenity1 = Amenity(name="Amenity1")
+        cls.amenity2 = Amenity(name="Amenity2")
+        cls.amenity3 = Amenity(name="Amenity3")
+        cls.objs = [cls.state, cls.city, cls.user,
+                    cls.place1, cls.place2, cls.amenity1,
+                    cls.amenity2, cls.amenity3]
+        for obj in cls.objs:
+            obj.save()
+
+    def setUp(self):
+        """initializes new user for testing"""
+        (self.status, self.city, self.user,
+         self.place1, self.place2, self.amenity1,
+         self.amenity2, self.amenity3) = TestCountGet.objs
+
+    def test_get(self):
+        """test get() function"""
+        duplicate = storage.get(Place, self.place1.id)
+        expected = self.place1.id
+        self.assertEqual(expected, duplicate.id)
+
+    def test_count(self):
+        """test count(class) function"""
+        count_user = storage.count(User)
+        n_user = 1
+        count_place = storage.count(Place)
+        n_place = 2
+        count_amenity = storage.count(Amenity)
+        n_amenity = 3
+        self.assertEqual(n_user, count_user)
+        self.assertEqual(n_place, count_place)
+        self.assertEqual(n_amenity, count_amenity)
+
+    def test_count_all(self):
+        """test count() function"""
+        count_all = storage.count()
+        expected = 8
+        self.assertEqual(expected, count_all)
