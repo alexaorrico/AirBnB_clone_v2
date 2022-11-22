@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import unittest
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -100,3 +101,30 @@ class FileStorage:
         if cls in self.__models_available:
             return len(self.all(cls))
         return -1
+
+    def test_get(self):
+        """test get with valid cls and id"""
+        a = Amenity(name="test_amenity3", id="test_3")
+        a.save()
+        result = self.store.get("Amenity", "test_3")
+        self.assertEqual(a.name, result.name)
+        self.assertEqual(a.created_at, result.created_at)
+
+    def test_get_bad_cls(self):
+        """test get with invalid cls"""
+        result = self.store.get("Dummy", "test")
+        self.assertIsNone(result)
+
+    def test_get_bad_id(self):
+        """test get with invalid id"""
+        result = self.store.get("State", "very_bad_id")
+        self.assertIsNone(result)
+
+
+if __name__ == "__main__":
+    import sys
+    import os
+    sys.path.insert(1, os.path.join(os.path.split(__file__)[0], '../../..'))
+    from models import *
+    from models.engine.file_storage import FileStorage
+    unittest.main()

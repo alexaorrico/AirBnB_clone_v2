@@ -86,3 +86,21 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get_bad_cls(self):
+        """test get with invalid cls"""
+        result = storage.get("Dummy", "test")
+        self.assertIsNone(result)
+
+    def test_get_bad_id(self):
+        """test get with invalid id"""
+        result = storage.get("State", "very_bad_id")
+        self.assertIsNone(result)
+
+if __name__ == "__main__":
+    import sys
+    import os
+    sys.path.insert(1, os.path.join(os.path.split(__file__)[0], '../../..'))
+    from models import *
+    from models.engine.file_storage import FileStorage
+    unittest.main()
