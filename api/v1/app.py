@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+    Flask file which starts application
+"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -9,7 +12,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown():
-    """ """
+    """ method which calls close method on storage"""
     storage.close()
 
 

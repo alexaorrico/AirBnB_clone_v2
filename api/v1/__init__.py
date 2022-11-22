@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" init file which defines blueprint """
 from flask import Blueprint, render_template, abort
 from api.v1.views.index import *
 
