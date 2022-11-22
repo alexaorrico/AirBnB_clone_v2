@@ -19,7 +19,8 @@ def teardown(error):
 
 @app.errorhandler(404)
 def handle_error(error):
-    return make_response(jsonify({'error': 'Not found'}))
+    """method which creates custom json error response"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == "__main__":
