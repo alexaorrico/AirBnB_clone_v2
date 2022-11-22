@@ -6,26 +6,34 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/states', methods=['GET'], strict_slashes=False,
+)
 def get_states():
     """ Retrieve all state objects """
     list_obj = [obj.to_dict() for obj in storage.all("State").values()]
     return jsonify(list_obj)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route(
+    '/states/<state_id>', methods=['GET'],
+    strict_slashes=False
+)
 def getId(state_id):
     """ Retrieves a State object by id """
-    obj = storage.get("State", state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     return jsonify(obj.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route(
+    '/states/<state_id>', methods=['DELETE'],
+    strict_slashes=False
+)
 def deleteId(state_id):
     """ Delete state object by id """
-    obj = storage.get("State", state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     obj.delete()
@@ -43,15 +51,18 @@ def newState():
     new = request.get_json()
     obj = State(**new)
     obj.save()
-    return jsonify(obj.to_dict()), 201
+    return (jsonify(obj.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route(
+    '/states/<state_id>', methods=['PUT'],
+    strict_slashes=False
+)
 def update(state_id):
     """ Update the State object """
     if not request.get_json():
         return jsonify({'error': 'Not a JSON'}), 400
-    obj = storage.get("State", state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     for k, v in request.get_json().items():
