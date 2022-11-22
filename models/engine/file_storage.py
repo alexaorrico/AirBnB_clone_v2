@@ -71,10 +71,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """Retrive object with given class name and id"""
-        all_classes = self.all(cls)
-        for obj in all_classes.values():
-            if id == str(obj.id):
-                return obj
+        obj_list = self.all(cls)
+        for key in obj_list.keys():
+            if id == str(obj_list[key].id):
+                return obj_list[key]
             else:
                 return None
 
