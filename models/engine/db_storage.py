@@ -76,7 +76,9 @@ class DBStorage:
         self.__session.remove()
 	
 	def get(self, cls, id):
-		"""call to retrive a class object with the id as it's method"""
+		"""call to retrive a class object with the id a\
+				s it's method
+		"""
 		if cls is not None and id is not None:
 			classes = self.all(cls)
 			for value_obj in classes.values():
