@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -18,6 +19,7 @@ import json
 import os
 import pep8
 import unittest
+from uuid import uuid4
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -66,6 +68,61 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+    def test_fs_get_method(self):
+        """Test for get method functionalities
+           Applicable to both file and db storage
+        """
+        user = User(first_name="ALX", last_name="Developer",
+                    email="dev@alx.com", password="alx_dev_pwd")
+        user.save()
+        state = State(name="Kenya")
+        state.save()
+        city = City(name="Nairobi", state_id=state.id)
+        city.save()
+        place = Place(name="Town House", city_id=city.id, user_id=user.id,
+                      number_rooms=4, number_bathrooms=3, max_guest=5,
+                      price_by_night=50)
+        place.save()
+
+        # check for valid search results
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+            self.assertTrue(storage.get(User, user.id) is user)
+            self.assertTrue(storage.get(State, state.id) is state)
+            self.assertTrue(storage.get(City, city.id) is city)
+            self.assertTrue(storage.get(Place, place.id) is place)
+        else:
+            self.assertEqual(storage.get(User, user.id).id, user.id)
+            self.assertEqual(storage.get(State, state.id).id,  state.id)
+            self.assertEqual(storage.get(City, city.id).id, city.id)
+            self.assertEqual(storage.get(Place, place.id).id, place.id)
+
+        # check for empty search results
+        self.assertTrue(storage.get(User, str(uuid4())) is None)
+        self.assertTrue(storage.get(State, str(uuid4())) is None)
+        self.assertTrue(storage.get(City, str(uuid4())) is None)
+
+    def test_fs_count_method(self):
+        """Test for count method functionalities
+           Applicable to both file and db storage
+        """
+        user = User(first_name="New", last_name="User", email="new@hbnb.com",
+                    password="hbnb_user_pwd")
+        user.save()
+        state = State(name="South Africa")
+        state.save()
+        city = City(name="Cape Town", state_id=state.id)
+        city.save()
+        place = Place(name="Outdoor Cottage", city_id=city.id, user_id=user.id,
+                      number_rooms=2, number_bathrooms=2, max_guest=3,
+                      price_by_night=35)
+        place.save()
+
+        # check count of ites
+        self.assertTrue(storage.count(User) >= 1)
+        self.assertTrue(storage.count(State) >= 1)
+        self.assertTrue(storage.count(City) >= 1)
+        self.assertTrue(storage.count(Place) >= 1)
 
 
 class TestFileStorage(unittest.TestCase):
