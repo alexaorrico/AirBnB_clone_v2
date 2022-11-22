@@ -16,12 +16,14 @@ def teardown(junk):
     """
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(error):
     """
     Return 404 error JSON string.
     """
     return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     h = environ.get('HBNB_API_HOST', '0.0.0.0')
