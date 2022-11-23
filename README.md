@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Yoseph Desalegn
+Kaleab Shiferaw
 
 Second part of Airbnb: Joann Vuong
 ## License
