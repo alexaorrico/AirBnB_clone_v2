@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -86,3 +87,32 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestGetAndCountFunctionDBStorage(unittest.TestCase):
+    """Test the get function in DBStorage"""
+
+    def test_get_db(self):
+        """Test that gets object from file.json by id"""
+        userDict = {
+            "email": "testmail@gmail.com",
+            "password": "testpassword",
+            "first_name": "test_first_name",
+            "last_name": "test_last_name"
+        }
+        userInst = User(**userDict)
+        storage.new(userInst)
+        storage.save()
+        getInst = storage.get(User, userInst.id)
+        self.assertEqual(getInst, userInst)
+
+    def test_count(self):
+        """Test that counts object from file.json by classname"""
+        stateDict = {"name": "Lagos"}
+        stateInst = State(**stateDict)
+        storage.new(stateInst)
+        storage.save()
+        countAll = storage.count()
+        countStates = storage.count('State')
+        self.assertEqual(len(storage.all()), countAll)
+        self.assertEqual(len(storage.all('State')), countStates)
