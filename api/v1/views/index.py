@@ -1,6 +1,5 @@
 #!/bin/usr/python3
 """Returns JSON status"""
-
 from api.v1.views import app_views
 from flask import jsonify
 
