@@ -17,7 +17,6 @@ def list_states():
     states_list = []
     for state in states_dict.values():
         states_list.append(state.to_dict())
-    print(states_list)
     return jsonify(states_list)
 
 
@@ -37,6 +36,7 @@ def delete_state(state_id):
     if state is not None:
         storage.delete(state)
         storage.save()
+        return {}
     abort(404)
 
 
@@ -47,7 +47,7 @@ def create_state():
     request_dict = request.get_json()
     if request_dict is not None:
         if 'name' in request_dict.keys() and request_dict['name'] is not None:
-            new_state = State(request_dict)
+            new_state = State(**request_dict)
             new_state.save()
             return make_response(jsonify(new_state.to_dict()), 201)
         return make_response(jsonify({'error': 'Missing name'}), 400)
@@ -67,4 +67,3 @@ def update_state(state_id):
         storage.save()
         return make_response(jsonify(state.to_dict()), 200)
     return make_response(jsonify({"error": "Not a JSON"}), 400)
-
