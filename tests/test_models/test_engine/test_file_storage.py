@@ -22,9 +22,8 @@ FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
-
 class TestFileStorageDocs(unittest.TestCase):
-    """Tests to check the documentation and style of FileStorage class"""
+    """Tests to check the documentation and style of FileStorage class""":
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
