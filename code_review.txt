@@ -1,0 +1,17 @@
+## Reviewing code for github username:
+
+## Link to  github pull request and comment:
+
+## The code review must be done on GitHub, in the comments for the pull request:
+the pull request must be created from the branch storage_get_count by a peer
+only the reviewer can approve the pull request
+don’t delete the branch storage_get_count after approval
+
+## The comments must contain at least one useful comment:
+questions about the piece of code, if it’s difficult to understand
+style issues
+error handling
+duplicate code
+potential bugs
+potential efficiency issues
+typographical errors
