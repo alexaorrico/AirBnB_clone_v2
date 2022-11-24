@@ -4,7 +4,6 @@ Contains the FileStorage class
 """
 
 import json
-import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -35,25 +34,6 @@ class FileStorage:
             return new_dict
         return self.__objects
 
-    def get(self, cls, id):
-        """
-        returns a single class object based on the ID
-        and None if not found
-        """
-        if cls not in classes.values():
-            return None
-        class_items = models.storage.all(cls)
-        for key, value in class_items.items():
-            if value.id == id:
-                return class_items[key]
-        return None
-
-    def count(self, cls=None):
-        """
-        returns a count of all objects based on the class
-        """
-        return len(models.storage.all(cls))
-
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
@@ -64,7 +44,7 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
+            json_objects[key] = self.__objects[key].to_dict(save_check=True)
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -78,8 +58,23 @@ class FileStorage:
         except:
             pass
 
+    def get(self, cls, id):
+        """Retrieving object by class and/or id
+        """
+        key = cls.__name__ + '.' + id
+
+        if key in self.__objects:
+            return self.__objects[key]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """Return count of objects in storage
+        """
+        return len(self.all(cls))
+
     def delete(self, obj=None):
-        """delete obj from __objects if its inside"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
