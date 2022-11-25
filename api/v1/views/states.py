@@ -3,7 +3,7 @@
 from api.v1.views import app_views
 from flask import jsonify, request, abort, Flask, make_response
 from models import storage
-from models.State import State
+from models.state import State
 
 
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
