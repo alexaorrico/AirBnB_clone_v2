@@ -9,7 +9,7 @@ from flask import abort, request, make_response, jsonify
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def users_get(user_id=None):
     """returns all user objects"""
-    return [obj.to_dict() for obj in storage.all('User').values()]
+    return jsonify([obj.to_dict() for obj in storage.all(User).values()])
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -33,7 +33,7 @@ def user_get_one(user_id):
     """returns specified user"""
     obj = storage.get(User, user_id)
     if obj is not None:
-        return obj.to_dict()
+        return jsonify(obj.to_dict())
     else:
         abort(404)
 
