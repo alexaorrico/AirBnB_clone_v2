@@ -21,7 +21,7 @@ def get_states_with_cities(state_id=None):
                  strict_slashes=False)
 def city_get_or_delete(city_id=None):
     """Retrieves a city or deletes a city"""
-    city = storage.city(City, city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     if request.method == 'GET':
