@@ -7,7 +7,8 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def get_states_with_cities(state_id=None):
     """Retrieves a state along with it's cities"""
     state = storage.get(State, state_id)
@@ -52,7 +53,7 @@ def city_post(state_id=None):
         abort(404)
     if not city_data:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in city_data:
+    if 'name' not in city_data.keys():
         return make_response(jsonify({'error': 'Missing name'}), 400)
     new_city = City(**city_data)
     storage.save()
