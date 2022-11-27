@@ -13,7 +13,7 @@ def get_states_with_cities(state_id=None):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    return make_response(jsonify([city.to_dict() for city in state.cities]))
+    return jsonify([city.to_dict() for city in state.cities])
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
