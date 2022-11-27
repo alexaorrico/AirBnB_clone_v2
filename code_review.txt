@@ -1,6 +1,10 @@
 ## Reviewing code for github username:
+wdmd2022
 
 ## Link to  github pull request and comment:
+https://github.com/CalebHouse99/holbertonschool-AirBnB_clone_v3/pull/1
+
+-------------------------------------------------------------------------------
 
 ## The code review must be done on GitHub, in the comments for the pull request:
 the pull request must be created from the branch storage_get_count by a peer
