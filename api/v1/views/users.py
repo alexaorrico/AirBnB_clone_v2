@@ -1,59 +1,65 @@
 #!/usr/bin/python3
-"""handles default RESTful API actions for City objects"""
+"""defines the view for user objects"""
 from api.v1.views import app_views
-from flask import jsonify, request, abort, Flask, make_response
 from models import storage
-from models.state import State
-from models.city import City
+from models.user import User
+from flask import abort, request, make_response, jsonify
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False)
-def get_states_with_cities(state_id=None):
-    """Retrieves a state along with it's cities"""
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    return make_response(jsonify([city.to_dict() for city in state.cities]))
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+def users_get(user_id=None):
+    """returns all user objects"""
+    return [obj.to_dict() for obj in storage.all('User').values()]
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
-                 strict_slashes=False)
-def city_get_or_delete(city_id=None):
-    """Retrieves a city or deletes a city"""
-    city = storage.city(City, city_id)
-    if city is None:
-        abort(404)
-    if request.method == 'GET':
-        return jsonify(city.to_dict())
-    elif request.method == 'DELETE':
-        storage.delete(city)
-        storage.save()
-        return make_response(jsonify({}), 200)
-    elif request.method == 'PUT':
-        if request.is_json:
-            city_data = request.get_json()
-        else:
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
-        ignore_list = ['id', 'created_at', 'updated_at', 'state_id']
-        for key, val in city_data.items():
-            if key not in ignore_list:
-                setattr(city, key, val)
-        storage.save()
-        return make_response(jsonify(city.to_dict()), 200)
-
-
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
-                 strict_slashes=False)
-def city_post(state_id=None):
-    """creates a city"""
-    city_data = request.get_json()
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    if not city_data:
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def user_post():
+    """creates a new user object"""
+    post_data = request.get_json(silent=True)
+    if post_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in city_data:
-        return make_response(jsonify({'error': 'Missing name'}), 400)
-    new_city = City(**city_data)
+    if 'email' not in post_data.keys():
+        return make_response(jsonify({'error': 'Missing email'}), 400)
+    if 'password' not in post_data.keys():
+        return make_response(jsonify({'error': 'Missing password'}),
+                             400)
+    new_user = User(**post_data)
     storage.save()
-    return make_response(jsonify(new_city.to_dict()), 201)
+    return make_response(jsonify(new_user.to_dict()), 201)
+
+
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+def user_get_one(user_id):
+    """returns specified user"""
+    obj = storage.get(User, user_id)
+    if obj is not None:
+        return obj.to_dict()
+    else:
+        abort(404)
+
+
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+def user_delete(user_id):
+    """deletes a user object"""
+    obj = storage.get(User, user_id)
+    if obj is None:
+        abort(404)
+    storage.delete(obj)
+    storage.save()
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def user_put(user_id):
+    """updates a user object"""
+    obj = storage.get(User, user_id)
+    if obj is None:
+        abort(404)
+    post_data = request.get_json(silent=True)
+    if post_data is None:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    for key, val in post_data.items():
+        if key not in ['id', 'email', 'created_at', 'updated_at']:
+            setattr(obj, key, value)
+    storage.save()
+    return make_response(jsonify(obj.to_dict()), 200)
