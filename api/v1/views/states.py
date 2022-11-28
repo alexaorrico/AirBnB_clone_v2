@@ -23,8 +23,8 @@ def get_state():
     """retrieves specific state"""
     state = storage.get(State, state_id)
     if not state:
-        abort(404)
-    return jsonify(state.to_dict())
+        return jsonify(state.to_dict())
+    abort(404)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
