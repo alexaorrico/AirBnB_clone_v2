@@ -5,55 +5,60 @@ from flask import jsonify, request, abort, Flask, make_response
 from models import storage
 from models.state import State
 from models.city import City
+from models.user import User
+from models.place import Place
+from models.review import Review
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False)
-def get_states_with_cities(state_id=None):
-    """Retrieves a state along with it's cities"""
-    state = storage.get(State, state_id)
-    if state is None:
+
+
+@app_views.route('/places/<place_id>/reviews', strict_slashes=False)
+def get_Reviews_of_Place(place_id=None):
+    """Retrieves a list of all Review objs of a Place"""
+    place = storage.get(Place, place_id)
+    if place is None:
         abort(404)
-    return make_response(jsonify([city.to_dict() for city in state.cities]))
+    return make_response(jsonify([review.to_dict() for review in place.reviews]))
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+@app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def city_get_or_delete(city_id=None):
-    """Retrieves a city or deletes a city"""
-    city = storage.city(City, city_id)
-    if city is None:
+def review_get_delete_put(review_id=None):
+    """Retrieves or deletes a Review object"""
+    review = storage.get(Review, review_id)
+    if review is None:
         abort(404)
     if request.method == 'GET':
-        return jsonify(city.to_dict())
+        return jsonify(review.to_dict())
     elif request.method == 'DELETE':
-        storage.delete(city)
+        storage.delete(review)
         storage.save()
         return make_response(jsonify({}), 200)
     elif request.method == 'PUT':
         if request.is_json:
-            city_data = request.get_json()
+            review_data = request.get_json()
         else:
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         ignore_list = ['id', 'created_at', 'updated_at', 'state_id']
-        for key, val in city_data.items():
+        for key, val in review_data.items():
             if key not in ignore_list:
-                setattr(city, key, val)
+                setattr(review, key, val)
         storage.save()
-        return make_response(jsonify(city.to_dict()), 200)
+        return make_response(jsonify(review.to_dict()), 200)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def city_post(state_id=None):
-    """creates a city"""
-    city_data = request.get_json()
-    state = storage.get(State, state_id)
-    if state is None:
+def review_post(place_id=None):
+    """creates a review"""
+    review_data = request.get_json()
+    place = storage.get(Place, place_id)
+    if place is None:
         abort(404)
-    if not city_data:
+    if not review_data:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in city_data:
+    if 'name' not in review_data:
         return make_response(jsonify({'error': 'Missing name'}), 400)
-    new_city = City(**city_data)
+    new_review = Review(**review_data)
     storage.save()
-    return make_response(jsonify(new_city.to_dict()), 201)
+    return make_response(jsonify(new_review.to_dict()), 201)
