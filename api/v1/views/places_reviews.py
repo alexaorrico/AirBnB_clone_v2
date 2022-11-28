@@ -10,15 +10,14 @@ from models.place import Place
 from models.review import Review
 
 
-
-
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False)
 def get_Reviews_of_Place(place_id=None):
     """Retrieves a list of all Review objs of a Place"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    return make_response(jsonify([review.to_dict() for review in place.reviews]))
+    return make_response(jsonify([review.to_dict() for review in
+                                  place.reviews]))
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -39,7 +38,8 @@ def review_get_delete_put(review_id=None):
             review_data = request.get_json()
         else:
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
-        ignore_list = ['id', 'created_at', 'updated_at', 'state_id']
+        ignore_list = ['id', 'user_id', 'place_id', 'created_at',
+                       'updated_at']
         for key, val in review_data.items():
             if key not in ignore_list:
                 setattr(review, key, val)
