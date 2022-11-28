@@ -60,6 +60,6 @@ def user_put(user_id):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key, val in post_data.items():
         if key not in ['id', 'email', 'created_at', 'updated_at']:
-            setattr(obj, key, value)
+            setattr(obj, key, val)
     storage.save()
     return make_response(jsonify(obj.to_dict()), 200)
