@@ -58,6 +58,6 @@ def update_amenity(amenity_id=None):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key, val in post_data.items():
         if key not in ['id', 'created_at', 'updated_at']:
-            setattr(obj, key, value)
+            setattr(amenity, key, val)
     storage.save()
     return make_response(jsonify(amenity.to_dict()), 200)
