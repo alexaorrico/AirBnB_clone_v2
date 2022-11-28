@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """handles default RESTful API actions for Amenity objects"""
 from api.v1.views import app_views
-from flask import jsonify, request, abort, Flask, make_response
+from flask import jsonify, request, abort, make_response
 from models import storage
 from models.amenity import Amenity
 
@@ -15,7 +15,7 @@ def get_amenities():
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
     """creates a new amenity objects"""
-    amenity_data = request.get_json(silent=True)
+    amenity_data = request.get_json()
     if amenity_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'name' not in amenity_data.keys():
@@ -53,7 +53,7 @@ def update_amenity(amenity_id=None):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-    post_data = request.get_json(silent=True)
+    post_data = request.get_json()
     if post_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key, val in post_data.items():

@@ -15,7 +15,7 @@ def users_get(user_id=None):
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def user_post():
     """creates a new user object"""
-    post_data = request.get_json(silent=True)
+    post_data = request.get_json()
     if post_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'email' not in post_data.keys():
@@ -55,7 +55,7 @@ def user_put(user_id):
     obj = storage.get(User, user_id)
     if obj is None:
         abort(404)
-    post_data = request.get_json(silent=True)
+    post_data = request.get_json()
     if post_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key, val in post_data.items():

@@ -42,7 +42,7 @@ def delete_place(place_id=None):
                  strict_slashes=False)
 def create_place(city_id=None):
     """creates a place object"""
-    place_data = request.get_json(silent=True)
+    place_data = request.get_json()
     if place_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     city = storage.get(City, city_id)
@@ -64,7 +64,7 @@ def update_place(place_id=None):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    place_data = request.get_json(silent=True)
+    place_data = request.get_json()
     if place_data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key, val in place_data.values():
