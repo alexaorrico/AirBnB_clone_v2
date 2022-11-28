@@ -4,7 +4,7 @@ Handles amenties objects for RestfulAPI
 """
 from models.amenity import Amenity
 from models import storage
-from api.vi.views import app_views
+from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
 
