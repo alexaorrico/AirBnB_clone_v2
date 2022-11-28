@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""module states
+"""module amenities
 Handles states objects for RestfulAPI
 """
 from models.state import Amenity
