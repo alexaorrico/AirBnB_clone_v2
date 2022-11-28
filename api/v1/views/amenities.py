@@ -33,12 +33,11 @@ def get_amenity():
 def delete_amenity():
     """deletes amenity object"""
     amenity = amenity.get(Amenity, amenity_id)
-    
+
     if not amenity:
         abort(404)
-    
+
     storage.delete(amenity)
     storage.save()
 
     return make_response(jsonify({}), 200)
-    
