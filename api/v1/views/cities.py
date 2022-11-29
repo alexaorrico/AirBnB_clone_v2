@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""module states
-Handles states objects for RestfulAPI
-"""
+"""module states - handles states objects for RestfulAPI"""
 from models.state import State
 from models.city import City
 from models import storage
