@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""module amenities
-Handles amenties objects for RestfulAPI
-"""
+"""module amenities - handles amenties objects for RestfulAPI"""
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
