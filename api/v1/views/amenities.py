@@ -22,7 +22,7 @@ def get_amenities():
                  strict_slashes=False)
 def get_amenity():
     """retrieves specific amenity"""
-    amenity = storage.get(amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
     return make_response(jsonify(amenity.to_dict()), 200)
