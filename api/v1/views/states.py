@@ -1,19 +1,17 @@
 #!/usr/bin/python3
-"""module states
-Handles states objects for RestfulAPI
-"""
+"""module states - handles states objects for RestfulAPI"""
 from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
 
-@app_views.route('/states/', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """retrieves list of state objects"""
-    all_states = storage.all(State).values()
+    all_states = storage.all(State)
     list_states = []
-    for state in all_states:
+    for state in all_states.values():
         list_states.append(state.to_dict())
     return jsonify(list_states)
 
@@ -22,7 +20,7 @@ def get_states():
 def get_state():
     """retrieves specific state"""
     state = storage.get(State, state_id)
-    if not state:
+    if state is not None:
         return jsonify(state.to_dict())
     abort(404)
 
