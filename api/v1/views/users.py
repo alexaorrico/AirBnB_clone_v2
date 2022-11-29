@@ -24,9 +24,9 @@ def get_users():
 def get_user_id(user_id):
     """retrieves specific user id"""
     user = storage.get(User, user_id)
-    if user is None:
-        abort(404)
-    return jsonify(user.to_dict())
+    if user is not None:
+        return jsonify(user.to_dict())
+    abort(404)
 
 
 @app_views.route("/users/<string:user_id>", methods=["DELETE"],
@@ -34,18 +34,18 @@ def get_user_id(user_id):
 def delete_user_id(user_id):
     """deletes user id object"""
     user = storage.get(User, user_id)
-    if user is None:
-        abort(404)
-    storage.delete(user)
-    storage.save()
-    return make_response(jsonify({}), 200)
+    if user is not None:
+        storage.delete(user)
+        storage.save()
+        return make_response(jsonify({}), 200)
+    abort(404)
 
 
 @app_views.route("/users/", methods=["POST"],
                  strict_slashes=False)
 def post_user():
     """creates user object"""
-    if not request.get_json():
+    if request.get_json() is not None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'email' not in request.get_json():
         return make_response(jsonify({"error": "Missing email"}), 400)
@@ -63,7 +63,7 @@ def put_user(user_id):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    if not request.get_json():
+    if request.get_json() is not None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     ignore_keys = ["id", "email", "created_at", "updated_at"]
     for key, value in request.get_json().items():
