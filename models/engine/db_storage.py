@@ -82,8 +82,6 @@ class DBStorage:
         id: string representing the object ID
         Returns the object based on the class and its ID, or None if not found
         """
-
-        # A variable that contains all objects of a class
         all_objects = self.all(cls)
 
         if all_objects is not None:
