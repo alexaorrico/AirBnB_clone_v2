@@ -83,7 +83,7 @@ class DBStorage:
             For example checking count of State objects
             Query Database as self.__session.query(State).count()
             '''
-            result = self.__session.query(cls).count()            
+            result = self.__session.query(cls).count()
             return (result)
         else:
             '''
