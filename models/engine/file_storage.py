@@ -72,5 +72,11 @@ class FileStorage:
 
     def count(self, cls=None):
         return len(self.all(cls))
-        
 
+
+    def get(self, cls, id):
+        try:
+            k = cls.__name__ + '.' + id
+            return self.all()[k]
+        except Exception:
+            return None
