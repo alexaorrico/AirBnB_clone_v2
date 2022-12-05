@@ -3,7 +3,7 @@
 Module app
 """
 from flask import Flask
-from views import app_views
+from api.v1.views import app_views
 from os import getenv
 
 
