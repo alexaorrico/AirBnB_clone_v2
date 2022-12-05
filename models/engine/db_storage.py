@@ -77,11 +77,24 @@ class DBStorage:
         return result
 
     def count(self, cls=None):
-        # Need to set up how to iterate over the different classes return that.
         '''Returns a count of cls if passed if not all items from database.'''
         if cls is not None:
+            '''
+            For example checking count of State objects
+            Query Database as self.__session.query(State).count()
+            '''
             result = self.__session.query(cls).count()            
             return (result)
+        else:
+            '''
+            Iterate over values of classes dict, return count and add to
+            total.
+            '''
+            count = 0
+            for clss in classes.values():
+                result = self.__session.query(clss).count()
+                count = count + result
+            return count
 
     def close(self):
         """call remove() method on the private session attribute"""
