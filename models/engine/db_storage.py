@@ -70,6 +70,11 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+    
+    def get(self, cls, id):
+        """Returns the object based
+         on the class and its ID, or None if not found"""
+         
 
     def close(self):
         """call remove() method on the private session attribute"""
