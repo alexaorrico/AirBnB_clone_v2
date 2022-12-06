@@ -70,7 +70,9 @@ class FileStorage:
         self.reload()
 
     def get(self, id, cls):
-        """get file storage"""
+        """
+            retrieves one object based on class name and id
+        """
         if cls not in classes.values():
             return None
         getItem = False
@@ -85,5 +87,7 @@ class FileStorage:
             return None
 
     def count(self, cls=None):
-        """count file storage"""
+        """
+            retrieves one object based on class name and id
+        """
         return len(self.all(cls))
