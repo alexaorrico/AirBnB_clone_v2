@@ -66,7 +66,7 @@ def put_state(state_id):
     if data is None or type(data) != dict:
         return make_response("Not a JSON", 400)
 
-    for key, value in date.items():
+    for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
 
