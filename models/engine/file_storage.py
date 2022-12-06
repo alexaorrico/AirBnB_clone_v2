@@ -79,8 +79,7 @@ class FileStorage:
         results = self.all(cls)
 
         if key in results:
-            retrieved_obj = results[key].value()
-            return retrieved_obj
+            return results[key]
         else:
             return None
 
