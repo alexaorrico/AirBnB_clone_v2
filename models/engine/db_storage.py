@@ -79,11 +79,15 @@ class DBStorage:
         """
             retrieves one object based on class name and id
         """
-        if cls and id:
+        """if cls and id:
             fetch = "{}.{}".format(cls.__name__, id)
             return self.__session.get(fetch)
         return None
-
+        """
+        if cls not in classes.values():
+            return None
+        return self.__session.get(cls, id)
+        
     def count(self, cls=None):
         """
             retrieves one object based on class name 
