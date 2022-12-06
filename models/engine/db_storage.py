@@ -84,12 +84,14 @@ class DBStorage:
             return self.__session.get(fetch)
         return None
         """
-        if cls not in classes and  cls not in classes.values():
+        if cls is not None and id is not None:
+            clases = self.all(cls)
+            for obj in clases.values():
+                if obj.id == id:
+                    return obj
             return None
-        if type(cls) is str:
-            cls = classes[cls]
-        return self.__session.get(cls, id)
-
+        else:
+            return None
     def count(self, cls=None):
         """
             retrieves one object based on class name 
