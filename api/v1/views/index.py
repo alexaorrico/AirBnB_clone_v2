@@ -27,7 +27,7 @@ def app_status():
 def count():
     '''Returns the count of objects from storage.'''
     class_count_dict = {}
-    for key, cls_name in classes:
-        cls_count = storage.count(cls_name)
-        class_count_dict[key] = cls_count
+    for name, cls in classes.items():
+        cls_count = storage.count(cls)
+        class_count_dict[name] = cls_count
     return jsonify(class_count_dict)
