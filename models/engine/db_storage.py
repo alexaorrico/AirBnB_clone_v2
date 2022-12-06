@@ -81,13 +81,20 @@ class DBStorage:
         if cls not in classes.values():
             return None
         return self.__session.get(cls, id)
-        """
+        
         obj = self.__session.get(cls, id)
 
         if obj:
             return obj
         else:
             return None
+        """
+        objs = models.storage.all(cls)
+        for obj in objs.values():
+            if (obj.id == id):
+                return obj
+
+        return None
 
     def count(self, cls=None):
         """
