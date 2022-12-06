@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """Module for State views"""
 from flask import jsonify, abort, make_response, request
-from api.vi.views import app_views
+from api.v1.views import app_views
 from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
     """Retrieves the list of all states"""
     states = []
@@ -15,7 +15,7 @@ def get_all_states():
     return jsonify(states)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """Retrieves a state by its id"""
     state = storage.get(State, state_id)
@@ -24,7 +24,8 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Deletes a state"""
     state = storage.get(State, state_id)
@@ -36,7 +37,7 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
     """Creates a state & returns the new state with status code 201"""
     data = request.get_json()
@@ -53,7 +54,7 @@ def post_state():
     return make_response(jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
     """Updates a state and return the state with status code 200"""
     state = storage.get(State, state_id)
@@ -70,9 +71,4 @@ def put_state(state_id):
             setattr(state, key, value)
 
     storage.save()
-    return make_response(jsonify(state.to_dict(), 200)
-
-
-if __name__ == "__main__":
-    app.url_map.strict_slashes = False
-    pass
+    return make_response(jsonify(state.to_dict()), 200)
