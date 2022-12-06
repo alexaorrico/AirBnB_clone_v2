@@ -32,14 +32,14 @@ class TestDBStorageDocs(unittest.TestCase):
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pep8.StyleGuide(quiet=False)
         result = pep8s.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pep8.StyleGuide(quiet=False)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
@@ -70,6 +70,20 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def setUp(self):
+        """set up for test"""
+        self.db = MySQLdb.connect(getenv("HBNB_MYSQL_HOST"),
+                                  getenv("HBNB_MYSQL_USER"),
+                                  getenv("HBNB_MYSQL_PWD"),
+                                  getenv("HBNB_MYSQL_DB"))
+        self.cursor = self.db.cursor()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def tearDown(self):
+        self.close()
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -80,9 +94,44 @@ class TestFileStorage(unittest.TestCase):
         """Test that all returns all rows when no class is passed"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
+    def test_new_DBStorage(self):
+        """Tests for new() method"""
+        nb = self.cursor.execute("SELECT COUNT(*) FROM states")
+        s = State(name="NSW")
+        storage.new(s)
+        storage.save()
+        nb1 = self.cursor.execute("SELECT COUNT(*) FROM states")
+        self.assertEqual(nb1 - nb, 0)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        nb = self.cursor.execute("SELECT COUNT(*) FROM states")
+        s = State(name="NSW")
+        storage.new(s)
+        storage.save()
+        nb1 = self.cursor.execute("SELECT COUNT(*) FROM states")
+        self.assertGreater(nb1, nb)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        '''Test get function returns the state id of newly created obj'''
+        test_state = State(name='Test')
+        storage.new(test_state)
+        storage.save()
+        first_obj = storage.get(State, test_state.id)
+        self.assertTrue(first_obj.id == test_state.id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        '''Test count method on db_storage.'''
+        test_state = State(name="Test")
+        test_user = User(name="Ada Lovelace")
+        test_place = Place(name="Test Place")
+        storage.new(test_state)
+        storage.new(test_user)
+        storage.new(test_place)
+        storage.save()
+        state_count = storage.count(State)
+        all_count = storage.count()
+        self.assertGreaterEqual(all_count, state_count)
