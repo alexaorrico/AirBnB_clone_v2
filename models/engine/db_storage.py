@@ -85,11 +85,4 @@ class DBStorage:
         """"Returns the number of objects in storage matching the given class
         If no class is passed, returns the count of all objects in storage"""
 
-        if not cls:
-            c = 0
-            for i in classes.values:
-                c += len(models.all(i).values)
-        else:
-            count = len(models.storage.all(cls).values)
-        
-        return count
+        return len (self.all(cls))
