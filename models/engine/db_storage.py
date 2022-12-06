@@ -70,11 +70,26 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
-    
-    def get(self, cls, id):
-        """Returns the object based
-         on the class and its ID, or None if not found"""
-         
+
+    def get(self, cls=None, id=None):
+        """Returns obj based on class name and its ID"""
+        if cls is not None and id is not None:
+            try:
+                return self.__session.query(classes[cls]).get(id)
+            except FileExistsError:
+                return None
+
+        return None
+
+    def count(self, cls=None):
+        """Returns the amount of obj"""
+        if cls is not None:
+            try:
+                return len(self.all(classes[cls]))
+            except FileExistsError:
+                return None
+        else:
+            return len(self.all())
 
     def close(self):
         """call remove() method on the private session attribute"""
