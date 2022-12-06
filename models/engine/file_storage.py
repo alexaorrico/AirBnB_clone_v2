@@ -71,10 +71,12 @@ class FileStorage:
 
 
     def count(self, cls=None):
+        """COUNT method"""
         return len(self.all(cls))
 
 
     def get(self, cls, id):
+        """GET method"""
         try:
             k = cls.__name__ + '.' + id
             return self.all()[k]

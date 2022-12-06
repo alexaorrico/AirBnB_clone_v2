@@ -76,9 +76,11 @@ class DBStorage:
         self.__session.remove()
 
     def count(self, cls=None):
+        """COUNT method"""
         return len(self.all())
 
     def get(self, cls, id):
+        """GET method"""
         try:
             k =cls.__name__ + '.' + id
             return self.all()[k]
