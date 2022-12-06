@@ -73,6 +73,9 @@ class FileStorage:
     update the file storage
     """
     def get(self, id, cls):
+        """
+        get file storage
+        """
         if cls not in classes.values():
             return None
         getItem = False
@@ -87,6 +90,9 @@ class FileStorage:
             return None
         
     def count(self, cls=None):
+        """
+        count file storage
+        """
         return len(self.all(cls))
 
         

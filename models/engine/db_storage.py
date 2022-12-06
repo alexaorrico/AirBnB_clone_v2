@@ -80,10 +80,16 @@ class DBStorage:
     """
 
     def get(self, id, cls):
+        """
+        get db storage
+        """
         if cls not in classes.values():
             return None
         return self.__session.get(cls, id)   
-        
+
     def count(self, cls=None):
+        """
+        count
+        """
         return len(self.all(cls))
 
