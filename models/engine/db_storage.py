@@ -84,9 +84,9 @@ class DBStorage:
             return self.__session.get(fetch)
         return None
         """
-        if cls not in classes.values():
+        if cls not in classes and  cls not in classes.values():
             return None
-        return self.__session.get(cls.__name__, {"id": id})
+        return self.__session.get(cls.__name__, id)
 
     def count(self, cls=None):
         """
