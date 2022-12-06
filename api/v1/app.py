@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+'''
+This module is basis for the Flask API. 
+It contains the teardown and run configuration.
+'''
 
 from flask import Flask
 from models import storage
