@@ -71,21 +71,25 @@ class FileStorage:
 
     def get(self, cls, id):
         """
+        Prototype: def get(self, cls, id):
+        cls: class
+        id: string representing the object ID
         Returns the object based on the class and its ID, or None if not found
         """
-
         # A variable that contains all objects of a class
-        all_objects = self.all(cls)
-
-        if all_objects is not None:
-            for obj in all_objects.values():
-                if obj.id == id:
-                    return obj
-        else:
-            return None
+        if cls and id:
+            try:
+                return self.__session.query(classes[cls]).get(id)
+            except:
+                pass
+        return None
 
     def count(self, cls=None):
         """A method to count the number of objects in storage"""
-        all_objects = self.all(cls)
         # returns the number of objects
-        return len(all_objects)
+        if cls is None:
+            return len(self.all())
+        try:
+            return len(self.all(classes[cls]))
+        except:
+            return None
