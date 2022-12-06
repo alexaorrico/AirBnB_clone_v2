@@ -73,18 +73,11 @@ class FileStorage:
         """
             retrieves one object based on class name and id
         """
-        if cls not in classes.values():
-            return None
-        getItem = False
-
-        for key, value in self.__objects:
-
-            if key == cls.__class__.__name__ + '.' + id:
-                getItem = True
-                return value
-
-        if getItem is False:
-            return None
+        if cls and id:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch)
+        return None
 
     def count(self, cls=None):
         """

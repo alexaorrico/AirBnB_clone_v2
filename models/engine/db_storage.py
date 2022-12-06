@@ -79,9 +79,11 @@ class DBStorage:
         """
             retrieves one object based on class name and id
         """
-        if cls not in classes.values():
-            return None
-        return self.__session.get(cls, id)
+        if cls and id:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch)
+        return None
 
     def count(self, cls=None):
         """
