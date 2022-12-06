@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def teardown_appcontext():
+def teardown_appcontext(self):
     """
     declare a method to handle @app.teardown_appcontext that calls
     storage.close()
@@ -26,5 +26,5 @@ def teardown_appcontext():
 if __name__ == "__main__":
     host = get("HBNB_API_HOST", "0.0.0.0")
     port = get("HBNB_API_PORT", "5000")
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port, threaded=True, debug=True)
 
