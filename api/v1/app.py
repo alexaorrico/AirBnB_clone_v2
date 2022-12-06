@@ -24,4 +24,4 @@ def teardown_app(exception):
 if __name__ == '__main__':
     app_host = getenv('HBNB_API_HOST', default='0.0.0.0')
     app_port = getenv('HBNB_API_PORT', default='5000')
-    app.run(host=app_host, port=app_port, threaded=True)
+    app.run(host=app_host, port=app_port, threaded=True, debug=True)
