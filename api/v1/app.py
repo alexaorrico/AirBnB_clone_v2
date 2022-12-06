@@ -19,6 +19,7 @@ def teardown_appcont(exception):
     """Closes the session running"""
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(exception):
     """Create a handler for 404 errors"""
