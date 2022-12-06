@@ -85,6 +85,6 @@ class DBStorage:
 
     def count(self, cls=None):
         """
-            retrieves one object based on class name and id
+            retrieves one object based on class name 
         """
         return len(self.all(cls))
