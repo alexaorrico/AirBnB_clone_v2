@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module that defines routes to be displayed"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
