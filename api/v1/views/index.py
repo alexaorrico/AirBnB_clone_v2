@@ -12,7 +12,7 @@ def status():
     return {"status": "ok"}
 
 
-@app_views.route('/stats')
+@app_views.route('/api/v1/stats')
 def stats():
     return {"aminities": storage.count('Amenity'),
             "cities": storage.count('City'),
