@@ -82,6 +82,7 @@ class DBStorage:
         id: string representing the object ID
         Returns the object based on the class and its ID, or None if not found
         """
+        # A variable that contains all objects of a class
         if cls and id:
             try:
                 return self.__session.query(classes[cls]).get(id)
@@ -91,6 +92,7 @@ class DBStorage:
 
     def count(self, cls=None):
         """A method to count the number of objects in storage"""
+        # returns the number of objects
         if cls is None:
             return len(self.all())
         try:
