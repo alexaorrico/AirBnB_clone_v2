@@ -81,9 +81,7 @@ class DBStorage:
         """
         if cls and id:
             fetch = "{}.{}".format(cls.__name__, id)
-            all_obj = self.all(cls.__name__)
-            obj = all_obj.get(fetch)
-            return obj
+            return self.__session.get(fetch)
         return None
 
     def count(self, cls=None):
