@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from flask import Blueprint, render_template, abort
 from api.v1.views import *
+from api import *
 from api.v1.views.index import *
 from api.v1.views.cities import * 
 from api.v1.views.index import * 
