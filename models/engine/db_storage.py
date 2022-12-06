@@ -85,9 +85,7 @@ class DBStorage:
         return objs[0]
 
     def count(self, cls=None):
-        if not cls:
-            return 0
-        return(len(self.__session.query(cls).all()))
+        return(len(self.all(cls)))
         
         
         
