@@ -75,7 +75,7 @@ class FileStorage:
         """
         if cls and id:
             fetch = "{}.{}".format(cls.__class__.__name__, id)
-            all_obj = self.all(cls)
+            all_obj = self.all(cls.__class__.__name__)
             obj = all_obj.get(fetch)
             return obj
         return None
