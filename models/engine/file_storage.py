@@ -73,11 +73,13 @@ class FileStorage:
         """
             retrieves one object based on class name and id
         """
-        fetch = "{}.{}".format(cls.__name__, id)
-        print(fetch)
-        all_obj = self.all(cls.__name__)
-        obj = all_obj.get(fetch)
-        return obj
+        
+        if cls and id:
+            fetch = "{}.{}".format(cls.__name__, id)
+            all_obj = self.all(cls.__name__)
+            obj = all_obj.get(fetch)
+            return obj
+        return None
 
     def count(self, cls=None):
         """

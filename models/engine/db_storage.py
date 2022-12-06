@@ -80,8 +80,8 @@ class DBStorage:
             retrieves one object based on class name and id
         """
         if cls and id:
-            fetch = "{}.{}".format(cls.__class__.__name__, id)
-            all_obj = self.all(cls)
+            fetch = "{}.{}".format(cls.__name__, id)
+            all_obj = self.all(cls.__name__)
             obj = all_obj.get(fetch)
             return obj
         return None
