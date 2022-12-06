@@ -72,11 +72,11 @@ class DBStorage:
         self.__session = Session
 
     def get(self, cls=None, id=None):
-        """Returns obj based on class name and its ID"""
+        """Returns obj"""
         if cls is not None and id is not None:
             try:
                 return self.__session.query(classes[cls]).get(id)
-            except FileExistsError:
+            except:
                 return None
 
         return None
@@ -86,7 +86,7 @@ class DBStorage:
         if cls is not None:
             try:
                 return len(self.all(classes[cls]))
-            except FileExistsError:
+            except:
                 return None
         else:
             return len(self.all())
