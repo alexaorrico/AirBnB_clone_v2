@@ -22,4 +22,5 @@ def teardown(exit):
 if __name__ == '__main__':
     print(host or '0.0.0.0')
     print(port or 5000)
-    app.run(host=(host or '0.0.0.0'), port=(port or 5000), threaded=True, debug=True)
+    app.run(host=(host or '0.0.0.0'),
+            port=(port or 5000), threaded=True, debug=True)
