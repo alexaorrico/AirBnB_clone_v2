@@ -19,6 +19,11 @@ def teardown(exit):
     storage.close()
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return {"error": "Not found"}
+
+
 if __name__ == '__main__':
     print(host or '0.0.0.0')
     print(port or 5000)
