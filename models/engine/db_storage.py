@@ -77,7 +77,7 @@ class DBStorage:
 
     def count(self, cls=None):
         """COUNT method"""
-        return len(self.all())
+        return len(self.all(cls))
 
     def get(self, cls, id):
         """GET method"""
