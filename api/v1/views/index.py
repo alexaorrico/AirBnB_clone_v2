@@ -16,6 +16,7 @@ from models.user import User
 def get_status():
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/api/v1/stats', methods=['GET'])
 def stats():
     classes = {
@@ -23,4 +24,3 @@ def stats():
                'states': State, 'cities': City, 'amenities': Amenity,
                'reviews': Review
               }
-    
