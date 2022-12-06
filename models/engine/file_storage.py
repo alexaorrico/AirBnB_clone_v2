@@ -67,13 +67,13 @@ class FileStorage:
 
     def get(self, cls, id):
         '''Gets one item from filestorage or none if unable to locate.'''
-        cls_dict = self.all(cls)
-        for obj in cls_dict:
-            if obj.get('id') == id:
-                return(obj)
+        cls_dict = self.all(cls).items()
+        for key, value in cls_dict:
+            if id in key:
+                return value
             else:
                 return None
-    
+
     def count(self, cls=None):
         '''
         Returns the count of object instances for the class supplied else will
@@ -83,7 +83,7 @@ class FileStorage:
         if cls is not None:
             obj_instance_dict = self.all(cls)
             return len(obj_instance_dict)
-        
+
         obj_instance_dict = self.all()
         return len(obj_instance_dict)
 
