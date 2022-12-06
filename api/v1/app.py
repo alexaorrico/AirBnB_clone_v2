@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-This module is basis for the Flask API. 
+This module is basis for the Flask API.
 It contains the teardown and run configuration.
 '''
 
