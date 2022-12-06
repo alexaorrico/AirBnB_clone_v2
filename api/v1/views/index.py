@@ -17,10 +17,13 @@ def get_status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'])
 def stats():
     classes = {
-               'amenities': BaseModel, 'users': User, 'places': Place,
-               'states': State, 'cities': City, 'amenities': Amenity,
-               'reviews': Review
+               'users': User, 'places': Place, 'states': State,
+               'cities': City, 'amenities': Amenity, 'reviews': Review
               }
+    d = {}
+    for k, v in classes.items():
+        d[k] = storage.count(v)
+    return jsonify(d)        
