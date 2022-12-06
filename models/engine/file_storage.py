@@ -78,7 +78,6 @@ class FileStorage:
         all_obj = self.all(cls.__name__)
         obj = all_obj.get(fetch)
         return obj
-       
 
     def count(self, cls=None):
         """
