@@ -75,9 +75,7 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-    """
-    update the db storage
-    """
+  
 
     def get(self, id, cls):
         """

@@ -69,9 +69,7 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
     
-    """
-    update the file storage
-    """
+
     def get(self, id, cls):
         """
         get file storage
