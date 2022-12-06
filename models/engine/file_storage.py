@@ -76,10 +76,10 @@ class FileStorage:
 
         # key = "{}.{}".format(type(cls).__name__, id)
         key = cls.__class__.__name__ + '.' + str(id)
-        results = self.all(cls)
 
-        if key in results:
-            return results[key]
+        for obj, value in self.all(cls):
+            if obj == key:
+                return value
         else:
             return None
 
