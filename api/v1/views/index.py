@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """Endpoints of the blueprint app_views"""
+
+
 from flask import Flask, jsonify
 from api.v1.views import app_views
 
