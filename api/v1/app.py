@@ -1,15 +1,17 @@
 #!/usr/bin/python3
-''''
-    file app for starting FLask
-    registering blueprint
-'''
+"""
+file app for starting FLask
+registering blueprint
+"""
 from os import getenv
-from flask import Flask
+from flask import Flask, make_response, jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 
 
 app = Flask(__name__)
+CORS(app, origins="0.0.0.0")
 app.register_blueprint(app_views)
 
 
@@ -21,11 +23,12 @@ def tear_down(self):
     storage.close()
 
 
-@app.errorhandler
-def error_handler(self):
-    """
-    return 404 status code response when error
-    """
+# @app.errorhandler(404)
+# def not_found(error):
+#     '''
+#     return JSON formatted 404 status code response
+#     '''
+#     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == "__main__":
