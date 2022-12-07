@@ -53,8 +53,10 @@ def post_user():
 
         if body is None:
             abort(400, description="Not a JSON")
-        elif body.get('name') is None:
-            abort(400, description='Missing name')
+        elif body.get('email') is None:
+            abort(400, description='Missing email')
+        elif body.get('password') is None:
+            abort(400, description='Missing password')
         else:
             obj = User(**body)
             storage.new(obj)
