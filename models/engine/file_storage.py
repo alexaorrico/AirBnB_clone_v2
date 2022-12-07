@@ -59,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if its inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -70,14 +70,33 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Method to retrieve one object"""
-        for obj_check in self.__session.query(cls).all():
-            if obj_check.id == id:
-                return obj_check
-        return None
+        """
+        Returns the obj based on the cls and its ID
+        """
+        if cls is None or id is None:
+            return None
+        else:
+            for k, v in classes.items():
+                if v == cls:
+                    key = "{}.{}".format(k, id)
+            obj = {}
+            if key not in self.__objects.keys():
+                return None
+            for k in self.__objects.keys():
+                if key == k:
+                    obj = self.__objects[k]
+            return obj
     
     def count(self, cls=None):
-        """Method to count the number of objects in storage"""
-        if cls:
-            return len(self.__session.query(cls).all())
-        return len(self.all())
+        """Method to count number of objects in the storage"""
+        count = 0
+        if cls is not None:
+            for k, v in classes.items():
+                if v == cls:
+                    key = k
+            for k in self.__objects.keys():
+                if key == k.split('.')[0]:
+                    count += 1 
+        elif cls is None:
+            count = len(self.__objects.keys())
+        return count
