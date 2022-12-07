@@ -1,6 +1,9 @@
 #!/usr/bin/python3
+"""
+module with route /status on object app_views
+"""
 from api.v1.views import app_views
-import jsonify
+from flask import jsonify
 
 
 @app_views.route('/status')
@@ -11,9 +14,8 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_view.route('/api/v1/stats')
-def _counts():
-    """
-    retrieves the number of each objects per type
-    """
-	
+# @app_view.route('/api/v1/stats')
+# def _counts():
+#     """
+#     retrieves the number of each objects per type
+#     """
