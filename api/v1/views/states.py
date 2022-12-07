@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from models import storage 
 from models.state import State
 
-@app_views.route('/states/', methods=['GET'])
+@app_views.route('/states', methods=['GET'])
 def get_states():
     """ Get All States"""
     states = storage.all(State).values()
@@ -33,7 +33,7 @@ def delete_state(state_id):
 
     return jsonify({}), 200
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states', methods=['POST'])
 def post_state():
     """ Post State """
     try:
