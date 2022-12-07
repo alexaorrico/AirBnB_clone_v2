@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 file app for starting FLask
-registering blueprint 
+registering blueprint
 """
 from os import getenv
 from flask import Flask, make_response, jsonify
