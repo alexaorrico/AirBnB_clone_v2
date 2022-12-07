@@ -76,23 +76,14 @@ class DBStorage:
         method to retrieve an object
         returns the object based on class and its ID
         """
-        dict_get = models.storage.all(cls)
-        # print(dict_get)
-        for k, v in dict_get.items():
-            obj = str(cls) + '.' + id
-            if k == obj:
-                return v
-        return None
-
-        # if cls and id:
-        #     objs = self.all(cls)
-        #     retrieved = '{}.{}'.format(cls, id)
-        #     # print(objs)
-        #     for obj in objs.values():
-        #         print(obj)
-        #         if obj.id in retrieved:
-        #             return obj
-        # return (None)
+        dict_get = self.all(cls)
+        try:
+            # print(dict_get)
+            for val in dict_get.values():
+                if val.id == id:
+                    return val
+        except BaseException:
+            return None
 
     def count(self, cls=None):
         """ Method to count number of objects in storage """
