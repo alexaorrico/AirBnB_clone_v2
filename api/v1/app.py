@@ -23,12 +23,14 @@ def tear_down(self):
     storage.close()
 
 
-# @app.errorhandler(404)
-# def not_found(error):
-#     '''
-#     return JSON formatted 404 status code response
-#     '''
-#     return make_response(jsonify({'error': 'Not found'}), 404)
+@app.errorhandler(404)
+def page_not_found(error):
+    '''
+    return JSON formatted 404 status code response
+    '''
+    return jsonify({'error': 'Not found'}), 404
+    # to decorate it:
+    # return render_template('page_for_error.html'), 404
 
 
 if __name__ == "__main__":
