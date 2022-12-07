@@ -87,7 +87,7 @@ def update_user(user_id):
 
 
 @app_views.route('/users/<user_id>', methods=["PUT"])
-def update_state(user_id):
+def update_user(user_id):
     """PUT/UPDATE a single users"""
     found = storage.get(User, user_id)
     if not found:
