@@ -12,7 +12,6 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-
 @app.errorhandler(404)
 def not_found(e):
     return jsonify(error="Not found"), 404
