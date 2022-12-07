@@ -13,7 +13,6 @@ app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 
-
 @app.teardown_appcontext
 def storage_close():
     storage.close()
@@ -23,7 +22,7 @@ def storage_close():
 def page_not_found(error):
     """Handler for 404 errors that returns a JSON-formatted 404
     status code response"""
-    return jsonify(error="Not found"), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
