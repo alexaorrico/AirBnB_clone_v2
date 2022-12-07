@@ -2,7 +2,7 @@
 """
 index
 """
-from flask import Flask, jsonify, abort, request
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage 
 from models.state import State
@@ -33,7 +33,7 @@ def delete_state(state_id):
 
     return jsonify({}), 200
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'])
 def post_state():
     """ Post State """
     try:
