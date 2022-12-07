@@ -11,6 +11,7 @@ from models.user import User
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def all_places_in_city(city_id):
+    """Route that shows all instances of class Place in a City"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -22,6 +23,7 @@ def all_places_in_city(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
+    """Route that shows a specific Place requested by id"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -30,6 +32,7 @@ def get_place(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
+    """Route that shows after deleting Place instance with input id"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -41,6 +44,7 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
+    """Route that shows a new instance of Place after being created"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -67,6 +71,7 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
+    """Route that shows instance of Place with input id after being updated"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
