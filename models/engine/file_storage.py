@@ -72,7 +72,12 @@ class FileStorage:
     def get(self, cls, id):
         """A method to retrieve one object"""
         if cls in classes.values() and id is not None:
-            key = "{}.{}".format(cls.__class__.__name__, id)
+            className = ""
+            for key, value in classes.items():
+                if cls == value:
+                    className = key
+                    break 
+            key = "{}.{}".format(className, id)
 
             if key in self.__objects.keys():
                 return self.__objects[key]
