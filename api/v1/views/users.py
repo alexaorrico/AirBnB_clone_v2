@@ -84,3 +84,25 @@ def update_user(user_id):
             return jsonify(found.to_dict()), 200
     except ValueError:
         abort(400, description="Not a JSON")
+
+
+@app_views.route('/users/<user_id>', methods=["PUT"])
+def update_state(state_id):
+    """PUT/UPDATE a single users"""
+    found = storage.get(User, user_id)
+    if not found:
+        abort(404)
+
+    try:
+        req = request.get_json()
+        if req is None:
+            abort(400, description="Not a JSON")
+        else:
+            invalid = ['id', 'created_at', 'updated_at', 'email']
+            for key, value in req.items():
+                if key not in invalid:
+                    setattr(found, key, value)
+            storage.save()
+            return jsonify(found.to_dict()), 200
+    except ValueError:
+        abort(400, description="Not a JSON")
