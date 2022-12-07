@@ -3,13 +3,14 @@
 
 
 from flask import Flask, jsonify
-from models import storage 
+from models import storage
 from api.v1.views import app_views
 from os import getenv
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
 
 @app.teardown_appcontext
 def storage_close():
@@ -24,7 +25,7 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-        host = '0.0.0.0'   
+        host = '0.0.0.0'  
         if getenv('HBNB_API_HOST'):
             host = getenv('HBNB_API_HOST')
         port = 5000

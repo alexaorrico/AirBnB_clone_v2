@@ -6,14 +6,13 @@ from flask import Flask, jsonify
 from api.v1.views import app_views
 
 
-
 @app_views.route('/status')
 def api_status():
     """Endpoint (route) will be to return the status of the API"""
     # We can use json.dump() or flask.jsonify()
-    return jsonify({"status":"OK"})
+    return jsonify({"status": "OK"})
 
- 
+
 @app_views.route('/stats')
 def objects_qty():
     """Retrieves the number of each objects by type"""
