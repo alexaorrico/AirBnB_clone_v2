@@ -2,8 +2,8 @@
 """Endpoints of the blueprint app_views"""
 
 
-from flask import Flask, jsonify
 from api.v1.views import app_views
+from flask import Flask, jsonify
 
 
 @app_views.route('/status')
@@ -13,15 +13,15 @@ def api_status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
-def objects_qty():
-    """Retrieves the number of each objects by type"""
-    from models import storage
-    return jsonify({
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
-    })
+#@app_views.route('/stats')
+#def objects_qty():
+#    """Retrieves the number of each objects by type"""
+#    from models import storage
+#    return jsonify({
+#        "amenities": storage.count("Amenity"),
+#        "cities": storage.count("City"),
+#        "places": storage.count("Place"),
+#        "reviews": storage.count("Review"),
+#        "states": storage.count("State"),
+#        "users": storage.count("User")
+#    })
