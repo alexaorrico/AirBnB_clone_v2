@@ -76,16 +76,23 @@ class DBStorage:
         method to retrieve an object
         returns the object based on class and its ID
         """
-        obj = None
-        try:
-            objs = self.__session.query(classes[cls]).all
-            for o in objs:
-                if o.id == id:
-                    obj = o
-        except BaseException:
-            """The base class for all built-in exceptions"""
-            pass
-        return obj
+        dict_get = models.storage.all(cls)
+        # print(dict_get)
+        for k, v in dict_get.items():
+            obj = str(cls) + '.' + id
+            if k == obj:
+                return v
+        return None
+
+        # if cls and id:
+        #     objs = self.all(cls)
+        #     retrieved = '{}.{}'.format(cls, id)
+        #     # print(objs)
+        #     for obj in objs.values():
+        #         print(obj)
+        #         if obj.id in retrieved:
+        #             return obj
+        # return (None)
 
     def count(self, cls=None):
         """ Method to count number of objects in storage """
