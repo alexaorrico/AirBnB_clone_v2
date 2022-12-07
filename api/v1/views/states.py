@@ -33,11 +33,11 @@ def delete_state(state_id):
 
     return jsonify({}), 200
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'])
 def post_state():
     """ Post State """
     try:
-        body = request.get_json(force=True)
+        body = request.get_json()
     
         if  body is None:
             abort(400, description="Not a JSON")
