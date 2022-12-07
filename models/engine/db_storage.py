@@ -89,18 +89,8 @@ class DBStorage:
 
     def count(self, cls=None):
         """ Method to count number of objects in storage """
-        obj_count = 0
-
-        if cls != '':
-            objs = self.__session.query(classes[cls])
-            obj_count = len(objs)
-        else:
-            for key, value in models.classes.items():
-                if key != "BaseModel":
-                    objs = self.__session.query(classes[key]).all()
-                    obj_count += len(objs)
-        return obj_count
-
+        return len(self.all(cls))
+        
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
