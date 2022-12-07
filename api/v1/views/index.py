@@ -16,7 +16,7 @@ class_dict = {
 }
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status')
 def status():
     """
     returns an OK Jsonified
