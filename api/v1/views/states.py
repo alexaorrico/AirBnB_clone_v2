@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-""""""
+"""Views for the State class: GET, DELETE,  POST, PUT"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
     objs = []
     for x in storage.all(State).values():
@@ -23,7 +23,7 @@ def get_state(state_id):
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
-def delete_state(state_id): 
+def delete_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -32,11 +32,11 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     if not request.get_json():
         abort(400, 'Not a JSON')
-    if not 'name' in request.get_json():
+    if 'name' not in request.get_json():
         abort(400, 'Missing name')
     obj = State(**request.get_json())
     storage.new(obj)
@@ -58,4 +58,3 @@ def update_state(state_id):
     storage.new(state)
     storage.save()
     return jsonify(state.to_dict()), 200
-
