@@ -57,4 +57,4 @@ def update_amenity(amenity_id):
     amenity = Amenity(**old_dict)
     storage.new(amenity)
     storage.save()
-    return jsonify(state.to_dict()), 200
+    return jsonify(amenity.to_dict()), 200
