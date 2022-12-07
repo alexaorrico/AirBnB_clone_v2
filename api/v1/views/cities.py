@@ -62,7 +62,7 @@ def update_city(city_id):
         abort(404)
     if not request.get_json():
         abort(400, 'Not a JSON')
-    city.__dict__.lpdate(request.get_json())
+    city.__dict__.update(request.get_json())
     old_dict = city.to_dict()
     storage.delete(city)
     city = City(**old_dict)
