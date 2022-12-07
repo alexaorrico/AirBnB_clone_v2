@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-app 
+app
 """
 from flask import Flask, Blueprint
 from models import storage
