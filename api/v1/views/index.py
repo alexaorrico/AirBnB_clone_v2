@@ -24,7 +24,9 @@ def hbnbStatus():
 @app_views.route('/stats', strict_slashes=False)
 def hbnbStats():
     """hbnbStats"""
-    return_dict = {}
-    for key, value in hbnbText.items():
-        return_dict[key] = storage.count(value)
-    return jsonify(return_dict)
+    return jsonify(amenities=storage.count("Amenity"),
+                   cities=storage.count("City"),
+                   places=storage.count("Place"),
+                   reviews=storage.count("Review"),
+                   states=storage.count("State"),
+                   users=storage.count("User"))
