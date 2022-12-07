@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 """start a flask web app"""
-
 from api.v1.views import app_views
 from flask import Flask, jsonify
 from models import storage 
 from os import getenv
 
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
-#app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
@@ -31,4 +30,3 @@ if __name__ == '__main__':
         if getenv('HBNB_API_PORT'):
             port = getenv('HBNB_API_PORT')
         app.run(host=host, port=port, threaded=True)
-
