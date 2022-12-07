@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-''''
-    file app for starting FLask
-    registering blueprint
-'''
+"""
+file app for starting FLask
+registering blueprint 
+"""
 from os import getenv
 from flask import Flask
 from models import storage
