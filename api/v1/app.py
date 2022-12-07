@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-file app to start FLask
+file app for starting FLask
+registering blueprint 
 """
 from os import getenv
 
