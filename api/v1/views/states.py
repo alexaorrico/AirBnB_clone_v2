@@ -7,14 +7,14 @@ from api.v1.views import app_views
 from models import storage 
 from models.state import State
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', strict_slashes=False, methods=['GET'])
 def get_states():
     """ Get All States"""
     states = storage.all(State).values()
 
     return jsonify([state.to_dict() for state in states ])
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_state(state_id):
     """ Get State with Id"""
     state = storage.get(State, state_id) 
@@ -22,7 +22,7 @@ def get_state(state_id):
         abort(404)
     return jsonify(state.to_dict())
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
     """ DELETE State With id"""
     state = storage.get(State, state_id) 
@@ -33,7 +33,7 @@ def delete_state(state_id):
 
     return jsonify({}), 200
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states', strict_slashes=False, methods=['POST'])
 def post_state():
     """ Post State """
     try:
