@@ -2,14 +2,19 @@
 """
 app
 """
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
+
 from os import getenv
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify(error="Not found")
 
 
 @app.teardown_appcontext
