@@ -10,6 +10,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
@@ -25,7 +26,7 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-        host = '0.0.0.0'  
+        host = '0.0.0.0'
         if getenv('HBNB_API_HOST'):
             host = getenv('HBNB_API_HOST')
         port = 5000
