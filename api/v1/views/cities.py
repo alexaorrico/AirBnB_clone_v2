@@ -26,3 +26,11 @@ def cities_by_state(state_id):
             return jsonify(results)
         else:
             abort(404)
+
+@app_views.route('/cities/<string:city_id>', methods=["GET"])
+def city_by_id(city_id):
+    """Retrieves a City object by city_id"""
+    if request.method == 'GET':
+        for obj in storage.all("City").values():
+            if obj.id == city_id:
+                return jsonify(obj.to_dict())
