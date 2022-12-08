@@ -31,6 +31,7 @@ def get_review(review_id):
         abort(404)
     return jsonify(review.to_dict())
 
+
 @app_views.route('/reviews/<review_id>',
                  strict_slashes=False,
                  methods=['DELETE'])
@@ -43,6 +44,7 @@ def delete_review(review_id):
     storage.save()
 
     return jsonify({}), 200
+
 
 @app_views.route('/places/<place_id>/reviews',
                  strict_slashes=False,
@@ -74,3 +76,23 @@ def post_review(place_id):
         abort(400, desciption="Not a JSON")
 
 
+@app_views.route('/reviews/<review_id>', methods=["PUT"])
+def update_review(review_id):
+    """UPDATE a single review"""
+    review = storage.get(Review, review_id)
+    if not review:
+        abort(404)
+
+    try:
+        req = request.get_json()
+        if req is None:
+            abort(400, description="Not a JSON")
+        else:
+            invalid = ['id', 'created_at', 'updated_at', 'place_id', 'user_id']
+            for key, value in req.items():
+                if key not in invalid:
+                    setattr(review, key, value)
+            storage.save()
+            return jsonify(review.to_dict()), 200
+    except ValueError:
+        abort(400, description="Not a JSON")
