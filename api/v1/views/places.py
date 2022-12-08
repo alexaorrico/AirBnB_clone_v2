@@ -80,8 +80,8 @@ def post_place(city_id):
 @app_views.route('/places/<user_id>', methods=["PUT"])
 def update_place(place_id):
     """UPDATE a single places"""
-    found = storage.get(Place, place_id)
-    if not found:
+    place = storage.get(Place, place_id)
+    if not place:
         abort(404)
 
     try:
@@ -92,8 +92,8 @@ def update_place(place_id):
             invalid = ['id', 'created_at', 'updated_at', 'city_id', 'user_id']
             for key, value in req.items():
                 if key not in invalid:
-                    setattr(found, key, value)
+                    setattr(place, key, value)
             storage.save()
-            return jsonify(found.to_dict()), 200
+            return jsonify(place.to_dict()), 200
     except ValueError:
         abort(400, description="Not a JSON")
