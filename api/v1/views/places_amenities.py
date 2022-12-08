@@ -50,6 +50,7 @@ def delete_amenities_places(place_id, amenitie_id):
         storage.save()
     else:
         del place.amenity_ids[amenitie_id]
+    place.save()
 
         
     return jsonify({}),200
