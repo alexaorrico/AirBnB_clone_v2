@@ -10,10 +10,10 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'])
-def list_all_states(self):
+@app_views.route('/states/', methods=['GET'])
+def list_all_states():
     """Returns the list of all `State` objects"""
-    list_states = [obj.to_dict() for obj in storage.all('State')]
+    list_states = [obj.to_dict() for obj in storage.all('State').values()]
     return jsonify(list_states)
 
 
@@ -42,8 +42,8 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
-def post_state(self):
+@app_views.route('/states/', methods=['POST'])
+def post_state():
     """Method to create a `State` object"""
     json_data = request.get_json()
     if not json_data:
