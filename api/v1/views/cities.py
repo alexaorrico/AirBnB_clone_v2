@@ -27,10 +27,20 @@ def cities_by_state(state_id):
         else:
             abort(404)
 
-@app_views.route('/cities/<string:city_id>', methods=["GET"])
+
+@app_views.route('/cities/<string:city_id>', methods=["GET", "DELETE"])
 def city_by_id(city_id):
-    """Retrieves a City object by city_id"""
+    """Retrieves or deletes a City object by city_id"""
     if request.method == 'GET':
         for obj in storage.all("City").values():
             if obj.id == city_id:
                 return jsonify(obj.to_dict())
+
+    elif request.method == 'DELETE':
+        for obj in storage.all("City").values():
+            if obj.id == city_id:
+                storage.delete(obj)
+                storage.save()
+                return jsonify({}), 200
+    
+    abort(404)
