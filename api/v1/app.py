@@ -12,7 +12,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def storage_close():
+def storage_close(exit):
     storage.close()
 
 
@@ -30,4 +30,4 @@ if __name__ == '__main__':
         port = 5000
         if getenv('HBNB_API_PORT'):
             port = getenv('HBNB_API_PORT')
-        app.run(host=host, port=port, threaded=True)
+        app.run(host=host, port=port, threaded=True, debug=True)

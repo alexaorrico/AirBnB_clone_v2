@@ -13,8 +13,8 @@ def api_status():
     return jsonify({"status": "OK"})
 
 
-#@app_views.route('/stats')
-#def objects_qty():
+# @app_views.route('/stats')
+# def objects_qty():
 #    """Retrieves the number of each objects by type"""
 #    from models import storage
 #    return jsonify({
