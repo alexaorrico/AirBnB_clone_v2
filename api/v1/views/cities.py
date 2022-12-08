@@ -1,90 +1,83 @@
 #!/usr/bin/python3
-""" view for City objects that handles all default RESTFul API actions """
-
+""" Method HTTP for City """
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, abort, request
 from models import storage
 from models.city import City
+from models.state import State
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-def states_state_id_cities(state_id):
-    """Retrieves all City objects of a State"""
+def get_all_cities(state_id):
+    """ Function that retrieves the list of all City """
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
 
-    state_catch = storage.get('State', state_id)
-
-    # If the state_id is not linked to any State object, raise a 404 error
-    if state_catch is None:
-        abort(404)
-
-    # retrieves City object
-    if request.method == 'GET':
-        cities = storage.all(City)
-        cities_list = []
-        for city in cities.values():
-            cities_dict = city.to_dict()
-            if cities_dict['state_id'] == state_id:
-                cities_list.append(cities_dict)
-        return jsonify(cities_list)
-
-    elif request.method == 'POST':
-        # transform the HTTP body request to a dictionary
-        body_request_dict = request.get_json()
-
-        # If the HTTP body request is not valid JSON
-        if not body_request_dict:
-            abort(400, 'Not a JSON')
-
-        # If the dictionary doesn’t contain the key name
-        if 'name' not in body_request_dict:
-            abort(400, 'Missing name')
-
-        # create new object State with body_request_dict
-        body_request_dict['state_id'] = state_id
-        new_city = City(**body_request_dict)
-
-        storage.new(new_city)
-        storage.save()
-        return new_city.to_dict(), 201
+    all_cities = []
+    for city in state.cities:
+        all_cities.append(city.to_dict())
+    return jsonify(all_cities)
 
 
-# @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
-#                  strict_slashes=False)
-# def city_id(city_id):
-#     """Retrieves City object"""
-#     city_catch = storage.get(City, city_id)
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+def get_city(city_id):
+    """ Function that retrieves a City """
+    city = storage.get(City, city_id)
+    return abort(404) if city is None else jsonify(city.to_dict())
 
-#     # If the city_id is not linked to any City object, raise a 404 error
-#     if city_catch is None:
-#         abort(404)
 
-#     # Retrieves a City object
-#     if request.method == 'GET':
-#         return city_catch.to_dict()
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_city(city_id):
+    """ Function that deletes a City """
+    city = storage.get(City, city_id)
+    if city is None:
+        return abort(404)
+    city.delete()
+    storage.save()
+    return jsonify({}), 200
 
-#     # Deletes a City object
-#     if request.method == 'DELETE':
-#         empty_dict = {}
-#         storage.delete(city_catch)
-#         storage.save()
-#         return empty_dict, 200
 
-#     # update a City object
-#     if request.method == 'PUT':
-#         # transform the HTTP body request to a dictionary
-#         body_request_dict = request.get_json()
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
+def post_city(state_id):
+    """ Function that create a City """
+    dico = request.get_json()
 
-#         # If the HTTP body request is not valid JSON
-#         if not body_request_dict:
-#             abort(400, 'Not a JSON')
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
 
-#         # Update the City object with all key-value pairs of the dictionary
-#         # Ignore keys: id, state_id, created_at and updated_at
+    if dico is None:
+        abort(400, "Not a JSON")
 
-#         for key, value in body_request_dict.items():
-#             if key not in ['id', 'state_id', 'created_at', 'updated_at']:
-#                 setattr(city_catch, key, value)
+    if dico.get("name") is None:
+        abort(400, "Missing name")
 
-#         city_catch.save()
-#         return city_catch.to_dict(), 200
+    dico['state_id'] = state_id
+    new_city = City(**dico)
+    new_city.save()
+
+    return jsonify(new_city.to_dict()), 201
+
+
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def put_city(city_id):
+    """ Function that update a City """
+    city = storage.get(City, city_id)
+    if city is None:
+        return abort(404)
+
+    dico = request.get_json()
+
+    if dico is None:
+        abort(400, "Not a JSON")
+
+    for key, value in dico.items():
+        if key not in ['id', 'created_at', 'updated_at', 'state_id']:
+            setattr(city, key, value)
+    city.save()
+
+    return jsonify(city.to_dict()), 200
