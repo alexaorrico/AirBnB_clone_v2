@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """ State endpoints """
 from flask import jsonify, request, abort
-from models import storage 
+from models import storage
 from models.state import State
 from api.v1.views import app_views
 
 
-@app_views.route('/states', methods=["GET", "POST"]) # deberia sacarle el api/v1? ya estaria en el blueprint
+# deberia sacarle el api/v1? ya estaria en el blueprint
+@app_views.route('/states', methods=["GET", "POST"])
 def retrive_states():
     """Retrieves the list of all State objects"""
     if request.method == 'GET':
@@ -23,13 +24,14 @@ def retrive_states():
             abort(400, 'Not a JSON')
         if "name" not in http_data:
             abort(400, 'Missing name')
-        
+
         new_state = State(**http_data)
         new_state.save()
         return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=["GET", "DELETE", "PUT"]) # deberia sacarle el api/v1? ya estaria en el blueprint
+# deberia sacarle el api/v1? ya estaria en el blueprint
+@app_views.route('/states/<string:state_id>', methods=["GET", "DELETE", "PUT"])
 def state_by_id(state_id):
     """Retrieves, deletes or updates a State object by state_id"""
     if request.method == 'GET':
@@ -56,6 +58,6 @@ def state_by_id(state_id):
                     if key not in statics_attrs:
                         setattr(obj, key, value)
                 storage.save()
-                return jsonify(obj.to_dict()), 200                  
-    
+                return jsonify(obj.to_dict()), 200
+
     abort(404)
