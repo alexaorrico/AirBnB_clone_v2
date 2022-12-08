@@ -77,7 +77,7 @@ def post_place(city_id):
         abort(400, desciption="Not a JSON")
 
 
-@app_views.route('/places/<user_id>', methods=["PUT"])
+@app_views.route('/places/<place_id>', methods=["PUT"])
 def update_place(place_id):
     """UPDATE a single places"""
     place = storage.get(Place, place_id)
