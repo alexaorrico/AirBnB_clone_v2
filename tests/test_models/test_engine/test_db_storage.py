@@ -113,7 +113,7 @@ class TestFileStorage(unittest.TestCase):
         storage.delete(state)
         storage.save()
 
-    @unittest.skiIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test count() to get the length of a type cls in storage"""
         from models import storage
