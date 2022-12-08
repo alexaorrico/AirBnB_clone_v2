@@ -47,7 +47,7 @@ def delete_amenities_places(place_id, amenitie_id):
         abort(404)
     if STORAGE_TYPE == 'db':
         
-        place.amenity_ids.delete(amenitie)
+        place.amenity_ids.remove(amenitie_id)
     else:
         del place.amenity_ids[amenitie_id]
     place.save()
