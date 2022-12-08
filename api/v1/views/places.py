@@ -69,6 +69,7 @@ def post_place(city_id):
             abort(400, description='Missing name')
         else:
             obj = Place(**body)
+            obj.city_id = city_id
             storage.new(obj)
             storage.save()
             return jsonify(obj.to_dict()), 201
