@@ -44,4 +44,33 @@ def delete_review(review_id):
 
     return jsonify({}), 200
 
+@app_views.route('/places/<place_id>/reviews',
+                 strict_slashes=False,
+                 methods=['POST'])
+def post_place(place_id):
+    """ Crate place"""
+    place = storage.get(Place, place_id)
+    if place is None:
+        abort(404)
+
+    try:
+        body = request.get_json()
+
+        if body is None:
+            abort(400, description="Not a JSON")
+        elif body.get('user_id') is None:
+            abort(400, description='Missing user_id')
+        elif storage.get(User, body["user_id"]) is None:
+            abort(404)
+        elif body.get('text') is None:
+            abort(400, description='Missing text')
+        else:
+            obj = Place(**body)
+            obj.place_id = place_id
+            storage.new(obj)
+            storage.save()
+            return jsonify(obj.to_dict()), 201
+    except ValueError:
+        abort(400, desciption="Not a JSON")
+
 
