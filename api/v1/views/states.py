@@ -69,4 +69,3 @@ def put_state(state_id):
     state.save()
 
     return jsonify(state.to_dict()), 200
-
