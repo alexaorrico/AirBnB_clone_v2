@@ -53,9 +53,11 @@ def cities_by_state(state_id):
             abort(404)
 
 
-@app_views.route('/cities/<string:city_id>', methods=["GET", "DELETE"])
+@app_views.route('/cities/<string:city_id>', methods=["GET", "DELETE", "PUT"])
 def city_by_id(city_id):
-    """Retrieves or deletes a City object by city_id"""
+    """Retrieves, deletes or updates a City object by city_id"""
+    # tambien se puede optimizar, manito 
+
     if request.method == 'GET':
         for obj in storage.all("City").values():
             if obj.id == city_id:
@@ -68,6 +70,18 @@ def city_by_id(city_id):
                 storage.save()
                 return jsonify({}), 200
 
+    elif request.method == 'PUT':
+        for obj in storage.all("City").values():
+            if obj.id == city_id:
+                http_data = request.get_json()
+                if not http_data:
+                    abort(400, 'Not a JSON')
+
+                statics_attrs = ["id", "created_at", "updated_at"]
+                for key, value in http_data.items():
+                    if key not in statics_attrs:
+                        setattr(obj, key, value)
+                storage.save()
+                return jsonify(obj.to_dict()), 200
+
     abort(404)
-
-
