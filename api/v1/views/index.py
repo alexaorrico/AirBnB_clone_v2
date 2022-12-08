@@ -3,10 +3,10 @@
 
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import jsonify
 
 
-@app_views.route('/status')
+@app_views.route("/status")
 def api_status():
     """Endpoint (route) will be to return the status of the API"""
     # We can use json.dump() or flask.jsonify()
