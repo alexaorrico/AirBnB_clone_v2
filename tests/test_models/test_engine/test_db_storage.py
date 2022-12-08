@@ -87,29 +87,29 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-
-class TestDBStorage(unittest.TestCase):
-    """Test get and count methods."""
-
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
-        """Tests function get """
-        state = State(name="Paris")
-        state.save()
-        user = User(first_name="Raph", last_name="Chemouni", password="test33",
-                    email="raph.chemouni@gmail.com")
-        user.save()
-        self.assertIs(state, models.storage.get(State, state.id))
-        self.assertIs(user, models.storage.get(User, user.id))
-        self.assertIs(None, models.storage.get(State, "1234"))
-        self.assertIs(None, models.storage.get(User, "1234"))
+        """Test that get properly retrieves one object, None if not found"""
+        from models import storage
+        state = State(name='test')
+        storage.new(state)
+        storage.save()
 
+        obj = storage.get(State, state.id)
+        self.assertEqual(obj, state)
+
+        storage.delete(state)
+        storage.save()
+
+        dummy = storage.get(State, state.id)
+        self.assertIsNone(dummy)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Tests function count"""
-        self.assertEqual(models.storage.count(State),
-                         len(models.storage.all(State)))
-        self.assertEqual(models.storage.count(User),
-                         len(models.storage.all(User)))
-        nb_states = models.storage.count(State)
-        state = State(name="Bourgogne")
-        state.save()
-        self.assertEqual(models.storage.count(State), nb_states + 1)
+        """Test that count properly gets the number of objects matching"""
+        from models import storage
+        storage_len = len(storage.all())
+        self.assertEqual(storage.count(), storage_len)
+
+        states_nb = len(storage.all(State).values())
+        self.assertEqual(storage.count(State), states_nb)
