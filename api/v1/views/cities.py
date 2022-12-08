@@ -45,6 +45,7 @@ def cities_by_state(state_id):
             if "name" not in http_data:
                 abort(400, 'Missing name')
 
+            http_data["state_id"] = state_id
             new_city = City(**http_data)
             new_city.save()
             return jsonify(new_city.to_dict()), 201
