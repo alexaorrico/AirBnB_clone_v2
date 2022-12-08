@@ -56,7 +56,7 @@ def cities_by_state(state_id):
 @app_views.route('/cities/<string:city_id>', methods=["GET", "DELETE", "PUT"])
 def city_by_id(city_id):
     """Retrieves, deletes or updates a City object by city_id"""
-    # tambien se puede optimizar, manito 
+    # tambien se puede optimizar, manito
 
     if request.method == 'GET':
         for obj in storage.all("City").values():
