@@ -21,7 +21,7 @@ def get_amenities_places(place_id):
     if place_obj is None:
         abort(404, 'Not found')
     if STORAGE_TYPE == 'db':
-        place_amenities = place_obj.amenities
+        place_amenities = [amenite.to_dict() for amenite in place_obj.amenities]
     else:
         place_amen_ids = place_obj.amenities
         place_amenities = []
