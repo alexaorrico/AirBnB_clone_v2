@@ -100,7 +100,7 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         result = storage.get(State, state.id)
         self.assertEqual(result.id, state.id)
-	self.assertEqual(result.created_at, state.created_at)
+        self.assertEqual(result.created_at, state.created_at)
 
         # test without a valid class
         result = storage.get(None, state.id)
@@ -117,8 +117,8 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test count() to get the length of a type cls in storage"""
         from models import storage
-	   
-        total = len(storage.all(State))
+        
+	total = len(storage.all(State))
         state = State(name="State test")
         storage.new(state)
         storage.savve()

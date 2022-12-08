@@ -129,7 +129,7 @@ class TestFileStorage(unittest.TestCase):
         result = storage.get(None, state.id)
         self.assertEqual(result, None)
 
-        #test without a valid id
+        # test without a valid id
         result = storage.get(State, "this is not a valid ID")
         self.assertEqual(result, None)
 
@@ -145,7 +145,7 @@ class TestFileStorage(unittest.TestCase):
         state = State()
         storage.new(state)
         user = User()
-	storage.new(user)
+        storage.new(user)
         user2 = User()
         storage.new(user2)
         storage.save()
