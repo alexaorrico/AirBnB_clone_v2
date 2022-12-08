@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """ Method HTTP for City """
 from api.v1.views import app_views
