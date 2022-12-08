@@ -34,25 +34,6 @@ class FileStorage:
             return new_dict
         return self.__objects
 
-    def get(self, cls, id):
-        """returns specific object"""
-        if cls is None or id is None:
-            return None
-        if type(id) != str:
-            id = str(id)
-        if cls in classes.values():
-            cls = cls.__name__
-        if cls in classes.keys():
-            key = "{}.{}".format(cls, id)
-            if self.__objects.get(key, None):
-                obj = self.__objects[key]
-                return obj
-        return None
-
-    def count(self, cls=None):
-        count_file = len(self.all(cls))
-        return count_file
-
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
