@@ -31,6 +31,26 @@ def states_state_id_cities(state_id):
             if cities_dict['state_id'] == state_id:
                 cities_list.append(cities_dict)
         return jsonify(cities_list)
+    
+        elif request.method == 'POST':
+        # transform the HTTP body request to a dictionary
+        body_request_dict = request.get_json()
+
+        # If the HTTP body request is not valid JSON
+        if not body_request_dict:
+            abort(400, 'Not a JSON')
+
+        # If the dictionary doesn’t contain the key name
+        if 'name' not in body_request_dict:
+            abort(400, 'Missing name')
+
+        # create new object State with body_request_dict
+        body_request_dict['state_id'] = state_id
+        new_city = City(**body_request_dict)
+
+        storage.new(new_city)
+        storage.save()
+        return new_city.to_dict(), 
 
 # @app_views.route('/states/<state_id>', methods=['GET'])
 # def pick_state_obj(state_id):
