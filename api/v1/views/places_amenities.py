@@ -33,3 +33,30 @@ def get_amenities_places(place_id):
         obj.to_dict() for obj in place_amenities
     ]
     return jsonify(place_amenities)
+
+@app_views.route('/places/<place_id>/amenities/<amenitie_id>', strict_slashes=False,
+                 methods=['DELETE'])
+def delete_amenities_places(place_id, amenitie_id):
+    place = storage.get('Place', place_id)
+    if place is None:
+        abort(404, 'Not found')
+    amenitie = storage.get('Amenitie', amenitie_id)
+    if amenitie is None:
+        abort(404)
+    if amenitie_id in place.amenities:
+        abort(404)
+    if STORAGE_TYPE == 'db':
+        storage.delete(amenitie)
+        storage.save()
+    else:
+        del place.amenity_ids[amenitie_id]
+
+        
+    return jsonify({}),200
+    
+
+    
+
+
+
+
