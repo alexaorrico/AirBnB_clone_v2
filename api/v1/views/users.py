@@ -78,7 +78,7 @@ def update_user(user_id):
         if req is None:
             abort(400, description="Not a JSON")
         else:
-            invalid = ['id', 'created_at', 'updated_at','email']
+            invalid = ['id', 'created_at', 'updated_at', 'email']
             for key, value in req.items():
                 if key not in invalid:
                     setattr(found, key, value)
@@ -86,6 +86,3 @@ def update_user(user_id):
             return jsonify(found.to_dict()), 200
     except ValueError:
         abort(400, description="Not a JSON")
-
-
-
