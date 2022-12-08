@@ -62,13 +62,12 @@ def post_place(city_id):
         if body is None:
             abort(400, description="Not a JSON")
         elif body.get('user_id') is None:
-            abort(400, description='Missing user_id')  
+            abort(400, description='Missing user_id') 
+        elif storage.get(User,body["user_id"]) is None:
+            abort(404)
         elif body.get('name') is None:
             abort(400, description='Missing name')
         else:
-            user = storage.get(User, body["user_id"])
-            if user is None:
-                abort(404)
             obj = Place(**body)
             storage.new(obj)
             storage.save()
