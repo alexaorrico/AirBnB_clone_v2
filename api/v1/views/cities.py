@@ -59,9 +59,27 @@ def city_id(city_id):
     if city_catch is None:
         abort(404)
 
+<<<<<<< HEAD
     # Retrieves a City object
     if request.method == 'GET':
         return city_catch.to_dict()
+=======
+@app_views.route('/states/<state_id>/cities/', methods=['POST'])
+def post_city(state_id):
+    """Method to create a `City` object"""
+    json_data = request.get_json()
+    if not json_data:
+        abort(400, 'Not a JSON')
+    elif 'name' not in json_data:
+        abort(400, 'Missing name')
+    all_states = storage.get("State", state_id)
+    if all_states is None:
+        abort(404)
+    json_data['state_id'] = state_id
+    new_post = City(**json_data)
+    new_post.save()
+    return jsonify(new_post.to_dict()), 201
+>>>>>>> 39c6caf1805b7c086654aa44533f66622a50e049
 
     # Deletes a City object
     if request.method == 'DELETE':

@@ -5,7 +5,7 @@ To handle all default Restful API actions
 """
 
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import Flask, jsonify, abort, request
 from models import storage
 from models.state import State
 
@@ -26,7 +26,6 @@ def pick_state_obj(state_id):
         # in the middle of a route
         abort(404)
     return jsonify(state_pick.to_dict())
-
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
@@ -52,7 +51,7 @@ def post_state():
         abort(400, 'Missing name')
     new_post = State(name=json_data['name'])
     new_post.save()
-    return jsonify(new_post.to_dict()), 200
+    return jsonify(new_post.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
