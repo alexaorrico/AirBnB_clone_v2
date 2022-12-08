@@ -7,6 +7,7 @@ from api.v1.views import app_views
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -54,16 +55,20 @@ def post_place(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
+   
     try:
         body = request.get_json()
 
         if body is None:
             abort(400, description="Not a JSON")
         elif body.get('user_id') is None:
-            abort(400, description='Missing user_id')
-        elif body.get('password') is None:
-            abort(400, description='Missing password')
+            abort(400, description='Missing user_id')  
+        elif body.get('name') is None:
+            abort(400, description='Missing name')
         else:
+            user = storage.get(User, body.user_id)
+            if user is None:
+                abort(404)
             obj = Place(**body)
             storage.new(obj)
             storage.save()
