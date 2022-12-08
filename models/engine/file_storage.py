@@ -49,10 +49,11 @@ class FileStorage:
                     return objects
         else:
             return None
+
     def count(self, cls=None):
         """to count the number of objects in storage"""
         if cls:
-            return len(self.all(cls)) 
+            return len(self.all(cls))
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
