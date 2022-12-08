@@ -17,9 +17,10 @@ def list_cities_by_state(state_id):
     state_dict = storage.get("State", state_id)
     if state_dict is None:
         abort(404)
-    cities_list = [obj.to_dict() for obj in storage.all("City").values()\
-    if state_id == obj.state_id]
+    cities_list = [obj.to_dict() for obj in storage.all("City").values()
+                   if state_id == obj.state_id]
     return jsonify(cities_list)
+
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def pick_city_obj(city_id):
@@ -63,19 +64,23 @@ def post_city(state_id):
     return jsonify(new_post.to_dict()), 201
 
 
-# @app_views.route('/states/<state_id>', methods=['PUT'])
-# def upd_state(state_id):
-#     """
-#     Update a `State` object
-#     Error if no linkage found
-#     """
-#     json_data = request.get_json()
-#     if not json_data:
-#         abort(400, 'This is not JASON!!')
+@app_views.route('/cities/<city_id>', methods=['PUT'])
+def upd_city(city_id):
+    """
+    Update a `City` object
+    Error if no linkage found
+    """
+    # second requirement comes first
+    json_data = request.get_json()
+    if json_data is None:
+        abort(400, 'Not a JSON')
 
-#     state_upd = storage.get("State", state_id)
-#     if state_upd is None:
-#         abort(404)
-#     state_upd.name = json_data['name']
-#     state_upd.save()
-#     return jsonify(state_upd.to_dict()), 200
+    city_obj = storage.get("City", city_id)
+    # gather City object matching the city_id provided
+    if city_obj is None:
+        # means no City are linked to city_id provided
+        abort(404)
+    city_obj.name = json_data['name']
+    # ignore all other keys(id, state_id, created_at....)
+    city_obj.save()
+    return jsonify(city_obj.to_dict()), 200
