@@ -117,8 +117,8 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test count() to get the length of a type cls in storage"""
         from models import storage
-        
-	total = len(storage.all(State))
+
+        total = len(storage.all(State))
         state = State(name="State test")
         storage.new(state)
         storage.savve()
