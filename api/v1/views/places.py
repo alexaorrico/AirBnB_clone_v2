@@ -66,7 +66,7 @@ def post_place(city_id):
         elif body.get('name') is None:
             abort(400, description='Missing name')
         else:
-            user = storage.get(User, body.user_id)
+            user = storage.get(User, body["user_id"])
             if user is None:
                 abort(404)
             obj = Place(**body)
@@ -89,7 +89,7 @@ def update_place(place_id):
         if req is None:
             abort(400, description="Not a JSON")
         else:
-            invalid = ['id', 'created_at', 'updated_at', 'email']
+            invalid = ['id', 'created_at', 'updated_at', 'city_id', 'user_id']
             for key, value in req.items():
                 if key not in invalid:
                     setattr(found, key, value)
