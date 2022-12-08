@@ -17,16 +17,15 @@ def list_all_states():
     return jsonify(list_states)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
-def pick_state_obj(state_id):
-    """Retrieves a `State` object/Error if no linkage to any id"""
-    state_pick = storage.get("State", state_id)
-    if state_pick is None:
-        # use abort to return 404
-        # in the middle of a route
-        abort(404)
-    return jsonify(state_pick.to_dict())
-
+# @app_views.route('/states/<state_id>', methods=['GET'])
+# def pick_state_obj(state_id):
+#     """Retrieves a `State` object/Error if no linkage to any id"""
+#     state_pick = storage.get("State", state_id)
+#     if state_pick is None:
+#         # use abort to return 404
+#         # in the middle of a route
+#         abort(404)
+#     return jsonify(state_pick.to_dict())
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
@@ -52,7 +51,7 @@ def post_state():
         abort(400, 'Missing name')
     new_post = State(name=json_data['name'])
     new_post.save()
-    return jsonify(new_post.to_dict()), 200
+    return jsonify(new_post.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
