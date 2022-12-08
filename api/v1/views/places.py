@@ -73,9 +73,9 @@ def post_place(city_id):
 
 
 @app_views.route('/places/<user_id>', methods=["PUT"])
-def update_user(user_id):
+def update_place(place_id):
     """UPDATE a single places"""
-    found = storage.get(Place, user_id)
+    found = storage.get(Place, place_id)
     if not found:
         abort(404)
 
