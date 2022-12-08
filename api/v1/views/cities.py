@@ -49,42 +49,42 @@ def states_state_id_cities(state_id):
         return new_city.to_dict(), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
-                 strict_slashes=False)
-def city_id(city_id):
-    """Retrieves City object"""
-    city_catch = storage.get(City, city_id)
+# @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+#                  strict_slashes=False)
+# def city_id(city_id):
+#     """Retrieves City object"""
+#     city_catch = storage.get(City, city_id)
 
-    # If the city_id is not linked to any City object, raise a 404 error
-    if city_catch is None:
-        abort(404)
+#     # If the city_id is not linked to any City object, raise a 404 error
+#     if city_catch is None:
+#         abort(404)
 
-    # Retrieves a City object
-    if request.method == 'GET':
-        return city_catch.to_dict()
+#     # Retrieves a City object
+#     if request.method == 'GET':
+#         return city_catch.to_dict()
 
-    # Deletes a City object
-    if request.method == 'DELETE':
-        empty_dict = {}
-        storage.delete(city_catch)
-        storage.save()
-        return empty_dict, 200
+#     # Deletes a City object
+#     if request.method == 'DELETE':
+#         empty_dict = {}
+#         storage.delete(city_catch)
+#         storage.save()
+#         return empty_dict, 200
 
-    # update a City object
-    if request.method == 'PUT':
-        # transform the HTTP body request to a dictionary
-        body_request_dict = request.get_json()
+#     # update a City object
+#     if request.method == 'PUT':
+#         # transform the HTTP body request to a dictionary
+#         body_request_dict = request.get_json()
 
-        # If the HTTP body request is not valid JSON
-        if not body_request_dict:
-            abort(400, 'Not a JSON')
+#         # If the HTTP body request is not valid JSON
+#         if not body_request_dict:
+#             abort(400, 'Not a JSON')
 
-        # Update the City object with all key-value pairs of the dictionary
-        # Ignore keys: id, state_id, created_at and updated_at
+#         # Update the City object with all key-value pairs of the dictionary
+#         # Ignore keys: id, state_id, created_at and updated_at
 
-        for key, value in body_request_dict.items():
-            if key not in ['id', 'state_id', 'created_at', 'updated_at']:
-                setattr(city_catch, key, value)
+#         for key, value in body_request_dict.items():
+#             if key not in ['id', 'state_id', 'created_at', 'updated_at']:
+#                 setattr(city_catch, key, value)
 
-        city_catch.save()
-        return city_catch.to_dict(), 200
+#         city_catch.save()
+#         return city_catch.to_dict(), 200
