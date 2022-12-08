@@ -121,7 +121,7 @@ class TestFileStorage(unittest.TestCase):
         total = len(storage.all(State))
         state = State(name="State test")
         storage.new(state)
-        storage.savve()
+        storage.save()
         total2 = len(storage.all(State))
         self.assertTrue(total + 1 == total2)
         storage.delete(state)
