@@ -11,15 +11,26 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'])
-def list_cities_by_state(state_id):
-    """Returns the list of all cities"""
-    state_dict = storage.get("State", state_id)
-    if state_dict is None:
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
+                 strict_slashes=False)
+def states_state_id_cities(state_id):
+    """Retrieves all City objects of a State"""
+
+    state_catch = storage.get('State', state_id)
+
+    # If the state_id is not linked to any State object, raise a 404 error
+    if state_catch is None:
         abort(404)
-    cities_list = [obj.to_dict() for obj in storage.all("City").values()\
-    if state_id == obj.state_id]
-    return jsonify(cities_list)
+
+    # retrieves City object
+    if request.method == 'GET':
+        cities = storage.all(City)
+        cities_list = []
+        for city in cities.values():
+            cities_dict = city.to_dict()
+            if cities_dict['state_id'] == state_id:
+                cities_list.append(cities_dict)
+        return jsonify(cities_list)
 
 # @app_views.route('/states/<state_id>', methods=['GET'])
 # def pick_state_obj(state_id):
