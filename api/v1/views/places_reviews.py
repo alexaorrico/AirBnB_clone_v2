@@ -47,7 +47,7 @@ def delete_review(review_id):
 @app_views.route('/places/<place_id>/reviews',
                  strict_slashes=False,
                  methods=['POST'])
-def post_place(place_id):
+def post_review(place_id):
     """ Crate place"""
     place = storage.get(Place, place_id)
     if place is None:
@@ -65,7 +65,7 @@ def post_place(place_id):
         elif body.get('text') is None:
             abort(400, description='Missing text')
         else:
-            obj = Place(**body)
+            obj = Review(**body)
             obj.place_id = place_id
             storage.new(obj)
             storage.save()
