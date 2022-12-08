@@ -32,6 +32,7 @@ def states_state_id_cities(state_id):
                 cities_list.append(cities_dict)
         return jsonify(cities_list)
     
+    """Retrieves all City objects of a State"""
     elif request.method == 'POST':
     # transform the HTTP body request to a dictionary
     body_request_dict = request.get_json()
