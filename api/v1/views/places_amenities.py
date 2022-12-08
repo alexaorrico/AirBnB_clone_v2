@@ -21,16 +21,15 @@ def get_amenities_places(place_id):
     if place_obj is None:
         abort(404, 'Not found')
     if STORAGE_TYPE == 'db':
-        if len(place_obj.amenities) ==  0:
-            place_amenities = place_obj.amenities
-        else:
-            place_amenities = [amen.to_dict() for amen in place_obj.amenities]
+        
+        place_amenities = place_obj.amenities
+       
     else:
         place_amen_ids = place_obj.amenities
         place_amenities = []
         for amen in place_amen_ids:
-            response.append(storage.get('Amenity', amen))
+            place_amenities.append(storage.get('Amenity', amen))
     place_amenities = [
-        obj.to_json() for obj in place_amenities
+        obj.to_dict() for obj in place_amenities
     ]
     return jsonify(place_amenities)
