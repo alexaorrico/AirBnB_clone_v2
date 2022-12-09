@@ -27,6 +27,7 @@ def pick_state_obj(state_id):
         abort(404)
     return jsonify(state_pick.to_dict())
 
+
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """
