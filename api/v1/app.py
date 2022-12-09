@@ -3,7 +3,7 @@
 file app for starting FLask
 registering blueprint
 """
-# from models import * ??
+from models import *
 from os import getenv
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
@@ -12,7 +12,8 @@ from api.v1.views import app_views
 
 
 app = Flask(__name__)
-CORS(app, origins="0.0.0.0")
+# CORS(app, origins="0.0.0.0")
+cors = CORS(app, resources={'/*': {'origins': '0.0.0.0'}})
 app.register_blueprint(app_views)
 
 

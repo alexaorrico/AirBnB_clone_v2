@@ -70,23 +70,28 @@ class FileStorage:
         method to retrieve an object
         returns the object based on class and its ID
         """
-        obj = None
-        try:
-            for o in self.__objects.values():
-                if o.id == id:
-                    obj = o
-        except BaseException:
-            """The base class for all built-in exceptions"""
-            pass
-        return obj
+        Objects = self.all(cls)
+        for key, value in Objects.items():
+            if value.id == id:
+                return value
+        return None
+        # obj = None
+        # try:
+        #     for o in self.__objects.values():
+        #         if o.id == id:
+        #             obj = o
+        # except BaseException:
+        #     """The base class for all built-in exceptions"""
+        #     pass
+        # return obj
 
     def count(self, cls=None):
         """
         Method to count number of objects in storage
         """
-        if cls is not None:
-            return len(self.all(cls))
-        return len(self.all())
+        # if cls is not None:
+        #     return len(self.all(cls))
+        return len(self.all(cls))
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
