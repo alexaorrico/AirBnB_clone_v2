@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+import sqlalchemy
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -88,11 +89,13 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_count(self):
-        """Test that count properly gets the number of objects matching"""
-        from models import storage
-        storage_len = len(storage.all())
-        self.assertEqual(storage.count(), storage_len)
+    def test_get(self):
+        """Test that get properly returns a requested object"""
+        user = User(name="User1")
+        user.save()
+        self.assertEqual(models.storage.get("User", user.id), user)
 
-        states_nb = len(storage.all(State).values())
-        self.assertEqual(storage.count(State), states_nb)
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count properly counts all objects"""
+        self.assertEqual(len(models.storage.all()), models.storage.count())
