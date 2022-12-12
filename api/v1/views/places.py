@@ -62,7 +62,7 @@ def create_place(city_id):
 
     d = request.get_json()
     d.update({"city_id": city_id})
-    d.update({"user_id": d["user_id"})
+    d.update({"user_id": d["user_id"]})
     obj = Place(**request.get_json())
     storage.new(obj)
     storage.save()
