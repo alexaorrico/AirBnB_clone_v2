@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module that starts app and runs server"""
+""" Module that starts app and runs server """
 from api.v1.views import app_views
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
@@ -25,8 +25,8 @@ def not_found(error):
 
 if __name__ == "__main__":
     app.run(
-            host=get.env("HBNB_API_HOST", '0.0.0.0'),
-            port=get.env("HBNB_API_PORT", 5000),
+            host=getenv("HBNB_API_HOST", '0.0.0.0'),
+            port=getenv("HBNB_API_PORT", 5000),
             threaded=True,
             debug=True
            )
