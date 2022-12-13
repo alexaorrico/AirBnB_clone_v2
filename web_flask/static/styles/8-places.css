@@ -1,132 +1,101 @@
-.places{
-    display: flex;
-    flex-direction: column;
-    padding-left: 30px;
-}
-.places h1{
-    font-size: 30px;
-}
-.places_title{
-    padding-top: 30px;
-    margin-bottom: -25px;
-}
-.articles{
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
+.places {
+    column-count: 2;
+    columns: 30em;
     justify-content: center;
+    padding: 0 20px;
+    margin-top: 1%;
+    margin-bottom: 8%;
 }
-article{
-    width: 390px;
-    margin: 20px;
-    padding: 20px;
-    border: solid #FF5A5F 1px;
-    border-radius: 4px;
-    text-align: center;
-    font-size: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 30px;
+@media only screen and (max-width: 920px)
+{
+    .places {
+	display: flex;
+	flex-wrap: wrap;
+    }
 }
-article h2{
-    font-size: 30px;
-    margin-top: -1px;
-    padding-left: 20%;
-}
-.article_title{
+
+.placesh1 h1 {
     width: 100%;
+    margin-right: 400px;
+    text-align: left;
+    font-size: 35px;
 }
-.price_by_night{
-    color: #FF5A5F;
-    border: solid #FF5A5F 4px;
-    border-radius: 50%;
-    min-width: 60px;
-    height: 60px;
+
+.places article {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    display: inline-block;
+    width: 390px;
+    height: 100%;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #FF5A5F;
+    border-radius: 4px;
+}
+.places h2 {
     font-size: 30px;
-    margin-top: -10px;
+    text-align: center;
+    margin-top: 0;
 }
-.price{
-    margin-top: 10px;
-}
-.price_title{
+.title_box {
     display: flex;
-}
-.information{
-    height:80px;
-    border-top: solid #DDDDDD 1px;
-    border-bottom: solid #DDDDDD 1px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-.max_guest{
-    width: 100px;
-    display: flex;
-    height: inherit;
-    flex-direction: column;
-    justify-content: center;
-}
-.guest_icon{
-    height: inherit;
-    width: inherit;
-    background: url(https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/icon_group.png);
-    background-repeat: no-repeat;
-    margin-left: 35px;
-}
-.guest_number h2{
-    font-size: 10px;
-    color: grey;
+    justify-content: space-between;
+    margin-top: -2%;
 }
 
-.number_rooms{
-    width: 100px;
+.title_box h2 {
+    text-align: left;
+    margin: 25px 3% 40px 2%;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+.price_by_night {
     display: flex;
-    height: inherit;
-    flex-direction: column;
+    height: 60px;
+    min-width: 60px;
+    font-size: 30px;
     justify-content: center;
-}
-.rooms_icon{
-    height: inherit;
-    width: inherit;
-    background: url(https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/icon_bed.png);
-    background-repeat: no-repeat;
-    margin-left: 35px;
-}
-.rooms_number h2{
-    font-size: 10px;
-    color: grey;
+    align-items: center;
+    color: #FF5A5F;
+    border: 4px solid #FF5A5F;
+    border-radius: 50%;
+    align-items: center;
+    padding: 2.3%;
 }
 
-.number_bathrooms{
-    width: 100px;
+.information {
     display: flex;
-    height: inherit;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 80px;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 5%;
 }
-.bathrooms_icon{
-    height: inherit;
-    width: inherit;
-    background: url(https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/icon_bath.png);
-    background-repeat: no-repeat;
-    margin-left: 35px;
+
+.information div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    height: 65px;
 }
-.bathrooms_number h2{
-    font-size: 10px;
-    color: grey;
+
+.information .max_guest {
+    background: url("../images/icon_group.png") no-repeat top center;
+    width: 100px;
 }
-.user{
-    font-size: 11px;
-    color: rgb(29, 26, 26);;
-    text-align: left;
-    margin-top: 15px;
-    font-family: Arial, Helvetica, sans-serif;
+
+.information .number_rooms {
+    background: url("../images/icon_bed.png") no-repeat top center;
+    width: 100px;
 }
-.description{
-    font-size: 11px;
-    color: rgb(29, 26, 26);;
-    text-align: left;
-    margin-top: 5px;
-    font-family: Arial, Helvetica, sans-serif;
+
+.information .number_bathrooms {
+    background: url("../images/icon_bath.png") no-repeat top center;
+    width: 100px;
+}
+
+.user {
+  margin-bottom: 1.5%;
 }
