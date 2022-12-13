@@ -1,15 +1,13 @@
-header {
-    width: 100%;
+header{
     background-color: white;
     height: 70px;
-    border-bottom: 1px solid #CCCCCC;
-    display: flex;
-    align-items: center;
+    width: 100%;
+    border-bottom: solid 1px #CCCCCC;
 }
-
-.logo {
-    width: 142px;
-    height: 60px;
-    background: url("../images/logo.png") no-repeat center;
-    padding-left: 20px;
+header .logo{
+    height: inherit;
+    width: inherit;
+    background: url("https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/logo.png");
+    background-repeat: no-repeat;
+    margin-left: 20px;
 }

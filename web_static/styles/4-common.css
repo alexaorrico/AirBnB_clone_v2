@@ -1,15 +1,12 @@
-body {
-    margin: 0;
-    padding: 0;
+body{
     color: #484848;
     font-size: 14px;
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: Cicular, "Helvetica Neue",Arial, Helvetica, sans-serif;
 }
 
-.container {
+.container{
+    margin: auto;
     max-width: 1000px;
     margin-top: 30px;
     margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
 }
