@@ -31,5 +31,6 @@ def close_this(self):
 
 
 if __name__ == "__main__":
+    """documented pa"""
     app.run(host=HBNB_API_HOST, port=HBNB_API_PORT,
             threaded=True)
