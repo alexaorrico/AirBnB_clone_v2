@@ -82,7 +82,7 @@ class DBStorage:
         if cls not in classes.values():
             return None
 
-        all_cls = modesl.storage.all(cls)
+        all_cls = models.storage.all(cls)
         for value in all_cls.values():
             if value.id == id:
                 return value
@@ -96,7 +96,7 @@ class DBStorage:
         if not cls:
             counter = 0
             for clas in all_cls:
-                count += len(models.storage.all(cls).values())
+                counter += len(models.storage.all(cls).values())
         else:
             counter = 0
             for clas in all_cls:
