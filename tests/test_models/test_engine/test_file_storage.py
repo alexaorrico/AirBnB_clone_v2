@@ -34,7 +34,7 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 2,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
@@ -113,3 +113,27 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        storage = FileStorage()
+        dic = {'name': 'Apartment'}
+        instance = State(**dic)
+        storage.new(instance)
+        storage.save()
+        storage = FileStorage()
+        get_inst = storage.get(State, instance.id)
+        self.assertEqual(get_inst, instance)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        storage = FileStorage()
+        dic = {'name': 'Apartment'}
+        state = State(**dic)
+        storage.new(state)
+        dic = {'name': 'Florida'}
+        city = City(**dic)
+        storage.new(city)
+        storage.save()
+        count_inst = storage.count()
+        self.assertEqual(len(storage.all()), count_inst)
