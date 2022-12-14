@@ -99,8 +99,8 @@ class DBStorage:
             objs = self.__session.query(models.classes[cls]).all()
             counter = len(objs)
         else:
-            for key. values in models.classes[cls].all():
+            for key, values in models.classes[cls].all():
                 if key != 'BaseModel':
-                    objs = self.__session.query(models.classes[k]).all()
+                    objs = self.__session.query(models.classes[key]).all()
                     counter += len(objs)
         return counter
