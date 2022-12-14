@@ -5,4 +5,8 @@
 from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
 
-app_views = Blueprint()
+app_views = Blueprint("simple_page", __name__, tamplate_folder='tamplates')
+
+@simple_page.route("/api/v1")
+def index():
+    pass
