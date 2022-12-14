@@ -82,8 +82,8 @@ class DBStorage:
             for obj in dict_objs.values():
                 if obj.id == id:
                     return obj
-        else:
-            return None
+            else:
+                return None
     
     def count(self, cls=None):
         """count of elements in db"""
