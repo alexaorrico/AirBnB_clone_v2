@@ -90,10 +90,11 @@ class DBStorage:
 
         dict_objs = self.all(cls)
         count = 0
+
         for obj in dict_objs.values():
             if cls is None:
                 count += 1
-            elif obj["__class__"] == cls:
+            elif obj.__class__ == cls:
                 count += 1
         
         return count

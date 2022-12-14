@@ -59,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it's inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -87,7 +87,7 @@ class FileStorage:
         for obj in dict_objs.values():
             if cls is None:
                 count += 1
-            elif obj["__class__"] == cls:
+            elif obj.__class__ == cls:
                 count += 1
         
         return count
