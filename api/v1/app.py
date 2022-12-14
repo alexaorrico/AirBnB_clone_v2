@@ -23,7 +23,6 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def close_this(self):
     """close the storage instance"""
-
     storage.close()
 
 
