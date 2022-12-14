@@ -77,13 +77,13 @@ class DBStorage:
 
     def get(self, cls, id):
         """get an object from database"""
-
-        dict_objs = self.all(cls)
-        for obj in dict_objs.values():
-            if obj.id == id:
-                return obj
-            else:
-                return None
+        if cls is not None and id is not None:
+            dict_objs = self.all(cls)
+            for obj in dict_objs.values():
+                if obj.id == id:
+                    return obj
+        else:
+            return None
     
     def count(self, cls=None):
         """count of elements in db"""
