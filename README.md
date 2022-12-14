@@ -188,7 +188,7 @@ No known bugs at this time.
 
 ## Authors
 Juan Esteban Hernandez Pedraza - [Github](https://github.com/Jehp00) / [Twitter]()  
-Giovanni Perez - [Github](https://github.com/) / [Twitter]()
+Giovanni Perez - [Github](https://github.com/Giogap) / [Twitter]()
 
 ## License
 Public Domain. No copy write protection. 
