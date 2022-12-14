@@ -79,24 +79,28 @@ class DBStorage:
         """
             Returns the object based on the class and its ID, or None if not found
         """
-        if cls not in classes.values():
-            return None
-
-        all_cls = modesl.storage.all(cls)
-        for value in all_cls.values():
-            if value.id == id:
-                return value
+        result = None
+        try:
+            objs = self.__session.query(models.classes[cls]).all()
+            for obj in objs:
+                if obj.id == id:
+                    result = obj
+        except BaseException:
+            pass
+        return result
 
     def count(self, cls=None):
         """
             Returns the number of objects in storage matching the given class.
             If no class is passed, returns the count of all objects in storage.
         """
-        all_cls = classes.values()
-        if not cls:
-            counter = 0
-            for clas in all_cls:
-                count += len(models.storage.all(cls).values())
+        counter = 0
+        if cls is not None:
+            objs = self.__session.query(models.classes[cls]).all()
+            counter = len(objs)
         else:
-            counter = len(models.storage.all(cls).values())
+            for key, values in models.classes[cls].all():
+                if key != 'BaseModel':
+                    objs = self.__session.query(models.classes[key]).all()
+                    counter += len(objs)
         return counter
