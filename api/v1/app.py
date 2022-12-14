@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" set up """
 
 from flask import Flask, request
 from models import storage
@@ -14,6 +15,7 @@ def close():
     storage.close()
 
 if __name__ == "__main__":
+    """ rinnung a server """
     if getenv('HBNB_API_HOST') == None:
         environ['HBNB_API_HOST'] = '0.0.0.0'
     if getenv('HBNB_API_PORT') == None:
