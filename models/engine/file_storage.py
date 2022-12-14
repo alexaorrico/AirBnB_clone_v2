@@ -93,8 +93,7 @@ class FileStorage:
             for clas in all_cls:
                 count += len(models.storage.all(cls).values())
         else:
-            for key, values in models.classes[cls].all():
-                if key != 'BaseModel':
-                    objs = self.__session.query(models.classes[key]).all()
-                    counter += len(objs)
+            counter = 0
+            for clas in all_cls:
+                counter += len(models.storage.all(cls).values())
         return counter
