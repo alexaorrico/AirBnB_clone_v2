@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 #!/usr/bin/python3
 """ """
 
@@ -9,4 +11,9 @@ app_views = Blueprint("simple_page", __name__, tamplate_folder='tamplates')
 
 @simple_page.route("/api/v1")
 def index():
+<<<<<<< HEAD
     pass
+>>>>>>> refs/remotes/origin/storage_get_count
+=======
+    pass
+>>>>>>> refs/remotes/origin/storage_get_count
