@@ -12,9 +12,9 @@ from models.state import State
 from models.review import Review
 
 classes = {
-    'City' : City, 'Amenity' : Amenity,
-    'Place' : Place, 'User' : User,
-    'State' : State, 'Review' : Review
+    "cities" : City, "amenities" : Amenity,
+    "places" : Place, "users" : User,
+    "states" : State, "reviews" : Review
     }
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
