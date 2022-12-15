@@ -15,7 +15,7 @@ from models.state import State
 from models.user import User
 
 app_views.route('/status', methods=['GET'])
-def app_view():
+def status():
     """just hoping this is a mistake"""
     
     return jsonify({"status": "OK"})
