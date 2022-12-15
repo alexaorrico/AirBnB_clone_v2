@@ -11,20 +11,20 @@ from models.user import User
 from models.state import State
 from models.review import Review
 
-classes = {
-    "cities" : City, "amenities" : Amenity,
-    "places" : Place, "users" : User,
-    "states" : State, "reviews" : Review
-    }
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status_route():
     """ Route that returns a JSON """
     return jsonify({'status': 'OK'})
 
-@app_views.route('/api/v1/stats', strict_slashes=False)
+@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
 def stats():
-    count_objs = {}
-    for key, value in classes.items():
-        count_objs[key] = storage.count(value)
+    count_objs = {
+            "amenities": storage.count(Amenity), 
+            "cities": storage.count(City), 
+            "places": storage.count(Place), 
+            "reviews": storage.count(Review), 
+            "states": storage.count(State), 
+            "users": storage.count(User)
+            }
     return jsonify(count_objs)
