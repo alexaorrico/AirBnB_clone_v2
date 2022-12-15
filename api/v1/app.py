@@ -7,7 +7,6 @@ from api.v1.views import app_views
 from os import getenv, environ
 
 app = Flask(__name__)
-env = getenv('HBNB_TYPE_STORAGE')
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
