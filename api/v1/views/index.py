@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-"""Doc"""
-from views import app_views
-from flask import jsonify, Flask
 
-app = Flask(__name__)
+from api.v1.views import app_views
+from flask import jsonify
+
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
-def index():
-    """ returns a JSON """
-    return jsonify(status="OK")
+def status_route():
+    """ Route that returns a JSON """
+    return jsonify({'status': 'OK'})
