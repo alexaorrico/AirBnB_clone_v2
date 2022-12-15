@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""  """
+"""
+    module app importing the Blueprinted varieble app_views
+"""
 
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
