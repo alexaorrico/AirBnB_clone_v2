@@ -3,7 +3,7 @@
 
 from flask import Flask, request
 from models import storage
-from api.v1.views import app_views
+from views import app_views
 from os import getenv, environ
 
 app = Flask(__name__)
