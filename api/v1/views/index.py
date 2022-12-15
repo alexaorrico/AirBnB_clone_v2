@@ -17,7 +17,7 @@ def status_route():
     """ Route that returns a JSON """
     return jsonify({'status': 'OK'})
 
-@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/api/v1/stats', methods=['GET'])
 def stats():
     count_objs = {
             "amenities": storage.count(Amenity), 
