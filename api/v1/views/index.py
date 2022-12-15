@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Doc"""
-from api.v1.views import app_views
+from views import app_views
 import requests
 import json
 
