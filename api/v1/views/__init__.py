@@ -1,5 +1,5 @@
 #!/usr/bin/pythoon3
-
+""" Create init """
 from flask import Blueprint
 from api.v1.views.index import *
 
