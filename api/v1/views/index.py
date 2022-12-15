@@ -2,6 +2,7 @@
 """Doc"""
 from api.v1.views import app_views
 import requests
+import json
 
 
 @app_views.route('/status')
@@ -11,5 +12,5 @@ def index():
     response = requests.get(url)
     
     if response.status_code == 200:
-        return {'status' : 'OK'}
-    
+        return {'status': 'OK'}
+ 
