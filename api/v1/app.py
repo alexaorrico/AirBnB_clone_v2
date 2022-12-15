@@ -6,21 +6,8 @@ from models import storage
 from flask import Flask
 from flask_cors import CORS
 
-
-if os.getenv("HBNB_API_HOST"):
-    HBNB_API_HOST = os.getenv("HBNB_API_HOST")
-else:
-    HBNB_API_HOST = "0.0.0.0"
-
-if os.getenv("HBNB_API_PORT"):
-    HBNB_API_PORT = os.getenv("HBNB_API_PORT")
-else:
-    HBNB_API_PORT = 5000
-
 app = Flask(__name__)
 app.register_blueprint(app_views)
-
-
 
 @app.teardown_appcontext
 def close_this(self):
@@ -31,5 +18,6 @@ def close_this(self):
 if __name__ == "__main__":
     """documented pa"""
 
-    app.run(host=HBNB_API_HOST, port=HBNB_API_PORT,
-            threaded=True)
+    host = os.getenv('HBNB_API_HOST', default="0.0.0.0")
+    port = os.getenv('HBNB_API_PORT', default=5000)
+    app.run(host=host, port=port, threaded=True)
