@@ -7,6 +7,7 @@ from api.v1.views import app_views
 from os import getenv, environ
 
 app = Flask(__name__)
+env = getenv('HBNB_TYPE_STORAGE')
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
@@ -16,11 +17,6 @@ def close():
 
 if __name__ == "__main__":
     """ rinnung a server """
-    if getenv('HBNB_API_HOST') == None:
-        environ['HBNB_API_HOST'] = '0.0.0.0'
-    if getenv('HBNB_API_PORT') == None:
-        environ['HBNB_API_PORT'] = 5000
-
-    app.run(host=getenv('HBNB_API_HOST'),
-            port=getenv('HBNB_API_PORT'),
-            threaded=True, debug=True)
+    app.run(host=getenv('HBNB_API_HOST', "0.0.0.0"),
+        port=getenv('HBNB_API_PORT', 5000),
+        threaded=True, debug=True)
