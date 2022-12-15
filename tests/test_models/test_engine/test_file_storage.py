@@ -124,6 +124,3 @@ class tests_File_storga_get_count(unittest.TestCase):
         if key in storage.__objects:
             obj = storage.__objects[key]
         self.assertEqual(storage.get(State, first_state_id), obj)
-        
-        
-
