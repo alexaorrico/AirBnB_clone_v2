@@ -22,7 +22,7 @@ def status_route():
     """ Route that returns a JSON """
     return jsonify({'status': 'OK'})
 
-@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/api/v1/stats', strict_slashes=False)
 def stats():
     count_objs = {}
     for key, value in classes.items():
