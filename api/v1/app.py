@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def close_this(self):
+def teardown(exception):
     """close the storage instance"""
     storage.close()
 
@@ -20,8 +20,6 @@ def not_found(error):
     return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
-    """documented pa"""
-
     host = os.getenv('HBNB_API_HOST', default="0.0.0.0")
     port = os.getenv('HBNB_API_PORT', default=5000)
     app.run(host=host, port=port, threaded=True)
