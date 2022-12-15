@@ -13,4 +13,3 @@ def index():
     
     if response.status_code == 200:
         return {'status': 'OK'}
- 
