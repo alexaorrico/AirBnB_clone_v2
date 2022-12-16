@@ -35,15 +35,16 @@ def get_city(city_id):
                  strict_slashes=False)
 def delete_cities_id(city_id):
     """Deletes a City object: DELETE /api/v1/cities/<city_id>"""
-    cities = storage.get(City, city_id)
-    if cities is None:
+    city = storage.get("City", city_id)
+    if city is None:
         abort(404, description="Not found")
-    cities.delete()
+    city.delete()
     storage.save()
     return jsonify({}, 200)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def post_cities(state_id):
     """Creates a City: POST /api/v1/states/<state_id>/cities"""
     state = storage.get(State, state_id)
