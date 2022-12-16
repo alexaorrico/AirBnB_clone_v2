@@ -38,10 +38,9 @@ def put_state(state_id):
             data = request.get_json(silent=True, force=True)
             if data is None:
                 return make_response(jsonify({'error': 'Not a JSON'}), 404)
-            else:
-                [setattr(obj, **data) for item in data if item != ('id', 'created_at', 'updated_at')]
-                obj.save()
-                return make_response(jsonify(obj), 200)
+            [setattr(obj, **data) for item in data if item != ('id', 'created_at', 'updated_at')]
+            obj.save()
+            return make_response(jsonify(obj), 200)
 
 """ Method POST """
 @app_views.route('/states', methods=['POST'], strict_slashes=False)               
@@ -51,7 +50,7 @@ def post_state():
         return make_response(jsonify({'error': 'Not a JSON'}), 404)
     else:
         if 'name' not in data:
-            return make_response(jsonify({'error': 'Missing name'}), 404)
+            return make_response(jsonify({'error': 'Missing name'}), 400)
 
     obj = State(**data)
     obj.save()
