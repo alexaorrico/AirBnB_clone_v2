@@ -43,7 +43,7 @@ def creates_state():
         setattr(newState, k, v)
     storage.new(newState)
     storage.save()
-    return make_response(jsonify(newState.to_dict), 201)
+    return make_response(jsonify(newState.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
