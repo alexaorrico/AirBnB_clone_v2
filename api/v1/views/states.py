@@ -24,6 +24,9 @@ def cities_by_state(state_id):
 
 @app_views.route("cities/<city_id>", methods=['GET'])
 def city_obj(city_id):
+    """
+        method get list the records with city_id
+    """
     city = storage.get("City", state_id)
     if city is None:
         abort(404)
@@ -31,6 +34,9 @@ def city_obj(city_id):
 
 @app_views.route("states/<state_id>", methods=['DELETE'])
 def del_state(state_id):
+    '''
+        return dictionary with state obj
+    '''
     state = storage.get("State")
     if state is None:
         abort(404)
