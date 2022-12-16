@@ -33,16 +33,28 @@ def get_states(state_id=None):
                 storage.delete(obj)
                 storage.save()
                 if key not in storage.all():
-                    return make_response('{}', 200)
+                    return make_response(jsonify('{}'), 200)
+        if request.method == 'PUT':
+            obj = storage.get(State, state_id)
+            if obj is None:
+                return make_response(jsonify({'error': 'Not found'}), 404)
+            else:
+                data = request.get_json()
+                if data is None:
+                    return make_response(jsonify({'error': 'Not a JSON'}), 404)
+                else:
+                    [setattr(obj, **data) for item in data if item != ('id', 'created_at', 'updated_at')]
+                    obj.save()
+                    return make_response(jsonify(obj), 200)
 
     else:
         if request.method == 'GET':
-                """ Method GET """ 
-                state_objs = [state.to_dict() for state in storage.all(State).values()]
-                return state_objs
+            """ Method GET """ 
+            state_objs = [state.to_dict() for state in storage.all(State).values()]
+            return state_objs
 
         if request.method == 'POST':
-            data = request.get_json(silent=True, force=True)
+            data = request.get_json()
             if data is None:
                 return make_response(jsonify({'error': 'Not a JSON'}), 404)
             else:
