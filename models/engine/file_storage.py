@@ -73,7 +73,7 @@ class FileStorage:
         """ Returns the object based on the class and its ID, or
         None if not found """
         if not (cls or id):
-            return None        
+            return None
         key = "{}.{}".format(cls.__name__, id)
 
         if key in self.__objects:
