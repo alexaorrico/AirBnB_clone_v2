@@ -10,6 +10,9 @@ from models.state import State, City
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def list_states(state_id):
+    """
+        return a states list
+    """
     if not state_id:
         abort(404)
     all_states = storage.get(State, state_id)
@@ -19,6 +22,9 @@ def list_states(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def city_obj_byID(city_id):
+    '''
+        return a object city by id attr
+    '''
     if not storage.get(City, city_id):
         anort(404)
     city = storage.get(City, city_id)
@@ -26,7 +32,10 @@ def city_obj_byID(city_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
-def delete_state_obj(city_id):
+def delete_city_obj(city_id):
+    '''
+        deletes an object from the state
+    '''
     city_obj = storage.get(City, city_id)
     if city_obj is None:
         abort(404)
@@ -36,7 +45,10 @@ def delete_state_obj(city_id):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
-def creates_state(state_id):
+def creates_city(state_id):
+    '''
+        creates a new city object from the state_id
+    '''
     if storage.get(State, state_id):
         abort(404)
     req_json = request.get_json()
@@ -53,7 +65,10 @@ def creates_state(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_state(city_id):
+def update_city(city_id):
+    '''
+        updates the city object
+    '''
     obj = storage.get(City, city_id)
     if not obj:
         return make_response(jsonify({"error": "Not found"}), 404)
