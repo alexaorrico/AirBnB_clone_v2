@@ -55,13 +55,13 @@ def post_review(place_id=None):
             return make_response(jsonify({'error': 'Missing user_id'}), 400)
     obj = storage.get(Place, place_id)
     obj_2 = storage.get(User, data['user_id'])
-    if obj is None or obj_2 is None or (obj is None and obj_2 is None):
+    if obj is None or obj_2 is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
     else:
-        objs = Place(**data)
-        objs.place_id = place_id
-        objs.save()
-    return make_response(jsonify(objs.to_dict()), 201)
+        new_review = Review(**data)
+        new_review.place_id = place_id
+        new_review.save() 
+    return make_response(jsonify(new_review.to_dict()), 201)
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
