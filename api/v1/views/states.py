@@ -58,7 +58,7 @@ def put_state(state_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
     for key, value in request.get_json().items():
-        if key not in ['id', 'create_at', 'update_at']:
+        if key not in ['state_id', 'create_at', 'update_at']:
             setattr(states, key, value)
-    states.save()
-    return jsonify(states, 200)
+    storage.save()
+    return jsonify(states.to_dict(), 200)
