@@ -4,6 +4,7 @@ from models import storage
 from api.v1.views import app_views
 from models.place import Place
 from models.city import City
+from models.user import User
 from flask import Flask, make_response, jsonify
 import requests
 from flask import request
@@ -45,10 +46,6 @@ def delete_place(place_id=None):
                  strict_slashes=False)
 def post_place(city_id=None):
     data = request.get_json(silent=True, force=True)
-    obj = storage.get(City, city_id)
-    obj_2 = storage.get(City, city_id)
-    if obj is None or obj_2 is None or (obj is None and obj_2 is None):
-        return make_response(jsonify({'error': 'Not found'}), 404)
     if data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     else:
@@ -56,6 +53,10 @@ def post_place(city_id=None):
             return make_response(jsonify({'error': 'Missing name'}), 400)
         if 'user_id' not in data:
             return make_response(jsonify({'error': 'Missing user_id'}), 400)
+    obj = storage.get(City, city_id)
+    obj_2 = storage.get(User, data['user_id'])
+    if obj is None or obj_2 is None or (obj is None and obj_2 is None):
+        return make_response(jsonify({'error': 'Not found'}), 404)
     objs = Place(**data)
     objs.city_id = city_id
     objs.save()
