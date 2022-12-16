@@ -122,5 +122,5 @@ class tests_File_storga_get_count(unittest.TestCase):
         from models import storage
         obj = State()
         storage.new(obj)
-        storage.save()
+        obj.save()
         self.assertEqual(storage.get(obj, obj.id), obj)
