@@ -2,11 +2,8 @@
 """ new view for Amenities objects """
 from models import storage
 from api.v1.views import app_views
-from models.state import State
-from models.city import City
 from models.amenity import Amenity
-from flask import Flask, make_response, jsonify
-import requests
+from flask import make_response, jsonify
 from flask import request
 
 
