@@ -25,7 +25,8 @@ def get_states_id(state_id):
     return jsonify(states.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state_id(state_id):
     """Deletes a State object:: DELETE /api/v1/states/<state_id>"""
     states = storage.get("State", state_id)
@@ -51,4 +52,13 @@ def post_state():
 @app_views.route('/states/', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
     """Updates a State object: PUT /api/v1/states/<state_id>"""
-    pass
+    states = storage.get("State", state_id)
+    if states is None:
+        abort(404, description="Not found")
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    for key, value in request.get_json().items():
+        if key not in ['id', 'create_at', 'update_at']:
+            setattr(states, key, value)
+    states.save()
+    return jsonify(states.to_dict(), 200)
