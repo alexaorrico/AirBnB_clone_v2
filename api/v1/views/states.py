@@ -6,14 +6,14 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', method=['GET'])
+@app_views.route('/states', methods=['GET'])
 def list_states():
     all_states = storage.all(State)
     all_states = list(v.to_dict() for v in all_states.values())
     return jsonify(all_states)
 
 
-@app_views.route('/states/<state_id>', method=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def state_obj(state_id):
     state_obj = storage.get('State', state_id)
     if state_ob is None:
@@ -21,7 +21,7 @@ def state_obj(state_id):
     return jsonify(state_obj.to_dict())
 
 
-@app_views.route('/states/<state_id>', method=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state_obj(state_id):
     state_ob = storage.get('State', state_id)
     if state_ob is None:
@@ -30,7 +30,7 @@ def delete_state_obj(state_id):
     return jsonify({})
 
 
-@app_views.route('/states', method=['POST'])
+@app_views.route('/states', methods=['POST'])
 def creates_state():
     req_json = request.get_json()
     if req_json is None:
@@ -41,7 +41,8 @@ def creates_state():
     inst.save()
     return make_response(jsonify(inst.to_dict(), 201))
 
-@app_views.route('/states/<state_id>', method=['PUT'])
+
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     state = storage.get("State", state_id)
     if state is None:
