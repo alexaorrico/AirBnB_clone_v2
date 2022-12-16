@@ -8,15 +8,6 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
-def get_states_all():
-    """Retrieves the list of all State objects: GET /api/v1/states"""
-    states = []
-    for state in storage.all("State").values():
-        states.append(state.to_dict())
-    return jsonify(states)
-
-
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities_id(state_id):
