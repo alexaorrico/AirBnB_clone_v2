@@ -61,4 +61,4 @@ def put_state(state_id):
         if key not in ['state_id', 'create_at', 'update_at']:
             setattr(states, key, value)
     storage.save()
-    return jsonify(states.to_dict(), 200)
+    return make_response(jsonify(states.to_dict()), 200)
