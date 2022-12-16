@@ -34,7 +34,7 @@ def delete_state_obj(state_id):
 def creates_state():
     req_json = request.get_json()
     if req_json is None:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
     if req_json.get("name") is None:
         abort(400, "Missing name")
     inst = State(**req_json)
