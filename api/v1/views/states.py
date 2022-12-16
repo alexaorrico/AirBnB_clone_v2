@@ -39,7 +39,7 @@ def creates_state():
         abort(404, "Missing name")
     inst = State(**req_json)
     inst.save()
-    return make_response(jsonify(inst.to_dict(), 201))
+    return make_response(jsonify(inst.to_dict())), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
@@ -48,11 +48,11 @@ def update_state(state_id):
     if state is None:
         abort(404)
     if not request.get_json():
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
     ignore = ["state_id", "created_at", "updated_at"]
     req_json = request.get_json()
     for k, v in req_json:
         if k not in ignore:
             setattr(state, k, v)
     storage.save()
-    return make_response(jsonify(state.to_dict), 200)
+    return make_response(jsonify(state.to_dict)), 200
