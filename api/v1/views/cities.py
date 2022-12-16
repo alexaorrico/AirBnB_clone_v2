@@ -26,7 +26,7 @@ def get_cities_id(state_id):
 def get_city(city_id):
     """Retrieves a City object. : GET /api/v1/cities/<city_id>"""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
     return jsonify(city.to_dict())
 
@@ -36,7 +36,7 @@ def get_city(city_id):
 def delete_cities_id(city_id):
     """Deletes a City object: DELETE /api/v1/cities/<city_id>"""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404, description="Not found")
     city.delete()
     storage.save()
@@ -48,7 +48,7 @@ def delete_cities_id(city_id):
 def post_cities(state_id):
     """Creates a City: POST /api/v1/states/<state_id>/cities"""
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404, description="Not found")
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -64,7 +64,7 @@ def post_cities(state_id):
 def put_cities(city_id):
     """Updates a City object: PUT /api/v1/cities/<city_id>"""
     cities = storage.get(City, city_id)
-    if cities is None:
+    if not cities:
         abort(404, description="Not found")
     if not request.get_json():
         abort(400, description="Not a JSON")
