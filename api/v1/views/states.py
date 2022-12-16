@@ -9,7 +9,6 @@ import requests
 from flask import request
 
 
-""" Method GET """
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/<state_id>')
 def get_states(state_id=None):
@@ -24,7 +23,7 @@ def get_states(state_id=None):
         else:
             return make_response(jsonify(obj.to_dict()), 200)
 
-""" Method PUT """
+
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id=None):
     if state_id is None:
@@ -37,12 +36,13 @@ def put_state(state_id=None):
             data = request.get_json(silent=True, force=True)
             if data is None:
                 return make_response(jsonify({'error': 'Not a JSON'}), 400)
-            [setattr(obj, item, value) for item, value in data.items() if item != ('id', 'created_at', 'updated_at')]
+            [setattr(obj, item, value) for item, value in data.items()
+             if item != ('id', 'created_at', 'updated_at')]
             obj.save()
             return make_response(jsonify(obj.to_dict()), 200)
 
-""" Method POST """
-@app_views.route('/states', methods=['POST'], strict_slashes=False)               
+
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
     data = request.get_json(silent=True, force=True)
     if data is None:
@@ -55,8 +55,9 @@ def post_state():
     obj.save()
     return make_response(jsonify(obj.to_dict()), 201)
 
-""" Method DELETE """
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id=None):
     """ Method DELETE """
     obj = storage.get(State, state_id)
