@@ -58,7 +58,6 @@ def post_place(city_id=None):
             return make_response(jsonify({'error': 'Missing user_id'}), 400)
     objs = Place(**data)
     objs.city_id = city_id
-    setattr(objs, 'user_id', data['user_id'])
     objs.save()
     return make_response(jsonify(objs.to_dict()), 201)
 
