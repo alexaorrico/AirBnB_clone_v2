@@ -15,6 +15,7 @@ def get_states_all():
         states.append(state.to_dict())
     return jsonify(states)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states_id(state_id):
     """Retrieves a State object: GET /api/v1/states/<state_id>"""
@@ -22,6 +23,7 @@ def get_states_id(state_id):
     if states is None:
         abort(404, description="Not found")
     return jsonify(states.to_dict())
+
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state_id(state_id):
@@ -33,6 +35,7 @@ def delete_state_id(state_id):
     storage.save()
     return jsonify({}, 200)
 
+
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def post_state():
     """Creates a State: POST /api/v1/states"""
@@ -42,7 +45,7 @@ def post_state():
         abort(400, description="Missing name")
     new_state = State(**request.get_json())
     new_state.save()
-    return (new_state, 201)
+    return make_response(jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route('/states/', methods=['PUT'], strict_slashes=False)
