@@ -38,12 +38,9 @@ def creates_state():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in req_json:
         return make_response(jsonify({"erro": "Missing name"}), 400)
-    newState = State()
-    for k, v in req_json.items():
-        setattr(newState, k, v)
-    storage.new(newState)
-    storage.save()
-    return make_response(jsonify(newState.to_dict()), 201)
+    instance = State(**req_json)
+    instance.save()
+    return make_response(jsonify(instance.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
