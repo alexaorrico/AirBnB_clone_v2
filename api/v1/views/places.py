@@ -46,7 +46,8 @@ def delete_place(place_id=None):
 def post_place(city_id=None):
     data = request.get_json(silent=True, force=True)
     obj = storage.get(City, city_id)
-    if obj is None:
+    obj_2 = storage.get(City, city_id)
+    if obj is None or obj_2 is None or (obj is None and obj_2 is None):
         return make_response(jsonify({'error': 'Not found'}), 404)
     if data is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
