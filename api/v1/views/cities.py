@@ -8,20 +8,20 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities_id(state_id):
     """Retrieves the list of all City objects of a State"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
-        abort(404, description="Not found")
+        abort(404)
     cities = []
     for city in state.cities:
         cities.append(city.to_dict())
     return jsonify(cities)
 
 
-@app_views.route('/cities/<string:city_id>', methods=['GET'],
+@app_views.route('cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
     """Retrieves a City object. : GET /api/v1/cities/<city_id>"""
