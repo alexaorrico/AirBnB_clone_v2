@@ -8,7 +8,7 @@ from flask import Flask, make_response, jsonify
 import requests
 from flask import request
 
-meths = ['GET', 'DELATE', 'POST', 'PUT']
+meths = ['GET', 'DELETE', 'POST', 'PUT']
 
 @app_views.route('/states', methods=meths, strict_slashes=False)
 @app_views.route('/states/<state_id>')
