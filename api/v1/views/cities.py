@@ -17,7 +17,7 @@ def get_cities(state_id=None):
     if obj is None:
          return make_response(jsonify({'error': 'Not found'}), 404)
     cities_objs = [city.to_dict() for city in storage.all(City).values() if city.state_id == state_id]
-    return make_response(jsonify(cities_objs), 200)
+    return jsonify(cities_objs)
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city(city_id=None):
