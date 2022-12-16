@@ -76,7 +76,7 @@ def update_city(city_id):
     if not json_obj:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     for k, v in json_obj.items():
-        if k not in ["id", "created_at", "updated_at"]:
+        if k not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(obj, k, v)
     obj.save()
     return make_response(jsonify(obj.to_dict()), 200)
