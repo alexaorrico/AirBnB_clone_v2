@@ -43,18 +43,16 @@ def del_state(state_id):
     return jsonify(state.to_dict()), 200
 
 @app_views.route("/states", methods=['POST'])
-def state():
+def create_city(state_id):
     '''
-        use request.get_json from Flask to
-        transform the HTTP body request to a dictionary
+        create new city obj through state association using POST
     '''
-    new_state = request.get_json()
-    if not new_state:
-        return jsonify({"error": "Not a JSIN"}), 400
-    elif "name" not in new_state:
-        return jsonify({"error": "Missing name"})
+    if not request.get_json():
+        return jsonify({"error": "Not a JSON"}), 400
+    elif "name" not in request.get_json():
+        return jsonify({"error": "Missing name"}), 400
     else:
-        obj_data = new_state
+        obj_data = request.get_json()
         state = storage.get("State", state_id)
         if state is None:
             abort(404)
