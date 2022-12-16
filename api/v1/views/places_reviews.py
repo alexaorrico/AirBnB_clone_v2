@@ -54,8 +54,7 @@ def post_review(place_id=None):
         if 'user_id' not in data:
             return make_response(jsonify({'error': 'Missing user_id'}), 400)
     obj = storage.get(Place, place_id)
-    obj_2 = storage.get(User, data['user_id'])
-    if obj is None or obj_2 is None or (obj is None and obj_2 is None):
+    if obj is None or 'user_id' not in obj or (obj is None and 'user_id' not in obj):
         return make_response(jsonify({'error': 'Not found'}), 404)
     objs = Place(**data)
     objs.place_id = place_id
