@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" state objects handles all default RESTFul API"""
+""" City objects handles all default RESTFul API"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -8,7 +8,7 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<string:state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities_id(state_id):
     """Retrieves the list of all City objects of a State"""
