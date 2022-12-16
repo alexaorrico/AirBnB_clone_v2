@@ -2,7 +2,6 @@
 """
     Module what creates a new view for City from State
 """
-
 from models import storage
 from models.city import City
 from models.base_model import BaseModel
@@ -61,7 +60,7 @@ def create_city(state_id):
         obj.save()
         return jsonify(obj.to_dict()), 201
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_city(state_id):
     '''
         update existing city object using PUT
