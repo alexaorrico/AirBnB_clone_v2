@@ -33,11 +33,11 @@ def delete_state_obj(state_id):
 
 @app_views.route('/states', methods=['POST'])
 def creates_state():
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    if "name" not in request.get_json():
+        abort(400, description="Missing name")
     req_json = request.get_json()
-    if not req_json:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if "name" not in req_json:
-        return make_response(jsonify({"erro": "Missing name"}), 400)
     instance = State(**req_json)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
