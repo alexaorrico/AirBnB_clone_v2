@@ -57,8 +57,6 @@ def post_review(place_id=None):
     obj_2 = storage.get(User, data['user_id'])
     if obj is None or obj_2 is None or (obj is None and obj_2 is None):
         return make_response(jsonify({'error': 'Not found'}), 404)
-    if obj['user_id'] == data['user_id']:
-        return make_response(jsonify({'error': 'Not found'}), 404)
     objs = Place(**data)
     objs.place_id = place_id
     objs.save()
