@@ -60,7 +60,7 @@ def post_review(place_id=None):
     else:
         new_review = Review(**data)
         new_review.place_id = place_id
-        new_review.save() 
+        new_review.save()
     return make_response(jsonify(new_review.to_dict()), 201)
 
 
