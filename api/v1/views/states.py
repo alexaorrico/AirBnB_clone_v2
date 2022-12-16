@@ -24,7 +24,7 @@ def state_obj(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state_obj(state_id):
     state_obj = storage.get(State, state_id)
-    if state_ob is None:
+    if state_obj is None:
         abort(404)
     state_obj.delete()
     return jsonify({}), 200
