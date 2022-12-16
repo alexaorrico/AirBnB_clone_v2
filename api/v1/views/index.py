@@ -26,7 +26,7 @@ def status_route():
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
-    """ method that returns the count of instances """
+    """ Method that returns the count of instances """
     count_objs = {}
     for key, value in classes.items():
         count_objs[key] = storage.count(value)
