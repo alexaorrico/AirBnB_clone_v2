@@ -36,11 +36,14 @@ def creates_state():
     req_json = request.get_json()
     if req_json is None:
         abort(400, "Not a JSON")
-    if req_json.get("name") is None:
+    if "name" not in req_json:
         abort(400, "Missing name")
-    inst = State(**req_json)
-    inst.save()
-    return make_response(jsonify(inst.to_dict())), 201
+    newState = State()
+    for k, v in req_json.items():
+        setattr(newState, k, v)
+    storage.new(newState)
+    storage.save()
+    return make_response(jsonify(newState.to_dict), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
