@@ -113,3 +113,7 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_func_count(self):
+        """ test def count, return count obj the cls"""
+        self. assertCountEqual(5, 5, msg=None)
