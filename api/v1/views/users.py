@@ -49,7 +49,7 @@ def post_user():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def put_amenities(user_id=None):
+def put_users(user_id=None):
     if user_id is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
     else:
