@@ -17,17 +17,17 @@ def list_states():
 def state_obj(state_id):
     state_obj = storage.get('State', state_id)
     if state_obJ is None:
-        abort(404, 'Not found')
-    return jsonify(state_obj.to_dict())
+        abort(404)
+    return jsonify(state_obj.to_dict()), 200
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state_obj(state_id):
     state_ob = storage.get('State', state_id)
     if state_ob is None:
-        abort(404, 'Not found')
+        abort(404)
     state_obj.delete()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'])
