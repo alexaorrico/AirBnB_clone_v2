@@ -33,7 +33,7 @@ def delete_user(user_id=None):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
 def post_user():
     data = request.get_json(silent=True, force=True)
     if data is None:
@@ -48,7 +48,7 @@ def post_user():
     return make_response(jsonify(obj.to_dict()), 201)
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def put_amenities(user_id=None):
     if user_id is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
