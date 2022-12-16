@@ -25,11 +25,10 @@ def get_states(state_id=None):
             return make_response(jsonify(obj.to_dict()), 200)
 
 """ Method PUT """
-@app_views.route('/states', methods=['PUT'], strict_slashes=False)
-@app_views.route('/states/<state_id>')
-def put_state(state_id):
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def put_state(state_id=None):
     if state_id is None:
-        return make_response(jsonify({'error': 'Not a JSON'}), 404)
+        return make_response(jsonify({'error': 'Not found'}), 404)
     else:
         obj = storage.get(State, state_id)
         if obj is None:
@@ -37,17 +36,18 @@ def put_state(state_id):
         else:
             data = request.get_json(silent=True, force=True)
             if data is None:
-                return make_response(jsonify({'error': 'Not a JSON'}), 404)
-            [setattr(obj, **data) for item in data if item != ('id', 'created_at', 'updated_at')]
-            obj.save()
-            return make_response(jsonify(obj), 200)
+                return make_response(jsonify({'error': 'Not a JSON'}), 400)
+            else:
+                [setattr(obj, **data) for item in data if item != ('id', 'created_at', 'updated_at')]
+                obj.save()
+                return make_response(jsonify(obj), 200)
 
 """ Method POST """
 @app_views.route('/states', methods=['POST'], strict_slashes=False)               
 def post_state():
     data = request.get_json(silent=True, force=True)
     if data is None:
-        return make_response(jsonify({'error': 'Not a JSON'}), 404)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     else:
         if 'name' not in data:
             return make_response(jsonify({'error': 'Missing name'}), 400)
