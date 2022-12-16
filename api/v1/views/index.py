@@ -10,6 +10,7 @@ classes = {"amenities": "Amenity",  "cities": "City",
 
 
 @app_views.route('/status')
+
 def status():
     """ return status"""
     return ({"status": "OK"})
