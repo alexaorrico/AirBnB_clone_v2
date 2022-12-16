@@ -36,7 +36,14 @@ def delete_state_id(state_id):
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def post_state():
     """Creates a State: POST /api/v1/states"""
-    pass
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    if 'name' not in request.get_json():
+        abort(400, description="Missing name")
+    new_state = State(**request.get_json())
+    new_state.save()
+    return (new_state, 201)
+
 
 @app_views.route('/states/', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
