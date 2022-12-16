@@ -35,9 +35,9 @@ def delete_state_obj(state_id):
 def creates_state():
     req_json = request.get_json()
     if not req_json:
-        make_response(jsonify({"error": "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in req_json:
-        make_response(jsonify({"erro": "Missing name"}), 400)
+        return make_response(jsonify({"erro": "Missing name"}), 400)
     newState = State()
     for k, v in req_json.items():
         setattr(newState, k, v)
