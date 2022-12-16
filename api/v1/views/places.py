@@ -61,7 +61,7 @@ def post_place(city_id=None):
     return make_response(jsonify(objs.to_dict()), 201)
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'],
+@app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def put_place(place_id=None):
     if place_id is None:
