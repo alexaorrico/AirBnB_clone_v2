@@ -36,7 +36,7 @@ def creates_state():
     if req_json is None:
         abort(404, "Not a JSON")
     if req_json.get("name") is None:
-        abort(404, "Missing name")
+        abort(400, "Missing name")
     inst = State(**req_json)
     inst.save()
     return make_response(jsonify(inst.to_dict())), 201
