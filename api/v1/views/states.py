@@ -43,7 +43,7 @@ def get_states(state_id=None):
                     return make_response(jsonify(obj), 200)
 
     if request.method == 'POST':
-        data = request.get_json()
+        data = request.get_json(silent=True, force=True)
         if data is None:
             return make_response(jsonify({'error': 'Not a JSON'}), 404)
         else:
