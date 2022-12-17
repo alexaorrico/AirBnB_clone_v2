@@ -45,13 +45,13 @@ def delete_cities_id(city_id):
                  methods=['POST'])
 def post_cities(state_id):
     """Creates a City: POST /api/v1/states/<state_id>/cities"""
-    state = storage.get(State, state_id)
-    if not state:
-        abort(404, description="Not found")
     if not request.get_json():
         abort(400, description="Not a JSON")
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404, description="Not found")
     new_city = City(**request.get_json())
     new_city.save()
     return make_response(jsonify(new_city.to_dict()), 201)
