@@ -24,9 +24,10 @@ def get_cities_id(state_id):
 def get_city(city_id):
     """Retrieves a City object. : GET /api/v1/cities/<city_id>"""
     city = storage.get(City, city_id)
-    if not city:
-        abort(404)
-    return jsonify(city.to_dict())
+    if city:
+        return jsonify(city.to_dict())
+    abort(404)
+    
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
@@ -37,7 +38,7 @@ def delete_cities_id(city_id):
         abort(404, description="Not found")
     city.delete()
     storage.save()
-    return jsonify({}, 200)
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states/<state_id>/cities',
