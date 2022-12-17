@@ -12,7 +12,8 @@ from models.city import City
                  strict_slashes=False)
 def get_cities_id(state_id):
     """Retrieves the list of all City objects of a State"""
-    if not state_id:
+    state = storage.get(State, state_id)
+    if not state:
         abort(404, description="Not found")
     state = storage.get(State, state_id)
     cities = []
@@ -66,12 +67,12 @@ def post_cities(state_id):
 def put_cities(city_id):
     """Updates a City object: PUT /api/v1/cities/<city_id>"""
     cities = storage.get(City, city_id)
-    if cities is None:
-        abort(404)
+    if not cities:
+        abort(404, description="Not found")
     if not request.get_json():
         abort(400, description="Not a JSON")
     for key, value in request.get_json().items():
-        if key not in ['id', 'state_id', 'create_at', 'update_at']:
+        if key not in ['id', 'create_at', 'update_at']:
             setattr(cities, key, value)
         cities.save()
         return make_response(jsonify(cities.to_dict()), 200)
