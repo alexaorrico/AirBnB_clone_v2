@@ -33,12 +33,11 @@ def get_city(city_id):
 def delete_cities_id(city_id):
     """Deletes a City object: DELETE /api/v1/cities/<city_id>"""
     city = storage.get(City, city_id)
-    if not city:
+    if city is None:
         abort(404, description="Not found")
-    else:
-        storage.delete(city)
-        storage.save()
-        return make_response(jsonify({}), 200)
+    storage.delete(city)
+    storage.save()
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states/<state_id>/cities',
@@ -52,11 +51,10 @@ def post_cities(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404, description="Not found")
-    else:
-        new_city = City(**request.get_json())
-        new_city.state_id = state.id
-        new_city.save()
-        return make_response(jsonify(new_city.to_dict()), 201)
+    new_city = City(**request.get_json())
+    new_city.state_id = state.id
+    new_city.save()
+    return make_response(jsonify(new_city.to_dict()), 201)
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
@@ -66,10 +64,9 @@ def put_cities(city_id):
         abort(400, description="Not a JSON")
     if not storage.get(City, city_id):
         abort(404)
-    else:
-        for key, value in request.get_json().items():
-            if key not in ['id', 'state_id', 'create_at', 'update_at']:
-                cities = storage.get(City, city_id)
-                setattr(cities, key, value)
-            storage.save()
-            return make_response(jsonify(cities.to_dict()), 200)
+    for key, value in request.get_json().items():
+        if key not in ['id', 'state_id', 'create_at', 'update_at']:
+            cities = storage.get(City, city_id)
+            setattr(cities, key, value)
+        storage.save()
+        return make_response(jsonify(cities.to_dict()), 200)
