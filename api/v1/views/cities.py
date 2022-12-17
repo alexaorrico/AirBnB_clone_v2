@@ -12,9 +12,9 @@ from models.city import City
                  strict_slashes=False)
 def get_cities_id(state_id):
     """Retrieves the list of all City objects of a State"""
-    state = storage.get(State, state_id)
-    if not state:
+    if not state_id:
         abort(404, description="Not found")
+    state = storage.get(State, state_id)
     cities = []
     for city in state.cities:
         cities.append(city.to_dict())
