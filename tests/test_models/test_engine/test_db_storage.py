@@ -94,6 +94,9 @@ class Test_get_count(unittest.TestCase):
     def test_get(self):
         from models import storage
         obj = State()
-        storage.new(obj)
-        storage.save()
-        self.assertEqual(storage.get(obj, obj.id), obj)
+        obj.save()
+        self.assertEqual(storage.get(State, obj.id), obj)
+
+    def test_count(self):
+        from models import storage
+        self.assertEqual(len(storage.all().keys()), storage.count())

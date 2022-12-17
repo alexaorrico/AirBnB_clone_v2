@@ -121,9 +121,9 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         from models import storage
         obj = State()
-        storage.new(obj)
         obj.save()
-        self.assertEqual(storage.get(obj, obj.id), obj)
+        obj_id = obj.id
+        self.assertEqual(storage.get(State, obj_id), obj)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
