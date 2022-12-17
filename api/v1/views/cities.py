@@ -17,7 +17,7 @@ def get_cities_id(state_id):
     cities = []
     for city in state.cities:
         cities.append(city.to_dict())
-    return jsonify(cities.to_dict())
+    return jsonify(cities)
 
 
 @app_views.route('cities/<city_id>', methods=['GET'])
@@ -28,8 +28,6 @@ def get_city(city_id):
         abort(404)
     city = storage.get(City, city_id)
     return jsonify(city.to_dict())
-
-
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
