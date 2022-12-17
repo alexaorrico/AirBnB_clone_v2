@@ -26,7 +26,6 @@ def get_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    city = storage.get(City, city_id)
     return jsonify(city.to_dict())
 
 
