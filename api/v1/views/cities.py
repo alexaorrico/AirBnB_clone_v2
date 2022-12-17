@@ -17,7 +17,7 @@ def list_states(state_id):
     if not state_id:
         abort(404)
     all_states = storage.get(State, state_id)
-    all_cities = [c,to_dict() for c in all_states.cities]
+    all_cities = [c.to_dict() for c in all_states.cities]
     return jsonify(all_cities)
 
 
