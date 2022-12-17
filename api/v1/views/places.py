@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """Module for place endpoints"""
 from flask import jsonify, make_response, request
