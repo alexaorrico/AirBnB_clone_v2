@@ -65,12 +65,13 @@ def put_cities(city_id):
     """Updates a City object: PUT /api/v1/cities/<city_id>"""
     if not request.get_json():
         abort(400, description="Not a JSON")
-    cities = storage.get(City, city_id)
-    if cities is None:
+    
+    if not storage.get(City, city_id):
         abort(404)
     else:
         for key, value in request.get_json().items():
             if key not in ['id', 'state_id', 'create_at', 'update_at']:
+                cities = storage.get(City, city_id)
                 setattr(cities, key, value)
             storage.save()
             return make_response(jsonify(cities.to_dict()), 200)
