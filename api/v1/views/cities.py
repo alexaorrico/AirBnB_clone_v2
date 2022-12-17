@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+i!/usr/bin/python3
 """ City objects handles all default RESTFul API"""
 
 from api.v1.views import app_views
