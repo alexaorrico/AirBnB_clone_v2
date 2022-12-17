@@ -46,7 +46,7 @@ def delete_cities_id(city_id):
 def post_cities(state_id):
     """Creates a City: POST /api/v1/states/<state_id>/cities"""
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404, description="Not found")
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -68,5 +68,5 @@ def put_cities(city_id):
     for key, value in request.get_json().items():
         if key not in ['id', 'state_id', 'create_at', 'update_at']:
             setattr(cities, key, value)
-        cities.save()
+        storage.save()
         return make_response(jsonify(cities.to_dict()), 200)
