@@ -80,7 +80,7 @@ class DBStorage:
         None if not found """
         from models import storage
         if cls not in classes.values():
-           return None
+            return None
         all_ = storage.all(cls)
         for obj in all_.values():
             if obj.id == id:
