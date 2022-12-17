@@ -81,7 +81,7 @@ class DBStorage:
         from models import storage
         if cls not in classes.values():
            return None
-        all_ = storage.all(cls).values()
+        all_ = storage.all(cls)
         for obj in all_.values():
             if obj.id == id:
                 return obj
