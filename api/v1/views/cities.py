@@ -28,7 +28,6 @@ def get_city(city_id):
         return jsonify(city.to_dict())
     else:
         abort(404)
-    
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
@@ -56,6 +55,7 @@ def post_cities(state_id):
         abort(404, description="Not found")
     else:
         new_city = City(**request.get_json())
+        new_city.state_id = state.id
         new_city.save()
         return make_response(jsonify(new_city.to_dict()), 201)
 
@@ -65,7 +65,6 @@ def put_cities(city_id):
     """Updates a City object: PUT /api/v1/cities/<city_id>"""
     if not request.get_json():
         abort(400, description="Not a JSON")
-    
     if not storage.get(City, city_id):
         abort(404)
     else:
@@ -73,5 +72,5 @@ def put_cities(city_id):
             if key not in ['id', 'state_id', 'create_at', 'update_at']:
                 cities = storage.get(City, city_id)
                 setattr(cities, key, value)
-            cities.save()
+            storage.save()
             return make_response(jsonify(cities.to_dict()), 200)
