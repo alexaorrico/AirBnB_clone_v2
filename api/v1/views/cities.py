@@ -73,5 +73,5 @@ def put_cities(city_id):
             if key not in ['id', 'state_id', 'create_at', 'update_at']:
                 cities = storage.get(City, city_id)
                 setattr(cities, key, value)
-            storage.save()
+            cities.save()
             return make_response(jsonify(cities.to_dict()), 200)
