@@ -12,23 +12,24 @@ from models.city import City
 def get_cities_id(state_id):
     """Retrieves the list of all City objects of a State"""
     state = storage.get(State, state_id)
-    if state:
+    if not state:
+        abort(404)
+    else:
         cities = []
         for city in state.cities:
             cities.append(city.to_dict())
             return jsonify(cities)
-    else:
-        abort(404, description="Not found")
 
 
 @app_views.route('cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Retrieves a City object. : GET /api/v1/cities/<city_id>"""
     city = storage.get(City, city_id)
-    if city:
-        return jsonify(city.to_dict())
-    else:
+    if not city:
         abort(404)
+    else:
+        return jsonify(city.to_dict())
+        
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
