@@ -55,7 +55,10 @@ def post_cities(state_id):
         abort(400, description="Not a JSON")
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
-    new_city = City(**request.get_json())
+    new_city= City()
+    for key, value in request.get_json().items():
+        setattr(new_city, key, value)
+    storage.new(new_city)
     storage.save()
     return make_response(jsonify(new_city.to_dict()), 201)
 
