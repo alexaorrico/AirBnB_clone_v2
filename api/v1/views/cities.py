@@ -25,7 +25,7 @@ def get_cities_id(state_id):
                  strict_slashes=False)
 def get_city(city_id):
     """Retrieves a City object. : GET /api/v1/cities/<city_id>"""
-    city = storage.get(City, city_id)
-    if not city:
+    if not storage.get(City, city_id):
         abort(404)
+    city = storage.get(City, city_id)
     return jsonify(city.to_dict())
