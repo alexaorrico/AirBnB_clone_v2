@@ -23,10 +23,9 @@ def get_cities_id(state_id):
 @app_views.route('cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Retrieves a City object. : GET /api/v1/cities/<city_id>"""
-    
-    if not storage.get(City, city_id):
-        abort(404)
     city = storage.get(City, city_id)
+    if not city:
+        abort(404)
     return jsonify(city.to_dict())
 
 
