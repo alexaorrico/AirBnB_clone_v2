@@ -151,7 +151,7 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 
 ## Bugs
-No known bugs at this time. 
+No known bugs at this time
 
 ## Authors
 Erick Adikah - [Github](https://github.com/Erickadikah) / [Twitter](https://twitter.com/erick_adikah)  
