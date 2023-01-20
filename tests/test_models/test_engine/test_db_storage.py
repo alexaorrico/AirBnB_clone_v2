@@ -66,6 +66,25 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+    
+    def test_get_pace(self):
+        """... checks if get() function returns properly"""
+        duplicate = db_storage.get('Place', self.p1.id)
+        expected = self.p1.id
+        self.assertEqual(expected, duplicate.id)
+
+    def test_count_amenity(self):
+        """... checks if count() returns proper count with Class input"""
+        count_amenity = db_storage.count('Amenity')
+        expected = 3
+        self.assertEqual(expected, count_amenity)
+        
+    def test_count_all(self):
+        """Check if the count() is with no class"""
+        count_all = db_storage.count()
+        expected = 8
+        self.assertEqual(expected, count_all)
+
 
 
 class TestFileStorage(unittest.TestCase):
@@ -86,3 +105,4 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+    
