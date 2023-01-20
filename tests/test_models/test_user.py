@@ -27,6 +27,7 @@ class TestUserDocs(unittest.TestCase):
         result = pep8s.check_files(['models/user.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
+
     @unittest.skip("Not Neccessary")
     def test_pep8_conformance_test_user(self):
         """Test that tests/test_models/test_user.py conforms to PEP8."""
