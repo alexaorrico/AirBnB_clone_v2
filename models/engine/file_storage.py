@@ -89,6 +89,9 @@ class FileStorage:
         given class. If no class is passed, returns the count
         of all objects in storage
         '''
-        if cls in classes.values():
-            return len(models.storage.all(cls))
-        return len(models.storage.all())
+        try:
+            if cls in classes.values():
+                return len(models.storage.all(cls))
+            return len(models.storage.all())
+        except NameError:
+            print("Invalid Class parsed")
