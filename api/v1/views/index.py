@@ -26,7 +26,7 @@ def stats_api():
         # Using the count method objects in storage
         amenities=storage.count(Amenity),
         cities=storage.count(City),
-        places=storage.count(Place)
+        places=storage.count(Place),
         reviews=storage.count(Review),
         states=storage.count(State),
         users=storage.count(User),
