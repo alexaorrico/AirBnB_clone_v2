@@ -22,7 +22,7 @@ def status_api():
 @app_views.route('/stats', strict_slashes=False)
 def stats_api():
     """Endpoint that retrieves the number of each objects by type"""
-    return jsonify(
+    return (jsonify(
         # Using the count method objects in storage
         amenities=storage.count(Amenity),
         cities=storage.count(City),
@@ -30,4 +30,4 @@ def stats_api():
         reviews=storage.count(Review),
         states=storage.count(State),
         users=storage.count(User),
-    )
+    ))
