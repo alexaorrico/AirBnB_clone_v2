@@ -25,9 +25,9 @@ def stats_api():
     return jsonify(
         # Using the count method objects in storage
         amenities=storage.count(Amenity),
-        states=storage.count(State),
         cities=storage.count(City),
-        users=storage.count(User),
-        reviews=storage.count(Review),
         places=storage.count(Place)
+        reviews=storage.count(Review),
+        states=storage.count(State),
+        users=storage.count(User),
     )
