@@ -19,6 +19,8 @@ import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
+storage = models.storage
+
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -113,3 +115,21 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_all(self):
+        """... checks if all() function returns newly created instance"""
+        bm_id = self.bm_obj.id
+        all_obj = storage.all()
+        actual = False
+        for k in all_obj.keys():
+            if bm_id in k:
+                actual = True
+        self.assertTrue(actual)
+
+    @classmethod
+    def setUpClass(cls):
+        """sets up the class"""
+        cls.user = User()
+        cls.user.save()
+        cls.bm_obj = BaseModel()
+        cls.bm_obj.save()
