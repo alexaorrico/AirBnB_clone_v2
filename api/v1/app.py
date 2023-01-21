@@ -17,5 +17,5 @@ def teardown_db(self):
 
 
 if __name__ == '__main__':
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, threaded=True)
 
