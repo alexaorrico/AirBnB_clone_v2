@@ -76,5 +76,5 @@ class DBStorage:
         self.__session.remove()
 
     def count(self, cls=None):
-	"""returns the count of all objects in storage"""
+        """returns the count of all objects in storage"""
         return (len(self.all(cls)))
