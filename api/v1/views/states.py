@@ -65,8 +65,9 @@ def update_state(state_id: str = None):
     if 'name' not in obj:
         abort(400, "Missing name")
     state = storage.get(State, state_id)
-    if not state:
-        abort(404)
-    state.name = obj['name']
+    attrs = ['id', 'updated_at', 'created_at']
+    for key, value in obj.items():
+        if key not in attrs:
+            setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict()), 200
