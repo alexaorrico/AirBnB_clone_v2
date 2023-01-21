@@ -10,14 +10,14 @@ from models.base_model import BaseModel
 @app_views.route('/states', methods=["GET", "POST"], strict_slashes=False)
 def get_states():
     """get all instances of the state object"""
-    if request == "GET":
+    if request.method == "GET":
         response = []
         states = storage.all(State).values()
         for state in states:
             response.append(state.to_dict())
         return (jsonify(response))
 
-    if request == "POST":
+    if request.method == "POST":
         """post a new instance"""
         new_data = request.get_json()
         if not request.is_json:
@@ -29,7 +29,7 @@ def get_states():
         return (jsonify(state.to_dict()), 201)
 
 
-@app_views.route('/states/<state_is>', methods=["GET", "PUT", "DELETE"],
+@app_views.route('/states/<state_id>', methods=["GET", "PUT", "DELETE"],
         strict_slashes=False)
 def get_state_by_id(state_id):
     """get, update an delete state"""
