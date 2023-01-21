@@ -18,10 +18,12 @@ def teardown_appcontext(stiven):
     """teardown function"""
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(e):
     """Error handler for not found route"""
     return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
