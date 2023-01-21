@@ -132,4 +132,21 @@ class TestDBStorage(unittest.TestCase):
         objs = self.storage.all(Amenity)
         self.assertIn("Amenity.{}".format(aminity.id), list(objs.keys()))
 
-        """Test that save properly saves objects to file.json"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get properly gets an object with the given id and class"""
+        obj_1 = Amenity(name="Wi-Fi")
+        obj_2 = Amenity(name="TV")
+        self.storage.new(obj_1)
+        self.storage.new(obj_2)
+        self.storage.save()
+        self.storage.reload()
+
+        found = self.storage.get(Amenity, obj_1.id)
+        self.assertEqual(found.id, obj_1.id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get returns None for object not found"""
+        self.assertIsNone(self.storage.get(None, ""))
+        self.assertIsNone(self.storage.get(Amenity, "abc"))
