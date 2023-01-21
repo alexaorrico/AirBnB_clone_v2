@@ -1,22 +1,23 @@
 #!/usr/bin/python3
-""" User view """
+""" user view """
 from api.v1.views import app_views
 from flask import jsonify, Blueprint, make_response, abort, request
 from models import storage
-from moedls.user import User
+from models.user import User
 from models.base_model import BaseModel
 
 
-@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
-def al_users():
-    """ Retrieves list of all User objects """
+@app_views.route('/users', methods=["GET", "POST"],
+                 strict_slashes=False)
+def get_all_users():
+    """ retrieves all user objects """
     output = []
     users = storage.all(User).values()
-    if request.method == 'GET':
+    if request.method == "GET":
         for user in users:
             output.append(user.to_dict())
         return (jsonify(output))
-    if request.method == 'POST':
+    if request.method == "POST":
         data = request.get_json()
         if not request.is_json:
             abort(400, description="Not a JSON")
