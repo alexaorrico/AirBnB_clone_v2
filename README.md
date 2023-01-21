@@ -160,3 +160,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+Jude 6, 7, 10
+Ifiok 3, 4, 5, 8, 9
+Together 12
