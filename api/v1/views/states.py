@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ALX SE Flask Api State Module."""
-from api.v1.views import state_views
-from flask import abort, jsonify, request
+from flask import abort, Blueprint, jsonify, request
 from models import storage
 from models.state import State
+
+state_views = Blueprint('state_views', __name__, url_prefix='/api/v1/states')
 
 
 @state_views.route('/', strict_slashes=False)
@@ -62,10 +63,9 @@ def update_state(state_id: str = None):
         obj = request.get_json()
     except Exception:
         abort(400, "Not a JSON")
+    if 'name' not in obj:
+        abort(400, "Missing name")
     state = storage.get(State, state_id)
-    attrs = ['id', 'updated_at', 'created_at']
-    for key, value in obj.items():
-        if key not in attrs:
-            setattr(state, key, value)
+    state.name = obj['name']
     state.save()
     return jsonify(state.to_dict()), 200
