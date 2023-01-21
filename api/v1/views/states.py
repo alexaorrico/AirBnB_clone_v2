@@ -62,8 +62,6 @@ def update_state(state_id: str = None):
         obj = request.get_json()
     except Exception:
         abort(400, "Not a JSON")
-    if 'name' not in obj:
-        abort(400, "Missing name")
     state = storage.get(State, state_id)
     attrs = ['id', 'updated_at', 'created_at']
     for key, value in obj.items():
