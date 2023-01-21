@@ -17,7 +17,7 @@ def all_amenities():
     return (jsonify(output))
 
 
-@app_views.route('/amenities', methods=['GET','POST'],
+@app_views.route('/amenities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def create_amenity():
     """creates a new amenity """
@@ -51,7 +51,7 @@ def an_amenity(amenity_id):
         return (jsonify(amenity.to_dict()), 200)
 
 
-@app_views.route('/amenities/<amenity_id>',methods=['GET', 'DELETE'],
+@app_views.route('/amenities/<amenity_id>' ,methods=['GET', 'DELETE'],
                  strict_slashes=False)
 def del_amenity(amenity_id):
     """ Deletes an amenity object """
