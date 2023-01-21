@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""index"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -12,12 +12,14 @@ from models.user import User
 
 classes = [Amenity, City, Place, Review, State, User]
 
+
 @app_views.route('/status', strict_slashes=False)
 def index_status():
     return jsonify(status="OK")
 
+
 @app_views.route('/stats', strict_slashes=False)
-def get_stats():        
+def get_stats():
     return jsonify(
         amenities=storage.count(Amenity),
         cities=storage.count(City),
