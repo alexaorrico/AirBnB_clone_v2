@@ -59,7 +59,7 @@ def create_place(city_id):
                 return jsonify({'error': 'Missing user_id'}), 400
             user = storage.get(User, user_id)
             if user is None:
-                return jsonify({'error': 'Not found'})
+                return jsonify({'error': 'Not found'}), 404
             if place_name is None:
                 return jsonify({'error': 'Missing name'}), 400
             place = Place(user_id=user_id,
