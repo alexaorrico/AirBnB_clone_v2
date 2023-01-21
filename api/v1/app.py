@@ -11,15 +11,18 @@ app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 
+
 @app.teardown_appcontext
 def tear_down(exc):
     """teardown method"""
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """404 error"""
     return jsonify(error="Not found"), 404
+
 
 if __name__ == '__main__':
     host = getenv('HBNB_API_HOST') or '0.0.0.0'
