@@ -59,6 +59,7 @@ class DBStorage:
         """commit all changes of the current database session"""
         self.__session.commit()
 
+
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
@@ -74,3 +75,19 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Returns the object based on the class and its id, otherwise none if not found"""
+        if cls in classes.values():
+            return None
+        obj_storage = models.storage.all(cls)
+        key = cls.__name__ + '.' + id
+        if obj_storage[key]:
+            return obj_storage[key]
+        return None
+
+    def count(self, cls=None):
+        """Returns the number of objects in storage matching the given class.If no class is passed, returns the count of all objects in storage."""
+        if cls in classes.values():
+            return len(models.storage.all(cls))
+        return len(models.storage.all())
