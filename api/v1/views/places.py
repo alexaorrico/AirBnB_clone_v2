@@ -64,7 +64,6 @@ def create_place(city_id):
                 return jsonify({'error': 'Missing name'}), 400
             place = Place(user_id=user_id,
                           city_id=city_id,
-                          state_id=city.state_id,
                           name=place_name)
             place.save()
             return jsonify(place.to_dict()), 201
@@ -81,7 +80,8 @@ def update_place(place_id):
         if request.is_json:
             data = request.get_json()
             data = {k: v for k, v in data.items() if k != 'id' and
-                    k != 'created_at' and k != 'updated_at'}
+                    k != 'created_at' and k != 'updated_at' and
+                    k != 'user_id' and k != 'city_id'}
             for k, v in data.items():
                 setattr(place, k, v)
             place.save()
