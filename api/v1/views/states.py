@@ -7,8 +7,7 @@ from api.v1.views import app_views
 from models.base_model import BaseModel
 
 
-@app_views.route('/states', methods=["GET", "POST"],
-                 strict_slashes=False)
+@app_views.route('/states', methods=["GET", "POST"], strict_slashes=False)
 def all_states():
     """Retrieving all states from the database"""
     if request.method == "GET":
@@ -17,7 +16,6 @@ def all_states():
         for state in states:
             state_list.append(state.to_dict())
         return (jsonify(state_list))
-
     if request.method == 'POST':
         data = request.get_json()
         if not request.is_json:
@@ -36,11 +34,9 @@ def get_state_by_id(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-
     if request.method == "GET":
         one_state = state.to_dict()
         return (jsonify(one_state))
-
     if request.method == "PUT":
         print("test\n")
         data = request.get_json()
@@ -59,7 +55,6 @@ def delete_state_by_id(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-
     if request.method == "DELETE":
         storage.delete(State)
         storage.save()
