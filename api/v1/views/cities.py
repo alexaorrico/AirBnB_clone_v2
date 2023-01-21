@@ -1,20 +1,20 @@
 #!/usr/bin/python3
-""" State/Cities """
+"""cities"""
 from api.v1.views import app_views
 from flask import jsonify, Blueprint, make_response, abort, request
 from models import storage
-from models.state import State
 from models.city import City
+from models.state import State
 from models.base_model import BaseModel
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET','POST'],
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
-def all_state_cities(state_id):
-    """ list all cities in state """
+def all_cities(state_id):
+    """list all cities in state"""
     output = []
     state = storage.get(State, state_id)
-    if states is None:
+    if state is None:
         abort(404)
     if request.method == 'GET':
         for city in state.cities:
@@ -32,21 +32,16 @@ def all_state_cities(state_id):
         return (jsonify(city.to_dict()), 201)
 
 
-@app_views.route('/cities/city_id', methods=['GET', 'DELETE', 'PUT'],
+@app_views.route('/cities/<city_id>', methods=['GET', 'PUT'],
                  strict_slashes=False)
-def get_city(city_id):
-    """ Retrieves a City object by id """
+def a_city(city_id):
+    """list a city by id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
     if request.method == 'GET':
         output = city.to_dict()
         return (jsonify(output))
-    if request.method == 'DELETE':
-        storage.delete(city)
-        storage.save()
-        result = make_response(jsonify({}), 200)
-        return result
     if request.method == 'PUT':
         data = request.get_json()
         if not request.is_json:
@@ -56,3 +51,15 @@ def get_city(city_id):
         city.save()
         return (jsonify(city.to_dict()), 200)
 
+
+@app_views.route('/cities/<city_id>', methods=["GET", "DELETE"],
+                 strict_slashes=False)
+def del_a_city(city_id):
+    """ delete one unique city object """
+    city = storage.get(City, city_id)
+    if city is None:
+        abort(404)
+    storage.delete(city)
+    storage.save()
+    result = make_response(jsonify({}), 200)
+    return result
