@@ -32,3 +32,9 @@ class TestApp(unittest.TestCase):
         response = self.client.get("/api/v1/status")
         self.assertEqual(response.content_type, "application/json")
         self.assertIsNotNone(response.json["status"])
+
+    def test_app_404(self):
+        """Test wether the 404 status is sent as json error message"""
+        response = self.client.get("/api/v1/nop")
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json["error"], "Not found")
