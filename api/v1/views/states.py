@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """ALX SE Flask Api State Module."""
-from flask import abort, Blueprint, jsonify, request
+from api.v1.views import state_views
+from flask import abort, jsonify, request
 from models import storage
 from models.state import State
-
-state_views = Blueprint('state_views', __name__, url_prefix='/api/v1/states')
 
 
 @state_views.route('/', strict_slashes=False)
@@ -29,11 +28,12 @@ def get_state(state_id: str = None):
         '/<string:state_id>',
         methods=['DELETE'],
         strict_slashes=False)
-def delete_state(state_id: str = None):
+def delete_state(state_id: str):
     """Delete a state given its id or 404 when not found."""
     if not state_id:
         abort(404)
     state = storage.get(State, state_id)
+    print(state)
     if not state:
         abort(404)
     storage.delete(state)
