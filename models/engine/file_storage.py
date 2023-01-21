@@ -81,6 +81,10 @@ class FileStorage:
             return None
 
     def count(self, cls=None):
+        """
+        count obj in storage based on cls
+        if no cls is given count all
+        """
         self.reload()
         times = 0
         if cls is not None:
