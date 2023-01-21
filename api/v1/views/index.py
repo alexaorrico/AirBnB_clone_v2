@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" following directions """
 from api.v1.views import app_views
 from flask import jsonify, Blueprint
 from models import storage

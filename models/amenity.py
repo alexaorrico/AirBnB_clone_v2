@@ -11,6 +11,7 @@ from sqlalchemy.orm import relationship
 class Amenity(BaseModel, Base):
     """Representation of Amenity """
     if models.storage_t == 'db':
+        __table_args__ = ({'mysql_default_charset': 'latin1'})
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
     else:

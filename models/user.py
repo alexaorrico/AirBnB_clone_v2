@@ -11,6 +11,7 @@ from sqlalchemy.orm import relationship
 class User(BaseModel, Base):
     """Representation of a user """
     if models.storage_t == 'db':
+        __table_args__ = ({'mysql_default_charset': 'latin1'})
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
