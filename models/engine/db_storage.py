@@ -5,7 +5,7 @@ Contains the class DBStorage
 
 from os import getenv
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from models.amenity import Amenity
@@ -87,6 +87,20 @@ class DBStorage:
         if (cls is None or id is None):
             return None
         return self.__session.query(cls).filter_by(id=id).first()
+
+    def count(self, cls=None):
+        """get the number of objects
+
+        Args:
+            cls (cls, optional): the type of the object. Defaults to None.
+
+        Returns:
+            int: number of objects with matching class or count of all
+        """
+        if (cls is not None):
+            return self.__session.query(func.count(cls.id)).scalar()
+        else:
+            return len(self.all())
 
     def close(self):
         """call remove() method on the private session attribute"""
