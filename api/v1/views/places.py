@@ -21,7 +21,7 @@ def get_city_places(city_id):
         return jsonify({'error': 'Not found'}), 404
 
 
-@app_views.route("/places/<place_id>", strict_slashes=False,
+@app_views.route("/places/<string:place_id>", strict_slashes=False,
                  methods=['GET'])
 def get_place(place_id):
     """Returns a place with a given id"""
@@ -33,7 +33,7 @@ def get_place(place_id):
         return jsonify({'error': 'Not found'}), 404
 
 
-@app_views.route("/places/<place_id>", strict_slashes=False,
+@app_views.route("/places/<string:place_id>", strict_slashes=False,
                  methods=['DELETE'])
 def delete_place(place_id):
     """Delete a place"""
@@ -44,7 +44,7 @@ def delete_place(place_id):
     return jsonify({'error': 'Not found'}), 404
 
 
-@app_views.route("/cities/<city_id>/places", strict_slashes=False,
+@app_views.route("/cities/<string:city_id>/places", strict_slashes=False,
                  methods=['POST'])
 def create_place(city_id):
     """Create a place"""
