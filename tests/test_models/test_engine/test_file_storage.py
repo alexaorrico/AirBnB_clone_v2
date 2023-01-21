@@ -129,7 +129,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
+    def test_get_with_cls(self):
         """Test that get properly gets an object with the given id and class"""
         storage = FileStorage()
         obj_1 = BaseModel()
@@ -141,8 +141,28 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(found.id, obj_1.id)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
+    def test_get_with_none(self):
         """Test that get returns None for object not found"""
         storage = FileStorage()
         self.assertIsNone(storage.get(None, ""))
         self.assertIsNone(storage.get(BaseModel, "abc"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_with_cls(self):
+        """Test that count returns the count of objs that match cls"""
+        storage = FileStorage()
+        obj_1 = BaseModel()
+        obj_2 = BaseModel()
+        storage.new(obj_1)
+        storage.new(obj_2)
+        storage.save()
+
+        base_model_count = len(storage.all(BaseModel))
+        self.assertEqual(storage.count(BaseModel), base_model_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all(self):
+        """Test that count returns the count of all objs"""
+        storage = FileStorage()
+        all_count = len(storage.all())
+        self.assertGreaterEqual(storage.count(), all_count)

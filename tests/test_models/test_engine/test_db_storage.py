@@ -84,15 +84,16 @@ class TestDBStorage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """initial configuration for tests"""
-        cls.conn = MySQLdb.connect(host=getenv("HBNB_MYSQL_HOST"),
-                                   port=3306,
-                                   user=getenv("HBNB_MYSQL_USER"),
-                                   passwd=getenv("HBNB_MYSQL_PWD"),
-                                   db=getenv("HBNB_MYSQL_DB"),
-                                   charset="utf8")
-        cls.cur = cls.conn.cursor()
-        cls.storage = DBStorage()
-        cls.storage.reload()
+        if (models.storage_t == 'db'):
+            cls.conn = MySQLdb.connect(host=getenv("HBNB_MYSQL_HOST"),
+                                       port=3306,
+                                       user=getenv("HBNB_MYSQL_USER"),
+                                       passwd=getenv("HBNB_MYSQL_PWD"),
+                                       db=getenv("HBNB_MYSQL_DB"),
+                                       charset="utf8")
+            cls.cur = cls.conn.cursor()
+            cls.storage = DBStorage()
+            cls.storage.reload()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -133,7 +134,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertIn("Amenity.{}".format(aminity.id), list(objs.keys()))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get(self):
+    def test_get_with_cls(self):
         """Test that get properly gets an object with the given id and class"""
         obj_1 = Amenity(name="Wi-Fi")
         obj_2 = Amenity(name="TV")
@@ -146,7 +147,25 @@ class TestDBStorage(unittest.TestCase):
         self.assertEqual(found.id, obj_1.id)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get(self):
+    def test_get_with_none(self):
         """Test that get returns None for object not found"""
         self.assertIsNone(self.storage.get(None, ""))
         self.assertIsNone(self.storage.get(Amenity, "abc"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_with_cls(self):
+        """Test that count returns the count of objs that match cls"""
+        obj_1 = Amenity(name="Wi-Fi")
+        obj_2 = Amenity(name="TV")
+        self.storage.new(obj_1)
+        self.storage.new(obj_2)
+        self.storage.save()
+        self.storage.reload()
+
+        amenity_count = len(self.storage.all(Amenity))
+        self.assertEqual(self.storage.count(Amenity), amenity_count)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all(self):
+        """Test that count returns the count of all objs"""
+        self.assertEqual(self.storage.count(), len(self.storage.all()))
