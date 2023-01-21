@@ -77,9 +77,13 @@ class FileStorage:
 
         obj_storage = models.storage.all(cls)
         key = cls.__name__ + '.' + id
-        if obj_storage[key]:
-            return obj_storage[key]
+        if (key in obj_storage.keys()):
+            return obj_storage.get(key)
         return None
+
+        # if obj_storage[key]:
+           # return obj_storage[key]
+        # return None
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching the given class"""
