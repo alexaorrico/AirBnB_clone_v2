@@ -18,8 +18,8 @@ def al_users():
         return (jsonify(output))
     if request.method == 'POST':
         data = request.get_json()
-       if not request.is_json:
-           abort(400, description="Not a JSON")
+        if not request.is_json:
+            abort(400, description="Not a JSON")
         if 'email' not in request.json:
             abort(400, description="Missing email")
         if 'password' not in request.json:
