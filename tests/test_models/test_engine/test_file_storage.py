@@ -113,6 +113,7 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+<<<<<<< HEAD
 
      def test_count_cls(self):
         """checks count method with class input arg"""
@@ -126,3 +127,5 @@ class TestFileStorage(unittest.TestCase):
         expected = self.user.id
         actual = duplicate.id
         self.assertEqual(expected, actual)
+=======
+>>>>>>> 2ddcddacd17faa52f0c0702479a6436297bdeda5
