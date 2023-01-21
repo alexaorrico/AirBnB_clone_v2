@@ -30,7 +30,7 @@ def get_states():
 
 
 @app_views.route('/states/<state_id>', methods=["GET", "PUT", "DELETE"],
-        strict_slashes=False)
+                 strict_slashes=False)
 def get_state_by_id(state_id):
     """get, update an delete state"""
     state = storage.get(State, state_id)
