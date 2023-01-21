@@ -8,7 +8,8 @@ from models.city import City
 from models.base_model import BaseModel
 
 
-@app_views.route('/states/<state_id>/cities', methods=["GET", "POST"], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=["GET", "POST"], strict_slashes=False)
 def get_cities(state_id):
     """get all instances of cities in a state"""
     response = []
