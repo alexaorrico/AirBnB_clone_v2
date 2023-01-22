@@ -33,7 +33,6 @@ def delete_state(state_id: str):
     if not state_id:
         abort(404)
     state = storage.get(State, state_id)
-    print(state)
     if not state:
         abort(404)
     storage.delete(state)
