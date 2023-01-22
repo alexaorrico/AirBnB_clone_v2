@@ -83,4 +83,4 @@ def update_amenity(amenity_id=None):
                 setattr(old_amenity, key, value)
         old_amenity.save()
         return jsonify(old_amenity.to_dict()), 200
-    raise NotFound(
+    raise NotFound()
