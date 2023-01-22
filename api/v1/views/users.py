@@ -12,7 +12,8 @@ def list_users():
     users = storage.all(User)
     return jsonify(
         [am.to_dict() for user in users.values()]
-            )
+    )
+
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False)
