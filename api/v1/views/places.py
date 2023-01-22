@@ -66,6 +66,7 @@ def create_place(city_id):
                           city_id=city_id,
                           name=place_name)
             place.save()
+            place = storage.get(Place, place.id)
             return jsonify(place.to_dict()), 201
         return jsonify({'error': 'Not a JSON'}), 400
     return jsonify({'error': 'Not found'}), 404
