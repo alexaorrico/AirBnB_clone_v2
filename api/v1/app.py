@@ -14,7 +14,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 @app.teardown_appcontext
 def teardown_db(execption):
-    """Closes the database"""
+    """Closes the database session"""
     storage.close()
 
 
