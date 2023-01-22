@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """API index views module"""
+
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -12,7 +13,7 @@ from models import storage
 from flask import jsonify
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """
     Returns json response as the status
