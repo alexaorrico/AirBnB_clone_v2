@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 """ALX SE Flask Api State Module."""
-from flask import abort, Blueprint, jsonify, request
+
+from api.v1.views import app_views
+from flask import abort, jsonify, request
 from models import storage
 from models.state import State
 
-state_views = Blueprint('state_views', __name__, url_prefix='/api/v1/states')
 
-
-@state_views.route('/', strict_slashes=False)
+@app_views.route('/states', strict_slashes=False)
 def get_states():
     """Return list of all states."""
     states = [state.to_dict() for state in storage.all(State).values()]
     return jsonify(states), 200
 
 
-@state_views.route('/<string:state_id>', strict_slashes=False)
+@app_views.route('/states/<string:state_id>', strict_slashes=False)
 def get_state(state_id: str):
     """Return a state given its id or 404 when not found."""
     if not state_id:
@@ -25,8 +25,8 @@ def get_state(state_id: str):
     return jsonify(state.to_dict()), 200
 
 
-@state_views.route(
-        '/<string:state_id>',
+@app_views.route(
+        '/states/<string:state_id>',
         methods=['DELETE'],
         strict_slashes=False)
 def delete_state(state_id: str):
@@ -41,7 +41,7 @@ def delete_state(state_id: str):
     return jsonify({}), 200
 
 
-@state_views.route('/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Create a new state."""
     try:
@@ -55,7 +55,7 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@state_views.route('/<string:state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id: str = None):
     """Update a state given its id."""
     if not state_id:

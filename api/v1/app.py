@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 """ALX SE Flask Api Module."""
-from api.v1.views import app_views, state_views
+from api.v1.views import app_views
 from flask import Flask, jsonify, make_response
 from models import storage
 import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-app.register_blueprint(state_views)
 
 
 @app.errorhandler(404)
