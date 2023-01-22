@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -77,14 +78,25 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieves one object"""
-        if cls and id:
-            obj_id = "{}.{}".format(cls, id)
-            objs = self.all(cls)
-            return (objs.get(obj_id))
+        if cls not in classes.values():
+            return None
+
+        all_cls = storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
         return None
 
     def count(self, cls=None):
         """Counts the number of objects in storage"""
-        if cls:
-            return (len(self.all(cls)))
-        return len(self.all())
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(storage.all(clas).values())
+        else:
+            count = len(storage.all(cls).values())
+
+        return count
