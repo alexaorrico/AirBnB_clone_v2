@@ -1,2 +1,2 @@
 #!/bin/bash
-git add . && git commit -m "0x05. AirBnB clone - RESTful API" && git push
+git add . && git commit -m "0x05. AirBnB clone - RESTful API" && git push origin $1
