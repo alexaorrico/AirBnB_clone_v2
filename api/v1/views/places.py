@@ -1,11 +1,11 @@
 #!/usr/bin/python3
+"""Place API"""
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import*
 from models import storage
 from models.city import City
 from models.place import Place
 from models.user import User
-from flask import*
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
@@ -21,6 +21,7 @@ def get_places(city_id):
             city_place.append(place.to_dict())
     return jsonify(city_place)
 
+
 @app_views.route('/places/<place_id>', strict_slashes=False)
 def get_place(place_id):
     """Get a place"""
@@ -29,7 +30,9 @@ def get_place(place_id):
         abort(404)
     return jsonify(place.to_dict())
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_place(place_id):
     """Delete a place"""
     place = storage.get(Place, place_id)
@@ -38,7 +41,9 @@ def delete_place(place_id):
     place.delete()
     return jsonify({})
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
 def create_place(city_id):
     """Create a Place"""
     get_json = request.get_json()
@@ -47,15 +52,16 @@ def create_place(city_id):
     if get_json['name'] is None:
         abort(404, 'Missing Name')
     if get_json['user_id'] is None:
-        abort(404, 'Missing user_id')    
+        abort(404, 'Missing user_id')
     user_id = get_json.get('user_id')
-    if (storage.get(User, user_id) == None):
+    if (storage.get(User, user_id) is None):
         abort(404)
 
     get_json['city_id'] = city_id
     new_place = Place(**get_json)
     new_place.save()
     return jsonify(new_place.to_dict())
+
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
@@ -70,6 +76,6 @@ def update_place(place_id):
     exept = ['created_at', 'updated_at', 'id', 'user_id', 'city_id']
     for key, value in update.items():
         if key not in exept:
-            setattr(place, key,value)
+            setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict()), 200
