@@ -49,6 +49,9 @@ class BaseModel:
 
     def __str__(self):
         """String representation of the BaseModel class"""
+        #  str_dict = self.__dict__.copy()
+        #  if "password" in str_dict.keys():
+        #    str_dict.pop("password")
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
                                          self.__dict__)
 
@@ -68,6 +71,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if "password" in new_dict:
+            del new_dict["password"]
         return new_dict
 
     def delete(self):
