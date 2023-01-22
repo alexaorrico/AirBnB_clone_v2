@@ -76,7 +76,8 @@ class DBStorage:
         self.__session.remove()
            
     def get(self, cls, id):
-        """call remove() method on the class name and its ID, or
+        """
+        Returns the onject based on the class name and its ID, or
         None if not found
         """
         if cls not in classes.value():
