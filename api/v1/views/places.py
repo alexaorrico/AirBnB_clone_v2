@@ -31,12 +31,13 @@ def city_places(city_id):
             place_data = request.get_json()
             if "user_id" not in place_data:
                 return jsonify(error="Missing user_id"), 400
-            elif "name" not in place_data:
+            user = storage.get(User, place_data["user_id"])
+            if user is None:
+                abort(404)
+
+            if "name" not in place_data:
                 return jsonify(error="Missing name"), 400
             else:
-                user = storage.get(User, place_data["user_id"])
-                if user is None:
-                    abort(404)
                 place_data["city_id"] = city.id
                 place = Place(**place_data)
                 storage.new(place)

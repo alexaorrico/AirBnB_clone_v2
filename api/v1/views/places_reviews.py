@@ -31,12 +31,13 @@ def place_reviews(place_id):
             review_data = request.get_json()
             if "user_id" not in review_data:
                 return jsonify(error="Missing user_id"), 400
-            elif "text" not in review_data:
+            user = storage.get(User, review_data["user_id"])
+            if user is None:
+                abort(404)
+
+            if "text" not in review_data:
                 return jsonify(error="Missing text"), 400
             else:
-                user = storage.get(User, review_data["user_id"])
-                if user is None:
-                    abort(404)
                 review_data["place_id"] = place.id
                 review = Review(**review_data)
                 storage.new(review)
