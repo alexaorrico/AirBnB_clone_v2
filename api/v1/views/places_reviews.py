@@ -82,6 +82,7 @@ def update_review(review_id):
             for k, v in data.items():
                 setattr(review, k, v)
             review.save()
+            review = storage.get(Review, review_id)
             return jsonify(review.to_dict()), 200
         return jsonify({'error': 'Not a JSON'}), 400
     return jsonify({'error': 'Not found'}), 404
