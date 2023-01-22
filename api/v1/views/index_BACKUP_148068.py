@@ -1,6 +1,10 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
+"""index"""
+=======
 """Index page"""
 
+>>>>>>> eb2505ce1a612d041181e43952ff196031b9062d
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -22,7 +26,10 @@ def index_status():
 
 @app_views.route('/stats', strict_slashes=False)
 def get_stats():
+<<<<<<< HEAD
+=======
     """Get status"""
+>>>>>>> eb2505ce1a612d041181e43952ff196031b9062d
     return jsonify(
         amenities=storage.count(Amenity),
         cities=storage.count(City),
