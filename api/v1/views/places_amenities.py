@@ -103,4 +103,4 @@ def add_place_amenity(place_id=None, amenity_id=None):
             place.amenity_ids.push(amenity_id)
             place.save()
             return jsonify(amenity.to_dict()), 201
-    raise NotFound(
+    raise NotFound()
