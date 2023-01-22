@@ -22,13 +22,8 @@ class TestApp(unittest.TestCase):
         """Removes the flask app context"""
         self.ctx.pop()
 
-    def test_app_status(self):
-        """Test wether the status route returns 200"""
-        response = self.client.get("/api/v1/status")
-        self.assertEqual(response.status_code, 200)
-
-    def test_app_json(self):
-        """Test wether the status route returns 200"""
-        response = self.client.get("/api/v1/status")
-        self.assertEqual(response.content_type, "application/json")
-        self.assertIsNotNone(response.json["status"])
+    def test_app_404(self):
+        """Test wether the 404 status is sent as json error message"""
+        response = self.client.get("/api/v1/nop")
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.json["error"], "Not found")
