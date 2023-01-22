@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-states blueprint routes
+states view routes
 """
 from flask import abort, jsonify, request
 
