@@ -91,7 +91,7 @@ class TestFileStorage(unittest.TestCase):
         """ Tests method for obtaining an instance db storage"""
         dic = {"name": "Cundinamarca"}
         instance = State(**dic)
-        storage.new(instance)
+        db_storage.DBStorage.new(instance)
         storage.save()
         get_instance = storage.get(State, instance.id)
         self.assertEqual(get_instance, instance)
@@ -100,7 +100,7 @@ class TestFileStorage(unittest.TestCase):
         """ Tests count method db storage """
         dic = {"name": "Vecindad"}
         state = State(**dic)
-        storage.new(state)
+        db_storage.DBStorage.new(state)
         dic = {"name": "Mexico", "state_id": state.id}
         city = City(**dic)
         storage.new(city)
