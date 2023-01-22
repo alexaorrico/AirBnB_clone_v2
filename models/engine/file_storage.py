@@ -53,9 +53,10 @@ class FileStorage:
         """deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as my_file:
-                js_load= json.load(my_file)
+                js_load = json.load(my_file)
             for key in js_load:
-                self.__objects[key] = classes[js_load[key]["__class__"]](**js_load[key])
+                self.__objects[key] = classes[js_load[key]
+                                              ["__class__"]](**js_load[key])
         # except BaseException:
         except FileNotFoundError as error:
             print(error)
