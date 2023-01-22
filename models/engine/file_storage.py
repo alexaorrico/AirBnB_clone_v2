@@ -84,7 +84,7 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
-        '''A method to count the number of objects in storage
+        '''A method to count the number of objects in storage.
         Returns the number of objects in storage matching the
         given class. If no class is passed, returns the count
         of all objects in storage
@@ -94,4 +94,4 @@ class FileStorage:
                 return len(models.storage.all(cls))
             return len(models.storage.all())
         except NameError:
-            print("Invalid Class parsed")
+            print("Invalid class parsed")
