@@ -5,6 +5,8 @@ from flask import abort, jsonify, request
 from models import storage
 from models.state import State
 
+state_views = Blueprint('state_views', __name__, url_prefix='/api/v1/states')
+
 
 @state_views.route('/', strict_slashes=False)
 def get_states():
