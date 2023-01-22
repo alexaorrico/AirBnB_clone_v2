@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 import json
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -57,6 +58,7 @@ class FileStorage:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
         except:
             pass
+            # this except is throwing an error E722 do not use bare 'except'
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -68,3 +70,21 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    # Updating with get() and count() methods
+    def get(self, cls, id):
+        """retrieve obj & return obj based on class & its ID if not None"""
+        if cls in classes.values():
+            obj = models.storage.all(cls)
+            key = cls.__name__ + '.' + id
+            return obj.get(key)
+        else:
+            return None
+
+    def count(self, cls=None):
+        """count"""
+        if cls in classes.values():
+            objCount = models.storage.all(cls)
+            return len(objCount)
+        else:
+            return len(models.storage.all())
