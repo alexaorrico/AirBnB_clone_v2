@@ -196,4 +196,4 @@ def find_places():
         if 'amenities' in obj:
             del obj['amenities']
         result.append(obj)
-    return jsonify(result
+    return jsonify(result)
