@@ -1,10 +1,10 @@
 #!/usr/bin/python3
+"""City API"""
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import*
 from models import storage
 from models.city import City
 from models.state import State
-from flask import *
 
 
 @app_views.route('/states/<state_id>/cities', strict_slashes=False)
@@ -23,6 +23,7 @@ def get_cities(state_id):
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
 def get_city(city_id):
+    """Get a city from storage"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -31,6 +32,7 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
+    """Delete a city"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -41,6 +43,7 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
+    """Create a city"""
     get_json = request.get_json()
     if get_json is None:
         abort(404, 'Not a JSON')
@@ -55,6 +58,7 @@ def create_city(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
+    """Update a city"""
     city = storage.get(City, city_id)
     if city is None:
         abort('404')
