@@ -1,51 +1,37 @@
 #!/usr/bin/python3
-"""API index views module"""
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-from models import storage
+"""
+Flask route that returns json status response
+"""
 from api.v1.views import app_views
+from flask import jsonify, request
 from models import storage
-from flask import jsonify
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def status():
     """
-    Returns json response as the status
-
-    Returns:
-        JSON: json object
+    function for status route that returns the status
     """
-    status = {
-        "status": "OK"
-    }
-    return jsonify(status)
+    if request.method == 'GET':
+        resp = {"status": "OK"}
+        return jsonify(resp)
 
 
-@app_views.route('/stats', strict_slashes=False)
-def count():
+@app_views.route('/stats', methods=['GET'])
+def stats():
     """
-    returns a count of all database objects
+    function to return the count of all class objects
     """
-
-    models_avail = {
-        "User": "users",
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-    }
-    mod_objs = [Amenity, City, Place, Review, State, User]
-
-    count = {}
-    i = -1
-    for cls in models_avail.keys():
-        i += 1
-        count[models_avail[cls]] = storage.count(mod_objs[i])
-
-    return jsonify(count)
+    if request.method == 'GET':
+        response = {}
+        PLURALS = {
+            "Amenity": "amenities",
+            "City": "cities",
+            "Place": "places",
+            "Review": "reviews",
+            "State": "states",
+            "User": "users"
+        }
+        for key, value in PLURALS.items():
+            response[value] = storage.count(key)
+        return jsonify(response)
