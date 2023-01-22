@@ -8,7 +8,7 @@ from flask import (
     request
 )
 from models import storage
-from models.state import State  # state model
+from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
