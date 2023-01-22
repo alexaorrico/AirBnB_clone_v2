@@ -55,6 +55,13 @@ def create_place(city_id):
             data = request.get_json()
             user_id = data.get('user_id', None)
             place_name = data.get('name', None)
+            longitude = data.get('longitude', None)
+            latitude = data.get('latitude', None)
+            description = data.get('description',  None)
+            number_rooms = data.get('number_rooms',  0)
+            number_bathrooms = data.get('number_bathrooms',  0)
+            max_guest = data.get('max_guest',  0)
+            price_by_night = data.get('price_by_night',  0)
             if user_id is None:
                 return jsonify({'error': 'Missing user_id'}), 400
             user = storage.get(User, user_id)
@@ -64,9 +71,19 @@ def create_place(city_id):
                 return jsonify({'error': 'Missing name'}), 400
             place = Place(user_id=user_id,
                           city_id=city_id,
-                          name=place_name)
+                          name=place_name,
+                          number_rooms=number_rooms,
+                          number_bathrooms=number_bathrooms,
+                          max_guest=max_guest,
+                          price_by_night=price_by_night)
+            if type(latitude) is float:
+                place.latitude = latitude
+            if type(longitude) is float:
+                place.longitude = longitude
+            if description is not None:
+                place.description = description
+
             place.save()
-            place = storage.get(Place, place.id)
             return jsonify(place.to_dict()), 201
         return jsonify({'error': 'Not a JSON'}), 400
     return jsonify({'error': 'Not found'}), 404
