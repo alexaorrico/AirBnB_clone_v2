@@ -26,18 +26,19 @@ def state_cities(state_id):
         abort(404)
 
     if request.method == "POST":
-        try:
-            city_data = request.get_json()
-            if "name" not in city_data:
-                return jsonify(error="Missing name"), 400
-            else:
-                city_data["state_id"] = state.id
-                city = City(**city_data)
-                storage.new(city)
-                storage.save()
-                return jsonify(city.to_dict()), 201
-        except Exception:
+        city_data = request.get_json(silent=True)
+        if city_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        if "name" not in city_data:
+            return jsonify(error="Missing name"), 400
+        else:
+            city_data["state_id"] = state.id
+            city = City(**city_data)
+            storage.new(city)
+            storage.save()
+            return jsonify(city.to_dict()), 201
+
     else:
         return jsonify([city.to_dict() for city in state.cities])
 
@@ -62,14 +63,15 @@ def cities(city_id):
         storage.save()
         return jsonify({})
     elif request.method == "PUT":
-        try:
-            city_data = request.get_json()
-            for key, value in city_data.items():
-                if key not in ["id", "state_id", "created_at", "updated_at"]:
-                    setattr(city, key, value)
-            city.save()
-            return jsonify(city.to_dict())
-        except Exception:
+        city_data = request.get_json(silent=True)
+        if city_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        for key, value in city_data.items():
+            if key not in ["id", "state_id", "created_at", "updated_at"]:
+                setattr(city, key, value)
+        city.save()
+        return jsonify(city.to_dict())
+
     else:
         return jsonify(city.to_dict())

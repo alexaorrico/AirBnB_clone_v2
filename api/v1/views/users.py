@@ -21,19 +21,20 @@ def users():
         json: list of all users or the newly added user
     """
     if request.method == "POST":
-        try:
-            user_data = request.get_json()
-            if "email" not in user_data:
-                return jsonify(error="Missing email"), 400
-            elif "password" not in user_data:
-                return jsonify(error="Missing password"), 400
-            else:
-                user = User(**user_data)
-                storage.new(user)
-                storage.save()
-                return jsonify(user.to_dict()), 201
-        except Exception:
+        user_data = request.get_json(silent=True)
+        if user_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        if "email" not in user_data:
+            return jsonify(error="Missing email"), 400
+        elif "password" not in user_data:
+            return jsonify(error="Missing password"), 400
+        else:
+            user = User(**user_data)
+            storage.new(user)
+            storage.save()
+            return jsonify(user.to_dict()), 201
+
     else:
         users = list(storage.all(User).values())
         return jsonify([user.to_dict() for user in users])
@@ -59,14 +60,15 @@ def user(user_id=None):
         storage.save()
         return jsonify({})
     elif request.method == "PUT":
-        try:
-            user_data = request.get_json()
-            for key, value in user_data.items():
-                if key not in ["id", "email", "created_at", "updated_at"]:
-                    setattr(user, key, value)
-            user.save()
-            return jsonify(user.to_dict())
-        except Exception:
+        user_data = request.get_json(silent=True)
+        if user_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        for key, value in user_data.items():
+            if key not in ["id", "email", "created_at", "updated_at"]:
+                setattr(user, key, value)
+        user.save()
+        return jsonify(user.to_dict())
+
     else:
         return jsonify(user.to_dict())
