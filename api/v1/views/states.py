@@ -51,11 +51,15 @@ def create_state():
     if 'name' not in obj:
         abort(400, "Missing name")
     state = State(**obj)
-    state.save()
+    storage.new(state)
+    storage.save()
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route(
+        '/states/<string:state_id>',
+        methods=['PUT'],
+        strict_slashes=False)
 def update_state(state_id: str = None):
     """Update a state given its id."""
     if not state_id:
