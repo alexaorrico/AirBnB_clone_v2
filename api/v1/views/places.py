@@ -76,10 +76,10 @@ def create_place(city_id):
                           number_bathrooms=number_bathrooms,
                           max_guest=max_guest,
                           price_by_night=price_by_night)
-            if type(latitude) is float:
-                place.latitude = latitude
-            if type(longitude) is float:
-                place.longitude = longitude
+            if latitude is not None:
+                place.latitude = float(latitude)
+            if longitude is not None:
+                place.longitude = float(longitude)
             if description is not None:
                 place.description = description
 
