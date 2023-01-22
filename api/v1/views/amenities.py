@@ -21,17 +21,18 @@ def amenities():
         json: list of all amenities or the newly added amenity
     """
     if request.method == "POST":
-        try:
-            amenity_data = request.get_json()
-            if "name" not in amenity_data:
-                return jsonify(error="Missing name"), 400
-            else:
-                amenity = Amenity(**amenity_data)
-                storage.new(amenity)
-                storage.save()
-                return jsonify(amenity.to_dict()), 201
-        except Exception:
+        amenity_data = request.get_json(silent=True)
+        if amenity_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        if "name" not in amenity_data:
+            return jsonify(error="Missing name"), 400
+        else:
+            amenity = Amenity(**amenity_data)
+            storage.new(amenity)
+            storage.save()
+            return jsonify(amenity.to_dict()), 201
+
     else:
         amenities = list(storage.all(Amenity).values())
         return jsonify([amenity.to_dict() for amenity in amenities])
@@ -57,14 +58,15 @@ def amenity(amenity_id=None):
         storage.save()
         return jsonify({})
     elif request.method == "PUT":
-        try:
-            amenity_data = request.get_json()
-            for key, value in amenity_data.items():
-                if key not in ["id", "created_at", "updated_at"]:
-                    setattr(amenity, key, value)
-            amenity.save()
-            return jsonify(amenity.to_dict())
-        except Exception:
+        amenity_data = request.get_json(silent=True)
+        if amenity_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        for key, value in amenity_data.items():
+            if key not in ["id", "created_at", "updated_at"]:
+                setattr(amenity, key, value)
+        amenity.save()
+        return jsonify(amenity.to_dict())
+
     else:
         return jsonify(amenity.to_dict())

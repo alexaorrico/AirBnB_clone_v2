@@ -21,17 +21,18 @@ def get_states():
         json: list of all states or the newly added state
     """
     if request.method == "POST":
-        try:
-            state_data = request.get_json()
-            if "name" not in state_data:
-                return jsonify(error="Missing name"), 400
-            else:
-                state = State(**state_data)
-                storage.new(state)
-                storage.save()
-                return jsonify(state.to_dict()), 201
-        except Exception:
+        state_data = request.get_json(silent=True)
+        if state_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        if "name" not in state_data:
+            return jsonify(error="Missing name"), 400
+        else:
+            state = State(**state_data)
+            storage.new(state)
+            storage.save()
+            return jsonify(state.to_dict()), 201
+
     else:
         states = list(storage.all(State).values())
         return jsonify([state.to_dict() for state in states])
@@ -57,14 +58,15 @@ def state(id=None):
         storage.save()
         return jsonify({})
     elif request.method == "PUT":
-        try:
-            state_data = request.get_json()
-            for key, value in state_data.items():
-                if key not in ["id", "created_at", "updated_at"]:
-                    setattr(state, key, value)
-            state.save()
-            return jsonify(state.to_dict())
-        except Exception:
+        state_data = request.get_json(silent=True)
+        if state_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        for key, value in state_data.items():
+            if key not in ["id", "created_at", "updated_at"]:
+                setattr(state, key, value)
+        state.save()
+        return jsonify(state.to_dict())
+
     else:
         return jsonify(state.to_dict())
