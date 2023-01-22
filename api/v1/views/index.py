@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python3
 """script to give status in JSON"""
 from api.v1.views import app_views
 from flask import request, jsonify
