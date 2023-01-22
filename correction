@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ $1 ]]; then
+    git add . && git commit -m "0x05. AirBnB clone - RESTful API" && git push origin $1
+else
+    git add . && git commit -m "0x05. AirBnB clone - RESTful API" && git push
+fi
