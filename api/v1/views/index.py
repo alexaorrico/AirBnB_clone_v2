@@ -33,4 +33,4 @@ def get_stats():
     }
     foobjects.items():r key, value in 
         objects[key] = storage.count(value)
-    return jsonify(objects
+    return jsonify(objects)                 
