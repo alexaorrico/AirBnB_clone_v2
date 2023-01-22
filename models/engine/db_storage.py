@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -59,7 +59,6 @@ class DBStorage:
         """commit all changes of the current database session"""
         self.__session.commit()
 
-
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
@@ -77,17 +76,24 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Returns the object based on the class and its id, otherwise none if not found"""
-        if cls in classes.values():
-            return None
-        obj_storage = models.storage.all(cls)
-        key = cls.__name__ + '.' + id
-        if obj_storage[key]:
-            return obj_storage[key]
+        """
+        Returns the object based on the class name and its ID, or None if not
+        found
+        """
+        key = "{}.{}".format(cls, id)
+        if key in self.__objects.keys():
+            return self.__objects[key]
         return None
 
     def count(self, cls=None):
-        """Returns the number of objects in storage matching the given class.If no class is passed, returns the count of all objects in storage."""
-        if cls in classes.values():
-            return len(models.storage.all(cls))
-        return len(models.storage.all())
+        """
+        Returns the number of objects in storage matching the given class name.
+        If no name is passed, returns the count of all objects in storage.
+        """
+        if cls:
+            counter = 0
+            for obj in self.__objects.values():
+                if obj.__class__.__name__ == cls:
+                    counter += 1
+            return counter
+        return len(self.__objects)
