@@ -27,24 +27,24 @@ def city_places(city_id):
         abort(404)
 
     if request.method == "POST":
-        try:
-            place_data = request.get_json()
-            if "user_id" not in place_data:
-                return jsonify(error="Missing user_id"), 400
+        place_data = request.get_json(silent=True)
+        if place_data is None:
+            return jsonify(error="Not a JSON"), 400
+
+        if "user_id" not in place_data:
+            return jsonify(error="Missing user_id"), 400
+        elif "name" not in place_data:
+            return jsonify(error="Missing name"), 400
+        else:
             user = storage.get(User, place_data["user_id"])
+            print(user)
             if user is None:
                 abort(404)
-
-            if "name" not in place_data:
-                return jsonify(error="Missing name"), 400
-            else:
-                place_data["city_id"] = city.id
-                place = Place(**place_data)
-                storage.new(place)
-                storage.save()
-                return jsonify(place.to_dict()), 201
-        except Exception:
-            return jsonify(error="Not a JSON"), 400
+            place_data["city_id"] = city.id
+            place = Place(**place_data)
+            storage.new(place)
+            storage.save()
+            return jsonify(place.to_dict()), 201
     else:
         return jsonify([place.to_dict() for place in city.places])
 
@@ -69,16 +69,17 @@ def places(place_id):
         storage.save()
         return jsonify({})
     elif request.method == "PUT":
-        try:
-            place_data = request.get_json()
-            for key, value in place_data.items():
-                if key not in [
-                        "id", "user_id", "city_id", "created_at", "updated_at"
-                ]:
-                    setattr(place, key, value)
-            place.save()
-            return jsonify(place.to_dict())
-        except Exception:
+        place_data = request.get_json(silent=True)
+        if place_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        for key, value in place_data.items():
+            if key not in [
+                    "id", "user_id", "city_id", "created_at", "updated_at"
+            ]:
+                setattr(place, key, value)
+        place.save()
+        return jsonify(place.to_dict())
+
     else:
         return jsonify(place.to_dict())

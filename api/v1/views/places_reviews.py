@@ -27,24 +27,23 @@ def place_reviews(place_id):
         abort(404)
 
     if request.method == "POST":
-        try:
-            review_data = request.get_json()
-            if "user_id" not in review_data:
-                return jsonify(error="Missing user_id"), 400
+        review_data = request.get_json(silent=True)
+        if review_data is None:
+            return jsonify(error="Not a JSON"), 400
+
+        if "user_id" not in review_data:
+            return jsonify(error="Missing user_id"), 400
+        elif "text" not in review_data:
+            return jsonify(error="Missing text"), 400
+        else:
             user = storage.get(User, review_data["user_id"])
             if user is None:
                 abort(404)
-
-            if "text" not in review_data:
-                return jsonify(error="Missing text"), 400
-            else:
-                review_data["place_id"] = place.id
-                review = Review(**review_data)
-                storage.new(review)
-                storage.save()
-                return jsonify(review.to_dict()), 201
-        except Exception:
-            return jsonify(error="Not a JSON"), 400
+            review_data["place_id"] = place.id
+            review = Review(**review_data)
+            storage.new(review)
+            storage.save()
+            return jsonify(review.to_dict()), 201
     else:
         return jsonify([review.to_dict() for review in place.reviews])
 
@@ -69,16 +68,17 @@ def reviews(review_id):
         storage.save()
         return jsonify({})
     elif request.method == "PUT":
-        try:
-            review_data = request.get_json()
-            for key, value in review_data.items():
-                if key not in [
-                        "id", "user_id", "place_id", "created_at", "updated_at"
-                ]:
-                    setattr(review, key, value)
-            review.save()
-            return jsonify(review.to_dict())
-        except Exception:
+        review_data = request.get_json(silent=True)
+        if review_data is None:
             return jsonify(error="Not a JSON"), 400
+
+        for key, value in review_data.items():
+            if key not in [
+                    "id", "user_id", "place_id", "created_at", "updated_at"
+            ]:
+                setattr(review, key, value)
+        review.save()
+        return jsonify(review.to_dict())
+
     else:
         return jsonify(review.to_dict())
