@@ -34,33 +34,33 @@ def delete_state(state_id):
     if state is None:
         abort(404)
     state.delete()
-    return jsonify({}), 200
+    return jsonify({}), 200)
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
+@ app_views.route('/states', methods = ['POST'], strict_slashes = False)
 def create_state():
     """create state"""
-    get_json = request.get_json()
+    get_json=request.get_json()
     if get_json is None:
         abort(404, 'Not a JSON')
     if get_json['name'] is None:
         abort(404, 'Missing Name')
-    new_state = State(**get_json)
+    new_state=State(**get_json)
     new_state.save()
-    return jsonify(new_state.to_dict()), 201
+    return jsonify(new_state.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@ app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """updating state"""
-    new_state = storage.get(State, state_id)
+    new_state=storage.get(State, state_id)
     if new_state is None:
         abort('404')
     if request.get_json() is None:
         abort('404', 'Not s JSON')
-    update = request.get_json()
+    update=request.get_json()
     for key, value in update.items():
         if key != 'id' or key != 'created_at' or key != 'updated_at':
             setattr(new_state, key, value)
     new_state.save()
-    return jsonify(new_state.to_dict()), 200
+    return jsonify(new_state.to_dict()), 200)
