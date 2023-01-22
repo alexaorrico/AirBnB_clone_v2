@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ALX SE Flask Api State Module."""
-from api.v1.views import state_views
-from flask import abort, jsonify, request
+from flask import abort, Blueprint, jsonify, request
 from models import storage
 from models.state import State
 
