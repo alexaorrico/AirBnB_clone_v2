@@ -55,7 +55,7 @@ def update_state(state_id):
     if "updated_at" in data:
         data.pop("updated_at")
     for key, value in data.items():
-        state.__dict__.__setattr__(key, value)
+        state.__setattr__(key, value)
     state.save()
     return jsonify(state.to_dict())
         
