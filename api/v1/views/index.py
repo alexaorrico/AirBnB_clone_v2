@@ -9,7 +9,7 @@ from models.user import User
 from models import storage
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from flask import jsonify, request
 
 
 @app_views.route('/status')
@@ -26,26 +26,21 @@ def status():
     return jsonify(status)
 
 
-@app_views.route('/stats', strict_slashes=False)
-def count():
+@app_views.route('/stats', methods=['GET'])
+def stats():
     """
-    returns a count of all database objects
+    function to return the count of all class objects
     """
-
-    models_avail = {
-        "User": "users",
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-    }
-    mod_objs = [Amenity, City, Place, Review, State, User]
-
-    count = {}
-    i = -1
-    for cls in models_avail.keys():
-        i += 1
-        count[models_avail[cls]] = storage.count(mod_objs[i])
-
-    return jsonify(count)
+    if request.method == 'GET':
+        response = {}
+        PLURALS = {
+            "Amenity": "amenities",
+            "City": "cities",
+            "Place": "places",
+            "Review": "reviews",
+            "State": "states",
+            "User": "users"
+        }
+        for key, value in PLURALS.items():
+            response[value] = storage.count(key)
+        return jsonify(response)
