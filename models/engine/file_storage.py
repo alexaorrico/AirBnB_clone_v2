@@ -36,7 +36,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """Retrieves an object"""
-        key = "{}.{}".format(cls, id)
+        key = "{}.{}".format(cls.__name__, id)
         obj = self.__objects.get(key)
         return obj
 
@@ -45,7 +45,7 @@ class FileStorage:
         count = 0
         if cls:
             for key in self.__objects:
-                if key.startswith(cls):
+                if key.startswith(cls.__name__):
                     count += 1
         else:
             for key in self.__objects:
