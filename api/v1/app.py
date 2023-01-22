@@ -20,9 +20,9 @@ def teardown_db(self):
 
 
 @app.errorhandler(404)
-def error_page(e):
+def error_page(error):
     """Return error page if specified page is unreachable"""
-    return jsonify({"error": "Not Found"}), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
