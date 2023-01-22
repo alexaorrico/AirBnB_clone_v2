@@ -148,4 +148,4 @@ class TestFileStorage(unittest.TestCase):
         Amenity(name='Free WiFi').save()
         self.assertGreater(storage.count(), storage.count(State))
         with self.assertRaises(TypeError):
-            storage.count(State, 'op'
+            storage.count(State, 'op')
