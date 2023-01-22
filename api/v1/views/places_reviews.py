@@ -93,4 +93,4 @@ def update_review(place_id=None, review_id=None):
                     setattr(review, key, value)
             review.save()
             return jsonify(review.to_dict()), 200
-    raise NotFound(
+    raise NotFound()
