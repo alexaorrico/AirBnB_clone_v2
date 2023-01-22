@@ -14,7 +14,7 @@ def get_states():
 
 
 @state_views.route('/<string:state_id>', strict_slashes=False)
-def get_state(state_id: str = None):
+def get_state(state_id: str):
     """Return a state given its id or 404 when not found."""
     if not state_id:
         abort(404)
@@ -36,6 +36,7 @@ def delete_state(state_id: str):
     if not state:
         abort(404)
     storage.delete(state)
+    storage.save()
     return jsonify({}), 200
 
 
@@ -62,9 +63,9 @@ def update_state(state_id: str = None):
         obj = request.get_json()
     except Exception:
         abort(400, "Not a JSON")
-    if 'name' not in obj:
-        abort(400, "Missing name")
     state = storage.get(State, state_id)
-    state.name = obj['name']
+    for key, value in obj.items():
+        if key not in ('id', 'updated_at', 'created_at'):
+            setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict()), 200
