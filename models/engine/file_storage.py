@@ -12,6 +12,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -29,8 +30,8 @@ class FileStorage:
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    new_dict[key] = value
+              #  cls in (value.__class__, value.__class__.__name__)
+                new_dict[key] = value
             return new_dict
         return self.__objects
 
@@ -43,20 +44,21 @@ class FileStorage:
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
-        for key in self.__objects:
+        for key in self.__objects.items():
             json_objects[key] = self.__objects[key].to_dict()
-        with open(self.__file_path, 'w') as f:
-            json.dump(json_objects, f)
+        with open(self.__file_path, 'w', encoding='utf-8') as my_file:
+            json.dump(json_objects, my_file)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
-            with open(self.__file_path, 'r') as f:
-                jo = json.load(f)
-            for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
+            with open(self.__file_path, 'r', encoding='utf-8') as my_file:
+                js_load= json.load(my_file)
+            for key in js_load:
+                self.__objects[key] = classes[js_load[key]["__class__"]](**js_load[key])
+        # except BaseException:
+        except FileNotFoundError as error:
+            print(error)
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -66,5 +68,28 @@ class FileStorage:
                 del self.__objects[key]
 
     def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
+        """call reload() method for deserializing the JSON fil    e to objects"""
         self.reload()
+
+    def get(self, cls, my_id):
+        """
+        Returns the object based on the class name and its ID, or None if not
+        found
+        """
+        key = (f"{cls}.{my_id}")
+        for key in self.__objects.items():
+            return self.__objects[key]
+        return None
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage matching the given class name.
+        If no name is passed, returns the count of all objects in storage.
+        """
+        if cls:
+            counter = 0
+            for obj in self.__objects.values():
+                if obj.__class__.__name__ == cls:
+                    counter += 1
+            return counter
+        return len(self.__objects)
