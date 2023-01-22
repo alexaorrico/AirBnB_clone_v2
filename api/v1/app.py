@@ -1,5 +1,5 @@
 from os import getenv
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -10,6 +10,10 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 def close_app(exception):
     """Close app connections"""
     storage.close()
+
+@app.errorhandler(404)
+def not_found(error_msg):
+    return jsonify({"error": "Not found"})
 
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST")
