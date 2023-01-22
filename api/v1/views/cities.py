@@ -95,4 +95,4 @@ def update_city(state_id=None, city_id=None):
                     setattr(city, key, value)
             city.save()
             return jsonify(city.to_dict()), 200
-    raise NotFound(
+    raise NotFound()
