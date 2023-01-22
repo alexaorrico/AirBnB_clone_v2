@@ -12,13 +12,13 @@ from flask import jsonify
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
-def status():
+def get_status():
     """ Status of API """
-    return jsonify({"status": "OK"})
+    return jsonify({"status": "OK"}), 200
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def number_objects():
+def get_count():
     """ Retrieves the number of each objects by type """
     classes = [Amenity, City, Place, Review, State, User]
     names = ["amenities", "cities", "places", "reviews", "states", "users"]
@@ -28,3 +28,4 @@ def number_objects():
         num_objs[names[i]] = storage.count(classes[i])
 
     return jsonify(num_objs)
+
