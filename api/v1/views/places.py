@@ -53,7 +53,7 @@ def city_places(city_id):
     methods=["GET", "DELETE", "PUT"],
     strict_slashes=False,
 )
-def cities(place_id):
+def places(place_id):
     """Handles /places/<place_id> endpoint
 
     Returns:
