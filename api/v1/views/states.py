@@ -83,4 +83,4 @@ def update_state(state_id=None):
                 setattr(old_state, key, value)
         old_state.save()
         return jsonify(old_state.to_dict()), 200
-    raise NotFound(
+    raise NotFound()
