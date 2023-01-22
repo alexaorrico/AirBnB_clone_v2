@@ -96,4 +96,4 @@ def update_user(user_id):
         if 'reviews' in obj:
             del obj['reviews']
         return jsonify(obj), 200
-    raise NotFound(
+    raise NotFound()
