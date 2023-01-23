@@ -3,8 +3,8 @@
 Contains the FileStorage class
 """
 
-import json
 import models
+import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -89,9 +89,6 @@ class FileStorage:
         given class. If no class is passed, returns the count
         of all objects in storage
         '''
-        try:
-            if cls in classes.values():
-                return len(models.storage.all(cls))
-            return len(models.storage.all())
-        except NameError:
-            print("Invalid class parsed")
+        if cls in classes.values():
+            return len(models.storage.all(cls))
+        return len(models.storage.all())
