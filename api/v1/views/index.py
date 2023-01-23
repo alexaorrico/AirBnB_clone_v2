@@ -9,7 +9,7 @@ def response():
   dic = {"status": "OK"}
   return jsonify(dic)
 
-@app_views.route('/stats')
+@app_views.route('/status')
 def class_counter():
   """Get a dictionary from count method"""
   dic = {}
