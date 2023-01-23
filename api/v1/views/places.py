@@ -119,12 +119,12 @@ def search(request):
             for city in get_cities:
                 all_cities.append(city.get('id'))
         for id in all_cities:
-            places = do_get_places(id, None)
+            places = get_places(id, None)
             for p in places.json:
                 places_list.append(p)
     if cities is not None and len(cities) is not 0:
         for id in cities:
-            places = do_get_places(id, None)
+            places = get_places(id, None)
             for p in places.json:
                 places_list.append(p)
     if amenities is not None and len(amenities) is not 0:
