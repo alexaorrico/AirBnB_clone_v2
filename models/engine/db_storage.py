@@ -12,10 +12,11 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import dotenv
 
+dotenv.load_dotenv()
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -74,3 +75,26 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Retrieve an object from storage based on its class and id"""
+        # validate arguments
+        # query database for specific object based on class, filter_by id
+        # return object
+        # if validation failed return none
+        if cls and id and cls.__name__ in classes:
+            obj = self.__session.query(cls).filter_by(id=id)
+            return obj
+        else:
+            return None       
+
+    def count(self, cls=None):
+        """Retrieve total count of objects stored in file storage based
+        on a class. If class is None, count all objcts stored"""
+        # if cls is not None
+        # check if cls is in classes
+        # if true query count of all objects of that class
+        # else return total number of objects
+        if cls and cls.__name__ in classes:
+            total = self.__session 
+        pass

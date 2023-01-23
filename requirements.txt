@@ -1,0 +1,4 @@
+greenlet==2.0.1
+pep8==1.7.1
+python-dotenv==0.21.1
+SQLAlchemy==1.4.46

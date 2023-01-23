@@ -151,5 +151,6 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         with open('file.json', 'r', encoding='utf-8') as f:
             loaded_list = json.load(f)
-        self.assertEqual(len(loaded_list), storage.count())
+        self.assertEqual(len(loaded_list), storage.count(),
+                         "count result is incorrect")
         FileStorage._FileStorage__objects = save
