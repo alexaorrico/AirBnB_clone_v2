@@ -1,0 +1,2234 @@
+[
+    {
+        "label": "models",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "models",
+        "description": "models",
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "amenity",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "city",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "place",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "review",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "state",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "user",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "storage",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "storage",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "storage",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "storage",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "importPath": "models.amenity",
+        "description": "models.amenity",
+        "isExtraImport": true,
+        "detail": "models.amenity",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "importPath": "models.amenity",
+        "description": "models.amenity",
+        "isExtraImport": true,
+        "detail": "models.amenity",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "importPath": "models.amenity",
+        "description": "models.amenity",
+        "isExtraImport": true,
+        "detail": "models.amenity",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "importPath": "models.amenity",
+        "description": "models.amenity",
+        "isExtraImport": true,
+        "detail": "models.amenity",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "importPath": "models.amenity",
+        "description": "models.amenity",
+        "isExtraImport": true,
+        "detail": "models.amenity",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "isExtraImport": true,
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "importPath": "models.city",
+        "description": "models.city",
+        "isExtraImport": true,
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "importPath": "models.city",
+        "description": "models.city",
+        "isExtraImport": true,
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "importPath": "models.city",
+        "description": "models.city",
+        "isExtraImport": true,
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "importPath": "models.city",
+        "description": "models.city",
+        "isExtraImport": true,
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "importPath": "models.city",
+        "description": "models.city",
+        "isExtraImport": true,
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "importPath": "models.city",
+        "description": "models.city",
+        "isExtraImport": true,
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "importPath": "models.place",
+        "description": "models.place",
+        "isExtraImport": true,
+        "detail": "models.place",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "importPath": "models.place",
+        "description": "models.place",
+        "isExtraImport": true,
+        "detail": "models.place",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "importPath": "models.place",
+        "description": "models.place",
+        "isExtraImport": true,
+        "detail": "models.place",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "importPath": "models.place",
+        "description": "models.place",
+        "isExtraImport": true,
+        "detail": "models.place",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "importPath": "models.place",
+        "description": "models.place",
+        "isExtraImport": true,
+        "detail": "models.place",
+        "documentation": {}
+    },
+    {
+        "label": "Review",
+        "importPath": "models.review",
+        "description": "models.review",
+        "isExtraImport": true,
+        "detail": "models.review",
+        "documentation": {}
+    },
+    {
+        "label": "Review",
+        "importPath": "models.review",
+        "description": "models.review",
+        "isExtraImport": true,
+        "detail": "models.review",
+        "documentation": {}
+    },
+    {
+        "label": "Review",
+        "importPath": "models.review",
+        "description": "models.review",
+        "isExtraImport": true,
+        "detail": "models.review",
+        "documentation": {}
+    },
+    {
+        "label": "Review",
+        "importPath": "models.review",
+        "description": "models.review",
+        "isExtraImport": true,
+        "detail": "models.review",
+        "documentation": {}
+    },
+    {
+        "label": "Review",
+        "importPath": "models.review",
+        "description": "models.review",
+        "isExtraImport": true,
+        "detail": "models.review",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "models.state",
+        "description": "models.state",
+        "isExtraImport": true,
+        "detail": "models.state",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "models.state",
+        "description": "models.state",
+        "isExtraImport": true,
+        "detail": "models.state",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "models.state",
+        "description": "models.state",
+        "isExtraImport": true,
+        "detail": "models.state",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "models.state",
+        "description": "models.state",
+        "isExtraImport": true,
+        "detail": "models.state",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "models.state",
+        "description": "models.state",
+        "isExtraImport": true,
+        "detail": "models.state",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "models.user",
+        "description": "models.user",
+        "isExtraImport": true,
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "getenv",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sqlalchemy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "DateTime",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Float",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Table",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "scoped_session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "inspect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "inspect",
+        "description": "inspect",
+        "detail": "inspect",
+        "documentation": {}
+    },
+    {
+        "label": "db_storage",
+        "importPath": "models.engine",
+        "description": "models.engine",
+        "isExtraImport": true,
+        "detail": "models.engine",
+        "documentation": {}
+    },
+    {
+        "label": "file_storage",
+        "importPath": "models.engine",
+        "description": "models.engine",
+        "isExtraImport": true,
+        "detail": "models.engine",
+        "documentation": {}
+    },
+    {
+        "label": "pep8",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pep8",
+        "description": "pep8",
+        "detail": "pep8",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "mock",
+        "importPath": "unittest",
+        "description": "unittest",
+        "isExtraImport": true,
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "console",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "console",
+        "description": "console",
+        "detail": "console",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "local",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "put",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "run",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "env",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "env",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "local",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "put",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "run",
+        "importPath": "fabric.api",
+        "description": "fabric.api",
+        "isExtraImport": true,
+        "detail": "fabric.api",
+        "documentation": {}
+    },
+    {
+        "label": "isdir",
+        "importPath": "os.path",
+        "description": "os.path",
+        "isExtraImport": true,
+        "detail": "os.path",
+        "documentation": {}
+    },
+    {
+        "label": "exists",
+        "importPath": "os.path",
+        "description": "os.path",
+        "isExtraImport": true,
+        "detail": "os.path",
+        "documentation": {}
+    },
+    {
+        "label": "exists",
+        "importPath": "os.path",
+        "description": "os.path",
+        "isExtraImport": true,
+        "detail": "os.path",
+        "documentation": {}
+    },
+    {
+        "label": "isdir",
+        "importPath": "os.path",
+        "description": "os.path",
+        "isExtraImport": true,
+        "detail": "os.path",
+        "documentation": {}
+    },
+    {
+        "label": "cmd",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cmd",
+        "description": "cmd",
+        "detail": "cmd",
+        "documentation": {}
+    },
+    {
+        "label": "shlex",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shlex",
+        "description": "shlex",
+        "detail": "shlex",
+        "documentation": {}
+    },
+    {
+        "label": "DBStorage",
+        "kind": 6,
+        "importPath": "models.engine.db_storage",
+        "description": "models.engine.db_storage",
+        "peekOfCode": "class DBStorage:\n    \"\"\"interaacts with the MySQL database\"\"\"\n    __engine = None\n    __session = None\n    def __init__(self):\n        \"\"\"Instantiate a DBStorage object\"\"\"\n        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')\n        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')\n        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')\n        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')",
+        "detail": "models.engine.db_storage",
+        "documentation": {}
+    },
+    {
+        "label": "classes",
+        "kind": 5,
+        "importPath": "models.engine.db_storage",
+        "description": "models.engine.db_storage",
+        "peekOfCode": "classes = {\"Amenity\": Amenity, \"City\": City,\n           \"Place\": Place, \"Review\": Review, \"State\": State, \"User\": User}\nclass DBStorage:\n    \"\"\"interaacts with the MySQL database\"\"\"\n    __engine = None\n    __session = None\n    def __init__(self):\n        \"\"\"Instantiate a DBStorage object\"\"\"\n        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')\n        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')",
+        "detail": "models.engine.db_storage",
+        "documentation": {}
+    },
+    {
+        "label": "FileStorage",
+        "kind": 6,
+        "importPath": "models.engine.file_storage",
+        "description": "models.engine.file_storage",
+        "peekOfCode": "class FileStorage:\n    \"\"\"serializes instances to a JSON file & deserializes back to instances\"\"\"\n    # string - path to the JSON file\n    __file_path = \"file.json\"\n    # dictionary - empty but will store all objects by <class name>.id\n    __objects = {}\n    def all(self, cls=None):\n        \"\"\"returns the dictionary __objects\"\"\"\n        if cls is not None:\n            new_dict = {}",
+        "detail": "models.engine.file_storage",
+        "documentation": {}
+    },
+    {
+        "label": "classes",
+        "kind": 5,
+        "importPath": "models.engine.file_storage",
+        "description": "models.engine.file_storage",
+        "peekOfCode": "classes = {\"Amenity\": Amenity, \"BaseModel\": BaseModel, \"City\": City,\n           \"Place\": Place, \"Review\": Review, \"State\": State, \"User\": User}\nclass FileStorage:\n    \"\"\"serializes instances to a JSON file & deserializes back to instances\"\"\"\n    # string - path to the JSON file\n    __file_path = \"file.json\"\n    # dictionary - empty but will store all objects by <class name>.id\n    __objects = {}\n    def all(self, cls=None):\n        \"\"\"returns the dictionary __objects\"\"\"",
+        "detail": "models.engine.file_storage",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "kind": 6,
+        "importPath": "models.amenity",
+        "description": "models.amenity",
+        "peekOfCode": "class Amenity(BaseModel, Base):\n    \"\"\"Representation of Amenity \"\"\"\n    if models.storage_t == 'db':\n        __tablename__ = 'amenities'\n        name = Column(String(128), nullable=False)\n    else:\n        name = \"\"\n    def __init__(self, *args, **kwargs):\n        \"\"\"initializes Amenity\"\"\"\n        super().__init__(*args, **kwargs)",
+        "detail": "models.amenity",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "kind": 6,
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "peekOfCode": "class BaseModel:\n    \"\"\"The BaseModel class from which future classes will be derived\"\"\"\n    if models.storage_t == \"db\":\n        id = Column(String(60), primary_key=True)\n        created_at = Column(DateTime, default=datetime.utcnow)\n        updated_at = Column(DateTime, default=datetime.utcnow)\n    def __init__(self, *args, **kwargs):\n        \"\"\"Initialization of the base model\"\"\"\n        if kwargs:\n            for key, value in kwargs.items():",
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 5,
+        "importPath": "models.base_model",
+        "description": "models.base_model",
+        "peekOfCode": "time = \"%Y-%m-%dT%H:%M:%S.%f\"\nif models.storage_t == \"db\":\n    Base = declarative_base()\nelse:\n    Base = object\nclass BaseModel:\n    \"\"\"The BaseModel class from which future classes will be derived\"\"\"\n    if models.storage_t == \"db\":\n        id = Column(String(60), primary_key=True)\n        created_at = Column(DateTime, default=datetime.utcnow)",
+        "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "kind": 6,
+        "importPath": "models.city",
+        "description": "models.city",
+        "peekOfCode": "class City(BaseModel, Base):\n    \"\"\"Representation of city \"\"\"\n    if models.storage_t == \"db\":\n        __tablename__ = 'cities'\n        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)\n        name = Column(String(128), nullable=False)\n        places = relationship(\"Place\", backref=\"cities\")\n    else:\n        state_id = \"\"\n        name = \"\"",
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "kind": 6,
+        "importPath": "models.place",
+        "description": "models.place",
+        "peekOfCode": "class Place(BaseModel, Base):\n    \"\"\"Representation of Place \"\"\"\n    if models.storage_t == 'db':\n        __tablename__ = 'places'\n        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)\n        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)\n        name = Column(String(128), nullable=False)\n        description = Column(String(1024), nullable=True)\n        number_rooms = Column(Integer, nullable=False, default=0)\n        number_bathrooms = Column(Integer, nullable=False, default=0)",
+        "detail": "models.place",
+        "documentation": {}
+    },
+    {
+        "label": "Review",
+        "kind": 6,
+        "importPath": "models.review",
+        "description": "models.review",
+        "peekOfCode": "class Review(BaseModel, Base):\n    \"\"\"Representation of Review \"\"\"\n    if models.storage_t == 'db':\n        __tablename__ = 'reviews'\n        place_id = Column(String(60), ForeignKey('places.id'), nullable=False)\n        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)\n        text = Column(String(1024), nullable=False)\n    else:\n        place_id = \"\"\n        user_id = \"\"",
+        "detail": "models.review",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "kind": 6,
+        "importPath": "models.state",
+        "description": "models.state",
+        "peekOfCode": "class State(BaseModel, Base):\n    \"\"\"Representation of state \"\"\"\n    if models.storage_t == \"db\":\n        __tablename__ = 'states'\n        name = Column(String(128), nullable=False)\n        cities = relationship(\"City\", backref=\"state\")\n    else:\n        name = \"\"\n    def __init__(self, *args, **kwargs):\n        \"\"\"initializes state\"\"\"",
+        "detail": "models.state",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "models.user",
+        "description": "models.user",
+        "peekOfCode": "class User(BaseModel, Base):\n    \"\"\"Representation of a user \"\"\"\n    if models.storage_t == 'db':\n        __tablename__ = 'users'\n        email = Column(String(128), nullable=False)\n        password = Column(String(128), nullable=False)\n        first_name = Column(String(128), nullable=True)\n        last_name = Column(String(128), nullable=True)\n        places = relationship(\"Place\", backref=\"user\")\n        reviews = relationship(\"Review\", backref=\"user\")",
+        "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "TestDBStorageDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_engine.test_db_storage",
+        "description": "tests.test_models.test_engine.test_db_storage",
+        "peekOfCode": "class TestDBStorageDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of DBStorage class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)\n    def test_pep8_conformance_db_storage(self):\n        \"\"\"Test that models/engine/db_storage.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/engine/db_storage.py'])",
+        "detail": "tests.test_models.test_engine.test_db_storage",
+        "documentation": {}
+    },
+    {
+        "label": "TestFileStorage",
+        "kind": 6,
+        "importPath": "tests.test_models.test_engine.test_db_storage",
+        "description": "tests.test_models.test_engine.test_db_storage",
+        "peekOfCode": "class TestFileStorage(unittest.TestCase):\n    \"\"\"Test the FileStorage class\"\"\"\n    @unittest.skipIf(models.storage_t != 'db', \"not testing db storage\")\n    def test_all_returns_dict(self):\n        \"\"\"Test that all returns a dictionaty\"\"\"\n        self.assertIs(type(models.storage.all()), dict)\n    @unittest.skipIf(models.storage_t != 'db', \"not testing db storage\")\n    def test_all_no_class(self):\n        \"\"\"Test that all returns all rows when no class is passed\"\"\"\n    @unittest.skipIf(models.storage_t != 'db', \"not testing db storage\")",
+        "detail": "tests.test_models.test_engine.test_db_storage",
+        "documentation": {}
+    },
+    {
+        "label": "DBStorage",
+        "kind": 5,
+        "importPath": "tests.test_models.test_engine.test_db_storage",
+        "description": "tests.test_models.test_engine.test_db_storage",
+        "peekOfCode": "DBStorage = db_storage.DBStorage\nclasses = {\"Amenity\": Amenity, \"City\": City, \"Place\": Place,\n           \"Review\": Review, \"State\": State, \"User\": User}\nclass TestDBStorageDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of DBStorage class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)\n    def test_pep8_conformance_db_storage(self):",
+        "detail": "tests.test_models.test_engine.test_db_storage",
+        "documentation": {}
+    },
+    {
+        "label": "classes",
+        "kind": 5,
+        "importPath": "tests.test_models.test_engine.test_db_storage",
+        "description": "tests.test_models.test_engine.test_db_storage",
+        "peekOfCode": "classes = {\"Amenity\": Amenity, \"City\": City, \"Place\": Place,\n           \"Review\": Review, \"State\": State, \"User\": User}\nclass TestDBStorageDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of DBStorage class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)\n    def test_pep8_conformance_db_storage(self):\n        \"\"\"Test that models/engine/db_storage.py conforms to PEP8.\"\"\"",
+        "detail": "tests.test_models.test_engine.test_db_storage",
+        "documentation": {}
+    },
+    {
+        "label": "TestFileStorageDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_engine.test_file_storage",
+        "description": "tests.test_models.test_engine.test_file_storage",
+        "peekOfCode": "class TestFileStorageDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of FileStorage class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)\n    def test_pep8_conformance_file_storage(self):\n        \"\"\"Test that models/engine/file_storage.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/engine/file_storage.py'])",
+        "detail": "tests.test_models.test_engine.test_file_storage",
+        "documentation": {}
+    },
+    {
+        "label": "TestFileStorage",
+        "kind": 6,
+        "importPath": "tests.test_models.test_engine.test_file_storage",
+        "description": "tests.test_models.test_engine.test_file_storage",
+        "peekOfCode": "class TestFileStorage(unittest.TestCase):\n    \"\"\"Test the FileStorage class\"\"\"\n    @unittest.skipIf(models.storage_t == 'db', \"not testing file storage\")\n    def test_all_returns_dict(self):\n        \"\"\"Test that all returns the FileStorage.__objects attr\"\"\"\n        storage = FileStorage()\n        new_dict = storage.all()\n        self.assertEqual(type(new_dict), dict)\n        self.assertIs(new_dict, storage._FileStorage__objects)\n    @unittest.skipIf(models.storage_t == 'db', \"not testing file storage\")",
+        "detail": "tests.test_models.test_engine.test_file_storage",
+        "documentation": {}
+    },
+    {
+        "label": "FileStorage",
+        "kind": 5,
+        "importPath": "tests.test_models.test_engine.test_file_storage",
+        "description": "tests.test_models.test_engine.test_file_storage",
+        "peekOfCode": "FileStorage = file_storage.FileStorage\nclasses = {\"Amenity\": Amenity, \"BaseModel\": BaseModel, \"City\": City,\n           \"Place\": Place, \"Review\": Review, \"State\": State, \"User\": User}\nclass TestFileStorageDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of FileStorage class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)\n    def test_pep8_conformance_file_storage(self):",
+        "detail": "tests.test_models.test_engine.test_file_storage",
+        "documentation": {}
+    },
+    {
+        "label": "classes",
+        "kind": 5,
+        "importPath": "tests.test_models.test_engine.test_file_storage",
+        "description": "tests.test_models.test_engine.test_file_storage",
+        "peekOfCode": "classes = {\"Amenity\": Amenity, \"BaseModel\": BaseModel, \"City\": City,\n           \"Place\": Place, \"Review\": Review, \"State\": State, \"User\": User}\nclass TestFileStorageDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of FileStorage class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)\n    def test_pep8_conformance_file_storage(self):\n        \"\"\"Test that models/engine/file_storage.py conforms to PEP8.\"\"\"",
+        "detail": "tests.test_models.test_engine.test_file_storage",
+        "documentation": {}
+    },
+    {
+        "label": "TestAmenityDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_amenity",
+        "description": "tests.test_models.test_amenity",
+        "peekOfCode": "class TestAmenityDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of Amenity class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.amenity_f = inspect.getmembers(Amenity, inspect.isfunction)\n    def test_pep8_conformance_amenity(self):\n        \"\"\"Test that models/amenity.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/amenity.py'])",
+        "detail": "tests.test_models.test_amenity",
+        "documentation": {}
+    },
+    {
+        "label": "TestAmenity",
+        "kind": 6,
+        "importPath": "tests.test_models.test_amenity",
+        "description": "tests.test_models.test_amenity",
+        "peekOfCode": "class TestAmenity(unittest.TestCase):\n    \"\"\"Test the Amenity class\"\"\"\n    def test_is_subclass(self):\n        \"\"\"Test that Amenity is a subclass of BaseModel\"\"\"\n        amenity = Amenity()\n        self.assertIsInstance(amenity, BaseModel)\n        self.assertTrue(hasattr(amenity, \"id\"))\n        self.assertTrue(hasattr(amenity, \"created_at\"))\n        self.assertTrue(hasattr(amenity, \"updated_at\"))\n    def test_name_attr(self):",
+        "detail": "tests.test_models.test_amenity",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "kind": 5,
+        "importPath": "tests.test_models.test_amenity",
+        "description": "tests.test_models.test_amenity",
+        "peekOfCode": "Amenity = amenity.Amenity\nclass TestAmenityDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of Amenity class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.amenity_f = inspect.getmembers(Amenity, inspect.isfunction)\n    def test_pep8_conformance_amenity(self):\n        \"\"\"Test that models/amenity.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)",
+        "detail": "tests.test_models.test_amenity",
+        "documentation": {}
+    },
+    {
+        "label": "TestBaseModelDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_base_model",
+        "description": "tests.test_models.test_base_model",
+        "peekOfCode": "class TestBaseModelDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of BaseModel class\"\"\"\n    @classmethod\n    def setUpClass(self):\n        \"\"\"Set up for docstring tests\"\"\"\n        self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)\n    def test_pep8_conformance(self):\n        \"\"\"Test that models/base_model.py conforms to PEP8.\"\"\"\n        for path in ['models/base_model.py',\n                     'tests/test_models/test_base_model.py']:",
+        "detail": "tests.test_models.test_base_model",
+        "documentation": {}
+    },
+    {
+        "label": "TestBaseModel",
+        "kind": 6,
+        "importPath": "tests.test_models.test_base_model",
+        "description": "tests.test_models.test_base_model",
+        "peekOfCode": "class TestBaseModel(unittest.TestCase):\n    \"\"\"Test the BaseModel class\"\"\"\n    def test_instantiation(self):\n        \"\"\"Test that object is correctly created\"\"\"\n        inst = BaseModel()\n        self.assertIs(type(inst), BaseModel)\n        inst.name = \"Holberton\"\n        inst.number = 89\n        attrs_types = {\n            \"id\": str,",
+        "detail": "tests.test_models.test_base_model",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "kind": 5,
+        "importPath": "tests.test_models.test_base_model",
+        "description": "tests.test_models.test_base_model",
+        "peekOfCode": "BaseModel = models.base_model.BaseModel\nmodule_doc = models.base_model.__doc__\nclass TestBaseModelDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of BaseModel class\"\"\"\n    @classmethod\n    def setUpClass(self):\n        \"\"\"Set up for docstring tests\"\"\"\n        self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)\n    def test_pep8_conformance(self):\n        \"\"\"Test that models/base_model.py conforms to PEP8.\"\"\"",
+        "detail": "tests.test_models.test_base_model",
+        "documentation": {}
+    },
+    {
+        "label": "module_doc",
+        "kind": 5,
+        "importPath": "tests.test_models.test_base_model",
+        "description": "tests.test_models.test_base_model",
+        "peekOfCode": "module_doc = models.base_model.__doc__\nclass TestBaseModelDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of BaseModel class\"\"\"\n    @classmethod\n    def setUpClass(self):\n        \"\"\"Set up for docstring tests\"\"\"\n        self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)\n    def test_pep8_conformance(self):\n        \"\"\"Test that models/base_model.py conforms to PEP8.\"\"\"\n        for path in ['models/base_model.py',",
+        "detail": "tests.test_models.test_base_model",
+        "documentation": {}
+    },
+    {
+        "label": "TestCityDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_city",
+        "description": "tests.test_models.test_city",
+        "peekOfCode": "class TestCityDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of City class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.city_f = inspect.getmembers(City, inspect.isfunction)\n    def test_pep8_conformance_city(self):\n        \"\"\"Test that models/city.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/city.py'])",
+        "detail": "tests.test_models.test_city",
+        "documentation": {}
+    },
+    {
+        "label": "TestCity",
+        "kind": 6,
+        "importPath": "tests.test_models.test_city",
+        "description": "tests.test_models.test_city",
+        "peekOfCode": "class TestCity(unittest.TestCase):\n    \"\"\"Test the City class\"\"\"\n    def test_is_subclass(self):\n        \"\"\"Test that City is a subclass of BaseModel\"\"\"\n        city = City()\n        self.assertIsInstance(city, BaseModel)\n        self.assertTrue(hasattr(city, \"id\"))\n        self.assertTrue(hasattr(city, \"created_at\"))\n        self.assertTrue(hasattr(city, \"updated_at\"))\n    def test_name_attr(self):",
+        "detail": "tests.test_models.test_city",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "kind": 5,
+        "importPath": "tests.test_models.test_city",
+        "description": "tests.test_models.test_city",
+        "peekOfCode": "City = city.City\nclass TestCityDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of City class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.city_f = inspect.getmembers(City, inspect.isfunction)\n    def test_pep8_conformance_city(self):\n        \"\"\"Test that models/city.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)",
+        "detail": "tests.test_models.test_city",
+        "documentation": {}
+    },
+    {
+        "label": "TestPlaceDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_place",
+        "description": "tests.test_models.test_place",
+        "peekOfCode": "class TestPlaceDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of Place class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.place_f = inspect.getmembers(Place, inspect.isfunction)\n    def test_pep8_conformance_place(self):\n        \"\"\"Test that models/place.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/place.py'])",
+        "detail": "tests.test_models.test_place",
+        "documentation": {}
+    },
+    {
+        "label": "TestPlace",
+        "kind": 6,
+        "importPath": "tests.test_models.test_place",
+        "description": "tests.test_models.test_place",
+        "peekOfCode": "class TestPlace(unittest.TestCase):\n    \"\"\"Test the Place class\"\"\"\n    def test_is_subclass(self):\n        \"\"\"Test that Place is a subclass of BaseModel\"\"\"\n        place = Place()\n        self.assertIsInstance(place, BaseModel)\n        self.assertTrue(hasattr(place, \"id\"))\n        self.assertTrue(hasattr(place, \"created_at\"))\n        self.assertTrue(hasattr(place, \"updated_at\"))\n    def test_city_id_attr(self):",
+        "detail": "tests.test_models.test_place",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "kind": 5,
+        "importPath": "tests.test_models.test_place",
+        "description": "tests.test_models.test_place",
+        "peekOfCode": "Place = place.Place\nclass TestPlaceDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of Place class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.place_f = inspect.getmembers(Place, inspect.isfunction)\n    def test_pep8_conformance_place(self):\n        \"\"\"Test that models/place.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)",
+        "detail": "tests.test_models.test_place",
+        "documentation": {}
+    },
+    {
+        "label": "TestReviewDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_review",
+        "description": "tests.test_models.test_review",
+        "peekOfCode": "class TestReviewDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of Review class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.review_f = inspect.getmembers(Review, inspect.isfunction)\n    def test_pep8_conformance_review(self):\n        \"\"\"Test that models/review.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/review.py'])",
+        "detail": "tests.test_models.test_review",
+        "documentation": {}
+    },
+    {
+        "label": "TestReview",
+        "kind": 6,
+        "importPath": "tests.test_models.test_review",
+        "description": "tests.test_models.test_review",
+        "peekOfCode": "class TestReview(unittest.TestCase):\n    \"\"\"Test the Review class\"\"\"\n    def test_is_subclass(self):\n        \"\"\"Test if Review is a subclass of BaseModel\"\"\"\n        review = Review()\n        self.assertIsInstance(review, BaseModel)\n        self.assertTrue(hasattr(review, \"id\"))\n        self.assertTrue(hasattr(review, \"created_at\"))\n        self.assertTrue(hasattr(review, \"updated_at\"))\n    def test_place_id_attr(self):",
+        "detail": "tests.test_models.test_review",
+        "documentation": {}
+    },
+    {
+        "label": "Review",
+        "kind": 5,
+        "importPath": "tests.test_models.test_review",
+        "description": "tests.test_models.test_review",
+        "peekOfCode": "Review = review.Review\nclass TestReviewDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of Review class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.review_f = inspect.getmembers(Review, inspect.isfunction)\n    def test_pep8_conformance_review(self):\n        \"\"\"Test that models/review.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)",
+        "detail": "tests.test_models.test_review",
+        "documentation": {}
+    },
+    {
+        "label": "TestStateDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_state",
+        "description": "tests.test_models.test_state",
+        "peekOfCode": "class TestStateDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of State class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.state_f = inspect.getmembers(State, inspect.isfunction)\n    def test_pep8_conformance_state(self):\n        \"\"\"Test that models/state.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/state.py'])",
+        "detail": "tests.test_models.test_state",
+        "documentation": {}
+    },
+    {
+        "label": "TestState",
+        "kind": 6,
+        "importPath": "tests.test_models.test_state",
+        "description": "tests.test_models.test_state",
+        "peekOfCode": "class TestState(unittest.TestCase):\n    \"\"\"Test the State class\"\"\"\n    def test_is_subclass(self):\n        \"\"\"Test that State is a subclass of BaseModel\"\"\"\n        state = State()\n        self.assertIsInstance(state, BaseModel)\n        self.assertTrue(hasattr(state, \"id\"))\n        self.assertTrue(hasattr(state, \"created_at\"))\n        self.assertTrue(hasattr(state, \"updated_at\"))\n    def test_name_attr(self):",
+        "detail": "tests.test_models.test_state",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "kind": 5,
+        "importPath": "tests.test_models.test_state",
+        "description": "tests.test_models.test_state",
+        "peekOfCode": "State = state.State\nclass TestStateDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of State class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.state_f = inspect.getmembers(State, inspect.isfunction)\n    def test_pep8_conformance_state(self):\n        \"\"\"Test that models/state.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)",
+        "detail": "tests.test_models.test_state",
+        "documentation": {}
+    },
+    {
+        "label": "TestUserDocs",
+        "kind": 6,
+        "importPath": "tests.test_models.test_user",
+        "description": "tests.test_models.test_user",
+        "peekOfCode": "class TestUserDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of User class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.user_f = inspect.getmembers(User, inspect.isfunction)\n    def test_pep8_conformance_user(self):\n        \"\"\"Test that models/user.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['models/user.py'])",
+        "detail": "tests.test_models.test_user",
+        "documentation": {}
+    },
+    {
+        "label": "TestUser",
+        "kind": 6,
+        "importPath": "tests.test_models.test_user",
+        "description": "tests.test_models.test_user",
+        "peekOfCode": "class TestUser(unittest.TestCase):\n    \"\"\"Test the User class\"\"\"\n    def test_is_subclass(self):\n        \"\"\"Test that User is a subclass of BaseModel\"\"\"\n        user = User()\n        self.assertIsInstance(user, BaseModel)\n        self.assertTrue(hasattr(user, \"id\"))\n        self.assertTrue(hasattr(user, \"created_at\"))\n        self.assertTrue(hasattr(user, \"updated_at\"))\n    def test_email_attr(self):",
+        "detail": "tests.test_models.test_user",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 5,
+        "importPath": "tests.test_models.test_user",
+        "description": "tests.test_models.test_user",
+        "peekOfCode": "User = user.User\nclass TestUserDocs(unittest.TestCase):\n    \"\"\"Tests to check the documentation and style of User class\"\"\"\n    @classmethod\n    def setUpClass(cls):\n        \"\"\"Set up for the doc tests\"\"\"\n        cls.user_f = inspect.getmembers(User, inspect.isfunction)\n    def test_pep8_conformance_user(self):\n        \"\"\"Test that models/user.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)",
+        "detail": "tests.test_models.test_user",
+        "documentation": {}
+    },
+    {
+        "label": "TestConsoleDocs",
+        "kind": 6,
+        "importPath": "tests.test_console",
+        "description": "tests.test_console",
+        "peekOfCode": "class TestConsoleDocs(unittest.TestCase):\n    \"\"\"Class for testing documentation of the console\"\"\"\n    def test_pep8_conformance_console(self):\n        \"\"\"Test that console.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['console.py'])\n        self.assertEqual(result.total_errors, 0,\n                         \"Found code style errors (and warnings).\")\n    def test_pep8_conformance_test_console(self):\n        \"\"\"Test that tests/test_console.py conforms to PEP8.\"\"\"",
+        "detail": "tests.test_console",
+        "documentation": {}
+    },
+    {
+        "label": "HBNBCommand",
+        "kind": 5,
+        "importPath": "tests.test_console",
+        "description": "tests.test_console",
+        "peekOfCode": "HBNBCommand = console.HBNBCommand\nclass TestConsoleDocs(unittest.TestCase):\n    \"\"\"Class for testing documentation of the console\"\"\"\n    def test_pep8_conformance_console(self):\n        \"\"\"Test that console.py conforms to PEP8.\"\"\"\n        pep8s = pep8.StyleGuide(quiet=True)\n        result = pep8s.check_files(['console.py'])\n        self.assertEqual(result.total_errors, 0,\n                         \"Found code style errors (and warnings).\")\n    def test_pep8_conformance_test_console(self):",
+        "detail": "tests.test_console",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_flask.0-hello_route",
+        "description": "web_flask.0-hello_route",
+        "peekOfCode": "def index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.0-hello_route",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.0-hello_route",
+        "description": "web_flask.0-hello_route",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/', strict_slashes=False)\ndef index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.0-hello_route",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_flask.1-hbnb_route",
+        "description": "web_flask.1-hbnb_route",
+        "peekOfCode": "def index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.1-hbnb_route",
+        "documentation": {}
+    },
+    {
+        "label": "hbnb",
+        "kind": 2,
+        "importPath": "web_flask.1-hbnb_route",
+        "description": "web_flask.1-hbnb_route",
+        "peekOfCode": "def hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.1-hbnb_route",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.1-hbnb_route",
+        "description": "web_flask.1-hbnb_route",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/', strict_slashes=False)\ndef index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\nif __name__ == '__main__':",
+        "detail": "web_flask.1-hbnb_route",
+        "documentation": {}
+    },
+    {
+        "label": "filters",
+        "kind": 2,
+        "importPath": "web_flask.10-hbnb_filters",
+        "description": "web_flask.10-hbnb_filters",
+        "peekOfCode": "def filters():\n    \"\"\"display a HTML page like 6-index.html from static\"\"\"\n    states = storage.all(\"State\").values()\n    amenities = storage.all(\"Amenity\").values()\n    return render_template('10-hbnb_filters.html', states=states,\n                           amenities=amenities)\n@app.teardown_appcontext\ndef teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()",
+        "detail": "web_flask.10-hbnb_filters",
+        "documentation": {}
+    },
+    {
+        "label": "teardown_db",
+        "kind": 2,
+        "importPath": "web_flask.10-hbnb_filters",
+        "description": "web_flask.10-hbnb_filters",
+        "peekOfCode": "def teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.10-hbnb_filters",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.10-hbnb_filters",
+        "description": "web_flask.10-hbnb_filters",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/hbnb_filters', strict_slashes=False)\ndef filters():\n    \"\"\"display a HTML page like 6-index.html from static\"\"\"\n    states = storage.all(\"State\").values()\n    amenities = storage.all(\"Amenity\").values()\n    return render_template('10-hbnb_filters.html', states=states,\n                           amenities=amenities)\n@app.teardown_appcontext\ndef teardown_db(exception):",
+        "detail": "web_flask.10-hbnb_filters",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_flask.2-c_route",
+        "description": "web_flask.2-c_route",
+        "peekOfCode": "def index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"",
+        "detail": "web_flask.2-c_route",
+        "documentation": {}
+    },
+    {
+        "label": "hbnb",
+        "kind": 2,
+        "importPath": "web_flask.2-c_route",
+        "description": "web_flask.2-c_route",
+        "peekOfCode": "def hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.2-c_route",
+        "documentation": {}
+    },
+    {
+        "label": "cisfun",
+        "kind": 2,
+        "importPath": "web_flask.2-c_route",
+        "description": "web_flask.2-c_route",
+        "peekOfCode": "def cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.2-c_route",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.2-c_route",
+        "description": "web_flask.2-c_route",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/', strict_slashes=False)\ndef index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)",
+        "detail": "web_flask.2-c_route",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_flask.3-python_route",
+        "description": "web_flask.3-python_route",
+        "peekOfCode": "def index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"",
+        "detail": "web_flask.3-python_route",
+        "documentation": {}
+    },
+    {
+        "label": "hbnb",
+        "kind": 2,
+        "importPath": "web_flask.3-python_route",
+        "description": "web_flask.3-python_route",
+        "peekOfCode": "def hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):",
+        "detail": "web_flask.3-python_route",
+        "documentation": {}
+    },
+    {
+        "label": "cisfun",
+        "kind": 2,
+        "importPath": "web_flask.3-python_route",
+        "description": "web_flask.3-python_route",
+        "peekOfCode": "def cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.3-python_route",
+        "documentation": {}
+    },
+    {
+        "label": "pythoniscool",
+        "kind": 2,
+        "importPath": "web_flask.3-python_route",
+        "description": "web_flask.3-python_route",
+        "peekOfCode": "def pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.3-python_route",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.3-python_route",
+        "description": "web_flask.3-python_route",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/', strict_slashes=False)\ndef index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)",
+        "detail": "web_flask.3-python_route",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_flask.4-number_route",
+        "description": "web_flask.4-number_route",
+        "peekOfCode": "def index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"",
+        "detail": "web_flask.4-number_route",
+        "documentation": {}
+    },
+    {
+        "label": "hbnb",
+        "kind": 2,
+        "importPath": "web_flask.4-number_route",
+        "description": "web_flask.4-number_route",
+        "peekOfCode": "def hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):",
+        "detail": "web_flask.4-number_route",
+        "documentation": {}
+    },
+    {
+        "label": "cisfun",
+        "kind": 2,
+        "importPath": "web_flask.4-number_route",
+        "description": "web_flask.4-number_route",
+        "peekOfCode": "def cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\n@app.route('/number/<int:n>', strict_slashes=False)\ndef imanumber(n):",
+        "detail": "web_flask.4-number_route",
+        "documentation": {}
+    },
+    {
+        "label": "pythoniscool",
+        "kind": 2,
+        "importPath": "web_flask.4-number_route",
+        "description": "web_flask.4-number_route",
+        "peekOfCode": "def pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\n@app.route('/number/<int:n>', strict_slashes=False)\ndef imanumber(n):\n    \"\"\"display “n is a number” only if n is an integer\"\"\"\n    return \"{:d} is a number\".format(n)\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.4-number_route",
+        "documentation": {}
+    },
+    {
+        "label": "imanumber",
+        "kind": 2,
+        "importPath": "web_flask.4-number_route",
+        "description": "web_flask.4-number_route",
+        "peekOfCode": "def imanumber(n):\n    \"\"\"display “n is a number” only if n is an integer\"\"\"\n    return \"{:d} is a number\".format(n)\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.4-number_route",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.4-number_route",
+        "description": "web_flask.4-number_route",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/', strict_slashes=False)\ndef index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)",
+        "detail": "web_flask.4-number_route",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_flask.5-number_template",
+        "description": "web_flask.5-number_template",
+        "peekOfCode": "def index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"",
+        "detail": "web_flask.5-number_template",
+        "documentation": {}
+    },
+    {
+        "label": "hbnb",
+        "kind": 2,
+        "importPath": "web_flask.5-number_template",
+        "description": "web_flask.5-number_template",
+        "peekOfCode": "def hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):",
+        "detail": "web_flask.5-number_template",
+        "documentation": {}
+    },
+    {
+        "label": "cisfun",
+        "kind": 2,
+        "importPath": "web_flask.5-number_template",
+        "description": "web_flask.5-number_template",
+        "peekOfCode": "def cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\n@app.route('/number/<int:n>', strict_slashes=False)\ndef imanumber(n):",
+        "detail": "web_flask.5-number_template",
+        "documentation": {}
+    },
+    {
+        "label": "pythoniscool",
+        "kind": 2,
+        "importPath": "web_flask.5-number_template",
+        "description": "web_flask.5-number_template",
+        "peekOfCode": "def pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\n@app.route('/number/<int:n>', strict_slashes=False)\ndef imanumber(n):\n    \"\"\"display “n is a number” only if n is an integer\"\"\"\n    return \"{:d} is a number\".format(n)\n@app.route('/number_template/<int:n>', strict_slashes=False)\ndef numbersandtemplates(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"",
+        "detail": "web_flask.5-number_template",
+        "documentation": {}
+    },
+    {
+        "label": "imanumber",
+        "kind": 2,
+        "importPath": "web_flask.5-number_template",
+        "description": "web_flask.5-number_template",
+        "peekOfCode": "def imanumber(n):\n    \"\"\"display “n is a number” only if n is an integer\"\"\"\n    return \"{:d} is a number\".format(n)\n@app.route('/number_template/<int:n>', strict_slashes=False)\ndef numbersandtemplates(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"\n    return render_template('5-number.html', n=n)\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.5-number_template",
+        "documentation": {}
+    },
+    {
+        "label": "numbersandtemplates",
+        "kind": 2,
+        "importPath": "web_flask.5-number_template",
+        "description": "web_flask.5-number_template",
+        "peekOfCode": "def numbersandtemplates(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"\n    return render_template('5-number.html', n=n)\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.5-number_template",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.5-number_template",
+        "description": "web_flask.5-number_template",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/', strict_slashes=False)\ndef index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)",
+        "detail": "web_flask.5-number_template",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "def index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "hbnb",
+        "kind": 2,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "def hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)\ndef cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "cisfun",
+        "kind": 2,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "def cisfun(text):\n    \"\"\"display “C ” followed by the value of the text variable\"\"\"\n    return 'C ' + text.replace('_', ' ')\n@app.route('/python', strict_slashes=False)\n@app.route('/python/<text>', strict_slashes=False)\ndef pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\n@app.route('/number/<int:n>', strict_slashes=False)\ndef imanumber(n):",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "pythoniscool",
+        "kind": 2,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "def pythoniscool(text='is cool'):\n    \"\"\"display “Python ”, followed by the value of the text variable\"\"\"\n    return 'Python ' + text.replace('_', ' ')\n@app.route('/number/<int:n>', strict_slashes=False)\ndef imanumber(n):\n    \"\"\"display “n is a number” only if n is an integer\"\"\"\n    return \"{:d} is a number\".format(n)\n@app.route('/number_template/<int:n>', strict_slashes=False)\ndef numbersandtemplates(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "imanumber",
+        "kind": 2,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "def imanumber(n):\n    \"\"\"display “n is a number” only if n is an integer\"\"\"\n    return \"{:d} is a number\".format(n)\n@app.route('/number_template/<int:n>', strict_slashes=False)\ndef numbersandtemplates(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"\n    return render_template('5-number.html', n=n)\n@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)\ndef numbersandevenness(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "numbersandtemplates",
+        "kind": 2,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "def numbersandtemplates(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"\n    return render_template('5-number.html', n=n)\n@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)\ndef numbersandevenness(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"\n    if n % 2 == 0:\n        evenness = 'even'\n    else:\n        evenness = 'odd'",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "numbersandevenness",
+        "kind": 2,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "def numbersandevenness(n):\n    \"\"\"display a HTML page only if n is an integer\"\"\"\n    if n % 2 == 0:\n        evenness = 'even'\n    else:\n        evenness = 'odd'\n    return render_template('6-number_odd_or_even.html', n=n,\n                           evenness=evenness)\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.6-number_odd_or_even",
+        "description": "web_flask.6-number_odd_or_even",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/', strict_slashes=False)\ndef index():\n    \"\"\"returns Hello HBNB!\"\"\"\n    return 'Hello HBNB!'\n@app.route('/hbnb', strict_slashes=False)\ndef hbnb():\n    \"\"\"returns HBNB\"\"\"\n    return 'HBNB'\n@app.route('/c/<text>', strict_slashes=False)",
+        "detail": "web_flask.6-number_odd_or_even",
+        "documentation": {}
+    },
+    {
+        "label": "states_list",
+        "kind": 2,
+        "importPath": "web_flask.7-states_list",
+        "description": "web_flask.7-states_list",
+        "peekOfCode": "def states_list():\n    \"\"\"display a HTML page with the states listed in alphabetical order\"\"\"\n    states = sorted(list(storage.all(\"State\").values()), key=lambda x: x.name)\n    return render_template('7-states_list.html', states=states)\n@app.teardown_appcontext\ndef teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.7-states_list",
+        "documentation": {}
+    },
+    {
+        "label": "teardown_db",
+        "kind": 2,
+        "importPath": "web_flask.7-states_list",
+        "description": "web_flask.7-states_list",
+        "peekOfCode": "def teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.7-states_list",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.7-states_list",
+        "description": "web_flask.7-states_list",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/states_list', strict_slashes=False)\ndef states_list():\n    \"\"\"display a HTML page with the states listed in alphabetical order\"\"\"\n    states = sorted(list(storage.all(\"State\").values()), key=lambda x: x.name)\n    return render_template('7-states_list.html', states=states)\n@app.teardown_appcontext\ndef teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()",
+        "detail": "web_flask.7-states_list",
+        "documentation": {}
+    },
+    {
+        "label": "cities_by_states",
+        "kind": 2,
+        "importPath": "web_flask.8-cities_by_states",
+        "description": "web_flask.8-cities_by_states",
+        "peekOfCode": "def cities_by_states():\n    \"\"\"display the states and cities listed in alphabetical order\"\"\"\n    states = storage.all(\"State\").values()\n    return render_template('8-cities_by_states.html', states=states)\n@app.teardown_appcontext\ndef teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.8-cities_by_states",
+        "documentation": {}
+    },
+    {
+        "label": "teardown_db",
+        "kind": 2,
+        "importPath": "web_flask.8-cities_by_states",
+        "description": "web_flask.8-cities_by_states",
+        "peekOfCode": "def teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.8-cities_by_states",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.8-cities_by_states",
+        "description": "web_flask.8-cities_by_states",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/cities_by_states', strict_slashes=False)\ndef cities_by_states():\n    \"\"\"display the states and cities listed in alphabetical order\"\"\"\n    states = storage.all(\"State\").values()\n    return render_template('8-cities_by_states.html', states=states)\n@app.teardown_appcontext\ndef teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()",
+        "detail": "web_flask.8-cities_by_states",
+        "documentation": {}
+    },
+    {
+        "label": "states",
+        "kind": 2,
+        "importPath": "web_flask.9-states",
+        "description": "web_flask.9-states",
+        "peekOfCode": "def states(state_id=None):\n    \"\"\"display the states and cities listed in alphabetical order\"\"\"\n    states = storage.all(\"State\")\n    if state_id is not None:\n        state_id = 'State.' + state_id\n    return render_template('9-states.html', states=states, state_id=state_id)\n@app.teardown_appcontext\ndef teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()",
+        "detail": "web_flask.9-states",
+        "documentation": {}
+    },
+    {
+        "label": "teardown_db",
+        "kind": 2,
+        "importPath": "web_flask.9-states",
+        "description": "web_flask.9-states",
+        "peekOfCode": "def teardown_db(exception):\n    \"\"\"closes the storage on teardown\"\"\"\n    storage.close()\nif __name__ == '__main__':\n    app.run(host='0.0.0.0', port='5000')",
+        "detail": "web_flask.9-states",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "web_flask.9-states",
+        "description": "web_flask.9-states",
+        "peekOfCode": "app = Flask(__name__)\n@app.route('/states', strict_slashes=False)\n@app.route('/states/<state_id>', strict_slashes=False)\ndef states(state_id=None):\n    \"\"\"display the states and cities listed in alphabetical order\"\"\"\n    states = storage.all(\"State\")\n    if state_id is not None:\n        state_id = 'State.' + state_id\n    return render_template('9-states.html', states=states, state_id=state_id)\n@app.teardown_appcontext",
+        "detail": "web_flask.9-states",
+        "documentation": {}
+    },
+    {
+        "label": "do_pack",
+        "kind": 2,
+        "importPath": "1-pack_web_static",
+        "description": "1-pack_web_static",
+        "peekOfCode": "def do_pack():\n    \"\"\"generates a tgz archive\"\"\"\n    try:\n        date = datetime.now().strftime(\"%Y%m%d%H%M%S\")\n        if isdir(\"versions\") is False:\n            local(\"mkdir versions\")\n        file_name = \"versions/web_static_{}.tgz\".format(date)\n        local(\"tar -cvzf {} web_static\".format(file_name))\n        return file_name\n    except:",
+        "detail": "1-pack_web_static",
+        "documentation": {}
+    },
+    {
+        "label": "do_deploy",
+        "kind": 2,
+        "importPath": "2-do_deploy_web_static",
+        "description": "2-do_deploy_web_static",
+        "peekOfCode": "def do_deploy(archive_path):\n    \"\"\"distributes an archive to the web servers\"\"\"\n    if exists(archive_path) is False:\n        return False\n    try:\n        file_n = archive_path.split(\"/\")[-1]\n        no_ext = file_n.split(\".\")[0]\n        path = \"/data/web_static/releases/\"\n        put(archive_path, '/tmp/')\n        run('mkdir -p {}{}/'.format(path, no_ext))",
+        "detail": "2-do_deploy_web_static",
+        "documentation": {}
+    },
+    {
+        "label": "env.hosts",
+        "kind": 5,
+        "importPath": "2-do_deploy_web_static",
+        "description": "2-do_deploy_web_static",
+        "peekOfCode": "env.hosts = ['142.44.167.228', '144.217.246.195']\ndef do_deploy(archive_path):\n    \"\"\"distributes an archive to the web servers\"\"\"\n    if exists(archive_path) is False:\n        return False\n    try:\n        file_n = archive_path.split(\"/\")[-1]\n        no_ext = file_n.split(\".\")[0]\n        path = \"/data/web_static/releases/\"\n        put(archive_path, '/tmp/')",
+        "detail": "2-do_deploy_web_static",
+        "documentation": {}
+    },
+    {
+        "label": "do_pack",
+        "kind": 2,
+        "importPath": "3-deploy_web_static",
+        "description": "3-deploy_web_static",
+        "peekOfCode": "def do_pack():\n    \"\"\"generates a tgz archive\"\"\"\n    try:\n        date = datetime.now().strftime(\"%Y%m%d%H%M%S\")\n        if isdir(\"versions\") is False:\n            local(\"mkdir versions\")\n        file_name = \"versions/web_static_{}.tgz\".format(date)\n        local(\"tar -cvzf {} web_static\".format(file_name))\n        return file_name\n    except:",
+        "detail": "3-deploy_web_static",
+        "documentation": {}
+    },
+    {
+        "label": "do_deploy",
+        "kind": 2,
+        "importPath": "3-deploy_web_static",
+        "description": "3-deploy_web_static",
+        "peekOfCode": "def do_deploy(archive_path):\n    \"\"\"distributes an archive to the web servers\"\"\"\n    if exists(archive_path) is False:\n        return False\n    try:\n        file_n = archive_path.split(\"/\")[-1]\n        no_ext = file_n.split(\".\")[0]\n        path = \"/data/web_static/releases/\"\n        put(archive_path, '/tmp/')\n        run('mkdir -p {}{}/'.format(path, no_ext))",
+        "detail": "3-deploy_web_static",
+        "documentation": {}
+    },
+    {
+        "label": "deploy",
+        "kind": 2,
+        "importPath": "3-deploy_web_static",
+        "description": "3-deploy_web_static",
+        "peekOfCode": "def deploy():\n    \"\"\"creates and distributes an archive to the web servers\"\"\"\n    archive_path = do_pack()\n    if archive_path is None:\n        return False\n    return do_deploy(archive_path)",
+        "detail": "3-deploy_web_static",
+        "documentation": {}
+    },
+    {
+        "label": "env.hosts",
+        "kind": 5,
+        "importPath": "3-deploy_web_static",
+        "description": "3-deploy_web_static",
+        "peekOfCode": "env.hosts = ['142.44.167.228', '144.217.246.195']\ndef do_pack():\n    \"\"\"generates a tgz archive\"\"\"\n    try:\n        date = datetime.now().strftime(\"%Y%m%d%H%M%S\")\n        if isdir(\"versions\") is False:\n            local(\"mkdir versions\")\n        file_name = \"versions/web_static_{}.tgz\".format(date)\n        local(\"tar -cvzf {} web_static\".format(file_name))\n        return file_name",
+        "detail": "3-deploy_web_static",
+        "documentation": {}
+    },
+    {
+        "label": "HBNBCommand",
+        "kind": 6,
+        "importPath": "console",
+        "description": "console",
+        "peekOfCode": "class HBNBCommand(cmd.Cmd):\n    \"\"\" HBNH console \"\"\"\n    prompt = '(hbnb) '\n    def do_EOF(self, arg):\n        \"\"\"Exits console\"\"\"\n        return True\n    def emptyline(self):\n        \"\"\" overwriting the emptyline method \"\"\"\n        return False\n    def do_quit(self, arg):",
+        "detail": "console",
+        "documentation": {}
+    },
+    {
+        "label": "classes",
+        "kind": 5,
+        "importPath": "console",
+        "description": "console",
+        "peekOfCode": "classes = {\"Amenity\": Amenity, \"BaseModel\": BaseModel, \"City\": City,\n           \"Place\": Place, \"Review\": Review, \"State\": State, \"User\": User}\nclass HBNBCommand(cmd.Cmd):\n    \"\"\" HBNH console \"\"\"\n    prompt = '(hbnb) '\n    def do_EOF(self, arg):\n        \"\"\"Exits console\"\"\"\n        return True\n    def emptyline(self):\n        \"\"\" overwriting the emptyline method \"\"\"",
+        "detail": "console",
+        "documentation": {}
+    }
+]
