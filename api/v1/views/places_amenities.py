@@ -5,6 +5,7 @@ from flask import abort, jsonify
 from models import storage
 from models.amenity import Amenity
 from models.place import Place
+from os import getenv
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
@@ -14,11 +15,13 @@ def get_amenities(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    amenities = storage.all(Amenity)
+    if (getenv("HBNB_TYPE_STORAGE") == "db"):
+        amenities = place.amenities
+    else:
+        amenities = place.amenities()
     place_amenity = []
     for amenity in amenities.values():
-        if amenity.place_id == place_id:
-            amenity_review.append(amenity.to_dict())
+        place_amenity.append(amenity.to_dict())
     return jsonify(place_amenity)
 
 
