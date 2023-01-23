@@ -74,7 +74,9 @@ def update_place(place_id: str):
     if not place:
         abort(404)
     for attr, value in place_attrs.items():
-        if attr not in ('id', 'city_id', 'updated_at', 'created_at', 'user_id'):
+        if attr not in (
+                'id', 'city_id', 'user_id',
+                'updated_at', 'created_at'):
             setattr(place, attr, value)
     place.save()
     return jsonify(place.to_dict())
