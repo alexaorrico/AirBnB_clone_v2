@@ -78,24 +78,22 @@ class DBStorage:
 
     def get(self, cls, id):
         """method to retrieve one object"""
+        new_dict_ = self.all()
         if isinstance(cls, str):
             key = eval(cls).__name__ + "." + id
         else:
             key = cls.__name__ + '.' + id
-        if (key in self.__objects):
-            return (self.__objects[key])
-        else:
-            return (None)
+        if key in new_dict_:
+            return new_dict_[key]
+        return None
 
     def count(self, cls=None):
         """method that count object"""
         if cls is not None:
             if isinstance(cls, str):
-                cls_all = self.all(eval(cls))
+                carlstive = self.all(eval(cls))
             else:
-                cls_all = self.all(cls.__name__)
-            return (len(cls_all))
-        else:
-            return len(self.all())
+                carlstive = self.all(cls.__name__)
+            return (len(carlstive))
+        return len(self.all())
 
-    
