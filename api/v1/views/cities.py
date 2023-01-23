@@ -34,7 +34,7 @@ def get_cities(state_id):
         return (jsonify(city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=["GET", "PUT", "DELETE"],
+@app_views.route('/cities/<city_id>', methods=["PUT"],
                  strict_slashes=False)
 def get_city_by_id(city_id):
     """get, update and delete city"""
@@ -52,6 +52,15 @@ def get_city_by_id(city_id):
             setattr(city, key, value)
         city.save()
         return (jsonify(city.to_dict()), 200)
+
+
+@app_views.route('/cities/<city_id>', methods=["DELETE"],
+                 strict_slashes=False)
+def delete_city_by_id(city_id):
+    """delete an instance of city"""
+    city = storage.get(City, city_id)
+    if city is None:
+        abort(404)
     if request.method == "DELETE":
         storage.delete(city)
         storage.save()
