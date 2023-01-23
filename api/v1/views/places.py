@@ -1,5 +1,9 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
+"""places"""
+=======
 """Place API"""
+>>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
 from api.v1.views import app_views
 from flask import*
 from models import storage
@@ -31,8 +35,12 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
+<<<<<<< HEAD
+@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+=======
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
+>>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
 def delete_place(place_id):
     """Delete a place"""
     place = storage.get(Place, place_id)
@@ -42,8 +50,12 @@ def delete_place(place_id):
     return jsonify({})
 
 
+<<<<<<< HEAD
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+=======
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
+>>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
 def create_place(city_id):
     """Create a Place"""
     get_json = request.get_json()
