@@ -3,18 +3,18 @@
 from api.v1.views import app_views
 from flask import jsonify, Blueprint, make_response, abort, request
 from models import storage
-from models.amenity import Amenity
+from models.user import User
 from models.base_model import BaseModel
 
 
-@app_views.route('/amenities', methods=["GET", "POST"], strict_slashes=False)
-def get_amenities():
-    """get all instances of amenity"""
+@app_views.route('/users', methods=["GET", "POST"], strict_slashes=False)
+def get_users():
+    """get all instances of user"""
     if request.method == "GET":
         response = []
-        amenities = storage.all(Amenity).values()
-        for amenity in amenities:
-            response.append(amenity.to_dict())
+        users = storage.all(User).values()
+        for user in users:
+            response.append(user.to_dict())
         return (jsonify(response))
 
     if request.method == "POST":
@@ -24,40 +24,40 @@ def get_amenities():
             abort(400, description="Not a JSON")
         if 'name' not in request.json:
             abort(400, description="Missing name")
-        amenity = Amenity(**new_data)
-        amenity.save()
-        return (jsonify(amenity.to_dict()), 201)
+        user = User(**new_data)
+        user.save()
+        return (jsonify(user.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["GET", "PUT"],
+@app_views.route('/users/<user_id>', methods=["GET", "PUT"],
                  strict_slashes=False)
-def get_amenity_by_id(amenity_id):
-    """get, update an delete amenity"""
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+def get_user_by_id(user_id):
+    """get, update an instance of user"""
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
     if request.method == "GET":
-        response = amenity.to_dict()
+        response = user.to_dict()
         return (jsonify(response))
     if request.method == "PUT":
         new_data = request.get_json()
         if not request.is_json:
             abort(400, description="Not a JSON")
         for key, value in new_data.items():
-            setattr(amenity, key, value)
-        amenity.save()
-        return (jsonify(amenity.to_dict()), 200)
+            setattr(user, key, value)
+        user.save()
+        return (jsonify(user.to_dict()), 200)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["DELETE"],
+@app_views.route('/users/<user_id>', methods=["DELETE"],
                  strict_slashes=False)
-def delete_amenity_by_id(amenity_id):
+def delete_user_by_id(user_id):
     """delete an instance of amenity"""
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
     if request.method == "DELETE":
-        storage.delete(amenity)
+        storage.delete(user)
         storage.save()
         response = make_response(jsonify({}), 200)
         return response
