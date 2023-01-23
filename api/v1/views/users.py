@@ -22,8 +22,10 @@ def get_users():
         new_data = request.get_json()
         if not request.is_json:
             abort(400, description="Not a JSON")
-        if 'name' not in request.json:
-            abort(400, description="Missing name")
+        if 'email' not in request.json:
+            abort(400, description="Missing email")
+        if 'password' not in request.json:
+            abort(400, description="Missing password")
         user = User(**new_data)
         user.save()
         return (jsonify(user.to_dict()), 201)
