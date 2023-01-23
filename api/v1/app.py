@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Script to return the status of an API"""
 
-from flask import Flask, Blueprint, jsonify
 from models import storage
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from os import getenv
 
