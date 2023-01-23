@@ -1,6 +1,2 @@
-<<<<<<< HEAD
+__pycache__/
 *.pyc
-=======
-.pyc
->>>>>>> e02caa7a0392252ac375022bfd742c53945e0b64
-*/__pycache__
