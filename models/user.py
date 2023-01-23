@@ -6,10 +6,12 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from hashlib import md5
 
 
 class User(BaseModel, Base):
-    """Representation of a user """
+    """Representation of a user with password hashed to MD5"""
+
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
@@ -26,4 +28,7 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
+        password = kwargs.get('password')
+        if password:
+            kwargs['password'] = md5(password.encode()).hexdigest()
         super().__init__(*args, **kwargs)
