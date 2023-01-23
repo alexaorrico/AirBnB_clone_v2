@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Script to return the status of an API"""
 
-from flask import Flask, jsonify
+from flask import Flask, Blueprint, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -17,7 +17,7 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 @app.errorhandler(404)
 def error_page(error):
     """Return error page if specified page is unreachable"""
-    return jsonify({"error": "Not found"}), 404
+    return jsonify({"error": "Not found"})
 
 
 @app.teardown_appcontext
