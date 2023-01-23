@@ -8,7 +8,8 @@ from models.review import Review
 from models.user import User
 
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
+                 strict_slashes=False)
 def get_reviews(place_id):
     """get method for reviews of a place"""
     place = storage.get(Place, place_id)
@@ -22,7 +23,8 @@ def get_reviews(place_id):
     return jsonify(place_review)
 
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False)
+@app_views.route('/reviews/<review_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_review(review_id):
     """Get a review"""
     review = storage.get(Review, review_id)
