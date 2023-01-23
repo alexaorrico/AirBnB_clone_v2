@@ -155,7 +155,11 @@ No known bugs at this time.
 
 ## Authors
 Ian Otieno - [Github](https://github.com/Ian12467) / [Twitter](https://twitter.com/IanOchiengOtie1) 
+
+
 Kayode Odeyemi - [Github](https://github.com/larsody) / [Twitter](https://twitter.com/larsody)
+
+
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
