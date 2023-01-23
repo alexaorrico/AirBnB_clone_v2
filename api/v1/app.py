@@ -2,7 +2,6 @@
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-app.register_blueprint(app_views)
 from os import getenv
 from flask_cors import CORS
 
