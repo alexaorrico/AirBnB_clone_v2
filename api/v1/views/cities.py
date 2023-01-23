@@ -18,12 +18,12 @@ def all_states(state_id=None):
             abort(404)
         else:
             cities = storage.all(City).values()
-            lista = []
+            liste = []
             for city in cities:
                 if city.state_id == my_state_obj.id:
                     my_city_obj = storage.get(City, city.id)
-                    lista.append(my_city_obj.to_dict())
-            return jsonify(lista)
+                    liste.append(my_city_obj.to_dict())
+            return jsonify(liste)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])

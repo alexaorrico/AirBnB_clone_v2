@@ -21,12 +21,12 @@ def all_review(place_id=None):
             abort(404)
         else:
             reviews = storage.all(Review).values()
-            lista = []
+            liste = []
             for review in reviews:
                 if review.place_id == my_place_obj.id:
                     my_review_obj = storage.get(Review, review.id)
-                    lista.append(my_review_obj.to_dict())
-            return jsonify(lista)
+                    liste.append(my_review_obj.to_dict())
+            return jsonify(liste)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'])

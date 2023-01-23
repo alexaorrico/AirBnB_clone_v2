@@ -20,12 +20,12 @@ def all_place(city_id=None):
             abort(404)
         else:
             places = storage.all(Place).values()
-            lista = []
+            liste = []
             for place in places:
                 if place.city_id == my_city_obj.id:
                     my_place_obj = storage.get(Place, place.id)
-                    lista.append(my_place_obj.to_dict())
-            return jsonify(lista)
+                    liste.append(my_place_obj.to_dict())
+            return jsonify(liste)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'])
