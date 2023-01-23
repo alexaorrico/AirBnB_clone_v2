@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """User API"""
 from api.v1.views import app_views
-from flask import*
+from flask import abort, jsonify, request
 from models import storage
 from models.user import User
 
@@ -11,7 +11,7 @@ def list_users():
     """list of users"""
     users = storage.all(User)
     return jsonify(
-        [am.to_dict() for user in users.values()]
+        [am.to_dict() for am in users.values()]
     )
 
 
@@ -32,7 +32,7 @@ def delete_user(user_id):
     if user is None:
         abort(404)
     user.delete()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -41,14 +41,14 @@ def create_user():
     get_json = request.get_json()
     if get_json is None:
         abort(404, 'Not a JSON')
-    if get_json['email'] is None:
+    if get_json.get('email') is None:
         abort(404, 'Missing email')
-    if get_json['password'] is None:
+    if get_json.get('password') is None:
         abort(404, 'Missing password')
 
     new_user = User(**get_json)
     new_user.save()
-    return jsonify(new_user.to_dict())
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
@@ -56,9 +56,9 @@ def update_user(user_id):
     """Update USer"""
     user = storage.get(User, user_id)
     if user is None:
-        abort('404')
+        abort(404)
     if request.get_json() is None:
-        abort('404', 'Not a JSON')
+        abort(404, 'Not a JSON')
     update = request.get_json()
 
     exx = ['id', 'created_at', 'updated_at', 'email']
