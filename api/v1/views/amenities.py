@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Amenity API"""
 from api.v1.views import app_views
-from flask import*
+from flask import *
 from models import storage
 from models.amenity import Amenity
 
@@ -13,7 +13,6 @@ def list_amenities():
     return jsonify(
         [am.to_dict() for am in amen.values()]
     )
-
 
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False)
@@ -48,7 +47,6 @@ def create_amenity():
     new_amenity = Amenity(**get_json)
     new_amenity.save()
     return jsonify(new_amenity.to_dict())
-
 
 
 @app_views.route('/amenities/<amenity_id>',
