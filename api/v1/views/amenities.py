@@ -7,6 +7,7 @@ from models.amenity import Amenity
 from api.v1.views import app_views
 from models.base_model import BaseModel
 
+
 @app_views.route('/amenities', methods=["GET"], strict_slashes=False)
 def get_amenities():
     """Retrieving all amenities from the database"""
@@ -15,4 +16,4 @@ def get_amenities():
 
     for amenity in amenities:
         amenity_list.append(amenity.to_dict())
-        return (jsonify(amenity_list)
+        return (jsonify(amenity_list))
