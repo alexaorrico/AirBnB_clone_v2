@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """State API"""
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, request, abort
 from models import storage
 from models.state import State
 
@@ -29,7 +29,7 @@ def delete_state(state_id):
     if state is not None:
         state.delete()
         return jsonify({})
-    return jsonify({'error': 'Not found'}), 404
+    abort(404)
 
 
 @app_views.route("/states/", strict_slashes=False,
@@ -40,11 +40,11 @@ def create_state():
         data = request.get_json()
         state_name = data.get('name', None)
         if state_name is None:
-            return jsonify({'error': 'Missing name'}), 400
+            abort(400, description='Missing name')
         state = State(name=state_name)
         state.save()
         return jsonify(state.to_dict()), 201
-    return jsonify({'error': 'Not a JSON'}), 400
+    abort(400, description='Not a JSON')
 
 
 @app_views.route("/states/<string:state_id>", strict_slashes=False,
@@ -61,5 +61,5 @@ def update_state(state_id):
                 setattr(state, k, v)
             state.save()
             return jsonify(state.to_dict()), 200
-        return jsonify({'error': 'Not found'}), 404
-    return jsonify({'error': 'Not a JSON'}), 400
+        abort(404)
+    abort(400, description='Not a JSON')
