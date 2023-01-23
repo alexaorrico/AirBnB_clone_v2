@@ -1,12 +1,15 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """places"""
+=======
+"""Place API"""
+>>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import*
 from models import storage
 from models.city import City
 from models.place import Place
 from models.user import User
-from flask import*
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
@@ -32,7 +35,12 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
+<<<<<<< HEAD
 @app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+=======
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
+>>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
 def delete_place(place_id):
     """Delete a place"""
     place = storage.get(Place, place_id)
@@ -42,7 +50,12 @@ def delete_place(place_id):
     return jsonify({})
 
 
+<<<<<<< HEAD
 @app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+=======
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
+>>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
 def create_place(city_id):
     """Create a Place"""
     get_json = request.get_json()
@@ -51,9 +64,9 @@ def create_place(city_id):
     if get_json['name'] is None:
         abort(404, 'Missing Name')
     if get_json['user_id'] is None:
-        abort(404, 'Missing user_id')    
+        abort(404, 'Missing user_id')
     user_id = get_json.get('user_id')
-    if (storage.get(User, user_id) == None):
+    if (storage.get(User, user_id) is None):
         abort(404)
 
     get_json['city_id'] = city_id
@@ -75,6 +88,6 @@ def update_place(place_id):
     exept = ['created_at', 'updated_at', 'id', 'user_id', 'city_id']
     for key, value in update.items():
         if key not in exept:
-            setattr(place, key,value)
+            setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict()), 200
