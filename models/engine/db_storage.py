@@ -16,7 +16,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import dotenv
 
-dotenv.load_dotenv()
+ENV_FILE_PATH='/home/shortninja/alx_work/AirBnB_clone_v3/.env'
+dotenv.load_dotenv('ENV_FILE_PATH')
+
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -78,23 +80,19 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieve an object from storage based on its class and id"""
-        # validate arguments
-        # query database for specific object based on class, filter_by id
-        # return object
-        # if validation failed return none
         if cls and id and cls.__name__ in classes:
             obj = self.__session.query(cls).filter_by(id=id)
             return obj
         else:
-            return None       
+            return None
 
     def count(self, cls=None):
         """Retrieve total count of objects stored in file storage based
         on a class. If class is None, count all objcts stored"""
-        # if cls is not None
-        # check if cls is in classes
-        # if true query count of all objects of that class
-        # else return total number of objects
+        total = 0
         if cls and cls.__name__ in classes:
-            total = self.__session 
-        pass
+            total = self.__session.query(cls).all().count()
+        else:
+            class_list = [cls for cls in classes.values()]
+            total = self.__session.query(*class_list).all().count()
+        return total
