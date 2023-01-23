@@ -48,6 +48,7 @@ def get_state_by_id(state_id):
         state.save()
         return (jsonify(state.to_dict()), 200)
 
+
 @app_views.route('/states/<state_id>', methods=["GET", "DELETE"],
                  strict_slashes=False)
 def delete_state_by_id(state_id):
