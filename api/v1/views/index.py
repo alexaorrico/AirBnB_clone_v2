@@ -18,13 +18,14 @@ def class_counter():
     if request.method == 'GET':
         response = {}
         PLURALS = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states",
-            "User": "users"
+            "amenities": "Amenity",
+            "cities": "City",
+            "places": "Place",
+            "reviews": "Review",
+            "states": "State",
+            "users": "User"
         }
         for key, value in PLURALS.items():
             response[value] = storage.count(key)
         return jsonify(response)
+    
