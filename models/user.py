@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """ holds class User"""
-import models
-from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
+import hashlib
+
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+
+import models
+from models.base_model import Base, BaseModel
 
 
 class User(BaseModel, Base):
@@ -23,6 +24,12 @@ class User(BaseModel, Base):
         password = ""
         first_name = ""
         last_name = ""
+
+    def __setattr__(self, __name: str, __value):
+        """Override set attribute to hijack and hash the password setting"""
+        if __name == "password":
+            __value = hashlib.md5(__value.encode()).hexdigest()
+        return super().__setattr__(__name, __value)
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
