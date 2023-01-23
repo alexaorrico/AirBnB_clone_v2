@@ -77,8 +77,8 @@ class DBStorage:
     
     def get(self, cls, id):
         """returns object based on its class and ID"""
-        return models.DBStorage.all(cls).get(cls + '.' + id)
+        return models.storage.all(cls).get(cls + '.' + id)
 
     def count(self, cls=None):
         """Returns objects in storage matching the given class """
-        return len(models.DBStorage.all(cls))
+        return len(models.storage.all(cls))
