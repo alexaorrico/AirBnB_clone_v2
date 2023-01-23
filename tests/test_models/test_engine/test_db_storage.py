@@ -91,19 +91,19 @@ class TestFileStorage(unittest.TestCase):
         """Test the methods to get an instance"""
         new_instance = {"name": "Nyayo Road"}
         instance = State(**new_instance)
-        storage.new(instance)
-        storage.save()
-        get_instance = get(State, instance.id)
+        models.storage.new(instance)
+        models.storage.save()
+        get_instance = models.storage.get(State, instance.id)
         self.assertEqual(get_instance, instance)
 
     def test_count(self):
         """Test that the count increases with new instances"""
         new_instance = {"name": "Nyayo Road"}
         instance = State(**new_instance)
-        storage.new(instance)
-        new_instance = {"name": "Saku", "state_id": state.id}
+        models.storage.new(instance)
+        new_instance = {"name": "Saku", "state_id": instance.id}
         new_city = City(**new_instance)
-        storage.new(new_city)
-        storage.save()
-        new_count = storage.count()
-        self.assertEqual(len(storage.all()), new_count)
+        models.storage.new(new_city)
+        models.storage.save()
+        new_count = models.storage.count()
+        self.assertEqual(len(models.storage.all()), new_count)
