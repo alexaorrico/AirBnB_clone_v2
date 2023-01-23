@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """Places Amenities API"""
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import jsonify, abort
 from models import storage, storage_t
-from models.user import User
 from models.amenity import Amenity
-from models.place import Place, place_amenity
+from models.place import Place
 
 
 @app_views.route("/places/<place_id>/amenities", strict_slashes=False,
@@ -32,7 +31,11 @@ def delete_place_amenity(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-    found = list(filter(lambda d: d.id == amenity_id, place.amenities))
+    found = None
+    if storage_t == 'db':
+        found = list(filter(lambda d: d.id == amenity_id, place.amenities))
+    else:
+        found = list(filter(lambda id: id == amenity_id, place.amenity_ids))
     if len(found) == 0:
         abort(404)
     if storage_t == 'db':
@@ -55,7 +58,10 @@ def link_amenity_place(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-    found = list(filter(lambda d: d.id == amenity_id, place.amenities))
+    if storage_t == 'db':
+        found = list(filter(lambda d: d.id == amenity_id, place.amenities))
+    else:
+        found = list(filter(lambda id: id == amenity_id, place.amenity_ids))
 
     if len(found) == 1:
         return jsonify(amenity.to_dict()), 200
