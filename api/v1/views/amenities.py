@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
-"""amenities"""
-=======
 """Amenity API"""
->>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
 from api.v1.views import app_views
 from flask import*
 from models import storage
@@ -22,11 +18,7 @@ def list_amenities():
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False)
 def get_amenity(amenity_id):
-<<<<<<< HEAD
-    """id amenity"""
-=======
     """Get amenity from storage"""
->>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -36,11 +28,7 @@ def get_amenity(amenity_id):
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
-<<<<<<< HEAD
-    """deleting amenity"""
-=======
     """Delete amenity"""
->>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -50,11 +38,7 @@ def delete_amenity(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
-<<<<<<< HEAD
-    """create amenity"""
-=======
     """Create an amenity"""
->>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
     get_json = request.get_json()
     if get_json is None:
         abort(404, 'Not a JSON')
@@ -70,11 +54,7 @@ def create_amenity():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
-<<<<<<< HEAD
-    """update amenity"""
-=======
     """Update Amenity"""
->>>>>>> 6c741cf84e75fc41aa58cd5e3aa2b5a541ea1aca
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort('404')
