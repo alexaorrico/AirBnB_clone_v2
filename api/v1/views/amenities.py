@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Amenity API"""
 from api.v1.views import app_views
-from flask import *
+from flask import abort, jsonify, request
 from models import storage
 from models.amenity import Amenity
 
