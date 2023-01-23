@@ -32,7 +32,7 @@ def delete_amenity(amenity_id):
     if amenity is None:
         abort(404)
     amenity.delete()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
@@ -41,12 +41,12 @@ def create_amenity():
     get_json = request.get_json()
     if get_json is None:
         abort(404, 'Not a JSON')
-    if get_json['name'] is None:
+    if get_json.get('name') is None:
         abort(404, 'Missing Name')
 
     new_amenity = Amenity(**get_json)
     new_amenity.save()
-    return jsonify(new_amenity.to_dict())
+    return jsonify(new_amenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>',
