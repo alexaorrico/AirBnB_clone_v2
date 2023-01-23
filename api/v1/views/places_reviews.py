@@ -33,8 +33,8 @@ def get_reviews(place_id):
         user = storage.get(User, user_id)
         if user is None:
             abort(404)
-        if 'name' not in request.json:
-            abort(400, description="Missing name")
+        if 'text' not in request.json:
+            abort(400, description="Missing text")
         new_data['place_id'] = place_id
         review = Review(**new_data)
         review.save()
