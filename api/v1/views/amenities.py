@@ -55,9 +55,9 @@ def update_amenity(amenity_id):
     """Update Amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
-        abort('404')
+        abort(404)
     if request.get_json() is None:
-        abort('404', 'Not a JSON')
+        abort(404, 'Not a JSON')
     update = request.get_json()
     for key, value in update.items():
         if key != 'id' or key != 'created_at' or key != 'updated_at':
