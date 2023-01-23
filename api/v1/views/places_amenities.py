@@ -62,5 +62,5 @@ def post_place_amenity(place_id, amenity_id):
     if amenity in place_amenities:
         return jsonify(amenity.to_dict())
     place_amenities.append(amenity)
-    place.saveg)
+    place.saveg()
     return make_response(jsonify(amenityto_dict()), 201)
