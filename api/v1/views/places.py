@@ -39,20 +39,22 @@ def delete_place(place_id):
     if place is None:
         abort(404)
     place.delete()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
     """Create a Place"""
+    if storage.get(City, city_id) is None:
+        abort(404)
     get_json = request.get_json()
     if get_json is None:
-        abort(404, 'Not a JSON')
-    if get_json['name'] is None:
-        abort(404, 'Missing Name')
-    if get_json['user_id'] is None:
-        abort(404, 'Missing user_id')
+        abort(400, 'Not a JSON')
+    if get_json.get('name') is None:
+        abort(400, 'Missing Name')
+    if get_json.get('user_id') is None:
+        abort(400, 'Missing user_id')
     user_id = get_json.get('user_id')
     if (storage.get(User, user_id) is None):
         abort(404)
@@ -68,9 +70,9 @@ def update_place(place_id):
     """Update a place"""
     place = storage.get(Place, place_id)
     if place is None:
-        abort('404')
+        abort(404)
     if request.get_json() is None:
-        abort('404', 'Not a JSON')
+        abort(404, 'Not a JSON')
     update = request.get_json()
 
     exept = ['created_at', 'updated_at', 'id', 'user_id', 'city_id']

@@ -11,9 +11,8 @@ def list_users():
     """list of users"""
     users = storage.all(User)
     return jsonify(
-        [am.to_dict() for am in users.values()]
+        [user.to_dict() for user in users.values()]
     )
-
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False)
@@ -40,11 +39,11 @@ def create_user():
     """Create User"""
     get_json = request.get_json()
     if get_json is None:
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
     if get_json.get('email') is None:
-        abort(404, 'Missing email')
+        abort(400, 'Missing email')
     if get_json.get('password') is None:
-        abort(404, 'Missing password')
+        abort(400, 'Missing password')
 
     new_user = User(**get_json)
     new_user.save()
@@ -58,7 +57,7 @@ def update_user(user_id):
     if user is None:
         abort(404)
     if request.get_json() is None:
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
     update = request.get_json()
 
     exx = ['id', 'created_at', 'updated_at', 'email']
