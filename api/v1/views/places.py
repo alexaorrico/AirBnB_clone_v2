@@ -5,6 +5,7 @@ from flask import abort, jsonify, request
 from models import storage
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
@@ -53,8 +54,13 @@ def create_place(city_id: str):
         place_attrs = request.get_json()
     except Exception:
         abort(400, 'Not a JSON')
+    if 'user_id' not in place_attrs:
+        abort(400, 'Missing user_id')
     if 'name' not in place_attrs:
         abort(400, 'Missing name')
+    user = storage.get(User, place_attrs['user_id'])
+    if not user:
+        abort(404)
     place = Place(**place_attrs)
     place.city_id = city_id
     storage.new(place)
