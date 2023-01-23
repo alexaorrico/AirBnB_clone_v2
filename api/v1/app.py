@@ -8,6 +8,7 @@ from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
 from flasgger import Swagger
+from models import storage
 
 # Global Flask Application Variable: app
 app = Flask(__name__)
@@ -27,7 +28,7 @@ cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 app.register_blueprint(app_views)
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown(exception:None):
     """Close the current storage session"""
     storage.close()
 
@@ -36,4 +37,4 @@ if __name__ == "__main__":
     MAIN Flask App
     """
     # start Flask app
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, threaded=True)
