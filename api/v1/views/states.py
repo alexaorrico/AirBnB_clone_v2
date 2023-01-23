@@ -29,10 +29,10 @@ def get_states():
         return (jsonify(state.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=["GET", "PUT", "DELETE"],
+@app_views.route('/states/<state_id>', methods=["GET", "PUT"],
                  strict_slashes=False)
 def get_state_by_id(state_id):
-    """get, update an delete state"""
+    """get, update an instance of state"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -47,6 +47,14 @@ def get_state_by_id(state_id):
             setattr(state, key, value)
         state.save()
         return (jsonify(state.to_dict()), 200)
+
+@app_views.route('/states/<state_id>', methods=["GET", "DELETE"],
+                 strict_slashes=False)
+def delete_state_by_id(state_id):
+    """delete an instance of state"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
     if request.method == "DELETE":
         storage.delete(state)
         storage.save()
