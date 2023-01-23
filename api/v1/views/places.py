@@ -2,9 +2,6 @@
 """
 places view routes
 """
-from functools import reduce
-from operator import concat
-
 from flask import abort, jsonify, request
 
 from api.v1.views import app_views
@@ -105,34 +102,36 @@ def search_places():
     city_ids = query.get("cities", [])
     amenity_ids = query.get("amenities", [])
 
-    search_result = [place.to_dict() for place in storage.all(Place).values()]
-    if len(query) == 0 or len(state_ids + city_ids + amenity_ids) == 0:
-        return jsonify(search_result)
+    search_result = []
+    if len(query) == 0 or len(state_ids + city_ids) == 0:
+        search_result = [place for place in storage.all(Place).values()]
+    elif len(city_ids + state_ids) > 0:
+        cities = get_cities(city_ids, state_ids)
+        for city in cities:
+            search_result.extend(city.places)
 
-    search_result = filter_places_by_cities(search_result, city_ids, state_ids)
     search_result = filter_places_by_amenities(search_result, amenity_ids)
+    search_result = [place.to_dict() for place in search_result]
+    for place in search_result:
+        place.pop("amenities", None)
+        place.pop("amenity_ids", None)
 
     return jsonify(search_result)
 
 
-def filter_places_by_cities(places, city_ids, state_ids=[]):
-    if len(state_ids + city_ids) > 0:
-        state_cities = reduce(
-            concat,
-            [
-                state.cities for state in storage.all(State).values()
-                if state.id in set(state_ids)
-            ],
-            [],
-        )
-        city_ids.extend([city.id for city in state_cities])
+def get_cities(city_ids=[], state_ids=[]):
+    cities = []
+    cities.extend(
+        list(
+            filter(lambda x: x is not None,
+                   [storage.get(City, id) for id in city_ids])))
 
-        return [
-            place for place in places
-            if place.get("city_id", None) in set(city_ids)
-        ]
-
-    return places
+    states = list(
+        filter(lambda x: x is not None,
+               [storage.get(State, id) for id in state_ids]))
+    for state in states:
+        cities.extend(state.cities)
+    return list(set(cities))
 
 
 def filter_places_by_amenities(places, amenity_ids):
@@ -143,10 +142,9 @@ def filter_places_by_amenities(places, amenity_ids):
             if storage_t == 'db':
                 place_amenity_ids = {amenity.id for amenity in place.amenities}
             else:
-                place_amenity_ids = place.amenity_ids
+                place_amenity_ids = set(place.amenity_ids)
 
-            if len(amenity_ids.intersection(place_amenity_ids)) != 0:
+            if all(id in place_amenity_ids for id in amenity_ids):
                 fileted_place_ids.append(place.id)
-        return [place for place in places if place["id"] in fileted_place_ids]
-
+        return [place for place in places if place.id in fileted_place_ids]
     return places
