@@ -73,7 +73,7 @@ class FileStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
     
-           def get(self, cls, id):
+    def get(self, cls, id):
         """method to retrieve one object"""
         if isinstance(cls, str):
             key = eval(cls).__name__ + "." + id
