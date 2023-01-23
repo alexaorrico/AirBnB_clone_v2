@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Place API"""
 from api.v1.views import app_views
-from flask import*
+from flask import *
 from models import storage
 from models.city import City
 from models.place import Place
