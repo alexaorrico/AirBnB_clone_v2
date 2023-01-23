@@ -34,7 +34,7 @@ def get_cities(state_id):
         return (jsonify(city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=["PUT"],
+@app_views.route('/cities/<city_id>', methods=["GET", "PUT"],
                  strict_slashes=False)
 def get_city_by_id(city_id):
     """get, update and delete city"""
