@@ -1,41 +1,33 @@
 #!/usr/bin/python3
-""" Flask api to return status
-"""
+"""This runs the flask app"""
 from api.v1.views import app_views
-from flask import Flask, jsonify, make_response
-from flask_cors import CORS
+from flask import Flask, make_response, jsonify
 from models import storage
 from os import getenv
+from flask_cors import CORS
 
 app = Flask(__name__)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
-CORS(app, origins='0.0.0.0')
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def teardown(exception):
-    """ destroys DB session in case of DB storage
-        reloads objects in case of File Storage
-    """
+def teardown_session(exception):
+    '''This method closes a storage session'''
     storage.close()
 
 
 @app.errorhandler(404)
-def error_404(error):
-    """ response for 404 errors"""
+def not_found(error):
+    '''This returns a JSON response with 404 status'''
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
-    #  get host address
-    host = getenv('HBNB_API_HOST')
-    if host is None:
-        host = '0.0.0.0'
+    HBNB_API_HOST = getenv('HBNB_API_HOST')
+    HBNB_API_PORT = getenv('HBNB_API_PORT')
 
-    #  get port number
-    port = getenv('HBNB_API_PORT')
-    if port is None:
-        port = '5000'
-
-    app.run(host=host, port=port)
+    host = '0.0.0.0' if not HBNB_API_HOST else HBNB_API_HOST
+    port = 5000 if not HBNB_API_PORT else HBNB_API_PORT
+    app.run(host=host, port=port, threaded=True)
