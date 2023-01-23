@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Oshindeinde Oluwaseun - [Github](https://github.com/GodblessMe2) / [Twitter](https://twitter.com/AlptemTech)  
+Ajani Abdulhameed - [Github](https://github.com/Elhameed) / [Twitter](https://twitter.com/teni0la_ajani)
 
 ## License
 Public Domain. No copy write protection. 
