@@ -1,0 +1,37 @@
+GET method, retrieve a city base on state_id
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    type: string
+    required: true
+    description: the unique id of the city to be listed
+responses:
+  200:
+    description: Succsesful resquest
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: "string"
+          created_at:
+            type: string
+            description: datetime of instance creation
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: The unique id of the state instance
+          name:
+            type: string
+            description: Place name
+          state_id:
+             type: string
+             description: city id
+
+  404:
+    description: City not found
