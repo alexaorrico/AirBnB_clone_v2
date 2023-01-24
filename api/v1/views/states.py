@@ -33,7 +33,7 @@ def delete_state(state_id=None):
     storage.save()
     return jsonify({}), 200
 
-@app_views.route("/state", methods=['POST'], strict_slashes=False)
+@app_views.route("/states", methods=['POST'], strict_slashes=False)
 def create_state():
     """create state"""
     if not request.get_json():
@@ -47,7 +47,7 @@ def create_state():
 @app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
 def update_state(state_id=None):
     """Update a state"""
-    key = "States." + str(state_id)
+    key = "State." + str(state_id)
     if key not in storage.all(State).keys():
         abort(404)
     if not request.get_json():
