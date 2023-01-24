@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """ This module contains the places_amenities view """
 
 from api.v1.views import app_views
