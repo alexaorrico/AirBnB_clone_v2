@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from models import storage
 from models.user import User
 from . import app_views

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from models import storage
 from models.amenity import Amenity
 from . import app_views
