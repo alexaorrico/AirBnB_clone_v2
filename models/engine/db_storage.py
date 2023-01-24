@@ -83,7 +83,12 @@ class DBStorage:
                 object or None
         """
 
-        pass
+        if cls and id:
+            fetch_obj = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch_obj)
+        return None
+
     def count(self, cls=None):
         """count number of objects
             cls: class
@@ -91,6 +96,4 @@ class DBStorage:
                 number of objects 
                 if no class returns count of object in storage
         """
-        pass
-
-
+        return(len(self.all(cls)))
