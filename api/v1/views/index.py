@@ -1,7 +1,10 @@
 #!/usr/bin/python3
-"""Endpoint (route) will be to return the status of API"""
+""" views functionality
+"""
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import jsonify
+from models import storage
+from flask import jsonify, make_response
 from models import storage
 from models.amenity import Amenity
 from models.city import City
@@ -11,20 +14,17 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status', methods=['GET'])
 def status():
-    """Returns a JSON of a string"""
+    """ return status OK on route /status"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats',  strict_slashes=False)
+@app_views.route('/stats', methods=['GET'])
 def stats():
-    """Creates an endpoint that retrieves the number of each objects by type"""
-    return jsonify(
-        amenities=storage.count(Amenity),
-        cities=storage.count(City),
-        places=storage.count(Place),
-        reviews=storage.count(Review),
-        states=storage.count(State),
-        users=storage.count(User)
-            )
+    """ returns count of all objects per class"""
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User}
+
+    obj_count = {key: storage.count(value) for key, value in classes.items()}
+    return make_response(jsonify(obj_count))
