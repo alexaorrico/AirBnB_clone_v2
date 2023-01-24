@@ -86,3 +86,43 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get_doc(self):
+        """Test function have documentation"""
+        self.assertIsNotNone(DBStorage.get.__doc__)
+
+    def test_count_doc(self):
+        """Test function have documentation"""
+        self.assertIsNotNone(DBStorage.count.__doc__)
+
+    def test_count_return_zero_value(self):
+        base = BaseModel()
+        stor = DBStorage()
+        self.assertEqual(0 stor.count(BaseModel))
+
+    def test_count_return_value_number_object_add(self):
+        base = BaseModel()
+        amm = Amenity()
+        stor = DBStorage()
+        stor.new(base)
+        stor.new(amm)
+
+        self.assertEqual(2, stor.count())
+
+    def test_count_return_value_with_params(self):
+        base = BaseModel()
+        amm = Amenity()
+        stor = DBStorage()
+        stor.new(base)
+        stor.new(amm)
+
+        self.assertEqual(1, stor.count(BaseModel))
+
+    def test_get_return_None(self):
+        stor = DBStorage()
+        self.assertIsNone(stor.get(BaseModel, 123))
+
+    def test_get_return_Object(self):
+        base = BaseModel()
+        stor = DBStorage()
+        self.assertEqual(base, stor.get(BaseModel, base.id))
