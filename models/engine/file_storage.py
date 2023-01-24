@@ -5,7 +5,8 @@ This is module file_storage
 This module defines one class FileStorage.
 This class hadles saving the information in json in a file
 """
-from datetime import datetime
+
+import models
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -14,8 +15,10 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-# from models import storage
-import os
+
+classes = {"Amenity": Amenity, "BaseModel": BaseModel,
+           "City": City,"Place": Place, "Review": Review,
+           "State": State, "User": User}
 
 
 class FileStorage:
@@ -33,14 +36,6 @@ class FileStorage:
     if os.getenv("FS_TEST", "no") == "yes":
         __file_path = "test_file.json"
     __objects = {}
-
-    def __init__(self):
-        """Instantiate the class"""
-        self.__models_available = {"User": User, "BaseModel": BaseModel,
-                                   "Amenity": Amenity, "City": City,
-                                   "Place": Place, "Review": Review,
-                                   "State": State}
-        self.reload()
 
     def all(self, cls=None):
         """
@@ -105,23 +100,25 @@ class FileStorage:
         """Close a session"""
         self.reload()
 
-    def get(self, cls, id_):
+    def get(self, cls, id):
         """
         Retrieve one object
 
         Arguments:
             cls: string representing a class name
-            id_: string representing the object id
+            id: string representing the object id
 
         Return:
            object of cls and id passed in argument
         """
-        if (cls not in self.__models_available.keys()) or (id_ is None):
+        if cls not in classes.values():
             return None
-        all_objs = self.all(cls)
-        for k in all_objs.keys():
-            if k == id_:
-                return all_objs[k]
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
         return None
 
     def count(self, cls=None):
@@ -135,8 +132,13 @@ class FileStorage:
             number of objects in that class or in total.
             -1 if the class is not valid
         """
-        if cls is None:
-            return len(self.__objects)
-        if cls in self.__models_available:
-            return len(self.all(cls))
-        return -1
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
+        return count
