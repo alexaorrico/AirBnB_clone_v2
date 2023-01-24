@@ -23,7 +23,9 @@ def get_states(state_id=None):
         abort(404)
     return jsonify(new_list)
 
-@app_views.route("/states/<state_id>", methods=['DELETE'], strict_slashes=False)
+
+@app_views.route("/states/<state_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id=None):
     """delete state based on the state_id passed"""
     state = storage.get(State, state_id)
@@ -33,7 +35,9 @@ def delete_state(state_id=None):
     storage.save()
     return jsonify({}), 200
 
-@app_views.route("/states", methods=['POST'], strict_slashes=False)
+
+@app_views.route("/states", methods=['POST'],
+                 strict_slashes=False)
 def create_state():
     """create state"""
     if not request.get_json():
@@ -44,7 +48,9 @@ def create_state():
     state.save()
     return jsonify(state.to_dict()), 201
 
-@app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
+
+@app_views.route("/states/<state_id>", methods=['PUT'],
+                 strict_slashes=False)
 def update_state(state_id=None):
     """Update a state"""
     key = "State." + str(state_id)
