@@ -51,7 +51,7 @@ def update_user(user_id):
     body = request.get_json()
     if not body:
         abort(400, {"Not a JSON"})
-    user = storage.get('User', user_id)
+    user = storage.get(User, user_id)
     if user is None:  # if user_id is not linked to any User object
         abort(404)
     for key, value in body.items():  # update User obj with key-val pairs
@@ -63,7 +63,7 @@ def update_user(user_id):
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user_by_id(user_id):
     """Deleting a User object by its id"""
-    user = storage.get('User', user_id)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
     else:
