@@ -75,15 +75,22 @@ class TestDBStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def setUp(self):
-        """Set up test fixtures for each test"""
-        # create a DBStorage object
-        # create some entries and save them
-        pass
+        """Set up test environment"""
+        self.state_1 = State(name="Mombasa")
+        self.state_2 = State(name="Nairobi")
+        self.amenity_1 = Amenity(name="wifi")
+        models.storage.new(self.amenity_1)
+        models.storage.new(self.state_1)
+        models.storage.new(self.state_2)
+        models.storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def tearDown(self):
-        """Clean up after each test"""
-        pass
+        """Clean up after a test"""
+        models.storage.delete(self.state_1)
+        models.storage.delete(self.state_2)
+        models.storage.delete(self.amenity_1)
+        models.storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_all_returns_dict(self):
@@ -93,62 +100,62 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        self.assertEqual(len(models.storage.all()), 3)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_all_with_class(self):
+        """Test that all returns all of a specific class when no class is
+        passed"""
+        self.assertEqual(len(models.storage.all(State)), 2)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_new(self):
-        """test that new adds an object to the database"""
+        """test that new adds an object to the session"""
+        new_state = State(name="Atlantis")
+        models.storage.new(new_state)
+        models.storage._DBStorage__session.commit()
+        retrieved_state = models.storage._DBStorage__session.query(State)\
+            .filter_by(id=new_state.id).one()
+        self.assertIs(retrieved_state, new_state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
-        pass
+        """Test that save properly saves objects to the database"""
+        amenity = Amenity(name="swimming_pool")
+        models.storage.new(amenity)
+        models.storage.save()
+        retrieved_amenity = models.storage._DBStorage__session.query(Amenity)\
+            .filter_by(id=amenity.id).one()
+        self.assertIs(amenity, retrieved_amenity)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_get(self):
+    def test_get_with_correct_id_and_class(self):
         """Test that get returns correct object based on class and id"""
-        storage = DBStorage()
-        storage.reload()
-        new_dict = {}
-        for key, value in classes.items():
-            instance = value()
-            instance_key = instance.__class__.__name__ + "." + instance.id
-            new_dict[instance_key] = instance
-            storage.new(instance)
-        storage.save()
-        for key, instance in new_dict.items():
-            cls = instance.__class__
-            id = instance.id
-            with self.subTest(cls=cls, id=id):
-                obj = storage.get(cls, id)
-                self.assertIsInstance(obj, cls)
-                self.assertIs(obj, instance)
+        retreived_state = models.storage.get(self.state_1.__class__,
+                                             self.state_1.id)
+        self.assertIsInstance(retreived_state, State)
+        self.assertIs(retreived_state, self.state_1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get_with_invalid_class_or_id(self):
+        """Test that get will return None when passed invalid input"""
+        retrieved_state = models.storage.get(None, None)
+        self.assertIsNone(retrieved_state, "invalid class or id was passed")
+        retrieved_state = models.storage.get(State, 'fake_id')
+        self.assertIsNone(retrieved_state, "invalid class or id was passed")
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_count_with_class(self):
         """Test that count returns correct number of objects of a particular
         class"""
-        storage = DBStorage()
-        storage.reload()
-        for key, value in classes.items():
-            instance = value()
-            storage.new(instance)
-        storage.save()
-        for cls in classes.values():
-            with self.subTest(cls=cls):
-                total = storage.get(cls=cls)
-                self.assertIsInstance(total, int)
-                self.assertEqual(total, 1)
+        total = models.storage.count(State)
+        self.assertIsInstance(total, int)
+        self.assertEqual(total, 2)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_count_without_class(self):
         """Testing that count returns correct number of total objects in
         storage"""
-        storage = DBStorage()
-        storage.reload()
-        for value in classes.values():
-            instance = value()
-            storage.new(instance)
-        storage.save()
-        total = storage.count()
+        total = models.storage.count()
         self.assertIsInstance(total, int)
-        self.assertEqual(total, len(classes))
+        self.assertEqual(total, 3)
