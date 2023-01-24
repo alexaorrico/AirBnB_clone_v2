@@ -26,7 +26,8 @@ def handle_states():
         return jsonify(states_list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
 def handle_state(state_id):
     """ Retrieves a State object """
     state = storage.get('State', state_id)
