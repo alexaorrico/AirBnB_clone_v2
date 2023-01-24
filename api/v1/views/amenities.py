@@ -21,9 +21,9 @@ def get_all_amenities():
 def create_amenity():
     """creates a new amenity """
     data = request.get_json()
-    if not data.is_json:
+    if not request.is_json:
         abort(400, description="Not a JSON")
-    if 'name' not in data.json:
+    if 'name' not in request.json:
         abort(400, description="Missing name")
     amenity = Amenity(**data)
     amenity.save()
