@@ -7,7 +7,7 @@ from models.state import State
 from models.review import Review
 from models.place import Place
 from models import storage
-from models.user import user
+from models.user import User
 from models.base_model import BaseModel
 
 
