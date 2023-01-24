@@ -89,9 +89,6 @@ class DBStorage:
     def count(self, cls=None):
         """Retrieve total count of objects stored in file storage based
         on a class. If class is None, count all objcts stored"""
-        # validate cls
-        # if cls is a valid class query count of all objects of that class
-        # if not valid, query count of all objects in the database
         total = 0
         if cls and cls.__name__ in classes:
             total = self.__session.query(cls).count()
