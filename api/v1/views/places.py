@@ -6,6 +6,7 @@ from models import storage
 from models.place import Place
 from models.city import City
 from models.base_model import BaseModel
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=["GET"],
@@ -25,7 +26,7 @@ def get_all_places(city_id):
                  strict_slashes=False)
 def get_place_by_id(place_id):
     """Getting individual users by their ids"""
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
 
     if place is None:  # if user_id is not linked to any user obj
         abort(404)  # then, raise 404 error
@@ -37,7 +38,7 @@ def get_place_by_id(place_id):
                  strict_slashes=False)
 def create_place(city_id=None):
     """Create a Place, from data provided by the request"""
-    city_object = storage.get('City', city_id)
+    city_object = storage.get(City, city_id)
     if city_object is None:  # if the city_id is not linked to any City obj
         abort(404)  # raise a 404 error
     body = request.get_json()  # Flask to transform HTTP request to a dict
@@ -45,7 +46,7 @@ def create_place(city_id=None):
         abort(400, {"error": "Not a JSON"})  # raise err and message
     if 'user_id' not in body:  # If the dict doesn't contain the key user_id
         abort(400, {"Missing user_id"})  # raise err
-    user_object = storage.get('User', body['user_id'])
+    user_object = storage.get(User, body['user_id'])
     if user_object is not None:  # user_id is not linked to any User object
         abort(404)  # raise err
     if 'name' not in body:  # If the dict doesn't contain the key name
@@ -64,7 +65,7 @@ def update_place_by_id(place_id):
     body = request.get_json()
     if not body:
         abort(400, {"Not a JSON"})
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place is None:  # if place_id is not linked to any User object
         abort(404)
     for key, value in body.items():  # update Place obj with key-val pairs
@@ -77,7 +78,7 @@ def update_place_by_id(place_id):
                  strict_slashes=False)
 def delete_place_by_id(place_id):
     """Deleting a Place object by its id"""
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     else:
