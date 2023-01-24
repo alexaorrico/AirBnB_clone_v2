@@ -74,6 +74,14 @@ class TestDBStorage(unittest.TestCase):
     """Test the DBStorage class"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    @classmethod
+    def setUpClass(cls):
+        """Setup a classwide test fixture.
+        Deletes all records of all classes"""
+        for clss in classes.values():
+            models.storage._DBStorage__session.query(clss).delete()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def setUp(self):
         """Set up test environment"""
         self.state_1 = State(name="Mombasa")
@@ -117,6 +125,8 @@ class TestDBStorage(unittest.TestCase):
         retrieved_state = models.storage._DBStorage__session.query(State)\
             .filter_by(id=new_state.id).one()
         self.assertIs(retrieved_state, new_state)
+        models.storage.delete(new_state)
+        models.storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_save(self):
@@ -127,6 +137,8 @@ class TestDBStorage(unittest.TestCase):
         retrieved_amenity = models.storage._DBStorage__session.query(Amenity)\
             .filter_by(id=amenity.id).one()
         self.assertIs(amenity, retrieved_amenity)
+        models.storage.delete(amenity)
+        models.storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_get_with_correct_id_and_class(self):
