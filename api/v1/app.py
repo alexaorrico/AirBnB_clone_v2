@@ -4,7 +4,7 @@ the api file
 """
 
 from os import environ
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -18,6 +18,10 @@ def close_dataBase(e):
     """tear down app context"""
     
     storage.close()
+
+@app.errorhandler(404)
+def not_found(e):
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
