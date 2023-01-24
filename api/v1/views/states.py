@@ -63,5 +63,6 @@ def delete_state_by_id(state_id):
         abort(404)
 
     if request.method == "DELETE":
-        storage.delete(State)
+        state.delete()
+        del state
         return jsonify({}), 200

@@ -81,6 +81,6 @@ def delete_place_by_id(place_id):
     if place is None:
         abort(404)
     else:
-        storage.delete(place)
-        storage.save()
+        place.delete()
+        del place
     return jsonify({}), 200  # returns an empty dict with status code 200

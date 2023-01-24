@@ -69,6 +69,6 @@ def delete_user_by_id(user_id):
     if user is None:
         abort(404)
     else:
-        storage.delete(user)
-        storage.save()
+        user.delete()
+        del user
     return jsonify({}), 200  # returns an empty dict with status code 200

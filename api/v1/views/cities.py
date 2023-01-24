@@ -68,7 +68,6 @@ def del_cities(city_id):
         abort(404)
 
     if request.method == "DELETE":
-        storage.delete(city)
-        storage.save()
+        city.delete()
         new_cities = make_response(jsonify({}), 200)
         return new_cities

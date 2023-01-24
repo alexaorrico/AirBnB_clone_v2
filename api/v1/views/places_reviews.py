@@ -16,11 +16,12 @@ from models.base_model import BaseModel
 def get_all_reviews(place_id):
     """Gets the list of all Review objects of a Place"""
     all_reviews = []  # review list
+    reviews = storage.all(Review)
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    for review in place.reviews:  # rev = review items
-        if item.place_id == place_id:
+    for review in reviews.items():  # rev = review items
+        if review.place_id == place_id:
             all_reviews.append(review.to_dict())
     return jsonify(all_reviews)
 
@@ -53,18 +54,16 @@ def create_review(place_id):
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    new_rev = Review(**post_content)
-    new_rev.place_id = place_id
-    storage.new(new_rev)
+    body["place_id"] = place_id
+    new_rev = Review(**body)
     new_rev.save()
-    storage.close()
     return jsonify(new_rev.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
     """Updates Review object"""
-    rev = storage.get("Review", review_id)
+    review = storage.get("Review", review_id)
     if review is None:
         abort(404)
     body = request.get_json()
@@ -73,7 +72,6 @@ def update_review(review_id):
     for key, value in body.items():
         setattr(review, key, value)
     review.save()
-    storage.close()
     return jsonify(review.to_dict()), 200
 
 
@@ -84,6 +82,6 @@ def delete_review_by_id(review_id):
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
-    storage.delete(review)
-    storage.save()
+    review.delete()
+    del review
     return jsonify({}), 200
