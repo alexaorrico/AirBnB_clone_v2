@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""State API"""
 from models import storage
 from models.state import State
 from . import app_views
@@ -6,6 +7,7 @@ from flask import jsonify, abort, request
 
 @app_views.route("/states")
 def states():
+    """Get all states"""
     states = storage.all(State)
     response = []
     for state in states.values():
@@ -14,6 +16,7 @@ def states():
 
 @app_views.route("states/<state_id>")
 def state(state_id):
+    """Get a single state"""
     obj = storage.get(State, state_id)
     if obj:
         return jsonify(obj.to_dict())
@@ -22,6 +25,7 @@ def state(state_id):
 
 @app_views.route("states/<state_id>", methods=["DELETE"])
 def delete_state(state_id):
+    """Delete a state"""
     obj = storage.get(State, state_id)
     if obj:
         storage.delete(obj)
@@ -32,6 +36,7 @@ def delete_state(state_id):
 
 @app_views.route("/states", methods=["POST"])
 def create_state():
+    """Create a state"""
     if request.content_type != "application/json":
         abort(400, "Not a JSON")
     data = request.get_json()
@@ -43,6 +48,7 @@ def create_state():
 
 @app_views.route("/states/<state_id>", methods=["PUT"])
 def update_state(state_id):
+    """Update a state"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)

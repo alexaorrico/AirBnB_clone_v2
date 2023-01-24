@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""App Views API"""
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify
@@ -11,10 +12,12 @@ from models.user import User
 
 @app_views.route("/status")
 def status():
+    """Return status of the API server"""
     return jsonify({"status": "OK"})
 
 @app_views.route("/stats")
 def stats():
+    """Return the stats of the data"""
     amenities_cnt = storage.count(Amenity)
     cities_cnt = storage.count(City)
     places_cnt = storage.count(Place)

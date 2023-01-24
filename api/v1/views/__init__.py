@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Views import"""
 from flask import Blueprint
 
 

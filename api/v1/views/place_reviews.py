@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Place Reviews API"""
 from models import storage
 from models.place import Place
 from models.review import Review
@@ -8,6 +9,7 @@ from flask import jsonify, abort, request
 
 @app_views.route("/places/<place_id>/reviews")
 def reviews(place_id):
+    """Get all place reviews"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -19,6 +21,7 @@ def reviews(place_id):
 
 @app_views.route("/reviews/<review_id>")
 def review(review_id):
+    """Get a single review"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
@@ -26,6 +29,7 @@ def review(review_id):
 
 @app_views.route("/reviews/<review_id>", methods=["DELETE"])
 def delete_review(review_id):
+    """Delete a review"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
@@ -35,6 +39,7 @@ def delete_review(review_id):
 
 @app_views.route("/places/<place_id>/reviews", methods=["POST"])
 def create_review(place_id):
+    """Create a place review"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -55,6 +60,7 @@ def create_review(place_id):
 
 @app_views.route("/reviews/<review_id>", methods=["PUT"])
 def update_review(review_id):
+    """Update a review"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)

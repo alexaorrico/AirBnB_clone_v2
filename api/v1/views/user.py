@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""User API"""
 from models import storage
 from models.user import User
 from . import app_views
@@ -6,6 +7,7 @@ from flask import jsonify, abort, request
 
 @app_views.route("/users")
 def users():
+    """Get all users"""
     users = storage.all(User)
     user_list = []
     for user in users.values():
@@ -14,6 +16,7 @@ def users():
 
 @app_views.route("/users/<user_id>")
 def user(user_id):
+    """Get a single user"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -21,6 +24,7 @@ def user(user_id):
 
 @app_views.route("/users/<user_id>")
 def delete_user(user_id):
+    """Delete a user"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -30,6 +34,7 @@ def delete_user(user_id):
 
 @app_views.route("/users", methods=["POST"])
 def create_user():
+    """Create a user"""
     if request.content_type != "application/json":
         abort(404)
     data = request.get_json()
@@ -43,6 +48,7 @@ def create_user():
 
 @app_views.route("/users/<user_id>", methods=["PUT"])
 def update_user(user_id):
+    """Update a user"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)

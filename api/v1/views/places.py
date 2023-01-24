@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Places API"""
 from models import storage
 from models.city import City
 from models.place import Place
@@ -8,6 +9,7 @@ from flask import jsonify, abort, request
 
 @app_views.route("/cities/<city_id>/places")
 def places(city_id):
+    """Get all the places of a city"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -19,6 +21,7 @@ def places(city_id):
 
 @app_views.route("/places/<place_id>")
 def place(place_id):
+    """Get a single place"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -26,6 +29,7 @@ def place(place_id):
 
 @app_views.route("/places/<place_id>", methods=["DELETE"])
 def delete_place(place_id):
+    """Delete a place"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -35,6 +39,7 @@ def delete_place(place_id):
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"])
 def create_place(city_id):
+    """Create a place"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -55,6 +60,7 @@ def create_place(city_id):
 
 @app_views.route("/places/<place_id>", methods=["PUT"])
 def update_place(place_id):
+    """Update a place"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)

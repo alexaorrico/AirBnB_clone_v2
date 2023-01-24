@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Module for the api application"""
 from os import getenv
 from flask import Flask, jsonify
 from models import storage
@@ -14,6 +15,7 @@ def close_app(exception):
 
 @app.errorhandler(404)
 def not_found(error_msg):
+    """Handle 404"""
     return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main__":
