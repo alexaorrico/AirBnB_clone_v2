@@ -81,7 +81,7 @@ class DBStorage:
     def get(self, cls, id):
         """Retrieve an object from storage based on its class and id"""
         if cls and id and cls.__name__ in classes:
-            obj = self.__session.query(cls).filter_by(id=id)
+            obj = self.__session.query(cls).filter_by(id=id).one_or_none()
             return obj
         else:
             return None
