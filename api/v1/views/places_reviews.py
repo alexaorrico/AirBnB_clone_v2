@@ -2,6 +2,8 @@
 '''
 A new view for Review object that handles all default RESTFul API actions
 '''
+
+
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/reviews/get_reviews.yml', methods=['GET'])
@@ -102,7 +104,7 @@ def put_review(review_id):
 
     data = request.get_json()
     for key, value in data.items():
-        if key not in ignor
+        if key not in ignore:
             setattr(review, key, value)
     storage.save()
     return make_response(jsonify(review.to_dict()), 200)
