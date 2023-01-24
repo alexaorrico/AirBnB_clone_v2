@@ -157,7 +157,7 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Obed Ehoneah - [Github](https://github.com/ehoneahobed) / [Twitter](https://ehoneahobed.com/twitter)
-Grac Olabode - [Github](https://github.com/Amazingracee) / [Twitter](https://olabodephoeb.com/twitter)
+Grace Olabode - [Github](https://github.com/Amazingracee) / [Twitter](https://olabodephoeb.com/twitter)
 =======
 
 >>>>>>> aac5acdaf910012588914eb3717c1dfbc215cbd8
