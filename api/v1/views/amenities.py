@@ -21,9 +21,9 @@ def get_all_amenities():
 def create_amenity():
     """creates a new amenity """
     data = request.get_json()
-    if not request.is_json:
+    if not data.is_json:
         abort(400, description="Not a JSON")
-    if 'name' not in request.json:
+    if 'name' not in data.json:
         abort(400, description="Missing name")
     amenity = Amenity(**data)
     amenity.save()
@@ -31,7 +31,7 @@ def create_amenity():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=[
-                 "PUT"], strict_slashes=False)
+                 "PUT", "GET"], strict_slashes=False)
 def get_an_amenity(amenity_id):
     """ retrieves one unique amenity object """
     amenity = storage.get(Amenity, amenity_id)
