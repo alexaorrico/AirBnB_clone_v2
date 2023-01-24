@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """Script to return the status of an API"""
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Blueprint
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 host = getenv('HBNB_API_HOST') if getenv('HBNB_API_HOST') else '0.0.0.0'
 port = getenv('HBNB_API_PORT') if getenv('HBNB_API_PORT') else 5000
 app.register_blueprint(app_views, url_prefix="/api/v1")
+cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 
 @app.errorhandler(404)
