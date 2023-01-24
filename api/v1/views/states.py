@@ -56,12 +56,12 @@ def get_state_by_id(state_id):
                  strict_slashes=False)
 def delete_state_by_id(state_id):
     """Deletes states by id"""
+    if state_id is None:
+        abort(404)
     state = storage.get(State, state_id)
-    if not state:
+    if state is None:
         abort(404)
 
     if request.method == "DELETE":
         storage.delete(State)
-        storage.save()
-        status = make_response(jsonify({}), 200)
-        return status
+        return jsonify({}), 200
