@@ -44,7 +44,7 @@ def get_city(city_id):
     if not city:
         abort(404)
 
-    if request.methods == "GET":
+    if request.method == "GET":
         result = city.to_dict()
         return (jsonify(result))
 
