@@ -7,7 +7,7 @@ from models.user import User
 from models.base_model import BaseModel
 
 
-@app_views.route('/users', methods=["GET", "POST"],
+@app_views.route('/users', methods=["GET"],
                  strict_slashes=False)
 def get_all_users():
     """ retrieves all user objects """
@@ -21,12 +21,13 @@ def get_all_users():
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def user_get_user_by_id(user_id):
     """Getting individual users by their ids"""
-    user = storage.get('User', user_id)
+    user = storage.get(User, user_id)
 
     if user is None:  # if user_id is not linked to any user obj
         abort(404)  # then, raise 404 error
     else:
-        return jsonify(user), 200
+        result = user.to_dict()
+        return jsonify(result), 200
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -39,11 +40,8 @@ def create_user():
         abort(400, {"Missing email"})  # raise err and message
     if 'password' not in body:  # if the dict doesn't contain the key passwd
         abort(400, {"Missing password"})  # raise err and message
-    objects = User()
-    for key, value in body.items():
-        setattr(objects, key, value)
-    storage.new(objects)
-    storage.save()
+    objects = User(**body)
+    objects.save()
     return jsonify(objects.to_dict()), 201  # returns new User
 
 
