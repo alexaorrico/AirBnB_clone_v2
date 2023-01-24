@@ -17,7 +17,7 @@ def get_all_amenities():
     return (jsonify(output))
 
 
-@app_views.route('/amenities', methods=["GET", "POST"], strict_slashes=False)
+@app_views.route('/amenities', methods=["POST"], strict_slashes=False)
 def create_amenity():
     """creates a new amenity """
     data = request.get_json()
@@ -31,7 +31,7 @@ def create_amenity():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=[
-                 "GET", "PUT"], strict_slashes=False)
+                 "PUT"], strict_slashes=False)
 def get_an_amenity(amenity_id):
     """ retrieves one unique amenity object """
     amenity = storage.get(Amenity, amenity_id)
@@ -50,7 +50,7 @@ def get_an_amenity(amenity_id):
         return (jsonify(amenity.to_dict()), 200)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["GET", "DELETE"],
+@app_views.route('/amenities/<amenity_id>', methods=["DELETE"],
                  strict_slashes=False)
 def del_an_amenity(amenity_id):
     """ deletes one unique amenity """
