@@ -5,6 +5,9 @@ initialize the models package
 
 from os import getenv
 
+from dotenv import load_dotenv
+ENV_FILE_PATH='/home/shortninja/alx_work/AirBnB_clone_v3/.env'
+load_dotenv(ENV_FILE_PATH)
 
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
