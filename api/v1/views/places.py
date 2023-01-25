@@ -84,7 +84,7 @@ def update_place(place_id):
     return jsonify(place.to_dict())
 
 @app_views.route("/places/<place_id>/amenities")
-def amenities(place_id):
+def place_amenities(place_id):
     """Get amenities of a place"""
     place = storage.get(Place, place_id)
     if not place:
@@ -96,7 +96,7 @@ def amenities(place_id):
     return jsonify(amenity_list)
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>")
-def delete_amenity(place_id, amenity_id):
+def delete_place_amenity(place_id, amenity_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -110,7 +110,7 @@ def delete_amenity(place_id, amenity_id):
     return jsonify({})
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["POST"])
-def link_amenity(place_id, amenity_id):
+def link_place_amenity(place_id, amenity_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
