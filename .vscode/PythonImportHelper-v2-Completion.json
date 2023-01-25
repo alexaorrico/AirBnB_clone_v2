@@ -64,6 +64,14 @@
         "documentation": {}
     },
     {
+        "label": "app_views",
+        "importPath": "api.v1.views",
+        "description": "api.v1.views",
+        "isExtraImport": true,
+        "detail": "api.v1.views",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -161,6 +169,38 @@
     },
     {
         "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "abort",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "make_response",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -497,6 +537,14 @@
         "documentation": {}
     },
     {
+        "label": "storage",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
         "label": "amenity",
         "importPath": "models",
         "description": "models",
@@ -665,11 +713,19 @@
         "documentation": {}
     },
     {
-        "label": "City",
-        "importPath": "models.city",
-        "description": "models.city",
+        "label": "Amenity",
+        "importPath": "models.amenity",
+        "description": "models.amenity",
         "isExtraImport": true,
-        "detail": "models.city",
+        "detail": "models.amenity",
+        "documentation": {}
+    },
+    {
+        "label": "Amenity",
+        "importPath": "models.amenity",
+        "description": "models.amenity",
+        "isExtraImport": true,
+        "detail": "models.amenity",
         "documentation": {}
     },
     {
@@ -734,6 +790,22 @@
         "description": "models.city",
         "isExtraImport": true,
         "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "City",
+        "importPath": "models.city",
+        "description": "models.city",
+        "isExtraImport": true,
+        "detail": "models.city",
+        "documentation": {}
+    },
+    {
+        "label": "State",
+        "importPath": "models.state",
+        "description": "models.state",
+        "isExtraImport": true,
+        "detail": "models.state",
         "documentation": {}
     },
     {
@@ -1006,6 +1078,14 @@
         "description": "models.base_model",
         "isExtraImport": true,
         "detail": "models.base_model",
+        "documentation": {}
+    },
+    {
+        "label": "Place",
+        "importPath": "models.place",
+        "description": "models.place",
+        "isExtraImport": true,
+        "detail": "models.place",
         "documentation": {}
     },
     {
@@ -1190,6 +1270,14 @@
         "description": "models.user",
         "isExtraImport": true,
         "detail": "models.user",
+        "documentation": {}
+    },
+    {
+        "label": "swag_from",
+        "importPath": "flasgger.utils",
+        "description": "flasgger.utils",
+        "isExtraImport": true,
+        "detail": "flasgger.utils",
         "documentation": {}
     },
     {
@@ -1198,6 +1286,14 @@
         "isExtraImport": true,
         "importPath": "os",
         "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "environ",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
         "detail": "os",
         "documentation": {}
     },
@@ -1644,6 +1740,15 @@
         "documentation": {}
     },
     {
+        "label": "inspect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "inspect",
+        "description": "inspect",
+        "detail": "inspect",
+        "documentation": {}
+    },
+    {
         "label": "declarative_base",
         "importPath": "sqlalchemy.ext.declarative",
         "description": "sqlalchemy.ext.declarative",
@@ -1661,12 +1766,11 @@
         "documentation": {}
     },
     {
-        "label": "inspect",
-        "kind": 6,
+        "label": "md5",
+        "importPath": "hashid",
+        "description": "hashid",
         "isExtraImport": true,
-        "importPath": "inspect",
-        "description": "inspect",
-        "detail": "inspect",
+        "detail": "hashid",
         "documentation": {}
     },
     {
@@ -1994,6 +2098,42 @@
         "description": "api.v1.views.places",
         "peekOfCode": "def update_place(place_id=None):\n    \"\"\"\n    update the user which the id is passed\n    \"\"\"\n    key = \"Place.\" + str(place_id)\n    if key not in storage.all(Place).keys():\n        abort(404)\n    if not request.get_json():\n        abort(400, \"Not a JSON\")\n    place = storage.get(Place, place_id)",
         "detail": "api.v1.views.places",
+        "documentation": {}
+    },
+    {
+        "label": "places_search",
+        "kind": 2,
+        "importPath": "api.v1.views.places",
+        "description": "api.v1.views.places",
+        "peekOfCode": "def places_search():\n    \"\"\"\n    Retrieves all Place objects depending of the JSON in the body\n    of the request\n    \"\"\"\n    if request.get_json() is None:\n        abort(400, description=\"Not a JSON\")\n    data = request.get_json()\n    if data and len(data):\n        states = data.get('states', None)",
+        "detail": "api.v1.views.places",
+        "documentation": {}
+    },
+    {
+        "label": "get_place_amenities",
+        "kind": 2,
+        "importPath": "api.v1.views.places_amenities",
+        "description": "api.v1.views.places_amenities",
+        "peekOfCode": "def get_place_amenities(place_id):\n    \"\"\"\n    Retrieves the list of all Amenity objects of a Place\n    \"\"\"\n    place = storage.get(Place, place_id)\n    if not place:\n        abort(404)\n    if environ.get('HBNB_TYPE_STORAGE') == \"db\":\n        amenities = [amenity.to_dict() for amenity in place.amenities]\n    else:",
+        "detail": "api.v1.views.places_amenities",
+        "documentation": {}
+    },
+    {
+        "label": "delete_place_amenity",
+        "kind": 2,
+        "importPath": "api.v1.views.places_amenities",
+        "description": "api.v1.views.places_amenities",
+        "peekOfCode": "def delete_place_amenity(place_id, amenity_id):\n    \"\"\"\n    Deletes a Amenity object of a Place\n    \"\"\"\n    place = storage.get(Place, place_id)\n    if not place:\n        abort(404)\n    amenity = storage.get(Amenity, amenity_id)\n    if not amenity:\n        abort(404)",
+        "detail": "api.v1.views.places_amenities",
+        "documentation": {}
+    },
+    {
+        "label": "post_place_amenity",
+        "kind": 2,
+        "importPath": "api.v1.views.places_amenities",
+        "description": "api.v1.views.places_amenities",
+        "peekOfCode": "def post_place_amenity(place_id, amenity_id):\n    \"\"\"\n    Link a Amenity object to a Place\n    \"\"\"\n    place = storage.get(Place, place_id)\n    if not place:\n        abort(404)\n    amenity = storage.get(Amenity, amenity_id)\n    if not amenity:\n        abort(404)",
+        "detail": "api.v1.views.places_amenities",
         "documentation": {}
     },
     {
