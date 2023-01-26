@@ -1,0 +1,31 @@
+GET method, lists state by unique id
+---
+tags:
+  - States
+parameters:
+  - name: state_id
+    in: path
+    type: string
+    required: false
+    description: the unique id of the state
+responses:
+  404:
+    description: State not found
+  200:
+    description: Successful request
+    schema:
+      properties:
+        __class__:
+          type: string
+        created_at:
+          type: string
+          description: datetime of instance creation
+        updated_at:
+           type: string
+           description: datetime of instance update
+        id:
+          type: string
+          description: The unique id of the state instance
+        name:
+           type: string
+           description: State name
