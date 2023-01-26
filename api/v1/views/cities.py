@@ -1,4 +1,4 @@
-#!/usr/bin/pthon3
+#!/usr/bin/python3
 
 '''A new view for City objects that handles all default RESTFul API actions'''
 from flask import jsonify, abort, request, make_response
