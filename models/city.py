@@ -1,5 +1,5 @@
 #!/usr/bin/python
-""" holds class City"""
+""" Holds class City"""
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -14,7 +14,7 @@ class City(BaseModel, Base):
         __tablename__ = 'cities'
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
-        places = relationship("Place", backref="cities")
+        places = relationship("Place", backref="cities", cascade="delete")
     else:
         state_id = ""
         name = ""
