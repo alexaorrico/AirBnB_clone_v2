@@ -3,6 +3,7 @@
 Contains the FileStorage class
 """
 
+import models
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -44,7 +45,7 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict(save_to_disk=True)
+            json_objects[key] = self.__objects[key].to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -55,7 +56,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except Exception as e:
+        except Exception:
             pass
 
     def delete(self, obj=None):
@@ -64,30 +65,31 @@ class FileStorage:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
+            self.save()
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
     def get(self, cls, id):
-        """Returns the object based on the class and its ID,
-        or None if not found
-        """
-        if cls is not None and type(cls) is str and id is not None and\
-           type(id) is str and cls in classes:
-            key = cls + '.' + id
-            obj = self.__objects.get(key, None)
-            return obj
-        else:
+        '''A method to retrieve one object to return the object
+        based on the class and its ID, or None if not found
+        '''
+        if cls not in classes.values():
             return None
 
+        obj_storage = models.storage.all(cls)
+        key = cls.__name__ + '.' + id
+        if obj_storage.get(key):
+            return obj_storage.get(key)
+        return None
+
     def count(self, cls=None):
-        """Returns the number of objects in storage matching the given class.
-        If no class is passed, returns the count of all objects in storage
-        """
-        counter = 0
-        if type(cls) == str and cls in classes:
-            counter = len(self.all(cls))
-        elif cls is None:
-            counter = len(self.__objects)
-        return total
+        '''A method to count the number of objects in storage.
+        Returns the number of objects in storage matching the
+        given class. If no class is passed, returns the count
+        of all objects in storage
+        '''
+        if cls in classes.values():
+            return len(models.storage.all(cls))
+        return len(models.storage.all())
