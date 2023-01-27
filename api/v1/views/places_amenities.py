@@ -11,6 +11,7 @@ from flask import jsonify, abort, request
 from os import getenv
 
 
+"""
 @app_views.route('/places/<place_id>/amenities')
 def pl_amenity_all(place_id):
     """ Route return all amenities in place referenced id """
@@ -60,6 +61,7 @@ def create_pl_amenities(place_id, amenity_id):
         my_place.amenity_ids.append(amenity_id)
     storage.save()
     return jsonify(my_amenity.to_dict()), 201
+"""
 
 
 # new
