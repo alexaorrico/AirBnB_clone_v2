@@ -15,6 +15,7 @@ from os import getenv
 @app_views.route('/places/<place_id>/amenities')
 def pl_amenity_all(place_id):
     """ Route return all amenities in place referenced id """
+
     my_place = storage.get('Place', place_id)
     if my_place is None:
         abort(404)
@@ -22,12 +23,14 @@ def pl_amenity_all(place_id):
         return jsonify(list(map(lambda x: x.to_dict(), my_place.amenities)))
     else:
         return jsonify(my_place.amenity_ids)
+    """
 
 
 @app_views.route('places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'])
 def delete_pl_amenity_id(place_id, amenity_id):
     """ Route delete amenities with referenced placeid  & amenityid"""
+    """
     my_place = storage.get('Place', place_id)
     if my_place is None:
         abort(404)
