@@ -114,58 +114,51 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_no_class(self):
-        """ test get with a non existing class
-        """
-        storage = FileStorage()
-        one = storage.get("NO", "09231280jdodasd")
-        self.assertEqual(one, None)
+    def test_get_dbstorage(self):
+        """Test get storage engine with valid data"""
+        obj = State(name="Some state")
+        obj.save()
+        models.storage.save()
+        return_obj = list(models.storage.all(State).values())[0].id
+        z = str(models.storage.all()['State.' + return_obj])
+        self.assertNotEqual(z, None)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_class_no_id(self):
-        """ test get if a class id doesn´t exist
-        """
-        storage = FileStorage()
-        one = storage.get("State", "09231280jdodasd")
-        self.assertEqual(one, None)
+    def test_get_dbstorage2(self):
+        """Test get storage engine with valid data"""
+        test = (models.storage.count())
+        self.assertEqual(type(test), int)
+        test2 = (models.storage.count(State))
+        self.assertEqual(type(test2), int)
+        first_state_id = list(models.storage.all(State).values())[0].id
+        test3 = models.storage.get(State, first_state_id)
+        self.assertEqual(str(type(test3)), "<class 'models.state.State'>")
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
-        """ test get return
-        """
-        storage = FileStorage()
-        first_elem = list(storage.all("State").values())[0]
-        first_state_id = first_elem.id
-        one = storage.get("State", first_state_id)
-        self.assertEqual(one, first_elem)
+    def test_get_fstorage_none(self):
+        """ testing invalid input"""
+        obj = State(name="Some state")
+        obj.save()
+        return_obj = models.storage.get('State', 'not_valid_id')
+        self.assertEqual(return_obj, None)
+        return_obj = models.storage.get('Not_valid_class', obj.id)
+        self.assertEqual(return_obj, None)
+        return_obj = models.storage.get('State', 33333)
+        self.assertEqual(return_obj, None)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_no_class(self):
-        """ test count is no class
-        """
-        storage = FileStorage()
-        counter = 0
-        dic = storage.all()
-        for elem in dic:
-            counter = counter + 1
-        self.assertEqual(counter, storage.count())
+    def test_count_fstorage(self):
+        """ testing count method"""
+        old_count = models.storage.count()
+        obj = State(name="Some state")
+        obj.save()
+        new_count = models.storage.count()
+        self.assertEqual(old_count + 1, new_count)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_fail(self):
-        """ test count if no valid class
-        """
-        storage = FileStorage()
-        counter = 0
-        self.assertEqual(counter, storage.count("NO_CLASS"))
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count(self):
-        """ test count with class user
-        """
-        storage = FileStorage()
-        counter = 0
-        dic = storage.all("User")
-        for elem in dic:
-            counter = counter + 1
-        self.assertEqual(counter, storage.count("User"))
+    def test_count_fstorage_cls(self):
+        """testing count method with class name"""
+        old_count = models.storage.count()
+        old_count_cls = models.storage.count('State')
+        obj = State(name="New York")
+        obj.save()
+        new_count = models.storage.count()
+        new_count_cls = models.storage.count('State')
+        self.assertEqual(old_count + 1, new_count)
+        self.assertEqual(old_count_cls + 1, new_count_cls)

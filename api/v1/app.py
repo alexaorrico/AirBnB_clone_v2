@@ -1,71 +1,43 @@
 #!/usr/bin/python3
 """
-Flask App integrated with AirBnB static
+This module contains the principal application
 """
-from flask import Flask, Blueprint, abort, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
+from flask import Flask, make_response, jsonify
 from os import getenv
 from flask_cors import CORS
 from flasgger import Swagger
-from models import storage
 
-# Global Flask Application Variable: app
 app = Flask(__name__)
-swagger = Swagger(app)
-
-# global strict slashes
-app.url_map.strict_slashes = False
-
-# flask server environmental setup
-host = getenv('HBNB_API_HOST', '0.0.0.0')
-port = getenv('HBNB_API_PORT', 5000)
-
-# Cross-Origin Resource Sharing
-cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
-
-# app_views BluePrint defined in api.v1.views
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
-
-# begin flask page rendering
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def teardown(exception):
-    """Close the current storage session"""
+def close_db(obj):
+    """ calls methods close() """
     storage.close()
 
 
 @app.errorhandler(404)
-def handle_404(exception):
-    """
-    handles 404 errors, in the event that global error handler fails
-    """
-    code = exception.__str__().split()[0]
-    description = exception.description
-    message = {'error': description}
-    return make_response(jsonify(message), code)
+def page_not_foun(error):
+    """ Loads a custom 404 page not found """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
-@app.errorhandler(Exception)
-def global_error_handler(err):
-    """
-      Global Route to handle all errors status code
-    """
-    if isinstance(err, HTTPException):
-        if type(err).__name__ == 'Not found':
-            err.description = 'Not found'
-        msg = {'error': err.description}
-        code = err.code
-    else:
-        msg = {'error': err}
-        code = 500
-    return make_response(jsonify(msg), code)
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone - RESTful API',
+    'description': 'This is the api that was created for the hbnb restful api project,\
+    all the documentation will be shown below',
+    'uiversion': 3}
 
+Swagger(app)
 
 if __name__ == "__main__":
-    """
-    MAIN Flask App
-    """
-    # start Flask app
-    app.run(host=host, port=port, threaded=True)
+
+    host = getenv('HBNB_API_HOST', default='0.0.0.0')
+    port = getenv('HBNB_API_PORT', default=5000)
+
+    app.run(host, int(port), threaded=True)
