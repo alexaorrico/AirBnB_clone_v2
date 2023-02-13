@@ -162,8 +162,6 @@ Second part of Airbnb: Joann Vuong
 Peter Chibunna - [Github](https://github.com/peterchibunna)
   
 Agbagher Japhet - [Github](https://github.com/ternguy)
-  
-Kitwana S. Ezechiel - [Github](https://github.com/KitwanaSh)
 
 ## License
 Public Domain. No copy write protection. 
