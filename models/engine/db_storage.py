@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -70,6 +70,17 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """Return object based on class and ID."""
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                stm = select(classes[clss]).filter_by(id=id)
+                objs = self.__session.scalars(stm).all()
+                for obj in objs:
+                    return obj
+        return None
 
     def close(self):
         """call remove() method on the private session attribute"""

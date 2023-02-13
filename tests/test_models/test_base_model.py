@@ -7,6 +7,7 @@ import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
+from os import getenv
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
