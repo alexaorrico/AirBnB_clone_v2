@@ -1,47 +1,66 @@
 #!/usr/bin/python3
-"""
-starts a Flask web application
-"""
-
+"""Definition of a Flask web application"""
 from flask import Flask, render_template
+
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def index():
-    """returns Hello HBNB!"""
-    return 'Hello HBNB!'
+@app.route("/", strict_slashes=False)
+def hello_world():
+    """
+    The hello_world function returns the string 'Hello HBNB!'
+    :return: The string `Hello HBNB!`
+    """
+    return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hbnb():
-    """returns HBNB"""
-    return 'HBNB'
+    """
+    The hbnb function returns the string 'HBNB'
+    :return: The string `HBNB`
+    """
+    return "HBNB"
 
 
-@app.route('/c/<text>', strict_slashes=False)
-def cisfun(text):
-    """display “C ” followed by the value of the text variable"""
-    return 'C ' + text.replace('_', ' ')
+@app.route("/c/<text>", strict_slashes=False)
+def hail_C(text):
+    """
+    The hail_C function returns the string 'C + {text}'
+    :return: The string `C + {text}`
+    """
+    text = text.replace("_", " ")
+    return "C {}".format(text)
 
 
-@app.route('/python', strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
-def pythoniscool(text='is cool'):
-    """display “Python ”, followed by the value of the text variable"""
-    return 'Python ' + text.replace('_', ' ')
+@app.route("/python/", strict_slashes=False)
+@app.route("/python/<text>", strict_slashes=False)
+def pytee(text="is cool"):
+    """
+    The pytee function returns the string 'Python + {text}'
+    :return: The string `Python + {text}`
+    """
+    text = text.replace("_", " ")
+    return "Python {}".format(text)
 
 
-@app.route('/number/<int:n>', strict_slashes=False)
-def imanumber(n):
-    """display “n is a number” only if n is an integer"""
-    return "{:d} is a number".format(n)
+@app.route("/number/<int:num>", strict_slashes=False)
+def number(num):
+    """
+    The number function returns the string 'n is a number'
+    :return: `n is a number`
+    """
+    return "{} is a number".format(num)
 
 
-@app.route('/number_template/<int:n>', strict_slashes=False)
-def numbersandtemplates(n):
-    """display a HTML page only if n is an integer"""
-    return render_template('5-number.html', n=n)
+@app.route("/number_template/<int:numba>", strict_slashes=False)
+def number_template(numba):
+    """
+    The number_template function renders a HTML file
+    :return: 5-number.html
+    """
+    return render_template("5-number.html", numba=numba)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)

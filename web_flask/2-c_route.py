@@ -1,28 +1,37 @@
 #!/usr/bin/python3
-"""
-starts a Flask web application
-"""
-
+"""Definition of a Flask web application"""
 from flask import Flask
+
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def index():
-    """returns Hello HBNB!"""
-    return 'Hello HBNB!'
+@app.route("/", strict_slashes=False)
+def hello_world():
+    """
+    The hello_world function returns the string 'Hello HBNB!'
+    :return: The string `Hello HBNB!`
+    """
+    return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hbnb():
-    """returns HBNB"""
-    return 'HBNB'
+    """
+    The hbnb function returns the string 'HBNB'
+    :return: The string `HBNB`
+    """
+    return "HBNB"
 
 
-@app.route('/c/<text>', strict_slashes=False)
-def cisfun(text):
-    """display “C ” followed by the value of the text variable"""
-    return 'C ' + text.replace('_', ' ')
+@app.route("/c/<text>", strict_slashes=False)
+def hail_C(text):
+    """
+    The hbnb function returns the string 'C + {text}'
+    :return: The string `C + {text}`
+    """
+    text = text.replace("_", " ")
+    return "C {}".format(text)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
