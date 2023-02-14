@@ -92,4 +92,3 @@ class FileStorage:
         for obj in objs:
             count += 1
         return count
-
