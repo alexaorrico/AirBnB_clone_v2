@@ -160,6 +160,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 
 Third part of Airbnb: Stephen Obialor - [Github](https://github.com/Cobidex)
-		      Nnachi Kingsley - [Github](https://github.com/kingieX)
+		      Nnachi Kingsley - [Github](https://github.com/kingieX) / [Twitter]
 ## License
 Public Domain. No copy write protection. 
