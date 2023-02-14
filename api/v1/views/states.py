@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" objects that handle all default RestFul API actions for States """
+"""objects that handle all default RestFul API actions for States"""
 from models.state import State
 from models import storage
 from api.v1.views import app_views
@@ -37,7 +37,7 @@ def del_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
-    """Returns the new State"""
+    """creates new State"""
     new_obj = request.get_json()
     if not new_obj:
         abort(400, "Not a JSON")
@@ -60,9 +60,9 @@ def put_state(state_id):
     if not req:
         abort(400, "Not a JSON")
 
-    for k, v in req.items():
-        if k not in ['id', 'created_at', 'updated_at']:
-            setattr(obj, k, v)
+    for key, value in req.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(obj, key, value)
 
     storage.save()
     return make_response(jsonify(obj.to_dict()), 200)
