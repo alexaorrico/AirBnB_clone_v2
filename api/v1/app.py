@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Initiates a Flask app
+"""
 
 from os import getenv
 from flask import Flask
