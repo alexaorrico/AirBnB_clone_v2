@@ -1,28 +1,48 @@
 #!/usr/bin/python3
-"""
-starts a Flask web application
-"""
-
+"""Flask Web App that returns list of states"""
 from flask import Flask, render_template
-from models import *
 from models import storage
+from models.state import State
+
 app = Flask(__name__)
-
-
-@app.route('/states', strict_slashes=False)
-@app.route('/states/<state_id>', strict_slashes=False)
-def states(state_id=None):
-    """display the states and cities listed in alphabetical order"""
-    states = storage.all("State")
-    if state_id is not None:
-        state_id = 'State.' + state_id
-    return render_template('9-states.html', states=states, state_id=state_id)
 
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """closes the storage on teardown"""
-    storage.close()
+    """teardown_db closes connections to database"""
+    if storage is not None:
+        storage.close()
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+
+# def state_list():
+#     """get all state info from database"""
+#     states = storage.all(State)
+#     return render_template("9-states.html", states=states)
+
+
+@app.route("/states", strict_slashes=False)
+@app.route("/states/<id>", strict_slashes=False)
+def states_city(id=None):
+    """get all state info from database"""
+    states = storage.all(State)
+    if id is None:
+        statez = states.values()
+        return render_template("9-states.html", states=statez)
+    # print(f"ID => {id}\n")
+    # [print(state.name) for state in states.values() if id == state.id]
+    for state in states.values():
+        if id == state.id:
+            print(state.name)
+            return render_template("9-states.html", id_state=state)
+    return render_template("9-states.html")
+
+
+@app.route("/cities_by_states", strict_slashes=False)
+def city_list():
+    """get all state and city info from database"""
+    states = storage.all(State)
+    return render_template("9-states.html", states=states)
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
