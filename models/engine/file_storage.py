@@ -75,9 +75,7 @@ class FileStorage:
             if id:
                 key = cls.__class__.__name__ + '.' + id
                 ob_dict = self.all(cls)
-                return ob_list[key]
-            else:
-                return (None)
+                return (ob_dict.get(key))
         else:
             return (None)
 
@@ -85,4 +83,4 @@ class FileStorage:
         """count the number of objects in storage"""
         if cls in FileStorage.classes:
             ob_dict = self.all(cls)
-            return len(ob_dict)
+            return (len(ob_dict))

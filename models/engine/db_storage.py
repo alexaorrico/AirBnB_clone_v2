@@ -80,10 +80,7 @@ class DBStorage:
         if cls in DBStorage.classes:
             key = cls.__class__.__name__ + '.' + id
             ob_dict = self.all(cls)
-            if key in ob_dict:
-                return ob_list[key]
-            else:
-                return None
+            return (ob_dict.get(key))
         else:
             return None
 
@@ -91,4 +88,4 @@ class DBStorage:
         """count the number of objects in storage"""
         if cls in DBStorage.classes:
             ob_dict = self.all(cls)
-            return len(ob_dict)
+            return (len(ob_dict))
