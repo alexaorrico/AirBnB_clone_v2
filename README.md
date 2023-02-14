@@ -159,6 +159,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 
-third part of Airbnb: Stephen Obialor - [Github](https://github.com/Cobidex)
+Third part of Airbnb: Stephen Obialor - [Github](https://github.com/Cobidex)
 ## License
 Public Domain. No copy write protection. 
