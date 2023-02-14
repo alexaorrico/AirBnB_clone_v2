@@ -7,6 +7,65 @@ from models.user import User
 from . import app_views
 from flask import jsonify, abort, request
 
+@app_views.route('/places_search',
+                 methods=['POST'],
+                 strict_slashes=False)
+def places_search():
+    """Search for place according to parameters
+    in body request
+    """
+    # POST REQUEST
+    if request.is_json:  # check is request is valid json
+        body = request.get_json()
+    else:
+        abort(400, 'Not a JSON')
+
+    place_list = []
+
+    # if states searched
+    if 'states' in body:
+        for state_id in body['states']:
+            state = storage.get(State, state_id)
+            if state is not None:
+                for city in state.cities:
+                    for place in city.places:
+                        place_list.append(place)
+
+    # if cities searched
+    if 'cities' in body:
+        for city_id in body['cities']:
+            city = storage.get(City, city_id)
+            if city is not None:
+                for place in city.places:
+                    place_list.append(place)
+
+    # if 'amenities' present
+    if 'amenities' in body and len(body['amenities']) > 0:
+        if len(place_list) == 0:
+            place_list = [place for place in storage.all(Place).values()]
+        del_list = []
+        for place in place_list:
+            for amenity_id in body['amenities']:
+                amenity = storage.get(Amenity, amenity_id)
+                if amenity not in place.amenities:
+                    del_list.append(place)
+                    break
+        for place in del_list:
+            place_list.remove(place)
+
+    if len(place_list) == 0:
+        place_list = [place for place in storage.all(Place).values()]
+
+    # convert objs to dict and remove 'amenities' key
+    place_list = [place.to_dict() for place in place_list]
+    for place in place_list:
+        try:
+            del place['amenities']
+        except KeyError:
+            pass
+
+    return jsonify(place_list)
+
 @app_views.route("/cities/<city_id>/places")
 def places(city_id):
     """Get all the places of a city"""
