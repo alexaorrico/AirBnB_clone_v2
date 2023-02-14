@@ -80,7 +80,10 @@ class DBStorage:
         if cls in DBStorage.classes:
             key = cls.__class__.__name__ + '.' + id
             ob_dict = self.all(cls)
-            return ob_list[key]
+            if key in ob_dict:
+                return ob_list[key]
+            else:
+                return None
         else:
             return None
 
