@@ -69,3 +69,4 @@ def create_state():
     storage.new(obj)
     storage.save()
     return jsonify(obj.to_dict()), 201
+
