@@ -69,9 +69,9 @@ def put_city(city_id):
     if not req:
         abort(400, "Not a JSON")
 
-    for k, v in req.items():
-        if k not in ['id', 'created_at', 'update_at', 'state_id']:
-            setattr(obj, k, v)
+    for key, value in req.items():
+        if key not in ['id', 'created_at', 'update_at', 'state_id']:
+            setattr(obj, key, value)
 
     storage.save()
     return make_response(jsonify(obj.to_dict()), 200)
