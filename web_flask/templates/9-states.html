@@ -21,7 +21,7 @@
         <ul>
         {#- Loop thru the state #}
         {#- sort the dict by value, case insensitive #}
-        {# for key, state in states | dictsort(false, 'value') #}
+        {#- for key, state in states | dictsort(false, 'value') #}
         {% for state in states | sort(attribute="name") %}
             <li>{{ state.id|e }}: <B>{{ state.name|e }}</B></li>
         {% endfor %}
