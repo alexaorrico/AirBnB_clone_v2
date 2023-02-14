@@ -76,10 +76,10 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Method to retrieve one obj"""
+        """Method to retrieve one object"""
         for value in self.all(cls).values():
             if value.id == id:
-                return value
+                return valu
         return None
 
     def count(self, cls=None):
