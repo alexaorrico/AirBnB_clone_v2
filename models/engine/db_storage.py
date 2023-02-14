@@ -93,7 +93,6 @@ class DBStorage:
                 total_count += len(self.__session.query(classes[clss]).all())
         return total_count
 
-
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
