@@ -316,7 +316,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Trefania Vhareta - [Github]()  
+Trefania Vhareta - [Github](https://github.com/Trefania)  
 Emmanuel Fasogba [Github](https://github.com/fashemma007) / [Twitter](https://twitter.com/tz_emiwest)
 ## Co-Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
