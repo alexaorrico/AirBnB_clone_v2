@@ -25,11 +25,16 @@ def teardown_db(exception):
 def states_city(id=None):
     """get all state info from database"""
     states = storage.all(State)
+    if id is None:
+        statez = states.values()
+        return render_template("9-states.html", states=statez)
+    # print(f"ID => {id}\n")
+    # [print(state.name) for state in states.values() if id == state.id]
     for state in states.values():
-        if id and state.id == id:
+        if id == state.id:
+            print(state.name)
             return render_template("9-states.html", id_state=state)
-    state = states.values()
-    return render_template("9-states.html", states=state)
+    return render_template("9-states.html")
 
 
 @app.route("/cities_by_states", strict_slashes=False)
