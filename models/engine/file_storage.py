@@ -72,10 +72,9 @@ class FileStorage:
     def get(self, cls, id):
         """retrieve one object"""
         if cls in FileStorage.classes:
-            if id:
-                key = cls.__class__.__name__ + '.' + id
-                ob_dict = self.all(cls)
-                return (ob_dict.get(key))
+            key = cls.__class__.__name__ + '.' + id
+            ob_dict = self.all(cls)
+            return (ob_dict.get(key))
         else:
             return (None)
 
