@@ -152,6 +152,7 @@ class TestBaseModel(unittest.TestCase):
         old_created_at = inst.created_at
         old_updated_at = inst.updated_at
         inst.save()
+        time.sleep(1)
         new_created_at = inst.created_at
         new_updated_at = inst.updated_at
         self.assertNotEqual(old_updated_at, new_updated_at)
