@@ -4,7 +4,7 @@ This module creates and configures the Flask application.
 """
 
 from os import environ
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, jsonify
 from api.v1.views import app_views
 from models import storage
 
