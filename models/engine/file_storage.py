@@ -30,6 +30,7 @@ class FileStorage:
     __file_path = './dev/file.json'
     __objects = {}
 
+    
     def all(self, cls=None):
         """
             returns private attribute: __objects
