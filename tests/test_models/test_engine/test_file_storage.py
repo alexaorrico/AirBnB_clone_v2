@@ -2,10 +2,14 @@
 """
 Contains the TestFileStorageDocs classes
 """
-
-from datetime import datetime
+import os
+import json
+import pep8
 import inspect
+import unittest
 import models
+from datetime import datetime
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -14,10 +18,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -70,6 +70,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +114,44 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
+    def test_get(self):
+        """Test get method."""
+        storage = FileStorage()
+        ca = State(name="California")
+        key = ca.__class__.__name__
+        FileStorage._FileStorage__objects["{}.{}".format(key, ca.id)] = ca
+        self.assertEqual(storage.get("State", ca.id), ca)
+
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
+    def test_get_nonexistant_object(self):
+        """Test get method with nonexistent parameter."""
+        storage = FileStorage()
+        self.assertIsNone(storage.get("State", "id"))
+
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
+    def test_count_no_class(self):
+        """Test count method without specified class."""
+        storage = FileStorage()
+        FileStorage._FileStorage__objects = {}
+        ca = State(name="California")
+        key = ca.__class__.__name__
+        FileStorage._FileStorage__objects["{}.{}".format(key, ca.id)] = ca
+        sf = City(name="San Francisco")
+        key = sf.__class__.__name__
+        FileStorage._FileStorage__objects["{}.{}".format(key, sf.id)] = sf
+        self.assertEqual(2, storage.count())
+
+    @unittest.skipIf(type(storage) != FileStorage, "Testing DBStorage")
+    def test_count_specified_class(self):
+        """Test count method with specified class."""
+        storage = FileStorage()
+        FileStorage._FileStorage__objects = {}
+        ca = State(name="California")
+        key = ca.__class__.__name__
+        FileStorage._FileStorage__objects["{}.{}".format(key, ca.id)] = ca
+        sf = City(name="San Francisco")
+        key = sf.__class__.__name__
+        FileStorage._FileStorage__objects["{}.{}".format(key, sf.id)] = sf
+        self.assertEqual(storage.count("State"), 1)
