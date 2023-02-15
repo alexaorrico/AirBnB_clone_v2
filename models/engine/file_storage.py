@@ -83,9 +83,7 @@ class FileStorage:
         """Count the number of objects in storage"""
         obj_count = 0
         if isinstance(cls, str) and cls in classes:
-            cls = classes[cls]
-            obj_count = self.__session.query(cls).count()
+            obj_count = len(self.all(cls))
         elif cls is None:
-            for cls in classes.values():
-                obj_count += self.__session.query(cls).count()
+            obj_count = len(self.__objects)
         return obj_count
