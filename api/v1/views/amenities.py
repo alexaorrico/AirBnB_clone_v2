@@ -13,7 +13,7 @@ from models.engine.db_storage import classes
 def all_amenities():
     """ defines route for api/v1/amenities """
     if request.method == 'GET':
-        amenity = [amenity.to_dict() for amenity in storage.all('Amenity').values()]
+        amenity = [a.to_dict() for a in storage.all('Amenity').values()]
         return jsonify(amenity)
 
     if request.method == 'POST':
@@ -30,14 +30,14 @@ def all_amenities():
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'])
 def amenity_by_id(amenity_id):
     """ defines route for api/vi/amenities/<amenity_id> """
+    allAmenity = [a for a in storage.all('Amenity').values()]
+    amenity = [a for a in allAmenity if a.id == amenity_id]
     if request.method == 'GET':
-        amenity = [a for a in storage.all('Amenity').values() if a.id == amenity_id]
         if (len(amenity) == 0):
             abort(404)
         return jsonify(amenity[0].to_dict())
 
     if request.method == 'DELETE':
-        amenity = [a for a in storage.all("Amenity").values() if a.id == amenity_id]
         if len(amenity) == 0:
             return make_response('Not found', 404)
         storage.delete(amenity[0])
@@ -45,7 +45,6 @@ def amenity_by_id(amenity_id):
         return jsonify({})
 
     if request.method == 'PUT':
-        amenity = [a for a in storage.all('Amenity').values() if a.id == amenity_id]
         if len(amenity) == 0:
             abort(404)
         if not request.json:
