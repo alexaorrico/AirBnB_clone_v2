@@ -2,7 +2,7 @@
 """This module handles all RESTful API actions for Amenity objects"""
 from api.v1.views import app_views
 from models import storage
-from models.storage import Amenity
+from models.amenity import Amenity
 from flask import jsonify, abort, request
 
 
