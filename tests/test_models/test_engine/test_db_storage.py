@@ -327,7 +327,6 @@ class TestCityDBInstancesUnderscore(unittest.TestCase):
         self.assertTrue(exist_in_all)
         self.assertTrue(exist_in_all_city)
 
-
 @unittest.skipIf(STORAGE_TYPE != 'db', 'skip if environ is not db')
 class TestPlaceDBInstances(unittest.TestCase):
     """testing for class instances"""
