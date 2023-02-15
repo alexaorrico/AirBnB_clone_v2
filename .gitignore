@@ -1,0 +1,26 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# IDEs and editors
+.idea/
+.vscode/
+*.pydevproject
+
+# Local development settings
+.env
+
+# Logs and temp files
+*.log
+*.swp
+*.bak
+*.tmp
+
+# file storage
+file.json
