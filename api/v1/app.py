@@ -2,7 +2,7 @@
 """
 This is an endpoint to return the status of the API
 """
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ as env
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 def teardown_app(exception):
     """ Closes the database request after each request"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """ returns the error code 404 if wrong url """
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == "__main__":
