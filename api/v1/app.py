@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Application startup script."""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -14,6 +14,12 @@ app.register_blueprint(app_views)
 def shutdown_app(err):
     """Close the storage on app teardown."""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(err):
+    """Handle 404 errors."""
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == '__main__':
