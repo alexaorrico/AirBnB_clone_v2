@@ -19,6 +19,7 @@ import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
+
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -86,3 +87,31 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        pass
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def  test_get(self):
+        """ tests get method retrives instance correctly"""
+
+        storage = DBStorage()
+        new_user = User()
+        new_user.save()
+
+        # initial_length = len(storage.all())
+        self.assertEqual(storage.get("User", "foo"), None)
+        self.assertEqual(storage.get("foo", "bar"), None)
+        self.assertEqual(storage.get("User", new_user.id), new_user)
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def  test_count(self):
+        """ test the count method of the storage"""
+        storage = DBStorage()
+        initial_length = len(storage.all())
+
+        self.assertEqual(storage.count(), initial_length)
+        user_len = len(storage.all("User"))
+        self.assertEqual(storage.count("User"), user_len)
+        new_user = User()
+        new_user.save()
+        self.assertEqual(storage.count("User"), user_len + 1)
+        self.assertEqual(storage.count(), initial_length + 1)
