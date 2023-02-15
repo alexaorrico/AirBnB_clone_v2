@@ -93,4 +93,4 @@ class FileStorage:
         """
         if not cls:
             return len(self.__objects)
-        return len([key for key in self.__objects if key.startswith(cls)]
+        return len([key for key in self.__objects if key.startswith(cls)])
