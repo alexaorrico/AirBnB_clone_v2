@@ -68,11 +68,11 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-"""class TestFileStorage(unittest.TestCase):
-    Test the FileStorage class
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
-        Test that all returns the FileStorage.__objects attr
+        """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
         new_dict = storage.all()
         self.assertEqual(type(new_dict), dict)
@@ -80,7 +80,7 @@ test_file_storage.py'])
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
-        test that new adds an object to the FileStorage.__objects attr
+        """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
@@ -96,7 +96,7 @@ test_file_storage.py'])
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
-        Test that save properly saves objects to file.json
+        """Test that save properly saves objects to file.json"""
         storage = FileStorage()
         new_dict = {}
         for key, value in classes.items():
@@ -131,6 +131,8 @@ test_file_storage.py'])
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
+        """ Tests that count returns the correct
+        number of specified classes or all"""
         storage = FileStorage()
         new_dict = storage.all()
         count = len(new_dict)
