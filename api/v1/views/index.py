@@ -7,11 +7,12 @@ from flask import jsonify
 import json
 from models import storage
 
-print(type(Amenity))
+
 @app_views.route('/status')
 def status():
     """returns the url status"""
     return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats')
 def stats():
