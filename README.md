@@ -155,7 +155,8 @@ No known bugs at this time.
 
 ## Authors
 Joseph Tam Ogbo - [Github](https://github.com/josephtam-github) / [Twitter](https://twitter.com/Joseph_tam_)  
+Ejiofor Kenneth Obieze - [Github](https://github.com/Ken-Obieze)
+Zehara Yassin Amin Yassin - [Github](https://github.com/zeharaY)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
