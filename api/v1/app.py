@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Run Flask application
+'''Run Flask application API
 '''
 import os
 from flask import Flask, jsonify
@@ -10,7 +10,7 @@ from models import storage
 
 
 app = Flask(__name__)
-'''Flask instance'''
+'''Flask application instance'''
 app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
 app_port = int(os.getenv('HBNB_API_PORT', '5000'))
 app.url_map.strict_slashe = False
