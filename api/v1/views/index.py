@@ -26,7 +26,3 @@ def stats():
         res[key] = models.storage.count(value)
     return res
 
-@app_views.app_errorhandler(404)
-def not_found(err):
-    """if route does not exist"""
-    return {"error": "Not found"}
