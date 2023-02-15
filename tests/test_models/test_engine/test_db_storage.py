@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the TestDBStorageDocs and TestDBStorage classes
-"""
+""" Contains the TestDBStorageDocs and TestDBStorage classes """
 
 from datetime import datetime
 import inspect
@@ -116,4 +114,3 @@ class TestDBStorage(unittest.TestCase):
         newUser.save()
         self.assertEqual(models.storage.count("State"), startCount + 1)
         self.assertEqual(models.storage.count(), startCount + 2)
-
