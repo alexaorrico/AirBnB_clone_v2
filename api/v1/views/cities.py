@@ -36,7 +36,8 @@ def cities_by_state_id(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
 def cities_by_city_id(city_id):
     """  defines a route to /cities/<city_id> """
-    cities = [city for city in storage.all('City').values() if city.id == city_id]
+    allCities = [city for city in storage.all('City').values()]
+    cities = [city for city in allCities if city.id == city_id]
     if len(cities) == 0:
         abort(404)
     if request.method == 'GET':
