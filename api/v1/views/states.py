@@ -1,31 +1,32 @@
 #!/usr/bin/python3
-'''state view for API'''
+'''Contains the states view for the API.'''
 from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
 from models import storage
-from models.state import state
+from models.state import State
+
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def state():
-    '''list all state object'''
-    objs = storage.all(state)
+    """Retrieves the list of all State objects"""
+    objs = storage.all(State)
     return jsonify([obj.to_dict() for obj in objs.values()])
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def single_state(state_id):
-    '''Retrieve state object'''
-    obj = storage.get(state, state_id)
+    """Retrieves a State object"""
+    obj = storage.get(State, state_id)
     if not obj:
         abort(404)
     return jsonify(obj.to_dict())
 
 
 @app_views.route('/states/<state_id>',
-        method=['DELETE'], strict_slashes=False)
+                 methods=['DELETE'], strict_slashes=False)
 def del_state(state_id):
-    '''delete state object'''
-    obj = storage.get(state, state_id)
+    """Deletes a State object"""
+    obj = storage.get(State, state_id)
     if not obj:
         abort(404)
     obj.delete()
@@ -35,22 +36,22 @@ def del_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
-    '''return new state'''
+    """Returns the new State with the status code 201"""
     new_obj = request.get_json()
     if not new_obj:
         abort(400, "Not a JSON")
     if 'name' not in new_obj:
         abort(400, "Missing name")
-    obj = state(**new_obj)
+    obj = State(**new_obj)
     storage.new(obj)
     storage.save()
     return make_response(jsonify(obj.to_dict()), 201)
 
 
-@app_view.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
-    '''update state object'''
-    obj = storage.get(state, state_id)
+    """ Updates a State object """
+    obj = storage.get(State, state_id)
     if not obj:
         abort(404)
 
