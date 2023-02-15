@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -58,6 +58,24 @@ class DBStorage:
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
+
+    def get(self, cls, id):
+        """ Retrieves an object identified by
+        a class (cls) and onject id (id)"""
+        for clss in classes:
+            if cls == classes[clss] or cls == clss:
+                obj = self.__session.query(classes[clss]).get(id)
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """Returns the number of objects in a
+        class (if cls defined) or all objects in the database"""
+        if cls is None:
+            count = len(self.all())
+        else:
+            count = self.__session.query(classes[cls]).count()
+        return count
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""

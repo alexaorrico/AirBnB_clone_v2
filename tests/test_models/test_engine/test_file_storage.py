@@ -112,4 +112,33 @@ test_file_storage.py'])
         string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()
-        self.assertEqual(json.loads(string), json.loads(js))"""
+        self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get retreives the correct object"""
+        storage = FileStorage()
+        with open("file.json", "r") as f:
+            json_dict = f.read()
+            file_ob = json.loads(json_dict)
+            for key, value in file_ob.items():
+                with self.subTest(key=key, value=value):
+                    file_id = value['id']
+                    file_key = value['__class__'] + "." + file_id
+                    file_obj = storage._FileStorage__objects[file_key]
+                    get_obj = storage.get(classes[value['__class__']], file_id)
+                    self.assertEqual(file_obj, get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        storage = FileStorage()
+        new_dict = storage.all()
+        count = len(new_dict)
+        count_method = storage.count()
+        for clss in classes:
+            with self.subTest():
+                clss_dict = storage.all(clss)
+                clss_len = len(clss_dict)
+                count_clss = storage.count(clss)
+                self.assertEqual(count_clss, clss_len)
+        self.assertEqual(count, count_method)
