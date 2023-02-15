@@ -30,6 +30,7 @@ def error_404(error):
     '''handles 404 error code'''
     return jsonify(error='Not found'), 404
 
+
 @app.errorhandler(400)
 def error_400(error):
     '''handles 400 error code'''
