@@ -25,14 +25,18 @@ def places_by_city_id(city_id):
             return make_response('Not a JSON', 400)
         if 'user_id' not in request.json:
             return make_response('Missing user_id', 400)
+        if 'name' not in request.json:
+            return make_response('Missing name', 400)
+        placeDict = request.json
+        placeDict['city_id'] = city_id
         newObj = classes['Place']
-        newPlace = newObj(**request.json)
+        newPlace = newObj(**placeDict)
         newPlace.save()
         return jsonify(newPlace.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'])
-def places_by_place_id(city_id):
+def places_by_place_id(place_id):
     """  defines a route to /places/<place_id> """
     allPlace = [p for p in storage.all('Place').values()]
     places = [p for p in allPlace if p.id == place_id]
