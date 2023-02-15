@@ -1,4 +1,4 @@
-#!/usr/bin/python3.8
+#!/usr/bin/python3
 """
 This module contains the API route for the status of the API.
 

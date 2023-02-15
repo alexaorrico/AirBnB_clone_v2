@@ -1,4 +1,4 @@
-#!/usr/bin/python3.8
+#!/usr/bin/python3
 """
 This module contains the Flask application instance and the API routes.
 The application instance is created and the API routes are registered here.

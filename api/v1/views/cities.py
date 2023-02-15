@@ -7,10 +7,14 @@ from flask import abort, jsonify, request
 from models import storage
 from models.state import State
 from models.city import City
-from api.v1.views import app_views
+from api.v1.views import app_views, City, State, storage
 
 
-@app_views.route("/states/<string:state_id>/cities", methods=["GET"])
+@app_views.route(
+    "/states/<string:state_id>/cities",
+    methods=["GET"],
+    strict_slashes=False
+)
 def get_cities_by_state(state_id):
     """
     Retrieves the list of all City objects of a State.
@@ -22,7 +26,11 @@ def get_cities_by_state(state_id):
     return jsonify(cities)
 
 
-@app_views.route("/cities/<string:city_id>", methods=["GET"])
+@app_views.route(
+    "/cities/<string:city_id>",
+    methods=["GET"],
+    strict_slashes=False
+)
 def get_city(city_id):
     """
     Retrieves a City object.
@@ -33,7 +41,11 @@ def get_city(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.route("/cities/<string:city_id>", methods=["DELETE"])
+@app_views.route(
+    "/cities/<string:city_id>",
+    methods=["DELETE"],
+    strict_slashes=False
+)
 def delete_city(city_id):
     """
     Deletes a City object.
@@ -43,10 +55,14 @@ def delete_city(city_id):
         abort(404)
     storage.delete(city)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
-@app_views.route("/states/<string:state_id>/cities", methods=["POST"])
+@app_views.route(
+    "/states/<string:state_id>/cities",
+    methods=["POST"],
+    strict_slashes=False
+)
 def create_city(state_id):
     """
     Creates a City.
@@ -66,7 +82,11 @@ def create_city(state_id):
     return jsonify(city.to_dict()), 201
 
 
-@app_views.route("/cities/<string:city_id>", methods=["PUT"])
+@app_views.route(
+    "/cities/<string:city_id>",
+    methods=["PUT"],
+    strict_slashes=False
+)
 def update_city(city_id):
     """
     Updates a City object.
@@ -81,4 +101,4 @@ def update_city(city_id):
         if key not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(city, key, value)
     storage.save()
-    return jsonify(city.to_dict())
+    return jsonify(city.to_dict()), 200
