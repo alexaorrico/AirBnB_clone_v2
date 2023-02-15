@@ -73,8 +73,8 @@ class FileStorage:
         """Gets an object"""
         if cls is not None and isinstance(cls, str) and cls in classes and \
                 id is not None and isinstance(id, str):
-            cls = classes[cls]
-            object = self.__session.query(cls).filter(cls.id == id).first()
+            key = cls + '.' + id
+            object = self.__objects.get(key, None)
             return (object)
         else:
             return (None)
