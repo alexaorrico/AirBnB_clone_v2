@@ -25,8 +25,17 @@ class User(BaseModel, Base):
         first_name = ""
         last_name = ""
 
+    def save(self):
+        """updates the attribute 'updated_at' with the current datetime"""
+        self.updated_at = datetime.utcnow()
+        if self.password:
+            self.password = hashlib.md5(self.password.encode()).hexdigest()
+        models.storage.new(self)
+        models.storage.save()
+
     def __init__(self, *args, **kwargs):
         """initializes user"""
         if kwargs.get("password"):
-            kwargs["password"] = hashlib.md5(kwargs["password"].encode()).hexdigest()
+            kwargs["password"] = hashlib.md5(kwargs["password"].
+                                             encode()).hexdigest()
         super().__init__(*args, **kwargs)
