@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''state view for API'''
-from flask import abort, jsinify, make_response, request
+from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
 from models import storage
 from models.state import state
