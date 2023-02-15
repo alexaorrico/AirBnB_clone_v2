@@ -29,6 +29,7 @@ class TestFileStorageDocs(unittest.TestCase):
 
     all_funcs = inspect.getmembers(FileStorage, inspect.isfunction)
 
+    
     @classmethod
     def setUpClass(cls):
         print('\n\n.................................')
