@@ -23,6 +23,7 @@ class DBStorage:
         'User': user.User
     }
 
+    
     """
         handles storage for database
     """
