@@ -68,20 +68,20 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-""""class TestFileStorage(unittest.TestCase):
-    Test the FileStorage class
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
-        Test that all returns a dictionaty
+        """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
-        Test that all returns all rows when no class is passed
+        """Test that all returns all rows when no class is passed"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
-        test that new adds an object to the databa
+        """test that new adds an object to the database"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
