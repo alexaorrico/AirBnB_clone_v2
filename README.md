@@ -159,8 +159,8 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 
-Peter Chibunna - [Github](https://github.com/peterchibunna)
-  
+Third part: **[AirBnB_clone_v3]**<br>
+Peter Chibunna - [Github](https://github.com/peterchibunna)<br>
 Agbagher Japhet - [Github](https://github.com/ternguy)
 
 ## License
