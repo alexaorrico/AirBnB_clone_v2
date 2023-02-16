@@ -9,11 +9,12 @@
 	width: 100%;
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
-	position: relative;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: stretch;
+	z-index: 2;
+	position: relative;
 }
 
 .container .filters .locations {
@@ -28,7 +29,7 @@
 .container .filters button {
 	font-size: 18px;
 	background-color: #FF5A5F;
-	height: 48px;
+	height: 60%;
 	width: 20%;
 	border: none;
 	border-radius: 4px;
@@ -37,6 +38,15 @@
 
 .container .filters button:hover {
 	opacity: 0.9;
+}
+
+/**
+ * ------ HEADERS
+ */
+
+.container .filters h2 {
+	font-size: 16px;
+	margin: 10px 0 5px 0;
 }
 
 .container .filters h3 {
@@ -48,6 +58,46 @@
 	font-weight: 400;
 	font-size: 14px;
 	margin: 7px 0 3px 40px;
+}
+
+/**
+ * ------ POPOVER
+ */
+
+.container .filters .locations:hover .popover {
+	display: list-item;
+}
+
+.container .filters .amenities:hover .popover {
+	display: list-item;
+}
+
+.container .filters .popover {
+	display: none;
+	list-style-type: none;
+	background-color: #FAFAFA;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px;
+	padding: 30px 40px 40px 30px;
+	margin: 15px -1px 0 -1px;
+}
+
+.container .filters .popover ul {
+	list-style-type: none;
+	padding-left: 20px;
+}
+
+.container .filters .popover li {
+	margin: 5px 0 5px 0;
+}
+
+
+@media screen and (min-width: 1800px) {
+
+	.container .filters {
+		min-height: 200px;
+	}
+
 }
 
 @media screen and (max-width: 600px) {

@@ -32,3 +32,11 @@ div.container {
 	flex-direction: column;
 	align-items: stretch;
 }
+
+@media screen and (min-width: 1800px) {
+
+	div.container {
+		max-width: 80%;
+	}
+
+}
