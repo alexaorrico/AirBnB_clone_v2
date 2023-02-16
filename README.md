@@ -162,6 +162,7 @@ Ruth Atse - [Github](https://github.com/Ruthatse) / [Twitter]
   
 Fregis Koffi - [Github](https://github.com/fregisk) / [Twitter]
 (https://twitter.com/fregiskonan)
+  
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
