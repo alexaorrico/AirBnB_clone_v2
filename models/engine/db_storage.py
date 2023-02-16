@@ -63,7 +63,7 @@ class DBStorage:
         """ Retrieves an object identified by
         a class (cls) and onject id (id)"""
         for clss in classes:
-            if cls == classes[clss] or cls == clss:
+            if cls == classes[clss]:
                 obj = self.__session.query(classes[clss]).get(id)
                 return obj
         return None
@@ -74,7 +74,7 @@ class DBStorage:
         if cls is None:
             count = len(self.all())
         else:
-            count = self.__session.query(classes[cls]).count()
+            count = len(self.all(cls))
         return count
 
     def delete(self, obj=None):
