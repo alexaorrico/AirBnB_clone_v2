@@ -1,0 +1,14 @@
+Deletes a city object
+---
+tags:
+    - City
+parameters:
+    - name: id
+      in: path
+      type: string
+      required: true
+responses:
+  200:
+    description: City deleted
+  404:
+    description: Resource not found
