@@ -159,6 +159,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
   
 Ruth Atse - [Github](https://github.com/Ruthatse) / [Twitter]
 (https://twitter.com/atse_ruth)
+  
 Fregis Koffi - [Github](https://github.com/fregisk) / [Twitter]
 (https://twitter.com/fregiskonan)
 Second part of Airbnb: Joann Vuong
