@@ -29,9 +29,14 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
         if kwargs:
+            hash_pw = kwargs.get('hash_pw', True)
+            if hash_pw is False:
+                del kwargs['hash_pw']
             for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
+                    if key == "password" and hash_pw is False:
+                        super().__setattr__(key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
             else:
@@ -58,7 +63,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, hide_pw=True):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -68,6 +73,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if "password" in new_dict and hide_pw is True:
+            del new_dict["password"]
         return new_dict
 
     def delete(self):
