@@ -34,7 +34,7 @@ def delete_amenity(amenity_id):
         abort(404)
     storage.delete(amenity)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)
@@ -63,4 +63,4 @@ def update_amenity(amenity_id):
         if key not in ignore:
             setattr(amenity, key, value)
     storage.save()
-    return jsonify(amenity.to_dict())
+    return jsonify(amenity.to_dict()), 200

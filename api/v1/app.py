@@ -15,7 +15,7 @@ Usage:
     to configure the server host and port respectively.
 """
 from flask import Flask
-from models import storage
+import models
 from api.v1.views import app_views
 import os
 
@@ -24,6 +24,25 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
 
+
+@app.teardown_appcontext
+def teardown_flask(exception):
+    """
+    request context end event listener.
+    """
+    # print(exception)
+    models.storage.close()
+
+#400 error handler
+@app.errorhandler(400)
+def error_400(error):
+    """
+    Handles the 400 HTTP error code.
+    """
+    message = 'Bad request'
+    if isinstance(error, Exception) and hasattr(error, 'description'):
+        message = error.description
+    return jsonify(error=message), 400
 
 # 404 error handler defination
 @app.errorhandler(404)

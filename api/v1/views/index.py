@@ -29,14 +29,15 @@ def get_stats():
     """
     Return the number of each object by type in the database.
     """
-    classes = [Amenity,City,Place,Review,State,User]
-    objects = {"amenities": "Amenity",
+    objects = {
+            "amenities": "Amenity",
             "cities": "City",
             "places": "Place",
             "reviews": "Review",
             "states": "State",
-            "users": "User"}
+            "users": "User"
+            }
     stats = {}
-    for key, value in objects.items():
-        stats[key] = storage.count(value)
+    for value in objects:
+        stats[object[value]] = storage.count(value)
     return jsonify(stats)
