@@ -62,7 +62,7 @@ class FileStorage:
         """Retrieves an object identified by a class (cls) and onject id (id)
         or returns None if not found"""
         for clss in classes:
-            if cls == classes[clss] or cls == clss:
+            if cls == classes[clss]:
                 cls_name = clss
                 obj_id = str(id)
                 obj_key = cls_name + "." + obj_id
