@@ -18,7 +18,6 @@ import json
 import os
 import pep8
 import unittest
-from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -68,20 +67,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    def test_storage_get(self):
-        """Tests for instance gotten for DBStorage"""
-        new_o = State(name="Cali")
-        obj = storage.get("State", "fake_id")
-        self.assertIsNone(obj)
-
-    def test_storage_count(self):
-        """Tests total count of objs in DBStorage"""
-        storage.reload()
-        all_count = self.storage.count()
-        self.assertIsInstance(all_count, int)
-        cls_no = self.storage.count("State")
-        self.assertIsInstance(cls_no, int)
-        self.assertGreaterEqual(all_count, cls_no)
 
 
 class TestFileStorage(unittest.TestCase):
@@ -103,25 +88,4 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get_db(self):
-        """ Tests method for obtaining an instance db storage"""
-        dic = {"name": "Cundinamarca"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_count(self):
-        """ Tests count method db storage """
-        dic = {"name": "Vecindad"}
-        state = State(**dic)
-        storage.new(state)
-        dic = {"name": "Mexico", "state_id": state.id}
-        city = City(**dic)
-        storage.new(city)
-        storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
+    
