@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Hermann WAKAM - [Github](https://github.com/WakHerv7)   
-abdirahman yosef - [Github](https://github.com/muadhhaji320)
+Ahmed abdirahman yosef - [Github](https://github.com/muadhhaji320)
 
 Second part of Airbnb: Joann Vuong
 ## License
