@@ -1,17 +1,37 @@
 #!/usr/bin/python3
-
+"""Index Package"""
 from flask import jsonify
+from models import storage
+from models.state import State
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.user import User
 from api.v1.views import app_views
-from models.storage import count
 
-@app_views.route("/status")
-def get_status():
-    """gets a json status"""
+
+@app_views.route('/status')
+def status():
+    """JSON response giving the api status
+    """
     return jsonify({"status": "OK"})
 
-@app.route("/api/v1/stats")
-def get_stats():
-    """endpoint that retrieves number of
-    each object by type"""
-    end_point = count()
-    return jsonify(end_point)
+
+@app_views.route('/stats', strict_slashes=False)
+def object_numb():
+    """an endpoint that retrieves the number of each objects by type
+    """
+    info = {
+        "amenities": storage.count(Amenity),
+        "cities": storage.count(City),
+        "places": storage.count(Place),
+        "reviews": storage.count(Review),
+        "states": storage.count(State),
+        "users": storage.count(User)
+    }
+    return jsonify(info)
+
+
+if __name__ == "__main__":
+    pass
