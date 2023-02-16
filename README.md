@@ -1,3 +1,6 @@
+![image](https://user-images.githubusercontent.com/106750453/219296351-c1d0ecf6-df5b-494c-9bf6-e72349a7bfca.png)
+
+
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
@@ -159,6 +162,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
   
-Third Part of Airbnb: Mary Kiige - [Github](https://github.com/Mkiige) / [Linkedin](https://www.linkedin.com/in/mary-kiige/)  
+Third Part of Airbnb: Mary Kiige - [Github](https://github.com/Mkiige) / [Linkedin](https://www.linkedin.com/in/mary-kiige/) 
+                       Ashaolu Peter O. - [Github](https://github.com/Pyro19) / [Linkedin](https://www.linkedin.com/in/peter-olu-272531b7/)
 ## License
 Public Domain. No copy write protection. 
