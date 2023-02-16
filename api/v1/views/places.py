@@ -5,6 +5,7 @@
 from api.v1.views import (app_views)
 from models.place import Place
 from models.city import City
+from models.user import User
 from flask import jsonify, abort, request
 import models
 
@@ -22,15 +23,15 @@ def places(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=["GET"], strict_slashes=False)
-def get_place_by_id(place_id):
+def get_place_by_id(place_id=None):
     """return a by id or 404"""
     place = models.storage.get(Place, place_id)
     if place_id is None:
         return abort(404)
     if place is None:
         return abort(404)
-    else:
-        return jsonify(place.to_dict())
+
+    return jsonify(place.to_dict())
 
 
 @app_views.route("/places/<place_id>",
@@ -42,9 +43,9 @@ def delete_place(place_id):
         return abort(404)
     if place is None:
         return abort(404)
-    else:
-        models.storage.delete(place)
-        return jsonify({}), 200
+
+    models.storage.delete(place)
+    return jsonify({}), 200
 
 
 @app_views.route("/cities/<city_id>/places",
@@ -55,17 +56,19 @@ def add_place(city_id):
         req_data = request.get_json(force=True)
     except Exception:
         req_data = None
-    if city_id is None:
-        return abort(404)
+    if req_data is None:
+        return "Not a JSON", 400
     city = models.storage.get(City, city_id)
     if city is None:
         return abort(404)
-    if req_data is None:
-        return "Not a JSON", 400
-
+    if "user_id" not in req_data.keys():
+        return "Missing user_id", 400
+    user = models.storage.get(User, req_data.get("user_id"))
+    if user is None:
+        return abort(404)
     if "name" not in req_data.keys():
         return "Missing name", 400
-
+    req_data["city_id"] = city_id
     new_place = Place(**req_data)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
