@@ -72,7 +72,7 @@ class FileStorage:
         """Returns number of objects in a
         class (if cls is defined) or all objects stored"""
         if cls is None:
-            count = len(self.all())
+            count = len(self.__objects)
         else:
             count = len(self.all(cls))
         return count
