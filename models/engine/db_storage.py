@@ -3,17 +3,16 @@
 Contains the class DBStorage
 """
 
-import models
+
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -63,6 +62,7 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+            self.__session.commit()
 
     def reload(self):
         """reloads data from the database"""
@@ -70,6 +70,32 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """Return object based on class and ID."""
+
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                stm = select(classes[clss]).filter_by(id=id)
+                objs = self.__session.scalars(stm).all()
+                for obj in objs:
+                    return obj
+        return None
+
+    def count(self, cls=None):
+        """count the number of object in cls or return total object"""
+        total_count = 0
+        if cls is None:
+            for key, value in classes.items():
+                total_count += len(self.__session.query(value).all())
+            return total_count
+        else:
+            for clss in classes:
+                if cls is None or cls is classes[clss] or cls is clss:
+                    total_count = len(
+                        self.__session.query(classes[clss]).all()
+                    )
+                    return total_count
 
     def close(self):
         """call remove() method on the private session attribute"""
