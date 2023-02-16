@@ -42,20 +42,20 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
-        json_objects = {}
+        odict = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
-        with open(self.__file_path, 'w') as f:
-            json.dump(json_objects, f)
+            odict[key] = self.__objects[key].to_dict(remove_password=False)
+        with open(self.__file_path, "w", encoding="utf-8") as f:
+            json.dump(odict, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """Deserializes the JSON file to __objects"""
         try:
-            with open(self.__file_path, 'r') as f:
+            with open(self.__file_path, "r", encoding="utf-8") as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +68,29 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """Get a single object from __objects
+        Args:
+            cls (str): string representing the class name
+            id  (str): string representing the object ID
+        Returns:
+            Object base on the `class` and `id` or else `None`.
+        """
+        if cls is None or id is None:
+            return None
+        key = '{}.{}'.format(cls, id)
+        return self.__objects.get(key, None)
+
+    def count(self, cls=None):
+        """counts all objects of a specific class (cls) in __objects
+        or all objects if no `cls` name is passed
+        Arsg:
+            cls (str): String representing the class name. Default (None)
+        Returns:
+            `count` of all object in __objects is cls is None, else `count`
+            of the specific onbject in __object.
+        """
+        if not cls:
+            return len(self.__objects)
+        return len([key for key in self.__objects if key.startswith(cls)])
