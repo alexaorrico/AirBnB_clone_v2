@@ -42,6 +42,8 @@ def deleteCity(city_id):
         storage.delete(Citys)
         storage.save()
         return make_response(jsonify({}), 200)
+    else:
+        abort(404)
 
 
 @app_views.route('states/<state_id>/cities', methods=['POST'],
@@ -57,7 +59,7 @@ def postCityState(state_id):
         abort(400, description="Missing name")
     PostDict = request.get_json()
     UpdatedClass = City(**PostDict)
-    UpdatedClass.state_id = state_id
+    UpdatedClass.state_id = States.id
     UpdatedClass.save()
     return make_response(jsonify(UpdatedClass.to_dict()), 201)
 
@@ -71,8 +73,8 @@ def PutCity(city_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
     ignoreList = ['id', 'state_id', 'created_at', 'updated_at']
-    PutCity = request.get_json()
-    for k, v in PutCity.items():
+    PutCitys = request.get_json()
+    for k, v in PutCitys.items():
         if k not in ignoreList:
             setattr(Citys, k, v)
     storage.save()
