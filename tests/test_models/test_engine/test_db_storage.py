@@ -27,7 +27,7 @@ class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
     def setUpClass(cls):
-        """Set up for the doc tests"""
+        """Set up fmeor the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
     def test_pep8_conformance_db_storage(self):
@@ -86,3 +86,20 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_count(self):
+        """ Test for the FS count method
+        """
+        num_states = models.storage.count(State)
+        state = State(name="statey")
+        state.save()
+        self.assertEqual(models.storage.count(State), num_states + 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get(self):
+        """ Test for FS get method
+        """
+        state = State(name="PR")
+        state.save()
+        self.assertIs(models.storage.get(State, state.id), state)
