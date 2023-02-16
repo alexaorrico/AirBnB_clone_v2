@@ -428,30 +428,21 @@ user@ubuntu:~/AirBnB_v3$ curl -X GET http://0.0.0.0:5000/api/v1/cities/1da255c0-
 At this time, there are no known bugs.
 
 ## Authors
-<<<<<<< HEAD
+
 Phase 3:
 * Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)
 * Rebcca945 | [Github](https://github.com/Rebcca945)
 **Note: As per Holberton's requirements, we practice working with new Phase 1 and 2 codebases in our Phase 3 version.**
-=======
-Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)  
->>>>>>> e19e94b3e2a885c8f2c6bd467990bf4e52fa6726
 
-<<<<<<< HEAD
 Phase 2 codebase: 
 * Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)
 * Rebcca945 | [Github](https://github.com/Rebcca945)
-=======
->>>>>>> 7525c77ecb523496412db8cdea369fa4631ca170
 
-<<<<<<< HEAD
 Phase 1 codebase:
 * Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)
 * Rebcca945 | [Github](https://github.com/Rebcca945)
 
-=======
 Second part of Airbnb: Joann Vuong
->>>>>>> e19e94b3e2a885c8f2c6bd467990bf4e52fa6726
 ## License
 
 **hbnb** is open source and free to download and use
