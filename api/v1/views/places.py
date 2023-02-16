@@ -10,7 +10,6 @@ from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'])
-@app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'])
 def places(city_id):
     """returns State object or collection or also
     creates a new State object"""
