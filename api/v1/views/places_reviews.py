@@ -53,7 +53,7 @@ def postPlaceReview(place_id):
     """ post a new review"""
     data = request.get_json()
     place = storage.get(Place, place_id)
-    user = storage.get(User, data.get("user_id"))
+    user = storage.get(User, data["user_id"])
     if not place:
         abort(404)
     if not data:
@@ -64,6 +64,7 @@ def postPlaceReview(place_id):
         abort(404)
     if "text" not in data.keys():
         abort(400, description="Missing text")
+    data["place_id"] = place_id
     UpdatedClass = Review(**data)
     UpdatedClass.save()
     return make_response(jsonify(UpdatedClass.to_dict()), 201)
