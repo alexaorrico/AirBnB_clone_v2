@@ -66,11 +66,11 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        if not include_password and "password" in new_dict:
-            del new_dict["password"]
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if not include_password and "password" in new_dict:
+            del new_dict["password"]
         return new_dict
 
     def delete(self):
