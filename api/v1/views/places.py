@@ -24,19 +24,17 @@ def places(city_id):
         else:
             abort(404)
     else:
-        name = "name"
-        user = "user_id"
         json_data = request.get_json(silent=True)
         city = storage.get(City, city_id)
         if city:
             if json_data is None:
                 abort(400, "Not a JSON")
-            if user not in json_data.keys():
+            if "user_id" not in json_data.keys():
                 abort(400, "Missing user_id")
-            user_place = storage.get(User, json_data[user])
+            user_place = storage.get(User, json_data["user_id"])
             if user_place is None:
                 abort(404)
-            if name not in json_data.keys():
+            if "name" not in json_data.keys():
                 abort(404, "Missing name")
             new_obj = Place(**json_data)
             new_obj.city_id = city.id
@@ -65,8 +63,9 @@ def placeid(place_id):
         json_data = request.get_json(silent=True)
         if json_data is None:
             abort(400, "Not a JSON")
+        ignore_list = ["id", "user_id","city_id", "created_at", "updatd-at"]
         for key, val in json_data.items():
-            if key != "id" and key != "created_at" and key != "updated_at":
+            if key not in ignore_list:
                 setattr(obj, key, val)
         storage.save()
         return make_response(jsonify(obj.to_dict()), 200)
