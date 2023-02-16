@@ -437,9 +437,12 @@ Phase 3:
 Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)  
 >>>>>>> e19e94b3e2a885c8f2c6bd467990bf4e52fa6726
 
+<<<<<<< HEAD
 Phase 2 codebase: 
 * Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)
 * Rebcca945 | [Github](https://github.com/Rebcca945)
+=======
+>>>>>>> 7525c77ecb523496412db8cdea369fa4631ca170
 
 <<<<<<< HEAD
 Phase 1 codebase:
