@@ -38,4 +38,3 @@ if [[ "$(($? + 0))" == "0" ]]; then
     [ "$(echo -n $?)" == "0" ] && echo -ne "\e[100m\e[32m PASSED "
 fi
 echo -ne "\n\e[0m"
-
