@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""view for Place objects that handles all default RESTFul API actions"""
+"""
+This file contains the Place module
+"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
@@ -8,13 +10,14 @@ from models.city import City
 from models.user import User
 from models.amenity import Amenity
 from models.state import State
-from flasgger.utils import
+from flasgger.utils import swag_from
+
 
 @app_views.route('/cities/<string:city_id>/places',
                  methods=['GET'], strict_slashes=False)
 @swag_from('documentation/places/get.yml', methods=['GET'])
-def get_places(city_id):
-    """Retrieves the list of all Place objects"""
+def get_all_places(city_id):
+    """ list cities by id """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -26,7 +29,7 @@ def get_places(city_id):
                  strict_slashes=False)
 @swag_from('documentation/places/get_id.yml', methods=['GET'])
 def get_place(place_id):
-    """Retrieves a Place object"""
+    """ get place by id """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -36,8 +39,8 @@ def get_place(place_id):
 @app_views.route('/places/<string:place_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/places/delete.yml', methods=['DELETE'])
-def delete_place(place_id):
-    """Deletes a Place object"""
+def del_place(place_id):
+    """ delete place by id """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -49,17 +52,17 @@ def delete_place(place_id):
 @app_views.route('/cities/<string:city_id>/places', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/places/post.yml', methods=['POST'])
-def create_place(city_id):
-    """Creates a Place"""
+def create_obj_place(city_id):
+    """ create new instance """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    if not request.get_json()
+    if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'user_id' not in request.get_json()
+    if 'user_id' not in request.get_json():
         return make_response(jsonify({"error": "Missing user_id"}), 400)
-    if 'name' not in request.get_json()
-        return make_respose(jsonify({"error": "Missing name"}), 400)
+    if 'name' not in request.get_json():
+        return make_response(jsonify({"error": "Missing name"}), 400)
     kwargs = request.get_json()
     kwargs['city_id'] = city_id
     user = storage.get(User, kwargs['user_id'])
@@ -73,15 +76,15 @@ def create_place(city_id):
 @app_views.route('/places/<string:place_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/places/put.yml', methods=['PUT'])
-def update_place(place_id):
-    """Updates a Place object"""
+def post_place(place_id):
+    """ update by id """
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    obj = storage.get)Place, place_id)
+    obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
     for key, value in request.get_json().items():
-        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated']:
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
@@ -90,11 +93,13 @@ def update_place(place_id):
 @app_views.route('/places_search', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/places/search.yml', methods=['POST'])
-def search_places():
-    """Search places by id"""
+def search_places_by_id():
+    """ search places by id """
     if request.get_json() is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
+
     data = request.get_json()
+
     if data and len(data):
         states = data.get('states', None)
         cities = data.get('cities', None)

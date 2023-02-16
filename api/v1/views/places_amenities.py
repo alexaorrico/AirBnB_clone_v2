@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""view for the link between Place objects and Amenity objects"""
+"""places_amenities.py"""
 import os
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -13,7 +13,7 @@ from flasgger.utils import swag_from
                  strict_slashes=False)
 @swag_from('documentation/place_amenity/get_id.yml', methods=['GET'])
 def get_amenities(place_id):
-    """Retrieves the list of all Amenity objects"""
+    """ retrieves all amenities from a place """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -25,7 +25,7 @@ def get_amenities(place_id):
                  methods=['DELETE'], strict_slashes=False)
 @swag_from('documentation/place_amenity/delete.yml', methods=['DELETE'])
 def delete_amenity(place_id, amenity_id):
-    """Deletes a Amenity object to a Place"""
+    """ delete amenity from place """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -36,14 +36,14 @@ def delete_amenity(place_id, amenity_id):
         abort(404)
     place.amenities.remove(amenity)
     storage.save()
-    return make_response(jsonify({}), 200)
+    return jsonify({})
 
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['POST'], strict_slashes=False)
 @swag_from('documentation/place_amenity/post.yml', methods=['POST'])
-def post_place_amenity(place_id, amenity_id):
-    """Link a Amenity object to a Place"""
+def post_amenity2(place_id, amenity_id):
+    """ post amenity by id """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -54,4 +54,4 @@ def post_place_amenity(place_id, amenity_id):
         return (jsonify(amenity.to_dict()), 200)
     place.amenities.append(obj)
     storage.save()
-    return (jsonify(amenity.to_dict()), 201)
+    return (jsonify(amenity.to_dict(), 201))

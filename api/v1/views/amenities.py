@@ -1,25 +1,27 @@
 #!/usr/bin/python3
-"""RestFul API actions for Amenities"""
-from models.amenity import Amenity
-from models import storage
+"""
+This file contains the Amenity module
+"""
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import jsonify, abort, request, make_response
+from models import storage
+from models.amenity import Amenity
 from flasgger.utils import swag_from
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/amenity/all_amenities.yml')
-def get_amenities():
-    """Retrieves the list of all Amenity"""
-    a_list = [obj.to_dict() for obj in storage.all(Amenity).values()]
-    return jsonify(a_list)
+@swag_from('documentation/amenity/get.yml', methods=['GET'])
+def get_all_amenities():
+    """ get amenities by id """
+    all_list = [obj.to_dict() for obj in storage.all(Amenity).values()]
+    return jsonify(all_list)
 
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/amenity/get_id.yml', methods=['GET'])
 def get_amenity(amenity_id):
-    """Retrieves a Amenity object"""
+    """ get amenity by id"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -29,8 +31,8 @@ def get_amenity(amenity_id):
 @app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/amenity/delete.yml', methods=['DELETE'])
-def delete_amenity(amenity_id):
-    """Deletes a Amenity object"""
+def del_amenity(amenity_id):
+    """ delete amenity by id"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
@@ -42,13 +44,14 @@ def delete_amenity(amenity_id):
 @app_views.route('/amenities/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/amenity/post.yml', methods=['POST'])
-def create_amenity():
-    """Creates a Amenity"""
+def create_obj_amenity():
+    """ create new instance """
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'name' not in request.get_json()
+    if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
-    obj = Amenity(**(request.get_json()))
+    js = request.get_json()
+    obj = Amenity(**js)
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
@@ -57,7 +60,7 @@ def create_amenity():
                  strict_slashes=False)
 @swag_from('documentation/amenity/put.yml', methods=['PUT'])
 def post_amenity(amenity_id):
-    """Updates a Amenity object"""
+    """  """
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     obj = storage.get(Amenity, amenity_id)
