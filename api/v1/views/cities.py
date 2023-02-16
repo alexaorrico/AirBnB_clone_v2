@@ -2,7 +2,7 @@
 
 """city view module"""
 
-from api.v1.views import app_views
+from api.v1.views import (app_views)
 from models.city import City
 from models.state import State
 from flask import jsonify, abort, request
@@ -61,7 +61,7 @@ def add_city(state_id):
     if state is None:
         return abort(404)
     req_data['state_id'] = state_id
-    new_city = City(req_data)
+    new_city = City(**req_data)
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 

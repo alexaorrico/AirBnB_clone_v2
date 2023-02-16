@@ -2,7 +2,7 @@
 
 """state view module"""
 
-from api.v1.views import app_views
+from api.v1.views import (app_views)
 from models.state import State
 from flask import jsonify, abort, request
 import models
@@ -23,22 +23,22 @@ def get_states_by_id(state_id):
         return abort(404)
     if state is None:
         return abort(404)
-    else:
-        return jsonify(state.to_dict())
+   
+    return jsonify(state.to_dict())
 
 
 @app_views.route("/states/<state_id>",
                  methods=["DELETE"], strict_slashes=False)
 def delete_state(state_id):
     """delete state data by id"""
-    state = models.storage.get(State, state_id)
     if state_id is None:
         return abort(404)
+    state = models.storage.get(State, state_id)
     if state is None:
         return abort(404)
-    else:
-        models.storage.delete(state)
-        return jsonify({}), 200
+    
+    models.storage.delete(state)
+    return jsonify({}), 200
 
 
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
@@ -55,7 +55,7 @@ def add_state():
     if "name" not in req_data.keys():
         return "Missing name", 400
 
-    new_state = State(req_data)
+    new_state = State(**req_data)
     new_state.save()
     return jsonify(new_state.to_dict())
 

@@ -2,7 +2,7 @@
 
 """users view module"""
 
-from api.v1.views import app_views
+from api.v1.views import (app_views)
 from models.user import User
 from flask import jsonify, abort, request
 import models
@@ -57,7 +57,7 @@ def add_user():
     if  "password" not in req_data.keys():
         return "Missing password", 400
 
-    new_user = User(req_data)
+    new_user = User(**req_data)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
 

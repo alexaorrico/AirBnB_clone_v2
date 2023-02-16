@@ -2,7 +2,7 @@
 
 """places view module"""
 
-from api.v1.views import app_views
+from api.v1.views import (app_views)
 from models.place import Place
 from models.city import City
 from flask import jsonify, abort, request
@@ -64,7 +64,7 @@ def add_place(city_id):
     if "name" not in req_data.keys():
         return "Missing name", 400
 
-    new_place = Place(req_data)
+    new_place = Place(**req_data)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
 

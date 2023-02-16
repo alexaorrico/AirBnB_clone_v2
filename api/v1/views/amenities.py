@@ -2,7 +2,7 @@
 
 """amenities view module"""
 
-from api.v1.views import app_views
+from api.v1.views import (app_views)
 from models.amenity import Amenity
 from flask import jsonify, abort, request
 import models
@@ -11,8 +11,8 @@ import models
 @app_views.route('/amenities', methods=["GET"], strict_slashes=False)
 def amenities():
     """return all the amenities"""
-    all_cities = models.storage.all(City)
-    return jsonify([city.to_dict() for city in all_cities.values()])
+    all_amenities = models.storage.all(Amenity)
+    return jsonify([amenity.to_dict() for amenity in all_amenities.values()])
 
 
 @app_views.route('/amenities/<amenity_id>', methods=["GET"], strict_slashes=False)
@@ -55,7 +55,7 @@ def add_amenity():
     if "name" not in req_data.keys():
         return "Missing name", 400
 
-    new_amenity = Amenity(req_data)
+    new_amenity = Amenity(**req_data)
     new_amenity.save()
     return jsonify(new_amenity.to_dict())
 

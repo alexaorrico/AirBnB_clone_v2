@@ -2,7 +2,7 @@
 
 """Bootstap for view"""
 
-from api.v1.views import app_views
+from api.v1.views import (app_views)
 from models.amenity import Amenity
 from models.state import State
 from models.city import City
