@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+Contains DBStorage Class
 """
 
 import models
@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interaacts with MySQL database"""
     __engine = None
     __session = None
 
@@ -41,7 +41,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """query on current database session"""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -52,15 +52,15 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add the object to the current database session"""
+        """add object to current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session"""
+        """commit all changes of current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session obj if not None"""
+        """delete from current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
 
@@ -72,7 +72,7 @@ class DBStorage:
         self.__session = Session
 
     def close(self):
-        """call remove() method on the private session attribute"""
+        """call remove() method on private session attribute"""
         self.__session.remove()
 
     def get(self, cls, id):
@@ -84,7 +84,7 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
-        """a method to count the number of methods in storage"""
+        """a method to count number of methods in storage"""
         if cls is not None:
             objs = self.all(cls)
             count = 0
