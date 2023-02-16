@@ -73,12 +73,13 @@ class FileStorage:
         class (if cls is defined) or all objects stored"""
         if cls is None:
             count = len(self.__objects)
+            return count
         else:
             count = 0
             for key in self.__objects.keys():
                 if str(cls.__name__) in key:
                     count += 1
-        return count
+            return count
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
