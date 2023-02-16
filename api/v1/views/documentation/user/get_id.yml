@@ -1,0 +1,42 @@
+GET method, get user by id
+---
+tags:
+  - Users
+parameters:
+  - name: user_id
+    in: path
+    type: string
+    required: true
+    description: User id to retrieve
+responses:
+  200:
+    description: Succsesful resquest
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: "string"
+          created_at:
+            type: string
+            description: datetime of instance creation
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: The unique id of the state instance
+          email:
+            type: string
+            description: User email
+          password:
+            type: string
+            description: User password
+          first_name:
+            type: string
+            description: User first name
+          last_name:
+            type: string
+            description: User last name
+  404:
+    description: User not found!
