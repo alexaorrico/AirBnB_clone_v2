@@ -58,7 +58,7 @@ def add_amenity():
 
     new_amenity = Amenity(**req_data)
     new_amenity.save()
-    return jsonify(new_amenity.to_dict())
+    return jsonify(new_amenity.to_dict()), 201
 
 
 @app_views.route("/amenities/<amenity_id>",
