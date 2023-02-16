@@ -154,13 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)  
 
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
-Alejandro Medina - [Github](https://github.com/mellab) / [Twitter](https://twitter.com/MentalAbduction)
-
-Luis Chaparro - [Github](https://github.com/luischaparroc) / [Twitter](https://twitter.com/luischaparroc)
 
 Second part of Airbnb: Joann Vuong
 ## License
