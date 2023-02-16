@@ -35,7 +35,7 @@ def places(city_id):
             if user_place is None:
                 abort(404)
             if "name" not in json_data.keys():
-                abort(404, "Missing name")
+                abort(400, "Missing name")
             new_obj = Place(**json_data)
             new_obj.city_id = city.id
             storage.new(new_obj)
