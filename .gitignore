@@ -3,3 +3,4 @@ bin/
 file.json
 __pycache__
 test_get_count.py
+.coverage
