@@ -7,14 +7,14 @@ from models.user import User
 import hashlib
 
 
-@app_views.route('/users', methods=['GET'], strict_slashes=False)
+@app_views.route('/api/v1/users', methods=['GET'], strict_slashes=False)
 def users():
     """ Retrieves the list of all User objects """
     d_users = storage.all(User)
     return jsonify([obj.to_dict() for obj in d_users.values()])
 
 
-@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/api/v1/users/<user_id>', methods=['GET'], strict_slashes=False)
 def r_user_id(user_id):
     """
     file: yml/users_get.yml
@@ -25,7 +25,7 @@ def r_user_id(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'],
+@app_views.route('/api/v1/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_user(user_id):
     """ Deletes a User object """
@@ -37,7 +37,7 @@ def del_user(user_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/users', methods=['POST'], strict_slashes=False)
+@app_views.route('/api/v1/users', methods=['POST'], strict_slashes=False)
 def post_user():
     """ Creates a User object """
     new_user = request.get_json()
@@ -54,7 +54,7 @@ def post_user():
     return make_response(jsonify(user.to_dict()), 201)
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/api/v1/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def put_user(user_id):
     """ Updates a User object """
     user = storage.get("User", user_id)
