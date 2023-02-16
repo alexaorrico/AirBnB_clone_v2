@@ -23,8 +23,8 @@ def get_user_by_id(user_id):
         return abort(404)
     if user is None:
         return abort(404)
-    else:
-        return jsonify(user.to_dict())
+
+    return jsonify(user.to_dict())
 
 
 @app_views.route("/users/<user_id>",
@@ -36,9 +36,9 @@ def delete_user(user_id):
         return abort(404)
     if user is None:
         return abort(404)
-    else:
-        models.storage.delete(user)
-        return jsonify({}), 200
+
+    models.storage.delete(user)
+    return jsonify({}), 200
 
 
 @app_views.route("/users", methods=["POST"], strict_slashes=False)

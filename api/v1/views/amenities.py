@@ -24,8 +24,8 @@ def get_amenities_by_id(amenity_id):
         return abort(404)
     if amenity is None:
         return abort(404)
-    else:
-        return jsonify(amenity.to_dict())
+
+    return jsonify(amenity.to_dict())
 
 
 @app_views.route("/amenities/<amenity_id>",
@@ -37,9 +37,9 @@ def delete_amenity(amenity_id):
         return abort(404)
     if amenity is None:
         return abort(404)
-    else:
-        models.storage.delete(amenity)
-        return jsonify({}), 200
+
+    models.storage.delete(amenity)
+    return jsonify({}), 200
 
 
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)

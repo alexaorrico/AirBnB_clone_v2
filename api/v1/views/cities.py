@@ -27,8 +27,8 @@ def get_cities_by_id(city_id):
         return abort(404)
     if city is None:
         return abort(404)
-    else:
-        return jsonify(city.to_dict())
+
+    return jsonify(city.to_dict())
 
 
 @app_views.route("/cities/<city_id>",
@@ -47,9 +47,9 @@ def delete_city(city_id):
     city = models.storage.get(City, city_id)
     if city is None:
         return abort(404)
-    else:
-        models.storage.delete(city)
-        return jsonify({})
+
+    models.storage.delete(city)
+    return jsonify({})
 
 
 @app_views.route("/states/<state_id>/cities",
