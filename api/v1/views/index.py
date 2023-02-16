@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from flask import jsonify
 from api.v1.views import app_views
 from models.storage import count
 
@@ -9,4 +10,8 @@ def get_status():
     return jsonify({"status": "OK"})
 
 @app.route("/api/v1/stats")
-def 
+def get_stats():
+    """endpoint that retrieves number of
+    each object by type"""
+    end_point = count()
+    return jsonify(end_point)
