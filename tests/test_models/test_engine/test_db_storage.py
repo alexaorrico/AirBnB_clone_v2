@@ -67,7 +67,7 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-def test_storage_get(self):
+    def test_storage_get(self):
         """Tests for instance gotten for DBStorage"""
         new_o = State(name="Cali")
         obj = storage.get("State", "fake_id")
@@ -102,7 +102,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_db(self):
         """ Tests method for obtaining an instance db storage"""
         dic = {"name": "Cundinamarca"}
