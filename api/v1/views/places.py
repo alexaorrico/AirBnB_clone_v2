@@ -172,7 +172,7 @@ def list_places():
      """
     try:
         r = request.get_json()
-    except:
+    except Exception:
         r = None
     if r is None:
         return "Not a JSON", 400
