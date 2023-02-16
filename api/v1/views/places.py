@@ -63,7 +63,7 @@ def placeid(place_id):
         json_data = request.get_json(silent=True)
         if json_data is None:
             abort(400, "Not a JSON")
-        ignore_list = ["id", "user_id","city_id", "created_at", "updatd-at"]
+        ignore_list = ["id", "user_id", "city_id", "created_at", "updatd-at"]
         for key, val in json_data.items():
             if key not in ignore_list:
                 setattr(obj, key, val)
