@@ -73,8 +73,10 @@ def update_city(city_id):
     """update city object"""
     try:
         req_data = request.get_json(force=True)
-    except Exception:
+    except:
         return "Not a JSON", 400
+    if city_id is None:
+        return abort(404)
     city = models.storage.get(City, city_id)
     if city is None:
         return abort(404)
