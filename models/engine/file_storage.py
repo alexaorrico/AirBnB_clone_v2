@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import re
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -55,7 +56,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +69,21 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """Method to return particular  object"""
+        if cls and id:
+            cl = "{}.{}".format(cls, id)
+            all_ob = self.all(cls)
+            for i in all_ob.values():
+                if i.id == id:
+                    return (i)
+        return (None)
+
+    def count(self, cls=None):
+        """Returns count of objects in a class or all objects if
+            class is None
+        """
+        if cls is None:
+            return (len(self.__objects))
+        return (len(self.all(cls)))
