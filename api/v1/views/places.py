@@ -50,27 +50,25 @@ def places(city_id):
 def placeid(place_id):
     """Retrieves/deletes or updates a single
     object if present or rase 404"""
+    obj = storage.get(Place, place_id)
     if request.method == 'GET':
-        obj = storage.get(Place, place_id)
         if obj is None:
             abort(404)
         obj_dict = obj.to_dict()
         return jsonify(obj_dict)
     elif request.method == 'PUT':
-        obj = storage.get(Place, place_id)
         if obj is None:
             abort(404)
         json_data = request.get_json(silent=True)
         if json_data is None:
             abort(400, "Not a JSON")
-        ignore_list = ["id", "user_id", "city_id", "created_at", "updatd-at"]
+        ignore_list = ["id", "user_id", "city_id", "created_at", "updated_at"]
         for key, val in json_data.items():
             if key not in ignore_list:
                 setattr(obj, key, val)
         storage.save()
         return make_response(jsonify(obj.to_dict()), 200)
     else:
-        obj = storage.get(Place, place_id)
         if obj is None:
             abort(404)
         storage.delete(obj)
