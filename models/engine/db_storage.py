@@ -72,7 +72,7 @@ class DBStorage:
         self.__session = Session
 
     def get(self, cls, id):
-        """Return object based on class and ID"""
+        """Return object based on class and ID."""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -81,6 +81,21 @@ class DBStorage:
                 for obj in objs:
                     return obj
         return None
+
+    def count(self, cls=None):
+        """count the number of object in cls or return total object"""
+        total_count = 0
+        if cls is None:
+            for key, value in classes.items():
+                total_count += len(self.__session.query(value).all())
+            return total_count
+        else:
+            for clss in classes:
+                if cls is None or cls is classes[clss] or cls is clss:
+                    total_count = len(
+                        self.__session.query(classes[clss]).all()
+                    )
+                    return total_count
 
     def close(self):
         """call remove() method on the private session attribute"""
