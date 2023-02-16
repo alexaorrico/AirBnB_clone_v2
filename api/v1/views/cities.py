@@ -35,14 +35,14 @@ def get_cities_by_id(city_id):
                  methods=["DELETE"], strict_slashes=False)
 def delete_city(city_id):
     """delete city data by id"""
-    city = models.storage.get(City, city_id)
     if city_id is None:
         return abort(404)
+    city = models.storage.get(City, city_id)
     if city is None:
         return abort(404)
     else:
         models.storage.delete(city)
-        return jsonify({}), 200
+        return jsonify({})
 
 
 @app_views.route("/states/<state_id>/cities",
@@ -51,7 +51,7 @@ def add_city(state_id):
     """add new city"""
     try:
         req_data = request.get_json(force=True)
-    except Exception:
+    except:
         req_data = None
 
     if req_data is None:
@@ -62,8 +62,8 @@ def add_city(state_id):
     state = models.storage.get(State, state_id)
     if state is None:
         return abort(404)
-    req_data['state_id'] = state_id
     new_city = City(**req_data)
+    new_city.state_id = state_id
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
@@ -74,12 +74,14 @@ def update_city(city_id):
     try:
         req_data = request.get_json(force=True)
     except:
-        return "Not a JSON", 400
+        req_data = None
     if city_id is None:
         return abort(404)
     city = models.storage.get(City, city_id)
     if city is None:
         return abort(404)
+    if req_data is None:
+        return "Not a JSON", 400
     for key in ("id", "state_id", "created_at", "updated_at"):
         req_data.pop(key, None)
     for k, v in req_data.items():
