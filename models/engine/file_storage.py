@@ -74,7 +74,10 @@ class FileStorage:
         if cls is None:
             count = len(self.__objects)
         else:
-            count = len(self.all(cls))
+            count = 0
+            for key in self.__objects.keys():
+                if str(cls.__name__) in key:
+                    count += 1
         return count
 
     def delete(self, obj=None):
