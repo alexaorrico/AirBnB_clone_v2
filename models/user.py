@@ -55,4 +55,4 @@ class User(BaseModel, Base):
         if key == "password":
             self.set_password(value)
         else:
-            super().__setattr__(key, value)            
+            super().__setattr__(key, value)
