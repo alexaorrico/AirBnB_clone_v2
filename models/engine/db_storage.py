@@ -64,7 +64,10 @@ class DBStorage:
         a class (cls) and onject id (id)"""
         for clss in classes:
             if cls == classes[clss] or cls == clss:
-                obj = self.__session.query(classes[clss]).get(id)
+                all_objs = self.all()
+                key = clss + "." + id
+                obj = all_objs[key]
+                # obj = self.__session.query(classes[clss]).get(id)
                 return obj
         return None
 
