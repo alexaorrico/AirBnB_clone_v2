@@ -62,10 +62,8 @@ class FileStorage:
         """Retrieves an object identified by a class (cls) and onject id (id)
         or returns None if not found"""
         for clss in classes:
-            if cls == classes[clss] or cls == clss:
-                cls_name = clss
-                obj_id = str(id)
-                obj_key = cls_name + "." + obj_id
+            if cls == classes[clss]:
+                obj_key = clss + "." + id
                 obj = self.__objects[obj_key]
                 return obj
         return None
@@ -75,10 +73,13 @@ class FileStorage:
         class (if cls is defined) or all objects stored"""
         if cls is None:
             count = len(self.__objects)
+            return count
         else:
-            objs = self.all(cls)
-            count = len(objs)
-        return count
+            count = 0
+            for key in self.__objects.keys():
+                if str(cls.__name__) in key:
+                    count += 1
+            return count
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
