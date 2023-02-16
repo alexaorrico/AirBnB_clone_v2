@@ -42,7 +42,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieves an object based on the class name and its ID.
-        Performs a query on the database to retrieve the matching row if it
+        Perform a query on the database to retrieve the matching row if it
         exists and uses the columns to create the object for return.
         Args:
             cls (str): String representing the class name(Place, User, Amenity)
@@ -62,7 +62,7 @@ class DBStorage:
 
     def count(self, cls=None):
         """Retrieves the total number of object based on the class name.
-        Performs a query on the database to retrieve the matching row if it
+        Performs a query on the database to retieve the matching row if it
         exists and uses the columns to create the object for return.
         Args:
             cls (str): String representing the class name(Place, User, Amenity)
@@ -108,6 +108,24 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """retrieves an object"""
+        if cls in self.storage and id in self.storage[cls]:
+            return self.storage[cls][id]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """counts the number of objects in storage"""
+        if cls is not None:
+            if cls in self.storage:
+                return (len(self.storage[cls]))
+        else:
+            count = 0
+            for cls_storage in self.storage.values():
+                count += len(cls_storage)
+            return count
 
     def close(self):
         """call remove() method on the private session attribute"""
