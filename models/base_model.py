@@ -28,7 +28,6 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
-        print(kwargs)
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":

@@ -44,7 +44,6 @@ def delete_state(state_id):
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
 def add_state():
     """add new state"""
-    print("HERE")
     try:
         req_data = request.get_json(force=True)
     except Exception:
