@@ -62,7 +62,7 @@ class FileStorage:
         """Retrieves an object identified by a class (cls) and onject id (id)
         or returns None if not found"""
         for clss in classes:
-            if cls == classes[clss] or cls is clss:
+            if cls == classes[clss] or cls == clss:
                 obj_key = cls + "." + id
                 obj = self.__objects[obj_key]
                 return obj
