@@ -42,7 +42,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieves an object based on the class name and its ID.
-        Performs a query on the database to retrieve the matching row if it
+        Perform a query on the database to retrieve the matching row if it
         exists and uses the columns to create the object for return.
         Args:
             cls (str): String representing the class name(Place, User, Amenity)
@@ -62,7 +62,7 @@ class DBStorage:
 
     def count(self, cls=None):
         """Retrieves the total number of object based on the class name.
-        Performs a query on the database to retrieve the matching row if it
+        Performs a query on the database to retieve the matching row if it
         exists and uses the columns to create the object for return.
         Args:
             cls (str): String representing the class name(Place, User, Amenity)
