@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" New view for State that handles all default RESTful API actions"""
+""" New view for Amenity that handles all default RESTful API actions"""
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 import json
