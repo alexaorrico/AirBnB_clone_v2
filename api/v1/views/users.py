@@ -1,60 +1,86 @@
 #!/usr/bin/python3
+"""View to handle API actions related to User objects
 """
-    Flask route that returns json response
-"""
+
 from api.v1.views import app_views
-from flask import abort, jsonify, request
-from models import storage, CNC
-from flasgger.utils import swag_from
+from flask import jsonify, abort, request
+from models import storage
 
 
-@app_views.route('/users/', methods=['GET', 'POST'])
-@swag_from('swagger_yaml/users_no_id.yml', methods=['GET', 'POST'])
-def users_no_id(user_id=None):
+@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
+def users_method(user_id=None):
+    """Manipulate User object by user_id, or all objects if
+    user_id is None
     """
-        users route that handles http requests with no ID given
-    """
+    from models.user import User
+    users = storage.all(User)
 
+    # GET REQUESTS
     if request.method == 'GET':
-        all_users = storage.all('User')
-        all_users = [obj.to_json() for obj in all_users.values()]
-        return jsonify(all_users)
+        if not user_id:  # if no, user id specified, return all
+            return jsonify([obj.to_dict() for obj in users.values()])
 
-    if request.method == 'POST':
-        req_json = request.get_json()
-        if req_json is None:
+        key = 'User.' + user_id
+        try:  # if obj exists in dictionary, convert from obj -> dict -> json
+            return jsonify(users[key].to_dict())
+        except KeyError:
+            abort(404)  # if User of user_id does not exist
+
+    # DELETE REQUESTS
+    elif request.method == 'DELETE':
+        try:
+            key = 'User.' + user_id
+            storage.delete(users[key])
+            storage.save()
+            return jsonify({}), 200
+        except:
+            abort(404)
+
+    # POST REQUESTS
+    elif request.method == 'POST':
+        # convert JSON request to dict
+        if request.is_json:
+            body_request = request.get_json()
+        else:
             abort(400, 'Not a JSON')
-        if req_json.get('email') is None:
+
+        # check for missing attributes
+        if 'email' not in body_request:
             abort(400, 'Missing email')
-        if req_json.get('password') is None:
+        elif 'password' not in body_request:
             abort(400, 'Missing password')
-        User = CNC.get('User')
-        new_object = User(**req_json)
-        new_object.save()
-        return jsonify(new_object.to_json()), 201
+        # instantiate, store, and return new User object
+        else:
+            new_user = User(**body_request)
+            storage.new(new_user)
+            storage.save()
+            return jsonify(new_user.to_dict()), 201
 
+    # PUT REQUESTS
+    elif request.method == 'PUT':
+        key = 'User.' + user_id
+        try:
+            user = users[key]
 
-@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
-@swag_from('swagger_yaml/users_id.yml', methods=['GET', 'DELETE', 'PUT'])
-def user_with_id(user_id=None):
-    """
-        users route that handles http requests with ID given
-    """
-    user_obj = storage.get('User', user_id)
-    if user_obj is None:
-        abort(404, 'Not found')
+            # convert JSON request to dict
+            if request.is_json:
+                body_request = request.get_json()
+            else:
+                abort(400, 'Not a JSON')
 
-    if request.method == 'GET':
-        return jsonify(user_obj.to_json())
+            for key, val in body_request.items():
+                if key != 'id' and key != 'email' and key != 'created_at'\
+                   and key != 'updated_at':
+                    setattr(user, key, val)
 
-    if request.method == 'DELETE':
-        user_obj.delete()
-        del user_obj
-        return jsonify({}), 200
+            storage.save()
+            return jsonify(user.to_dict()), 200
 
-    if request.method == 'PUT':
-        req_json = request.get_json()
-        if req_json is None:
-            abort(400, 'Not a JSON')
-        user_obj.bm_update(req_json)
-        return jsonify(user_obj.to_json()), 200
+        except KeyError:
+            abort(404)
+
+    # UNSUPPORTED REQUESTS
+    else:
+        abort(501)
