@@ -1,58 +1,69 @@
 #!/usr/bin/python3
-"""Flask route that returns json response"""
+'''Contains the users view for the API.'''
+from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
-from flask import abort, jsonify, request
-from models import storage, CNC
-from flasgger.utils import swag_from
+from models import storage
+from models.user import User
 
 
-@app_views.route('/users/', methods=['GET', 'POST'])
-@swag_from('swagger_yaml/users_no_id.yml', methods=['GET', 'POST'])
-def users_no_id(user_id=None):
-    """
-        users route that handles http requests with no ID given
-    """
-
-    if request.method == 'GET':
-        all_users = storage.all('User')
-        all_users = [obj.to_json() for obj in all_users.values()]
-        return jsonify(all_users)
-
-    if request.method == 'POST':
-        req_json = request.get_json()
-        if req_json is None:
-            abort(400, 'Not a JSON')
-        if req_json.get('email') is None:
-            abort(400, 'Missing email')
-        if req_json.get('password') is None:
-            abort(400, 'Missing password')
-        User = CNC.get('User')
-        new_object = User(**req_json)
-        new_object.save()
-        return jsonify(new_object.to_json()), 201
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+def users():
+    """Retrieves the list of all User objects"""
+    objs = storage.all(User)
+    return jsonify([obj.to_dict() for obj in objs.values()])
 
 
-@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
-@swag_from('swagger_yaml/users_id.yml', methods=['GET', 'DELETE', 'PUT'])
-def user_with_id(user_id=None):
-    """
-        users route that handles http requests with ID given
-    """
-    user_obj = storage.get('User', user_id)
-    if user_obj is None:
-        abort(404, 'Not found')
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+def single_user(user_id):
+    """Retrieves a User object"""
+    obj = storage.get(User, user_id)
+    if not obj:
+        abort(404)
+    return jsonify(obj.to_dict())
 
-    if request.method == 'GET':
-        return jsonify(user_obj.to_json())
 
-    if request.method == 'DELETE':
-        user_obj.delete()
-        del user_obj
-        return jsonify({}), 200
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+def del_user(user_id):
+    """Returns an empty dictionary with the status code 200"""
+    obj = storage.get(User, user_id)
+    if not obj:
+        abort(404)
+    obj.delete()
+    storage.save()
+    return make_response(jsonify({}), 200)
 
-    if request.method == 'PUT':
-        req_json = request.get_json()
-        if req_json is None:
-            abort(400, 'Not a JSON')
-        user_obj.bm_update(req_json)
-        return jsonify(user_obj.to_json()), 200
+
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def post_user():
+    """Returns the new User with the status code 201"""
+    new_user = request.get_json()
+    if not new_user:
+        abort(400, "Not a JSON")
+    if 'email' not in new_user:
+        abort(400, "Missing email")
+    if 'password' not in new_user:
+        abort(400, 'Missing password')
+
+    obj = User(**new_user)
+    storage.new(obj)
+    storage.save()
+    return make_response(jsonify(obj.to_dict()), 201)
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def put_user(user_id):
+    """Returns the User object with the status code 200"""
+    obj = storage.get(User, user_id)
+    if not obj:
+        abort(404)
+
+    req = request.get_json()
+    if not req:
+        abort(400, "Not a JSON")
+
+    for k, v in req.items():
+        if k not in ['id', 'email', 'created_at', 'updated_at']:
+            setattr(obj, k, v)
+
+    storage.save()
+    return make_response(jsonify(obj.to_dict()), 200)
