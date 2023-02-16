@@ -9,7 +9,8 @@ from flask import jsonify, abort, request
 import models
 
 
-@app_views.route('/cities/<city_id>/places', methods=["GET"], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=["GET"], strict_slashes=False)
 def places(city_id):
     """return all the places"""
     cities = models.storage.get(City, city_id)
@@ -46,7 +47,8 @@ def delete_place(place_id):
         return jsonify({}), 200
 
 
-@app_views.route("/cities/<city_id>/places", methods=["POST"], strict_slashes=False)
+@app_views.route("/cities/<city_id>/places",
+                 methods=["POST"], strict_slashes=False)
 def add_place(city_id):
     """add new place"""
     try:
@@ -79,7 +81,7 @@ def update_place(place_id):
     place = models.storage.get(Place, place_id)
     if place is None:
         return abort(404)
-    for key in ("id", "created_at", "updated_at","user_id", "city_id"):
+    for key in ("id", "created_at", "updated_at", "user_id", "city_id"):
         req_data.pop(key, None)
     for k, v in req_data.items():
         setattr(place, k, v)

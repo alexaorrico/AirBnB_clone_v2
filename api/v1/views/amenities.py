@@ -15,7 +15,8 @@ def amenities():
     return jsonify([amenity.to_dict() for amenity in all_amenities.values()])
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["GET"], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=["GET"], strict_slashes=False)
 def get_amenities_by_id(amenity_id):
     """return a amenity by id or 404"""
     amenity = models.storage.get(Amenity, amenity_id)
@@ -60,7 +61,8 @@ def add_amenity():
     return jsonify(new_amenity.to_dict())
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>",
+                 methods=["PUT"], strict_slashes=False)
 def update_amenity(amenity_id):
     """update amenity object"""
     try:

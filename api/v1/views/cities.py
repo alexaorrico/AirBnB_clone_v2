@@ -9,7 +9,8 @@ from flask import jsonify, abort, request
 import models
 
 
-@app_views.route('/states/<state_id>/cities', methods=["GET"], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=["GET"], strict_slashes=False)
 def cities(state_id):
     """return all the cities"""
     state = models.storage.get(State, state_id)
@@ -44,7 +45,8 @@ def delete_city(city_id):
         return jsonify({}), 200
 
 
-@app_views.route("/states/<state_id>/cities", methods=["POST"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities",
+                 methods=["POST"], strict_slashes=False)
 def add_city(state_id):
     """add new city"""
     try:

@@ -23,7 +23,7 @@ def get_states_by_id(state_id):
         return abort(404)
     if state is None:
         return abort(404)
-   
+
     return jsonify(state.to_dict())
 
 
@@ -36,7 +36,7 @@ def delete_state(state_id):
     state = models.storage.get(State, state_id)
     if state is None:
         return abort(404)
-    
+
     models.storage.delete(state)
     return jsonify({}), 200
 

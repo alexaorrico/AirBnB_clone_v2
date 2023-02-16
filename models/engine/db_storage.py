@@ -3,16 +3,15 @@
 Contains the class DBStorage
 """
 
-import models
+
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -74,7 +73,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Return object based on class and ID."""
-        new_dict = {}
+
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
                 stm = select(classes[clss]).filter_by(id=id)

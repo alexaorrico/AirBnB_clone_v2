@@ -54,7 +54,7 @@ def add_user():
 
     if "email" not in req_data.keys():
         return "Missing email", 400
-    if  "password" not in req_data.keys():
+    if "password" not in req_data.keys():
         return "Missing password", 400
 
     new_user = User(**req_data)
