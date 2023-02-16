@@ -1,65 +1,75 @@
 #!/usr/bin/python3
-"""states.py"""
+"""creates a new view for State Objects"""
+from os import name
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
-from models import storage
+from flask import jsonify, request, abort
 from models.amenity import Amenity
+from models import storage
+import json
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def get_amenities():
-    """get amenity information for all amenities"""
-    amenities = []
-    for amenity in storage.all("Amenity").values():
-        amenities.append(amenity.to_dict())
-    return jsonify(amenities)
+def get_amen():
+    """gets all state objects"""
+    all_objects = storage.all(Amenity)
+    single_object = []
+    for all_objects in all_objects.values():
+        single_object.append(all_objects.to_dict())
+    return jsonify(single_object)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def get_amenity(amenity_id):
-    """get amenity information for specified amenity"""
-    amenity = storage.get("Amenity", amenity_id)
-    if amenity is None:
-        abort(404)
-    return jsonify(amenity.to_dict())
+def get_amen_id(amenity_id):
+    """gets the state object using his id"""
+    all_objects = storage.all(Amenity)
+    new_dict = {}
+    for key, value in all_objects.items():
+        if amenity_id == value.id:
+            new_dict = value.to_dict()
+            return jsonify(new_dict)
+    abort(404)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
-                 strict_slashes=False)
-def delete_amenity(amenity_id):
-    """deletes an amenity based on its amenity_id"""
-    amenity = storage.get("Amenity", amenity_id)
-    if amenity is None:
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['DELETE'], strict_slashes=False)
+def delete_amen(amenity_id=None):
+    """Deletes"""
+    obj = storage.get(Amenity, amenity_id)
+    if obj is None:
         abort(404)
-    amenity.delete()
+    storage.delete(obj)
     storage.save()
-    return (jsonify({}))
+    return jsonify({}), 200
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-def post_amenity():
-    """create a new amenity"""
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({'error': 'Missing name'}), 400)
-    amenity = Amenity(**request.get_json())
-    amenity.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+def post_amen():
+    """Creates"""
+    res = request.get_json()
+    if not res:
+        abort(400, {"Not a JSON"})
+    if 'name' not in res:
+        abort(400, {"Missing name"})
+    obj = Amenity(name=res['name'])
+    storage.new(obj)
+    storage.save()
+    return jsonify(obj.to_dict()), 201
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
-                 strict_slashes=False)
-def put_amenity(amenity_id):
-    """update an amenity"""
-    amenity = storage.get("Amenity", amenity_id)
-    if amenity is None:
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
+def put_amen(amenity_id=None):
+    """PUT"""
+    res = request.get_json()
+    if not res:
+        abort(400, {"Not a JSON"})
+    obj = storage.get(Amenity, amenity_id)
+    if obj is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    for attr, val in request.get_json().items():
-        if attr not in ['id', 'created_at', 'updated_at']:
-            setattr(amenity, attr, val)
-    amenity.save()
-    return jsonify(amenity.to_dict())
+    i_key = ["id", "created_at", "updated_at"]
+    for key, value in res.items():
+        if key not in i_key:
+            setattr(obj, key, value)
+    storage.save()
+    return jsonify(obj.to_dict()), 200
