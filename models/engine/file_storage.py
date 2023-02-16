@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the FileStorage class
+Contains FileStorage class
 """
 
 import json
@@ -78,7 +78,7 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
-        """a method to count the number of methods in storage"""
+        """a method to count number of methods in storage"""
         if cls is not None:
             objs = self.all(cls)
             count = 0
