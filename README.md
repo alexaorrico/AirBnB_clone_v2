@@ -431,16 +431,16 @@ At this time, there are no known bugs.
 
 Phase 3:
 * Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)
-* Rebcca945 | [Github](https://github.com/Rebcca945)
+* Chimeremma Shiphrah | [Github](https://github.com/MergoldShey)
 **Note: As per Holberton's requirements, we practice working with new Phase 1 and 2 codebases in our Phase 3 version.**
 
 Phase 2 codebase: 
 * Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)
-* Rebcca945 | [Github](https://github.com/Rebcca945)
+* Chimeremma Shiphrah | [Github](https://github.com/MergoldShey)
 
 Phase 1 codebase:
 * Natnael Bizuneh - [Github](https://github.com/NattyXO) / [Linkedin](https://www.linkedin.com/in/natnael-bizuneh-zenebe/)
-* Rebcca945 | [Github](https://github.com/Rebcca945)
+* Chimeremma Shiphrah | [Github](https://github.com/MergoldShey)
 
 Second part of Airbnb: Joann Vuong
 ## License
