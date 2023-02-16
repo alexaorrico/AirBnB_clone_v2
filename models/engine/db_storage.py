@@ -74,7 +74,7 @@ class DBStorage:
         if cls is None:
             count = len(self.all())
         else:
-            count = self.__session.query(classes[cls]).count()
+            count = len(self.all(cls))
         return count
 
     def delete(self, obj=None):
