@@ -4,7 +4,6 @@
 
 from api.v1.views import (app_views)
 from models.place import Place
-
 from models.review import Review
 from models.user import User
 from flask import jsonify, abort, request
@@ -13,7 +12,7 @@ import models
 
 @app_views.route('/places/<place_id>/reviews',
                  methods=["GET"], strict_slashes=False)
-def places(place_id):
+def reviews(place_id):
     """return all the places"""
     place = models.storage.get(Place, place_id)
     if place_id is None:
@@ -24,7 +23,7 @@ def places(place_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=["GET"], strict_slashes=False)
-def get_place_by_id(review_id=None):
+def get_review_by_id(review_id=None):
     """return a by id or 404"""
     review = models.storage.get(Review, review_id)
     if review_id is None:
@@ -37,7 +36,7 @@ def get_place_by_id(review_id=None):
 
 @app_views.route("/reviews/<review_id>",
                  methods=["DELETE"], strict_slashes=False)
-def delete_place(review_id):
+def delete_review(review_id):
     """delete place data by id"""
     review = models.storage.get(Review, review_id)
     if review_id is None:
@@ -51,7 +50,7 @@ def delete_place(review_id):
 
 @app_views.route("/places/<place_id>/reviews",
                  methods=["POST"], strict_slashes=False)
-def add_place(place_id):
+def add_review(place_id):
     """add new place"""
     try:
         req_data = request.get_json(force=True)
@@ -78,7 +77,7 @@ def add_place(place_id):
 
 
 @app_views.route("/reviews/<review_id>", methods=["PUT"], strict_slashes=False)
-def update_place(review_id):
+def update_review(review_id):
     """update place object"""
     try:
         req_data = request.get_json(force=True)
