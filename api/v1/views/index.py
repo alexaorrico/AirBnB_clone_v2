@@ -12,7 +12,7 @@ Usage:
 """
 from flask import jsonify
 from api.v1.views import app_views
-from models import storage
+from models import storage,state,City,Amenity,User,Review
 
 
 #api route status defination
@@ -21,7 +21,7 @@ def status():
     """
     Returns the status of the API
     """
-    return jsonify{"status": "OK"}
+    return jsonify({"status": "OK"})
 
 # api route  defination for the number objects
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
@@ -29,6 +29,7 @@ def get_stats():
     """
     Return the number of each object by type in the database.
     """
+    classes = [Amenity,City,Place,Review,State,User]
     objects = {"amenities": "Amenity",
             "cities": "City",
             "places": "Place",
