@@ -34,7 +34,14 @@ def get_cities_by_id(city_id):
 @app_views.route("/cities/<city_id>",
                  methods=["DELETE"], strict_slashes=False)
 def delete_city(city_id):
-    """delete city data by id"""
+    """delete city data by idDeletes a state based on the city_id
+    ---
+    definitions:
+      City:
+        type: object
+      Color:
+        type: string
+      items:"""
     if city_id is None:
         return abort(404)
     city = models.storage.get(City, city_id)
@@ -51,7 +58,7 @@ def add_city(state_id):
     """add new city"""
     try:
         req_data = request.get_json(force=True)
-    except:
+    except Exception:
         req_data = None
 
     if req_data is None:
@@ -73,7 +80,7 @@ def update_city(city_id):
     """update city object"""
     try:
         req_data = request.get_json(force=True)
-    except:
+    except Exception:
         req_data = None
     if city_id is None:
         return abort(404)
