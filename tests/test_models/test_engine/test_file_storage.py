@@ -79,6 +79,22 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(new_dict, storage._FileStorage__objects)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_returns_obj(self):
+        """Test that get returns an existing object """
+        storage = FileStorage()
+        storage.new(State())
+        first_state_obj = list(storage.all("State").values())[0]
+        state_obj = storage.get("State", first_state_obj.id)
+        self.assertIs(first_state_obj, state_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_returns_none(self):
+        """Test that get returns None for nonexisting object """
+        storage = FileStorage()
+        state_obj = storage.get("State", "IDONTEXIST")
+        self.assertIsNone(state_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -113,3 +129,13 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count is properly return """
+        objs = models.storage.all()
+        self.assertEqual(len(objs), models.storage.count())
+        state_objs = models.storage.all("State")
+        self.assertEqual(len(state_objs), models.storage.count("State"))
+        no_objs = models.storage.all("Any")
+        self.assertEqual(len(no_objs), models.storage.count("Any"))
