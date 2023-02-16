@@ -63,7 +63,7 @@ class FileStorage:
         or returns None if not found"""
         for clss in classes:
             if cls == classes[clss] or cls == clss:
-                obj_key = cls + "." + id
+                obj_key = clss + "." + id
                 obj = self.__objects[obj_key]
                 return obj
         return None
