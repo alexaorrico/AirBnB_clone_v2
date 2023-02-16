@@ -14,36 +14,31 @@ from models.user import User
 def places(city_id):
     """returns State object or collection or also
     creates a new State object"""
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404)
     if request.method == 'GET':
         places = []
-        city = storage.get(City, city_id)
-        if city:
-            for place in city.places:
-                places.append(place.to_dict())
-            return jsonify(places)
-        else:
-            abort(404)
-    else:
+        for place in city.places:
+            places.append(place.to_dict())
+        return jsonify(places)
+    elif request.method == 'POST':
+        if not request.json:
+            abort(400, "Not a JSON")
         json_data = request.get_json(silent=True)
-        city = storage.get(City, city_id)
-        if city:
-            if json_data is None:
-                abort(400, "Not a JSON")
-            if "user_id" not in json_data.keys():
-                abort(400, "Missing user_id")
-            user_place = storage.get(User, json_data["user_id"])
-            if user_place is None:
-                abort(404)
-            if "name" not in json_data.keys():
-                abort(400, "Missing name")
-            new_obj = Place(**json_data)
-            new_obj.city_id = city.id
-            storage.new(new_obj)
-            storage.save()
-            new_obj_dict = new_obj.to_dict()
-            return make_response(jsonify(new_obj_dict), 201)
-        else:
+        user_id = json_data.get("user_id")
+        if not user_id:
+            abort(400, "Missing user_id")
+        user = storage.get(User, user_id)
+        if user is None:
             abort(404)
+        name = json_data.get("name")
+        if not name:
+            abort(400, "Missing name")
+        json_data["city_id"] = city_id
+        new_obj = Place(**json_data)
+        new_obj.save()
+        return make_response(jsonify(new_obj_dict.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -51,26 +46,23 @@ def placeid(place_id):
     """Retrieves/deletes or updates a single
     object if present or rase 404"""
     obj = storage.get(Place, place_id)
+    if obj is None:
+        abort(404)
     if request.method == 'GET':
-        if obj is None:
-            abort(404)
-        obj_dict = obj.to_dict()
-        return jsonify(obj_dict)
+        return jsonify(obj.to_dict())
     elif request.method == 'PUT':
-        if obj is None:
-            abort(404)
-        json_data = request.get_json(silent=True)
-        if json_data is None:
+        if not request.json:
             abort(400, "Not a JSON")
+        json_data = request.get_json(silent=True)
         ignore_list = ["id", "user_id", "city_id", "created_at", "updated_at"]
         for key, val in json_data.items():
             if key not in ignore_list:
                 setattr(obj, key, val)
-        storage.save()
+        obj.save()
         return make_response(jsonify(obj.to_dict()), 200)
     else:
         if obj is None:
             abort(404)
-        storage.delete(obj)
+        obj.delete()
         storage.save()
         return make_response(jsonify({}), 200)
