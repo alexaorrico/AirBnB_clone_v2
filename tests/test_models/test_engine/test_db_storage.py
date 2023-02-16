@@ -69,20 +69,49 @@ test_db_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    """Test the DBStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing fs storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing fs storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing fs storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing fs storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing fs storage")
+    def test_get(self):
+        """Test get method on DBStorage"""
+        rhode = State(name="State of Rhode Island and Providence Plantations")
+        models.storage.new(rhode)
+        models.storage.save()
+        self.assertEqual(rhode, models.storage.get(State, rhode.id))
+        self.assertEqual(None, models.storage.get(State, "random_id"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing fs storage")
+    def test_count(self):
+        """Test count method on DBStorage"""
+        all = models.storage.count()
+        self.assertIsInstance(all, int)
+        states = models.storage.count(State)
+        cities = models.storage.count(City)
+        self.assertIsInstance(states, int)
+        self.assertIsInstance(cities, int)
+
+        new_state = State(name="Foo")
+        models.storage.new(new_state)
+        models.storage.save()
+
+        self.assertNotEqual(all, models.storage.count())
+        self.assertEqual(all + 1, models.storage.count())
+        self.assertNotEqual(states, models.storage.count(State))
+        self.assertEqual(states + 1, models.storage.count(State))
+        self.assertEqual(cities, models.storage.count(City))
