@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Oluwaseyi Egunjobi - [Github](https://github.com/seyistry) / [Twitter](https://twitter.com/seyistry)  
-******* ******* - [Github](https://github.com/********) / [Twitter](https://twitter.com/*********)
+Adebayo Martins Abayomi - [Github](https://github.com/Hilerioluwa12) / [Twitter](https://twitter.com/Bayomi_Hiliz)
 
 Second part of Airbnb: Joann Vuong
 ## License
