@@ -17,7 +17,7 @@ def all_states():
         Example endpoint returning a list of all the states
     Retrieves a list of all the states
     """
-     all_states = storage.all(State).values()
+    all_states = storage.all(State).values()
     state_list = []
 
     for state in all_states:
@@ -46,7 +46,7 @@ def delete_state(state_id=None):
     """
     Retrieves a state by a given id and deletes it
     """
-     if state_id is None:
+    if state_id is None:
         abort(404)
     state = storage.get(State, state_id)
     if state is None:
@@ -84,7 +84,7 @@ def update_state(state_id=None):
     """
     Updates a State object based on the JSON body
     """
-     if request.get_json:
+    if request.get_json:
         kwargs = request.get_json()
     else:
         return "Not a JSON", 400
@@ -108,4 +108,3 @@ def update_state(state_id=None):
         return "Not a JSON", 400
 
     return jsonify(state.to_dict()), 200
-
