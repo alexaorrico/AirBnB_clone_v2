@@ -63,7 +63,7 @@ class DBStorage:
         """ Retrieves an object identified by
         a class (cls) and onject id (id)"""
         for clss in classes:
-            if cls == classes[clss] or cls == clss:
+            if cls == classes[clss] or cls is clss:
                 obj = self.__session.query(classes[clss]).get(id)
                 return obj
         return None
