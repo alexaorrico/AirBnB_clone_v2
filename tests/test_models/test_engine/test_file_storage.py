@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -30,17 +30,17 @@ class TestFileStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
 
-    def test_pep8_conformance_file_storage(self):
+    def test_pycodestyle_conformance_file_storage(self):
         """Test that models/engine/file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
+        pycodestyles = pycodestyle.StyleGuide(quiet=True)
+        result = pycodestyles.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_pep8_conformance_test_file_storage(self):
+    def test_pycodestyle_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
+        pycodestyles = pycodestyle.StyleGuide(quiet=True)
+        result = pycodestyles.check_files(['tests/test_models/test_engine/\
 test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
@@ -113,3 +113,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get retreives the correct object"""
+        storage = FileStorage()
+        with open("file.json", "r") as f:
+            json_dict = f.read()
+            file_ob = json.loads(json_dict)
+            for key, value in file_ob.items():
+                with self.subTest(key=key, value=value):
+                    file_id = value['id']
+                    file_key = value['__class__'] + "." + file_id
+                    file_obj = storage._FileStorage__objects[file_key]
+                    get_obj = storage.get(classes[value['__class__']], file_id)
+                    self.assertEqual(file_obj, get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """ Tests that count returns the correct
+        number of specified classes or all"""
+        storage = FileStorage()
+        new_dict = storage.all()
+        count = len(new_dict)
+        count_method = storage.count()
+        for clss in classes:
+            with self.subTest():
+                clss_dict = storage.all(clss)
+                clss_len = len(clss_dict)
+                count_clss = storage.count(clss)
+                self.assertEqual(count_clss, clss_len)
+        self.assertEqual(count, count_method)
