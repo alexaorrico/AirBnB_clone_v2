@@ -1,17 +1,18 @@
 #!/usr/bin/python3
 '''Run Flask application API
 '''
-import os
-from flask import Flask, jsonify
-
-from api.v1.views import app_views
 from models import storage
+import os
+from api.v1.views import app_views
+from flask import Flask, jsonify
+from flask_cors import CORS
 
 
 app = Flask(__name__)
-'''Flask application instance'''
-app.url_map.strict_slashe = False
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
+
+CORS(app, resources={'/*': {'origins': '0.0.0.0'}})
 
 
 @app.teardown_appcontext
