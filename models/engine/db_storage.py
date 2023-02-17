@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""
-Contains the class DBStorage
+"""Database storage engine using SQLAlchemy with a mysql+mysqldb database
+connection.
 """
 
 import models
