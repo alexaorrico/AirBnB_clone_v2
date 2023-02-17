@@ -52,21 +52,15 @@ class DBStorage:
         return (new_dict)
 
     def get(self, cls, id):
-        """ Retrieve one object.
-        """
-        if cls and id:
-            key = "{}.{}".format(cls.__name__, id)
-            return self.__session.query(eval(cls.__name__)).get(id)
-        else:
-            return None
+        """retrieves an object of a class with id"""
+        obj = None
+        if cls is not None and issubclass(cls, BaseModel):
+            obj = self.__session.query(cls).filter(cls.id == id).first()
+        return obj
 
-     def count(self, cls=None):
-        """ Count the number of objects in storage.
-        """
-        if cls:
-            return self.__session.query(eval(cls.__name__)).count()
-        else:
-            return sum(self.__session.query(c).count() for c in [State, City, User, Place, Review, Amenity]
+    def count(self, cls=None):
+        """retrieves the number of objects of a class or all (if cls==None)"""
+        return len(self.all(cls))
 
     def new(self, obj):
         """add the object to the current database session"""
