@@ -1,62 +1,50 @@
 #!/usr/bin/python3
-"""
-This module contains the Flask application instance and the API routes.
-The application instance is created and the API routes are registered here.
-
-Usage:
-    You can run this module to start the Flask web server.
-
-    To run the server with default configuration, run:
-        python -m api.v1.app
-
-    You can also set the environment variables :
-        HBNB_API_HOST
-        HBNB_API_PORT
-    to configure the server host and port respectively.
-"""
-from flask import Flask
-import models
-from api.v1.views import app_views
+'''Contains a Flask web application API.
+'''
 import os
+from flask import Flask, jsonify
+from flask_cors import CORS
+
+from models import storage
+from api.v1.views import app_views
 
 
-# flask application instance
 app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix="/api/v1")
+'''The Flask web application instance.'''
+app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+app_port = int(os.getenv('HBNB_API_PORT', '5000'))
+app.url_map.strict_slashes = False
+app.register_blueprint(app_views)
+CORS(app, resources={'/*': {'origins': app_host}})
 
 
 @app.teardown_appcontext
 def teardown_flask(exception):
-    """
-    request context end event listener.
-    """
+    '''The Flask app/request context end event listener.'''
     # print(exception)
-    models.storage.close()
+    storage.close()
 
-#400 error handler
+
+@app.errorhandler(404)
+def error_404(error):
+    '''Handles the 404 HTTP error code.'''
+    return jsonify(error='Not found'), 404
+
+
 @app.errorhandler(400)
 def error_400(error):
-    """
-    Handles the 400 HTTP error code.
-    """
-    message = 'Bad request'
+    '''Handles the 400 HTTP error code.'''
+    msg = 'Bad request'
     if isinstance(error, Exception) and hasattr(error, 'description'):
-        message = error.description
-    return jsonify(error=message), 400
-
-# 404 error handler defination
-@app.errorhandler(404)
-def page_not_found(error):
-    """
-    return a JSON-formatted 404 status code response.
-    """
-    return jsonify({"error": "Not found"}), 404
+        msg = error.description
+    return jsonify(error=msg), 400
 
 
-if __name__ == "__main__":
-    """
-    runs flask web server
-    """
-    host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-    port = int(os.getenv("HBNB_API_PORT", 5000))
-    app.run(host=host, port=port, threaded=True)
+if __name__ == '__main__':
+    app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    app_port = int(os.getenv('HBNB_API_PORT', '5000'))
+    app.run(
+        host=app_host,
+        port=app_port,
+        threaded=True
+    )

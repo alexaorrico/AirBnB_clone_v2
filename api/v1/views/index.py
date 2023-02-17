@@ -12,7 +12,7 @@ Usage:
 """
 from flask import jsonify
 from api.v1.views import app_views
-from models import storage,state,City,Amenity,User,Review
+from models import storage,State,City,Amenity,User,Review
 
 
 #api route status defination
