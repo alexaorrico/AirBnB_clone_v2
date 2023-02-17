@@ -154,9 +154,14 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Hermann WAKAM - [Github](https://github.com/WakHerv7)   
-Ahmed abdirahman yosef - [Github](https://github.com/muadhhaji320)
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang) 
+Ahmed Abdirahman yosef - [Github](https://github.com/muadhhaji320)
+Wakam Hermann Vanel - [Github](https://github.com/WakHerv7) 
+=======
 
+>>>>>>> aac5acdaf910012588914eb3717c1dfbc215cbd8
 Second part of Airbnb: Joann Vuong
+
 ## License
 Public Domain. No copy write protection. 
