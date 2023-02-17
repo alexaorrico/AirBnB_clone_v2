@@ -12,6 +12,7 @@ This Directory contains API files and documenation
 * __web server gateway:__ gunicorn (version 19.7.1)
 * __database:__ mysql Ver 14.14 Distrib 5.7.18
 * __documentation:__ Swagger (flasgger==0.6.6)
+
 * __Style:__
   * __python:__ PEP 8 (v. 1.7.0)
 
