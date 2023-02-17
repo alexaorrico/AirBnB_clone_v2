@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-""" Test .get() and .count() methods
+""" Test .get()
 """
 from models import storage
-from models.city import City
+from models.state import State
 
-print("All objects: {}".format(storage.count()))
-print("State objects: {}".format(storage.count(City)))
-
-first_City_id = list(storage.all(City).values())[0].id
-print("First City: {}".format(storage.get(City, first_City_id)))
+state = storage.get(State, "Doesn't exist")
+if state is None:
+    print("None", end="")
+else:
+    print("Get shouldn't return an object if the ID doesn't exist", end="")
