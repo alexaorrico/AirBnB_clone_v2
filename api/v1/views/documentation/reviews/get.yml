@@ -1,0 +1,36 @@
+GET method, get all reviews of a place
+---
+tags:
+  - Reviews
+parameters:
+  - name: place_id
+    in: path
+    type: string
+    required: true
+    description: place id
+responses:
+  200:
+    description: Succsesful resquest
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: "string"
+          created_at:
+            type: string
+            description: datetime of instance creation
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: The unique id of the state instance
+          text:
+            type: string
+            description: Place description
+          place_id:
+            type: string
+            description: Place id
+  404:
+    description: Place not found
