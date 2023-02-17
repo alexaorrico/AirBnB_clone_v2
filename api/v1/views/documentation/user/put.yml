@@ -1,0 +1,18 @@
+Update a user instance by id
+---
+tags:
+  - Users
+parameters:
+  - name: user_id
+    in: path
+    type: string
+    required: true
+    description: the unique id of the user to be update
+  - name: update_request
+    in: body
+    required: true
+responses:
+  404:
+    description: User not found 😳
+  200:
+    description: Successful request ✔️
