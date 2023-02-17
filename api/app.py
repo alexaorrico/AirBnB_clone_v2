@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-
-"""Flask server (variable app)
-"""
+"""Flask server (variable app) """
 
 
 from flask import Flask, jsonify
