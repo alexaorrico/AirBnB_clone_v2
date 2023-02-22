@@ -153,7 +153,7 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
-## Authors
+## Author
 Alhassan Mumin - [Github](https://github.com/AlhassanMumin) / [Twitter](https://twitter.com/Mumin_hass)  
 
 
