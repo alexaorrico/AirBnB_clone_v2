@@ -6,6 +6,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import hashlib
 
 
 class User(BaseModel, Base):
@@ -55,4 +56,4 @@ class User(BaseModel, Base):
         if key == "password":
             self.set_password(value)
         else:
-            super().__setattr__(key, value)            
+            super().__setattr__(key, value)
