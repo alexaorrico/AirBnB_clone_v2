@@ -108,8 +108,13 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """
-            retrieves one object based on class name and id
+        """_summary_
+
+        Args:
+            id (_type_): _description_
+
+        Returns:
+            _type_: _description_
         """
         if cls and id:
             fetch_obj = "{}.{}".format(cls, id)
