@@ -21,9 +21,9 @@ class TestStateDocs(unittest.TestCase):
         cls.state_f = inspect.getmembers(State, inspect.isfunction)
 
     def test_pep8_conformance_state(self):
-        """Test that models/states.py conforms to PEP8."""
+        """Test that models/state.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/states.py'])
+        result = pep8s.check_files(['models/state.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -35,11 +35,11 @@ class TestStateDocs(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_state_module_docstring(self):
-        """Test for the states.py module docstring"""
+        """Test for the state.py module docstring"""
         self.assertIsNot(state.__doc__, None,
-                         "states.py needs a docstring")
+                         "state.py needs a docstring")
         self.assertTrue(len(state.__doc__) >= 1,
-                        "states.py needs a docstring")
+                        "state.py needs a docstring")
 
     def test_state_class_docstring(self):
         """Test for the State class docstring"""

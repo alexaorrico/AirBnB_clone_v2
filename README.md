@@ -77,14 +77,14 @@ TestBaseModel class:
 * `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
 * `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
 
-[/test_models/test_amenity.py](/tests/test_models/test_amenities.py) - Contains the TestAmenityDocs class:
+[/test_models/test_amenity.py](/tests/test_models/test_amenity.py) - Contains the TestAmenityDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_amenity(self)` - Test that models/amenity.py conforms to PEP8
 * `def test_pep8_conformance_test_amenity(self)` - Test that tests/test_models/test_amenity.py conforms to PEP8
 * `def test_amenity_module_docstring(self)` - Test for the amenity.py module docstring
 * `def test_amenity_class_docstring(self)` - Test for the Amenity class docstring
 
-[/test_models/test_city.py](/tests/test_models/test_cities.py) - Contains the TestCityDocs class:
+[/test_models/test_city.py](/tests/test_models/test_city.py) - Contains the TestCityDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_city(self)` - Test that models/city.py conforms to PEP8
 * `def test_pep8_conformance_test_city(self)` - Test that tests/test_models/test_city.py conforms to PEP8
@@ -98,7 +98,7 @@ TestBaseModel class:
 * `def test_file_storage_module_docstring(self)` - Test for the file_storage.py module docstring
 * `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
 
-[/test_models/test_place.py](/tests/test_models/test_places.py) - Contains the TestPlaceDoc class:
+[/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_place(self)` - Test that models/place.py conforms to PEP8.
 * `def test_pep8_conformance_test_place(self)` - Test that tests/test_models/test_place.py conforms to PEP8.
@@ -112,14 +112,14 @@ TestBaseModel class:
 * `def test_review_module_docstring(self)` - Test for the review.py module docstring
 * `def test_review_class_docstring(self)` - Test for the Review class docstring
 
-[/test_models/state.py](/tests/test_models/test_states.py) - Contains the TestStateDocs class:
+[/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
 * `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
 * `def test_state_module_docstring(self)` - Test for the state.py module docstring
 * `def test_state_class_docstring(self)` - Test for the State class docstring
 
-[/test_models/user.py](/tests/test_models/test_users.py) - Contains the TestUserDocs class:
+[/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
 * `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
