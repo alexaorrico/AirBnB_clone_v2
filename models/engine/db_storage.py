@@ -78,10 +78,11 @@ class DBStorage:
         self.__session.commit()
 
     def get(self, cls, id):
-        """
-        Retrieve one object.
-        """
-        return self.__session.query(classes[cls]).filter_by(id=id).first()
+        '''
+            Retrieve one object
+        '''
+        obj = self.__session.query(eval(cls)).filter_by(id=id).first()
+        return obj
 
     def count(self, cls=None):
         """
