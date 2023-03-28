@@ -16,8 +16,8 @@ host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
 port = os.environ.get('HBNB_API_PORT', '5000')
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-@app.teardown_appcontext
 
+@app.teardown_appcontext
 def close_storage(error):
     '''
         engage in teardowns
