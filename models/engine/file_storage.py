@@ -75,9 +75,11 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Gets an object from the object dictionary based on class and id."""
-        key = "{}.{}".format(cls.__name__, id)
-        return self.__objects.get(key)
+        """Gets the string representing the class name and object ID """
+        string_dict = self.all(cls)
+        for key, value in string_dict.items():
+            if key == cls.__name__ + "." + id:
+                return value
 
     def count(self, cls=None):
         """Counts the number of objects in the object dictionary."""
