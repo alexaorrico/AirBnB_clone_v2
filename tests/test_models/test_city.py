@@ -21,9 +21,9 @@ class TestCityDocs(unittest.TestCase):
         cls.city_f = inspect.getmembers(City, inspect.isfunction)
 
     def test_pep8_conformance_city(self):
-        """Test that models/city.py conforms to PEP8."""
+        """Test that models/cities.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/city.py'])
+        result = pep8s.check_files(['models/cities.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -35,11 +35,11 @@ class TestCityDocs(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_city_module_docstring(self):
-        """Test for the city.py module docstring"""
+        """Test for the cities.py module docstring"""
         self.assertIsNot(city.__doc__, None,
-                         "city.py needs a docstring")
+                         "cities.py needs a docstring")
         self.assertTrue(len(city.__doc__) >= 1,
-                        "city.py needs a docstring")
+                        "cities.py needs a docstring")
 
     def test_city_class_docstring(self):
         """Test for the City class docstring"""

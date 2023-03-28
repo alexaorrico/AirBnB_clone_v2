@@ -11,10 +11,12 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
+
 @app.route('/api/v1/status', methods=['GET'], strict_slashes=False)
 def get_status():
     """Returns status of API."""
     return jsonify({"status": "OK"})
+
 
 @app.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
 def get_stats():
