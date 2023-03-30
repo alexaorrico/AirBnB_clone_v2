@@ -160,6 +160,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 ## Collaborators:
 (https://github.com/MicoBledsoe)
+
 (https://github.com/mnlazs)
 
 Second part of Airbnb: Joann Vuong
