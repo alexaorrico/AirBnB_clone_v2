@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" init """
+""" views for AirBnB_clone """
 from flask import Blueprint
 from models import storage
 
