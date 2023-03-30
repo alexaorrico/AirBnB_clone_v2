@@ -5,7 +5,7 @@ initialize the models package
 
 from os import getenv
 
-
+class_names = ["Amenity", "City", "Place", "Review", "State", "User"]
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 if storage_t == "db":
