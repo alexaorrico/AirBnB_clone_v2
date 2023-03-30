@@ -158,6 +158,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Chris Stamper - [Github](https://github.com/ZeroDayPoke)
 Philip Taylor - [Github](https://github.com/Oggal)
+Alexandra Tatum - [Github] (https://github.com/actatum88)
 
 Second part of Airbnb: Joann Vuong
 ## License
