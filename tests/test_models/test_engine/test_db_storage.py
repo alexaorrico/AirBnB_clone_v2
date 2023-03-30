@@ -90,6 +90,7 @@ class TestStateDBInstances(unittest.TestCase):
         total_states = storage.count(State)
         self.assertEqual(total_states, 2)
 
+
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
