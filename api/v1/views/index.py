@@ -17,5 +17,5 @@ def stats():
     """Return number of objects by type"""
     data = {}
     for cls in class_names:
-        data[cls] = storage.count(cls)
+        data[cls.lower()] = storage.count(cls)
     return Response(dumps(data), content_type='application/json')
