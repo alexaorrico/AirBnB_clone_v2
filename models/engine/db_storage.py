@@ -80,7 +80,7 @@ class DBStorage:
         if cls is str:
             cls = classes.get(cls)
         if cls and id:
-            fetch = "{}.{}".format(cls, id)
+            fetch = "{}.{}".format(cls.__name__, id)
             all_obj = self.all(cls)
             return all_obj.get(fetch)
         return None
