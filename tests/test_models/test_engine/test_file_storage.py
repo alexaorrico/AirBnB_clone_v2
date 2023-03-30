@@ -117,6 +117,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count_method(self):
+        """tests count method in FileStorage engine / mode"""
         ok_state = State(name='OK')
         ar_state = State(name='AR')
         ok_state.save()
@@ -127,6 +128,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_method(self):
+        """tests get method in FileStorage engine / mode"""
         ok_state = State(name='OK')
         ok_state.save()
         ok_state_id = ok_state.id
