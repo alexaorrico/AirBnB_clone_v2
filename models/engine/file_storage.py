@@ -71,6 +71,8 @@ class FileStorage:
 
     def get(self, cls, id):
         """gets object by cls and id"""
+        if cls is str:
+            cls = classes.get(cls)
         if cls and id:
             fetch_obj = "{}.{}".format(cls, id)
             all_obj = self.all(cls)
