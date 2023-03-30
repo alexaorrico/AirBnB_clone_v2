@@ -5,7 +5,8 @@ from flask import Response
 from api.v1.views import app_views
 from models import storage, class_names
 
-
+classConversion = { "Amenity": "amenities", "City": "cities", "Place": "places",
+                    "Review": "reviews", "State": "states", "User": "users" }
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
@@ -17,5 +18,5 @@ def stats():
     """Return number of objects by type"""
     data = {}
     for cls in class_names:
-        data[cls.lower()] = storage.count(cls)
+        data[classConversion[cls]] = storage.count(cls)
     return Response(dumps(data), content_type='application/json')
