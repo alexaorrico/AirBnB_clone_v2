@@ -4,6 +4,7 @@ from api.v1.views import app_views
 from flask import jsonify, Blueprint
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+app.run(host='0.0.0.0, port=5000)
 
 
 @app_views.route('/status', methods=['GET'])
