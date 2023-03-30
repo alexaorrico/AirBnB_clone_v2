@@ -14,6 +14,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
+from models.engine.file_storage import FileStorage
 import json
 import os
 import pep8
@@ -67,6 +69,26 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+
+@unittest.skipIf(type(models.storage) == FileStorage, "Testing FileStorage")
+class TestStateDBInstances(unittest.TestCase):
+    """DBStorage State Tests"""
+    def tearDownClass():
+        """tidies up the tests removing storage objects"""
+        storage.hcf(State)
+
+    def setUp(self):
+        """initializes new BaseModel object for testing"""
+        self.state_one = State(name='OK')
+        self.state_one.save()
+        self.state_two = State(name='AR')
+        self.state_two.save()
+        storage.save()
+
+    def test_count_meth(self):
+        """tests count method for DBStorage"""
+        total_states = storage.count(State)
+        self.assertEqual(total_states, 2)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
