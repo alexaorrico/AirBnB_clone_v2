@@ -89,7 +89,7 @@ class DBStorage:
         """returns count of objs in cls"""
         return (len(self.all(cls)))
 
-    def hcf(self, cls):
+    def drop_table(self, cls):
         """drops specified table"""
         metadata = sqlalchemy.MetaData()
         metadata.reflect(bind=self.__engine)
