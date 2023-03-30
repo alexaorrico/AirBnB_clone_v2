@@ -15,9 +15,7 @@ from models.user import User
 
 
 class FileStorage:
-    """
-        handles long term storage of all class instances
-    """
+
     CNC = {
         'BaseModel': base_model.BaseModel,
         'Amenity': amenity.Amenity,
@@ -27,17 +25,12 @@ class FileStorage:
         'State': state.State,
         'User': user.User
     }
-    """CNC - this variable is a dictionary with:
-    keys: Class Names
-    values: Class type (used for instantiation)
-    """
+
     __file_path = './dev/file.json'
     __objects = {}
 
     def all(self, cls=None):
-        """
-            returns private attribute: __objects
-        """
+
         if cls is not None:
             new_objs = {}
             for clsid, obj in FileStorage.__objects.items():
@@ -48,16 +41,12 @@ class FileStorage:
             return FileStorage.__objects
 
     def new(self, obj):
-        """
-            sets / updates in __objects the obj with key <obj class name>.id
-        """
+
         bm_id = "{}.{}".format(type(obj).__name__, obj.id)
         FileStorage.__objects[bm_id] = obj
 
     def save(self):
-        """
-            serializes __objects to the JSON file (path: __file_path)
-        """
+
         fname = FileStorage.__file_path
         storage_d = {}
         for bm_id, bm_obj in FileStorage.__objects.items():
@@ -66,9 +55,7 @@ class FileStorage:
             json.dump(storage_d, f_io)
 
     def reload(self):
-        """
-            if file exists, deserializes JSON file to __objects, else nothing
-        """
+
         fname = FileStorage.__file_path
         FileStorage.__objects = {}
         try:
@@ -81,9 +68,7 @@ class FileStorage:
             FileStorage.__objects[o_id] = FileStorage.CNC[k_cls](**d)
 
     def delete(self, obj=None):
-        """
-            deletes obj from __objects if it's inside
-        """
+
         if obj:
             obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
             all_class_objs = self.all(obj.__class__.__name__)
@@ -92,9 +77,7 @@ class FileStorage:
             self.save()
 
     def delete_all(self):
-        """
-            deletes all stored objects, for testing purposes
-        """
+
         try:
             with open(FileStorage.__file_path, mode='w') as f_io:
                 pass
