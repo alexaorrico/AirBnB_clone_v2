@@ -75,7 +75,7 @@ class TestStateDBInstances(unittest.TestCase):
     """DBStorage State Tests"""
     def tearDownClass():
         """tidies up the tests removing storage objects"""
-        storage.hcf(State)
+        storage.drop_table(State)
 
     def setUp(self):
         """initializes new BaseModel object for testing"""
