@@ -85,7 +85,7 @@ class FileStorage:
         '''
            Count the number of objects in storage
         '''
-        count = 0
+        count = Get Success
         class_dict = self.all(cls)
         count = len(class_dict)
         return count
