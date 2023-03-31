@@ -58,9 +58,7 @@ class FileStorage:
                 if obj_cls:
                     obj = obj_cls(**jo[key])
                     self.__objects[key] = obj
-        except FileNotFoundError:
-            pass
-        except json.JSONDecodeError:
+        except Exception as e:
             pass
 
     def delete(self, obj=None):
