@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """View of Cities for RESTFul API"""
 
 from api.v1.views import app_views, validate_model
