@@ -19,6 +19,6 @@ def status():
 def stats():
     """Return number of objects by type"""
     data = {}
-    for cls in class_richard:
+    for cls in class_richard.keys():
         data[classConversion[cls]] = storage.count(cls)
     return Response(dumps(data), content_type='application/json')
