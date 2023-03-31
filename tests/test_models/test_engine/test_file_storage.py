@@ -133,5 +133,5 @@ class TestFileStorage(unittest.TestCase):
         ok_state.save()
         ok_state_id = ok_state.id
         storage.reload()
-        ok_state_from_get = storage.get('State', ok_state_id)
+        ok_state_from_get = storage.get(State, ok_state_id)
         self.assertEqual(ok_state_id, ok_state_from_get.id)
