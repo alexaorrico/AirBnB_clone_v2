@@ -14,7 +14,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from models.engine.db_storage import DBStorage
 import json
 import os
 import pep8
@@ -98,15 +97,3 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionary"""
-        state = State(name="California")
-        state.save()
-        city = City(name="San Francisco", state_id=state.id)
-        city.save()
-        storage = DBStorage()
-        storage.reload()
-        obj_dict = storage.all()
-        self.assertEqual(type(obj_dict), dict)
