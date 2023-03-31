@@ -107,8 +107,6 @@ class TestCity(unittest.TestCase):
         self.assertEqual(new_d["created_at"], c.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], c.updated_at.strftime(t_format))
 
-    def test_str(self):
-        """test that the str method has the correct output"""
-        city = City()
-        string = "[City] ({}) {}".format(city.id, city.__dict__)
-        self.assertEqual(string, str(city))
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)

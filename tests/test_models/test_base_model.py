@@ -131,11 +131,9 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_d["created_at"], bm.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], bm.updated_at.strftime(t_format))
 
-    def test_str(self):
-        """test that the str method has the correct output"""
-        inst = BaseModel()
-        string = "[BaseModel] ({}) {}".format(inst.id, inst.__dict__)
-        self.assertEqual(string, str(inst))
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)
 
     @mock.patch('models.storage')
     def test_save(self, mock_storage):

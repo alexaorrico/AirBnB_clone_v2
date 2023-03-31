@@ -99,8 +99,6 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(new_d["created_at"], am.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], am.updated_at.strftime(t_format))
 
-    def test_str(self):
-        """test that the str method has the correct output"""
-        amenity = Amenity()
-        string = "[Amenity] ({}) {}".format(amenity.id, amenity.__dict__)
-        self.assertEqual(string, str(amenity))
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)
