@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Define a blueprint for the API v1"""
 from flask import Blueprint
 
