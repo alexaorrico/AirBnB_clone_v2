@@ -77,8 +77,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """gets object by cls and id"""
+        if cls is str:
+            cls = classes.get(cls)
         if cls and id:
-            fetch = "{}.{}".format(cls, id)
+            fetch = "{}.{}".format(cls.__name__, id)
             all_obj = self.all(cls)
             return all_obj.get(fetch)
         return None
@@ -86,3 +88,11 @@ class DBStorage:
     def count(self, cls=None):
         """returns count of objs in cls"""
         return (len(self.all(cls)))
+
+    def drop_table(self, cls):
+        """drops specified table"""
+        metadata = sqlalchemy.MetaData()
+        metadata.reflect(bind=self.__engine)
+        table = metadata.tables.get(cls.__tablename__)
+        self.__session.execute(table.delete())
+        self.save()
