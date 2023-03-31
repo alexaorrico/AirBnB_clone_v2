@@ -4,6 +4,7 @@ from flask import Blueprint, abort
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
+
 def validate_model(model, model_id):
     """Validate if a model exists"""
     from models import storage
