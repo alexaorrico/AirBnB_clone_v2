@@ -16,8 +16,13 @@ from models.user import User
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
 
-    class_richard = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-                    "Place": Place, "Review": Review, "State": State, "User": User}
+    class_richard = {"Amenity": Amenity,
+                     "BaseModel": BaseModel,
+                     "City": City,
+                     "Place": Place,
+                     "Review": Review,
+                     "State": State,
+                     "User": User}
     # string - path to the JSON file
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
@@ -53,8 +58,10 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
-                self.__objects[key] = self.class_richard[jo[key]["__class__"]](**jo[key])
-        except:
+                r = self.class_richard
+                self.__objects[key] = r[jo[key]["__class__"]](**jo[key])
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print("{}".format(e))
             pass
 
     def delete(self, obj=None):

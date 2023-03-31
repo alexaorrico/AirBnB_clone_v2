@@ -13,6 +13,6 @@ if storage_t == "db":
     storage = DBStorage()
 else:
     from models.engine.file_storage import FileStorage
-    class_richard = DBStorage.class_richard
+    class_richard = FileStorage.class_richard
     storage = FileStorage()
 storage.reload()
