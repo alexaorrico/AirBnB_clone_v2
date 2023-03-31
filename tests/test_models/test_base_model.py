@@ -99,6 +99,7 @@ def test_datetime_attributes(self):
 
 
 def test_uuid(self):
+def test_uuid(self):
     """Test that id is a valid uuid"""
     inst1 = BaseModel()
     inst2 = BaseModel()
