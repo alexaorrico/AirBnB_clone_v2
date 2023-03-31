@@ -79,7 +79,7 @@ class DBStorage:
         """gets object by cls and id"""
         if cls is str:
             cls = self.class_richard.get(cls)
-        if id:
+        if cls and id:
             fetch = "{}.{}".format(cls.__name__, id)
             all_obj = self.all(cls)
             return all_obj.get(fetch)
