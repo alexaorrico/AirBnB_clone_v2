@@ -36,8 +36,7 @@ def states_with_id_get(state_id=None):
 def states_with_id_del(state_id=None):
     """states route handling - id given DELETE scenario"""
     state_obj = validate_model("State", state_id)
-    state_obj.delete()
-    del state_obj
+    storage.delete(state_obj)
     return jsonify({})
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
