@@ -29,6 +29,7 @@ def delete_city(city_id):
     city = validate_model("City", city_id)
     city.delete()
     storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/states/<state_id>/cities',
