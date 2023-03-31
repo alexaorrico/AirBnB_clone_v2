@@ -95,8 +95,7 @@ class TestStateDBInstances(unittest.TestCase):
 
     def test_get_meth(self):
         """tests get method for DBStorage"""
-        oklahoma_get = storage.get('State', self.state_one_id)
-        print(oklahoma_get)
+        oklahoma_get = storage.get(State, self.state_one_id)
         self.assertEqual(oklahoma_get.name, 'OK')
 
 

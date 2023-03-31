@@ -12,13 +12,17 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
 
+    class_richard = {"Amenity": Amenity,
+                     "BaseModel": BaseModel,
+                     "City": City,
+                     "Place": Place,
+                     "Review": Review,
+                     "State": State,
+                     "User": User}
     # string - path to the JSON file
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
@@ -54,8 +58,10 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+                r = self.class_richard
+                self.__objects[key] = r[jo[key]["__class__"]](**jo[key])
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print("{}".format(e))
             pass
 
     def delete(self, obj=None):
@@ -72,7 +78,7 @@ class FileStorage:
     def get(self, cls, id):
         """gets object by cls and id"""
         if cls is str:
-            cls = classes.get(cls)
+            cls = self.class_richard.get(cls)
         if cls and id:
             fetch_obj = "{}.{}".format(cls.__name__, id)
             all_obj = self.all(cls)
