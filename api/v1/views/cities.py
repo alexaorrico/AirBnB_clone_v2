@@ -1,7 +1,7 @@
 #!/bin/usr/python3
 """View of Cities for RESTFul API"""
 
-from api.v1.views import app_views
+from api.v1.views import app_views, validate_model
 from flask import jsonify, abort, request
 from models import storage
 from models.city import City
@@ -11,9 +11,7 @@ from models.city import City
                  methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
     """Retrieves the list of all City objects of a State"""
-    state = storage.get("State", state_id)
-    if state is None:
-        abort(404)
+    state = validate_model("State", state_id)
     cities = state.cities
     return jsonify([city.to_dict() for city in cities])
 
@@ -21,18 +19,14 @@ def get_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city(city_id):
     """Retrieves a City object"""
-    city = storage.get("City", city_id)
-    if city is None:
-        abort(404)
+    city = validate_model("City", city_id)
     return jsonify(city.to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
     """Deletes a City object"""
-    city = storage.get("City", city_id)
-    if city is None:
-        abort(404)
+    city = validate_model("City", city_id)
     city.delete()
     storage.save()
 
@@ -41,9 +35,7 @@ def delete_city(city_id):
                  methods=['POST'], strict_slashes=False)
 def post_city(state_id):
     """Creates a City"""
-    state = storage.get("State", state_id)
-    if state is None:
-        abort(404)
+    validate_model("State", state_id)
     body = request.get_json()
     if body is None:
         abort(400, "Not a JSON")
@@ -58,9 +50,7 @@ def post_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def put_city(city_id):
     """Updates a City object"""
-    city = storage.get("City", city_id)
-    if city is None:
-        abort(404)
+    city = validate_model("City", city_id)
     body = request.get_json()
     if body is None:
         abort(400, "Not a JSON")
