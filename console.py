@@ -109,4 +109,9 @@ class HBNBCommand(cmd.Cmd):
         """Prints string representations of instances"""
         args = shlex.split(arg)
         obj_list = []
-        if len(args)
+        if len(args) > 0:
+            # do something with args
+            pass
+        else:
+            # handle the case where there are no args
+            pass
