@@ -100,4 +100,4 @@ class TestState(unittest.TestCase):
 
     def __str__(self):
         """String representation of the BaseModel class"""
-        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)
+        return "[{:s}] ({:s})".format(self.__class__.__name__, str(self.id))
