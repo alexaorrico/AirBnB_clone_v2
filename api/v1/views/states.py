@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Flask route module for states"""
-from api.v1.views import app_views
+from api.v1.views import app_views, validate_model
 from flask import abort, jsonify, request
 from models import storage, class_richard
 
@@ -29,29 +29,21 @@ def states_no_id_post():
 @app_views.route('/states/<state_id>', methods=['GET'])
 def states_with_id_get(state_id=None):
     """states route handling - id given GET scenario"""
-    state_obj = storage.get('State', state_id)
-    if state_obj is None:
-        abort(404, 'Not found')
-    if request.method == 'GET':
-        return jsonify(state_obj.to_dict())
+    state_obj = validate_model("State", state_id)
+    return jsonify(state_obj.to_dict())
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def states_with_id_del(state_id=None):
     """states route handling - id given DELETE scenario"""
-    state_obj = storage.get('State', state_id)
-    if state_obj is None:
-        abort(404, 'Not found')
-    if request.method == 'DELETE':
-        state_obj.delete()
-        del state_obj
-        return jsonify({})
+    state_obj = validate_model("State", state_id)
+    state_obj.delete()
+    del state_obj
+    return jsonify({})
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def states_with_id_put(state_id=None):
     """states route handling - id given PUT scenario"""
-    state_obj = storage.get('State', state_id)
-    if state_obj is None:
-        abort(404, 'Not found')
+    state_obj = validate_model("State", state_id)
     req_json = request.get_json()
     if req_json is None:
         abort(400, 'Not a JSON')
