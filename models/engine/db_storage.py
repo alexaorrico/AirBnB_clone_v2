@@ -75,7 +75,7 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-    """db storage changes"""
+    """Question 3 Code Past This Line"""
     def get(self, cls, id):
         """get function Question 3"""
         key = cls.__name__ + "." + id
@@ -88,12 +88,4 @@ class DBStorage:
 
     def count(self, cls=None):
         """Count Question 3"""
-        return len(self.all(cls))
-
-    def get(self, cls, id):
-        if cls in cls.values():
-            return self.__session.query(cls).filter(cls.id == id).first()
-        return None
-
-    def count(self, cls=None):
         return len(self.all(cls))
