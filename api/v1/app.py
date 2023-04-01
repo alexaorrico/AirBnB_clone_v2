@@ -14,6 +14,12 @@ def tearitup():
     """turrupboii"""
     storage.close()
 
-if __name__ == '__main__':
+def start_flask():
+    """ start flask """
     app.run(host=getenv('HBNB_API_HOST'),
-            port=getenv('HBNB_API_PORT'))
+            port=getenv('HBNB_API_PORT'),
+            threaded=True)
+
+
+if __name__ == "__main__":
+    start_flask()
