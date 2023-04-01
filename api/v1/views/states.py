@@ -5,14 +5,14 @@ from flask import abort, jsonify, request
 from models import storage, class_richard
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/', methods=['GET'])
 def states_no_id_get():
     """states route handling - no id given GET scenario"""
     all_states = storage.all("State")
     all_states = list(obj.to_dict() for obj in all_states.values())
     return jsonify(all_states)
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'])
 def states_no_id_post():
     """states route handling - no id given POST scenario"""
     req_json = request.get_json()
