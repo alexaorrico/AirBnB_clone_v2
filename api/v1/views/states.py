@@ -34,7 +34,8 @@ def states_with_id_get(state_id=None):
     return jsonify(state_obj.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def states_with_id_del(state_id=None):
     """states route handling - id given DELETE scenario"""
     state_obj = validate_model("State", state_id)
