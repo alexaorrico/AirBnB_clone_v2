@@ -75,6 +75,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     @classmethod
     def tearDownClass(cls):
+        """tears down test cls by removing jason :P after"""
         try:
             os.remove("file.json")
         except IOError:
