@@ -12,6 +12,7 @@ def states_no_id_get():
     all_states = list(obj.to_dict() for obj in all_states.values())
     return jsonify(all_states)
 
+
 @app_views.route('/states/', methods=['POST'])
 def states_no_id_post():
     """states route handling - no id given POST scenario"""
@@ -32,12 +33,14 @@ def states_with_id_get(state_id=None):
     state_obj = validate_model("State", state_id)
     return jsonify(state_obj.to_dict())
 
+
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def states_with_id_del(state_id=None):
     """states route handling - id given DELETE scenario"""
     state_obj = validate_model("State", state_id)
     storage.delete(state_obj)
     return jsonify({})
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def states_with_id_put(state_id=None):

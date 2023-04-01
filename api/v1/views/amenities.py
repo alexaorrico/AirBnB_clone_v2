@@ -12,6 +12,7 @@ def amenities_no_id_get(amenity_id=None):
     all_amenities = [obj.to_dict() for obj in all_amenities.values()]
     return jsonify(all_amenities)
 
+
 @app_views.route('/amenities/', methods=['POST'])
 def amenities_no_id_post(amenity_id=None):
     """amenities route - no id POST scenario"""
@@ -32,12 +33,14 @@ def amenities_with_id_get(amenity_id=None):
     amenity_obj = validate_model('Amenity', amenity_id)
     return jsonify(amenity_obj.to_dict())
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def amenities_with_id_del(amenity_id=None):
     """amenities route - id given DELETE scenario"""
     amenity_obj = validate_model('Amenity', amenity_id)
     storage.delete(amenity_obj)
     return jsonify({}), 200
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def amenities_with_id_put(amenity_id=None):
