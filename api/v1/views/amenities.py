@@ -36,8 +36,7 @@ def amenities_with_id_get(amenity_id=None):
 def amenities_with_id_del(amenity_id=None):
     """amenities route - id given DELETE scenario"""
     amenity_obj = validate_model('Amenity', amenity_id)
-    amenity_obj.delete()
-    del amenity_obj
+    storage.delete(amenity_obj)
     return jsonify({}), 200
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
