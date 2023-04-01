@@ -71,6 +71,15 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @classmethod
+    def tearDownClass(cls):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
