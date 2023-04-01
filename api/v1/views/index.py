@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-This module contains the views for getting statistics of the API data.
-"""
+""" Index """
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -9,6 +7,9 @@ from models import storage
 
 @app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
 def get_stats():
+    """
+    This module contains the views for getting statistics of the API data.
+    """
     stats = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
