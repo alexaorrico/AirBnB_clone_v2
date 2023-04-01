@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
-@app.tearddown_appcontext
+@app.teardown_appcontext
 def tearitup():
     """turrupboii"""
     storage.close()
