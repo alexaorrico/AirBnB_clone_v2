@@ -69,7 +69,7 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
-    """filestorage changes"""
+    """Question 3 Code Past This Line"""
     def get(self, cls, id):
         """get function Question 3"""
         key = cls.__name__ + "." + id
@@ -82,15 +82,4 @@ class FileStorage:
 
     def count(self, cls=None):
         """Count Question 3"""
-        return len(self.all(cls))
-
-    def get(self, cls, id):
-        '''get meth'''
-        if cls in cls.values():
-            return self.__session.query(cls).filter(cls.id == id).first()
-        else:
-            return None
-
-    def count(self, cls=None):
-        '''count meth'''
         return len(self.all(cls))
