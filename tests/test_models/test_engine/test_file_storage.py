@@ -68,6 +68,21 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+    """file storage test"""
+    def get(self, cls, id):
+        """get function Question 3"""
+        key = cls.__name__ + "." + id
+        found_items = []
+        if key in self.all(cls).keys():
+            found_items.append(self.all(cls)[key])
+            return found_items[0]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """Count Question 3"""
+        return len(self.all(cls)
+
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
