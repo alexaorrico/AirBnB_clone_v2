@@ -158,8 +158,9 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 ## Additional Authors
-Johanna Avila [Github](https://github.com/jobabyyy)
-Amber Wagoner [Github](https://github.com/amberwagoner)
+Johanna Avila: [Github](https://github.com/jobabyyy)
+
+Amber Wagoner: [Github](https://github.com/amberwagoner)
 
 Second part of Airbnb: Joann Vuong
 ## License
