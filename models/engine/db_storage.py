@@ -75,6 +75,21 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
+    """db storage changes"""
+    def get(self, cls, id):
+        """get function Question 3"""
+        key = cls.__name__ + "." + id
+        found_items = []
+        if key in self.all(cls).keys():
+            found_items.append(self.all(cls)[key])
+            return found_items[0]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """Count Question 3"""
+        return len(self.all(cls))
+
     def get(self, cls, id):
         if cls in cls.values():
             return self.__session.query(cls).filter(cls.id == id).first()

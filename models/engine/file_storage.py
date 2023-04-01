@@ -69,6 +69,21 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
+    """filestorage changes"""
+    def get(self, cls, id):
+        """get function Question 3"""
+        key = cls.__name__ + "." + id
+        found_items = []
+        if key in self.all(cls).keys():
+            found_items.append(self.all(cls)[key])
+            return found_items[0]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """Count Question 3"""
+        return len(self.all(cls))
+
     def get(self, cls, id):
         '''get meth'''
         if cls in cls.values():
