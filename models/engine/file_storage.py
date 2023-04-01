@@ -73,7 +73,8 @@ class FileStorage:
         '''get meth'''
         if cls in cls.values():
             return self.__session.query(cls).filter(cls.id == id).first()
-        return None
+        else:
+            return None
 
     def count(self, cls=None):
         '''count meth'''
