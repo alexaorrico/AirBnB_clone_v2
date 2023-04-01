@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Index"""
+"""
+This module contains the views for getting statistics of the API data.
+"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
