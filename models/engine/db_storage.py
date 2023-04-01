@@ -46,8 +46,11 @@ class DBStorage:
 
     def get(self, cls, id):
         """returns single object with query"""
-        obj = self.__session.query(cls).filter_by(id=id).one()
-        return obj
+        if cls is None or id is None:
+            return None
+        else:
+            obj = self.__session.query(cls).filter_by(id=id).one()
+            return obj
 
     def all(self, cls=None):
         """query on the current database session"""
