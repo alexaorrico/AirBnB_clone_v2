@@ -51,7 +51,7 @@ def states_with_id_put(state_id=None):
     if req_json is None:
         abort(400, 'Not a JSON')
     for key, value in req_json.items():
-        if key not in ["id", "state_id", "created_at", "updated_at"]:
+        if key not in ["id", "created_at", "updated_at"]:
             setattr(state_obj, key, value)
     state_obj.save()
     return jsonify(state_obj.to_dict())

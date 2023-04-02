@@ -53,7 +53,7 @@ def amenities_with_id_put(amenity_id=None):
     if req_json is None:
         abort(400, 'Not a JSON')
     for key, value in req_json.items():
-        if key not in ["id", "state_id", "created_at", "updated_at"]:
+        if key not in ["id", "created_at", "updated_at"]:
             setattr(amenity_obj, key, value)
     amenity_obj.save()
     return jsonify(amenity_obj.to_dict()), 200
