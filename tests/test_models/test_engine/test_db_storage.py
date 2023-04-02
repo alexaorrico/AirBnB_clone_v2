@@ -162,4 +162,4 @@ class TestDBStorageCount(unittest.TestCase):
     def test_count_nonexistent_class(self):
         """Test count() with a nonexistent class argument"""
         count = self.storage.count(Amenity)
-        self.assertEqual(count, 0)
+        self.assertEqual(count, 0) 
