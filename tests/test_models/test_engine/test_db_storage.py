@@ -30,6 +30,17 @@ class TestDBStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
+    def setUp(self):
+        """Set up method"""
+        DBStorage._DBStorage__session.close()
+        DBStorage._DBStorage__session.rollback()
+
+    def tearDown(self):
+        """Tear down method"""
+        DBStorage._DBStorage__session.close()
+        DBStorage._DBStorage__session.rollback()
+        os.remove('test.db')
+
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
