@@ -39,6 +39,7 @@ class TestDBStorageDocs(unittest.TestCase):
         saved_state = storage.get(State, state.id)
         self.assertEqual(state.id, saved_state.id)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """test get method"""
         prev_count = storage.count(State)
