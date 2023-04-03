@@ -1,5 +1,14 @@
 #!/usr/bin/python3
-"""This module defines the views of handling the RESTful API on state objects"""
+"""
+This module defines the views for handling the RESTful API actions on State objects.
+
+Functions:
+    get_states(): Retrieves the list of all State objects
+    get_state(state_id): Retrieves a State object by ID
+    delete_state(state_id): Deletes a State object by ID
+    create_state(): Creates a new State object
+    update_state(state_id): Updates a State object by ID
+"""
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
@@ -15,7 +24,7 @@ def get_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
-    """Retrieves a State object"""
+    """Retrieves a State object by ID"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -24,7 +33,7 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
-    """Deletes a State object"""
+    """Deletes a State object by ID"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -35,7 +44,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
-    """Creates a State"""
+    """Creates a new State object"""
     if not request.json:
         abort(400, 'Not a JSON')
     if 'name' not in request.json:
@@ -48,7 +57,7 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
-    """Updates a State object"""
+    """Updates a State object by ID"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
