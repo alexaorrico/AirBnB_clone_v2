@@ -2,7 +2,7 @@
 """
 Flask app
 """
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown_app(exception):
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """handler for routes that don't exist"""
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
