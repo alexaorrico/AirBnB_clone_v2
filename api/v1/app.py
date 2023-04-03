@@ -9,13 +9,17 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
-
-@app.tearddown_appcontext
+@app.teardown_appcontext
 def tearitup():
     """turrupboii"""
     storage.close()
 
-
-if __name__ == '__main__':
+def start_flask():
+    """ start flask """
     app.run(host=getenv('HBNB_API_HOST'),
-            port=getenv('HBNB_API_PORT'))
+            port=getenv('HBNB_API_PORT'),
+            threaded=True)
+
+
+if __name__ == "__main__":
+    start_flask()
