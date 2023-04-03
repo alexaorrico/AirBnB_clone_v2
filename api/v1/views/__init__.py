@@ -1,12 +1,20 @@
 #!/usr/bin/python3
-"""initializing Flask"""
-from flask import Blueprint
-from api.v1.views.index import *
-from api.v1.views.users import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
-from api.v1.views.amenities import *
-from api.v1.views.places import *
-from api.v1.views.places_reviews import *
+""" Blueprint for API v1 """
+from flask import Blueprint, abort, request
+import index
+import users
+import states
+import cities
+import amenities
+import places
+import places_reviews
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+__all__ = ['index',
+           'user',
+           'states',
+           'cities',
+           'amenities',
+           'places',
+           'places_reviews'
+           ]
