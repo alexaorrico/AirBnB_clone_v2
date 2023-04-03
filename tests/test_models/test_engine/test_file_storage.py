@@ -113,3 +113,81 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "skip if db")
+class TestFileStorageGet(unittest.TestCase):
+    """Tests get method of the FileStorage class"""
+
+    def setUp(self):
+        """Set up for the tests"""
+
+        self.storage = FileStorage()
+        self.storage.reload()
+        self.new_state = State(name="California")
+        self.new_state.save()
+
+    def tearDown(self):
+        """Tear down after the tests"""
+
+        self.storage.delete(self.new_state)
+        self.storage.save()
+        self.storage.close()
+
+    def test_get_existing_object(self):
+        """Test get() with an object that exists"""
+        obj = self.storage.get(State, self.new_state.id)
+        self.assertEqual(obj.id, self.new_state.id)
+
+    def test_get_nonexistent_object(self):
+        """Test get() with an object that does not exist"""
+        obj = self.storage.get(State, "nonexistent")
+        self.assertIsNone(obj)
+
+
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'fs', "skip if not fs")
+class TestFileStorageCount(unittest.TestCase):
+    """Tests the count() method of the FileStorage class"""
+
+    def setUp(self):
+        """Set up for the tests"""
+
+        self.storage = FileStorage()
+        self.storage.reload()
+        self.new_state1 = State(name="California")
+        self.new_state2 = State(name="New York")
+        self.new_state3 = State(name="Texas")
+        self.new_place = Place(name="Texas")
+        self.new_state1.save()
+        self.new_state2.save()
+        self.new_state3.save()
+
+    def tearDown(self):
+        """Tear down after the tests"""
+
+        self.storage.delete(self.new_state1)
+        self.storage.delete(self.new_state2)
+        self.storage.delete(self.new_state3)
+        self.storage.delete(self.new_place)
+        self.storage.save()
+
+    def test_count_all_objects(self):
+        """Test count() with no arguments"""
+        count = self.storage.count()
+        self.assertEqual(count, 3)
+
+    def test_count_some_objects(self):
+        """Test count() with a class argument"""
+        count = self.storage.count(State)
+        self.assertEqual(count, 3)
+
+    def test_count_nonexistent_class(self):
+        """Test count() with a nonexistent class argument"""
+        count = self.storage.count(Amenity)
+        self.assertEqual(count, 0)
+
+    def test_count_existing_class(self):
+        """Test count() with existing class argument"""
+        count = self.storage.count(Place)
+        self.assertEqual(count, 1)
