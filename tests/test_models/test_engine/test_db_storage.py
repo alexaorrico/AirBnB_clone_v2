@@ -117,3 +117,34 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDatabaseClass(unittest.TestCase):
+    """Tests the get and count methods for Task 3"""
+    def setUp(self):
+        """setup code to create a test instance of the Database class"""
+        pass
+
+    def test_get(self):
+        """test retrieving an object from the database"""
+        obj = classes(id='123')
+        self.database.put(obj)
+        retrieved_obj = self.database.get(classes, '123')
+        self.assertEqual(retrieved_obj, obj)
+
+    def test_get_nonexistent(self):
+        """test retrieving a nonexistent object from the database"""
+        retrieved_obj = self.database.get(classes, '456')
+        self.assertIsNone(retrieved_obj)
+
+    def test_count(self):
+        """test counting the number of objects in the database"""
+        obj1 = classes(id='123')
+        obj2 = classes(id='456')
+        self.database.put(obj1)
+        self.database.put(obj2)
+        self.assertEqual(self.database.count(classes), 2)
+
+    def test_count_empty(self):
+        """test counting the number of objects in an empty database"""
+        self.assertEqual(self.database.count(classes), 0)
