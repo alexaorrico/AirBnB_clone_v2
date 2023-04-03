@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Flask instance startup"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -12,6 +12,13 @@ app.register_blueprint(app_views)
 def teardown_appcontext(exception):
     """Stops instance"""
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_404_error(error):
+    response = jsonify({'error': 'Not found'})
+    response.status_code = 404
+    return response
 
 if __name__ == "__main__":
     import os
