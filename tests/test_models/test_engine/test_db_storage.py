@@ -118,26 +118,27 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+
 class TestDatabaseClass(unittest.TestCase):
 
     def setUp(self):
-        # setup code to create a test instance of the Database class
+        """setup code to create a test instance of the Database class"""
         pass
 
     def test_get(self):
-        # test retrieving an object from the database
+        """test retrieving an object from the database"""
         obj = classes(id='123')
         self.database.put(obj)
         retrieved_obj = self.database.get(classes, '123')
         self.assertEqual(retrieved_obj, obj)
 
     def test_get_nonexistent(self):
-        # test retrieving a nonexistent object from the database
+        """test retrieving a nonexistent object from the database"""
         retrieved_obj = self.database.get(classes, '456')
         self.assertIsNone(retrieved_obj)
 
     def test_count(self):
-        # test counting the number of objects in the database
+        """test counting the number of objects in the database"""
         obj1 = classes(id='123')
         obj2 = classes(id='456')
         self.database.put(obj1)
@@ -145,5 +146,5 @@ class TestDatabaseClass(unittest.TestCase):
         self.assertEqual(self.database.count(classes), 2)
 
     def test_count_empty(self):
-        # test counting the number of objects in an empty database
+        """test counting the number of objects in an empty database"""
         self.assertEqual(self.database.count(classes), 0)
