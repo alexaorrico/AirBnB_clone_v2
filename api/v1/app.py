@@ -9,16 +9,19 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def tearitup():
     """turrupboii"""
     storage.close()
+
 
 def start_flask():
     """ start flask """
     app.run(host=getenv('HBNB_API_HOST'),
             port=getenv('HBNB_API_PORT'),
             threaded=True)
+
 
 """404 error handler"""
 @app.errorhandler(404)
