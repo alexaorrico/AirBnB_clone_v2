@@ -19,3 +19,7 @@ class Amenity(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes Amenity"""
         super().__init__(*args, **kwargs)
+
+    def __str__(self):
+        """returns string representation"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)
