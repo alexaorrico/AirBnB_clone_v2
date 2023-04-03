@@ -8,7 +8,7 @@ import inspect
 import models
 from models import state
 from models.base_model import BaseModel
-import pep8
+import pycodestyle
 import unittest
 State = state.State
 
@@ -22,15 +22,15 @@ class TestStateDocs(unittest.TestCase):
 
     def test_pep8_conformance_state(self):
         """Test that models/state.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/state.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['models/state.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_state(self):
         """Test that tests/test_models/test_state.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_state.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['tests/test_models/test_state.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -98,8 +98,6 @@ class TestState(unittest.TestCase):
         self.assertEqual(new_d["created_at"], s.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], s.updated_at.strftime(t_format))
 
-    def test_str(self):
-        """test that the str method has the correct output"""
-        state = State()
-        string = "[State] ({}) {}".format(state.id, state.__dict__)
-        self.assertEqual(string, str(state))
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)

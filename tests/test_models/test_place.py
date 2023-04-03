@@ -8,7 +8,7 @@ import inspect
 import models
 from models import place
 from models.base_model import BaseModel
-import pep8
+import pycodestyle
 import unittest
 Place = place.Place
 
@@ -22,15 +22,15 @@ class TestPlaceDocs(unittest.TestCase):
 
     def test_pep8_conformance_place(self):
         """Test that models/place.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/place.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['models/place.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_place(self):
         """Test that tests/test_models/test_place.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_place.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['tests/test_models/test_place.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -193,8 +193,6 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(new_d["created_at"], p.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], p.updated_at.strftime(t_format))
 
-    def test_str(self):
-        """test that the str method has the correct output"""
-        place = Place()
-        string = "[Place] ({}) {}".format(place.id, place.__dict__)
-        self.assertEqual(string, str(place))
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)

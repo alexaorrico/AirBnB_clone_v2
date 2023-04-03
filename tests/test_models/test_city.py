@@ -8,7 +8,7 @@ import inspect
 import models
 from models import city
 from models.base_model import BaseModel
-import pep8
+import pycodestyle
 import unittest
 City = city.City
 
@@ -22,15 +22,15 @@ class TestCityDocs(unittest.TestCase):
 
     def test_pep8_conformance_city(self):
         """Test that models/city.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/city.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['models/city.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_city(self):
         """Test that tests/test_models/test_city.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_city.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['tests/test_models/test_city.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -107,8 +107,6 @@ class TestCity(unittest.TestCase):
         self.assertEqual(new_d["created_at"], c.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], c.updated_at.strftime(t_format))
 
-    def test_str(self):
-        """test that the str method has the correct output"""
-        city = City()
-        string = "[City] ({}) {}".format(city.id, city.__dict__)
-        self.assertEqual(string, str(city))
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)

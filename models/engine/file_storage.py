@@ -54,8 +54,11 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+                obj_cls = classes.get(jo[key]["__class__"])
+                if obj_cls:
+                    obj = obj_cls(**jo[key])
+                    self.__objects[key] = obj
+        except Exception as e:
             pass
 
     def delete(self, obj=None):

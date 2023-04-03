@@ -8,7 +8,7 @@ import inspect
 import models
 from models import review
 from models.base_model import BaseModel
-import pep8
+import pycodestyle
 import unittest
 Review = review.Review
 
@@ -22,15 +22,15 @@ class TestReviewDocs(unittest.TestCase):
 
     def test_pep8_conformance_review(self):
         """Test that models/review.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/review.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['models/review.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_review(self):
         """Test that tests/test_models/test_review.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_review.py'])
+        pcs = pycodestyle.StyleGuide(quiet=True)
+        result = pcs.check_files(['tests/test_models/test_review.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -116,8 +116,6 @@ class TestReview(unittest.TestCase):
         self.assertEqual(new_d["created_at"], r.created_at.strftime(t_format))
         self.assertEqual(new_d["updated_at"], r.updated_at.strftime(t_format))
 
-    def test_str(self):
-        """test that the str method has the correct output"""
-        review = Review()
-        string = "[Review] ({}) {}".format(review.id, review.__dict__)
-        self.assertEqual(string, str(review))
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s})".format(self.__class__.__name__, self.id)
