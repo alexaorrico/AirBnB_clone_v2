@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Module for State objects that handles all default Restful API actions"""
+""" Module for State """
 
 from flask import jsonify, abort, request
 from models.state import State
@@ -8,7 +8,7 @@ from api.v1.views import app_views
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
-    """ Retrieves the list of all State objects"""
+    """ list of all State objects """
     states = State.all()
     state_list = []
     for state in states:
