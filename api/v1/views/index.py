@@ -13,7 +13,7 @@ def status():
     return jsonify(status)
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """ returns number of objects by type """
     result = {}
