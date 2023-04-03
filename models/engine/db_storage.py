@@ -50,12 +50,12 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
-    
+
     def get(self, cls, id):
         """get single object"""
         obj = self.__session.query(cls).filter(cls.id==id).one()
         return obj
-    
+
     def count(self, cls=None):
         """Count object"""
         if cls:
