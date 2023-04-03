@@ -120,7 +120,7 @@ class TestFileStorage(unittest.TestCase):
 
 
 class TestDatabaseClass(unittest.TestCase):
-
+    """Tests the get and count methods for Task 3"""
     def setUp(self):
         """setup code to create a test instance of the Database class"""
         pass
