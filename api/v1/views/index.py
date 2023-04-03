@@ -8,7 +8,7 @@ app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
 
 @app_views.route('/stats', methods=['GET'])
-def get_stats():
+def get_status():
     """Returns the count of each object type"""
     stats = {"amenities": storage.count("Amenity"),
              "cities": storage.count("City"),
