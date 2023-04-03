@@ -24,6 +24,8 @@ def start_flask():
 
 
 """404 error handler"""
+
+
 @app.errorhandler(404)
 def not_found_error(error):
     return Blueprint({'error': 'Not found'}), 404
