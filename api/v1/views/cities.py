@@ -2,7 +2,7 @@
 """View of Cities for RESTFul API"""
 
 from api.v1.views import app_views, validate_model, get_json
-from flask import jsonify, abort, request
+from flask import jsonify
 from models import storage
 from models.city import City
 
