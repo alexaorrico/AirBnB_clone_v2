@@ -153,8 +153,9 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
-##Authors 
-Mico Bledsoe / Manuel Zambrano 
+## Authors
+Mico Bledsoe
+Manuel Zambrano 
 
 ### Thanks to..
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
