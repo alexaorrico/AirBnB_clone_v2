@@ -9,10 +9,12 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+
 @app.tearddown_appcontext
 def tearitup():
     """turrupboii"""
     storage.close()
+
 
 if __name__ == '__main__':
     app.run(host=getenv('HBNB_API_HOST'),
