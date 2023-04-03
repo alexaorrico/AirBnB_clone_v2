@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Module for State objects that handles all default Restful API actions"""
+
 from flask import jsonify, abort, request
 from models.state import State
 from api.v1.views import app_views
