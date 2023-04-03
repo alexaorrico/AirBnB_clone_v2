@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Flask route module for states"""
-from api.v1.views import app_views, validate_model
-from flask import abort, jsonify, request
+from api.v1.views import app_views, validate_model, get_json
+from flask import jsonify
 from models import storage, class_richard
 
 
@@ -16,11 +16,7 @@ def states_no_id_get():
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def states_no_id_post():
     """states route handling - no id given POST scenario"""
-    req_json = request.get_json()
-    if req_json is None:
-        abort(400, 'Not a JSON')
-    if req_json.get("name") is None:
-        abort(400, 'Missing name')
+    req_json = get_json(['name'])
     State = class_richard.get("State")
     new_object = State(**req_json)
     new_object.save()
@@ -39,7 +35,8 @@ def states_with_id_get(state_id=None):
 def states_with_id_del(state_id=None):
     """states route handling - id given DELETE scenario"""
     state_obj = validate_model("State", state_id)
-    storage.delete(state_obj)
+    state_obj.delete()
+    storage.save()
     return jsonify({})
 
 
@@ -47,9 +44,7 @@ def states_with_id_del(state_id=None):
 def states_with_id_put(state_id=None):
     """states route handling - id given PUT scenario"""
     state_obj = validate_model("State", state_id)
-    req_json = request.get_json()
-    if req_json is None:
-        abort(400, 'Not a JSON')
+    req_json = get_json()
     for key, value in req_json.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(state_obj, key, value)
