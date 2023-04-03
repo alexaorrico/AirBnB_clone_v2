@@ -11,9 +11,14 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
-def stats():
-    stats = {}
-    for cls in storage.classes:
-        stats[cls] = storage.count(cls)
+@app_views.route('/api/v1stats', methods=['GET'])
+def get_stats():
+    stats = {
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'places': storage.count('Place'),
+        'reviews': storage.count('Review'),
+        'states': storage.count('State'),
+        'users': storage.count('User')
+    }
     return jsonify(stats)
