@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pycodestyle
@@ -66,6 +67,33 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+@unittest.skipIf(type(models.storage) == FileStorage, "Testing FileStorage")
+class TestStateDBInstances(unittest.TestCase):
+    """DBStorage State Tests"""
+    def tearDown(self):
+        """Remove storage objs"""
+        storage.drop_table(State)
+
+    def setUp(self):
+        """Initializes new BaseModel obj"""
+        self.state_obj1 = State(name='OK')
+        self.state_obj1.save()
+        self.state_obj2 = State(name='AR')
+        self.state_obj2.save()
+        storage.save()
+        storage.reload()
+
+    def test_count_meth(self):
+        """tests count method for DBStorage"""
+        total_states = storage.count(State)
+        self.assertEqual(total_states, 2)
+
+    def test_get_meth(self):
+        """tests get method for DBStorage"""
+        oklahoma_get = storage.get(State, self.state_obj1.id)
+        self.assertEqual(oklahoma_get.name, 'OK')
 
 
 class TestFileStorage(unittest.TestCase):
