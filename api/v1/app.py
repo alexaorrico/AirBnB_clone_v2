@@ -20,6 +20,10 @@ def start_flask():
             port=getenv('HBNB_API_PORT'),
             threaded=True)
 
+"""404 error handler"""
+@app.errorhandler(404)
+def not_found_error(error):
+    return Blueprint({'error': 'Not found'}), 404
 
 if __name__ == "__main__":
     start_flask()
