@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """This module defines the views of handling the RESTful API on state objects"""
+
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage, State
