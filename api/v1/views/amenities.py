@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Flask route module for amenities"""
 from api.v1.views import app_views, validate_model, get_json
-from flask import abort, jsonify, request
+from flask import jsonify
 from models import storage, class_richard
 
 
