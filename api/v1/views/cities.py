@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """View of Cities for RESTFul API"""
 
-from api.v1.views import app_views, validate_model
+from api.v1.views import app_views, validate_model, get_json
 from flask import jsonify, abort, request
 from models import storage
 from models.city import City
@@ -37,11 +37,7 @@ def delete_city(city_id):
 def post_city(state_id):
     """Creates a City"""
     validate_model("State", state_id)
-    body = request.get_json()
-    if body is None:
-        abort(400, "Not a JSON")
-    if body.get("name") is None:
-        abort(400, "Missing name")
+    body = get_json(['name'])
     body["state_id"] = state_id
     city = City(**body)
     city.save()
@@ -52,9 +48,7 @@ def post_city(state_id):
 def put_city(city_id):
     """Updates a City object"""
     city = validate_model("City", city_id)
-    body = request.get_json()
-    if body is None:
-        abort(400, "Not a JSON")
+    body = get_json()
     for key, value in body.items():
         if key not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(city, key, value)

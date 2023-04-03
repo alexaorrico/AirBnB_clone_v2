@@ -14,11 +14,14 @@ def validate_model(model, model_id):
     return obj
 
 
-def get_json():
+def get_json(required_fields=[]):
     """Get the json from the request"""
     result = request.get_json()
     if result is None:
         abort(400, 'Not a JSON')
+    for check in required_fields:
+        if result.get(check) is None:
+            abort(400, 'Missing {}'.format(check))
     return result
 
 # Pep8 doesn't like the next line, project said it's okay

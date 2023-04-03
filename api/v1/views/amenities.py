@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Flask route module for amenities"""
-from api.v1.views import app_views, validate_model
+from api.v1.views import app_views, validate_model, get_json
 from flask import abort, jsonify, request
 from models import storage, class_richard
 
@@ -16,11 +16,7 @@ def amenities_no_id_get(amenity_id=None):
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def amenities_no_id_post(amenity_id=None):
     """amenities route - no id POST scenario"""
-    req_json = request.get_json()
-    if req_json is None:
-        abort(400, 'Not a JSON')
-    if req_json.get('name') is None:
-        abort(400, 'Missing name')
+    req_json = get_json(['name'])
     Amenity = class_richard.get('Amenity')
     new_object = Amenity(**req_json)
     new_object.save()
@@ -40,7 +36,8 @@ def amenities_with_id_get(amenity_id=None):
 def amenities_with_id_del(amenity_id=None):
     """amenities route - id given DELETE scenario"""
     amenity_obj = validate_model('Amenity', amenity_id)
-    storage.delete(amenity_obj)
+    amenity_obj.delete()
+    storage.save()
     return jsonify({}), 200
 
 
@@ -49,9 +46,7 @@ def amenities_with_id_del(amenity_id=None):
 def amenities_with_id_put(amenity_id=None):
     """amenities route - id given PUT scenario"""
     amenity_obj = validate_model('Amenity', amenity_id)
-    req_json = request.get_json()
-    if req_json is None:
-        abort(400, 'Not a JSON')
+    req_json = get_json()
     for key, value in req_json.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(amenity_obj, key, value)
