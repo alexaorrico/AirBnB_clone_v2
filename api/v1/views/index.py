@@ -8,11 +8,13 @@ from flask import jsonify
 
 @app_views.route('/status')
 def status():
+    """returns OK as a JSON"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'])
 def get_stats():
+    """Return jsonify count of all"""
     stats = {
         'amenities': storage.count('Amenity'),
         'cities': storage.count('City'),
