@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-""" Module for State """
-
+'''task 7'''
 from flask import jsonify, abort, request
 from models.state import State
 from api.v1.views import app_views
@@ -8,7 +7,7 @@ from api.v1.views import app_views
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
-    """ list of all State objects """
+    '''state getty boi'''
     states = State.all()
     state_list = []
     for state in states:
@@ -18,7 +17,7 @@ def get_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
-    """ Retrieves a State object """
+    '''state retervy boi'''
     state = State.get(state_id)
     if state is None:
         abort(404)
@@ -27,7 +26,7 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
-    """Deletes a State object"""
+    '''delety boii'''
     state = State.get(state_id)
     if state is None:
         abort(404)
@@ -37,7 +36,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
-    """Creates a State"""
+    '''creaty boi'''
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
@@ -50,7 +49,7 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
-    """Updates a State object"""
+    '''updateyboiii'''
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
