@@ -2,7 +2,7 @@
 """Flask route module for amenities"""
 from api.v1.views import app_views, validate_model
 from flask import abort, jsonify, request
-from models import storage, class_richard
+from models import storage, classes
 
 
 @app_views.route('/amenities/', methods=['GET'])
@@ -20,7 +20,7 @@ def amenities_no_id_post(amenity_id=None):
         abort(400, 'Not a JSON')
     if req_json.get('name') is None:
         abort(400, 'Missing name')
-    Amenity = class_richard.get('Amenity')
+    Amenity = classes.get('Amenity')
     new_object = Amenity(**req_json)
     new_object.save()
     return jsonify(new_object.to_dict()), 201
