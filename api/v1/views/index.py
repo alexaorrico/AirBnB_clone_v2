@@ -8,12 +8,6 @@ app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
 
 @app_views.route('/stats', methods=['GET'])
-def get_status():
-    """Returns the count of each object type"""
-    stats = {"amenities": storage.count("Amenity"),
-             "cities": storage.count("City"),
-             "places": storage.count("Place"),
-             "reviews": storage.count("Review"),
-             "states": storage.count("State"),
-             "users": storage.count("User")}
-    return jsonify(stats)
+def status():
+  """Returns the status of the API"""
+    return jsonify({'status': 'OK'})
