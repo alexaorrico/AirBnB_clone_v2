@@ -3,7 +3,7 @@
 
 from flask import Flask, jsonify, make_response
 from models import storage
-from views import app_views
+from api.v1.views import app_views
 import os
 from flask_cors import CORS
 
