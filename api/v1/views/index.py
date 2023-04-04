@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Route to index page"""
 from json import dumps
-from flask import Response
+from flask import jsonify
 from api.v1.views import app_views
 
 cc = {"Amenity": "amenities", "City": "cities", "Place": "places",
@@ -11,7 +11,7 @@ cc = {"Amenity": "amenities", "City": "cities", "Place": "places",
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """Return status of API"""
-    return Response(dumps({"status": "OK"}), content_type='application/json')
+    return jsonify(dumps({"status": "OK"}), content_type='application/json')
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
@@ -20,4 +20,4 @@ def stats():
     data = {}
     for cls in cc.keys():
         data[cc[cls]] = cc.count(cls)
-    return Response(dumps(data), content_type='application/json')
+    return jsonify(dumps(data), content_type='application/json')
