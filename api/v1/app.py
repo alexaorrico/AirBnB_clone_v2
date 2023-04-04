@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""api module"""
+"""API module entry point"""
 
 from flask import Flask
 from models import storage
@@ -18,7 +18,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown_appcontent(exception):
     """Calls storage.close"""
     storage.close()
 
