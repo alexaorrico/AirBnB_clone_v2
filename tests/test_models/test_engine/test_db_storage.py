@@ -98,6 +98,23 @@ class TestStateDBInstances(unittest.TestCase):
         oklahoma_get = storage.get(State, self.state_obj1.id)
         self.assertEqual(oklahoma_get.name, 'OK')
 
+    def test_get_existing_object(self):
+        """tests for existing object"""
+        self.assertEqual(storage.get(State,
+                                     self.state_obj1.id), self.state_obj1)
+
+    def test_get_non_existing_object(self):
+        """tests for object that does not exist"""
+        self.assertIsNone(storage.get(State, 'invalid_id'))
+
+    def test_count_all_objects(self):
+        """tests count for all objects"""
+        self.assertEqual(storage.count(), 2)
+
+    def test_count_objects_of_class(self):
+        """tests count for objects of State class"""
+        self.assertEqual(storage.count(State), 2)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
