@@ -163,8 +163,8 @@ EOF  all  create  destroy  help  quit  show  update
 ## Concepts
 For this project, we expect you to look at these concepts:
 
-- [REST API](https://alx-intranet.hbtn.io/concepts/45)
-- [AirBnB clone](https://alx-intranet.hbtn.io/concepts/74)
+- [REST API](https://intranet.hbtn.io/concepts/533)
+- [AirBnB clone](https://intranet.hbtn.io/concepts/513)
 
 ## Resources
 **Read or watch:**
@@ -244,8 +244,8 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 
 ## Collaborators:
-Mico Bledsoe - [Github](https://github.com/MicoBledsoe) <br>
-Manuel Zambrano - [Github](https://github.com/mnlazs) 
+:godmode:Mico Bledsoe - [Github](https://github.com/MicoBledsoe) <br>
+:rage3:Manuel Zambrano - [Github](https://github.com/mnlazs) 
 
 Second part of Airbnb: Joann Vuong
 
