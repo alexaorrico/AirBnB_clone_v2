@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-This module defines a view for State objects that handles all default RESTFul API actions.
+This module defines a view for State objects that handles 
+all default RESTFul API actions.
 """
 
 from api.v1.views import app_views
@@ -15,6 +16,7 @@ def get_states():
     states = storage.all(State)
     return jsonify([state.to_dict() for state in states.values()])
 
+
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """Retrieves a State object"""
@@ -23,7 +25,9 @@ def get_state(state_id):
         abort(404)
     return jsonify(state.to_dict())
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>',
+                methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object"""
     state = storage.get(State, state_id)
@@ -32,6 +36,7 @@ def delete_state(state_id):
     storage.delete(state)
     storage.save()
     return jsonify({})
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
@@ -43,6 +48,7 @@ def create_state():
     state = State(**request.get_json())
     state.save()
     return jsonify(state.to_dict()), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
