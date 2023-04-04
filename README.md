@@ -149,7 +149,7 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
-# 0x04. AirBnB clone - RESTful API :bomb:
+# 0x04. AirBnB clone - RESTful API 🔫
 `Python` `Back-end` `API` `Webserver` `Flask`
 
 |By: Guillaume, CTO at Holberton School|
@@ -244,7 +244,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 
 ## Collaborators:
-Mico Bledsoe - [Github](https://github.com/MicoBledsoe) / <br>
+Mico Bledsoe - [Github](https://github.com/MicoBledsoe) <br>
 Manuel Zambrano - [Github](https://github.com/mnlazs) 
 
 Second part of Airbnb: Joann Vuong
