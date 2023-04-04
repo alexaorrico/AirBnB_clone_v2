@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module for API v1 views
+Module for API v1 views and made changes
 """
 
 from flask import Blueprint
