@@ -1,109 +1,132 @@
 #!/usr/bin/python3
-
 """
-Contains the DBStorage class which interacts with a MySQL database.
+Database engine
 """
 
-import models
-from models.amenity import Amenity
-from models.base_model import BaseModel, Base
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-from os import getenv
-import sqlalchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-
-# Dictionary of all available classes and their corresponding models
-CLASS_MODELS = {"Amenity": Amenity, "City": City, "Place": Place,
-                "Review": Review, "State": State, "User": User}
+import os
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import Base
+from models import base_model, amenity, city, place, review, state, user
 
 
 class DBStorage:
     """
-    Represents a database storage engine
+        handles long term storage of all class instances
+    """
+    CNC = {
+        'Amenity': amenity.Amenity,
+        'City': city.City,
+        'Place': place.Place,
+        'Review': review.Review,
+        'State': state.State,
+        'User': user.User
+    }
+
+    """
+        handles storage for database
     """
     __engine = None
     __session = None
 
     def __init__(self):
         """
-        Instantiate a DBStorage object with a connection to a MySQL database
+            creates the engine self.__engine
         """
-        MYSQL_USER = getenv('HBNB_MYSQL_USER')
-        MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
-        MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
-        MYSQL_DB = getenv('HBNB_MYSQL_DB')
-        ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(MYSQL_USER, MYSQL_PWD,
-                                             MYSQL_HOST, MYSQL_DB))
-        if ENV == "test":
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
+                os.environ.get('HBNB_MYSQL_USER'),
+                os.environ.get('HBNB_MYSQL_PWD'),
+                os.environ.get('HBNB_MYSQL_HOST'),
+                os.environ.get('HBNB_MYSQL_DB')))
+        if os.environ.get("HBNB_ENV") == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """
-        Retrieve a dictionary of all objects in the current session
+           returns a dictionary of all objects
         """
         obj_dict = {}
-        for cls_name, cls_model in CLASS_MODELS.items():
-            if cls is None or cls is cls_model or cls is cls_name:
-                objs = self.__session.query(cls_model).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    obj_dict[key] = obj
+        if cls is not None:
+            a_query = self.__session.query(DBStorage.CNC[cls])
+            for obj in a_query:
+                obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
+                obj_dict[obj_ref] = obj
+            return obj_dict
+
+        for c in DBStorage.CNC.values():
+            a_query = self.__session.query(c)
+            for obj in a_query:
+                obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
+                obj_dict[obj_ref] = obj
         return obj_dict
 
     def new(self, obj):
         """
-        Add an object to the current session
+            adds objects to current database session
         """
         self.__session.add(obj)
 
     def save(self):
         """
-        Commit all changes made to the current session
+            commits all changes of current database session
         """
         self.__session.commit()
 
-    def get(self, cls, id):
+    def rollback_session(self):
         """
-        Retrieve a single object based on class name and object id
+            rollsback a session in the event of an exception
         """
-        obj = self.__session.query(eval(cls)).filter_by(id=id).first()
-        return obj
-
-    def count(self, cls=None):
-        """
-        Count the number of objects in the current session
-        """
-        count = 0
-        obj_dict = self.all(cls)
-        count = len(obj_dict)
-        return count
+        self.__session.rollback()
 
     def delete(self, obj=None):
         """
-        Remove an object from the current session
+            deletes obj from current database session if not None
         """
-        if obj is not None:
+        if obj:
             self.__session.delete(obj)
+            self.save()
+
+    def delete_all(self):
+        """
+           deletes all stored objects, for testing purposes
+        """
+        for c in DBStorage.CNC.values():
+            a_query = self.__session.query(c)
+            all_objs = [obj for obj in a_query]
+            for obj in range(len(all_objs)):
+                to_delete = all_objs.pop(0)
+                to_delete.delete()
+        self.save()
 
     def reload(self):
         """
-        Reload data from the database
+           creates all tables in database & session from engine
         """
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine,
-                                       expire_on_commit=False)
-        Session = scoped_session(session_factory)
-        self.__session = Session
+        self.__session = scoped_session(
+            sessionmaker(
+                bind=self.__engine,
+                expire_on_commit=False))
 
     def close(self):
         """
-        Close the current session
+            calls remove() on private session attribute (self.session)
         """
         self.__session.remove()
+
+    def get(self, cls, id):
+        """
+            retrieves one object based on class name and id
+        """
+        if cls and id:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch)
+        return None
+
+    def count(self, cls=None):
+        """
+            returns the count of all objects in storage
+        """
+        return (len(self.all(cls)))
