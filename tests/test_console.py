@@ -4,7 +4,6 @@ Contains the class TestConsoleDocs
 """
 
 import console
-import inspect
 import pycodestyle
 import unittest
 HBNBCommand = console.HBNBCommand
