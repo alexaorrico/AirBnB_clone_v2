@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
+from models.state import state
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +88,31 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test validate the correct functionality of the method get"""
+        for i in range(10):
+            new_state = State({"name": 'Erasing'})
+            storage.new(new_state)
+        new_state.save()
+
+        all_states = storage.all(State)
+        key = next(iter(all_states))
+        only_id = key.split('.')[0]
+
+        self.assertEqual(all_states[key], storage.get(State, only_id),
+                         'The object doesn\'t match')
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test validate the correct functionality of the method count"""
+        for i in range(10):
+            new_state = State({"name": 'Alabama'})
+            storage.new(new_state)
+        new_state.save()
+
+        quantity_states = storage.all(State)
+
+        self.assertEqual(quantity_states, storage.count(State),
+                         'Cuantity of states doesn\'t match')
