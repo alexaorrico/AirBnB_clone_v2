@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""api index"""
+"""api index status and stats"""
 from api.v1.views import app_views
 from flask import Response
 from json import dumps
