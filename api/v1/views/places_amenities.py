@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ objects that handle all default RestFul API actions for Place - Amenity """
 from models.place import Place
 from models.amenity import Amenity
