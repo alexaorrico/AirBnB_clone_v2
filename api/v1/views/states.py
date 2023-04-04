@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""
-Module to create view for State objects handling defaut
-RESTful API actions
-"""
+    """
+    Module to create view for State objects handling defaut
+    RESTful API actions
+    """
 from api.v1.views import app_views
 from flask import jsonify, abort, reuest, make_response
 from models import storage
