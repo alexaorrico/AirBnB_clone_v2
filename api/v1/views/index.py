@@ -25,6 +25,3 @@ def number_objects():
 
     return jsonify(num_objs)
 
-classes = class_models
-
-print(classes)
