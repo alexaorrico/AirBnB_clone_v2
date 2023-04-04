@@ -18,8 +18,8 @@ app.register_blueprint(app_views)
 def not_found(error):
     """ 404(page not found) """
     code = error.__str__().split()[0]
-    err_message = {"Error": "Not Found"}
-    return jsonify(code, err_message)
+    err_message = {"error": "Not Found"}
+    return jsonify(code, err_message), 404 
 
 
 @app.teardown_appcontext
