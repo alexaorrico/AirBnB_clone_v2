@@ -3,7 +3,6 @@
 Sets up first endpoint that returns stats of the API
 """
 
-
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from models import storage
