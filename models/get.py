@@ -17,7 +17,7 @@ def get_models():
     THIS_FILE = Path(os.path.abspath(__file__))
     THIS_FOLDER = THIS_FILE.parent
 
-    EXCLUDED_FILE_NAMES = ["__init__.py", THIS_FILE.name]
+    EXCLUDED_FILE_NAMES = ["__init__.py", "base_model.py", THIS_FILE.name]
 
     class_ret_params = (
         {
