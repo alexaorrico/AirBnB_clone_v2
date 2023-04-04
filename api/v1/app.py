@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 """API module entry point"""
 
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
-from flask import jsonify
-from flask import make_response
 import os
 import json
 from flask_cors import CORS
