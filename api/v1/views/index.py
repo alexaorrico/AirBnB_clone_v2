@@ -2,8 +2,8 @@
 """Route to index page"""
 from json import dumps
 from flask import Response
-from api.v1.views import index, app_views
-from models import storage, classes
+from api.v1.views import app_views
+from models.engine import classes
 
 cc = {"Amenity": "amenities", "City": "cities", "Place": "places",
       "Review": "reviews", "State": "states", "User": "users"}
@@ -20,5 +20,5 @@ def stats():
     """Return number of objects by type"""
     data = {}
     for cls in classes.keys():
-        data[cc[cls]] = storage.count(cls)
+        data[cc[cls]] = classes.count(cls)
     return Response(dumps(data), content_type='application/json')
