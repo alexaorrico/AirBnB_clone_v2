@@ -78,11 +78,53 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        newState = State(name="NEWSTATE")
+        newCity = City(name="chicago", state_id=newState.id)
+        models.storage.new(newCity)
+        models.storage.new(newState)
+        models.storage.save()
+        self.assertNotEqual(models.storage.all(), models.storage.all(State))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        newState = State(name="Georgia")
+        models.storage.new(newState)
+        allStates = models.storage.all(State)
+        testState = allStates["State." + newState.id]
+        self.assertEqual(testState, newState)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        newState = State(name="Hawai")
+        models.storage.new(newState)
+        models.storage.save()
+        models.storage.reload()
+        allStates = models.storage.all(State)
+        testState = allStates["State." + newState.id]
+        self.assertEqual(testState.name, newState.name)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Tests that the get method works properly on objs"""
+        newState = State(name="Washington")
+        models.storage.new(newState)
+        models.storage.save()
+        gotState = models.storage.get(State, newState.id)
+        self.assertEqual(gotState, newState)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Tests that the count method works properly"""
+        storageCount = len(models.storage.all())
+        newState = State(name="CALI")
+        newCity = City(name="chicago", state_id=newState.id)
+        models.storage.new(newState)
+        models.storage.new(newCity)
+        models.storage.save()
+        stateCount = len(models.storage.all(State))
+        baseCount = len(models.storage.all(City))
+        self.assertNotEqual(storageCount, models.storage.count())
+        self.assertEqual(baseCount, models.storage.count(City))
+        self.assertEqual(stateCount, models.storage.count(State))
