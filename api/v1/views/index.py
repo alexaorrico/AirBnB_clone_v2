@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """API routes for status and stats endpoints."""
 import os
 from flask import Flask, jsonify
