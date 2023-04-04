@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """gets object by cls and id"""
+        """gets object by cls ad id"""
         if type(cls) is str:
             cls = self.classhole.get(cls)
         if cls and id:
