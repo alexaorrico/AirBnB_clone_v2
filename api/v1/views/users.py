@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ objects that handle all default RestFul API actions for Users """
 from models.user import User
 from models import storage
