@@ -18,8 +18,6 @@ from models.state import State
 from models.user import User
 from models import storage
 from models import FileStorage
-import json
-import os
 import pycodestyle
 import unittest
 DBStorage = db_storage.DBStorage
