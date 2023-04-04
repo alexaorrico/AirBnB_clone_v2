@@ -17,10 +17,14 @@ def status():
 def number_objects():
     """ Retrieves the number of each objects by type """
     classes = class_models
-    names = ["amenities", "cities", "places", "reviews", "states", "users"]
-
+    names = ["cities", "users", "places", "reviews", "amenities", "states"]
     num_objs = {}
+
     for i in range(len(classes)):
         num_objs[names[i]] = storage.count(classes[i])
 
     return jsonify(num_objs)
+
+classes = class_models
+
+print(classes)
