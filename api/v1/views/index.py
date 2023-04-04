@@ -1,23 +1,23 @@
 #!/usr/bin/python3
-"""api index status and stats"""
-from api.v1.views import app_views
-from flask import Response
+"""Route to index page"""
 from json import dumps
+from flask import Response
+from api.v1.views import app_views
 from models import storage, classes
 
 cc = {"Amenity": "amenities", "City": "cities", "Place": "places",
       "Review": "reviews", "State": "states", "User": "users"}
 
 
-@app_views.route('/status',  methods=['GET'], strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """returns the status of the API"""
+    """Return status of API"""
     return Response(dumps({"status": "OK"}), content_type='application/json')
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
-    """returns the stats"""
+    """Return number of objects by type"""
     data = {}
     for cls in classes.keys():
         data[cc[cls]] = storage.count(cls)
