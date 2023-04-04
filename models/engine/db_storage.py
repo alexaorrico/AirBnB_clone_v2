@@ -14,14 +14,14 @@ from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class DBStorage:
-    """interacts with the MySQL database"""
+    """interaacts with the MySQL database"""
     __engine = None
     __session = None
-    classes = {"Amenity": Amenity, "City": City,
-               "Place": Place, "Review": Review,
-               "State": State, "User": User}
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -41,13 +41,13 @@ class DBStorage:
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in self.classes:
-            if cls is None or cls is self.classes[clss] or cls is clss:
-                objs = self.__session.query(self.classes[clss]).all()
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return new_dict
+        return (new_dict)
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -74,20 +74,23 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Retrieve one object"""
-        if cls in self.classes.values() and id is not None:
-            key = "{}.{}".format(cls.__name__, id)
-            return self.__session.query(cls).filter_by(id=id).first()
-        return None
+        """ retrieve one object if found, or None if not """
+
+        # Create var 'key', assign concatenated str of class name,
+        # period (.), and id - 'State.id'
+        key = cls.__name__ + "." + id
+
+        # if "key" exists in dictionary
+        # return it by calling the method "self.all(cls)"
+        if key in self.all(cls).keys():
+            return self.all(cls)[key]
+        else:
+            # if key is not found, return None.
+            return None
 
     def count(self, cls=None):
-        """Count number of objects in storage"""
-        if cls is None:
-            count = 0
-            for clss in self.classes:
-                count += self.__session.query(self.classes[clss]).count()
-            return count
-        elif cls in self.classes.values():
-            return self.__session.query(cls).count()
-        else:
-            return 0
+        """
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
+        return len(self.all(cls))
