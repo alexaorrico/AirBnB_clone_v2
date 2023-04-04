@@ -19,7 +19,7 @@ def not_found(error):
     """ 404(page not found) """
     code = error.__str__().split()[0]
     err_message = {"error": "Not Found"}
-    return jsonify(code, err_message), 404 
+    return jsonify(code, err_message)
 
 
 @app.teardown_appcontext
