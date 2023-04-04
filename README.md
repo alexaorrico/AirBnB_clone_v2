@@ -245,7 +245,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 ## Collaborators:
 Mico Bledsoe - [Github](https://github.com/MicoBledsoe) / <br>
-Manuel Zambrano - [Github](https://github.com/mnlazs) / [Twitter] (https://twitter.com/mnlazs)
+Manuel Zambrano - [Github](https://github.com/mnlazs) 
 
 Second part of Airbnb: Joann Vuong
 
