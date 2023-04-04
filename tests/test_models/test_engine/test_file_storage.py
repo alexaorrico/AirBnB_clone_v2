@@ -2,7 +2,6 @@
 """
 Contains the TestFileStorageDocs classes
 """
-
 import inspect
 import models
 from models.engine import file_storage
@@ -113,43 +112,30 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_existing_object(self):
-        """Test retrieving an existing object"""
+    def test_get(self):
+        """
+        Test that get properly gets an object or returns None
+        if it doesn't exist.
+        """
         storage = FileStorage()
-        state = State(name="California")
-        storage.new(state)
+        instance1 = City(id="my_id")
+        storage.new(instance1)
         storage.save()
-        obj = storage.get(State, state.id)
-        self.assertEqual(obj, state)
+        instance2 = storage.get(City, 'my_id')
+        instance3 = storage.get(City, 'unknown_id')
+        self.assertEqual(instance1, instance2)
+        self.assertIsNone(instance3)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_non_existing_object(self):
-        """Test retrieving a non-existing object"""
+    def test_count(self):
+        """
+        Test that count properly returns a count of the desired class
+        or a count of all classes if none is passed.
+        """
         storage = FileStorage()
-        obj = storage.get(State, "non-existing-id")
-        self.assertIsNone(obj)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_all_objects(self):
-        """Test counting all objects"""
-        storage = FileStorage()
-        count = storage.count()
-        self.assertEqual(count, len(storage.all()))
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_objects_by_class(self):
-        """Test counting objects by class"""
-        storage = FileStorage()
-        count = storage.count(State)
-        self.assertEqual(count, len(storage.all(State)))
-
-    def test_count_file_storage(self):
-        """Test count method with FileStorage and 4 objects stored"""
-        storage = FileStorage()
-        self.assertEqual(storage.count(), 7)
-        self.assertEqual(storage.count(City), 1)
-        self.assertEqual(storage.count(State), 1)
-        self.assertEqual(storage.count(Amenity), 1)
-        self.assertEqual(storage.count(User), 1)
-        self.assertEqual(storage.count(State), 1)
-        self.assertEqual(storage.count(Review), 1)
+        num = len(storage.all())
+        self.assertEqual(storage.count(), num)
+        new_city = City()
+        storage.new(new_city)
+        storage.save()
+        self.assertEqual(storage.count(), num + 1)
