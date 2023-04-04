@@ -8,11 +8,12 @@ from flask_cors import CORS
 from os import getenv
 
 
-#create instance of Flask
+# create instance of Flask
 app = Flask(__name__)
 CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
-#register blueprint
+# register blueprint
 app.register_blueprint(app_views)
+
 
 @app.errorhandler(404)
 def handle_404(exception):
