@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ starting the Flash """
-from api.v1.views import app_views
-from flask import Flask, Blueprint, jsonify
+from views import app_views
+from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
 from os import getenv as env
