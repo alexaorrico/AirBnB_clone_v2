@@ -1,33 +1,30 @@
 #!/usr/bin/python3
-'''task 4'''
-from flask import Flask, Blueprint, make_response, jsonify
+""" Creating an instance of Flask """
+from flask import Flask, jsonify, make_response
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
-from os import getenv
+from os import getenv as env
+
 
 app = Flask(__name__)
-
+CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 
 @app.errorhandler(404)
-def page_not_found(exception):
-    """
-    404 Page Not Found Error Handler
-    """
+def handle_404(exception):
+    """handles 404 scenario (page not found)"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
+
 @app.teardown_appcontext
-def tearitup():
-    """turrupboii"""
+def teardown(exception):
+    """method closes storage session"""
     storage.close()
 
-if __name__ == '__main__':
-    host = '0.0.0.0'
-    port = '5000'
-    if getenv("HBNB_API_HOST"):
-        host = getenv("HBNB_API_HOST")
-    if getenv("HBNB_API_PORT"):
-        port = getenv("HBNB_API_PORT")
 
-    app.run(host=host, port=port, threaded=True)
+if __name__ == "__main__":
+    app.run(host=env('HBNB_API_HOST'),
+            port=env('HBNB_API_PORT'),
+            threaded=True)
