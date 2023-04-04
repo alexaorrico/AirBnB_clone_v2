@@ -5,12 +5,10 @@ from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 import os
-import json
 from flask_cors import CORS
 
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
