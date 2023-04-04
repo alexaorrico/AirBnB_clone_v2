@@ -10,11 +10,13 @@ from models import place
 from models.base_model import BaseModel
 import pep8
 import unittest
+
 Place = place.Place
 
 
 class TestPlaceDocs(unittest.TestCase):
     """Tests to check the documentation and style of Place class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -59,6 +61,7 @@ class TestPlaceDocs(unittest.TestCase):
 
 class TestPlace(unittest.TestCase):
     """Test the Place class"""
+    
     def test_is_subclass(self):
         """Test that Place is a subclass of BaseModel"""
         place = Place()
