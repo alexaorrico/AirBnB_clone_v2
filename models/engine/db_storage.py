@@ -22,8 +22,8 @@ class DBStorage:
     __engine = None
     __session = None
     classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review,
-           "State": State, "User": User}
+               "Place": Place, "Review": Review,
+               "State": State, "User": User}
 
     def __init__(self):
         """Instantiate a DBStorage object"""
