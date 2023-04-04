@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ console """
 
 import cmd
@@ -8,7 +8,7 @@ from models import class_models
 import shlex  # for splitting the line along spaces except in double quotes
 
 classes = {
-    (vars(x)["__module__"].split(".")[1]).capitalize(): x
+    x.get_name(): x
         for x in class_models
 }
 

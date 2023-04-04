@@ -2,7 +2,7 @@
 """
 initialize the models package
 """
-import models.get as get
+import models._get as get
 
 from os import getenv
 
