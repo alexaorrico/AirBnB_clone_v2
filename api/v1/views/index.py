@@ -3,7 +3,6 @@
 from json import dumps
 from flask import Response
 from api.v1.views import app_views
-from models.engine import classes
 
 cc = {"Amenity": "amenities", "City": "cities", "Place": "places",
       "Review": "reviews", "State": "states", "User": "users"}
@@ -19,6 +18,6 @@ def status():
 def stats():
     """Return number of objects by type"""
     data = {}
-    for cls in classes.keys():
-        data[cc[cls]] = classes.count(cls)
+    for cls in cc.keys():
+        data[cc[cls]] = cc.count(cls)
     return Response(dumps(data), content_type='application/json')
