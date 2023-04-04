@@ -158,7 +158,9 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 :sparkles::cherry_blossom: Katrina Keas - [Github](https://github.com/kkeas)  :cherry_blossom::sparkles:
+
 :sparkles::hibiscus: Teylor Chapman-Bilbee [Github](https://github.com/teylorchapman) :hibiscus::sparkles:
+
 
 Second part of Airbnb: Joann Vuong
 ## License
