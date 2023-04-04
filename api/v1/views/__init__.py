@@ -2,6 +2,9 @@
 """ Blueprint for API v1 """
 from flask import Blueprint, abort, request
 from models import storage
+# project wants this style
+from api.v1.views.index import *
+
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
@@ -25,11 +28,3 @@ def get_json(re_fields=None):
         if result.get(field) is None:
             abort(400, 'Missing {}'.format(field))
     return result
-
-
-# project wants this style
-from api.v1.views.index import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
-from api.v1.views.amenities import *
-from api.v1.views.users import *
