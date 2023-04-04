@@ -6,19 +6,17 @@ from flask_cors import CORS
 from api.v1.views import app_views
 from models import storage
 
+from flask import Flask, jsonify
+from models import storage
+
 app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix='/api/v1')
-cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-
-@app.route('/api/v1/status', methods=['GET'], strict_slashes=False)
+@app.route('/status', methods=['GET'])
 def get_status():
     """Returns status of API."""
     return jsonify({"status": "OK"})
 
-
-@app.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
+@app.route('/stats', methods=['GET'])
 def get_stats():
     """Returns count of each type of object in database."""
     count_stats = {
@@ -32,6 +30,4 @@ def get_stats():
     return jsonify(count_stats)
 
 if __name__ == '__main__':
-    app.run(host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
-            port=os.getenv('HBNB_API_PORT', '5000'),
-            threaded=True)
+    app.run(host='0.0.0.0', port=5000)
