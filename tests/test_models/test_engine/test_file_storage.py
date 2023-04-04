@@ -41,7 +41,7 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pcs = pycodestyle.StyleGuide(quiet=True)
         result = pcs.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
+            test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -113,3 +113,45 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_existing_object(self):
+        """Test retrieving an existing object"""
+        storage = FileStorage()
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+        obj = storage.get(State, state.id)
+        self.assertEqual(obj, state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_non_existing_object(self):
+        """Test retrieving a non-existing object"""
+        storage = FileStorage()
+        obj = storage.get(State, "non-existing-id")
+        self.assertIsNone(obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all_objects(self):
+        """Test counting all objects"""
+        storage = FileStorage()
+        count = storage.count()
+        self.assertEqual(count, len(storage.all()))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_objects_by_class(self):
+        """Test counting objects by class"""
+        storage = FileStorage()
+        count = storage.count(State)
+        self.assertEqual(count, len(storage.all(State)))
+
+    def test_count_file_storage(self):
+        """Test count method with FileStorage and 4 objects stored"""
+        storage = FileStorage()
+        self.assertEqual(storage.count(), 7)
+        self.assertEqual(storage.count(City), 1)
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(Amenity), 1)
+        self.assertEqual(storage.count(User), 1)
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(Review), 1)
