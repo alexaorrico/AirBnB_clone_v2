@@ -43,9 +43,9 @@ class DBStorage:
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+        for clss in self.classes:
+            if cls is None or cls is self.classes[clss] or cls is clss:
+                objs = self.__session.query(self.classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """retrieve one object"""
-        if cls in classes.values() and id is not None:
+        if cls in self.classes.values() and id is not None:
             key = "{}.{}".format(cls.__name__, id)
             return self.__session.query(cls).filter_by(id=id).first()
 
@@ -85,10 +85,10 @@ class DBStorage:
         """count number of objects in storage"""
         if cls is None:
             count = 0
-            for clss in classes:
-                count += self.__session.query(classes[clss]).count()
+            for clss in self.classes:
+                count += self.__session.query(self.classes[clss]).count()
             return count
-        elif cls in classes.values():
+        elif cls in self.classes.values():
             return self.__session.query(cls).count()
         else:
             return 0
