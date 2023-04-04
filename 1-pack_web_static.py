@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Fabric script that generates a tgz archive from the contents of the web_static
 folder of the AirBnB Clone repo

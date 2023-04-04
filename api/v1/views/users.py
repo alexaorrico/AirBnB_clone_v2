@@ -1,83 +1,95 @@
-#!/usr/bin/python3
-'''
-Create a new view for User objects that handles all default HTTP methods
-'''
+#!/usr/bin/env python3
+""" objects that handle all default RestFul API actions for Users """
 from models.user import User
 from models import storage
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import abort, jsonify, make_response, request
+from flasgger.utils import swag_from
 
 
-@app_views.route("/users", methods=["GET"], strict_slashes=False)
-def get_user():
-    """  list of all Users objects """
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/user/all_users.yml')
+def get_users():
+    """
+    Retrieves the list of all user objects
+    or a specific user
+    """
+    all_users = storage.all(User).values()
+    list_users = []
+    for user in all_users:
+        list_users.append(user.to_dict())
+    return jsonify(list_users)
 
-    all_user = storage.all(User).values()
-    all_users = [user.to_dict() for user in all_user]
 
-    return jsonify(all_users)
-
-
-@app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
-def get_user_by_name(user_id=None):
-    """ display a resource of my list of users """
-
-    user_object = storage.get(User, user_id)
-    if user_object is None:
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/user/get_user.yml', methods=['GET'])
+def get_user(user_id):
+    """ Retrieves an user """
+    user = storage.get(User, user_id)
+    if not user:
         abort(404)
-    return jsonify(user_object.to_dict())
+
+    return jsonify(user.to_dict())
 
 
-@app_views.route("/users/<user_id>", methods=["DELETE"], strict_slashes=False)
-def delete_user(user_id=None):
-    """ delete a resource of my list of users """
-
-    delete_user = storage.get(User, user_id)
-    if delete_user is None:
-        abort(404)
-    else:
-        storage.delete(delete_user)
-        storage.save()
-        return (jsonify({}), 200)
-
-
-@app_views.route("/users", methods=["POST"], strict_slashes=False)
-def create_new_user(state_id=None):
-    """ create new resource by my list of users """
-
-    user_object_json = request.get_json()
-    if user_object_json is None:
-        return jsonify({'Error': 'Not a JSON'}), 400
-
-    if 'email' not in user_object_json:
-        return jsonify({'Error': 'Missing email'}), 400
-
-    if 'password' not in user_object_json.keys():
-        return jsonify({'Error': 'Missing password'}), 400
-
-    user_object = User(**user_object_json)
-    user_object.save()
-
-    return jsonify(user_object.to_dict()), 201
-
-
-@app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
-def update_a_user(user_id=None):
-    """ update a resource of my objects """
-
-    user_object_json = request.get_json()
-    if user_object_json is None:
-        return jsonify({'Error': 'Not a JSON'}), 400
+@app_views.route('/users/<user_id>', methods=['DELETE'],
+                 strict_slashes=False)
+@swag_from('documentation/user/delete_user.yml', methods=['DELETE'])
+def delete_user(user_id):
+    """
+    Deletes a user Object
+    """
 
     user = storage.get(User, user_id)
-    if user is None:
+
+    if not user:
         abort(404)
+
+    storage.delete(user)
+    storage.save()
+
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+@swag_from('documentation/user/post_user.yml', methods=['POST'])
+def post_user():
+    """
+    Creates a user
+    """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    if 'email' not in request.get_json():
+        abort(400, description="Missing email")
+    if 'password' not in request.get_json():
+        abort(400, description="Missing password")
+
+    data = request.get_json()
+    instance = User(**data)
+    instance.save()
+    return make_response(jsonify(instance.to_dict()), 201)
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('documentation/user/put_user.yml', methods=['PUT'])
+def put_user(user_id):
+    """
+    Updates a user
+    """
+    user = storage.get(User, user_id)
+
+    if not user:
+        abort(404)
+
+    if not request.get_json():
+        abort(400, description="Not a JSON")
 
     ignore = ['id', 'email', 'created_at', 'updated_at']
 
-    for key, value in user_object_json.items():
+    data = request.get_json()
+    for key, value in data.items():
         if key not in ignore:
             setattr(user, key, value)
-    user.save()
-
-    return jsonify(user.to_dict()), 200
+    storage.save()
+    return make_response(jsonify(user.to_dict()), 200)
