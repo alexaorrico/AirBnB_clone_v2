@@ -1,123 +1,108 @@
-#!/usr/bin/python3
-"""
-Handles I/O, writing and reading, of JSON for storage of all class instances
-"""
-import json
-from models import base_model, amenity, city, place, review, state, user
-from datetime import datetime
+#!/usr/bin/env python
+"""A module that that serializes instances to a JSON file and deserializes
+JSON file to instances"""
 
-strptime = datetime.strptime
-to_json = base_model.BaseModel.to_json
+import json
+import os
+from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 
 class FileStorage:
+    """ File storage class that serializes
+    instances to a JSON file and deserializes. JSON file to instances.
+    Returns:
+        _type_: _description_
     """
-        handles long term storage of all class instances
-    """
-    CNC = {
-        'BaseModel': base_model.BaseModel,
-        'Amenity': amenity.Amenity,
-        'City': city.City,
-        'Place': place.Place,
-        'Review': review.Review,
-        'State': state.State,
-        'User': user.User
-    }
-    """CNC - this variable is a dictionary with:
-    keys: Class Names
-    values: Class type (used for instantiation)
-    """
-    __file_path = './dev/file.json'
+    # private class attributes
+    # __file_path is the path to the JSON file to store all objects.
+    __file_path = 'storage.json'
+
+    # __objects is a dictionary that stores all objects by <class name>.id
+    # ex: to store a BaseModel object with id=12121212, the key will be
+    # BaseModel.12121212 and the value will be the object.
+    # the object (value of key) is stored like this:
+    # <models.base_model.BaseModel object at 0x7f3329dac310>
+    # obects = {BaseModel.12121212: }
     __objects = {}
 
     def all(self, cls=None):
+        """Returns a list of all objects if cls is None.
+        If cls is provided, return all objects of that type.
         """
-            returns private attribute: __objects
-        """
+
         if cls is not None:
-            new_objs = {}
-            for clsid, obj in FileStorage.__objects.items():
-                if type(obj).__name__ == cls:
-                    new_objs[clsid] = obj
-            return new_objs
+
+            obj = {}
+            # print(FileStorage.__objects.items())
+            for key, val in FileStorage.__objects.items():
+                if cls.__name__ in key:
+                    obj[key] = val
+            return obj
         else:
-            return FileStorage.__objects
+            return self.__objects
 
+    # sets in __objects the obj with key <obj class name>.id
     def new(self, obj):
+        """Add obj with key <obj class name>.id to dictionary.
+        Args:
+        obj: the object with key <obj class name>.id
         """
-            sets / updates in __objects the obj with key <obj class name>.id
-        """
-        bm_id = "{}.{}".format(type(obj).__name__, obj.id)
-        FileStorage.__objects[bm_id] = obj
+        key = obj.__class__.__name__ + '.' + obj.id
+        # json_data = json.dump(obj)
+        self.__objects[key] = obj
 
+    # serializes __objects to the JSON file (path: __file_path)
     def save(self):
-        """
-            serializes __objects to the JSON file (path: __file_path)
-        """
-        fname = FileStorage.__file_path
-        storage_d = {}
-        for bm_id, bm_obj in FileStorage.__objects.items():
-            storage_d[bm_id] = bm_obj.to_json(saving_file_storage=True)
-        with open(fname, mode='w', encoding='utf-8') as f_io:
-            json.dump(storage_d, f_io)
+        """ Serializes __objects to the JSON file (path: __file_path)."""
+        json_obj = {}
+        for key in self.__objects.keys():
+            json_obj[key] = self.__objects[key].to_dict()
+
+        with open(self.__file_path, 'w') as json_file:
+            json.dump(json_obj, json_file)
 
     def reload(self):
-        """
-            if file exists, deserializes JSON file to __objects, else nothing
-        """
-        fname = FileStorage.__file_path
-        FileStorage.__objects = {}
-        try:
-            with open(fname, mode='r', encoding='utf-8') as f_io:
-                new_objs = json.load(f_io)
-        except:
-            return
-        for o_id, d in new_objs.items():
-            k_cls = d['__class__']
-            FileStorage.__objects[o_id] = FileStorage.CNC[k_cls](**d)
+        """Deserializes the JSON file to __objects (only if the JSON file"""
+        """(path: __file_path) exists ; otherwise, do nothing."""
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, 'r') as json_file:
+                json_obj = json.load(json_file)
+                for key in json_obj.keys():
+
+                    # By providing the dict value stored in json_obj[key] as
+                    # kwargs, genrate an object with the same attributes
+                    self.__objects[key] = eval(
+                        json_obj[key]['__class__'])(**json_obj[key])
 
     def delete(self, obj=None):
-        """
-            deletes obj from __objects if it's inside
-        """
-        if obj:
-            obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
-            all_class_objs = self.all(obj.__class__.__name__)
-            if all_class_objs.get(obj_ref):
-                del FileStorage.__objects[obj_ref]
-            self.save()
-
-    def delete_all(self):
-        """
-            deletes all stored objects, for testing purposes
-        """
-        try:
-            with open(FileStorage.__file_path, mode='w') as f_io:
-                pass
-        except:
-            pass
-        del FileStorage.__objects
-        FileStorage.__objects = {}
-        self.save()
+        """Delete an object from the __objects"""
+        if obj is not None:
+            for key, val in list(FileStorage.__objects.items()):
+                if obj == val:
+                    del FileStorage.__objects[key]
+                    print("Deleted: {}".format(key))
+                    self.save()
 
     def close(self):
-        """
-            calls the reload() method for deserialization from JSON to objects
-        """
+        "Deserialize the JSON file to __objects"
         self.reload()
 
     def get(self, cls, id):
-        """
-            retrieves one object based on class name and id
-        """
-        if cls and id:
-            fetch_obj = "{}.{}".format(cls, id)
-            all_obj = self.all(cls)
-            return all_obj.get(fetch_obj)
+        """Retrieve one object"""
+        if cls is not None and id is not None:
+            # first change cls to string
+            key = cls.__name__ + '.' + id
+            return FileStorage.__objects.get(key)
         return None
 
     def count(self, cls=None):
-        """
-        count of all objects in storage
-        """
-        return (len(self.all(cls)))
+        """ Counts the number of objects in storage """
+        if cls:
+            return len(self.all(cls))
+        return len(self.all())
