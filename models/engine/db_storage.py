@@ -72,9 +72,14 @@ class DBStorage:
         self.__session.close()
 
     def get(self, cls, id):
-        """retrieves one object"""
-        key = '{}.{}'.format(cls.__name__, id)
-        return self.all(cls).get(key)
+        """
+            retrieves one object based on class name and id
+        """
+        if cls and id:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch)
+        return None
 
     def count(self, cls=None):
         """
