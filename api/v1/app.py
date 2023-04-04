@@ -18,7 +18,7 @@ def page_not_found(exception):
     return make_response(jsonify({"error": "Not found"}), 404)
 
 @app.teardown_appcontext
-def tearitup():
+def tearitup(exception):
     """turrupboii"""
     storage.close()
 
