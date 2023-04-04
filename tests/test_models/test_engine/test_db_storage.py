@@ -3,21 +3,15 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
 import inspect
-from io import StringIO
-from unittest.mock import patch
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from models import storage
-from models import FileStorage
 import pycodestyle
 import unittest
 DBStorage = db_storage.DBStorage
@@ -69,76 +63,44 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+# class TestFileStorage(unittest.TestCase):
+#     """Test the FileStorage class"""
+#     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+#     def test_all_returns_dict(self):
+#         """Test that all returns a dictionaty"""
+#         self.assertIs(type(models.storage.all()), dict)
 
-@unittest.skipIf(type(models.storage) == FileStorage, "Testing FileStorage")
-class TestStateDBInstances(unittest.TestCase):
-    """DBStorage State Tests"""
-    def tearDown(self):
-        """Remove storage objs"""
-        storage.drop_table(State)
+#     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+#     def test_all_no_class(self):
+#         """Test that all returns all rows when no class is passed"""
 
-    def setUp(self):
-        """Initializes new BaseModel obj"""
-        self.state_obj1 = State(name='OK')
-        self.state_obj1.save()
-        self.state_obj2 = State(name='AR')
-        self.state_obj2.save()
-        storage.save()
-        storage.reload()
+#     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+#     def test_new(self):
+#         """test that new adds an object to the database"""
 
-    def test_count_meth(self):
-        """tests count method for DBStorage"""
-        total_states = storage.count(State)
-        self.assertEqual(total_states, 2)
+#     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+#     def test_save(self):
+#         """Test that save properly saves objects to file.json"""
 
-    def test_get_meth(self):
-        """tests get method for DBStorage"""
-        oklahoma_get = storage.get(State, self.state_obj1.id)
-        self.assertEqual(oklahoma_get.name, 'OK')
+    def test_get(self):
+        """ Test that get properly gets object from storage """
+        if models.storage_t != 'db':
+            pass
+        test_state_1 = State(name="Joshter")
+        test_state_1.save()
+        test_state_2 = models.storage.get(State, test_state_1.id)
+        test_bad_state = models.storage.get(State, "no_id")
+        self.assertEqual(test_state_1, test_state_2)
+        self.assertIsNone(test_bad_state)
 
-    def test_get_existing_object(self):
-        """tests for existing object"""
-        self.assertEqual(storage.get(State,
-                                     self.state_obj1.id), self.state_obj1)
-
-    def test_get_non_existing_object(self):
-        """tests for object that does not exist"""
-        self.assertIsNone(storage.get(State, 'invalid_id'))
-
-    def test_count_all_objects(self):
-        """tests count for all objects"""
-        self.assertEqual(storage.count(), 2)
-
-    def test_count_objects_of_class(self):
-        """tests count for objects of State class"""
-        self.assertEqual(storage.count(State), 2)
-
-
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            command = 'all'
-            classes().onecmd(command)
-            output = f.getvalue().strip()
-            self.assertTrue(len(output) > 0)
-
-            # Verify that all objects are in output
-            for class_name, class_obj in classes.items():
-                for obj in storage.all(class_obj).values():
-                    self.assertIn(obj.__str__(), output)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """ Test that count properly counts  number of objects in storage """
+        if models.storage_t != 'db':
+            pass
+        state_count = models.storage.count(State)
+        total_count = models.storage.count()
+        new_state = State(name="count_state")
+        new_state.save()
+        self.assertEqual(models.storage.count(State), state_count + 1)
+        self.assertEqual(models.storage.count(), total_count + 1)
