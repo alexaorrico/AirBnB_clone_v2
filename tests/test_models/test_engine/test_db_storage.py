@@ -5,6 +5,8 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
+from io import StringIO
+from unittest.mock import patch
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
@@ -15,6 +17,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models import storage
+from models import FileStorage
 import json
 import os
 import pycodestyle
@@ -106,6 +109,16 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            command = 'all'
+            classes().onecmd(command)
+            output = f.getvalue().strip()
+            self.assertTrue(len(output) > 0)
+
+            # Verify that all objects are in output
+            for class_name, class_obj in classes.items():
+                for obj in storage.all(class_obj).values():
+                    self.assertIn(obj.__str__(), output)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
