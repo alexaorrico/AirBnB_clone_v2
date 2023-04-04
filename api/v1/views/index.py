@@ -6,13 +6,13 @@ from models import storage
 from json import dumps
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route('/status', strict_slashes=False)
 def status():
     """ Returns status of API """
-    return jsonify(dumps({"status": "OK"}), content_type='application/json')
+    return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/api/v1/stats')
 def get_stats():
     """
     This module contains the views for getting statistics of the API data.
