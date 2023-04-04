@@ -5,8 +5,6 @@ Contains class BaseModel
 
 from datetime import datetime
 import models
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
@@ -73,3 +71,15 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    @classmethod
+    def get_name(cls):
+        return(cls.__name__)
+
+    @classmethod
+    def get_plural(cls):
+        name = cls.get_name().lower()
+        if name[-1] == "y":
+            return "{}ies".format(name[:-1])
+        else:
+            return name + "s"

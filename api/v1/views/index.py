@@ -16,12 +16,11 @@ def status():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def number_objects():
     """ Retrieves the number of each objects by type """
-    classes = class_models
-    names = ["cities", "users", "places", "reviews", "amenities", "states"]
-    num_objs = {}
-
-    for i in range(len(classes)):
-        num_objs[names[i]] = storage.count(classes[i])
-
+    classes = sorted(
+        class_models,
+        key=(lambda x: x.__name__[0])
+    )
+    num_objs = {
+        x.get_plural(): storage.count(x) for x in classes
+    }
     return jsonify(num_objs)
-
