@@ -71,6 +71,16 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @classmethod
+    def tearDownClass(cls):
+        """tears down test cls by removing jason :P after"""
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -116,22 +126,22 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def testcountmethod(self):
-        """tests the count method"""
-        co_state = State(name='CO')
+    def test_count_method(self):
+        """tests count method in FileStorage engine / mode"""
         ok_state = State(name='OK')
-        co_state.save()
+        ar_state = State(name='AR')
         ok_state.save()
+        ar_state.save()
         storage.reload()
         total_states = storage.count(State)
         self.assertEqual(total_states, 2)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def testgetmethod(self):
-        """tests the get method"""
-        co_state = State(name='CO')
-        co_state.save()
-        co_state_id = co_state.id
+    def test_get_method(self):
+        """tests get method in FileStorage engine / mode"""
+        ok_state = State(name='OK')
+        ok_state.save()
+        ok_state_id = ok_state.id
         storage.reload()
-        co_state_from_get = storage.get(State, co_state_id)
-        self.assertEqual(co_state_id, co_state_from_get.id)
+        ok_state_from_get = storage.get(State, ok_state_id)
+        self.assertEqual(ok_state_id, ok_state_from_get.id)

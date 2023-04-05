@@ -73,16 +73,30 @@ test_db_storage.py'])
 @unittest.skipIf(type(models.storage) == FileStorage, "Testing FileStorage")
 class TestStateDBInstances(unittest.TestCase):
     """DBStorage State Tests"""
+    def tearDownClass():
+        """tidies up the tests removing storage objects"""
+        storage.drop_table(State)
 
-    def testcountmethod(self):
-        """tests the count method for DBStorage"""
+    def setUp(self):
+        """initializes new BaseModel object for testing"""
+        self.state_one = State(name='OK')
+        self.state_one.save()
+        self.state_one_id = self.state_one.id
+        self.state_two = State(name='AR')
+        self.state_two.save()
+        self.state_two_id = self.state_two.id
+        storage.save()
+        storage.reload()
+
+    def test_count_meth(self):
+        """tests count method for DBStorage"""
         total_states = storage.count(State)
         self.assertEqual(total_states, 2)
 
-    def testgetmethod(self):
+    def test_get_meth(self):
         """tests get method for DBStorage"""
-        colorado_get = storage.get(State, self.state_one_id)
-        self.assertEqual(colorado_get.name, 'CO')
+        oklahoma_get = storage.get(State, self.state_one_id)
+        self.assertEqual(oklahoma_get.name, 'OK')
 
 
 class TestFileStorage(unittest.TestCase):
