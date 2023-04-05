@@ -3,9 +3,10 @@
 Module that creates /status route on app_views object
 Returns "status": "OK" JSON
 """
+from json import dumps
+from flask import Response
 from api.v1.views import app_views
-from flask import jsonify
-from models import storage
+from models import storage, class_dictionary
 
 
 @app_views.route("/status")
