@@ -16,7 +16,7 @@ def get_reviews_for_place(place_id):
         abort(404)
     reviews = [review.to_dict() for review in place.reviews]
     if len(reviews) == 0:
-        print (reviews)
+        print(reviews)
         return jsonify([])
     return jsonify(reviews)
 
