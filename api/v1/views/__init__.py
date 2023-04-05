@@ -4,6 +4,9 @@ from flask import Blueprint, abort, request
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
+cc = {"Amenity": "amenities", "City": "cities", "Place": "places",
+      "Review": "reviews", "State": "states", "User": "users"}
+
 
 def validate_model(model, model_id):
     """Validate if a model exists"""
@@ -24,11 +27,3 @@ def get_json(required_fields=[]):
             abort(400, 'Missing {}'.format(field))
     return result
 
-# Pep8 doesn't like the next line, project said it's okay
-from api.v1.views.index import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
-from api.v1.views.amenities import *
-from api.v1.views.users import *
-from api.v1.views.places import *
-from api.v1.views.places_reviews import *
