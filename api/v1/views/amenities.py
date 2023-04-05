@@ -51,14 +51,15 @@ def post_amenity():
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
 def put_amenity(amenity_id):
     """update a specific amenity"""
+    data = request.get_json()
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         return jsonify({"error": "Not found"}), 404
-    amenity = request.get_json()
-    if amenity is None:
+    if data is None:
         return jsonify({"error": "Not a JSON"}), 400
-    for key, value in amenity.items():
+    for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:
+            print(key, value)
             setattr(amenity, key, value)
     amenity.save()
     return jsonify(amenity.to_dict()), 200
