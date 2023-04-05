@@ -1,16 +1,15 @@
 #!/usr/bin/python3
-    """
-    Module to create view for State objects handling defaut
-    RESTful API actions
-    """
+"""
+Module to create view for State objects handling defaut
+RESTful API actions
+"""
 from api.v1.views import app_views
-from flask import jsonify, abort, reuest, make_response
+from flask import jsonify, abort, request, make_response, Flask
 from models import storage
 from models.state import State
 
 
-@app_views.route("/states/", methods=["GET"]
-                 strict_slashes=Flase)
+@app_views.route("/states/", methods=["GET"], strict_slashes=False)
 def state_get():
     """
     Retrieves list of all State objects.
