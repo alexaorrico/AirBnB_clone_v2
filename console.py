@@ -7,10 +7,8 @@ from models import class_models
 
 import shlex  # for splitting the line along spaces except in double quotes
 
-classes = {
-    x.get_name(): x
-        for x in class_models
-}
+classes = {x.get_name(): x for x in class_models}
+
 
 class HBNBCommand(cmd.Cmd):
     """ HBNH console """
