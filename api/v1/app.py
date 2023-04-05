@@ -3,28 +3,25 @@
 from flask import Flask, make_response
 from models import storage
 from api.v1.views import app_views
-from flask import Flask
 from flask_cors import CORS
 from os import getenv
 
 
-# create instance of Flask
 app = Flask(__name__)
-CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
-# register blueprint
+CORS(app, resources={"/*": {"origins": "0/0/0/0"}})
 app.register_blueprint(app_views)
 
 
 @app.errorhandler(404)
 def handle_404(exception):
-    """handles 404 scenario (page not found)"""
+    """handles 404 scenario"""
     code = exception.__str__().split()[0]
-    message = {"error": "Not found"}
+    message = {"error": "Not Found"}
     return make_response(message, code)
 
 
 @app.teardown_appcontext
-def teardowndb(exception):
+def teardown_db(exception):
     """close storage"""
     storage.close()
 
@@ -34,6 +31,7 @@ def start_flask():
     app.run(host=getenv('HBNB_API_HOST'),
             port=getenv('HBNB_API_PORT'),
             threaded=True)
+
 
 if __name__ == "__main__":
     start_flask()
