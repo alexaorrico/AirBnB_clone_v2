@@ -3,10 +3,7 @@
 
 from api.v1.views import app_views, validate_model, get_json
 from flask import jsonify
-from models import storage
-
-cc = {"Amenity": "amenities", "City": "cities", "Place": "places",	
-	"Review": "reviews", "State": "states", "User": "users"}
+from models import storage, class_dictionary
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
@@ -44,7 +41,7 @@ def post_review(place_id):
     user_id = data.get("user_id")
     user = validate_model("User", user_id)
     text = data.get('text')
-    review = storage.cc["Review"](place_id=place,
+    review = storage.class_dictionary["Review"](place_id=place,
                                                 user_id=user, text=text)
     storage.new(review)
     storage.save()

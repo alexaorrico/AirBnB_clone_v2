@@ -3,11 +3,8 @@
 
 from api.v1.views import app_views, validate_model, get_json
 from flask import jsonify
-from models import storage
+from models import storage, class_dictionary
 from models.user import User
-
-cc = {"Amenity": "amenities", "City": "cities", "Place": "places",	
-	"Review": "reviews", "State": "states", "User": "users"}
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -37,7 +34,7 @@ def delete_user(user_id):
 def create_user():
     """User no ID given POST scenario"""
     req_json = get_json(['email', 'password'])
-    User = cc.get('User')
+    User = class_dictionary.get('User')
     new_object = User(**req_json)
     new_object.save()
     return jsonify(new_object.to_dict()), 201

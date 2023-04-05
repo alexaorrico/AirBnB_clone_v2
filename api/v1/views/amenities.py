@@ -2,10 +2,7 @@
 """Flask route module for amenities"""
 from api.v1.views import app_views, validate_model, get_json
 from flask import jsonify
-from models import storage
-
-cc = {"Amenity": "amenities", "City": "cities", "Place": "places",	
-	"Review": "reviews", "State": "states", "User": "users"}
+from models import storage, class_dictionary
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
@@ -20,7 +17,7 @@ def amenities_no_id_get(amenity_id=None):
 def amenities_no_id_post(amenity_id=None):
     """amenities route - no id POST scenario"""
     req_json = get_json(['name'])
-    Amenity = cc.get('Amenity')
+    Amenity = class_dictionary.get('Amenity')
     new_object = Amenity(**req_json)
     new_object.save()
     return jsonify(new_object.to_dict()), 201
