@@ -10,9 +10,9 @@ from models.user import User
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def get_reviews_for_place(place_id):
-    """Retrieves a list of reviews for a specified place"""
-    place = storage.get("Place", place_id)
-    if place is None:
+    """Retrieves a list of reviews for a specified place"""<<<<<<< MDevop
+    place = storage.get(Place, place_id)
+    if not place:
         abort(404)
     reviews = [review.to_dict() for review in place.reviews]
     if len(reviews) == 0:
