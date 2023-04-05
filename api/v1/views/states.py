@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-"""Flask route module for states"""
 from api.v1.views import app_views, validate_model, get_json
 from flask import jsonify
 from models import storage, class_dictionary
-
+"""Flask route module for states"""
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states_no_id_get():
