@@ -18,6 +18,7 @@ def get_all():
         amenities_list.append(amenity.to_dict())
     return jsonify(amenities_list)
 
+
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False)
 def get_amenity(amenity_id):
     """get a specific amenity"""
@@ -26,7 +27,9 @@ def get_amenity(amenity_id):
         return jsonify({"error": "Not found"}), 404
     return jsonify(amenity.to_dict())
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
     """delete a specific amenity"""
     amenity = storage.get(Amenity, amenity_id)
@@ -35,6 +38,7 @@ def delete_amenity(amenity_id):
     amenity.delete()
     storage.save()
     return jsonify({}), 200
+
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def post_amenity():
@@ -48,7 +52,9 @@ def post_amenity():
     amenity.save()
     return jsonify(amenity.to_dict()), 201
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
 def put_amenity(amenity_id):
     """update a specific amenity"""
     data = request.get_json()
@@ -63,4 +69,3 @@ def put_amenity(amenity_id):
             setattr(amenity, key, value)
     amenity.save()
     return jsonify(amenity.to_dict()), 200
-
