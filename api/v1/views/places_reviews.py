@@ -4,7 +4,6 @@ from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
 from models.review import Review
-from models.place import Place
 from models.user import User
 
 
@@ -16,7 +15,8 @@ def get_reviews_for_place(place_id):
     if place is None:
         abort(404)
     reviews = [review.to_dict() for review in place.reviews]
-    print(reviews)
+    if len(reviews) == 0:
+        return jsonify([])
     return jsonify(reviews)
 
 
