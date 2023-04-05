@@ -2,7 +2,10 @@
 """Flask route module for states"""
 from api.v1.views import app_views, validate_model, get_json
 from flask import jsonify
-from models import storage, class_dictionary
+from models import storage
+
+cc = {"Amenity": "amenities", "City": "cities", "Place": "places",
+      "Review": "reviews", "State": "states", "User": "users"}
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -17,7 +20,7 @@ def states_no_id_get():
 def states_no_id_post():
     """states route handling - no id given POST scenario"""
     req_json = get_json(['name'])
-    State = class_dictionary.get("State")
+    State = cc.get("State")
     new_object = State(**req_json)
     new_object.save()
     return jsonify(new_object.to_dict()), 201
