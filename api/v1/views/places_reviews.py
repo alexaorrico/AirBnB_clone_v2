@@ -11,13 +11,12 @@ from models.user import User
                  strict_slashes=False)
 def get_reviews_for_place(place_id):
     """Retrieves a list of reviews for a specified place"""
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     reviews = [review.to_dict() for review in place.reviews]
     if len(reviews) == 0:
         return jsonify([])
-    print(reviews)
     return jsonify(reviews)
 
 
@@ -47,7 +46,7 @@ def delete_review(review_id):
                  strict_slashes=False)
 def create_review(place_id):
     """Creates a new review for a specified place"""
-    place = storage.get('Place', place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
 
