@@ -6,6 +6,7 @@ State objects that handles all default RESTFul API actions
 from api.v1.views import app_views
 from models import storage
 from models.state import State
+from flask import jsonify
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
