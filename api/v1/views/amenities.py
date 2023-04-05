@@ -4,7 +4,7 @@ Amenity api
 """
 
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, request
 from models import storage
 from models.amenity import Amenity
 
@@ -40,6 +40,7 @@ def delete_amenity(amenity_id):
 def post_amenity():
     """post a new amenity"""
     amenity = request.get_json()
+    print(amenity, '=====================')
     if amenity is None:
         return jsonify({"error": "Not a JSON"}), 400
     if "name" not in amenity:
