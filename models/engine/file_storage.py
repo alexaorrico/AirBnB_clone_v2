@@ -17,18 +17,26 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        if cls:
-            return {k: v for k, v in self.__objects.items() if isinstance(v, cls)}
-        else:
-            return self.__objects
+        """returns the dictionary __objects"""
+        if cls is not None:
+            new_dict = {}
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    new_dict[key] = value
+            return new_dict
+        return self.__objects
 
     def new(self, obj):
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
+        """serializes __objects to the JSON file (path: __file_path)"""
+        json_objects = {}
+        for key in self.__objects:
+            json_objects[key] = self.__objects[key].to_dict()
         with open(self.__file_path, 'w') as f:
-            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
+            json.dump(json_objects, f)
 
     def reload(self):
         if os.path.exists(self.__file_path):
