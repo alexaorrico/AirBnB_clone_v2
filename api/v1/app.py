@@ -9,7 +9,7 @@ from flask_cors import CORS
 from os import environ
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/v1*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 app.register_blueprint(app_views)
 
 
@@ -17,6 +17,12 @@ app.register_blueprint(app_views)
 def teardown_app(exception):
     storage.close()
 
+@app.after_request
+def after_request(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    return response
 
 @app.errorhandler(404)
 def page_not_found(e):
