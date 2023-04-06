@@ -16,9 +16,6 @@ class FileStorage:
     __file_path = 'storage.json'
     __objects = {}
 
-    def __init__(self):
-        self.reload()
-
     def all(self, cls=None):
         if cls:
             return {k: v for k, v in self.__objects.items() if isinstance(v, cls)}
