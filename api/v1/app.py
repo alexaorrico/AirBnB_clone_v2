@@ -9,9 +9,8 @@ from flask_cors import CORS
 from os import environ
 
 app = Flask(__name__)
-cors = CORS(app, resources=r"/api/v1/*", origins= "*")
 app.register_blueprint(app_views)
-
+cors = CORS(app, resources=r"/api/v1/*", origins= "*")
 
 @app.teardown_appcontext
 def teardown_app(exception):
