@@ -1,108 +1,87 @@
-#!/usr/bin/env python
-"""A module that that serializes instances to a JSON file and deserializes
-JSON file to instances"""
+#!/usr/bin/python3
+"""
+Contains the FileStorage class
+"""
 
 import json
-import os
-from models.base_model import BaseModel
-from models.user import User
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
+from models.user import User
+
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class FileStorage:
-    """ File storage class that serializes
-    instances to a JSON file and deserializes. JSON file to instances.
-    Returns:
-        type: description
-    """
-    # private class attributes
-    # __file_path is the path to the JSON file to store all objects.
-    __file_path = 'storage.json'
+    """serializes instances to a JSON file & deserializes back to instances"""
 
-    # __objects is a dictionary that stores all objects by <class name>.id
-    # ex: to store a BaseModel object with id=12121212, the key will be
-    # BaseModel.12121212 and the value will be the object.
-    # the object (value of key) is stored like this:
-    # <models.base_model.BaseModel object at 0x7f3329dac310>
-    # obects = {BaseModel.12121212: }
+    __file_path = "file.json"
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a list of all objects if cls is None.
-        If cls is provided, return all objects of that type.
-        """
-
-        if cls is not None:
-
-            obj = {}
-            # print(FileStorage.__objects.items())
-            for key, val in FileStorage.__objects.items():
-                if cls.__name__ in key:
-                    obj[key] = val
-            return obj
-        else:
+        """returns the dictionary __objects"""
+        if not cls:
             return self.__objects
+        elif type(cls) == str:
+            return {k: v for k, v in self.__objects.items()
+                    if v.__class__.__name__ == cls}
+        else:
+            return {k: v for k, v in self.__objects.items()
+                    if v.__class__ == cls}
 
-    # sets in __objects the obj with key <obj class name>.id
     def new(self, obj):
-        """Add obj with key <obj class name>.id to dictionary.
-        Args:
-        obj: the object with key <obj class name>.id
-        """
-        key = obj.__class__.__name__ + '.' + obj.id
-        # json_data = json.dump(obj)
-        self.__objects[key] = obj
+        """sets in __objects the obj with key <obj class name>.id"""
+        if obj is not None:
+            key = obj.__class__.__name__ + "." + obj.id
+            self.__objects[key] = obj
 
-    # serializes __objects to the JSON file (path: __file_path)
     def save(self):
-        """ Serializes __objects to the JSON file (path: __file_path)."""
-        json_obj = {}
-        for key in self.__objects.keys():
-            json_obj[key] = self.__objects[key].to_dict()
-
-        with open(self.__file_path, 'w') as json_file:
-            json.dump(json_obj, json_file)
+        """serializes __objects to the JSON file (path: __file_path)"""
+        json_objects = {}
+        for key in self.__objects:
+            json_objects[key] = self.__objects[key].to_dict(save_to_disk=True)
+        with open(self.__file_path, 'w') as f:
+            json.dump(json_objects, f)
 
     def reload(self):
-        """Deserializes the JSON file to __objects (only if the JSON file"""
-        """(path: __file_path) exists ; otherwise, do nothing."""
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, 'r') as json_file:
-                json_obj = json.load(json_file)
-                for key in json_obj.keys():
-
-                    # By providing the dict value stored in json_obj[key] as
-                    # kwargs, genrate an object with the same attributes
-                    self.__objects[key] = eval(
-                        json_obj[key]['__class__'])(**json_obj[key])
+        """deserializes the JSON file to __objects"""
+        try:
+            with open(self.__file_path, 'r') as f:
+                jo = json.load(f)
+            for key in jo:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
+        except:
+            pass
 
     def delete(self, obj=None):
-        """Delete an object from the __objects"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
-            for key, val in list(FileStorage.__objects.items()):
-                if obj == val:
-                    del FileStorage.__objects[key]
-                    print("Deleted: {}".format(key))
-                    self.save()
+            del self.__objects[obj.__class__.__name__ + '.' + obj.id]
+            self.save()
 
     def close(self):
-        "Deserialize the JSON file to __objects"
+        """Deserialize JSON file to objects"""
         self.reload()
 
     def get(self, cls, id):
-        """Retrieve one object"""
-        if cls is not None and id is not None:
-            # first change cls to string
-            key = cls.__name__ + '.' + id
-            return FileStorage.__objects.get(key)
-        return None
+        """Retrieve an object"""
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
+            return None
 
     def count(self, cls=None):
-        """ Counts the number of objects in storage """
-        if cls:
-            return len(self.all(cls))
-        return len(self.all())
+        """Count number of objects in storage"""
+        total = 0
+        if type(cls) == str and cls in classes:
+            total = len(self.all(cls))
+        elif cls is None:
+            total = len(self.__objects)
+        return total
