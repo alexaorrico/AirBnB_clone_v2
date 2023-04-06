@@ -12,10 +12,14 @@ from models.city import City
 def get_places(city_id):
     """get places"""
     city = storage.get(City, city_id)
+
     if city is not None:
-        places = city.places
-        places_list = [place.to_dict() for place in places]
-        return jsonify(places_list)
+        places = []
+        places_db = storage.all(Place).values()
+        for place in places_db:
+            if place.city_id == city_id:
+                places.append(place.to_dict())
+        return jsonify(places)
     abort(404)
 
 @app_views.route('/places/<place_id>', strict_slashes=False)
