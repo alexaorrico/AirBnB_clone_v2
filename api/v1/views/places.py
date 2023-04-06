@@ -12,7 +12,7 @@ from models.city import City
 def get_places(city_id):
     """get places"""
     city = storage.get(City, city_id)
-    print(city)
+    print
     if city is None:
         abort(404)
     places = []
@@ -23,26 +23,26 @@ def get_places(city_id):
     return jsonify(places), 200
 
 
-# @app_views.route('/places/<place_id>', strict_slashes=False)
-# def get_place(place_id):
-#     """get a specific place"""
-#     place = storage.get(Place, place_id)
-#     if place is not None:
-#         return jsonify(place.to_dict())
-#     abort(404)
+@app_views.route('/places/<place_id>', strict_slashes=False)
+def get_place(place_id):
+    """get a specific place"""
+    place = storage.get(Place, place_id)
+    if place is not None:
+        return jsonify(place.to_dict())
+    abort(404)
 
-# @app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
-# def delete_place(place_id):
-#     """delete a specific place"""
-#     place = storage.get(Place, place_id)
-#     if place is not None:
-#         place.delete()
-#         storage.save()
-#         return jsonify({}), 200
-#     abort(404)
+@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+def delete_place(place_id):
+    """delete a specific place"""
+    place = storage.get(Place, place_id)
+    if place is not None:
+        place.delete()
+        storage.save()
+        return jsonify({}), 200
+    abort(404)
 
-# @app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
-# def post_place(city_id):
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+def post_place(city_id):
     """create a new place"""
     city = storage.get(City, city_id)
     if city is None:
