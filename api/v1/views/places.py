@@ -13,14 +13,15 @@ def get_places(city_id):
     """get places"""
     city = storage.get(City, city_id)
 
-    if city is not None:
-        places = []
-        places_db = storage.all(Place).values()
-        for place in places_db:
-            if place.city_id == city_id:
-                places.append(place.to_dict())
-        return jsonify(places), 200
-    abort(404)
+    if city is None:
+        abort(404)
+    places = []
+    places_db = storage.all(Place).values()
+    for place in places_db:
+        if place.city_id == city_id:
+            places.append(place.to_dict())
+    return jsonify(places), 200
+
 
 @app_views.route('/places/<place_id>', strict_slashes=False)
 def get_place(place_id):
