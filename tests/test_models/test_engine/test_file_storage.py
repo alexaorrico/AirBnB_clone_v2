@@ -121,5 +121,12 @@ class TestFileStorage(unittest.TestCase):
 
     def test_count(self):
         """Test that count returns the correct number of objects"""
-        storage = FileStorage()
-        self.assertEqual(type(storage.count(State)), int)
+
+        def test_count(self):
+            """test for count method"""
+            store = FileStorage()
+            store.reload()
+            counter = store.count(State)
+            new_state = State(name="Osun")
+            new_state.save()
+            self.assertEqual(models.storage.count(State), counter + 1)
