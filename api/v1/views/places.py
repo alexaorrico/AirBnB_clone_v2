@@ -11,7 +11,7 @@ from models.city import City
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
 def get_places(city_id):
     """get places"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is not None:
         places = city.places
         places_list = [place.to_dict() for place in places]
