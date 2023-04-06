@@ -54,6 +54,8 @@ class DBStorage:
     def get(self, cls, id):
         """get single object"""
         obj = self.__session.query(cls).filter(cls.id == id).first()
+        print(obj, '=======')
+        print(obj.get("id"), '=========')
         return obj
 
     def count(self, cls=None):

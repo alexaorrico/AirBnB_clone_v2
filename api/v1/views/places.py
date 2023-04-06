@@ -12,6 +12,7 @@ from models.city import City
 def get_places(city_id):
     """get places"""
     city = storage.get(City, city_id)
+    print(city)
     if city is None:
         abort(404)
     places = []
