@@ -1,19 +1,27 @@
-#!/usr/bin/env python
-"""A module that that serializes instances to a JSON file and deserializes
-JSON file to instances"""
+#!/usr/bin/python3
+"""
+Contains the FileStorage class
+"""
 
 import json
-import os
-from models.base_model import BaseModel
-from models.user import User
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
+from models.user import User
+
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class FileStorage:
-    __file_path = 'storage.json'
+    """serializes instances to a JSON file & deserializes back to instances"""
+
+    # string - path to the JSON file
+    __file_path = "file.json"
+    # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
     def all(self, cls=None):
@@ -33,7 +41,7 @@ class FileStorage:
             self.__objects[key] = obj
 
     def save(self):
-        """serializes __objects to the JSON"""
+        """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
             json_objects[key] = self.__objects[key].to_dict()
@@ -41,7 +49,7 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file"""
+        """deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
@@ -51,19 +59,19 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete objects"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
 
     def close(self):
-        """call reload()"""
+        """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
     def get(self, cls, id):
         """
-         brings back the object with the type and ID specified, or None if the object cannot be located
+        Returns the object based on the class and its ID, or None if not found
         """
         if cls is None or id is None:
             return None
@@ -76,5 +84,7 @@ class FileStorage:
 
     def count(self, cls=None):
         """
-            count of all objects in storage        """
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
         return len(self.all(cls))
