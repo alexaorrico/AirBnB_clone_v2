@@ -105,7 +105,7 @@ TestBaseModel class:
 * `def test_place_module_docstring(self)` - Test for the place.py module docstring
 * `def test_place_class_docstring(self)` - Test for the Place class docstring
 
-[/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
+[/test_models/test_review.py](/tests/test_models/test_views.py) - Contains the TestReviewDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
 * `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
