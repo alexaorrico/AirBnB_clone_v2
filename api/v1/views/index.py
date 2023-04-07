@@ -11,12 +11,14 @@ from models.state import State
 from models.user import
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def status():
     """
-    returns a JSON: "status": "OK"
+    function for status route that returns the status
     """
-    return jsonify({"status": "OK"})
+    if request.method == 'GET':
+        resp = {"status": "OK"}
+        return jsonify(resp)
 
 
 @app_views.route('/stats')
