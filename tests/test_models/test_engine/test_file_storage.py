@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 """
-Contains the TestFileStorageDocs classes
+Contains the FileStorage class
 """
 
-from datetime import datetime
-import inspect
-import models
-from models.engine import file_storage
+import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -14,102 +11,77 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
-FileStorage = file_storage.FileStorage
+
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
-class TestFileStorageDocs(unittest.TestCase):
-    """Tests to check the documentation and style of FileStorage class"""
-    @classmethod
-    def setUpClass(cls):
-        """Set up for the doc tests"""
-        cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
+class FileStorage:
+    """serializes instances to a JSON file & deserializes back to instances"""
 
-    def test_pep8_conformance_file_storage(self):
-        """Test that models/engine/file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    # string - path to the JSON file
+    __file_path = "file.json"
+    # dictionary - empty but will store all objects by <class name>.id
+    __objects = {}
 
-    def test_pep8_conformance_test_file_storage(self):
-        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    def all(self, cls=None):
+        """returns the dictionary __objects"""
+        if cls is not None:
+            new_dict = {}
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    new_dict[key] = value
+            return new_dict
+        return self.__objects
 
-    def test_file_storage_module_docstring(self):
-        """Test for the file_storage.py module docstring"""
-        self.assertIsNot(file_storage.__doc__, None,
-                         "file_storage.py needs a docstring")
-        self.assertTrue(len(file_storage.__doc__) >= 1,
-                        "file_storage.py needs a docstring")
+    def new(self, obj):
+        """sets in __objects the obj with key <obj class name>.id"""
+        if obj is not None:
+            key = obj.__class__.__name__ + "." + obj.id
+            self.__objects[key] = obj
 
-    def test_file_storage_class_docstring(self):
-        """Test for the FileStorage class docstring"""
-        self.assertIsNot(FileStorage.__doc__, None,
-                         "FileStorage class needs a docstring")
-        self.assertTrue(len(FileStorage.__doc__) >= 1,
-                        "FileStorage class needs a docstring")
+    def save(self):
+        """serializes __objects to the JSON file (path: __file_path)"""
+        json_objects = {}
+        for key in self.__objects:
+            json_objects[key] = self.__objects[key].to_dict()
+        with open(self.__file_path, 'w') as f:
+            json.dump(json_objects, f)
 
-    def test_fs_func_docstrings(self):
-        """Test for the presence of docstrings in FileStorage methods"""
-        for func in self.fs_f:
-            self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+    def reload(self):
+        """deserializes the JSON file to __objects"""
+        try:
+            with open(self.__file_path, 'r') as f:
+                jo = json.load(f)
+            for key in jo:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
+        except:
+            pass
 
+    def delete(self, obj=None):
+        """delete obj from __objects if it’s inside"""
+        if obj is not None:
+            key = obj.__class__.__name__ + '.' + obj.id
+            if key in self.__objects:
+                del self.__objects[key]
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_all_returns_dict(self):
-        """Test that all returns the FileStorage.__objects attr"""
-        storage = FileStorage()
-        new_dict = storage.all()
-        self.assertEqual(type(new_dict), dict)
-        self.assertIs(new_dict, storage._FileStorage__objects)
+    def get(self, cls, id):
+        """ get method: returns the object based on the class and its ID or
+            None if not found """
+        obj_dict = self.all(cls)
+        for key, value in obj_dict.items():
+            obj_str = cls.__name__ + '.' + id
+            if key == obj_str:
+                return (value)
+        return (None)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_new(self):
-        """test that new adds an object to the FileStorage.__objects attr"""
-        storage = FileStorage()
-        save = FileStorage._FileStorage__objects
-        FileStorage._FileStorage__objects = {}
-        test_dict = {}
-        for key, value in classes.items():
-            with self.subTest(key=key, value=value):
-                instance = value()
-                instance_key = instance.__class__.__name__ + "." + instance.id
-                storage.new(instance)
-                test_dict[instance_key] = instance
-                self.assertEqual(test_dict, storage._FileStorage__objects)
-        FileStorage._FileStorage__objects = save
+    def count(self, cls=None):
+        """ count method: Returns the number of objects in storage matching
+            the given class. If no class is passed, returns the count of all
+            objects in storage. """
+        obj_num = self.all(cls)
+        return (len(obj_num))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
-        storage = FileStorage()
-        new_dict = {}
-        for key, value in classes.items():
-            instance = value()
-            instance_key = instance.__class__.__name__ + "." + instance.id
-            new_dict[instance_key] = instance
-        save = FileStorage._FileStorage__objects
-        FileStorage._FileStorage__objects = new_dict
-        storage.save()
-        FileStorage._FileStorage__objects = save
-        for key, value in new_dict.items():
-            new_dict[key] = value.to_dict()
-        string = json.dumps(new_dict)
-        with open("file.json", "r") as f:
-            js = f.read()
-        self.assertEqual(json.loads(string), json.loads(js))
+    def close(self):
+        """call reload() method for deserializing the JSON file to objects"""
+        self.reload()
