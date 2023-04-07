@@ -6,6 +6,10 @@ from api.v1.views import app_views
 from flask import jsonify, request
 from models import storage
 
+try:
+    from api.v1.views import app_views
+except ImportError:
+    print("Error: Unable to import app_views")
 
 @app_views.route('/status', methods=['GET'])
 def status():
