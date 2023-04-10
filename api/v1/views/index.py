@@ -31,13 +31,13 @@ def stats():
     from models.state import State
     from models.user import User
     from models import storage
-    classes = {"amenities": Amenity, "cities": City,
-               "places": Place, "reviews": Review,
-               "states": State, "users": User}
-    counts = []
-    for key, val in classes.items():
-        counts[key] = storage.count(val)
-    return jsonify(counts), 200
+    classes = {"amenities": storage.count(Amenity),
+               "cities": storage.count(City),
+               "places": storage.count(Place),
+               "reviews": storage.count(Review),
+               "states": storage.count(State),
+               "users": storage.count(User)}
+    return jsonify(classes)
 
 if __name__ == '__main__':
     app.run(debug=True)
