@@ -12,6 +12,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models.state import State
+import models
 
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -74,8 +75,10 @@ class FileStorage:
     def get(self, cls, id):
         """A method to retrieve one object"""
         if id:
-            key = cls.name + "." + id
-            return self.__objects.get(key)
+            all_objets = models.storage.all(cls)
+            for i in all_objets.values():
+                if i.id == id:
+                    return i
         return None
 
     def count(self, cls=None):
