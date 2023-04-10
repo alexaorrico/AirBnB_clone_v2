@@ -1,3 +1,12 @@
+<center> <h1>AirBnB clone - The console 👩‍💻</h1> </center>
+
+<img align="center" src="https://miro.medium.com/max/1400/0*NChTo-XqLOxLabIW" /></a>
+
+##     DESCRIPTION PROYECT✍
+ The project aims to deploy a server on a simple copy of the AirBnB website. Keeping in mind that some of the features will be implemented, in order to cover all the fundamental concepts of the higher level programming path.
+
+This repository contains the initial stage of a student project to build a clone of the AirBnB website. This stage implements a backend interface, or console, to manage program data. Console commands allow the user to create, update, and destroy objects, as well as manage file storage. Using a system of JSON serialization/deserialization, storage is persistent between sessions.
+
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
@@ -153,10 +162,6 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
-## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
-Second part of Airbnb: Joann Vuong
-## License
-Public Domain. No copy write protection. 
+### Authors
+* Natha0b <a href="https://github.com/Natha0b" rel="nofollow"><img align="center" alt="github" src="https://www.vectorlogo.zone/logos/github/github-tile.svg" height="24" /></a>
+* Yurany Ulchur <a href="https://github.com/YuranyUlchur" rel="nofollow"><img align="center" alt="github" src="https://www.vectorlogo.zone/logos/github/github-tile.svg" height="24" /></a>
