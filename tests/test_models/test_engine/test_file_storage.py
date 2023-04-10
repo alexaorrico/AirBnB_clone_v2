@@ -66,6 +66,21 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+                      
+     def test_storage_get(self):
+        """Test for instance gotten for DBStorage"""
+        new_o = State(name="Cali")
+        obj = storage.get("State", "fake_id")
+        self.assertIsNone(obj)
+
+    def test_storage_count(self):
+        """Test total count of objs in DBStorage"""
+        storage.reload()
+        all_count = self.storage.count()
+        self.assertIsInstance(all_count, int)
+        cls_no = self.storage.count("State")
+        self.assertIsInstance(cls_no, int)
+        self.assertGreaterEqual(all_count, cls_no)
 
 
 class TestFileStorage(unittest.TestCase):
@@ -113,3 +128,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == "db", "not testing dbStorage")
+    def test_get(self):
+        """test for get method of filestorage"""
+        state = State()
+        storage = FileStorage()
+        storage.new(state)
+        storage.save()
+        instance = storage.get(State, state.id)
+        self.assertEqual(instance, state)
+
+    @unittest.skipIf(models.storage_t == "db", "not testing dbStorage")
+    def test_count(self):
+        """ test for count method of filestorage"""
+        storage = FileStorage()
+        all_states = len(storage.all(State))
+        state = State()
+        storage.new(state)
+        storage.save()
+        updated_all = len(storage.all(State))
+        self.assertEqual(all_states + 1, updated_all)
