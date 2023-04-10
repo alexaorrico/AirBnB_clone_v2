@@ -18,6 +18,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class HBNBCommand(cmd.Cmd):
+
     """ HBNH console """
     prompt = '(hbnb) '
 

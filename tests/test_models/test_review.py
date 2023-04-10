@@ -15,6 +15,7 @@ Review = review.Review
 
 class TestReviewDocs(unittest.TestCase):
     """Tests to check the documentation and style of Review class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -59,6 +60,7 @@ class TestReviewDocs(unittest.TestCase):
 
 class TestReview(unittest.TestCase):
     """Test the Review class"""
+
     def test_is_subclass(self):
         """Test if Review is a subclass of BaseModel"""
         review = Review()
