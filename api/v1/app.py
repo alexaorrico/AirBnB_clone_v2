@@ -7,16 +7,16 @@ from api.v1.views import app_views
 from models import storage
 import os
 
+"""create a variable app, instance of Flask"""
 app = Flask(__name__)
 
+"""register the blueprint app_views"""
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
 def close_storage(exception):
-    """
-    Closes the connection to the database
-    """
+    """Closes the connection to the database"""
     storage.close()
 
 
