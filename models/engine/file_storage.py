@@ -11,6 +11,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models.state import State
+
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -68,3 +70,14 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+    
+    def get(self, cls, id):
+        """A method to retrieve one object"""
+        if id:
+            key = cls.name + "." + id
+            return self.__objects.get(key)
+        return None
+
+    def count(self, cls=None):
+        """A method to count the number of objects in storage"""
+        return len(self.all(cls))
