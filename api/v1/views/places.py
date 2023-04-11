@@ -6,6 +6,7 @@ from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.state import State
 
 
 @app_views.route('cities/<city_id>/places',
@@ -14,12 +15,12 @@ def all_places(city_id):
     """
         retrieves list of all Places of a specific city
     """
-    places = storage.get(City, city_id)
-    if places is None:
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
     else:
         places_list = []
-        for place in City.places:
+        for place in city.places:
             places_list.append(place.to_dict())
     return (jsonify(places_list))
 
