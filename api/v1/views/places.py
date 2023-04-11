@@ -67,14 +67,14 @@ def create_place(city_id):
 
     #  transform the HTTP body request to a dictionary
     json_data = request.get_json()
-    json_data['city_id'] = city_id
+
     if not json_data:
         return (jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in json_data:
         return (jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in json_data:
         return (jsonify({"error": "Missing name"}), 400)
-
+    json_data['city_id'] = city_id
     # get linked user if exist
     user = storage.get(User, json_data['user_id'])
     if user is None:
