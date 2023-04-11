@@ -20,7 +20,7 @@ def teardown(exception):
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST')
     port = os.getenv('HBNB_API_PORT')
-    if not host: 
+    if not host:
         host = '0.0.0.0'
     if not port:
         port = '5000'
