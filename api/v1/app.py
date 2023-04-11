@@ -21,7 +21,7 @@ def close_storage(exception):
 
 if __name__ == '__main__':
     host = '0.0.0.0'
-    port = '5001'
+    port = '5000'
     if getenv("HBNB_API_HOST"):
         host = getenv("HBNB_API_HOST")
     if getenv("HBNB_API_PORT"):
