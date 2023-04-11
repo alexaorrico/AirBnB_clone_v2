@@ -93,7 +93,7 @@ class TestDBStorage(unittest.TestCase):
                      "Testing FileStorage")
     def test_get(self):
         state = State(name='Albania')
-        state.save()
+        self.storage.new(state)
         x = self.storage.get(State, state.id)
         self.assertEqual(x, state)
 
