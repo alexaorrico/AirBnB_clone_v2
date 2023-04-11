@@ -103,7 +103,7 @@ class TestDBStorage(unittest.TestCase):
         state.save()
         self.assertEqual(len(self.storage.all()), self.storage.count())
         self.assertEqual(len(self.storage.all('State')),
-                         self.storage.count(State))
+                         self.storage.count('State'))
 
 
 if __name__ == "__main__":
