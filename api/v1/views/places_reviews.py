@@ -15,7 +15,9 @@ def get_reviews(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    reviews_list = [review.to_dict() for review in place.reviews]
+    reviews = storage.all(Review).values()
+    reviews_list = [
+        review.to_dict() for review in reviews if review.place_id == place_id]
     return jsonify(reviews_list)
 
 
@@ -32,7 +34,7 @@ def get_review(review_id):
     '/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
 def delete_review(review_id):
     """Delete a Review object"""
-    place = storage.get(Review, review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     storage.delete(review)

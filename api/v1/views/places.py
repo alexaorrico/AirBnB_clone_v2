@@ -13,10 +13,8 @@ from models.user import User
 def get_place_city(city_id):
     """Retrieves the list of all City Places objects"""
     city = storage.get(City, city_id)
-    print(city)
     if city is None:
         abort(404)
-
     places_list = [place.to_dict() for place in city.places]
     return jsonify(places_list)
 
