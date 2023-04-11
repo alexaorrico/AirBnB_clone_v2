@@ -92,19 +92,18 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(type(models.storage) == FileStorage,
                      "Testing FileStorage")
     def test_get(self):
-        storage = DBStorage()
         state = State(name='Albania')
         state.save()
-        x = storage.get(State, state.id)
+        x = self.storage.get(State, state.id)
         self.assertEqual(x, state)
 
     @unittest.skipIf(models.storage_t == FileStorage, "not testing file storage")
     def test_count(self):
-        storage = DBStorage()
         state = State(name='another')
         state.save()
-        self.assertEqual(len(storage.all()), storage.count())
-        self.assertEqual(len(storage.all('State')), storage.count(State))
+        self.assertEqual(len(self.storage.all()), self.storage.count())
+        self.assertEqual(len(self.storage.all('State')),
+                         self.storage.count(State))
 
 
 if __name__ == "__main__":
