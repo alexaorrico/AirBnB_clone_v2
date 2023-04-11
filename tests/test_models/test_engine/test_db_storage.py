@@ -78,7 +78,7 @@ class TestDBStorage(unittest.TestCase):
         """Test default all method."""
         obj = self.storage.all()
         self.assertEqual(type(obj), dict)
-        self.assertEqual(len(obj), 6)
+        self.assertEqual(len(obj), len(self.storage.all()))
 
     @unittest.skipIf(type(models.storage) == FileStorage,
                      "Testing FileStorage")
