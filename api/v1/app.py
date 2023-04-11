@@ -4,16 +4,11 @@ from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from os import getenv
-from flask import jsonify
-from werkzeug.exceptions import HTTPException
 from flask_cors import CORS
 
 
-# instance app variable
 app = Flask(__name__)
-# register the blueprint
 app.register_blueprint(app_views)
-# Cors(origin resource shering):https://flask-cors.readthedocs.io/en/latest/
 cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
@@ -21,12 +16,6 @@ cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 def teardown(self):
     ''' Remove the current SQLAlchemy Session '''
     storage.close()
-
-
-@app.errorhandler(HTTPException)
-def handle_exception(error):
-    ''' Use errorhandler to display 404 error page '''
-    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
