@@ -59,7 +59,7 @@ def create_place(city_id):
         abort(404)
     if 'name' not in req_json:
         abort(400, "Missing name")
-
+    req_json['city_id'] = city_id
     place = Place(**req_json)
     place.save()
     return jsonify(place.to_dict()), 201
