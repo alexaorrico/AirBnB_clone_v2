@@ -120,8 +120,7 @@ class TestFileStorage(unittest.TestCase):
         """get method test"""
         new_state = State(name='Disenyland')
         storage.new(new_state)
-        key = 'State.{}'.format(new_state.id)
-        get_state = storage.get("State", new_state.id)
+        get_state = models.storage.get("State", new_state.id)
         self.assertTrue(get_state.id, new_state.id)
         self.assertIsInstance(State, new_state)
 
