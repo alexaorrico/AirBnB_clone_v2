@@ -71,9 +71,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """Method used to get object if is already in storage"""
-        key = cls.__name__ + '.' + id
-        if self.all()[key]:
-            return self.all()[key]
+        key_name = cls.__name__ + '.' + id
+        for key, val in self.all().items():
+            if key_name == key:
+                return val
         return None
 
     def count(self, cls=None):
