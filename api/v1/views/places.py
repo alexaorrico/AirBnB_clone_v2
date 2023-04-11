@@ -6,10 +6,9 @@ from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
-from models.state import State
 
 
-@app_views.route('cities/<city_id>/places',
+@app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
 def all_places(city_id):
     """
@@ -39,9 +38,9 @@ def place_by_id(place_id):
         return (jsonify(place_dict))
 
 
-@app_views.route('places/<place_id>>',
+@app_views.route('/places/<place_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_state(place_id):
+def delete_place(place_id):
     """
         delete specific place with given id
     """
@@ -55,7 +54,7 @@ def delete_state(place_id):
         return (jsonify({}), 200)
 
 
-@app_views.route('cities/<city_id>/places',
+@app_views.route('/cities/<city_id>/places',
                  methods=['POST'], strict_slashes=False)
 def create_place(city_id):
     """
@@ -78,7 +77,7 @@ def create_place(city_id):
 
     # get linked user if exist
     user = storage.get(User, json_data['user_id'])
-    if not user:
+    if user is None:
         abort(404)
     # State(**kwargs)
     newplace = Place(**json_data)
@@ -89,7 +88,7 @@ def create_place(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-def update_state(place_id):
+def update_place(place_id):
     """
         update State
     """
