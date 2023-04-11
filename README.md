@@ -179,7 +179,9 @@ No known bugs at this time.
 ## Authors
 
 Ennio Cano - [Github](https://github.com/Katrolli)
+
 Patrik Zheji - [Github](https://github.com/PatrikZh)
+
 Fabio Hysollari - [Github](https://github.com/FabioH7)
 
 Second part of Airbnb: Joann Vuong
