@@ -10,24 +10,22 @@ from models.user import User
 
 @app_views.route(
     '/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
-def get_place_city():
+def get_place_city(city_id):
     """Retrieves the list of all City Places objects"""
     city = storage.get(City, city_id)
     print(city)
     if city is None:
         abort(404)
 
-    places = city.places
-    print(places)
-    places_list = [place.to_dict() for place in places]
+    places_list = [place.to_dict() for place in city.places]
     return jsonify(places_list)
 
 
-@app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id):
     """ Retrieves a Place object """
     place = storage.get(Place, place_id)
-    if not place:
+    if place is None:
         abort(404)
     return jsonify(place.to_dict())
 
@@ -37,6 +35,7 @@ def get_place(place_id):
 def delete_place(place_id):
     """Delete a Place object"""
     place = storage.get(Place, place_id)
+    if place is None:
         abort(404)
     storage.delete(place)
     storage.save()
@@ -48,18 +47,19 @@ def delete_place(place_id):
 def create_place():
     """Creates a Place"""
     city = storage.get(City, city_id)
-    if not city:
+    if city is None:
         abort(404)
     req_json = request.get_json()
     if req_json is None:
         abort(400, "Not a JSON")
     if 'user_id' not in req_json:
         abort(400, "Missing user_id")
-    user = storage.get(User, body.get("user_id"))
-    if not user:
+    user = storage.get(User, req_json['user_id'])
+    if user is None:
         abort(404)
     if 'name' not in req_json:
         abort(400, "Missing name")
+
     place = Place(**req_json)
     place.save()
     return jsonify(place.to_dict()), 201
