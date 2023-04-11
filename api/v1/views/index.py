@@ -9,8 +9,8 @@ from models import storage
 import json
 
 
-
 app = Flask(__name__)
+
 
 @app_views.route('/status', methods=['GET'])
 def status():
@@ -40,6 +40,7 @@ def stats():
                "users": storage.count('User')}
     json_string = json.dumps(classes, indent=2)
     return json_string
+
 
 if __name__ == '__main__':
     app.run(debug=True)
