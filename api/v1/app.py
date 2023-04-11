@@ -9,11 +9,6 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
-@app.route('/andi')
-def hello():
-    return "Hello ennio"
-
-
 @app.teardown_appcontext
 def close_storage(exception):
     storage.close()
@@ -26,4 +21,4 @@ if __name__ == '__main__':
         host = getenv("HBNB_API_HOST")
     if getenv("HBNB_API_PORT"):
         port = getenv("HBNB_API_PORT")
-    app.run(host=host, port=port, threaded=True, debug=True)
+    app.run(host=host, port=port, threaded=True)
