@@ -19,7 +19,7 @@ def all_review(place_id):
         abort(404)
     else:
         review_list = []
-        for review in Place.reviews:
+        for review in places.reviews:
             review_list.append(review.to_dict())
     return (jsonify(review_list))
 
@@ -67,14 +67,14 @@ def create_review(place_id):
 
     #  transform the HTTP body request to a dictionary
     json_data = request.get_json()
-    json_data['place_id'] = place_id
+
     if not json_data:
         return (jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in json_data:
         return (jsonify({"error": "Missing user_id"}), 400)
     if 'text' not in json_data:
         return (jsonify({"error": "Missing text"}), 400)
-
+    json_data['place_id'] = place_id
     # get linked user if exist
     user = storage.get(User, json_data['user_id'])
     if not user:
