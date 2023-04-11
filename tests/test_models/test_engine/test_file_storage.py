@@ -118,7 +118,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_get(self):
         """get method test"""
-        self.inst = State(name="Hola")
+        self.inst = State(name="California")
         self.inst.save()
         state_id = self.inst.id
         state = models.storage.get(State, state_id)
