@@ -1,5 +1,12 @@
 #!/usr/bin/python3
-""" New view for State objects that handles all default RESTFull Api actions """
+""" New view for State objects that handles all default RESTFull Api actions :
+        GET /states
+        GET /states/state_id
+        DELETE /states/state_id
+        POST /states
+        PUT /states/state_id
+
+ """
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
