@@ -116,14 +116,12 @@ class TestFileStorage(unittest.TestCase):
 
     def test_get(self):
         """get method test"""
-        if models.storage_t != "db":
-            state = State(name="California")
-            state.save()
-            state_id = state.id
-            models.storage.delete(state)
-            self.assertEqual(None, models.storage.get(State, state_id))
+        state = State(name="California")
+        state.save()
+        state_id = state.id
+        models.storage.delete(state)
+        self.assertEqual(None, models.storage.get(State, state_id))
 
     def test_count(self):
         """count method test"""
-        if models.storage_t != "db":
-            self.assertEqual(type(models.storage.count()), int)
+        self.assertEqual(type(models.storage.count()), int)
