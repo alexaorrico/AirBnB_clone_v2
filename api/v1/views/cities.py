@@ -6,7 +6,7 @@ from flask import jsonify, request
 from models import storage
 from api.v1.views import app_views
 
-        
+
 @app_views.route('/cities/', methods=['GET', 'POST'], defaults={'id': None})
 @app_views.route('/cities/<id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def cities_view(id=None):
@@ -40,7 +40,8 @@ def cities_view(id=None):
             for city in my_cities.values():
                 json_cities.append(city.to_dict())
             return jsonify(json_cities)
-        
+
+
 @app_views.route('/states/<state_id>/cities/', methods=['GET', 'POST'])
 def cities_by_state(state_id):
     """ city view model"""
@@ -59,6 +60,4 @@ def cities_by_state(state_id):
         if 'name' not in update_values.keys():
             return jsonify(error='Missing name'), 400
         x = City(name=update_values['name'], state_id=state_id)
-        return jsonify(x.to_dict()), 201   
-
-    
+        return jsonify(x.to_dict()), 201
