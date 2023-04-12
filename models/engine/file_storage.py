@@ -101,4 +101,4 @@ class FileStorage:
             return count
         else:
             # if cls is not None thats because a class was passed as argument
-            return len(self.all(cls))    
+            return len(self.all(cls))
