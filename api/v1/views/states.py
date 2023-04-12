@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""states view modules"""
+"""states.py"""
+
+
 from models.state import State
 from flask import jsonify, request
 from models import storage
@@ -46,4 +48,3 @@ def state_view(id=None):
                 return jsonify(error='Missing name'), 400
             x = State(name=update_values['name'])
             return jsonify(x.to_dict()), 201
-            
