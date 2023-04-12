@@ -4,6 +4,7 @@ api status page Blueprint package
 containing 'flask.Blueprint' object 'app_views'
 """
 from flask import Blueprint
+import api.v1.views.states
 
 app_views = Blueprint(
     "api_status_page",
