@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""First route to display a json object"""
 from api.v1.views import app_views
 from flask import jsonify
 

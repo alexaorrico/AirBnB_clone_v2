@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Start of Flask app"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -15,6 +17,7 @@ def close_storage(exception):
 
 
 if __name__ == '__main__':
+    """Starting flask server"""
     host = '0.0.0.0'
     port = '5000'
     if getenv("HBNB_API_HOST"):
