@@ -91,10 +91,10 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get returns an object base on its id"""
-        instance = User()
+        instance = Amenity(name="wifi")
         instance.save()
-        user = storage.get(User, str(instance.id))
-        self.assertEqual(user, instance)
+        amenity = storage.get(Amenity, str(instance.id))
+        self.assertEqual(amenity, instance)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
