@@ -75,12 +75,12 @@ class FileStorage:
             or None if not found
         """
         query = f"{str(cls.__name__)}.{id}"
-        return(self.__objects.get(query))
-        
+        return (self.__objects.get(query))
+
     def count(self, cls=None):
         """
             count number of objects in DB storage
             if no class : all object storage
             if class : all object of specific class
         """
-        return(len(self.all(cls)))
+        return (len(self.all(cls)))

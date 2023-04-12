@@ -81,8 +81,8 @@ class DBStorage:
             or None if not found
         """
         if (cls is not None and id is not None):
-            return(self.__session.query(cls).get(id))
-        
+            return (self.__session.query(cls).get(id))
+
     def count(self, cls=None):
         """
             count number of objects in DB storage
@@ -90,6 +90,6 @@ class DBStorage:
             if class : all object of specific class
         """
         if cls is None:
-            return(len(self.all()))
-        else :
-            return(len(self.all(cls)))
+            return (len(self.all()))
+        else:
+            return (len(self.all(cls)))
