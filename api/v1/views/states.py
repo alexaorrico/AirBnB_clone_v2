@@ -19,7 +19,7 @@ def state_view(id=None):
             return jsonify(error='Not found'), 404
         state = my_states[key]
         if request.method == 'GET':
-            return jsonify(state.to_dict())     
+            return jsonify(state.to_dict())
         elif request.method == 'DELETE':
             storage.delete(state)
             storage.save()
@@ -30,10 +30,8 @@ def state_view(id=None):
                 return jsonify(error='Not a JSON'), 400
             for key, val in update_values.items():
                 ls = ['id', 'created_at', 'updated_at']
-                if key in ls:
-                    continue
-                else:
-                    state.__dict__[key] = val
+                if key not in ls:
+                    state.name = val
                 storage.save()
                 return jsonify(state.to_dict())
     else:
