@@ -72,6 +72,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """ method to retrieve one object"""
+        from models import storage
         all_CLS = storage.all(cls)
         for obj in all_CLS.values():
             if obj.id == id:
