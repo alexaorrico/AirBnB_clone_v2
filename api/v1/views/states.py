@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Adding comments"""
+"""states view modules"""
 from models.state import State
 from flask import jsonify, request
 from models import storage
@@ -9,6 +9,7 @@ from api.v1.views import app_views
 @app_views.route('/states/', methods=['GET', 'POST'], defaults={'id': None})
 @app_views.route('/states/<id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def state_view(id=None):
+    """state view document"""
     if id is not None:
         my_states = storage.all(State)
         key = State.__name__ + '.' + id
