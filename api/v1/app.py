@@ -4,7 +4,7 @@ from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from os import getenv
-
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -14,6 +14,11 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def close_storage(exception):
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_404(e):
+    return jsonify(error='Not found'), 404
 
 
 if __name__ == '__main__':
