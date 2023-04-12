@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+api status page Blueprint package
+containing 'flask.Blueprint' object 'app_views'
+"""
 from flask import Blueprint
 
 app_views = Blueprint(
