@@ -1,1 +1,46 @@
-{"State.8ae421f2-ac08-45a1-b6a7-86f708d12945": {"id": "8ae421f2-ac08-45a1-b6a7-86f708d12945", "created_at": "2023-04-03T09:43:53.206990", "updated_at": "2023-04-03T09:43:53.206998", "name": "California is so cool", "__class__": "State"}, "State.144665e1-2d91-4147-907c-526dc8539d81": {"id": "144665e1-2d91-4147-907c-526dc8539d81", "created_at": "2023-04-03T09:43:57.446270", "updated_at": "2023-04-03T09:43:57.446288", "name": "x", "__class__": "State"}, "State.d92ed0a7-f416-4944-acc8-92bb20ba46a5": {"id": "d92ed0a7-f416-4944-acc8-92bb20ba46a5", "created_at": "2023-04-03T09:44:00.039009", "updated_at": "2023-04-03T09:44:00.039018", "name": "z", "__class__": "State"}, "State.c620a942-ff4a-4675-9db5-fcb4fa7e1ef1": {"id": "c620a942-ff4a-4675-9db5-fcb4fa7e1ef1", "created_at": "2023-04-03T09:52:53.412594", "updated_at": "2023-04-03T09:52:53.412602", "name": "a", "__class__": "State"}, "State.ace7d664-6b29-4aa7-8055-50cc222780b8": {"id": "ace7d664-6b29-4aa7-8055-50cc222780b8", "created_at": "2023-04-03T09:53:13.634227", "updated_at": "2023-04-03T09:53:13.634236", "name": "California is so cool", "key": "California is so cool", "__class__": "State"}}
+{
+    "State.8ae421f2-ac08-45a1-b6a7-86f708d12945": {
+        "id": "8ae421f2-ac08-45a1-b6a7-86f708d12945",
+        "created_at": "2023-04-03T09:43:53.206990",
+        "updated_at": "2023-04-03T09:43:53.206998",
+        "name": "California is so cool",
+        "__class__": "State"
+    },
+    "City.254665e1-2d91-4147-907c-526dc8539d81": {
+        "id": "254665e1-2d91-4147-907c-526dc8539d81",
+        "created_at": "2023-04-03T09:44:57.446270",
+        "updated_at": "2023-04-03T09:44:57.446288",
+        "state_id": "144665e1-2d91-4147-907c-526dc8539d81",
+        "name": "Bossier City",
+        "__class__": "City"
+    },
+    "State.144665e1-2d91-4147-907c-526dc8539d81": {
+        "id": "144665e1-2d91-4147-907c-526dc8539d81",
+        "created_at": "2023-04-03T09:43:57.446270",
+        "updated_at": "2023-04-03T09:43:57.446288",
+        "name": "x",
+        "__class__": "State"
+    },
+    "State.d92ed0a7-f416-4944-acc8-92bb20ba46a5": {
+        "id": "d92ed0a7-f416-4944-acc8-92bb20ba46a5",
+        "created_at": "2023-04-03T09:44:00.039009",
+        "updated_at": "2023-04-03T09:44:00.039018",
+        "name": "z",
+        "__class__": "State"
+    },
+    "State.c620a942-ff4a-4675-9db5-fcb4fa7e1ef1": {
+        "id": "c620a942-ff4a-4675-9db5-fcb4fa7e1ef1",
+        "created_at": "2023-04-03T09:52:53.412594",
+        "updated_at": "2023-04-03T09:52:53.412602",
+        "name": "a",
+        "__class__": "State"
+    },
+    "State.ace7d664-6b29-4aa7-8055-50cc222780b8": {
+        "id": "ace7d664-6b29-4aa7-8055-50cc222780b8",
+        "created_at": "2023-04-03T09:53:13.634227",
+        "updated_at": "2023-04-03T09:53:13.634236",
+        "name": "California is so cool",
+        "key": "California is so cool",
+        "__class__": "State"
+    }
+}
