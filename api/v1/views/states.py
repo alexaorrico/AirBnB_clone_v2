@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from models.state import State
 from flask import jsonify, request
 from models import storage
@@ -44,10 +45,3 @@ def state_view(id=None):
             x = State(name=update_values['name'])
             return jsonify(x.to_dict()), 201
             
-            
-            
-            
-                
-
-# def state_id_view(id=None):
-#     return jsonify(error='Not found allslasdlas'), 404
