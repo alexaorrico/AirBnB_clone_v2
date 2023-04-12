@@ -14,7 +14,7 @@ def state_view(id=None):
     """ state view """
     if id is not None:
         my_states = storage.all(State)
-        key = State.__name__ + '.' + id
+        key = '{}.{}'.format(State.__name__, id)
         if key not in my_states.keys():
             return jsonify(error='Not found'), 404
         state = my_states[key]
@@ -30,7 +30,7 @@ def state_view(id=None):
             for key, val in update_values.items():
                 ls = ['id', 'created_at', 'updated_at']
                 if key not in ls:
-                    eval('state.{}'.format(key)) = val
+                    state.__dict__[key] = val
                 storage.save()
                 return jsonify(state.to_dict())
     else:
@@ -40,7 +40,7 @@ def state_view(id=None):
             for state in my_states.values():
                 json_states.append(state.to_dict())
             return jsonify(json_states)
-        elif request.method == 'POST'
+        elif request.method == 'POST':
             update_values = request.get_json()
             if type(update_values) is not dict:
                 return jsonify(error='Not a JSON'), 400
