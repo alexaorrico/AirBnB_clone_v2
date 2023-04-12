@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""states.py"""
+""" state api module created """
+
+
 from models.state import State
 from flask import jsonify, request
 from models import storage
@@ -9,6 +11,7 @@ from api.v1.views import app_views
 @app_views.route('/states/', methods=['GET', 'POST'], defaults={'id': None})
 @app_views.route('/states/<id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def state_view(id=None):
+    """ state view """
     if id is not None:
         my_states = storage.all(State)
         key = State.__name__ + '.' + id
