@@ -71,6 +71,16 @@ class DBStorage:
         Session = scoped_session(sess_factory)
         self.__session = Session
 
+    def count(self, cls=None):
+        """
+        Method that returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage
+        """
+        if cls is not None:
+            return len(self.all(cls))
+        else:
+            return len(self.all())
+
     def get(self, cls, id):
         """
         Method that returns the object based on the class and its ID,
@@ -82,16 +92,6 @@ class DBStorage:
                 if val.id == id:
                     return val
         return None
-
-    def count(self, cls=None):
-        """
-        Method that returns the number of objects in storage matching the given class.
-        If no class is passed, returns the count of all objects in storage
-        """
-        if cls is not None:
-            return (len(self.all(cls)))
-        else:
-            return (len(self.all()))
 
 
 
