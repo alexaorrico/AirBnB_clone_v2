@@ -31,7 +31,7 @@ def state_view(id=None):
             for key, val in update_values.items():
                 ls = ['id', 'created_at', 'updated_at']
                 if key not in ls:
-                    state.name = val
+                    eval("state.{} = {}".format(key, value))
                 storage.save()
                 return jsonify(state.to_dict())
     else:
