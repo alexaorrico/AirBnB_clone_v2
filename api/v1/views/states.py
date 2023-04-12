@@ -17,7 +17,7 @@ def state_view(id=None):
             return jsonify(state.to_dict())     
         elif request.method == 'DELETE':
             storage.delete(state)
-            return {}
+            return {}, 200
         elif request.method == 'PUT':
             update_values = request.get_json()
             if type(update_values) is not dict:
@@ -42,7 +42,7 @@ def state_view(id=None):
             if 'name' not in update_values.keys():
                 return jsonify(error='Missing name'), 400
             x = State(name=update_values['name'])
-            return jsonify(x.to_dict())
+            return jsonify(x.to_dict()), 201
             
             
             
