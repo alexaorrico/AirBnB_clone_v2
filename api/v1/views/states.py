@@ -22,6 +22,7 @@ def state_view(id=None):
             return jsonify(state.to_dict())     
         elif request.method == 'DELETE':
             storage.delete(state)
+            storage.save()
             return {}, 200
         elif request.method == 'PUT':
             update_values = request.get_json()
@@ -29,7 +30,9 @@ def state_view(id=None):
                 return jsonify(error='Not a JSON'), 400
             for key, val in update_values.items():
                 ls = ['id', 'created_at', 'updated_at']
-                if key not in ls:
+                if key in ls:
+                    continue
+                else:
                     state.__dict__[key] = val
                 storage.save()
                 return jsonify(state.to_dict())
