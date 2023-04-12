@@ -66,6 +66,7 @@ class FileStorage:
                 del self.__objects[key]
 
     def get(self, cls, id):
+        """ get specific object from storage"""
         if cls in classes.values() and id is not None:
             obj = self.all(cls)
             for key, val in obj.items():
