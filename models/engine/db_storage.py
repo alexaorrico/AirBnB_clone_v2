@@ -72,7 +72,7 @@ class DBStorage:
         self.__session = Session
 
     def get(self, cls, id):
-        if cls and id is not None:
+        if cls in classes.values() and id is not None:
             obj = self.all(cls)
             for key, val in obj.items():
                 if val.id == id:
