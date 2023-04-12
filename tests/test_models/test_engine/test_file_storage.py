@@ -70,13 +70,101 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    def __init__(self, methodName: str = "runTest"):
+        """
+        Wipe out all the previous json file data
+        before doing the tests.
+        """
+        unittest.TestCase.__init__(self, methodName)
+        self.storage = FileStorage()
+        self.storage._FileStorage__objects = {}
+        self.storage.save()
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
-        storage = FileStorage()
-        new_dict = storage.all()
+        new_dict = self.storage.all()
         self.assertEqual(type(new_dict), dict)
-        self.assertIs(new_dict, storage._FileStorage__objects)
+        self.assertIs(new_dict, self.storage._FileStorage__objects)
+
+        self.assertEqual({}, self.storage.all())
+        # If the self.storage.__objects dictionary is still full,
+        # even when we haven't added anything to it,
+        # we know our tests have already failed to wipe out
+        # any test data from the previous time testing here.
+
+    def test_get(self):
+        """
+        Test that
+        'self.storage.get' returns
+        an instance of class 'cls' arguments
+        with 'id' argument as its 'id' field
+        if it was placed in the 'self.storage'
+        variale,
+        'None' if it wasn't
+        inserted,
+        And raises TypeError if 'cls' isn't
+        a class or if 'id' isn't a str.
+        """
+        target = BaseModel()
+        self.storage.new(target)
+        self.assertEqual(target, self.storage.get(BaseModel, target.id))
+
+        self.assertIsNone(self.storage.get(Amenity, target.id))
+        self.assertIsNone(self.storage.get(BaseModel, '<wrong id format>'))
+
+        with self.assertRaises(TypeError):
+            self.storage.get(5, None)
+        with self.assertRaises(TypeError):
+            self.storage.get(Place, 3.14)
+
+        self.storage.delete(target)
+        # delete the object to prevent conflict
+        # with future tests
+        self.assertEqual({}, self.storage.all())
+        self.storage.save()
+
+    def test_count(self):
+        """
+        Tests that 'FileStorage.count' counts
+        all instances of 'cls', or returns the
+        correct amount of objects in 'storage.all()'
+        when 'cls' is None,
+
+        and that 'FileStorage.count' raises 'TypeError'
+        if 'cls' isn't a class.
+        """
+        target_base_model = BaseModel()
+        target_amenity = Amenity(name="tv")
+        target_state = State(name="California")
+
+        self.storage.new(target_base_model)
+        self.storage.new(target_amenity)
+        self.storage.new(target_state)
+
+        self.assertEqual(1, self.storage.count(BaseModel))
+        self.assertEqual(1, self.storage.count(Amenity))
+        self.assertEqual(1, self.storage.count(State))
+
+        self.assertEqual(0, self.storage.count(Place))
+        self.assertEqual(0, self.storage.count(Review))
+        self.assertEqual(0, self.storage.count(User))
+
+        self.assertEqual(3, self.storage.count())
+        self.assertEqual(3, self.storage.count(None))
+
+        with self.assertRaises(TypeError):
+            self.storage.count(complex())
+            self.storage.count(True)
+            self.storage.count("")
+
+        self.storage.delete(target_state)
+        self.storage.delete(target_amenity)
+        self.storage.delete(target_base_model)
+        # delete the object to prevent conflict
+        # with future tests
+        self.assertEqual({}, self.storage.all())
+        self.storage.save()
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
