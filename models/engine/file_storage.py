@@ -70,23 +70,35 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """retrieve one object based on the class and its ID"""
+        """
+        Return the object based on the class and its ID, or None if not found
+        """
+        # save the objects' class passed as argument using all() method
         objects = self.all(cls)
-        for obj in objects.values():
-            # check if the object's ID matches with the providee ID 
-            if obj.id == id:
-                return value
-            # return None if the IDs don't match
+
+        if cls is None or id is None:
+            return None
+        else:
+            for key, value in objects.items():
+                # if ids match return value which is the
+                # string representation of the object
+                if objects[key].id == id:
+                    return value
+            # return None if ids don't match
             return None
 
     def count(self, cls=None):
-        """count the number of objects in storage"""
+        """
+        Return the number of objects in storage matching the given class.
+        If no class is passed, return the count of all objects in storage
+        """
         objects = self.all()
-        objectsCls = self.all(cls)
         count = 0
+
         if cls is None:
             for key, value in objects.items():
                 count += 1
             return count
         else:
-            return len(self.objectsCls)    
+            # if cls is not None thats because a class was passed as argument
+            return len(self.all(cls))    
