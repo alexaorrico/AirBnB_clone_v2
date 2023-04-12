@@ -72,10 +72,10 @@ class FileStorage:
     def get(self, cls, id):
         """retrieve one object based on the class and its ID"""
         objects = self.all(cls)
-        for obj in objects.values():
+        for key, value in objects.values():
             # check if the object's ID matches with the providee ID 
-            if obj.id == id:
-                return obj
+            if objects[key].id == id:
+                return value
             # return None if the IDs don't match
             return None
 
@@ -89,4 +89,4 @@ class FileStorage:
                 count += 1
             return count
         else:
-            return len(objectsCls)    
+            return len(self.objectsCls)    
