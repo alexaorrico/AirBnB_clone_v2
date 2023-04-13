@@ -31,4 +31,3 @@ def retrieve_json():
         "users": storage.count(User),
     }
     return jsonify(new_dict)
-
