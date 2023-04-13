@@ -2,9 +2,8 @@
 """
 create a new view that handles all default RESTFul API actions
 """
-
-from api.v1.views import app_views
 from flask import jsonify, abort, request
+from api.v1.views import app_views
 from models.state import State
 from models import storage
 
@@ -14,11 +13,11 @@ def get_all_state():
     """returns the list of all State objects"""
     # retrieve all objects registered in the State class
     states = storage.all(State).values()
-    return jsonify([state.to_dict() for state in States])
+    return jsonify([state.to_dict() for state in states])
 
 
 @app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state_id():
+def get_state_id(state_id):
     """retrieves a State object using id"""
     # retrieve all objects registered in the State class
     states = storage.all(State)
@@ -31,7 +30,7 @@ def get_state_id():
 
 
 @app_views.route('states/<state_id>', methods=['DELETE'], trict_slashes=False)
-def delete_state():
+def delete_state(state_id):
     """delete a State object"""
     state = storage.get(State, state_id)
         
@@ -68,7 +67,7 @@ def post_state():
 
 
 @app_views.route('states/<state_id>', methods=['PUT'], trict_slashes=False)
-def update_state():
+def update_state(state_id):
     """update a State object"""
     state = storage.get(State, state_id)
 
