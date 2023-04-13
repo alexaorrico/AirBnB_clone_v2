@@ -10,7 +10,7 @@ from api.v1.views import app_views
                  defaults={'user_id': None})
 @app_views.route('/users/<user_id>',
                  methods=['GET', 'POST', 'DELETE', 'PUT'])
-def amenity_views(user_id=None):
+def reviews_views(user_id=None):
     if user_id is not None:
         my_user = storage.get(User, user_id)
         if my_user is None:
