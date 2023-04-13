@@ -47,7 +47,7 @@ def places_views(place_id=None):
 def place_by_city(city_id):
     """ city view model"""
     city = storage.get(City, city_id)
-    places = storage.get(Place)
+    places = storage.all(Place)
     if city is None:
         return jsonify(error='No city found'), 404
     # Get method works with city_id
