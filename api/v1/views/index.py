@@ -24,7 +24,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/api/v1/stats', methods=['GET'])
 def retrieve_json():
     new_dict = {}
     for k, v in cls.items():
