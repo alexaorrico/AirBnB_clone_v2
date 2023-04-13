@@ -7,10 +7,10 @@
 
 from flask import Flask, jsonify
 from models import storage
-from api.v1.views import app_view
+from api.v1.views import app_views
 
 app = Flask(__name__)
-app.register_blueprint(app_view)
+app.register_blueprint(app_views)
 
 
 # Run the app with the default port 5000 threaded true
