@@ -36,7 +36,7 @@ def amenity_views(user_id=None):
             curr = storage.all(User)
             new_user_list = []
             for user in curr:
-                new_user_list.append(user)
+                new_user_list.append(user.to_dict())
             return jsonify(new_user_list)
         if request.method == 'POST':
             new_object = request.get_json()
