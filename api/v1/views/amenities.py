@@ -13,7 +13,7 @@ from api.v1.views import app_views
 def get_amenitys():
     """get amenity information for all amenitys"""
     amenities = []
-    for amenity in storage.all(Amenity).values():
+    for amenity in storage.all("Amenity").values():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
