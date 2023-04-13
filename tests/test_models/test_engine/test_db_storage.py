@@ -56,8 +56,7 @@ class TestDBStorage(unittest.TestCase):
                      "Testing FileStorage")
     def test_attributes(self):
         self.assertTrue(isinstance(self.storage._DBStorage__engine, Engine))
-        self.assertTrue(isinstance(self.storage._DBStorage__session,
-                                   Session))
+        self.assertTrue(isinstance(self.storage._DBStorage__session, Session))
 
     def test_methods(self):
         self.assertTrue(hasattr(DBStorage, "__init__"))
@@ -97,6 +96,14 @@ class TestDBStorage(unittest.TestCase):
         self.storage.new(state)
         x = self.storage.get(State, state.id)
         self.assertEqual(x, state)
+
+    @unittest.skipIf(models.storage_t == FileStorage, "not testing file storage")
+    def test_count(self):
+        state = State(name='another')
+        state.save()
+        self.assertEqual(len(self.storage.all()), self.storage.count())
+        self.assertEqual(len(self.storage.all(State)),
+                         self.storage.count(State))
 
 
 if __name__ == "__main__":
