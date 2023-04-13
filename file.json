@@ -79,5 +79,16 @@
         "firstname": "Firstname",
         "lastname": "Lastname",
         "__class__": "User"
+    },
+
+    "Review.654665e1-2d91-4147-907c-526dc8539d81": {
+        "id" : "654665e1-2d91-4147-907c-526dc8539d81",
+        "place_id": "354665e1-2d91-4147-907c-526dc8539d81",
+        "user_id": "454665e1-2d91-4147-907c-526dc8539d81",
+        "text": "This place is a shithole",
+        "updated_at": "2023-04-03T09:44:57.446288",
+        "created_at": "2023-04-03T09:44:57.446270",
+        "__class__": "Review"
+
     }
 }
