@@ -7,6 +7,8 @@
 
 from flask import jsonify
 from api.v1.views import app_views
+from models import storage
+from models import user, city, state, amenity, review, place
 
 @app_views.route('/status', strict_slashes=False)
 def index():
@@ -26,4 +28,12 @@ def count():
      
      @return 200 if everything worked 400 if something went wrong with the
     """
-    return jsonify({"status": "OK"})
+
+    return jsonify({
+        "amenities": storage.count(amenity),
+        "cities": storage.count(city),
+        "places": storage.count(place),
+        "reviews": storage.count(review),
+        "state": storage.count(state),
+        "users": storage.count(user),
+    })
