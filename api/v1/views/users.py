@@ -35,7 +35,7 @@ def users_views(user_id=None):
         if request.method == 'GET':
             curr = storage.all(User)
             new_user_list = []
-            for user in curr:
+            for user in curr.values():
                 new_user_list.append(user.to_dict())
             return jsonify(new_user_list)
         if request.method == 'POST':

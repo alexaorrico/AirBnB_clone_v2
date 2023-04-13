@@ -35,7 +35,7 @@ def amenity_views(amenity_id=None):
         if request.method == 'GET':
             curr = storage.all(Amenity)
             amenity_list = []
-            for item in curr:
+            for item in curr.values():
                 amenity_list.append(item.to_dict())
             return jsonify(amenity_list)
         if request.method == 'POST':

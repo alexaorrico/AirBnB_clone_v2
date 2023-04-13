@@ -42,5 +42,13 @@
         "name": "California is so cool",
         "key": "California is so cool",
         "__class__": "State"
+    },
+    "Amenity.xle7d664-6b29-4aa7-8055-50cc222780b8": {
+        "id": "xle7d664-6b29-4aa7-8055-50cc222780b8",
+        "created_at": "2023-04-03T09:53:13.634227",
+        "updated_at": "2023-04-03T09:53:13.634236",
+        "name": "California is so cool",
+        "key": "California is so cool",
+        "__class__": "Amenity"
     }
 }
