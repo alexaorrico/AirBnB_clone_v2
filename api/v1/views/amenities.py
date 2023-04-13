@@ -1,0 +1,63 @@
+#!/usr/bin/python3
+'''
+    Amenity route for the API
+'''
+from flask import Flask
+from models import storage
+from models.amenity import Amenity
+from flask import jsonify, abort, request, make_response
+from api.v1.views import app_views
+
+
+@app_views.route("/amenities", methods=["GET"])
+def get_amenitys():
+    """get amenity information for all amenitys"""
+    amenities = []
+    for amenity in storage.all(Amenity).values():
+        amenities.append(amenity.to_dict())
+    return jsonify(amenities)
+
+@app_views.route("/amenities/<amenity_id>", methods=["GET"], strict_slashes=False)
+def get_amenitys_by_id(amenity_id):
+    """get amenity information for specific amenitys"""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity != None:
+        return jsonify(amenity.to_dict())
+    else:
+        abort(404)
+
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+def delete_amenity(amenity_id):
+    """deletes a amenity based on its amenity_id"""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
+        abort(404)
+    storage.delete(amenity)
+    storage.save()
+    return {}
+
+@app_views.route('/amenities/', methods=['POST'], strict_slashes=False)
+def create_amenity():
+    """ create a amenity"""
+    createJson = request.get_json()
+    if createJson is None:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not 'name' in createJson.keys():
+        return make_response(jsonify({'error': 'Missing name'}), 400)
+    amenity = Amenity(**createJson)
+    storage.save()
+    return make_response(jsonify(amenity.to_dict()), 201)
+
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+def put_amenity(amenity_id):
+    """update a amenity"""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
+        abort(404)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    for attr, val in request.get_json().items():
+        if attr is not 'id' or attr is not 'created_at' or attr is not 'updated_at':
+            setattr(amenity, attr, val)
+    storage.save()
+    return jsonify(amenity.to_dict())
