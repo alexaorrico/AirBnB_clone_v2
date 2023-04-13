@@ -58,24 +58,6 @@ def get_state_id():
     # if the state_id is not linkes to any State object raise an error
     abort(404)
 
-
-@app_views.route('states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def delete_state():
-    """delete a State object"""
-    state = storage.get(State, state_id)
-        
-    #check if the state_id is linked to any State object, if not raise an error
-    if state is None:
-        abort(404)
-
-    # delete a State object if the state_id is linked
-    storage.delete(state)
-    storage.save()
-
-    # return an empty dictionary with the status code 200
-    return (jsonify({}), 200)
-
-
 @app_views.route('states', methods=['POST'], strict_slashes=False)
 def post_state():
     """create a State"""
