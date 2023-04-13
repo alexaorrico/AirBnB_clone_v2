@@ -56,7 +56,8 @@ class TestDBStorage(unittest.TestCase):
                      "Testing FileStorage")
     def test_attributes(self):
         self.assertTrue(isinstance(self.storage._DBStorage__engine, Engine))
-        self.assertTrue(isinstance(self.storage._DBStorage__session, Session))
+        self.assertTrue(isinstance(self.storage._DBStorage__session,
+                                   Session))
 
     def test_methods(self):
         self.assertTrue(hasattr(DBStorage, "__init__"))
