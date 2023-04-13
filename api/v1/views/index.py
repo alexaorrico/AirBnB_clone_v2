@@ -1,12 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
-import json
-
-from flask import jsonify
-
-from api.v1.views import app_views
-
-=======
 """
 api status page Blueprint module
 containing the API's status being ok or not
@@ -26,7 +18,6 @@ from models.place import Place
 from models.review import Review
 from flask import jsonify
 
->>>>>>> 72c2052882cf43eedee79d8e5c351fe895479708
 
 @app_views.route("/status")
 def check_status():
