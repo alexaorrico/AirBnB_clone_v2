@@ -21,10 +21,10 @@ def get_amenitys():
 def get_amenitys_by_id(amenity_id):
     """get amenity information for specific amenitys"""
     amenity = storage.get(Amenity, amenity_id)
-    if amenity != None:
-        return jsonify(amenity.to_dict())
-    else:
+    if amenity is None:
         abort(404)
+    else:
+        return jsonify(amenity.to_dict())
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
@@ -57,7 +57,7 @@ def put_amenity(amenity_id):
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for attr, val in request.get_json().items():
-        if attr is not 'id' or attr is not 'created_at' or attr is not 'updated_at':
+        if attr != 'id' or attr != 'created_at' or attr != 'updated_at':
             setattr(amenity, attr, val)
     storage.save()
     return jsonify(amenity.to_dict())
