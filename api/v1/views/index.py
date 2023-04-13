@@ -27,7 +27,7 @@ def check_status():
     return jsonify(dict_)
 
 
-@app_views.route('/api/v1/stats')
+@app_views.route('/stats')
 def model_statistics():
     """
     Returns the counts of all the
@@ -35,14 +35,10 @@ def model_statistics():
     counted by each type
     """
     return {
-        obj_type: storage.count(obj_type)
-        for obj_type in (
-            BaseModel,
-            User,
-            State,
-            City,
-            Amenity,
-            Place,
-            Review
-        )
+        "amenities": storage.count(Amenity),
+        "cities": storage.count(City),
+        "places": storage.count(Place),
+        "reviews": storage.count(Review),
+        "states": storage.count(State),
+        "users": storage.count(User)
     }
