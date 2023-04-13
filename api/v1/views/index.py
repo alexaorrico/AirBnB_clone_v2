@@ -22,8 +22,8 @@ from flask import jsonify
 @app_views.route("/status")
 def check_status():
     """ return status ok as json"""
-    dict_ = { 'status' : "OK"}
-    
+    dict_ = {'status': "OK"}
+
     return jsonify(dict_)
 
 
@@ -35,7 +35,7 @@ def model_statistics():
     counted by each type
     """
     return {
-      "amenities": storage.count(Amenity),
+        "amenities": storage.count(Amenity),
         "cities": storage.count(City),
         "places": storage.count(Place),
         "reviews": storage.count(Review),
