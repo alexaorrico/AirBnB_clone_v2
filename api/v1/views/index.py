@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+"""INDEX.PY
+
+    Route Status
+"""
+
+
 from flask import jsonify
 from api.v1.app import app
 
