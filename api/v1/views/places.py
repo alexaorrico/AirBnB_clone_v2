@@ -53,7 +53,7 @@ def place_by_city(city_id):
     # Get method works with city_id
     if request.method == "GET":
         place_list = []
-        for place in places:
+        for place in places.values():
             if place.id == city_id:
                 place_list.append(place.to_dict())
         return jsonify(place_list), 200
