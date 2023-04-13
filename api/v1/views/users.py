@@ -12,10 +12,10 @@ from api.v1.views import app_views
 @app_views.route("/users", methods=["GET"])
 def get_users():
     """get user information for all users"""
-    users = []
-    for users in storage.all(User).values():
-        users.append(users.to_dict())
-    return jsonify(users)
+    Users = []
+    for user in storage.all("User").values():
+        Users.append(user.to_dict())
+    return jsonify(Users)
 
 @app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
 def get_users_by_id(user_id):
@@ -36,7 +36,7 @@ def delete_user(user_id):
     storage.save()
     return {}
 
-@app_views.route('/users/', methods=['POST'], strict_slashes=False)
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
     """ create a user"""
     createJson = request.get_json()
