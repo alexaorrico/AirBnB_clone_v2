@@ -24,4 +24,6 @@ def retrieve_json():
         "states": storage.count('states'),
         "users": storage.count('users'),
     }
+    for k, v in new_dict.items():
+        new_dict[k] = storage.count(v)
     return jsonify(new_dict)
