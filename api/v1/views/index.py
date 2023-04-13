@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/usr/bin/python3
 """
 api status page Blueprint module
@@ -17,14 +16,15 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+from flask import jsonify
 
 
 @app_views.route("/status")
-def api_status():
-    """
-    Returns status of API
-    """
-    return {"status": "ok"}
+def check_status():
+    """ return status ok as json"""
+    dict_ = { 'status' : "ok"}
+    
+    return jsonify(dict_)
 
 
 @app_views.route('/api/v1/stats')
@@ -46,15 +46,3 @@ def model_statistics():
             Review
         )
     }
-=======
-from api.v1.views import app_views
-import json
-from flask import jsonify
-
-@app_views.route("/status")
-def check_status():
-    """ return status ok as json"""
-    dict_ = { 'status' : "ok"}
-    
-    return jsonify(dict_)
->>>>>>> master
