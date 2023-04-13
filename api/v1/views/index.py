@@ -6,9 +6,9 @@
 
 
 from flask import jsonify
-from api.v1.app import app
+from api.v1.views import app_views
 
-@app.route('/status', strict_slashes=False)
+@app_views.route('/status', strict_slashes=False)
 def index():
     """
      Return status of API.
@@ -18,8 +18,7 @@ def index():
     """
     return jsonify({"status": "OK"})
 
-
-@app.route('/stats', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def count():
     """
      Count how many records exist in the database.
