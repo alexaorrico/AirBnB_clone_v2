@@ -45,6 +45,13 @@ def delete_state(state_id):
 def post_state():
     """returns HOW MANY DATA IN STORAGE"""
     items = request.get_json()
+    
+    if items is None:
+        abort(400, 'Missing name')
+        
+    new_state = State(**items)
+    new_state.save()
+    return (jsonify(new_state.to_dict()), 201)
 
 @app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_id():
@@ -57,12 +64,6 @@ def get_state_id():
             return value.to_dict()
     # if the state_id is not linkes to any State object raise an error
     abort(404)
-
-@app_views.route('states', methods=['POST'], strict_slashes=False)
-def post_state():
-    """create a State"""
-    # transform the HTTP body request to a dictionary
-    items = request.get_json()
 
 @app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state():
