@@ -59,7 +59,7 @@ def get_state_id():
     abort(404)
 
 
-@app_views.route('states/<state_id>', methods=['DELETE'], trict_slashes=False)
+@app_views.route('states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state():
     """delete a State object"""
     state = storage.get(State, state_id)
@@ -76,13 +76,13 @@ def delete_state():
     return (jsonify({}), 200)
 
 
-@app_views.route('states', methods=['POST'], trict_slashes=False)
+@app_views.route('states', methods=['POST'], strict_slashes=False)
 def post_state():
     """create a State"""
     # transform the HTTP body request to a dictionary
     items = request.get_json()
 
-@app_views.route('states/<state_id>', methods=['PUT'], trict_slashes=False)
+@app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state():
     """update a State object"""
     
