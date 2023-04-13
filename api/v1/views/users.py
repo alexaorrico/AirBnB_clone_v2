@@ -11,9 +11,7 @@ from api.v1.views import app_views
 @app_views.route('/users/<user_id>',
                  methods=['GET', 'POST', 'DELETE', 'PUT'])
 def users_views(user_id=None):
-    print('here')
     if user_id is not None:
-        print('here1')
         my_user = storage.get(User, user_id)
         if my_user is None:
             return jsonify(error='Amenity not found'), 404
@@ -34,7 +32,6 @@ def users_views(user_id=None):
                 storage.save()
                 return jsonify(my_user.to_dict())
     else:
-        print('here2')
         if request.method == 'GET':
             curr = storage.all(User)
             new_user_list = []

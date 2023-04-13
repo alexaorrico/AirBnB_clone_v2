@@ -52,12 +52,32 @@
         "__class__": "Amenity"
     },
 
-    "Place.254665e1-2d91-4147-907c-526dc8539d81": {
-        "id": "254665e1-2d91-4147-907c-526dc8539d81",
+    "Place.354665e1-2d91-4147-907c-526dc8539d81": {
+        "id": "354665e1-2d91-4147-907c-526dc8539d81",
+        "city_id": "254665e1-2d91-4147-907c-526dc8539d81",
+        "user_id": "454665e1-2d91-4147-907c-526dc8539d81",
         "created_at": "2023-04-03T09:44:57.446270",
         "updated_at": "2023-04-03T09:44:57.446288",
         "state_id": "144665e1-2d91-4147-907c-526dc8539d81",
         "name": "Random Place",
+        "description": "place_description",
+        "number_rooms": 2,
+        "number_bathrooms" : 3,
+        "max_guest" : 4,
+        "price_by_night" : 5,
+        "latitude" : 0.1,
+        "longitude" : 0.2,
         "__class__": "Place"
+    },
+
+    "User.454665e1-2d91-4147-907c-526dc8539d81": {
+        "id": "454665e1-2d91-4147-907c-526dc8539d81",
+        "email": "user@email",
+        "password": "userpaswword",
+        "updated_at": "2023-04-03T09:44:57.446288",
+        "created_at": "2023-04-03T09:44:57.446270",
+        "firstname": "Firstname",
+        "lastname": "Lastname",
+        "__class__": "User"
     }
 }
