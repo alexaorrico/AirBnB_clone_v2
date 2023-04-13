@@ -65,5 +65,6 @@ def place_by_city(city_id):
             return jsonify(error='Missing user_id'), 400
         if 'name' not in update_values.keys():
             return jsonify(error='Missing name'), 400
-        x = Place(name=update_values['name'], city_id=city_id)
+        x = Place(
+            name=update_values['name'], city_id=update_values['city_id'], user_id=update_values['user_id'])
         return jsonify(x.to_dict()), 201
