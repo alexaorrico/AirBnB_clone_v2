@@ -44,7 +44,7 @@ def amenity_views(amenity_id=None):
                 return jsonify(error='Not a JSON'), 400
             if 'name' not in new_object.keys():
                 return jsonify(error='Missing name'), 400
-            new_amenity = Amenity(**new_object)
+            new_amenity = Amenity(name=new_object['name'])
             storage.new(new_amenity)
             storage.save()
             return jsonify(new_amenity), 201
