@@ -15,13 +15,13 @@ from api.v1.views import app_views
 @app_views.route("/cities/<city_id>/places", methods=["GET"])
 def get_places(city_id):
     """get place information for all places"""
-    places = []
+    placesList = []
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
     for place in city.places:
-        places.append(place.to_dict())
-    return jsonify(places)
+        placesList.append(place.to_dict())
+    return jsonify(placesList)
 
 @app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
 def get_places_by_id(place_id):
