@@ -70,5 +70,6 @@ def place_by_city(city_id):
         if user is None:
             return jsonify(error='Missing user_id'), 404
         x = Place(
-            name=update_values['name'], city_id=city_id, user_id=update_values['user_id'])
+            name=update_values['name'], city_id=city_id,
+            user_id=update_values['user_id'])
         return jsonify(x.to_dict()), 201
