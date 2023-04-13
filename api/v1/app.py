@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-from os import getenv
-
-from flask import Flask
-
-from api.v1.views import app_views
-from models import storage
-
-=======
 #!/usr/bin/python3
 """
 Registers Blueprint 'app_views'
@@ -27,7 +18,6 @@ from models import storage
 from api.v1.views import app_views
 from os import getenv
 
->>>>>>> 72c2052882cf43eedee79d8e5c351fe895479708
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
