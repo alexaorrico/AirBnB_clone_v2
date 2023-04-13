@@ -1,24 +1,26 @@
 #!/usr/bin/python3
 """First route to display a json object"""
-from models.user import User
+from models.place import Place
+from models.city import City
 from flask import jsonify, request
 from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/users/', methods=['GET', 'POST'],
-                 defaults={'user_id': None})
-@app_views.route('/users/<user_id>',
+@app_views.route('/places/', methods=['GET', 'POST'],
+                 defaults={'place_id': None})
+@app_views.route('/places/<place_id>',
                  methods=['GET', 'POST', 'DELETE', 'PUT'])
-def places_views(user_id=None):
-    if user_id is not None:
-        my_user = storage.get(User, user_id)
-        if my_user is None:
-            return jsonify(error='Amenity not found'), 404
+def places_views(place_id=None):
+    if place_id is not None:
+        new_place = storage.get(Place, place_id)
+        if new_place is None:
+            return jsonify(error='Place not found'), 404
+        # Get method with id works
         if request.method == 'GET':
-            return jsonify(my_user.to_dict())
+            return jsonify(new_place.to_dict())
         if request.method == 'DELETE':
-            storage.delete(my_user)
+            storage.delete(new_place)
             storage.save()
             return {}, 200
         if request.method == 'PUT':
@@ -26,23 +28,40 @@ def places_views(user_id=None):
             if type(update_values) is not dict:
                 return jsonify(error='Not a JSON'), 400
             for key, val in update_values.items():
-                ls = ['id', 'created_at', 'updated_at', 'email']
+                ls = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
                 if key not in ls:
-                    setattr(my_user, key, val)
+                    setattr(new_place, key, val)
                 storage.save()
-                return jsonify(my_user.to_dict())
+                return jsonify(new_place.to_dict())
     else:
+        # Get method works
         if request.method == 'GET':
-            return jsonify(storage.all(User))
-        if request.method == 'POST':
-            new_object = request.get_json()
-            if type(new_object) is not dict:
-                return jsonify(error='Not a JSON'), 400
-            if 'email' not in new_object.keys():
-                return jsonify(error='Missing email'), 400
-            if 'password' not in new_object.keys():
-                return jsonify(error='Missing password'), 400
-            new_user = User(**new_object)
-            storage.new(new_user)
-            storage.save()
-            return jsonify(new_user), 201
+            new_places = storage.all(Place)
+            json_places = []
+            for place in new_places.values():
+                json_places.append(place.to_dict())
+            return jsonify(json_places)
+
+
+@app_views.route('/cities/<city_id>/places/', methods=['GET', 'POST'])
+def place_by_city(city_id):
+    """ city view model"""
+    city = storage.get(City, city_id)
+    places = storage.get(Place)
+    if city is None:
+        return jsonify(error='No city found'), 404
+    # Get method works with city_id
+    if request.method == "GET":
+        place_list = []
+        for place in places:
+            if place.id == city_id:
+                place_list.append(place.to_dict())
+        return jsonify(place_list), 200
+    elif request.method == 'POST':
+        update_values = request.get_json()
+        if type(update_values) is not dict:
+            return jsonify(error='Not a JSON'), 400
+        if 'name' not in update_values.keys():
+            return jsonify(error='Missing name'), 400
+        x = Place(name=update_values['name'], city_id=city_id)
+        return jsonify(x.to_dict()), 201

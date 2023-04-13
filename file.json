@@ -50,5 +50,14 @@
         "name": "California is so cool",
         "key": "California is so cool",
         "__class__": "Amenity"
+    },
+
+    "Place.254665e1-2d91-4147-907c-526dc8539d81": {
+        "id": "254665e1-2d91-4147-907c-526dc8539d81",
+        "created_at": "2023-04-03T09:44:57.446270",
+        "updated_at": "2023-04-03T09:44:57.446288",
+        "state_id": "144665e1-2d91-4147-907c-526dc8539d81",
+        "name": "Random Place",
+        "__class__": "Place"
     }
 }
