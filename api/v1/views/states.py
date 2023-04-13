@@ -40,7 +40,9 @@ def state_view(id=None):
             json_states = []
             for state in my_states.values():
                 json_states.append(state.to_dict())
-            return jsonify(json_states)
+            response = jsonify(json_states)
+            response.headers['Access-Control-Allow-Origin'] = '0.0.0.0'
+            return response
         elif request.method == 'POST':
             update_values = request.get_json()
             if type(update_values) is not dict:
