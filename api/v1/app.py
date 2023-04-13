@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+'''
+create app
+'''
 
 
 from models import storage
@@ -9,9 +12,11 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def call_close():
     return storage.close()
+
 
 if __name__ == "__main__":
     app.run(os.environ.get('HBNB_API_HOST'), os.environ.get('HBNB_API_PORT'), threaded=True)
