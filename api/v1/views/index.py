@@ -22,7 +22,7 @@ from flask import jsonify
 @app_views.route("/status")
 def check_status():
     """ return status ok as json"""
-    dict_ = { 'status' : "ok"}
+    dict_ = { 'status' : "OK"}
     
     return jsonify(dict_)
 
