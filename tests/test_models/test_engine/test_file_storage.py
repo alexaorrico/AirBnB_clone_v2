@@ -159,7 +159,7 @@ class test_fileStorage(unittest.TestCase):
         x = self.storage.get(State, state.id)
         self.assertEqual(x, state)
 
-    @unittest.skipIf(models.storage_t == DBStorage,   "Testing DBStorage")
+    @unittest.skipIf(models.storage_t == DBStorage, "Testing DBStorage")
     def test_count(self):
         state = State(name='another')
         state.save()
