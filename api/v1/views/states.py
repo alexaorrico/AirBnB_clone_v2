@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+'''
+    State route for the API
+'''
 from flask import Flask
 from models import storage
 from models.state import State
