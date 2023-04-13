@@ -69,8 +69,6 @@ def review_by_place(place_id):
         update_values = request.get_json()
         if type(update_values) is not dict:
             return jsonify(error='Not a JSON'), 400
-        if 'name' not in update_values.keys():
-            return jsonify(error='Missing name'), 400
         if 'user_id' not in update_values.keys():
             return jsonify(error="Missing user_id"), 400
         if 'text' not in update_values.keys():
@@ -78,5 +76,5 @@ def review_by_place(place_id):
         user = storage.get(User, update_values['user_id'])
         if user is None:
             return jsonify(error="User not found"), 404
-        new_review = Review(name=update_values['name'], state_id=state_id)
+        new_review = Review(text=update_values['text'], user_id=user.id)
         return jsonify(new_review.to_dict()), 201

@@ -58,6 +58,6 @@ def cities_by_state(state_id):
         if type(update_values) is not dict:
             return jsonify(error='Not a JSON'), 400
         if 'name' not in update_values.keys():
-            return jsonify(error='Missing name'), 400
+            return jsonify(error='Missing user_id'), 400
         x = City(name=update_values['name'], state_id=state_id)
         return jsonify(x.to_dict()), 201
