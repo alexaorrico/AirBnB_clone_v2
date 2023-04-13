@@ -33,7 +33,11 @@ def amenity_views(user_id=None):
                 return jsonify(my_user.to_dict())
     else:
         if request.method == 'GET':
-            return jsonify(storage.all(User))
+            curr = storage.all(User)
+            new_user_list = []
+            for user in curr:
+                new_user_list.append(user)
+            return jsonify(new_user_list)
         if request.method == 'POST':
             new_object = request.get_json()
             if type(new_object) is not dict:
