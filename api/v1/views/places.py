@@ -2,6 +2,7 @@
 """First route to display a json object"""
 from models.place import Place
 from models.city import City
+from models.user import User
 from flask import jsonify, request
 from models import storage
 from api.v1.views import app_views
@@ -32,7 +33,7 @@ def places_views(place_id=None):
                 if key not in ls:
                     setattr(new_place, key, val)
                 storage.save()
-                return jsonify(new_place.to_dict())
+            return jsonify(new_place.to_dict())
     else:
         # Get method works
         if request.method == 'GET':
@@ -65,6 +66,9 @@ def place_by_city(city_id):
             return jsonify(error='Missing user_id'), 400
         if 'name' not in update_values.keys():
             return jsonify(error='Missing name'), 400
+        user = storage.get(User, update_values['user_id'])
+        if user is None:
+            return jsonify(error='Missing user_id'), 404
         x = Place(
             name=update_values['name'], city_id=city_id, user_id=update_values['user_id'])
         return jsonify(x.to_dict()), 201
