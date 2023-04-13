@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    create Blueprint that make application work in smaller parts
+    create Blueprint that make application work in smaller parts.
 """
 
 
