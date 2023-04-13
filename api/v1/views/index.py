@@ -27,7 +27,7 @@ def check_status():
     return jsonify(dict_)
 
 
-@app_views.route('stats')
+@app_views.route('/stats')
 def model_statistics():
     """
     Returns the counts of all the
