@@ -4,9 +4,9 @@ create app
 '''
 
 
+from flask import Flask
 from models import storage
 from api.v1.views import app_views
-from flask import Flask
 import os
 
 app = Flask(__name__)
@@ -19,4 +19,5 @@ def call_close():
 
 
 if __name__ == "__main__":
-    app.run(os.environ.get('HBNB_API_HOST'), os.environ.get('HBNB_API_PORT'), threaded=True)
+    app.run(os.environ.get('HBNB_API_HOST'), 
+            os.environ.get('HBNB_API_PORT'), threaded=True)
