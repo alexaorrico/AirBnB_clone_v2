@@ -46,15 +46,6 @@ def post_state():
     """returns HOW MANY DATA IN STORAGE"""
     items = request.get_json()
 
-
-@app_views.route('states', methods=['GET'], strict_slashes=False)
-def get_all_state():
-    """returns the list of all State objects"""
-    # retrieve all objects registered in the State class
-    states = storage.all(State).values()
-    return jsonify([state.to_dict() for state in States])
-
-
 @app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_id():
     """retrieves a State object using id"""
