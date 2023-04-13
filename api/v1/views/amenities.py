@@ -47,4 +47,4 @@ def amenity_views(amenity_id=None):
             new_amenity = Amenity(name=new_object['name'])
             storage.new(new_amenity)
             storage.save()
-            return jsonify(new_amenity), 201
+            return jsonify(new_amenity.to_dict()), 201
