@@ -16,7 +16,8 @@ def get_all_amenities():
     return jsonify([amenity.to_dict() for amenity in amenities])
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_amenity(amenity_id):
     """retrieve an Amenity object"""
     # get an Amenity object and its ID
@@ -54,7 +55,8 @@ def post_amenity():
     return (jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_amenity(amenity_id):
     """Update a Amenity object"""
     body = request.get_json()
