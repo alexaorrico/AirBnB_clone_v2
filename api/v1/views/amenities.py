@@ -130,7 +130,7 @@ def put_amenity_in_JSON(amenity_id):
     Otherwise, this function returns the JSON
     format of the new amenity with code 200.
     """
-    if storage.get(amenity, amenity_id) is None:
+    if storage.get(Amenity, amenity_id) is None:
         abort(404)
 
     new_amenity_info = request.get_json(silent=True)
@@ -139,7 +139,7 @@ def put_amenity_in_JSON(amenity_id):
     if new_amenity_info is None:
         abort(400, "Not a JSON")
 
-    amenity = storage.get(amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     # 'amenity' acts like a "pointer" to the 'Amenity' object,
     # so it doesn't need to be put back
     # in the storage.
