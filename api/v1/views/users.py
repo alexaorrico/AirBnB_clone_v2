@@ -8,17 +8,17 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.routes(
+@app_views.route(
     "/users",
     strict_slashes=False,
     methods=['GET']
      )
-def get_all_users(user_id):
+def get_all_users():
     """
     This module gets all users from the storage and retuns a json
     """
     all_usr = storage.all(User)
-    if user_id is None:
+    if all_usr is None:
         abort(404)
     all_usrs = []
     for usr in all_usr.values():
@@ -26,7 +26,7 @@ def get_all_users(user_id):
     return jsonify(all_usrs)
 
 
-@app_views.routes(
+@app_views.route(
     "/users/<user_id>",
     strict_slashes=False,
     methods=["GET"]
@@ -41,7 +41,7 @@ def retrive_user(user_id):
     return jsonify(usr.to_dict())
 
 
-@app_views.routes(
+@app_views.route(
     "/users",
     strict_slashes=False,
     methods=["POST"]
@@ -50,7 +50,7 @@ def post_user():
     """
     This module post a new user to the data base
     """
-    usr = request.get_json()
+    usr = request.get_json(silent=True)
     if usr is None:
         abort(400, 'Not a JSON')
     if 'email' is None:
@@ -62,7 +62,7 @@ def post_user():
     return make_response(jsonify(user.to_dict()), 201)
 
 
-@app_views.routes(
+@app_views.route(
     "/users/<user_id>",
     strict_slashes=False,
     methods=["DELETE"]
@@ -79,7 +79,7 @@ def delete_usr(user_id):
     return jsonify({}, 200)
 
 
-@app_views.routes(
+@app_views.route(
     "/users",
     strict_slashes=False,
     methods=["PUT"]
