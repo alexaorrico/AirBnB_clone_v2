@@ -72,7 +72,7 @@ def delete_usr(user_id):
     This module deletes user from data base
     """
     usr = storage.get(User, user_id)
-    if user_id is None:
+    if usr is None:
         abort(404)
     storage.delete(usr)
     storage.save()
