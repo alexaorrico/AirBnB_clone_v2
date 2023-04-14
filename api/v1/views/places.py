@@ -32,6 +32,19 @@ def get_place_id(place_id):
     # if the state_id is not linkes to any State object raise an error
     abort(404)
 
+@app_views.route('cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
+def get_all_cities(city_id):
+    """retrieve the list of all City objects"""
+    # retrieve states and IDs registered in the State class
+    state = storage.get(Place, city_id)
+    # raise an error if the state_id is not linked to any State object
+    if state is None:
+        abort(404)
+    else:
+        places = storage.all(Place).values()
+        list_places = [place.to_dict() for place in places.places]
+        return jsonify(list_places)
 
 @app_views.route('places/<place_id>', methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
