@@ -77,8 +77,8 @@ class DBStorage:
     def get(self, cls, id):
         """Retrieves an object based on class and id"""
         """The if condition is rather bloated, but it gets the job done"""
-        if cls is not None and type(cls) is str and id is not None
-        and type(id) is str and cls in name2class:
+        if cls is not None and type(cls) is str and id is not None\
+                and type(id) is str and cls in name2class:
             cls = name2class[cls]
             result = self.__session.query(cls).filter(cls.id == id).first()
             return result
