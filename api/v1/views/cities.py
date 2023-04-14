@@ -30,7 +30,7 @@ def get_cities(state_id):
     return jsonify(cities.to_dict())
 
 
-@app_views.route("/cities/<city_id>", mothods=["GET"])
+@app_views.route("/cities/<city_id>", methods=["GET"])
 def get_cities(city_id):
     city = storage.get(City, city_id)
     if city is None:
@@ -77,6 +77,7 @@ def delete_city(city_id):
     storage.save()
     return jsonify({}, 200 )
 
+
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
 def put_city(city_id):
     """Update a City object"""
@@ -94,5 +95,3 @@ def put_city(city_id):
 
 if __name__ == "__main__":
     app_views.run(host='0.0.0.0')
-
-
