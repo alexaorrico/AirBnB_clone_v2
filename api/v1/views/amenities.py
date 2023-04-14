@@ -1,53 +1,52 @@
 #!/usr/bin/python3
 """
-file for "/api/v1/states" API
+file for "/api/v1/amenities" API
 with GET, POST, PUT and DELETE
 for getting, posting, putting and deleting
-State objects in 'storage', imported from
+Amenity objects in 'storage', imported from
 'models', and saving those changes in the
 'storage's database/JSON file.
 """
+from models.amenity import Amenity
 from models import storage
-from models.state import State
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import jsonify, abort, request
 
 
 @app_views.route(
-        "/states",
-        strict_slashes=False,
-        methods=["GET"]
+        "/amenities",
+        strict_slashes=False
     )
-def all_state_objects_in_JSON():
+def all_amenities_in_JSON():
     """
-    Returns all State objects in 'storage',
+    Returns all Amenity objects in 'storage',
     as a JSON, from the values returned
-    by 'storage.all(State)'.
+    by 'storage.all(Amenity)'.
     """
     return jsonify(
         [
-            state.to_dict()
-            for state in
-            storage.all(State).values()
+            amenity.to_dict()
+            for amenity in
+            storage.all(Amenity).values()
         ]
     )
 
 
 @app_views.route(
-        "/states/<state_id>",
+        "/amenities/<amenity_id>",
         strict_slashes=False,
         methods=["GET"]
     )
-def get_state_in_JSON(state_id):
+def get_amenity_by_id_in_JSON(amenity_id):
     """
-    Returns the State with the 'state_id'
+    Returns the amenity with the 'amenity_id'
     argument and route in 'storage',
     in its JSON-serializable dict form,
-    if the State object exists.
+    if the 'Amenity' object exists.
 
     Raises 404 otherwise.
     """
-    result = storage.get(State, state_id)
+    result = storage.get(Amenity, amenity_id)
 
     if result is None:
         abort(404)
@@ -56,26 +55,20 @@ def get_state_in_JSON(state_id):
 
 
 @app_views.route(
-        "/states/<state_id>",
+        "/amenities/<amenity_id>",
         strict_slashes=False,
         methods=["DELETE"]
     )
-def delete_state_by_id(state_id):
+def delete_amenity_by_id(amenity_id):
     """
-    Deletes State object with 'state_id' as its 'id'
+    Deletes 'Amenity' object with 'amenity_id' as its 'id'
     field/column value (let's call it 'target')
-    from 'storage.all' dictionary, by calling storage.delete(<target>)
+    from 'storage.all' dictionary, by calling storage.delete(<target>).
 
     Returns ({}, 200) if successful,
     404 if 'target' doesn't exist.
-
-    NOTE:
-    If the state being deleted is related to cities,
-    and the 'storage' variable is a 'DBStorage' instance,
-    an SQLalchemy error will occur, since the
-    state is related to cities.
     """
-    target = storage.get(State, state_id)
+    target = storage.get(Amenity, amenity_id)
 
     if target is None:
         abort(404)
@@ -86,14 +79,14 @@ def delete_state_by_id(state_id):
 
 
 @app_views.route(
-        "/states/",
+        "/amenities/",
         strict_slashes=False,
         methods=["POST"]
     )
-def post_state_in_JSON():
+def post_amenity_in_JSON():
     """
-    Creates new State object based on
-    JSON input and the State and BaseModel
+    Creates new 'Amenity' object based on
+    JSON input and the 'Amenity' and 'BaseModel'
     constructors (these constructors are in
     <project root>/models/).
 
@@ -103,56 +96,55 @@ def post_state_in_JSON():
     with a message of what went wrong:
     either "Not a JSON" or "Missing name".
     """
-    new_state_in_JSON = request.get_json(silent=True)
+    new_amenity_in_JSON = request.get_json(silent=True)
     # If the request's JSON isn't valid,
-    # 'new_state_in_JSON' is None.
-    if new_state_in_JSON is None:
+    # 'new_amenity_in_JSON' is None.
+    if new_amenity_in_JSON is None:
         abort(400, "Not a JSON")
 
-    if 'name' not in new_state_in_JSON:
+    if 'name' not in new_amenity_in_JSON:
         abort(400, "Missing name")
 
-    new_state = State(**new_state_in_JSON)
-    storage.new(new_state)
+    new_amenity = Amenity(**new_amenity_in_JSON)
+    storage.new(new_amenity)
     storage.save()
 
-    return jsonify(new_state.to_dict()), 201
+    return jsonify(new_amenity.to_dict()), 201
 
 
 @app_views.route(
-    "/states/<state_id>",
+    "/amenities/<amenity_id>",
         strict_slashes=False,
     methods=["PUT"])
-def put_state_in_JSON(state_id):
+def put_amenity_in_JSON(amenity_id):
     """
-    Overrides State object's fields
-    except for 'id', 'created_at' and 'updated_at',
-    where the object's id is 'state_id',
+    Overrides 'Amenity' object's 'name' field,
+    where the object's id is 'amenity_id',
     with the json attributes provided in the
     PUT request.
 
-    If the state with 'state_id' as its 'id'
+    If the amenity with 'amenity_id' as its 'id'
     doesn't exist, this function calls
     abort(404).
 
     Otherwise, this function returns the JSON
-    format of the new state with code 200.
+    format of the new amenity with code 200.
     """
-    if storage.get(State, state_id) is None:
+    if storage.get(Amenity, amenity_id) is None:
         abort(404)
 
-    new_state_info = request.get_json(silent=True)
+    new_amenity_info = request.get_json(silent=True)
     # If the request's JSON isn't valid,
-    # 'new_state_in_JSON' is None.
-    if new_state_info is None:
+    # 'new_amenity_in_JSON' is None.
+    if new_amenity_info is None:
         abort(400, "Not a JSON")
 
-    state = storage.get(State, state_id)
-    # state acts like a "pointer" to the State object,
+    amenity = storage.get(Amenity, amenity_id)
+    # 'amenity' acts like a "pointer" to the 'Amenity' object,
     # so it doesn't need to be put back
     # in the storage.
-    if 'name' in new_state_info:
-        state.name = new_state_info['name']
+    if 'name' in new_amenity_info:
+        amenity.name = new_amenity_info['name']
     storage.save()
     # We have to re-write the object change
     # to the database/storage file,
@@ -160,4 +152,4 @@ def put_state_in_JSON(state_id):
     # there too, and not just in this
     # Python object.
 
-    return jsonify(state.to_dict()), 200
+    return jsonify(amenity.to_dict()), 200
