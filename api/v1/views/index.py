@@ -35,4 +35,3 @@ def return_count():
         'states': storage.count(State),
         'users': storage.count(User)
         })
-    
