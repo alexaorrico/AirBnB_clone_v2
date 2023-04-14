@@ -36,8 +36,8 @@ def get_review(review_id):
     return jsonify(review.to_dict())
 
 
-@app_views.route('reviews/<review_id>'
-                 , methods=['DELETE'], strict_slashes=False)
+@app_views.route('reviews/<review_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_review(review_id):
     """delete a City object"""
     # retrieve all City objects registered in the City class
