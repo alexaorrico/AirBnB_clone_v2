@@ -13,6 +13,7 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """
@@ -25,11 +26,10 @@ def page_not_found(error):
     return jsonify({"error": "not found"})
 
 
-
 def teardown_db(exception):
     """
      Clean up after test. This is called at the end of each test and cleans up the database.
-     
+
      @param exception - The exception that caused the test to fail. This is used to provide context to the failure
     """
     storage.close()
