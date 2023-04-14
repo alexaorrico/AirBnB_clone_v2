@@ -4,6 +4,7 @@ create a new view that handles all default RESTFul API actions
 """
 from models.review import Review
 from models.place import Place
+from models.user import User
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request
@@ -11,7 +12,7 @@ from flask import jsonify, abort, request
 
 @app_views.route('places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def get_all_places(place_id):
+def get_all_review(place_id):
     """retrieve the list of all City objects"""
     # retrieve states and IDs registered in the State class
     place = storage.get(Place, place_id)
@@ -24,7 +25,7 @@ def get_all_places(place_id):
 
 
 @app_views.route('reviews/<review_id>', methods=['GET'], strict_slashes=False)
-def get_place(review_id):
+def get_review(review_id):
     """retrieve a City object"""
     # retrieve City objects and their IDs registered in the City class
     review = storage.get(Review, review_id)
@@ -36,7 +37,7 @@ def get_place(review_id):
 
 
 @app_views.route('reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
-def delete_place(review_id):
+def delete_review(review_id):
     """delete a City object"""
     # retrieve all City objects registered in the City class
     review = storage.get(Review, review_id)
@@ -52,7 +53,7 @@ def delete_place(review_id):
 
 @app_views.route('places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def create_place(place_id):
+def create_review(place_id):
     """create a city object"""
     # get State object which is linked to the state_id
     place = storage.get(Place, place_id)
@@ -70,6 +71,16 @@ def create_place(place_id):
     if 'name' not in body:
         abort(400, 'Missing name')
 
+    if 'user_id' not in body:
+        abort(400, 'Missing user_id')
+
+    user = storage.get(User, body['user_id'])
+    if user is None:
+        abort(404)
+    
+    if 'text' not in body:
+        abort(400, 'Missing text')
+
     body['place_id'] = place_id
     review = Review(**body)
     storage.new(review)
@@ -78,7 +89,7 @@ def create_place(place_id):
 
 
 @app_views.route('reviews/<review_id>', methods=['PUT'], strict_slashes=False)
-def update_place(review_id):
+def update_review(review_id):
     """update a City object"""
     # get a City object and its ID
     review = storage.get(Review, review_id)
@@ -92,7 +103,7 @@ def update_place(review_id):
     if body is None:
         abort(400, 'Not a JSON')
 
-    ignore_key = ['id', 'state_at', 'created_at' 'updated_at']
+    ignore_key = ['id', 'state_at', 'created_at' 'updated_at', 'place_id', 'user_id']
     for key, value in body.items():
         if key not in ignore_key:
             setattr(review, key, value)
