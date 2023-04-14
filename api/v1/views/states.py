@@ -123,8 +123,18 @@ def post_state_in_JSON():
     methods=["PUT"])
 def put_state_in_JSON(state_id):
     """
-    Overrides State object with id in PUT request
-    (??)
+    Overrides State object's fields
+    except for 'id', 'created_at' and 'updated_at',
+    where the object's id is 'state_id',
+    with the json attributes provided in the
+    PUT request.
+
+    If the state with 'state_id' as its 'id'
+    doesn't exist, this function calls
+    abort(404).
+
+    Otherwise, this function returns the JSON
+    format of the new state with code 200.
     """
     if storage.get(State, state_id) is None:
         abort(404)
