@@ -53,9 +53,9 @@ def post_user():
     usr = request.get_json(silent=True)
     if usr is None:
         abort(400, 'Not a JSON')
-    if 'email' is None:
+    if 'email' not in usr:
         abort(400, 'Missing email')
-    if 'password' is None:
+    if 'password' not in usr:
         abort(400, 'Missing password')
     user = User(**usr)
     user.save()
