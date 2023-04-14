@@ -62,6 +62,9 @@ def create_review(place_id):
     if 'user_id' not in createJson.keys():
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
     createJson['place_id'] = place_id
+    user = storage.get(User, createJson['user_id'])
+    if user is None:
+        abort(404)
     place = storage.get(Place, createJson['place_id'])
     if place is None:
         abort(404)
