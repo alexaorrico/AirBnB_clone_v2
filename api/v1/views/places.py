@@ -4,6 +4,7 @@ create a new view that handles all default RESTFul API actions
 """
 from models.city import City
 from models.place import Place
+from models.user import User
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request
@@ -70,6 +71,13 @@ def create_place(city_id):
     if 'name' not in body:
         abort(400, 'Missing name')
 
+    if body['user_id'] is None:
+        abort(400, 'Missing user_id')
+
+    user = storage.get(User, body['user_id'])
+    if user is None:
+        abort(404)
+
     body['city_id'] = city_id
     place = Place(**body)
     storage.new(place)
@@ -91,6 +99,13 @@ def update_place(place_id):
     # raise error if the the HTTP body request is not a valid JSON
     if body is None:
         abort(400, 'Not a JSON')
+
+    if body['user_id'] is None:
+        abort(400, 'Missing user_id')
+
+    user = storage.get(User, body['user_id'])
+    if user is None:
+        abort(404)
 
     ignore_key = ['id', 'state_at', 'created_at' 'updated_at']
     for key, value in body.items():
