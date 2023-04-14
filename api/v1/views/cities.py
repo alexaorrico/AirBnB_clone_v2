@@ -18,7 +18,7 @@ from flask import abort, jsonify, request, make_response
     strict_slashes=False,
     methods=["GET"]
     )
-def get_cities(state_id):
+def get_list_of_state_cities(state_id):
     """ module to get cities in states"""
     state = storage.get(State, state_id)
     if state in None:
@@ -36,7 +36,7 @@ def get_cities(state_id):
     strict_slashes=False, 
     methods=["GET"]
     )
-def get_cities(city_id):
+def get_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
