@@ -9,8 +9,8 @@ from models.user import User
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_users():
     """Retrieves the list of all User objects."""
-    amenities = storage.all(User).values()
-    return jsonify([user.to_dict() for user in amenities])
+    users = storage.all(User).values()
+    return jsonify([user.to_dict() for user in users])
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
@@ -45,6 +45,7 @@ def create_user():
         abort(400, 'Missing email')
     if 'password' not in body:
         abort(400, 'Missing password')
+
     user = User(**body)
     storage.new(user)
     storage.save()
