@@ -53,7 +53,10 @@ def create_new_city(state_id):
     state = State.get(State, state_id)
     if state is None:
         abort(404)
-    new_city_JSON = request.get_json()
+    new_city_JSON = request.get_json(silent=True)
+    # if the JSON is invalid
+    if new_city_JSON is None:
+        abort(400, "Not a JSON")
     if 'name' not in new_city_JSON:
         abort(400, "Missing name")
     new_city_JSON['state_id'] = state_id
