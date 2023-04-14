@@ -10,20 +10,19 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-
 @app_views.route('/status', strict_slashes=False)
 def index():
     """
      Return status of API.
      Used to check if user is allowed to access API
-     
+
      @return jsonified version of status
     """
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', strict_slashes=False)
-def count():
+def return_count():
     """
     retrieve the number of each objects by type
     """

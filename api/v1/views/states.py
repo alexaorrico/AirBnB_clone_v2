@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 """
-create a new view that handles all default RESTFul API actions
+Create a new view that handles all default RESTFul API actions
+get_all_state [GET]
+get_state [GET]
+delete_state [DELETE]
+post_state [POST]
+update_state [PUT]
 """
 from flask import jsonify, abort, request
 from api.v1.views import app_views
@@ -8,10 +13,9 @@ from models.state import State
 from models import storage
 
 
-@app_views.route('states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'])
 def get_all_state():
-    """returns the list of all State objects"""
-    # retrieve all objects registered in the State class
+    """returns HOW MANY DATA IN STORAGE"""
     states = storage.all(State).values()
     return jsonify([state.to_dict() for state in states])
 
@@ -32,9 +36,10 @@ def get_state_id(state_id):
 @app_views.route('states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """delete a State object"""
+
     state = storage.get(State, state_id)
-        
-    #check if the state_id is linked to any State object, if not raise an error
+
+    # check if the state_id is linked to any State object, if not raise an error
     if state is None:
         abort(404)
 
@@ -48,19 +53,12 @@ def delete_state(state_id):
 
 @app_views.route('states', methods=['POST'], strict_slashes=False)
 def post_state():
-    """create a State"""
-    # transform the HTTP body request to a dictionary
+    """returns HOW MANY DATA IN STORAGE"""
     items = request.get_json()
 
-    # raise an error if the HTTP body request is not valid JSON
     if items is None:
-        abort(400, 'NOT a JSON')
-
-    # raise an error if the dictionary doesn’t contain the key name
-    if 'name' not in items:
         abort(400, 'Missing name')
 
-    # return the new State with the status code 201 
     new_state = State(**items)
     new_state.save()
     return (jsonify(new_state.to_dict()), 201)
@@ -69,6 +67,7 @@ def post_state():
 @app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """update a State object"""
+
     state = storage.get(State, state_id)
 
     # raise an error if the state_id is not linked to any State object
@@ -88,5 +87,5 @@ def update_state(state_id):
             setattr(state, key, value)
     state.save()
 
-    #return the State object with the status code 200
+    # return the State object with the status code 200
     return (jsonify(state.to_dict()), 200)
