@@ -14,6 +14,9 @@ from model.user import User
     methos=['GET']
      )
 def get_all_users(user_id):
+    """ T
+    his module gets all users from the storage and retuns a json
+    """
     all_usr = storage.all(User)
     if user_id is None:
         abort(404)
@@ -29,6 +32,9 @@ def get_all_users(user_id):
     methods=["GET"]
     )
 def retrive_user(user_id):
+    """
+    This module returns a user with the specific user id pass as argument
+    """
     usr = storage.get(User, user_id)
     if usr is None:
         abort(404)
@@ -41,6 +47,9 @@ def retrive_user(user_id):
     methods=["POST"]
     )
 def post_user():
+    """
+    This module post a new user to the data base
+    """
     usr = request.get_json()
     if usr is None:
         abort(400, 'Not a JSON')
@@ -54,11 +63,31 @@ def post_user():
 
 
 @app_views.routes(
+    "/users/<user_id>",
+    strict_slashes=False,
+    methods=["DELETE"]
+    )
+def delete_usr(user_id):
+    """
+    This module deletes user from data base
+    """
+    usr = storage.get(User, user_id)
+    if user_id is None:
+        abort(404)
+    storage.delete(usr)
+    storage.save()
+    return jsonify({}, 200)
+
+
+@app_views.routes(
     "/users",
     strict_slashes=False,
     methods=["PUTS"]
     )
 def puts_usr(user_id):
+    """ 
+    This module updates user info i =n the data bsae
+    """
     if user_id is None:
         abort(404)
     usr = request.get_json()
