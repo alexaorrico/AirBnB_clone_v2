@@ -11,13 +11,15 @@ from flask import abort, jsonify, request
 
 @app_views.route(
         "/states",
+        strict_slashes=False,
         methods=["GET"]
     )
 def all_state_objects_in_JSON():
     """
     Returns all State objects in 'storage',
-    in dictionary form,
-    which is JSON serializable.
+    as a JSON with the keys and
+    dictionary forms of the States, returned
+    by 'storage.all(State)'.
     """
     return jsonify(
         {
@@ -27,8 +29,10 @@ def all_state_objects_in_JSON():
         }
     )
 
+
 @app_views.route(
         "/states/<state_id>",
+        strict_slashes=False,
         methods=["GET"]
     )
 def get_state_in_JSON(state_id):
@@ -40,7 +44,7 @@ def get_state_in_JSON(state_id):
 
     Raises 404 otherwise.
     """
-    result = storage.get(State, f"State.{state_id}")
+    result = storage.get(State, state_id)
 
     if result is None:
         abort(404)
@@ -52,6 +56,7 @@ def get_state_in_JSON(state_id):
 
 @app_views.route(
         "/states/<state_id>",
+        strict_slashes=False,
         methods=["DELETE"]
     )
 def delete_state_by_id(state_id):
@@ -62,21 +67,29 @@ def delete_state_by_id(state_id):
 
     Returns ({}, 200) if successful,
     404 if 'target' doesn't exist.
+
+    NOTE:
+    If the state being deleted is related to cities,
+    and the 'storage' variable is a 'DBStorage' instance,
+    an SQLalchemy error will occur, since the
+    state is related to cities.
     """
     target = storage.get(State, state_id)
 
     if target is None:
         abort(404)
     storage.delete(target)
+    storage.save()
 
     return jsonify({}), 200
 
 
 @app_views.route(
         "/states/",
+        strict_slashes=False,
         methods=["POST"]
     )
-def post_state_by_id():
+def post_state_in_JSON():
     """
     Creates new State object based on
     JSON input and the State and BaseModel
@@ -99,18 +112,21 @@ def post_state_by_id():
 
     new_state = State(**new_state_in_JSON)
     storage.new(new_state)
-    return new_state, 201
+    storage.save()
+
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route(
     "/states/<state_id>",
+        strict_slashes=False,
     methods=["PUT"])
 def put_state_in_JSON(state_id):
     """
     Overrides State object with id in PUT request
     (??)
     """
-    if f"State.{state_id}" not in storage.all(State):
+    if storage.get(State, state_id) is None:
         abort(404)
 
     new_state_info = request.get_json()
@@ -121,5 +137,11 @@ def put_state_in_JSON(state_id):
     # in the storage.
     if 'name' in new_state_info:
         state.name = new_state_info['name']
-    
+    storage.save()
+    # We have to re-write the object change
+    # to the database/storage file,
+    # so that the changes are saved
+    # there too, and not just in this
+    # Python object.
+
     return jsonify(state.to_dict()), 200
