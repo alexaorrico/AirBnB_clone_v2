@@ -58,7 +58,7 @@ def post_state():
 
     if items is None:
         abort(400, 'Not a JSON')
-        
+
     if 'name' not in items:
         abort(400, 'Missing name')
 
