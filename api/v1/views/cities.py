@@ -7,11 +7,13 @@ State objects in 'storage', imported from
 'models', and saving those changes in the
 'storage's database/JSON file.
 """
-from models import storage
-from models.state import State
-from models.city import City
+from flask import abort, jsonify, make_response, request
+
 from api.v1.views import app_views
-from flask import abort, jsonify, request, make_response
+from models import storage
+from models.city import City
+from models.state import State
+
 
 @app_views.route(
     "/states/<state_id>/cities",
@@ -21,13 +23,12 @@ from flask import abort, jsonify, request, make_response
 def get_list_of_state_cities(state_id):
     """ module to get cities in states"""
     state = storage.get(State, state_id)
-    if state in None:
+    if state is None:
         abort(404)
     cities = state.cities
     city_list = []
     for city in cities:
         city_list.append(city.to_dict())
-    print(city_list)
     return jsonify(city_list)
 
 
@@ -97,6 +98,3 @@ def put_city(city_id):
             setattr(city, key, value)
     city.save()
     return make_response(jsonify(city.to_dict()), 200)
-
-if __name__ == "__main__":
-    app_views.run(host='0.0.0.0')
