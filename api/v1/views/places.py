@@ -34,7 +34,7 @@ def get_place_id(place_id):
 
 @app_views.route('cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def get_all_cities(city_id):
+def get_soms_cities(city_id):
     """retrieve the list of all City objects"""
     # retrieve states and IDs registered in the State class
     state = storage.get(Place, city_id)
