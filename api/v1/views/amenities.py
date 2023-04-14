@@ -2,10 +2,11 @@
 """
 create a new view that handles all default RESTFul API actions
 """
-from flask import jsonify, abort, request
-from api.v1.views import app_views
-from models import storage
 from models.amenity import Amenity
+from models import storage
+from api.v1.views import app_views
+from flask import jsonify, abort, request
+
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_all_amenities():
@@ -62,10 +63,10 @@ def update_amenity(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-        
+
     ignore_keys = ['id', 'created_at', 'updated_at']
     for key, value in body.items():
-        if key not in ignore_key:
+        if key not in ignore_keys:
             setattr(amenity, key, value)
     storage.save()
     return (jsonify(amenity.to_dict()), 200)
