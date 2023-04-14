@@ -2,7 +2,6 @@
 """
 Contains the FileStorage class
 """
-
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -73,7 +72,7 @@ class FileStorage:
         """Returns a specific object of given class"""
         """The if condition is kinda bloated but it works"""
         if cls is not None and type(cls) is str and id is not None and\
-           type(id) is str and cls in classes:
+                type(id) is str and cls in classes:
             dicKey = cls + '.' + id
             objs = self.__objects.get(dicKey, None)
             return objs
@@ -90,20 +89,3 @@ class FileStorage:
             """This counts every object in storage"""
             objNum = len(self.__objects)
         return objNum
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
