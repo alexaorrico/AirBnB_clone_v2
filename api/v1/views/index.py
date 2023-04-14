@@ -10,8 +10,8 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-@app_views.route('/status', strict_slashes=False)
-def index():
+@app_views.route('/status', methods=['GET'])
+def get_status():
     """
      Return status of API.
      Used to check if user is allowed to access API
