@@ -27,10 +27,14 @@ def get_cities(state_id):
     city_list = []
     for city in cities:
         city_list.append(city.to_dict())
-    return jsonify(city_list.to_dict())
+    return jsonify(city_list)
 
 
-@app_views.route("/cities/<city_id>", methods=["GET"])
+@app_views.route(
+    "/cities/<city_id>",
+    strict_slashes=False, 
+    methods=["GET"]
+    )
 def get_cities(city_id):
     city = storage.get(City, city_id)
     if city is None:
