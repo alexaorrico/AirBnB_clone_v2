@@ -2,6 +2,10 @@
 """
 file for "/api/v1/states" API
 with GET, POST, PUT and DELETE
+for getting, posting, putting and deleting
+State objects in 'storage', imported from
+'models', and saving those changes in the
+'storage's database/JSON file.
 """
 from models import storage
 from models.state import State
@@ -17,16 +21,15 @@ from flask import abort, jsonify, request
 def all_state_objects_in_JSON():
     """
     Returns all State objects in 'storage',
-    as a JSON with the keys and
-    dictionary forms of the States, returned
+    as a JSON, from the values returned
     by 'storage.all(State)'.
     """
     return jsonify(
-        {
-            key: state.to_dict()
-            for key, state in
-            storage.all(State).items()
-        }
+        [
+            state.to_dict()
+            for state in
+            storage.all(State).values()
+        ]
     )
 
 
