@@ -10,6 +10,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/status', methods=['GET'])
 def get_status():
     """
@@ -34,3 +35,4 @@ def return_count():
         'states': storage.count(State),
         'users': storage.count(User)
         })
+    
