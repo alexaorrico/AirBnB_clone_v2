@@ -45,7 +45,7 @@ def get_city(city_id):
 
 
 @app_views.route(
-        "/states//<state_id>/cities",
+        "/states/<state_id>/cities",
         strict_slashes=False,
         methods=["POST"]
     )
