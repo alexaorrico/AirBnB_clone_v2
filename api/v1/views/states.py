@@ -7,13 +7,13 @@ delete_state [DELETE]
 post_state [POST]
 update_state [PUT]
 """
-from flask import jsonify, abort, request
-from api.v1.views import app_views
 from models.state import State
 from models import storage
+from api.v1.views import app_views
+from flask import jsonify, abort, request
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_state():
     """returns HOW MANY DATA IN STORAGE"""
     states = storage.all(State).values()
@@ -39,7 +39,7 @@ def delete_state(state_id):
 
     state = storage.get(State, state_id)
 
-    # check if the state_id is linked to any State object, if not raise an error
+    # check if the id is linked to any State object, if not raise an error
     if state is None:
         abort(404)
 
@@ -53,10 +53,13 @@ def delete_state(state_id):
 
 @app_views.route('states', methods=['POST'], strict_slashes=False)
 def post_state():
-    """returns HOW MANY DATA IN STORAGE"""
+    """create a State object"""
     items = request.get_json()
 
     if items is None:
+        abort(400, 'Not a JSON')
+        
+    if 'name' not in items:
         abort(400, 'Missing name')
 
     new_state = State(**items)
