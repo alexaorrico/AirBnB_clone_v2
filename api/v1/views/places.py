@@ -100,12 +100,10 @@ def update_place(place_id):
     if body is None:
         abort(400, 'Not a JSON')
 
-    print(body['user_id'])
-    if body['user_id'] is None:
+    if 'user_id' not in body:
         abort(400, 'Missing user_id')
 
     user = storage.get(User, body['user_id'])
-    print(user)
     if user is None:
         abort(404)
 
