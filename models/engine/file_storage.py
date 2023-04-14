@@ -73,7 +73,7 @@ class FileStorage:
         """
         returns a single object and None if not found
         """
-        key = '{}.{}'.format(cls, id)
+        key = '{}.{}'.format(str(cls.__name__), id)
         if self.__objects[key] is not None:
             return self.__objects[key]
         return None
@@ -85,9 +85,5 @@ class FileStorage:
 
         if cls is None:
             return len(self.__objects)
-
-        count = 0
-        for key in self.__objects.keys():
-            if key.startswith(cls):
-                count += 1
+        count = len(self.all(cls))
         return count
