@@ -73,7 +73,7 @@ def create_review(place_id):
     user = storage.get(User, body['user_id'])
     if user is None:
         abort(404)
-    
+
     if 'text' not in body:
         abort(400, 'Missing text')
 
@@ -99,7 +99,8 @@ def update_review(review_id):
     if body is None:
         abort(400, 'Not a JSON')
 
-    ignore_key = ['id', 'state_at', 'created_at' 'updated_at', 'place_id', 'user_id']
+    ignore_key = ['id', 'state_at',
+                  'created_at' 'updated_at', 'place_id', 'user_id']
     for key, value in body.items():
         if key not in ignore_key:
             setattr(review, key, value)
