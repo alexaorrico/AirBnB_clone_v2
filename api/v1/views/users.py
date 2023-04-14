@@ -2,10 +2,10 @@
 """ This module is for user calls to api"""
 
 from flask import abort, jsonify, make_response, request
+from models.user import User
+from models import storage
 
 from api.v1.views import app_views
-from models import storage
-from model.user import User
 
 
 @app_views.routes(
