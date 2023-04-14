@@ -2,10 +2,11 @@
 """
 create a new view that handles all default RESTFul API actions
 """
-from flask import jsonify, abort, request
-from api.v1.views import app_views
-from models import storage
 from models.amenity import Amenity
+from models import storage
+from api.v1.views import app_views
+from flask import jsonify, abort, request
+
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_all_amenities():
@@ -15,7 +16,8 @@ def get_all_amenities():
     return jsonify([amenity.to_dict() for amenity in amenities])
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_amenity(amenity_id):
     """retrieve an Amenity object"""
     # get an Amenity object and its ID
@@ -53,19 +55,21 @@ def post_amenity():
     return (jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_amenity(amenity_id):
     """Update a Amenity object"""
-    body = request.get_json()
-    if body is None:
-        return (400, 'Not a JSON')
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-        
+
+    body = request.get_json()
+    if body is None:
+        abort(400, 'Not a JSON')
+
     ignore_keys = ['id', 'created_at', 'updated_at']
     for key, value in body.items():
-        if key not in ignore_key:
+        if key not in ignore_keys:
             setattr(amenity, key, value)
-    storage.save()
+    amenity.save()
     return (jsonify(amenity.to_dict()), 200)
