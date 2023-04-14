@@ -11,11 +11,11 @@ from api.v1.views import app_views
 @app_views.routes(
     "/users",
     strict_slashes=False,
-    methos=['GET']
+    methods=['GET']
      )
 def get_all_users(user_id):
-    """ T
-    his module gets all users from the storage and retuns a json
+    """
+    This module gets all users from the storage and retuns a json
     """
     all_usr = storage.all(User)
     if user_id is None:
@@ -82,9 +82,9 @@ def delete_usr(user_id):
 @app_views.routes(
     "/users",
     strict_slashes=False,
-    methods=["PUTS"]
+    methods=["PUT"]
     )
-def puts_usr(user_id):
+def put_usr(user_id):
     """ 
     This module updates user info in the data bsae
     """
