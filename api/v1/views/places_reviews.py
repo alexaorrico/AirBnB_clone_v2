@@ -85,6 +85,6 @@ def put_review(review_id):
     for attr, val in request.get_json().items():
         if attr != 'id' or attr != 'created_at' or attr != 'updated_at' \
            or attr != 'user_id' or attr != 'place_id':
-            setattr(Review, attr, val)
+            setattr(review, attr, val)
     storage.save()
-    return jsonify(Review.to_dict())
+    return jsonify(review.to_dict())
