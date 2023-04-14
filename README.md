@@ -270,8 +270,8 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 
-AirBnB clone - RESTful API: a RESTful API has been implemented allowing access to the database 
-Sonia Nguyen [Github](https://github.com/soniangn)
+#### AirBnB clone - RESTful API: a RESTful API has been implemented allowing access to the database 
+Sonia Nguyen [Github](https://github.com/soniangn)  
 Marianne Arrué [Github](https://github.com/MarianneHolbie)
 
 ## License
