@@ -1,108 +1,102 @@
 #!/usr/bin/python3
 """
-Create a new view that handles all default RESTFul API actions
-get_all_place [GET]
-get_place [GET]
-delete_place [DELETE]
-post_place [POST]
-update_place [PUT]
+create a new view that handles all default RESTFul API actions
 """
-from models.place import Place
 from models.city import City
+from models.place import Place
 from models import storage
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 
 
-@app_views.route('/places', methods=['GET'], strict_slashes=False)
-def get_all_place():
-    """returns HOW MANY DATA IN STORAGE"""
-    places = storage.all(Place).values()
-    return jsonify([place.to_dict() for place in places])
+@app_views.route('cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
+def get_all_places(city_id):
+    """retrieve the list of all City objects"""
+    # retrieve states and IDs registered in the State class
+    city = storage.get(City, city_id)
+    # raise an error if the state_id is not linked to any State object
+    if city is None:
+        abort(404)
+    else:
+        places = storage.all(City).values()
+        list_places = [place.to_dict() for place in city.places]
+        return jsonify(list_places)
 
 
 @app_views.route('places/<place_id>', methods=['GET'], strict_slashes=False)
-def get_place_id(place_id):
-    """retrieves a State object using id"""
-    # retrieve all objects registered in the State class
-    states = storage.all(Place)
-    for key, value in states.items():
-        # check if the state_id is linked to any State object
-        if states[key].id == place_id:
-            return value.to_dict()
-    # if the state_id is not linkes to any State object raise an error
-    abort(404)
+def get_place(place_id):
+    """retrieve a City object"""
+    # retrieve City objects and their IDs registered in the City class
+    place = storage.get(Place, place_id)
 
-@app_views.route('cities/<city_id>/places', methods=['GET'],
-                 strict_slashes=False)
-def get_soms_cities(city_id):
-    """retrieve the list of all City objects"""
-    # retrieve states and IDs registered in the State class
-    cities = storage.get(City, city_id)
-    # raise an error if the state_id is not linked to any State object
-    if cities is None:
+    # raise an error if the city_id is not linked to any City object
+    if place is None:
         abort(404)
-    else:
-        cities = storage.all(City).values()
-        list_places = [place.to_dict() for place in cities.places]
-        return jsonify(list_places)
+    return jsonify(place.to_dict())
+
 
 @app_views.route('places/<place_id>', methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
-    """delete a State object"""
-
+    """delete a City object"""
+    # retrieve all City objects registered in the City class
     place = storage.get(Place, place_id)
 
-    # check if the id is linked to any State object, if not raise an error
+    # raise an error if the city_id doesn't match
     if place is None:
         abort(404)
-
-    # delete a State object if the state_id is linked
     storage.delete(place)
     storage.save()
-
     # return an empty dictionary with the status code 200
     return (jsonify({}), 200)
 
 
-@app_views.route('places', methods=['POST'], strict_slashes=False)
-def post_place():
-    """create a State object"""
-    items = request.get_json()
+@app_views.route('cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
+def create_place(city_id):
+    """create a city object"""
+    # get State object which is linked to the state_id
+    city = storage.get(City, city_id)
+    # raise an error if the state_id is not linked to any State object
+    if city is None:
+        abort(404)
 
-    if items is None:
+    # transform the HTTP body request to a dictionary
+    body = request.get_json()
+    # raise error if the the HTTP body request is not a valid JSON
+    if body is None:
         abort(400, 'Not a JSON')
 
-    if 'name' not in items:
+    # raise error if the dictionary doesn’t contain the key name
+    if 'name' not in body:
         abort(400, 'Missing name')
 
-    new_state = Place(**items)
-    new_state.save()
-    return (jsonify(new_state.to_dict()), 201)
+    body['city_id'] = city_id
+    place = Place(**body)
+    storage.new(place)
+    place.save()
+    return (jsonify(city.to_dict()), 201)
 
 
 @app_views.route('places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    """update a State object"""
-
+    """update a City object"""
+    # get a City object and its ID
     place = storage.get(Place, place_id)
-
-    # raise an error if the state_id is not linked to any State object
+    # raise error id city_id is not linked to any City object
     if place is None:
         abort(404)
 
-    data = request.get_json()
-    # raise an error if the HTTP body request is not valid JSON
-    if data is None:
+    # transform the HTTP body request to a dictionary
+    body = request.get_json()
+    # raise error if the the HTTP body request is not a valid JSON
+    if body is None:
         abort(400, 'Not a JSON')
 
-    ignore_keys = ['id', 'created_at', 'updated_at']
-
-    # update the State object with all key-value pairs of the dictionary
-    for key, value in data.items():
-        if key not in ignore_keys:
+    ignore_key = ['id', 'state_at', 'created_at' 'updated_at']
+    for key, value in body.items():
+        if key not in ignore_key:
             setattr(place, key, value)
-    place.save()
 
-    # return the State object with the status code 200
+    storage.save()
     return (jsonify(place.to_dict()), 200)
