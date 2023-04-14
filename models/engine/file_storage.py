@@ -72,6 +72,5 @@ class FileStorage:
             result = objs.get(search)
             return result
 
-    
     def count(self, cls=None):
         return len(self.all(cls))
