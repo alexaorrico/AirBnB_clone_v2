@@ -9,8 +9,8 @@ from models.user import User
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_users():
     """Retrieves the list of all User objects."""
-    amenities = storage.all(User).values()
-    return jsonify([user.to_dict() for user in amenities])
+    users = storage.all(User).values()
+    return jsonify([user.to_dict() for user in users])
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
@@ -21,8 +21,8 @@ def get_users_id(user_id):
         if users[key].id == user_id:
             return value.to_dict()
     abort(404)
-    
-    
+
+
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """Delete a user object"""
@@ -40,12 +40,13 @@ def create_user():
     body = request.get_json()
     if body is None:
         abort(400, 'Not a JSON')
-        
+
     if 'email' not in body:
         abort(400, 'Missing email')
     if 'password' not in body:
         abort(400, 'Missing password')
-    user = user(**body)
+
+    user = User(**body)
     storage.new(user)
     storage.save()
     return (jsonify(user.to_dict()), 201)
@@ -60,7 +61,7 @@ def update_user(user_id):
     body = request.get_json()
     if body is None:
         abort(400, 'Not a JSON')
-        
+
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']
     for key, value in body.items():
         if key not in ignore_keys:

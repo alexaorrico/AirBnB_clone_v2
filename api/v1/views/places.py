@@ -19,7 +19,6 @@ def get_all_places(city_id):
     if city is None:
         abort(404)
     else:
-        places = storage.all(City).values()
         list_places = [place.to_dict() for place in city.places]
         return jsonify(list_places)
 
@@ -75,7 +74,7 @@ def create_place(city_id):
     place = Place(**body)
     storage.new(place)
     place.save()
-    return (jsonify(city.to_dict()), 201)
+    return (jsonify(place.to_dict()), 201)
 
 
 @app_views.route('places/<place_id>', methods=['PUT'], strict_slashes=False)
