@@ -59,16 +59,17 @@ def post_amenity():
                  strict_slashes=False)
 def update_amenity(amenity_id):
     """Update a Amenity object"""
-    body = request.get_json()
-    if body is None:
-        return (400, 'Not a JSON')
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-
+        
+    body = request.get_json()
+    if body is None:
+        abort(400, 'Not a JSON')
+        
     ignore_keys = ['id', 'created_at', 'updated_at']
     for key, value in body.items():
         if key not in ignore_keys:
             setattr(amenity, key, value)
-    storage.save()
+    amenity.save()
     return (jsonify(amenity.to_dict()), 200)
