@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 """
-create a new view that handles all default RESTFul API actions
+Create a new view that handles all default RESTFul API actions
+get_all_state [GET]
+get_state [GET]
+delete_state [DELETE]
+post_state [POST]
+update_state [PUT]
 """
 from flask import jsonify, abort, request
 from api.v1.views import app_views
