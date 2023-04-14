@@ -78,45 +78,23 @@ class DBStorage:
     def get(self, cls, id):
         """Retrieves an object based on class and id"""
         """The if condition is rather bloated, but it gets the job done"""
-        if cls is not None and type(cls) is str and id is not None and\
-           type(id) is str and cls in name2class:
+        if cls is not None and type(cls) is str and id is not None
+        and type(id) is str and cls in name2class:
             cls = name2class[cls]
-            result = self.__session.query(cls.filter(cls.id == id).first()
+            result = self.__session.query(cls).filter(cls.id == id).first()
             return result
         else:
             return None
 
     def count(self, cls=None):
-    """Returns number of objects in a class in storage"""
-    objNum = 0
-    if type(cls) is str and cls in name2class:
-        """This gathers specifically the objects that match the given cls"""
-        cls = name2class[cls]
-        objNum = self.__session.query(cls).count()
-    elif cls is None:
-        """This gathers every object in storage"""
-        for cls in name2class.values():
-            objNum += self.__session.query(cls).count()
-    return objNum
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        """Returns number of objects in a class in storage"""
+        objNum = 0
+        if type(cls) is str and cls in name2class:
+            """This gathers specifically the objects that match given cls"""
+            cls = name2class[cls]
+            objNum = self.__session.query(cls).count()
+        elif cls is None:
+            """This gathers every object in storage"""
+            for cls in name2class.values():
+                objNum += self.__session.query(cls).count()
+        return objNum

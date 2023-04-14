@@ -90,20 +90,3 @@ class FileStorage:
             """This counts every object in storage"""
             objNum = len(self.__objects)
         return objNum
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
