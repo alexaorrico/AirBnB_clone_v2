@@ -49,8 +49,6 @@ def get_state_in_JSON(state_id):
     if result is None:
         abort(404)
 
-    print(result.to_dict())
-
     return jsonify(result.to_dict())
 
 
