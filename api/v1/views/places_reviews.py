@@ -46,7 +46,7 @@ def delete_review(review_id):
     if review is None:
         abort(404)
     storage.delete(review)
-    storage.save()
+    review.save()
     # return an empty dictionary with the status code 200
     return (jsonify({}), 200)
 
@@ -84,7 +84,7 @@ def create_review(place_id):
     body['place_id'] = place_id
     review = Review(**body)
     storage.new(review)
-    place.save()
+    review.save()
     return (jsonify(review.to_dict()), 201)
 
 
@@ -108,5 +108,5 @@ def update_review(review_id):
         if key not in ignore_key:
             setattr(review, key, value)
 
-    storage.save()
+    review.save()
     return (jsonify(review.to_dict()), 200)
