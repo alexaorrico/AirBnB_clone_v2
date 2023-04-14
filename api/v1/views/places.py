@@ -154,10 +154,17 @@ def post_place_in_JSON(city_id):
     methods=["PUT"])
 def put_place_in_JSON(place_id):
     """
-    Overrides 'Place' object's 'name' field,
+    Overrides 'Place' object's attributes
+    except 'id', 'created_at', 'updated_at'
+    and '__class__',
     where the object's id is 'place_id',
     with the json attributes provided in the
     PUT request.
+
+    If any of the keys are not the way
+    the 'Place' definition says, an error
+    may occur. (Definition is in
+    <project root>/models/place.py)
 
     If the place with 'place_id' as its 'id'
     doesn't exist, this function calls
@@ -178,7 +185,8 @@ def put_place_in_JSON(place_id):
 
     # We're changing 'place's attributes in-place.
     for attr, value in new_place_info.items():
-        if attr in ('id', 'created_at', 'updated_at', '__class__'):
+        if attr not in ('id', 'created_at', 'updated_at', '__class__'):
+            # skip those attributes
             place.__setattr__(attr, value)
 
     storage.save()
