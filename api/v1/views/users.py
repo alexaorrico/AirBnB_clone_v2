@@ -86,7 +86,7 @@ def delete_usr(user_id):
     )
 def puts_usr(user_id):
     """ 
-    This module updates user info i =n the data bsae
+    This module updates user info in the data bsae
     """
     if user_id is None:
         abort(404)
