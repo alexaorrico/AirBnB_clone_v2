@@ -22,11 +22,12 @@ def get_cities(state_id):
     """ module to get cities in states"""
     state = storage.get(State, state_id)
     if state in None:
-        return abort(404)
+        abort(404)
     cities = state.cities
     city_list = []
     for city in cities:
         city_list.append(city.to_dict())
+    print(city_list)
     return jsonify(city_list)
 
 
@@ -38,7 +39,7 @@ def get_cities(state_id):
 def get_cities(city_id):
     city = storage.get(City, city_id)
     if city is None:
-        return abort(404)
+        abort(404)
     return jsonify(city.to_dict())
 
 
