@@ -1,14 +1,22 @@
 #!/usr/bin/python3
-"""INDEX.PY
+"""
+This module defines API routes for the project.
 
-    Route Status
+Routes:
+    /status: Returns the status of the API.
+    /stats: Returns the number of records in the database for each model.
 """
 
 
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
-from models import user, city, state, amenity, review, place
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 
 @app_views.route('/status', strict_slashes=False)
@@ -32,10 +40,10 @@ def count():
     """
 
     return jsonify({
-        "amenities": storage.count(amenity),
-        "cities": storage.count(city),
-        "places": storage.count(place),
-        "reviews": storage.count(review),
-        "state": storage.count(state),
-        "users": storage.count(user),
+        "amenities": storage.count(Amenity),
+        "cities": storage.count(City),
+        "places": storage.count(Place),
+        "reviews": storage.count(Review),
+        "state": storage.count(State),
+        "users": storage.count(User),
     })
