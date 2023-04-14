@@ -13,7 +13,7 @@ from models.base_model import BaseModel
 from models.user import User
 from models.state import State
 from models.city import City
-from models.amenity import amenity
+from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from flask import jsonify
@@ -35,7 +35,7 @@ def model_statistics():
     counted by each type
     """
     return {
-        "amenities": storage.count(amenity),
+        "amenities": storage.count(Amenity),
         "cities": storage.count(City),
         "places": storage.count(Place),
         "reviews": storage.count(Review),
