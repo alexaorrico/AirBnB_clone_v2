@@ -80,7 +80,7 @@ def delete_usr(user_id):
 
 
 @app_views.route(
-    "/users",
+    "/users/<user_id>",
     strict_slashes=False,
     methods=["PUT"]
     )
@@ -88,13 +88,14 @@ def put_usr(user_id):
     """ 
     This module updates user info in the data bsae
     """
-    if user_id is None:
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
-    usr = request.get_json()
-    if usr is None:
-        abort(400, 'Nont a JSON')
-    for key, value in usr.item():
+    user_attrs = request.get_json(silent=True)
+    if user_attrs is None:
+        abort(400, 'Not a JSON')
+    for key, value in user_attrs.items():
         if key not in ['id', 'email', 'created_at', 'updated_at']:
-            setattr(usr, key, value)
-    usr.save()
-    return make_response(jsonify(usr.to_dict()), 200)
+            setattr(user, key, value)
+    user.save()
+    return make_response(jsonify(user.to_dict()), 200)
