@@ -8,6 +8,7 @@ Place objects in 'storage', imported from
 'storage's database/JSON file.
 """
 from models.city import City
+from models.user import User
 from models.place import Place
 from models import storage
 from api.v1.views import app_views
@@ -137,7 +138,7 @@ def post_place_in_JSON(city_id):
     if 'user_id' not in new_place_in_JSON:
         abort(400, "Missing user_id")
 
-    place_user = storage.get(Place, new_place_in_JSON['user_id'])
+    place_user = storage.get(User, new_place_in_JSON['user_id'])
     if place_user is None:
         abort(404)
 
