@@ -16,7 +16,6 @@ def get_status():
     """
      Return status of API.
      Used to check if user is allowed to access API
-
      @return jsonified version of status
     """
     return jsonify({"status": "OK"})
@@ -34,4 +33,4 @@ def return_count():
         'reviews': storage.count(Review),
         'states': storage.count(State),
         'users': storage.count(User)
-        })
+    })
