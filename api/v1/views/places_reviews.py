@@ -67,10 +67,6 @@ def create_review(place_id):
     if body is None:
         abort(400, 'Not a JSON')
 
-    # raise error if the dictionary doesn’t contain the key name
-    if 'name' not in body:
-        abort(400, 'Missing name')
-
     if 'user_id' not in body:
         abort(400, 'Missing user_id')
 
