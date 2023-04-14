@@ -103,11 +103,12 @@ def post_state_in_JSON():
     with a message of what went wrong:
     either "Not a JSON" or "Missing name".
     """
-    new_state_in_JSON = request.get_json()
-    # Automatically calls 400 when POST request
-    # has invalid JSON.
-    # So, this new state object MUST be valid
-    # (if the keys are also valid):
+    new_state_in_JSON = request.get_json(silent=True)
+    # If the request's JSON isn't valid,
+    # 'new_state_in_JSON' is None.
+    if new_state_in_JSON is None:
+        abort(400, "Not a JSON")
+
     if 'name' not in new_state_in_JSON:
         abort(400, "Missing name")
 
@@ -140,7 +141,11 @@ def put_state_in_JSON(state_id):
     if storage.get(State, state_id) is None:
         abort(404)
 
-    new_state_info = request.get_json()
+    new_state_info = request.get_json(silent=True)
+    # If the request's JSON isn't valid,
+    # 'new_state_in_JSON' is None.
+    if new_state_info is None:
+        abort(400, "Not a JSON")
 
     state = storage.get(State, state_id)
     # state acts like a "pointer" to the State object,
