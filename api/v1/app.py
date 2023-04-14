@@ -3,12 +3,12 @@
     Main file of API,
     he store the Flask app and run the api
 """
-
-
-from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask
 from models import storage
-import os
+from api.v1.views import app_views
+from os import getenv
+from flask import jsonify
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
@@ -23,7 +23,7 @@ def page_not_found(error):
         @param error - The error that was encountered. Can be None.
         @return The JSON error message with the error message in it
     """
-    return jsonify({"error": "not found"})
+    return jsonify({"error": "Not found"})
 
 
 def teardown_db(exception):
@@ -38,7 +38,8 @@ def teardown_db(exception):
 # Run the app with the default port 5000 threaded true
 if __name__ == '__main__':
     app.run(
-        host=os.environ.get('HBNB_API_HOST', '0.0.0.0'),
-        port=os.environ.get('HBNB_API_PORT', '5000'),
+        host= getenv('HBNB_API_HOST', '0.0.0.0'),
+        port= getenv('HBNB_API_PORT', '5000'),
         threaded=True
     )
+

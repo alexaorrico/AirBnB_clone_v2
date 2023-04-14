@@ -17,12 +17,12 @@ from models import storage
 def get_all_state():
     """returns HOW MANY DATA IN STORAGE"""
     states = storage.all(State).values()
-    return jsonify([state.to_dict() for state in storage.all(State)])
+    return jsonify([state.to_dict() for state in states])
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
-def get_state(state_id):
-    """returns HOW MANY DATA IN STORAGE"""
+@app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
+def get_state_id(state_id):
+    """retrieves a State object using id"""
     # retrieve all objects registered in the State class
     states = storage.all(State)
     for key, value in states.items():
@@ -33,9 +33,10 @@ def get_state(state_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
-    """returns HOW MANY DATA IN STORAGE"""
+    """delete a State object"""
+
     state = storage.get(State, state_id)
 
     # check if the state_id is linked to any State object, if not raise an error
@@ -50,7 +51,7 @@ def delete_state(state_id):
     return (jsonify({}), 200)
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('states', methods=['POST'], strict_slashes=False)
 def post_state():
     """returns HOW MANY DATA IN STORAGE"""
     items = request.get_json()
