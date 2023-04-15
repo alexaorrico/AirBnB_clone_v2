@@ -120,9 +120,10 @@ def post_state_in_JSON():
 
 
 @app_views.route(
-    "/states/<state_id>",
+        "/states/<state_id>",
         strict_slashes=False,
-    methods=["PUT"])
+        methods=["PUT"]
+    )
 def put_state_in_JSON(state_id):
     """
     Overrides State object's fields

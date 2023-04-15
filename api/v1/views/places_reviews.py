@@ -121,7 +121,7 @@ def post_review_in_JSON(place_id):
     new_review_user = storage.get(User, new_review_in_JSON['user_id'])
     if new_review_user is None:
         abort(404)
-    
+
     if 'text' not in new_review_in_JSON:
         abort(400, "Missing text")
 
@@ -133,9 +133,10 @@ def post_review_in_JSON(place_id):
 
 
 @app_views.route(
-    "/reviews/<review_id>",
+        "/reviews/<review_id>",
         strict_slashes=False,
-    methods=["PUT"])
+        methods=["PUT"]
+    )
 def put_review_in_JSON(review_id):
     """
     Overrides 'Review' object's 'name' fields,
@@ -161,7 +162,9 @@ def put_review_in_JSON(review_id):
     review = storage.get(Review, review_id)
     # We're changing these attributes in place.
     for attr, value in new_review_info:
-        if attr not in ('id', 'user_id', 'place_id', 'created_at', 'updated_at'):
+        if attr not in ('id', 'user_id',
+                        'place_id', 'created_at',
+                        'updated_at'):
             review.__setattr__(attr, value)
 
     storage.save()

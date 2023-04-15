@@ -85,7 +85,7 @@ def delete_usr(user_id):
     methods=["PUT"]
     )
 def put_usr(user_id):
-    """ 
+    """
     This module updates user info in the data bsae
     """
     user = storage.get(User, user_id)

@@ -113,9 +113,10 @@ def post_amenity_in_JSON():
 
 
 @app_views.route(
-    "/amenities/<amenity_id>",
+        "/amenities/<amenity_id>",
         strict_slashes=False,
-    methods=["PUT"])
+        methods=["PUT"]
+    )
 def put_amenity_in_JSON(amenity_id):
     """
     Overrides 'Amenity' object's 'name' field,

@@ -34,7 +34,7 @@ def get_list_of_state_cities(state_id):
 
 @app_views.route(
     "/cities/<city_id>",
-    strict_slashes=False, 
+    strict_slashes=False,
     methods=["GET"]
     )
 def get_city(city_id):
@@ -84,7 +84,7 @@ def delete_city(city_id):
         abort(404)
     storage.delete(city)
     storage.save()
-    return jsonify({}, 200 )
+    return jsonify({}, 200)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])

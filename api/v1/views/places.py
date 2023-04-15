@@ -152,9 +152,10 @@ def post_place_in_JSON(city_id):
 
 
 @app_views.route(
-    "/places/<place_id>",
+        "/places/<place_id>",
         strict_slashes=False,
-    methods=["PUT"])
+        methods=["PUT"]
+    )
 def put_place_in_JSON(place_id):
     """
     Overrides 'Place' object's attributes
