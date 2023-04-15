@@ -142,6 +142,8 @@ def post_place_in_JSON(city_id):
     if place_user is None:
         abort(404)
 
+    new_place_in_JSON['city_id'] = city_id
+
     new_place = Place(**new_place_in_JSON)
     storage.new(new_place)
     storage.save()
