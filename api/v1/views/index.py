@@ -1,21 +1,27 @@
 #!/usr/bin/python3
 """
-Index module for handling the default route
+Module: index
 """
-
 from api.v1.views import app_views, storage
 from flask import jsonify
+from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 @app_views.route('/status/', strict_slashes=False)
 def status():
-    """Returns the status of the API"""
+    """ returns status: OK JSON  """
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats/', strict_slashes=False)
 def stats():
-    """Returns the count of each object by type"""
+    """ returns number of objects by type  """
     class_counts = {}
     convert_dict = {
         'Amenity': 'amenities',
