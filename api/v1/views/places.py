@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Handles RESTful API actions for Place objects."""
+"""
+module: Place api
+"""
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage, City, Place, User
