@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """Handles RESTful API actions for Review objects."""
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import jsonify, request, abort
+from models.review import Review
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
@@ -51,7 +52,7 @@ def create_review(place_id):
     if 'text' not in data:
         abort(400, 'Missing text')
     # Replace with code to create a new Review object using the provided data
-    return jsonify(review.to_dict()), 201
+    return jsonify(Review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
