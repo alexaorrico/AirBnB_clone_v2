@@ -1,26 +1,35 @@
 #!/usr/bin/python3
 """
-Module: index
+Index view module
 """
-from api.v1.views import app_views, storage
+
+from api.v1.views import app_views
 from flask import jsonify
+from models import storage
 
 
-@app_views.route('/status/', strict_slashes=False)
+@app_views.route('/status', strict_slashes=False)
 def status():
-    """ returns status: OK JSON  """
+    """
+    Return a JSON with the status of the API
+    """
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats/', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def stats():
-    """ returns number of objects by type  """
-    count_objects = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User"),
+    """
+    Return a JSON with the number of objects per class
+    """
+    classes = {
+        "amenities": "Amenity",
+        "cities": "City",
+        "places": "Place",
+        "reviews": "Review",
+        "states": "State",
+        "users": "User"
     }
-    return jsonify(count_objects)
+    stats = {}
+    for key, value in classes.items():
+        stats[key] = storage.count(value)
+    return jsonify(stats)
