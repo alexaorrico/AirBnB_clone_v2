@@ -1,28 +1,19 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Flask App that integrates with AirBnb static HTML Template
+Flask app module.
 """
-from flask import Flask
-from api.v1.views import app_views
-from models import storage
-import os
-
+from flask import Flask, jsonify
 
 app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix="/api/v1")
 
 
-@app.teardown_appcontext
-def teardown(self):
+@app.route('/', methods=['GET'])
+def root_path():
     """
-    Calls storage.close() on app context teardown
+    GET /
     """
-    storage.close()
+    return jsonify({'message': 'Hello World'})
 
 
 if __name__ == '__main__':
-    app.run(
-        host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
-        port=os.getenv('HBNB_API_PORT', '5000'),
-        threaded=True
-    )
+    app.run()
