@@ -21,6 +21,7 @@ import os
 import pep8
 import unittest
 import tempfile
+from models import storage
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -116,3 +117,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Test get method of FileStorage"""
+        # create a new BaseModel instance
+        model = BaseModel()
+        # save the instance to the file storage
+        storage.new(model)
+        storage.save()
+        # get the instance from the file storage
+        retrieved_model = storage.get(BaseModel, model.id)
+        # check if the retrieved instance matches the original instance
+        self.assertEqual(retrieved_model, model)
+
+if __name__ == '__main__':
+    unittest.main()
