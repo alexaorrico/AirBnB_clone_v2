@@ -130,5 +130,32 @@ class TestFileStorage(unittest.TestCase):
         # check if the retrieved instance matches the original instance
         self.assertEqual(retrieved_model, model)
 
+    def test_count(self):
+        # create some instances of models
+        state1 = State(name="California")
+        state2 = State(name="Florida")
+        city1 = City(name="San Francisco", state_id=state1.id)
+        city2 = City(name="Miami", state_id=state2.id)
+        self.storage.new(state1)
+        self.storage.new(state2)
+        self.storage.new(city1)
+        self.storage.new(city2)
+        self.storage.save()
+
+        # check counts for all models
+        count = self.storage.count()
+        self.assertEqual(count, 4)
+
+        # check counts for specific model
+        count = self.storage.count(State)
+        self.assertEqual(count, 2)
+
+        count = self.storage.count(City)
+        self.assertEqual(count, 2)
+
+        # check count for non-existing model
+        count = self.storage.count(Amenity)
+        self.assertEqual(count, 0)
+
 if __name__ == '__main__':
     unittest.main()
