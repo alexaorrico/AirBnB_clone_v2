@@ -8,6 +8,7 @@ from models import storage, State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
+    """..."""
     states = ["Alabama", "Alaska", "Arizona", "Arkansas",
               "California", "Colorado", "Connecticut", "Delaware",
               "Florida", "Georgia", "Hawaii", "Idaho", "Illinois",
