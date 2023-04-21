@@ -7,7 +7,8 @@ from models import storage, City, Place, User
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
 def get_places_by_city(city_id):
-    """Retrieves the list of all Place objects of a City"""
+    """function retrieves all the places belonging to a
+    city and returns them as a JSON response."""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -17,7 +18,8 @@ def get_places_by_city(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
-    """Retrieves a Place object"""
+    """function retrieves a place by its ID
+    and returns it as a JSON response."""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -26,7 +28,8 @@ def get_place(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
-    """Deletes a Place object"""
+    """function deletes a place by its ID and returns an
+    empty JSON response with a status code of 200."""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -37,7 +40,11 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place(city_id):
-    """Creates a Place"""
+    """function creates a new place in a city specified
+    by its ID. It checks that the request body is valid
+    JSON, contains a valid user ID, and a name for the
+    place. It returns the newly created place as a JSON
+    response with a status code of 201."""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -61,7 +68,12 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
-    """Updates a Place object"""
+    """function updates a place specified by
+    its ID with the values specified in the
+    request body. It ignores the ID, user ID,
+    city ID, created_at, and updated_at fields.
+    It returns the updated place as a JSON response
+    with a status code of 200."""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
