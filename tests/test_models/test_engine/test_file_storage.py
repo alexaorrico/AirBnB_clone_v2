@@ -14,10 +14,14 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
 import json
 import os
 import pep8
 import unittest
+import tempfile
+from models import storage
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +117,45 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Test get method of FileStorage"""
+        # create a new BaseModel instance
+        model = BaseModel()
+        # save the instance to the file storage
+        storage.new(model)
+        storage.save()
+        # get the instance from the file storage
+        retrieved_model = storage.get(BaseModel, model.id)
+        # check if the retrieved instance matches the original instance
+        self.assertEqual(retrieved_model, model)
+
+    def test_count(self):
+        # create some instances of models
+        state1 = State(name="California")
+        state2 = State(name="Florida")
+        city1 = City(name="San Francisco", state_id=state1.id)
+        city2 = City(name="Miami", state_id=state2.id)
+        self.storage.new(state1)
+        self.storage.new(state2)
+        self.storage.new(city1)
+        self.storage.new(city2)
+        self.storage.save()
+
+        # check counts for all models
+        count = self.storage.count()
+        self.assertEqual(count, 4)
+
+        # check counts for specific model
+        count = self.storage.count(State)
+        self.assertEqual(count, 2)
+
+        count = self.storage.count(City)
+        self.assertEqual(count, 2)
+
+        # check count for non-existing model
+        count = self.storage.count(Amenity)
+        self.assertEqual(count, 0)
+
+if __name__ == '__main__':
+    unittest.main()
