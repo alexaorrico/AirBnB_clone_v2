@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Chinedu Jeremiah - [Github](https://github.com/callmhejerry) / [Twitter](https://twitter.com/jerressy)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Charlian Imoisili - [Github](https://github.com/CharlyAnne) / [Twitter](https://twitter.com/Imoisiliii)
 
 Second part of Airbnb: Joann Vuong
 ## License
