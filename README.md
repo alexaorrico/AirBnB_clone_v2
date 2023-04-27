@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Brenda Okonofua - [Github](https://github.com/dabrencreationz) / [Twitter](https://twitter.com/bren_1)  
-Ugwuanyi Afam - [Github](https://github.com/) / [Twitter](https://twitter.com/)
+Ugwuanyi Afam - [Github](https://github.com/2022phyro) / [Twitter](https://twitter.com/PhyroKelstein)
 
 Second part of Airbnb: 
 
