@@ -161,7 +161,7 @@ Second Part of AirBnB
 * Joann Vuong
  
 Third Part of AirBnB
-* Abakpa Dominic - [Github](https://github.com/DT-GAMER) / [Twitter](https://twitter.com/DT GAMER)
+* Abakpa Dominic - [Github](https://github.com/DT-GAMER) / [Twitter](https://twitter.com/dominic_abakpa)
 
 ## License
 Public Domain. No copy write protection. 
