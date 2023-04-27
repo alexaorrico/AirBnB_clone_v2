@@ -68,8 +68,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +86,28 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get fetches properly saved objects from storage"""
+        from models import storage
+
+        amenity = list(storage.all(Amenity).values())[0]
+
+        self.assertEqual(storage.get(Amenity, amenity.id), amenity)
+        self.assertEqual(storage.get(Amenity, 'nil'), None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count fetches properly counts of saved objects"""
+        from models import storage
+
+        all_total_ini = storage.count()
+        all_state_ini = storage.count(State)
+        state = State(name="Rode Island")
+        state.save()
+        self.assertNotEqual(all_total_ini, storage.count())
+        self.assertNotEqual(all_state_ini, storage.count(State))
+        state.delete()
+        self.assertEqual(all_total_ini, storage.count())
+        self.assertEqual(all_state_ini, storage.count(State))
