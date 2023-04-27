@@ -48,6 +48,17 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
+    def get(self, cls, id):
+        """method to retrieve one object"""
+        obj = self.all(cls)
+        for value in obj.values():
+            if value.id == id:
+                return (value)
+
+    def count(self, cls=None):
+        """method to count the number of objects in storage"""
+        return len(self.all(cls)) 
+
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
