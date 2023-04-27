@@ -159,10 +159,9 @@ Emmanuel Myles- [Github](https://github.com/Myles2005)
 		[Email](cyrile450@gmail.com)
 		[LinkedIn](https://www.linkedin.com/in/cyril-emmanuel-73a918240)
 
-Ms.Vee- [Github](https://github.com/MsVee55)
-	[Twitter]()
+Precious Augustine- [Github](https://github.com/MsVee55)
 	[Email](precious.v.augustine@gmail.com)
-	[LinkedIn]()
+	[LinkedIn](https://www.linkedin.com/in/precious-vivian-augustine-alx-software-developer)
 
 Second part of Airbnb: Myles && Vee
 ## License
