@@ -79,5 +79,16 @@ class FileStorage:
                     result = v
         except BaseException:
             pass
-
         return result
+    
+    def count(self, cls=None):
+        '''Count num objects in FileStorage'''
+        cls_counter = 0
+
+        if cls is not None:
+            for k in self.__objects.keys():
+                if cls in k:
+                    cls_counter += 1
+        else:
+            cls_counter = len(self.__objects)
+        return cls_counter
