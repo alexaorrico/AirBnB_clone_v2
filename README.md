@@ -40,7 +40,7 @@ List of commands this console current supports:
 * `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
 
 #### `models/` directory contains classes used for this project:
-[base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
+[base\_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
 * `def __init__(self, *args, **kwargs)` - Initialization of the base model
 * `def __str__(self)` - String representation of the BaseModel class
 * `def save(self)` - Updates the attribute `updated_at` with the current datetime
@@ -154,9 +154,16 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Emmanuel Myles- [Github](https://github.com/Myles2005)
+		[Twitter](https://twitter.com/CyrilEm26118130)
+		[Email](cyrile450@gmail.com)
+		[LinkedIn](https://www.linkedin.com/in/cyril-emmanuel-73a918240)
 
-Second part of Airbnb: Joann Vuong
+Ms.Vee- [Github](https://github.com/MsVee55)
+	[Twitter]()
+	[Email](precious.v.augustine@gmail.com)
+	[LinkedIn]()
+
+Second part of Airbnb: Myles && Vee
 ## License
 Public Domain. No copy write protection. 
