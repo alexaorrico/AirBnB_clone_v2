@@ -149,6 +149,9 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
+#Add functions - Francis & laban
+A get function to that takes a class and id and returns an object based on these details
+A count function that returns the number of object sin the database
 
 ## Bugs
 No known bugs at this time. 
@@ -156,6 +159,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Francis Onyach <franblog7@gmail.com>
+Laban Rotich <labanrotich6544@gmail.com>
 
 Second part of Airbnb: Joann Vuong
 ## License
