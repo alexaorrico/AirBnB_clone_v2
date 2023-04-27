@@ -162,7 +162,7 @@ Second Part of AirBnB
  
 Third Part of AirBnB
 * Abakpa Dominic - [Github](https://github.com/DT-GAMER) / [Twitter](https://twitter.com/dominic_abakpa)
-* Isioma Umunna - [Github](https://github.com/isybliss) / [Twitter] (https://twitter.com/Isioma_Bliss)
+* Isioma Umunna - [Github](https://github.com/isybliss) / [Twitter](https://twitter.com/Isioma_Bliss)
 
 ## License
 Public Domain. No copy write protection. 
