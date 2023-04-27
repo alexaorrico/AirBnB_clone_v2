@@ -67,6 +67,26 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    #
+
+    # test documentation for all functions
+    def test_all_docstring(self):
+        """Test documentation for all functions of the DBStorage class imported from db_storage"""
+        self.assertIsNotNone(DBStorage.all.__doc__)
+        self.assertIsNotNone(DBStorage.new.__doc__)
+        self.assertIsNotNone(DBStorage.save.__doc__)
+        self.assertIsNotNone(DBStorage.delete.__doc__)
+        self.assertIsNotNone(DBStorage.reload.__doc__)
+        self.assertIsNotNone(DBStorage.close.__doc__)
+        expected = "DBStorage class handles long term storage of all class \
+
+
+
+    
+
+
+
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
