@@ -1,0 +1,16 @@
+Updates a user object
+---
+tags:
+    - User
+parameters:
+    - name: user_id
+      in: path
+      type: string
+      required: true
+responses:
+  200:
+    description: User updated
+  404:
+    description: Resource not found
+  400:
+    description: Not a JSON
