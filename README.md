@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Aslam Dhikrullahi - [Github](https://github.com/aslam-adigun) / [Twitter](https://twitter.com/AslamAdigun)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Jennifer Huang - [Github](https://github.com/Broline77) / [Twitter](https://twitter.com/)
 
 Second part of Airbnb: Joann Vuong
 ## License
