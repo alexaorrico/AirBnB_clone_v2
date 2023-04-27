@@ -171,7 +171,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong  
  
-RESTful API PART: 
+RESTful API PART:  
 Nwadialu Gideon - [Github](https://github.com/Senseiuc) / [Twitter](https://twitter.com/SenseiUC)  
 Malik Kolawole Lanlokun - [Github](https://github.com/lanlokun) / [Twitter](https://twitter.com/maliklanlokun_)
  
