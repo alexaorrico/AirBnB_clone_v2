@@ -49,11 +49,11 @@ def create_state():
         response with dictionary representation of new `State`, and 201 code
     """
 
-    attrs = request.get_json()
-    _validate_json(attrs)
+    state_data = request.get_json(silent=True)
+    _validate_json(state_data)
 
     # create the `State` object
-    new_state = State(name=attrs['name'])
+    new_state = State(name=state_data['name'])
     new_state.save()
 
     return make_response(jsonify(new_state.to_dict()), 201)
@@ -75,13 +75,13 @@ def update_states(state_id):
     if state is None:
         abort(404)
 
-    attrs = request.get_json()
-    _validate_json(attrs)
+    state_data = request.get_json(silent=True)
+    _validate_json(state_data)
 
-    state.name = request.get_json().get('name', state.name)
+    state.name = state_data.get('name', state.name)
     state.save()
 
-    return jsonify(state.to_dict()), 200
+    return make_response(jsonify(state.to_dict()), 200)
 
 
 def _validate_json(json_obj):
