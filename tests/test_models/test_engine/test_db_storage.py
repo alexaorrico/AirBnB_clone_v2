@@ -86,3 +86,20 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_save(self):
+        """Test that save properly saves objects to file.json"""
+        # Create a new instance of a class
+        obj = models.User()
+        # Add the object to the database
+        models.storage.new(obj)
+        # Save the database to file
+        models.storage.save()
+        # Load the database from file
+        with open(models.storage._FileStorage__file_path, 'r') as f:
+            data = json.load(f)
+        # Check that the object is in the loaded data
+        obj_dict = obj.to_dict()
+        self.assertIn(obj_dict['id'], data['User'].keys())
+        self.assertEqual(data['User'][obj_dict['id']], obj_dict)
