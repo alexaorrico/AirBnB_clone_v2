@@ -157,7 +157,7 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Abiodun-Omoniyi Victory - [Github](https://github.com/preciousvictory) / [Twitter](https://twitter.com/preciousvicky_)
-Osamede Osunde - [Github](https://github.com/Osaclay)
+Osamede Osunde - [Github](https://github.com/Osaclay) / [Email](osaosun@gmail.com)
 
 Second part of Airbnb: Joann Vuong
 ## License
