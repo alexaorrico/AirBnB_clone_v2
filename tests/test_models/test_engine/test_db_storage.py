@@ -71,14 +71,14 @@ class TestFileStorage(unittest.TestCase):
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
-
+#malik
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
         storage = DBStorage()
         storage.reload()
         self.assertEqual(len(storage.all()), 0)
-
+#malik
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
@@ -88,6 +88,7 @@ class TestFileStorage(unittest.TestCase):
         state.save()
         self.assertIn(state, storage.all().values())
 
+#malik 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
