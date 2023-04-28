@@ -11,8 +11,7 @@ from models.state import State
 @app_views.route('/states')
 def get_all_states():
     """Returns all json representation of States"""
-    states = storage.all(State)
-    return jsonify([x.to_dict() for x in states.values()])
+    return jsonify([x.to_dict() for x in storage.all(State).values()])
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
@@ -71,5 +70,5 @@ def update_state(state_id):
     for key, value in data.items():
         setattr(state, key, value)
 
-    state.save()
+    storage.save()
     return jsonify(state.to_dict()), 200
