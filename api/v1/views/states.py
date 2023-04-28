@@ -39,9 +39,9 @@ def create_state():
     """Create a new State object from POST json data"""
     data = request.get_json(silent=True)
     if data is None:
-        return 'Not a JSON', 400
+        return jsonify({'error': 'Not a JSON'}), 400
     elif 'name' not in data:
-        return 'Missing name', 400
+        return jsonify({'error': 'Missing name'}), 400
     state = State(name=data['name'])
     state.save()
     return jsonify(state.to_dict()), 201
@@ -57,9 +57,9 @@ def update_state(state_id):
 
     data = request.get_json(silent=True)
     if data is None:
-        return 'Not a JSON', 400
+        return jsonify({'error': 'Not a JSON'}), 400
     if type(data) is not dict:
-        return 'Forbidden', 400
+        return jsonify({'error': 'Forbidden'}), 400
 
     for key in ['created_at', 'updated_at', 'id']:
         try:
