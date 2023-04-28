@@ -3,7 +3,7 @@
 0x05. AirBnB clone - RESTful API
 """
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -28,6 +28,12 @@ app.url_map.strict_slashes = False
 def close_storage(exception=None):
     """Close any active SQLAlchemy sessions"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """ Error 404 """
+    return jsonify({'error': 'Not found'}), 404
 
 
 if __name__ == '__main__':
