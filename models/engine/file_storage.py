@@ -68,3 +68,25 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """
+        Retrieves an object with given `id` from the file storage
+
+        Args:
+            cls (class): class of object to retrieve
+            id (str): id of object to retrieve
+
+        Returns:
+            `obj` based on `cls and `id``, or None if not found
+        """
+        from models import storage
+
+        if cls not in classes and cls not in classes.values():
+            raise TypeError("{} is not a valid class type".format(cls))
+
+        if type(id) != str:
+            raise TypeError("id must be a string")
+
+        return next((obj for obj in storage.all(cls).values() if obj.id == id),
+                    None)
