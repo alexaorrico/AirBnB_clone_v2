@@ -55,7 +55,7 @@ class DBStorage:
         """A method to retrieve one object"""
         my_dict = self.all(cls)
         for obj in my_dict.values():
-            if obj["id"] == id:
+            if obj.id == id:
                 return obj
 
     def count(self, cls=None):
