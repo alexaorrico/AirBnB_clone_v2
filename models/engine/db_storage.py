@@ -114,5 +114,8 @@ class DBStorage:
         if cls not in classes and cls not in classes.values():
             raise TypeError("{} is not a valid class type".format(cls))
 
+        if type(cls) == str:
+            cls = classes[cls]
+
         return sum(1 for obj in storage.all(cls).values()
-                   if obj.__class__ == cls or obj.__class__ == cls.__name__)
+                   if obj.__class__ == cls)
