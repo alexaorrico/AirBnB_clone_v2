@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Index """
+"""Creates a route that returns a JSON """
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
