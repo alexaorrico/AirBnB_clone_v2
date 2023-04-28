@@ -26,7 +26,7 @@ def get_all_cities(state_id):
             cities_obj.append(city.to_dict())
     if len(cities_obj) == 0:
         abort(404)
-    return jsonify(cities_obj)
+    return jsonify(cities_obj), 200
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
