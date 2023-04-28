@@ -165,3 +165,37 @@ class TestFileStorage(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             models.storage.get(State, 10)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count_class(self):
+        """Test the count method for the `User` class"""
+        with patch('sys.stdout', new=StringIO()) as fd:
+            old_count = models.storage.count(User)
+
+            # create new object
+            HBNBCommand().onecmd(
+                'create User email="nil@nil.com" password="nil"')
+            reset_stream(fd)
+
+            new_count = models.storage.count(User)
+            self.assertEqual(old_count + 1, new_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count_all(self):
+        """Test the `count` method for all classes"""
+        with patch('sys.stdout', new=StringIO()) as fd:
+            old_count = models.storage.count()
+
+            # create new object
+            HBNBCommand().onecmd(
+                'create User email="nil@nil.com" password="nil"')
+            reset_stream(fd)
+
+            new_count = models.storage.count()
+            self.assertEqual(old_count + 1, new_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count_exceptions(self):
+        """Test the `get` method to raise exceptions"""
+        with self.assertRaises(TypeError):
+            models.storage.count("Invalid class")
