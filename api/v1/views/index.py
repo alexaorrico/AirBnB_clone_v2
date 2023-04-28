@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Index module"""
 from . import app_views
 from flask import jsonify
 from models import storage

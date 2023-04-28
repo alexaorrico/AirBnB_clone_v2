@@ -1,8 +1,9 @@
+#!/usr/bin/python3
+""" Root of application """
 from os import getenv
 from flask import Flask
 from .views import app_views
 from models import storage
-""" Root of application """
 
 # globals
 HBNB_API_HOST = getenv('HBNB_API_HOST', '0.0.0.0')
@@ -27,5 +28,6 @@ def create_app(config_name):
 
 
 if __name__ == "__main__":
+    """Start of application"""
     app = create_app(None)
     app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
