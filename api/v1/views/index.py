@@ -2,7 +2,7 @@
 """ Index File """
 
 from api.v1.views import app_views
-from flask import jsonify
+import json
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -16,7 +16,8 @@ from models import storage
 def status():
     """ Returns Status of api"""
 
-    return jsonify({"status": "OK"})
+    status = {"status": "OK"}
+    return json.dumps(status, indent=2)
 
 
 @app_views.route('/api/v1/stats', strict_slashes=False)
