@@ -2,7 +2,6 @@
 """ console """
 
 import cmd
-from datetime import datetime
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -96,7 +95,8 @@ class HBNBCommand(cmd.Cmd):
             if len(args) > 1:
                 key = args[0] + "." + args[1]
                 if key in models.storage.all():
-                    models.storage.all().pop(key)
+                    obj = models.storage.get(classes[args[0]], args[1])
+                    models.storage.delete(obj)
                     models.storage.save()
                 else:
                     print("** no instance found **")
@@ -159,6 +159,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

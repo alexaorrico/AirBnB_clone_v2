@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +68,47 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """
+        Retrieves an object with given `id` from the file storage
+
+        Args:
+            cls (class): class of object to retrieve
+            id (str): id of object to retrieve
+
+        Returns:
+            `obj` based on `cls and `id``, or None if not found
+        """
+        from models import storage
+
+        if cls not in classes and cls not in classes.values():
+            raise TypeError("{} is not a valid class type".format(cls))
+
+        if type(id) != str:
+            raise TypeError("id must be a string")
+
+        return next((obj for obj in storage.all(cls).values() if obj.id == id),
+                    None)
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in file storage
+
+        Args:
+            cls (class): optional class of objects to count
+
+        Returns:
+            Count of objects belonging to `cls` in storage,
+                or count of all objects if `cls` is None.
+        """
+        from models import storage
+
+        if cls is None:
+            return len(storage.all(cls).values())
+
+        if cls not in classes and cls not in classes.values():
+            raise TypeError("{} is not a valid class type".format(cls))
+
+        return sum(1 for obj in storage.all(cls).values()
+                   if obj.__class__ == cls or obj.__class__ == cls.__name__)

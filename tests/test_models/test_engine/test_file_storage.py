@@ -3,7 +3,6 @@
 Contains the TestFileStorageDocs classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models.engine import file_storage
@@ -14,8 +13,11 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from io import StringIO
+from tests import reset_stream
+from unittest.mock import patch
+from console import HBNBCommand
 import json
-import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -113,3 +115,87 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_get_valid_class(self):
+        """Test the `get` method using a `State` object"""
+        with patch('sys.stdout', new=StringIO()) as fd:
+            # get existing number of objects of given class
+            old_len = len(list(models.storage.all(State).values()))
+
+            # create new `State` object
+            HBNBCommand().onecmd('create State name="Imo"')
+            id = fd.getvalue().strip()
+            reset_stream(fd)
+
+            new_len = len(list(models.storage.all(State).values()))
+            self.assertEqual(old_len + 1, new_len)
+
+            # test `get` method
+            objs = models.storage.all(State).values()
+            obj = None
+            for obj in objs:
+                if obj.id == id:
+                    break
+
+            self.assertNotEqual(obj, None)
+
+            our_state = models.storage.get(State, id)
+            self.assertEqual(our_state.name, obj.name)
+            self.assertEqual(our_state.id, obj.id)
+            self.assertEqual(our_state, obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_get_invalid_id(self):
+        """Test the `get` method using an invalid id"""
+        with patch('sys.stdout', new=StringIO()) as fd:
+            # create new object
+            HBNBCommand().onecmd('create State name="Imo"')
+            id = fd.getvalue().strip()
+            reset_stream(fd)
+
+            our_state = models.storage.get(State, id + "z")
+            self.assertEqual(our_state, None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_get_exceptions(self):
+        """Test the `get` method to raise exceptions"""
+        with self.assertRaises(TypeError):
+            models.storage.get("Invalid", "id")
+
+        with self.assertRaises(TypeError):
+            models.storage.get(State, 10)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count_class(self):
+        """Test the count method for the `User` class"""
+        with patch('sys.stdout', new=StringIO()) as fd:
+            old_count = models.storage.count(User)
+
+            # create new object
+            HBNBCommand().onecmd(
+                'create User email="nil@nil.com" password="nil"')
+            reset_stream(fd)
+
+            new_count = models.storage.count(User)
+            self.assertEqual(old_count + 1, new_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count_all(self):
+        """Test the `count` method for all classes"""
+        with patch('sys.stdout', new=StringIO()) as fd:
+            old_count = models.storage.count()
+
+            # create new object
+            HBNBCommand().onecmd(
+                'create User email="nil@nil.com" password="nil"')
+            reset_stream(fd)
+
+            new_count = models.storage.count()
+            self.assertEqual(old_count + 1, new_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count_exceptions(self):
+        """Test the `get` method to raise exceptions"""
+        with self.assertRaises(TypeError):
+            models.storage.count("Invalid class")
