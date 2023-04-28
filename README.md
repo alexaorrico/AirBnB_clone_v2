@@ -154,8 +154,11 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Stanley Ezechukwu - [Github](https://github.com/stan6453) / [Linked](https://www.linkedin.com/in/stanley-ezechukwu)  
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Stanley Ezechukwu - [Github](https://github.com/stan6453) / [Linked](https://www.linkedin.com/in/stanley-ezechukwu)  
+Abraham OLAGUNJU - [Github](https://github.com/OluwaninsolaAO) / [Twitter](https://twitter.com/oluwaninsolaao)  
+
 
 Second part of Airbnb: Joann Vuong
 ## License
