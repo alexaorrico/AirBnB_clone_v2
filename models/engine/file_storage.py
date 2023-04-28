@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """Returns the specified instance"""
-        for val in self.all(cls):
+        for val in list(self.all(cls).values()):
             if val.id == id:
                 return val
         return None
