@@ -4,14 +4,8 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
 from datetime import datetime
-import os
-import unittest
-
 import inspect
-import json
-import pep8
 import models
-
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -20,8 +14,10 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-
-
+import json
+import os
+import pep8
+import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -92,18 +88,10 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
-        # Create a new instance of a class
-        obj = models.User()
-        # Add the object to the database
-        models.storage.new(obj)
-        # Save the database to file
-        models.storage.save()
-        # Load the database from file
-        with open(models.storage._FileStorage__file_path, 'r') as f:
-            data = json.load(f)
-        # Check that the object is in the loaded data
-        obj_dict = obj.to_dict()
-        self.assertIn(obj_dict['id'], data['User'].keys())
-        self.assertEqual(data['User'][obj_dict['id']], obj_dict)
+    def test_get(self):
+        """Test that get returns the correct object"""
+        state = State(name="California")
+        state.save()
+        self.assertEqual(state, models.storage.get(State, state.id))
+
+        
