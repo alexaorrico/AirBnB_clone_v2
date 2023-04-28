@@ -10,3 +10,7 @@ class IndexTestCase(unittest.TestCase):
     def test_views_app(self):
         """test views app"""
         pass
+
+    def test_count_object(self):
+        """Test total number of objects by type"""
+        pass
