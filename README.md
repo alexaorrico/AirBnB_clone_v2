@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
- TOKOLOGO Chabalala- [Github](https://github.com/TKMshengu)  
+ TOKOLOGO Chabalala- [Github](https://github.com/Tokologo1)  
 Ayo Hassan- [Github](https://github.com/itsayopapi)
   
 Second part of Airbnb: Joann Vuong
