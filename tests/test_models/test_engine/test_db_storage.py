@@ -99,8 +99,9 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_with_arg(self):
         """Check if the count with argument return the correct output"""
+        storage = DBStorage()
         users = storage.all(User)
-        self.assertEqual(len(user), storage.count(User))
+        self.assertEqual(len(users), storage.count(User))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count_without_arg(self):
