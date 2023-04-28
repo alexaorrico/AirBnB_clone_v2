@@ -5,17 +5,17 @@ import json
 from models import storage
 from models.city import City
 from models.state import State
-from api.v1.views import city_views
+from api.v1.views import app_views
 from flask import abort, make_response, request, jsonify
 
 
-@city_views.errorhandler(400)
+@app_views.errorhandler(400)
 def handle400(exception):
     """handles 400 errors"""
     return make_response(jsonify(exception.description)), 400
 
 
-@city_views.route('/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                   strict_slashes=False)
 def get_all_cities(state_id):
     """gets all the cities associated with the state_id"""
@@ -30,7 +30,7 @@ def get_all_cities(state_id):
     return jsonify(cities_obj)
 
 
-@city_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city(city_id):
     """gets a single city"""
     cities = storage.all(City)
@@ -43,7 +43,7 @@ def get_city(city_id):
     return jsonify(city)
 
 
-@city_views.route('/cities/<city_id>', methods=['DELETE'],
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
                   strict_slashes=False)
 def delete_city(city_id):
     """deletes a city from db"""
@@ -61,7 +61,7 @@ def delete_city(city_id):
         return jsonify({})
 
 
-@city_views.route('states/<state_id>/cities', methods=['POST'],
+@app_views.route('states/<state_id>/cities', methods=['POST'],
                   strict_slashes=False)
 def post_city(state_id):
     """adds a new city to the db"""
@@ -87,7 +87,7 @@ def post_city(state_id):
     return jsonify(new_city.to_dict()), 201
 
 
-@city_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """updates a city"""
     cities = storage.all(City)
