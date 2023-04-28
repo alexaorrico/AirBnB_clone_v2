@@ -3,14 +3,10 @@
 
 import unittest
 from werkzeug.test import Client
-from api.v1.views import index
+from api.v1.views import cities
 
-class IndexTestCase(unittest.TestCase):
+class CitiesTestCase(unittest.TestCase):
     """Tests cases for the views.index file"""
     def test_views_app(self):
         """test views app"""
-        pass
-
-    def test_count_object(self):
-        """Test total number of objects by type"""
         pass
