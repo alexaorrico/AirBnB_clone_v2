@@ -58,8 +58,6 @@ def update_state(state_id):
     data = request.get_json(silent=True)
     if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
-    if type(data) is not dict:
-        return jsonify({'error': 'Forbidden'}), 400
 
     for key in ['created_at', 'updated_at', 'id']:
         try:
