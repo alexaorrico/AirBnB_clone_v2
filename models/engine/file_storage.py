@@ -75,9 +75,21 @@ class FileStorage:
         try:
             key = cls.__name__ + "." + id
         except Exception:
-            pass
+            return None
         obj = None
         for k, v in self.all().items():
             if k == key:
                 obj = v
+                break
         return obj
+
+    def count(self, cls=None):
+        """ count the number of objects in storage"""
+        count = 0
+        if cls:
+            for k in self.all():
+                if cls.__name__ in k:
+                    count += 1
+        else:
+            count = len(self.all())
+        return count
