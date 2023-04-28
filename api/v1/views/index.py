@@ -32,7 +32,7 @@ def get_status():
 def get_stats():
     """Return stats of all models"""
     stats = {}
-    for name, model in model.items():
+    for name, model in models.items():
         total = storage.count(model)
         stats[name] = total
     return jsonify(stats)
