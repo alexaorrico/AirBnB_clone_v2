@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Root of application """
 from os import getenv
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from .views import app_views
 from models import storage
 
@@ -24,6 +24,12 @@ def create_app(config_name):
     def teardown(self):
         ''' Close session '''
         storage.close()
+
+    @app.errorhandler(404)
+    def not_found(e):
+        """Error handler for the application"""
+        return make_response(jsonify({'error': 'Not found'}), 404)
+
     return app
 
 
