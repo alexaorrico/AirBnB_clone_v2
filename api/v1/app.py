@@ -24,5 +24,6 @@ def page_not_found(e):
     """404ed"""
     return jsonify({"error": "Not found"}), 404
 
+
 if __name__ == '__main__':
     app.run(host=host, port=port, threaded=True)
