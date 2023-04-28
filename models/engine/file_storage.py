@@ -90,3 +90,25 @@ class FileStorage:
 
         return next((obj for obj in storage.all(cls).values() if obj.id == id),
                     None)
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in file storage
+
+        Args:
+            cls (class): optional class of objects to count
+
+        Returns:
+            Count of objects belonging to `cls` in storage,
+                or count of all objects if `cls` is None.
+        """
+        from models import storage
+
+        if cls is None:
+            return len(storage.all(cls).values())
+
+        if cls not in classes and cls not in classes.values():
+            raise TypeError("{} is not a valid class type".format(cls))
+
+        return sum(1 for obj in storage.all(cls).values()
+                   if obj.__class__ == cls or obj.__class__ == cls.__name__)
