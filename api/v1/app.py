@@ -13,6 +13,7 @@ HBNB_API_PORT = getenv('HBNB_API_PORT', '5000')
 def create_app(config_name):
     ''' Main func, avoid litter global space'''
     app = Flask(__name__)
+    app.url_map.strict_slashes = False
     # set configs if available
     if config_name is not None:
         app.config.from_object(config_name)
