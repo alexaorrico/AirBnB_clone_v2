@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 """Flask file"""
 
 from api.v1.views import app_views
@@ -15,3 +17,4 @@ def clean_up(exception=None):
 
 
 if __name__ == "__main__":
+	app.run(host='0.0.0.0', port=5000, threaded=True)
