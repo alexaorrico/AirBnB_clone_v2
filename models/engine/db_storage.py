@@ -87,7 +87,7 @@ class DBStorage:
 
         key = cls.__name__ + "." + id
         objs = self.all()
-        for k,v in objs.items():
+        for k, v in objs.items():
             if key == k:
                 return v
         return None
@@ -103,7 +103,7 @@ class DBStorage:
             for obj in objs:
                 obj_count += 1
         else:
-            for k,v in objs.items():
+            for k, v in objs.items():
                 if v.__class__.__name__ == str(cls):
                     obj_count += 1
         return obj_count
