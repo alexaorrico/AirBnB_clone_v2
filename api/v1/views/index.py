@@ -5,7 +5,7 @@ from api.v1.views import app_views
 from flask import jsonify
 
 
-@app.route('/status'):
-    def app_views():
-        """Return a JSON"""
-        return jsonify({'status': 'OK'})
+@app.route('/status')
+def app_views():
+    """Return a JSON"""
+    return jsonify({'status': 'OK'})
