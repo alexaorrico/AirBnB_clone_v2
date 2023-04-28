@@ -5,8 +5,9 @@
 
 
 from api.v1.views import app_views
-from models import storage, State
-from flask import jsonify, request, abort
+from models import storage
+from models.state import State
+from flask import jsonify, make_response, request, abort
 
 
 @app_views.route('/states', methods=['GET'])
@@ -49,7 +50,7 @@ def create_state():
     if not name:
         abort(400, description="Missing name")
 
-    state = State(name=name)
+    state = State(**name)
     state.save()
 
     return make_response(jsonify(state.to_dict()), 201)
