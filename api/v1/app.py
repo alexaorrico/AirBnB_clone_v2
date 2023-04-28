@@ -4,6 +4,9 @@ import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 
+# import sys
+# sys.path.insert(0, '/AirBnB_clone_v3/models')
+
 from models import storage
 from api.v1.views import app_views
 
@@ -21,7 +24,7 @@ def teardown_storage(exception):
     """Closes the database connection at the end of the request."""
     storage.close()
 
-    if __name__ == '__main__':
-        app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-        app_port = int(os.getenv('HBNB_API_PORT', '5000'))
-        app.run(host=app_host, port=app_port, threaded=True)
+if __name__ == '__main__':
+    app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    app_port = int(os.getenv('HBNB_API_PORT', '5000'))
+    app.run(host=app_host, port=app_port, threaded=True)
