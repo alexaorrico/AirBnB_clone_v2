@@ -34,7 +34,10 @@ def delete_state(state_id):
     if state is None:
         abort(404)
 
-    return {}, 200
+    storage.delete(state)
+    storage.save()
+
+    return make_response({}, 200)
 
 
 @app_views.route('/states', methods=['POST'])
