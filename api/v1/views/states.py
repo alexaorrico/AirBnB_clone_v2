@@ -61,7 +61,7 @@ def update_state(state_id):
     if type(data) is not dict:
         return 'Forbidden', 400
 
-    for key in ['created_at', 'updated_at']:
+    for key in ['created_at', 'updated_at', 'id']:
         try:
             data.pop(key)
         except KeyError:
