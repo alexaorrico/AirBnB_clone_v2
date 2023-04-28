@@ -16,7 +16,7 @@ def handle400(exception):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def get_all_cities(state_id):
     """gets all the cities associated with the state_id"""
     print(state_id)
@@ -44,7 +44,7 @@ def get_city(city_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def delete_city(city_id):
     """deletes a city from db"""
     cities = storage.all(City)
@@ -62,7 +62,7 @@ def delete_city(city_id):
 
 
 @app_views.route('states/<state_id>/cities', methods=['POST'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def post_city(state_id):
     """adds a new city to the db"""
     states = storage.all(State)
