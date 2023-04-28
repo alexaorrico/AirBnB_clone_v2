@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Temitope Owolabi - [Github] (https://github.com/afristorm-3/)
-Ezana Wmariam - [Github] (https://github.com/ezana73)
+Ezana Zeray - [Github] (https://github.com/ezana73)
 
 Second part of Airbnb: Joann Vuong
 ## License
