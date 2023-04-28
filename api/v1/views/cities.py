@@ -6,13 +6,7 @@ from models import storage
 from models.city import City
 from models.state import State
 from api.v1.views import app_views
-from flask import abort, make_response, request, jsonify
-
-
-@app_views.errorhandler(400)
-def handle400(exception):
-    """handles 400 errors"""
-    return make_response(jsonify(exception.description)), 400
+from flask import abort, request, jsonify
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
