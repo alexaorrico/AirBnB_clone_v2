@@ -85,7 +85,7 @@ class DBStorage:
         track = 0
         if cls:
             for key in self.all():
-                if cls.__name__ == key.split('.')[0]:
+                if cls == key.split('.')[0]:
                     track += 1
             return track
         else:
