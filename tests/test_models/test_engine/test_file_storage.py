@@ -67,6 +67,57 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+     def test_get_existing_object(self):
+        """
+        Test that the get method returns an existing object
+        """
+        class StateObject:
+            id = '1'
+
+        self.FileStorage.all()[StateObject.__name__] = {'1': StateObject}
+        obj = self.FileStorage.get(ExampleObject, '1')
+        self.assertEqual(obj, StateObject)
+
+    def test_get_nonexistent_object(self):
+        """
+        Test that the get method returns None for a nonexistent object
+        """
+        self.FileStorage.all()[object.__name__] = {}
+        obj = self.FileStorage.get(object, '1')
+        self.assertIsNone(obj)
+
+    def test_count_all_classes(self):
+        """
+        Test that the count method returns the correct count for all classes
+        """
+        class ClassA:
+            pass
+
+        class ClassB:
+            pass
+
+        obj1 = ClassA()
+        obj2 = ClassB()
+
+        self.FileStorage.all()[ClassA.__name__] = {'1': obj1}
+        self.FileStorage.all()[ClassB.__name__] = {'2': obj2}
+        count = self.FileStorage.count()
+        self.assertEqual(count, 2)
+
+    def test_count_specific_class(self):
+        """
+        Test that the count method returns the correct count for a specific class
+        """
+        class StateClass:
+            pass
+
+        obj1 = StateClass()
+        obj2 = StateClass()
+
+        self.FileStorage.all()[ExampleClass.__name__] = {'1': obj1, '2': obj2}
+        count = self.FileStorage.count(StateClass)
+        self.assertEqual(count, 2)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
