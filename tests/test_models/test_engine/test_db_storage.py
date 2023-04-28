@@ -66,7 +66,56 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+    def test_get_existing_object(self):
+        """
+        Test that the get method returns an existing object
+        """
+        class StateObject:
+            id = '1'
 
+        self.DBStorage.all()[StateObject.__name__] = {'1': StateObject}
+        obj = self.DBStorage.get(StateObject, '1')
+        self.assertEqual(obj, StateObject)
+
+    def test_get_nonexistent_objects(self):
+        """
+        Test that returns None for noneexistent objects
+        """
+        self.DBStorage.all()[object.__name__] = {}
+        obj = self.DBStorage.get(object, '1')
+        self.assertIsNone(obj)
+
+    def test_count_all_classes(self):
+        """
+        Test that the count method returns the correct count for all classes
+        """
+        class ClassA:
+            pass
+
+        class ClassB:
+            pass
+
+        obj1 = ClassA()
+        obj2 = ClassB()
+
+        self.DBStorage.all()[ClassA.__name__] = {'1': obj1}
+        self.DBStorage.all()[ClassB.__name__] = {'2': obj2}
+        count = self.DBStorage.count()
+        self.assertEqual(count, 2)
+
+
+    def test_count_specific_classes(self):
+        """
+        Test that the count method returns correct count
+        """
+        class StateClass:
+            pass
+        obj1 = StateClass()
+        obj2 = StateClass()
+
+        self.DBStorage.all()[Stateclass.__name__] = {'1' : obj1, '2' :obj2}
+        count = self.DBtorage.count(StateClass)
+        self.assertEqual(count, 2)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
