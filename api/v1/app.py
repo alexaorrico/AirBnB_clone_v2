@@ -19,6 +19,6 @@ def clean_up(exception=None):
 
 if __name__ == "__main__":
     app.run(getenv('HBNB_API_HOST', defaults='0.0.0.0'),
-            getenv('HBNB_API_PORT', default=5000),
+            getenv(int('HBNB_API_PORT'), default=5000),
             threaded=True
             )
