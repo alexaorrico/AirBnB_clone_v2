@@ -19,6 +19,9 @@ def create_app(config_name):
     # set up cors
     CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 
+    # set pretty print
+    app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
     # set configs if available
     if config_name is not None:
         app.config.from_object(config_name)
