@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Creates a view for City objects"""
+"""Creates a view for Review objects"""
 
 import json
 from models import storage
