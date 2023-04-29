@@ -55,7 +55,7 @@ def update_user(user_id):
     if user is None:
         abort(404)
 
-    allowed = ["email", "password", "first_name", "last_name"]
+    allowed = ["password", "first_name", "last_name"]
 
     for key, value in user_data.items():
         if key in allowed:
