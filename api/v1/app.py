@@ -17,7 +17,7 @@ def create_app(config_name):
     app.url_map.strict_slashes = False
 
     # set up cors
-    CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
+    CORS(app, resources={r"/api/v1/*": {"origins": HBNB_API_HOST}})
 
     # set pretty print
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
