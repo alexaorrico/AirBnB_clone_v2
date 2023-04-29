@@ -1,0 +1,3 @@
+#!/bin/bash
+VAR=$1
+pycodestyle ${VAR:-} $(find . -type f -name '*.py')

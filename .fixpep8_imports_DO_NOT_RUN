@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+# This script fixes all pep8 import error from AirBnB_clone_v3
+# forked repository.
+
+vim -c "args `find ./tests -type f -name '*.py' -printf '%p '`" -c "silent argdo %s/import pep8 as pycodestyle/import pycodestyle/g | %s/pep8.StyleGuide/pycodestyle.StyleGuide/g | %s/pep8s/style/g | %s/pep8/pycodestyle/g | wq"
