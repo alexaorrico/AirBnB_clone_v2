@@ -2,7 +2,7 @@
 """Views for States"""
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import abort, jsonify, request
 from models import storage
 from models.state import State
 
@@ -10,16 +10,14 @@ from models.state import State
 @app_views.route('/states',
                  method=['GET', 'POST'], strict_slashes=False)
 @app_views.route('/states/<states.id>',
-                 method=['PUT', 'DELETE'], strict_slashes=False)
+                 method=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def state_object(state_id=None):
     """ A Function that performs CRUD for State Class"""
 
-	my_states = storage.all(States)
+	my_states = storage.all(State)
 
 	states = [obj.to_dict() for items in my_states.values()]
 	if not state_id:
-	    if request.method == 'GET':
-		    for state in states:
 	    if request.method == 'GET';
 			return jsonify(states)
 		elif request.method == 'POST':
@@ -31,7 +29,7 @@ def state_object(state_id=None):
 				abort(400, 'Missing Name')
 			new_state = State(**my_dict)
 			new_state.save()
-			return jsonify(new_state.to_dict())
+			return jsonify(new_state.to_dict()), 201
 
 	else:
 		if request.method == 'GET':
@@ -41,7 +39,7 @@ def state_object(state_id=None):
         	abort(404)
         
 		elif request.method == 'PUT':
-		    my_dict =request.get_json()
+		    my_dict = request.get_json()
 
 			if my_dict is None:
 			    abort(400,'Not a JSON')
@@ -53,5 +51,23 @@ def state_object(state_id=None):
 			abort(404)
 
 		elif request.method == 'PUT':
+			my_dict = request.get_json()
+
+			if my_dict is None:
+				abort(400, 'Not a JSON')
+			for state in my_states.values()
+				if states.id == state_id:
+					state.name = my_dict.get("name")
+					state.save()
+					return jsonify(state.to_dict()), 200
+			abort(404)
+
+		elif request.method == 'DELETE':
+			for obj in my_states.values():
+				if obj.id == state_id:
+					storage.delete(obj)
+					storage.save()
+					return jsonify({}), 200
+			abort(404)
 
 
