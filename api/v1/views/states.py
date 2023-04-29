@@ -8,13 +8,14 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
     """Returns all json representation of States"""
     return jsonify([x.to_dict() for x in storage.all(State).values()])
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_state(state_id):
     """Returns a json representation of a matching state"""
     state = storage.all(State).get(State.__name__ + '.' + state_id, None)
@@ -23,7 +24,8 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object from storage"""
     state = storage.get(State, state_id)
@@ -34,7 +36,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Create a new State object from POST json data"""
     data = request.get_json(silent=True)
@@ -47,7 +49,7 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """Update State object data from PUT json data"""
 
