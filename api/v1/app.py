@@ -19,10 +19,20 @@ app.register_blueprint(app_views)
 # CORS(app, resources={'/*': {'origins': app_host}})
 CORS(app, origins='0.0.0.0')
 
+
 @app.teardown_appcontext
 def teardown_storage(exception):
     """Closes the database connection at the end of the request."""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(e):
+    """handles a 404 error"""
+
+    response = {"error": "Not found"}
+    return jsonify(response)
+
 
 if __name__ == '__main__':
     app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
