@@ -1,18 +1,17 @@
- list of cities based on the state_id
+Gets the list of all amenities of a place
 ---
 tags:
-  - Cities
+  - Place_Amenities
 parameters:
-  - name: state_id
+  - name: place_id
     in: path
     type: string
     required: true
-    description: The uniqe id of the state
+    description: the unique id of the place
+
 responses:
-  404:
-    description: No state is linked to the ID!
   200:
-    description: Request completed successfully
+    description: Successful request
     schema:
       type: array
       items:
@@ -27,10 +26,9 @@ responses:
              description: time of last update of the instance
           id:
             type: string
-            description: The uuid of the instance
-          state_id:
-             type: string
-             description: uuid of the city's state
+            description: The uuid of the state instance
           name:
              type: string
-             description: city name
+             description: name of the amenity
+  404:
+    description: Place not found
