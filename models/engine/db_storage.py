@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+Class DBStorage
 """
 
 import models
@@ -15,7 +15,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-# this helps incase you use a .env file
+# incase you have a .env file
 try:
     from decouple import config as getenv
 except ImportError:
@@ -26,7 +26,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interaacting with MySQL database"""
     __engine = None
     __session = None
 
@@ -57,11 +57,11 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add the object to the current database session"""
+        """add object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session"""
+        """commit all changes of current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
