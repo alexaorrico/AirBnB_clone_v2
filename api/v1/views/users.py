@@ -1,77 +1,99 @@
 #!/usr/bin/python3
-'''
-API for User
-'''
+'''Contains the users view for the API.'''
+from flask import jsonify, request
+from werkzeug.exceptions import NotFound, BadRequest
+
 from api.v1.views import app_views
-from flask import jsonify, abort, request
 from models import storage
-import models
+from models.user import User
 
 
-@app_views.route('/users/', methods=['GET'])
+@app_views.route('/users', methods=['GET'])
 @app_views.route('/users/<user_id>', methods=['GET'])
-def all_user(user_id=None):
-    '''Returns all or an user object in json format'''
-    json_list = []
-    try:
-        if user_id is None:
-            for v in storage.all('User').values():
-                json_list.append(v.to_dict())
-        else:
-            json_list = storage.get('User', user_id).to_dict()
-        return jsonify(json_list)
-    except Exception:
-        abort(404)
-
-
-def attrib_update(obj, **args):
-    '''Helper function to update objects attributes to correct types'''
-    for key, value in args.items():
-        if hasattr(obj, key):
-            value = value.replace("_", " ")
-            try:
-                value = eval(value)
-            except Exception:
-                pass
-            setattr(obj, key, value)
-
-
-@app_views.route('/users/', methods=['POST'])
-def create_user():
-    '''Creates an instance of User and save it to storage'''
-    form = request.get_json(force=True)
-    if 'password' not in request.json:
-        return jsonify({"error": "Missing password"}), 400
-    if 'email' not in request.json:
-        return jsonify({"error": "Missing email"}), 400
-    user_class = models.classes['User']
-    new_user = user_class()
-    attrib_update(new_user, **form)
-    new_user.save()
-    return jsonify(new_user.to_dict()), 201
+def get_users(user_id=None):
+    '''Gets the user with the given id or all users.
+    '''
+    if user_id:
+        user = storage.get(User, user_id)
+        if user:
+            obj = user.to_dict()
+            if 'places' in obj:
+                del obj['places']
+            if 'reviews' in obj:
+                del obj['reviews']
+            return jsonify(obj)
+        raise NotFound()
+    all_users = storage.all(User).values()
+    users = []
+    for user in all_users:
+        obj = user.to_dict()
+        if 'places' in obj:
+            del obj['places']
+        if 'reviews' in obj:
+            del obj['reviews']
+        users.append(obj)
+    return jsonify(users)
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    '''Deletes an user object'''
-    user_obj = storage.get('User', user_id)
-    if user_obj is None:
-        abort(404)
-    else:
-        storage.delete(user_obj)
+def remove_user(user_id):
+    '''Removes a user with the given id.
+    '''
+    user = storage.get(User, user_id)
+    if user:
+        storage.delete(user)
         storage.save()
-    return jsonify({})
+        return jsonify({}), 200
+    raise NotFound()
+
+
+@app_views.route('/users', methods=['POST'])
+def add_user():
+    '''Adds a new user.
+    '''
+    data = {}
+    try:
+        data = request.get_json()
+    except Exception:
+        data = None
+    if type(data) is not dict:
+        raise BadRequest(description='Not a JSON')
+    if 'email' not in data:
+        raise BadRequest(description='Missing email')
+    if 'password' not in data:
+        raise BadRequest(description='Missing password')
+    user = User(**data)
+    user.save()
+    obj = user.to_dict()
+    if 'places' in obj:
+        del obj['places']
+    if 'reviews' in obj:
+        del obj['reviews']
+    return jsonify(obj), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
-    '''Updates User object attribute'''
-    user_obj = storage.get('User', user_id)
-    if user_obj is None:
-        abort(404)
-    form = request.get_json(force=True)
-    for k, v in form.items():
-        if k not in ['id', 'created_at', 'updated_at']:
-            setattr(user_obj, k, v)
-    user_obj.save()
-    return jsonify(user_obj.to_dict()), 200
+    '''Updates the user with the given id.
+    '''
+    xkeys = ('id', 'email', 'created_at', 'updated_at')
+    user = storage.get(User, user_id)
+    if user:
+        data = {}
+        try:
+            data = request.get_json()
+        except Exception:
+            data = None
+        if type(data) is not dict:
+            raise BadRequest(description='Not a JSON')
+        for key, value in data.items():
+            if key not in xkeys:
+                setattr(user, key, value)
+        user.save()
+        obj = user.to_dict()
+        if 'places' in obj:
+            del obj['places']
+        if 'reviews' in obj:
+            del obj['reviews']
+        return jsonify(obj), 200
+    raise NotFound()
