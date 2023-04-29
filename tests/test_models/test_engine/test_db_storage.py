@@ -68,13 +68,15 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+# @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
 class TestDBStorage(unittest.TestCase):
     """Test the DBStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
@@ -86,6 +88,7 @@ class TestDBStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test the get method"""
         storage = DBStorage()
@@ -95,6 +98,7 @@ class TestDBStorage(unittest.TestCase):
         state = storage.get(State, "f8d21261-3e79-4f5c-829a-99d7452cd73c")
         self.assertIsNone(state)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         '''Test count method'''
         storage = DBStorage()
