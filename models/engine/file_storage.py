@@ -83,5 +83,5 @@ class FileStorage:
         """Count the numbe of objects in storage"""
         no_of_objs = self.all(cls)
         if cls in classes.values():
-            no_of_objs = self.all(cls)
-        return len(no_of_objs)
+            no_of_objects = self.all(cls)
+        return len(no_of_objects)
