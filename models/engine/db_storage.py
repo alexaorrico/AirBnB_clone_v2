@@ -62,9 +62,8 @@ class DBStorage:
 
     def count(self, cls=None):
         """counts objects in the database"""
-
         my_dict = self.all(cls)
-        return (len(my_dict) 
+        return (len(my_dict)
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -82,10 +81,10 @@ class DBStorage:
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        sess_factory=sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session=scoped_session(sess_factory)
+        self.__session=Session
 
-    def close(self):
+        def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
