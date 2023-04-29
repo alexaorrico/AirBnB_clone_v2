@@ -92,4 +92,4 @@ def updateReview(review_id):
                        'updated_at']:
             setattr(review, key, value)
     storage.save()
-    return jsonify(place.to_dict()), 200
+    return jsonify(review.to_dict()), 200
