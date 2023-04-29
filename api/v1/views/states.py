@@ -1,5 +1,5 @@
 #!/usr/bin/pyhton3
-"""Views for States"""
+"""This is the Views for States Class Objects"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, request
