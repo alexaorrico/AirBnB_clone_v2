@@ -2,6 +2,7 @@
 """ State objects that handles all default RESTFul API """
 from flask import jsonify
 from flask import request
+from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
 from api.v1.views import app_views
 from models import storage
