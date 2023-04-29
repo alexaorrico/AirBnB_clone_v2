@@ -5,7 +5,7 @@ from flask import abort, jsonify, make_response, request
 from models import storage, CNC
 
 
-@app_views.route('/api/v1/states', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'])
 def State():
     """Route that fetch/Add State Objects"""
     if request.method == 'GET':
@@ -24,7 +24,7 @@ def State():
         return jsonify(new_state_obj.to_json()), 201
 
 
-@app_views.route('/api/v1/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def get_state_by_id(state_id):
     """Route that handles retrieving and deleteing
        a state base on the state id
