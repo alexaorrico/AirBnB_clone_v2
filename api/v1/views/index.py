@@ -25,12 +25,12 @@ def get_api_stats():
     """gets the number of each objects"""
 
     stats = {
-      'amenities': 'Amenity',
-    'cities': 'City',
-    'places': 'Place',
-    'reviews': 'Review',
-    'states': 'State',
-    'users': 'User'
+      'amenities': Amenity,
+    'cities': City,
+    'places': Place,
+    'reviews': Review,
+    'states': State,
+    'users': User
     }
     for key, value in stats.items():
        stats[key] = storage.count(value)
