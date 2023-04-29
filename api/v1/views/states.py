@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ State objects that handles all default RESTFul API """
-from flask import jsonify
-from flask import request
+from flask import jsonify, request
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
 from api.v1.views import app_views
@@ -16,7 +15,7 @@ ALLOWED_METHODS = ['GET', 'POST', 'PUT', 'DELETE']
 @app_views.route('/states', methods=ALLOWED_METHODS)
 @app_views.route('/states/<state_id>', methods=ALLOWED_METHODS)
 def handle_states(state_id=None):
-    """ handler for the sates endpioint"""
+    """ handler for the states endpoint"""
     handlers = {
             'GET': get_state_data,
             'DELETE': remove_state,
@@ -26,7 +25,7 @@ def handle_states(state_id=None):
     if request.method in handlers:
         return handlers[request.method](state_id)
     else:
-        return MethodNotAllowed(list(handlers.key()))
+        return MethodNotAllowed(handlers.keys())
 
 
 def get_state_data(state_id=None):
@@ -38,7 +37,7 @@ def get_state_data(state_id=None):
             return jsonify(matching_states[0].to_dict())
         raise NotFound()
     all_states = list(map(lambda x: x.to_dict(), all_states))
-    return jsonfiy(all_states)
+    return jsonify(all_states)
 
 
 def remove_state(state_id=None):
@@ -77,6 +76,6 @@ def update_state(state_id=None):
         for key, value in request_data.items():
             if key not in keys:
                 setattr(old_state, key, value)
-                old_state.save()
-                return jsonify(old_state.to_dict()), 200
-            raise NotFound()
+        old_state.save()
+        return jsonify(old_state.to_dict()), 200
+    raise NotFound()
