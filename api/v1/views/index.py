@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 ''' index and status view for the API'''
 from flask import jsonify
+
 from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
