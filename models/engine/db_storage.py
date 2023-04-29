@@ -80,13 +80,13 @@ class DBStorage:
         Returns an object based on its class and id
         """
 
-        if cls is none or id is None:
+        if cls is None or id is None:
             return
         elif cls.__name__ not in classes:
             return
 
         key = cls.__name__ + "." + id
-        objs = objs = self.__session.query(classes[cls]).all()
+        objs = objs = self.__session.query(classes[cls.__name__]).all()
         for obj in objs:
             if obj.__class__.__name__ == cls.__name__:
                 return obj
@@ -103,11 +103,9 @@ class DBStorage:
             for k, v in classes.items():
                 if k != "BaseModel":
                     objs = objs = self.__session.query(classes[k]).all()
-                    for obj in objs:
-                        obj_count += 1
+                    obj_count += len(objs)
+                    # print(len(objs))
         else:
-            objs = objs = self.__session.query(classes[cls]).all()
-            for obj in objs:
-                if obj.__class__.__name__ == cls.__name__:
-                    obj_count += 1
+            objs = objs = self.__session.query(classes[cls.__name__]).all()
+            obj_count = len(objs)
         return obj_count
