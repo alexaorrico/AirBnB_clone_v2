@@ -11,4 +11,3 @@ def api_status():
     """a function to return api status"""
 
     return jsonify({"status": "OK"})
-
