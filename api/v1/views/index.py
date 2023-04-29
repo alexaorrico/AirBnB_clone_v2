@@ -14,8 +14,10 @@ from models import storage
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """ Returns Status of api"""
-
+    """ Returns Status of a """
+    return jsonify({
+        "status": "OK"
+        })
     status = {"status": "OK"}
     return jsonify(status)
 

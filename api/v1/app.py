@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""	This is app.py for v1 api """
-
+""" module to run flask app """
 from api.v1.views import app_views
 from flask import Flask, jsonify
 from models import storage
