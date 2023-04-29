@@ -16,7 +16,7 @@ from models.user import User
 def get_api_status():
     '''Gets the status of the api
     '''
-    #return jsonify(status='OK')
+    # return jsonify(status='OK')
     return jsonify({'status': 'OK'})
 
 
@@ -25,13 +25,13 @@ def get_api_stats():
     """gets the number of each objects"""
 
     stats = {
-      'amenities': Amenity,
-    'cities': City,
-    'places': Place,
-    'reviews': Review,
-    'states': State,
-    'users': User
-    }
+            'amenities': Amenity,
+            'cities': City,
+            'places': Place,
+            'reviews': Review,
+            'states': State,
+            'users': User
+            }
     for key, value in stats.items():
-       stats[key] = storage.count(value)
-    return jsonify(stats)
+        stats[key] = storage.count(value)
+        return jsonify(stats)
