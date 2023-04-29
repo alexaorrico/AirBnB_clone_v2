@@ -10,3 +10,4 @@ from . import amenities
 from . import users
 from . import places
 from . import places_reviews
+from . import places_amenities
