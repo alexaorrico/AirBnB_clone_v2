@@ -17,7 +17,7 @@ def get_all_users():
                  strict_slashes=False)
 def get_user(user_id):
     """Returns a User object with a matching id"""
-    user = storage.all(User).get(User.__name__ + '.' + user_id, None)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
 
@@ -28,7 +28,7 @@ def get_user(user_id):
                  strict_slashes=False)
 def delete_user(user_id):
     """Deletes User object with a matching id"""
-    user = storage.all(User).get(User.__name__ + '.' + user_id, None)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
 

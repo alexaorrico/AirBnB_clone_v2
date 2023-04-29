@@ -17,8 +17,7 @@ def get_amenities():
                  strict_slashes=False)
 def get_amenity(amenity_id):
     """Returns an Amenity object with a matching id"""
-    amenity = storage.all(Amenity).get(
-            Amenity.__name__ + '.' + amenity_id, None)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
 
@@ -29,8 +28,7 @@ def get_amenity(amenity_id):
                  strict_slashes=False)
 def delete_amenity(amenity_id):
     """Deletes a matching Amenity objects"""
-    amenity = storage.all(Amenity).get(
-            Amenity.__name__ + '.' + amenity_id, None)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
 
@@ -57,8 +55,7 @@ def create_amenity():
                  strict_slashes=False)
 def update_amenity(amenity_id):
     """Updates a matching Amenity objects with JSON data"""
-    amenity = storage.all(Amenity).get(
-            Amenity.__name__ + '.' + amenity_id, None)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
 

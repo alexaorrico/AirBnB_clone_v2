@@ -12,7 +12,7 @@ from models.city import City
                  strict_slashes=False)
 def get_cities(state_id):
     """Returns a list of all City Objects of a State"""
-    state = storage.all(State).get(State.__name__ + '.' + state_id, None)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify([x.to_dict() for x in state.cities])
@@ -22,7 +22,7 @@ def get_cities(state_id):
                  strict_slashes=False)
 def get_city(city_id):
     """Returns a City Object with a matching id"""
-    city = storage.all(City).get(City.__name__ + '.' + city_id, None)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     return jsonify(city.to_dict())
@@ -32,7 +32,7 @@ def get_city(city_id):
                  strict_slashes=False)
 def delete_city(city_id):
     """Deletes the City object with the matching id"""
-    city = storage.all(City).get(City.__name__ + '.' + city_id, None)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
@@ -45,7 +45,7 @@ def delete_city(city_id):
                  strict_slashes=False)
 def create_city(state_id):
     """Create a new City object for a matching state id"""
-    state = storage.all(State).get(State.__name__ + '.' + state_id, None)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -64,7 +64,7 @@ def create_city(state_id):
                  strict_slashes=False)
 def update_city(city_id):
     """Updates matching City Object with JSON data"""
-    city = storage.all(City).get(City.__name__ + '.' + city_id, None)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 

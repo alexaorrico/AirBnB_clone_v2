@@ -18,7 +18,7 @@ def get_all_states():
                  strict_slashes=False)
 def get_state(state_id):
     """Returns a json representation of a matching state"""
-    state = storage.all(State).get(State.__name__ + '.' + state_id, None)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -53,7 +53,7 @@ def create_state():
 def update_state(state_id):
     """Update State object data from PUT json data"""
 
-    state = storage.all(State).get(State.__name__ + '.' + state_id, None)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
