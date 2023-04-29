@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This is the Index file for package views"""
+"""The Index file for package views"""
 
 from api.v1.views import app_views
 from flask import jsonify
@@ -28,7 +28,7 @@ def get_status():
     return jsonify(status="OK")
     
     
- @app_views.route('/stats')
+@app_views.route('/stats')
  def get_stats():
      """function returns stats of all models"""
      stats = {}
