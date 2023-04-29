@@ -57,12 +57,13 @@ class DBStorage:
         for ob in M_dict.values():
             if ob.id == id:
                 return ob
-            return None
+        return None
+
     def count(self, cls=None):
         """count the number of objects in storage"""
         M_dict = self.all(cls)
         return len(M_dict)
-        
+
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
