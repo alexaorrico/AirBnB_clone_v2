@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""A Script that return the status of API"""
+"""
+A Script that return the status of API
+"""
 import os
 from flask import Flask
 from flask_cors import CORS, cross_origin
@@ -17,15 +19,55 @@ port = os.getenv('HBNB_API_PORT', 5000)
 
 
 @app.teardown_appcontext
-def teardown(exc):
-    """Function that closes the current session"""
+def teardown(exception):
+    """
+    Function that closes the current session
+    on the SQLAlchemy
+    """
     storage.close()
 
 
-@app.error_handler(404)
-def error_handler():
-    """A route that handles 404 (not found) error"""
+@app.errorhandler(404)
+def error_handler(exception):
+    """
+    A route that handles 404 (not found) error
+    on the event the global error fails.
+    """
     return jsonify({"error": "Not found"})
+
+
+@app.errorhandler(400)
+def handle_400():
+    """
+    Handles 400 error
+    """
+    code = exception.__str__().split()[0]
+    description = exception.description
+    return make_response(jsonify({"error": description}), code)
+
+
+@app.errorhandler(Exception)
+def global_error_handler(err):
+    """
+        Global route to handle all errors
+    """
+    if isinstance(err, HTTPException):
+        if type(err).__name__ == 'NotFound':
+            err.description = "Not found"
+        message = {'error': err.description}
+        code = err.code
+    else:
+        message = {'error': err}
+        code = 500
+    return make_response(jsonify(message), code)
+
+
+def setup_global_errors():
+    """
+    HTTPException with custom error
+    """
+    for cls in HTTPException.__subclass__():
+        app.register_error_handler(cls, global_error_handler)
 
 
 if __name__ == '__main__':
