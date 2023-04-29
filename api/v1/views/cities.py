@@ -6,7 +6,7 @@ from models import storage, CNC
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
-def City(state_id):
+def cities(state_id):
     """A route that either retrieves all cities of a state
        or Create a city for a state.
        Parameter:
@@ -37,7 +37,7 @@ def City(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
-def City(city_id):
+def city_by_id(city_id):
     """A route handles fetching of cities, deletting cities
     of a state or updating the cities of a state.
     Parameters:

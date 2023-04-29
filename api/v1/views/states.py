@@ -6,7 +6,7 @@ from models import storage, CNC
 
 
 @app_views.route('/states', methods=['GET', 'POST'])
-def State():
+def states():
     """Route that fetch/Add State Objects"""
     if request.method == 'GET':
         states = storage.all('State')

@@ -6,7 +6,7 @@ from models import storage, CNC
 
 
 @app_views.route('/amenities', methods=['GET', 'POST'])
-def State():
+def amenities():
     """Route that fetch/Add Amenity Objects"""
     if request.method == 'GET':
         amenities = storage.all('Amenity')
@@ -26,7 +26,7 @@ def State():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'])
-def get_state_by_id(state_id):
+def get_amenities_by_id(amenity_id):
     """Route that handles retrieving and deleteing
        a Amenity base on the amenity_id
        Parameter:
