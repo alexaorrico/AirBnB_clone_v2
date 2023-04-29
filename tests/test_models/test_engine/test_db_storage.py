@@ -87,31 +87,30 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    class TestNewMethodsDb(unittest.TestCase):
-        """ Testing get and count methods in db_storage """
+class TestNewMethodsDb(unittest.TestCase):
+    """ Testing get and count methods in db_storage """
 
-        def setUp(self):
-            """ set up for db """
-            self.obj_instance = State(name="Vienna")
+    def setUp(self):
+        """ set up for db """
+        self.obj_instance = State(name="Vienna")
 
-        def tearDown(self):
-            self.obj_instance.delete()
+    def tearDown(self):
+        self.obj_instance.delete()
 
-        def test_count(self):
-            """ Testing for count method """
+    def test_count(self):
+        """ Testing for count method """
 
-            obj_count = models.storage.count(State)
-            self.obj_instance.save()
-            obj_second_count = models.storage.count(State)
+        obj_count = models.storage.count(State)
+        self.obj_instance.save()
+        obj_second_count = models.storage.count(State)
 
-            self.assetEqual(obj_count + 1, obj_second_count)
+        self.assetEqual(obj_count + 1, obj_second_count)
+    def test_get(self):
+        """ Testing for get method """
+        self.obj_instance.save()
+        id = self.obj_instance.id
+        get_obj = models.storage.get(State, id)
 
-        def test_get(self):
-            """ Testing for get method """
-            self.obj_instance.save()
-            id = self.obj_instance.id
-            get_obj = models.storage.get(State, id)
-
-            self.assertEqual(id, get_obj.id)
-            self.assertInstance(get_obj, State)
-            self.assertEqual(type(id), str)
+        self.assertEqual(id, get_obj.id)
+        self.assertInstance(get_obj, State)
+        self.assertEqual(type(id), str)
