@@ -47,7 +47,7 @@ class FileStorage:
         """counts objects in the database"""
 
         my_dict = self.all(cls)
-        return (len(my_dict)) 
+        return (len(my_dict))
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
