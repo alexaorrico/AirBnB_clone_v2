@@ -68,14 +68,13 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
@@ -86,3 +85,18 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get(self):
+        """Test the get method"""
+        storage = DBStorage()
+        first_state_id = list(storage.all(State).values())[0].id
+        state = storage.get(State, first_state_id)
+        self.assertIsInstance(state, State)
+        state = storage.get(State, "f8d21261-3e79-4f5c-829a-99d7452cd73c")
+        self.assertIsNone(state)
+
+    def test_count(self):
+        '''Test count method'''
+        storage = DBStorage()
+        self.assertEqual(len(storage.all()), storage.count())
+        self.assertEqual(len(storage.all(City)), storage.count(City))
