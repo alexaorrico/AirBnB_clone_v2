@@ -14,7 +14,7 @@ port = os.getenv('HBNB_API_PORT', 5000)
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(exc):
     """Function that closes the current session"""
     storage.close()
 
