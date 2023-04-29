@@ -14,22 +14,23 @@ from models import storage
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """ Returns Status of api"""
-
+    """ Returns Status of a """
     return jsonify({
         "status": "OK"
         })
+    status = {"status": "OK"}
+    return jsonify(status)
 
 
-@app_views.route('/api/v1/stats', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def class_number():
     """Returns The Number of Each Individual Class"""
     dict_count = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
-        "Places": storage.count(Places),
+        "Places": storage.count(Place),
         "Review": storage.count(Review),
         "state": storage.count(State),
-        "users": strorage.count(User)
+        "users": storage.count(User)
     }
     return jsonify(dict_count)
