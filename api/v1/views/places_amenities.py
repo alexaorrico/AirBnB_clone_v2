@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Creates a view for Place_amenity"""
 
 from models import storage, storage_t
