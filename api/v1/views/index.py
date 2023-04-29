@@ -2,7 +2,7 @@
 """ Index File """
 
 from api.v1.views import app_views
-import json
+from flask import jsonify
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -17,18 +17,18 @@ def status():
     """ Returns Status of api"""
 
     status = {"status": "OK"}
-    return json.dumps(status, indent=2)
+    return jsonify(status)
 
 
-@app_views.route('/api/v1/stats', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def class_number():
     """Returns The Number of Each Individual Class"""
     dict_count = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
-        "Places": storage.count(Places),
+        "Places": storage.count(Place),
         "Review": storage.count(Review),
         "state": storage.count(State),
-        "users": strorage.count(User)
+        "users": storage.count(User)
     }
     return jsonify(dict_count)
