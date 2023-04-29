@@ -24,21 +24,21 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class TestFileStorageDocs(unittest.TestCase):
-    """Tests to check the documentation and style of FileStorage class"""
+    """Tests for the documentation and style of FileStorage class"""
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
 
     def test_pep8_conformance_file_storage(self):
-        """Test that models/engine/file_storage.py conforms to PEP8."""
+        """Test if models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
-        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
+        """Test if tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_file_storage.py'])
@@ -60,7 +60,7 @@ test_file_storage.py'])
                         "FileStorage class needs a docstring")
 
     def test_fs_func_docstrings(self):
-        """Test for the presence of docstrings in FileStorage methods"""
+        """Test to check for docstrings in FileStorage methods"""
         for func in self.fs_f:
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
@@ -69,7 +69,7 @@ test_file_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+    """Test for FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +113,29 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count method returns accurate count of objects"""
+        storage = FileStorage()
+        # clear objects from storage
+        FileStorage._FileStorage__objects.clear()
+        storage.save()
+        # create new object of each class
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            FileStorage._FileStorage__objects[instance_key] = instance
+        storage.save()
+        self.assertEqual(storage.count(), 7)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that count method returns object by valid id"""
+        storage = FileStorage()
+        storage.save()
+        # create new object
+        state = State()
+        storage.new(state)
+        state_id = state.to_dict()['id']
+        self.assertTrue(storage.get(State, state_id) is state)
