@@ -63,7 +63,7 @@ def addPlace(city_id):
     user_id = obj['user_id']
     user = storage.get(User, user_id)
     if not user:
-        abort(400)
+        abort(404)
 
     if 'name' not in obj:
         abort(400, "Missing name")
