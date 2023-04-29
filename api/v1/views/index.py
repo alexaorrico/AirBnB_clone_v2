@@ -16,8 +16,8 @@ from models.user import User
 def get_api_status():
     '''Gets the status of the api
     '''
-    return jsonify(status='OK')
-    #return jsonify({'status': 'OK'})
+    #return jsonify(status='OK')
+    return jsonify({'status': 'OK'})
 
 
 @app_views.route('/stats')
