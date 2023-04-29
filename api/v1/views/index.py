@@ -16,7 +16,9 @@ from models import storage
 def status():
     """ Returns Status of api"""
 
-    return jsonify({"status": "OK"})
+    return jsonify({
+        "status": "OK"
+        })
 
 
 @app_views.route('/api/v1/stats', strict_slashes=False)
