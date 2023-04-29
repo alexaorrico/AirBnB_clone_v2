@@ -117,20 +117,38 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_delete(self):
         """Test delete object if not None"""
-        
+        new = {"name": "Test delete"}
+        new = State(**new)
+        new.save()
+        old_len = len(models.storage.all(State))
+        models.storage.delete(new)
+        new_len = len(models.storage.all(State))
+        self.assertLess(new_len, old_len)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_reload(self):
-        """Test that a db session is created and ready for use"""    
+        """Test that a db session is created and ready for use"""
+        self.assertIsNone(models.storage.reload())
 
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_close(self):
-        """Test closing db session""""
+        """Test closing db session"""
+        self.assertIsNone(models.storage.close())
 
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_get(self):
-       """Test get that retrieve one object that belong to a class"""
+        """Test get that retrieve one object that belong to a class"""
+        new = {"name": "Test get"}
+        new = State(**new)
+        new.save()
+        first_state_id = list(models.storage.all(State).values())[0].id
+        state = models.storage.get(State, first_state_id)
+        self.assertTrue(state)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
-    def test_get(self):
+    def test_count(self):
         """Test Count object by class or all object in file storage"""
+        total_states_obj = models.storage.count(State)
+        total_obj = models.storage.count()
+        self.assertGreaterEqual(total_states_obj, 0)
+        self.assertGreaterEqual(total_obj, 0)
