@@ -84,15 +84,13 @@ class DBStorage:
         Returns:
             `obj` based on `cls and `id``, or None if not found
         """
-        from models import storage
-
         if cls not in classes and cls not in classes.values():
             raise TypeError("{} is not a valid class type".format(cls))
 
         if type(id) != str:
             raise TypeError("id must be a string")
 
-        return next((obj for obj in storage.all(cls).values() if obj.id == id),
+        return next((obj for obj in self.all(cls).values() if obj.id == id),
                     None)
 
     def count(self, cls=None):
@@ -106,10 +104,8 @@ class DBStorage:
             Count of objects belonging to `cls` in storage,
                 or count of all objects if `cls` is None.
         """
-        from models import storage
-
         if cls is None:
-            return len(storage.all(cls).values())
+            return len(self.all().values())
 
         if cls not in classes and cls not in classes.values():
             raise TypeError("{} is not a valid class type".format(cls))
@@ -117,5 +113,4 @@ class DBStorage:
         if type(cls) == str:
             cls = classes[cls]
 
-        return sum(1 for obj in storage.all(cls).values()
-                   if obj.__class__ == cls)
+        return len(self.all(cls).values())
