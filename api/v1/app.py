@@ -1,14 +1,18 @@
 #!/usr/bin/python3
+"""
+    flask application
+"""
 from flask import Flask, Blueprint
 from models import storage
 from os import getenv
 from api.v1.views import app_views
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def closeDB():
+def closeDB(obj):
     """Close the database"""
     storage.close()
 
