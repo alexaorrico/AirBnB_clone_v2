@@ -15,4 +15,3 @@ class TestAPI(TestCase):
     def test_new_api_route(self):
         """Test the /status route"""
         pass
-
