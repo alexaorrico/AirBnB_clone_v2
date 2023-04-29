@@ -86,7 +86,7 @@ class DBStorage:
             return
 
         key = cls.__name__ + "." + id
-        objs = objs = self.__session.query(classes[clss]).all()
+        objs = objs = self.__session.query(classes[cls]).all()
         for obj in objs:
             if obj.__class__.__name__ == cls.__name__:
                 return obj
@@ -97,12 +97,16 @@ class DBStorage:
         returns counts of objects
         """
 
-        objs = objs = self.__session.query(classes[clss]).all()
+        # objs = objs = self.__session.query(classes[clss]).all()
         obj_count = 0
         if cls is None:
-            for obj in objs:
-                obj_count += 1
+            for k, v in classes.items():
+                if k != "BaseModel":
+                    objs = objs = self.__session.query(classes[k]).all()
+                    for obj in objs:
+                        obj_count += 1
         else:
+            objs = objs = self.__session.query(classes[cls]).all()
             for obj in objs:
                 if obj.__class__.__name__ == cls.__name__:
                     obj_count += 1
