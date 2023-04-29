@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Script for the city views """
 from flask import abort, jsonify, request
 from models import storage
 from models.state import State
