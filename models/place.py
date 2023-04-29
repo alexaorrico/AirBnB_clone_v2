@@ -2,8 +2,7 @@
 """ holds class Place"""
 import models
 from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
+from models.amenity import Amenity
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
@@ -68,11 +67,18 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """getter attribute returns the list of Amenity instances"""
-            from models.amenity import Amenity
-            amenity_list = []
-            all_amenities = models.storage.all(Amenity)
-            for amenity in all_amenities.values():
-                if amenity.place_id == self.id:
-                    amenity_list.append(amenity)
-            return amenity_list
+            """Gets a list of all amenities associated with a place"""
+            from models import storage
+
+            return [amenity for amenity in storage.all(Amenity).values()
+                    if amenity.id in self.amenity_ids]
+
+        @amenities.setter
+        def amenities(self, obj):
+            """Adds new ids to the list of amenities for a place"""
+            if type(obj) != Amenity:
+                raise TypeError("Amenity must be an Amenity object")
+
+            if obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
+                setattr(self, "amenity_ids", self.amenity_ids)
