@@ -4,6 +4,7 @@ from os import getenv
 from flask import Flask, make_response, jsonify
 from .views import app_views
 from models import storage
+from flask_cors import CORS
 
 # globals
 HBNB_API_HOST = getenv('HBNB_API_HOST', '0.0.0.0')
@@ -14,6 +15,10 @@ def create_app(config_name):
     ''' Main func, avoid litter global space'''
     app = Flask(__name__)
     app.url_map.strict_slashes = False
+
+    # set up cors
+    CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
+
     # set configs if available
     if config_name is not None:
         app.config.from_object(config_name)
