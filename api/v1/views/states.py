@@ -30,7 +30,7 @@ def get_a_state(state_id):
     abort(404)
 
 
-@app.views.route(
+@app_views.route(
         '/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_a_state(state_id):
     """deletes a state objects"""
