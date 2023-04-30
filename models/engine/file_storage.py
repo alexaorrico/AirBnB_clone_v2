@@ -29,8 +29,8 @@ class FileStorage:
         """retrieves an object"""
         obj = None
         key = cls.__name__ + '.' + id
-        if key in self.__objects:
-            obj = self.__objects[key]
+        if key in self.all(cls):
+            obj = self.all(cls)[key]
         return obj 
 
 

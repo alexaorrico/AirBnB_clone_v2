@@ -15,7 +15,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-
+from models.engine.file_storage import FileStorage
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
@@ -42,12 +42,16 @@ class DBStorage:
 
     def get(self, cls, id):
         """retrieves an object"""
-        return self.all(cls.id)
+        obj = None
+        key = cls.__name__ + '.' + id
+        if key in self.all(cls):
+            obj = self.all(cls)[key]
+        return obj 
 
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
-        return self.all(cls).get(cls.__name__ + '.' + id)
+        return len(self.all(cls)) 
 
     def all(self, cls=None):
         """query on the current database session"""
