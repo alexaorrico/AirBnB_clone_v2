@@ -82,18 +82,10 @@ class DBStorage:
             cls: classname
             id: string representing the object id
         """
-<<<<<<< HEAD
-        if cls in classes.values() and id and type(id) == str:
-            cls_objs = self.all(cls)
-            for key, value in cls_objs.items():
-                if key.split(".")[1] == id:
-                    return value
-=======
         objs = self.all(cls)
         for obj in objs.values():
             if obj.id == id:
                 return obj
->>>>>>> b84513ab28e128c746ca5c7b08d81b7a700a3abd
         return None
 
     def count(self, cls=None):
@@ -101,13 +93,6 @@ class DBStorage:
         retrieves the number of ojects in corresponding to cls. if cls is
         none, rhen get the the number of all object in rhe class
         """
-<<<<<<< HEAD
-        data = self.all(cls)
-        if cls in classes.values():
-		data = self.all(cls)
-	return len(data)
-=======
         objs = self.all(cls)
         num_objs = len(objs)
         return num_objs
->>>>>>> b84513ab28e128c746ca5c7b08d81b7a700a3abd
