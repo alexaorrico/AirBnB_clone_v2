@@ -2,12 +2,12 @@
 """
 A Script that return the status of API
 """
-import os
-from flask import Flask
-from flask_cors import CORS
-from werkzeug.exceptions import HTTPException
-from models import storage
 from app.v1.views import app_views
+from flask import Flask, jsonify, make_response, render_template, url_for
+from flask_cors import CORS
+from models import storage
+import os
+from werkzeug.exceptions import HTTPException
 
 
 app = Flask(__name__)
