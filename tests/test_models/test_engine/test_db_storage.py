@@ -36,8 +36,9 @@ class TestDBStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+        result = pep8s.check_files(
+            ['tests/test_models/test_engine test_db_storage.py']
+            )
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -62,8 +63,7 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
-            
-
+   
     def test_get_dbstorage(self):
         """Test dbstorage with valid data"""
         obj = State(name="Delta state")
