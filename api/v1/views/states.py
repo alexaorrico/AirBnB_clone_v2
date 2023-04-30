@@ -1,4 +1,4 @@
-#!/uar/bin/puthon3
+#!/usr/bin/puthon3
 '''
 Handles all default RESTFul API actions for state objects
 '''
