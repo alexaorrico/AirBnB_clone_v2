@@ -1,192 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zxx">
   <head>
-	<!-- HEAD -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Holberton AirBnB</title>
-
-	<!-- FAVICON -->
-	<link rel="shortcut icon" href="images/icon.png">
-
-	<!-- ********************** CSS styles -->
-	<link rel="stylesheet" href="styles/4-common.css">
-	<link rel="stylesheet" href="styles/3-header.css">
-	<link rel="stylesheet" href="styles/3-footer.css">
-	<link rel="stylesheet" href="styles/6-filters.css">
-	<link rel="stylesheet" href="styles/8-places.css">
-
-	<!-- ********************** Font Awesome -->
-	<link rel="stylesheet" href="/styles/font-awesome.css">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles/4-common.css">
+    <link rel="stylesheet" href="styles/3-header.css">
+    <link rel="stylesheet" href="styles/3-footer.css">
+    <link rel="stylesheet" href="styles/6-filters.css">
+    <link rel="stylesheet" href="styles/8-places.css">
+    <link rel="icon" href="images/icon.png" type="image/png">
+    <title>AirBnb Clone</title>
   </head>
-  <!-- ********************** BODY -->
   <body>
-	<!-- ********************** HEADER -->
-	<header>
-	</header>
-	<main>
-	  <div class="container">
-		<!-- ********************** FILTERS -->
-		<section class="filters">
-		  <!-- ********************** LOCATIONS -->
-		  <div class="locations">
-			<h3>States</h3>
-			<h4>Lorem ipsum dolor</h4>
-			<ul class="popover">
-			  <li><h2>California</h2>
-				<ul>
-				  <li>Pacifica</li>
-				  <li>San Diego</li>
-				</ul>
-			  </li>
-			  <li><h2>Illinois</h2>
-				<ul>
-				  <li>Chicago</li>
-				  <li>Winnetka</li>
-				</ul>
-			  </li>
-			</ul>
-		  </div>
-		  <!-- ********************** AMENITIES -->
-		  <div class="amenities">
-			<h3>Amenities</h3>
-			<h4>adipiscing elit</h4>
-			<ul class="popover">
-			  <li>Pool</li>
-			  <li>Wifi</li>
-			  <li>Breakfast</li>
-			  <li>Garage</li>
-			</ul>
-		  </div>
-		  <!-- ********************** SEARCH BUTTON -->
-		  <button>Search</button>
-		</section>
-		<!-- ********************** PLACES -->
-		<section class="places">
-		  <h1>Places</h1>
-		  <article>
-			<!-- ********************** place: flatland
-			  -->
-			<div class="title">
-			  <h2>Flatland</h2>
-			  <div class="price_by_night">
-				$80
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				5 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				4 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** USER
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  I wandered lonely as a cloud That floats on high o'er vales and
-			  hills, When all at once I saw a crowd, A host, of golden
-			  daffodils; Beside the lake, beneath the trees, Fluttering and
-			  dancing in the breeze.
-			</div>
-		  </article>
-		  <article>
-			<!-- ********************** place: closet
-			  -->
-			<div class="title">
-			  <h2>Closet</h2>
-			  <div class="price_by_night">
-				$7
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				2 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				2 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** user
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  Continuous as the stars that shine And twinkle on the milky way,
-			  They stretched in never-ending line Along the margin of a bay:
-			  Ten thousand saw I at a glance, Tossing their heads in sprightly
-			  dance.
-			</div>
-		  </article>
-		  <article>
-			<!-- ********************** place: big home
-			  -->
-			<div class="title">
-			  <h2>Big Home</h2>
-			  <div class="price_by_night">
-				$99
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				20 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				4 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** user
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  The waves beside them danced; but they Out-did the sparkling
-			  waves in glee: A poet could not but be gay, In such a jocund
-			  company: I gazed—and gazed—but little thought What wealth the
-			  show to me had brought: For oft, when on my couch I lie In vacant
-			  or in pensive mood, They flash upon that inward eye Which is the
-			  bliss of solitude; And then my heart with pleasure fills, And
-			  dances with the daffodils.
-			</div>
-		  </article>
-		</section>
+    <header>
+      <div class="logo">
+      </div>
+    </header>
+    <div class="container">
+      <section class="filters">
+	<div class="locations">
+	  <h3>States</h3>
+	  <h4>California, New York...</h4>
+	  <ul class="popover">
+	    <li>
+	      <h2>California:</h2>
+	      <ul>
+		<li>San Francisco</li>
+		<li>Mountain View</li>
+	      </ul>
+	    </li>
+	    <li>
+	      <h2>New York:</h2>
+	      <ul>
+		<li>Manhattan</li>
+		<li>Brooklyn</li>
+	      </ul>
+	    </li>
+	  </ul>
+	</div>
+	<div class="amenities">
+	  <h3>Amenities</h3>
+	  <h4>Laundry, Internet...</h4>
+	  <ul class="popover">
+            <li>Laundry</li>
+	    <li>Internet</li>
+	    <li>Television</li>
+	    <li>Pool</li>
+	  </ul>
+	</div>
+	<button>
+	  Search
+	</button>
+      </section>
+      <section class="places">
+	<h1>Places</h1>
+	<article>
+	  <h2>My home</h2>
+	  <div class="price_by_night">
+	    <p>$80</p>
 	  </div>
-	</main>
-	<!-- FOOTER -->
-	<footer>
-	  Holberton School
-	</footer>
+	  <div class="information">
+	    <div class="max_guest">
+	      <div class="guest_image"></div>
+	      <p>2 Guests</p>
+	    </div>
+	    <div class="number_rooms">
+	      <div class="bed_image"></div>
+	      <p>1 Bedroom</p>
+	    </div>
+	    <div class="number_bathrooms">
+	      <div class="bath_image"></div>
+	      <p>1 Bathroom</p>
+	    </div>
+	  </div>
+	  <div class="user">
+	    <p><b>Owner: </b>Jon Snow</p>
+	  </div>
+	  <div class="description">
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	  </div>
+	</article>
+	<article>
+	  <h2>Tiny house</h2>
+	  <div class="price_by_night">
+	    <p>$65</p>
+	  </div>
+	  <div class="information">
+	    <div class="max_guest">
+	      <div class="guest_image"></div>
+	      <p>4 Guests</p>
+	    </div>
+	    <div class="number_rooms">
+	      <div class="bed_image"></div>
+	      <p>2 Bedroom</p>
+	    </div>
+	    <div class="number_bathrooms">
+	      <div class="bath_image"></div>
+	      <p>1 Bathroom</p>
+	    </div>
+	  </div>
+	  <div class="user">
+	    <p><b>Owner: </b>Daenerys Targaryen</p>
+	  </div>
+	  <div class="description">
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	  </div>
+	</article>
+	<article>
+	  <h2>A suite</h2>
+	  <div class="price_by_night">
+	    <p>$190</p>
+	  </div>
+	  <div class="information">
+	    <div class="max_guest">
+	      <div class="guest_image"></div>
+	      <p>6 Guests</p>
+	    </div>
+	    <div class="number_rooms">
+	      <div class="bed_image"></div>
+	      <p>3 Bedroom</p>
+	    </div>
+	    <div class="number_bathrooms">
+	      <div class="bath_image"></div>
+	      <p>2 Bathroom</p>
+	    </div>
+	  </div>
+	  <div class="user">
+	    <p><b>Owner: </b>Azor Ahai</p>
+	  </div>
+	  <div class="description">
+	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	  </div>
+	</article>
+      </section>
+    </div>
+    <footer>
+      <p>
+	Holberton School
+      </p>
+    </footer>
   </body>
 </html>
