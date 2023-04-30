@@ -3,7 +3,6 @@
 Contains the TestFileStorageDocs classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models.engine import file_storage
@@ -15,7 +14,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
-import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -67,45 +65,6 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    def test_get_db(self):
-        """Test dbstorage with basic data"""
-        stateObj = State(name="GokuState")
-        stateObj.save()
-        models.storage.save()
-        listObj = list(models.storage.all(State).values())[0].id
-        strObj = str(models.storage.all()['State.' + listObj])
-        self.assertNotEqual(strObj, None)
-
-    def test_classofoutput_get_count_db(self):
-        """Test count dbstorage"""
-        total = (models.storage.count())
-        self.assertEqual(type(total), int)
-        totalState = (models.storage.count(State))
-        self.assertEqual(type(totalState), int)
-        state_id0 = list(models.storage.all(State).values())[0].id
-        classGet = models.storage.get(State, state_id0)
-        self.assertEqual(str(type(classGet)), "<class 'models.state.State'>")
-
-    def test_get_fs(self):
-        """Test fstorage"""
-        stateObj = State(name="GokuState")
-        stateObj.save()
-        failTry = models.storage.get('State', 'failId')
-        self.assertEqual(failTry, None)
-        failTry2 = models.storage.get('failId', stateObj.id)
-        self.assertEqual(failTry2, None)
-
-    def test_count_fs(self):
-        """count fs"""
-        count = models.storage.count()
-        countClass = models.storage.count('State')
-        newState = State(name="GokuState")
-        newState.save()
-        newCount = models.storage.count()
-        newCountClass = models.storage.count('State')
-        self.assertEqual(count + 1, newCount)
-        self.assertEqual(countClass + 1, newCountClass)
-
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -152,3 +111,33 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get returns the correct object"""
+        storage = FileStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        instance = storage.get(State, instance.id)
+        self.assertEqual(instance, new_dict[instance_key])
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count returns the correct number of objects"""
+        storage = FileStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        count = storage.count()
+        self.assertEqual(count, len(new_dict))
+        FileStorage._FileStorage__objects = save
