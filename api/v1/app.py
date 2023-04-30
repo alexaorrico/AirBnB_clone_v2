@@ -1,40 +1,40 @@
-s module initiates the api"""
-from flask import Flask, make_response, jsonify
+#!/usr/bin/python3
+
+"""
+Flask web application api
+"""
+
 from models import storage
 from api.v1.views import app_views
-from os import getenv
+from flask import Flask, make_response, jsonify
 from flask_cors import CORS
+import os
+
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-cors = CORS(app, resources={r'/*': {'origins': '0.0.0.0'}})
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    """closes the storage on teardown"""
+    storage.close()
 
 
 @app.errorhandler(404)
-def page_not_found(error):
+def not_found(error):
+    """ Return an 'error: not found' JSON response """
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 @app.errorhandler(400)
 def bad_request(error):
-    d = error.description
-    msgs = ["Missing name", "Missing email",
-            "Missing password", "Missing user_id",
-            "Missing text"]
-    message = 'Not a Json' if d not in msgs else d
-    return make_response(jsonify({'error': message}), 400)
+    return make_response(jsonify({'error': error.description}), 400)
 
 
-@app.teardown_appcontext
-def tear_down_db(execute):
-    """Removes the current SQLAlchemy session after each request
-    is completed"""
-    storage.close()
-
-
-if __name__ == "__main__":
-    app.run(host=getenv('HBNB_API_HOST', '0.0.0.0'),
-            port=getenv('HBNB_API_PORT', 5000),
-            threaded=True, debug=True)
+if __name__ == '__main__':
+    my_host = os.getenv('HBNB_API_HOST')
+    my_port = os.getenv('HBNB_API_PORT')
+    app.run(host=my_host, port=int(my_port), threaded=True)
