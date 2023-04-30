@@ -45,6 +45,10 @@ def get_user(user_id=None):
             data = request.get_json()
             if not data:
                 abort(400, 'Not a JSON')
-            user_obj.name = data.get('name')
+            ignore_keys = ["id", "email", "created_at", "updated_at"]
+            for key, value in data.items():
+                if key in ignore_keys:
+                    continue
+                setattr(user_obj, key, value)
             user_obj.save()
             return jsonify(user_obj.to_dict()), 200
