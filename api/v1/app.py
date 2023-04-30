@@ -20,7 +20,7 @@ api_port = getenv('HBNB_API_PORT', 5000)
 
 
 @app.teardown_appcontext
-def db_close(error):
+def teardown(self):
     """
     Commit changes in database
     """
@@ -33,7 +33,7 @@ def Error_Handler(error):
     The Error handler method is to hide a web page or an item from a user
     it also serve to redirect a user back to the main page
     """
-    return jasonify({"error": "Not found"}, 404)
+    return jsonify({"error": "Not found"}, 404)
 
 
 if __name__ == "__main__":
