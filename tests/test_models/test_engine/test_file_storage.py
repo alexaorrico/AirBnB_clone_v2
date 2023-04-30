@@ -3,9 +3,10 @@
 Contains the TestFileStorageDocs classes
 """
 
-from datetime import datetime
 import inspect
+import os
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -15,7 +16,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
-import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -68,9 +68,10 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -78,7 +79,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -94,7 +94,6 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -113,3 +112,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_with_valid_class_and_id(self):
+        """Test get with valid class and id"""
+        new1 = BaseModel()
+        new2 = BaseModel()
+        new1.save()
+        new2.save()
+        self.assertIn(storage.get(BaseModel, new1.id), new1.__str__())
+        self.assertIn(storage.get(BaseModel, new2.id), new2.__str__())
+        new1.delete()
+        new2.delete()
+
+    def test_get_with_invalid_id(self):
+        """Test get with invalid id"""
+        new1 = BaseModel()
+        new2 = BaseModel()
+        new1.save()
+        self.assertIsNone(storage.get(BaseModel, new2.id))
+        new1.delete()
+
+    def test_count_with_class(self):
+        """Test count with a class"""
+        new1 = BaseModel()
+        new2 = BaseModel()
+        new1.save()
+        new2.save()
+        self.assertEqual(storage.count(BaseModel), 3)
+        new1.delete()
+        new2.delete()
+
+    def count_with_no_class(self):
+        new1 = BaseModel()
+        new2 = BaseModel()
+        state = State()
+        new1.save()
+        new2.save()
+        state.save()
+        self.assertEqual(storage.count(), 3)
