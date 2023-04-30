@@ -1,227 +1,365 @@
 #!/usr/bin/python3
-'''
-    Implementing the console for the HBnB project.
-'''
+"""
+Command interpreter for Holberton AirBnB project
+"""
+import os
 import cmd
-import json
-import shlex
-import models
-from models import storage
-from models.base_model import BaseModel
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
+from models import base_model, user, storage, CNC
+
+BaseModel = base_model.BaseModel
+User = user.User
 
 
 class HBNBCommand(cmd.Cmd):
-    '''
-        Contains the entry point of the command interpreter.
-    '''
-    prompt = ("(hbnb) ")
+    """
+        Command inerpreter class
+    """
+    prompt = '(hbnb) '
+    ERR = [
+        '** class name missing **',
+        '** class doesn\'t exist **',
+        '** instance id missing **',
+        '** no instance found **',
+        '** attribute name missing **',
+        '** value missing **',
+        ]
 
-    def do_quit(self, args):
-        '''
-            Quit command to exit the program.
-        '''
-        return True
+    def preloop(self):
+        """
+            handles intro to command interpreter
+        """
+        print('.----------------------------.')
+        print('|    Welcome to hbnb CLI!    |')
+        print('|   for help, input \'help\'   |')
+        print('|   for quit, input \'quit\'   |')
+        print('.----------------------------.')
 
-    def do_EOF(self, args):
-        '''
-            Exits after receiving the EOF signal.
-        '''
-        return True
+    def postloop(self):
+        """
+            handles exit to command interpreter
+        """
+        print('.----------------------------.')
+        print('|  Well, that sure was fun!  |')
+        print('.----------------------------.')
 
-    def do_create(self, args):
-        '''
-            Create a new instance of class BaseModel and saves it
-            to the JSON file.
-        '''
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        try:
-            args = shlex.split(args)
-            new_instance = eval(args[0])()
-            for i in args[1:]:
-                try:
-                    key = i.split("=")[0]
-                    value = i.split("=")[1]
-                    if hasattr(new_instance, key) is True:
-                        value = value.replace("_", " ")
-                        try:
-                            value = eval(value)
-                        except:
-                            pass
-                        setattr(new_instance, key, value)
-                except (ValueError, IndexError):
-                    pass
-            new_instance.save()
-            print(new_instance.id)
-        except:
-            print("** class doesn't exist **")
-            return
-
-    def do_show(self, args):
-        '''
-            Print the string representation of an instance baed on
-            the class name and id given as args.
-        '''
-        args = shlex.split(args)
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        obj_dict = storage.all(args[0])
-        try:
-            eval(args[0])
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        key = args[0] + "." + args[1]
-        try:
-            value = obj_dict[key]
-            print(value)
-        except KeyError:
-            print("** no instance found **")
-
-    def do_destroy(self, args):
-        '''
-            Deletes an instance based on the class name and id.
-        '''
-        args = shlex.split(args)
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        elif len(args) == 1:
-            print("** instance id missing **")
-            return
-        class_name = args[0]
-        class_id = args[1]
-        storage.reload()
-        obj_dict = storage.all()
-        try:
-            eval(class_name)
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        key = class_name + "." + class_id
-        try:
-            del obj_dict[key]
-        except KeyError:
-            print("** no instance found **")
-        storage.save()
-
-    def do_all(self, args):
-        '''
-            Prints all string representation of all instances
-            based or not on the class name.
-        '''
-        args = args.split(" ")
-        obj_list = []
-        objects = storage.all(args[0])
-        try:
-            if args[0] != "":
-                models.classes[args[0]]
-        except (KeyError, NameError):
-            print("** class doesn't exist **")
-            return
-        try:
-            for key, val in objects.items():
-                obj_list.append(val)
-        except:
-            pass
-        print(obj_list)
-
-    def do_update(self, args):
-        '''
-            Update an instance based on the class name and id
-            sent as args.
-        '''
-        storage.reload()
-        args = shlex.split(args)
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        elif len(args) == 1:
-            print("** instance id missing **")
-            return
-        elif len(args) == 2:
-            print("** attribute name missing **")
-            return
-        elif len(args) == 3:
-            print("** value missing **")
-            return
-        try:
-            eval(args[0])
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        key = args[0] + "." + args[1]
-        obj_dict = storage.all()
-        try:
-            obj_value = obj_dict[key]
-        except KeyError:
-            print("** no instance found **")
-            return
-        try:
-            attr_type = type(getattr(obj_value, args[2]))
-            args[3] = attr_type(args[3])
-        except AttributeError:
-            pass
-        setattr(obj_value, args[2], args[3])
-        obj_value.save()
-
-    def emptyline(self):
-        '''
-            Prevents printing anything when an empty line is passed.
-        '''
+    def default(self, line):
+        """
+            default response for unknown commands
+        """
         pass
 
-    def do_count(self, args):
-        '''
-            Counts/retrieves the number of instances.
-        '''
-        obj_list = []
-        storage.reload()
-        objects = storage.all()
-        try:
-            if len(args) != 0:
-                eval(args)
-        except NameError:
-            print("** class doesn't exist **")
-            return
-        for key, val in objects.items():
-            if len(args) != 0:
-                if type(val) is eval(args):
-                    obj_list.append(val)
+    def emptyline(self):
+        """
+            Called when an empty line is entered in response to the prompt.
+        """
+        pass
+
+    def __class_err(self, arg):
+        """
+            private: checks for missing class or unknown class
+        """
+        error = 0
+        if len(arg) == 0:
+            print(HBNBCommand.ERR[0])
+            error = 1
+        else:
+            if isinstance(arg, list):
+                arg = arg[0]
+            if arg not in CNC.keys():
+                print(HBNBCommand.ERR[1])
+                error = 1
+        return error
+
+    def __id_err(self, arg):
+        """
+            private checks for missing ID or unknown ID
+        """
+        error = 0
+        if (len(arg) < 2):
+            error += 1
+            print(HBNBCommand.ERR[2])
+        if not error:
+            file_storage_objs = storage.all()
+            for key, value in file_storage_objs.items():
+                temp_id = key.split('.')[1]
+                if temp_id == arg[1] and arg[0] in key:
+                    return error
+            error += 1
+            print(HBNBCommand.ERR[3])
+        return error
+
+    def do_airbnb(self, arg):
+        """airbnb: airbnb
+        SYNOPSIS: Command changes prompt string"""
+        print("                      __ ___                        ")
+        print("    _     _  _ _||\ |/  \ | _  _  _|_|_     _  _ _| ")
+        print("|_||_)\)/(_|| (_|| \|\__/ || )(_)| |_| )\)/(_|| (_| ")
+        print("   |                                                ")
+        if HBNBCommand.prompt == '(hbnb) ':
+            HBNBCommand.prompt = " /_ /_ _  /_\n/ //_// //_/ "
+        else:
+            HBNBCommand.prompt = '(hbnb) '
+        arg = arg.split()
+        error = self.__class_err(arg)
+
+    def do_quit(self, line):
+        """quit: quit
+        USAGE: Command to quit the program
+        """
+        return True
+
+    def do_EOF(self, line):
+        """function to handle EOF"""
+        print()
+        return True
+
+    def __parse_string(self, value):
+        """ parses attribute value passed as string """
+        value = value.strip('"').replace('_', ' ')
+        index = 0
+        while index < len(value):
+            index = value.find('\\', index)
+            if index == -1:
+                break
+            if value[index+1] == '"':
+                value_list = list(value)
+                del value_list[index]
+                value = ''.join(value_list)
+                index += 2
+        return value
+
+    def __parse_number(self, value):
+        """ parses attribute value passed as number """
+        if value.find('.') != -1:
+            try:
+                value = float(value)
+            except:
+                pass
+        else:
+            try:
+                value = int(value)
+            except:
+                pass
+        return value
+
+    def do_create(self, arg):
+        """create: create [ARG]
+        ARG = Class Name
+        SYNOPSIS: Creates a new instance of the Class from given input ARG"""
+        arg = arg.split()
+        error = self.__class_err(arg)
+        if not error:
+            for k, v in CNC.items():
+                if k == arg[0]:
+                    my_obj = v()
+                    for param in arg[1:]:
+                        attribute = param.split('=')
+                        value = attribute[1]
+                        if value[0] == '"' and value[-1] == '"':
+                            value = self.__parse_string(value)
+                        else:
+                            value = self.__parse_number(value)
+                        my_obj.bm_update(attribute[0], value)
+                    my_obj.save()
+                    print(my_obj.id)
+
+    def do_show(self, arg):
+        """show: show [ARG] [ARG1]
+        ARG = Class
+        ARG1 = ID #
+        SYNOPSIS: Prints object of given ID from given Class"""
+        arg = arg.split()
+        error = self.__class_err(arg)
+        if not error:
+            error += self.__id_err(arg)
+        if not error:
+            file_storage_objs = storage.all()
+            for k, v in file_storage_objs.items():
+                if arg[1] in k and arg[0] in k:
+                    print(v)
+
+    def do_all(self, arg):
+        """all: all [ARG]
+        ARG = Class
+        SYNOPSIS: prints all objects of given class"""
+        error = 0
+        if arg:
+            arg = arg.split()
+            arg = str(arg[0])
+            error = self.__class_err(arg)
+        if not error:
+            file_storage_objs = storage.all(arg)
+            l = 0
+            if arg:
+                for v in file_storage_objs.values():
+                    if isinstance(arg, str):
+                        if type(v).__name__ == CNC[arg].__name__:
+                            l += 1
+                    else:
+                        if type(v).__name__ == CNC[arg[0]].__name__:
+                            l += 1
+                c = 0
+                for v in file_storage_objs.values():
+                    if isinstance(arg, str):
+                        if type(v).__name__ == CNC[arg].__name__:
+                            c += 1
+                            print(v, end=(', ' if c < l else ''))
+                    else:
+                        if type(v).__name__ == CNC[arg[0]].__name__:
+                            c += 1
+                            print(v, end=(', ' if c < l else ''))
             else:
-                obj_list.append(val)
-        print(len(obj_list))
+                l = len(file_storage_objs)
+                c = 0
+                for v in file_storage_objs.values():
+                    print(v, end=(', ' if c < l else ''))
+            print()
 
-    def default(self, args):
-        '''
-            Catches all the function names that are not expicitly defined.
-        '''
-        functions = {"all": self.do_all, "update": self.do_update,
-                     "show": self.do_show, "count": self.do_count,
-                     "destroy": self.do_destroy, "update": self.do_update}
-        args = (args.replace("(", ".").replace(")", ".")
-                .replace('"', "").replace(",", "").split("."))
+    def do_destroy(self, arg):
+        """destroy: destroy [ARG] [ARG1]
+        ARG = Class
+        ARG1 = ID #
+        SYNOPSIS: destroys object of given ID from given Class"""
+        arg = arg.split()
+        error = self.__class_err(arg)
+        if not error:
+            error += self.__id_err(arg)
+        if not error:
+            file_storage_objs = storage.all()
+            for k in file_storage_objs.keys():
+                if arg[1] in k and arg[0] in k:
+                    del file_storage_objs[k]
+                    storage.save()
 
-        try:
-            cmd_arg = args[0] + " " + args[2]
-            func = functions[args[1]]
-            func(cmd_arg)
-        except:
-            print("*** Unknown syntax:", args[0])
+    def __rreplace(self, s, l):
+        for c in l:
+            s = s.replace(c, '')
+        return s
 
-if __name__ == "__main__":
-    '''
-        Entry point for the loop.
-    '''
+    def __check_dict(self, arg):
+        """checks if the arguments input has a dictionary"""
+        if '{' and '}' in arg:
+            l = arg.split('{')[1]
+            l = l.split(', ')
+            l = list(s.split(':') for s in l)
+            d = {}
+            for subl in l:
+                k = subl[0].strip('"\' {}')
+                v = subl[1].strip('"\' {}')
+                d[k] = v
+            return d
+        else:
+            return None
+
+    def __handle_update_err(self, arg):
+        """checks for all errors in update"""
+        d = self.__check_dict(arg)
+        arg = self.__rreplace(arg, [',', '"'])
+        arg = arg.split()
+        error = self.__class_err(arg)
+        if not error:
+            error += self.__id_err(arg)
+        if not error:
+            valid_id = 0
+            file_storage_objs = storage.all()
+            for k in file_storage_objs.keys():
+                if arg[1] in k and arg[0] in k:
+                    key = k
+            if len(arg) < 3:
+                print(HBNBCommand.ERR[4])
+            elif len(arg) < 4:
+                print(HBNBCommand.ERR[5])
+            else:
+                return [1, arg, d, file_storage_objs, key]
+        return [0]
+
+    def do_update(self, arg):
+        """update: update [ARG] [ARG1] [ARG2] [ARG3]
+        ARG = Class
+        ARG1 = ID #
+        ARG2 = attribute name
+        ARG3 = value of new attribute
+        SYNOPSIS: updates or adds a new attribute and value of given Class"""
+        arg_inv = self.__handle_update_err(arg)
+        if arg_inv[0]:
+            arg = arg_inv[1]
+            d = arg_inv[2]
+            file_storage_objs = arg_inv[3]
+            key = arg_inv[4]
+            if not d:
+                avalue = arg[3].strip('"')
+                if avalue.isdigit():
+                    avalue = int(avalue)
+                file_storage_objs[key].bm_update(arg[2], avalue)
+            else:
+                for k, v in d.items():
+                    if v.isdigit():
+                        v = int(v)
+                    file_storage_objs[key].bm_update(k, v)
+
+    def do_BaseModel(self, arg):
+        """class method with .function() syntax
+        Usage: BaseModel.<command>(<id>)"""
+        self.__parse_exec('BaseModel', arg)
+
+    def do_Amenity(self, arg):
+        """class method with .function() syntax
+        Usage: Amenity.<command>(<id>)"""
+        self.__parse_exec('Amenity', arg)
+
+    def do_City(self, arg):
+        """class method with .function() syntax
+        Usage: City.<command>(<id>)"""
+        self.__parse_exec('City', arg)
+
+    def do_Place(self, arg):
+        """class method with .function() syntax
+        Usage: Place.<command>(<id>)"""
+        self.__parse_exec('Place', arg)
+
+    def do_Review(self, arg):
+        """class method with .function() syntax
+        Usage: Review.<command>(<id>)"""
+        self.__parse_exec('Review', arg)
+
+    def do_State(self, arg):
+        """class method with .function() syntax
+        Usage: State.<command>(<id>)"""
+        self.__parse_exec('State', arg)
+
+    def do_User(self, arg):
+        """class method with .function() syntax
+        Usage: User.<command>(<id>)"""
+        self.__parse_exec('User', arg)
+
+    def __count(self, arg):
+        args = arg.split()
+        file_storage_objs = storage.all()
+        count = 0
+        for k in file_storage_objs.keys():
+            if args[0] in k:
+                count += 1
+        print(count)
+
+    def __parse_exec(self, c, arg):
+        CMD_MATCH = {
+            '.all': self.do_all,
+            '.count': self.__count,
+            '.show': self.do_show,
+            '.destroy': self.do_destroy,
+            '.update': self.do_update,
+            '.create': self.do_create,
+        }
+        if '(' and ')' in arg:
+            check = arg.split('(')
+            new_arg = "{} {}".format(c, check[1][:-1])
+            for k, v in CMD_MATCH.items():
+                if k == check[0]:
+                    if ((',' or '"' in new_arg) and k != '.update'):
+                        new_arg = self.__rreplace(new_arg, ['"', ','])
+                    v(new_arg)
+                    return
+        self.default(arg)
+
+if __name__ == '__main__':
     HBNBCommand().cmdloop()
