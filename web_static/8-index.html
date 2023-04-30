@@ -1,192 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	<!-- HEAD -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Holberton AirBnB</title>
-
-	<!-- FAVICON -->
-	<link rel="shortcut icon" href="images/icon.png">
-
-	<!-- ********************** CSS styles -->
-	<link rel="stylesheet" href="styles/4-common.css">
-	<link rel="stylesheet" href="styles/3-header.css">
-	<link rel="stylesheet" href="styles/3-footer.css">
-	<link rel="stylesheet" href="styles/6-filters.css">
-	<link rel="stylesheet" href="styles/8-places.css">
-
-	<!-- ********************** Font Awesome -->
-	<link rel="stylesheet" href="/styles/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="styles/4-common.css">
+    <link rel="stylesheet" type="text/css" href="styles/3-header.css">
+    <link rel="stylesheet" type="text/css" href="styles/3-footer.css">
+    <link rel="stylesheet" type="text/css" href="styles/6-filters.css">
+    <link type="text/css" rel="stylesheet" href="styles/8-places.css">
+    <link rel="icon" href="images/icon.png" />
+    <title>HBnB</title>
   </head>
-  <!-- ********************** BODY -->
   <body>
-	<!-- ********************** HEADER -->
-	<header>
-	</header>
-	<main>
-	  <div class="container">
-		<!-- ********************** FILTERS -->
-		<section class="filters">
-		  <!-- ********************** LOCATIONS -->
-		  <div class="locations">
-			<h3>States</h3>
-			<h4>Lorem ipsum dolor</h4>
-			<ul class="popover">
-			  <li><h2>California</h2>
-				<ul>
-				  <li>Pacifica</li>
-				  <li>San Diego</li>
-				</ul>
-			  </li>
-			  <li><h2>Illinois</h2>
-				<ul>
-				  <li>Chicago</li>
-				  <li>Winnetka</li>
-				</ul>
-			  </li>
-			</ul>
-		  </div>
-		  <!-- ********************** AMENITIES -->
-		  <div class="amenities">
-			<h3>Amenities</h3>
-			<h4>adipiscing elit</h4>
-			<ul class="popover">
-			  <li>Pool</li>
-			  <li>Wifi</li>
-			  <li>Breakfast</li>
-			  <li>Garage</li>
-			</ul>
-		  </div>
-		  <!-- ********************** SEARCH BUTTON -->
-		  <button>Search</button>
-		</section>
-		<!-- ********************** PLACES -->
-		<section class="places">
-		  <h1>Places</h1>
-		  <article>
-			<!-- ********************** place: flatland
-			  -->
-			<div class="title">
-			  <h2>Flatland</h2>
-			  <div class="price_by_night">
-				$80
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				5 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				4 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** USER
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  I wandered lonely as a cloud That floats on high o'er vales and
-			  hills, When all at once I saw a crowd, A host, of golden
-			  daffodils; Beside the lake, beneath the trees, Fluttering and
-			  dancing in the breeze.
-			</div>
-		  </article>
-		  <article>
-			<!-- ********************** place: closet
-			  -->
-			<div class="title">
-			  <h2>Closet</h2>
-			  <div class="price_by_night">
-				$7
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				2 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				2 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** user
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  Continuous as the stars that shine And twinkle on the milky way,
-			  They stretched in never-ending line Along the margin of a bay:
-			  Ten thousand saw I at a glance, Tossing their heads in sprightly
-			  dance.
-			</div>
-		  </article>
-		  <article>
-			<!-- ********************** place: big home
-			  -->
-			<div class="title">
-			  <h2>Big Home</h2>
-			  <div class="price_by_night">
-				$99
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				20 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				4 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** user
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  The waves beside them danced; but they Out-did the sparkling
-			  waves in glee: A poet could not but be gay, In such a jocund
-			  company: I gazed—and gazed—but little thought What wealth the
-			  show to me had brought: For oft, when on my couch I lie In vacant
-			  or in pensive mood, They flash upon that inward eye Which is the
-			  bliss of solitude; And then my heart with pleasure fills, And
-			  dances with the daffodils.
-			</div>
-		  </article>
-		</section>
+    <header>
+      <div class="logo"></div>
+    </header>
+    <div class="container">
+      <section class="filters">
+	<div class="locations">
+	  <h3>States</h3>
+	  <h4>California, Arizona</h4>
+	  <div class="popover">
+	    <ul>
+	      <li>
+		<h2>Arizona:</h2>
+		<ul>
+		  <li>Pheonix</li>
+		  <li>Sedona</li>
+		</ul>
+	      </li>
+	      <li>
+		<h2>California:</h2>
+		<ul>
+		  <li>LA</li>
+		  <li>SF</li>
+		</ul>
+	      </li>
+	    </ul>
 	  </div>
-	</main>
-	<!-- FOOTER -->
-	<footer>
-	  Holberton School
-	</footer>
+	</div>
+	<div class="amenities">
+	  <h3>Amenities</h3>
+	  <h4>Internet, Kitchen</h4>
+	  <div class="popover">
+	    <ul>
+	      <li>Internet</li>
+	      <li>TV</li>
+	      <li>Kitchen</li>
+	      <li>Iron</li>
+	    </ul>
+	  </div>
+	</div>
+	<button type="button">Search</button>
+      </section>
+      <section class="places">
+	<h1>Places</h1>
+	<article>
+	  <div class="title_box">
+	    <h2>My Home</h2>
+	    <div class="price_by_night">$129</div>
+	  </div>
+	  <div class="information">
+	    <div class="max_guest">6 Guests</div>
+            <div class="number_rooms">4 Bedroom</div>
+            <div class="number_bathrooms">2 Bathroom</div>
+	  </div>
+	  <div class="user">
+            <b>Owner:</b> Kevin Yook
+          </div>
+          <div class="description">
+	    This is my personal house in Korea please stay as much as you want if you come to Korea. Also as a complementary there is a tour guide who will help guide you though Seoul me.
+          </div>
+	</article>
+	<article>
+	  <div class="title_box">
+	    <h2>Tiny House</h2>
+	    <div class="price_by_night">$69</div>
+	  </div>
+	  <div class="information">
+	    <div class="max_guest">3 Guests</div>
+            <div class="number_rooms">1 Bedroom</div>
+            <div class="number_bathrooms">1 Bathroom</div>
+	  </div>
+	  <div class="user">
+            <b>Owner:</b> John Doe
+          </div>
+          <div class="description">
+	    This house is John's personal hideout. It contains blood stained walls as a feature to the luxery blury light.
+          </div>
+	</article>
+	<article>
+	  <div class="title_box">
+	    <h2>A Suite</h2>
+	    <div class="price_by_night">$179</div>
+	  </div>
+	  <div class="information">
+	    <div class="max_guest">4 Guests</div>
+            <div class="number_rooms">4 Bedroom</div>
+            <div class="number_bathrooms">4 Bathroom</div>
+	  </div>
+	  <div class="user">
+            <b>Owner:</b> Bob
+          </div>
+          <div class="description">
+	    This house is a fine suite created by designer bob. Each room has it's own bathrooms
+          </div>
+	</article>
+      </section>
+    </div>
+    <footer>
+      <p>Holberton School</p>
+    </footer>
   </body>
 </html>

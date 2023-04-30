@@ -1,170 +1,144 @@
-<img src="https://github.com/johncoleman83/AirBnB_clone/blob/master/dev/HBTN-hbnb-Final.png" width="160" height=auto />
 
-# AirBnB Clone Phase #1
+<p align="center">
+    <img src="https://i.imgur.com/JOhaZ5m.png">
+</p>
 
-: python BaseModel Class, unittests, python CLI, & web static
+# Description
 
-## Description
+The goal of the HBnB project is to deploy a simple clone of AirBnB on our own server.
+This project is built over 4 months as part of the curriculum of the first year at Alx Engineering Program)).
 
-Project attempts to clone the the AirBnB application and website, including the
-database, storage, RESTful API, Web Framework, and Front End.
+At the end of the 4 months, the project will have:
+- A command interpreter to manipulate data without a visual interface, like in a Shell (perfect for development and debugging)
+- A website (the front-end) that shows the final product to everybody: static and dynamic
+- A database or files that store data (data = objects)
+- An API that provides a communication interface between the front-end and the data (retrieve, create, delete, update them)
 
-## Environment
+Here's a simple diagram of the entire stack of the final product:
 
-* __OS:__ Ubuntu 14.04 LTS
-* __language:__ Python 3.4.3
-* __style:__ PEP 8 (v. 1.7.0)
+<p>
+    <img src="https://i.imgur.com/sQ4tQRX.png">
+</p>
 
-<img src="https://github.com/johncoleman83/AirBnB_clone/blob/master/dev/hbnb_step5.png" />
+# The Web Framework
 
-## Testing
+Flask is the web framework used for the HBnB project.
+In the [web_flask](./web_flask) are all the python scripts used to start a Flask app.
 
-#### NOTE: YOU MUST RUN THE SQL SCRIPT `setup_mysql_test.sql` RO RUN THE UNIT TESTS.
+Usage:
+
+- Dump data in the MySQL database with [10-dump.sql](./10-dump.sql) or [100-dump.sql](./100-dump.sql), for scripts [10-hbnb_filters.py](.10-hbnb_filters.py) and [100-hbnb.py](./100-hbnb.py) respectively:
 ```
-$ cat setup_mysql_test.sql | mysql -u root -p
-```
-
-
-#### `unittest`
-
-This project uses python library, `unittest` to run tests on all python files.
-All unittests are in the `./tests` directory with the command:
-
-* `python3 -m unittest discover -v ./tests/`
-
-The bash script `init_test.sh` executes all these tests:
-
-  * checks `pep8` style
-
-  * runs all unittests
-
-  * runs all w3c_validator tests
-
-  * cleans up all `__pycache__` directories and the storage file, `file.json`
-
-**Usage:**
-
-```
-$ ./dev/init_test.sh
+cat 100-dump.sql | mysql -uroot -p
 ```
 
-#### CLI Interactive Tests
-
-This project uses python library, `cmd` to run tests in an interactive command
-line interface.  To begin tests with the CLI, run this script:
-
+- Set the environment variables and execute the Flask scripts like this:
 ```
-$ ./console.py
+HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db python3 -m web_flask.100-hbnb
 ```
 
-* For a detailed description of all tests, run these commands inside the
-custom CLI:
-
+- In the browser, type:
 ```
-$ ./console.py
-(hbnb) help help
-List available commands with "help" or detailed help with "help cmd".
-(hbnb) help
-
-Documented commands (type help <topic>):
-========================================
-Amenity    City  Place   State  airbnb  create   help  show
-BaseModel  EOF   Review  User   all     destroy  quit  update
-
-(hbnb) help User
-class method with .function() syntax
-        Usage: User.<command>(<id>)
-(hbnb) help create
-create: create [ARG]
-        ARG = Class Name
-        SYNOPSIS: Creates a new instance of the Class from given input ARG
+http://0.0.0.0:5000/hbnb
 ```
+You should see the rendered web page!
 
-* Tests in the CLI may also be executed with this syntax:
+# The Storage system
 
-  * **destroy:** `<class name>.destroy(<id>)`
+HBnB has two storage types: a File Storage and a DataBase storage.
+The folder [engine](./models/engine/) contains those storage types definitions.
+Here is a representation of all the data:
 
-  * **update:** `<class name>.update(<id>, <attribute name>, <attribute value>)`
+<p>
+    <img src="https://i.imgur.com/eNZMRuS.jpg">
+</p>
 
-  * **update with dictionary:** `<class name>.update(<id>, <dictionary representation>)`
+## File Storage
 
+The File Storage system manages the serialization and deserialization of all the data, following a JSON format.
 
-#### Continuous Integration
+A FileStorage class is defined in [file_storage.py](./models/engine/file_storage.py) with methods to follow this flow:
+```<object> -> to_dict() -> <dictionary> -> JSON dump -> <json string> -> FILE -> <json string> -> JSON load -> <dictionary> -> <object>```
 
-Uses [Travis-CI](https://travis-ci.org/) to run all tests on all commits to the
-github repo
+If the environment variable **HBNB_TYPE_STORAGE** is set to 'file', the [__init__.py](./models/__init__.py) file instantiates the FileStorage class called **storage**, followed by a call to the method reload() on that instance.
+This allows the storage to be reloaded automatically at initialization, which recovers the serialized data.
 
-## Running
+## DataBase Storage
 
-Clone the Repo
+The DataBase Storage system manages communication to and from a MySQL server, where data will be stored in a database depending on the **HBNB_MYSQL_DB** variable value.
+
+A DBStorage class is defined in [db_storage.py](./models/engine/db_storage.py) and uses the SQAlchemy module to interact with MySQL.
+
+If the environment variable **HBNB_TYPE_STORAGE** is set to 'db', the [__init__.py](./models/__init__.py) file instantiates the DBStorage class called **storage**, followed by a call to the method reload() on that instance.
+This allows the storage to be reloaded automatically at initialization, which recovers the data from the defined database.
+
+To run any script with the DataBase storage, declare those environment variables:
 ```
-$ git clone https://github.com/glyif/AirBnB_clone_v3 && cd AirBnB_clone_v3
-```
-
-Install Dependencies
-```
-$ pip3 install -r requirements.txt
+HBNB_MYSQL_USER=hbnb_dev
+HBNB_MYSQL_PWD=hbnb_dev_pwd
+HBNB_MYSQL_HOST=localhost
+HBNB_MYSQL_DB=hbnb_dev_db
+HBNB_TYPE_STORAGE=db
 ```
 
-VirtualEnv Alternative
-```
-$ virtualenv -p $(which python3) env
-$ source env/bin/activate
-$ pip install -r requirements.txt
-```
+# The Console
 
-Running Console
-```
-$ ./console.py
-$ HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./console.py
-```
+This is the console /command interpreter for the Holberton Airbnb clone project. The console can be used to store objects in and retrieve objects from a JSON.
 
-Running Flask API
-```
-$ HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app
-```
+### Supported classes:
+* BaseModel
+* User
+* State
+* City
+* Amenity
+* Place
+* Review
 
-To exit out of the virtualenv, use:
-```
-$ deactivate
-```
+### Commands:
+* create - create an object
+* show - show an object (based on id)
+* destroy - destroy an object
+* all - show all objects, of one type or all types
+* quit/EOF - quit the console
+* help - see descriptions of commands
 
-### Docker Integration
-To run with docker, it's very simple.
+To start, navigate to the project folder and enter `./console.py` in the shell.
 
-NOTE: You will need to have docker and docker-compose installed
+#### Create
+`create <class name>`
+Ex:
+`create BaseModel`
 
-First, build all of the images. (console, db, api)
-```
-$ docker-compose build --no-cache
-```
+#### Show
+`show <class name> <object id>`
+Ex:
+`show User my_id`
 
-Then you can just run the images
-```
-$ docker-compose up -d
-```
+#### Destroy
+`destroy <class name> <object id>`
+Ex:
+`destroy Place my_place_id`
 
-To use the console, you'll need to run:
-```
-$ docker exec -it <container_id> /bin/bash
-```
-NOTE: you will need to replace <container_id> with the actual console container id
+#### All
+`all` or `all <class name>`
+Ex:
+`all` or `all State`
 
-NOTE: TESTING WITH DOCKERHUB AND RANCHER
-## API Documentation
-There is a postman json in side the API folder that you can import to check out the api endpoints, or you can go to [the online version](https://documenter.getpostman.com/view/1535334/airbnb_clone_v3/6tc3iuA)
+#### Quit
+`quit` or `EOF`
 
-Swagger documentation will soon come.
+#### Help
+`help` or `help <command>`
+Ex:
+`help` or `help quit`
 
-## Authors
+Additionally, the console supports `<class name>.<command>(<parameters>)` syntax.
+Ex:
+`City.show(my_city_id)`
 
-* MJ Johnson, [@mj31508](https://github.com/mj31508)
-* David John Coleman II, [davidjohncoleman.com](http://www.davidjohncoleman.com/)
-* Kimberly Wong, [kjowong](http://github.com/kjowong) | [@kjowong](http://twitter.com/kjowong) | [kjowong@gmail.com](kjowong@gmail.com)
-* Carrie Ybay, [hicarrie](http://github.com/hicarrie) | [@hicarrie_](http://twitter.com/hicarrie_)
-* Naomi Sorrell, [NamoDawn](https://github.com/NamoDawn) | [@NamoDawn](https://twitter.com/NamoDawn)
-* Bobby Yang, [glyif](https://github.com/glyif) | [@bobstermyang](https://twitter.com/bobstermyang)
+# Tests
 
-## License
+All unittests can be found in the [tests](./tests) directory.
 
-Public Domain, no copyright protection
+# Author
+Chukuma Uche Daniel

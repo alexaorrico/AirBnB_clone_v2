@@ -1,26 +1,7 @@
-@charset "UTF-8";
-/** Holberton Practice Styles
- * ------ Common
- */
-
-html {
-	position: relative;
-	min-height: 100%;
-}
-
 body {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	min-height: 100vh;
-	margin: 0;
-	padding: 0;
-	color: #484848;
-	font-size: 14px;
-	font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-
-main {
-	flex-grow: 1;
-	flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    color: #484848;
+    font-size: 14px;
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }

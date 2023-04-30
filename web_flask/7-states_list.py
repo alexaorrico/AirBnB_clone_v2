@@ -1,27 +1,26 @@
 #!/usr/bin/python3
-"""
-    Sript that starts a Flask web application
-"""
-from flask import Flask, render_template
+"""Starts a Flask web application"""
+
 from models import storage
+from models.state import State
+from flask import Flask
+from flask import render_template
 app = Flask(__name__)
 
 
+@app.route('/states_list', strict_slashes=False)
+def states():
+    """Returns a rendered html template
+    at the /states_list route,
+    listing all states"""
+    return render_template('7-states_list.html',
+                           states=storage.all('State').values())
+
+
 @app.teardown_appcontext
-def handle_teardown(self):
-    """
-        method to handle teardown
-    """
+def teardown(self):
+    """Removes the current SQLAlchemy Session"""
     storage.close()
 
-
-@app.route('/states_list', strict_slashes=False)
-def state_list():
-    """
-        method to render states
-    """
-    states = storage.all('State').values()
-    return render_template("7-states_list.html", states=states)
-
 if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0')
