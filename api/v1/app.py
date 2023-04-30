@@ -1,43 +1,45 @@
 #!/usr/bin/python3
 """
-creating an api
+
+Flask web server creation to handle api petition-requests
+
 """
-from flask import Flask
-from api.v1.views import app_views
-from models import storage
-from os import getenv
+from flask import Flask, Blueprint, jsonify
 from flask_cors import CORS
-from flasgger import Swagger
+from models import storage
+from api.v1.views import app_views
+from os import getenv
+
 
 app = Flask(__name__)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
+app.url_map.strict_slashes = False
+CORS(app, origins="0.0.0.0")
+api_host = getenv('HBNB_API_HOST', "0.0.0.0")
+api_port = getenv('HBNB_API_PORT', 5000)
 
-api_host = getenv("HBNB_API_HOST", "0.0.0.0")
-api_port = getenv("HBNB_API_PORT", 5000)
 
 @app.teardown_appcontext
-def close_db(obj):
-    """Deletes/removes instance of a session when done with it"""
-    storage.close()
+def commit_data(error):
+        """
+        Commit changes in database
+        """
+        storage.close()
+
 
 @app.errorhandler(404)
-def page_not_found(error):
-	"""Load custom 404 page not found"""
-	return make_response(jsonify({"error": "Not found"}), 404)
+def not_found(error):
+    """
 
-app.config['SWAGGER'] = {
-	'title': 'AirBnB clone - RESTful API',
-	'description': 'Api created for the hbnb restful api project,\
-	all documentation shown below',
-	'uiversion': 3}
+    Args:
+        error: error received
 
-Swagger(app)
+    Returns: Json with data
+
+    """
+    my_error_dict = {"error": "Not found"}
+    return jsonify(my_error_dict), 404
+
 
 if __name__ == "__main__":
-
-	api_host = getenv("HBNB_API_HOST", "0.0.0.0")
-        api_port = getenv("HBNB_API_PORT", 5000)
-        
-	app.run(host=api_host, port=int(api_port), threaded=True)
+        app.run(host=api_host, port=int(api_port), threaded=True)
