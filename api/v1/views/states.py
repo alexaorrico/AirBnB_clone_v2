@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+'''State Rest API'''
 from flask import jsonify, abort, request
 from models.state import State
 from models import storage
@@ -17,7 +18,7 @@ def state_list():
             json_body = request.get_json()
             if not json_body:
                 abort(400, 'Not a JSON')
-            if not 'name' in json_body:
+            if json_body['name'] is None:
                 abort(400, 'Missing name')
             state = State(**json_body)
             new_inst = storage.new(state)
@@ -27,7 +28,8 @@ def state_list():
             abort(404)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False, methods=['GET', 'DELETE', 'PUT'])
 def state_detail(state_id):
     '''Interested in details of a specific state'''
     state = storage.get(State, state_id)

@@ -1,44 +1,46 @@
 #!/usr/bin/python3
-'''Module for Amenity API'''
+'''Module for User RestAPI'''
 from flask import jsonify, abort, request
-from models.amenity import Amenity
+from models.user import User
 from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/amenities', strict_slashes=False, methods=['GET', 'POST'])
-def amenity_list():
-    '''Interested in list of all amenities'''
+@app_views.route('/users', strict_slashes=False, methods=['GET', 'POST'])
+def user_list():
+    '''Interested in list of all users'''
     if request.method == 'GET':
-        amenity_list = storage.all('Amenity')
-        list_dict = [amenity.to_dict() for amenity in amenity_list.values()]
+        user_list = storage.all('User')
+        list_dict = [user.to_dict() for user in user_list.values()]
         return jsonify(list_dict)
     if request.method == 'POST':
         try:
             json_body = request.get_json()
             if not json_body:
                 abort(400, 'Not a JSON')
-            if json_body['name'] is None:
-                abort(400, 'Missing name')
-            amenity = Amenity(**json_body)
-            new_inst = storage.new(amenity)
+            if json_body['email'] is None:
+                abort(400, 'Missing email')
+            if json_body['password'] is None:
+                abort(400, 'Missing password')
+            user = User(**json_body)
+            new_inst = storage.new(user)
             storage.save()
-            return jsonify(amenity.to_dict()), 201
+            return jsonify(user.to_dict()), 201
         except Exception as err:
             abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>',
+@app_views.route('/users/<user_id>',
                  strict_slashes=False, methods=['GET', 'DELETE', 'PUT'])
-def amenity_detail(amenity_id):
-    '''Interested in details of a specific amenity'''
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+def user_detail(user_id):
+    '''Interested in details of a specific user'''
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
     if request.method == 'GET':
-        return jsonify(amenity.to_dict())
+        return jsonify(user.to_dict())
     if request.method == 'DELETE':
-        storage.delete(amenity)
+        storage.delete(user)
         storage.save()
         return jsonify({})
     else:
@@ -48,8 +50,8 @@ def amenity_detail(amenity_id):
                 abort(400, 'Not a JSON')
             for k, v in json_body.items():
                 if k not in ['id', 'created_at', 'updated_at']:
-                    setattr(amenity, k, v)
+                    setattr(user, k, v)
             storage.save()
-            return jsonify(amenity.to_dict())
+            return jsonify(user.to_dict())
         except Exception as err:
             abort(404)
