@@ -5,11 +5,7 @@ body {
     font-size: 14px;
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-
-.container {
+body .container {
     max-width: 1000px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 30px auto;
 }
