@@ -3,19 +3,15 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
@@ -66,6 +62,42 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+    def test_get_dbstorage(self):
+        """Test dbstorage with valid data"""
+        obj = State(name="Delta state")
+        obj.save()
+        models.storage.save()
+        retrieve_state = models.storage.get('State', obj.id)
+        self.assertEqual(obj.name, retrieve_state.name)
+
+    def test_get_dbstorage_with_none(self):
+        """Test db storage retrieve with invlid input"""
+        obj = State(name="Delta state")
+        obj.save()
+        retrieve_state = models.storage.get('State', None)
+        self.assertIsNone(retrieve_state)
+        retrieve_state = models.storage.get(None, obj.id)
+        self.assertIsNone(retrieve_state)
+
+    def test_count_engine(self):
+        """Test to confirm data is stored"""
+        first_count = models.storage.count()
+        obj = State(name="Delta state")
+        obj.save()
+        second_count = models.storage.count()
+        self.assertEqual(first_count + 1, second_count)
+
+    def test_count_dbstorage_cls(self):
+        """Test count() of storage engine with class name"""
+        first_count = models.storage.count()
+        first_count_cls = models.storage.count('State')
+        obj = State(name="Delta State")
+        obj.save()
+        second_count = models.storage.count()
+        second_count_cls = models.storage.count('State')
+        self.assertEqual(first_count + 1, second_count)
+        self.assertEqual(first_count_cls + 1, second_count_cls)
 
 
 class TestFileStorage(unittest.TestCase):
