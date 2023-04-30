@@ -26,6 +26,7 @@ class testFileStorage(unittest.TestCase):
         '''
             Initializing classes
         '''
+        
         self.storage = FileStorage()
         self.my_model = BaseModel()
 
