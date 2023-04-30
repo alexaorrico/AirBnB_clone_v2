@@ -54,9 +54,9 @@ def create_state_obj():
 
     json_data = request.get_json()
     if json_data is None:
-        abort(400, "Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
     elif 'name' not in json_data.keys():
-        abort(400, "Missing name")
+        return jsonify({"error": "Missing name"}), 400
 
     new_obj = State()
     for attr, val in json_data.items():
@@ -77,7 +77,7 @@ def update_state_obj(state_id):
 
     json_data = request.get_json()
     if json_data is None:
-        abort(400, "Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
     for attr, val in json_data.items():
         setattr(state_obj, attr, val)
     state_obj.save()
