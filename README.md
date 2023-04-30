@@ -155,8 +155,12 @@ No known bugs at this time.
 
 ## Authors
 Karimi Yvonne - [Github](https://github.com/karivone) / [Twitter](https://twitter.com/_kayewi_)  
+<<<<<<< HEAD
 Flesier Onyango - [Github](https://github.com/flesier) / [Twitter](https://twitter.com/nyako_codes)
 
+=======
+Flesier Akinyi - [Github](https://github.com/flesier) / [Twitter](https://twitter.com/nyako_codes)
+>>>>>>> 0ccb8943a9b00c8a0abba615abc9d58e8b93c7ed
 
 ## License
 Public Domain. No copy write protection. 
