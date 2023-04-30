@@ -2,7 +2,7 @@
 """
     flask application
 """
-from flask import Flask, Blueprint
+from flask import Blueprint, Flask, jsonify, make_response
 from models import storage
 from os import getenv
 from api.v1.views import app_views
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 def closeDB(obj):
     """Close the database"""
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_404(error):
+    """handle 404 error page"""
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
