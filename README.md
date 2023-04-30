@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Jihnclinton Luseno - [Github](https://github.com/clintmadeit) / [Twitter](https://twitter.com/clintmadeit)  
+Johnclinton Luseno - [Github](https://github.com/clintmadeit) / [Twitter](https://twitter.com/clintmadeit)  
 Josephine Mumbua - [Github](https://github.com/mumbuamutuku) / [Twitter](https://twitter.com/mumbuamutuku)
 
 Second part of Airbnb: Johnclinton Luseno
