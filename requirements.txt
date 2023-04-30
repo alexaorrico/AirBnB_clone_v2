@@ -1,8 +1,0 @@
-pep8==1.7.0
-requests==2.17.3
-requests-oauthlib==0.8.0
-sqlalchemy==1.1.6
-flask==0.12.2
-mysqlclient
-flask_cors
-flasgger

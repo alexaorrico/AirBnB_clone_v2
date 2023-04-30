@@ -1,15 +1,19 @@
+*, *:before, *:after: {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 body {
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-color: #484848;
+    font-size: 14px;
     margin: 0;
     padding: 0;
-    color: #484848;
-    font-size: 14px;
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .container {
     max-width: 1000px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 30px auto 30px auto;
+    position: relative;
 }

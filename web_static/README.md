@@ -1,15 +1,5 @@
-# 0x01. AirBnB clone - Web static
-At the end of this project you are expected to be able to explain to anyone, without the help of Google:
-* What is HTML?
-* How do you create an HTML page?
-* What is a markup language?
-* What is the DOM?
-* What is an element / tag?
-* What is an attribute?
-* How does the browser load a webpage?
-* What is CSS?
-* How do you add style to an element?
-* What is a class?
-* What is a selector?
-* How do you compute CSS Specificity Value?
-* What are Box properties in CSS?
+## Static website
+
+This folder contains the static website built for the project. It is done in `CSS` and `HTML`.
+It doubles as an introduction to those languages.  
+For all the questions, we were given a screenshot and some specific parameters, and we had to match the screenshot.  

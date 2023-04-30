@@ -1,0 +1,13 @@
+#!/bin/bash
+curl -L -X POST http://0.0.0.0:5000/api/v1/states/ -H "Content-Type: application/json" -d '{"name": "California", "id": "CA"}'
+curl -L -X GET http://0.0.0.0:5000/api/v1/states/
+curl -L -X POST http://0.0.0.0:5000/api/v1/states/CA/cities/ -H "Content-Type: application/json" -d '{"name": "San Francisco", "id": "SF"}' -vvv
+curl -L -X POST http://0.0.0.0:5000/api/v1/amenities/ -H "Content-Type: application/json" -d '{"name": "WiFi", "id": "wf"}'
+curl -L -X POST http://0.0.0.0:5000/api/v1/users/ -H "Content-Type: application/json" -d '{"name": "user 1", "id": "1", "email": "a@b.com", "password": "1234"}'
+curl -L -X POST http://0.0.0.0:5000/api/v1/cities/SF/places/ -H "Content-Type: application/json" -d '{"name": "appt 1", "user_id": "1", "id": "appt1"}' -vvv
+curl -L -X GET http://0.0.0.0:5000/api/v1/stats/
+curl -L -X GET http://0.0.0.0:5000/api/v1/places/appt1/
+curl -L -X POST http://0.0.0.0:5000/api/v1/places/appt1/amenities/wf/
+curl -L -X GET http://0.0.0.0:5000/api/v1/places/appt1/amenities/
+echo "Insert a review"
+curl -L -X POST http://0.0.0.0:5000/api/v1/places/appt1/reviews/ -H "Content-Type: application/json" -d '{"text": "REVIEW", "user_id": "1", "id": "R1"}' -vvv

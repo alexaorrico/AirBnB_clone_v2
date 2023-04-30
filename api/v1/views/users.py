@@ -1,104 +1,234 @@
 #!/usr/bin/python3
 """
-route for handling User objects and operations
+This is module users
 """
-from flask import jsonify, abort, request
-from api.v1.views import app_views, storage
-from models.user import User
+from api.v1.views import (app_views, User, storage)
+from flask import (abort, jsonify, make_response, request)
 
 
-@app_views.route("/users", methods=["GET"], strict_slashes=False)
-def user_get_all():
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+def view_user(user_id=None):
+    """Example endpoint returning a list of all users or of one specified
+    Retrieves a list of all users or of one specified by user_id
+    ---
+    parameters:
+      - name: user_id
+        in: path
+        type: string
+        enum: ["all", "32c11d3d-99a1-4406-ab41-7b6ccb7dd760"]
+        required: true
+        default: None
+
+    definitions:
+
+      User:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'
+      Color:
+        type: string
+    responses:
+      200:
+        description: A list of dictionarys or dictionary, each dict is a user
+        schema:
+          $ref: '#/definitions/User'
+        examples:
+            [{"__class__": "User",
+              "_password": "pwd18",
+              "created_at": "2017-03-25T02:17:06",
+              "email": "noemail18@gmail.com",
+              "first_name": "Susan",
+              "id": "32c11d3d-99a1-4406-ab41-7b6ccb7dd760",
+              "last_name": "Finney",
+              "updated_at": "2017-03-25T02:17:06"}]
     """
-    retrieves all User objects
-    :return: json of all users
-    """
-    user_list = []
-    user_obj = storage.all("User")
-    for obj in user_obj.values():
-        user_list.append(obj.to_json())
-
-    return jsonify(user_list)
-
-
-@app_views.route("/users", methods=["POST"], strict_slashes=False)
-def user_create():
-    """
-    create user route
-    :return: newly created user obj
-    """
-    user_json = request.get_json(silent=True)
-    if user_json is None:
-        abort(400, 'Not a JSON')
-    if "email" not in user_json:
-        abort(400, 'Missing email')
-    if "password" not in user_json:
-        abort(400, 'Missing password')
-
-    new_user = User(**user_json)
-    new_user.save()
-    resp = jsonify(new_user.to_json())
-    resp.status_code = 201
-
-    return resp
-
-
-@app_views.route("/users/<user_id>",  methods=["GET"], strict_slashes=False)
-def user_by_id(user_id):
-    """
-    gets a specific User object by ID
-    :param user_id: user object id
-    :return: user obj with the specified id or error
-    """
-
-    fetched_obj = storage.get("User", str(user_id))
-
-    if fetched_obj is None:
+    if user_id is None:
+        all_users = [state.to_json() for state
+                     in storage.all("User").values()]
+        return jsonify(all_users)
+    s = storage.get("User", user_id)
+    if s is None:
         abort(404)
+    return jsonify(s.to_json())
 
-    return jsonify(fetched_obj.to_json())
 
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+def delete_user(user_id=None):
+    """Example endpoint deleting one user
+    Deletes a user based on the user_id
+    ---
+    definitions:
+      User:
+        type: object
+      Color:
+        type: string
+      items:
+        $ref: '#/definitions/Color'
 
-@app_views.route("/users/<user_id>",  methods=["PUT"], strict_slashes=False)
-def user_put(user_id):
+    responses:
+      200:
+        description: An empty dictionary
+        schema:
+          $ref: '#/definitions/User'
+        examples:
+            {}
     """
-    updates specific User object by ID
-    :param user_id: user object ID
-    :return: user object and 200 on success, or 400 or 404 on failure
-    """
-    user_json = request.get_json(silent=True)
-
-    if user_json is None:
-        abort(400, 'Not a JSON')
-
-    fetched_obj = storage.get("User", str(user_id))
-
-    if fetched_obj is None:
+    user = storage.get("User", user_id)
+    if user is None:
         abort(404)
-
-    for key, val in user_json.items():
-        if key not in ["id", "created_at", "updated_at", "email"]:
-            setattr(fetched_obj, key, val)
-
-    fetched_obj.save()
-
-    return jsonify(fetched_obj.to_json())
+    storage.delete(user)
+    return jsonify({}), 200
 
 
-@app_views.route("/users/<user_id>",  methods=["DELETE"], strict_slashes=False)
-def user_delete_by_id(user_id):
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def create_user():
+    """Example endpoint creates a user
+    Creates a user based on the JSON body
+    ---
+    definitions:
+
+      User:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'
+      Color:
+        type: string
+    responses:
+      201:
+        description: A list of a dictionary, each dict is a user
+        schema:
+          $ref: '#/definitions/User'
+        examples:
+            [{"__class__": "User",
+              "_password": "pwd18",
+              "created_at": "2017-03-25T02:17:06",
+              "email": "noemail18@gmail.com",
+              "first_name": "Susan",
+              "id": "32c11d3d-99a1-4406-ab41-7b6ccb7dd760",
+              "last_name": "Finney",
+              "updated_at": "2017-03-25T02:17:06"}]
     """
-    deletes User by id
-    :param user_id: user object id
-    :return: empty dict with 200 or 404 if not found
+    try:
+        r = request.get_json()
+    except:
+        r = None
+    if r is None:
+        return "Not a JSON", 400
+    if 'email' not in r.keys():
+        return "Missing email", 400
+    if 'password' not in r.keys():
+        return "Missing password", 400
+    s = User(**r)
+    s.save()
+    return jsonify(s.to_json()), 201
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def update_user(user_id=None):
+    """Example endpoint updates a user
+    Updates a user based on the JSON body
+    ---
+    parameters:
+      - name: user_id
+        in: path
+        type: string
+        enum: ["32c11d3d-99a1-4406-ab41-7b6ccb7dd760"]
+        required: true
+        default: "32c11d3d-99a1-4406-ab41-7b6ccb7dd760"
+
+    definitions:
+
+      User:
+        type: object
+        properties:
+          __class__:
+            type: string
+            description: The string of class object
+          created_at:
+            type: string
+            description: The date the object created
+          email:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          id:
+            type: string
+            description: the id of the user
+          updated_at:
+            type: string
+            description: The date the object was updated
+            items:
+              $ref: '#/definitions/Color'
+      Color:
+        type: string
+    responses:
+      200:
+        description: A list of a dictionary, each dict is a user
+        schema:
+          $ref: '#/definitions/User'
+        examples:
+            [{"__class__": "User",
+              "_password": "pwd18",
+              "created_at": "2017-03-25T02:17:06",
+              "email": "noemail18@gmail.com",
+              "first_name": "Susan",
+              "id": "32c11d3d-99a1-4406-ab41-7b6ccb7dd760",
+              "last_name": "Finney",
+              "updated_at": "2017-03-25T02:17:06"}]
     """
-
-    fetched_obj = storage.get("User", str(user_id))
-
-    if fetched_obj is None:
+    try:
+        r = request.get_json()
+    except:
+        r = None
+    if r is None:
+        return "Not a JSON", 400
+    a = storage.get("User", user_id)
+    if a is None:
         abort(404)
-
-    storage.delete(fetched_obj)
-    storage.save()
-
-    return jsonify({})
+    for k in ("id", "email", "created_at", "updated_at"):
+        r.pop(k, None)
+    for k, v in r.items():
+        setattr(a, k, v)
+    a.save()
+    return jsonify(a.to_json()), 200

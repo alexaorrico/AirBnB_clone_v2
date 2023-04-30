@@ -1,91 +1,92 @@
 .filters {
-    background-color: white;
+    color: white;
     height: 70px;
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-    display: flex;
-    align-items: center;
-}
-
-section.filters > button{
-    font-size: 18px;
-    color: white;
-    background-color: #FF5A5F;
-    height: 48px;
-    border: 0px;
-    border-radius: 4px;
-    width: 20%;
-    margin-left: auto;
-    margin-right: 30px;
-    opacity: 1;
-}
-
-section.filters > button:hover {
-    opacity: 0.9;
-}
-
-.locations, .amenities {
-    height: 100%;
-    width: 25%;
-    padding-left: 50px;
+    position: relative;
+    display: inline-block;
 }
 
 .locations {
+    width: 25%;
+    height: 100%;
+    float: left;
     border-right: 1px solid #DDDDDD;
 }
-.locations > h3, .amenities > h3 {
-    font-weight: 600;
-    margin: 12px 0 5px 0;
+
+.amenities {
+    widt: 25%;
+    height: 100%;
+    float: left;
 }
 
-.locations > h4, .amenities > h4 {
+h3 {
+    color: black;
+    font-weight: 600;
+    margin-left: 30px;
+    line-height: 8px;
+}
+
+h4 {
+    color: black;
     font-weight: 400;
-    font-size: 14px;
-    margin: 0 0 5px 0;
+    line-height: 2px;
+    margin-left: 30px;
+}
+
+button {
+    font-size: 18px;
+    background-color: #FF5A5F;
+    border-color: #FF5A5F;
+    border-style: solid;
+    color: white;
+    height: 48px;
+    width: 20%;
+    border-radius: 4px;
+    position: relative;
+    text-align: center;
+    margin-top: 11px;
+    float: right;
+    right: 30px;
+    opacity: 1;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-indent: 20px;
+}
+
+li {
+    padding-bottom: 10px;
+    text-indent: 40px;
+}
+
+.locations:hover .popover {
+    display: table-cell;
+}
+
+.amenities:hover .popover {
+    display: table-cell;
 }
 
 .popover {
+    margin-top: 6px;
     display: none;
-    position: relative;
-    left: -51px;
-    background-color: #FAFAFA;
-    width: 100%;
+    position: absolute;
+    background: #FAFAFA;
+    width: 25%;
+    color: black;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-    z-index: 1;
-    padding: 30px 50px 30px 0;
-    margin-top: 17px;
-}
-
-.popover, .popover ul {
-    list-style-type: none;
-}
-.locations:hover > .popover {
-    display: block;
-}
-
-.amenities:hover > .popover {
-    display: block;
-}
-
-.popover h2 {
-    margin-top: 0px;
-    margin-bottom: 5px;
-}
-
-.locations > .popover > li {
-    margin-bottom: 30px;
-    margin-left: 30px;
-}
-.locations > .popover > li > ul {
-    padding-left: 20px;
-}
-.locations > .popover > li > ul > li {
-    margin-bottom: 10px;
-}
-
-.amenities > .popover > li {
-    margin-left: 50px;
-    margin-bottom: 10px;
+    float: left;
+    padding-bottom: 30px;
 }
