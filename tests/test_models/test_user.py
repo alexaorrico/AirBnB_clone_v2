@@ -2,16 +2,13 @@
 """
 Contains the TestUserDocs classes
 """
-import pip
+
 from datetime import datetime
 import inspect
 import models
 from models import user
 from models.base_model import BaseModel
-try:
-    import pep8
-except ModuleNotFoundError:
-    pip.main(['install', 'pep8'])
+import pep8
 import unittest
 User = user.User
 
