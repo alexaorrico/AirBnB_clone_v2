@@ -16,16 +16,21 @@ def handles_get_amenities(place_id=None):
     """Retrieves the list of all amenity objects by place
        uses the '/places/<place_id>/amenities' places routes
     """
-    if storage_t == 'db':
-        if place_id:
-            place = storage.get(Place, place_id)
-            if not place:
-                abort(404)
-            else:
-                if request.method == 'GET':
-                    amenity_list = []
+    if place_id:
+        place = storage.get(Place, place_id)
+        if not place:
+            abort(404)
+        else:
+            if request.method == 'GET':
+                amenity_list = []
+                if storage_t == 'db':
+                    # DBStorage: list, create and delete Amenity
                     for amenity in place.amenities:
                         amenity_list.append(amenity.to_dict())
+                    return jsonify(amenity_list)
+                else:
+                    # FileStorage: list, add and remove Amenity
+                    amenity_list = place.amenity_ids
                     return jsonify(amenity_list)
 
 
@@ -37,13 +42,13 @@ def handles_post_delete_amenity(place_id=None, amenity_id=None):
        Link a Amenity object to a Place (post).
        uses the '/places/<place_id>/amenities/<amenity_id>' route
     """
-    if storage_t == 'db':
-        if place_id and amenity_id:
-            place = storage.get(Place, place_id)
-            amenity = storage.get(Amenity, amenity_id)
-            if not place or not amenity:
-                abort(404)
-            else:
+    if place_id and amenity_id:
+        place = storage.get(Place, place_id)
+        amenity = storage.get(Amenity, amenity_id)
+        if not place or not amenity:
+            abort(404)
+        else:
+            if storage_t == 'db':
                 if request.method == 'DELETE':
                     storage.delete(amenity)
                     storage.save()
@@ -55,3 +60,15 @@ def handles_post_delete_amenity(place_id=None, amenity_id=None):
                     place.amenities.append(amenity)
                     storage.save()
                     return jsonify(amenity.to_dict()), 201
+            else:
+                if request.method == 'DELETE':
+                    place.amenity_ids.remove(amenity.id)
+                    storage.save()
+                    return jsonify({}), 200
+                elif request.method == 'POST':
+                    for am_id in place.amenity_ids:
+                        if am_id == amenity.id:
+                            return jsonify({"amenity_id": am_id}), 200
+                    place.amenity_ids.append(amenity.id)
+                    storage.save()
+                    return jsonify({"amenity_id": amenity.id}), 201
