@@ -10,14 +10,21 @@ import os
 from werkzeug.exceptions import HTTPException
 
 
+# Flask application instance
 app = Flask(__name__)
+
+# Cross origin resource sharing
 cors = CORS(app, resouces={r"/api/v1/*": {"origins": "*"}})
+
+# app_views Blueprint from app.v1.views
 app.register_blueprint(app_views)
 
+# Environmental variables for flask
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
 port = os.getenv('HBNB_API_PORT', 5000)
 
 
+# Application page rendering begins
 @app.teardown_appcontext
 def teardown(exception):
     """
