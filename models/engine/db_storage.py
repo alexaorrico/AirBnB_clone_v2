@@ -82,10 +82,10 @@ class DBStorage:
             cls: classname
             id: string representing the object id
         """
-        if cls in classes.values() and type(id) is str:
+        if cls in classes.values() and id and type(id) == str:
             cls_objs = self.all(cls)
             for key, value in cls_objs.items():
-                if id == key.split(".")[1]:
+                if key.split(".")[1] == id:
                     return value
         return None
 
@@ -94,8 +94,7 @@ class DBStorage:
         retrieves the number of ojects in corresponding to cls. if cls is
         none, rhen get the the number of all object in rhe class
         """
-        if cls:
-            if cls in classes.values():
-                cls_objects = self.all(cls)
-                return len(cls_objects)
-        return len(self.all())
+        data = self.all(cls)
+        if cls in classes.values():
+		data = self.all(cls)
+	return len(data)

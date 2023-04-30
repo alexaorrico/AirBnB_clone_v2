@@ -78,19 +78,18 @@ class FileStorage:
             cls: classs
             id: string representing the object id
         """
-        if cls in classes.values() and type(id) is str:
+        if cls in classes.values()and id and type(id) == str:
             cls_objects = self.all(cls)
             for key, value in cls_objects.items():
                 if key.split(".")[1] == id:
                     return value
         return None
-    
     def count(self, cls=None):
         """
         Return the number of ocurrence of rhe class cls
         if cls is None, return all order objects
         """
-        if cls:
-            cls_objects = self.all(cls)
-            return len(cls_objects)
-        return len(self.all())
+        data = self.all(cls)
+        if cls in classes.value():
+            data =self.all(cls)
+        return len(data)
