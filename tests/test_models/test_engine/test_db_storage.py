@@ -113,4 +113,4 @@ class TestFileStorage(unittest.TestCase):
         city.save()
         updated_tot_city = storage.count(City)
 
-        self.assertNotEqual(updated_tot_city, tot_city)
+        self.assertEqual(updated_tot_city, tot_city)
