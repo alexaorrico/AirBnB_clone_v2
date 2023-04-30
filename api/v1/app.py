@@ -21,10 +21,10 @@ api_port = getenv('HBNB_API_PORT', 5000)
 
 @app.teardown_appcontext
 def db_close(error):
-        """
-        Commit changes in database
-        """
-        storage.close()
+    """
+    Commit changes in database
+    """
+    storage.close()
 
 
 @app.errorhandler(404)
@@ -37,4 +37,4 @@ def Error_Handler(error):
 
 
 if __name__ == "__main__":
-        app.run(host=api_host, port=int(api_port), threaded=True)
+    app.run(host=api_host, port=int(api_port), threaded=True)
