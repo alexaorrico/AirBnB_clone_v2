@@ -1,72 +1,117 @@
 #!/usr/bin/python3
-
-'''
-    All the test for the amenity model are implemented here.
-'''
-
+"""
+Unit Test for Amenity Class
+"""
 import unittest
-import pep8
-from models.base_model import BaseModel
-from models.amenity import Amenity
-from os import getenv, remove
+from datetime import datetime
+import models
+import json
+import os
+
+Amenity = models.amenity.Amenity
+BaseModel = models.base_model.BaseModel
+storage_type = os.environ.get('HBNB_TYPE_STORAGE')
 
 
-storage = getenv("HBNB_TYPE_STORAGE", "fs")
+class TestAmenityDocs(unittest.TestCase):
+    """Class for testing BaseModel docs"""
 
-
-class TestAmenity(unittest.TestCase):
-    '''
-        Testing Amenity class
-    '''
     @classmethod
     def setUpClass(cls):
-        '''
-            Sets up unittest
-        '''
-        cls.new_amenity = Amenity()
-        cls.new_amenity.name = "wifi"
+        print('\n\n.................................')
+        print('..... Testing Documentation .....')
+        print('........   Amenity  Class   ........')
+        print('.................................\n\n')
+
+    def test_doc_file(self):
+        """... documentation for the file"""
+        expected = '\nAmenity Class from Models Module\n'
+        actual = models.amenity.__doc__
+        self.assertEqual(expected, actual)
+
+    def test_doc_class(self):
+        """... documentation for the class"""
+        expected = 'Amenity class handles all application amenities'
+        actual = Amenity.__doc__
+        self.assertEqual(expected, actual)
+
+
+class TestAmenityInstances(unittest.TestCase):
+    """testing for class instances"""
 
     @classmethod
-    def tearDownClass(cls):
-        '''
-            Tears down unittest
-        '''
-        del cls.new_amenity
+    def setUpClass(cls):
+        print('\n\n.................................')
+        print('....... Testing Functions .......')
+        print('.........  Amenity  Class  .........')
+        print('.................................\n\n')
+
+    def setUp(self):
+        """initializes new amenity for testing"""
+        self.amenity = Amenity()
+
+    def test_instantiation(self):
+        """... checks if Amenity is properly instantiated"""
+        self.assertIsInstance(self.amenity, Amenity)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_to_string(self):
+        """... checks if BaseModel is properly casted to string"""
+        my_str = str(self.amenity)
+        my_list = ['Amenity', 'id', 'created_at']
+        actual = 0
+        for sub_str in my_list:
+            if sub_str in my_str:
+                actual += 1
+        self.assertTrue(3 == actual)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_instantiation_no_updated(self):
+        """... should not have updated attribute"""
+        my_str = str(self.amenity)
+        actual = 0
+        if 'updated_at' in my_str:
+            actual += 1
+        self.assertTrue(0 == actual)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_updated_at(self):
+        """... save function should add updated_at attribute"""
+        self.amenity.save()
+        actual = type(self.amenity.updated_at)
+        expected = type(datetime.now())
+        self.assertEqual(expected, actual)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_to_json(self):
+        """... to_json should return serializable dict object"""
+        self.amenity_json = self.amenity.to_json()
+        actual = 1
         try:
-            remove("file.json")
-        except FileNotFoundError:
-            pass
+            serialized = json.dumps(self.amenity_json)
+        except:
+            actual = 0
+        self.assertTrue(1 == actual)
 
-    def test_pep8_style_check(self):
-        '''
-            Tests pep8 style
-        '''
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/amenity.py'])
-        self.assertEqual(p.total_errors, 0, "pep8 error needs fixing")
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_json_class(self):
+        """... to_json should include class key with value Amenity"""
+        self.amenity_json = self.amenity.to_json()
+        actual = None
+        if self.amenity_json['__class__']:
+            actual = self.amenity_json['__class__']
+        expected = 'Amenity'
+        self.assertEqual(expected, actual)
 
-    def test_States_dbtable(self):
-        '''
-            Check if the tablename is correct
-        '''
-        self.assertEqual(self.new_amenity.__tablename__, "amenities")
+    def test_amenity_attribute(self):
+        """... add amenity attribute"""
+        self.amenity.name = "greatWifi"
+        if hasattr(self.amenity, 'name'):
+            actual = self.amenity.name
+        else:
+            actual = ''
+        expected = "greatWifi"
+        self.assertEqual(expected, actual)
 
-    def test_Amenity_inheritence(self):
-        '''
-            tests that the Amenity class Inherits from BaseModel
-        '''
-        self.assertIsInstance(self.new_amenity, BaseModel)
-
-    def test_Amenity_attributes(self):
-        '''
-            Test that Amenity class had name attribute.
-        '''
-        self.assertTrue("name" in self.new_amenity.__dir__())
-
-    @unittest.skipIf(storage == "db", "Testing database storage only")
-    def test_Amenity_attribute_type(self):
-        '''
-            Test that Amenity class had name attribute's type.
-        '''
-        name_value = getattr(self.new_amenity, "name")
-        self.assertIsInstance(name_value, str)
+if __name__ == '__main__':
+    unittest.main

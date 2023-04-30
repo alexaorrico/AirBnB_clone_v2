@@ -1,132 +1,100 @@
-.places{
-    display: flex;
-    flex-direction: column;
-    padding-left: 30px;
-}
-.places h1{
-    font-size: 30px;
-}
-.places_title{
-    padding-top: 30px;
-    margin-bottom: -25px;
-}
-.articles{
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-article{
-    width: 390px;
-    margin: 20px;
-    padding: 20px;
-    border: solid #FF5A5F 1px;
-    border-radius: 4px;
-    text-align: center;
-    font-size: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 30px;
-}
-article h2{
-    font-size: 30px;
-    margin-top: -1px;
-    padding-left: 20%;
-}
-.article_title{
-    width: 100%;
-}
-.price_by_night{
-    color: #FF5A5F;
-    border: solid #FF5A5F 4px;
-    border-radius: 50%;
-    min-width: 60px;
-    height: 60px;
-    font-size: 30px;
-    margin-top: -10px;
-}
-.price{
-    margin-top: 10px;
-}
-.price_title{
-    display: flex;
-}
-.information{
-    height:80px;
-    border-top: solid #DDDDDD 1px;
-    border-bottom: solid #DDDDDD 1px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-.max_guest{
-    width: 100px;
-    display: flex;
-    height: inherit;
-    flex-direction: column;
-    justify-content: center;
-}
-.guest_icon{
-    height: inherit;
-    width: inherit;
-    background: url(https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/icon_group.png);
-    background-repeat: no-repeat;
-    margin-left: 35px;
-}
-.guest_number h2{
-    font-size: 10px;
-    color: grey;
+@charset "UTF-8";
+/** Holberton Practice Styles
+ * ------ Places
+ */
+
+.container .places {
+	width: 100%;
+	position: relative;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	align-items: stretch;
+	z-index: 1;
 }
 
-.number_rooms{
-    width: 100px;
-    display: flex;
-    height: inherit;
-    flex-direction: column;
-    justify-content: center;
-}
-.rooms_icon{
-    height: inherit;
-    width: inherit;
-    background: url(https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/icon_bed.png);
-    background-repeat: no-repeat;
-    margin-left: 35px;
-}
-.rooms_number h2{
-    font-size: 10px;
-    color: grey;
+.container .places article {
+	width: 390px;
+	padding: 20px 20px;
+	margin: 20px 20px;
+	border: 1px solid #FF5A5F;
+	border-radius: 4px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
 }
 
-.number_bathrooms{
-    width: 100px;
-    display: flex;
-    height: inherit;
-    flex-direction: column;
-    justify-content: center;
+/**
+ * ------ HEADERS
+ */
+
+.container .places h1 {
+	width: 100%;
+	font-size: 30px;
+	margin: 30px 0 0 10px;
 }
-.bathrooms_icon{
-    height: inherit;
-    width: inherit;
-    background: url(https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/icon_bath.png);
-    background-repeat: no-repeat;
-    margin-left: 35px;
+
+.container .places .title {
+	display: flex;
+	flex-direction: row;
 }
-.bathrooms_number h2{
-    font-size: 10px;
-    color: grey;
+
+.container .places h2 {
+	font-size: 30px;
+	flex-grow: 1;
+	margin: 10px 0 30px 0;
+	text-align: center;
 }
-.user{
-    font-size: 11px;
-    color: rgb(29, 26, 26);;
-    text-align: left;
-    margin-top: 15px;
-    font-family: Arial, Helvetica, sans-serif;
+
+.container .places .price_by_night {
+	color: #FF5A5F;
+	border: 4px solid #FF5A5F;
+	border-radius: 50%;
+	min-width: 60px;
+	height: 60px;
+	font-size: 30px;
+	text-align: center;
+	line-height: 60px;
 }
-.description{
-    font-size: 11px;
-    color: rgb(29, 26, 26);;
-    text-align: left;
-    margin-top: 5px;
-    font-family: Arial, Helvetica, sans-serif;
+
+.container .places .information {
+	height: 80px;
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+.container .places .information .max_guest,
+.container .places .information .number_rooms,
+.container .places .information .number_bathrooms {
+	width: 100px;
+	padding: 10px 0 0 0;
+	background-repeat: no-repeat;
+	background-position: center 5px;
+	text-align: center;
+	line-height: 25px;
+}
+
+.container .places .user {
+	margin: 20px 0 5px 0;
+}
+
+@media screen and (max-width: 600px) {
+
+	.container .places .information {
+		height: auto;
+	}
+
+	.container .places .price_by_night {
+		border: 2px solid #FF5A5F;
+		min-width: 40px;
+		height: 40px;
+		font-size: 20px;
+		top: 3px;
+		right: 3px;
+		text-align: center;
+		line-height: 42px;
+	}
 }

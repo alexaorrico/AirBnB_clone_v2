@@ -1,62 +1,116 @@
 #!/usr/bin/python3
-'''
-    Contain tests for the state module.
-'''
+"""
+Unit Test for State Class
+"""
 import unittest
-from models.base_model import BaseModel
-from models.state import State
-from os import getenv, remove
-import pep8
+from datetime import datetime
+import models
+import json
+import os
+State = models.state.State
+BaseModel = models.base_model.BaseModel
+storage_type = os.environ.get('HBNB_TYPE_STORAGE')
 
-storage = getenv("HBNB_TYPE_STORAGE", "fs")
 
-
-class TestState(unittest.TestCase):
-    '''
-        Test the State class.
-    '''
+class TestStateDocs(unittest.TestCase):
+    """Class for testing State docs"""
 
     @classmethod
     def setUpClass(cls):
-        '''
-            Sets up unittest
-        '''
-        cls.new_state = State()
-        cls.new_state.name = "California"
+        print('\n\n.................................')
+        print('..... Testing Documentation .....')
+        print('........   State Class   ........')
+        print('.................................\n\n')
+
+    def test_doc_file(self):
+        """... documentation for the file"""
+        expected = '\nState Class from Models Module\n'
+        actual = models.state.__doc__
+        self.assertEqual(expected, actual)
+
+    def test_doc_class(self):
+        """... documentation for the class"""
+        expected = 'State class handles all application states'
+        actual = State.__doc__
+        self.assertEqual(expected, actual)
+
+
+class TestStateInstances(unittest.TestCase):
+    """testing for class instances"""
 
     @classmethod
-    def tearDownClass(cls):
-        '''
-            Tears down unittest
-        '''
-        del cls.new_state
+    def setUpClass(cls):
+        print('\n\n.................................')
+        print('....... Testing Functions .......')
+        print('.........  State Class  .........')
+        print('.................................\n\n')
+
+    def setUp(self):
+        """initializes new state for testing"""
+        self.state = State()
+
+    def test_instantiation(self):
+        """... checks if State is properly instantiated"""
+        self.assertIsInstance(self.state, State)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_to_string(self):
+        """... checks if BaseModel is properly casted to string"""
+        my_str = str(self.state)
+        my_list = ['State', 'id', 'created_at']
+        actual = 0
+        for sub_str in my_list:
+            if sub_str in my_str:
+                actual += 1
+        self.assertTrue(3 == actual)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_instantiation_no_updated(self):
+        """... should not have updated attribute"""
+        my_str = str(self.state)
+        actual = 0
+        if 'updated_at' in my_str:
+            actual += 1
+        self.assertTrue(0 == actual)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_updated_at(self):
+        """... save function should add updated_at attribute"""
+        self.state.save()
+        actual = type(self.state.updated_at)
+        expected = type(datetime.now())
+        self.assertEqual(expected, actual)
+
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_to_json(self):
+        """... to_json should return serializable dict object"""
+        self.state_json = self.state.to_json()
+        actual = 1
         try:
-            remove("file.json")
-        except FileNotFoundError:
-            pass
+            serialized = json.dumps(self.state_json)
+        except:
+            actual = 0
+        self.assertTrue(1 == actual)
 
-    def test_States_dbtable(self):
-        '''
-            Check if the tablename is correct
-        '''
-        self.assertEqual(self.new_state.__tablename__, "states")
+    @unittest.skipIf(storage_type == 'db', 'skip if environ is db')
+    def test_json_class(self):
+        """... to_json should include class key with value State"""
+        self.state_json = self.state.to_json()
+        actual = None
+        if self.state_json['__class__']:
+            actual = self.state_json['__class__']
+        expected = 'State'
+        self.assertEqual(expected, actual)
 
-    def test_State_inheritence(self):
-        '''
-            Test that State class inherits from BaseModel.
-        '''
-        self.assertIsInstance(self.new_state, BaseModel)
+    def test_name_attribute(self):
+        """... add name attribute"""
+        self.state.name = "betty"
+        if hasattr(self.state, 'name'):
+            actual = self.state.name
+        else:
+            acual = ''
+        expected = "betty"
+        self.assertEqual(expected, actual)
 
-    def test_State_attributes(self):
-        '''
-            Test that State class contains the attribute `name`.
-        '''
-        self.assertTrue("name" in self.new_state.__dir__())
-
-    @unittest.skipIf(storage == "db", "Testing database storage only")
-    def test_State_attributes_type(self):
-        '''
-            Test that State class attribute name is class type str.
-        '''
-        name = getattr(self.new_state, "name")
-        self.assertIsInstance(name, str)
+if __name__ == '__main__':
+    unittest.main
