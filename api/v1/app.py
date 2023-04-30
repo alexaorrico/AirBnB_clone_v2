@@ -71,4 +71,6 @@ def setup_global_errors():
 
 
 if __name__ == '__main__':
+    """Main Flask App entry point"""
+    setup_global_errors()
     app.run(host=host, port=port debug=True)
