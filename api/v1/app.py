@@ -4,7 +4,7 @@ A Script that return the status of API
 """
 import os
 from flask import Flask
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 from models import storage
 from app.v1.views import app_views
