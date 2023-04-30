@@ -5,18 +5,19 @@ from flask import jsonify, request, abort
 from models import storage
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('cities/<city_id>/places', methods=['GET', 'POST'],
                  strict_slashes=False)
 @app_views.route('places/<place_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def handle_city(city_id=None, place_id=None):
+def handle_places(city_id=None, place_id=None):
     """Retrieves the list of all city objects by state"""
     if city_id:
         # uses the '/states/<state_it>/cities routes
         city = storage.get(City, city_id)
-        if not state:
+        if not city:
             abort(404)
         else:
             if request.method == 'GET':
@@ -59,6 +60,6 @@ def handle_city(city_id=None, place_id=None):
                     abort(400, 'Not a JSON')
                 for key in data.keys():
                     if key not in ignore_keys:
-                        place[key] = data.get(key)
+                        setattr(place, key, data.get(key))
                 place.save()
-                return jsonify(city.to_dict()), 200
+                return jsonify(place.to_dict()), 200
