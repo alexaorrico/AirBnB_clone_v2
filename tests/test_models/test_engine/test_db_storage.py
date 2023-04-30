@@ -23,6 +23,7 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 
+@unittest.skipIf(STORAGE_TYPE != 'db', 'skip if environ is not db')
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
@@ -86,3 +87,6 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+if __name__ == '__main__':
+    unittest.main

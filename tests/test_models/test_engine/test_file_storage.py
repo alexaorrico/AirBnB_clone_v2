@@ -23,6 +23,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
+@unittest.skipIf(STORAGE_TYPE != 'db', 'skip if environ is not db')
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
     @classmethod
@@ -113,3 +114,6 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+if __name__ == '__main__':
+    unittest.main
