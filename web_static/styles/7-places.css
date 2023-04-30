@@ -1,29 +1,31 @@
-.places {
-    width: 100%;
-    border: 0;
+.places{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    padding-left: 30px;
+}
+.places h1{
+    font-size: 30px;
+}
+.places_title{
+    padding-top: 30px;
+    margin-bottom: -25px;
+}
+.articles{
+    display: flex;
+    align-items: baseline;
     flex-wrap: wrap;
     justify-content: center;
 }
-
-.places > h1 {
-    font-size: 30px;
-    padding-left: 20px;
-    padding-top: 20px;
-    margin-bottom: 0px;
-    flex: 0 1 100%;
-}
-.places > article {
+article{
     width: 390px;
-    padding: 20px 20px 20px 20px;
-    margin: 20px 20px 20px 20px;
-    border: 1px solid #FF5A5F;
+    margin: 20px;
+    padding: 20px;
+    border: solid #FF5A5F 1px;
     border-radius: 4px;
-    display: flex;
-    justify-content: center;
-}
-
-.places > article > h2 {
+    text-align: center;
     font-size: 30px;
+}
+article h2{
+    font-size: 30px;
+    margin-top: -5px;
 }
