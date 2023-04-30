@@ -2,19 +2,16 @@
 """
 Test cases for api redirections
 """
-
-import inspect
-"""import pep8"""
 import unittest
 from flask import Flask
 from api.v1.app import app
 
 
-class TestCityDocs(unittest.TestCase):
-    """Tests to check the documentation and style of City class"""
+class TestStatusRoutes(unittest.TestCase):
+    """Tests for status routes"""
     @classmethod
     def setUpClass(self):
-        """Set up for the doc tests"""
+        """Set up for flask app request"""
         self.myapp = app.app_context()
         self.myapp.push()
         app.testing = True
@@ -25,7 +22,28 @@ class TestCityDocs(unittest.TestCase):
         res = self.client.get('api/v1/status')
         self.assertEqual(res.status_code, 200)
 
-    def test_content-type(self):
+    def test_content_type(self):
         """ Test return data """
         res = self.client.get('api/v1/status')
+        self.assertEqual(res.content_type, 'application/json')
+
+
+class TestStatsRoutes(unittest.TestCase):
+    """ Test cases for Stats routes"""
+    @classmethod
+    def setUpClass(self):
+        """Set up for flas app request"""
+        self.myapp = app.app_context()
+        self.myapp.push()
+        app.testing = True
+        self.client = app.test_client()
+
+    def test_status_code(self):
+        """ Test for status_code """
+        res = self.client.get('api/v1/stats')
+        self.assertEqual(res.status_code, 200)
+
+    def test_content_type(self):
+        """ Test for content-type """
+        res = self.client.get('api/v1/stats')
         self.assertEqual(res.content_type, 'application/json')
