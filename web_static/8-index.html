@@ -1,192 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-	<!-- HEAD -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Holberton AirBnB</title>
 
-	<!-- FAVICON -->
-	<link rel="shortcut icon" href="images/icon.png">
+<head>
+    <title>Holberton School</title>
+    <link href="styles/3-header.css" rel="stylesheet">
+    <link href="styles/4-common.css" rel="stylesheet">
+    <link href="styles/3-footer.css" rel="stylesheet">
+    <link href="styles/6-filters.css" rel="stylesheet">
+    <link href="styles/8-places.css" rel="stylesheet">
+    <link href="https://s3.amazonaws.com/intranet-projects-files/holbertonschool-higher-level_programming+/268/icon.png" rel="icon">
+</head>
 
-	<!-- ********************** CSS styles -->
-	<link rel="stylesheet" href="styles/4-common.css">
-	<link rel="stylesheet" href="styles/3-header.css">
-	<link rel="stylesheet" href="styles/3-footer.css">
-	<link rel="stylesheet" href="styles/6-filters.css">
-	<link rel="stylesheet" href="styles/8-places.css">
+<body>
+    <header>
+        <div class="logo"></div>
+    </header>
+    <div class="container">
+        <section class="filters">
+            <button type="button">Search</button>
+            <div class="locations">
+                <h3>States</h3>
+                <h4>California</h4>
+                <ul class="popover">
+                    <li>
+                        <h2>Arizona:</h2>
+                    </li>
+                    <li>
+                        <ul class="popover_list">
+                            <li>Content</li>
+                            <li>Content</li>
+                            <li>Content</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h2>California:</h2>
+                    </li>
+                    <li>
+                        <ul class="popover_list">
+                            <li>Content</li>
+                            <li>Content</li>
+                            <li>Content</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="amenities">
+                <h3>Amenities</h3>
+                <h4>Lorem Ipsum</h4>
+                <ul class="popover">
+                    <li>Internet</li>
+                    <li>Tv</li>
+                    <li>Free Food</li>
+                    <li>Pool</li>
+                </ul>
+            </div>
+        </section>
+        <section class="places">
+            <div class="places_title">
+                <h1>Places</h1>
+            </div>
+            <div class="articles">
+                <article>
+                    <div class="price_title">
+                        <div class="article_title">
+                            <h2>My Home</h2>
+                        </div>
+                        <div class="price_by_night">
+                            <div class="price">
+                                $60
+                            </div>
+                        </div>
+                    </div>
+                    <div class="information">
+                        <div class="max_guest">
+                            <div class="guest_icon">
+                            </div>
+                            <div class="guest_number">
+                                <h2>2 Guests</h2>
+                            </div>
+                        </div>
+                        <div class="number_rooms">
+                            <div class="rooms_icon">
+                            </div>
+                            <div class="rooms_number">
+                                <h2>1 Bedroom</h2>
+                            </div>
+                        </div>
+                        <div class="number_bathrooms">
+                            <div class="bathrooms_icon">
+                            </div>
+                            <div class="bathrooms_number">
+                                <h2>1 Bathroom</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <b>Owner:</b> Grace Hopper
+                    </div>
+                    <div class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                        text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                        a type specimen book. It has survived not only five centuries, but also the leap into electronic
+                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+                        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                        like Aldus PageMaker including versions of Lorem Ipsum.
+                    </div>
+                </article>
+                <article>
+                    <div class="price_title">
+                        <div class="article_title">
+                            <h2>My Home</h2>
+                        </div>
+                        <div class="price_by_night">
+                            <div class="price">
+                                $60
+                            </div>
+                        </div>
+                    </div>
+                    <div class="information">
+                        <div class="max_guest">
+                            <div class="guest_icon">
+                            </div>
+                            <div class="guest_number">
+                                <h2>2 Guests</h2>
+                            </div>
+                        </div>
+                        <div class="number_rooms">
+                            <div class="rooms_icon">
+                            </div>
+                            <div class="rooms_number">
+                                <h2>1 Bedroom</h2>
+                            </div>
+                        </div>
+                        <div class="number_bathrooms">
+                            <div class="bathrooms_icon">
+                            </div>
+                            <div class="bathrooms_number">
+                                <h2>1 Bathroom</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <b>Owner:</b> Grace Hopper
+                    </div>
+                    <div class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                        text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                        a type specimen book. It has survived not only five centuries, but also the leap into electronic
+                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+                        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                        like Aldus PageMaker including versions of Lorem Ipsum.
 
-	<!-- ********************** Font Awesome -->
-	<link rel="stylesheet" href="/styles/font-awesome.css">
-  </head>
-  <!-- ********************** BODY -->
-  <body>
-	<!-- ********************** HEADER -->
-	<header>
-	</header>
-	<main>
-	  <div class="container">
-		<!-- ********************** FILTERS -->
-		<section class="filters">
-		  <!-- ********************** LOCATIONS -->
-		  <div class="locations">
-			<h3>States</h3>
-			<h4>Lorem ipsum dolor</h4>
-			<ul class="popover">
-			  <li><h2>California</h2>
-				<ul>
-				  <li>Pacifica</li>
-				  <li>San Diego</li>
-				</ul>
-			  </li>
-			  <li><h2>Illinois</h2>
-				<ul>
-				  <li>Chicago</li>
-				  <li>Winnetka</li>
-				</ul>
-			  </li>
-			</ul>
-		  </div>
-		  <!-- ********************** AMENITIES -->
-		  <div class="amenities">
-			<h3>Amenities</h3>
-			<h4>adipiscing elit</h4>
-			<ul class="popover">
-			  <li>Pool</li>
-			  <li>Wifi</li>
-			  <li>Breakfast</li>
-			  <li>Garage</li>
-			</ul>
-		  </div>
-		  <!-- ********************** SEARCH BUTTON -->
-		  <button>Search</button>
-		</section>
-		<!-- ********************** PLACES -->
-		<section class="places">
-		  <h1>Places</h1>
-		  <article>
-			<!-- ********************** place: flatland
-			  -->
-			<div class="title">
-			  <h2>Flatland</h2>
-			  <div class="price_by_night">
-				$80
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				5 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				4 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** USER
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  I wandered lonely as a cloud That floats on high o'er vales and
-			  hills, When all at once I saw a crowd, A host, of golden
-			  daffodils; Beside the lake, beneath the trees, Fluttering and
-			  dancing in the breeze.
-			</div>
-		  </article>
-		  <article>
-			<!-- ********************** place: closet
-			  -->
-			<div class="title">
-			  <h2>Closet</h2>
-			  <div class="price_by_night">
-				$7
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				2 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				2 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** user
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  Continuous as the stars that shine And twinkle on the milky way,
-			  They stretched in never-ending line Along the margin of a bay:
-			  Ten thousand saw I at a glance, Tossing their heads in sprightly
-			  dance.
-			</div>
-		  </article>
-		  <article>
-			<!-- ********************** place: big home
-			  -->
-			<div class="title">
-			  <h2>Big Home</h2>
-			  <div class="price_by_night">
-				$99
-			  </div>
-			</div>
-			<div class="information">
-			  <div class="max_guest">
-				<i class="fa fa-users fa-3x" aria-hidden="true"></i>
-				<br />
-				20 Guests
-			  </div>
-			  <div class="number_rooms">
-				<i class="fa fa-bed fa-3x" aria-hidden="true"></i>
-				<br />
-				4 Bedrooms
-			  </div>
-			  <div class="number_bathrooms">
-				<i class="fa fa-bath fa-3x" aria-hidden="true"></i>
-				<br />
-				1 Bathroom
-			  </div>
-			</div>
-			<!-- ********************** user
-			  -->
-			<div class="user">
-			  <strong>Owner:</strong>
-			</div>
-			<div class="description">
-			  The waves beside them danced; but they Out-did the sparkling
-			  waves in glee: A poet could not but be gay, In such a jocund
-			  company: I gazed—and gazed—but little thought What wealth the
-			  show to me had brought: For oft, when on my couch I lie In vacant
-			  or in pensive mood, They flash upon that inward eye Which is the
-			  bliss of solitude; And then my heart with pleasure fills, And
-			  dances with the daffodils.
-			</div>
-		  </article>
-		</section>
-	  </div>
-	</main>
-	<!-- FOOTER -->
-	<footer>
-	  Holberton School
-	</footer>
-  </body>
+                    </div>
+                </article>
+                <article>
+                    <div class="price_title">
+                        <div class="article_title">
+                            <h2>My Home</h2>
+                        </div>
+                        <div class="price_by_night">
+                            <div class="price">
+                                $60
+                            </div>
+                        </div>
+                    </div>
+                    <div class="information">
+                        <div class="max_guest">
+                            <div class="guest_icon">
+                            </div>
+                            <div class="guest_number">
+                                <h2>2 Guests</h2>
+                            </div>
+                        </div>
+                        <div class="number_rooms">
+                            <div class="rooms_icon">
+                            </div>
+                            <div class="rooms_number">
+                                <h2>1 Bedroom</h2>
+                            </div>
+                        </div>
+                        <div class="number_bathrooms">
+                            <div class="bathrooms_icon">
+                            </div>
+                            <div class="bathrooms_number">
+                                <h2>1 Bathroom</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <b>Owner:</b> Grace Hopper
+                    </div>
+                    <div class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                        text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                        a type specimen book. It has survived not only five centuries, but also the leap into electronic
+                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+                        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                        like Aldus PageMaker including versions of Lorem Ipsum.
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <footer>
+        Holberton School
+    </footer>
+</body>
+
 </html>

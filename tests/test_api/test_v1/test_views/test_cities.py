@@ -1,55 +1,81 @@
 #!/usr/bin/python3
-"""
-Unit Test for api v1 Flask App
-"""
-import inspect
-import pep8
-import web_flask
+'''testing the index route'''
 import unittest
-from os import stat
-import api
-module = api.v1.views.cities
+import pep8
+from os import getenv
+import requests
+import json
+from api.v1.app import *
+from flask import request, jsonify
+from models.state import State
+from models.city import City
+from models import storage
 
 
-class TestCitiesDocs(unittest.TestCase):
-    """Class for testing Hello Route docs"""
+class TestCities(unittest.TestCase):
+    '''test city'''
+    def test_lists_cities_of_state(self):
+        '''test cities GET route'''
+        with app.test_client() as c:
+            new_state = State(name="Beckystan")
+            storage.new(new_state)
+            new_city = City(name="Chensville", state_id=new_state.id)
+            storage.new(new_city)
+            resp = c.get('/api/v1/states/{}/cities'.format(new_state.id))
+            self.assertEqual(resp.status_code, 200)
+            resp2 = c.get('/api/v1/states/{}/cities/'.format(new_state.id))
+            self.assertEqual(resp.status_code, 200)
 
-    all_funcs = inspect.getmembers(module, inspect.isfunction)
+    def test_create_city(self):
+        '''test city POST route'''
+        with app.test_client() as c:
+            new_state = State(name="Beckystan")
+            storage.new(new_state)
+            new_city = City(name="Chensville", state_id=new_state.id)
+            storage.new(new_city)
+            resp = c.post('/api/v1/states/{}/cities'.format(new_state.id),
+                          data=json.dumps({"name": "Chentown"}),
+                          content_type="application/json")
+            self.assertEqual(resp.status_code, 201)
 
-    @classmethod
-    def setUpClass(cls):
-        print('\n\n.................................')
-        print('..... Testing Documentation .....')
-        print('.......  Cities API  .......')
-        print('.................................\n\n')
+    def test_delete_city(self):
+        '''test city DELETE route'''
+        with app.test_client() as c:
+            new_state = State(name="Beckystan")
+            storage.new(new_state)
+            new_city = City(name="Chensville", state_id=new_state.id)
+            storage.new(new_city)
+            resp = c.get('api/v1/cities/{}'.format(new_city.id))
+            self.assertEqual(resp.status_code, 200)
+            resp1 = c.delete('api/v1/cities/{}'.format(new_city.id))
+            self.assertEqual(resp1.status_code, 404)
+            resp2 = c.get('api/v1/cities/{}'.format(new_city.id))
+            self.assertEqual(resp2.status_code, 404)
 
-    def test_doc_file(self):
-        """... documentation for the file"""
-        actual = module.__doc__
-        self.assertIsNotNone(actual)
+    def test_get_city(self):
+        '''test city GET by id route'''
+        with app.test_client() as c:
+            new_state = State(name="Beckystan")
+            storage.new(new_state)
+            new_city = City(name="Chensville", state_id=new_state.id)
+            storage.new(new_city)
+            resp = c.get('/api/v1/states/{}/cities'.format(new_state.id))
+            self.assertEqual(resp.status_code, 200)
 
-    def test_all_function_docs(self):
-        """... tests for ALL DOCS for all functions"""
-        all_functions = TestCitiesDocs.all_funcs
-        for function in all_functions:
-            self.assertIsNotNone(function[1].__doc__)
-
-    def test_pep8(self):
-        """... tests if file conforms to PEP8 Style"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        errors = pep8style.check_files(['api/v1/views/cities.py'])
-        self.assertEqual(errors.total_errors, 0, errors.messages)
-
-    def test_file_is_executable(self):
-        """... tests if file has correct permissions so user can execute"""
-        file_stat = stat('api/v1/views/cities.py')
-        permissions = str(oct(file_stat[0]))
-        actual = int(permissions[5:-2]) >= 5
-        self.assertTrue(actual)
+    def test_update_city(self):
+        '''test city PUT route'''
+        with app.test_client() as c:
+            new_state = State(name="Beckystan")
+            storage.new(new_state)
+            new_city = City(name="Chensville", state_id=new_state.id)
+            storage.new(new_city)
+            resp = c.put('api/v1/cities/{}'.format(new_city.id),
+                         data=json.dumps({"name": "Becktropolis"}),
+                         content_type="application/json")
+            # data = json.loads(resp.data.decode('utf-8'))
+            # print(data)
+            self.assertEqual(resp.status_code, 200)
 
 
 if __name__ == '__main__':
-    """
-    MAIN TESTS
-    """
-    unittest.main
+    unittest.main()

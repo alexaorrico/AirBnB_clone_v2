@@ -1,55 +1,66 @@
 #!/usr/bin/python3
-"""
-Unit Test for api v1 Flask App
-"""
-import inspect
-import pep8
-import web_flask
+'''testing the index route'''
 import unittest
-from os import stat
-import api
-module = api.v1.views.amenities
+import pep8
+from os import getenv
+import requests
+import json
+from api.v1.app import *
+from flask import request, jsonify
+from models.amenity import Amenity
+from models import storage
 
 
-class TestAmenitiesDocs(unittest.TestCase):
-    """Class for testing Hello Route docs"""
+class TestAmenities(unittest.TestCase):
+    '''test amenity'''
+    def test_lists_amenities(self):
+        '''test amenity GET route'''
+        with app.test_client() as c:
+            resp = c.get('/api/v1/amenities')
+            self.assertEqual(resp.status_code, 200)
+            resp2 = c.get('/api/v1/amenities/')
+            self.assertEqual(resp.status_code, 200)
 
-    all_funcs = inspect.getmembers(module, inspect.isfunction)
+    def test_create_amenity(self):
+        '''test amenity POST route'''
+        with app.test_client() as c:
+            resp = c.post('/api/v1/amenities/',
+                          data=json.dumps({"name": "treehouse"}),
+                          content_type="application/json")
+            self.assertEqual(resp.status_code, 201)
 
-    @classmethod
-    def setUpClass(cls):
-        print('\n\n.................................')
-        print('..... Testing Documentation .....')
-        print('.......  Amenities API  .......')
-        print('.................................\n\n')
+    def test_delete_amenity(self):
+        '''test amenity DELETE route'''
+        with app.test_client() as c:
+            new_amenity = Amenity(name="3 meals a day")
+            storage.new(new_amenity)
+            resp = c.get('api/v1/amenities/{}'.format(new_amenity.id))
+            self.assertEqual(resp.status_code, 200)
+            resp1 = c.delete('api/v1/amenities/{}'.format(new_amenity.id))
+            self.assertEqual(resp1.status_code, 404)
+            resp2 = c.get('api/v1/amenities/{}'.format(new_amenity.id))
+            self.assertEqual(resp2.status_code, 404)
 
-    def test_doc_file(self):
-        """... documentation for the file"""
-        actual = module.__doc__
-        self.assertIsNotNone(actual)
+    def test_get_amenity(self):
+        '''test amenity GET by id route'''
+        with app.test_client() as c:
+            new_amenity = Amenity(name="3 meals a day")
+            storage.new(new_amenity)
+            resp = c.get('api/v1/amenities/{}'.format(new_amenity.id))
+            self.assertEqual(resp.status_code, 200)
 
-    def test_all_function_docs(self):
-        """... tests for ALL DOCS for all functions"""
-        all_functions = TestAmenitiesDocs.all_funcs
-        for function in all_functions:
-            self.assertIsNotNone(function[1].__doc__)
-
-    def test_pep8(self):
-        """... tests if file conforms to PEP8 Style"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        errors = pep8style.check_files(['api/v1/views/amenities.py'])
-        self.assertEqual(errors.total_errors, 0, errors.messages)
-
-    def test_file_is_executable(self):
-        """... tests if file has correct permissions so user can execute"""
-        file_stat = stat('api/v1/views/amenities.py')
-        permissions = str(oct(file_stat[0]))
-        actual = int(permissions[5:-2]) >= 5
-        self.assertTrue(actual)
+    def test_update_amenity(self):
+        '''test amenity PUT route'''
+        with app.test_client() as c:
+            new_amenity = Amenity(name="3 meals a day")
+            storage.new(new_amenity)
+            resp = c.put('api/v1/amenities/{}'.format(new_amenity.id),
+                         data=json.dumps({"name": "2 meals a day"}),
+                         content_type="application/json")
+            # data = json.loads(resp.data.decode('utf-8'))
+            # print(data)
+            self.assertEqual(resp.status_code, 200)
 
 
 if __name__ == '__main__':
-    """
-    MAIN TESTS
-    """
-    unittest.main
+    unittest.main()

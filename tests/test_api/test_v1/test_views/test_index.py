@@ -1,55 +1,42 @@
 #!/usr/bin/python3
-"""
-Unit Test for api v1 Flask App
-"""
-import inspect
-import pep8
-import web_flask
+'''testing the index route'''
 import unittest
-from os import stat
-import api
-module = api.v1.views.index
+import pep8
+from os import getenv
+import requests
+import json
+from api.v1.app import *
 
 
-class TestIndexDocs(unittest.TestCase):
-    """Class for testing Hello Route docs"""
+storage = getenv("HBNB_TYPE_STORAGE")
 
-    all_funcs = inspect.getmembers(module, inspect.isfunction)
 
-    @classmethod
-    def setUpClass(cls):
-        print('\n\n.................................')
-        print('..... Testing Documentation .....')
-        print('.......  Index API  .......')
-        print('.................................\n\n')
+class TestIndex(unittest.TestCase):
+    '''test index'''
+    def test_status(self):        
+        '''test status function'''
+        with app.test_client() as c:
+            resp = c.get('/api/v1/status')
+            data = json.loads(resp.data.decode('utf-8'))
+            self.assertEqual(data, {'status': 'OK'})
 
-    def test_doc_file(self):
-        """... documentation for the file"""
-        actual = module.__doc__
-        self.assertIsNotNone(actual)
 
-    def test_all_function_docs(self):
-        """... tests for ALL DOCS for all functions"""
-        all_functions = TestIndexDocs.all_funcs
-        for function in all_functions:
-            self.assertIsNotNone(function[1].__doc__)
+    def test_count(self):
+        '''test count'''
+        with app.test_client() as c:
+            resp = c.get('/api/v1/stats')
+            data = json.loads(resp.data.decode('utf-8'))
+            for k, v in data.items():
+                self.assertIsInstance(v, int)
+                self.assertTrue(v >= 0)
 
-    def test_pep8(self):
-        """... tests if file conforms to PEP8 Style"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        errors = pep8style.check_files(['api/v1/views/index.py'])
-        self.assertEqual(errors.total_errors, 0, errors.messages)
-
-    def test_file_is_executable(self):
-        """... tests if file has correct permissions so user can execute"""
-        file_stat = stat('api/v1/views/index.py')
-        permissions = str(oct(file_stat[0]))
-        actual = int(permissions[5:-2]) >= 5
-        self.assertTrue(actual)
+    def test_404(self):
+        '''test for 404 error'''
+        with app.test_client() as c:
+            resp = c.get('/api/v1/yabbadabbadoo')
+            data = json.loads(resp.data.decode('utf-8'))
+            self.assertEqual(data, {"error": "Not found"})
 
 
 if __name__ == '__main__':
-    """
-    MAIN TESTS
-    """
-    unittest.main
+    unittest.main()
