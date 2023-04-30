@@ -33,7 +33,7 @@ def Error_Handler(error):
     The Error handler method is to hide a web page or an item from a user
     it also serve to redirect a user back to the main page
     """
-    return jsonify({"error": "Not found"}, 404)
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
