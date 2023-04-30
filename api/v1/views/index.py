@@ -8,11 +8,10 @@ from flask import Flask
 from models import storage
 
 
-@app_views.route("/status", methods=['GET'], strict_slashes=False)
-def return_json():
-    """return a json representation of an object
-    """
-    return jsonify(status="Ok")
+@app_views.route('/status', strict_slashes=False)
+def status():
+    """return a json representation of an object"""
+    return jsonify("status":"Ok")
 
 @app_views.route('/stats', strict_slashes=False)
 def count():
