@@ -52,17 +52,16 @@ class DBStorage:
         return (new_dict)
 
     def get(self, cls, id):
-        """ gets an object using its id """
-
-        my_dicts = self.all(cls)
-        for obj in my_dicts.values():
-            if obj.id == id:
-                return obj
-        return None
+        """ retrieves an object of type cls with the passed id
+        or none if not found """
+        obj = None
+        if cls is not None and issubclass(cls, BaseModel):
+            obj = self.__session.query(cls).filter(cls.id == id).first()
+        return obj
 
     def count(self, cls=None):
-        """ counts the many objects of type cls in storage or
-        counts all objects of all classes if cls is None"""
+        '''counts the many objects of type cls in storage or
+        counts all objects of all classes if cls is None'''
         return len(self.all(cls))
 
     def new(self, obj):
@@ -88,5 +87,3 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
-
-    def 
