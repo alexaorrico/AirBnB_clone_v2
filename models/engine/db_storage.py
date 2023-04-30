@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+the class DBStorage interacts with the MySQL
 """
 
 import models
@@ -51,21 +51,6 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
 
-    def get(self, cls, id):
-        """get an object based on its class and id"""
-
-        my_dict = self.all(cls)
-        for obj in my_dict.values():
-            if obj.id == id:
-                return obj
-        return None
-
-    def count(self, cls=None):
-        """counts objects in the database"""
-
-        my_dict = self.all(cls)
-        return (len(my_dict))
-
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
@@ -89,3 +74,33 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """
+        Returns the object based on the class name and its ID, or
+        None if not found
+        """
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
+        return None
+
+    def count(self, cls=None):
+        """
+        count the number of objects in storage
+        """
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
+        return count
