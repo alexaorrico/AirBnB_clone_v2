@@ -2,6 +2,7 @@
 """creates a new view for users that handles all Rest Api actions"""
 from api.v1.views import app_views
 from flask import jsonify, request, abort
+import hashlib
 from models import storage
 from models.user import User
 
@@ -46,9 +47,13 @@ def get_user(user_id=None):
             if not data:
                 abort(400, 'Not a JSON')
             ignore_keys = ["id", "email", "created_at", "updated_at"]
-            for key, value in data.items():
-                if key in ignore_keys:
-                    continue
-                setattr(user_obj, key, value)
+            for key in data.keys():
+                if key not in ignore_keys:
+                    if key == 'password':
+                        hashed = hashlib.new('md5')
+                        hashed.update(bytes("{}".format(data.get(key)),
+                                      encoding='utf-8'))
+                        data[key] = hashed.hexdigest()
+                    setattr(user_obj, key, data.get(key))
             user_obj.save()
             return jsonify(user_obj.to_dict()), 200

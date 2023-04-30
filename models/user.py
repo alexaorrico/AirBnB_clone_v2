@@ -2,6 +2,7 @@
 """ holds class User"""
 import models
 from models.base_model import BaseModel, Base
+import hashlib
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
@@ -25,5 +26,10 @@ class User(BaseModel, Base):
         last_name = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes user"""
+        """initializes user and hash user password"""
+        password = kwargs.get('password')
+        hashed = hashlib.new('md5')
+        hashed.update(bytes("{}".format(password), encoding='utf-8'))
+        if kwargs.get("password"):
+            kwargs['password'] = hashed.hexdigest()
         super().__init__(*args, **kwargs)
