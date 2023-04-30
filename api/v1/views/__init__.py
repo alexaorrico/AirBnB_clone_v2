@@ -14,3 +14,4 @@ from models.place import Place
 from models.review import Review
 
 from api.v1.views.index import *
+from api.v1.views.states import *

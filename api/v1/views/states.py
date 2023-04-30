@@ -1,81 +1,79 @@
-#!/usr/bin/python3
-""" State objects that handles all default RESTFul API """
-from flask import jsonify, request
-from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
+#!/uar/bin/puthon3
+"""
+Handles all default RESTFul API actions for state objects
+"""
 
 from api.v1.views import app_views
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 
-ALLOWED_METHODS = ['GET', 'POST', 'PUT', 'DELETE']
+F=False
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
+def get_states_obj():
+    """ handles Get for all statea objects"""
 
-""" allowed methods for the states endpoint"""
+    state_list = []
+    objs = storage.all()
+    for k, v in objs.items():
+        if v.__class__.__name__ == "State":
+            state_list.append(v.to_dict())
+    return jsonify(state_list)
 
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=F)
+def get_state_obj(state_id):
+    """handles Get for a state object"""
 
-@app_views.route('/states', methods=ALLOWED_METHODS)
-@app_views.route('/states/<state_id>', methods=ALLOWED_METHODS)
-def handle_states(state_id=None):
-    """ handler for the states endpoint"""
-    handlers = {
-            'GET': get_state_data,
-            'DELETE': remove_state,
-            'POST': add_state,
-            'PUT': update_state,
-            }
-    if request.method in handlers:
-        return handlers[request.method](state_id)
-    else:
-        return MethodNotAllowed(handlers.keys())
+    state_obj = storage.get(State, state_id)
+    if state_obj == None:
+        abort(404)
 
+    state_dict = state_obj.to_dict()
+    return jsonify(state_dict)
 
-def get_state_data(state_id=None):
-    """Gets the state with it id or get all states."""
-    all_states = storage.all(State).values()
-    if state_id:
-        matching_states = list(filter(lambda x: x.id == state_id, all_states))
-        if matching_states:
-            return jsonify(matching_states[0].to_dict())
-        raise NotFound()
-    all_states = list(map(lambda x: x.to_dict(), all_states))
-    return jsonify(all_states)
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=F)
+def delete_state_obj(state_id):
+    """deletes a state object"""
 
+    state_obj = storage.get(State, state_id)
+    if state_obj == None:
+        abort(404)
 
-def remove_state(state_id=None):
-    """ delete state with the given id"""
-    all_states = storage.all(State).values()
-    matching_states = list(filter(lambda x: x.id == state_id, all_states))
-    if matching_states:
-        storage.delete(matching_states[0])
-        storage.save()
-        return jsonify({}), 200
-    raise NotFound()
+    storage.delete(state_obj)
+    storage.save()
+    return jsonify({}), 200
 
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def create_state_obj():
+    """creates states objects"""
 
-def add_state(state_id=None):
-    """ Adds a new state"""
-    request_data = request.get_json()
-    if type(request_data) is not dict:
-        raise BadRequest(description='Not a JSON')
-    if 'name' not in request_data:
-        raise BadRequest(description='Missing name')
-    state_to_add = State(**request_data)
-    state_to_add.save()
-    return jsonify(state_to_add.to_dict()), 201
+    json_data = request.get_json()
+    if json_data is None:
+        abort(400, "Not a JSON")
+    elif 'name' not in json_data.keys():
+        abort(400, "Missing name")
 
+    new_obj = State()
+    for attr, val in json_data.items():
+        setattr(new_obj, attr, val)
+    # new_obj = State(**json_data)
+    new_obj.save()
 
-def update_state(state_id=None):
-    """ update the state with the given id"""
-    keys = ('id', 'created_at', 'updated_at')
-    all_states = storage.all(State).values()
-    matching_states = list(filter(lambda x: x.id == state_id, all_states))
-    if matching_states:
-        request_data = request.get_json()
-        if type(request_data) is not dict:
-            raise BadRequest(description='Not a JSON')
-        old_state = matching_states[0]
-        for key, value in request_data.items():
-            if key not in keys:
-                setattr(old_state, key, value)
-        old_state.save()
-        return jsonify(old_state.to_dict()), 200
-    raise NotFound()
+    return jsonify(new_obj.to_dict()), 201
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=F)
+def update_state_obj(state_id):
+    """updates a state object"""
+
+    state_obj = storage.get(State, state_id)
+    if state_obj == None:
+        abort(404)
+
+    json_data = request.get_json()
+    if json_data is None:
+        abort(400, "Not a JSON")
+    for attr, val in json_data.items():
+        setattr(state_obj, attr, val)
+    state_obj.save()
+
+    return jsonify(state_obj.to_dict()), 200
