@@ -1,144 +1,181 @@
+# 0x05. AirBnB clone - RESTful API
 
-<p align="center">
-    <img src="https://i.imgur.com/JOhaZ5m.png">
-</p>
+![AirBnB clone](img/homehero_v3.png)
 
-# Description
 
-The goal of the HBnB project is to deploy a simple clone of AirBnB on our own server.
-This project is built over 4 months as part of the curriculum of the first year at Alx Engineering Program)).
+## AirBnB Clone - The Console
 
-At the end of the 4 months, the project will have:
-- A command interpreter to manipulate data without a visual interface, like in a Shell (perfect for development and debugging)
-- A website (the front-end) that shows the final product to everybody: static and dynamic
-- A database or files that store data (data = objects)
-- An API that provides a communication interface between the front-end and the data (retrieve, create, delete, update them)
+The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
-Here's a simple diagram of the entire stack of the final product:
+### Functionalities of this command interpreter:
 
-<p>
-    <img src="https://i.imgur.com/sQ4tQRX.png">
-</p>
+* Create a new object (ex: a new User or a new Place)
+* Retrieve an object from a file, a database etc...
+* Do operations on objects (count, compute stats, etc...)
+* Update attributes of an object
+* Destroy an object
 
-# The Web Framework
+## Table of Content
 
-Flask is the web framework used for the HBnB project.
-In the [web_flask](./web_flask) are all the python scripts used to start a Flask app.
+* [Environment](#environment)
+* [Installation](#installation)
+* [File Descriptions](#file-descriptions)
+* [Usage](#usage)
+* [Examples of use](#examples-of-use)
+* [Bugs](#bugs)
+* [Authors](#authors)
+* [License](#license)
 
-Usage:
+## Environment
 
-- Dump data in the MySQL database with [10-dump.sql](./10-dump.sql) or [100-dump.sql](./100-dump.sql), for scripts [10-hbnb_filters.py](.10-hbnb_filters.py) and [100-hbnb.py](./100-hbnb.py) respectively:
+* SO: ``ubuntu`` 20.04 LTS
+* IDE: ``vim``, ``VSCode``
+* Shel: ``bash``
+* language ``python`` 3.8
+* Style guidelines: ``PEP8``, ``pycodestyle``
+* Version control: ``git``
+* ``ssh``
+
+## Installation
+
+* Clone this repository: `git clone "https://github.com/ralexrivero/AirBnB_clone_v3"`
+* Access AirBnb directory: `cd AirBnB_clone`
+* Run hbnb(interactively): `./console` and enter command
+* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
+
+## File Descriptions
+
+[console.py](console.py) - the console contains the entry point of the command interpreter.
+List of commands this console current supports:
+
+* `EOF` - exits console
+* `quit` - exits console
+* `<emptyline>` - overwrites default emptyline method and does nothing
+* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
+* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file).
+* `show` - Prints the string representation of an instance based on the class name and id.
+* `all` - Prints all string representation of all instances based or not on the class name.
+* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).
+
+### `models/` directory contains classes used for this project:
+
+* [base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
+  * `def __init__(self, *args, **kwargs)` - Initialization of the base model
+  * `def __str__(self)` - String representation of the BaseModel class
+  * `def save(self)` - Updates the attribute `updated_at` with the current datetime
+  * `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
+
+* Classes inherited from Base Model:
+  * [amenity.py](/models/amenity.py)
+  * [city.py](/models/city.py)
+  * [place.py](/models/place.py)
+  * [review.py](/models/review.py)
+  * [state.py](/models/state.py)
+  * [user.py](/models/user.py)
+
+### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization
+
+* [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
+  * `def all(self)` - returns the dictionary __objects
+  * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
+  * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
+  * `def reload(self)` -  deserializes the JSON file to __objects
+
+### `/tests` directory contains all unit test cases for this project:
+
+[/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
+
+* TestBaseModelDocs class:
+  * `def setUpClass(cls)`- Set up for the doc tests
+  * `def test_pep8_conformance_base_model(self)` - Test that models/base_model.py conforms to PEP8
+  * `def test_pep8_conformance_test_base_model(self)` - Test that tests/test_models/test_base_model.py conforms to PEP8
+  * `def test_bm_module_docstring(self)` - Test for the base_model.py module docstring
+  * `def test_bm_class_docstring(self)` - Test for the BaseModel class docstring
+  * `def test_bm_func_docstrings(self)` - Test for the presence of docstrings in BaseModel methods
+
+* TestBaseModel class:
+  * `def test_is_base_model(self)` - Test that the instatiation of a BaseModel works
+  * `def test_created_at_instantiation(self)` - Test created_at is a pub. instance attribute of type datetime
+  * `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
+  * `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
+
+* [/test_models/test_amenity.py](/tests/test_models/test_amenity.py) - Contains the TestAmenityDocs class:
+  * `def setUpClass(cls)` - Set up for the doc tests
+  * `def test_pep8_conformance_amenity(self)` - Test that models/amenity.py conforms to PEP8
+  * `def test_pep8_conformance_test_amenity(self)` - Test that tests/test_models/test_amenity.py conforms to PEP8
+  * `def test_amenity_module_docstring(self)` - Test for the amenity.py module docstring
+  * `def test_amenity_class_docstring(self)` - Test for the Amenity class docstring
+
+* [/test_models/test_city.py](/tests/test_models/test_city.py) - Contains the TestCityDocs class:
+  * `def setUpClass(cls)` - Set up for the doc tests
+  * `def test_pep8_conformance_city(self)` - Test that models/city.py conforms to PEP8
+  * `def test_pep8_conformance_test_city(self)` - Test that tests/test_models/test_city.py conforms to PEP8
+  * `def test_city_module_docstring(self)` - Test for the city.py module docstring
+  * `def test_city_class_docstring(self)` - Test for the City class docstring
+
+* [/test_models/test_file_storage.py](/tests/test_models/test_file_storage.py) - Contains the TestFileStorageDocs class:
+  * `def setUpClass(cls)` - Set up for the doc tests
+  * `def test_pep8_conformance_file_storage(self)` - Test that models/file_storage.py conforms to PEP8
+  * `def test_pep8_conformance_test_file_storage(self)` - Test that tests/test_models/test_file_storage.py conforms to PEP8
+  * `def test_file_storage_module_docstring(self)` - Test for the file_storage.py module docstring
+  * `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
+
+* [/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
+  * `def setUpClass(cls)` - Set up for the doc tests
+  * `def test_pep8_conformance_place(self)` - Test that models/place.py conforms to PEP8.
+  * `def test_pep8_conformance_test_place(self)` - Test that tests/test_models/test_place.py conforms to PEP8.
+  * `def test_place_module_docstring(self)` - Test for the place.py module docstring
+  * `def test_place_class_docstring(self)` - Test for the Place class docstring
+
+* [/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
+  * `def setUpClass(cls)` - Set up for the doc tests
+  * `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
+  * `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
+  * `def test_review_module_docstring(self)` - Test for the review.py module docstring
+  * `def test_review_class_docstring(self)` - Test for the Review class docstring
+
+* [/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
+  * `def setUpClass(cls)` - Set up for the doc tests
+  * `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
+  * `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
+  * `def test_state_module_docstring(self)` - Test for the state.py module docstring
+  * `def test_state_class_docstring(self)` - Test for the State class docstring
+
+* [/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
+  * `def setUpClass(cls)` - Set up for the doc tests
+  * `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
+  * `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
+  * `def test_user_module_docstring(self)` - Test for the user.py module docstring
+  * `def test_user_class_docstring(self)` - Test for the User class docstring
+
+## Examples of use
+
+```bash
+vagrantAirBnB_clone$./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  all  create  destroy  help  quit  show  update
+
+(hbnb) all MyModel
+** class doesn't exist **
+(hbnb) create BaseModel
+7da56403-cc45-4f1c-ad32-bfafeb2bb050
+(hbnb) all BaseModel
+[[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}]
+(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+[BaseModel] (7da56403-cc45-4f1c-ad32-bfafeb2bb050) {'updated_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772167), 'id': '7da56403-cc45-4f1c-ad32-bfafeb2bb050', 'created_at': datetime.datetime(2017, 9, 28, 9, 50, 46, 772123)}
+(hbnb) destroy BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+(hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
+** no instance found **
+(hbnb) quit
 ```
-cat 100-dump.sql | mysql -uroot -p
-```
 
-- Set the environment variables and execute the Flask scripts like this:
-```
-HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db python3 -m web_flask.100-hbnb
-```
+## Bugs
 
-- In the browser, type:
-```
-http://0.0.0.0:5000/hbnb
-```
-You should see the rendered web page!
+No known bugs at this time.
 
-# The Storage system
+## Authors
 
-HBnB has two storage types: a File Storage and a DataBase storage.
-The folder [engine](./models/engine/) contains those storage types definitions.
-Here is a representation of all the data:
-
-<p>
-    <img src="https://i.imgur.com/eNZMRuS.jpg">
-</p>
-
-## File Storage
-
-The File Storage system manages the serialization and deserialization of all the data, following a JSON format.
-
-A FileStorage class is defined in [file_storage.py](./models/engine/file_storage.py) with methods to follow this flow:
-```<object> -> to_dict() -> <dictionary> -> JSON dump -> <json string> -> FILE -> <json string> -> JSON load -> <dictionary> -> <object>```
-
-If the environment variable **HBNB_TYPE_STORAGE** is set to 'file', the [__init__.py](./models/__init__.py) file instantiates the FileStorage class called **storage**, followed by a call to the method reload() on that instance.
-This allows the storage to be reloaded automatically at initialization, which recovers the serialized data.
-
-## DataBase Storage
-
-The DataBase Storage system manages communication to and from a MySQL server, where data will be stored in a database depending on the **HBNB_MYSQL_DB** variable value.
-
-A DBStorage class is defined in [db_storage.py](./models/engine/db_storage.py) and uses the SQAlchemy module to interact with MySQL.
-
-If the environment variable **HBNB_TYPE_STORAGE** is set to 'db', the [__init__.py](./models/__init__.py) file instantiates the DBStorage class called **storage**, followed by a call to the method reload() on that instance.
-This allows the storage to be reloaded automatically at initialization, which recovers the data from the defined database.
-
-To run any script with the DataBase storage, declare those environment variables:
-```
-HBNB_MYSQL_USER=hbnb_dev
-HBNB_MYSQL_PWD=hbnb_dev_pwd
-HBNB_MYSQL_HOST=localhost
-HBNB_MYSQL_DB=hbnb_dev_db
-HBNB_TYPE_STORAGE=db
-```
-
-# The Console
-
-This is the console /command interpreter for the Holberton Airbnb clone project. The console can be used to store objects in and retrieve objects from a JSON.
-
-### Supported classes:
-* BaseModel
-* User
-* State
-* City
-* Amenity
-* Place
-* Review
-
-### Commands:
-* create - create an object
-* show - show an object (based on id)
-* destroy - destroy an object
-* all - show all objects, of one type or all types
-* quit/EOF - quit the console
-* help - see descriptions of commands
-
-To start, navigate to the project folder and enter `./console.py` in the shell.
-
-#### Create
-`create <class name>`
-Ex:
-`create BaseModel`
-
-#### Show
-`show <class name> <object id>`
-Ex:
-`show User my_id`
-
-#### Destroy
-`destroy <class name> <object id>`
-Ex:
-`destroy Place my_place_id`
-
-#### All
-`all` or `all <class name>`
-Ex:
-`all` or `all State`
-
-#### Quit
-`quit` or `EOF`
-
-#### Help
-`help` or `help <command>`
-Ex:
-`help` or `help quit`
-
-Additionally, the console supports `<class name>.<command>(<parameters>)` syntax.
-Ex:
-`City.show(my_city_id)`
-
-# Tests
-
-All unittests can be found in the [tests](./tests) directory.
-
-# Author
-Chukuma Uche Daniel
+> Uche Daniel
