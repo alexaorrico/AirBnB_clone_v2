@@ -85,8 +85,14 @@ class DBStorage:
     return models.storage.get(cls, id)
 
     def count(self, cls=None):
-        """returns the number of objects in storage matching the given class"""
-        if cls:
-            return self.__session.query(cls).count()
-        else:
-            return self.__session.query(BaseModel).count()
+    """
+    count the number of objects in storage
+    """
+    if cls:
+        return len(models.storage.all(cls))
+    
+    count = 0
+    for item_cls in classes.values():
+        count += len(models.storage.all(item_cls))
+    
+    return count
