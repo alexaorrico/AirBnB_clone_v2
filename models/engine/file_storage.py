@@ -79,6 +79,7 @@ class FileStorage:
         # print(key)
         for k, v in self.__objects.items():
             if key == k:
+                # print("{} == {}".format(key, k))
                 return v
         return None
 
