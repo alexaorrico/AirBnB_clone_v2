@@ -26,8 +26,6 @@ def error_handler(error):
 
 
 if __name__ == "__main__":
-    app.run(host=getenv('HBNB_API_HOST', default='0.0.0.0'),
-
-            port=getenv('HBNB_API_PORT', default=5000),
-            threaded=True, debug=True
-            )
+    host = getenv('HBNB_API_HOST', default='0.0.0.0')
+    port = getenv('HBNB_API_PORT', default=5000)
+    app.run(host, int(port), threaded=True, debug=True)
