@@ -53,10 +53,10 @@ def create_users():
 
     if my_dict is None:
         abort(400, 'Not a JSON')
-    if my_dict.get("name") is None:
-        abort(400, 'Missing name')
     if my_dict.get("email") is None:
         abort(400, 'Missing email')
+    if my_dict.get("password") is None:
+        abort(400, 'Missing password')
 
     new_user = User(**my_dict)
     new_user.save()
