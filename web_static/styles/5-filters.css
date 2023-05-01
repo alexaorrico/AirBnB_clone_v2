@@ -1,56 +1,48 @@
 .filters {
-    color: white;
+    background-color: white;
     height: 70px;
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-    position: relative;
-    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.locations {
-    width: 25%;
-    border-right: 1px solid #DDDDDD;
-    float: left;
-    height: 100%;
-    padding-left: 20px;
-}
-
-.amenities {
-    height: 100%;
-    width: 25%;
-    float: left;
-    padding-left: 30px;
-}
-
-h3 {
-    color: black;
-    font-weight: 600;
-}
-
-h4 {
-    color: black;
-    font-weight: 400;
-    line-height: 4px;
-}
-
-button {
+section.filters button{
     font-size: 18px;
-    background-color: #FF5A5F;
-    border-color: #FF5A5F;
-    border-style: solid;
     color: white;
+    background-color: #FF5A5F;
     height: 48px;
-    width: 20%;
+    border: 0px;
     border-radius: 4px;
-    position: relative;
-    text-align: center;
-    margin-top: 11px;
-    float: right;
-    right: 30px;
+    width: 20%;
+    margin-left: auto;
+    margin-right: 30px;
     opacity: 1;
 }
 
-button:hover {
+section.filters button:hover {
     opacity: 0.9;
+}
+
+.locations, .amenities {
+    height: 100%;
+    width: 25%;
+    padding-left: 50px;
+}
+
+.locations {
+    border-right: 1px solid #DDDDDD;
+}
+
+.locations h3, .amenities h3 {
+    font-weight: 600;
+    margin: 12px 0 5px 0;
+}
+
+.locations h4, .amenities h4 {
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0 0 0 0;
 }

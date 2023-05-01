@@ -1,203 +1,200 @@
+#!/usr/bin/python3
+"""
+Contains the TestPlaceDocs classes
+"""
+
 from datetime import datetime
-from models import *
-# from models.place import PlaceAmenity
-import os
+import inspect
+import models
+from models import place
+from models.base_model import BaseModel
+import pep8
 import unittest
+Place = place.Place
 
 
-class Test_PlaceModel(unittest.TestCase):
-    """
-    Test the place model class
-    """
+class TestPlaceDocs(unittest.TestCase):
+    """Tests to check the documentation and style of Place class"""
     @classmethod
     def setUpClass(cls):
-        """create necessary dependent objects"""
-        test_user = {'id': "001",
-                     'email': "you@g.com",
-                     'password': "1234",
-                     'first_name': "TEST",
-                     'last_name': "REVIEW"}
-        cls.user = User(test_user)
-        cls.user.save()
-        test_state = {'id': "002",
-                      'created_at': datetime(2017, 2, 12, 00, 31, 55, 331997),
-                      'name': "TEST STATE FOR CITY"}
-        cls.state = State(test_state)
-        cls.state.save()
-        test_city = {'id': "003",
-                     'name': "CITY SET UP",
-                     'state_id': "002"}
-        cls.city = City(test_city)
-        cls.city.save()
+        """Set up for the doc tests"""
+        cls.place_f = inspect.getmembers(Place, inspect.isfunction)
 
-    @classmethod
-    def tearDownClass(cls):
-        storage.delete(cls.state)
-        storage.delete(cls.user)
+    def test_pep8_conformance_place(self):
+        """Test that models/place.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/place.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def test_simple_initialization(self):
-        """initialization without arguments"""
-        model = Place()
-        self.assertTrue(hasattr(model, "id"))
-        self.assertTrue(hasattr(model, "created_at"))
+    def test_pep8_conformance_test_place(self):
+        """Test that tests/test_models/test_place.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_models/test_place.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def test_var_initialization(self):
-        """Check default type"""
-        test_place = {'id': "003",
-                      'city_id': "003",
-                      'user_id': "001",
-                      'name': "TEST REVIEW",
-                      'description': "blah blah",
-                      'number_rooms': 4,
-                      'number_bathrooms': 2,
-                      'max_guest': 4,
-                      'price_by_night': 23,
-                      'latitude': 45.5,
-                      'longitude': 23.4}
-        model = Place(test_place)
-        self.assertEqual(model.id, test_place["id"])
-        self.assertEqual(model.city_id, test_place["city_id"])
-        self.assertEqual(model.user_id, test_place["user_id"])
-        self.assertEqual(model.name, test_place["name"])
-        self.assertEqual(model.description, test_place["description"])
-        self.assertEqual(model.number_rooms, test_place["number_rooms"])
-        self.assertEqual(model.number_bathrooms,
-                         test_place["number_bathrooms"])
-        self.assertEqual(model.max_guest, test_place["max_guest"])
-        self.assertEqual(model.price_by_night, test_place["price_by_night"])
-        self.assertEqual(model.latitude, test_place["latitude"])
-        self.assertEqual(model.longitude, test_place["longitude"])
+    def test_place_module_docstring(self):
+        """Test for the place.py module docstring"""
+        self.assertIsNot(place.__doc__, None,
+                         "place.py needs a docstring")
+        self.assertTrue(len(place.__doc__) >= 1,
+                        "place.py needs a docstring")
 
-    def test_date_format(self):
-        """test the date has the right type"""
-        model = Place()
-        self.assertIsInstance(model.created_at, datetime)
+    def test_place_class_docstring(self):
+        """Test for the Place class docstring"""
+        self.assertIsNot(Place.__doc__, None,
+                         "Place class needs a docstring")
+        self.assertTrue(len(Place.__doc__) >= 1,
+                        "Place class needs a docstring")
 
-    def test_delete(self):
-        """test the deletion of a city"""
-        test_place = {'name': "test_1",
-                      'city_id': "003",
-                      'user_id': "001"
-                      }
-        model = Place(**test_place)
-        model.save()
-        self.assertIn(model.id, storage.all("Place").keys())
-        storage.delete(model)
-        self.assertIsNone(storage.get("Place", model.id))
-
-    def test_all_place(self):
-        """test querying all places"""
-        length = storage.count("Place")
-        test_place = {'city_id': "003",
-                      'user_id': "001"
-                      }
-        a = Place(**test_place)
-        a.name = "test_a"
-        b = Place(**test_place)
-        b.name = "test_b"
-        a.save()
-        b.save()
-        all_cities = storage.all("Place")
-        self.assertIn(a.id, all_cities.keys())
-        self.assertIn(b.id, all_cities.keys())
-        self.assertEqual(storage.count("Place"), length + 2)
-        storage.delete(a)
-        storage.delete(b)
-
-    def test_get_place(self):
-        """test getting an amenity"""
-        test_place = {'name': "test_get",
-                      'city_id': "003",
-                      'user_id': "001"
-                      }
-        a = Place(**test_place)
-        id_a = a.id
-        a.save()
-        res = storage.get("Place", id_a)
-        self.assertEqual(a.name, res.name)
-        self.assertEqual(a.created_at.year, res.created_at.year)
-        self.assertEqual(a.created_at.month, res.created_at.month)
-        self.assertEqual(a.created_at.day, res.created_at.day)
-        self.assertEqual(a.created_at.hour, res.created_at.hour)
-        self.assertEqual(a.created_at.minute, res.created_at.minute)
-        self.assertEqual(a.created_at.second, res.created_at.second)
-        storage.delete(a)
-
-    def test_save(self):
-        """saving the object to storage"""
-        test_args = {'id': "003",
-                     'city_id': "003",
-                     'user_id': "001",
-                     'name': "TEST REVIEW",
-                     'description': "blah blah",
-                     'number_rooms': 4,
-                     'number_bathrooms': 2,
-                     'max_guest': 4,
-                     'price_by_night': 23,
-                     'latitude': 45.5,
-                     'longitude': 23.4}
-        place = Place(**test_args)
-        place.save()
-        all_places = storage.all("Place")
-        self.assertIn(test_args['id'], all_places.keys())
-        obj = storage.get("Place", test_args['id'])
-        self.assertEqual(obj.name, test_args['name'])
-        self.assertEqual(obj.created_at.hour, place.created_at.hour)
-        storage.delete(place)
+    def test_place_func_docstrings(self):
+        """Test for the presence of docstrings in Place methods"""
+        for func in self.place_f:
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
 
 
-# @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE', 'fs') != 'db', "db")
-# class Test_PlaceAmenityModel(unittest.TestCase):
-#     """
-#     Test the place amenity model class
-#     """
+class TestPlace(unittest.TestCase):
+    """Test the Place class"""
+    def test_is_subclass(self):
+        """Test that Place is a subclass of BaseModel"""
+        place = Place()
+        self.assertIsInstance(place, BaseModel)
+        self.assertTrue(hasattr(place, "id"))
+        self.assertTrue(hasattr(place, "created_at"))
+        self.assertTrue(hasattr(place, "updated_at"))
 
-#     def test_save(self):
-#         """creates and save a PlaceAmenity object"""
-#         test_user = {'id': "002",
-#                      'email': "you@g.com",
-#                      'password': "1234",
-#                      'first_name': "TEST",
-#                      'last_name': "REVIEW"}
-#         user = User(**test_user)
-#         test_state = {'id': "001",
-#                       'created_at': datetime(2017, 2, 12, 00,
-#                                              31, 55, 331997),
-#                       'name': "TEST STATE FOR CITY"}
-#         state = State(**test_state)
-#         test_city = {'id': "005",
-#                      'name': "CITY SET UP",
-#                      'state_id': "001"}
-#         city = City(**test_city)
-#         test_place = {'id': "002",
-#                       'city_id': "005",
-#                       'user_id': "002",
-#                       'name': "TEST REVIEW",
-#                       'description': "blah blah",
-#                       'number_rooms': 4,
-#                       'number_bathrooms': 2,
-#                       'max_guest': 4,
-#                       'price_by_night': 23,
-#                       'latitude': 45.5,
-#                       'longitude': 23.4}
-#         place = Place(**test_place)
-#         test_amenity = {'id': "010",
-#                         'name': "TEST place_amenities"}
-#         amenity = Amenity(**test_amenity)
-#         pla = PlaceAmenity(place_id="002", amenity_id="010")
-#         user.save()
-#         state.save()
-#         city.save()
-#         place.save()
-#         amenity.save()
-#         storage._DBStorage__session.add(pla)
-#         tmp = storage._DBStorage__session.query(PlaceAmenity).one()
-#         storage._DBStorage__session.delete(tmp)
-        # storage.delete(amenity) ???, foreign key constraint on empty set
-        # storage.delete(place)
-        # storage.delete(user)
-        # storage.delete(state)
+    def test_city_id_attr(self):
+        """Test Place has attr city_id, and it's an empty string"""
+        place = Place()
+        self.assertTrue(hasattr(place, "city_id"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.city_id, None)
+        else:
+            self.assertEqual(place.city_id, "")
 
+    def test_user_id_attr(self):
+        """Test Place has attr user_id, and it's an empty string"""
+        place = Place()
+        self.assertTrue(hasattr(place, "user_id"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.user_id, None)
+        else:
+            self.assertEqual(place.user_id, "")
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_name_attr(self):
+        """Test Place has attr name, and it's an empty string"""
+        place = Place()
+        self.assertTrue(hasattr(place, "name"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.name, None)
+        else:
+            self.assertEqual(place.name, "")
+
+    def test_description_attr(self):
+        """Test Place has attr description, and it's an empty string"""
+        place = Place()
+        self.assertTrue(hasattr(place, "description"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.description, None)
+        else:
+            self.assertEqual(place.description, "")
+
+    def test_number_rooms_attr(self):
+        """Test Place has attr number_rooms, and it's an int == 0"""
+        place = Place()
+        self.assertTrue(hasattr(place, "number_rooms"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.number_rooms, None)
+        else:
+            self.assertEqual(type(place.number_rooms), int)
+            self.assertEqual(place.number_rooms, 0)
+
+    def test_number_bathrooms_attr(self):
+        """Test Place has attr number_bathrooms, and it's an int == 0"""
+        place = Place()
+        self.assertTrue(hasattr(place, "number_bathrooms"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.number_bathrooms, None)
+        else:
+            self.assertEqual(type(place.number_bathrooms), int)
+            self.assertEqual(place.number_bathrooms, 0)
+
+    def test_max_guest_attr(self):
+        """Test Place has attr max_guest, and it's an int == 0"""
+        place = Place()
+        self.assertTrue(hasattr(place, "max_guest"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.max_guest, None)
+        else:
+            self.assertEqual(type(place.max_guest), int)
+            self.assertEqual(place.max_guest, 0)
+
+    def test_price_by_night_attr(self):
+        """Test Place has attr price_by_night, and it's an int == 0"""
+        place = Place()
+        self.assertTrue(hasattr(place, "price_by_night"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.price_by_night, None)
+        else:
+            self.assertEqual(type(place.price_by_night), int)
+            self.assertEqual(place.price_by_night, 0)
+
+    def test_latitude_attr(self):
+        """Test Place has attr latitude, and it's a float == 0.0"""
+        place = Place()
+        self.assertTrue(hasattr(place, "latitude"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.latitude, None)
+        else:
+            self.assertEqual(type(place.latitude), float)
+            self.assertEqual(place.latitude, 0.0)
+
+    def test_longitude_attr(self):
+        """Test Place has attr longitude, and it's a float == 0.0"""
+        place = Place()
+        self.assertTrue(hasattr(place, "longitude"))
+        if models.storage_t == 'db':
+            self.assertEqual(place.longitude, None)
+        else:
+            self.assertEqual(type(place.longitude), float)
+            self.assertEqual(place.longitude, 0.0)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
+    def test_amenity_ids_attr(self):
+        """Test Place has attr amenity_ids, and it's an empty list"""
+        place = Place()
+        self.assertTrue(hasattr(place, "amenity_ids"))
+        self.assertEqual(type(place.amenity_ids), list)
+        self.assertEqual(len(place.amenity_ids), 0)
+
+    def test_to_dict_creates_dict(self):
+        """test to_dict method creates a dictionary with proper attrs"""
+        p = Place()
+        new_d = p.to_dict()
+        self.assertEqual(type(new_d), dict)
+        self.assertFalse("_sa_instance_state" in new_d)
+        for attr in p.__dict__:
+            if attr is not "_sa_instance_state":
+                self.assertTrue(attr in new_d)
+        self.assertTrue("__class__" in new_d)
+
+    def test_to_dict_values(self):
+        """test that values in dict returned from to_dict are correct"""
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        p = Place()
+        new_d = p.to_dict()
+        self.assertEqual(new_d["__class__"], "Place")
+        self.assertEqual(type(new_d["created_at"]), str)
+        self.assertEqual(type(new_d["updated_at"]), str)
+        self.assertEqual(new_d["created_at"], p.created_at.strftime(t_format))
+        self.assertEqual(new_d["updated_at"], p.updated_at.strftime(t_format))
+
+    def test_str(self):
+        """test that the str method has the correct output"""
+        place = Place()
+        string = "[Place] ({}) {}".format(place.id, place.__dict__)
+        self.assertEqual(string, str(place))
