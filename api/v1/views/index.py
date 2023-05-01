@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-""" An index file for our Flask API 
-    
+""" An index file for our Flask API
 """
 
 from api.v1.views import app_views
@@ -13,12 +12,13 @@ def api_status():
     """ A function to return status of the API """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def obj_stats():
     """returns the number of each object"""
 
     my_dict = {
-            "amenities": storage.count(Amenity), 
+            "amenities": storage.count(Amenity),
             "cities": storage.count(City),
             "places": storage.count(Place),
             "reviews": storage.count(Review),
