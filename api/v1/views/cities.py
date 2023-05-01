@@ -6,7 +6,7 @@ from models.city import City
 from models.state import State
 from api.v1.views import app_views
 from flask import Flask, request, abort, jsonify
-from models import storage
+import models
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
@@ -29,7 +29,8 @@ def cities_in_state(state_id):
             abort(400, 'Missing name')
         new_city = City(**data)
         data.state_id = state_id
-        new_city.save()
+        models.storage.new(new_city)
+        models.storage.save()
         return jsonify(new_city.to_dict()), 201
 
 
@@ -51,10 +52,10 @@ def city(city_id):
             ign_attr = ['id', 'created_at', 'updated_at']
             if k not in ign_attr:
                 city[k] = v
-        city.save()
+        models.storage.save()
         return jsonify(city.to_dict()), 200
 
     elif request.method == 'DELETE':
-        storage.delete(city)
-        storage.save()
+        models.storage.delete(city)
+        models.storage.save()
         return jsonify({}), 200
