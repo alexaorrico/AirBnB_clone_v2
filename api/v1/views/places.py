@@ -71,6 +71,6 @@ def place_end_points(place_id):
         get_new_name = request.get_json()
         if not get_new_name or type(get_new_name) is not dict:
             abort(400, "Not a JSON")
-        obj_placename = get_new_name.get("name")
+        obj_place.__dict__.update(get_new_name)
         obj_place.save()
-        return jsonify(obj_place.to_dict()), 200
+        return jsonify(obj_place.to_dict()), 201
