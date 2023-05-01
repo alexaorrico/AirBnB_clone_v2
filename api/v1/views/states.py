@@ -35,6 +35,8 @@ def get_a_state(state_id):
 def delete_a_state(state_id):
     """deletes a state objects"""
     state = storage.get(State, state_id)
-    state = state.to_dict()
-    del state
-    return jsonify(state, status=200)
+    if state is None:
+        abort(404)
+    state.delete()
+    storage.save()
+    return jsonify({})
