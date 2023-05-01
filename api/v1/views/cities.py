@@ -7,7 +7,9 @@ from models import storage
 from models.city import City
 from models.state import State
 
-@app_views.route('/states/<state_id>/cities', methods = ['GET'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def cities_by_state_id(state_id):
     """ retrieve city objects for each state using state_id """
     if state_id is None:
@@ -19,7 +21,8 @@ def cities_by_state_id(state_id):
     cts = st.cities
     return jsonify([ct.to_dict() for ct in cts])
 
-@app_views.route('/cities/<city_id>/', methods = ['GET'], strict_slashes=False)
+
+@app_views.route('/cities/<city_id>/', methods=['GET'], strict_slashes=False)
 def cities_by_cities_id(city_id):
     """ get all cities using their id """
     if city_id is None:
@@ -28,6 +31,7 @@ def cities_by_cities_id(city_id):
     if ct is None:
         abort(404)
     return jsonify(ct.to_dict())
+
 
 @app_views.route('/cities/<city_id>',
                  methods=['DELETE'],
