@@ -62,10 +62,12 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    if not request.is_json:
+    try:
+        req_data = request.get_json()
+    except Exception:
         abort(400, 'Not a JSON')
-    req_data = request.get_json()
-    state = State()
+    if type(req_data) is not dict:
+        abort(400, 'Not a JSON')
     for key, val in req_data.items():
         if key != 'id' or key != 'created_at' or key != 'updated_at':
             setattr(state, key, val)
