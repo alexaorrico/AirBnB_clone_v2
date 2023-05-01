@@ -158,6 +158,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 <br/>
 Okoronkwo Chinedu Elijah -- [Github](https://github.com/chineduCoded) / [Twitter](https://twitter.com/Elijah_ChineduZ)
+Onyedibe Nakachukwu Sixtus - [Github](https://github.com/Xys-Tus) / [Twitter](https://twitter.com/Sitoaustin)
 
 Second part of Airbnb: Joann Vuong
 ## License
