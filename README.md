@@ -154,9 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Lameck Momanyi  - [Github](https://github.com/lamech-byte) 
+Lameck Momanyi  - [Github](https://github.com/lamech-byte)
 MUTHAURA KARIMI - [Github](https://github.com/MuthauraCodex)
 
-Second part of Airbnb: Joann Vuong
+
 ## License
 Public Domain. No copy write protection. 
