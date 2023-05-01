@@ -12,7 +12,7 @@ from models.amenity import Amenity
                  methods=['GET', 'POST'], strict_slashes=False)
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
-def state_object(state_id=None):
+def amenity_object(amenity_id=None):
     """ A Function that performs CRUD for State Class"""
 
     my_amenities = storage.all(Amenity)
