@@ -42,7 +42,7 @@ def delete_a_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states', method=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_obj():
     """
     Create an instance of the state object
