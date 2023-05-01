@@ -72,7 +72,7 @@ def post_state():
 @swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def put_state(state_id):
     """
-    Updates a State
+    Update a State
     """
     state = storage.get(State, state_id)
 
