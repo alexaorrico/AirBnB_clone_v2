@@ -69,8 +69,23 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = Session	
 
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Return object based on class and ID, or None if not found"""
+        if cls in classes.values() and id is not None:
+            key = "{}.{}".format(cls.__name__, id)
+            return self.all(cls).get(key)
+
+    def count(self, cls=None):
+        """Return count of all objects or objects matching a specific class"""
+        if cls in classes.values():
+            return len(self.all(cls))
+        elif cls is None:
+            return len(self.all())
+        else:
+            return 0
