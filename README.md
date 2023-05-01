@@ -153,7 +153,7 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
-## Authors
+## Authors:
 Nathaniel Emenike - [Github](https://github.com/Githubnath) / [Twitter](https://twitter.com/EngrNath3)  
 Ayomide Akanji - [Github](https://github.com/Ayomidegideon123) / [Twitter](https://twitter.com/@AkanjiAyomide3)
 
