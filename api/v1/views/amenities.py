@@ -10,17 +10,17 @@ from models import storage
 
 @app_views.route('/amenities',
                  methods=['GET'], strict_slashes=False)
-def get_all_cities():
+def get_all_amennities():
     """ Returns all amenities """
 
-    amenity_objs = storage.all(State)
+    amenity_objs = storage.all(Amenity)
     amenities = [obj.to_dict() for obj in amenity_obj.values()]
-    return jsonify(all_amenities)
+    return jsonify(amenities)
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def get_individual_cities(amenity_id):
+def get_individual_amenites(amenity_id):
     """" Returns indivuidual amenities by id """
     amenity = storage.get(Amenity, amenity_id)
 
