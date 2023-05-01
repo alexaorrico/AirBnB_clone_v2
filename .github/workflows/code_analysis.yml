@@ -44,6 +44,10 @@ jobs:
           flake8 --ignore=F401 $(git ls-files web_flask/*.py)
           pycodestyle $(git ls-files web_flask/*.py)
 
+      - name: Run unit tests
+        run: |
+          python -m unittest discover tests
+
   py34:
     runs-on: ubuntu-latest
     strategy:
@@ -88,3 +92,7 @@ jobs:
         run: |
           flake8 --ignore=F401 $(git ls-files web_flask/*.py)
           pycodestyle $(git ls-files web_flask/*.py)
+
+      - name: Run unit tests
+        run: |
+          python -m unittest discover tests
