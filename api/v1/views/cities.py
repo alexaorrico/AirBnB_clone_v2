@@ -24,7 +24,7 @@ def cities_in_state(state_id):
     if request.method == 'POST':
         data = request.get_json()
         if not request.is_json:
-            abort(400, 'Not a JSON')
+            abort(400, message='Not a JSON')
         if 'name' not in data:
             abort(400, 'Missing name')
         new_city = City(**data)
@@ -47,7 +47,7 @@ def city(city_id):
     elif request.method == 'PUT':
         data = request.get_json()
         if not request.is_json:
-            abort(400, 'Not a JSON')
+            abort(400, message='Not a JSON')
         for k, v in data.items():
             ign_attr = ['id', 'created_at', 'updated_at']
             if k not in ign_attr:
