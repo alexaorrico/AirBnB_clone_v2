@@ -1,4 +1,21 @@
+@charset "UTF-8";
+/** Holberton Practice Styles
+ * ------ Common
+ */
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
 body {
-    margin: 0;
-    padding: 0;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	flex-grow: 1;
+	flex-shrink: 0;
 }
