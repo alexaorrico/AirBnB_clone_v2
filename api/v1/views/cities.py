@@ -1,83 +1,73 @@
 #!/usr/bin/python3
-'''
-    RESTful API for class City
-'''
-from flask import Flask, jsonify, abort, request
-from models import storage
+"""
+This file contains the Amenity module
+"""
 from api.v1.views import app_views
-from models.city import City
+from flask import jsonify, abort, request, make_response
+from models import storage
+from models.amenity import Amenity
+from flasgger.utils import swag_from
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/amenity/get.yml', methods=['GET'])
+def get_all_amenities():
+    """ get amenities by id """
+    all_list = [obj.to_dict() for obj in storage.all(Amenity).values()]
+    return jsonify(all_list)
+
+
+@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def get_city_by_state(state_id):
-    '''
-        return cities in state, json form
-    '''
-    state = storage.get("State", state_id)
-    if state is None:
+@swag_from('documentation/amenity/get_id.yml', methods=['GET'])
+def get_amenity(amenity_id):
+    """ get amenity by id"""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
-    city_list = [c.to_dict() for c in state.cities]
-    return jsonify(city_list), 200
+    return jsonify(amenity.to_dict())
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def get_city_id(city_id):
-    '''
-        return city and its id using GET
-    '''
-    city = storage.get("City", city_id)
-    if city is None:
+@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
+@swag_from('documentation/amenity/delete.yml', methods=['DELETE'])
+def del_amenity(amenity_id):
+    """ delete amenity by id"""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
-    return jsonify(city.to_dict()), 200
-
-
-@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
-def delete_city(city_id):
-    '''
-        DELETE city obj given city_id
-    '''
-    city = storage.get("City", city_id)
-    if city is None:
-        abort(404)
-    city.delete()
+    amenity.delete()
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
+@app_views.route('/amenities/', methods=['POST'],
                  strict_slashes=False)
-def create_city(state_id):
-    '''
-        create new city obj through state association using POST
-    '''
+@swag_from('documentation/amenity/post.yml', methods=['POST'])
+def create_obj_amenity():
+    """ create new instance """
     if not request.get_json():
-        return jsonify({"error": "Not a JSON"}), 400
-    elif "name" not in request.get_json():
-        return jsonify({"error": "Missing name"}), 400
-    else:
-        obj_data = request.get_json()
-        state = storage.get("State", state_id)
-        if state is None:
-            abort(404)
-        obj_data['state_id'] = state.id
-        obj = City(**obj_data)
-        obj.save()
-        return jsonify(obj.to_dict()), 201
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if 'name' not in request.get_json():
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    js = request.get_json()
+    obj = Amenity(**js)
+    obj.save()
+    return (jsonify(obj.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_city(city_id):
-    '''
-        update existing city object using PUT
-    '''
+@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
+@swag_from('documentation/amenity/put.yml', methods=['PUT'])
+def post_amenity(amenity_id):
+    """  """
     if not request.get_json():
-        return jsonify({"error": "Not a JSON"}), 400
-
-    obj = storage.get("City", city_id)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    obj = storage.get(Amenity, amenity_id)
     if obj is None:
         abort(404)
-    obj_data = request.get_json()
-    obj.name = obj_data['name']
-    obj.save()
-    return jsonify(obj.to_dict()), 200
+    for key, value in request.get_json().items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(obj, key, value)
+    storage.save()
+    return jsonify(obj.to_dict())
