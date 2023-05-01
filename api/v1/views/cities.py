@@ -68,7 +68,7 @@ def update(city_id):
     for i in dic:
         if dic[i].id == city_id:
             if request.json:
-                ignore = ["id", "update_at", "created_at"]
+                ignore = ["id", "created_at", "updated_at"]
                 content = request.get_json()
                 for items in content:
                     if items not in ignore:
