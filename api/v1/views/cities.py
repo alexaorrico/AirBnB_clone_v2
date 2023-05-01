@@ -9,6 +9,8 @@ from models import storage
 from models.city import City
 from models.state import State
 
+F = False
+
 
 @app_views.route(
         '/states/<state_id>/cities',
