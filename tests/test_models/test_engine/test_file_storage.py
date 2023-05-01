@@ -2,6 +2,7 @@
 """
 Contains the TestFileStorageDocs classes
 """
+
 from datetime import datetime
 import inspect
 import models
@@ -17,7 +18,6 @@ import json
 import os
 import pep8
 import unittest
-
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
