@@ -29,7 +29,7 @@ def get_individual_users(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users/<users_id>', methods=['DELETE'],
+@app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
     """ Deletes individual users by id """
@@ -55,6 +55,8 @@ def create_users():
         abort(400, 'Not a JSON')
     if my_dict.get("name") is None:
         abort(400, 'Missing name')
+    if my_dict.get("email") is None:
+        abort(400, 'Missing email')
 
     new_user = User(**my_dict)
     new_user.save()
