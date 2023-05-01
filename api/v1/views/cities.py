@@ -42,7 +42,7 @@ def city(city_id):
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(city)
+        return jsonify(city.to_dict())
     elif request.method == 'PUT':
         data = request.get_json()
         if not data:
@@ -57,4 +57,4 @@ def city(city_id):
     elif request.method == 'DELETE':
         storage.delete(city)
         storage.save()
-        return jsonify({}), 200
+        return {}, 200
