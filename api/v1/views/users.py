@@ -53,7 +53,7 @@ def user_end_points(user_id=None):
                 abort(400, "Not a JSON")
             for user in obj_users.values():
                 if user.id == user_id:
-                    new_dict.name = get_new_name.get("name")
+                    new_dict.__dict__.update(get_new_name)
                     new_dict.save()
                     return jsonify(new_dict.to_dict()), 200
             abort(404)
