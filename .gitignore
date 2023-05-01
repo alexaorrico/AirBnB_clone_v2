@@ -1,0 +1,4 @@
+__pycache__/app.cpython-38.pyc
+__pycache__/states.cpython-38.pyc
+models/engine/__pycache__/db_storage.cpython-38.pyc
+models/engine/__pycache__/file_storage.cpython-38.pyc
