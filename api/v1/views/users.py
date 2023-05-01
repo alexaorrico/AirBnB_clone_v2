@@ -2,6 +2,7 @@
 """
 Handle all default RESTFUL API actions
 """
+from models.user import User
 from models.city import City
 from models.state import State
 from api.v1.views import app_views
@@ -9,41 +10,44 @@ from flask import Flask, request, abort, jsonify
 from models import storage
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
+@app_views.route('/users', methods=['GET', 'POST'],
                  strict_slashes=False)
-def cities_in_state(state_id):
-    """ Returns all cities in a state id"""
-    my_state = storage.get(State, state_id)
-    if my_state is None:
+def users():
+    """ Returns all users"""
+    users = storage.all('User')
+    if users is None:
         abort(404)
-    cities = []
-    for city in my_state.cities:
-        cities.append(city.to_dict())
+
     if request.method == 'GET':
-        return jsonify(cities)
+        all_users = []
+        for user in users.values():
+            all_users.append(user.to_dict())
+        return jsonify(all_users)
     if request.method == 'POST':
         data = request.get_json()
         if not request.is_json:
             abort(400, 'Not a JSON')
-        if 'name' not in data:
-            abort(400, 'Missing name')
-        new_city = City(**data)
-        data.state_id = state_id
-        storage.new(new_city)
+        if 'email' not in data:
+            abort(400, 'Missing email')
+        if 'password' not in data:
+            abort(400, 'Missing password')
+        new_user = User(**data)
+        storage.new(new_user)
         storage.save()
-        return jsonify(new_city.to_dict()), 201
+        return jsonify(new_user.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'PUT', 'DELETE'],
+@app_views.route('/users/<user_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def city(city_id):
+def user(user_id):
     """ Returns city object of id """
-    city = storage.get(City, city_id)
-    if city is None:
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(city.to_dict())
+        if user:
+            return jsonify(user.to_dict())
     elif request.method == 'PUT':
         data = request.get_json()
         if not request.is_json:
@@ -51,11 +55,11 @@ def city(city_id):
         for k, v in data.items():
             ign_attr = ['id', 'created_at', 'updated_at']
             if k not in ign_attr:
-                setattr(city, k, v)
+                setattr(user, k, v)
         storage.save()
-        return jsonify(city.to_dict()), 200
+        return jsonify(user.to_dict()), 200
 
     elif request.method == 'DELETE':
-        storage.delete(city)
+        storage.delete(user)
         storage.save()
         return jsonify({}), 200
