@@ -21,8 +21,8 @@ def places_end_points(place_id):
             if obj.get('id') == place_id:
                 obj_reviews = storage.all(Review)
                 reviews_dict = [obj.to_dict() for obj in
-                               obj_reviews.values() if
-                               obj.place_id == place_id]
+                                obj_reviews.values() if
+                                obj.place_id == place_id]
                 return jsonify(reviews_dict)
         abort(404)
 
