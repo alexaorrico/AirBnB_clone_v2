@@ -5,11 +5,14 @@ API for AirBnB Clone
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
+from flasgger import Swagger
+from flask_cors import (CORS, cross_origin)
 import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
-
+CORS(app, origins="0.0.0.0")
+Swagger(app)
 
 @app.teardown_appcontext
 def teardown_db(exception):
