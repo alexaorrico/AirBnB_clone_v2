@@ -31,6 +31,9 @@ def places_reviews(place_id):
             abort(400, 'Not a JSON')
         if 'user_id' not in data:
             abort(400, 'Missing user_id')
+        u_id = storage.get(User, data.user_id)
+        if u_id is None:
+            abort(404)
         if 'text' not in data:
             abort(400, 'Missing text')
         new_review = Review(**data)
@@ -41,7 +44,7 @@ def places_reviews(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def user(user_id):
+def review(review_id):
     """ Returns review object of id """
     review = storage.get(Review, user_id)
     if review is None:
