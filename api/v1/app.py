@@ -10,9 +10,12 @@ from flask_cors import (CORS, cross_origin)
 from os import getenv
 
 app = Flask(__name__)
-CORS(app, origins="0.0.0.0")
 app.register_blueprint(app_views)
-Swagger(app)
+swagger = Swagger(app)
+
+cors = CORS(app, resources={
+            r'/*': {'origins': os.getenv('HBNB_API_HOST', '0.0.0.0')}})
+app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_db(exception):
@@ -27,7 +30,7 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    host = getenv('HBNB_API_HOST', '0.0.0.0')
-    port = getenv('HBNB_API_PORT', '5000')
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=getenv('HBNB_API_HOST', '0.0.0.0'),
+            port=int(getenv('HBNB_API_PORT', '5000')),
+            threaded=True)
 

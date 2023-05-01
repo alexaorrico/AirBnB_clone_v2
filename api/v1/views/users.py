@@ -56,3 +56,4 @@ def handle_user_by_id(user_id):
                 setattr(user_by_id, key, value)
         storage.save()
         return jsonify(user_by_id.to_dict()), 200
+    
