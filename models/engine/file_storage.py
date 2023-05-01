@@ -21,13 +21,13 @@ class FileStorage:
         handles long term storage of all class instances
     """
     CNC = {
-        'BaseModel': base_model.BaseModel,
-        'Amenity': amenity.Amenity,
-        'City': city.City,
-        'Place': place.Place,
-        'Review': review.Review,
-        'State': state.State,
-        'User': user.User
+        'BaseModel': BaseModel,
+        'Amenity': Amenity,
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State,
+        'User': User
     }
     """CNC - this variable is a dictionary with:
     keys: Class Names
