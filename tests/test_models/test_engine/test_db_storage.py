@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
@@ -86,3 +87,15 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_get(self):
+        """test that returns an object based on the class and its ID
+        or None if not found"""
+        
+    def test_count(self):
+        """test that count the number of objects in storage"""
