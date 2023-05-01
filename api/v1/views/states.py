@@ -15,10 +15,10 @@ from flask import request, jsonify, abort
                  methods=["DELETE", "PUT", "GET"])
 def state_end_points(state_id=None):
     """to get states"""
+    obj_states = storage.all(State)
+    my_dict = [obj.to_dict() for obj in obj_states.values()]
     if not state_id:
-        obj_states = storage.all(State)
         if request.method == "GET":
-            my_dict = [obj.to_dict() for obj in obj_states.values()]
             return jsonify(my_dict)
 
         elif request.method == "POST":
@@ -32,19 +32,26 @@ def state_end_points(state_id=None):
                 new_state.save()
                 return jsonify(new_state.to_dict()), 201
     else:
-        obj_state = storage.get("State", state_id)
-        if obj_state is None:
-            abort(404)
         if request.method == "GET":
-            return jsonify(obj_state.to_dict()), 201
+            for state in my_dict:
+                if state.get('id') == state_id:
+                    return jsonify(state)
+            abort(404)
         elif request.method == "DELETE":
-            storage.delete(obj_state)
-            storage.save()
-            return jsonify({}), 200
+            for ob in obj_states.values():
+                if ob.id == state_id:
+                    storage.delete(ob)
+                    storage.save()
+                    return jsonify({}), 200
+            abort(404)
         elif request.method == "PUT":
+            new_dict = storage.get("State", state_id)
             get_new_name = request.get_json()
             if not get_new_name:
                 abort(400, "Not a JSON")
-            obj_state.name = get_new_name["name"]
-            obj_state.save()
-            return jsonify(obj_state.to_dict()), 200
+            for state in obj_states.values():
+                if state.id == state_id:
+                    new_dict.name = get_new_name.get("name")
+                    new_dict.save()
+                    return jsonify(new_dict.to_dict()), 200
+            abort(404)
