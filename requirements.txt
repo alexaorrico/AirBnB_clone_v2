@@ -7,5 +7,5 @@ pylint
 fabric3
 flask
 pep8
-Fabric
+# Fabric
 SQLAlchemy
