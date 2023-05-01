@@ -5,7 +5,7 @@
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -17,32 +17,10 @@ section.filters button{
     border: 0px;
     border-radius: 4px;
     width: 20%;
-    margin-left: auto;
     margin-right: 30px;
     opacity: 1;
 }
 
 section.filters button:hover {
     opacity: 0.9;
-}
-
-.locations, .amenities {
-    height: 100%;
-    width: 25%;
-    padding-left: 50px;
-}
-
-.locations {
-    border-right: 1px solid #DDDDDD;
-}
-
-.locations h3, .amenities h3 {
-    font-weight: 600;
-    margin: 12px 0 5px 0;
-}
-
-.locations h4, .amenities h4 {
-    font-weight: 400;
-    font-size: 14px;
-    margin: 0 0 0 0;
 }
