@@ -77,6 +77,8 @@ def update_user(user_id):
     if my_dict is None:
         abort(400, 'Not a JSON')
 
-    user.name = my_dict.get("name")
+    for k, v in my_dict.items():
+        setattr(user, k, v)
+
     user.save()
     return jsonify(user.to_dict()), 200
