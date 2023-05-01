@@ -37,7 +37,6 @@ def states(state_id=None):
                 if state.get('id') == state_id:
                     return jsonify(state)
             abort(404)
-                  
         elif request.method == 'PUT':
             my_dict = request.get_json()
 
