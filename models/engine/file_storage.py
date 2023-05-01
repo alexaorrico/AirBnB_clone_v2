@@ -71,14 +71,15 @@ class FileStorage:
 
     def get(self, cls, id):
         """ Retrieves, one object based on the class. """
+        self.reload()
         objects = self.all()
         name = cls.__name__ + "." + id
         if name in objects.keys():
             return (objects[name])
-        return None
 
     def count(self, cls=None):
         """ Counts the number of objects based on class. """
+        self.reload()
         objects = self.all()
         count = 0
         if cls:
@@ -88,4 +89,5 @@ class FileStorage:
         else:
             for obj in objects.values():
                 count += 1
+
         return(count)
