@@ -7,7 +7,7 @@ from models.users import User
 from models import storage
 
 
-@app_views.route('/api/v1/users', methods=['GET'])
+@app_views.route('/users', methods=['GET'])
 def get_all():
     """ get all the states """
     user = []
@@ -17,7 +17,7 @@ def get_all():
     return jsonify(user)
 
 
-@app_views.route('/api/v1/users/<user_id>', methods=['GET'])
+@app_views.route('/users/<user_id>', methods=['GET'])
 def get_id(user_id):
     """ get status by id """
     user = storage.get(User, user_id)
@@ -26,7 +26,7 @@ def get_id(user_id):
     abort(404)
 
 
-@app_views.route("/api/v1/users/<user_id>", methods=['DELETE'])
+@app_views.route("/users/<user_id>", methods=['DELETE'])
 def del_id(user_id):
     """ delete user by id """
     user = storage.get(User, user_id)
@@ -37,7 +37,7 @@ def del_id(user_id):
     return ({}), 200
 
 
-@app_views.route('/api/v1/users', methods=['POST'])
+@app_views.route('/users', methods=['POST'])
 def add():
     """ add statte to storage """
     if request.json:
@@ -53,7 +53,7 @@ def add():
     return jsonify("Not a JSON"), 400
 
 
-@app_views.route('/api/v1/users/<user_id>', methods=['PUT'])
+@app_views.route('/users/<user_id>', methods=['PUT'])
 def update(user_id):
     """ update states with id """
     dic = storage.all(User)
