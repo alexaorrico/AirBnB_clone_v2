@@ -13,7 +13,7 @@ from models import storage
                  strict_slashes=False)
 def cities_in_state(state_id):
     """ Returns all cities in a state id"""
-    my_state = storage.get('State', state_id)
+    my_state = storage.get(State, state_id)
     if my_state is None:
         abort(404)
     cities = []
@@ -38,7 +38,7 @@ def cities_in_state(state_id):
                  strict_slashes=False)
 def city(city_id):
     """ Returns city object of id """
-    city = storage.get('City', city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
