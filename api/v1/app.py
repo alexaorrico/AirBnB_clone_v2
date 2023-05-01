@@ -4,7 +4,11 @@ from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
+
+# create Flask instance
 app = Flask(__name__)
+
+# register blueprint to flask instance
 app.register_blueprint(app_views)
 
 
@@ -20,5 +24,5 @@ def not_found(error):
 
 if __name__ == "__main__":
     app.run(host=os.getenv("HBNB_API_HOST", default="0.0.0.0"),
-            port=int(os.getenv("HBNB_API_HOST", default=5000)),
+            port=int(os.getenv("HBNB_API_PORT", default=5000)),
             threaded=True)
