@@ -11,29 +11,25 @@ from models.city import City
                  methods=['GET', 'POST'], strict_slashes=False)
 def cities_by_state(state_id):
     """retrieve cities based on state_id"""
-    state_objs = storage.all(State)
-    states = [obj for obj in state_objs.values()]
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
 
     if request.method == 'GET':
-        for state in states:
-            if state.id == state_id:
-                cities_objs = storage.all(City)
-                cities = [obj.to_dict() for obj in
-                          cities_objs.values() if obj.state_id == state_id]
-                return jsonify(cities)
-        abort(404)
+        cities_objs = storage.all(City)
+        cities = [obj.to_dict() for obj in
+                  cities_objs.values() if obj.state_id == state_id]
+        return jsonify(cities)
     elif request.method == 'POST':
-        for state in states:
-            if state.id == state_id:
-                my_dict = request.get_json()
-                if my_dict is None:
-                    abort(400, 'Not a JSON')
-                if my_dict.get("name") is None:
-                    abort(400, 'Missing name')
-                my_dict["state_id"] = state_id
-                city = City(**my_dict)
-                city.save()
-                return jsonify(city.to_dict()), 201
+        my_dict = request.get_json()
+        if my_dict is None:
+            abort(400, 'Not a JSON')
+        if my_dict.get("name") is None:
+            abort(400, 'Missing name')
+        my_dict["state_id"] = state_id
+        city = City(**my_dict)
+        city.save()
+        return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<string:city_id>',
@@ -43,6 +39,7 @@ def city_by_city_id(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
+
     if request.method == 'GET':
         return jsonify(city.to_dict())
     elif request.method == 'DELETE':
@@ -53,6 +50,8 @@ def city_by_city_id(city_id):
         my_dict = request.get_json()
         if my_dict is None:
             abort(400, 'Not a JSON')
-        city.name = my_dict.get("name")
+        if not my_dict:
+            abort(400, 'Empty JSON')
+        city.name = my_dict.get("name", city.name)
         city.save()
         return jsonify(city.to_dict()), 200
