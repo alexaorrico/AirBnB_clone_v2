@@ -5,6 +5,7 @@ from flask import jsonify, request, abort,  make_response
 from api.v1.views import app_views
 from models.places import Place
 from models.city import City
+from models.user import User
 from models import storage
 
 
@@ -80,3 +81,66 @@ def update(place_id):
             else:
                 return jsonify("Not a JSON"), 400
     abort(404)
+
+
+@app_views.route('/places_search', methods=['POST'])
+def advanced():
+    """ return all places per city, state or amenities
+    return all places that has all amenities
+    return all places that belong to city or state
+    permited keys states, cities, amenities
+    """
+    # rule 0
+    content = request.get_json(force=True, silent=True)
+    if content is None:
+        return jsonify('Not a JSON'), 400
+    # rule 1
+    result, places = [], []
+    if len(content) == 0:
+        places = storage.all("Place").values()
+        for elem in places:
+            result.append(elem.to_dict())
+        return jsonify(result)
+
+    flag = 0
+    for key in content:
+        if len(content[key]) > 0:
+            flag = 1
+            break
+    if flag == 0:
+        places = storage.all("Place").values()
+        for elem in places:
+            result.append(elem.to_dict())
+        return jsonify(result)
+    # rule 2
+    if "states" in content.keys() and len(content["states"]) > 0:
+        states = content["states"]
+        for id in states:
+            st = storage.get("State", id)
+            if st:
+                for city in st.cities:
+                    for pl in city.places:
+                        places.append(pl)
+    # rule 3
+    if "cities" in content.keys() and len(content["cities"]) > 0:
+        cities = content["cities"]
+        for id in cities:
+            ct = storage.get("City", id)
+            if ct:
+                for pl in ct.places:
+                    places.append(pl)
+
+    places = list(set(places))
+
+    if "amenities" in content.keys() and len(content["amenities"]) > 0:
+        ame = []
+        for id in content["amenities"]:
+            ame.append(storage.get("Amenity", id))
+        places = [pl for pl in places if all([a in pl.amenities for a in ame])]
+
+    for elem in places:
+        var = elem.to_dict()
+        if "amenities" in var.keys():
+            del var["amenities"]
+        result.append(var)
+    return jsonify(result)
