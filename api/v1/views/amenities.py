@@ -11,7 +11,7 @@ from models import storage, CNC
 
 # Define the route for GET and POST requests to /amenities/
 @app_views.route('/amenities/', methods=['GET', 'POST'])
-@swag_from('swagger_yaml/amenities_no_id.yml', methods=['GET', 'POST'])
+@swag_from('documentation/amenities_no_id.yml', methods=['GET', 'POST'])
 def amenities_no_id(amenity_id=None):
     """
     Handle GET and POST requests to the /amenities/ route
@@ -35,7 +35,7 @@ def amenities_no_id(amenity_id=None):
 
 # Define the route for GET, PUT, and DELETE requests to /amenities/<amenity_id>
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'])
-@swag_from('swagger_yaml/amenities_id.yml', methods=['GET', 'PUT', 'DELETE'])
+@swag_from('documentation/amenities_id.yml', methods=['GET', 'PUT', 'DELETE'])
 def amenities_with_id(amenity_id=None):
     """
     Handle GET, PUT, and DELETE requests to the /amenities/<amenity_id> route
