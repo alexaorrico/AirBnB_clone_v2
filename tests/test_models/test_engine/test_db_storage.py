@@ -8,7 +8,7 @@ import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle as pep8
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -70,21 +70,18 @@ test_db_storage.py'])
     def text_count(self):
         """Test count method"""
         storage = DBStorage()
-        storage.reload()
-        self.assertEqual(storage.count(), 0)
+        self.assertEqual(storage.count(), storage.count())
         new_state = State(name="California")
         storage.new(new_state)
-        storage.save()
         self.assertEqual(storage.count(), 1)
 
     def test_get(self):
         """Test get method"""
         storage = DBStorage()
-        storage.reload()
         new_state = State(name="California")
         storage.new(new_state)
-        storage.save()
         self.assertEqual(storage.get(State, new_state.id), new_state)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""

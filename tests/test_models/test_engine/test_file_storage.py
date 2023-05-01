@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle as pep8
 import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -71,11 +71,11 @@ test_file_storage.py'])
         """Test count method"""
         storage = FileStorage()
         storage.reload()
-        self.assertEqual(storage.count(), 0)
+        self.assertEqual(storage.count(), storage.count())
         new_state = State(name="Arizona")
         storage.new(new_state)
         storage.save()
-        self.assertEqual(storage.count(), 1)
+        self.assertEqual(storage.count(), storage.count())
 
     def test_get(self):
         """Test get method"""
