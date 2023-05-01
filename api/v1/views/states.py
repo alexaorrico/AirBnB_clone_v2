@@ -2,10 +2,10 @@
 """
 A new view for state objects that handles all RESTFul api
 """
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, make_response
 from api.v1.views import app_views
 from models import storage
-from models.engine.db_storage import classes
+from models.state import State
 
 
 @app_views.route('/states', methods=["GET"], strict_slashes=False)
@@ -34,9 +34,9 @@ def get_a_state(state_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_a_state(state_id):
     """deletes a state objects"""
-    state = storage.get(classes['State'], state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    storage.delete(state)
+    state.delete()
     storage.save()
-    return jsonify({})
+    return make_response(jsonify({}), 200)
