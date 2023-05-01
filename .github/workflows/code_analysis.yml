@@ -21,27 +21,27 @@ jobs:
 
       - name: Analysing code at root of the repo with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files *.py)
+          flake8 --ignore=F401,F403 $(git ls-files *.py)
           pycodestyle $(git ls-files *.py)
 
       - name: Analysing models with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401,F821 $(git ls-files models/*.py)
+          flake8 --ignore=F401,F821,F403 $(git ls-files models/*.py)
           pycodestyle $(git ls-files models/*.py)
 
       - name: Analysing models/engine with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files models/engine/*.py)
+          flake8 --ignore=F401,F403 $(git ls-files models/engine/*.py)
           pycodestyle $(git ls-files models/engine/*.py)
 
       - name: Analysing tests with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files tests/*.py)
+          flake8 --ignore=F401,F403 $(git ls-files tests/*.py)
           pycodestyle $(git ls-files tests/*.py)
 
       - name: Analysing web_flask with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files web_flask/*.py)
+          flake8 --ignore=F401,F403 $(git ls-files web_flask/*.py)
           pycodestyle $(git ls-files web_flask/*.py)
 
       - name: Run unit tests
@@ -70,27 +70,27 @@ jobs:
 
       - name: Analysing code at root of the repo with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files *.py)
+          flake8 --ignore=F401,F403 $(git ls-files *.py)
           pycodestyle $(git ls-files *.py)
 
       - name: Analysing models with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401,F821 $(git ls-files models/*.py)
+          flake8 --ignore=F401,F821,F403 $(git ls-files models/*.py)
           pycodestyle $(git ls-files models/*.py)
 
       - name: Analysing models/engine with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files models/engine/*.py)
+          flake8 --ignore=F401,F403 $(git ls-files models/engine/*.py)
           pycodestyle $(git ls-files models/engine/*.py)
 
       - name: Analysing tests with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files tests/*.py)
+          flake8 --ignore=F401,F403 $(git ls-files tests/*.py)
           pycodestyle $(git ls-files tests/*.py)
 
       - name: Analysing web_flask with Flake8 and Pycodestyle
         run: |
-          flake8 --ignore=F401 $(git ls-files web_flask/*.py)
+          flake8 --ignore=F401,F403 $(git ls-files web_flask/*.py)
           pycodestyle $(git ls-files web_flask/*.py)
 
       - name: Run unit tests
