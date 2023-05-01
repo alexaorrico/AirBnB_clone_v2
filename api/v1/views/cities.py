@@ -8,7 +8,7 @@ from models.city import City
 from models import storage
 
 
-@app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'])
+@app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_all(state_id):
     """ get all the states """
     lists = []
@@ -22,7 +22,7 @@ def get_all(state_id):
     abort(404)
 
 
-@app_views.route('/api/v1/cities/<city_id>', methods=['GET'])
+@app_views.route('/cities/<city_id>', methods=['GET'])
 def get_id(city_id):
     """ get status by id """
     citi = storage.get(City, city_id)
@@ -31,7 +31,7 @@ def get_id(city_id):
     abort(404)
 
 
-@app_views.route("/api/v1/cities/<city_id>", methods=['DELETE'])
+@app_views.route("/cities/<city_id>", methods=['DELETE'])
 def del_id(city_id):
     """ delete state by id """
     citi = storage.get(City, city_id)
@@ -42,7 +42,7 @@ def del_id(city_id):
     return ({}), 200
 
 
-@app_views.route('/api/v1/states/<state_id>/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities', methods=['POST'])
 def add():
     """ add city to storage """
     dct = storage.all(State)
@@ -61,7 +61,7 @@ def add():
     abort(404)
 
 
-@app_views.route('/api/v1/cities/<city_id>', methods=['PUT'])
+@app_views.route('/cities/<city_id>', methods=['PUT'])
 def update(city_id):
     """ update states and city with id """
     dic = storage.all(City)
