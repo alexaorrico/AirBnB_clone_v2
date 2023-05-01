@@ -98,28 +98,28 @@ TestBaseModel class:
 * `def test_file_storage_module_docstring(self)` - Test for the file_storage.py module docstring
 * `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
 
-[/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
+[/test_models/test_place.py](https://github.com/deletella01/AirBnB_clone_v3/blob/master/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_place(self)` - Test that models/place.py conforms to PEP8.
 * `def test_pep8_conformance_test_place(self)` - Test that tests/test_models/test_place.py conforms to PEP8.
 * `def test_place_module_docstring(self)` - Test for the place.py module docstring
 * `def test_place_class_docstring(self)` - Test for the Place class docstring
 
-[/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
+[/test_models/test_review.py](https://github.com/deletella01/AirBnB_clone_v3/blob/master/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
 * `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
 * `def test_review_module_docstring(self)` - Test for the review.py module docstring
 * `def test_review_class_docstring(self)` - Test for the Review class docstring
 
-[/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
+[/test_models/state.py](https://github.com/deletella01/AirBnB_clone_v3/blob/master/tests/test_models/test_state.py) - Contains the TestStateDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
 * `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
 * `def test_state_module_docstring(self)` - Test for the state.py module docstring
 * `def test_state_class_docstring(self)` - Test for the State class docstring
 
-[/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
+[/test_models/user.py](https://github.com/deletella01/AirBnB_clone_v3/blob/master/tests/test_models/test_user.py) - Contains the TestUserDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
 * `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
@@ -154,9 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Bamidele Tella - [Github](https://github.com/deletella01)  
+Tobi Emmanuel - [Github](https://github.com/TobiMoscow)
 
-Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
