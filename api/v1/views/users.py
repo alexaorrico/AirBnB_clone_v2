@@ -13,7 +13,7 @@ from models import storage
 def get_users():
     """ return all user objects """
     users = storage.all(User)
-    all_users = [user.to_dict() for user in users]
+    all_users = [user.to_dict() for user in users.values()]
     return jsonify(all_users)
 
 
