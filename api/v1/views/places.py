@@ -69,7 +69,7 @@ def create_place(city_id):
     if my_dict.get("name") is None:
         abort(400, 'Missing name')
         place = Place(name=name, user_id=user_id, city_id=city_id)
-    for key, value in data.items():
+    for key, value in my_dict.items():
         if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             setattr(place, key, value)
     storage.new(place)
