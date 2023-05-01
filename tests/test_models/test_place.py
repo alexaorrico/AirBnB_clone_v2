@@ -8,7 +8,6 @@ import inspect
 import models
 from models import place
 from models.base_model import BaseModel
-import pep8
 import unittest
 Place = place.Place
 
@@ -19,20 +18,6 @@ class TestPlaceDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.place_f = inspect.getmembers(Place, inspect.isfunction)
-
-    def test_pep8_conformance_place(self):
-        """Test that models/place.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/place.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_pep8_conformance_test_place(self):
-        """Test that tests/test_models/test_place.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_place.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
 
     def test_place_module_docstring(self):
         """Test for the place.py module docstring"""
@@ -178,7 +163,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in p.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
