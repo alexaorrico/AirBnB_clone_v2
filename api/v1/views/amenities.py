@@ -13,11 +13,15 @@ from models.amenity import Amenity
 def get_amenities():
     '''retrieves the list of all Amenity objects'''
 
-    amenities_list = [amenity.to_dict() for amenity in storage.all(Amenity).values()]
+    amenities_list = [
+            amenity.to_dict()
+            for amenity in storage.all(Amenity).values()]
     return jsonify(amenities_list)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+        '/amenities/<amenity_id>',
+        methods=['GET'], strict_slashes=False)
 def get_amenity(amenity_id):
     '''retrieves a Amenity object'''
 
@@ -29,7 +33,9 @@ def get_amenity(amenity_id):
     return jsonify(amenity_dict)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+        '/amenities/<amenity_id>',
+        methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
     '''deletes a Amenity object'''
 
@@ -58,7 +64,9 @@ def create_amenity():
     return jsonify(new_obj.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route(
+        '/amenities/<amenity_id>',
+        methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
     '''updates a Amenity object'''
 
