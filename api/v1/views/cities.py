@@ -21,9 +21,9 @@ def cities_in_state(state_id):
         cities.append(city.to_dict())
     if request.method == 'GET':
         return jsonify(cities)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         data = request.get_json()
-        if not request.is_json():
+        if not request.is_json:
             abort(400, 'Not a JSON')
         if 'name' not in data:
             abort(400, 'Missing name')
@@ -46,7 +46,7 @@ def city(city_id):
         return jsonify(city.to_dict())
     elif request.method == 'PUT':
         data = request.get_json()
-        if not request.is_json():
+        if not request.is_json:
             abort(400, 'Not a JSON')
         for k, v in data.items():
             ign_attr = ['id', 'created_at', 'updated_at']
