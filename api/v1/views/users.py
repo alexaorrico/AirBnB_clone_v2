@@ -63,7 +63,7 @@ def create_users():
     return jsonify(new_user.to_dict()), 201
 
 
-@app_views.route('/user/<user_id>', methods=['PUT'],
+@app_views.route('/users/<user_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_user(user_id):
     """ Updates an user by user ID """
