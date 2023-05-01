@@ -1,0 +1,25 @@
+This file will will collect every amenity of a place
+---
+tags:
+  - Amenities
+responses:
+  200:
+    description: request is executed successfully
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: string
+          created_at:
+            type: string
+            description: time the instance was created
+          updated_at:
+             type: string
+             description: The time of last update of the instance
+          id:
+            type: string
+            description: The uuid of the instance
+          name:
+             type: string
+             description: The amenity name

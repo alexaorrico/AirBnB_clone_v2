@@ -1,0 +1,21 @@
+
+    This Updates an amenity specified
+    ---
+    tags:
+      - Amenities
+    parameters:
+      - name: amenity_id
+        in: path
+        type: string
+        required: true
+        description: The unique id of the amenity
+      - name: update_request
+        in: body
+        required: true
+    responses:
+      404:
+        description: resource not found!
+      400:
+        description: Not a JSON
+      200:
+        description: request was executed successfully

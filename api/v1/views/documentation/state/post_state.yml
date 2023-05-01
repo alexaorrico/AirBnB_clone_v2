@@ -1,0 +1,19 @@
+This  Posts a new state for program update.
+    ---
+    tags:
+      - States
+    parameters:
+      - name: request
+        in: body
+        required: true
+        requires:
+          - name
+        properties:
+          name:
+            type: string
+
+    responses:
+      400:
+        description: Missing name or Not Valid JSON
+      201:
+        description: Request successfully executed
