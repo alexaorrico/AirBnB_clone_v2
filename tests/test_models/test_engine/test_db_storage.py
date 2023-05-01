@@ -86,3 +86,59 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get() method"""
+        # Create a State object and add it to the database
+        state = State(name="California")
+        self.storage.new(state)
+        self.storage.save()
+
+        # Try to retrieve the State object
+        state_id = state.id
+        result = self.storage.get(State, state_id)
+
+        # Check that the retrieved object matches the original
+        self.assertEqual(state, result)
+
+        # Try to retrieve a non-existent object
+        result = self.storage.get(City, "fake_id")
+        self.assertIsNone(result)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count() method"""
+        # Create several objects of different classes
+        # and add them to the database
+        state1 = State(name="California")
+        state2 = State(name="Texas")
+        city1 = City(name="San Francisco", state_id=state1.id)
+        city2 = City(name="Los Angeles", state_id=state1.id)
+        city3 = City(name="Houston", state_id=state2.id)
+        user1 = User(email="test1@example.com", password="password1")
+        user2 = User(email="test2@example.com", password="password2")
+        user3 = User(email="test3@example.com", password="password3")
+        self.storage.new(state1)
+        self.storage.new(state2)
+        self.storage.new(city1)
+        self.storage.new(city2)
+        self.storage.new(city3)
+        self.storage.new(user1)
+        self.storage.new(user2)
+        self.storage.new(user3)
+        self.storage.save()
+
+        # Test counting all objects
+        result = self.storage.count()
+        self.assertEqual(result, 8)
+
+        # Test counting objects of a specific class
+        result = self.storage.count(State)
+        self.assertEqual(result, 2)
+        result = self.storage.count(City)
+        self.assertEqual(result, 3)
+        result = self.storage.count(User)
+        self.assertEqual(result, 3)
+        result = self.storage.count(Place)
+        self.assertEqual(result, 0)
