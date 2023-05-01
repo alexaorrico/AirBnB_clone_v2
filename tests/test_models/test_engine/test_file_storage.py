@@ -113,3 +113,54 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """ Test for the FS count method
+        """
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+
+        storage = FileStorage()
+        for i in range(3):
+            state = State()
+            storage.new(state)
+        storage.save()
+        # passing non-BaseModel derived object as `cls` - return 0
+        for test_type in (str, int, float):
+            self.assertEqual(storage.count(test_type), 0)
+        # passing BaseModel derived object as `cls`
+        self.assertEqual(storage.count(State), 3)
+
+        for i in range(2):
+            city = City()
+            storage.new(city)
+        storage.save()
+        # passing None as `cls` - count all types in storage
+        self.assertEqual(storage.count(None),
+                         len(storage.all(State)) + len(storage.all(City)))
+        # passing no `cls` - count all types in storage
+        self.assertEqual(storage.count(),
+                         len(storage.all(State)) + len(storage.all(City)))
+
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """ Test for FS get method
+        """
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+
+        storage = FileStorage()
+        state = State()
+        state.save()
+        # passing non-BaseModel derived object as `cls` - None
+        for test_type in (str, int, float):
+            self.assertIsNone(storage.get(test_type, state.id))
+        # passing BaseModel derived object as `cls`, invalid id - None
+        self.assertIsNone(storage.get(State, 'invalid_id'))
+        # passing BaseModel derived object as `cls`, valid id - obj with id
+        self.assertIs(storage.get(State, state.id), state)
+
+        FileStorage._FileStorage__objects = savei
