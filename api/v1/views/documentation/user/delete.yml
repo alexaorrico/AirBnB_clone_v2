@@ -1,0 +1,15 @@
+Removes an user by id
+---
+tags:
+  - Users
+parameters:
+  - name: user_id
+    in: path
+    type: string
+    required: false
+    description: the unique id of the user
+responses:
+  404:
+    description: User not found 😳
+  200:
+    description: Successful request ✔️
