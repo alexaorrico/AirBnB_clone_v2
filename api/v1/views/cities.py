@@ -9,7 +9,7 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
-@swag_from('swagger_yaml/cities_by_state.yml', methods=['GET', 'POST'])
+@swag_from('documentation/cities_by_state.yml', methods=['GET', 'POST'])
 def get_cities_by_state(state_id=None):
     """
     This function handles HTTP methods for cities in a given state.
@@ -36,7 +36,7 @@ def get_cities_by_state(state_id=None):
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
-@swag_from('swagger_yaml/cities_id.yml', methods=['GET', 'DELETE', 'PUT'])
+@swag_from('documentation/cities_id.yml', methods=['GET', 'DELETE', 'PUT'])
 def get_city(city_id=None):
     """
     This function handles HTTP methods for a single city.
