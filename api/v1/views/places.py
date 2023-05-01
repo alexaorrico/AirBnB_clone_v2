@@ -3,7 +3,7 @@
 from flask import jsonify, request
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
-rom api.v1.views import app_views
+from api.v1.views import app_views
 from models import storage, storage_t
 from models.amenity import Amenity
 from models.city import City
