@@ -51,7 +51,7 @@ def city(city_id):
         for k, v in data.items():
             ign_attr = ['id', 'created_at', 'updated_at']
             if k not in ign_attr:
-                city[k] = v
+                setattr(city, k, v)
         storage.save()
         return jsonify(city.to_dict()), 200
 
