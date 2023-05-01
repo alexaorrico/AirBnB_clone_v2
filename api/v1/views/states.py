@@ -45,13 +45,13 @@ def state_end_points(state_id=None):
                     return jsonify({}), 200
             abort(404)
         elif request.method == "PUT":
-            new_dict = storage.get(State, state_id)
+#            new_dict = storage.get(State, state_id)
             get_new_name = request.get_json()
             if not get_new_name:
                 abort(400, "Not a JSON")
             for state in obj_states.values():
                 if state.id == state_id:
-                    new_dict.name = get_new_name.get("name")
-                    new_dict.save()
-                    return jsonify(new_dict.to_dict()), 200
+                    state.name = get_new_name.get("name")
+                    state.save()
+                    return jsonify(state.to_dict()), 200
             abort(404)
