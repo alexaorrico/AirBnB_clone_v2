@@ -1,17 +1,17 @@
 #!/usr/bin/python3
-'''State Rest API'''
+'''Module for Amenity API'''
 from flask import jsonify, abort, request
-from models.state import State
+from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/states', strict_slashes=False, methods=['GET', 'POST'])
-def state_list():
-    '''Interested in list of all states'''
+@app_views.route('/amenities', strict_slashes=False, methods=['GET', 'POST'])
+def amenity_list():
+    '''Interested in list of all amenities'''
     if request.method == 'GET':
-        state_list = storage.all('State')
-        list_dict = [state.to_dict() for state in state_list.values()]
+        amenity_list = storage.all('Amenity')
+        list_dict = [amenity.to_dict() for amenity in amenity_list.values()]
         return jsonify(list_dict)
     if request.method == 'POST':
         try:
@@ -20,25 +20,25 @@ def state_list():
                 abort(400, 'Not a JSON')
             if json_body['name'] is None:
                 abort(400, 'Missing name')
-            state = State(**json_body)
-            new_inst = storage.new(state)
+            amenity = Amenity(**json_body)
+            new_inst = storage.new(amenity)
             storage.save()
-            return jsonify(state.to_dict()), 201
+            return jsonify(amenity.to_dict()), 201
         except Exception as err:
             abort(404)
 
 
-@app_views.route('/states/<state_id>',
+@app_views.route('/amenities/<amenity_id>',
                  strict_slashes=False, methods=['GET', 'DELETE', 'PUT'])
-def state_detail(state_id):
-    '''Interested in details of a specific state'''
-    state = storage.get(State, state_id)
-    if state is None:
+def amenity_detail(amenity_id):
+    '''Interested in details of a specific amenity'''
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
     if request.method == 'GET':
-        return jsonify(state.to_dict())
+        return jsonify(amenity.to_dict())
     if request.method == 'DELETE':
-        storage.delete(state)
+        storage.delete(amenity)
         storage.save()
         return jsonify({})
     else:
@@ -48,8 +48,8 @@ def state_detail(state_id):
                 abort(400, 'Not a JSON')
             for k, v in json_body.items():
                 if k not in ['id', 'created_at', 'updated_at']:
-                    setattr(state, k, v)
+                    setattr(amenity, k, v)
             storage.save()
-            return jsonify(state.to_dict())
+            return jsonify(amenity.to_dict())
         except Exception as err:
             abort(404)
