@@ -44,9 +44,12 @@ def del_state(state_id):
 
 def add_state():
     '''Adds state to states'''
-    if not request.is_json:
-        return 'Not a JSON', 400
-    req_data = request.get_json()
+    try:
+        req_data = request.get_json()
+    except Exception:
+        abort(400, 'Not a JSON')
+    if type(req_data) is not dict:
+        abort(400, 'Not a JSON')
     if 'name' not in req_data:
         abort(400, 'Missing name')
     state = State(**req_data)
