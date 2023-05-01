@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This file contains the Amenity module
+This file contain the Amenity module
 """
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
