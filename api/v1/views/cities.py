@@ -47,7 +47,7 @@ def states_end_points(state_id):
 def city_end_points(city_id):
     """state objects that handles all default RESTFul API actions"""
     obj_city = storage.get(City, city_id)
-    if obj_city is None:
+    if not obj_city:
         abort(404)
 
     if request.method == "GET":
