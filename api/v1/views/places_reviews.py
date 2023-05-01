@@ -7,12 +7,13 @@ from flask import request, jsonify, abort
 from models.place import Place
 from models import storage
 from models.review import Review
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews',
                  methods=['GET', 'POST'], strict_slashes=False)
 def reviews_by_place(place_id):
-    """retrieve reviews based on place_id"""
+    """ Retrieve reviews based on the place_id """
     place = storage.get(Place, place_id)
 
     if place is None:
@@ -40,7 +41,7 @@ def reviews_by_place(place_id):
 @app_views.route('/reviews/<string:review_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def review_by_review_id(review_id):
-    """retrieves review by review id"""
+    """ Retrieves review by the review id """
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -54,7 +55,7 @@ def review_by_review_id(review_id):
         my_dict = request.get_json()
         if my_dict is None:
             abort(400, 'Not a JSON')
-        for k, v in my_dict.items():
-            setattr(review, k, v)
+        for i, j in my_dict.items():
+            setattr(review, i, j)
         review.save()
         return jsonify(review.to_dict()), 200
