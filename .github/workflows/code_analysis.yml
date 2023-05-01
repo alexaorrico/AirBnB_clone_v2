@@ -1,0 +1,90 @@
+name: Code Analysis with Flake8 and Pycodestyle
+
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.8", "3.9", "3.10" ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pycodestyle
+
+      - name: Analysing code at root of the repo with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files *.py)
+          pycodestyle $(git ls-files *.py)
+
+      - name: Analysing models with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401,F821 $(git ls-files models/*.py)
+          pycodestyle $(git ls-files models/*.py)
+
+      - name: Analysing models/engine with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files models/engine/*.py)
+          pycodestyle $(git ls-files models/engine/*.py)
+
+      - name: Analysing tests with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files tests/*.py)
+          pycodestyle $(git ls-files tests/*.py)
+
+      - name: Analysing web_flask with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files web_flask/*.py)
+          pycodestyle $(git ls-files web_flask/*.py)
+
+  py34:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.4", "3.5" ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: MatteoH2O1999/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          allow-build: info
+          cache-build: true
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+
+      - name: Analysing code at root of the repo with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files *.py)
+          pycodestyle $(git ls-files *.py)
+
+      - name: Analysing models with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401,F821 $(git ls-files models/*.py)
+          pycodestyle $(git ls-files models/*.py)
+
+      - name: Analysing models/engine with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files models/engine/*.py)
+          pycodestyle $(git ls-files models/engine/*.py)
+
+      - name: Analysing tests with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files tests/*.py)
+          pycodestyle $(git ls-files tests/*.py)
+
+      - name: Analysing web_flask with Flake8 and Pycodestyle
+        run: |
+          flake8 --ignore=F401 $(git ls-files web_flask/*.py)
+          pycodestyle $(git ls-files web_flask/*.py)
