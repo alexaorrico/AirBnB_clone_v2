@@ -4,12 +4,16 @@ from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
+from flask_cors import CORS
 
 # create Flask instance
 app = Flask(__name__)
 
 # register blueprint to flask instance
 app.register_blueprint(app_views)
+
+# create CORS instance
+cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext

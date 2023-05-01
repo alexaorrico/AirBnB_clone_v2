@@ -8,7 +8,7 @@ import inspect
 import models
 from models import city
 from models.base_model import BaseModel
-import pep8
+simport pep8
 import unittest
 City = city.City
 
@@ -112,3 +112,6 @@ class TestCity(unittest.TestCase):
         city = City()
         string = "[City] ({}) {}".format(city.id, city.__dict__)
         self.assertEqual(string, str(city))
+
+if __name__ == '__main__':
+    unittest.main()
