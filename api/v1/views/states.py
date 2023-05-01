@@ -34,10 +34,9 @@ def get_a_state(state_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_a_state(state_id):
     """deletes a state objects"""
-    states = storage.all('State')
-    for state in states.values():
-        if state.id == state_id:
-            storage.delete(state)
-            storage.save()
-        return jsonify({})
-    abort(404)
+    state = storage.get(classes['State'], state_id)
+    if state is None:
+        abort(404)
+    storage.delete(state)
+    storage.save()
+    return jsonify({})
