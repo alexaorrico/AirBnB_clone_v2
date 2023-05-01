@@ -2,7 +2,7 @@
 """
 Handle all default RESTFUL API actions
 """
-from models.review import Review
+from models.amenity import Amenity
 from models.place import Place
 from models.user import User
 from models.city import City
@@ -12,58 +12,39 @@ from flask import Flask, request, abort, jsonify
 from models import storage
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'],
+@app_views.route('/places/<place_id>/amenities', methods=['GET', 'POST'],
                  strict_slashes=False)
-def places_reviews(place_id):
-    """ Returns infor for reviews"""
+def places_amenities(place_id):
+    """ Returns infor for places reviews"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
 
     if request.method == 'GET':
-        reviews = []
-        for review in place.reviews:
-            reviews.append(review.to_dict())
+        amenities = []
+        for amenity in place.amenities:
+            reviews.append(amenity.to_dict())
         return jsonify(reviews)
-    if request.method == 'POST':
-        data = request.get_json()
-        if not request.is_json:
-            abort(400, 'Not a JSON')
-        if 'user_id' not in data:
-            abort(400, 'Missing user_id')
-        u_id = storage.get(User, data.user_id)
-        if u_id is None:
-            abort(404)
-        if 'text' not in data:
-            abort(400, 'Missing text')
-        new_review = Review(**data)
-        storage.new(new_review)
-        storage.save()
-        return jsonify(new_review.to_dict()), 201
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET', 'PUT', 'DELETE'],
-                 strict_slashes=False)
-def review(review_id):
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 methods=['POST', 'DELETE'], strict_slashes=False)
+def place_amenity(place_id, amenity_id):
     """ Returns review object of id """
-    review = storage.get(Review, user_id)
-    if review is None:
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
+    if place is None or amenity is None:
         abort(404)
 
-    if request.method == 'GET':
-        return jsonify(review.to_dict())
-    elif request.method == 'PUT':
-        data = request.get_json()
-        if not request.is_json:
-            abort(400, 'Not a JSON')
-        for k, v in data.items():
-            ign_attr = ['id', 'created_at', 'updated_at']
-            if k not in ign_attr:
-                setattr(review, k, v)
+    if request.method == 'POST':
+        if amenity in place.amenities:
+            return jsonify(amenity.to_dict())
+        place.amenities.append(amenity)
         storage.save()
-        return jsonify(review.to_dict()), 200
-
+        return jsonify(amenity.to_dict())
     elif request.method == 'DELETE':
-        storage.delete(review)
+        if amenity not in place.amenities:
+            abort(404)
+        place.amenities.remove(amenity)
         storage.save()
         return jsonify({}), 200
