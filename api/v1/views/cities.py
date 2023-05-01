@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" Handles all restful API actions for State"""
+"""New view for City objects that handles all default RESTFul API actions"""
 
 from api.v1.views import app_views
 from flask import request, jsonify, abort
@@ -12,7 +12,7 @@ from models.city import City
 @app_views.route('/states/<state_id>/cities',
                  methods=['GET', 'POST'], strict_slashes=False)
 def cities_by_state(state_id):
-    """retrieve cities based on state_id"""
+    """Retrieves cities using state_id"""
     state_objs = storage.all(State)
     states = [obj for obj in state_objs.values()]
 
@@ -42,7 +42,7 @@ def cities_by_state(state_id):
 @app_views.route('/cities/<string:city_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def city_by_city_id(city_id):
-    """retrieves cities by cities id"""
+    """Retrieves cities using city_id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
