@@ -19,7 +19,6 @@ class TestAmenityDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.amenity_f = inspect.getmembers(Amenity, inspect.isfunction)
 
-
     def test_amenity_module_docstring(self):
         """Test for the amenity.py module docstring"""
         self.assertIsNot(amenity.__doc__, None,

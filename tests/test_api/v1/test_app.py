@@ -8,6 +8,7 @@ import unittest
 from flask import Flask
 from api.v1.app import app
 
+
 class TestFlaskApp(unittest.TestCase):
     """Tests to check the documentation and style of City class"""
     @classmethod
