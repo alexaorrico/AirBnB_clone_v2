@@ -22,6 +22,7 @@ def tearDown():
 def handle_404():
     """
     handles 404 error
+    :return: returns 404 json
 
     """
     return jsonify({"error": "Not found"})
