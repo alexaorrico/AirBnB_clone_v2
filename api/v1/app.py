@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Status of api ApI V1"""
 from flask import Flask, jsonify, make_response
-#mport models
 from models import storage
 from api.v1.views import app_views
 from os import getenv
