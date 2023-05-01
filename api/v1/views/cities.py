@@ -23,11 +23,12 @@ def cities_in_state(state_id):
         return jsonify(cities)
     elif request.method == 'POST':
         data = request.get_json()
-        if not data:
+        if not request.is_json():
             abort(400, 'Not a JSON')
         if 'name' not in data:
             abort(400, 'Missing name')
-        new_city = City(data)
+        new_city = City(**data)
+        data.state_id = state_id
         storage.new(new_city)
         storage.save()
         return jsonify(new_city.to_dict()), 201
@@ -45,7 +46,7 @@ def city(city_id):
         return jsonify(city.to_dict())
     elif request.method == 'PUT':
         data = request.get_json()
-        if not data:
+        if not request.is_json():
             abort(400, 'Not a JSON')
         for k, v in data.items():
             ign_attr = ['id', 'created_at', 'updated_at']
@@ -57,4 +58,4 @@ def city(city_id):
     elif request.method == 'DELETE':
         storage.delete(city)
         storage.save()
-        return {}, 200
+        return jsonify({}), 200
