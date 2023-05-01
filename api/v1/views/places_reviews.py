@@ -28,7 +28,7 @@ def get_review(review_id):
     if review is None:
         abort(404)
     else:
-        return(jsonify(review.to_dict()))
+        return (jsonify(review.to_dict()))
 
 
 @app_views.route('/reviews/<review_id>',
