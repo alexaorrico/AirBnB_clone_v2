@@ -6,10 +6,10 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get():
     """Retrieve all state class"""
-    states_list =[]
+    states_list = []
     for item in storage.all("State").values():
         states_list.append(item.to_dict())
     return jsonify(states_list)
@@ -35,7 +35,7 @@ def delete(state_id):
     return jsonify({})
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create():
     """Create a new state object"""
     if not request.get_json():
