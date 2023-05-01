@@ -9,6 +9,7 @@ from os import environ
 
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
+
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
 def get_amenities_per_place(place_id):
     """
@@ -29,6 +30,7 @@ def get_amenities_per_place(place_id):
         amenities = [storage.get('Amenity', amenity_id) for amenity_id in amenities_ids]
 
     return jsonify([amenity.to_json() for amenity in amenities])
+
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['POST', 'DELETE'])
 def link_amenity_to_place(place_id, amenity_id):
