@@ -52,20 +52,28 @@ def delete_place(place_id):
                  methods=['POST'], strict_slashes=False)
 def create_place(city_id):
     """ Creates a new city by using the URL """
-    city = storage.get(Place, place_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
     my_dict = request.get_json()
     if my_dict is None:
         abort(400, 'Not a JSON')
+    user_id = my_dict.get('user_id')
+    if user_id is None:
+        abort(400, 'Missing user_id')
+    user = storage.get(User, user_id)
+    if user is None:
+        abort(404)
     if my_dict.get("name") is None:
         abort(400, 'Missing name')
-
-    my_dict["city_id"] = city_id
-    new_place = Place(**my_dict)
-    new_place.save()
-    return jsonify(new_place.to_dict()), 201
+        place = Place(name=name, user_id=user_id, city_id=city_id)
+    for key, value in data.items():
+        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            setattr(place, key, value)
+    storage.new(place)
+    storage.save()
+    return jsonify(place.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
