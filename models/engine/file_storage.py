@@ -2,9 +2,15 @@
 """
 Handles I/O, writing and reading, of JSON for storage of all class instances
 """
-import json
-from models import base_model, amenity, city, place, review, state, user
 from datetime import datetime
+import json
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import Cit
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 strptime = datetime.strptime
 to_json = base_model.BaseModel.to_json
