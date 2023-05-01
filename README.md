@@ -156,6 +156,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+  
 Nduka Henry Chisom [Github](https://github.com/zerokodes) / [Twitter](https://twitter.com/Henry_Konflikt)
 Godwin Emmanuel [Github](https://github.com/Emigham) / [Twitter](https://twitter.com/emigham7)
 
