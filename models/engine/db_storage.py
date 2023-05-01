@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+"Database storage engine using SQLAlchemy with a mysql+mysqldb database
+connection.
 """
 
-import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -12,12 +12,16 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {"Amenity": Amenity,
+           "City": City,
+           "Place": Place,
+           "Review": Review,
+           "State": State,
+           "User": User
+           }
 
 
 class DBStorage:
@@ -38,10 +42,34 @@ class DBStorage:
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
-            Base.metadata.drop_all(self.__engine)
+            Base.metadata.drop_all(self.__engine) # type: ignore
+
+    def get(self, cls, id):
+        """Retrieve an object"""
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
+            cls = classes[cls]
+            result = self.__session.query(cls).filter(cls.id == id).first()
+            return result
+        else:
+            return None
+
+
+    def count(self, cls=None):
+        """Count number of objects in storage"""
+        total = 0
+        if type(cls) == str and cls in classes:
+            cls = classes[cls]
+            total = self.__session.query(cls).count()
+        elif cls is None:
+            for cls in classes.values():
+                total += self.__session.query(cls).count()
+        return total
 
     def all(self, cls=None):
         """query on the current database session"""
+        if not self.__session:
+            self.reload()
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -61,12 +89,14 @@ class DBStorage:
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
-        if obj is not None:
+        if not self.__session:
+            self.reload()
+        if obj:
             self.__session.delete(obj)
 
     def reload(self):
         """reloads data from the database"""
-        Base.metadata.create_all(self.__engine)
+        Base.metadata.create_all(self.__engine) # type: ignore
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session

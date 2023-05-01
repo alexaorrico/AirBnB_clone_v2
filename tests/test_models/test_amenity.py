@@ -45,7 +45,7 @@ class TestAmenityDocs(unittest.TestCase):
         """Test for the Amenity class docstring"""
         self.assertIsNot(Amenity.__doc__, None,
                          "Amenity class needs a docstring")
-        self.assertTrue(len(Amenity.__doc__) >= 1,
+        self.assertTrue(len(Amenity.__doc__) >= 1, # type: ignore
                         "Amenity class needs a docstring")
 
     def test_amenity_func_docstrings(self):
@@ -53,7 +53,7 @@ class TestAmenityDocs(unittest.TestCase):
         for func in self.amenity_f:
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
+            self.assertTrue(len(func[1].__doc__) >= 1, # type: ignore
                             "{:s} method needs a docstring".format(func[0]))
 
 
@@ -104,3 +104,6 @@ class TestAmenity(unittest.TestCase):
         amenity = Amenity()
         string = "[Amenity] ({}) {}".format(amenity.id, amenity.__dict__)
         self.assertEqual(string, str(amenity))
+
+if __name__ == '__main__':
+    unittest.main()
