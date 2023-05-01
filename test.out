@@ -1,0 +1,29 @@
+....................................sssssssss.EFE..............................................................
+======================================================================
+ERROR: test_count (test_models.test_engine.test_file_storage.testFileStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/AirBnB_clone_v3/tests/test_models/test_engine/test_file_storage.py", line 148, in test_count
+    old_count = storage.count("State")
+AttributeError: 'FileStorage' object has no attribute 'count'
+
+======================================================================
+ERROR: test_get (test_models.test_engine.test_file_storage.testFileStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/AirBnB_clone_v3/tests/test_models/test_engine/test_file_storage.py", line 140, in test_get
+    result = storage.get("State", new_state.id)
+AttributeError: 'FileStorage' object has no attribute 'get'
+
+======================================================================
+FAIL: test_delete (test_models.test_engine.test_file_storage.testFileStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/root/AirBnB_clone_v3/tests/test_models/test_engine/test_file_storage.py", line 125, in test_delete
+    self.assertFalse(state_id == k.split('.')[1])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 111 tests in 2.093s
+
+FAILED (failures=1, errors=2, skipped=9)

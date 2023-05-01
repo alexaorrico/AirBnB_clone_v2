@@ -155,8 +155,8 @@ No known bugs at this time.
 
   
 ## Authors
-Oladele Basheer - [Github]((https://github.com/oladelebasheer) / [Twitter](https://twitter.com/alexa_orrico)  
-Ruhullahi Muhammad - []() / []()
+Oladele Basheer - [Github](https://github.com/oladelebasheer)   
+Ruhullahi Muhammad - [Github](https://github.com/ibnAbuMahdi)
 
 Second part of Airbnb: Joann Vuong
 ## License
