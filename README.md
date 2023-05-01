@@ -162,7 +162,7 @@ Emmanuel Myles- [Github](https://github.com/Myles2005)
 Precious Augustine- [Github](https://github.com/MsVee55)
 	[Email](precious.v.augustine@gmail.com)
 	[LinkedIn](https://www.linkedin.com/in/precious-vivian-augustine-alx-software-developer)
-Forked again from Myles.
+
 Second part of Airbnb: Myles && Vee
 ## License
 Public Domain. No copy write protection. 
