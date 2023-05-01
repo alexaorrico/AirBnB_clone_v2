@@ -4,3 +4,8 @@ cryptography
 flake8
 pyflakes
 pylint
+fabric3
+flask
+pep8
+Fabric
+SQLAlchemy
