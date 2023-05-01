@@ -1,73 +1,53 @@
 #!/usr/bin/python3
 """
-This file contains the Amenity module
+handles REST API actions for Amenity
 """
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
+from flask import jsonify
+from flask import Flask
+from flask import request
+from flask import abort
 from models import storage
 from models.amenity import Amenity
-from flasgger.utils import swag_from
 
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/amenity/get.yml', methods=['GET'])
-def get_all_amenities():
-    """ get amenities by id """
-    all_list = [obj.to_dict() for obj in storage.all(Amenity).values()]
-    return jsonify(all_list)
+@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
+def amenity():
+    """handles amenities route"""
+    if request.method == 'GET':
+        return jsonify(
+            [obj.to_dict() for obj in storage.all("Amenity").values()])
+    if request.method == 'POST':
+        post_data = request.get_json()
+        if post_data is None or type(post_data) != dict:
+            return jsonify({'error': 'Not a JSON'}), 400
+        new_name = post_data.get('name')
+        if new_name is None:
+            return jsonify({'error': 'Missing name'}), 400
+        new_amenity = Ameninity(**post_data)
+        new_amenity.save()
+        return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
-                 strict_slashes=False)
-@swag_from('documentation/amenity/get_id.yml', methods=['GET'])
-def get_amenity(amenity_id):
-    """ get amenity by id"""
-    amenity = storage.get(Amenity, amenity_id)
+@app_views.route(
+    '/amenities/<string:amenity_id>',
+    methods=['GET', 'DELETE', 'PUT'],
+    strict_slashes=False)
+def amenity_with_id(amenity_id):
+    """handles amenities route with a parameter amenity_id"""
+    amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
-    return jsonify(amenity.to_dict())
-
-
-@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
-                 strict_slashes=False)
-@swag_from('documentation/amenity/delete.yml', methods=['DELETE'])
-def del_amenity(amenity_id):
-    """ delete amenity by id"""
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
-        abort(404)
-    amenity.delete()
-    storage.save()
-    return jsonify({})
-
-
-@app_views.route('/amenities/', methods=['POST'],
-                 strict_slashes=False)
-@swag_from('documentation/amenity/post.yml', methods=['POST'])
-def create_obj_amenity():
-    """ create new instance """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    js = request.get_json()
-    obj = Amenity(**js)
-    obj.save()
-    return (jsonify(obj.to_dict()), 201)
-
-
-@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
-                 strict_slashes=False)
-@swag_from('documentation/amenity/put.yml', methods=['PUT'])
-def post_amenity(amenity_id):
-    """  """
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    obj = storage.get(Amenity, amenity_id)
-    if obj is None:
-        abort(404)
-    for key, value in request.get_json().items():
-        if key not in ['id', 'created_at', 'updated_at']:
-            setattr(obj, key, value)
-    storage.save()
-    return jsonify(obj.to_dict())
+    if request.method == 'GET':
+        return jsonify(amenity.to_dict())
+    if request.method == 'DELETE':
+        storage.delete(amenity)
+        storage.save()
+        return jsonify({}), 200
+    if request.method == 'PUT':
+        put_data = request.get_json()
+        if put_data is None or type(put_data) != dict:
+            return jsonify({'error': 'Not a JSON'}), 400
+        to_ignore = ['id', 'created_at', 'updated_at']
+        amenity.update(to_ignore, **put_data)
+        return jsonify(amenity.to_dict()), 200
