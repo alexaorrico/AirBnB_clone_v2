@@ -25,6 +25,11 @@ def page_not_found(error):
     return make_response(jsonify({"error": "Not found"})), 404
 
 
+@app.errorhandler(400)
+def bad_request(error):
+    return make_response(jsonify(error.description)), 400
+
+
 if __name__ == '__main__':
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
     port = int(os.getenv('HBNB_API_PORT', '5000'))
