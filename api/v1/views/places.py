@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from models.city import City
 from models.place import Place
+from models.user import User
 from models import storage
 from flask import request, jsonify, abort
 
@@ -31,8 +32,18 @@ def cities_end_points(city_id):
                 my_dict = request.get_json()
                 if not my_dict or type(my_dict) is not dict:
                     abort(400, "Not a JSON")
-                elif not my_dict["name"]:
+                if not my_dict["name"]:
                     abort(400, "Missing name")
+                if not my_dict.get('user_id'):
+                    abort(400, "Missing user_id")
+                user_obj = storage.all(User).values()
+                user_exists = False
+                for user_obj in user_objs:
+                    if user_obj.id == my_dict["user_id"]:
+                        user_exists = True
+                        break
+                if not user_exists:
+                    abort(404)
                 else:
                     my_dict["city_id"] = city_id
                     new_place = Place(**my_dict)
