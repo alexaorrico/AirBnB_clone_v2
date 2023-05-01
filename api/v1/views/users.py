@@ -12,7 +12,7 @@ from models import storage
 @app_views.route('/users', methods=['GET'], strict_slashes=False,)
 def get_users():
     """ return all user objects """
-    users = storage.get(User)
+    users = storage.all(User)
     all_users = [user.to_dict() for user in users]
     return jsonify(all_users)
 
