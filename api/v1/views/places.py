@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-"""Place view module"""
+""" Handles all restful API actions for State"""
 
 from api.v1.views import app_views
 from flask import request, jsonify, abort
@@ -13,7 +13,7 @@ from models.place import Place
 @app_views.route('cities/<city_id>/places',
                  methods=['GET', 'POST'], strict_slashes=False)
 def places_by_city(city_id):
-    """Retrieves the list of all Place objects of a City"""
+    """retrieve places based on city_id"""
 
     if request.method == 'GET':
         city = storage.get(City, city_id)
@@ -47,7 +47,7 @@ def places_by_city(city_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def place_by_place_id(place_id):
-    """Retrieves a place using place_id"""
+    """Retrieves a place based on the place_id"""
     place = storage.get(Place, place_id)
 
     if place is None:
