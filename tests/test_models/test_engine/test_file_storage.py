@@ -67,6 +67,7 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -120,38 +121,38 @@ class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
         """ Creates a temporary file to store test data"""
-	self.test_file = "test_file.json"
-	with open(self.test_file, "w") as f:
-		f.write("")
+        self.test_file = "test_file.json"
+        with open(self.test_file, "w") as f:
+            f.write("")
 
     def tearDown(self):
         """ Remove the temporary file"""
-	os.remove(self.test_file)
+        os.remove(self.test_file)
 
     def test_get(self):
-	""" Create a user object and add it to the file storage"""
-	user = User()
-	user.name = "Test User"
-	user.save()
+        """ Create a user object and add it to the file storage"""
+        user = User()
+        user.name = "Test User"
+        user.save()
 
-	user_id = user.id
-	retrieved_user = self.storage.get(User, user_id)
-
-	self.assertEqual(retrieved_user, user)
+        user_id = user.id
+        retrieved_user = self.storage.get(User, user_id)
+        self.assertEqual(retrieved_user, user)
 
     def test_get_nonexistent_object(self):
-	""" Retrieved a non-existent object from the file storage using get()"""
-	self.assertIsNone(retrieved_user)
+        """ Retrieved a non-existent object from the
+        file storage using get()"""
+        self.assertIsNone(retrieved_user)
 
     def test_count_all_objects(self):
-	""" Count all objects in the file storage """
-	count = self.storage.count()
+        """ Count all objects in the file storage """
+        count = self.storage.count()
 
-	expected_count = len(self.storage.all())
-	self.assertEqual(count, expected_count)
+        expected_count = len(self.storage.all())
+        self.assertEqual(count, expected_count)
 
     def test_count_specific_class(self):
-	""" Count all the User objects in the file storage"""
-	count = self.storage.count(User)
-	expected_count = len(self.storage.all(User))
-	self.assertEqual(count, expected_count)
+        """ Count all the User objects in the file storage"""
+        count = self.storage.count(User)
+        expected_count = len(self.storage.all(User))
+        self.assertEqual(count, expected_count)

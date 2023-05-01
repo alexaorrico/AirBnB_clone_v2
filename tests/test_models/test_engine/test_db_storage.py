@@ -33,7 +33,7 @@ class TestDBStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
         cls.storage = DBStorage()
-	cls.storage.reload
+        cls.storage.reload
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
@@ -73,32 +73,33 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
     def test_get(self):
-	""" Create a user object and add it to the database"""
-	user = User()
-	user.name = "Test User"
-	self.storage.new(user)
-	self.storage.save()
+        """ Create a user object and add it to the database"""
+        user = User()
+        user.name = "Test User"
+        self.storage.new(user)
+        self.storage.save()
 
-	user_id = user.id
-	retrieved_user = self.storage.get(User, user_id)
-	self.assertEqual(retrieved_user, user)
+        user_id = user.id
+        retrieved_user = self.storage.get(User, user_id)
+        self.assertEqual(retrieved_user, user)
 
     def test_get_nonexistent_object(self):
-	retrieved_user = self.storage.get(User, "nonexistent_id")
-	self.assertIsNone(retrieved_user)
+        retrieved_user = self.storage.get(User, "nonexistent_id")
+        self.assertIsNone(retrieved_user)
 
     def test_count_all_objects(self):
-	"""Count all objects in the database"""
-	count = self.storage.count()
+        """Count all objects in the database"""
+        count = self.storage.count()
 
-	expected_count = len(self.storage.all())
-	self.assertEqual(count, expected_count)
+        expected_count = len(self.storage.all())
+        self.assertEqual(count, expected_count)
 
     def test_count_specific_class(self):
-	""" Count all User objects in the database"""
-	count = self.storage.count(User)
-	expected_count = len(self.storage.all(User))
-	self.assertEqual(count, expected_count)
+        """ Count all User objects in the database"""
+        count = self.storage.count(User)
+        expected_count = len(self.storage.all(User))
+        self.assertEqual(count, expected_count)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
