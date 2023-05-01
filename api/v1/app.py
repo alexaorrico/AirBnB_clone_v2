@@ -15,6 +15,11 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 def teardown_storage(exception):
     storage.close()
 
+@app.errorhandler(404)
+def not_found(error):
+    ''' handles 404 error and gives json formatted response '''
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
