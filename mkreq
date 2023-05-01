@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# This script
+# cpost='curl -X POST http://0.0.0.0:5000/api/v1/'
+# curl -X GET http://0.0.0.0:5000/api/v1/amenities
+# curl -X POST http://0.0.0.0:5000/api/v1/amenities -H "Content-Type: application/json" -d '{"name": "AI"}' -vvv
+# curl -X PUT http://0.0.0.0:5000/api/v1/amenities/e4cf926a-466a-4c8f-92d6-09ac042d6b6a -H "Content-Type: application/json" -d '{"name": "AI"}'
+# curl -X DELETE http://0.0.0.0:5000/api/v1/amenities/a205dae5-c7ec-4441-a14b-236ac8b82f15
+# curl -X GET http://0.0.0.0:5000/api/v1/amenities
+# curl -X POST http://0.0.0.0:5000/api/v1/states/ -H "Content-Type: application/json" -d '{"name": "California"}' -vvv
+# curl -X PUT http://0.0.0.0:5000/api/v1/states/8d12e4e0-ddd6-4d9c-bc50-956da071a3d8 -H "Content-Type: application/json" -d '{"name": "California is so cool"}'
+# curl -X GET http://0.0.0.0:5000/api/v1/states/
+# curl -X GET http://0.0.0.0:5000/api/v1/states/421a55f4-7d82-47d9-b54c-a76916479553
+# curl -X GET http://0.0.0.0:5000/api/v1/places/906b5bbe-61af-466c-b923-faae15a96635
+# curl -X POST http://0.0.0.0:5000/api/v1/cities/city100278524560015366/places/ -H "Content-Type: application/json" -d '{"name": "Jand", "city_id": "city100278524560015366", "user_id": "c71f8509-58ce-4c40-8962-21236140d56f"}' -vvv
+# curl -X GET http://0.0.0.0:5000/api/v1/cities/city100278524560015366/places/
+# curl -X DELETE http://0.0.0.0:5000/api/v1/places/906b5bbe-61af-466c-b923-faae15a96635
+# curl -X GET http://0.0.0.0:5000/api/v1/places/91adffc6-0a2b-40d9-85e2-27d97573532e
+# curl -X DELETE http://0.0.0.0:5000/api/v1/places/91adffc6-0a2b-40d9-85e2-27d97573532e
+# curl -X GET http://0.0.0.0:5000/api/v1/places/91adffc6-0a2b-40d9-85e2-27d97573532e
+# curl -X PUT http://0.0.0.0:5000/api/v1/places/91adffc6-0a2b-40d9-85e2-27d97573532e -H "Content-Type: application/json" -d '{"price_by_night": 40}'
+# curl -X GET http://0.0.0.0:5000/api/v1/places/91adffc6-0a2b-40d9-85e2-27d97573532e
+# Test places api
+curl -X POST http://0.0.0.0:5000/api/v1/cities/f16e21e7-7af2-4fbb-9dc4-25be36093e8d/places -H "Content-Type: application/json" -d '{"name": "jail", "user_id": "c71f8509-58ce-4c40-8962-21236140d56f"}' -vvv
+curl -X GET http://0.0.0.0:5000/api/v1/cities/f16e21e7-7af2-4fbb-9dc4-25be36093e8d/places
+curl -X PUT http://0.0.0.0:5000/api/v1/places/fee9223c-22f3-4539-a4d7-1556bb2b2f94 -H "Content-Type: application/json" -d '{"name": "lag is so cool"}'
+curl -X GET http://0.0.0.0:5000/api/v1/cities/f16e21e7-7af2-4fbb-9dc4-25be36093e8d/places
+curl -X DELETE http://0.0.0.0:5000/api/v1/places/7477b23e-bfea-4ad9-97e8-21bf5504ae39
+
+
+#file storage
+# c3498132-e452-4ce0-bdde-4d7aee238d72
+# curl -X POST http://0.0.0.0:5000/api/v1/cities/c3498132-e452-4ce0-bdde-4d7aee238d72/places -H "Content-Type: application/json" -d '{"name": "shell", "user_id": "ffd4ade3-50e4-4323-8b68-596156c736c5"}' -vvv
+# curl -X PUT http://0.0.0.0:5000/api/v1/places/b5817ad7-8ad2-4479-a97d-2ced01dcd911 -H "Content-Type: application/json" -d '{"name": "jail sucks"}' -vvv
+# curl -X GET http://0.0.0.0:5000/api/v1/cities/c3498132-e452-4ce0-bdde-4d7aee238d72/places

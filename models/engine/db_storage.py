@@ -3,7 +3,6 @@
 Contains the class DBStorage
 """
 
-import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -12,7 +11,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -68,9 +66,18 @@ class DBStorage:
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = scoped_session(sess_factory)()
 
     def close(self):
-        """call remove() method on the private session attribute"""
-        self.__session.remove()
+        """call close() method on the private session attribute"""
+        self.__session.close()
+
+    def get(self, cls, id):
+        """Returns an object if it exists otherwise None"""
+        key = cls.__name__ + '.' + id
+        return self.all(cls).get(key)
+
+    def count(self, cls=None):
+        """ Returns the number of objects in storage matching
+        the given class"""
+        return len(self.all(cls))
