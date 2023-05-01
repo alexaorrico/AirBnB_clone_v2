@@ -39,7 +39,7 @@ def delete_user(user_id):
         abort(404)
 
     """ Delete the user """
-    storage.delete()
+    storage.delete(user)
     storage.save()
     return jsonify({}), 200
 
