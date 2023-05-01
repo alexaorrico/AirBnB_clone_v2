@@ -61,12 +61,12 @@ def update_user(user_id):
     user = storage.get(User, user_id)
     if not user:
         abort(404)
-    request = request.get_json()
-    if not request:
+    req = request.get_json()
+    if not req:
         abort(400, description="Not a JSON")
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']
 
-    for key, value in request.items():
+    for key, value in req.items():
         if key not in ignore_keys:
             setattr(user, key, value)
     user.save()
