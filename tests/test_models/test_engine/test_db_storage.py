@@ -13,6 +13,7 @@ from models.engine.db_storage import DBStorage
 storage_type = os.environ.get('HBNB_TYPE_STORAGE')
 
 
+
 @unittest.skipIf(storage_type != 'db', 'skip if environ is not db')
 class TestDBStorageDocs(unittest.TestCase):
     """Class for testing DBStorage docs"""
@@ -21,7 +22,7 @@ class TestDBStorageDocs(unittest.TestCase):
     def setUpClass(cls):
         print('\n\n.................................')
         print('..... Testing Documentation .....')
-        print('..... For FileStorage Class .....')
+        print('..... For DBStorage Class .....')
         print('.................................\n\n')
 
     def test_doc_file(self):
@@ -120,7 +121,7 @@ class TestUserDBInstances(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         print('\n\n.................................')
-        print('...... Testing FileStorage ......')
+        print('...... Testing DBStorage ......')
         print('.......... User  Class ..........')
         print('.................................\n\n')
 
@@ -206,7 +207,7 @@ class TestCityDBInstancesUnderscore(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         print('\n\n.................................')
-        print('...... Testing FileStorage ......')
+        print('...... Testing DBStorage ......')
         print('.......... City Class ..........')
         print('.................................\n\n')
 
@@ -318,6 +319,28 @@ class TestGetCountDB(unittest.TestCase):
         self.city2.name = 'San_Francisco'
         self.city2.state_id = self.state.id
         self.city2.save()
+
+    def test_get(self):
+        """Test if get method returns state"""
+        real_state = storage.get("State", self.state.id)
+        fake_state = storage.get("State", "12345")
+        no_state = storage.get("", "")
+
+        self.assertEqual(real_state, self.state)
+        self.assertNotEqual(fake_state, self.state)
+        self.assertIsNone(no_state)
+
+    def test_count(self):
+        """Tests if count method returns correct numbers"""
+        state_count = storage.count("State")
+        city_count = storage.count("City")
+        place_count = storage.count("Place")
+        all_count = storage.count("")
+
+        self.assertEqual(state_count, 3)
+        self.assertEqual(city_count, 4)
+        self.assertEqual(place_count, 0)
+        self.assertEqual(all_count, 7)
 
 
 if __name__ == "__main__":

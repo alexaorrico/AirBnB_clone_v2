@@ -163,7 +163,7 @@ class TestBmFsInstances(unittest.TestCase):
             if bm_id in k:
                 if type(v).__name__ == 'BaseModel':
                     actual = 1
-        self.assertTrue(actual == 1)
+        self.assertTrue(1 == actual)
 
 
 class TestUserFsInstances(unittest.TestCase):
@@ -228,9 +228,10 @@ class TestGetCountFS(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         print('\n\n.................................')
-        print('...... Testing Get and Count ......')
-        print('.......... FS Methods ..........')
+        print('.........Testing Get and Count.......')
+        print('.........FileStorage Methods.........')
         print('.................................\n\n')
+
 
     def setUp(self):
         """initializes new state and cities for testing"""
@@ -248,6 +249,28 @@ class TestGetCountFS(unittest.TestCase):
         self.city2.name = 'San_Francisco'
         self.city2.state_id = self.state.id
         self.city2.save()
+
+    def test_get(self):
+        """Test if get method returns state"""
+        real_state = storage.get("State", self.state.id)
+        fake_state = storage.get("State", "12345")
+        no_state = storage.get("", "")
+
+        self.assertEqual(real_state), self.state)
+        self.assertNotEqual(fake_state, self.state)
+        self.assertIsNone(no_state)
+
+    def test_count(self):
+        """Test if count method returns correct numbers"""
+        state_count = storage.count("State")
+        city_count = storage.count("City")
+        place_count = storage.count("Place")
+        all_count = storage.count(None)
+
+        self.assertEqual(state_count, 1)
+        self.assertEqual(city_count, 2)
+        self.assertEqual(place_count, 0)
+        self.assertEqual(all_count, 18)
 
 
 if __name__ == "__main__":
