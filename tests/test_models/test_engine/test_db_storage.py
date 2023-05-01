@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -29,6 +30,20 @@ class TestDBStorageDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+
+    def test_get(self):
+        """Tests to check get method"""
+        if storage.all("State").values():
+            first_state_id = list(storage.all("State").values())[0].id
+            first_state = storage.get("State", first_state_id)
+            self.assertTrue(isinstance(first_state, State))
+
+    def test_count(self):
+        """Tests to check count method"""
+        all_objects = storage.count()
+        all_states = storage.count("State")
+        self.assertTrue(isinstance(all_objects, int))
+        self.assertTrue(isinstance(all_states, int))
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
@@ -86,3 +101,19 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_db_get(self):
+        """Tests to check get method"""
+        if storage.all("State").values():
+            first_state_id = list(storage.all("State").values())[0].id
+            first_state = storage.get("State", first_state_id)
+            self.assertTrue(isinstance(first_state, State))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_db_count(self):
+        """The Tests to check count method"""
+        all_objects = storage.count()
+        all_states = storage.count("State")
+        self.assertTrue(isinstance(all_objects, int))
+        self.assertTrue(isinstance(all_states, int))
