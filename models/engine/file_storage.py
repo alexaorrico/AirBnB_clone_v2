@@ -76,9 +76,9 @@ class FileStorage:
         result = None
         
         try:
-            for v in self.__objects.values():
-                if v.id == id:
-                    result = v
+            for value in self.__objects.values():
+                if value.id == id:
+                    result = value
         except BaseException:
             pass
         
@@ -91,8 +91,8 @@ class FileStorage:
         cls_counter = 0
         
         if cls is not None:
-            for k in self.__objects.keys():
-                if cls in k:
+            for key in self.__objects.keys():
+                if cls in key:
                     cls_counter += 1
         else:
             cls_counter = len(self.__objects)
