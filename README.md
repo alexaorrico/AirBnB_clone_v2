@@ -158,7 +158,8 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-ABRAHAM JOSIAH - [Github](https://github.com/DistinguishAJ) 
+Nurudeen Adeagbo - [Github](https://github.com/Nusultkang1)
+Benedict Benedict - [Github](https://github.com/Eregbene) 
 
-## License
+## Licence
 Public Domain. No copyright protection. 
