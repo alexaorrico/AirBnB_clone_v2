@@ -1,0 +1,5 @@
+*.pyc
+*~
+file.json
+venv/
+main.py
