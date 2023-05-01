@@ -8,7 +8,7 @@ from models.city import City
 from models import storage
 
 
-@app_views.route('/api/v1/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
 def get_all(city_id):
     """ get all the places in cities """
     lists = []
@@ -19,7 +19,7 @@ def get_all(city_id):
     abort(404)
 
 
-@app_views.route('/api/v1/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>', methods=['GET'])
 def get_id(place_id):
     """ get place by id """
     place = storage.get(Place, place_id)
@@ -28,7 +28,7 @@ def get_id(place_id):
     abort(404)
 
 
-@app_views.route("/api/v1/places/<place_id>", methods=['DELETE'])
+@app_views.route("/places/<place_id>", methods=['DELETE'])
 def del_id(place_id):
     """ delete place by id """
     place = storage.get(Place, place_id)
@@ -39,7 +39,7 @@ def del_id(place_id):
     return ({}), 200
 
 
-@app_views.route('/api/v1/cities/<city_id>/places', methods=['POST'])
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def add():
     """ add place to storage """
     dct = storage.get(City, city_id)
@@ -63,7 +63,7 @@ def add():
     abort(404)
 
 
-@app_views.route('/api/v1/places/<place_id>', methods=['PUT'])
+@app_views.route('/places/<place_id>', methods=['PUT'])
 def update(place_id):
     """ update places and city with id """
     dic = storage.all(Place)
