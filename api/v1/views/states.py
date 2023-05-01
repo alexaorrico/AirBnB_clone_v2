@@ -58,7 +58,7 @@ def create_post():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', method=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put(state_id):
     """
     method to put into data into the state objects
