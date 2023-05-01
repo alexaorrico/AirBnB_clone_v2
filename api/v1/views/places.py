@@ -14,12 +14,10 @@ from models.user import User
                  methods=['GET'], strict_slashes=False)
 def get_all_places(city_id):
     """ Returns all places from state id """
-
     city = storage.get(City, city_id)
-
     if city is None:
         abort(404)
-    all_places = [obj.to_dict() for obj in city.places]
+    all_places = [place.to_dict() for place in city.places]
     return jsonify(all_places)
 
 
@@ -28,7 +26,6 @@ def get_all_places(city_id):
 def get_individual_place(place_id):
     """" Returns indivuidual cities by id """
     place = storage.get(Place, place_id)
-
     if place is None:
         abort(404)
     return jsonify(place.to_dict())
@@ -39,10 +36,8 @@ def get_individual_place(place_id):
 def delete_place(place_id):
     """ Deletes individual by id """
     place = storage.get(Place, place_id)
-
     if place is None:
         abort(404)
-
     """ Delete the place """
     storage.delete(place)
     storage.save()
@@ -56,7 +51,6 @@ def create_place(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-
     my_dict = request.get_json()
     if my_dict is None:
         abort(400, 'Not a JSON')
@@ -66,7 +60,8 @@ def create_place(city_id):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    if my_dict.get("name") is None:
+    name = my_dict.get('name')
+    if name is None:
         abort(400, 'Missing name')
         place = Place(name=name, user_id=user_id, city_id=city_id)
     for key, value in my_dict.items():
@@ -82,12 +77,9 @@ def create_place(city_id):
 def update_place(place_id):
     """ Updates a city by City ID """
     place = storage.get(Place, place_id)
-
     if place is None:
         abort(404)
-
     my_dict = request.get_json()
-
     if my_dict is None:
         abort(400, 'Not a JSON')
     for key, value in my_dict.items():
