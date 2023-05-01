@@ -6,14 +6,14 @@ Handles all default RESTFul API actions for User objects
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
-from models.user import Place
+from models.place import Place
 from models.city import City
 
 F = False
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=F)
-def get_place_obj(city_id):
+def get_place_objs(city_id):
     '''handles Get for all place objects for a city'''
 
     place_list = []

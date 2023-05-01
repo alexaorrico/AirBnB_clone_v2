@@ -12,18 +12,18 @@ F = False
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
-def get_user_obj():
+def get_user_objs():
     '''handles Get for all users objects'''
 
     user_list = []
     objs = storage.all()
     for k, v in objs.items():
         if v.__class__.__name__ == "User":
-            state_list.append(v.to_dict())
+            user_list.append(v.to_dict())
     return jsonify(user_list)
 
 
-@app_views.route('/users/user_id>', methods=['GET'], strict_slashes=F)
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=F)
 def get_user_obj(user_id):
     '''handles Get for a user object'''
 
@@ -70,7 +70,7 @@ def create_user_obj():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=F)
-def update_user_obj(user_id):
+def update_user_objs(user_id):
     '''updates a user object'''
 
     user_obj = storage.get(User, user_id)
