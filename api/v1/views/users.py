@@ -19,15 +19,15 @@ def user_end_points(user_id=None):
     my_dict = [obj.to_dict() for obj in obj_users.values()]
     if not user_id:
         if request.method == "GET":
-            return jsonify(my_dict)
+            return jsonify(my_dict), 200
 
         elif request.method == "POST":
             imput = request.get_json()
             if not imput:
                 abort(400, "Not a JSON")
-            elif not imput["email"]:
+            if not imput.get("email"):
                 abort(400, "Missing email")
-            elif not imput["password"]:
+            if not imput.get("password"):
                 abort(400, "Missing password")
             else:
                 new_user = User(**imput)
@@ -35,16 +35,16 @@ def user_end_points(user_id=None):
                 return jsonify(new_user.to_dict()), 201
     else:
         if request.method == "GET":
-            for user in my_dict:
-                if user.get('id') == user_id:
-                    return jsonify(user)
+            new_dict = storage.get(User, user_id)
+            if new_dict:
+                return jsonify(newdict.to_dict()), 200
             abort(404)
         elif request.method == "DELETE":
-            for ob in obj_users.values():
-                if ob.id == user_id:
-                    storage.delete(ob)
-                    storage.save()
-                    return jsonify({}), 200
+            new_dict = storage.get(User, user_id)
+            if new_dict:
+                storage.delete(new_dict)
+                storage.save()
+                return jsonify({}), 200
             abort(404)
         elif request.method == "PUT":
             new_dict = storage.get(User, user_id)
