@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -42,14 +42,20 @@ class DBStorage:
 
     def all(self, cls=None):
         """query on the current database session"""
-        new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+        obj_dict = {}
+        if cls:
+            obj_class = self.__session.query(self.classes.get(cls)).all()
+            for item in obj_class:
+                obj_dict[item.id] = item
+            return obj_dict
+        for class_name in self.classes:
+            if class_name == 'BaseModel':
+                continue
+            obj_class = self.__session.query(
+                self.classes.get(class_name)).all()
+            for item in obj_class:
+                obj_dict[item.id] = item
+        return obj_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -69,8 +75,21 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = Session()
 
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """ Retrieves an object from the database based on its class and ID"""
+        objs = self.__session.query(cls).filter_by(id=id).all()
+        return objs[0] if objs else None
+
+    def count(self, cls=None):
+        """Counts the number of objects in storage"""
+        if cls:
+            return self.__session.query(cls).count()
+        else:
+            return sum(self.__session.query(cls).count()
+                       for cls in self.__classes)

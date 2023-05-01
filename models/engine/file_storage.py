@@ -12,11 +12,20 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class FileStorage:
+    """Handles storage of all class instances"""
+
+    classes = {
+            'BaseModel': BaseModel,
+            'Amenity': Amenity,
+            'City': City,
+            'Place': Place,
+            'Review': Review,
+            'State': State,
+            'User': User
+            }
     """serializes instances to a JSON file & deserializes back to instances"""
 
     # string - path to the JSON file
@@ -55,7 +64,9 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
+            pass
+        except json.JSONDecodeError:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +79,34 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """ Retrieves an object from the file storage base
+        on its class and ID"""
+        obj_dict = {}
+        obj = None
+        if cls:
+            obj_dict = FileStorage.__objects.items()
+            for key, value in obj_dict:
+                if key == id:
+                    obj = value
+            return obj
+
+    def count(self, cls=None):
+        """ Counts the number of objects in file storage"""
+        if cls:
+            obj_list = []
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
+        else:
+            obj_list = []
+            for class_name in self.classes:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = FileStorage.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)
