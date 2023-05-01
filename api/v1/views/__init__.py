@@ -10,3 +10,7 @@ import api.v1.views.amenities import *
 from api.v1.views.users import *
 from api.v1.views.places import *
 from api.v1.views.places_reviews import *
+
+# this means a client querying dns/api/v1/ will be handled by
+# api_views
+# and all those routes are inside the __name__ ie here views module
