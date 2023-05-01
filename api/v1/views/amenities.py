@@ -7,7 +7,7 @@ from models.amenities import Amenity
 from models import storage
 
 
-@app_views.route('/api/v1/amenities', methods=['GET'])
+@app_views.route('/amenities', methods=['GET'])
 def get_all():
     """ get all the states """
     new = []
@@ -17,7 +17,7 @@ def get_all():
     return jsonify(new)
 
 
-@app_views.route('/api/v1/amenities/<amenity_id>', methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def get_id(amenity_id):
     """ get status by id """
     amenity = storage.get(Amenity, amenity_id)
@@ -26,7 +26,7 @@ def get_id(amenity_id):
     abort(404)
 
 
-@app_views.route("/api/v1/amenities/<amenity_id>", methods=['DELETE'])
+@app_views.route("/amenities/<amenity_id>", methods=['DELETE'])
 def del_id(amenity_id):
     """ delete state by id """
     amenity = storage.get(Amenity, amenity_id)
@@ -37,7 +37,7 @@ def del_id(amenity_id):
     return ({}), 200
 
 
-@app_views.route('/api/v1/amenities', methods=['POST'])
+@app_views.route('/amenities', methods=['POST'])
 def add():
     """ add statte to storage """
     if request.json:
@@ -51,7 +51,7 @@ def add():
     return jsonify("Not a JSON"), 400
 
 
-@app_views.route('/api/v1/amenities/<amenity_id>', methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update(amenity_id):
     """ update states with id """
     dic = storage.all(Amenity)
