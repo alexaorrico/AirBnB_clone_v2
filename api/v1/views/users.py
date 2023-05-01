@@ -9,7 +9,7 @@ from flask import jsonify, abort, make_response, request
 from models import storage
 
 
-@app_views.route('/users', strict_slashes=False, methods=['GET'])
+@app_views.route('/users', methods=['GET'], strict_slashes=False,)
 def get_users():
     """ return all user objects """
     users = storage.get(User)
