@@ -1,64 +1,47 @@
 #!/usr/bin/python3
 """
-A Script that return the status of API
+Flask App that integrates with AirBnB static HTML Template
 """
-from app.v1.views import app_views
+from api.v1.views import app_views
 from flask import Flask, jsonify, make_response, render_template, url_for
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+from flasgger import Swagger
 from models import storage
 import os
 from werkzeug.exceptions import HTTPException
 
-
-# Flask application instance
+# Global Flask Application Variable: app
 app = Flask(__name__)
+swagger = Swagger(app)
 
+# global strict slashes
 app.url_map.strict_slashes = False
 
-# Environmental variables for flask
+# flask server environmental setup
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
 port = os.getenv('HBNB_API_PORT', 5000)
 
-# Cross origin resource sharing
-cors = CORS(app, resouces={r"/api/v1/*": {"origins": "*"}})
+# Cross-Origin Resource Sharing
+cors = CORS(app, resources={r'/*': {'origins': host}})
 
-# app_views Blueprint from app.v1.views
+# app_views BluePrint defined in api.v1.views
 app.register_blueprint(app_views)
 
 
-# Application page rendering begins
+# begin flask page rendering
 @app.teardown_appcontext
-def teardown(exception):
+def teardown_db(exception):
     """
-    Function that closes the current session
-    on the SQLAlchemy
+    after each request, this method calls .close() (i.e. .remove()) on
+    the current SQLAlchemy Session
     """
     storage.close()
-
-
-@app.errorhandler(404)
-def error_handler(exception):
-    """
-    A route that handles 404 (not found) error
-    on the event the global error fails.
-    """
-    return jsonify({"error": "Not found"})
-
-
-@app.errorhandler(400)
-def handle_400():
-    """
-    Handles 400 error
-    """
-    code = exception.__str__().split()[0]
-    description = exception.description
-    return make_response(jsonify({"error": description}), code)
 
 
 @app.errorhandler(Exception)
 def global_error_handler(err):
     """
-        Global route to handle all errors
+        Global Route to handle All Error Status Codes
     """
     if isinstance(err, HTTPException):
         if type(err).__name__ == 'NotFound':
@@ -73,13 +56,17 @@ def global_error_handler(err):
 
 def setup_global_errors():
     """
-    HTTPException with custom error
+    This updates HTTPException Class with custom error function
     """
-    for cls in HTTPException.__subclass__():
+    for cls in HTTPException.__subclasses__():
         app.register_error_handler(cls, global_error_handler)
 
 
-if __name__ == '__main__':
-    """Main Flask App entry point"""
+if __name__ == "__main__":
+    """
+    MAIN Flask App
+    """
+    # initializes global error handling
     setup_global_errors()
-    app.run(host=host, port=port debug=True)
+    # start Flask app
+    app.run(host=host, port=port)
