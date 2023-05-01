@@ -1,0 +1,40 @@
+flasgger endpoint for GET & POST request for states data
+GET: returns all state data
+POST: creates new state object based on attributes from request data
+---
+paths:
+  '/states/':
+get:
+post:
+tags:
+  - GET, POST /states/
+parameters:
+  - name: name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: name attribute of the state to create
+responses:
+  200:
+    description: objects's attributes names and values in JSON
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        name:
+          type: string
+          description: name attribute of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated
