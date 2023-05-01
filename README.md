@@ -158,6 +158,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
   
 Nduka Henry Chisom [Github](https://github.com/zerokodes) / [Twitter](https://twitter.com/Henry_Konflikt)
+  
 Godwin Emmanuel [Github](https://github.com/Emigham) / [Twitter](https://twitter.com/emigham7)
 
 Second part of Airbnb: Joann Vuong
