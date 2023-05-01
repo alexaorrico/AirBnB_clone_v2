@@ -84,7 +84,7 @@ class DBStorage:
 
         all_objs_dict = models.storage.all(cls)
         for value in all_objs_dict.values():
-            if (obj.id == id):
+            if (value.id == id):
                 return value
 
         return None
@@ -95,12 +95,13 @@ class DBStorage:
         Returns the number of objects in storage matching the given class.
         If no class is passed, returns the count of all objects in storage.
         """
-        all_objs = models.storage.all(cls).values()
-        count = len(all_objs)
+        all_class = classes.values()
 
         if not cls:
             count = 0
-            for clas in classes.values():
+            for clas in all_class:
                 count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
 
         return count
