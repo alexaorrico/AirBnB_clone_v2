@@ -21,7 +21,8 @@ def handle_cities(city_id=None):
         return get_cities(city_id)
 
 
-@app_views.route('states/<state_id>/cities', methods=['GET', 'POST'])
+@app_views.route('states/<state_id>/cities', methods=['GET', 'POST']
+                 strict_slashes=False)
 def handle_state_cities(state_id):
     '''Hadnles direction to actual view function'''
     if request.method == 'POST':
