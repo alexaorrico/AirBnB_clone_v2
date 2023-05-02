@@ -1,4 +1,4 @@
-    Deletes a user 
+    flasgger endpoint for DELETE users data
     ---
     tags:
       - Users
