@@ -1,4 +1,4 @@
-Gets the list of all places of a city
+flasgger endpoint for GET place object
 ---
 tags:
   - Places
