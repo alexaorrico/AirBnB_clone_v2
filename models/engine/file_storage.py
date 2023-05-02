@@ -6,6 +6,7 @@ Contains the FileStorage class
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
+from datetime import datetime
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -15,10 +16,27 @@ from models.user import User
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+CNC = {
+        'Amenity': Amenity,
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State,
+        'User': User
+    }
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
 
+
+    CNC = {
+        'Amenity': Amenity,
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State,
+        'User': User
+    }
     # string - path to the JSON file
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
@@ -68,3 +86,20 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """
+            retrieves one object based on class name and id
+        """
+        if cls and id:
+            fetch_obj = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch_obj)
+        return None
+
+    def count(self, cls=None):
+        """
+        count of all objects in storage
+        """
+        return (len(self.all(cls)))
+
