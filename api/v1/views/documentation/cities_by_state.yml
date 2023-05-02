@@ -1,4 +1,4 @@
-get a list of cities based on the state_id
+flasgger endpoint for GET based on the state_id
 ---
 tags:
   - Cities
