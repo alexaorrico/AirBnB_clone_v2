@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Script that facilitates the innitialization of flask"""
+
 from flask import Flask
 from flask_cors import CORS
 from models import storage
