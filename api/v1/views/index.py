@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Create the necessary routes needed for the app"""
+
 # Import necessary libraries
 from api.v1.views import app_views
 from flask import jsonify
