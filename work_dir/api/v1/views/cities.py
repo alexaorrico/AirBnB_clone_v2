@@ -48,10 +48,44 @@ def delete_city_object(city_id):
     storage.save()
     return make_response(jsonify({}), 200)
 
-@app_view.route(
-        '/states/<state_id>/cities', method=['POST'], strict_slashes=False)
+
+@app_view.route('/states/<state_id>/cities', method=['POST'],
+                strict_slashes=False)
 def Mypost(state_id):
+    """
+    Creates a neegrw instance of city
+    """
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}). 400)
+        return make_response(jsonify({"error": "Missinng name"}). 400)
+
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+
+    cityToPost = request.get_json()
+    cityToPost['state_id'] = state_id
+
+    city = City(**cityToPost)
+    city.new()
+    storage.save(city)
+    return jsonify(city.to_dict())
+
+
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def update_city(city_id):
+    """update a city instance"""
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    city = storage.get(City, city_id)
+    if city is None:
+        abort(404)
+
+    obj_dict = request.get_json()
+    for key, value in obj_dict.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            city[key] = value
+    storage.save()
+    return jasonify(city.to_dict()), 200
