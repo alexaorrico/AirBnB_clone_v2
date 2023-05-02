@@ -68,7 +68,7 @@ def Mypost(state_id):
     cityToPost['state_id'] = state_id
 
     city = City(**cityToPost)
-    city.new()
+    storage.new(city)
     storage.save(city)
     return jsonify(city.to_dict())
 
