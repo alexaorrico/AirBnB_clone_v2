@@ -1,4 +1,4 @@
-Retrieves a Review
+flasgger endpoint for GET review object
 ---
 tags:
   - Reviews
