@@ -16,8 +16,8 @@ def handle_users():
     if request.method == 'GET':
         users = storage.all(User)
         all_users = []
-        for user in users.values():
-            all_users.append(user.to_dict())
+        for users in users.values():
+            all_users.append(users.to_dict())
         return jsonify(all_users)
     elif request.method == 'POST':
         post = request.get_json()
