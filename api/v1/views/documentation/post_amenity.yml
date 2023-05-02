@@ -1,4 +1,4 @@
-    Links an amenity object to a place
+    flasgger endpoint for POST request for users data
     ---
     tags:
       - Amenities
