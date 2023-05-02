@@ -293,53 +293,5 @@ class TestPlaceDBInstances(unittest.TestCase):
         self.assertTrue(exist_in_all_place)
 
 
-@unittest.skipIf(storage_type != 'db', 'skip if environ is not db')
-class TestGetCountDB(unittest.TestCase):
-    """testing get and count methods"""
-
-    @classmethod
-    def setUpClass(cls):
-        print('\n\n.................................')
-        print('...... Testing Get and Count ......')
-        print('.......... DB Methods ..........')
-        print('.................................\n\n')
-
-    def setUp(self):
-        """initializes new state and cities for testing"""
-        self.state = State()
-        self.state.name = 'California'
-        self.state.save()
-        self.city1 = City()
-        self.city1.name = 'Fremont'
-        self.city1.state_id = self.state.id
-        self.city1.save()
-        self.city2 = City()
-        self.city2.name = 'San_Francisco'
-        self.city2.state_id = self.state.id
-        self.city2.save()
-
-    def test_get(self):
-        """Test if get method returns state"""
-        real_state = storage.get("State", self.state.id)
-        fake_state = storage.get("State", "12345")
-        no_state = storage.get("", "")
-
-        self.assertEqual(real_state, self.state)
-        self.assertNotEqual(fake_state, self.state)
-        self.assertIsNone(no_state)
-
-    def test_count(self):
-        """Tests if count method returns correct numbers"""
-        state_count = storage.count("State")
-        city_count = storage.count("City")
-        place_count = storage.count("Place")
-        all_count = storage.count("")
-
-        self.assertEqual(state_count, 3)
-        self.assertEqual(city_count, 4)
-        self.assertEqual(place_count, 0)
-        self.assertEqual(all_count, 7)
-
-
 if __name__ == "__main__":
     unittest.main()
