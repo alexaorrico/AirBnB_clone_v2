@@ -1,15 +1,15 @@
-Updates a user object
+Updates a state object
 ---
 tags:
-    - User
+    - States
 parameters:
-    - name: user_id
+    - name: id
       in: path
       type: string
       required: true
 responses:
   200:
-    description: User updated
+    description: State updated
   404:
     description: Resource not found
   400:

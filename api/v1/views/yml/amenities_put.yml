@@ -1,15 +1,15 @@
-Updates a user object
+Updates a amenity object
 ---
 tags:
-    - User
+    - Amenity
 parameters:
-    - name: user_id
+    - name: amenity_id
       in: path
       type: string
       required: true
 responses:
   200:
-    description: User updated
+    description: amenity updated
   404:
     description: Resource not found
   400:

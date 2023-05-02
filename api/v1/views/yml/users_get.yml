@@ -1,4 +1,4 @@
-Updates a user object
+Retrieves a user object
 ---
 tags:
     - User
@@ -9,8 +9,6 @@ parameters:
       required: true
 responses:
   200:
-    description: User updated
+    description: List of users
   404:
     description: Resource not found
-  400:
-    description: Not a JSON

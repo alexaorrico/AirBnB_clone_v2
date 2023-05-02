@@ -1,15 +1,15 @@
-Updates a user object
+Updates a city object
 ---
 tags:
-    - User
+    - City
 parameters:
-    - name: user_id
+    - name: city_id
       in: path
       type: string
       required: true
 responses:
   200:
-    description: User updated
+    description: City updated
   404:
     description: Resource not found
   400:
