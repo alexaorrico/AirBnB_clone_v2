@@ -1,4 +1,4 @@
-Retrieves a place
+flasgger endpoint for GET place object
 ---
 tags:
   - Places
