@@ -1,4 +1,4 @@
-    Post a new city
+   flasgger endpoint for POST request for cities data
     ---
     tags:
       - Cities
