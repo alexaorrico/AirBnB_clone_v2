@@ -344,4 +344,4 @@ class TestGetCountDB(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest
+    unittest.main()
