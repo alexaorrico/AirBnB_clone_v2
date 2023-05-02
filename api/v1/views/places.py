@@ -8,6 +8,7 @@ from flask import jsonify, abort, request
 from models import storage
 from models.place import Place
 from models.city import City
+from models.user import User
 
 F = False
 
@@ -27,7 +28,7 @@ def get_place_objs(city_id):
         # place_list.append(obj.to_dict())
 
     place_list = [p_obj.to_dict() for p_obj in city_obj.places]
-    return jsonify(place_list), 200
+    return jsonify(place_list)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=F)
@@ -39,7 +40,7 @@ def get_place_obj(place_id):
         abort(404)
 
     place_dict = place_obj.to_dict()
-    return jsonify(place_dict), 200
+    return jsonify(place_dict)
 
 
 @app_views.route('/place/<place_id>', methods=['DELETE'], strict_slashes=F)
@@ -78,7 +79,7 @@ def create_place_obj(city_id):
     new_obj = Place()
     for attr, val in json_data.items():
         setattr(new_obj, attr, val)
-    # new_obj = State(**json_data)
+    # new_obj = Place(**json_data)
     new_obj.save()
 
     return jsonify(new_obj.to_dict()), 201
