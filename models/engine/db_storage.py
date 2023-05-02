@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -63,6 +63,33 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+
+    def get(self, cls, id):
+        """Get object from storage"""
+        if cls is None or cls not in classes or id is None:
+            return None
+        new_dict = None
+        objs = self.__session.query(classes[cls]).all()
+        for obj in objs:
+            if obj.id == id:
+                new_dict = {}
+                key = obj.__class__.__name__ + '.' + obj.id
+                new_dict[key] = obj
+                break
+        return new_dict
+
+    def count(self, cls=None):
+        """Count number of objects in storage"""
+        total = 0
+        if cls is not None and cls not in classes:
+            return total
+        for clss in classes:
+            objs = self.__session.query(classes[clss]).all()
+            if cls is not None and clss == cls:
+                return len(objs)
+            else:
+                total += len(objs)
+        return total
 
     def reload(self):
         """reloads data from the database"""
