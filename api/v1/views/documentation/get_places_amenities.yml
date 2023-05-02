@@ -1,4 +1,4 @@
-Gets the list of all amenities of a place
+flasgger endpoint for GET for amenities data
 ---
 tags:
   - Place_Amenities
