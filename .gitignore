@@ -1,0 +1,11 @@
+## Contains a list of files/folders to be ignored/unstaged when
+## git add is used with a wildcard: 'git add .' or 'git add *'.
+
+# Byte-compiled / optimized Python files
+__pycache__/
+
+# Temp files
+*~
+.idea
+*.json
+*.xml
