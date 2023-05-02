@@ -1,4 +1,4 @@
-get a specific city  based on the state_id
+flasgger endpoint for GET city object
 ---
 tags:
   - Cities
