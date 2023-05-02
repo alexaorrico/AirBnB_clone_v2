@@ -49,8 +49,8 @@ def delete_city_object(city_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
-                strict_slashes=False)
+@app_views.route(
+        '/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
 def Mypost(state_id):
     """
     Creates a neegrw instance of city
