@@ -20,10 +20,11 @@ def places_reviews(place_id):
     if place is None:
         abort(404)
 
+    reviews = []
+    for rev in place.reviews:
+        reviews.append(rev.to_dict())
+
     if request.method == 'GET':
-        reviews = []
-        for review in place.reviews:
-            reviews.append(review.to_dict())
         return jsonify(reviews)
     if request.method == 'POST':
         data = request.get_json()
@@ -36,6 +37,7 @@ def places_reviews(place_id):
             abort(404)
         if 'text' not in data:
             abort(400, 'Missing text')
+        data['place_id'] = place_id
         new_review = Review(**data)
         storage.new(new_review)
         storage.save()
