@@ -1,4 +1,4 @@
-    deletes a city based on id
+    flasgger endpoint for DELETE city object
     ---
     tags:
       - Cities
