@@ -72,7 +72,8 @@ class FileStorage:
             try:
                 jo = json.load(f)
                 for key in jo.keys():
-                    self.__objects[key] = FileStorage.classes[jo[key]["__class__"]](**jo[key])
+                    self.__objects[key] = FileStorage.classes[jo[key]
+                                          ["__class__"]](**jo[key])
             except json.JSONDecodeError:
                 pass
 
@@ -90,12 +91,15 @@ class FileStorage:
     def get(self, cls, id):
         """ Retrieves an object from the file storage base
         on its class and ID"""
-        objs = self.__session.query(cls).filter(cls.id == id).all()
-        if objs:
-            return objs[0]
+        key = "{}.{}".format(cls.__name__, id)
+        if key in self.__objects:
+            return self.__objects[key]
         else:
+            objs = self.all(cls)
+            for obj in objs:
+                if obj.id == id:
+                    return obj
             return None
-
     def count(self, cls=None):
         """Counts the number of objects in storage"""
         if cls:
