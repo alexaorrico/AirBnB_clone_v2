@@ -21,11 +21,12 @@ def get_place_objs(city_id):
     if city_obj is None:
         abort(404)
 
-    place_objs = storage.all(Place)
-    for obj in place_objs.values():
-        if obj.city_id == city_id:
-            place_list.append(obj.to_dict())
+    # place_objs = storage.all(Place)
+    # for obj in place_objs.values():
+        # if obj.city_id == city_id:
+            # place_list.append(obj.to_dict())
 
+    place_list = [p_obj.to_dict() for p_obj in city_obj.places]
     return jsonify(place_list)
 
 
@@ -84,7 +85,7 @@ def create_place_obj(city_id):
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=F)
-def update_user_obj(place_id):
+def update_place_obj(place_id):
     '''updates a place object'''
 
     place_obj = storage.get(Place, place_id)
@@ -98,6 +99,6 @@ def update_user_obj(place_id):
     for attr, val in json_data.items():
         if attr not in ("id", "user_id", "created_at", "updated_at"):
             setattr(user_obj, attr, val)
-    state_obj.save()
+    place_obj.save()
 
-    return jsonify(place__obj.to_dict()), 200
+    return jsonify(place_obj.to_dict()), 200
