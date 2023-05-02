@@ -56,9 +56,8 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except Exception as e:
-            print(f'Exception type: {type(e)}')
-            print(f'Exception message: {str(e)}')    
+        except:
+            pass
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
