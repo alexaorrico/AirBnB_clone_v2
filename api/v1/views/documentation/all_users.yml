@@ -1,4 +1,4 @@
-retrieves a list of all users.
+flasgger endpoint for all users data
 ---
 tags:
   - Users
