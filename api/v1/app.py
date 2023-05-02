@@ -1,40 +1,33 @@
 #!/usr/bin/python3
-
-"""
-Flask web application api
-"""
-
-from models import storage
-from api.v1.views import app_views
-from flask import Flask, make_response, jsonify
+'''
+app setup for Airbnb_Clone_v3
+'''
+from flask import Flask, render_template, abort, make_response, jsonify
 from flask_cors import CORS
-import os
-
+from models import storage
+from os import getenv
+from api.v1.views import app_views
+from flasgger import Swagger
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
+app.url_map.strict_slashes = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
-
-
-@app.teardown_appcontext
-def teardown_db(exception):
-    """closes the storage on teardown"""
-    storage.close()
+app.register_blueprint(app_views)
+swagger = Swagger(app)
 
 
 @app.errorhandler(404)
-def not_found(error):
-    """ Return an 'error: not found' JSON response """
-    return make_response(jsonify({'error': 'Not found'}), 404)
+def page_not_found(e):
+    return jsonify({"error": "Not found"}), 404
 
 
-@app.errorhandler(400)
-def bad_request(error):
-    return make_response(jsonify({'error': error.description}), 400)
+@app.teardown_appcontext
+def close(exception):
+    storage.close()
 
 
-if __name__ == '__main__':
-    my_host = os.getenv('HBNB_API_HOST')
-    my_port = os.getenv('HBNB_API_PORT')
-    app.run(host=my_host, port=int(my_port), threaded=True)
+if __name__ == "__main__":
+    apiHost = getenv("HBNB_API_HOST", default="0.0.0.0")
+    apiPort = getenv("HBNB_API_PORT", default=5000)
+    app.run(host=apiHost, port=int(apiPort), threaded=True)
