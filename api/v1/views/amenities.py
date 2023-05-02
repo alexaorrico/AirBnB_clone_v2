@@ -9,6 +9,7 @@ from flasgger.utils import swag_from
 from api.v1.views import app_views
 from models import storage, CNC
 
+
 # Define the route for GET and POST requests to /amenities/
 @app_views.route('/amenities/', methods=['GET', 'POST'])
 @swag_from('documentation/amenities_no_id.yml', methods=['GET', 'POST'])
