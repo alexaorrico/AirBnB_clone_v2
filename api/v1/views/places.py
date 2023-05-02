@@ -97,7 +97,8 @@ def update_place_obj(place_id):
         return jsonify({"error": "Not a JSON"}), 400
 
     for attr, val in json_data.items():
-        if attr not in ("id", "user_id", "created_at", "updated_at"):
+        if attr not in ("id", "user_id", "city_id",
+                        "created_at", "updated_at"):
             setattr(place_obj, attr, val)
     place_obj.save()
 
