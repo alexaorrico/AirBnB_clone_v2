@@ -20,8 +20,17 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
-
+    
     # string - path to the JSON file
+    CNC = {
+        'Amenity': Amenity,
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State,
+        'User': User
+        }
+        
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
