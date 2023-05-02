@@ -13,7 +13,6 @@ from models.engine.db_storage import DBStorage
 storage_type = os.environ.get('HBNB_TYPE_STORAGE')
 
 
-
 @unittest.skipIf(storage_type != 'db', 'skip if environ is not db')
 class TestDBStorageDocs(unittest.TestCase):
     """Class for testing DBStorage docs"""
@@ -307,7 +306,6 @@ class TestGetCountDB(unittest.TestCase):
 
     def setUp(self):
         """initializes new state and cities for testing"""
-        
         self.state = State()
         self.state.name = 'California'
         self.state.save()
@@ -344,4 +342,4 @@ class TestGetCountDB(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest
+    unittest.main

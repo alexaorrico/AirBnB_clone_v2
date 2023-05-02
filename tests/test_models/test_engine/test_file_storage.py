@@ -130,7 +130,7 @@ class TestBmFsInstances(unittest.TestCase):
         actual = 1
         try:
             serialized = json.dumps(my_model_json)
-        except:
+        except TypeError:
             actual = 0
         self.assertTrue(1 == actual)
 
@@ -232,7 +232,6 @@ class TestGetCountFS(unittest.TestCase):
         print('.........FileStorage Methods.........')
         print('.................................\n\n')
 
-
     def setUp(self):
         """initializes new state and cities for testing"""
         if os.path.isfile(F):
@@ -256,7 +255,7 @@ class TestGetCountFS(unittest.TestCase):
         fake_state = storage.get("State", "12345")
         no_state = storage.get("", "")
 
-        self.assertEqual(real_state), self.state)
+        self.assertEqual(real_state, self.state)
         self.assertNotEqual(fake_state, self.state)
         self.assertIsNone(no_state)
 
@@ -274,4 +273,4 @@ class TestGetCountFS(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest
+    unittest.main
