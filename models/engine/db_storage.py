@@ -77,23 +77,16 @@ class DBStorage:
 
     def get(self, cls, id):
         """A method to get the specified object"""
-        # Check if cls is in the classes dictionary
         if cls in classes.values():
-            # Searches for it in the database using session
             specific_object = self.__session.query(cls).get(id)
-            # If not found, return None.
             return specific_object
         return None
 
     def count(self, cls=None):
         """Count the number of objects in storage"""
-        # if cls remains None
         if cls is None:
-            # Count all the objects in all classes
             return sum([self.__session.query(item).count() \
                         for item in classes.values()])
-        # else:
         elif cls in classes.values():
-            # Count the objects for just one class
             return self.__session.query(cls).count()
         return 0
