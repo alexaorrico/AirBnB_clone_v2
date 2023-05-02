@@ -1,4 +1,4 @@
-    Links a Review to a Place
+   flasgger endpoint for POST request for users data
     ---
     tags:
       - Place_Amenities
