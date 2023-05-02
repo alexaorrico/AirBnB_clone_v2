@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Database storage engine using SQLAlchemy with a mysql+mysqldb database
-connection.
+connection. def count and def get added.
 """
 
 import os
