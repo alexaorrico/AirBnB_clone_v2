@@ -20,7 +20,6 @@ def tear(self):
     ''' closes storage engine '''
     storage.close()
 
-
 @app.errorhandler(404)
 def not_found(error):
     ''' handles 404 error and gives json formatted response '''
@@ -36,4 +35,3 @@ if __name__ == '__main__':
     else:
         HBNB_API_PORT = int(getenv("HBNB_API_PORT"))
     app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
-
