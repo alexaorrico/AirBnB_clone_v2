@@ -1,4 +1,4 @@
-    Deletes a state based on the id provided
+    flasgger endpoint for DELETE state object
     ---
     tags:
       - States
