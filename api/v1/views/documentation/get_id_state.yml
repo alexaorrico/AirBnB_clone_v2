@@ -1,4 +1,4 @@
-Gets a specific state by ID or the list of all states if no ID is specied
+flasgger endpoint for GET state object
 ---
 tags:
   - States
