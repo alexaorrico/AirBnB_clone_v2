@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Class DBStorage
+Contains the class DBStorage
 """
 
 import models
@@ -11,22 +11,17 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-
-# incase you have a .env file
-try:
-    from decouple import config as getenv
-except ImportError:
-    from os import getenv
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
-    """interaacting with MySQL database"""
+    """interaacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -57,18 +52,17 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add object to the current database session"""
+        """add the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of current database session"""
+        """commit all changes of the current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
-        self.save()
 
     def reload(self):
         """reloads data from the database"""
@@ -81,21 +75,15 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-      
     def get(self, cls, id):
-        """
-        Retrieve an object from the database based on its class and ID.
-        """
-        key = "{}.{}".format(cls.__name__, id)
-        return self.__session.query(cls).get(key)
+        """retrieve one object"""
+        if cls and id:
+            key = cls.__name__ + "." + id
+            return self.__session.query(classes[cls]).get(id)
 
     def count(self, cls=None):
-        """
-        Count the number of objects in the database matching the given class.
-        If no class is passed, count all objects in the database.
-        """
-        if cls is None:
-            count = sum(len(v) for v in self.__session.query(cls).all())
+        """count the number of objects in storage"""
+        if cls:
+            return self.__session.query(classes[cls]).count()
         else:
-            count = len(self.__session.query(cls).all())
-        return count
+            return sum(self.__session.query(cls).count() for cls in classes.values())

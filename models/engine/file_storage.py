@@ -4,7 +4,6 @@ Contains the FileStorage class
 """
 
 import json
-import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -56,11 +55,11 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except Exception:
+        except:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it's inside"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -70,23 +69,17 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
-    
     def get(self, cls, id):
-        """
-        Retrieve an object from the file storage based on its class and ID.
-        """
-        key = "{}.{}".format(cls.__name__, id)
-        if key in self.__objects:
-            return self.__objects[key]
-        return None
+        """retrieves an object based on class and its ID"""
+        key = cls.__name__ + "." + id
+        return self.__objects.get(key, None)
 
     def count(self, cls=None):
-        """
-        Count the number of objects in the file storage matching the given class.
-        If no class is passed, count all objects in the file storage.
-        """
+        """counts the number of objects in storage"""
         if cls is None:
-            count = len(self.__objects)
-        else:
-            count = sum(1 for obj in self.__objects.values() if isinstance(obj, cls))
+            return len(self.__objects)
+        count = 0
+        for key, value in self.__objects.items():
+            if cls == value.__class__ or cls == value.__class__.__name__:
+                count += 1
         return count
