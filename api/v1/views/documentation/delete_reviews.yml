@@ -1,4 +1,4 @@
-    Deletes a review based on the id provided
+    flasgger endpoint for DELETE review object
     ---
     tags:
       - Reviews
