@@ -58,7 +58,7 @@ def Mypost(state_id):
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if "name" not in request.get_json():
-        return make_response(jsonify({"error": "Missinng name"}). 400)
+        return make_response(jsonify({"error": "Missinng name"}), 400)
 
     state = storage.get(State, state_id)
     if state is None:
