@@ -50,7 +50,7 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
-    
+
     def get(self, cls, id):
         """gets one object based on the object's class and id"""
 
@@ -59,7 +59,7 @@ class DBStorage:
             if obj.id == id:
                 return obj
         return None
-    
+
     def count(self, cls=None):
         """counts the number of objects that are in storage"""
 
