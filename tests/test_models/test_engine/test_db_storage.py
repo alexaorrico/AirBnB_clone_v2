@@ -71,3 +71,44 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get() method"""
+        state = State(name="California")
+        models.storage.new(state)
+        models.storage.save()
+        state_id = state.id
+
+        # Test if the state object is returned correctly
+        obj = models.storage.get(State, state_id)
+        self.assertIs(obj, state)
+
+        # Test if None is returned for invalid ID
+        obj = models.storage.get(State, "invalid_id")
+        self.assertIsNone(obj)
+
+        # Test if None is returned for invalid class
+        obj = models.storage.get(int, state_id)
+        self.assertIsNone(obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count() method"""
+        # Count all the objects in all classes
+        obj_count = models.storage.count()
+        self.assertEqual(obj_count, 0)
+
+        state = State(name="California")
+        models.storage.new(state)
+        models.storage.save()
+
+        # Count the objects for just State class
+        obj_count = models.storage.count(State)
+        self.assertEqual(obj_count, 1)
+
+        # Test if 0 is returned for invalid class
+        obj_count = models.storage.count(int)
+        self.assertEqual(obj_count, 0)
