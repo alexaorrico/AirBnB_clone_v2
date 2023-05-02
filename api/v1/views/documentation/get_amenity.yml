@@ -1,4 +1,4 @@
-gets amenity by ID
+flasgger endpoint for DELETE amenities data
 ---
 tags:
   - Amenities
