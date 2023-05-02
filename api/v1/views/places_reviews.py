@@ -31,7 +31,7 @@ def places_reviews(place_id):
             abort(400, 'Not a JSON')
         if 'user_id' not in data:
             abort(400, 'Missing user_id')
-        u_id = storage.get(User, data.user_id)
+        u_id = storage.get(User, data.get('user_id'))
         if u_id is None:
             abort(404)
         if 'text' not in data:

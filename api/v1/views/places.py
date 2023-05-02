@@ -8,6 +8,7 @@ from models import storage
 from models.amenity import Amenity
 from models.place import Place
 from models.city import City
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
@@ -19,11 +20,13 @@ def all_place(city_id):
         amenity_lists.append(amenity_objects)
     return jsonify(amenity_lists)"""
     city = storage.get(City, city_id)
+    places = storage.all('Place')
     if not city:
         abort(404)
-    for place in city.places:
-        place_lists.append(place.to_dict())
-    return place_lists
+    for place in places.values():
+        if place.city_id == city_id:
+            place_lists.append(place.to_dict())
+    return jsonify(place_lists)
 
 
 @app_views.route('/places/<place_id>', strict_slashes=False)
@@ -32,7 +35,7 @@ def get_single_place(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    return jsonify(place)
+    return jsonify(place.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
