@@ -24,10 +24,10 @@ def get_place_objs(city_id):
     # place_objs = storage.all(Place)
     # for obj in place_objs.values():
         # if obj.city_id == city_id:
-            # place_list.append(obj.to_dict())
+        # place_list.append(obj.to_dict())
 
     place_list = [p_obj.to_dict() for p_obj in city_obj.places]
-    return jsonify(place_list)
+    return jsonify(place_list), 200
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=F)
@@ -39,7 +39,7 @@ def get_place_obj(place_id):
         abort(404)
 
     place_dict = place_obj.to_dict()
-    return jsonify(place_dict)
+    return jsonify(place_dict), 200
 
 
 @app_views.route('/place/<place_id>', methods=['DELETE'], strict_slashes=F)
@@ -98,7 +98,7 @@ def update_place_obj(place_id):
 
     for attr, val in json_data.items():
         if attr not in ("id", "user_id", "created_at", "updated_at"):
-            setattr(user_obj, attr, val)
+            setattr(place_obj, attr, val)
     place_obj.save()
 
     return jsonify(place_obj.to_dict()), 200

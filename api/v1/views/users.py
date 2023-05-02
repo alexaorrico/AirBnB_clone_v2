@@ -84,6 +84,6 @@ def update_user_objs(user_id):
     for attr, val in json_data.items():
         if attr not in ("id", "email", "created_at", "updated_at"):
             setattr(user_obj, attr, val)
-    state_obj.save()
+    user_obj.save()
 
     return jsonify(user_obj.to_dict()), 200
