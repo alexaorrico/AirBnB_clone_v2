@@ -101,4 +101,4 @@ class DBStorage:
             count = len(models.storage.all(cls).values())
 
         return count
-    
+# This is a new line that ends the file.
