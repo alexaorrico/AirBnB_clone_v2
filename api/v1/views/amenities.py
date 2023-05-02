@@ -22,7 +22,7 @@ def get_amenities():
 
 @app_views.route('/amenities/<amenity_id>/', methods=['GET'],
                  strict_slashes=False)
-@swag_from('documentation/amenity/get_amenity.yml', methods=['GET'])
+@swag_from('documentation/amenities_id.yml', methods=['GET'])
 def get_amenity(amenity_id):
     """ Retrieves an amenity """
     amenity = storage.get(Amenity, amenity_id)
@@ -34,7 +34,7 @@ def get_amenity(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-@swag_from('documentation/amenity/delete_amenity.yml', methods=['DELETE'])
+@swag_from('documentation/amenities_id.yml', methods=['DELETE'])
 def delete_amenity(amenity_id):
     """
     Deletes an amenity  Object
@@ -71,7 +71,7 @@ def post_amenity():
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-@swag_from('documentation/amenity/put_amenity.yml', methods=['PUT'])
+@swag_from('documentation/amenities_id.yml', methods=['PUT'])
 def put_amenity(amenity_id):
     """
     Updates an amenity
