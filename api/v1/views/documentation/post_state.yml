@@ -1,4 +1,4 @@
-    Posts a new state.
+    flasgger endpoint for POST request for states data
     ---
     tags:
       - States
