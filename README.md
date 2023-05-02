@@ -1,6 +1,6 @@
 # AirBnB Clone v#
 
-...To be Updated soon
+...To be Updated
 
 ## Authors
 Victor Chesachi Kalu
