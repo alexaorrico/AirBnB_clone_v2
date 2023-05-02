@@ -1,4 +1,4 @@
-gets all amenities of a place
+endpoint for GET place object
 ---
 tags:
   - Amenities
