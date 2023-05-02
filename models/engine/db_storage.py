@@ -52,7 +52,7 @@ class DBStorage:
         return (new_dict)
 
     def get(self, cls, id):
-        """gets one object based on the object's class and id"""
+        """gets one object based on the class and id"""
 
         my_dict = self.all(cls)
         for obj in my_dict.values():
