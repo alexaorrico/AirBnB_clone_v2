@@ -1,4 +1,4 @@
-    Removes an amenity of the specified location
+    flasgger endpoint for DELETE amenities data
     ---
     tags:
       - Amenities
