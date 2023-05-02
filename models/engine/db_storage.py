@@ -60,17 +60,33 @@ class DBStorage:
         self.__session.commit()
 
     def get(self, cls, id):
-        """This method retrieve one object"""
-        all_class = self.all(cls)
+        '''
+        gets an object
+        Args:
+            cls (str): class name
+            id (str): object ID
+        Returns:
+            an object based on class name and its ID
+        '''
+        obj_dict = models.storage.all(cls)
+        for k, v in obj_dict.items():
+            matchstring = cls + '.' + id
+            if k == matchstring:
+                return v
 
-        for obj in all_class.values()
-            if id == str(obj.id):
-                return obj
         return None
 
     def count(self, cls=None):
-        """This method count the number of objects in storage"""
-        return len(self.all(cls)
+        '''
+        counts number of objects of a class (if given)
+        Args:
+            cls (str): class name
+        Returns:
+            number of objects in class, if no class name given
+            return total number of objects in database
+        '''
+        obj_dict = models.storage.all(cls)
+        return len(obj_dict)
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
