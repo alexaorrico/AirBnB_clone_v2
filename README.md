@@ -150,7 +150,7 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
-## Bugs
+# Bugs
 No known bugs at this time. 
 
 ## License
