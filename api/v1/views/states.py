@@ -8,7 +8,7 @@ from flasgger.utils import swag_from
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/state/get_state.yml', methods=['GET'])
+@swag_from('documentation/state/states_id.yml', methods=['GET'])
 def get_states():
     """
     Retrieves the list of all State objects
@@ -33,7 +33,7 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
+@swag_from('documentation/state/states_id.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
     Deletes a State Object
@@ -69,7 +69,7 @@ def post_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-@swag_from('documentation/state/put_state.yml', methods=['PUT'])
+@swag_from('documentation/state/states_id.yml', methods=['PUT'])
 def put_state(state_id):
     """
     Updates a State
