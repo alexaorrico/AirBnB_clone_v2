@@ -1,4 +1,4 @@
-    Deletes an amenity from a place based on the ids provided
+    flasgger endpoint for Delete an amenity from a place based on the ids provided
     ---
     tags:
       - Place_Amenities
