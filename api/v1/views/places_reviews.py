@@ -46,7 +46,7 @@ def places_reviews(place_id):
                  strict_slashes=False)
 def review(review_id):
     """ Returns review object of id """
-    review = storage.get(Review, user_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
 
