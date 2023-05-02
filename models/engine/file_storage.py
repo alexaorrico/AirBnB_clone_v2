@@ -92,6 +92,6 @@ class FileStorage:
         elif cls in classes.values():
             # Count the number of objects in the class
             return len([obj for obj in self.__objects.values() if isinstance(obj, cls)])         
-        # else return zero
+        # else return
         else:
             return 0
