@@ -12,8 +12,7 @@ from flask import Flask, request, abort, jsonify
 from models import storage
 
 
-@app_views.route('/places/<place_id>/amenities', methods=['GET', 'POST'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>/amenities', strict_slashes=False)
 def places_amenities(place_id):
     """ Returns infor for places reviews"""
     place = storage.get(Place, place_id)
@@ -23,8 +22,8 @@ def places_amenities(place_id):
     if request.method == 'GET':
         amenities = []
         for amenity in place.amenities:
-            reviews.append(amenity.to_dict())
-        return jsonify(reviews)
+            amenities.append(amenity.to_dict())
+        return jsonify(amenities)
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
