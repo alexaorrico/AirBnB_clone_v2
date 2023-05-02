@@ -93,3 +93,4 @@ def get(self, cls, id):
         if cls is None:
             return len(models.storage.all())
         return len(models.storage.all(cls))
+
