@@ -3,8 +3,10 @@
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
+from models import storage_t
 from models.city import City
 from models.place import Place
+from models.state import State
 from models.user import User
 
 
@@ -65,3 +67,59 @@ def handle_place(city_id=None, place_id=None):
                     setattr(place, key, value)
                 place.save()
                 return jsonify(place.to_dict()), 200
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def places_search():
+    """Retrieves all ``Place`` objects depending of
+       the JSON in the body of the request.
+    """
+    payload = request.get_json()
+    db_t = storage_t
+    if not payload:
+        abort(400, 'Not a JSON')
+    # Get all need lists if available.
+    state_ids = payload.get('states') if payload.get('states') else []
+    city_ids = payload.get('cities') if payload.get('cities') else []
+    amenity_ids = payload.get('amenities') if payload.get('amenities') else []
+
+    if len(state_ids) > 0 or len(city_ids) > 0:
+        city_ids_state = []
+        if len(state_ids) > 0:
+            for state_id in state_ids:
+                state = storage.get(State, state_id)
+                for city in  state.cities:
+                    city_ids_state.append(city.id)
+        city_ids = city_ids + city_ids_state
+        places = []
+        filtered_places = []
+        for city_id in city_ids:
+            city = storage.get(City, city_id)
+            for place in city.places:
+                places.append(place)
+        filtered_places = filter_place(places, amenity_ids)
+        return jsonify(filtered_places), 200
+    else:
+        places = storage.all(Place).values()
+        if len(amenity_ids) > 0:
+            # Get all places with that has amenity in list of amenities
+            filtered_place = []
+            for place in places:
+                place_amenity_ids = place.amenity_ids if db_t != 'db' else []
+                if db_t == 'db':
+                    for amenity in place.amenities:
+                        place_amenity_ids.append(amenity.id)
+                if len(place_amenity_ids):
+                    a = set(amenity_ids)
+                    b = set(place_amenity_ids)
+                    if a == b or set(a).issubset(set(b)):
+                        # compare place amenity ids to request amenity ids
+                        c_place = place.to_dict().copy()
+                        del c_place['amenities']
+                        filtered_place.append(c_place)
+            return jsonify(filtered_place), 200
+        else:
+            place_list = []
+            for place in places:
+                place_list.append(place.to_dict())
+            return jsonify(place_list), 200
