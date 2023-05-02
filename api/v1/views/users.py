@@ -63,4 +63,3 @@ def user(user_id):
                 setattr(user, key, value)
         user.save()
         return make_response(jsonify(user.to_dict()), 200)
-    
