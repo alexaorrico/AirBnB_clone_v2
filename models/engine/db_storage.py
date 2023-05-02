@@ -11,17 +11,26 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import os
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """Handles storage of all class instances"""
+
+    classes = {
+            "Amenity": Amenity,
+            "City": City,
+            "Place": Place,
+            "Review": Review,
+            "State": State,
+            "User": User
+            }
+
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -36,26 +45,24 @@ class DBStorage:
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
+                                             HBNB_MYSQL_DB),
+                                      pool_pre_ping=True)
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """query on the current database session"""
-        obj_dict = {}
         if cls:
-            obj_class = self.__session.query(self.classes.get(cls)).all()
-            for item in obj_class:
-                obj_dict[item.id] = item
-            return obj_dict
-        for class_name in self.classes:
-            if class_name == 'BaseModel':
-                continue
-            obj_class = self.__session.query(
-                self.classes.get(class_name)).all()
-            for item in obj_class:
-                obj_dict[item.id] = item
-        return obj_dict
+            class_name = cls.__name__
+            objs = self.__session.query(cls).all()
+        else:
+            objs = []
+            for cls_name in self.classes:
+                if cls_name == 'BaseModel':
+                    continue
+                cls = self.classes[cls_name]
+                objs += self.__session.query(cls).all()
+        return {obj.__class__.__name__ + '.' + obj.id: obj for obj in objs}
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -83,13 +90,20 @@ class DBStorage:
 
     def get(self, cls, id):
         """ Retrieves an object from the database based on its class and ID"""
-        objs = self.__session.query(cls).filter_by(id=id).all()
-        return objs[0] if objs else None
+        if cls and id:
+            return self.__session.query(cls).get(id)
+        else:
+            return None
 
     def count(self, cls=None):
         """Counts the number of objects in storage"""
         if cls:
-            return self.__session.query(cls).count()
+            class_name = cls.__name__
+            return self.__session.query(eval(class_name)).count()
         else:
-            return sum(self.__session.query(cls).count()
-                       for cls in self.__classes)
+            count = 0
+            for cls_name in self.classes:
+                if cls_name == 'BaseModel':
+                    continue
+                count += self.__session.query(eval(cls_name)).count()
+            return count

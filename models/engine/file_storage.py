@@ -12,6 +12,15 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+classes = {
+            'BaseModel': BaseModel,
+            'Amenity': Amenity,
+            'City': City,
+            'Place': Place,
+            'Review': Review,
+            'State': State,
+            'User': User
+            }
 
 
 class FileStorage:
@@ -59,15 +68,13 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        try:
-            with open(self.__file_path, 'r') as f:
+        with open(self.__file_path, 'r') as f:
+            try:
                 jo = json.load(f)
-            for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except FileNotFoundError:
-            pass
-        except json.JSONDecodeError:
-            pass
+                for key in jo.keys():
+                    self.__objects[key] = FileStorage.classes[jo[key]["__class__"]](**jo[key])
+            except json.JSONDecodeError:
+                pass
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -78,35 +85,20 @@ class FileStorage:
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
-        self.reload()
+        self.__session.close()
 
     def get(self, cls, id):
         """ Retrieves an object from the file storage base
         on its class and ID"""
-        obj_dict = {}
-        obj = None
-        if cls:
-            obj_dict = FileStorage.__objects.items()
-            for key, value in obj_dict:
-                if key == id:
-                    obj = value
-            return obj
+        objs = self.__session.query(cls).filter(cls.id == id).all()
+        if objs:
+            return objs[0]
+        else:
+            return None
 
     def count(self, cls=None):
-        """ Counts the number of objects in file storage"""
+        """Counts the number of objects in storage"""
         if cls:
-            obj_list = []
-            obj_dict = FileStorage.__objects.values()
-            for item in obj_dict:
-                if type(item).__name__ == cls:
-                    obj_list.append(item)
-            return len(obj_list)
+            return len(self.all(cls))
         else:
-            obj_list = []
-            for class_name in self.classes:
-                if class_name == 'BaseModel':
-                    continue
-                obj_class = FileStorage.__objects
-                for item in obj_class:
-                    obj_list.append(item)
-            return len(obj_list)
+            return len(self.__objects)
