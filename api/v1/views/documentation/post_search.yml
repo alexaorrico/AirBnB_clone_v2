@@ -1,4 +1,4 @@
-    Search Places with a POST request.
+    flasgger endpoint for Search Places with a POST request.
     ---
     tags:
       - Places
