@@ -1,5 +1,14 @@
 #!/usr/bin/python3
-"""This module handles all default RestFul API actions"""
+"""
+This module handles all default RestFul API actions for State objects.
+
+Routes:
+    GET /states - Retrieves the list of all State objects.
+    GET /states/<state_id> - Retrieves a State object.
+    DELETE /states/<state_id> - Deletes a State object.
+    POST /states - Creates a State.
+    PUT /states/<state_id> - Updates a State object.
+"""
 
 from flask import jsonify, abort, request
 from api.v1.views import app_views
