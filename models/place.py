@@ -13,6 +13,7 @@ from sqlalchemy import ForeignKey, String, Integer, Float
 from sqlalchemy.orm import relationship, backref
 
 
+<<<<<<< HEAD
 # class PlaceAmenity(Base):
 #     """
 #     PlaceAmenity class designed to link table places and table amenities
@@ -49,6 +50,23 @@ class Place(BaseModel, Base):
         user_id = Column(String(60),
                          ForeignKey('users.id'),
                          nullable=False)
+=======
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', String(60),
+                             ForeignKey('places.id', onupdate='CASCADE',
+                                        ondelete='CASCADE'),primary_key=True),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id', onupdate='CASCADE',
+                                        ondelete='CASCADE'), primary_key=True))
+
+
+class Place(BaseModel, Base):
+    """Representation of Place """
+    __tablename__ = 'places'
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+>>>>>>> 0e125649dcfd402fd7b762fe147243315523b4f2
         name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True)
         number_rooms = Column(Integer, default=0, nullable=False)
@@ -85,7 +103,11 @@ class Place(BaseModel, Base):
         """
         super().__init__(*args, **kwargs)
 
+<<<<<<< HEAD
     if getenv('HBNB_TYPE_STORAGE', 'fs') != 'db':
+=======
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+>>>>>>> 0e125649dcfd402fd7b762fe147243315523b4f2
         @property
         def reviews(self):
             """

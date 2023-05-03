@@ -10,11 +10,17 @@ amenity module
 
 
 class Amenity(BaseModel, Base):
+<<<<<<< HEAD
     """
     The Amenity class
     """
     if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
         __tablename__ = 'amenities'
+=======
+    """Representation of Amenity """
+    __tablename__ = 'amenities'
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+>>>>>>> 0e125649dcfd402fd7b762fe147243315523b4f2
         name = Column(String(128), nullable=False)
 #        place_amenities = relationship("PlaceAmenity", backref="amenity",
 #                                       cascade="all, delete, delete-orphan")

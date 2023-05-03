@@ -11,6 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from os import getenv
 import uuid
 
+<<<<<<< HEAD
 if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
     Base = declarative_base()
 else:
@@ -26,6 +27,18 @@ class BaseModel:
         updated_at = Column(DateTime(timezone=True), default=datetime.now(),
                             nullable=False,
                             onupdate=datetime.now)
+=======
+time = "%Y-%m-%dT%H:%M:%S.%f"
+
+Base = declarative_base()
+
+
+class BaseModel:
+    """The BaseModel class from which future classes will be derived"""
+    id = Column(String(60), primary_key=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow)
+>>>>>>> 0e125649dcfd402fd7b762fe147243315523b4f2
 
     def __init__(self, *args, **kwargs):
         """

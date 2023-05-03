@@ -11,6 +11,7 @@ from models.base_model import BaseModel, Base, Table, Column, String
 from sqlalchemy.orm import relationship, backref
 import hashlib
 from os import getenv
+<<<<<<< HEAD
 
 
 class User(BaseModel, Base):
@@ -19,6 +20,17 @@ class User(BaseModel, Base):
     """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = "users"
+=======
+import sqlalchemy
+from sqlalchemy import Column, String, Integer, Table
+from sqlalchemy.orm import relationship
+
+
+class User(BaseModel, Base):
+    """Representation of a user """
+    __tablename__ = 'users'
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+>>>>>>> 0e125649dcfd402fd7b762fe147243315523b4f2
         email = Column(String(128), nullable=False)
         _password = Column("password", String(128), nullable=False)
         first_name = Column(String(128), nullable=True)

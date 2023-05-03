@@ -12,11 +12,17 @@ city module
 
 
 class City(BaseModel, Base):
+<<<<<<< HEAD
     """
     The City class
     """
     if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
         __tablename__ = 'cities'
+=======
+    """Representation of city """
+    __tablename__ = 'cities'
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+>>>>>>> 0e125649dcfd402fd7b762fe147243315523b4f2
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
         places = relationship("Place", backref="city",
