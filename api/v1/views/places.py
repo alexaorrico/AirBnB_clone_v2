@@ -1,3 +1,9 @@
+#!/usr/bin/python3
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
 from flask import abort, jsonify, request
 from models import app, City, Place, User
 from api.v1.views import app_views

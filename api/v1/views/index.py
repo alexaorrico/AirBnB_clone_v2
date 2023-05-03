@@ -5,19 +5,21 @@ from flask import jsonify, Blueprint
 from api.v1.views import app_views
 from models import storage
 
-
+# Create a blueprint for the API views
 app_views = Blueprint('app_views', __name__)
 
 
 @app_views.route('/status', methods=['GET'])
 def get_status():
-    """Returns the status of the API"""
+    """Return the status of the API"""
+    # Return a JSON object with the status of the API
     return jsonify({'status': 'OK'})
 
 
 @app_views.route('/stats', methods=['GET'])
 def get_stats():
-    """Returns the number of objects in the data store"""
+    """Return the number of objects in the data store for each model"""
+    # Create a dictionary with the count of objects for each model
     stats = {
         'amenities': storage.count('Amenity'),
         'cities': storage.count('City'),
@@ -26,4 +28,5 @@ def get_stats():
         'states': storage.count('State'),
         'users': storage.count('User'),
     }
+    # Return a JSON object with the count of objects for each model
     return jsonify(stats)
