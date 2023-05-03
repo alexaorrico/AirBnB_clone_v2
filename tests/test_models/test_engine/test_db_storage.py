@@ -3,19 +3,15 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
@@ -40,8 +36,9 @@ class TestDBStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+        result = pep8s.check_files(
+            ['tests/test_models/test_engine/test_db_storage.py']
+            )
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -67,22 +64,58 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get_dbstorage(self):
+        """Test dbstorage with valid data"""
+        obj = State(name="Delta state")
+        obj.save()
+        models.storage.save()
+        retrieve_state = models.storage.get('State', obj.id)
+        self.assertEqual(obj.name, retrieve_state.name)
+
+    def test_get_dbstorage_with_none(self):
+        """Test db storage retrieve with invlid input"""
+        obj = State(name="Delta state")
+        obj.save()
+        retrieve_state = models.storage.get('State', None)
+        self.assertIsNone(retrieve_state)
+        retrieve_state = models.storage.get(None, obj.id)
+        self.assertIsNone(retrieve_state)
+
+    def test_count_engine(self):
+        """Test to confirm data is stored"""
+        first_count = models.storage.count()
+        obj = State(name="Delta state")
+        obj.save()
+        second_count = models.storage.count()
+        self.assertEqual(first_count + 1, second_count)
+
+    def test_count_dbstorage_cls(self):
+        """Test count() of storage engine with class name"""
+        first_count = models.storage.count()
+        first_count_cls = models.storage.count('State')
+        obj = State(name="Delta State")
+        obj.save()
+        second_count = models.storage.count()
+        second_count_cls = models.storage.count('State')
+        self.assertEqual(first_count + 1, second_count)
+        self.assertEqual(first_count_cls + 1, second_count_cls)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
