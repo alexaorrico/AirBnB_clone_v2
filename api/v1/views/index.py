@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 index
+
 """
 
 from flask import jsonify
@@ -30,6 +31,7 @@ def stats():
     """
     stats of all objs route
     :return: json of all objs
+
     """
     data = {
         "amenities": storage.count("Amenity"),
@@ -41,6 +43,5 @@ def stats():
     }
 
     resp = jsonify(data)
-    resp.status_code = 200
 
     return resp
