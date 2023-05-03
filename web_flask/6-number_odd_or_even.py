@@ -1,58 +1,58 @@
 #!/usr/bin/python3
 """
-starts a Flask web application
+This is module 6-number_odd_or_even.
+It starts a minimal Flask application.
+Run it with python3 -m 6-number_odd_or_even or ./6-number_odd_or_even
 """
-
-from flask import Flask, render_template
+from flask import Flask
+from flask import render_template
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def index():
-    """returns Hello HBNB!"""
-    return 'Hello HBNB!'
+@app.route('/')
+def hello_hbnb():
+    """flask hello world"""
+    return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route('/hbnb')
 def hbnb():
-    """returns HBNB"""
-    return 'HBNB'
+    """add a path to the url"""
+    return "HBNB"
 
 
-@app.route('/c/<text>', strict_slashes=False)
-def cisfun(text):
-    """display “C ” followed by the value of the text variable"""
-    return 'C ' + text.replace('_', ' ')
+@app.route('/c/<text>')
+def c_text(text):
+    """make a simple variable rule"""
+    return "C {}".format(text.replace("_", " "))
 
 
-@app.route('/python', strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
-def pythoniscool(text='is cool'):
-    """display “Python ”, followed by the value of the text variable"""
-    return 'Python ' + text.replace('_', ' ')
+@app.route('/python/', defaults={'text': "is cool"})
+@app.route('/python/<text>')
+def python_text(text):
+    """give a rule a default value"""
+    return "Python {}".format(text.replace("_", " "))
 
 
-@app.route('/number/<int:n>', strict_slashes=False)
-def imanumber(n):
-    """display “n is a number” only if n is an integer"""
+@app.route('/number/<int:n>')
+def number_route(n):
+    """make a rule only take a number"""
     return "{:d} is a number".format(n)
 
 
-@app.route('/number_template/<int:n>', strict_slashes=False)
-def numbersandtemplates(n):
-    """display a HTML page only if n is an integer"""
-    return render_template('5-number.html', n=n)
+@app.route('/number_template/<int:number>')
+def number_template(number):
+    """create an html page with a rule"""
+    return render_template('5-number.html', number=number)
 
 
-@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-def numbersandevenness(n):
-    """display a HTML page only if n is an integer"""
-    if n % 2 == 0:
-        evenness = 'even'
-    else:
-        evenness = 'odd'
-    return render_template('6-number_odd_or_even.html', n=n,
-                           evenness=evenness)
+@app.route('/number_odd_or_even/<int:n>')
+def number_odd_or_even(n):
+    """Create a template with 2 variables"""
+    odd_even = "even" if (n % 2 == 0) else "odd"
+    return render_template("6-number_odd_or_even.html",
+                           number=n, odd_even=odd_even)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="5000")
