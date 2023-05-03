@@ -23,3 +23,6 @@ def teardown_flask(exception):
     '''The Flask app/request context end event listener.'''
     # print(exception)
     storage.close()
+
+if __name__ == "__main__":
+    app.run()
