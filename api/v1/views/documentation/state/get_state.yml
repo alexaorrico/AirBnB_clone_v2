@@ -1,13 +1,14 @@
-Retrieves a list of cities by state:
+Retrieves a state object
+---
 tags:
-    - City
+    - States
 parameters:
-    - name: state_id
+    - name: id
       in: path
       type: string
       required: true
 responses:
   200:
-    description: List of cities
+    description: List of states	
   404:
     description: Resource not found

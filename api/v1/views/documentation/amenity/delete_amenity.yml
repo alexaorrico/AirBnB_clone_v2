@@ -1,13 +1,14 @@
-Retrieves a list of cities by state:
+Deletes a amenity object
+---
 tags:
-    - City
+    - Amenity
 parameters:
-    - name: state_id
+    - name: amenity_id
       in: path
       type: string
       required: true
 responses:
   200:
-    description: List of cities
+    description: Amenity deleted
   404:
     description: Resource not found

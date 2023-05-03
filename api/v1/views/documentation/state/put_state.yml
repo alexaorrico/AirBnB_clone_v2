@@ -1,13 +1,16 @@
-Retrieves a list of cities by state:
+Updates a state object
+---
 tags:
-    - City
+    - States
 parameters:
-    - name: state_id
+    - name: id
       in: path
       type: string
       required: true
 responses:
   200:
-    description: List of cities
+    description: State updated
   404:
     description: Resource not found
+  400:
+    description: Not a JSON

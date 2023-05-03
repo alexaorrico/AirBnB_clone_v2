@@ -1,4 +1,5 @@
-Retrieves a list of cities by state:
+Creates a city object
+---
 tags:
     - City
 parameters:
@@ -7,7 +8,9 @@ parameters:
       type: string
       required: true
 responses:
-  200:
-    description: List of cities
+  201:
+    description: city created
   404:
     description: Resource not found
+  400:
+    description: Not a JSON or missing name
