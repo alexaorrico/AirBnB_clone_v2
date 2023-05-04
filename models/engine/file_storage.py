@@ -73,12 +73,12 @@ class FileStorage:
         """a method to retrieve one object """
         temp = self.all(cls)
         for i in temp.values():
-            if i.id == id:
+            if i.id == str(id):
                 return (i)
         return (None)
 
     def count(self, cls=None):
         """returns the number of objects in storage """
-        temp = self.all(cls).values()
+        temp = self.all(cls)
         num = len(temp)
         return (num)
