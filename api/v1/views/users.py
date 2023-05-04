@@ -45,7 +45,7 @@ def create_user():
     """ create a User """
     try:
         req = request.get_json()
-    except JSONDecodeError, TypeError:
+    except (JSONDecodeError, TypeError):
         req = None
     if req is None:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)

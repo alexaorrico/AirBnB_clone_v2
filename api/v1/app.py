@@ -1,37 +1,24 @@
 #!/usr/bin/python3
-"""
-Module app
-"""
-from api.v1.views import app_views
-from flask import (Blueprint, Flask, jsonify, Response)
-from flask_cors import (CORS, cross_origin)
+"""This module creates an instance of Flask to start our web application"""
+from flask import Flask
 from models import storage
-from os import getenv
+from api.v1.views import app_views
+import os
 
 
 app = Flask(__name__)
-CORS(app, origins="0.0.0.0")
-app.register_blueprint(app_views)
-
-
-cors = CORS(app, resources={
-            r'/*': {'origins': os.getenv('HBNB_API_HOST', '0.0.0.0')}})
-app.register_blueprint(app_views)
+app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
-    """close the storage"""
+def teardown_storage(exception):
+    """
+    This function calls storage.close() when the request context is destroyed.
+    """
     storage.close()
 
 
-@app.errorhandler(404)
-def not_found(error):
-    """json 404 page"""
-    return make_response(jsonify({"error": "Not found"}), 404)
-
-
 if __name__ == "__main__":
-    app.run(host=getenv('HBNB_API_HOST', '0.0.0.0'),
-            port=int(getenv('HBNB_API_PORT', '5000')),
-            threaded=True)
+    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    port = os.getenv('HBNB_API_PORT', 5000)
+    app.run(host=host, port=port, threaded=True)
