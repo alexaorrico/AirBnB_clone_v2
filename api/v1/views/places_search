@@ -1,0 +1,37 @@
+#!/usr/bin/python3
+"""
+Create a new view for Place objects that handles all default RESTFul API actions
+"""
+from api.v1.views import app_views
+from flask import jsonify, abort, request
+from models import storage, State, City, Amenity, Place
+
+
+@app_views.route('/places_search', methods=['POST'])
+def search_places():
+    """Retrieves all Place objects depending of the JSON in the body
+    of the request
+    """
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    json_data = request.get_json()
+    states = json_data.get('states', [])
+    cities = json_data.get('cities', [])
+    amenities = json_data.get('amenities', [])
+    if not states and not cities and not amenities:
+        places = storage.all('Place').values()
+        return jsonify([place.to_dict() for place in places])
+    state_objs = [storage.get('State', state_id) for state_id in states]
+    city_objs = [storage.get('City', city_id) for city_id in cities]
+    places = []
+    for state_obj in state_objs:
+        if state_obj:
+            for city_obj in state_obj.cities:
+                if city_obj not in city_objs:
+                    city_objs.append(city_obj)
+    for city_obj in city_objs:
+        if city_obj:
+            for place_obj in city_obj.places:
+                if all(amenity_id in place_obj.amenities for amenity_id in amenities):
+                    places.append(place_obj)
+    return jsonify([place.to_dict() for place in places])
