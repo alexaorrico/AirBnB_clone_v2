@@ -1,0 +1,41 @@
+This file is a compilation of command lines and flags used to run the unittests.
+
+The unittests have to be run from the directory this file is in.
+
+To run all unittests
+--------------------
+- with file storage
+FS_TEST=yes python3 -m unittest discover (not required: tests 2>&1)
+
+-with db storage
+HBNB_MYSQL_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest discover (not required: tests 2>&1)
+
+To run one test file or module (test_file_storage)
+-------------------------------------------------
+We can use module notation or give the path to the file
+
+-with file storage
+FS_TEST=yes python3 -m unittest tests.test_models.test_engine.test_file_storage
+
+-with db storage
+HBNB_MYSQL_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest tests.test_models.test_engine.test_file_storage
+
+To run one class in a module (class Test_FileStorage in test_file_storage)
+--------------------------------------------------------------------------
+-with file storage
+FS_TEST=yes python3 -m unittest tests.test_models.test_engine.test_file_storage.Test_FileStorage
+
+-with db storage
+HBNB_MYSQL_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest tests.test_models.test_engine.test_file_storage.Test_FileStorage
+
+To run one method in a class (method test_all in test_FileStorage)
+------------------------------------------------------------------
+-with file storage
+FS_TEST=yes python3 -m unittest tests.test_models.test_engine.test_file_storage.Test_FileStorage.test_all
+
+-with db storage
+HBNB_MYSQL_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest tests.test_models.test_engine.test_file_storage.Test_FileStorage.test_all
+
+Useful flags:
+------------
+      -f to stop after first test failed

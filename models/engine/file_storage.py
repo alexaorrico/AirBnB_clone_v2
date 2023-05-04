@@ -12,29 +12,11 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {
-            'BaseModel': BaseModel,
-            'Amenity': Amenity,
-            'City': City,
-            'Place': Place,
-            'Review': Review,
-            'State': State,
-            'User': User
-            }
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class FileStorage:
-    """Handles storage of all class instances"""
-
-    classes = {
-            'BaseModel': BaseModel,
-            'Amenity': Amenity,
-            'City': City,
-            'Place': Place,
-            'Review': Review,
-            'State': State,
-            'User': User
-            }
     """serializes instances to a JSON file & deserializes back to instances"""
 
     # string - path to the JSON file
@@ -68,14 +50,13 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        with open(self.__file_path, 'r') as f:
-            try:
+        try:
+            with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
-                for key in jo.keys():
-                    self.__objects[key] = FileStorage.classes[jo[key]
-                                                             ["__class__"]](**jo[key])
-            except json.JSONDecodeError:
-                pass
+            for key in jo:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
+        except Exception:
+            pass
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -86,24 +67,16 @@ class FileStorage:
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
-        self.__session.close()
+        self.reload()
 
     def get(self, cls, id):
-        """ Retrieves an object from the file storage base
-        on its class and ID"""
-        key = "{}.{}".format(cls.__name__, id)
-        if key in self.__objects:
-            return self.__objects[key]
-        else:
-            objs = self.all(cls)
-            for obj in objs:
-                if obj.id == id:
-                    return obj
-            return None
+        """ A method to retrieve one object """
+        clss = self.all(cls)
+        if type(cls) != str:
+            cls = cls.__name__
+        key = cls + '.' + id
+        return clss.get(key)
 
     def count(self, cls=None):
-        """Counts the number of objects in storage"""
-        if cls:
-            return len(self.all(cls))
-        else:
-            return len(self.__objects)
+        """ A method to count the number of objects in storage """
+        return len(self.all(cls))
