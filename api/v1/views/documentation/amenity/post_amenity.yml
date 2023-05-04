@@ -1,19 +1,14 @@
- Links an amenity object to a place
-    ---
-    tags:
-      - Amenities
-    parameters:
-      - name: amenity_id
-        in: body
-        required: true
-        requires:
-          - name
-        properties:
-          name:
-            type: string
-
-    responses:
-      400:
-        description: Not a JSON
-      201:
-        description: request executed successfully
+Creates a amenity object
+---
+tags:
+    - Amenity
+parameters:
+    - name: id
+      in: path
+      type: string
+      required: true
+responses:
+  201:
+    description: new amenity created
+  400:
+    description: Not a JSON or missing name

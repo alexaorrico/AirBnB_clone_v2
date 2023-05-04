@@ -1,16 +1,16 @@
-Creates a city object
+Updates a user object
 ---
 tags:
-    - City
+    - User
 parameters:
-    - name: state_id
+    - name: user_id
       in: path
       type: string
       required: true
 responses:
-  201:
-    description: city created
+  200:
+    description: User updated
   404:
     description: Resource not found
   400:
-    description: Not a JSON or missing name
+    description: Not a JSON

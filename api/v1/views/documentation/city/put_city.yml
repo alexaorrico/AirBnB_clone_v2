@@ -1,21 +1,16 @@
-  Updates a city based on id
-    ---
-    tags:
-      - Cities
-    parameters:
-      - name: city_id
-        in: path
-        type: string
-        required: true
-        description: id of the city
-      - name: update_request
-        in: body
-        required: true
-
-    responses:
-      404:
-        description: city not found!
-      400:
-        description: Not a valid JSON
-      200:
-        description: Request completed successfully
+Updates a city object
+---
+tags:
+    - City
+parameters:
+    - name: city_id
+      in: path
+      type: string
+      required: true
+responses:
+  200:
+    description: City updated
+  404:
+    description: Resource not found
+  400:
+    description: Not a JSON

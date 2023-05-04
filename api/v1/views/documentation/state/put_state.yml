@@ -1,19 +1,16 @@
-  Updates the state info based on ID
-    ---
-    tags:
-      - States
-    parameters:
-      - name: state_id
-        in: path
-        type: string
-        required: true
-        description: the unique id of the state
-      - name: request
-        in: body
-        required: true
-
-    responses:
-      404:
-        description: State not found
-      200:
-        description: Request executed successfully
+Updates a state object
+---
+tags:
+    - States
+parameters:
+    - name: id
+      in: path
+      type: string
+      required: true
+responses:
+  200:
+    description: State updated
+  404:
+    description: Resource not found
+  400:
+    description: Not a JSON
