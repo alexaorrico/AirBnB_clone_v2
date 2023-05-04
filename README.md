@@ -159,4 +159,8 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 ## License
+
+##Version3 of Airbnb:
+Ahlidjah Christian - [Github](https://github.com/LordZeuz)
+Hamida Mahama - [Github](https://github.com/AngryDuchess)
 Public Domain. No copy write protection. 
