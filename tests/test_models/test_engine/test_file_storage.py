@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestFileStorageDocs classes
+It Contains the TestFileStorageDocs classes
 """
 
 from datetime import datetime
@@ -24,7 +24,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class TestFileStorageDocs(unittest.TestCase):
-    """Tests to check the documentation and style of FileStorage class"""
+    """It tests to check the documentation and style of FileStorage class"""
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -80,7 +80,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
-        """test that adds new object to the FileStorage.__objects attr"""
+        """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
@@ -112,30 +112,19 @@ class TestFileStorage(unittest.TestCase):
         string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()
-        self.assertEqual(json.loads(string), json.loads(js))
+        self.assertEqual(json.loads(string), json.loads(js)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
-        """ Tests method for obtaining an instance file storage"""
+     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+     def test_get(self):
+        """Test that get properly returns a requested object"""
         storage = FileStorage()
-        dic = {"name": "Vecindad"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        storage = FileStorage()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
+        user = User(name="User1")
+        user.save()
+        self.assertEqual(user, storage.get("User", user.id))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """ Tests count method file storage """
+        """Test that count properly counts all objects"""
         storage = FileStorage()
-        dic = {"name": "Vecindad"}
-        state = State(**dic)
-        storage.new(state)
-        dic = {"name": "Mexico"}
-        city = City(**dic)
-        storage.new(city)
-        storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
+        nobjs = len(storage._FileStorage__objects)
+        self.assertEqual(nobjs, storage.count()))
