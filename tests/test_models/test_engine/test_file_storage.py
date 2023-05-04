@@ -67,7 +67,6 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -114,26 +113,26 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+     @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == 'db',
+                     "not testing file storage")
     def test_get(self):
-        '''
-            Test if get method retrieves obj requested
-        '''
-        new_state = State(name="NewYork")
-        storage.new(new_state)
-        key = "State.{}".format(new_state.id)
-        result = storage.get("State", new_state.id)
-        self.assertTrue(result.id, new_state.id)
-        self.assertIsInstance(result, State)
+        """Test that the get method properly retrievs objects"""
+        storage = FileStorage()
+        self.assertIs(storage.get("User", "blah"), None)
+        self.assertIs(storage.get("blah", "blah"), None)
+        new_user = User()
+        new_user.save()
+        self.assertIs(storage.get("User", new_user.id), new_user)
 
+    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == db,
+                     "not testing file storage")
     def test_count(self):
-        '''
-            Test if count method returns expected number of objects
-        '''
-        old_count = storage.count("State")
-        new_state1 = State(name="NewYork")
-        storage.new(new_state1)
-        new_state2 = State(name="Virginia")
-        storage.new(new_state2)
-        new_state3 = State(name="California")
-        storage.new(new_state3)
-        self.assertEqual(old_count + 3, storage.count("State"))
+        storage = FileStorage()
+        initial_length = len(storage.all())
+        self.assertEqual(storage.count(), initial_length)
+        state_len = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), state_len)
+        new_state = State()
+        new_state.save()
+        self.assertEqual(storage.count(), initial_length + 1)
+        self.assertEqual(storage.count("State"), state_len + 1)
