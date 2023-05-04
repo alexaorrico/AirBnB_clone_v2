@@ -102,11 +102,15 @@ def places_search():
        the JSON in the body of the request.
     """
     payload = request.get_json()
-    if isinstance(payload, dict) and len(payload) == 0:
-        # Check for empty dictionary
-        return jsonify(filter_places(storage.all(Place).values(), [])), 200
-    else:
+    if payload is None:
         abort(400, 'Not a JSON')
+
+    if not payload or len(payload) == 0:  # Check for empty dictionary
+        places = storage.all(Place).values()
+        place_list = []
+        for place in places:
+            place_list.append(place.to_dict())
+        return jsonify(place_list), 200
 
     # Get all need lists if available.
     state_ids = payload.get('states') if payload.get('states') else []
