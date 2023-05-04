@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+#!/usr/bin/python3
+<<<<<<< meeda
 """Api indexes"""
 import os
 import sys
