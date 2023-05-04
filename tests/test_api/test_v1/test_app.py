@@ -2,6 +2,7 @@
 """
 Testing app.py file
 """
+import sys
 from api.v1.app import app
 import flask
 import json
@@ -12,7 +13,7 @@ import unittest
 class TestApp(unittest.TestCase):
 
     @classmethod
-    def setUpClass(self):
+    def setUpClass(cls):
         app.config['TESTING'] = True
         self.app = app.test_client()
 

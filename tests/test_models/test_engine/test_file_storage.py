@@ -7,6 +7,7 @@ from datetime import datetime
 import models
 from models import engine
 from models.engine.file_storage import FileStorage
+from api.v1.app import app
 import json
 import os
 
@@ -90,7 +91,7 @@ class TestBmFsInstances(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         print('\n\n.................................')
-        print('...... Testing FileStorate ......')
+        print('...... Testing FileStorage ......')
         print('..... For FileStorage Class .....')
         print('.................................\n\n')
 
