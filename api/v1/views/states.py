@@ -1,249 +1,70 @@
 #!/usr/bin/python3
 """
-This is module states
+New view for State objects that handles default Restful API actions
 """
-from api.v1.views import (app_views, State, storage)
-from flask import (abort, jsonify, make_response, request)
+from flask import Flask, jsonify, abort, request, make_response
+from api.v1.views import app_views
+from models import storage
+from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-def view_all_states():
-    """Example endpoint returning a list of all the states
-    Retrieves a list of all the states
-    ---
-    definitions:
-      State:
-        type: object
-        properties:
-          __class__:
-            type: string
-            description: The string of class object
-          created_at:
-            type: string
-            description: The date the object created
-          id:
-            type: string
-            description: the id of the state
-          name:
-            type: string
-            description: name of the state
-          updated_at:
-            type: string
-            description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-
-      Color:
-        type: string
-    responses:
-      200:
-        description: A list of dictionarys, each dict is a State
-        schema:
-          $ref: '#/definitions/State'
-        examples:
-            [{'__class__': 'State', 'created_at': '2017-03-25T02:17:06',
-            'id': '10098698-bace-4bfb-8c0a-6bae0f7f5b8f', 'name': 'Oregon',
-            'updated_at': '2017-03-25T02:17:06'}]
-
-    """
-    all_states = [state.to_json() for state in storage.all("State").values()]
+def all_states():
+    """ Retrieve a list of all State objects """
+    all_states = []
+    for state in storage.all('State').values():
+        all_states.append(state.to_dict())
     return jsonify(all_states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def view_one_state(state_id=None):
-    """Example endpoint returning a list of one state
-    Retrieves a state by a given id
-    ---
-    parameters:
-      - name: state_id
-        in: path
-        type: string
-        enum: ['None', '10098698-bace-4bfb-8c0a-6bae0f7f5b8f']
-        required: true
-        default: None
-    definitions:
-      State:
-        type: object
-        properties:
-          __class__:
-            type: string
-            description: The string of class object
-          created_at:
-            type: string
-            description: The date the object created
-          id:
-            type: string
-            description: the id of the state
-          name:
-            type: string
-            description: name of the state
-          updated_at:
-            type: string
-            description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
-    responses:
-      200:
-        description: A list of one dictionary of the desired State object
-        schema:
-          $ref: '#/definitions/State'
-        examples:
-            [{'__class__': 'State', 'created_at': '2017-03-25T02:17:06',
-            'id': '10098698-bace-4bfb-8c0a-6bae0f7f5b8f', 'name': 'Oregon',
-            'updated_at': '2017-03-25T02:17:06'}]
-
-    """
-    if state_id is None:
+def retrieve_state(state_id):
+    """ Retrieve a particular State """
+    try:
+        state = jsonify(storage.get('State', state_id).to_dict())
+        return state
+    except KeyError:
         abort(404)
-    state = storage.get("State", state_id)
-    if state is None:
-        abort(404)
-    return jsonify(state.to_json())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_state(state_id=None):
-    """Example endpoint deleting one state
-    Deletes a state based on the state_id
-    ---
-    definitions:
-      State:
-        type: object
-      Color:
-        type: string
-      items:
-        $ref: '#/definitions/Color'
-
-    responses:
-      200:
-        description: An empty dictionary
-        schema:
-          $ref: '#/definitions/State'
-        examples:
-            {}
-    """
-    if state_id is None:
-        abort(404)
-    state = storage.get("State", state_id)
-    if state is None:
-        abort(404)
-    storage.delete(state)
-    return jsonify({}), 200
+def delete_state(state_id):
+    """ Delete a State """
+    state = storage.get('State', state_id)
+    if state:
+        state.delete()
+        storage.save()
+        return {}
+    abort(404)
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'],
+                 strict_slashes=False)
 def create_state():
-    """Example endpoint creating a state
-    Creates a State object based on the JSON body
-    ---
-    definitions:
-      State:
-        type: object
-        properties:
-          __class__:
-            type: string
-            description: The string of class object
-          created_at:
-            type: string
-            description: The date the object created
-          id:
-            type: string
-            description: the id of the state
-          name:
-            type: string
-            description: name of the state
-          updated_at:
-            type: string
-            description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
-    responses:
-      201:
-        description: A list of a single dictionary of a State
-        schema:
-          $ref: '#/definitions/State'
-        examples:
-            [{'__class__': 'State', 'created_at': '2017-03-25T02:17:06',
-            'id': '10098698-bace-4bfb-8c0a-6bae0f7f5b8f', 'name': 'Oregon',
-            'updated_at': '2017-03-25T02:17:06'}]
-    """
-    r = None
-    try:
-        r = request.get_json()
-    except:
-        r = None
-    if r is None:
-        return "Not a JSON", 400
-    if 'name' not in r.keys():
-        return "Missing name", 400
-    s = State(**r)
-    s.save()
-    return jsonify(s.to_json()), 201
+    """ Create a State """
+    state_name = request.get_json()
+    if not state_name:
+        abort(400, {'Not a JSON'})
+    elif 'name' not in state_name:
+        abort(400, {'Missing name'})
+    new_state = State(**state_name)
+    storage.new(new_state)
+    storage.save()
+    return new_state.to_dict(), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state(state_id=None):
-    """Example endpoint updates a state
-    Updates a State object based on the JSON body
-    ---
-    parameters:
-      - name: state_id
-        in: path
-        type: string
-        enum: ['None', '10098698-bace-4bfb-8c0a-6bae0f7f5b8f']
-        required: true
-        default: None
-    definitions:
-      State:
-        type: object
-        properties:
-          __class__:
-            type: string
-            description: The string of class object
-          created_at:
-            type: string
-            description: The date the object created
-          id:
-            type: string
-            description: the id of the state
-          name:
-            type: string
-            description: name of the state
-          updated_at:
-            type: string
-            description: The date the object was updated
-            items:
-              $ref: '#/definitions/Color'
-      Color:
-        type: string
-    responses:
-      201:
-        description: A list of a single dictionary of a State
-        schema:
-          $ref: '#/definitions/State'
-        examples:
-            [{'__class__': 'State', 'created_at': '2017-03-25T02:17:06',
-            'id': '10098698-bace-4bfb-8c0a-6bae0f7f5b8f', 'name': 'Oregon',
-            'updated_at': '2017-03-25T02:17:06'}]
-    """
-    try:
-        r = request.get_json()
-    except:
-        r = None
-    if r is None:
-        return "Not a JSON", 400
-    state = storage.get("State", state_id)
-    if state is None:
+@app_views.route('/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_state(state_id):
+    """ Update a State """
+    update_attr = request.get_json()
+    if not update_attr:
+        abort(400, {'Not a JSON'})
+    my_state = storage.get('State', state_id)
+    if not my_state:
         abort(404)
-    for k in ("id", "created_at", "updated_at"):
-        r.pop(k, None)
-    for k, v in r.items():
-        setattr(state, k, v)
-    state.save()
-    return jsonify(state.to_json()), 200
+    for key, value in update_attr.items():
+        setattr(my_state, key, value)
+    storage.save()
+    return my_state.to_dict()
