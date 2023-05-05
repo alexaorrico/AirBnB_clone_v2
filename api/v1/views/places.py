@@ -80,7 +80,7 @@ def add_place(city_id):
     place = Place(**req_data)
     place.city_id = city_id
     place.save()
-    return get_place(place_id), 201
+    return get_place(place.id), 201
 
 
 def update_place(place_id):
