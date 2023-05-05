@@ -49,6 +49,7 @@ def create_state():
 
     return jsonify(stat.to.dict()), 201
 
+
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state():
     """update state object"""
