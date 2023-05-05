@@ -4,6 +4,10 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-        <H1>Number: {{ n }} is {{ evenness }}</H1>
+        {% if (value % 2 == 0) %}
+        <H1>Number: {{ value }} is even</H1>
+	{% else %}
+	<H1>Number: {{ value }} is odd</H1>
+	{% endif %}
     </BODY>
 </HTML>
