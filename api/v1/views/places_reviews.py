@@ -1,70 +1,71 @@
 #!/usr/bin/python3
-'''BLueprint implementation for city model'''
+'''BLueprint implementation for review model'''
 
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
-from models.city import City
-from models.state import State
+from models.review import Review
+from models.place import Place
+from models.user import User
 import os
 
 
-@app_views.route('cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+@app_views.route('reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def handle_cities(city_id=None):
-    '''Return the list of all City objects'''
+def handle_reviews(review_id=None):
+    '''Return the list of all Review objects'''
     if request.method == 'DELETE':
-        return del_city(city_id)
+        return del_review(review_id)
     elif request.method == 'PUT':
-        return update_city(city_id)
+        return update_review(review_id)
     elif request.method == 'GET':
-        return get_cities(city_id)
+        return get_reviews(review_id)
 
 
-@app_views.route('states/<state_id>/cities', methods=['GET', 'POST'],
+@app_views.route('places/<place_id>/reviews', methods=['GET', 'POST'],
                  strict_slashes=False)
-def handle_state_cities(state_id):
+def handle_place_reviews(place_id):
     '''Hadnles direction to actual view function'''
     if request.method == 'POST':
-        return add_city(state_id)
+        return add_review(place_id)
     elif request.method == 'GET':
-        return get_state_cities(state_id)
+        return get_place_reviews(place_id)
 
 
-def get_state_cities(state_id):
-    '''Return all citie linked to a state'''
-    state = storage.get(State, state_id)
-    if not state:
+def get_place_reviews(place_id):
+    '''Return all citie linked to a place'''
+    place = storage.get(Place, place_id)
+    if not place:
         abort(404)
     if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-        cities = state.cities()
+        reviews = place.reviews()
     else:
-        cities = list(state.cities)
-    return jsonify([city.to_dict() for city in cities])
+        reviews = list(place.reviews)
+    return jsonify([review.to_dict() for review in reviews])
 
 
-def get_cities(city_id):
-    '''Reurn a city given an id'''
-    city = storage.get(City, city_id)
-    if not city:
+def get_reviews(review_id):
+    '''Reurn a review given an id'''
+    review = storage.get(Review, review_id)
+    if not review:
         abort(404)
-    return jsonify(city.to_dict())
+    return jsonify(review.to_dict())
 
 
-def del_city(city_id):
-    '''Deletes a city obj with city_id'''
-    city = storage.get(City, city_id)
-    if not city:
+def del_review(review_id):
+    '''Deletes a review obj with place_id'''
+    review = storage.get(Review, review_id)
+    if not review:
         abort(404)
-    storage.delete(city)
+    storage.delete(review)
     storage.save()
     return jsonify({}), 200
 
 
-def add_city(state_id):
-    '''Adds city to cities'''
-    state = storage.get(State, state_id)
-    if not state:
+def add_review(place_id):
+    '''Adds review to reviews'''
+    place = storage.get(Place, place_id)
+    if not place:
         abort(404)
     try:
         req_data = request.get_json()
@@ -72,18 +73,23 @@ def add_city(state_id):
         abort(400, 'Not a JSON')
     if type(req_data) is not dict:
         abort(400, 'Not a JSON')
-    if 'name' not in req_data:
-        abort(400, 'Missing name')
-    city = City(**req_data)
-    city.state_id = state.id
-    city.save()
-    return get_cities(city.id), 201
+    if 'text' not in req_data:
+        abort(400, 'Missing text')
+    if 'user_id' not in req_data:
+        abort(400, 'Missing user_id')
+    user = storage.get(User, req_data['user_id'])
+    if not user:
+        abort(404)
+    review = Review(**req_data)
+    review.place_id = place.id
+    review.save()
+    return get_reviews(review.id), 201
 
 
-def update_city(city_id):
-    '''Update a city instance'''
-    city = storage.get(City, city_id)
-    if not city:
+def update_review(review_id):
+    '''Update a review instance'''
+    review = storage.get(Review, review_id)
+    if not review:
         abort(404)
     try:
         req_data = request.get_json()
@@ -91,8 +97,9 @@ def update_city(city_id):
         abort(400, 'Not a JSON')
     if type(req_data) is not dict:
         abort(400, 'Not a JSON')
+    skip = ['id', 'created_at', 'updated_at', 'place_id', 'user_id']
     for key, val in req_data.items():
-        if key != 'id' or key != 'created_at' or key != 'updated_at':
-            setattr(city, key, val)
-    city.save()
-    return get_cities(city.id), 200
+        if key not in skip:
+            setattr(review, key, val)
+    review.save()
+    return get_reviews(review.id), 200
