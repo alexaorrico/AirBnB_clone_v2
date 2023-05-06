@@ -47,11 +47,11 @@ def create_state():
     state = State(name=data['name'])
     state.save()
 
-    return jsonify(stat.to.dict()), 201
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state():
+def update_state(state_id):
     """update state object"""
     state = storage.get(State, state_id)
     if not state:
