@@ -8,12 +8,19 @@
     <link rel="stylesheet" href="../static/styles/6-filters.css?{{ cache_id }}">
     <link rel="stylesheet" href="../static/styles/8-places.css?{{ cache_id }}">
     <link rel="icon" href="../static/images/icon.png?{{ cache_id }}" type="image/png">
+
+    <!-- Import jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- Import custom Javascript -->
+    <script type="text/javascript" src="../static/scripts/4-hbnb.js?{{ cache_id }}"></script>
+
     <title>AirBnb Clone</title>
   </head>
   <body>
     <header>
-      <div class="logo">
-      </div>
+      <div class="logo"></div>
+      <div id="api_status"></div>
     </header>
     <div class="container">
       <section class="filters">
@@ -38,7 +45,9 @@
           <h4>&nbsp;</h4>
           <ul class="popover">
 	    {% for amty in amenities.values() %}
-	    <li>{{ amty.name }}</li>
+	    <li>
+	      <input type="checkbox" data-id="{{ amty.id }}" data-name="{{ amty.name }}">{{ amty.name }}
+	    </li>
 	    {% endfor %}
           </ul>
 	</div>
@@ -48,36 +57,6 @@
       </section>
       <section class="places">
 	<h1>Places</h1>
-	{% for place in places.values()|sort(attribute='name') %}
-	<article>
-	  <h2>{{ place.name }}</h2>
-	  <div class="price_by_night">
-	    <p>${{ place.price_by_night }}</p>
-	  </div>
-	  <div class="information">
-	    <div class="max_guest">
-	      <div class="guest_image"></div>
-	      <p>{{ place.max_guest }}</p>
-	    </div>
-	    <div class="number_rooms">
-	      <div class="bed_image"></div>
-	      <p>{{ place.number_rooms }}</p>
-	    </div>
-	    <div class="number_bathrooms">
-	      <div class="bath_image"></div>
-	      <p>{{ place.number_bathrooms }}</p>
-	    </div>
-	  </div>
-	  <div class="user">
-	    <p><b>Owner: </b>{{ place.user.first_name ~ ' ' ~ place.user.last_name }}</p>
-	  </div>
-	  <div class="description">
-	    {% autoescape false %}
-	    <p>{{ place.description }}</p>
-	    {% endautoescape %}
-	  </div>
-	</article>
-	{% endfor %}
       </section>
     </div>
     <footer>
