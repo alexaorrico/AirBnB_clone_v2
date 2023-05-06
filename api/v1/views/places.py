@@ -64,30 +64,25 @@ def create_place(place_id):
         abort(404)
     if 'name' not in data:
         return jsonify({'error': 'Missing name'}), 400
-
     place=Place(name = data['name'], city_id = city.id,
                 user_id = data['user_id'])
     place.save()
-
     return jsonify(place.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods = ['DELETE'],
                 strict_slashes = False)
-
 def update_place(place_id):
     """updates a place"""
-
     place=storage.get(Place, place_id)
-
     if not place:
         abort(404)
-
     data=request.get_json(silent = True)
     if not data:
         return jsonify({'error': 'Not a JSON'}), 400
 
     ignore=['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+
     for key, value in data.items():
         if key not in ignore:
             setattr(place, key, value)
@@ -97,7 +92,7 @@ def update_place(place_id):
 
 @app_view.route('/places_search', methods = ['POST'], strict_slashes = False)
 def places_search():
-    """ retrieves a list of places matching search"""
+    """retrieves a list of places matching search"""
 
     data=request.get_json(silent = True)
     if not data:
