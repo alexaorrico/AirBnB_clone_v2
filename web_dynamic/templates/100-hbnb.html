@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/styles/4-common.css?{{ cache_id }}">
+    <link rel="stylesheet" href="../static/styles/3-header.css?{{ cache_id }}">
+    <link rel="stylesheet" href="../static/styles/3-footer.css?{{ cache_id }}">
+    <link rel="stylesheet" href="../static/styles/6-filters.css?{{ cache_id }}">
+    <link rel="stylesheet" href="../static/styles/8-places.css?{{ cache_id }}">
+    <link rel="icon" href="../static/images/icon.png?{{ cache_id }}" type="image/png">
+
+    <!-- Import jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <!-- Import custom Javascript -->
+    <script type="text/javascript" src="../static/scripts/100-hbnb.js?{{ cache_id }}"></script>
+
+    <title>AirBnb Clone</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo"></div>
+      <div id="api_status"></div>
+    </header>
+    <div class="container">
+      <section class="filters">
+	<div class="locations">
+          <h3>States</h3>
+	  <h4>&nbsp;</h4>
+          <ul class="popover">
+	    {% for state in states.values()|sort(attribute='name') %}
+            <li>
+	      <input type="checkbox" data-id="{{ state.id }}" data-name="{{ state.name }}"><h2>{{ state.name }}</h2>
+              <ul>
+	      {% for city in state.cities|sort(attribute='name') %}
+                <li><input type="checkbox" data-id="{{ city.id }}" data-name="{{ city.name }}">{{ city.name }}</li>
+	      {% endfor %}
+              </ul>
+            </li>
+	    {% endfor %}
+	  </ul>
+	</div>
+	<div class="amenities">
+          <h3>Amenities</h3>
+          <h4>&nbsp;</h4>
+          <ul class="popover">
+	    {% for amty in amenities.values() %}
+	    <li>
+	      <input type="checkbox" data-id="{{ amty.id }}" data-name="{{ amty.name }}">{{ amty.name }}
+	    </li>
+	    {% endfor %}
+          </ul>
+	</div>
+	<button>
+	  Search
+	</button>
+      </section>
+      <section class="places">
+	<h1>Places</h1>
+      </section>
+    </div>
+    <footer>
+      <p>
+	Holberton School
+      </p>
+    </footer>
+  </body>
+</html>
