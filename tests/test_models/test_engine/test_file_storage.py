@@ -2,7 +2,8 @@
 """
 Contains the TestFileStorageDocs classes
 """
-
+from io import StringIO
+import contextlib
 from datetime import datetime
 import inspect
 import models
@@ -113,3 +114,40 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestDBStorage(unittest.TestCase):
+    """tests for db v3"""
+
+    def test_dbs_get(self):
+        """ v3 GET retrieve one object"""
+        new_state = State(name="California")
+        models.storage.new(new_state)
+        new_state.save()
+        first_state_id = list(models.storage.all("State").values())[0].id
+        self.assertEqual(models.storage.get(
+            "State", first_state_id).__class__.__name__, 'State')
+        temp_stdout1 = StringIO()
+        with contextlib.redirect_stdout(temp_stdout1):
+            print("First state: {}".format(models.storage.get("State",
+                                                              first_state_id)))
+        o = temp_stdout1.getvalue().strip()
+        self.assertIn(first_state_id, o)
+
+    def test_dbs_count(self):
+        """ test v3 count storage """
+        self.assertIs(type(models.storage.count()), int)
+        self.assertIs(type(models.storage.count("State")), int)
+        temp1 = StringIO()
+        with contextlib.redirect_stdout(temp1):
+            print(models.storage.count())
+        output1 = temp1.getvalue().strip()
+        temp2 = StringIO()
+        with contextlib.redirect_stdout(temp2):
+            print(models.storage.count("State"))
+        output2 = temp2.getvalue().strip()
+        self.assertTrue(output1 >= output2)
+
+
+if __name__ == "__main__":
+    unittest.main()
