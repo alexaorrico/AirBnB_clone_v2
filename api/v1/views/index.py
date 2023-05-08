@@ -15,7 +15,6 @@ from models import storage
 def return_json():
     return jsonify(status="OK")
 
-
 @app_views.route("/stats")
 def get_stats():
     # Create an empty dict to be returned as json
