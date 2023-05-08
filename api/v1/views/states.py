@@ -5,6 +5,7 @@ from flask import jsonify, request, abort
 from models import storage
 from models.state import State
 
+
 @app_views.route("/states", strict_slashes=False)
 def get_all_states():
     # Return json versions of all states
@@ -22,7 +23,8 @@ def get_one_state(state_id):
         abort(404)
 
 
-@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["DELETE"],
+                 strict_slashes=False)
 def delete_one_state(state_id):
     # Delete a state using the delete method
     to_delete = storage.get(State, state_id)
