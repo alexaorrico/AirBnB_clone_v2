@@ -6,7 +6,6 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Retrieve an object from a file, a database etc...
 * Do operations on objects (count, compute stats, etc...)
 * Update attributes of an object
-* Destroy an object
 
 ## Table of Content
 * [Environment](#environment)
@@ -14,6 +13,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
+* [Resources](#resources)
 * [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
@@ -149,6 +149,9 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
+## Resources
+ChatGPT chat links for personal use
+Python Blueprints Folder: https://chat.openai.com/c/b52458ce-0945-4cdb-9420-56a0402d92da
 
 ## Bugs
 No known bugs at this time. 
@@ -156,6 +159,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
+Olamide Olanrewaju [LinkedIn](https://www.linkedin.com/in/olyray/) / [Twitter](https://twitter.com/olanrewajuolam6)
 
 Second part of Airbnb: Joann Vuong
 ## License

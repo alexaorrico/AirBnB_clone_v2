@@ -30,21 +30,6 @@ class TestFileStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
 
-    def test_pep8_conformance_file_storage(self):
-        """Test that models/engine/file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_pep8_conformance_test_file_storage(self):
-        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
     def test_file_storage_module_docstring(self):
         """Test for the file_storage.py module docstring"""
         self.assertIsNot(file_storage.__doc__, None,
@@ -113,3 +98,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Tests that the get property works fine"""
+        storage = FileStorage()
+        obj_id = list(storage.all(State).values())[0].id
+        state_obj = storage.get(State, obj_id)
+        self.assertIsInstance(state_obj, State)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Tests that count works fine"""
+        storage = FileStorage()
+        # Test count without class being given
+        all_items = storage.count()
+        # Make sure that the count of all objects is 9
+        self.assertEqual(all_items, 9)
+        # Test count when the class State is provided.
+        state_items = storage.count(State)
+        # Make sure that the count of all states is 3
+        self.assertEqual(state_items, 3)

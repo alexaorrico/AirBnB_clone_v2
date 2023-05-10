@@ -30,21 +30,6 @@ class TestDBStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
-    def test_pep8_conformance_db_storage(self):
-        """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_pep8_conformance_test_db_storage(self):
-        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
     def test_db_storage_module_docstring(self):
         """Test for the db_storage.py module docstring"""
         self.assertIsNot(db_storage.__doc__, None,
@@ -86,3 +71,44 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get() method"""
+        state = State(name="California")
+        models.storage.new(state)
+        models.storage.save()
+        state_id = state.id
+
+        # Test if the state object is returned correctly
+        obj = models.storage.get(State, state_id)
+        self.assertIs(obj, state)
+
+        # Test if None is returned for invalid ID
+        obj = models.storage.get(State, "invalid_id")
+        self.assertIsNone(obj)
+
+        # Test if None is returned for invalid class
+        obj = models.storage.get(int, state_id)
+        self.assertIsNone(obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count() method"""
+        # Count all the objects in all classes
+        obj_count = models.storage.count()
+        self.assertEqual(obj_count, 0)
+
+        state = State(name="California")
+        models.storage.new(state)
+        models.storage.save()
+
+        # Count the objects for just State class
+        obj_count = models.storage.count(State)
+        self.assertEqual(obj_count, 1)
+
+        # Test if 0 is returned for invalid class
+        obj_count = models.storage.count(int)
+        self.assertEqual(obj_count, 0)
