@@ -40,7 +40,7 @@ def delete_amenity(amenity_id):
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 @swag_from('documentation/amenity/create_amenity.yml', methods=['POST'])
 def create_amenity():
-    request_data = request.get_json
+    request_data = request.get_json()
     if not request_data:
         abort(400, description='Not a JSON')
 
@@ -60,12 +60,12 @@ def update_amenity(amenity_id):
     if not amenity:
         abort(404)
 
-    request_data = request.get_json
+    request_data = request.get_json()
     if not request_data:
         abort(400, description='Not a JSON')
 
     ignored_keys = ['id', 'created_at', 'updated_at']
-    for key, value in amenity:
+    for key, value in request_data.items():
         if key not in ignored_keys:
             setattr(amenity, key, value)
     storage.save()

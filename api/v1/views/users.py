@@ -40,7 +40,7 @@ def delete_user(user_id):
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 @swag_from('documentation/user/create_user.yml', methods=['POST'])
 def create_user():
-    request_data = request.get_json
+    request_data = request.get_json()
     if not request_data:
         abort(400, description='Not a JSON')
 
@@ -62,12 +62,12 @@ def update_user(user_id):
     if not user:
         abort(404)
 
-    request_data = request.get_json
+    request_data = request.get_json()
     if not request_data:
         abort(400, description='Not a JSON')
 
     ignored_keys = ['id', 'email', 'created_at', 'updated_at']
-    for key, value in user:
+    for key, value in request_data.items():
         if key not in ignored_keys:
             setattr(user, key, value)
     storage.save()

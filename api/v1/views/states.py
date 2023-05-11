@@ -59,7 +59,7 @@ def state_update(state_id):
     if not state:
         abort(404)
 
-    request_data = request.get_json
+    request_data = request.get_json()
     if not request_data:
         abort(400, description='Not a JSON')
 
