@@ -160,7 +160,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Mwaura Mbugua - [Github](https://github.com/MwauratheAlex) / [Twitter](https://twitter.com/mwaurambugua_)
 
 Second part of Airbnb: Joann Vuong
-
 Third part of Airbnb: Mwaura Mbugua
 ## License
 Public Domain. No copy write protection. 
