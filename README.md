@@ -155,8 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Samuel Senerwa - [Github](https://github.com/samuelsenerwa)
-Samuel Mugane - [Github](https://github.com/mugane-dj)
 
-Second part of Airbnb: Joann Vuong
+Samuel Mugane - [Github](https://github.com/mugane-dj)
 ## License
 Public Domain. No copy write protection. 
