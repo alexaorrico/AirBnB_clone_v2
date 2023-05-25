@@ -1032,6 +1032,7 @@ guillaume@ubuntu:~/AirBnB_v3$
 ## Authors
 ---
 -   [Alvin](https://github.com/vpnchengo)
+-  [GiddyLesGid](https://github.com/GiddyLesGid)
 - [Alexa Orrico](https://github.com/alexaorrico)
 - [Jennifer Huang ](https://github.com/jhuang10123) 
 
