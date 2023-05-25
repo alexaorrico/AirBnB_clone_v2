@@ -113,3 +113,74 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """ Test that get gets an object with id or none if not found """
+
+        storage = FileStorage()
+        s1 = State()
+        s2 = State()
+
+        storage.new(s1)
+        storage.new(s2)
+
+        self.assertTrue(s1 is storage.get("State", s1.id))
+        self.assertTrue(s2 is storage.get("State", s2.id))
+
+        p1 = Place()
+        u1 = User()
+
+        storage.new(p1)
+        storage.new(u1)
+
+        self.assertTrue(u1 is storage.get("User", u1.id))
+        self.assertTrue(p1 is storage.get("Place", p1.id))
+
+        self.assertTrue(storage.get(State, "1234") is None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_no_args(self):
+        """ test get with no args """
+
+        storage = FileStorage()
+        with self.assertRaises(TypeError):
+            storage.get()
+        with self.assertRaises(TypeError):
+            storage.get("State")
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """ Test the count method for all objects"""
+
+        storage = FileStorage()
+        count = storage.count()
+
+        self.assertTrue(type(count) is int)
+        self.assertEqual(count, 7)
+
+        p1 = Place()
+        storage.new(p1)
+        s1 = State()
+        storage.new(s1)
+
+        count = storage.count()
+        self.assertEqual(count, 9)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_args(self):
+        """ test the count method for particular object """
+
+        storage = FileStorage()
+        count = storage.count("State")
+
+        self.assertEqual(count, 2)
+        self.assertEqual(storage.count("Place"), 2)
+
+        s1 = State()
+        storage.new(s1)
+        p1 = Place()
+        storage.new(p1)
+
+        self.assertEqual(storage.count("State"), 3)
+        self.assertEqual(storage.count("Place"), 3)
