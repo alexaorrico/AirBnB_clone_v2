@@ -564,7 +564,7 @@ guillaume@ubuntu:~/AirBnB_v3$ curl -X GET http://0.0.0.0:5000/api/v1/states/fead
 guillaume@ubuntu:~/AirBnB_v3$ 
 
 ```
-### [7. City](### [8. City](https://github.com/vpnchengo/AirBnB_clone_v3/blob/master/api/v1/views/cities.py))
+### [7. City](https://github.com/vpnchengo/AirBnB_clone_v3/blob/master/api/v1/views/cities.py)
 
 Same as  `State`, create a new view for  `City`  objects that handles all default RESTFul API actions:
 
@@ -1035,5 +1035,7 @@ guillaume@ubuntu:~/AirBnB_v3$
 - [Alexa Orrico](https://github.com/alexaorrico)
 - [Jennifer Huang ](https://github.com/jhuang10123) 
 
+## License
 
+Public Domain. No copy write protection.
 
