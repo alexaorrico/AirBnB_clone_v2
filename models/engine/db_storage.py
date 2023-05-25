@@ -73,11 +73,8 @@ class DBStorage:
         If no class is passed, returns the count of all objects in storage.
         """
         if cls is not None:
-            objs = self.all(cls)
-            return len(objs)
-        
-        objs = self.all()
-        return len(objs)
+            return len(self.all(cls))
+        return len(self.all())
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
