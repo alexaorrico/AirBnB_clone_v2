@@ -48,6 +48,32 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
+    def get(self, cls, id):
+        """method to retrieve one object:
+        Returns the object based on the class and its ID, or None if not found
+        """
+        if cls not in classes.values():
+            return None
+        all_cls = models.storage.all(cls)
+        for value in all.cls.values():
+            if value.id == id:
+                return value
+        return None
+
+    def count(self, cls=None):
+        """method to count the number of objects in storage:
+        Returns the number of objects in storage matching the given class
+        If no class is passed, returns the count of all objects in storage.
+        """
+        all_clss = classes.values()
+        if cls is None:
+            count = 0
+            for clas in all_clss:
+                count += len(models.storage.all(clas).values())
+        count = len(models.storage.all(cls).values())
+
+        return count
+
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
