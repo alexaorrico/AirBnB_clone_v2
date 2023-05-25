@@ -117,19 +117,30 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_returns_a_single_obj(self):
         """Test that get retrieves an object by id from file.json"""
-        obj_id = list(models.storage.all(State).values())[0].id
-        self.assertEqual(len(models.storage.get(obj_id)), 1)
+        storage = FileStorage()
+        obj_id = list(storage.all(State).values())[0].id
+        obj = storage.get(State, obj_id)
+        self.assertEqual(type(obj), State)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_raises_type_error(self):
         """Test that get returns none if id is none"""
+        storage = FileStorage()
         with self.assertRaises(TypeError):
-            models.storage.get()
+            storage.get(cls=State)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_raises_type_error(self):
+        """Test that get returns none if cls is none"""
+        storage = FileStorage()
+        with self.assertRaises(TypeError):
+            storage.get(id="af14c85b-172f-4474-8a30-d4ec21f9795e")
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count_for_all_objects(self):
         """Test that counts returns number of all objects"""
-        all_objs = (models.storage.all())
+        storage = FileStorage()
+        all_objs = storage.all()
         self.assertEqual(models.storage.count(), len(all_objs))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -137,5 +148,6 @@ class TestFileStorage(unittest.TestCase):
         """
         Test that counts returns number of all objects in specified class
         """
-        all_objs = models.storage.all("State")
-        self.assertEqual(models.storage.count("State"), len(all_objs))
+        storage = FileStorage()
+        all_objs = storage.all(State)
+        self.assertEqual(storage.count(State), len(all_objs))
