@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Ekarika Nsemeke - [Github](https://github.com/alexaorrico) / [Gmail](hamatthan@gmail.com)  
+Ekarika Nsemeke - [Github](https://https://github.com/pope-h) / [Gmail](hamatthan@gmail.com)  
 Brian Surtan - [Github](https://github.com/bsltan) / [Gmail](brynsultan@gmail.com)
 
 Second part of Airbnb: Joann Vuong
