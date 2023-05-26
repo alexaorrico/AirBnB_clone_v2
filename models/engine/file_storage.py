@@ -75,7 +75,13 @@ class FileStorage:
             if not found.
         """
         try:
-            print(self.__objects)
+            if cls in classes.values():
+                for key, value in self.__objects.items():
+                    if cls.__name__ == key.split('.')[0]:
+                        if key.split('.')[1] == id:
+                            return value
+            else:
+                return None
         except Exception as e:
             print(e)
 
