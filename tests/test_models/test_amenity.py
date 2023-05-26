@@ -42,7 +42,7 @@ class TestAmenityDocs(unittest.TestCase):
                         "amenity.py needs a docstring")
 
     def test_amenity_class_docstring(self):
-        """Test for the Amenity class docstring"""
+        "i""Test for the Amenity class docstring"""
         self.assertIsNot(Amenity.__doc__, None,
                          "Amenity class needs a docstring")
         self.assertTrue(len(Amenity.__doc__) >= 1,
@@ -79,7 +79,7 @@ class TestAmenity(unittest.TestCase):
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         am = Amenity()
-        print(am.__dict__)
+        # print(am.__dict__)
         new_d = am.to_dict()
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
