@@ -9,3 +9,4 @@ def get_status():
     Endpoint to get API status
     """
     return jsonify({"status": "OK"})
+
