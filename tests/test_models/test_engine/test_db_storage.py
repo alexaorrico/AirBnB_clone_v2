@@ -41,7 +41,7 @@ class TestDBStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+                                    test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -86,3 +86,29 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_returns_a_single_obj(self):
+        """Test that get retrieves an object by id from file.json"""
+        obj_id = list(models.storage.all(State).values())[0].id
+        self.assertEqual(len(models.storage.get(obj_id)), 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_raises_type_error(self):
+        """Test that get returns none if id is none"""
+        with self.assertRaises(TypeError):
+            models.storage.get()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_for_all_objects(self):
+        """Test that counts returns number of all objects"""
+        all_objs = (models.storage.all())
+        self.assertEqual(models.storage.count(), len(all_objs))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_returns_count_if_class_specified(self):
+        """
+        Test that counts returns number of all objects in specified class
+        """
+        all_objs = models.storage.all("State")
+        self.assertEqual(models.storage.count("State"), len(all_objs))
