@@ -154,15 +154,6 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-<<<<<<< HEAD
-<<<<<<< HEAD
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Brian M'Ikiara - [Github](https://github.com/brian-ikiara) / [Twitter](https://twitter.com/brian_ikiara)
-
-Second part of Airbnb: Joann Vuong
-=======
-=======
->>>>>>> 71138959fd41169d68aa54d14d919afb59ffd21f
 #### AirBnB clone - The Console
   - Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
   - Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
@@ -173,10 +164,6 @@ Second part of Airbnb: Joann Vuong
 #### AirBnB clone - The RESTful API
   - Brian M'Ikiara - [Github](https://github.com/brian-ikiara) / [Twitter](https://twitter.com/brian_ikiara)
   - Jonathan Boomni - [Github](https://github.com/Boomni/AirBnB_clone_v3/boomni) / [Twitter](https://twitter.com/rejoiceoye)
-  
-<<<<<<< HEAD
->>>>>>> origin/boomni
-=======
->>>>>>> 71138959fd41169d68aa54d14d919afb59ffd21f
+
 ## License
 Public Domain. No copy write protection. 
