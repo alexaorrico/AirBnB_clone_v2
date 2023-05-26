@@ -151,7 +151,7 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 
 ## Bugs
-No known bugs at this time. 
+No known bugs at this time. The codebase is clean.
 
 ## Authors
 Samuel Senerwa - [Github](https://github.com/samuelsenerwa)
