@@ -70,10 +70,12 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(
+            os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+        all = models.storage.all()
+        self.assertIs(type(all), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
@@ -86,3 +88,31 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_db_storage_get_state(self):
+        """Tests the method of getting Classes state in the db"""
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+            obj = models.storage.get(classes.get("State"), '12313312')
+            self.assertTrue(obj is None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_db_storage_get(self):
+        """Tests the method of get"""
+        state = State()
+        state.name = 'State B'
+        models.storage.new(state)
+        models.storage.save()
+        models.storage.reload()
+        state_1 = models.storage.get(State, state.id)
+        self.assertEqual(state.id, state_1.id)
+
+    @unittest.skipIf(models.storage_t != 'db', 'not testing db storage')
+    def test_db_storage_count(self):
+        """Test the count method"""
+        state = State()
+        state.name = 'State Test'
+        models.storage.new(state)
+        models.storage.save()
+        models.storage.reload()
+        self.assertTrue(models.storage.count(State) >= 1)
