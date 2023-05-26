@@ -89,15 +89,15 @@ class TestFileStorage(unittest.TestCase):
         storage = models.storage
         s1 = State()
         s2 = State()
-        s1.name = "Lagos"
-        s2.name = "Delta"
+        s1.name = "kogi"
+        s2.name = "Abuja"
         
         found_l = False
         found_d = False
         for obj in storage.all(State).values():
-            if obj.name == "Lagos":
+            if obj.name == "kogi":
                 found_l = True
-            if obj.name == "Delta":
+            if obj.name == "Abuja":
                 found_d = True
                 
         if not found_l:
