@@ -20,6 +20,7 @@ def teardown(self):
     """
     storage.close()
 
+
 # Defaults
 default_host = "0.0.0.0"
 default_port = 5000
@@ -31,3 +32,4 @@ port = int(getenv("HBNB_API_PORT", default_port))
 
 if __name__ == '__main__':
     app.run(host=host, port=port, threaded=True)
+
