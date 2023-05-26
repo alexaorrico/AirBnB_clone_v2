@@ -15,6 +15,7 @@ def get_status():
     """
     return jsonify({"status": "OK"})
 
+
 @app_views.route("/stats")
 def storage_counts():
     '''
