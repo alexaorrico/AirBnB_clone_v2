@@ -14,7 +14,7 @@ from flask import request
 from werkzeug.exceptions import BadRequest, NotFound
 
 
-@app_views.route("/states", strict_slashes=False)
+@app_views.route("/states", methods=["GET"], strict_slashes=False)
 def get_all_states():
     """
     Retrieves the list of all State objects.
