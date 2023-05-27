@@ -28,13 +28,22 @@ def page_not_found(e):
     return jsonify(status), 404
 
 # Defaults
-default_host = "0.0.0.0"
-default_port = 5000
+#default_host = "0.0.0.0"
+#default_port = 5000
 
 # Host and port configs
-host = getenv("HBNB_API_HOST", default_host)
-port = int(getenv("HBNB_API_PORT", default_port))
+#host = getenv("HBNB_API_HOST", default_host)
+#port = int(getenv("HBNB_API_PORT", default_port))
 
 
 if __name__ == '__main__':
+    try:
+        host = os.environ.get('HBNB_API_HOST')
+    except:
+        host = '0.0.0.0'
+
+    try:
+        port = os.environ.get('HBNB_API_PORT')
+    except:
+        port = '5000'
     app.run(host=host, port=port, threaded=True)
