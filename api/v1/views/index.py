@@ -17,7 +17,7 @@ def get_status():
 
 
 @app_views.route('/stats')
-def storage_count():
+def storage_counts():
     """return the count of all the classes contained in models
     """
     cls_counts = {
