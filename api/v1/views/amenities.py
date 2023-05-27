@@ -11,7 +11,6 @@ from flask import jsonify
 from api.v1.views import app_views
 from flask import abort
 from flask import request
-from werkzeug.exceptions import BadRequest, NotFound
 
 
 @app_views.route("/amenities", methods=["GET"], strict_slashes=False)
