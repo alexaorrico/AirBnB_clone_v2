@@ -5,9 +5,7 @@ from models.place import Place
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
-from models.state import State
 from models.user import User
-from models.amenity import Amenity
 
 
 @app_views.route('cities/<city_id>/places', methods=['GET'],
@@ -48,24 +46,26 @@ def delete_place(place_id):
                  strict_slashes=False)
 def post_city(city_id):
     """Create a new place object"""
-    data = request.get_json()
     city = storage.get(City, city_id)
     if not city:
         abort(404)
+
+    data = request.get_jason()
     if not data:
         abort(400, description="Not a JSON")
 
-    if 'user_id' not in data:
+    user_id = data.get('user_id')
+    if not user_id:
         abort(400, disctionary="Missing user_id")
 
-    user = storage.get(User, data['user_id'])
+    user = storage.get(User, user_id)
     if not user:
         abort(404)
 
     if 'name' not in data:
         abort(400, description="Missing name")
 
-    new_place = Place(**data)
+    new_place = Place(city_id=city_id, user_id=user_id, **data)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
 
