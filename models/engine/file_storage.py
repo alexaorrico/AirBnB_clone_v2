@@ -79,7 +79,7 @@ class FileStorage:
         """
         for clss in classes:
             if cls is classes[clss] or cls is clss:
-                obj = self.__session.query(cls).get(id)
+                obj = self.__objects(cls).get(id)
                 if obj and obj.id == id:
                     return obj
         return None
@@ -93,6 +93,6 @@ class FileStorage:
             If no class is passed, returns the count of all objects in storage
         """
         if cls in classes.values():
-            return len(self.__session.query(cls))
+            return len(self.__object(cls))
 
         return len(self.all())
