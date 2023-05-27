@@ -1,16 +1,16 @@
 #!/usr/bin/python3
 """
-Module contains all api routes for the AirBnB clone project
+Module contains all API routes for the AirBnB clone project
 """
 
-#from os import getenv
-import os
+from os import getenv
 from models import storage
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
+from flask_cors import CORS
 from api.v1.views import app_views
 
-
 app = Flask(__name__)
+CORS(app, origin="0.0.0.0")
 app.register_blueprint(app_views)
 
 
@@ -21,30 +21,16 @@ def teardown(self):
     """
     storage.close()
 
+
 @app.errorhandler(404)
-def page_not_found(e):
-    """handles the 404 error
-    """
-    status = {"error": "Not found"}
-    return jsonify(status), 404
-
-# Defaults
-#default_host = "0.0.0.0"
-#default_port = 5000
-
-# Host and port configs
-#host = getenv("HBNB_API_HOST", default_host)
-#port = int(getenv("HBNB_API_PORT", default_port))
+def not_found(error):
+    """Handles the 404 error"""
+    return make_response(jsonify({'error': 'Not Found'}), 404)
 
 
 if __name__ == '__main__':
-    try:
-        host = os.environ.get('HBNB_API_HOST')
-    except:
-        host = '0.0.0.0'
-
-    try:
-        port = os.environ.get('HBNB_API_PORT')
-    except:
-        port = '5000'
-    app.run(host=host, port=port, threaded=True)
+    app.run(
+        host=getenv("HBNB_API_HOST", "0.0.0.0"),
+        port=int(getenv("HBNB_API_PORT", "5000")),
+        threaded=True
+    )
