@@ -11,7 +11,6 @@ from flask import jsonify
 from api.v1.views import app_views
 from flask import abort
 from flask import request
-from werkzeug.exceptions import BadRequest, NotFound
 
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
@@ -59,15 +58,15 @@ def create_state_obj():
     try:
         body = request.get_json()
     except Exception:
-        raise BadRequest("Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
 
     if "name" not in body.keys():
-        raise BadRequest("Missing name")
+        return jsonify({"error": "Missing name"}), 400
     obj = State(name=body.get("name"))
     storage.new(obj)
     storage.save()
     state = storage.get(State, obj.id)
-    return jsonify(state.to_dict()), 200
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route("/states/<state_id>", methods=["PUT"],
@@ -79,16 +78,16 @@ def update_state_obj(state_id):
     try:
         body = request.get_json()
     except Exception:
-        raise BadRequest("Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
 
     for key in body.keys():
         if key not in dir(State):
             msg = "Attribute {} not found in State object".format(key)
-            raise BadRequest(msg)
+            return jsonify(msg), 400
 
     state_obj = storage.get(State, state_id)
     if state_obj is None:
-        raise NotFound()
+        abort(404)
 
     new_name = body.get("name")
     state_obj.name = new_name
