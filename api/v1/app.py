@@ -20,6 +20,12 @@ def teardown(self):
     """
     storage.close()
 
+@app.errorhandler(404)
+def page_not_found(e):
+    """handles the 404 error
+    """
+    status = {"error": "Not found"}
+    return jsonify(status), 404
 
 # Defaults
 default_host = "0.0.0.0"
