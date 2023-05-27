@@ -5,6 +5,9 @@ from models.place import Place
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+from models.state import State
+from models.user import User
+from models.amenity import Amenity
 
 
 @app_views.route('cities/<city_id>/places', methods=['GET'],
