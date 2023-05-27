@@ -76,9 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-	""" Returns the object based on the class and its ID, or None if not found """
-	
-	if type(cls) is str:
+        if type(cls) is str:
             cls = eval(cls)
 
         try:
@@ -89,8 +87,7 @@ class DBStorage:
         return obj
 
     def count(self, cls=None):
-        """ Returns the number of objects in storage """
-
+        """Returns the number of objects in storage"""
         if cls:
             if type(cls) is str:
                 cls = eval(cls)
