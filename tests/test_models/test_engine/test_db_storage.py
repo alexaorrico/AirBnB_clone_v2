@@ -86,3 +86,54 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """ Test that get gets an object with id or none if not found """
+
+        storage = models.storage
+        s1 = State()
+        s2 = State()
+        s1.name = "Lagos"
+        s2.name = "Kaduna"
+
+        found_l = False
+        found_d = False
+        for obj in storage.all(State).values():
+            if obj.name == "Lagos":
+                found_l = True
+            if obj.name == "Kaduna":
+                found_d = True
+
+        if not found_l:
+            storage.new(s1)
+            storage.save()
+            self.assertTrue(s1 is storage.get("State", s1.id))
+        if not found_d:
+            storage.new(s2)
+            storage.save()
+            self.assertTrue(s2 is storage.get("State", s2.id))
+
+        storage.close()
+
+        self.assertTrue(storage.get(State, "1234") is None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_no_args(self):
+        """ test get with no args """
+
+        storage = models.storage
+        with self.assertRaises(TypeError):
+            storage.get()
+        with self.assertRaises(TypeError):
+            storage.get("State")
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """ Test the count method for all objects"""
+
+        storage = models.storage
+        count = storage.count()
+
+        self.assertTrue(type(count) is int)
+        self.assertEqual(count, 2)
