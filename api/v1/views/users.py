@@ -37,7 +37,7 @@ def user_delete(user_id):
 @app_views.route('/users', methods=['POST'])
 def user_post():
     """POST method handler for user object"""
-    if request.is_json:
+    if not request.is_json:
         return "Not a JSON", 400
     data = request.get_json()
     email = data.get('email')
