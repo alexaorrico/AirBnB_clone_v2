@@ -3,11 +3,11 @@
 from datetime import datetime
 import inspect
 import models
+import os
 import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
-from unittest.mock import patch
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
@@ -86,7 +86,7 @@ class TestBaseModel(unittest.TestCase):
         tic = datetime.now()
         inst1 = BaseModel()
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at and inst1.created_at <= toc)
+        self.assertTrue(tic <= inst1.created_at <= toc)
         time.sleep(1e-4)
         tic = datetime.now()
         inst2 = BaseModel()
