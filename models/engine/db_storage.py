@@ -50,17 +50,6 @@ class DBStorage:
         Returns:
             A dictionary of objects queried from the database session.
         """
-
-    def all(self, cls=None):
-        """
-        Queries the current database session for objects.
-
-        Args:
-            cls: Class representing the object type.
-
-        Returns:
-            A dictionary of objects queried from the database session.
-        """
         new_dict = {}
         if cls:
             objs = self.__session.query(cls).all()

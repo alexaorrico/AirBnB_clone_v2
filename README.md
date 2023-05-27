@@ -164,6 +164,6 @@ No known bugs at this time.
 #### AirBnB clone - The RESTful API
   - Brian M'Ikiara - [Github](https://github.com/brian-ikiara) / [Twitter](https://twitter.com/brian_ikiara)
   - Jonathan Boomni - [Github](https://github.com/Boomni/AirBnB_clone_v3/boomni) / [Twitter](https://twitter.com/rejoiceoye)
-  
+
 ## License
 Public Domain. No copy write protection. 
