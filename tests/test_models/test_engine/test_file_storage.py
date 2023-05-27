@@ -113,3 +113,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_file_storage_get(file_storage):
+        """Test the 'get' method in FileStorage."""
+        obj = MyModel(name="Test", description="Test object")
+        file_storage.save(obj)
+        retrieved_obj = file_storage.get(MyModel, obj.id)
+        assert retrieved_obj == obj
+
+    def test_file_storage_get_not_found(file_storage):
+        """Test the 'get' method in FileStorage when object not found."""
+        retrieved_obj = file_storage.get(MyModel, "nonexistent_id")
+        assert retrieved_obj is None
+
+    def test_file_storage_count(file_storage):
+        """Test the 'count' method in FileStorage."""
+        obj1 = MyModel(name="Test1", description="Test object 1")
+        obj2 = MyModel(name="Test2", description="Test object 2")
+        file_storage.save(obj1)
+        file_storage.save(obj2)
+        assert file_storage.count() == 2
+        assert file_storage.count(MyModel) == 2
