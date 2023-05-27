@@ -2,7 +2,7 @@
 '''
     RESTful API for class User
 '''
-from flask import Flask, jsonify, abort, request
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models.user import User
