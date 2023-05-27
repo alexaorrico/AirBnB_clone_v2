@@ -87,7 +87,7 @@ def update_amenity_obj(amenity_id):
 
     amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj is None:
-        raise NotFound()
+        abort(404)
 
     new_name = body.get("name")
     amenity_obj.name = new_name
