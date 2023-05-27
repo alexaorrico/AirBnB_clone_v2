@@ -28,12 +28,13 @@ def user_delete(user_id):
     user = storage.get(User, user_id)
     if not user:
         abort(404)
-    storage.delete(user)
-    storage.save()
-    return jsonify({})
+    else:
+        storage.delete(user)
+        storage.save()
+        return jsonify({})
 
 
-@app_views.route('/users/', methods=['POST'])
+@app_views.route('/users', methods=['POST'])
 def user_post():
     """POST method handler for user object"""
     if request.is_json:
@@ -49,7 +50,7 @@ def user_post():
     user.email = email
     user.password = password
     user.save()
-    return jsonify({})
+    return jsonify({}), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
