@@ -18,11 +18,11 @@ def closeDB(arg):
     storage.close()
 
 @app.errorhandler(404)
-def not_found():
+def not_found(e):
     """
     method to handle 404 errors
     """
-    return jsonify({"error": "Not found"}), 404
+    return (jsonify({"error": "Not found"}), 404)
 
 if __name__ == '__main__':
     host = os.getenv('HBNB_API_HOST')
