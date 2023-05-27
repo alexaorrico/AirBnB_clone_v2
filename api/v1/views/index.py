@@ -18,7 +18,8 @@ def get_status():
 
 @app_views.route('/stats')
 def count():
-    """return the count of all the classes contained in models
+    """
+    Return the count of all the classes contained in models
     """
     total = {}
     classes = {
