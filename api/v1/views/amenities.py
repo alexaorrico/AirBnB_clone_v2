@@ -6,7 +6,7 @@ objects from Amenity model.
 
 
 from models import storage
-from models.state import State
+from models.amenity import Amenity
 from flask import jsonify
 from api.v1.views import app_views
 from flask import abort
@@ -26,11 +26,11 @@ def get_all_amenities():
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET"],
                  strict_slashes=False)
-def get_amenity_by_id(id):
+def get_amenity_by_id(amenity_id):
     """
     Retrieves a Amenity object by id.
     """
-    obj = storage.get(Amenity, id)
+    obj = storage.get(Amenity, amenity_id)
     if obj:
         return jsonify(obj.to_dict())
     else:
@@ -39,11 +39,11 @@ def get_amenity_by_id(id):
 
 @app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
                  strict_slashes=False)
-def delete_amenity_by_id(id):
+def delete_amenity_by_id(amenity_id):
     """
     Deletes a Amenity object by id.
     """
-    obj = storage.get(Amenity, id)
+    obj = storage.get(Amenity, amenity_id)
     if obj:
         obj.delete()
         return jsonify({}), 200
@@ -72,7 +72,7 @@ def create_amenity_obj():
 
 @app_views.route("/amenities/<amenity_id>", methods=["PUT"],
                  strict_slashes=False)
-def update_amenity_obj(id):
+def update_amenity_obj(amenity_id):
     """
     Updates a Amenity object.
     """
@@ -86,7 +86,7 @@ def update_amenity_obj(id):
             msg = "Attribute {} not found in Amenity object".format(key)
             raise BadRequest(msg)
 
-    amenity_obj = storage.get(Amenity, id)
+    amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj is None:
         raise NotFound()
 
