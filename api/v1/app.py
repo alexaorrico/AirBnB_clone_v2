@@ -3,7 +3,7 @@
 Module contains all api routes for the AirBnB clone project
 """
 
-#from os import getenv
+
 import os
 from models import storage
 from flask import Flask, jsonify
@@ -21,20 +21,13 @@ def teardown(self):
     """
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     """handles the 404 error
     """
     status = {"error": "Not found"}
     return jsonify(status), 404
-
-# Defaults
-#default_host = "0.0.0.0"
-#default_port = 5000
-
-# Host and port configs
-#host = getenv("HBNB_API_HOST", default_host)
-#port = int(getenv("HBNB_API_PORT", default_port))
 
 
 if __name__ == '__main__':
