@@ -25,10 +25,11 @@ class State(BaseModel, Base):
     if models.storage_t != "db":
         @property
         def cities(self):
-            """getter for list of city instances related to the state"""
-            city_list = []
+            """Return list of city instances if City.state_id==current State.id
+            FileStorage relationship between State and City"""
+            list_cities = []
             all_cities = models.storage.all(City)
             for city in all_cities.values():
                 if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+                    list_cities.append(city)
+            return list_cities
