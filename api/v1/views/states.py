@@ -24,24 +24,26 @@ def get_all_states():
     return jsonify(states)
 
 
-@app_views.route("/states/<id>", methods=["GET"], strict_slashes=False)
-def get_state_by_id(id):
+@app_views.route("/states/<state_id>", methods=["GET"],
+                 strict_slashes=False)
+def get_state_by_id(state_id):
     """
     Retrieves a State object by id.
     """
-    obj = storage.get(State, id)
+    obj = storage.get(State, state_id)
     if obj:
         return jsonify(obj.to_dict())
     else:
         abort(404)
 
 
-@app_views.route("/states/<id>", methods=["DELETE"], strict_slashes=False)
-def delete_state_by_id(id):
+@app_views.route("/states/<state_id>", methods=["DELETE"],
+                 strict_slashes=False)
+def delete_state_by_id(state_id):
     """
     Deletes a State object by id.
     """
-    obj = storage.get(State, id)
+    obj = storage.get(State, state_id)
     if obj:
         obj.delete()
         return jsonify({}), 200
@@ -68,8 +70,9 @@ def create_state_obj():
     return jsonify(state.to_dict()), 200
 
 
-@app_views.route("/states/<id>", methods=["PUT"], strict_slashes=False)
-def update_state_obj(id):
+@app_views.route("/states/<state_id>", methods=["PUT"],
+                 strict_slashes=False)
+def update_state_obj(state_id):
     """
     Updates a State object.
     """
@@ -83,7 +86,7 @@ def update_state_obj(id):
             msg = "Attribute {} not found in State object".format(key)
             raise BadRequest(msg)
 
-    state_obj = storage.get(State, id)
+    state_obj = storage.get(State, state_id)
     if state_obj is None:
         raise NotFound()
 
