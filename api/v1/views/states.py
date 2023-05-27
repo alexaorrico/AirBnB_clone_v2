@@ -13,23 +13,16 @@ def state_get(state_id=None):
     """
     get all states or a state if state_id is specified
     """
-    states = storage.all(State).values()
-    states = [state.to_dict() for state in states]
-    state = None
     if state_id:
-        for _state in states:
-            if _state.get('id') == state_id:
-                state = _state
-                break
-        if state is None:
+        state = storage.get(State, state_id)
+        if state:
+            return jsonify(state.to_dict())
+        else:
             abort(404)
-    data = None
-    if state:
-        data = state
     else:
-        data = states
-
-    return jsonify(data)
+        states = storage.all(State).values()
+        states = [state.to_dict() for state in states]
+        return jsonify(states)
 
 
 @app_views.route('/states/<state_id>', methods=["DELETE"])
@@ -39,7 +32,6 @@ def state_delete(state_id):
     will delete a state with the specified id.
     """
     state = storage.get(State, state_id)
-    state = None
 
     if state:
         storage.delete(state)
