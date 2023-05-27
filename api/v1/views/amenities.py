@@ -59,15 +59,15 @@ def create_amenity_obj():
     try:
         body = request.get_json()
     except Exception:
-        raise BadRequest("Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
 
     if "name" not in body.keys():
-        raise BadRequest("Missing name")
+        return jsonify({"error": "Missing name"}), 400
     obj = Amenity(name=body.get("name"))
     storage.new(obj)
     storage.save()
     amenity = storage.get(Amenity, obj.id)
-    return jsonify(amenity.to_dict()), 200
+    return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["PUT"],
@@ -84,7 +84,7 @@ def update_amenity_obj(amenity_id):
     for key in body.keys():
         if key not in dir(Amenity):
             msg = "Attribute {} not found in Amenity object".format(key)
-            raise BadRequest(msg)
+            return jsonify(msg), 400
 
     amenity_obj = storage.get(Amenity, amenity_id)
     if amenity_obj is None:
