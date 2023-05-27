@@ -36,3 +36,37 @@ def retrieve_city_using_cityid(city_id):
     if city:
         return jsonify(city.to_dict())
     abort(404)
+
+
+@app_views.route("/cities/<string:city_id>", methods=['DELETE'],
+                 strict_slashes=False)
+def delete_city_using_cityid(city_id):
+    """
+    Deletes a city using the city id
+    If the city_id is not linked to any City object, raise a 404 error
+    """
+    city = storage.get(City, city_id)
+    if city:
+        city.delete()
+        storage.save()
+        return jsonify({})
+    else:
+        abort(404)
+
+
+@app_views.route("/states/<state_id>/cities", methods=["POST"],
+                 strict_slashes=False)
+def post_city(state_id):
+    """
+    uploads a new city
+    """
+    if not request.get_json():
+        abort(400, "Not a JSON")
+    if 'name' not in request.get_json():
+        abort(400, "Missing name")
+    state = storage.get(State, state_id)
+    form = request.get_json()
+    obj = City(**form)
+    obj.state_id = state.id
+    obj.save()
+    return jsonify(state.to_dict())
