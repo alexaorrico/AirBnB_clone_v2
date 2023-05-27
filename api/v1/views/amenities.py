@@ -68,6 +68,6 @@ def put_amenity(amenity_id):
             if key not in ignore_keys:
                 setattr(amenity, key, value)
         storage.save()
-        return make_response(jsonify(city.to_dict()), 200)
+        return make_response(jsonify(amenity.to_dict()), 200)
     else:
         abort(404)
