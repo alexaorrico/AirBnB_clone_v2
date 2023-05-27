@@ -17,19 +17,15 @@ def get_status():
 
 
 @app_views.route('/stats')
-def count():
+def storage_count():
     """return the count of all the classes contained in models
     """
-    total = {}
-    classes = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "place",
-            "Review": "reviews",
-            "State": "states",
-            "User": "users"
+    cls_counts = {
+            "amenities": storage.count("Amenity"),
+            "cities": storage.count("City"),
+            "places": storage.count("Place"),
+            "reviews": storage.count("Review"),
+            "states": storage.count("State"),
+            "users": storage.count("Place")
             }
-    for cls in classes:
-        count = storage.count(cls)
-        total[classes.get(cls)] = count
-    return jsonify(total)
+    return jsonify(cls_counts)
