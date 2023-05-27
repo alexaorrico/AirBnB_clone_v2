@@ -3,12 +3,8 @@
 Module contains all API routes for the AirBnB clone project
 """
 
-<<<<<<< HEAD
 
-import os
-=======
 from os import getenv
->>>>>>> dev
 from models import storage
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
@@ -26,7 +22,6 @@ def teardown(self):
     """
     storage.close()
 
-<<<<<<< HEAD
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -36,14 +31,12 @@ def page_not_found(e):
     status = {"error": "Not found"}
     return jsonify(status), 404
 
-=======
 
 @app.errorhandler(404)
 def not_found(error):
     """Handles the 404 error"""
     return make_response(jsonify({'error': 'Not Found'}), 404)
 
->>>>>>> dev
 
 if __name__ == '__main__':
     app.run(
