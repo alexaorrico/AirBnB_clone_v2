@@ -7,10 +7,12 @@ from models import storage
 
 app = Flask(__name__)
 
+
 @app.teardown_appcontext
 def teardown_appcontext(exception):
     """Teardown"""
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
