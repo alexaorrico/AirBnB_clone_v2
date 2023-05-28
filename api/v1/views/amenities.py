@@ -32,7 +32,7 @@ def retrieve_amenity_uisng_amenityid(amenity_id):
     Raises a 404 error if the id doesnt match any amenity
     """
     amenity = storage.get(Amenity, amenity_id)
-    # if the amenity object exists
     if amenity:
         return jsonify(amenity.to_dict()), 200
-    abort(404)
+    else:
+        abort(404)
