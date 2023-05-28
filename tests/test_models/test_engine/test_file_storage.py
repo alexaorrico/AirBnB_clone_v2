@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -112,3 +113,39 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_method_existing_object(self):
+        """Test retrieving an existing object using the get method."""
+        state = State(name="Nigeria")
+        state_id = state.id
+        state.save()
+        obj = models.storage.get(State, state_id)
+        self.assertIsNotNone(obj)
+        self.assertIsInstance(obj, State)
+        self.assertEqual(obj.id, state_id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_method_non_existing_object(self):
+        """Test retrieving a non-existing object using the get method."""
+        obj = models.storage.get(State, "non_existing_id")
+        self.assertIsNone(obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_method_all_objects(self):
+        """Test counting all objects using the count method."""
+        count = models.storage.count()
+        self.assertIsNotNone(count)
+        self.assertIsInstance(count, int)
+        self.assertGreaterEqual(count, 0)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_method_objects_of_specific_class(self):
+        """Test counting objects of a specific class using the count method."""
+        state = State(name="Nigeria")
+        state_id = state.id
+        state.save()
+        count = models.storage.count(State)
+        self.assertIsNotNone(count)
+        self.assertIsInstance(count, int)
+        self.assertGreaterEqual(count, 0)
