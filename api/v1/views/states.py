@@ -35,16 +35,16 @@ def retrieve_state(state_id):
         abort(400)
 
 
-@app_views.route("/states/<state_id>",
+@app_views.route("/states/<string:state_id>",
                  methods=["DELETE"], strict_slashes=False)
 def delete_state(state_id):
     """
     Deletes a state using the state id
     Raises a 404 error if the id isnt found
     """
-    state = storage.get(State, state_id)
+    state = storage.get(State, str(state_id))
     if state:
-        storage.delete(state)
+        state.delete()
         storage.save()
         return make_response(jsonify({}), 200)
     else:
