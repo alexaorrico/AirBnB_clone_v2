@@ -54,18 +54,18 @@ def post_city(city_id):
     if not data:
         abort(400, description="Not a JSON")
 
-    user_id = data.get('user_id')
-    if not user_id:
+    if 'user_id' not in data:
         abort(400, disctionary="Missing user_id")
 
-    user = storage.get(User, user_id)
+    user = storage.get(User, data['user_id'])
     if not user:
         abort(404)
 
     if 'name' not in data:
         abort(400, description="Missing name")
 
-    new_place = Place(city_id=city_id, user_id=user_id, **data)
+    data['city_id'] = city_id
+    new_place = Place(**data)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
 
@@ -82,7 +82,7 @@ def put_place(place_id):
         ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
         for key, value in data.items():
             if key not in ignore_keys:
-                setattr(city, key, value)
+                setattr(place, key, value)
         storage.save()
         return make_response(jsonify(place.to_dict()), 200)
     else:
