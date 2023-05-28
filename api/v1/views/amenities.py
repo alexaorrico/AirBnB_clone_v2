@@ -24,7 +24,7 @@ def retrieve_amenity():
     return jsonify(amenities_list)
 
 
-@app_views.route("/amenities/<string:amenity_id>", methods=["GET"],
+@app_views.route("/amenities/<amenity_id>", methods=["GET"],
                  strict_slashes=False)
 def retrieve_amenity_uisng_amenityid(amenity_id):
     """
