@@ -69,7 +69,7 @@ def post_city(state_id):
     obj = City(**form)
     obj.state_id = state.id
     obj.save()
-    return jsonify(state.to_dict())
+    return make_response(jsonify(state.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"],
