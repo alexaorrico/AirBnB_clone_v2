@@ -20,6 +20,7 @@ def cities_get(state_id):
     else:
         abort(404)
 
+
 @app_views.route('/cities/<city_id>', methods=["GET"])
 def city_get(city_id):
     """
@@ -48,7 +49,7 @@ def cities_delete(city_id):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
-def state_post():
+def city_post():
     """
     route handler for creating a new city
     """
@@ -63,7 +64,7 @@ def state_post():
 
 
 @app_views.route('/states/<city_id>', methods=['PUT'])
-def state_put(state_id):
+def city_put(state_id):
     """
     Returns the City object with the status code 200
     """
