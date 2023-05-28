@@ -89,4 +89,5 @@ def put_city_using_cityid(city_id):
                 setattr(city, key, value)
         city.save()
         return make_response(jsonify(city.to_dict()), 200)
-    abort(404)
+    else:
+        abort(404)
