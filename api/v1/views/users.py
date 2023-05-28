@@ -68,4 +68,3 @@ def update_user(user_id):
         setattr(user, k, v)
     user.save()
     return jsonify(user.to_dict()), 200
-

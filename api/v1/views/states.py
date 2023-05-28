@@ -62,4 +62,3 @@ def manipulate_state(state_id):
         return jsonify({}), 200  # DELETE method
 
     return jsonify(state.to_dict()), 200  # GET, PUT method
-
