@@ -12,6 +12,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -82,3 +83,30 @@ class TestFileStorage(unittest.TestCase):
 
     def test_save(self):
         """Test that save properly saves objects to file.json."""
+
+
+class TestGetCountDB(unittest.TestCase):
+    """testing get and count methods"""
+
+    def setUp(self):
+        """initializes new state for testing"""
+        self.state = State()
+        self.state.name = 'California'
+        self.state.save()
+
+    def test_get(self):
+        """check if get method returns state"""
+        real_state = storage.get(State, self.state.id)
+        fake_state = storage.get(State, "12345")
+        no_state = storage.get(State, "")
+        self.assertEqual(real_state, self.state)
+        self.assertNotEqual(fake_state, self.state)
+        self.assertIsNone(no_state)
+
+    def test_count(self):
+        """checks if count method returns correct numbers"""
+        state_count = storage.count(State)
+        all_count = storage.count()
+        self.assertIsNotNone(all_count)
+        self.assertIsInstance(all_count, int)
+        self.assertGreaterEqual(state_count, 0)
