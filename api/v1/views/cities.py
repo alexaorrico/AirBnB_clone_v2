@@ -70,3 +70,23 @@ def post_city(state_id):
     obj.state_id = state.id
     obj.save()
     return jsonify(state.to_dict())
+
+
+@app_views.route("/cities/<city_id>", methods=["PUT"],
+                 strict_slashes=False)
+def put_city_using_cityid(city_id):
+    """
+    updates a city
+    """
+    city = storage.get(City, city_id)
+    if city:
+        if not request.get_json():
+            abort(400, "Not a JSON")
+        update = request.get_json()
+        keys_ignore = ["id", "created_at", "updated_at"]
+        for key, value in update.items():
+            if key not in keys_ignore:
+                setattr(city, key, value)
+        city.save()
+        return jsonify(city.to_dict())
+    abort(404)
