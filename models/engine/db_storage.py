@@ -92,6 +92,6 @@ class DBStorage:
             cls = classes[cls]
             total = self.__session.query(cls).count()
         elif cls is None:
-            for cls in name2class.values():
+            for cls in classes.values():
                 total += self.__session.query(cls).count()
         return total
