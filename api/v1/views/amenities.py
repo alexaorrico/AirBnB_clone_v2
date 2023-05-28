@@ -22,3 +22,17 @@ def retrieve_amenity():
     for amenity in amenities:
         amenities_list.append(amenity.to_dict())
     return jsonify(amenities_list)
+
+
+@app_views.route("/amenities/<string:amenity_id>", methods=["GET"],
+                 strict_slashes=False)
+def retrieve_amenity_uisng_amenityid(amenity_id):
+    """
+    Retrieves an amenity using the amenity id
+    Raises a 404 error if the id doesnt match any amenity
+    """
+    amenity = storage.get(Amenity, amenity_id)
+    # if the amenity object exists
+    if amenity:
+        return jsonify(amenity.to_dict())
+    abort(404)
