@@ -122,4 +122,3 @@ def post_places_search():
         return jsonify(confirmed_places)
     else:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-
