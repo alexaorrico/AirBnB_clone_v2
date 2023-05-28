@@ -16,10 +16,7 @@ app = Flask(__name__)
 @app.teardown_appcontext
 def teardown_appcontext(Exception):
     """Clear the storage and end the current session."""
-    try:
-        storage.close()
-    except Exception:
-        exit(1)
+    storage.close()
 
 
 @app.errorhandler(404)
