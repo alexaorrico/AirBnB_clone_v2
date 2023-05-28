@@ -1,6 +1,9 @@
 #!/usr/bin/python3
-"""The module for app_views"""
+"""Flask RESTful API.
 
+This houses the main body of our Flask app.
+
+"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -12,14 +15,16 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_api_status():
+    """Return a JSON object that confirms the API's status."""
     status = {"status": "OK"}
     return jsonify(status)
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def get_api_stats():
+    """Return a JSON object showing the Session's statistics."""
     stats = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
