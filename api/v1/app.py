@@ -21,6 +21,7 @@ def close(cls):
     """close"""
     storage.close()
 
+
 if __name__ == "__main__":
     """Initialize api"""
     app.run(host=host, port=int(port), threaded=True)
