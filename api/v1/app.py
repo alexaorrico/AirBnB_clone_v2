@@ -30,4 +30,4 @@ if __name__ == '__main__':
     app_port = int(os.getenv('HBNB_API_POST', 500))
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
     app.register_blueprint(app_views, url_prefix="/api/v1")
-    app.run(host=app_host, port=app_port, threaded=True, debug=True)
+    app.run(host=app_host, port=app_port, threaded=True)
