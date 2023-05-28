@@ -23,6 +23,11 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 
+class SomeClass:
+    def __init__(self, id):
+        self.id = id
+
+
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
@@ -66,6 +71,24 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+    def test_get(self):
+        # Check for valid class and ID
+        obj_1 = SomeClass(id=1)
+        self.dictionary = {1: obj_1}
+        self.assertEqual(self.get(SomeClass, 1), obj_1)
+
+        # Check for invalid class and ID
+        self.assertIsNone(self.get(None, None))
+
+        # Check for invalid ID
+        self.assertIsNone(self.get(SomeClass, None))
+
+        # Check for non-existent ID
+        self.assertIsNone(self.get(SomeClass, 2))
+
+        # Check for correct return type
+        self.assertIsInstance(self.get(SomeClass, 1), SomeClass)
 
 
 class TestFileStorage(unittest.TestCase):
