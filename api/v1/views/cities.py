@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-"""RESTful API action for State object"""
+"""RESTful API action for City object"""
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
-from models.city import State, City
-from models import storage
+from models.city import City
+from models.state import State
+from models import storage, storage_t
 
 
 @app_views.route('/states/<state_id>/cities', methods=["GET"])
@@ -14,10 +15,14 @@ def cities_get(state_id):
     """
     state = storage.get(State, state_id)
     if state:
-        cities = [city for city in state.cities]
-        return jsonify(cities.to_dict())
+        if storage_t == 'db':
+            cities = [city.to_dict() for city in state.cities]
+        else:
+            cities = [city.to_dict() for city in state.cities()]
+        return jsonify(cities)
     else:
         abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=["GET"])
 def city_get(city_id):
@@ -25,7 +30,7 @@ def city_get(city_id):
     """
     city = storage.get(City, city_id)
     if city:
-        return jsonify(city.todict())
+        return jsonify(city.to_dict())
     else:
         abort(404)
 
@@ -36,7 +41,7 @@ def cities_delete(city_id):
     delete method handler.
     will delete a city with the specified id.
     """
-    city = storage.get(City, state_id)
+    city = storage.get(City, city_id)
 
     if city:
         storage.delete(city)
@@ -47,7 +52,7 @@ def cities_delete(city_id):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
-def state_post():
+def city_post(state_id):
     """
     route handler for creating a new city
     """
@@ -61,8 +66,8 @@ def state_post():
     return jsonify(city.to_dict()), 201
 
 
-@app_views.route('/states/<city_id>', methods=['PUT'])
-def state_put(state_id):
+@app_views.route('/cities/<city_id>', methods=['PUT'])
+def city_put(city_id):
     """
     Returns the City object with the status code 200
     """
