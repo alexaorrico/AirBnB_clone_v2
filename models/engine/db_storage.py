@@ -3,6 +3,7 @@
 Contains the class DBStorage
 """
 
+import os
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -16,28 +17,35 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 
 class DBStorage:
+    """
+    Handles a long term storage for all classes
+    """
+    CNC = {
+        'Amenity': amenity.Amenity,
+        'City': city.City,
+        'Place': place.Place,
+        'Review': review.Review,
+        'State': state.State
+        'User': user.User
+    }
+
     """interaacts with the MySQL database"""
     __engine = None
     __session = None
 
     def __init__(self):
         """Instantiate a DBStorage object"""
-        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
-        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
-        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
-        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
-        HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
-        if HBNB_ENV == "test":
+        self.__engine = create_engine(
+                'mysql+mysqldb://{}:{}@{}/{}'.format(
+                    os.environ.get('HBNB_MYSQL_USER'),
+                    os.environ.get('HBNB_MYSQL_PWD'),
+                    os.environ.get('HBNB_MYSQL_HOST'),
+                    os.environ.get('HBNB_MYSQL_DB')))
+        if os.environ.get("HBNB_ENV") == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -75,7 +83,7 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-    def get(self, cls, id_):
+    def get(self, cls, id):
         """
         Retrieving one object
         Args:
@@ -85,28 +93,14 @@ class DBStorage:
         Return:
             object of cls and id passed in argument or None
         """
-        if (cls not in self.__models_available) or (id_ is None):
-            return None
-        return self.__session.query(
-                self.__models_available[cls]).get(id_)
+        if cls and id:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch)
+        return None
 
     def count(self, cls=None):
         """
-        The number of objects in a certain class
-
-        Args:
-            
-            cls: optional, string representing a class name (default None)
-
-        Return:
-            number of objects in that class or in total
-            -1 if the argument is not valid
+        returns the count of all objects in storage
         """
-        if cls is None:
-            total = 0
-            for v in self.__models_available.values():
-                total += self.__session.query(v).count()
-            return total
-        if cls in self.__models_available.keys():
-            return self.__session.query(self.__models_available[cls]).count()
-        return -1
+        return (len(self.all(cls)))
