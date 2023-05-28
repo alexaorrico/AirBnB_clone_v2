@@ -88,5 +88,5 @@ def put_city_using_cityid(city_id):
             if key not in keys_ignore:
                 setattr(city, key, value)
         city.save()
-        return jsonify(city.to_dict())
+        return make_response(jsonify(city.to_dict()), 200)
     abort(404)
