@@ -11,10 +11,12 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/status', methods=['GET'])
 def get_api_status():
     status = {"status": "OK"}
     return jsonify(status)
+
 
 @app_views.route('/stats', methods=['GET'])
 def get_api_stats():
