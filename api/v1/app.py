@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ app.py """
 
-from flask import Flask
+from flask import Flask, make_reponse, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -14,6 +14,12 @@ app.register_blueprint(app_views)
 def tear(self):
     """tear down app.py"""
     storage.close()
+
+
+@auth.error_handler
+def not_found():
+    """ handles 404 errors"""
+    return make_reposnse(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
