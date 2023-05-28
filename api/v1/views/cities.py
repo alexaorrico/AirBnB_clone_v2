@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-"""RESTful API action for State object"""
+"""RESTful API action for City object"""
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
-from models.city import State, City
+from models.city import City
+from models.state import State
 from models import storage
 
 
