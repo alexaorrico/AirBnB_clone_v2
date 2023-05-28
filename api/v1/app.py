@@ -21,6 +21,12 @@ def close(cls):
     """close"""
     storage.close()
 
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({
+        "error": "Not found"
+    }), 404
+
 
 if __name__ == "__main__":
     """Initialize api"""
