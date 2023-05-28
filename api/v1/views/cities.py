@@ -46,12 +46,11 @@ def delete_city_using_cityid(city_id):
     If the city_id is not linked to any City object, raise a 404 error
     """
     city = storage.get(City, city_id)
-    if city:
-        city.delete()
-        storage.save()
-        return jsonify({})
-    else:
+    if city is None:
         abort(404)
+    storage.delete(city)
+    storage.save()
+    return jsonify({})
 
 
 @app_views.route("/states/<state_id>/cities", methods=["POST"],
