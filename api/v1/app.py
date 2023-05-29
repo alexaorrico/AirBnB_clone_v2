@@ -32,7 +32,9 @@ def not_found(error):
         error ('obj':'Error'): Error object.
 
     """
-    return jsonify({"error": "Not found"}), 400
+    error_response = jsonify({"error": "Not found"})
+    error_response.status_code = 404
+    return error_response
 
 
 if __name__ == '__main__':
