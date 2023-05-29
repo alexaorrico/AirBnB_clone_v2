@@ -60,7 +60,10 @@ def post_state():
         abort(400, "Not a JSON")
     if 'name' not in request.get_json():
         abort(400, "Missing name")
-    state = State(**request.get_json())
+    state_data = request.get_json()
+    state = State()
+    for key, value in state_data.items():
+        setattr(state, key, value)
     state.save()
     return make_response(jsonify(state.to_dict()), 201)
 

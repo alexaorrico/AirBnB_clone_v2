@@ -51,3 +51,35 @@ def delete_amenity(amenity_id):
         storage.save()
         return jsonify({})
     abort(404)
+
+
+@app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
+                 strict_slashes=False)
+def delete_amenity(amenity_id):
+    """
+    delete an amenity using the amenity_id
+    Raises a 404 not found error if the id doesnt exists
+    """
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity:
+        amenity.delete()
+        storage.save()
+        return jsonify({})
+    abort(404)
+
+
+@app_views.route("/amenities", methods=["POST"], strict_slashes=False)
+def post_amenity():
+    """
+    posts a new amenity
+    """
+    if not request.get_json():
+        abort(404, "Not a JSON")
+    if 'name' not in request.get_json():
+        abort(404, "Missing name")
+    amenity_data = request.get_json()
+    amenity = Amenity()
+    for key, value in amenity_data.items():
+        setattr(amenity, key, value)
+    amenity.save()
+    return jsonify(amenity.to_dict())
