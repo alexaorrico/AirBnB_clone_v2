@@ -86,6 +86,7 @@ class DBStorage:
         for value in all_cls.values():
             if (value.id == id):
                 return value
+        return None
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching
@@ -99,6 +100,6 @@ class DBStorage:
             for cl in all_class:
                 count += len(models.storage.all(cl).values())
         else:
-            count = len(models.storage.all(cls).values())
+            count = len(models.storage.all(cl).values())
 
         return count
