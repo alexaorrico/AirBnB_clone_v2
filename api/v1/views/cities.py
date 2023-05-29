@@ -81,4 +81,3 @@ def post_city(city_id):
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
-
