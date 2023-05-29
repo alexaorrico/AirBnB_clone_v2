@@ -33,6 +33,7 @@ def review_place(place_id):
         if not user:
             abort(404)
         new_review = Review(**request.get_json())
+        new_review.place_id = place_id
         new_review.save()
         return make_response(jsonify(new_review.to_dict()), 201)
 
