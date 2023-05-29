@@ -114,37 +114,45 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_get(self):
-        """test method for the get method of a DB storage"""
+        """Test that get method works properly"""
         data = {
             "name": "Lagos"
         }
 
-        instance = State(**data)
-        instance.save()
-        state = models.storage.get(State, instance.id)
+        state = State(**data)
+        state.save()
 
-        self.assertEqual(instance.name, state.name)
-        self.assertTrue(instance.id, state.id)
-        self.assertTrue(instance, state)
+        instance = models.storage.get(State, state.id)
+
+        self.assertEqual(state.name, instance.name)
+        self.assertEqual(state.id, instance.id)
         models.storage.delete(instance)
-        models.storage.save()
-        state = models.storage.get(State, instance.id)
-        self.assertIsNone(state)
+        instance = models.storage.get(State, state.id)
+        self.assertIsNone(instance)
+        models.storage.close()
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_count(self):
-        """test method for count method of DB storage"""
-        data = {
-            "name": "Lagos"
-        }
+        """Test that count method is working"""
 
-        instance = State(**data)
-        instance.save()
+        data = {
+            "states": [{
+                "name": 'Lagos'
+            }, {
+                "name": 'Abuja'
+            }]
+        }
 
         count = models.storage.count()
-        self.assertEqual(count, len(models.storage.all()))
-        models.storage.delete(instance)
-        models.storage.save()
-        self.assertNotEqual(count, len(models.storage.all()))
+
+        lagos = State(**data["states"][0])
+        abuja = State(**data["states"][1])
+
+        lagos.save()
+        abuja.save()
+
+        self.assertNotEqual(count, models.storage.count())
+        models.storage.delete(lagos)
+        models.storage.delete(abuja)
+        self.assertEqual(count, models.storage.count())
+        models.storage.close()
