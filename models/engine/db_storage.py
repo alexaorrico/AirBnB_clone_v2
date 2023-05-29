@@ -76,8 +76,8 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-    """method that retrieve an object"""
-    obj = self.__session.get(id)
-    if obj is not None and isinstance(obj, cls):
-        return obj
-    return None
+        """method that retrieve an object"""
+        obj = self.__session.get(id)
+        if obj is not None and isinstance(obj, cls):
+            return obj
+        return None
