@@ -27,4 +27,11 @@ def count():
                     "reviews": storage.count("Review"),
                     "states": storage.count("State"),
                     "users": storage.count("User")})
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d
+>>>>>>> 8f3d9dee79eec5dc4c542470ee31a868f377a9fc

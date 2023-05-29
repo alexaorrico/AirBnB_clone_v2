@@ -35,3 +35,7 @@ class User(BaseModel, Base):
             v = hashlib.md5(v.encode()).hexdigest()
         super().__setattr__(k, v)
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d
