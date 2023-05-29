@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""An endpoint that retrieves the number of each objects by type"""
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
