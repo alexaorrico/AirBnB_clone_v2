@@ -129,7 +129,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, arg):
         print(models.storage.count(arg))
-        
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
@@ -168,6 +167,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
