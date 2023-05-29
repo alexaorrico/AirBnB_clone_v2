@@ -14,18 +14,25 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teardown_appcontext(Exception):
-    """Clear the storage and end the current session."""
-    if Exception:
-        return Exception
+def teardown_appcontext(exception):
+    """Clear the storage and end the current session.
+
+    Args:
+        exception ('obj':'Exception'): Exception object.
+
+    """
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
-    """Handle the 404 Status Code Response."""
-    error = {"error": "Not found"}
-    return jsonify(error), 400
+    """Handle the 404 Status Code Response.
+
+    Args:
+        error ('obj':'Error'): Error object.
+
+    """
+    return jsonify({"error": "Not found"}), 400
 
 
 if __name__ == '__main__':
