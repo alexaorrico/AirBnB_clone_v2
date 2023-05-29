@@ -16,14 +16,12 @@ app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 
 
-@app.errorhandler(404)
-def error_404(error):
+@app.teardown_appcontext
+def teardown_appcontext(exception):
     """
-    handles the error
+    declare a method to handle @app.teardown_appcontext that calls storage.close()
     """
-    return jsonify({
-        'error': 'Not found'
-    }), 404
+    storage.close()
 
 
 if __name__ == '__main__':
