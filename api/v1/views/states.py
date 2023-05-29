@@ -17,7 +17,7 @@ def get_states_list():
     return jsonify([state.to_dict() for state in states]), 200
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def get_states_obj(state_id):
     """
     Retrieves a State object
@@ -34,7 +34,7 @@ def get_states_obj(state_id):
         return jsonify({"error": "Not found"}), 404
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_states_obj(state_id):
     """
     Deletes a State object
@@ -44,12 +44,11 @@ def delete_states_obj(state_id):
     Raises:
         404: if state_id supplied is not linked to any state object
     """
-    empty_dict = {}
     state = storage.get(State, state_id)
-    if state:
-        return jsonify(empty_dict), 200
-    else:
+    if not state:
         return jsonify({"error": "Not found"}), 404
+    storage.delete(state).save()
+    return jsonify({}), 200
 
 
 @app_views.route('/states/', methods=['POST'])
@@ -70,7 +69,7 @@ def post_state():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """
     Updates a state object
