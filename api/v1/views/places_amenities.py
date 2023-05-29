@@ -2,7 +2,9 @@
 """ Place - Amenity"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
-from models import storage, Place, Amenity
+from models import storage
+from models.place import Place
+from models.amenity import Amenity
 from os import getenv
 import sqlalchemy
 

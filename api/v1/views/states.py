@@ -6,7 +6,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.routes('/states')
+@app_views.route('/states')
 def state(id=None):
     """Retrieves the list of all State"""
     list_state = []
@@ -19,6 +19,7 @@ def state(id=None):
     for state_objs in storage.all('State').values():
         list_state.append(state_objs.to_dict())
     return jsonify(list_state)
+
 
 @app_views.route('/states/<id>', methods=['GET', 'DELETE', 'PUT'])
 def state_delete(id=None):
@@ -39,6 +40,7 @@ def state_delete(id=None):
          if k not in ["id", "created_at", "updated_at"]]
     obj_state.save()
     return jsonify(obj_state.to_dict()), 200
+
 
 @app_views.route('/states', methods=['POST'])
 def state_post():
