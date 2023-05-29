@@ -73,3 +73,7 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def __len__(self):
+        # Provide custom implementation to calculate the length
+        return len(self.__dict__)  # Count the number of attributes
