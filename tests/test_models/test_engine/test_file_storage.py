@@ -117,6 +117,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_get(self):
         """Test the get method og file storage"""
+<<<<<<< HEAD
         newstate = State(name='Spring Valley')
         models.storage.new(newstate)
         models.storage.save()
@@ -125,6 +126,15 @@ class TestFileStorage(unittest.TestCase):
         models.storage.delete(newstate)
         models.storage.save()
         self.assertEqual(models.storage.get('Cont', 'tyewc2345'), None)
+=======
+        self.assertEqual(models.storage.get('Cont', 'tyewc2345'), None)
+        storage = FileStorage()
+        mydict = storage.all()
+        first_value = list(mydict.items())[0][1]
+        cls = first_value.__class__.__name__
+        clsid = first_value.id
+        self.assertEqual(models.storage.get(cls, clsid), first_value)
+>>>>>>> origin/master
 
     @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_count(self):
