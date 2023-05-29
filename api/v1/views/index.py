@@ -1,24 +1,28 @@
 #!/usr/bin/python3
-""" Provides status of our Flask instance route of 'app' """
-from api.v1.views import app_views
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep  1 14:42:23 2020
+@authors: Robinson Montes.
+          Mauricio Olarte
+"""
+from flask import jsonify, Blueprint
 from models import storage
-from flask import jsonify
+from api.v1.views import app_views
+from models.state import State
 
 
-@app_views.route("/status")
-def app_status():
-    """ App status if successful """
-    return jsonify({"status": "OK"})
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
+def get_status():
+    """ check the status of route """
+    return jsonify({'status': 'OK'})
 
 
-@app_views.route("/stats")
-def cool_stats():
-    """ Endpoint that retrieves the number of each objects by type """
-    return jsonify({
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
-    })
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def object_status():
+    """Create an endpoint that retrieves the number of each objects by type
+    """
+    objects = {"amenities": 'Amenity', "cities": 'City', "places": 'Place',
+               "reviews": 'Review', "states": 'State', "users": 'User'}
+    for key, value in objects.items():
+        objects[key] = storage.count(value)
+    return jsonify(objects)
