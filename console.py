@@ -122,6 +122,14 @@ class HBNBCommand(cmd.Cmd):
         print(", ".join(obj_list), end="")
         print("]")
 
+    def do_get(self, arg):
+        args = shlex.split(arg)
+        ans = models.storage.get(args[0], args[1])
+        print(ans)
+
+    def do_count(self, arg):
+        print(models.storage.count(arg))
+
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
         args = shlex.split(arg)
@@ -159,6 +167,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

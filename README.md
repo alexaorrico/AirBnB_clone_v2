@@ -157,7 +157,11 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Fabian Cheruiyot - [Github](https://github.com/sezfabian) / [Twitter](https://twitter.com/SezFabian)
+<<<<<<< HEAD
+Jedidah Wambugu - [Github](https://github.com/wambuguschild) / [Twitter](https://twitter.com/wambuguschild)
+=======
 Jedidah Wambugu - [Github](https://github.com/wambuguschild) / [Twittwer](https://twitter.com/wambuguschild)
+>>>>>>> origin/master
 
 Second part of Airbnb: Joann Vuong
 ## License
