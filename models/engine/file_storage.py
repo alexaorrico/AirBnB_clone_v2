@@ -70,11 +70,9 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-<<<<<<< HEAD
+
         """Retrieve an object"""
-=======
         """ retrieves """
->>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d
         if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
             for key, value in d_obj.items():

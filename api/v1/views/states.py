@@ -1,6 +1,5 @@
-#!/usr/bin/python3
-"""State module"""
-from api.v1.views import app_views
+
+m api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
@@ -69,11 +68,4 @@ def post_method(state_id):
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d
->>>>>>> 8f3d9dee79eec5dc4c542470ee31a868f377a9fc

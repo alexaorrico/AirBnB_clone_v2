@@ -82,7 +82,6 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
-<<<<<<< HEAD
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
@@ -95,8 +94,6 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count returns the right number of elements in the db"""
-=======
->>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
