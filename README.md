@@ -154,8 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
 Clive Sasaka - [Github](https://github.com/Csasaka19) / [Twitter](https://twitter.com/Incognittocc)
 
-Third part of AirBnB : RESTful API
-## License
-Public Domain. No copy write protection. 
+Third part of AirBnB : RESTful API. 
