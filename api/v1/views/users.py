@@ -60,7 +60,7 @@ def user_put(user_id):
     """
     user = storage.get(User, user_id)
     if user is None:
-        return abort(404)
+        abort(404)
 
     if not request.is_json:
         return "Not a JSON", 400
