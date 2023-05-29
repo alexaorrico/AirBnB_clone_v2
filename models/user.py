@@ -11,7 +11,6 @@ import hashlib
 
 class User(BaseModel, Base):
     """Representation of a user """
-    
     def __init__(self, *args, **kwargs):
         """initializes user"""
         if kwargs.get('password'):
