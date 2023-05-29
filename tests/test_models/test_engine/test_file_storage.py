@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the TestFileStorageDocs classes
-"""
+"""Contains the TestFileStorageDocs classes"""
 
 from datetime import datetime
 import inspect
@@ -66,6 +64,32 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+	def test_filestorage_get(self):
+        '''Testing get method'''
+        new_state = State()
+        state_id = new_state.id
+        new_state.save()
+        get_state = storage.get('State', state_id)
+        self.assertEqual(new_state.id, get_state.id)
+        self.assertEqual(state_id, get_state.id)
+        self.assertTrue(isinstance(get_state, State))
+        self.assertTrue(isinstance(get_state.id, str))
+
+    def test_filestorage_count(self):
+        '''Testing count method'''
+        for j in range(2):
+            new_state = State()
+            new_state.save()
+        count = self.storage.count()
+        self.assertEqual(count, 7)
+        new_user = User()
+        new_user.save()
+        count = self.storage.count()
+        self.assertEqual(count, 8)
+        count_State = storage.count('State')
+        self.assertEqual(count_State, 2)
+        self.assertTrue(isinstance(count, int))
 
 
 class TestFileStorage(unittest.TestCase):
