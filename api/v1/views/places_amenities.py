@@ -23,7 +23,7 @@ def place_amenities(place_id=None):
     if db is 'db':
         amenities = [amenity.to_dict() for amenity in place.amenities]
     else:
-        amenities = [storage.get(Amenity, amenity_id).to_dict()
+        amenities = [storage.get("Amenity", amenity_id).to_dict()
                      for amenity_id in place.amenity_ids]
     return jsonify(amenities)
 
@@ -31,24 +31,22 @@ def place_amenities(place_id=None):
 @app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
 def delete_place_amenity(place_id, amenity_id):
     place = storage.get("Place", place_id)
-    amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.get("Amenity", amenity_id)
     if not place or not amenity:
         abort(404)
 
-    if storage.__class__.__name__ == 'DBStorage':
+    if db is 'db':
         if amenity in place.amenities:
             place.amenities.remove(amenity)
             storage.save()
         else:
             abort(404)
-    elif storage.__class__.__name__ == 'FileStorage':
+    else:
         if amenity_id in place.amenity_ids:
             place.amenity_ids.remove(amenity_id)
             storage.save()
         else:
             abort(404)
-    else:
-        abort(404)
 
     return jsonify({}), 200
 
@@ -56,23 +54,21 @@ def delete_place_amenity(place_id, amenity_id):
 @app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['POST'], strict_slashes=False)
 def link_place_amenity(place_id, amenity_id):
     place = storage.get("Place", place_id)
-    amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.get("Amenity", amenity_id)
     if not place or not amenity:
         abort(404)
 
-    if storage.__class__.__name__ == 'DBStorage':
+    if db is 'db':
         if amenity in place.amenities:
             return jsonify(amenity.to_dict()), 200
         else:
             place.amenities.append(amenity)
             storage.save()
             return jsonify(amenity.to_dict()), 201
-    elif storage.__class__.__name__ == 'FileStorage':
+    else:
         if amenity_id in place.amenity_ids:
             return jsonify(amenity.to_dict()), 200
         else:
             place.amenity_ids.append(amenity_id)
             storage.save()
             return jsonify(amenity.to_dict()), 201
-    else:
-        abort(404)
