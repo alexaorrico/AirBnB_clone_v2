@@ -55,4 +55,7 @@ def post_amenity2(place_id, amenity_id):
     place.amenities.append(obj)
     storage.save()
     return (jsonify(amenity.to_dict(), 201))
+<<<<<<< HEAD
 
+=======
+>>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d

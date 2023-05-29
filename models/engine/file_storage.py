@@ -44,7 +44,7 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
+            json_objects[key] = self.__objects[key].to_dict(False)
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception as ex:
             pass
 
     def delete(self, obj=None):
@@ -68,9 +68,14 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-    
+<<<<<<< HEAD
+
     def get(self, cls, id):
+<<<<<<< HEAD
         """Retrieve an object"""
+=======
+        """ retrieves """
+>>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d
         if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
             for key, value in d_obj.items():
@@ -85,3 +90,5 @@ class FileStorage:
             data = self.all(cls)
         return len(data)
 
+=======
+>>>>>>> 8980e1d1a8f160fc34e57ded936e82e0c7eb1459

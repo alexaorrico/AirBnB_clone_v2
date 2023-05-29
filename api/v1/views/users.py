@@ -73,4 +73,7 @@ def post_user(user_id):
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
+<<<<<<< HEAD
 
+=======
+>>>>>>> 778ea08ab0a36aadb0a62f27b5459c789b64051d
