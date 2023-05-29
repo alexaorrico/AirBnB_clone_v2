@@ -148,3 +148,4 @@ def search_places_by_id():
         places.append(d)
 
     return jsonify(places)
+
