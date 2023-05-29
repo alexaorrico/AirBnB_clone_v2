@@ -74,16 +74,16 @@ def city_put(city_id):
     if not request.is_json:
         return "Not a JSON", 400
     data = request.get_json()
-    city = storage.get(City, city_id)
+    state = storage.get(State, city_id)
 
-    if city is None:
+    if state is None:
         return abort(404)
 
     for key, value in data.items():
-        if key in ('id', 'state_id', 'created_at', 'updated_at'):
+        if key in ('id', 'created_at', 'updated_at'):
             continue
         else:
-            setattr(city, key, value)
+            setattr(state, key, value)
 
-    city.save()
-    return jsonify(city.to_dict()), 200
+    state.save()
+    return jsonify(state.to_dict()), 200
