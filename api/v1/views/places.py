@@ -3,9 +3,10 @@
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
-from models.places import Place
-from models.state import State
+from models.place import Place
+from models.city import City
 from models import storage
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', methods=["GET"])
@@ -15,14 +16,14 @@ def places_get(city_id):
     """
     city = storage.get(City, city_id)
     if city:
-        places = [place for place in state.places]
+        places = [place for place in city.places]
         return jsonify(places.to_dict())
     else:
         abort(404)
 
 
 @app_views.route('/places/<place_id>', methods=["GET"])
-def place_get(city_id):
+def place_get(place_id):
     """
     Get a place specified by place_id
     """
@@ -39,7 +40,7 @@ def place_delete(place_id):
     delete method handler.
     will delete a place with the specified id.
     """
-    place = storage.get(places, place_id)
+    place = storage.get(Place, place_id)
 
     if place:
         storage.delete(place)
@@ -49,41 +50,38 @@ def place_delete(place_id):
         abort(404)
 
 
-TODO: Start from post
 @app_views.route('/cities/<city_id>/places', methods=['POST'])
 def place_post(city_id):
     """
     route handler for creating a new city
     """
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404)
+
     if not request.is_json():
-        return "Not a JSON", 404
+        return "Not a JSON", 400
 
     data = request.get_json()
-
-    if city_id not in :
-        abort(404)
     if 'user_id' not in data.keys():
-        return "Missing user_id",404
+        return "Missing user_id", 400
 
-    all_cities = storage.get('Cities').all()
-    users = [user.to_dict() for user in all_cities.values() if user.id == user_id]
+    user_id = data.get('user_id')
 
-    if users is None:
+    user = storage.get(User, user_id)
+    if not user:
         abort(404)
 
-    new_place = Place(name=data.get('name'), user_id=data.get('user_id'),
-            city_id=city_id)
-    all_users = storage.all('User').values()
-    user_obj = [obj.to_dict() for obj in all_users if obj.id == new_place.user_id]
+    name = data.get('name')
+    if not name:
+        return "Missing user_id", 400
 
-    if user_obj is None:
-        abort(404)
+    new_place = Place(name=name, user_id=user_id,
+                      city_id=city_id)
 
-    places = []
-    storage.new(new_place)
-    storage.save()
-    places.append(new_place.to_dict())
-    return jsonify(places[0]), 201
+    new_place.save()
+    return jsonify(new_place.to_dict()), 201
+
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
 def places_put(place_id):
@@ -106,5 +104,7 @@ def places_put(place_id):
         else:
             setattr(place, key, value)
 
+    storage.save()
+    return jsonify(place.to_dict()), 200
     storage.save()
     return jsonify(place.to_dict()), 200
