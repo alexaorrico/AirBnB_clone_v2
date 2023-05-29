@@ -9,6 +9,7 @@ from models.review import Review
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 
+
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False,
                  methods=['GET', 'POST'])
 def review_place(place_id):
@@ -34,6 +35,7 @@ def review_place(place_id):
         new_review = Review(**request.get_json())
         new_review.save()
         return make_response(jsonify(new_review.to_dict()), 201)
+
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])

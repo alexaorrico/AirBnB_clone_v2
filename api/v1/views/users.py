@@ -6,6 +6,7 @@ from models.user import User
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 
+
 @app_views.route('/users', strict_slashes=False,
                  methods=['GET', 'POST'])
 def users():
@@ -24,6 +25,7 @@ def users():
         new_user = User(**request.get_json())
         new_user.save()
         return make_response(jsonify(new_user.to_dict()), 201)
+
 
 @app_views.route('/users/<user_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])

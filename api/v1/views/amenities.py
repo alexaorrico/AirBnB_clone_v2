@@ -6,6 +6,7 @@ from models.amenity import Amenity
 from api.v1.views import app_views
 from flask import jsonify, request, abort, make_response
 
+
 @app_views.route('/amenities', strict_slashes=False,
                  methods=['GET', 'POST'])
 def amenities():
@@ -22,6 +23,7 @@ def amenities():
         new_amenity = Amenity(**request.get_json())
         new_amenity.save()
         return make_response(jsonify(new_amenity.to_dict()), 201)
+
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
