@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" Flask Application """
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
@@ -23,6 +24,7 @@ def page_not_foun(error):
 
 
 if __name__ == "__main__":
+    """ Main Function """
     host = getenv('HBNB_API_HOST', default='0.0.0.0')
     port = getenv('HBNB_API_PORT', default=5000)
 
