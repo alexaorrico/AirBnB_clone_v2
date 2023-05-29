@@ -73,4 +73,3 @@ def post_user(user_id):
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
-
