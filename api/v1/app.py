@@ -29,8 +29,8 @@ def page_not_foun(error):
 
 app.config['SWAGGER'] = {
     'title': 'AirBnB clone - RESTful API',
-    'description': 'This is the api that was created for the hbnb
-    restful api project, \all the documentation will be shown below',
+    'description': 'This is the api that was created for the hbnb restful api project,\
+    all the documentation will be shown below',
     'uiversion': 3}
 
 Swagger(app)
@@ -41,3 +41,4 @@ if __name__ == "__main__":
     port = getenv('HBNB_API_PORT', default=5000)
 
     app.run(host, int(port), threaded=True)
+
