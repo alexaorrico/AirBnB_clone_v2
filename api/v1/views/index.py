@@ -20,6 +20,6 @@ def stats_text():
                 "cities": storage.count("City"),
                 "places": storage.count("Place"),
                 "reviews": storage.count("Review"),
-                "states": strorage.count("State"),
+                "states": storage.count("State"),
                 "users": storage.count("User")})
     return jsonify(objects)
