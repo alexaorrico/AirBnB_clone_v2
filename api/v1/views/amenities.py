@@ -11,7 +11,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def get_amenitys_list():
+def get_amenity_list():
     """Retrieves the list of all Amenity objects"""
     amenities_list = []
     amenities = storage.all(Amenity).values()
@@ -70,7 +70,7 @@ def post_amenity():
         return jsonify({'error': 'Not a JSON'}), 400
     if 'name' not in data:
         return jsonify({'error': 'Missing name'}), 400
-    amenity = State(**data)
+    amenity = Amenity(**data)
     amenity.save()
     return jsonify(amenity.to_dict()), 201
 
