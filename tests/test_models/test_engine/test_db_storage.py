@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -68,21 +69,42 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+    def test_get(self):
+        """Test the get method"""
+        state = State(name="California")
+        models.storage.new(state)
+        models.storage.save()
+        state_id = state.id
+
+        retrieved_state = models.storage.get(State, state_id)
+        self.assertEqual(retrieved_state, state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+    def test_count_all_objects(self):
+        """Test the count method with all objects"""
+        initial_count = models.storage.count()
+        state = State(name="California")
+        models.storage.new(state)
+        models.storage.save()
+
+        updated_count = models.storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
+    def test_count_specific_class(self):
+        """Test the count method with a specific class"""
+        initial_count = models.storage.count(State)
+        state = State(name="California")
+        models.storage.new(state)
+        models.storage.save()
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        updated_count = models.storage.count(State)
+        self.assertEqual(updated_count, initial_count + 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
