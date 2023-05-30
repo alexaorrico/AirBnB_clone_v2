@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """api status"""
+
+
 import models
 from models import storage
 from models.base_model import BaseModel
