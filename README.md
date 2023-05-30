@@ -152,7 +152,3 @@ EOF  all  create  destroy  help  quit  show  update
 
 ## Bugs
 No known bugs at this time. 
-
-## Authors
-- Ahmed Amir - [Github](https://github.com/ahmedamirabbas)
-- Mohammed Ziyin
