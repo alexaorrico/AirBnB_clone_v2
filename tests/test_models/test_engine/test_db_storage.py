@@ -67,52 +67,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    def test_get_existing_object(self):
-    # Create a test object in the storage
-    obj = SomeClass(id='object_id', name='Test Object')
-    self.storage.save(obj)
-
-    # Retrieve the object using the get method
-    retrieved_obj = self.storage.get(SomeClass, 'object_id')
-
-    # Assert that the retrieved object matches the original object
-    self.assertEqual(retrieved_obj, obj)
-
-    def test_get_nonexistent_object(self):
-    # Try to retrieve a non-existing object
-    retrieved_obj = self.storage.get(SomeClass, 'nonexistent_id')
-
-    # Assert that the retrieved object is None
-    self.assertIsNone(retrieved_obj)
-
-    def test_count_all_objects(self):
-    # Create some test objects in the storage
-    obj1 = SomeClass(id='object1', name='Object 1')
-    obj2 = SomeClass(id='object2', name='Object 2')
-    self.storage.save(obj1)
-    self.storage.save(obj2)
-
-    # Count all objects in the storage
-    count = self.storage.count()
-
-    # Assert that the count matches the number of objects created
-    self.assertEqual(count, 2)
-
-    def test_count_objects_by_class(self):
-    # Create some test objects in the storage
-    obj1 = SomeClass(id='object1', name='Object 1')
-    obj2 = AnotherClass(id='object2', name='Object 2')
-    self.storage.save(obj1)
-    self.storage.save(obj2)
-
-    # Count objects of SomeClass in the storage
-    count = self.storage.count(SomeClass)
-
-    # Assert that the count matches the number of objects of SomeClass
-    self.assertEqual(count, 1)
-
-
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -131,48 +85,3 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-    
-    def test_get_existing_object(self):
-    # Create a test object in the storage
-    obj = SomeClass(id='object_id', name='Test Object')
-    self.storage.save(obj)
-
-    # Retrieve the object using the get method
-    retrieved_obj = self.storage.get(SomeClass, 'object_id')
-
-    # Assert that the retrieved object matches the original object
-    self.assertEqual(retrieved_obj, obj)
-
-    def test_get_nonexistent_object(self):
-    # Try to retrieve a non-existing object
-    retrieved_obj = self.storage.get(SomeClass, 'nonexistent_id')
-
-    # Assert that the retrieved object is None
-    self.assertIsNone(retrieved_obj)
-
-    def test_count_all_objects(self):
-    # Create some test objects in the storage
-    obj1 = SomeClass(id='object1', name='Object 1')
-    obj2 = SomeClass(id='object2', name='Object 2')
-    self.storage.save(obj1)
-    self.storage.save(obj2)
-
-    # Count all objects in the storage
-    count = self.storage.count()
-
-    # Assert that the count matches the number of objects created
-    self.assertEqual(count, 2)
-
-    def test_count_objects_by_class(self):
-    # Create some test objects in the storage
-    obj1 = SomeClass(id='object1', name='Object 1')
-    obj2 = AnotherClass(id='object2', name='Object 2')
-    self.storage.save(obj1)
-    self.storage.save(obj2)
-
-    # Count objects of SomeClass in the storage
-    count = self.storage.count(SomeClass)
-
-    # Assert that the count matches the number of objects of SomeClass
-    self.assertEqual(count, 1)
-
