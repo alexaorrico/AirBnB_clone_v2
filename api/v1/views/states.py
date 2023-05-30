@@ -7,7 +7,7 @@ from models.state import State
 from flasgger.utils import swag_from
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/', methods=['GET'])
 def get_all():
     """gets all objects by id"""
     all_obj = [obj.to_dict() for obj in storage.all(State).values()]
@@ -31,7 +31,7 @@ def del_method_state(state_id):
         abort(404)
     storage.delete()
     storage.save()
-    return jsonify({})
+    return make_response(jsonify({}, 200))
 
 
 @app_views.route('/states/', methods=['POST'])
@@ -44,7 +44,7 @@ def create_state():
     state_js = request.get_json()
     obj = State(state_js)
     obj.save()
-    return jsonify(obj.to_dict(), 201)
+    return make_response(jsonify(obj.to_dict()), 201)
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'])
