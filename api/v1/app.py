@@ -16,14 +16,20 @@ app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
 def downtear(self):
-    """teardown app"""
+    """teardown app and terminate the session"""
     storage.close()
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    """return page not found (code)"""
-    return jsonify(error='Not found'), 404
+    """return page not found (code)
+    Arg:
+        error: error variable
+
+    Return:
+        JSON
+    """
+    return jsonify({"error": 'Not found'}), 404
 
 
 if __name__ == "__main__":
