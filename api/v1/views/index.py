@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""api status"""
+"""api index status"""
 
 
 import models
@@ -17,7 +17,7 @@ def returnstatus():
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
-    """JSON Responses"""
+    """return JSON Responses"""
     todos = {'states': State, 'users': User,
              'amenities': Amenity, 'cities': City,
              'places': Place, 'reviews': Review}
