@@ -40,7 +40,7 @@ def del_method_place(place_id):
     return make_response(jsonify({}, 200))
 
 
-@app_views.route('/states/<state_id/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_place(city_id):
     """creates a place"""
     if not storage.get("City", city_id):

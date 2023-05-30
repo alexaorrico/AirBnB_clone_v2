@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """User module """
-from models.User import User
+from models.user import User
 from api.v1.views import app_views
 from api.v1.views import *
 from flask import jsonify, abort, request, make_response

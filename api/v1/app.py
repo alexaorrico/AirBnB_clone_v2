@@ -16,10 +16,10 @@ def tear(self):
     storage.close()
 
 
-@auth.error_handler
+@app.errorhandler(404)
 def not_found():
     """ handles 404 errors"""
-    return make_reposnse(jsonify({"error": "Not found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":

@@ -39,7 +39,7 @@ def del_method_amenity(amenity_id):
 
 
 @app_views.route('/amenities', methods=['POST'])
-def create_city(state_id):
+def create_amenities(state_id):
     """creates specified test"""
 
     if not request.get_json():
