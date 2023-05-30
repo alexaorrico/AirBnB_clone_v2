@@ -7,6 +7,7 @@ from models import storage
 from flask import Flask, request, jsonify, abort, make_response
 from api.v1.views import app_views
 
+
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def states():
     """Retrieves the list of all State objects"""
@@ -17,7 +18,7 @@ def states():
     if request.method == 'POST':
         if not request.json:
             abort(400, "Not a JSON")
-        elif not 'name' in request.json:
+        elif 'name' not in request.json:
             abort(400, "Missing name")
         else:
             new_state = State(**request.get_json())

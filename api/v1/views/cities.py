@@ -7,6 +7,7 @@ from models.state import State
 from flask import jsonify, request, make_response, abort
 from api.v1.views import app_views
 
+
 @app_views.route('/states/<state_id>/cities',
                  strict_slashes=False, methods=['GET', 'POST'])
 def state_cities(state_id):
@@ -28,6 +29,7 @@ def state_cities(state_id):
         new_city.state_id = state_id
         new_city.save()
         return make_response(jsonify(new_city.to_dict()), 201)
+
 
 @app_views.route('/cities/<city_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])

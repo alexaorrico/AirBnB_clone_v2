@@ -9,6 +9,7 @@ from models.place import Place
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 
+
 @app_views.route('/cities/<city_id>/places', strict_slashes=False,
                  methods=['GET', 'POST'])
 def place_in_city(city_id):
@@ -35,6 +36,7 @@ def place_in_city(city_id):
         new_place.city_id = city_id
         new_place.save()
         return make_response(jsonify(new_place.to_dict()), 201)
+
 
 @app_views.route('/places/<place_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
