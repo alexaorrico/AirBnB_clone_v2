@@ -55,7 +55,7 @@ def create_city(state_id):
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
-def update_amenity(city_id):
+def update_amenity(amenity_id):
     """updates city method"""
     if not request.get_json():
         return abort(400, description="Not a JSON")
