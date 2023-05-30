@@ -11,13 +11,13 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tear(self):
-    """tear down app.py"""
+def teardown_appcontext(self):
+    """teardown app.py"""
     storage.close()
 
 
 @app.errorhandler(404)
-def not_found():
+def not_found(error):
     """ handles 404 errors"""
     return make_response(jsonify({"error": "Not found"}), 404)
 

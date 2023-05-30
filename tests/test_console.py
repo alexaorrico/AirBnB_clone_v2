@@ -7,7 +7,7 @@ import console
 import inspect
 import pep8
 import unittest
-from unittest.mock import patch 
+from unittest.mock import patch
 from io import StringIO
 import os
 import json
@@ -21,7 +21,6 @@ from models.amenity import Amenity
 from models.review import Review
 from models.engine.file_storage import FileStorage
 HBNBCommand = console.HBNBCommand
-
 
 
 class TestConsoleDocs(unittest.TestCase):
@@ -56,4 +55,4 @@ class TestConsoleDocs(unittest.TestCase):
 
 
 if __name__ == "__main__":
-     unittest.main
+    unittest.main

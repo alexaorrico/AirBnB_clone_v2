@@ -84,5 +84,17 @@ class TestFileStorage(unittest.TestCase):
         """test that new adds an object to the database"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_count(self):
+        """add new object to db"""
+        startCount = models.storage.count()
+        self.assertEqual(models.storage.count('Blah'), 0)
+        newState = State(name='Montevideo')
+        newState.save()
+        newUser = User(email='relaxrivero@gamil.com.com', password='dummypass')
+        newUser.save()
