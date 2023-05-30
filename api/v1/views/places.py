@@ -11,62 +11,79 @@ from models.place import Place
 from models.city import City
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=['GET'], strict_slashes=False)
 def get_places_list(city_id):
-    """Retrieves the list of all Place objects"""
+    """
+    Retrieves the list of all Place objects
+    Based on the city
+
+    Args:
+        city_id - The id of the City object
+
+    Returns:
+        404: if city_id supplied is not linked to any state object
+        List of all Place objects
+    """
+    places_list = []
     city = storage.get(City, city_id)
     if not city:
-        abort(404)
-    places_list = [place.to_dict() for place in city.places]
+        return jsonify({"error": "Not found"}), 404
+    for obj in city.places:
+        places_list.append(obj.to_dict())
     return jsonify(places_list)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id):
-    """Retrieves a Place object"""
+    """
+    Retrieves a Place object
+
+    Args:
+        place_id: The id of the place object
+
+    Returns:
+        Place Object dictionary or 404
+    """
     place = storage.get(Place, place_id)
     if not place:
-        abort(404)
+        return jsonify({"error": "Not found"}), 404
     return jsonify(place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
     """Deletes a Place object"""
     place = storage.get(Place, place_id)
     if not place:
-        abort(404)
+        return jsonify({"error": "Not found"}), 404
     storage.delete(place)
     storage.save()
     return jsonify({})
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=['POST'], strict_slashes=False)
 def create_place(city_id):
     """Creates a Place object"""
     city = storage.get(City, city_id)
     if not city:
-        abort(404)
-
-    if not request.is_json:
-        abort(400, 'Not a JSON')
-
+        return jsonify({"error": "Not found"}), 404
     data = request.get_json()
-    if 'user_id' not in data:
-        abort(400, 'Missing user_id')
-
-    user = storage.get(User, data['user_id'])
+    if not data:
+        return jsonify({'error': 'Not a JSON'}), 400
+    if "user_id" not in data:
+        return jsonify({"error", "Missing user_id"}), 400
+    user = storage.get(User, data["user_id"])
     if not user:
-        abort(404)
-
+        return jsonify({"error": "Not found"}), 404
     if 'name' not in data:
-        abort(400, 'Missing name')
-
+        return jsonify({'error': 'Missing name'}), 400
     data['city_id'] = city_id
     place = Place(**data)
     storage.new(place)
     storage.save()
-
     return jsonify(place.to_dict()), 201
 
 
