@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""A Flask API server
+"""A Flask API server that controls error and variables
+    of API host_IP and Port
 """
 
 
