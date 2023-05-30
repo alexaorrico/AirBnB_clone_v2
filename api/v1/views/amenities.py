@@ -20,7 +20,8 @@ def get_amenity_list():
     return jsonify(amenities_list), 200
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 def get_amenity_obj(amenity_id):
     """
     Retrieves an Amenity object
