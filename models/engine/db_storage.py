@@ -15,6 +15,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import hashlib
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -53,7 +54,11 @@ class DBStorage:
 
     def new(self, obj):
         """add the object to the current database session"""
-        self.__session.add(obj)
+        """add the object to the current database session"""
+        if obj is not None:
+            if obj.__class__.__name__ == "User" and obj.password:
+                obj.password = hashlib.md5(obj.password.encode()).hexdigest()
+            self.__session.add(obj)
 
     def save(self):
         """commit all changes of the current database session"""
@@ -74,3 +79,13 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Retrieves one object:"""
+        all_obj = self.all(cls)
+        key = "{}.{}".format(cls, id)
+        return (all_obj.get(key))
+
+    def count(self, cls=None):
+        """Returns the number of objects in storage"""
+        return len(self.all(cls))
