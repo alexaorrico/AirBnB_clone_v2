@@ -154,12 +154,5 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-  
-## Authors, New modifications
-Ajiboye Daniel - [Github](https://github.com/Blackart-glitch) / [linkedIn](https://www.linkedin.com/in/daniel-boy%C3%A9-58366a1b4/)
-
-Second part of Airbnb: Joann Vuong
-## License
-Public Domain. No copy write protection. 
+- Ahmed Amir - [Github](https://github.com/ahmedamirabbas)
+- Mohammed Ziyin
