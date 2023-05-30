@@ -11,7 +11,7 @@ def get_status():
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def  get_stats():
+def get_stats():
     stats = {
             "amenities": storage.count("Amenity"),
             "cities": storage.count("City"),
