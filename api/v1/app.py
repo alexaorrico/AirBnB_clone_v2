@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Flask server (variable app)
+"""A Flask API server
 """
 
 
@@ -15,14 +15,13 @@ app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
 def downtear(self):
-    """Status of your API"""
+    """teardown app"""
     storage.close()
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    """return render_template"""
-
+    """return page not found (code)"""
     return jsonify(error='Not found'), 404
 
 
