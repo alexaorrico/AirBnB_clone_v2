@@ -153,8 +153,8 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 ## Authors
-Caroline Akinyi Opiyo  opiyocaroline20@gmail.com (https://github.com/Muideen27)
-Muideen Ilori ilorimuideen0000@gmail.com  (https://github.com/Budabos)
+Caroline Akinyi Opiyo  opiyocaroline20@gmail.com (https://github.com/Budabos)
+Pascal Onyiaosuofia    sequencepascal@gmail.com  (https://github.com/Pascal-Hub)
 
 
 Second part of Airbnb: 
