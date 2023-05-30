@@ -19,16 +19,16 @@ def all_cities(state_id):
     return jsonify(all_cities)
 
 
-@app_views.route('/cities/<string:city_id>')
-def get_method_state(state_id):
-    """gets state by id"""
+@app_views.route('/cities/<:city_id>')
+def get_method_city(city_id):
+    """Returns a City"""
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
     return jsonify(city.to_dict())
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'])
+@app_views.route('/cities/<city_id>', methods=['DELETE'])
 def del_method_state(city_id):
     """deletes city"""
     city = storage.get("City", city_id)
@@ -62,13 +62,14 @@ def update_method(city_id):
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
-    obj = storage.get("City", city_id)
+    city = storage.get("City", city_id)
 
-    if obj is None:
+    if city is None:
         abort(404)
 
     for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated']:
-            setattr(obj, key, value)
+            setattr(city, key, value)
+
     storage.save()
-    return make_response(jsonify(obj.to_dict(), 200))
+    return make_response(jsonify(city.to_dict(), 200))
