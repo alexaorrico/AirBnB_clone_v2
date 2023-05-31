@@ -64,23 +64,15 @@ class DBStorage:
         if obj is not None:
             self.__session.delete(obj)
 
-    def reload(self):
-        """reloads data from the database"""
-        Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
-
     def get(self, cls, id):
-        """
-        Returns the object based on the class name and its ID, or
-        None if not found
+        """A method to retrieve one object:
+           returns the object based on the class and its ID, or None
         """
         if cls not in classes.values():
             return None
         all_cls = models.storage.all(cls)
         for value in all_cls.values():
-            if (value.id == id):
+            if value.id == id:
                 return value
         return None
 
@@ -89,14 +81,21 @@ class DBStorage:
         Returns the number of objects in storage matching the given class.
         If no class is passed, returns the count of all objects in storage.
         """
-        all_class = classes.values()
-        if not cls:
+        all_clss = classes.values()
+        if cls is None:
             count = 0
-            for clas in all_class:
+            for clas in all_clss:
                 count += len(models.storage.all(clas).values())
         count = len(models.storage.all(cls).values())
 
         return count
+
+    def reload(self):
+        """reloads data from the database"""
+        Base.metadata.create_all(self.__engine)
+        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(sess_factory)
+        self.__session = Session
 
     def close(self):
         """call remove() method on the private session attribute"""
