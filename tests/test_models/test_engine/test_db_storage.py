@@ -23,6 +23,11 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 
+class SomeClass:
+    def __init__(self, id):
+        self.id = id
+
+
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
@@ -66,6 +71,46 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+    def test_get_none(self):
+        """ Test get method """
+        if os.getenv("HBNB_TYPE_STORAGE") == "db":
+            storage = DBStorage()
+            # test for none
+            param_err = storage.get("State", "123")
+            self.assertIsNone(param_err)
+            param_err = storage.get("State", "12.33")
+            self.assertIsNone(param_err)
+            param_err = storage.get("State", "123")
+            self.assertIsNone(param_err)
+
+    def test_get_correct(self):
+        """ Test get method """
+        # Test for correct object
+        if os.getenv("HBNB_TYPE_STORAGE") == "db":
+            storage = DBStorage()
+            state = State(name="Alabama")
+            alabama_id = state.id
+            state.save()
+            state = storage.get("State", alabama_id)
+            self.assertEqual(state.name, "Alabama")
+            self.assertEqual(state.id, alabama_id)
+
+    def test_count(self):
+        """ Test count method """
+        if os.getenv("HBNB_TYPE_STORAGE") == "db":
+            storage = DBStorage()
+            # Test for count
+            count = storage.count()
+            self.assertEqual(count, 0)
+            state = State(name="Alabama")
+            state.save()
+            count = storage.count()
+            self.assertEqual(count, 1)
+            state = State(name="California")
+            state.save()
+            count = storage.count()
+            self.assertEqual(count, 2)
 
 
 class TestFileStorage(unittest.TestCase):
