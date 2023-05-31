@@ -86,3 +86,50 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+@unittest.skipIf(models.storage_t != 'db', 'skip if environ is not db')
+class TestGetCountDB(unittest.TestCase):
+    """testing get and count methods"""
+
+    @classmethod
+    def setUpClass(cls):
+        print('\n\n.................................')
+        print('...... Testing Get and Count ......')
+        print('.......... DB Methods ..........')
+        print('.................................\n\n')
+
+    def setUp(self):
+        """initializes new state and cities for testing"""
+
+        self.state = State()
+        self.state.name = 'California'
+        self.state.save()
+        self.city1 = City()
+        self.city1.name = 'Fremont'
+        self.city1.state_id = self.state.id
+        self.city1.save()
+        self.city2 = City()
+        self.city2.name = 'San_Francisco'
+        self.city2.state_id = self.state.id
+        self.city2.save()
+
+    def test_get(self):
+        """check if get method returns state"""
+        storage = FileStorage()
+        real_state = storage.get("State", self.state.id)
+        fake_state = storage.get("State", "12345")
+
+        self.assertEqual(real_state, self.state)
+        self.assertNotEqual(fake_state, self.state)
+
+    def test_count(self):
+        """checks if count method returns correct numbers"""
+        storage = FileStorage()
+        state_count = storage.count("State")
+        city_count = storage.count("City")
+        place_count = storage.count("Place")
+
+        self.assertEqual(state_count, 1)
+        self.assertEqual(city_count, 2)
+        self.assertEqual(place_count, 0)
