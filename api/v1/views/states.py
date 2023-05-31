@@ -14,8 +14,8 @@ from models.state import State
 def get_all_states():
     """Retrieves all state objects"""
     all_states = storage.all('State')
-    all_states = [obj.to_dict() for obj in all_states.values()]
-    return jsonify(all_states)
+    states = [obj.to_dict() for obj in all_states.values()]
+    return jsonify(states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
@@ -72,3 +72,4 @@ def update_state(state_id):
         if key not in ignore_keys:
             setattr(state, key, value)
     storage.save()
+    return jsonify(state.to_dict()), 200

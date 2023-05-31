@@ -2,7 +2,7 @@
 """
 entry point of the app
 """
-
+    
 from os import getenv
 from flask import Flask, jsonify
 from models import storage
@@ -19,9 +19,19 @@ cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 @app.teardown_appcontext
 def teardown_appcontext(exception):
     """
-    declare a method to handle @app.teardown_appcontext that calls storage.close()
+    a method that calls storage.close()
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def error_404(error):
+    """
+    error handler
+    """
+    return jsonify({
+        'error': 'Not found'
+    }), 404
 
 
 if __name__ == '__main__':
@@ -31,8 +41,8 @@ if __name__ == '__main__':
         host = "0.0.0.0"
 
     if getenv('HBNB_API_HOST'):
-          port = getenv('HBNB_API_PORT')
+        port = getenv('HBNB_API_PORT')
     else:
-          port = 5000
+        port = 5000
 
     app.run(host=host, port=port, threaded=True)
