@@ -87,7 +87,8 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-@unittest.skipIf(storage_type != 'db', 'skip if environ is not db')
+
+@unittest.skipIf(models.storage_t != 'db', 'skip if environ is not db')
 class TestGetCountDB(unittest.TestCase):
     """testing get and count methods"""
 
@@ -100,7 +101,7 @@ class TestGetCountDB(unittest.TestCase):
 
     def setUp(self):
         """initializes new state and cities for testing"""
-        
+
         self.state = State()
         self.state.name = 'California'
         self.state.save()
