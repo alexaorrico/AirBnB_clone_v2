@@ -1,35 +1,47 @@
 #!/usr/bin/python3
-""" holds class State"""
+""" holds class User"""
+import hashlib
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String
 
 
-class State(BaseModel, Base):
-    """Representation of state """
+class User(BaseModel, Base):
+    """Representation of a user """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        __tablename__ = 'states'
-        name = Column(String(128),
-                      nullable=False)
-        cities = relationship("City", cascade="all, delete",
-                              backref="states")
+        __tablename__ = 'users'
+        email = Column(String(128),
+                       nullable=False)
+        _password = Column('password',
+                           String(128),
+                           nullable=False)
+        first_name = Column(String(128),
+                            nullable=True)
+        last_name = Column(String(128),
+                           nullable=True)
+        places = relationship("Place",
+                              backref="user",
+                              cascade="all, delete-orphan")
+        reviews = relationship("Review",
+                               backref="user",
+                               cascade="all, delete-orphan")
     else:
-        name = ""
+        email = ""
+        _password = ""
+        first_name = ""
+        last_name = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes state"""
+        """initializes user"""
         super().__init__(*args, **kwargs)
 
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
-        @property
-        def cities(self):
-            """fs getter attribute that returns City instances"""
-            values_city = models.storage.all("City").values()
-            list_city = []
-            for city in values_city:
-                if city.state_id == self.id:
-                    list_city.append(city)
-            return list_city
+    @property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def password(self, pwd):
+        """hashing password values"""
+        self._password = hashlib.md5(pwd.encode()).hexdigest()
