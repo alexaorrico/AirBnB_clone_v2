@@ -75,12 +75,12 @@ def create_place(city_id):
     data = request.get_json()
     if not data:
         return jsonify({'error': 'Not a JSON'}), 400
-    try:
-        storage.get(User, data["user_id"])
-    except KeyError:
+    user = storage.get(User, data["user_id"])
+    if not user:
         return jsonify({"error": "Not found"}), 404
-    if "user_id" not in data:
-        return jsonify({"error", "Missing user_id"}), 400
+    else:
+        if "user_id" not in data:
+            return jsonify({"error", "Missing user_id"}), 400
     if 'name' not in data:
         return jsonify({'error': 'Missing name'}), 400
     data['city_id'] = city_id
