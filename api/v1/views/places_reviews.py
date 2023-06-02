@@ -62,7 +62,7 @@ def delete_reviews_obj(review_id):
     return jsonify({}), 200
 
 
-@app_views.route('/places/<place_id>/reviews',
+@app_views.route('/places/<string:place_id>/reviews',
                  methods=['POST'], strict_slashes=False)
 def create_review(place_id):
     """
@@ -77,12 +77,11 @@ def create_review(place_id):
     data = request.get_json()
     if not data:
         return jsonify({'error': 'Not a JSON'}), 400
+    if 'user_id' not in data:
+        return jsonify({'error': 'Missing user_id'}), 400
     user = storage.get(User, data["user_id"])
     if not user:
         return jsonify({'error': 'Not found'}), 404
-    else:
-        if 'user_id' not in data:
-            return jsonify({'error': 'Missing user_id'}), 400
     if 'text' not in data:
         return jsonify({'error': 'Missing text'}), 400
     data["place_id"] = place_id
