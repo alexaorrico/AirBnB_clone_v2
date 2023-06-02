@@ -61,3 +61,4 @@ def post_place_amenity(place_id, amenity_id):
     place_amenities.append(amenity)
     place.save()
     return make_response(jsonify(amenityto_dict()), 201)
+

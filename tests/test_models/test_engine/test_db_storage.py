@@ -96,3 +96,4 @@ class TestDBStorage(unittest.TestCase):
         new_user.save()
         self.assertEqual(models.storage.count("State"), initial_count + 1)
         self.assertEqual(models.storage.count(), initial_count + 2)
+

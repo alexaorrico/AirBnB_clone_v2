@@ -64,3 +64,4 @@ def put_state(state_id):
             setattr(state, attr, val)
     state.save()
     return jsonify(state.to_dict())
+
