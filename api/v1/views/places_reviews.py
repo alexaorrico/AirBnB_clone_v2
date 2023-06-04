@@ -1,57 +1,54 @@
 #!/usr/bin/python3
-
-"""
-a new view for Review object that handles all default RESTFul API actions
-"""
-
-from models import storage
+"""This module defines a view for the link between Place and Review objects"""
 from api.v1.views import app_views
-from models.review import Review
+from flask import jsonify, request, abort
+from models import storage
 from models.place import Place
-from flask import jsonify, abort, make_response
+from models.review import Review
 
 
-@app_views.route("/places/<place_id>/reviews", methods=["GET"],
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def retrieve_review_uisng_placeid(place_id):
-    """
-    retrieves all review objects of a place
-    raises a 404 error if the place_id isnt linked to any review
-    """
-
-    review_list = []
+def place_reviews(place_id):
+    """Retrieves the list of all Review objects of a Place"""
     place = storage.get(Place, place_id)
-    if place:
-        for reviewid in place.reviews:
-            review_list.append(reviewid.to_dict())
-        return jsonify(review_list)
-    abort(404)
+    if place is None:
+        abort(404)
+    if storage_t == 'db':
+        reviews = place.reviews
+    else:
+        reviews = [storage.get(Review, review_id)
+                   for review_id in place.review_ids]
+    return jsonify([review.to_dict() for review in reviews])
 
 
-@app_views.route("/reviews/<review_id>", methods=["GET"],
-                 strict_slashes=False)
-def retrieve_review(review_id):
-    """
-    Retrieves a review using the review id
-    Raises a 404 error if the review_id isnt linked to any review
-    """
-
+@app_views.route('/reviews/<review_id>',
+                 methods=['DELETE', 'POST'], strict_slashes=False)
+def place_review(place_id, amenity_id):
+    """Deletes or links an Review object to a Place"""
+    place = storage.get(Place, place_id)
     review = storage.get(Review, review_id)
-    if review:
-        return jsonify(review.to_dict())
-    abort(404)
-
-
-@app_views.route("/reviews/<review_id>", methods=["DELETE"],
-                 strict_slashes=False)
-def delete_review(review_id):
-    """
-    delets a review
-    """
-
-    review = storage.get(Review, review_id)
-    if review:
-        review.delete()
+    if place is None or review is None:
+        abort(404)
+    if request.method == 'DELETE':
+        if storage_t == 'db':
+            if review not in place.reviews:
+                abort(404)
+            place.reviews.remove(review)
+        else:
+            if review_id not in place.review_ids:
+                abort(404)
+            place.review_ids.remove(review_id)
         storage.save()
-        return jsonify({})
-    abort(404)
+        return jsonify({}), 200
+    elif request.method == 'POST':
+        if storage_t == 'db':
+            if review in place.reviews:
+                return jsonify(review.to_dict()), 200
+            place.reviews.append(review)
+        else:
+            if review_id in place.review_ids:
+                return jsonify(review.to_dict()), 200
+            place.review_ids.append(review_id)
+        storage.save()
+        return jsonify(review.to_dict()), 201
