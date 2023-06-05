@@ -41,15 +41,28 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """
+        Queries the current database session for objects.
+
+        Args:
+            cls: Class representing the object type.
+
+        Returns:
+            A dictionary of objects queried from the database session.
+        """
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+        if cls:
+            objs = self.__session.query(cls).all()
+            for obj in objs:
+                key = obj.__class__.__name__ + '.' + obj.id
+                new_dict[key] = obj
+        else:
+            for cls in classes.values():
+                objs = self.__session.query(cls).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -74,3 +87,36 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """
+        Retrieves one object based on the class and ID.
+
+        Args:
+            cls: Class representing the object type.
+            id: String representing the object ID.
+
+        Returns:
+            The object based on the class and ID, or None if not found.
+        """
+        obj_dict = self.all(cls)
+        key = cls.__name__ + '.' + id
+        return obj_dict.get(key, None)
+
+    def count(self, cls=None):
+        """
+        Counts the number of objects in storage.
+
+        Args:
+            cls: Class representing the object type (optional).
+
+        Returns:
+            The number of objects in storage matching the given class.
+            If no class is passed, returns the count of all objects in storage.
+        """
+        if cls is None:
+            objects_dict = self.all()
+        else:
+            objects_dict = self.all(cls)
+        count = sum(1 for obj in objects_dict.values() if obj is not None)
+        return count
