@@ -86,3 +86,45 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_get(self):
+        """get method test, returns an object of a given class by id."""
+        storage = models.storage
+        obj = State(name='Lagos')
+        obj.save()
+        self.assertEqual(obj, storage.get(State, obj.id))
+        self.assertIsNone(storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, 45))
+        self.assertIsNone(storage.get(None, obj.id))
+        self.assertIsNone(storage.get(int, obj.id))
+        with self.assertRaises(TypeError):
+            storage.get(State, obj.id, 'op')
+        with self.assertRaises(TypeError):
+            storage.get(State)
+        with self.assertRaises(TypeError):
+            storage.get()
+
+    def test_count(self):
+        """test that count returns the number of objects of a given class."""
+        storage = models.storage
+        self.assertIs(type(storage.count()), int)
+        self.assertIs(type(storage.count(None)), int)
+        self.assertIs(type(storage.count(int)), int)
+        self.assertIs(type(storage.count(State)), int)
+        self.assertEqual(storage.count(), storage.count(None))
+        State(name='Jos').save()
+        self.assertGreater(storage.count(State), 0)
+        self.assertEqual(storage.count(), storage.count(None))
+        a = storage.count(State)
+        State(name='Osun').save()
+        self.assertGreater(storage.count(State), a)
+        Amenity(name='WiFi').save()
+        self.assertGreater(storage.count(), storage.count(State))
+        with self.assertRaises(TypeError):
+            storage.count(State, 'op')
