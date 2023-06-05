@@ -114,26 +114,51 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
-    def test_get(self):
-        """Test that the get method properly retrievs objects"""
-        storage = FileStorage()
-        self.assertIs(storage.get("User", "blah"), None)
-        self.assertIs(storage.get("blah", "blah"), None)
-        new_user = User()
-        new_user.save()
-        self.assertIs(storage.get("User", new_user.id), new_user)
+    def test_get_dbstorage(self):
+        """Test get storage engine with valid data"""
+        obj = State(name="Some state")
+        obj.save()
+        models.storage.save()
+        return_obj = list(models.storage.all(State).values())[0].id
+        z = str(models.storage.all()['State.' + return_obj])
+        self.assertNotEqual(z, None)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
-    def test_count(self):
-        storage = FileStorage()
-        initial_length = len(storage.all())
-        self.assertEqual(storage.count(), initial_length)
-        state_len = len(storage.all("State"))
-        self.assertEqual(storage.count("State"), state_len)
-        new_state = State()
-        new_state.save()
-        self.assertEqual(storage.count(), initial_length + 1)
-        self.assertEqual(storage.count("State"), state_len + 1)
+    def test_get_dbstorage2(self):
+        """Test get storage engine with valid data"""
+        test = (models.storage.count())
+        self.assertEqual(type(test), int)
+        test2 = (models.storage.count(State))
+        self.assertEqual(type(test2), int)
+        first_state_id = list(models.storage.all(State).values())[0].id
+        test3 = models.storage.get(State, first_state_id)
+        self.assertEqual(str(type(test3)), "<class 'models.state.State'>")
+
+    def test_get_fstorage_none(self):
+        """ testing invalid input"""
+        obj = State(name="Some state")
+        obj.save()
+        return_obj = models.storage.get('State', 'not_valid_id')
+        self.assertEqual(return_obj, None)
+        return_obj = models.storage.get('Not_valid_class', obj.id)
+        self.assertEqual(return_obj, None)
+        return_obj = models.storage.get('State', 33333)
+        self.assertEqual(return_obj, None)
+
+    def test_count_fstorage(self):
+        """ testing count method"""
+        old_count = models.storage.count()
+        obj = State(name="Some state")
+        obj.save()
+        new_count = models.storage.count()
+        self.assertEqual(old_count + 1, new_count)
+
+    def test_count_fstorage_cls(self):
+        """testing count method with class name"""
+        old_count = models.storage.count()
+        old_count_cls = models.storage.count('State')
+        obj = State(name="New York")
+        obj.save()
+        new_count = models.storage.count()
+        new_count_cls = models.storage.count('State')
+        self.assertEqual(old_count + 1, new_count)
+        self.assertEqual(old_count_cls + 1, new_count_cls)
