@@ -1,5 +1,10 @@
-# AirBnB Clone - The Console
+# AirBnB clone - RESTful API 
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+
+RESTful web service?
+The REST architecture was originally designed to fit the HTTP protocol that the world wide web uses.
+
+Central to the concept of RESTful web services is the notion of resources. Resources are represented by URIs. The clients send requests to these URIs using the methods defined by the HTTP protocol, and possibly as a result of that the state of the affected resource changes.
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
@@ -11,6 +16,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 ## Table of Content
 * [Environment](#environment)
 * [Installation](#installation)
+* [FLASK] (#Installing)
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
@@ -26,7 +32,11 @@ This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.
 * Access AirBnb directory: `cd AirBnB_clone`
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
+## Flask
+Flask
+Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. Itbegan as a simple wrapper around Werkzeug and Jinja and has become one of the most popular Python web application frameworks.
 
+Flask offers suggestions, but doesn't enforce any dependencies or project layout. It is up to the developer to choose the tools and libraries they want to use. There are many extensions provided by the community that make adding new functionality easy.
 ## File Descriptions
 [console.py](console.py) - the console contains the entry point of the command interpreter. 
 List of commands this console current supports:
@@ -158,5 +168,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+Third part of Airbnb: Adedolapo Adefaye
+                      Maxwell Ahorlu
 ## License
 Public Domain. No copy write protection. 
