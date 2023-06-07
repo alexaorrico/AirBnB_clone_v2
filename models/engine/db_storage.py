@@ -77,8 +77,9 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieve one object"""
-        for obj in self.all(cls):
-            if obj.get('id') == id:
+        for obj in self.all(cls).values():
+            obj_dict = obj.to_dict()
+            if obj_dict.get('id') == id:
                 return obj
         return None
 
