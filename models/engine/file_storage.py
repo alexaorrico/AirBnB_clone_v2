@@ -32,8 +32,8 @@ class FileStorage:
             for key, value in self.__objects.items():
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     new_dict[key] = value
-                    return new_dict
-            return self.__objects
+            return new_dict
+        return self.__objects
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
@@ -51,7 +51,7 @@ class FileStorage:
                 json.dump(json_objects, f)
 
     def reload(self):
-         """deserializes the JSON file to __objects"""
+        """deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
@@ -82,6 +82,6 @@ class FileStorage:
     def count(self, cls=None):
         """Count number of objects in storage"""
         count = 0
-        for obj in self.all(cls):
+        for obj in self.all(cls).values():
             count += 1
         return count
