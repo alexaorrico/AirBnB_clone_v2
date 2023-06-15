@@ -9,6 +9,7 @@ from flask import jsonify, request
 from models import storage
 from models.place import Place
 from models.review import Review
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews',
@@ -86,7 +87,8 @@ def create_review(place_id):
         return jsonify({'error': 'Missing text'}), 400
     data["place_id"] = place_id
     review = Review(**data)
-    review.save()
+    storage.new(review)
+    storage.save()
     return jsonify(review.to_dict()), 201
 
 
@@ -115,5 +117,5 @@ def update_review(review_id):
     data.pop('updated_at', None)
     for key, value in data.items():
         setattr(review, key, value)
-    review.save()
+    storage.save()
     return jsonify(review.to_dict()), 200
