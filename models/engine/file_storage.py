@@ -36,17 +36,21 @@ class FileStorage:
 
     def get(self, cls, id):
 	"""gets an object based on its class and id"""
-	my_dict = self.all(cls)
-        for obj in my_dict.value():
-            if obj.id == id:
-                return obj
+        tmp = self.all(cls)
+        for key, value in my_dict.items():
+            if (value.id == id):
+                return value
         return None
 
     def count(self, cls=None):
         """counts objects in the database"""
-        my_dict = self.all(cls)
-        return (len(my_dict))
- 
+        count = 0
+        if cls is None:
+            count = count + len(self.all())
+            return count
+        else:
+            count = count + len(self.all(cls))
+            return count
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
