@@ -159,5 +159,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Bella Okafor - [Github](https://github.com/belladesign) / [Twitter](https://twitter.com/BellaChumzy)
 
 Second part of Airbnb: Joann Vuong
+Forked the codebase: Bella Okafor
+
 ## License
 Public Domain. No copy write protection. 
