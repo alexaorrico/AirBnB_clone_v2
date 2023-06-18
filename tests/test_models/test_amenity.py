@@ -68,7 +68,7 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(hasattr(amenity, "updated_at"))
 
     def test_name_attr(self):
-        """Test that Amenity has attribute name, and it's as an empty string."""
+        """Test that Amenity has attribute name and it's value."""
         amenity = Amenity()
         self.assertTrue(hasattr(amenity, "name"))
         if models.storage_t == 'db':
