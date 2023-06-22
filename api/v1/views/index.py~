@@ -1,0 +1,9 @@
+#!/usr/bin/python3
+"""Defines endpoints"""
+from api.v1 import views
+from flask import jsonify
+
+@views.app_views.route("/status")
+def status():
+    """Returns status of app"""
+    return jsonify(status="OK")
