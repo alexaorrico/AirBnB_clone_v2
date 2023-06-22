@@ -80,29 +80,29 @@ class DBStorage:
         Session = scoped_session(session_factory)
         self.__session = Session()
 
-    def get(self, cls, id):
-        """Retrieve an object based on the class and its ID.
-        Args:
-            cls (class): The class of the object.
-            id (str): The ID of the object.
-        Returns:
-            object: The retrieved object or None if not found.
-        """
-        try:
-            obj = self.__session.query(cls).filter(cls.id == id).one()
-        except NoResultFound:
-            obj = None
-
-        return obj
-
-    def count(self, cls=None):
-        """Count the number of objects in storage matching the given class."""
-        if cls:
-            return self.__session.query(cls).count()
-        else:
-            return self.__session.query(User).count()
-
     def close(self):
         """Close the database storage session."""
         if self.__session is not None:
             self.__session.close()
+
+
+  def get(self, cls, id):
+        """Retrieve an object"""
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in name2class:
+            cls = name2class[cls]
+            result = self.__session.query(cls).filter(cls.id == id).first()
+            return result
+        else:
+            return None
+
+ def count(self, cls=None):
+        """Count number of objects in storage"""
+        total = 0
+        if type(cls) == str and cls in name2class:
+            cls = name2class[cls]
+            total = self.__session.query(cls).count()
+        elif cls is None:
+            for cls in name2class.values():
+                total += self.__session.query(cls).count()
+        return total
