@@ -13,6 +13,9 @@ from models.place import Place
 from models.review import Review
 
 
+from sqlalchemy.orm.exc import NoResultFound
+
+
 class DBStorage:
     """The class DBStorage is defined for database storage in Python."""
 
@@ -30,7 +33,7 @@ class DBStorage:
         self.__engine = create_engine(
             f'mysql+mysqldb://{user}:{password}@{host}/{database}',
             pool_pre_ping=True,
-            )
+        )
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
@@ -78,16 +81,26 @@ class DBStorage:
         self.__session = Session()
 
     def get(self, cls, id):
-        """Is retrieve an object based on the class and its ID."""
-        key = f"{cls.__name__}.{id}"
-        return self.__session.query(cls).filter_by(id=id).first()
+        """Retrieve an object based on the class and its ID.
+        Args:
+            cls (class): The class of the object.
+            id (str): The ID of the object.
+        Returns:
+            object: The retrieved object or None if not found.
+        """
+        try:
+            obj = self.__session.query(cls).filter(cls.id == id).one()
+        except NoResultFound:
+            obj = None
+
+        return obj
 
     def count(self, cls=None):
         """Count the number of objects in storage matching the given class."""
         if cls:
             return self.__session.query(cls).count()
         else:
-            return self.__session.query(State).count()
+            return self.__session.query(User).count()
 
     def close(self):
         """Close the database storage session."""
