@@ -1,88 +1,120 @@
 #!/usr/bin/python3
-"""
-Contains the TestDBStorageDocs and TestDBStorage classes
-"""
-
-from datetime import datetime
-import inspect
-import models
-from models.engine import db_storage
-from models.amenity import Amenity
-from models.base_model import BaseModel
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
+''' testing database storage '''
+import unittest
+import pep8
 import json
 import os
-import pep8
-import unittest
-DBStorage = db_storage.DBStorage
-classes = {"Amenity": Amenity, "City": City, "Place": Place,
-           "Review": Review, "State": State, "User": User}
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
+from models import storage
 
 
-class TestDBStorageDocs(unittest.TestCase):
-    """Tests to check the documentation and style of DBStorage class"""
-    @classmethod
-    def setUpClass(cls):
-        """Set up for the doc tests"""
-        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+class TestDBStorage(unittest.TestCase):
+    ''' testing the DBStorage '''
 
-    def test_pep8_conformance_db_storage(self):
-        """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    def test_pep8_FileStorage(self):
+        ''' Testing pep8 style '''
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(['models/engine/db_storage.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
-    def test_pep8_conformance_test_db_storage(self):
-        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+        def setUp(self):
+            self.db_storage = storage.DBStorage()
+        self.db_storage.reload()
 
-    def test_db_storage_module_docstring(self):
-        """Test for the db_storage.py module docstring"""
-        self.assertIsNot(db_storage.__doc__, None,
-                         "db_storage.py needs a docstring")
-        self.assertTrue(len(db_storage.__doc__) >= 1,
-                        "db_storage.py needs a docstring")
+    def tearDown(self):
+        self.db_storage.close()
 
-    def test_db_storage_class_docstring(self):
-        """Test for the DBStorage class docstring"""
-        self.assertIsNot(DBStorage.__doc__, None,
-                         "DBStorage class needs a docstring")
-        self.assertTrue(len(DBStorage.__doc__) >= 1,
-                        "DBStorage class needs a docstring")
+    def test_get_existing_object(self):
+        """Test retrieving an existing object using get()"""
+        new_state = (
+            self.
+            _extracted_from__extracted_from_test_count_objects_by_class_5_3()
+        )
+        retrieved_state = self.db_storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
 
-    def test_dbs_func_docstrings(self):
-        """Test for the presence of docstrings in DBStorage methods"""
-        for func in self.dbs_f:
-            self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+    def test_get_nonexistent_object(self):
+        """Test retrieving a nonexistent object using get()"""
+        retrieved_state = self.db_storage.get(State, "nonexistent-id")
+        self.assertIsNone(retrieved_state)
+
+    def test_count_all_objects(self):
+        """Test counting all objects in storage"""
+        initial_count = self.db_storage.count()
+
+        self._extracted_from_test_count_objects_by_class_5()
+        updated_count = self.db_storage.count()
+
+        self.assertEqual(updated_count, initial_count + 2)
+
+    def test_count_objects_by_class(self):
+        """Test counting objects in storage by class"""
+        initial_state_count = self.db_storage.count(State)
+        initial_city_count = self.db_storage.count(City)
+
+        self._extracted_from_test_count_objects_by_class_5()
+        updated_state_count = self.db_storage.count(State)
+        updated_city_count = self.db_storage.count(City)
+
+        self.assertEqual(updated_state_count, initial_state_count + 1)
+        self.assertEqual(updated_city_count, initial_city_count + 1)
+
+    # TODO Rename this here and in `test_count_all_objects` and\
+        # `test_count_objects_by_class`
+    def _extracted_from_test_count_objects_by_class_5(self):
+        new_state = (
+            self.
+            _extracted_from__extracted_from_test_count_objects_by_class_5_3()
+        )
+        new_city = City(name="Los Angeles", state_id=new_state.id)
+        storage.new(new_city)
+        storage.save()
+
+    # TODO Rename this here and in `test_get_existing_object` and\
+        # `_extracted_from_test_count_objects_by_class_5`
+    def _extracted_from__extracted_from_test_count_objects_by_class_5_3(self):
+        result = State(name="California")
+        storage.new(result)
+        storage.save()
+        return result
+
+    def test_get_positive(self):
+        obj = User(name="John")
+        self.session.add(obj)
+        self.session.commit()
+        result = self.get(User, obj.id)
+        assert result == obj
+
+    def test_get_negative(self):
+        result = self.get(User, 0)
+        assert result is None
+
+    def test_count_with_class(self):
+        self._extracted_from_test_count_without_class_2()
+        result = self.count(User)
+        assert result == 2
+
+    def test_count_without_class(self):
+        self._extracted_from_test_count_without_class_2()
+        result = self.count()
+        assert result == 2
+
+    # TODO Rename this here and in `test_count_with_class` and\
+    # `test_count_without_class`
+    def _extracted_from_test_count_without_class_2(self):
+        obj1 = User(name="John")
+        obj2 = User(name="Jane")
+        self.session.add_all([obj1, obj2])
+        self.session.commit()
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+if __name__ == "__main__":
+    unittest.main()
