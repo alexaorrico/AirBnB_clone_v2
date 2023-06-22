@@ -64,17 +64,25 @@ class FileStorage:
             if key in FileStorage.__objects:
                 del FileStorage.__objects[key]
 
-    def get(self, cls, id):
-        """Is retrieve an object based on the class and its ID."""
-        objects = self.all(cls)
-        key = f"{cls.__name__}.{id}"
-        return objects.get(key, None)
-
-    def count(self, cls=None):
-        """Count the number of objects in storage matching the given class."""
-        objects = self.all(cls)
-        return len(objects)
-
     def close(self):
         """Close the file storage and reload the data from JSON file."""
         self.reload()
+
+    def get(self, cls, id):
+        """Retrieve an object"""
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
+            return None
+
+    def count(self, cls=None):
+        """Count number of objects in storage"""
+        total = 0
+        if type(cls) == str and cls in classes:
+            total = len(self.all(cls))
+        elif cls is None:
+            total = len(self.__objects)
+        return total
