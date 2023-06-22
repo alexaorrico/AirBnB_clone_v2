@@ -87,7 +87,7 @@ class DBStorage:
         if cls:
             return self.__session.query(cls).count()
         else:
-            return self.__session.query(User).count()
+            return self.__session.query(State).count()
 
     def close(self):
         """Close the database storage session."""
