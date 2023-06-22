@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Contains the FileStorage class."""
 
+
+import contextlib
 import json
 import models
 from models.amenity import Amenity
@@ -25,19 +27,19 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Return the dictionary __object."""
+        """Return the dictionary __objects."""
         if cls is not None:
-            new_dict = {}
-            for key, value in self.__objects.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    new_dict[key] = value
-            return new_dict
+            return {
+                key: value
+                for key, value in self.__objects.items()
+                if cls in [value.__class__, value.__class__.__name__]
+            }
         return self.__objects
 
     def new(self, obj):
         """Set in __objects the obj with key <obj class name>.id."""
         if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
+            key = f"{obj.__class__.__name__}.{obj.id}"
             self.__objects[key] = obj
 
     def save(self):
@@ -51,19 +53,17 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """Deserializes the JSON file to __objects."""
-        try:
+        """Deserialize the JSON file to __objects."""
+        with contextlib.suppress(KeyError):
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
 
     def delete(self, obj=None):
         """Delete obj from __objects if it’s inside."""
         if obj is not None:
-            key = obj.__class__.__name__ + '.' + obj.id
+            key = f'{obj.__class__.__name__}.{obj.id}'
             if key in self.__objects:
                 del self.__objects[key]
 
@@ -78,21 +78,14 @@ class FileStorage:
             return None
 
         all_cls = models.storage.all(cls)
-        for value in all_cls.values():
-            if (value.id == id):
-                return value
-
-        return None
+        return next((value for value in all_cls.values()
+                     if (value.id == id)), None)
 
     def count(self, cls=None):
         """Count the number of objects in storage."""
         all_class = classes.values()
 
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
-        else:
-            count = len(models.storage.all(cls).values())
-
-        return count
+        return (
+            len(models.storage.all(cls).values()) if cls else
+            sum(len(models.storage.all(clas).values()) for clas in all_class)
+        )
