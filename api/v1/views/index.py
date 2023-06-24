@@ -1,29 +1,11 @@
 #!/usr/bin/python3
-"""
-Testing documentation of a module.
-
-"""
+"""Create a status route."""
 
 from api.v1.views import app_views
 from flask import jsonify
-from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
-def get_status():
-    """Status of api."""
-    return jsonify(status="ok")
-
-
-@app_views.route('/stats', methods=['GET'])
-def get_stats():
-    """Retrieve the number of each objects by type."""
-    stats = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
-    }
-    return jsonify(stats)
+@app_views.route('/status')
+def status():
+    """Print 'ok' string."""
+    return jsonify(status='OK')
