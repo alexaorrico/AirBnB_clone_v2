@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Contain the class DBStorage."""
+"""Contains the class DBStorage."""
 
 import models
 from models.amenity import Amenity
@@ -46,7 +46,7 @@ class DBStorage:
             if cls is None or cls is classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
-                    key = f'{obj.__class__.__name__}.{obj.id}'
+                    key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
 
@@ -75,20 +75,14 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Return the object based on the class name and its ID,\
-        or None if not found."""
-        if cls not in classes.values():
-            return None
-
-        all_cls = models.storage.all(cls)
-        return next((value for value in all_cls.values()
-                     if (value.id == id)), None)
-
+        """Return the object based on the class and its ID."""
+        object = f"{cls}.{id}"
+        if object in self.__objects:
+            return self.__objects[object]
+        return None
+    
     def count(self, cls=None):
-        """Count the number of objects in storage."""
-        all_class = classes.values()
-
-        return (
-            len(models.storage.all(cls).values()) if cls else
-            sum(len(models.storage.all(clas).values()) for clas in all_class)
-        )
+        """Returns the number of objects."""
+        if cls is not None and cls in classes:
+            return len(self.__objects[cls])
+        return len(self.__objects)
