@@ -67,10 +67,6 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
 
-    def close(self):
-        """Call reload() method for deserializing the JSON file to objects."""
-        self.reload()
-
     def get(self, cls, id):
         """Return the object based on the class name and its ID,\
         or None if not found."""
@@ -89,3 +85,7 @@ class FileStorage:
             len(models.storage.all(cls).values()) if cls else
             sum(len(models.storage.all(clas).values()) for clas in all_class)
         )
+
+    def close(self):
+        """Call reload() method for deserializing the JSON file to objects."""
+        self.reload()
