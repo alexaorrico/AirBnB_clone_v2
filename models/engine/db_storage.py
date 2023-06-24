@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Contains the class DBStorage."""
+"""
+Contains the class DBStorage
+"""
 
 import models
 from models.amenity import Amenity
@@ -19,8 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """Interacts with the MySQL database."""
-
+    """Interact with the MySQL database."""
     __engine = None
     __session = None
 
@@ -46,7 +47,7 @@ class DBStorage:
             if cls is None or cls is classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
-                    key = f'{obj.__class__.__name__}.{obj.id}'
+                    key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
 
@@ -74,13 +75,21 @@ class DBStorage:
         """Call remove() method on the private session attribute."""
         self.__session.remove()
 
-    def get(self, cls, id):  # sourcery skip: avoid-builtin-shadow
-        """Return the object based on the class and its ID."""
-        object = f"{cls}.{id}"
-        return self.__objects[object] if object in self.__objects else None
+    def get(self, cls, id):
+        """Return the object based on the class name and its ID."""
+
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        return next((value for value in all_cls.values()
+                     if (value.id == id)), None)
 
     def count(self, cls=None):
-        """Return the number of objects."""
-        if cls is not None and cls in classes:
-            return len(self.__objects[cls])
-        return len(self.__objects)
+        """Count the number of objects in storage."""
+        all_class = classes.values()
+
+        return (
+            len(models.storage.all(cls).values()) if cls else
+            sum(len(models.storage.all(clas).values()) for clas in all_class)
+        )
