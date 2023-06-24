@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""It’s time to start your API!."""
+"""
+It’s time to start your API!.
+"""
 
 from models import storage
 from flask import Flask, jsonify
