@@ -79,6 +79,7 @@ class FileStorage:
             return None
 
         all_cls = models.storage.all(cls)
+        print(all_cls)
         return next((value for value in all_cls.values()
                     if (value.id == id)), None)
 
