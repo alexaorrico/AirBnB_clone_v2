@@ -46,7 +46,7 @@ class FileStorage:
         for key in self.__objects:
             if key == "password":
                 json_objects[key].decode()
-            json_objects[key] = self.__objects[key].to_dict(save_fs=1)
+            json_objects[key] = self.__objects[key].to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -79,7 +79,6 @@ class FileStorage:
             return None
 
         all_cls = models.storage.all(cls)
-        print(all_cls)
         return next((value for value in all_cls.values()
                     if (value.id == id)), None)
 
