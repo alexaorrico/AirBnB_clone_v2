@@ -1,8 +1,4 @@
 #!/usr/bin/python3
-"""
-It’s time to start your API!.
-"""
-
 from models import storage
 from flask import Flask, jsonify
 from api.v1.views import app_views
