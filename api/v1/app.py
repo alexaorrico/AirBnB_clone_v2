@@ -12,14 +12,18 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 
 @app.teardown_appcontext
 def close_db(exception):
-    """Is function "close_db" takes an error as input and does not have any\
-    code implemented within it."""
+    """
+    Is function "close_db" takes an error as input and does not have any\
+    code implemented within it.
+    """
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
-    """Is description: a resource was not found."""
+    """
+    Is description: a resource was not found.
+    """
     return jsonify({'error': "Not found"}), 404
 
 
