@@ -70,6 +70,10 @@ class DBStorage:
         Session = scoped_session(sess_factory)
         self.__session = Session
 
+    def close(self):
+        """Call remove() method on the private session attribute."""
+        self.__session.remove()
+
     def get(self, cls, id):
         """Return the object based on the class name and its ID,\
         or None if not found."""
@@ -88,7 +92,3 @@ class DBStorage:
             len(models.storage.all(cls).values()) if cls else
             sum(len(models.storage.all(clas).values()) for clas in all_class)
         )
-
-    def close(self):
-        """Call remove() method on the private session attribute."""
-        self.__session.remove()
