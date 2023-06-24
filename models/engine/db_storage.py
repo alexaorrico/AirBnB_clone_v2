@@ -46,7 +46,7 @@ class DBStorage:
             if cls is None or cls is classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
+                    key = f'{obj.__class__.__name__}.{obj.id}'
                     new_dict[key] = obj
         return (new_dict)
 
@@ -74,15 +74,13 @@ class DBStorage:
         """Call remove() method on the private session attribute."""
         self.__session.remove()
 
-    def get(self, cls, id):
+    def get(self, cls, id):  # sourcery skip: avoid-builtin-shadow
         """Return the object based on the class and its ID."""
         object = f"{cls}.{id}"
-        if object in self.__objects:
-            return self.__objects[object]
-        return None
-    
+        return self.__objects[object] if object in self.__objects else None
+
     def count(self, cls=None):
-        """Returns the number of objects."""
+        """Return the number of objects."""
         if cls is not None and cls in classes:
             return len(self.__objects[cls])
         return len(self.__objects)
