@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Testing documentation of a module
+"""
+Testing documentation of a module.
+
 """
 
 from api.v1.views import app_views
