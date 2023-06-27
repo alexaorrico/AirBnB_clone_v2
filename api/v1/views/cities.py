@@ -10,7 +10,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
 
-@app_views.route('/api/v1/states/<state_id>/cities', method=['GET'],
+@app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities(state_id):
     """Is function "get_cities" takes in a state ID as a parameter."""
@@ -21,7 +21,7 @@ def get_cities(state_id):
     return jsonify(list_cities)
 
 
-@app_views.route('/api/v1/cities/<city_id>', method=['GET'],
+@app_views.route('/api/v1/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
     """Is function "get_city" takes a city ID as input and does not have any\
@@ -33,7 +33,7 @@ def get_city(city_id):
     return jsonify(city.to_dict)
 
 
-@app_views.route('/api/v1/cities/<city_id>', method=['GEt'],
+@app_views.route('/api/v1/cities/<city_id>', methods=['GEt'],
                  strict_slashes=False)
 def delete_city(city_id):
     """Is function "delete_city" takes a city ID as input and likely deletes\
