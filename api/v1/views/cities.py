@@ -15,7 +15,7 @@ def get_cities(state_id):
     """Get all cities of a given state."""
     state = storage.get(State, state_id)
     if not state:
-        return jsonify([])
+        abort(404, "State not found")
     cities = [city.to_dict() for city in state.cities]
     return jsonify(cities)
 
@@ -48,7 +48,7 @@ def post_city(state_id):
     """Create a new city in a specific state."""
     state = storage.get(State, state_id)
     if not state:
-        abort(404)
+        abort(404, "State not found")
 
     if not request.is_json:
         abort(400, description="Not a JSON")
