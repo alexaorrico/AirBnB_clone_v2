@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""Create a new view for City objects that handles
-all default RESTFul API actions."""
+"""Create a new view for City objects that handles all
+default RESTFul API actions."""
 
 from models.city import City
 from models.state import State
@@ -14,10 +14,10 @@ from flask import abort, jsonify, make_response, request
 def get_cities(state_id):
     """Get all cities of a given state."""
     state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    list_cities = [city.to_dict() for city in state.cities]
-    return jsonify(list_cities)
+    if not state:
+        return jsonify([])
+    cities = [city.to_dict() for city in state.cities]
+    return jsonify(cities)
 
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['GET'],
@@ -25,7 +25,7 @@ def get_cities(state_id):
 def get_city(city_id):
     """Get details of a specific city."""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
     return jsonify(city.to_dict())
 
@@ -35,11 +35,11 @@ def get_city(city_id):
 def delete_city(city_id):
     """Delete a specific city."""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
     storage.delete(city)
     storage.save()
-    return make_response(jsonify({}), 200)
+    return jsonify({})
 
 
 @app_views.route('/api/v1/states/<state_id>/cities', methods=['POST'],
@@ -47,7 +47,7 @@ def delete_city(city_id):
 def post_city(state_id):
     """Create a new city in a specific state."""
     state = storage.get(State, state_id)
-    if state is None:
+    if not state:
         abort(404)
 
     if not request.is_json:
@@ -69,7 +69,7 @@ def post_city(state_id):
 def put_city(city_id):
     """Update an existing city."""
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
 
     if not request.is_json:
@@ -83,4 +83,4 @@ def put_city(city_id):
 
     storage.save()
 
-    return make_response(jsonify(city.to_dict()), 200)
+    return jsonify(city.to_dict())
