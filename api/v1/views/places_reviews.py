@@ -13,9 +13,9 @@ from api.v1.views import app_views
 def get_reviews_by_place(place_id):
     """Retrieve the list of all Review objects of a Place."""
     place = storage.get(Place, place_id)
-    if place is None:
+    if not place:
         abort(404)
-    return jsonify([review.to_dict() for review in place.reviews.values()])
+    return jsonify([review.to_dict() for review in place.reviews])
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
