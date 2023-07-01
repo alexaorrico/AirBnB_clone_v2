@@ -24,7 +24,7 @@ def r_user_id(user_id):
     """
     file: yml/users_get.yml
     """
-    user = storage.get("User", user_id)
+    user = storage.get(User, user_id)
     if not user:
         abort(404)
     return jsonify(user.to_dict())
@@ -36,7 +36,7 @@ def del_user(user_id):
     """
     Deletes a User object.
     """
-    user = storage.get("User", user_id)
+    user = storage.get(User, user_id)
     if not user:
         abort(404)
     user.delete()
@@ -68,7 +68,7 @@ def put_user(user_id):
     """
     Updates a User object.
     """
-    user = storage.get("User", user_id)
+    user = storage.get(User, user_id)
     if not user:
         abort(404)
 
