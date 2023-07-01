@@ -30,8 +30,6 @@ def get_review(review_id):
 
 app_views.route('/reviews/<review_id>', methods=['DELETE'],
                 strict_slashes=False)
-
-
 def delete_review(review_id):
     """Delete a Review object."""
     review = storage.get(Review, review_id)
