@@ -11,22 +11,25 @@ from models.user import User
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def get_place_reviews(place_id):
-    """Retrieve the list of all Review objects of a Place."""
-    place = storage.get(Place, place_id)
-    if not place:
+def search_place_review(place_id):
+    """Return a list of reviews link to a place."""
+    selected_place = storage.get(Place, place_id)
+    if not selected_place:
         abort(404)
-    reviews = [review.to_dict() for review in place.reviews]
-    return jsonify(reviews)
+    list_of_reviews = []
+    for review in selected_place.reviews:
+        list_of_reviews.append(review.to_dict())
+    return jsonify(list_of_reviews)
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
-def get_review(review_id):
-    """Retrieve a Review object."""
-    review = storage.get(Review, review_id)
-    if not review:
+@app_views.route('/reviews/<review_id>', methods=['GET'],
+                 strict_slashes=False)
+def get_a_review(review_id):
+    """Get a review by its id."""
+    wanted_review = storage.get(Review, review_id)
+    if not wanted_review:
         abort(404)
-    return jsonify(review.to_dict())
+    return jsonify(wanted_review.to_dict())
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
