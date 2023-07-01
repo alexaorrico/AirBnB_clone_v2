@@ -17,7 +17,7 @@ def get_reviews_by_place(place_id):
         abort(404)
     is_review = []
 
-    for review in place.reviews:
+    for review in place.reviews.values():
         is_review.append(review.to_dict())
     return jsonify(is_review)
 
