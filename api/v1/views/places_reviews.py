@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """View for Review objects that handles default API actions."""
 
-from api.v2.views import app_views
+from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
 from models.review import Review
