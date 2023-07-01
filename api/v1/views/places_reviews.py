@@ -19,6 +19,7 @@ def get_reviews_by_place(place_id):
 
     for review in place.reviews.values():
         is_review.append(review.to_dict())
+    print(is_review)
     return jsonify(is_review)
 
 
