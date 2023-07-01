@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 """View for Review objects that handles default API actions."""
-
+from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
 from models.review import Review
 from models.place import Place
 from models.user import User
-from api.v1.views import app_views
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
