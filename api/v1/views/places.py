@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-View for Place objects that handles default API actions.
-"""
+"""View for Place objects that handles default API actions."""
 
 from flask import abort, jsonify, make_response, request
 from models import storage
