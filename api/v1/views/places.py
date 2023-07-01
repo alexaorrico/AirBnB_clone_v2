@@ -6,6 +6,7 @@ from models import storage
 from models.city import City
 from models.place import Place
 from models.amenity import Amenity
+from models.user import User
 import requests
 import json
 from os import getenv
@@ -63,7 +64,7 @@ def post_place(city_id):
     if "user_id" not in new_place:
         abort(400, "Missing user_id")
     user_id = new_place['user_id']
-    if not storage.get("User", user_id):
+    if not storage.get(User, user_id):
         abort(404)
     if "name" not in new_place:
         abort(400, "Missing name")
@@ -80,7 +81,7 @@ def put_place(place_id):
     """
     Updates a Place object.
     """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if not place:
         abort(404)
 
@@ -119,7 +120,7 @@ def places_search():
     places = []
 
     if body_r.get('states'):
-        states = [storage.get("State", id) for id in body_r.get('states')]
+        states = [storage.get(State, id) for id in body_r.get('states')]
 
         for state in states:
             for city in state.cities:
