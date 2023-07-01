@@ -5,6 +5,7 @@ from flask import jsonify, abort, make_response, request
 from models import storage
 from models.city import City
 from models.place import Place
+from models.amenity import Amenity
 import requests
 import json
 from os import getenv
@@ -16,7 +17,7 @@ def places(city_id):
     """
     Retrieves the list of all Place objects.
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if not city:
         abort(404)
     return jsonify([place.to_dict() for place in city.places])
@@ -27,7 +28,7 @@ def r_place_id(place_id):
     """
     Retrieves a Place object.
     """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if not place:
         abort(404)
     return jsonify(place.to_dict())
@@ -39,7 +40,7 @@ def del_place(place_id):
     """
     Deletes a Place object.
     """
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if not place:
         abort(404)
     place.delete()
@@ -53,7 +54,7 @@ def post_place(city_id):
     """
     Creates a Place object.
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if not city:
         abort(404)
     new_place = request.get_json()
@@ -126,7 +127,7 @@ def places_search():
                     places.append(place)
 
     if body_r.get('cities'):
-        cities = [storage.get("City", id) for id in body_r.get('cities')]
+        cities = [storage.get(City, id) for id in body_r.get('cities')]
 
         for city in cities:
             for place in city.places:
@@ -138,7 +139,7 @@ def places_search():
         places = [place for place in places.values()]
 
     if body_r.get('amenities'):
-        ams = [storage.get("Amenity", id) for id in body_r.get('amenities')]
+        ams = [storage.get(Amenity, id) for id in body_r.get('amenities')]
         i = 0
         limit = len(places)
         HBNB_API_HOST = getenv('HBNB_API_HOST')
@@ -152,7 +153,7 @@ def places_search():
             req = url.format(place.id)
             response = requests.get(req)
             am_d = json.loads(response.text)
-            amenities = [storage.get("Amenity", o['id']) for o in am_d]
+            amenities = [storage.get(Amenity, o['id']) for o in am_d]
             for amenity in ams:
                 if amenity not in amenities:
                     places.pop(i)
