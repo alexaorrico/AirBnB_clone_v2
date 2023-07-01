@@ -13,7 +13,7 @@ from api.v1.views import app_views
 def get_reviews_by_place(place_id):
     """Retrieve the list of all Review objects of a Place."""
     place = storage.get(Place, place_id)
-    if not place:
+    if place is None:
         abort(404)
     return jsonify([review.to_dict() for review in place.reviews])
 
