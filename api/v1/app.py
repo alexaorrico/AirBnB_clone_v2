@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-    Module: app
+Module: app.
 """
+
 from flask import Flask, make_response, jsonify
 from api.v1.views import app_views
 from models import storage
