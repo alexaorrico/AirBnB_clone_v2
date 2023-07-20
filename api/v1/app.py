@@ -1,23 +1,45 @@
 #!/usr/bin/python3
-"""Api/v1/app.py"""
-from flask import Flask
-from models import storage
+"""
+app
+"""
+
+from flask import Flask, jsonify
+from flask_cors import CORS
+from os import getenv
+
 from api.v1.views import app_views
-import os
+from models import storage
+
 
 app = Flask(__name__)
 
-def register_blueprints(app):
-    """Register the blueprint app_views to the Flask instance app."""
-    app.register_blueprint(app_views)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
+app.register_blueprint(app_views)
+
 
 @app.teardown_appcontext
 def teardown(exception):
-    """Closes the storage engine when the application context is torn down."""
+    """
+    teardown function
+    """
     storage.close()
 
+
+@app.errorhandler(404)
+def handle_404(exception):
+    """
+    handles 404 error
+    :return: returns 404 json
+    """
+    data = {
+        "error": "Not found"
+    }
+
+    resp = jsonify(data)
+    resp.status_code = 404
+
+    return(resp)
+
 if __name__ == "__main__":
-    """Set default values for host and port if not defined in the environment."""
-    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-    port = int(os.getenv('HBNB_API_PORT', '5000'))
-    app.run(host=host, port=port, threaded=True)
+    app.run(getenv("HBNB_API_HOST"), getenv("HBNB_API_PORT"))
