@@ -1,4 +1,4 @@
-#!/user/bin/python3
+#!/usr/bin/python3
 import sys
 import traceback
 from importlib import import_module
