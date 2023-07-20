@@ -3,31 +3,23 @@
 Module: app.
 """
 
-from flask import Flask, make_response, jsonify
-from api.v1.views import app_views
+import os
+from flask import Flask, jsonify
 from models import storage
-from os import getenv
-from flask import jsonify
-from flask_cors import CORS
+from api.v1.views import app_views
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
-CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
+app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 @app.teardown_appcontext
-def teardown(self):
-    """ close storage session """
+def teardown_db(exception):
+    """Closes the storage on teardown."""
     storage.close()
 
 
-@app.errorhandler(404)
-def handle_404(error):
-    """ returns the 404 request error in JSON format """
-    return make_response(jsonify({"error": "Not found"}), 404)
-
-
 if __name__ == "__main__":
-    _host = getenv('HBNB_API_HOST', '0.0.0.0')
-    _port = getenv('HBNB_API_PORT', 5000)
-    app.run(host=_host, port=_port)
+    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(os.getenv('HBNB_API_PORT', 5000))
+    app.run(host=host, port=port, threaded=True)

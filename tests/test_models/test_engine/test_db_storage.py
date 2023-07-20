@@ -42,7 +42,7 @@ class TestDBStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+                            test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -69,9 +69,10 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
     def setUp(self):
-        """create a test database"""
-        self.db = DBStorage(database='test_db')
-        self.db.create_all()
+        """Set up the DBStorage object and create necessary tables"""
+        self.db = DBStorage()
+        BaseModel.metadata.create_all(self.db._DBStorage__engine)
+        self.db.reload()
 
         """add some data to the database"""
         user1 = User(name='John', age=30)
