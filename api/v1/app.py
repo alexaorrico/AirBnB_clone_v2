@@ -1,6 +1,6 @@
-#!/usr/bin/python3
-
+#!/user/bin/python3
 import sys
+import traceback
 from importlib import import_module
 
 if __name__ == "__main__":
@@ -16,4 +16,5 @@ if __name__ == "__main__":
     except ImportError as e:
         print(f"Error: Unable to import module '{module_name}'.")
         print(f"Reason: {e}")
+        traceback.print_exc()
         sys.exit(1)
