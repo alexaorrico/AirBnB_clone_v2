@@ -25,7 +25,7 @@ def teardown(exception):
     """
     teardown function
 
-    This function is called when the application context is torn down. It closes
+    This function is called when application context is torn down. It closes
     the database storage engine to free up resources.
 
     Args:
@@ -40,7 +40,7 @@ def handle_404(exception):
     handles 404 error
 
     This function is called when a 404 error occurs. It returns a JSON response
-    with an "error" key containing the message "Not found" and a status code of 404.
+    with an "error" key containing message "Not found" and status code of 404.
 
     Args:
         exception (Exception): The exception that caused the 404 error.
