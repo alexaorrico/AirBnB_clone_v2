@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 app
+
+This module contains the main Flask application for the API.
 """
 
 from flask import Flask, jsonify
@@ -22,6 +24,12 @@ app.register_blueprint(app_views)
 def teardown(exception):
     """
     teardown function
+
+    This function is called when the application context is torn down. It closes
+    the database storage engine to free up resources.
+
+    Args:
+        exception (Exception): The exception that caused the teardown.
     """
     storage.close()
 
@@ -30,7 +38,15 @@ def teardown(exception):
 def handle_404(exception):
     """
     handles 404 error
-    :return: returns 404 json
+
+    This function is called when a 404 error occurs. It returns a JSON response
+    with an "error" key containing the message "Not found" and a status code of 404.
+
+    Args:
+        exception (Exception): The exception that caused the 404 error.
+
+    Returns:
+        Response: A JSON response with the error message and status code 404.
     """
     data = {
         "error": "Not found"
@@ -39,7 +55,7 @@ def handle_404(exception):
     resp = jsonify(data)
     resp.status_code = 404
 
-    return (resp)
+    return resp
 
 
 if __name__ == "__main__":
