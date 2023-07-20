@@ -4,6 +4,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
 from datetime import datetime
+import imp
 import inspect
 import models
 from models.engine import db_storage
@@ -74,15 +75,84 @@ class TestFileStorage(unittest.TestCase):
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
+        test = models.storage.all()
+        self.assertEqual(type(test), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        from models import storage
+        from models.state import State
+        from models.city import City
+        testState = State(name="Happiness")
+        testCity = City(name="Ignorance", state_id=testState.id)
+        storage.new(testState)
+        storage.new(testCity)
+        storage.save()
+        self.assertNotEqual(len(storage.all(State)), len(storage.all()))
+        storage.delete(testState)
+        storage.delete(testCity)
+        storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        from models import storage
+        from models.state import State
+        test = State(name="Happiness")
+        storage.new(test)
+        storage.save()
+        saveWorks = False
+        testDict = storage.all(State)
+        for state in testDict.values():
+            if state.name == "Happiness":
+                saveWorks = True
+        self.assertEqual(saveWorks, True)
+        storage.delete(test)
+        storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        from models import storage
+        from models.state import State
+        test = State(name="Happiness")
+        storage.new(test)
+        storage.save()
+        saveWorks = False
+        testDict = storage.all(State)
+        for state in testDict.values():
+            if state.name == "Happiness":
+                saveWorks = True
+        self.assertEqual(saveWorks, True)
+        storage.delete(test)
+        storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that save properly saves objects to file.json"""
+        from models import storage
+        test = State(name="Happiness")
+        storage.new(test)
+        storage.save()
+        first_state_id = list(storage.all(State).values())[0].id
+        obj = storage.get(State, first_state_id)
+        self.assertTrue(obj.__class__.__name__, "State")
+        self.assertTrue(obj.id, first_state_id)
+        storage.delete(test)
+        storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that save properly saves objects to file.json"""
+        from models import storage
+        from models.state import State
+        test = State(name="Happiness")
+        storage.new(test)
+        storage.save()
+        count_state = storage.count(State)
+        count = storage.count()
+        self.assertEqual(count, 1)
+        self.assertEqual(count_state, 1)
+        storage.delete(test)
+        storage.save()
