@@ -2,10 +2,8 @@
 """
 module: Place api
 """
-from api.v1.views import app_views
+from api.v1.views import app_views, Place, storage
 from flask import jsonify, abort, request
-from models import storage
-from models.place import Place
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
