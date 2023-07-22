@@ -77,8 +77,12 @@ class DBStorage:
 
     def get(self, cls, id):
         """ retrieves an object """
-        dict = self.all()
-        return dict[f"{cls}.{id}"]
+        try:
+            dict = self.all()
+            obj = dict[f"{cls.__name__}.{id}"]
+        except KeyError:
+            obj = None
+        return obj
 
     def count(self, cls=None):
         """ counts the number of objects in storage """
