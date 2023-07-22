@@ -86,4 +86,5 @@ class FileStorage:
             dict = self.__objects
         for obj in dict:
             count += 1
+        self.save()
         return count
