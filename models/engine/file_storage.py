@@ -72,7 +72,7 @@ class FileStorage:
     def get(self, cls, id):
         """ retrieves an object """
         self.reload()
-        obj = self.__objects[cls + '.' + id]
+        obj = self.__objects[f"{cls}.{id}"]
         self.save()
         return obj
 
@@ -80,7 +80,7 @@ class FileStorage:
         """ counts the number of objects in storage """
         self.reload()
         if cls is not None:
-            dict = self.__objects[cls + '.*']
+            dict = self.__objects[f"{cls}.*"]
         else:
             dict = self.__objects
         count = len(dict)
