@@ -163,6 +163,7 @@ Joann Vuong
 
 V3:
 Wyatt Morris - [Github](https://github.com/pretzelogical)
+Adel Knode - [Github](https://github.com/PaintRock)
 
 
 ## License
