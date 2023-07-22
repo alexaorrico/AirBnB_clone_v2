@@ -78,13 +78,11 @@ class FileStorage:
 
     def count(self, cls=None):
         """ counts the number of objects in storage """
-        count = 0
         self.reload()
         if cls is not None:
-            dict = self.__objects[cls]
+            dict = self.__objects[cls + '.*']
         else:
             dict = self.__objects
-        for obj in dict:
-            count += 1
+        count = len(dict)
         self.save()
         return count
