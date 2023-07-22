@@ -83,7 +83,7 @@ class FileStorage:
         """ counts the number of objects in storage """
         self.reload()
         if cls is not None:
-            dict = self.__objects[f"{cls}.*"]
+            dict = self.__objects[f"{cls.__name__}.*"]
         else:
             dict = self.__objects
         count = len(dict)
