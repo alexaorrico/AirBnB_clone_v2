@@ -72,7 +72,8 @@ class FileStorage:
     def get(self, cls, id):
         """ retrieves an object """
         self.reload()
-        obj = self.__objects[f"{cls}.{id}"]
+        cls_name = classes[cls]
+        obj = self.__objects[f"{cls_name}.{id}"]
         self.save()
         return obj
 
