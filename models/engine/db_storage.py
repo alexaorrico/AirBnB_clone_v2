@@ -76,7 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """ retrieves an object """
+        """ retrieves an object (successfully) """
         try:
             dict = self.all()
             obj = dict[f"{cls.__name__}.{id}"]
@@ -85,5 +85,5 @@ class DBStorage:
         return obj
 
     def count(self, cls=None):
-        """ counts the number of objects in storage """
+        """ counts the number of objects in storage (successfully) """
         return len(self.all(cls))
