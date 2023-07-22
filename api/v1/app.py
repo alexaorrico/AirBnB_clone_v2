@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ 4. Status of your API """
-from flask import Flask
+from flask import Flask, jsonify, make_response
 import os
 from models import storage
 from api.v1.views import app_views
@@ -13,6 +13,12 @@ app.register_blueprint(app_views)
 def tear_it_down(stuff):
     """ clost storage """
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_404(error):
+    """ displays 404 error """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
