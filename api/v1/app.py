@@ -9,14 +9,8 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
-@app.route('/')
-def index():
-    """ root route """
-    return "Hello world!"
-
-
 @app.teardown_appcontext
-def tear_it_down():
+def tear_it_down(stuff):
     """ clost storage """
     storage.close()
 
