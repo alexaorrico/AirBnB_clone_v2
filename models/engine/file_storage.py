@@ -72,7 +72,10 @@ class FileStorage:
     def get(self, cls, id):
         """ retrieves an object """
         self.reload()
-        obj = self.__objects[f"{cls.__name__}.{id}"]
+        try:
+            obj = self.__objects[f"{cls.__name__}.{id}"]
+        except KeyError:
+            obj = None
         self.save()
         return obj
 
