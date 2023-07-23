@@ -113,3 +113,14 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_fs_get_method(self):
+        print(self.state.id)
+        result = FileStorage.get(cls="State", id=self.state.id)
+        self.assertIsInstance(result, models.state.State)
+
+    def test_fs_count_method(self):
+        result = FileStorage.count(cls="City")
+        self.assertEqual(
+            int(0 if len(FileStorage.all("City")) is None else
+                len(FileStorage.all("City"))), result)
