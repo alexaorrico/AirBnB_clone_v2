@@ -68,8 +68,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +86,51 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_new_user(self):
+        """Test that get properly retrieves an object from the database"""
+        new_user = User(password="goodbye", email="jinji@gmail.com")
+        user_id = new_user.id
+        models.storage.new(new_user)
+        models.storage.save()
+        self.assertEqual(new_user, models.storage.get("User", user_id))
+        models.storage.delete(new_user)
+        models.storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_faulty_id(self):
+        """Test that get properly handles errors/nonexistant obj instances"""
+        self.assertEqual(None, models.storage.get("User", "fake_id"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_faulty_classname(self):
+        """Test that get properly handles errors/nonexistant obj instances"""
+        self.assertEqual(None, models.storage.get("Usr", "fake_id"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_with_classname(self):
+        """Test that count properly counts instances"""
+        orig_count = models.storage.count('State')
+        new_state = State(name="Indiana")
+        models.storage.new(new_state)
+        models.storage.save()
+        self.assertEqual(orig_count + 1, models.storage.count('State'))
+        models.storage.delete(new_state)
+        models.storage.save()
+        self.assertEqual(orig_count, models.storage.count('State'))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_without_classname(self):
+        """Test that count properly counts instances"""
+        orig_count = models.storage.count()
+        new_state = State(name="Indiana")
+        new_user = User(password="goodbye", email="jinji@gmail.com")
+        models.storage.new(new_state)
+        models.storage.new(new_user)
+        models.storage.save()
+        self.assertEqual(orig_count + 2, models.storage.count())
+        models.storage.delete(new_state)
+        models.storage.delete(new_user)
+        models.storage.save()
+        self.aseertEqual(orig_count, models.storage.count())
