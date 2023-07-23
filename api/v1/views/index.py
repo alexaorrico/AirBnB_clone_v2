@@ -5,6 +5,6 @@ import json
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
-def app_status(self):
+def app_status():
     """ Returns the status of the app in json format """
     return json.dumps({"status": "OK"})
