@@ -2,7 +2,7 @@
 """ Gives the status of the api """
 from flask import jsonify
 from api.v1.views import app_views
-from api.v1.app import storage
+from models import storage
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -15,6 +15,7 @@ from models.user import User
 def app_status():
     """ Returns the status of the app in json format """
     return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def obj_stats():
