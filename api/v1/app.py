@@ -17,8 +17,9 @@ def teardown_db(exception):
 
 @app.errorhandler(404)
 def not_found(error):
-    """ Define a handler for 404 errors """
-    return jsonify({"error": "Not found"}), 404
+    """Error code 404, not found"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
     if "HBNB_API_HOST" in environ:
