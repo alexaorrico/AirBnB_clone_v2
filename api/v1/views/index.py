@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+"""
+Checks the status of the JSON file
+"""
 from api.v1.views import app_views
 from flask import jsonify
 
