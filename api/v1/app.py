@@ -8,10 +8,12 @@ from os import environ
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """ Close the database """
     storage.close()
+
 
 if __name__ == "__main__":
     if "HBNB_API_HOST" in environ:
