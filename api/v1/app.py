@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ Returns the status of the API """
+from api.v1.views import app_views
 from flask import Flask, render_template
 from models import storage
-from api.v1.views import app_views
 from os import environ
 
 app = Flask(__name__)
