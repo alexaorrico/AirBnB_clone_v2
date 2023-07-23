@@ -2,6 +2,7 @@
 """ Returns the status of the API """
 from api.v1.views import app_views
 from flask import Flask, render_template
+from flask import jsonify
 from models import storage
 from os import environ
 
