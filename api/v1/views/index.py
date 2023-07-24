@@ -20,8 +20,9 @@ def app_status():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def obj_stats():
     """ Returns the number of each object by type """
-    m_classes = [Amenity, City, Place, Review, State, User]
+    m_classes = {"amenities": Amenity, "cities": City, "places": Place,
+                 "reviews": Review, "states": State, "users": User}
     count = {}
-    for c in m_classes:
-        count[c.__name__] = storage.count(c)
+    for key, val in m_classes.items():
+        count[key] = storage.count(val)
     return jsonify(count)
