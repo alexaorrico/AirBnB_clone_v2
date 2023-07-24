@@ -23,9 +23,9 @@ a = {}
 s = {}
 for i in range(10):
     a[f"a{i}"] = Amenity(name=f"amenity{i}")
-    a.save()
+    a[f"a{i}"].save()
     s[f"s{i}"] = State(name=f"state{i}")
-    s.save()
+    s[f"s{i}"].save()
 
 
 # c_ps = subprocess.Popen(['cat', 'drop_dev_database.sql'], stdout=subprocess.PIPE)
