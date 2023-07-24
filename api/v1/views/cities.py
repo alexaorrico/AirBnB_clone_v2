@@ -48,9 +48,9 @@ def create_city(state_id):
     if state is None:
         abort(404)
     if not data:
-        abort(404, "Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
     if "name" not in data.keys():
-        abort(404, "Missing name")
+        return jsonify({"error": "Missing name"}), 400
     new_city = City(**data)
     storage.new(new_city)
     storage.save()
@@ -65,7 +65,7 @@ def update_city(city_id):
     if city is None:
         abort(404)
     if not data:
-        abort(404, "Not a JSON")
+        return jsonify({"error": "Not a JSON"}), 400
     ignored_keys = ['id', 'state_id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in ignored_keys:
