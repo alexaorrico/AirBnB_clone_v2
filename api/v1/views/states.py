@@ -17,6 +17,7 @@ def get_states():
 
 @app_views.route('/states/<string:state_id>', methods=['GET'])
 def get_state(state_id):
+    """ git states"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
