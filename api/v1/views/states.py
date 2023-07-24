@@ -3,8 +3,8 @@
 a new view for State objects
 that handles all default RESTful API actions
 """
-from api.v1.views import app_views
 from flask import jsonify, abort, request
+from api.v1.views import app_views
 from models import State
 
 
