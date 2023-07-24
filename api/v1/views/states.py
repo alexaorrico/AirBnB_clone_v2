@@ -12,14 +12,14 @@ from models.state import State
 @app_views.route('/api/v1/states', methods=['GET'])
 def get_states():
     """ retrieves the list of all State objects """
-    states = storage.all(State)
-    return jsonify([state.to_dict() for state in states])
+    states = storage.all("State")
+    return jsonify([state.to_dict() for state in states.values()])
 
 
 @app_views.route('/api/v1/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """ retrieves a State object (specified with state_id) """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -28,7 +28,7 @@ def get_state(state_id):
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ deletes a State object (specified with state_id) """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -39,7 +39,7 @@ def delete_state(state_id):
 def create_state():
     """ creates a State object """
     state_data = request.get_json()
-    if state_data is None:
+    if not state_data:
         abort(404, description="Not a JSON")
     if 'name' not in state_data:
         abort(404, description="Missing name")
@@ -50,7 +50,7 @@ def create_state():
 @app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """ updates a State object (specified with state_id) """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     state_data = request.get_json()
