@@ -18,11 +18,11 @@ def stats():
     import json
     from models import storage
     classes = {
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-        "User": "users"
+        "amenities": ("Amenity"),
+        "cities": ("City"),
+        "places": ("Place"),
+        "reviews": ("Review"),
+        "states": ("State"),
+        "users": ("User"),
     }
     return jsonify({k: storage.count(v) for k, v in classes.items()})
