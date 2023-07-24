@@ -1,4 +1,4 @@
-# api/v1/views/states.py
+#!/usr/bin/python3
 """ flask state import blood drive """
 
 from flask import jsonify, request, abort
