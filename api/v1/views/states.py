@@ -1,16 +1,14 @@
 #!/usr/bin/python3
-""" Create a new view for states and handle RESTFul API"""
-# api/v1/views/states.py
-
-from flask import jsonify, request, abort
+""" Create a new view for states and handle RESTFul API """
 from api.v1.views import app_views
+from flask import jsonify, request, abort
 from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'])
 def get_states():
-    """ Gets the list of all State objects"""
+    """ Gets the list of all State objects """
     states = storage.all(State).values()
     return jsonify([state.to_dict() for state in states])
 
