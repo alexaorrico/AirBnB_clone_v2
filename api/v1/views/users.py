@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" View for amenities """
+""" View for users """
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models.user import User
