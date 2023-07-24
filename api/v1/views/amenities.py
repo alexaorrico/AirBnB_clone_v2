@@ -30,7 +30,7 @@ def get_amenity_id(amenity_id=None):
 def new_amenity():
     """ Creates a new amenity """
     js_info = request.get_json()
-    if request.is_json == False:
+    if request.is_json is False:
         abort(400, 'Not a JSON')
     if 'name' not in js_info:
         abort(400, 'Missing name')
@@ -58,7 +58,7 @@ def put_amenity(amenity_id=None):
     """ Updates an amenity based on the amenity id """
     js_info = request.get_json()
     amen = storage.all(Amenity)
-    if request.is_json == False:
+    if request.is_json is False:
         abort(400, 'Not a JSON')
     js_info.pop('id', 'no_error_pls')
     js_info.pop('created_at', 'no_error_pls')
