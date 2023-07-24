@@ -13,16 +13,15 @@ def status():
 
 
 @app_views.route('/stats')
-def stats():
-    """Returns the stats of the API"""
-    import json
+def class_stats():
+    """ return counts of class instances """
     from models import storage
-    classes = {
-        "amenities": ("Amenity"),
-        "cities": ("City"),
-        "places": ("Place"),
-        "reviews": ("Review"),
-        "states": ("State"),
-        "users": ("User"),
+    counts = {
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User"),
     }
-    return jsonify({k: storage.count(v) for k, v in classes.items()})
+    return jsonify(counts)
