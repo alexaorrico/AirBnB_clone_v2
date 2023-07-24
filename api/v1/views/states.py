@@ -3,22 +3,23 @@
 a new view for State objects
 that handles all default RESTful API actions
 """
-from flask import jsonify, abort, request
 from api.v1.views import app_views
-from models import State
+from flask import jsonify, abort, request
+from models import storage
+from models.state import State
 
 
 @app_views.route('/api/v1/states', methods=['GET'])
 def get_states():
     """ retrieves the list of all State objects """
-    states = State.query.all()
+    states = storage.all(State)
     return jsonify([state.to_dict() for state in states])
 
 
 @app_views.route('/api/v1/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """ retrieves a State object (specified with state_id) """
-    state = State.query.get(state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -27,7 +28,7 @@ def get_state(state_id):
 @app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ deletes a State object (specified with state_id) """
-    state = State.query.get(state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -49,7 +50,7 @@ def create_state():
 @app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """ updates a State object (specified with state_id) """
-    state = State.query.get(state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state_data = request.get_json()
