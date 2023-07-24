@@ -47,18 +47,17 @@ def create_post():
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'])
 def update_state(state_id):
-    state = storage.get(State, state_id)
-    if not state:
-        abort(404)
+    if request.is_json is False:
+        abort(404, 'Not a JSON')
     data = request.get_json()
-    if not data:
-        abort(400, description='Not a JSON')
-
+    states = storage.all(State)
+    s_key = "State." + state_id
+    if s_key not in states:
+        abort(404)
     # Ignore keys: id, created_at, and updated_at
     ignored_keys = ['id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in ignored_keys:
-            setattr(state, key, value)
-    state.save()
-
-    return jsonify(state.to_dict()), 200
+            setattr(states[s_key], key, value)
+    storage.save()
+    return jsonify(states[s_key].to_dict()), 200
