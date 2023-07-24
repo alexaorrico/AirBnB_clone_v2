@@ -10,3 +10,4 @@ def get_cities():
     """ Retrieves teh lost of all City objects """
     cities = storage.all(City).values()
     return jsonify ([city.to dict() for city in cities])
+
