@@ -40,9 +40,9 @@ def create_state():
     """ creates a State object """
     state_data = request.get_json()
     if not state_data:
-        abort(404, description="Not a JSON")
+        abort(400, description="Not a JSON")
     if 'name' not in state_data:
-        abort(404, description="Missing name")
+        abort(400, description="Missing name")
     new_state = State(name=state_data['name'])
     return jsonify(new_state.to_dict()), 201
 
@@ -55,7 +55,7 @@ def update_state(state_id):
         abort(404)
     state_data = request.get_json()
     if state_data is None:
-        abort(404, description="Not a JSON")
+        abort(400, description="Not a JSON")
     for key, value in state_data.items():
         if key in ('id', 'created_at', 'updated_at'):
             state.__setattr__(key, value)
