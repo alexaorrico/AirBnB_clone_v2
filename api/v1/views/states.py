@@ -26,8 +26,7 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('api/v1/views/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('api/v1/views/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ deletes a State object (specified with state_id) """
     state = storage.get("State", state_id)
@@ -38,7 +37,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'])
 def create_state():
     """ creates a State object """
     s_request = request.get_json()
@@ -51,8 +50,7 @@ def create_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('api/v1/views/states/<state_id>', methods=['PUT'],
-                 strict_slashes=False)
+@app_views.route('api/v1/views/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """ updates a State object (specified with state_id) """
     state = storage.get("State", state_id)
