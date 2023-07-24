@@ -2,7 +2,7 @@
 """
 This module contains the index for the RESTful API
 """
-from flask import JSON, jsonify
+from flask import jsonify
 from api.v1.views import app_views
 
 
