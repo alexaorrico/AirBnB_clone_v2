@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+# api/v1/views/states.py
 """ flask state import blood drive """
 
 from flask import jsonify, request, abort
@@ -9,14 +9,13 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'])
 def get_states():
-    """ more blood for the drive """
+    """ more blood fo """
     states = storage.all(State).values()
     return jsonify([state.to_dict() for state in states]), 200
 
 
 @app_views.route('/states/<string:state_id>', methods=['GET'])
 def get_state(state_id):
-    """ center of his own attention """
     state = storage.get(State, state_id)
     if not state:
         abort(404)
