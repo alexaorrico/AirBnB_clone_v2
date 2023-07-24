@@ -3,9 +3,8 @@
 Starts up a copy of a flask-app
 """
 from flask import Flask
-from models import storage
 from api.v1.views import app_views
-from os import getenv as env
+
 app = Flask(__name__)
 
 app.register_blueprint(app_views)
@@ -14,6 +13,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown_db(self):
     """Closes the storage on teardown"""
+    from models import storage
     storage.close()
 
 
@@ -25,6 +25,7 @@ def page_not_found(e):
 
 def start_flask():
     """ start flask """
+    from os import getenv as env
     app.run(host=env('HBNB_API_HOST', default='localhost'),
             port=env('HBNB_API_PORT'),
             threaded=True)

@@ -2,9 +2,8 @@
 """
 This module contains the index for the RESTful API
 """
-from api.v1.views import app_views
 from flask import jsonify
-from models import storage
+from api.v1.views import app_views
 
 
 @app_views.route('/status')
@@ -16,6 +15,7 @@ def status():
 @app_views.route('/stats')
 def stats():
     """Returns the stats of the API"""
+    from models import storage
     classes = {
         "Amenity": "amenities",
         "City": "cities",
