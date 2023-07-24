@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ View for amenities """
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models import storage
@@ -10,7 +10,6 @@ from models import storage
                  strict_slashes=False)
 def get_amenity_no_id():
     """ Gets an amenity if no id has been provided """
-    amen_l = []
     amen = storage.all(Amenity).values()
     return jsonify([a.to_dict() for a in amen])
 
@@ -23,3 +22,16 @@ def get_amenity_id(amenity_id=None):
     if a_key not in amen:
         abort(404)
     return(jsonify(amen[a_key].to_dict()))
+
+@app_views.route('/amenities', methods=['POST'],
+                 strict_slashes=False)
+def new_amenity():
+    """ Creates a new amenity """
+    js_info = request.get_json()
+    if request.is_json == False:
+        abort(400, 'Not a JSON')
+    if 'name' not in js_info:
+        abort(400, 'Missing name')
+    new_a = Amenity(**js_info)
+    new_a.save()
+    return jsonify(new_a.to_dict()), 201
