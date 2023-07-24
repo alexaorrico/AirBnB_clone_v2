@@ -11,29 +11,30 @@ from api.v1.views import app_views
 
 @app_views.route('/states', methods=['GET'])
 def get_states():
-    states = storage.all("State")
-    states_list = [state.to_dict() for state in states.values()]
+    states = storage.all(State).values()
+    states_list = []
+    for state in states:
+        states_list.append(state.to_dict())
     return jsonify(states_list)
 
-
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('api/v1/views/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def get_delete_update_state(state_id):
     state = storage.get("State", state_id)
-    if state is None:
+    if not state:
         abort(404)
 
     if request.method == 'GET':
         return jsonify(state.to_dict())
     elif request.method == 'DELETE':
         storage.delete(state)
+        storage.save()
         return jsonify({}), 200
-
     elif request.method == 'PUT':
         # Get the JSON data from the request
         data = request.get_json()
 
         if data is None:
-            abort(400, description="Not a JSON")
+            abort(400, "Not a JSON")
         for key, value in data.items():
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(state, key, value)
@@ -48,12 +49,11 @@ def create_state():
     # If the request isn't valid JSON or
     # doesn't contain the name, raise a 400 error
     if data is None:
-        abort(400, description="Not a JSON")
+        abort(400, "Not a JSON")
     if 'name' not in data:
-        abort(400, description="Missing name")
+        abort(400, "Missing name")
 
     # Create a new State
     new_state = State(**data)
-    storage.new(new_state)
     storage.save()
     return jsonify(new_state.to_dict()), 201
