@@ -15,6 +15,7 @@ def status():
 @app_views.route('/stats')
 def stats():
     """Returns the stats of the API"""
+    import json
     from models import storage
     classes = {
         "Amenity": "amenities",
