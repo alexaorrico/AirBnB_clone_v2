@@ -35,3 +35,15 @@ def new_amenity():
     new_a = Amenity(**js_info)
     new_a.save()
     return jsonify(new_a.to_dict()), 201
+
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_amenity(amenity_id=None):
+    """ Deletes an amenity based on the amenity id """
+    amen = storage.all(Amenity)
+    a_key = "Amenity." + amenity_id
+    if a_key not in amen:
+        abort(404)
+    storage.delete(amen[a_key])
+    storage.save()
+    return jsonify({}), 200
