@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """create a new view for Amenity objects that handles all default RestFul API 
 actions"""
 from api.v1.views import app_views
