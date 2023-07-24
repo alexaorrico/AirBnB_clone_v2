@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ retrieves an object """
+        """ retrieves an object (successfully) """
         self.reload()
         try:
             obj = self.__objects[f"{cls.__name__}.{id}"]
@@ -80,7 +80,7 @@ class FileStorage:
         return obj
 
     def count(self, cls=None):
-        """ counts the number of objects in storage """
+        """ counts the number of objects in storage (successfully) """
         self.reload()
         if cls is not None:
             count = 0
