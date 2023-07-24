@@ -55,7 +55,7 @@ def update_state(state_id):
     if s_key not in states:
         abort(404)
     # Ignore keys: id, created_at, and updated_at
-    ignored_keys = ['id', 'created_at', 'updated_at']
+    ignored_keys = ['id', 'created_at', 'updated_at', 'state_id']
     for key, value in data.items():
         if key not in ignored_keys:
             setattr(states[s_key], key, value)
