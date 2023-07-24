@@ -15,6 +15,7 @@ def get_states():
 
 @app_views.route('/states/<string:state_id>', methods=['GET'])
 def get_state(state_id):
+    """ gits the states """
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -23,6 +24,7 @@ def get_state(state_id):
 
 @app_views.route('/states/<string:state_id>', methods=['DELETE'])
 def delete_state(state_id):
+    """ why"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -32,12 +34,12 @@ def delete_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'])
-def create_state():
+def create_post():
     data = request.get_json()
     if not data:
-        abort(400, description='Not a JSON')
+        abort(400, description="Not a JSON")
     if 'name' not in data:
-        abort(400, description='Missing name')
+        abort(400, description="Missing name")
     state = State(**data)
     state.save()
     return jsonify(state.to_dict()), 201
