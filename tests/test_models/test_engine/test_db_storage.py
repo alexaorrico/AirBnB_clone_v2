@@ -86,3 +86,38 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """ Test that get retrieves the right object """
+        oklama = State(name="Oklahoma")
+        ok_id = oklama.id
+        oklama.save()
+        self.assertEqual(oklama, models.storage.get(State, ok_id))
+        self.assertEqual(None, models.storage.get(State, "dang"))
+        models.storage.delete(oklama)
+        models.storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """ Test that count retrieves the correct number of objects """
+        for c in classes.values():
+            models.storage._DBStorage__session.query(c).delete()
+        models.storage.save()
+        self.assertEqual(0, models.storage.count())
+        uncle_funky = User(email="funkmail.funk", password="bigbiggins22",
+                           first_name="uncle", last_name="funky")
+        uncle_funky.save()
+        self.assertEqual(1, models.storage.count(User))
+        tuxus = State(name="tuxus")
+        tuxus.save()
+        self.assertEqual(1, models.storage.count(User))
+        self.assertEqual(1, models.storage.count(State))
+        jane_doe = User(email="snail.mail.fail", password="password",
+                        first_name="Jane", last_name="Doe")
+        jane_doe.save()
+        self.assertEqual(2, models.storage.count(User))
+        self.assertEqual(3, models.storage.count())
+        for c in classes.values():
+            models.storage._DBStorage__session.query(c).delete()
+        models.storage.save()
