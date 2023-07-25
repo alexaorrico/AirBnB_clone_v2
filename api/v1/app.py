@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """creating an instance of Flask"""
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.vi.views import app_views
 from os import getenv
