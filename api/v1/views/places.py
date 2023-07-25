@@ -34,13 +34,13 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route("/places/<place_id>", methods=["GET"],
+@app_views.route("/places/<place_id>", methods=["DELETE"],
                  strict_slashes=False)
 def delete_place(place_id):
     """ deletes a Place object (specified with place_id) """
     place = storage.get(Place, place_id)
     if not place:
-        abort (404)
+        abort(404)
     storage.delete(place)
     storage.save()
     return jsonify({})
