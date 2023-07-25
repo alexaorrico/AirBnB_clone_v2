@@ -3,8 +3,8 @@
 Starts up a copy of a flask-app
 """
 from flask import Flask
-from api.v1.views import app_views
-from flask_cors import CORS
+from views import app
+from . import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
