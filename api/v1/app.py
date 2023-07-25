@@ -1,35 +1,38 @@
 #!/usr/bin/python3
-""" Returns the status of the API """
-from api.v1.views import app_views
-from flask import Flask, render_template, jsonify
-from flask_cors import CORS
+"""creating an instance of Flask"""
+
+from flask import Flask, jsonify
 from models import storage
-from os import environ
+from api.v1.views import app_views
+from os import getenv
+from flask_cors import CORS
 
+
+# Creating flask app instance
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-app.register_blueprint(app_views)
+
+# Cross-Origin Resource Sharing
+CORS(app, origins="0.0.0.0")
 
 
+# Method that tears down app context
 @app.teardown_appcontext
-def teardown_db(exception):
-    """ Close the database """
+def teardown_appcontext(self):
+    """Calls the close method in storage"""
     storage.close()
 
 
+# 404 error
 @app.errorhandler(404)
 def not_found(error):
-    """Make of the erroro 404, not found"""
-    return jsonify(error="Not found"), 404
+    """404 error"""
+    return jsonify({"error": "Not found"}), 404
 
+# If main file
+if __name__ == '__main__':
+    # Gets host and port from env variables
+    hosts = getenv('HBNB_API_HOST', default='0.0.0.0')
+    ports = getenv('HBNB_API_PORT', default=5000)
 
-if __name__ == "__main__":
-    if "HBNB_API_HOST" in environ:
-        host = environ["HBNB_API_HOST"]
-    else:
-        host = "0.0.0.0"
-    if "HBNB_API_PORT" in environ:
-        port = environ["HBNB_API_PORT"]
-    else:
-        port = "5000"
-    app.run(host=host, port=port, threaded=True)
+    # Runs the application
+    app.run(host=hosts, port=ports, threaded=True)
