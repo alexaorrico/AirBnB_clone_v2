@@ -14,6 +14,7 @@ app = Flask(__name__)
 # Cross-Origin Resource Sharing
 CORS(app, origins="0.0.0.0")
 
+
 # Method that tears down app context
 @app.teardown_appcontext
 def teardown_appcontext(self):
