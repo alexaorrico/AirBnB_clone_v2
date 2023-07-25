@@ -31,14 +31,11 @@ def create_amenity():
 
 
 # Route to get a single amenity by its ID
-@app_views.route('/amenities/<amenity_id>', methods=['GET'],
-                 strict_slashes=False)
-def get_amenity(amenity_id):
-    """Gets a single amenity object based on ID"""
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
-        abort(404)
-    return jsonify(amenity.to_dict())
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+def get_amenities():
+    """Retrieves all amenities"""
+    amenities = storage.all(Amenity)
+    return jsonify([amenity.to_dict() for amenity in amenities.values()])
 
 
 # Route to delete a single amenity by its ID
