@@ -85,5 +85,5 @@ class DBStorage:
         if cls is None:
             return len(self.__session)
         else:
-            cownt = len(self.all(cls))
-            return cownt
+            count = len(self.all(cls))
+            return count
