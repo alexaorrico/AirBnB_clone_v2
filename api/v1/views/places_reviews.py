@@ -55,13 +55,13 @@ def create_review(place_id):
     user = storage.get(User, data.get("user_id"))
     if not place:
         abort(404)
-    elif not user:
-        abort(404)
-    elif not data:
+    if not data:
         abort(400, "Not a JSON")
-    elif "user_id" not in data:
+    if "user_id" not in data:
         abort(400, "Missing user_id")
-    elif "text" not in data:
+    if not user:
+        abort(404)
+    if "text" not in data:
         abort(400, "Missing text")
     data["place_id"] = place_id
     new_review = Review(**data)
