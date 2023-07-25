@@ -4,7 +4,9 @@
 from flask import Flask
 from models import storage
 from api.vi.views import app_views
+from os import getenv
 from flask_cors import CORS
+
 
 # Creating flask app instance
 app = Flask(__name__)
