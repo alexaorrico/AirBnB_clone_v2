@@ -4,7 +4,7 @@ Starts up a copy of a flask-app
 """
 from flask import Flask
 from importlib import import_module
-from app import app_views
+from api import app_views
 from . import CORS
 import sys
 
