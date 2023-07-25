@@ -20,6 +20,13 @@ def teardown_appcontext(self):
     """Calls the close method in storage"""
     storage.close()
 
+
+# 404 error
+@app.errorhandler(404)
+def not_found(error):
+    """404 error"""
+    return jsonify({"error": "Not found"}), 404
+
 # If main file
 if __name__ == '__main__':
     # Gets host and port from env variables
