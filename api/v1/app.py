@@ -4,7 +4,7 @@ This module contains the principal application
 """
 from models import storage
 from api.v1.views import app_views
-from flask import Flask, make_response, jsonify
+from flask import Flask
 from os import getenv
 from flask_cors import CORS
 from flasgger import Swagger
