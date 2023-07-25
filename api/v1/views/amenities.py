@@ -11,7 +11,7 @@ from models.amenity import Amenity
 def get_amenities():
     """Retrieves the list of all Amenity objects"""
     amenities = []
-    for amenity in storage.all('Amenity').values():
+    for amenity in storage.all(Amenity).values():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
@@ -20,7 +20,7 @@ def get_amenities():
                     strict_slashes=False)
 def get_amenity(amenity_id):
     """Retrieves a Amenity object"""
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity:
         return jsonify(amenity.to_dict())
     abort(404)
@@ -30,7 +30,7 @@ def get_amenity(amenity_id):
                     strict_slashes=False)
 def delete_amenity(amenity_id):
     """Deletes a Amenity object"""
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity:
         storage.delete(amenity)
         storage.save()
@@ -56,8 +56,8 @@ def post_amenity():
 
 def put_amenity(amenity_id):
     """Updates a Amenity object"""
-    amenity = storage.get('Amenity', amenity_id)
-    if not amenity:
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
     if not request.get_json():
         abort(400, 'Not a JSON')
