@@ -7,6 +7,8 @@ from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
+from models.engine import file_storage
+from models.engine.file_storage import FileStorage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -86,7 +88,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-    
+        pass  # added pass because this entry was empty
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
     def test_get(self):
         """Test that the get method properly retrievs objects"""
@@ -96,7 +98,7 @@ class TestFileStorage(unittest.TestCase):
         new_user = User()
         new_user.save()
         self.assertIs(storage.get("User", new_user.id), new_user)
-        
+
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
     def test_count(self):
         storage = FileStorage()
