@@ -124,9 +124,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(storage.get("blah", "blah"), None)
         new_user = User()
         new_user.save()
-        if storage.get("User", new_user.id) == new_user:
-            self.assertEqual(storage.get("User", new_user.id), new_user)
-            # dicussion needed
+        self.assertIs(storage.get("User", new_user.id), new_user)
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') ==
                      'db', "not testing file storage")
