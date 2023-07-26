@@ -7,7 +7,6 @@ from datetime import datetime
 import inspect
 import models
 from models.engine import file_storage
-from models.engine.file_storage import FileStorage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -114,9 +113,8 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
-
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
+    
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
     def test_get(self):
         """Test that the get method properly retrievs objects"""
         storage = FileStorage()
@@ -126,8 +124,7 @@ class TestFileStorage(unittest.TestCase):
         new_user.save()
         self.assertIs(storage.get("User", new_user.id), new_user)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') ==
-                     'db', "not testing file storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
     def test_count(self):
         storage = FileStorage()
         initial_length = len(storage.all())

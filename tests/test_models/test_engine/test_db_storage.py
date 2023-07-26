@@ -7,8 +7,6 @@ from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
-from models.engine import file_storage
-from models.engine.file_storage import FileStorage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -88,9 +86,8 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
+    
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
     def test_get(self):
         """Test that the get method properly retrievs objects"""
         storage = FileStorage()
@@ -99,9 +96,8 @@ class TestFileStorage(unittest.TestCase):
         new_user = User()
         new_user.save()
         self.assertIs(storage.get("User", new_user.id), new_user)
-
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') ==
-                     'db', "not testing file storage")
+        
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
     def test_count(self):
         storage = FileStorage()
         initial_length = len(storage.all())
@@ -113,8 +109,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(storage.count(), initial_length + 1)
         self.assertEqual(storage.count("State"), state_len + 1)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') !=
-                     'db', "not testing db storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
     def test_get(self):
         """Test that get returns specific object, or none"""
         new_state = State(name="New York")
