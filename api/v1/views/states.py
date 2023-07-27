@@ -10,7 +10,7 @@ from flasgger.utils import swag_from
 # GET
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get.yml', methods=['GET'])
-def get_all():
+def get_states():
     """Retrieves the list of all State objects"""
     all_states = [obj.to_dict() for obj in storage.all(State).values()]
     return jsonify(all_states)
@@ -19,7 +19,7 @@ def get_all():
 @app_views.route('/states/<string:state_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/state/get_id.yml', methods=['GET'])
-def get_method_state(state_id):
+def get_state(state_id):
     """Retrieves a State object by id"""
     state = storage.get(State, state_id)
 
@@ -33,7 +33,7 @@ def get_method_state(state_id):
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/state/delete.yml', methods=['DELETE'])
-def del_method(state_id):
+def delete_state(state_id):
     """Deletes a State objct by id"""
     state = storage.get(State, state_id)
 
@@ -49,7 +49,7 @@ def del_method(state_id):
 @app_views.route('/states/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/state/post.yml', methods=['POST'])
-def create_obj():
+def create_state():
     """Creates a new State object"""
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
@@ -67,7 +67,7 @@ def create_obj():
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/state/put.yml', methods=['PUT'])
-def post_method(state_id):
+def update_state(state_id):
     """Updates a State object"""
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
