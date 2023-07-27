@@ -160,8 +160,8 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 
 ### Restful API
-Joanne Gitari - [Github](https://github.com/joeygitari)
-Alan Nato - [Github](https://github.com/iamnotnato)
+* Joanne Gitari - [Github](https://github.com/joeygitari)
+* Alan Nato - [Github](https://github.com/iamnotnato)
 
 
 ## License
