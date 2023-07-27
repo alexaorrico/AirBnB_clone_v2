@@ -154,9 +154,11 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+
 Omoba Sanni - [Github](https://github.com/OmobaVII)
+
 Jeremiah Martey - [Github](https://github.com/kofifloki)
 
-Second part of Airbnb: Joann Vuong
+Third part of Airbnb: RESTfulAPII
 ## License
 Public Domain. No copy write protection. 
