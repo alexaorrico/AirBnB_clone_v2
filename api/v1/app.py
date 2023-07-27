@@ -23,7 +23,7 @@ def close_db(obj):
 
 @app.errorhandler(404)
 def page_not_foun(error):
-    """Method that handles 404 status in json fromat"""
+    """Method that handles 404 status in JSON fromat"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
