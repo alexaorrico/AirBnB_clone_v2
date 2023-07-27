@@ -149,7 +149,6 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
-
 ## Bugs
 No known bugs at this time. 
 
