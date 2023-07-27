@@ -2,7 +2,7 @@
 """
 Flask App that integrates with AirBnB static HTML
 """
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -19,6 +19,13 @@ def close_storage(exception):
     method to close the storage after each request
     """
     storage.close()
+
+@app.errorhandler(404)
+def not_found(error):
+    """
+    Handler for 404 errors that returns a JSON-formatted 404 status code response
+    """
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
