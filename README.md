@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Robert Ruai Mawich - [Github](https://github.com/RobertRuai)  
+Ryan Ochieng - [Github](https://github.com/ra-y-oo)
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
