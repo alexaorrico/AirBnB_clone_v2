@@ -52,10 +52,10 @@ A RESTful API architecture is Resource-based, a resource is an object and can be
 > `command-line interface`<br/>
 > a shell implementation that uses the `Python` module `cmd`, which provides a simple framework for writing line-oriented command interpreters.
 
-## Actual `Shell` Behavior:
+## `Shell` Behavior:
 Is a `CRUD` simulated behavior - operations on objects in command-line.
 
-> **Note**: <br/>
+> **Note**:  
 > start interpreter in interactive mode: `./console.py`;- quit interpreter: type `quit` or `EOF`, or press `Ctrl + D` <br/>
 > sample interpreter features: `create`, `show`, `update`, `destroy`, etc<br/>  
 
