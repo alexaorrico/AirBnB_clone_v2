@@ -5,7 +5,7 @@ This module creates a variable app that is an instance of Flask and
 registers the blueprint app_views to your Flask instance app
 """
 
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 import os
@@ -19,11 +19,12 @@ def teardown_db(exception):
     """remove the current SQLAlchemy Session"""
     storage.close()
 
-
-@app_views.errorhandler(404)
+@app.errorhandler(404)
 def handle_not_found(err):
     """ returns a JSON-formatted 404 status code response """
-    return jsonify({"error": "Not found"}, 404)
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 
 if __name__ == "__main__":
