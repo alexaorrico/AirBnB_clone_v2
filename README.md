@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 KelvinMutuku - [Github](https://github.com/kelvinMutuku) / [Twitter](https://twitter.com/kelvinMutuku)  
-Kelvin Otando - [Github](https://github.com/kelvinotando) / [Twitter](https://twitter.com/kelvinotando)
+Kelvin Otando - [Github](https://github.com/kelvinotando) / [Twitter](https://twitter.com/kelvinSEALX)
 
 
 ## License
