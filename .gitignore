@@ -1,0 +1,7 @@
+*~
+*.pyc
+__pycache__
+*main.py
+*.txt
+*.json
+*.csv
