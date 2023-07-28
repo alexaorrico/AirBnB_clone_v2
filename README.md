@@ -154,10 +154,13 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time.
 
 ## Authors
-Abdulqoyyum Aileru - [Github](https://github.comolagold-hackxx) / [Twitter](https://twitter.com/quyyumzy)
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Abdulqoyyum Aileru - [Github](https://github.comolagold-hackxx)
+[Twitter](https://twitter.com/quyyumzy)
+Alexa Orrico - [Github](https://github.com/alexaorrico)
+[Twitter](https://twitter.com/alexa_orrico)
+Jennifer Huang - [Github](https://github.com/jhuang10123)
+[Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection.
+Public Domain. No copyright protection.
