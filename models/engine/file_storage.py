@@ -69,6 +69,7 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
+    # Add get function
     def get(self, cls, id):
         """A method to retrieve one object"""
         if cls in classes.values() and id and type(id) == str:
@@ -78,6 +79,7 @@ class FileStorage:
                     return value
         return None
 
+    # Add count function
     def count(self, cls=None):
         """A method to count the number of objects in storage"""
         resource = self.all(cls)
