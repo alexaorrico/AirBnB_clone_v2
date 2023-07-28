@@ -172,6 +172,7 @@ class TestDBStorage(unittest.TestCase):
         models.storage.delete(amenity_obj)
         models.storage.save()
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test the get method of the dbstorage"""
         first_state_id = list(models.storage.all(State).values())[0].id
@@ -179,6 +180,7 @@ class TestDBStorage(unittest.TestCase):
         if obj:
             self.assertEqual(first_state_id, obj.id)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test count db method"""
         self.assertEqual(models.storage.count(State), 1)
