@@ -154,6 +154,12 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-[AUTHORS](https://github.com/Abstrat22/AirBnB_clone_v3/blob/master/AUTHORS)
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
+Joann Vuon
+
+version 3
+Francis Ofori Anane - [Github](https://github.com/abstrat22) / [Twitter](https://twitter.com/FrancisOforiAna)
 ## License
 Public Domain. No copy write protection. 
