@@ -154,9 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-KelvinMutuku - [Github](https://github.com/kelvinMutuku) / [Twitter](https://twitter.com/kelvinMutuku)  
-Kelvin Otando - [Github](https://github.com/kelvinotando) / [Twitter](https://twitter.com/kelvinSEALX)
-
-
+KelvinMutuku - [Github](https://github.com/kelvinMutuku)  
+Kelvin Otando - [Github](https://github.com/kelvin-thegreat)
 ## License
 Public Domain. No copy write protection. 
