@@ -155,6 +155,5 @@ No known bugs at this time.
 
 ## Authors
 [AUTHORS](https://github.com/Abstrat22/AirBnB_clone_v2/blob/master/AUTHORS)
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
