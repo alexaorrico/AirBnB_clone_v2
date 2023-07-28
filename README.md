@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Birhan Kassaye - [Github](https://github.com/birhan-kassaye) / [Twitter](https://twitter.com/YalewBirhan)  
-Melaku Birhanu - [Github](https://github.com/) / [Twitter](https://twitter.com/)
+Melaku Birhanu - [Github](https://github.com/melakubi)/ [Twitter](https://twitter.com/melegnawmagna)
 
 Second part of Airbnb: Joann Vuong
 ## License
