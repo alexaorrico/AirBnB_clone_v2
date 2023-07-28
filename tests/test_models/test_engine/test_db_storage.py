@@ -19,8 +19,7 @@ import os
 import pycodestyle
 import unittest
 DBStorage = db_storage.DBStorage
-classes = {"Amenity": Amenity, "City": City, "Place": Place,
-           "Review": Review, "State": State, "User": User}
+classes = [State, City, Place, Amenity, Review, User]
 
 
 @unittest.skipIf(models.storage_t != 'db', 'Test for db storage')
@@ -77,6 +76,12 @@ class TestDBStorage(unittest.TestCase):
         """Setup for test"""
         self.storage = DBStorage()
         self.storage.reload()
+        self.test_args = {'name': 'Test'}
+        self.obj = State(**self.test_args)
+        self.obj_key = "{}.{}".format(self.obj.__class__.__name__, self.obj.id)
+        self.storage.new(self.obj)
+        self.new_obj = {}
+        self.new_obj[self.obj_key] = self.obj
 
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -88,7 +93,6 @@ class TestDBStorage(unittest.TestCase):
         all_dict = self.storage.all()
         session = self.storage._DBStorage__session
         test_all_dict = {}
-        classes = [State, City, Place, Amenity, Review, User]
         for row in classes:
             for obj in session.query(row).all():
                 key = "{}.{}".format(obj.__class__.__name__, obj.id)
@@ -97,9 +101,29 @@ class TestDBStorage(unittest.TestCase):
 
     def test_new(self):
         """test that new adds an object to the database"""
+        all_objs = self.storage.all()
+        self.assertLessEqual(self.new_obj.items(), all_objs.items())
 
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects to database"""
+        self.storage.save()
+        self.storage.close()
+        new_session = DBStorage()
+        new_session.reload()
+        new_session_all_objs = new_session.all()
+        self.assertLessEqual(self.new_obj.keys(), new_session_all_objs.keys())
 
     def test_get(self):
         """ Test that get works properly and get right obj"""
+        id = self.obj.id
+        get_obj = self.storage.get(State, id)
+        self.assertEqual(get_obj, self.obj)
+
+    def test_count(self):
+        """ Check if count method counts right"""
+        all_objs = self.storage.all(State)
+        count = self.storage.count(State)
+        test_count = 0
+        for objs in all_objs:
+            test_count = test_count + 1
+        self.assertEqual(count, test_count)
