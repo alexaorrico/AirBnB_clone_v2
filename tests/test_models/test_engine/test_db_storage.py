@@ -86,3 +86,65 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage_get(unittest.TestCase):
+
+    @unittest.skipIf(len(models.storage.all(State).keys()) == 0, "Empty DB")
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_get_with_class(self):
+        first_state = list(models.storage.all(State).values())[0]
+        obj = models.storage.get(State, first_state.id)
+        self.assertEqual(obj, first_state)
+        self.assertEqual(obj.id, first_state.id)
+        obj = models.storage.get('State', first_state.id)
+        self.assertEqual(obj, first_state)
+        self.assertEqual(obj.id, first_state.id)
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_get_with_no_args(self):
+        with self.assertRaises(TypeError):
+            obj = models.storage.get()
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_get_with_one_arg(self):
+        with self.assertRaises(TypeError):
+            obj = models.storage.get('State')
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_get_with_wrong_class(self):
+        obj = models.storage.get('BadClass', 'someid')
+        self.assertIsNone(obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_get_with_wrong_id(self):
+        obj = models.storage.get(State, 'wrongid')
+        self.assertIsNone(obj)
+
+
+class TestDBStorage_count(unittest.TestCase):
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_count_with_class_arg(self):
+        all_states = len(models.storage.all(State).keys())
+        total_states = models.storage.count(State)
+        self.assertEqual(all_states, total_states)
+        all_cities = len(models.storage.all(City).keys())
+        total_cities = models.storage.count('City')
+        self.assertEqual(all_cities, total_cities)
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_count_with_no_args(self):
+        all_objs = len(models.storage.all().keys())
+        total_objs = models.storage.count()
+        self.assertEqual(all_objs, total_objs)
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_count_with_more_than_one_arg(self):
+        with self.assertRaises(TypeError):
+            obj = models.storage.count('State', 'somerandomargument')
+
+    @unittest.skipIf(models.storage_t != 'db', "Skip if FileStorage")
+    def test_count_with_wrong_class(self):
+        obj = models.storage.count('BadClass')
+        self.assertIsNone(obj)
