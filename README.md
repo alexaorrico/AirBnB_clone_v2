@@ -157,9 +157,9 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-Joann Vuon
+Second part: Joann Vuon
 
-version 3
+version 3:
 Francis Ofori Anane - [Github](https://github.com/abstrat22) / [Twitter](https://twitter.com/FrancisOforiAna)
 ## License
 Public Domain. No copy write protection. 
