@@ -19,6 +19,7 @@ def teardown_db(exception):
     """remove the current SQLAlchemy Session"""
     storage.close()
 
+
 @app.errorhandler(404)
 def handle_not_found(err):
     """ returns a JSON-formatted 404 status code response """
