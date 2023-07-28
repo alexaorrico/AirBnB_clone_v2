@@ -154,6 +154,9 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-[AUTHORS](https://github.com/Abstrat22/AirBnB_clone_v3/blob/master/AUTHORS)
+Jennifer Huang <133@holbertonschool.com>
+Alexa Orrico <210@holbertonschool.com>
+Joann Vuong <130@holbertonschool.com> 
+Francis Ofori Anane <ofori.anane@gmail.com>
 ## License
 Public Domain. No copy write protection. 
