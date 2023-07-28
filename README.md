@@ -154,6 +154,6 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-[AUTHORS](https://github.com/Abstrat22/AirBnB_clone_v2/blob/master/AUTHORS)
+[AUTHORS](https://github.com/Abstrat22/AirBnB_clone_v3/blob/master/AUTHORS)
 ## License
 Public Domain. No copy write protection. 
