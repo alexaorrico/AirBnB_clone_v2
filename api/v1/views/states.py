@@ -54,13 +54,15 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@state_views.route("/<string:state_id>", methods=["PUT"])
+@state_views.route("/<string:state_id>", methods=["PUT"], strict_slashes=False)
 def update_state(state_id):
     """Updates a State given by state_id and stores it"""
     state = storage.get(State, state_id)
 
     if state is None:
         abort(404)
+    if len(request.data) == 0:
+        abort(400, "Not a JSON")
     state_data = request.get_json()
     if not state_data:
         abort(400, "Not a JSON")
