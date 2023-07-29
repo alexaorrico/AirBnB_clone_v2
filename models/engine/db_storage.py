@@ -70,9 +70,13 @@ class DBStorage:
 
     def reload(self):
         """reloads data from the database"""
-        Base.metadata.create_all(self.__engine)  # Create the database engine to work on
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)  # Create database Session instance with the new engine
-        Session = scoped_session(sess_factory)  #  Create database session to perform database operations on the database engine
+
+        # Create the database engine to work on
+        Base.metadata.create_all(self.__engine)
+        # Create database Session instance with the new engine
+        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        #  Creates database session for database operations
+        Session = scoped_session(sess_factory)
         self.__session = Session
 
     def close(self):
@@ -84,11 +88,14 @@ class DBStorage:
             Args:
                 cls: A class instance
                 id (str): string representing the object id.
-            Return: The object based on the class and its ID, or None if not found
+            Return: The object based on the class and its ID,
+                or None if not found
         """
         try:
-            key = f"{cls.__name__}.{id}"  # Form key from <class name> and id
-            objs = self.__session.query(cls).all()  # Get list of objects from db
+            # Form key from <class name> and id
+            key = f"{cls.__name__}.{id}"
+            # Get list of objects from db
+            objs = self.__session.query(cls).all()
             for obj in objs:
                 obj_id = obj.to_dict()['id']  # Get object id
                 obj_clss = obj.to_dict()['__class__']  # Get object class name
@@ -97,13 +104,13 @@ class DBStorage:
             return None  # Return None if object not found
         except Exception:
             pass  # for now
-    
+
     def count(self, cls=None):
         """Counts number of objects in storage
             Args:
-                cls: Optional class object to specify the type of objects to count.
+                cls: Optional class object to specify object to count.
         """
-        
+
         try:
             objs = self.all(cls)  # get all objects
             return len(objs)  # return number of objects
