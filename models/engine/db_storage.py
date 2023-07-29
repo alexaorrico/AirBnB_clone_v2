@@ -89,5 +89,5 @@ class DBStorage:
     
     def count(self, cls=None):
         if cls is None:
-            allobj = (models.storage.all()).length
+            allobj = [models.storage.all()].length
             return allobj
