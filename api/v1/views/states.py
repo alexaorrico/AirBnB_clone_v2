@@ -61,8 +61,6 @@ def update_state(state_id):
 
     if state is None:
         abort(404)
-    if len(request.data) == 0:
-        abort(400, "Not a JSON")
     state_data = request.get_json()
     if not state_data:
         abort(400, "Not a JSON")
