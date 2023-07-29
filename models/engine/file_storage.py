@@ -79,3 +79,13 @@ class FileStorage:
                 if obj.id == id:
                     return obj
         return None
+
+    def count(self, cls=None):
+        """Count the number of objects in storage"""
+        if cls is None:
+            allObj = models.storage.all()
+            return len(allObj)
+        else:
+            if cls in classes.values() or cls in classes.keys():
+                allClsObj = models.storage.all()
+                return len(allClsObj)
