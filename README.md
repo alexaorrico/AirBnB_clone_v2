@@ -154,8 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Otueh James Chibueze - [Github](https://github.com/OChibu) / [Twitter](https://twitter.com/OtuehC)  
-Olowookun Sunday - [Github](https://github.com/Superstazdare) / [Twitter](https://twitter.com/Engr_asune)
+Favour Ocheja <favourocheja@gmail.com>
+Samuel John <Samuel John>
 
 ## License
 Public Domain. No copy write protection. 
