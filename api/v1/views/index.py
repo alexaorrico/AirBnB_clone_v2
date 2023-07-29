@@ -11,13 +11,15 @@ from models.user import User
 from models.state import State
 from models import storage
 
-Classes =  {'states': State, 'users': User, 'amenities': Amenity, 'reviews': Review, 'cities': City, 'places': Place}
+Classes = {'states': State, 'users': User, 'amenities': Amenity,
+           'reviews': Review, 'cities': City, 'places': Place}
 
 
 @app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
     """API status"""
     return jsonify(status='OK')
+
 
 @app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
