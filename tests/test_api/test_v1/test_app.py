@@ -109,7 +109,21 @@ class TestApiRoute(unittest.TestCase):
         res = self.app.get('/api/v1/stats')
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.content_type, "application/json")
-        print(res.json)
         self.assertEqual(res.json, {
             'amenities': 1, 'cities': 1, 'places': 1,
             'reviews': 1, 'states': 1, 'users': 1})
+
+    def test_error_handle(self):
+        """Defines test for error handle"""
+        res_1 = self.app.get('/api/nop')
+        res_2 = self.app.get('/api/v1/nop')
+        res_3 = self.app.get('/api/v1/stats/nop')
+        self.assertEqual(res_1.status_code, 404)
+        self.assertEqual(res_2.status_code, 404)
+        self.assertEqual(res_3.status_code, 404)
+        self.assertEqual(res_1.content_type, "application/json")
+        self.assertEqual(res_2.content_type, "application/json")
+        self.assertEqual(res_3.content_type, "application/json")
+        self.assertEqual(res_1.json, {"error": "Not found"})
+        self.assertEqual(res_2.json, {"error": "Not found"})
+        self.assertEqual(res_3.json, {"error": "Not found"})

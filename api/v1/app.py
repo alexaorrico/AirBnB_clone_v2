@@ -3,6 +3,8 @@
 """Api Interface"""
 from os import getenv
 from flask import Flask
+from flask.helpers import make_response
+from flask.json import jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -16,6 +18,12 @@ def tearDown(exc):
     """Close the session and request a new one once the application context is
     poped"""
     storage.close()
+
+
+@app.errorhandler(404)
+def on_error_404(e):
+    """Defines error handler  for 404"""
+    return make_response(jsonify(error="Not found"), 404)
 
 
 if __name__ == "__main__":
