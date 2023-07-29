@@ -88,6 +88,9 @@ class DBStorage:
         """
         if self.__session and cls in classes.values() and id:
             return (self.__session.query(cls).filter(cls.id == id).scalar())
+        elif self.__session and cls in classes and id:
+            cls = classes[cls]
+            return (self.__session.query(cls).filter(cls.id == id).scalar())
         return None
 
     def count(self, cls=None):
@@ -102,6 +105,8 @@ class DBStorage:
         if self.__session:
             row_count = 0
             if cls:
+                if type(cls) == str and cls in classes:
+                    cls = classes[cls]
                 row_count = self.__session.query(cls).count()
             else:
                 for cls in classes.values():
