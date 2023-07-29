@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 0x05. AirBnB clone - RESTful API
 
 ## Table of Content
@@ -152,5 +151,3 @@ Assefa Baye
 ## License
 Public Domain. No copy write protection.
 =======
-
->>>>>>> 1a3e9b34cb783c104be045119d8513fb5b998934
