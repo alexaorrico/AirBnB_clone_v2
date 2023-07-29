@@ -73,3 +73,17 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def update(self, value):
+        """updates the value of basemodel instance"""
+        if type(value) != dict:
+            raise TypeError("Update only accepts dictionary")
+
+        default_attr = ['id', 'created_at']
+        new_dict = {
+            k: v for k, v in value.items()
+            if k not in default_attr
+        }
+        for k, v in new_dict.items():
+            setattr(self, k, v)
+        self.save()

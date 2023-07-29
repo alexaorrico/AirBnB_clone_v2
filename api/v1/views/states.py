@@ -12,19 +12,19 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states", methods=['GET', 'POST'])
+@app_views.route("/states", methods=['GET', 'POST'], strict_slashes=False)
 def states():
     """Retrieve all states or a state if <state_id> is provided
     """
     if request.method == 'GET':
-        return jsonify([v.to_dict() for v in storage.all().values()])
+        return jsonify([v.to_dict() for v in storage.all(State).values()])
 
     if request.method == 'POST':
-        req = request.get_json()
+        req = request.get_json(silent=True)
         if req is None:
-            abort(400, "Not a JSON")
+            abort(400, description="Not a JSON")
         if 'name' not in req.keys():
-            abort(400, "Missing name")
+            abort(400, description="Missing name")
         state = State(**req)
         state.save()
         return make_response(state.to_dict(), 201)
@@ -46,20 +46,8 @@ def states_id(state_id=None):
         return jsonify({})
 
     if request.method == 'PUT':
-        req = request.get_json()
+        req = request.get_json(silent=True)
         if req is None:
-            abort(400, "Not a JSON")
-        """
-            Line 55-62 can be implemented in the
-            base class to avoid repitition in other
-            endpoints.
-        """
-        DEFAULTS = ['id', 'created_at', 'updated_at']
-        new_dict = {
-            k: v for k, v in req.items()
-            if k not in DEFAULTS
-        }
-        for k, v in new_dict.items():
-            setattr(state, k, v)
-        state.save()
+            abort(400, description="Not a JSON")
+        state.update(req)
         return jsonify(state.to_dict())
