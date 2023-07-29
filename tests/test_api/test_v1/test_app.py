@@ -77,11 +77,11 @@ class TestApiRoute(unittest.TestCase):
                     values[key] = id_store[key]
                 else:
                     values[key] = val
-                obj_inst = clss(**values)
-                obj_inst.save()
-                cls.obj_insts.append(obj_inst)
-                if save_id:
-                    id_store[save_id] = obj_inst.id
+            obj_inst = clss(**values)
+            obj_inst.save()
+            cls.obj_insts.append(obj_inst)
+            if save_id:
+                id_store[save_id] = obj_inst.id
 
     @classmethod
     def tearDownClass(cls) -> None:
