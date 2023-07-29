@@ -86,7 +86,7 @@ class DBStorage:
                 return value
 
         return None
-    
+
     def count(self, cls=None):
         if cls is None:
             allobj = [obj for obj in models.storage.all()]
