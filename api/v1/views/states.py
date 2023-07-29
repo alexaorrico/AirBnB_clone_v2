@@ -20,7 +20,7 @@ def list_states():
     return jsonify(states_list)
 
 
-@state_views.route("/<state_id>", methods=["GET"])
+@state_views.route("/<state_id>", methods=["GET"], strict_slashes=False)
 def get_state(state_id):
     """Retrieves a State object by id"""
     state = storage.get(State, state_id)
@@ -30,7 +30,7 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@state_views.route("/<string:state_id>", methods=["DELETE"])
+@state_views.route("/<string:state_id>", methods=["DELETE"], strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object by id"""
     state = storage.get(State, state_id)
