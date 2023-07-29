@@ -1,48 +1,50 @@
 #!/usr/bin/python3
-"""
-entry point of our application
-"""
-
-from os import getenv
+'''Contains a Flask web application API.
+'''
+import os
 from flask import Flask, jsonify
+from flask_cors import CORS
+
 from models import storage
 from api.v1.views import app_views
-from flask_cors import CORS
 
 
 app = Flask(__name__)
+'''The Flask web application instance.'''
+app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+app_port = int(os.getenv('HBNB_API_PORT', '5000'))
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
-cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
+CORS(app, resources={'/*': {'origins': app_host}})
 
 
 @app.teardown_appcontext
-def teardown(exception):
-    """
-    a method that closes the storage
-    """
+def teardown_flask(exception):
+    '''The Flask app/request context end event listener.'''
+    # print(exception)
     storage.close()
 
 
 @app.errorhandler(404)
 def error_404(error):
-    """
-    handles the error
-    """
-    return jsonify({
-        'error': 'Not found'
-    }), 404
+    '''Handles the 404 HTTP error code.'''
+    return jsonify(error='Not found'), 404
+
+
+@app.errorhandler(400)
+def error_400(error):
+    '''Handles the 400 HTTP error code.'''
+    msg = 'Bad request'
+    if isinstance(error, Exception) and hasattr(error, 'description'):
+        msg = error.description
+    return jsonify(error=msg), 400
 
 
 if __name__ == '__main__':
-    if getenv('HBNB_API_HOST'):
-        host = getenv('HBNB_API_HOST')
-    else:
-        host = "0.0.0.0"
-
-    if getenv('HBNB_API_PORT'):
-        port = getenv('HBNB_API_PORT')
-    else:
-        port = 5000
-
-    app.run(host=host, port=port, threaded=True)
+    app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    app_port = int(os.getenv('HBNB_API_PORT', '5000'))
+    app.run(
+        host=app_host,
+        port=app_port,
+        threaded=True
+    )
