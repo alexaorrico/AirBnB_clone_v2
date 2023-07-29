@@ -113,3 +113,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestDBStorage_new(unittest.TestCase):
+    """ Test for Task 3. Improve storage """
+    def test_get(self):
+        """Test method to retrieve one object"""
+        storage = FileStorage()
+        state = State(name="Arizona")
+        state.save()
+        self.assertEqual(state, storage.get("State", state.id))
+
+    def test_count(self):
+        """Test method to count the number of objects in storage"""
+        storage = FileStorage()
+        nobjs = len(storage._FileStorage__objects)
+        self.assertEqual(nobjs, storage.count())
