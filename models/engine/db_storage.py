@@ -21,7 +21,11 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database
+    Attributes:
+        __engine (Engine): The database engine
+        __session(Session): The database session to query
+    """
     __engine = None
     __session = None
 
@@ -66,11 +70,42 @@ class DBStorage:
 
     def reload(self):
         """reloads data from the database"""
-        Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
+        Base.metadata.create_all(self.__engine)  # Create the database engine to work on
+        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)  # Create database Session instance with the new engine
+        Session = scoped_session(sess_factory)  #  Create database session to perform database operations on the database engine
         self.__session = Session
 
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Retrieves an object from storage based object id
+            Args:
+                cls: A class instance
+                id (str): string representing the object id.
+            Return: The object based on the class and its ID, or None if not found
+        """
+        try:
+            key = f"{cls.__name__}.{id}"  # Form key from <class name> and id
+            objs = self.__session.query(cls).all()  # Get list of objects from db
+            for obj in objs:
+                obj_id = obj.to_dict()['id']  # Get object id
+                obj_clss = obj.to_dict()['__class__']  # Get object class name
+                if key == f"{obj_clss}.{obj_id}":
+                    return obj  # return found object
+            return None  # Return None if object not found
+        except Exception:
+            pass  # for now
+    
+    def count(self, cls=None):
+        """Counts number of objects in storage
+            Args:
+                cls: Optional class object to specify the type of objects to count.
+        """
+        
+        try:
+            objs = self.all(cls)  # get all objects
+            return len(objs)  # return number of objects
+        except Exception:
+            pass  # for now

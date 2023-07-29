@@ -91,13 +91,8 @@ class FileStorage:
             Args:
                 cls: Optional class object to specify the type of objects to count.
         """
-        if cls is not None:
-            # count specified class objects and return
-            obj_count = 0
-            keys = self.__objects.keys()
-            for key in keys:
-                if cls.__name__ in key:
-                    obj_count += 1
-            return obj_count
-        else:
-            return len(self.__objects)  # return number of all objects
+        try:
+            objs = self.all(cls)  # get all objects
+            return len(objs)  # return number of objects
+        except Exception:
+            pass  # for now
