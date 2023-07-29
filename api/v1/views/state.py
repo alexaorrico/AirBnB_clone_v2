@@ -33,4 +33,3 @@ def post_state(state_id=None):
     if state is None:
         abort(404)
 
-@app_views.route('/states/<state_id>', methods=['POST'], strict_slashes=False)
