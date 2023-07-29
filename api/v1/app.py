@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ api entry point """
 from flask import Flask
+from flask import jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -20,6 +21,12 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 def teardown(err):
     """a function exectue when a request finshed"""
     storage.close()
+
+
+@app.errorhandler(404)
+def error404(err):
+    """handel 404 error"""
+    return jsonify({'error': 'Not found'})
 
 
 if __name__ == "__main__":
