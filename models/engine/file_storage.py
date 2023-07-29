@@ -73,7 +73,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """Gets a specific object using id"""
-        if cls in classes:
+        if cls in classes.keys() or cls in classes.values():
             clsobj = models.storage.all(cls)
             for obj in clsobj:
                 if obj.id == id:
