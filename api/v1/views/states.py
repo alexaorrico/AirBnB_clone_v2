@@ -62,7 +62,7 @@ def update_state(state_id):
     if state is None:
         abort(404)
     if len(request.data) == 0:
-        abort(400, "Not a JSON")
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     state_data = request.get_json()
     if not state_data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
