@@ -3,7 +3,7 @@
 Contains class BaseModel
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import models
 from os import getenv
 import sqlalchemy
@@ -22,9 +22,10 @@ else:
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
     if models.storage_t == "db":
+        delta = timedelta(minutes=3)
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
-        updated_at = Column(DateTime, default=datetime.utcnow)
+        updated_at = Column(DateTime, default=datetime.utcnow + delta)
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
@@ -54,7 +55,7 @@ class BaseModel:
 
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow() + delta
         models.storage.new(self)
         models.storage.save()
 
