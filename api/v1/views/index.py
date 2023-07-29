@@ -15,7 +15,7 @@ Classes = {'states': State, 'users': User, 'amenities': Amenity,
            'reviews': Review, 'cities': City, 'places': Place}
 
 
-@app_views.route("/status", methods=['GET'], strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """API status"""
     return jsonify(status='OK')
