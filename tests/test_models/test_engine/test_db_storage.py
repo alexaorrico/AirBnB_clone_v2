@@ -90,7 +90,7 @@ class TestFileStorage(unittest.TestCase):
 
 class TestDBStorage(unittest.TestCase):
     """Test the DBStorage class"""
-   def test_get(self):
+    def test_get(self):
         """Tests the get function"""
 
     def test_count(self):
