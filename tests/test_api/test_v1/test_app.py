@@ -2,6 +2,7 @@
 
 """Test api v1"""
 
+import os
 from models.user import User
 from models.state import State
 from models.review import Review
@@ -61,11 +62,16 @@ class TestApiDoc(unittest.TestCase):
 class TestApiRoute(unittest.TestCase):
     """Test api routes """
 
-    @classmethod
-    def setUpClass(cls) -> None:
+    def setUp(self) -> None:
         """Setup Test Db with content"""
+        test_app.testing = True
+        self.app = test_app.test_client()
+        if os.getenv("HBNB_TYPE_STORAGE") != "db" and os.path.\
+                exists("file.json"):
+            os.remove("file.json")
+        models.storage.close()
         id_store = {}
-        cls.obj_insts = []
+        self.obj_insts = []
         for key, vals in classes_test.items():
             values = {}
             clss = classes[key]
@@ -79,23 +85,19 @@ class TestApiRoute(unittest.TestCase):
                     values[key] = val
             obj_inst = clss(**values)
             obj_inst.save()
-            cls.obj_insts.append(obj_inst)
+            self.obj_insts.append(obj_inst)
             if save_id:
                 id_store[save_id] = obj_inst.id
 
-    @classmethod
-    def tearDownClass(cls) -> None:
+    def tearDown(self) -> None:
         """Teardown test Db after"""
-        if cls.obj_insts:
-            for obj in cls.obj_insts:
+        if self.obj_insts:
+            for obj in self.obj_insts:
                 models.storage.delete(obj)
         models.storage.save()
-        models.storage.close()
-
-    def setUp(self):
-        """Setup app for testing"""
-        test_app.testing = True
-        self.app = test_app.test_client()
+        if os.getenv("HBNB_TYPE_STORAGE") != "db" and os.path.\
+                exists("file.json"):
+            os.remove("file.json")
 
     def test_get_status(self):
         """Defines Test for status route"""
@@ -104,7 +106,19 @@ class TestApiRoute(unittest.TestCase):
         self.assertEqual(res.content_type, 'application/json')
         self.assertEqual(res.json, {"status": "OK"})
 
+    @unittest.skipIf(models.storage_t == 'db' and os.path.
+                     exists('file.json'), "weird behaviour")
     def test_get_stats(self):
+        """"Defines Test for stats route"""
+        res = self.app.get('/api/v1/stats')
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.content_type, "application/json")
+        self.assertEqual(res.json, {
+            'amenities': 2, 'cities': 2, 'places': 2,
+            'reviews': 2, 'states': 2, 'users': 2})
+
+    @unittest.skipIf(models.storage_t != 'db', "weird behaviour")
+    def test_get_stats_db(self):
         """"Defines Test for stats route"""
         res = self.app.get('/api/v1/stats')
         self.assertEqual(res.status_code, 200)

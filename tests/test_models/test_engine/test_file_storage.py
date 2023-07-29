@@ -71,6 +71,7 @@ class TestFileStorageDocs(unittest.TestCase):
                                 format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', 'Not test filestorage')
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
