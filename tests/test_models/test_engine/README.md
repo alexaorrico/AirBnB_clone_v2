@@ -149,5 +149,5 @@ No known bugs at this time.
 Assefa Baye
 
 ## License
-Public Domain. No copy write protection
+Public Domain. No copy write protection.
 
