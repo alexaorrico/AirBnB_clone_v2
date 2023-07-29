@@ -158,6 +158,5 @@ No known bugs at this time.
 Manuel Dinis Júnior - [Github](https://github.com/manueldinisjunior) / [Twitter](https://twitter.com/manueldinisjr)  
 Adjamkwalim Young - [Github](https://github.com/Thomasyong11)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
