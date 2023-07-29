@@ -154,8 +154,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Angela Ayivi
-Bernard Appiah
+* [<b>Angela Ayivi](https://github.com/bloominghowl/)
+* [Bernard Appiah](https://github.com/Borngod/)
 
 ## License
 Public Domain. No copy write protection. 
