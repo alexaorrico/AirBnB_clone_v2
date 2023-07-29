@@ -3,12 +3,15 @@
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
+from api.v1.views import state_views
 import os
+import json
 
 
 app = Flask('__name__')
 
 app.register_blueprint(app_views)
+app.register_blueprint(state_views)
 
 
 @app.teardown_appcontext
@@ -20,7 +23,13 @@ def handler(error):
 @app.errorhandler(404)
 def handler(error):
     ''' Handles 404 error '''
-    return {"error": "Not found"}, 404
+    return json.dumps({"error": "Not found"}, indent=4), 404
+
+
+@app.errorhandler(400)
+def handler(error):
+    ''' Handles 404 error '''
+    return jsonify(error=str(error)), 400
 
 
 if __name__ == '__main__':
