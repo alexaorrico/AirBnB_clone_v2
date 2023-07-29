@@ -158,7 +158,6 @@ Abdulqoyyum Aileru - [Github](https://github.comolagold-hackxx)
 [Twitter](https://twitter.com/quyyumzy)
 
 Obioha Darlington N. - [Github] (https://github.com/epitome011)
-[Twitter] (https://twitter.com/dnobioha)
 
 Alexa Orrico - [Github](https://github.com/alexaorrico)
 [Twitter](https://twitter.com/alexa_orrico)
