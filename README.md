@@ -154,6 +154,6 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Author
-David Udoh - [Github](https://github.com/davidgregs87) / [Twitter](https://twitter.com/gregs_david)  
+David Udoh - [Github](https://github.com/davidgregs87) / [Twitter](https://twitter.com/gregs_david).  
 ## License
 Public Domain. No copy write protection. 
