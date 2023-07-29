@@ -17,8 +17,13 @@ def close_storage(exception):
 
 
 if __name__ == "__main__":
+    import os
 
-    host = getenv('HBNB_API_HOST', default='0.0.0.0')
-    port = getenv('HBNB_API_PORT', default=5000)
+    # Get the host from the environment variable HBNB_API_HOST or use '0.0.0.0' if not defined
+    host = os.environ.get('HBNB_API_HOST', default='0.0.0.0')
 
-    app.run(host, int(port), threaded=True)
+    # Get the port from the environment variable HBNB_API_PORT or use 5000 if not defined
+    port = int(os.environ.get('HBNB_API_PORT', default=500))
+
+    # Run the Flask server (variable app) with threaded=True
+    app.run(host=host, port=port, threaded=True)
