@@ -39,7 +39,7 @@ def post_state():
     if not state:
         abort(400, description="Not a JSON")
     if 'name' not in state:
-        abort(400, description="Missing Name")
+        abort(400, description="Missing name")
     obj = State(**state)
     obj.save()
     return make_response(jsonify(obj.to_dict()), 201)
@@ -49,14 +49,14 @@ def post_state():
 def put_state(state_id):
     """Update a state object"""
     state = storage.get(State, state_id)
-    static_data = ['id', 'created_at', 'updated_at']
+    fixed_data = ['id', 'created_at', 'updated_at']
     if state is None:
         abort(404)
     data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
     for key, value in data.items():
-        if key not in static_data:
+        if key not in fixed_data:
             setattr(state, key, value)
     storage.save()
     return make_response(jsonify(state.to_dict()), 200)
