@@ -2,6 +2,7 @@
 """Flask with general routes"""
 from api.v1.views import app_views
 from flask import jsonify
+import json
 from models import storage
 from models.amenity import Amenity
 from models.city import City
@@ -22,11 +23,12 @@ def stats():
     Retrieves the number of each objects by type
     """
     classes = {
-            "amenities": storage.count(Amenity),
-            "City": storage.count(City),
-            "Place": storage.count(Place),
-            "Review": storage.count(Review),
-            "State": storage.count(State),
-            "User": storage.count(User)
+        "amenities": storage.count(Amenity),
+        "City": storage.count(City),
+        "Place": storage.count(Place),
+        "Review": storage.count(Review),
+        "State": storage.count(State),
+        "User": storage.count(User)
     }
-    return jsonify(classes)
+    objs = json.dumps(classes, indent=2)
+    return objs
