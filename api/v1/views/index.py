@@ -11,6 +11,16 @@ from models.place import Place
 from models.user import User
 from models.review import Review
 
+classes = {
+    "amenities": Amenity,
+    "cities": City,
+    "places": Place,
+    "reviews": Review,
+    "states": State,
+    "users": User
+}
+
+
 @app_views.route("/status", methods=['GET'])
 def status():
     """Returns a JSON status"""
@@ -22,13 +32,7 @@ def stats():
     """
     Retrieves the number of each objects by type
     """
-    classes = {
-        "amenities": storage.count(Amenity),
-        "City": storage.count(City),
-        "Place": storage.count(Place),
-        "Review": storage.count(Review),
-        "State": storage.count(State),
-        "User": storage.count(User)
-    }
-    objs = json.dumps(classes, indent=2)
-    return objs
+    dict = {}
+    for key, value in classes.items():
+        dict[key] = storage.count(value)
+    return jsonify(dict)
