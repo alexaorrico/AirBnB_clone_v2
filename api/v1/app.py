@@ -18,6 +18,7 @@ def close_session(error):
 
 @app.errorhandler(404)
 def error_handler_404(error):
+    """404 error json"""
     return make_response(jsonify({"error": "Not found"}))
 
 
