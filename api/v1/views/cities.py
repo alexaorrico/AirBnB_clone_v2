@@ -2,7 +2,8 @@
 
 """RESTFUL API for the City class"""
 from flask import Flask, jsonify, request, abort
-from models import storage, State
+from models import storage
+from models.state import State
 from api.v1.views import app_views
 from models.city import City
 
