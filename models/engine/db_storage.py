@@ -51,6 +51,37 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
 
+    def get(self, cls, id):
+        """
+        will return a specific object based on the class
+        and id provided
+        """
+        if cls is not None and cls not in classes.values():
+            raise ValueError("You have provided an Invalid class")
+
+        for obj in self.all(cls).values():
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """
+        this method will count the number of objects in the
+        database
+        if the class is provided then it will be specific to that
+        class
+        """
+        if cls is not None and cls not in classes.values():
+            raise ValueError("You have provided an invalid class")
+
+        if cls is not None:
+            return len(self.all(cls))
+        else:
+            count = 0
+            for clss in classes.values():
+                count = count + len(self.all(clss))
+            return count
+
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)

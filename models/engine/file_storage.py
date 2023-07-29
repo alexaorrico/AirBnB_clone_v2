@@ -34,6 +34,32 @@ class FileStorage:
             return new_dict
         return self.__objects
 
+    def get(self, cls, id):
+        """
+        return a specific based on the class and id provided
+        """
+        if cls not in classes.values():
+            raise ValueError("Invalid class is provided")
+
+        for obj in self.all(cls).values():
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """
+        return the number of objects in the file storage
+        if class is provided then return for that object
+        else return for all
+        """
+        if cls is not None and cls not in classes.values():
+            raise ValueError("You have entered an invalid class")
+
+        if cls is not None:
+            return len(self.all(cls))
+        else:
+            return len(self.__objects)
+
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
@@ -55,7 +81,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception as e:
             pass
 
     def delete(self, obj=None):
