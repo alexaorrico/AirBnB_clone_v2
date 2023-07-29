@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import hashlib
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -53,6 +54,10 @@ class DBStorage:
 
     def new(self, obj):
         """add the object to the current database session"""
+        if obj:
+            # Hash the password to an MD5 value if it's a User object
+            if isinstance(obj, User) and obj.password:
+                obj.password = hashlib.md5(obj.password.encode()).hexdigest()
         self.__session.add(obj)
 
     def save(self):
