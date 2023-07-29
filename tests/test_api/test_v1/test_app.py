@@ -13,8 +13,6 @@ import pep8
 import unittest
 from api.v1 import app
 from api.v1.app import app as test_app
-<< << << < HEAD
-== == == =
 
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -32,7 +30,6 @@ classes_test = {
                "text": "Just Some test review", "review_id": "save"},
     "Amenity": {"name": "wifi", "amenity_id": "save"}
 }
->>>>>> > some_stats
 
 
 class TestApiDoc(unittest.TestCase):
