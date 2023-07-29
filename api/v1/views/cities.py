@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """RESTFUL API for the City class"""
 from flask import Flask, jsonify, request, abort
 from models import storage, State
