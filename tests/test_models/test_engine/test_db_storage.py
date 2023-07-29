@@ -120,7 +120,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertEqual(get_obj, self.obj)
 
     def test_count(self):
-        """ Check if count method counts right"""
+        """ Check if count method counts objects right"""
         all_objs = self.storage.all(State)
         count = self.storage.count(State)
         test_count = 0
