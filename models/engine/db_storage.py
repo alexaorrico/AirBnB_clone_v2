@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import hashlib
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
@@ -53,6 +54,10 @@ class DBStorage:
 
     def new(self, obj):
         """add the object to the current database session"""
+        if obj:
+            # Hash the password to an MD5 value if it's a User object
+            if isinstance(obj, User) and obj.password:
+                obj.password = hashlib.md5(obj.password.encode()).hexdigest()
         self.__session.add(obj)
 
     def save(self):
@@ -70,6 +75,20 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def count(self, cls=None):
+        """counts the number of objects in storage"""
+        if cls:
+            return len(self.all(cls));
+        return len(self.all());
+
+    def get(self, cls, id):
+        """gets object of cls.id"""
+        objects = self.all(cls)
+        for k_id in objects.keys():
+            if id == k_id.split(".")[1]:
+                return objects[k_id]
+        return None
 
     def close(self):
         """call remove() method on the private session attribute"""
