@@ -87,5 +87,5 @@ class FileStorage:
             return len(allObj)
         else:
             if cls in classes.values() or cls in classes.keys():
-                allClsObj = models.storage.all()
+                allClsObj = models.storage.all(cls)
                 return len(allClsObj)
