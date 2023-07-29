@@ -9,6 +9,7 @@ from models import storage
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id=None):
+    """Get all states or a states whose id is specified"""
     if state_id is None:
         states = storage.all(State).values()
         states_list = [state.to_dict() for state in states]
@@ -22,6 +23,7 @@ def get_state(state_id=None):
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
+    """Delete a state object"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -32,6 +34,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
+    """Create a new state"""
     state = request.get_json()
     if not state:
         abort(400, description="Not a JSON")
@@ -44,6 +47,7 @@ def post_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
+    """Update a state object"""
     state = storage.get(State, state_id)
     static_data = ['id', 'created_at', 'updated_at']
     if state is None:
