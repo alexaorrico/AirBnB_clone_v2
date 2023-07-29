@@ -1,2 +1,9 @@
 # remove venv from commit
-venv/ 
+venv/
+
+# remove pyright config 
+
+pyrightconfig.json
+
+# pycache 
+__pycache__/
