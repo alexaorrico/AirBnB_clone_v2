@@ -5,5 +5,15 @@ venv/
 
 pyrightconfig.json
 
-# pycache 
+# pycache
 __pycache__/
+api/__pycache__/
+api/v1/__pycache__/
+api/v1/views/__pycache__/
+tests/test_api/test_v1/__pycache__/
+tests/test_api/__pycache__/
+tests/__pycache__/
+tests/test_models/__pycache__/
+tests/test_models/test_engine/__pycache__/
+models/__pycache__/
+models/engine/__pycache__/
