@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Regist Blueprint"""
+"""Register Blueprint"""
 
 from flask import Blueprint
 
