@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Flask with general routes"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -10,7 +11,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/api/v1/stats", methods=['GET'])
+@app_views.route("/stats", methods=['GET'])
 def stats():
     """Retrieves the number of each objects by type"""
     classes = {
