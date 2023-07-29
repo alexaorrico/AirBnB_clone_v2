@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ api entry point """
 from flask import Flask
+from flask import make_response
 from flask import jsonify
 from models import storage
 from api.v1.views import app_views
@@ -26,7 +27,7 @@ def teardown(err):
 @app.errorhandler(404)
 def error404(err):
     """handel 404 error"""
-    return jsonify({'error': 'Not found'})
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == "__main__":
