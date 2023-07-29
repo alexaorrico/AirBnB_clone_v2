@@ -10,7 +10,7 @@ from models import storage
 from models.state import State
 
 
-@state_views.route("/", methods=["GET"])
+@state_views.route("/", methods=["GET"], strict_slashes=False)
 def list_states():
     """Retrieves the list of all State objects"""
     states_objs = storage.all(State)
@@ -41,7 +41,7 @@ def delete_state(state_id):
     return jsonify({})
 
 
-@state_views.route("/", methods=["POST"])
+@state_views.route("/", methods=["POST"], strict_slashes=False)
 def create_state():
     """Creates a new State and stores it"""
     state_data = request.get_json()
