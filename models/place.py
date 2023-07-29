@@ -16,7 +16,7 @@ if models.storage_t == 'db':
                           Column('amenity_id', String(60),
                                  ForeignKey('amenities.id', onupdate='CASCADE',
                                             ondelete='CASCADE'),
-                                 primary_key=True))
+                                 primary_key=True), mysql_charset='latin1')
 
 
 class Place(BaseModel, Base):
@@ -37,6 +37,7 @@ class Place(BaseModel, Base):
         amenities = relationship("Amenity", secondary="place_amenity",
                                  backref="place_amenities",
                                  viewonly=False)
+        __table_args__ = {'mysql_default_charset': 'latin1'}
     else:
         city_id = ""
         user_id = ""
