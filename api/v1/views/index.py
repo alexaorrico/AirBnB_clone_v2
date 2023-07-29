@@ -14,7 +14,7 @@ from models.user import User
 @app_views.route("/status", strict_slashes=False)
 def get_status():
     """Return server status"""
-    return jsonify({"status": "OK"}), 200
+    return jsonify(status="OK"), 200
 
 
 @app_views.route("/stats", strict_slashes=False)
@@ -29,7 +29,3 @@ def get_stats():
     return jsonify({"amenities": amenities_count, "cities": cities_count,
                     "places": places_count, "reviews": reviews_count,
                     "states": states_count, "users": user_count}), 200
-
-
-if __name__ == "__main__":
-    pass
