@@ -1,5 +1,7 @@
+#!/usr/bin/python3
+""" app """
+import os
 from flask import Flask, Blueprint, jsonify
-from flask_cors import CORS
 from api.v1.views import app_views
 from models import storage
 app = Flask(__name__)
