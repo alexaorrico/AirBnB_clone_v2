@@ -8,7 +8,6 @@ import inspect
 import models
 from models import user
 from models.base_model import BaseModel
-import pep8
 import unittest
 User = user.User
 
