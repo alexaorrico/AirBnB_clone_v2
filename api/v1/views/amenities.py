@@ -30,7 +30,7 @@ def get_amenity(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@amenity_views.route("/<string:amenity>", methods=["DELETE"])
+@amenity_views.route("/<string:amenity_id>", methods=["DELETE"])
 def delete_amenity(amenity_id):
     """Deletes an Amenity object by id"""
     amenity = storage.get(Amenity, amenity_id)
