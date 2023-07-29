@@ -91,3 +91,6 @@ class DBStorage:
         if cls is None:
             allobj = [obj for obj in models.storage.all()]
             return len(allobj)
+        else:
+            allObjOfCls = [obj for obj in models.storage.all(cls)]
+            return len(allObjOfCls)
