@@ -8,6 +8,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Update attributes of an object
 * Destroy an object
 
+
 ## Table of Content
 * [Environment](#environment)
 * [Installation](#installation)
@@ -154,9 +155,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Manuel Dinis Júnior - [Github](https://github.com/manueldinisjunior) / [Twitter](https://twitter.com/manueldinisjr)  
+Adjamkwalim Young - [Github](https://github.com/Thomasyong11)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
