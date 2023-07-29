@@ -20,6 +20,7 @@ app.register_blueprint(state_views, url_prefix="/api/v1/states",
 app.register_blueprint(amenity_views, url_prefix="/api/v1/amenities",
                        name='amenitiy_views')
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """remove the current SQLAlchemy Session"""
