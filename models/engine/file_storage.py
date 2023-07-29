@@ -81,6 +81,8 @@ class FileStorage:
         """
         db_obj = None
         if cls and id:
+            if type(cls) == str and cls in classes:
+                cls = classes[cls]
             for obj in self.all(cls).values():
                 if obj.id == id:
                     db_obj = obj
@@ -97,5 +99,7 @@ class FileStorage:
             class is passed, returns the counts of all objects in storage
         """
         if cls:
+            if type(cls) == "str" and cls in classes:
+                cls = classes[cls]
             return (len(self.all(cls)))
         return (len(self.all(cls)))
