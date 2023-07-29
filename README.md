@@ -157,7 +157,7 @@ No known bugs at this time.
 Abdulqoyyum Aileru - [Github](https://github.comolagold-hackxx)
 [Twitter](https://twitter.com/quyyumzy)
 
-Obioha Darlington - [Github] (https://github.com/epitome011)
+Obioha Darlington N. - [Github] (https://github.com/epitome011)
 [Twitter] (https://twitter.com/dnobioha)
 
 Alexa Orrico - [Github](https://github.com/alexaorrico)
