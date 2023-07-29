@@ -1,114 +1,79 @@
 #!/usr/bin/python3
 """
-This module contains the BaseModel class:
-All classes should inherit from this class
+Contains class BaseModel
 """
-from datetime import datetime
-import uuid
-import models
-from sqlalchemy import Column, Integer, String, Table, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from os import getenv
-import uuid
 
-if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
+from datetime import datetime
+import models
+from os import getenv
+import sqlalchemy
+from sqlalchemy import Column, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+import uuid
+import hashlib
+
+time = "%Y-%m-%dT%H:%M:%S.%f"
+
+if models.storage_t == "db":
     Base = declarative_base()
 else:
     Base = object
 
 
 class BaseModel:
-    """The base class for all storage objects in this project"""
-    if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
-        id = Column(String(60), primary_key=True, nullable=False)
-        created_at = Column(DateTime(timezone=True), default=datetime.now(),
-                            nullable=False)
-        updated_at = Column(DateTime(timezone=True), default=datetime.now(),
-                            nullable=False,
-                            onupdate=datetime.now)
+    """The BaseModel class from which future classes will be derived"""
+    if models.storage_t == "db":
+        id = Column(String(60), primary_key=True)
+        created_at = Column(DateTime, default=datetime.utcnow)
+        updated_at = Column(DateTime, default=datetime.utcnow)
 
     def __init__(self, *args, **kwargs):
-        """
-        initialize class object
-
-        **Arguments**
-           none: a unique user id and timestamp will be created
-           args: a sequence, this should not be used, please pass a dictionary
-                 as **dictionary
-           kwargs: a dictionay, if the id and timestamp are missing they will
-                   be created
-        """
-
-        if args:  # this is not the right way to handle kwargs
-            kwargs = args[0]
+        """Initialization of the base model"""
         if kwargs:
-            flag_id = False
-            flag_created_at = False
-            for k in kwargs.keys():
-                if k == "created_at" or k == "updated_at":
-                    if k == "created_at":
-                        flag_created_at = True
-                    if not isinstance(kwargs[k], datetime):
-                        kwargs[k] = datetime(*self.__str_to_numbers(kwargs[k]))
-                elif k == "id":
-                    flag_id = True
-                setattr(self, k, kwargs[k])
-            if not flag_created_at:
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    setattr(self, key, value)
+            if kwargs.get("created_at", None) and type(self.created_at) is str:
+                self.created_at = datetime.strptime(kwargs["created_at"], time)
+            else:
                 self.created_at = datetime.now()
-            if not flag_id:
+            if kwargs.get("updated_at", None) and type(self.updated_at) is str:
+                self.updated_at = datetime.strptime(kwargs["updated_at"], time)
+            else:
+                self.updated_at = datetime.now()
+            if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
-        elif not args:
-            self.created_at = datetime.now()
+        else:
             self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
 
-    def __str_to_numbers(self, s):
-        """
-        Prepares a string for datetime
-
-        **Arguments**
-           s: a string of numbers
-        """
-        tmp = ''.join([o if o not in "T;:.,-_" else " " for o in s]).split()
-        res = [int(i) for i in tmp]
-        return res
+    def __str__(self):
+        """String representation of the BaseModel class"""
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
+                                         self.__dict__)
 
     def save(self):
-        """method to update self"""
-        self.__dict__["updated_at"] = datetime.now()
+        """updates the attribute 'updated_at' with the current datetime"""
+        self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
 
-    def __str__(self):
-        """edit string representation"""
-        return "[{}] ({}) {}".format(type(self)
-                                     .__name__, self.id, self.__dict__)
+    def to_dict(self, dump=None):
+        """returns a dictionary containing all keys/values of the instance"""
+        new_dict = self.__dict__.copy()
+        if "created_at" in new_dict:
+            new_dict["created_at"] = new_dict["created_at"].strftime(time)
+        if "updated_at" in new_dict:
+            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
+        new_dict["__class__"] = self.__class__.__name__
+        if "_sa_instance_state" in new_dict:
+            del new_dict["_sa_instance_state"]
+        if getenv("HBNB_TYPE_STORAGE") == "db":
+            if 'password' in new_dict:
+                del new_dict["password"]
+        return new_dict
 
-    def to_json(self, saving=False):
-        """convert to json"""
-        dupe = self.__dict__.copy()
-        dupe.pop('_sa_instance_state', None)
-
-        dupe["created_at"] = dupe["created_at"].isoformat()
-        # sqlAlchemy_storage_engine
-        if ("updated_at" in dupe):
-            dupe["updated_at"] = dupe["updated_at"].isoformat()
-        dupe["__class__"] = type(self).__name__
-        if not saving:
-            dupe.pop("password", None)
-        dupe.pop("amenities", None)
-        dupe.pop("amenities_id", None)
-        return dupe
-
-
-#    def __setattr__(self, name, value):
-#        """
-#        Forbids update of instance variables
-#        Arguments:
-#        name: name
-#        value: value
-#        """
-#        if name in ("id", "created_at", "updated_at"):
-#            if name in self.__dict__.keys()
-# and self.__dict__[name] is not None:
-#                return
-#        object.__setattr__(self, name, value):
+    def delete(self):
+        """delete the current instance from the storage"""
+        models.storage.delete(self)
