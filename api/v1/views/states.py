@@ -66,7 +66,7 @@ def update_state(state_id):
         if not state_data:
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         for key, value in state_data.items():
-            keys_to_ignore = ["id", "created_at", "updated_at"]
+            allowed_keys = ["name"]
             if key not in keys_to_ignore:
                 setattr(state, key, value)
     state.save()
