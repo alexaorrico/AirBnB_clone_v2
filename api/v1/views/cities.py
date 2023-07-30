@@ -7,21 +7,13 @@ from models import storage
 from models.city import City
 
 
-@app_views.errorhandler(400)
-def handle_400(e):
-    """Error handler for 400"""
-    return make_response(jsonify(error=str(e)), 400)
-
-
 @app_views.route('/states/<state_id>/cities', strict_slashes=False)
 def get_state_cities(state_id):
     """Defines cities route in relation with state
     Args:
         state_id (str): state_id
     """
-    print("called")
     state = storage.get('State', state_id)
-    print(state)
     if not state:
         abort(404)
     return jsonify([city.to_dict() for city in state.cities])
@@ -30,8 +22,8 @@ def get_state_cities(state_id):
 @app_views.route('/cities/<city_id>', strict_slashes=False)
 def get_city_by_id(city_id):
     """Defines cities route to retrieve city by id
-        Args:
-            city_id (str): id of city to retrive from storage
+    Args:
+        city_id (str): id of city to retrive from storage
     """
     city = storage.get('City', city_id)
     if not city:
@@ -57,16 +49,16 @@ def delete_city_by_id(city_id):
                  strict_slashes=False)
 def post_state_city(state_id):
     """Post a city to belong to state identified by its id
-        Args:
-            state_id (str): state id
+    Args:
+        state_id (str): state id
     """
     state = storage.get('State', state_id)
     if not state:
         abort(404)
     if not request.get_json():
-        abort(400, 'Not a JSON')
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if not request.get_json().get('name'):
-        abort(400, 'Missing name')
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     city_data = request.get_json()
     city_data["state_id"] = state_id
     city = City(**city_data)
@@ -83,7 +75,7 @@ def put_city(city_id):
     if not city:
         abort(404)
     if not request.get_json():
-        abort(400, "Not a JSON")
+        return make_response(jsonify({'error': "Not a JSON"}), 400)
     for key, val in request.get_json().items():
         if key not in ignorekeys:
             setattr(city, key, val)
