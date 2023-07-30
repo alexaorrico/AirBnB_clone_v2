@@ -5,21 +5,22 @@ from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def teardown_session(exception):
+def close_it(obj):
     """ Closes storage session """
     storage.close()
 
 
-if __name__ == '__main__':
-    HBNB_API_HOST = getenv('HBNB_API_HOST')
-    HBNB_API_PORT = getenv('HBNB_API_PORT')
+if __name__ == "__main__":
 
-    host = '0.0.0.0' if not HBNB_API_HOST else HBNB_API_HOST
-    port = 5000 if not HBNB_API_PORT else HBNB_API_PORT
-    app.run(host=host, port=port, threaded=True)
+    host = getenv('HBNB_API_HOST', default='0.0.0.0')
+    port = getenv('HBNB_API_PORT', default=5000)
+
+    app.run(host, int(port), threaded=True)
