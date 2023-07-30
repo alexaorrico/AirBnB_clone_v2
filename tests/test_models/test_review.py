@@ -8,7 +8,7 @@ import inspect
 import models
 from models import review
 from models.base_model import BaseModel
-import pep8
+import pycodestyle as pep8
 import unittest
 Review = review.Review
 
