@@ -1,76 +1,86 @@
 #!/usr/bin/python3
-"""Handles all default RESTFUL API actions for places"""
-
-from api.v1.views import app_views
+'''Contains the places view for the API.'''
 from flask import abort, jsonify, make_response, request
+from api.v1.views import app_views
 from models import storage
+from models.city import City
 from models.place import Place
+from models.user import User
 
 
-@app_views.route("/cities/<city_id>/places", strict_slashes=False)
-def get_places_by_city_id(city_id):
-    city = storage.get('City', city_id)
-    """Get all places related to a city"""
-    if not city:
+@app_views.route('cities/<city_id>/places',
+                 methods=['GET'], strict_slashes=False)
+def place(city_id):
+    """Retrieves the list of all Place objects of a City"""
+    obj_city = storage.get(City, city_id)
+    if not obj_city:
         abort(404)
-    return jsonify([place.to_dict() for place in city.places])
+
+    return jsonify([obj.to_dict() for obj in obj_city.places])
 
 
-@app_views.route("/places/<place_id>", strict_slashes=False)
-def get_places_by_id(place_id):
-    """Get a place with the id"""
-    place = storage.get('Place', place_id)
-    if not place:
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+def single_place(place_id):
+    """Retrieves a Place object"""
+    obj = storage.get(Place, place_id)
+    if not obj:
         abort(404)
-    return jsonify(place.to_dict())
+    return jsonify(obj.to_dict())
 
 
-@app_views.route("/places/<place_id>", methods=['DELETE'],
-                 strict_slashes=False)
-def delete_place_by_id(place_id):
-    """Take an Id and delete a place identified by the id """
-    place = storage.get('Place', place_id)
-    if not place:
+@app_views.route('/places/<place_id>',
+                 methods=['DELETE'], strict_slashes=False)
+def del_place(place_id):
+    """Returns an empty dictionary with the status code 200"""
+    obj = storage.get(Place, place_id)
+    if not obj:
         abort(404)
-    storage.delete(place)
+    obj.delete()
     storage.save()
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/cities/<city_id>/places", methods=["POST"],
-                 strict_slashes=False)
-def post_city_place(city_id):
-    """Takes a city id and post a place related to city"""
-    city = storage.get('City', city_id)
-    if not city:
+@app_views.route('cities/<city_id>/places',
+                 methods=['POST'], strict_slashes=False)
+def post_place(city_id):
+    """Returns the new Place with the status code 201"""
+    obj_city = storage.get(City, city_id)
+    if not obj_city:
         abort(404)
-    if not request.get_json():
-        abort(400, "Not a JSON")
-    if "user_id" not in request.get_json():
-        abort(400, 'Missing user_id')
-    user = storage.get('User', (request.get_json()).get('user_id'))
-    if not user:
+
+    new_place = request.get_json()
+    if not new_place:
+        abort(400, 'Not a JSON')
+    if 'user_id' not in new_place:
+        abort(400, "Missing user_id")
+    user_id = new_place['user_id']
+    obj_user = storage.get(User, user_id)
+    if not obj_user:
         abort(404)
-    if "name" not in request.get_json():
+    if 'name' not in new_place:
         abort(400, "Missing name")
-    place_data = request.get_json()
-    place_data['city_id'] = city_id
-    place = Place(**place_data)
-    place.save()
-    return make_response(jsonify(place.to_dict()), 201)
 
-
-@app_views.route("/places/<place_id>", methods=['PUT'], strict_slashes=False)
-def update_place(place_id):
-    """update a place identified by the place_id"""
-    ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
-    place = storage.get("Place", place_id)
-    if not place:
-        abort(404)
-    if not request.get_json():
-        abort(400, "Not a JSON")
-    for key, val in request.get_json().items():
-        if key not in ignore_keys:
-            setattr(place, key, val)
+    obj = Place(**new_place)
+    setattr(obj, 'city_id', city_id)
+    storage.new(obj)
     storage.save()
-    return make_response(jsonify(place.to_dict()), 200)
+    return make_response(jsonify(obj.to_dict()), 201)
+
+
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
+def put_place(place_id):
+    """Returns the Place object with the status code 200"""
+    obj = storage.get(Place, place_id)
+    if not obj:
+        abort(404)
+
+    req = request.get_json()
+    if not req:
+        abort(400, "Not a JSON")
+
+    for k, v in req.items():
+        if k not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            setattr(obj, k, v)
+
+    storage.save()
+    return make_response(jsonify(obj.to_dict()), 200)
