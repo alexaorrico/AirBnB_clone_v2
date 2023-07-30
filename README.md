@@ -154,5 +154,6 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Otaoroju Olalekan
-Busari Olufunmilayo
+#Otaoroju Olalekan
+
+#Busari Olufunmilayo - https://github.com/oluphunmmy
