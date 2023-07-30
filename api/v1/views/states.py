@@ -6,14 +6,14 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states", strict_slashes=False)
+@app_views.route("/states", methods=["GET"], strict_slashes=False)
 def all_states():
     """Retrieves a list of all states """
     states_dict = storage.all("State")
     return jsonify([obj.to_dict() for obj in states_dict.values()])
 
 
-@app_views.route("/states/<state_id>", strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
 def get_state(state_id):
     """Retrieves a state by its id """
     state_obj = storage.get("State", state_id)
@@ -37,7 +37,7 @@ def del_state(state_id):
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
     """ Creates a State """
-    data = request.json
+    data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
     if "name" not in data:
@@ -57,7 +57,7 @@ def put_state(state_id):
     if not data:
         abort(400, "Not a JSON")
     for key, value in data.items():
-        if key != 'id' and key != 'created_at' and key != 'updated_at':
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(state_obj, key, value)
     state_obj.save()
     return make_response(jsonify(state_obj.to_dict()), 200)
