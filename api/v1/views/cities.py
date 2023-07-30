@@ -2,7 +2,7 @@
 """Defines City Route for rest API"""
 
 from api.v1.views import app_views
-from flask import request, jsonify, abort, make_response
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.city import City
 
@@ -19,10 +19,12 @@ def get_state_cities(state_id):
     Args:
         state_id (str): state_id
     """
+    print("called")
     state = storage.get('State', state_id)
+    print(state)
     if not state:
         abort(404)
-    return jsonify([city.to_dict() for city in state.cities]), 200
+    return jsonify([city.to_dict() for city in state.cities])
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
@@ -34,7 +36,7 @@ def get_city_by_id(city_id):
     city = storage.get('City', city_id)
     if not city:
         abort(404)
-    return jsonify(city.to_dict()), 200
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
@@ -48,7 +50,7 @@ def delete_city_by_id(city_id):
         abort(404)
     storage.delete(city)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
@@ -69,10 +71,10 @@ def post_state_city(state_id):
     city_data["state_id"] = state_id
     city = City(**city_data)
     city.save()
-    return make_response(jsonify(city.to_dict()), 201)
+    return jsonify(city.to_dict()), 201
 
 
-@app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
+@ app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
 def put_city(city_id):
     """Update a city from the city city_id selected"""
     city = storage.get('City', city_id)
@@ -85,4 +87,4 @@ def put_city(city_id):
         if key not in ignorekeys:
             setattr(city, key, val)
     city.save()
-    return make_response(jsonify(city.to_dict()), 200)
+    return jsonify(city.to_dict()), 200

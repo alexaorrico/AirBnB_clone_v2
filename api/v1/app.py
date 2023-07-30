@@ -2,9 +2,7 @@
 
 """Api Interface"""
 from os import getenv
-from flask import Flask
-from flask.helpers import make_response
-from flask.json import jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 
