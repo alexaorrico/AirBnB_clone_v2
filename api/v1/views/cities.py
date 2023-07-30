@@ -12,7 +12,6 @@ import json
 @city_views.route('/states/<state_id>/cities', strict_slashes=False)
 def get_cities(state_id):
     ''' Retrieves a list of cities of a state '''
-    print('show love')
     state = storage.get(State, state_id)
     if not state:
         abort(404)
