@@ -10,6 +10,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 
 ## Table of Content
 * [Environment](#environment)
+* [Structure](#structure)
 * [Installation](#installation)
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
@@ -21,6 +22,109 @@ The console is the first segment of the AirBnB project at Holberton School that 
 ## Environment
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
 
+## Structure
+This project is structured as follows:
+```
+ .
+├──  models
+│  ├──  engine
+│  │  ├──  __init__.py
+│  │  ├──  db_storage.py
+│  │  └──  file_storage.py
+│  ├──  __init__.py
+│  ├──  amenity.py
+│  ├──  base_model.py
+│  ├──  city.py
+│  ├──  place.py
+│  ├──  review.py
+│  ├──  state.py
+│  └──  user.py
+├──  tests
+│  ├──  test_models
+│  │  ├──  test_engine
+│  │  │  ├──  __init__.py
+│  │  │  ├──  test_db_storage.py
+│  │  │  └──  test_file_storage.py
+│  │  ├──  __init__.py
+│  │  ├──  test_amenity.py
+│  │  ├──  test_base_model.py
+│  │  ├──  test_city.py
+│  │  ├──  test_place.py
+│  │  ├──  test_review.py
+│  │  ├──  test_state.py
+│  │  └──  test_user.py
+│  ├──  __init__.py
+│  └──  test_console.py
+├──  web_flask
+│  ├──  static
+│  │  ├──  images
+│  │  │  ├──  icon.png
+│  │  │  └──  logo.png
+│  │  └──  styles
+│  │     ├──  3-footer.css
+│  │     ├──  3-header.css
+│  │     ├──  4-common.css
+│  │     └──  6-filters.css
+│  ├──  templates
+│  │  ├──  5-number.html
+│  │  ├──  6-number_odd_or_even.html
+│  │  ├──  7-states_list.html
+│  │  ├──  8-cities_by_states.html
+│  │  ├──  9-states.html
+│  │  └──  10-hbnb_filters.html
+│  ├──  0-hello_route.py
+│  ├──  1-hbnb_route.py
+│  ├──  2-c_route.py
+│  ├──  3-python_route.py
+│  ├──  4-number_route.py
+│  ├──  5-number_template.py
+│  ├──  6-number_odd_or_even.py
+│  ├──  7-states_list.py
+│  ├──  8-cities_by_states.py
+│  ├──  9-states.py
+│  ├──  10-hbnb_filters.py
+│  ├──  __init__.py
+│  └──  README.md
+├──  web_static
+│  ├──  images
+│  │  ├──  icon.png
+│  │  ├──  icon_bath.png
+│  │  ├──  icon_bed.png
+│  │  ├──  icon_group.png
+│  │  └──  logo.png
+│  ├──  styles
+│  │  ├──  2-common.css
+│  │  ├──  2-footer.css
+│  │  ├──  2-header.css
+│  │  ├──  3-common.css
+│  │  ├──  3-footer.css
+│  │  ├──  3-header.css
+│  │  ├──  4-common.css
+│  │  ├──  4-filters.css
+│  │  ├──  5-filters.css
+│  │  ├──  6-filters.css
+│  │  ├──  7-places.css
+│  │  └──  8-places.css
+│  ├──  0-index.html
+│  ├──  1-index.html
+│  ├──  2-index.html
+│  ├──  3-index.html
+│  ├──  4-index.html
+│  ├──  5-index.html
+│  ├──  6-index.html
+│  ├──  7-index.html
+│  ├──  8-index.html
+│  └──  README.md
+├──  0-setup_web_static.sh
+├──  1-pack_web_static.py
+├──  2-do_deploy_web_static.py
+├──  3-deploy_web_static.py
+├──  AUTHORS
+├──  console.py
+├──  README.md
+├──  setup_mysql_dev.sql
+└──  setup_mysql_test.sql
+```
 ## Installation
 * Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
 * Access AirBnb directory: `cd AirBnB_clone`
