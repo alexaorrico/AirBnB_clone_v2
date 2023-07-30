@@ -157,6 +157,5 @@ No known bugs at this time.
 Ogedegbe Eric - [Github](https://github.com/ohimaigold) / [Twitter](https://twitter.com/aireeko)  
 Peter Sylvester Lansana - [Github](https://github.com/pslansana) / [Twitter](https://twitter.com/Peter_s_lansana)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
