@@ -10,8 +10,10 @@ from models import storage
 from api.v1.views import app_views
 from api.v1.views import state_views
 from api.v1.views import amenity_views
-
+from api.v1.views import place_views
+from api.v1.views import city_views
 import os
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
@@ -19,6 +21,8 @@ app.register_blueprint(state_views, url_prefix="/api/v1/states",
                        name='state_views')
 app.register_blueprint(amenity_views, url_prefix="/api/v1/amenities",
                        name='amenitiy_views')
+app.register_blueprint(place_views)
+app.register_blueprint(city_views)
 
 
 @app.teardown_appcontext
