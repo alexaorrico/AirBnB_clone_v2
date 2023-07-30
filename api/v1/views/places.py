@@ -77,3 +77,14 @@ def put_place(place_id):
             setattr(place, key, value)
     storage.save()
     return make_response(jsonify(place.to_dict()), 200)
+
+
+@app_views.route('/places_search', methods=['GET'], strict_slashes=False)
+def get_places_search():
+    place_search = request.get_json()
+    if place_search is None:
+        abort(404, 'Not a JSON')
+    if len(place_search) and place_search:
+        states = place_search.get('states', None)
+        cities = place_search.get('cities', None)
+        amenities = place_search.get('amenities', None)
