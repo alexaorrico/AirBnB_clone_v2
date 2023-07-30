@@ -12,43 +12,44 @@ from models.city import City
                  strict_slashes=False)
 def get_city_by_state(state_id):
     """Retrives a city object in state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    cities = [city.to_dict() for city in state.cities]
-    return jsonify(cities), 200
+    cities = []
+    for city in state.cities:
+        cities.append(city.to_dict())
+    return jsonify(cities)
 
 
 @app_views.route("/cities/<city_id>", methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
     """Retrives a city object in state"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    return jsonify(city.to_dict()), 200
+    return jsonify(city.to_dict())
 
 
 @app_views.route("/cities/<city_id>", methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
     """Deletes a City object"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     storage.delete(city)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
     """create new city obj through state association using POST"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
-
     data = request.get_json()
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
