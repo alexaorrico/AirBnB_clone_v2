@@ -86,3 +86,27 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test to retrieve and instance based on it's key"""
+        cls_name = self.__class__.__name__
+        for val in models.storage.all().values():
+            if cls_name in classes.values():
+                key = "{}.{}".format(cls_name, val.id)
+                self.assertIn(key, models.storage.all().keys())
+                inst = models.storage.all()[key]
+                self.assertIn(inst, models.storage.all())
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self, cls=None):
+        """Test to count the number of instance"""
+        count = 0
+        for instance in models.storage.all().values():
+            if cls is not None:
+                if isinstance(instance, cls):
+                    count += 1
+            else:
+                count += 1
+            self.assertGreater(count, 0, "No instances of the\
+                               specified class found in models.storage")
