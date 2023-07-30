@@ -110,7 +110,6 @@ class DBStorage:
             Args:
                 cls: Optional class object to specify object to count.
         """
-
         try:
             objs = self.all(cls)  # get all objects
             return len(objs)  # return number of objects
