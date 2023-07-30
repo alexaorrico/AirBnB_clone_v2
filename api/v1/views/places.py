@@ -134,7 +134,7 @@ def search_places():
                 pl_list = place.to_dict()
                 pl_list.pop('amenities', None)
                 places_list.append(pl_list)
-        return make_response(jsonify(places_list))
+        return jsonify(places_list)
 
 
 def check_amenities(place, amenities_id):
