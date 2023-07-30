@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/python3
 """
 handle all the default RESTful API Actions
 for amenities objects in the storage
