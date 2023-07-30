@@ -77,7 +77,7 @@ def create_city(state_id):
 
 
 @app_views.route('/city/<str:city_id>', methods=['PUT'])
-def update_state(city_id):
+def update_city(city_id):
     """
     Updates the city with the given city_id.
     Ignores id, created_at, updated_at keys.
