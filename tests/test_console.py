@@ -5,7 +5,7 @@ Contains the class TestConsoleDocs
 
 import console
 import inspect
-import pycodestyle as pep8
+import pep8 as pep8
 import unittest
 HBNBCommand = console.HBNBCommand
 

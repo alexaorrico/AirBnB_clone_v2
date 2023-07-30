@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pycodestyle as pep8
+import pep8
 import unittest
 DBStorage = db_storage.DBStorage
 classes = [State, City, Place, Amenity, Review, User]
