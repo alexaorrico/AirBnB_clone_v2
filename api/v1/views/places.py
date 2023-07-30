@@ -87,17 +87,16 @@ def search_places():
     place_search = request.get_json()
     if place_search is None:
         abort(404, 'Not a JSON')
-    if len(place_search) and place_search:
+    if place_search and len(place_search):
         states = place_search.get('states', None)
         cities = place_search.get('cities', None)
         amenities = place_search.get('amenities', None)
-
-    if states and cities:
-        place_list = [states, cities]
-    elif states and not cities:
-        place_list = [states]
-    elif cities and not states:
-        place_list = [cities]
+        if states and cities:
+            place_list = [states, cities]
+        elif states and not cities:
+            place_list = [states]
+        elif cities and not states:
+            place_list = [cities]
     else:
         place_list = None
 
@@ -123,7 +122,8 @@ def search_places():
         return make_response(jsonify(places))
     else:
         places = storage.all(Place).values()
-        return make_response(jsonify(places.to_dict()))
+        places_list = [place.to_dict() for place in places]
+        return make_response(jsonify(places_list))
 
 
 def check_amenities(place, amenities_id):
