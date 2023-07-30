@@ -92,15 +92,19 @@ def search_places():
         cities = place_search.get('cities', None)
         amenities = place_search.get('amenities', None)
 
-    if states or cities:
+    if states and cities:
         place_list = [states, cities]
+    elif states and not cities:
+        place_list = [states]
+    elif cities and not states:
+        place_list = [cities]
     else:
         place_list = None
 
     if place_list:
         places = []
         for place_location in place_list:
-            if place_location == place_list[0]:
+            if place_location == states:
                 for state_id in place_location:
                     state = storage.get(State, state_id)
                     for city in state.cities:
