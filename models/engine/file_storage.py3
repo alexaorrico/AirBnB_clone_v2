@@ -17,7 +17,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class FileStorage:
-    """Serializes instances to a JSON file & deserializes back to instances"""
+    """serializes instances to a JSON file & deserializes back to instances"""
 
     # string - path to the JSON file
     __file_path = "file.json"
@@ -25,7 +25,7 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns the dictionary __objects"""
+        """returns the dictionary __objects"""
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
@@ -35,13 +35,13 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """Sets in __objects the obj with key <obj class name>.id"""
+        """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
     def save(self):
-        """Serializes __objects to the JSON file (path: __file_path)"""
+        """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
             json_objects[key] = self.__objects[key].to_dict()
@@ -49,53 +49,56 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """Deserializes the JSON file to __objects"""
+        """deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except Exception:
+        except:
             pass
 
     def delete(self, obj=None):
-        """Delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
 
     def close(self):
-        """Call reload() method for deserializing the JSON file to objects"""
+        """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 
+
     def get(self, cls, id):
-        """Call get() method to retrieve object by class name or id"""
+        """ call get() method to retrieve object by class name or id"""
         if cls is not None and id is not None:
             keys = cls + "." + id
-            for key, value in self.__objects.items():
+            for key, value in self.__object.items():
+
                 if key == keys:
                     return value
         else:
             return None
 
+
     def count(self, cls=None):
-        """Count objects in dictionary"""
+        """count objects in dictionary"""
         if cls is not None:
             if len(self.__objects) > 0:
-                count = 0
+                count = 0;
                 for key, val in self.__objects.items():
                     klass, id = key.split(".")
-                    if key.startswith(klass):
-                        count += 1
-                return count
+                    if (key.startsWith(klass):
+                        count++
+                return (count)
             else:
                 return None
         else:
             if len(self.__objects) > 0:
                 count = 0
-                for key, val in self.__objects.items():
+                for key, val in self.__objects.items()
                     count += 1
-                return count
+                return (count)
             else:
                 return None
