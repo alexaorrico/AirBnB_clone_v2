@@ -18,6 +18,12 @@ def close_it(obj):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """ Returns JSON response with 404 status """
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+
 if __name__ == "__main__":
 
     host = getenv('HBNB_API_HOST', default='0.0.0.0')
