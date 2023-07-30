@@ -4,7 +4,7 @@ Module: 'state'
 State objects that handles all default RESTFul API actions
 '''
 
-from flask import Flask, jsonify, request, abort
+from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -39,20 +39,21 @@ def delete_state(state_id):
         abort(404)
     state.delete()
     storage.save()
-    return jsonify({}), 200
+    return make_tesponse(jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates a State"""
-    if not request.json:
-        abort(400, 'Not a JSON')
-    if 'name' not in request.json:
-        abort(400, 'Missing name')
     data = request.get_json()
+    if not data:
+        abort(400, 'Not a JSON')
+    if 'name' not in data:
+        abort(400, 'Missing name')
     new_state = State(**data)
-    new_state.save()
-    return jsonify(new_state.to_dict()), 201
+    storage.new(new_state)
+    storage.save()
+    return make_response(jsonify(new_state.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -61,7 +62,7 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    if not request.json:
+    if not request.get_json():
         abort(400, 'Not a JSON')
     data = request.get_json()
     ignore_keys = ['id', 'created_at', 'updated_at']
@@ -69,4 +70,4 @@ def update_state(state_id):
         if key not in ignore_keys:
             setattr(state, key, value)
     state.save()
-    return jsonify(state.to_dict()), 200
+    return make_response(jsonify(state.to_dict()), 200)
