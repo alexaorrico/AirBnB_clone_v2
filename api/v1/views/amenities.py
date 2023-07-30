@@ -19,22 +19,24 @@ def all_amenities():
                  strict_slashes=False)
 def get_amenity(amenity_id):
     """ Retrieves an amenity by its id """
-    amenity_obj = storage.get("Amenity", amenity_id)
-    if not amenity_obj:
+    try:
+        amenity_obj = storage.get("Amenity", amenity_id)
+        return jsonify(amenity_obj.to_dict())
+    except Exception:
         abort(404)
-    return jsonify(amenity_obj.to_dict())
 
 
 @app_views.route("/amenities/<amenity_id>", methods=['DELETE'],
                  strict_slashes=False)
 def del_amenity(amenity_id):
     """ Deletes an amenity """
-    amenity_obj = storage.get("Amenity", amenity_id)
-    if not amenity_obj:
+    try:
+        amenity_obj = storage.get("Amenity", amenity_id)
+        storage.delete(amenity_obj)
+        storage.save()
+        return make_response(jsonify({}), 200)
+    except Exception:
         abort(404)
-    storage.delete(amenity_obj)
-    storage.save()
-    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
