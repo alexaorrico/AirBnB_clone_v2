@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Test .get() and .count() methods
+""" Test .get() and .count() method
 """
 from models import storage
 from models.state import State
