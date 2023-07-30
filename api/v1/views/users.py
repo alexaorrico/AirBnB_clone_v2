@@ -1,4 +1,8 @@
-#!/usr/bin/pyth
+#!/usr/bin/python3
+"""
+Handle all the default RESTful api acions
+for the user object
+"""
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
