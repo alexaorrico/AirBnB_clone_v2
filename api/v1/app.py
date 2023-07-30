@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""return the status of the API"""
+"""This file return the status of the API"""
 import os
 from api.v1.views import app_views
 from flask import Flask, jsonify, Blueprint, make_response
