@@ -75,7 +75,6 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-
     def get(self, cls, id):
         """query on the current database session"""
         for clss in classes:
@@ -86,7 +85,6 @@ class DBStorage:
                         return values
             else:
                 return None
-
 
     def count(self, cls=None):
         """query on the current database session"""
