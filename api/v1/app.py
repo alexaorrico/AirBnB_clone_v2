@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """A simple REST API application to print status OK"""
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -14,10 +14,11 @@ def teardown(exception):
     """A method to handle closing of application"""
     storage.close()
 
+
 @app.errorhandler(404)
-def error(e):
+def not_found(error):
     """Return a 4O4 ERROR in json"""
-    return jsonify({'error': 'Not found'})
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == '__main__':
