@@ -69,4 +69,6 @@ if __name__ == "__main__":
     # initializes global error handling
     setup_global_errors()
     # start Flask app
-    app.run(host=host, port=port)
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = getenv('HBNB_API_PORT', 5000)
+    app.run(host=host, port=port, threaded=True)
