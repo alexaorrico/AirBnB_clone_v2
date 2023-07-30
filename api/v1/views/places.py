@@ -141,10 +141,6 @@ def check_amenities(place, amenities_id):
     if amenities_id is not None:
         for amenity_id in amenities_id:
             amenities = storage.get(Amenity, amenity_id)
-            if getenv('HBNB_TYPE_STORAGE') == "db":
-                if amenities not in place.amenities:
-                    return False
-            else:
-                if amenity_id not in place.amenity_ids:
-                    return False
+            if amenities not in place.amenities:
+                return False
     return True
