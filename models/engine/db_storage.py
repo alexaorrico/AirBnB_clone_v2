@@ -77,13 +77,10 @@ class DBStorage:
     def count(self, cls=None):
         """Count number of all objects of a class or all
         objects of all classes"""
-        all_class = classes.values()
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
-        else:
-            count = len(models.storage.all(cls).values())
+        class_objs = self.all(cls)
+        count = 0
+        for objs in class_objs:
+            count = count + 1
         return count
 
     def reload(self):
