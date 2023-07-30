@@ -96,4 +96,4 @@ class FileStorage:
             objs = self.all(cls)  # get all objects
             return len(objs)  # return number of objects
         except Exception:
-            pass  # for now
+            pass  # pass for now
