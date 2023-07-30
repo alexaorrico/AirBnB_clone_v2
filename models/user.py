@@ -29,7 +29,8 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
-        if kwargs["password"]:
-            value = kwargs["password"]
-            kwargs["password"] = md5(value.encode()).hexdigest()
-            self.__dict__.update(kwargs)
+        if kwargs:
+            if kwargs["password"] is not None:
+                value = kwargs["password"]
+                kwargs["password"] = md5(value.encode()).hexdigest()
+                self.__dict__.update(kwargs)
