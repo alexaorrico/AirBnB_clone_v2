@@ -57,13 +57,13 @@ def post_state_city(state_id):
         abort(404)
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if not request.get_json().get('name'):
+    if 'name' not in request.get_json():
         return make_response(jsonify({'error': 'Missing name'}), 400)
     city_data = request.get_json()
     city_data["state_id"] = state_id
     city = City(**city_data)
     city.save()
-    return jsonify(city.to_dict()), 201
+    return make_response(jsonify(city.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=['PUT'],
@@ -80,4 +80,4 @@ def put_city(city_id):
         if key not in ignorekeys:
             setattr(city, key, val)
     city.save()
-    return jsonify(city.to_dict()), 200
+    return jsonify(city.to_dict())
