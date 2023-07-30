@@ -65,7 +65,6 @@ def update_place(place_id):
     """update a place identified by the place_id"""
     ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     place = storage.get("Place", place_id)
-    print(place)
     if not place:
         abort(404)
     if not request.get_json():
@@ -73,5 +72,5 @@ def update_place(place_id):
     for key, val in request.get_json().items():
         if key not in ignore_keys:
             setattr(place, key, val)
-    place.save()
+    storage.save()
     return make_response(jsonify(place.to_dict()), 200)
