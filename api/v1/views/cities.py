@@ -72,5 +72,5 @@ def update_city(city_id):
             if key in ['id', 'created_at', 'updated_at']:
                 continue
             setattr(city, key, value)
-            city.save()
-            return json.dumps(city.to_dict(), indent=4), 200
+        city.save()
+        return json.dumps(city.to_dict(), indent=4), 200
