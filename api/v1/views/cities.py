@@ -40,7 +40,7 @@ def delete_city_by_id(city_id):
     city = storage.get('City', city_id)
     if not city:
         abort(404)
-    storage.delete(city)
+    city.delete()
     storage.save()
     return jsonify({})
 
@@ -71,7 +71,7 @@ def post_state_city(state_id):
 def put_city(city_id):
     """Update a city from the city city_id selected"""
     city = storage.get('City', city_id)
-    ignorekeys = ['id', 'state_id', 'created_at', 'update_at']
+    ignorekeys = ['id', 'state_id', 'created_at', 'updated_at']
     if not city:
         abort(404)
     if not request.get_json():
