@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -32,14 +32,14 @@ class TestDBStorageDocs(unittest.TestCase):
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
@@ -86,3 +86,27 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test to retrieve and instance based on it's key"""
+        cls_name = self.__class__.__name__
+        for val in models.storage.all().values():
+            if cls_name in classes.values():
+                key = "{}.{}".format(cls_name, val.id)
+                self.assertIn(key, models.storage.all().keys())
+                inst = models.storage.all()[key]
+                self.assertIn(inst, models.storage.all())
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self, cls=None):
+        """Test to count the number of instance"""
+        count = 0
+        for instance in models.storage.all().values():
+            if cls is not None:
+                if isinstance(instance, cls):
+                    count += 1
+            else:
+                count += 1
+            self.assertGreater(count, 0, "No instances of the\
+                               specified class found in models.storage")
