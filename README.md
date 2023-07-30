@@ -153,7 +153,13 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
+<<<<<<< HEAD
 ## Author
 David Udoh - [Github](https://github.com/davidgregs87) / [Twitter](https://twitter.com/gregs_david).  
+=======
+## Authors
+David Udoh - [Github](https://github.com/davidgregs87) / [Twitter](https://twitter.com/gregs_david)
+
+>>>>>>> 008c4bde9333914497ff39d39a7294d05c87d3ce
 ## License
 Public Domain. No copy write protection. 
