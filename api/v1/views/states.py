@@ -67,5 +67,5 @@ def update_state(state_id):
             if key in ['id', 'created_at', 'updated_at']:
                 continue
             setattr(state, key, value)
-            state.save()
-            return json.dumps(state.to_dict(), indent=4), 200
+        state.save()
+        return json.dumps(state.to_dict(), indent=4), 200
