@@ -2,7 +2,7 @@
 """Defines City Route for rest API"""
 
 from api.v1.views import app_views
-from flask import request, jsonify, abort, make_response
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.city import City
 
