@@ -4,7 +4,10 @@ from flask import Flask, jsonify, abort, make_response, request
 from api.v1.views import app_views
 from models.place import Place
 from models.user import User
+from models.state import State
 from models.city import City
+from models.amenity import Amenity
+from os import getenv
 from models import storage
 
 
@@ -79,8 +82,8 @@ def put_place(place_id):
     return make_response(jsonify(place.to_dict()), 200)
 
 
-@app_views.route('/places_search', methods=['GET'], strict_slashes=False)
-def get_places_search():
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def search_places():
     place_search = request.get_json()
     if place_search is None:
         abort(404, 'Not a JSON')
@@ -88,3 +91,45 @@ def get_places_search():
         states = place_search.get('states', None)
         cities = place_search.get('cities', None)
         amenities = place_search.get('amenities', None)
+
+    if states or cities:
+        place_list = [states, cities]
+    else:
+        place_list = None
+
+    if place_list:
+        places = []
+        for place_location in place_list:
+            if place_location == place_list[0]:
+                for state_id in place_location:
+                    state = storage.get(State, state_id)
+                    for city in state.cities:
+                        for place in city.places:
+                            if place not in places and\
+                              check_amenities(place, amenities):
+                                places.append(place.to_dict())
+            else:
+                for city_id in place_location:
+                    city = storage.get(City, city_id)
+                    if city:
+                        for place in city.places:
+                            if place not in places and\
+                              check_amenities(place, amenities):
+                                places.append(place.to_dict())
+        return make_response(jsonify(places))
+    else:
+        places = storage.all(Place).values()
+        return make_response(jsonify(places.to_dict()))
+
+
+def check_amenities(place, amenities_id):
+    if amenities_id is not None:
+        for amenity_id in amenities_id:
+            amenities = storage.get(Amenity, amenity_id)
+            if getenv('HBNB_TYPE_STORAGE') == "db":
+                if amenities not in place.amenities:
+                    return False
+            else:
+                if amenities not in place.amenity_ids:
+                    return False
+    return True
