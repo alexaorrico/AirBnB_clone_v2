@@ -71,8 +71,8 @@ class FileStorage:
 
     def get(self, cls, id):
         """retrieves an object"""
-        if clss in classes.values() and id and type(id) == str:
-            db_obj = self.all(clss)
+        if cls in classes.values() and id and type(id) == str:
+            db_obj = self.all(cls)
             for key, val in db_obj.items():
                 if key.split(".")[1] == id:
                     return val
@@ -80,7 +80,7 @@ class FileStorage:
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
-        obj_data = self.all(clss)
-        if clss in classes.values():
-            obj_data = self.all(clss)
+        obj_data = self.all(cls)
+        if cls in classes.values():
+            obj_data = self.all(cls)
         return len(obj_data)
