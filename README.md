@@ -219,6 +219,8 @@ github repo
 * __Jared Heck__ - <[jarehec](https://github.com/jarehec)> | <[@jarehec](https://twitter.com/jarehec)>
 * __Brennan D Baraban__ - <[bdbaraban](https://github.com/bdbaraban)> | <[@bdov_](https://twitter.com/bdov_)>
 * __Derrick Gee__ - <[kai-dg](https://github.com/kai-dg)> | <[@the_haru_kai](https://twitter.com/the_haru_kai)>
+* joshua Owoichoche Amah
+  (https://github.com/owoicho12)
 
 ## License
 
