@@ -3,16 +3,14 @@
 Contains the class DBStorage
 """
 
-import models
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -51,17 +49,6 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
 
-    def get(self, cls, id):
-        """retrieves an object of a class with id"""
-        obj = None
-        if cls is not None and issubclass(cls, BaseModel):
-            obj = self.__session.query(cls).filter(cls.id == id).first()
-        return obj
-
-    def count(self, cls=None):
-        """retrieves the number of objects of a class or all (if cls==None)"""
-        return len(self.all(cls))
-
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
@@ -85,3 +72,21 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    # Add get function
+    def get(self, cls, id):
+        """A method to retrieve one object"""
+        if cls in classes.values() and id and type(id) == str:
+            resource = self.all(cls)
+            for key, value in resource.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
+
+    # Add count function
+    def count(self, cls=None):
+        """A method to count the number of objects in storage"""
+        resource = self.all(cls)
+        if cls in classes.values():
+            resource = self.all(cls)
+        return len(resource)
