@@ -12,6 +12,8 @@ from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
+now = datetime.now()
+delta = now + timedelta(minutes=1)
 
 if models.storage_t == "db":
     Base = declarative_base()
@@ -20,11 +22,13 @@ else:
 
 
 class BaseModel:
-    """The BaseModel class from which future classes will be derived"""
+    """The BaseModel class from which future classes will be derived
+    now = datetime.now()
+    delta = now + timedelta(minutes=1) """
     if models.storage_t == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
-        updated_at = Column(DateTime, default=datetime.utcnow)
+        updated_at = Column(DateTime, default=delta)
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
@@ -54,7 +58,7 @@ class BaseModel:
 
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
-        self.updated_at = datetime.utcnow()
+        self.updated_at = delta
         models.storage.new(self)
         models.storage.save()
 
