@@ -97,6 +97,8 @@ def search_places():
             place_list = [states]
         elif cities and not states:
             place_list = [cities]
+        else:
+            place_list = None
     else:
         place_list = None
 
