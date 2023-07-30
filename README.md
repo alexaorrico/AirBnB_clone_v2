@@ -156,6 +156,6 @@ No known bugs at this time.
 ## Authors
 Victor Matusse - [Github](https://github.com/unkown007) / [LinkedIn](www.linkedin.com/in/victor-matusse-061a61110)
 
-Second part of Airbnb: Joann Vuong
+Second part of Airbnb:  Alexa Orrico
 ## License
 Public Domain. No copy write protection. 
