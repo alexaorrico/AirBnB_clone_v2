@@ -2,9 +2,7 @@
 """Defines City Route for rest API"""
 
 from api.v1.views import app_views
-from flask import request
-from flask.helpers import abort, make_response
-from flask.json import jsonify
+from flask import request, jsonify, abort, make_response
 from models import storage
 from models.city import City
 
@@ -63,15 +61,15 @@ def post_state_city(state_id):
     state = storage.get('State', state_id)
     if not state:
         abort(404)
-    if not request.json:
+    if not request.get_json():
         abort(400, 'Not a JSON')
     if not request.get_json().get('name'):
-        abort(400, 'Missing Name')
+        abort(400, 'Missing name')
     city_data = request.get_json()
     city_data["state_id"] = state_id
     city = City(**city_data)
     city.save()
-    return jsonify(city.to_dict()), 201
+    return make_response(jsonify(city.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
@@ -87,4 +85,4 @@ def put_city(city_id):
         if key not in ignorekeys:
             setattr(city, key, val)
     city.save()
-    return jsonify(city.to_dict()), 200
+    return make_response(jsonify(city.to_dict()), 200)
