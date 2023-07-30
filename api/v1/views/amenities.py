@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Objects that handles all default RESTFul API actions """
+""" Objects that handles all default RESTFul API actions for amenities"""
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
