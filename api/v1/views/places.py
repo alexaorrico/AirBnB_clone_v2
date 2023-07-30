@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Handles all default RESTFUL API actions for places"""
 
-from flask import abort, make_response, request, jsonify
+from api.v1.views import app_views
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.place import Place
-from api.v1.views import app_views
 
 
 @app_views.route("/cities/<city_id>/places", strict_slashes=False)
