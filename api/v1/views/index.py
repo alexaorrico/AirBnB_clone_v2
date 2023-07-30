@@ -15,9 +15,9 @@ def status_json():
 
 
 @app_views.route("/api/v1/stats")
-def stats():
+def stats_count():
     """returns json of all objects"""
-    data = {
+    endpoint_data = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
@@ -26,7 +26,6 @@ def stats():
         "users": storage.count("User"),
         }
 
-    res = jsonify(data)
+    res = jsonify(endpoint_data)
     res.status_code = 200
-
     return res
