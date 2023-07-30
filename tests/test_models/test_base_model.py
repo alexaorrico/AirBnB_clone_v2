@@ -3,7 +3,7 @@
 from datetime import datetime
 import inspect
 import models
-import pycodestyle
+import pycodestyle as pep8
 import time
 import unittest
 from unittest import mock
@@ -19,12 +19,12 @@ class TestBaseModelDocs(unittest.TestCase):
         """Set up for docstring tests"""
         self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
 
-    def test_pycodestyle_conformance(self):
-        """Test that models/base_model.py conforms to pycodestyle."""
+    def test_pep8_conformance(self):
+        """Test that models/base_model.py conforms to pep8."""
         for path in ['models/base_model.py',
                      'tests/test_models/test_base_model.py']:
             with self.subTest(path=path):
-                errors = pycodestyle.Checker(path).check_all()
+                errors = pep8.Checker(path).check_all()
                 self.assertEqual(errors, 0)
 
     def test_module_docstring(self):
