@@ -93,7 +93,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Return object based on its class and `id`, or `None` if absent"""
-        key = cls.__name__ + id
+        key = cls.__name__ + "." + id
         if key in self.all().keys():
             return self.all()[key]
 
