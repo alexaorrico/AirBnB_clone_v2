@@ -1,13 +1,15 @@
 #!/usr/bin/python3
-""" app """
-import os
+""" app variable object of flask"""
 from flask import Flask, Blueprint, jsonify
 from api.v1.views import app_views
 from models import storage
+from flask_cors import CORS
+import os
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
+CORS(app)
 
 @app.teardown_appcontext
 def teardown(err):
