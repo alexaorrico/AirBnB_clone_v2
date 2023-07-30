@@ -112,7 +112,9 @@ def search_places():
                         for place in city.places:
                             if place not in places and\
                               check_amenities(place, amenities):
-                                places.append(place.to_dict())
+                                pl_list = place.to_dict()
+                                pl_list.pop('amenities', None)
+                                places.append(pl_list)
             else:
                 for city_id in place_location:
                     city = storage.get(City, city_id)
@@ -120,7 +122,9 @@ def search_places():
                         for place in city.places:
                             if place not in places and\
                               check_amenities(place, amenities):
-                                places.append(place.to_dict())
+                                pl_list = place.to_dict()
+                                pl_list.pop('amenities', None)
+                                places.append(pl_list)
         return make_response(jsonify(places))
     else:
         places = storage.all(Place)
