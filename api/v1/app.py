@@ -4,6 +4,7 @@ from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from api.v1.views import state_views
+from api.v1.views import city_views
 import os
 import json
 
@@ -12,6 +13,7 @@ app = Flask('__name__')
 
 app.register_blueprint(app_views)
 app.register_blueprint(state_views)
+app.register_blueprint(city_views)
 
 
 @app.teardown_appcontext
