@@ -17,7 +17,14 @@ def teardown(code):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(e):
+    """returns 404 error"""
+    return ({"error": "Not found"}), 404
+
+
 if __name__ == "__main__":
+    """running app"""
     app.run(host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
         port=os.getenv('HBNB_API_PORT', '5000'),
             threaded=True)
