@@ -74,7 +74,8 @@ def post_state_city(state_id):
     return jsonify(city.to_dict()), 201
 
 
-@ app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=['PUT'],
+                 strict_slashes=False)
 def put_city(city_id):
     """Update a city from the city city_id selected"""
     city = storage.get('City', city_id)
