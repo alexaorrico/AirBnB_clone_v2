@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Handle apis from users
+handle all the default RESTful API Actions
+for users in the storage
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -32,7 +33,8 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users/<string:user_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/users/<string:user_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_user(user_id):
     """
     deletes a user based on its user_id
@@ -61,7 +63,8 @@ def post_a_user():
     return make_response(jsonify(user.to_dict()), 201)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 @swag_from('documentation/amenity/put.yml', methods=['PUT'])
 def post_amenity(amenity_id):
     """
@@ -77,4 +80,3 @@ def post_amenity(amenity_id):
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
-
