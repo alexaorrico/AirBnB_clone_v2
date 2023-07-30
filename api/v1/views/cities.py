@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-
 """Defines City Route for rest API"""
 
+from api.v1.views import app_views
 from flask import request
 from flask.helpers import abort, make_response
 from flask.json import jsonify
-from api.v1.views import app_views
 from models import storage
 from models.city import City
 
@@ -75,7 +74,7 @@ def post_state_city(state_id):
     return jsonify(city.to_dict()), 201
 
 
-@ app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route("/cities/<city_id>", methods=['PUT'], strict_slashes=False)
 def put_city(city_id):
     """Update a city from the city city_id selected"""
     city = storage.get('City', city_id)

@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Defines Views for the route"""
+from api.v1.views import app_views
 from flask.helpers import make_response
 from flask.json import jsonify
-from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 from models.city import City
