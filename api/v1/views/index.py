@@ -14,7 +14,7 @@ def status():
 
 # stat blueprint
 @app_views.route('/stats')
-def stat(cls=None):
+def stats(cls=None):
     """Return number of objects by type"""
 
     objects = {}
