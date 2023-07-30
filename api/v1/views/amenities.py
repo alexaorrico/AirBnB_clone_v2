@@ -57,9 +57,10 @@ def post_amenity():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({'error': 'Missing name'}), 400)
-    amenity = Amenity(**request.get_json())
-    storage.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+    json_obj = request.get_json()
+    amenity = Amenity(**json_obj)
+    amenity.save()
+    return (jsonify(amenity.to_dict()), 201)
 
 
 @app_views.route('/amenities/<string:amenity_id>',
