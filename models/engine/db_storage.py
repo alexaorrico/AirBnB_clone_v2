@@ -51,6 +51,15 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
 
+    def get(self, cls, id):
+        """ query the db and return object with given id """
+        if cls in classes.values() and id and type(id) == str:
+            data = self.all(cls)
+            for key, value in data.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
+
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
@@ -63,6 +72,15 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+    
+    def count(self, cls=None):
+        """ returns the count of items in storage matching given cls """
+        data = self.all(cls)
+        if cls in classes.values():
+            data = self.all(cls)
+
+        return len(data)
+
 
     def reload(self):
         """reloads data from the database"""
