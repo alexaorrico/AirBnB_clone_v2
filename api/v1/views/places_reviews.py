@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """Handles all default RESTFul API actions for Review"""
 from flask import Flask, jsonify, request, abort
 from models import storage
