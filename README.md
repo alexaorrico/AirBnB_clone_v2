@@ -154,6 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-#Otaoroju Olalekan
-
-#Busari Olufunmilayo - https://github.com/oluphunmmy
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)  
+Olalekan Otaoroju - [Github](https://github.com/otaorojuolalekan) / [Twitter](https://twitter.com/_onifemi_)
+Oluwafunmi Busari - [Github](https://github.com/oluphunmmy) / [Twitter](https://twitter.com/oluphunmmy)
