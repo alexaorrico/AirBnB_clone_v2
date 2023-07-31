@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """A method that retrieves one object from the database"""
-        if cls in classes.value() and isinstance(id, str):
+        if cls in classes.value() and  id and type(id) == str:
             obj = self.all(cls)
             for Key, value in obj.items():
                 if key.split(".")[1] == id:
