@@ -24,4 +24,4 @@ def close_storage(exeception):
 if __name__ == '__main__':
     host_to_use = os.environ.get('HBNB_API_HOST', '0.0.0.0')
     port_to_use = int(os.environ.get('HBNB_API_PORT', 5000))
-    app.run(host=host_to_use, port=port_to_use, threaded=True)
+    app.run(host=host_to_use, port=port_to_use, threaded=True, debug=True)
