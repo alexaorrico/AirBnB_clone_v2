@@ -5,11 +5,13 @@ from api.v1.views import app_views
 from models import storage
 from flask_cors import CORS
 import os
+from flasgger import Swagger
+from flasgger.utils import swag_from
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
+"""app.url_map.strict_slashes = False"""
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown(err):
@@ -21,6 +23,13 @@ def teardown(err):
 def page_not_found(err):
     """ handle for 404 errors """
     return jsonify({"error": "Not found"}), 404
+
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone Restful API',
+    'uiversion': 3
+}
+
+Swagger(app)
 
 if __name__ == "__main__":
     host = os.environ.get('HBNB_API_HOST', '0.0.0.0')

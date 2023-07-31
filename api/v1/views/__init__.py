@@ -9,15 +9,3 @@ from api.v1.views.amenities import *
 from api.v1.views.users import *
 from api.v1.views.places import *
 from api.v1.views.places_reviews import *
-
-def get_status():
-    """ returns a JSON """
-    return jsonify({"status": "OK"})
-
-def stats():
-    clases = {"amenities": Amenity, "cities": City, "places": Place,
-              "reviews": Review, "states": State, "users": User}
-    my_dict = {}
-    for i, j in clases.items():
-        my_dict[i] = storage.count(j)
-    return jsonify(my_dict)
