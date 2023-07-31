@@ -4,78 +4,83 @@ module amenities.py
 """
 
 from flask import abort, jsonify, request
-from models.amenity import Amenity
+from models.user import User
 from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def amenityObjects():
-    """ Retrieves the list of all Amenity objects """
-    amenity = storage.all(Amenity)
-    amenityList = []
-    for amen in amenity.values():
-        amenityDict = amen.to_dict()
-        amenityList.append(amenityDict)    
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+def userObjects():
+    """ Retrieves the list of all User objects """
+    user = storage.all(User)
+    userList = []
+    for us in user.values():
+        userDict = us.to_dict()
+        userList.append(userDict)
     """states_list = [state.to_dict() for state in states.values()]"""
-    return jsonify(amenityList)
+    return jsonify(userList)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['GET'], strict_slashes=False)
-def ametityObjectWithId(amenity_id):
-    """Retrieves an Amenity object with it's id"""
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        return jsonify(amenity.to_dict())
+@app_views.route('/users/<string:user_id>', methods=['GET'],
+                 strict_slashes=False)
+def userObjectWithId(user_id):
+    """Retrieves an User object with it's id"""
+    user = storage.get(User, user_id)
+    if user:
+        return jsonify(user.to_dict())
     else:
         abort(404)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'], strict_slashes=False)
-def amenityDeleteWithId(amenity_id):
-    """Deletes an Amenity object"""
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        storage.delete(amenity)
+@app_views.route('/users/<string:user_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def userDeleteWithId(user_id):
+    """Deletes an User object"""
+    user = storage.get(User, user_id)
+    if user:
+        storage.delete(user)
         storage.save()
         return jsonify({}), 200
     else:
         abort(404)
 
-@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-def createAmenity():
-    """Creates an Amenity: POST /api/v1/amenities"""
 
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def createUser():
+    """Creates a User: POST /api/v1/users"""
     """same as 'if not request.is_json'"""
     if request.headers.get('Content-Type') != "application/json":
         abort(400, description="Not a JSON")
 
-    newAmenData = request.get_json()
+    newUserData = request.get_json()
 
-    if not newAmenData.get("name"):
-        abort(400, description="Missing name")
+    if not newUserData.get("email"):
+        abort(400, description="Missing email")
+    if not newUserData.get("password"):
+        abort(400, description="Missing password")
 
-    newAmenObj = Amenity(**newAmenData)
-    storage.new(newAmenObj)
+    newUserObj = User(**newUserData)
+    storage.new(newUserObj)
     storage.save()
-    
-    return jsonify(newAmenObj.to_dict()), 201
+
+    return jsonify(newUserObj.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
-def updateAmenity(amenity_id):
-    """Updates an Amenity object: PUT /api/v1/amenities/<amenity_id>"""
+@app_views.route('/users/<user_id>', methods=['PUT'],
+                 strict_slashes=False)
+def updateUser(user_id):
+    """Updates a User object: PUT /api/v1/amenities/<amenity_id>"""
     if not request.is_json:
         abort(400, description="Not a JSON")
 
-    amenUpdateData = request.get_json()
-    amenityObj = storage.get(Amenity, amenity_id)
-    if amenityObj:
-        ignoredKeys = ['id', 'created_at', 'updated_at']
-        for k, v in amenUpdateData.items():
+    userUpdateData = request.get_json()
+    userObj = storage.get(User, user_id)
+    if userObj:
+        ignoredKeys = ['id', 'email', 'created_at', 'updated_at']
+        for k, v in userUpdateData.items():
             if k not in ignoredKeys:
-                setattr(amenityObj, k, v)
+                setattr(userObj, k, v)
         storage.save()
-        return jsonify(amenityObj.to_dict()), 200
+        return jsonify(userObj.to_dict()), 200
     else:
         abort(404)

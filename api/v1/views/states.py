@@ -17,12 +17,13 @@ def stateObjects():
     for state in states.values():
         """print (state)"""
         stateDict = state.to_dict()
-        statesList.append(stateDict)    
+        statesList.append(stateDict)
     """states_list = [state.to_dict() for state in states.values()]"""
     return jsonify(statesList)
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['GET'],
+                 strict_slashes=False)
 def stateObjectWithId(state_id):
     """Retrieves a State object"""
     """ this code only prints the first id in the database
@@ -41,7 +42,8 @@ def stateObjectWithId(state_id):
         abort(404)
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def stateDeleteWithId(state_id):
     """Deletes a State object"""
     state = storage.get(State, state_id)
@@ -51,6 +53,7 @@ def stateDeleteWithId(state_id):
         return jsonify({}), 200
     else:
         abort(404)
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def createState():
@@ -65,11 +68,12 @@ def createState():
 
     newStateObj = State(**newStateData)
     newStateObj.save()
-    
+
     return jsonify(newStateObj.to_dict()), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['PUT'],
+                 strict_slashes=False)
 def updateState(state_id):
     """Updates a State object: PUT /api/v1/states/<state_id>"""
     if not request.is_json:
