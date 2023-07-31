@@ -23,4 +23,4 @@ def stats():
     u = storage.count("User")
 
     return (jsonify(amenities=a, cities=c, places=p,
-                     reviews=r, states=s, users=u))
+                    reviews=r, states=s, users=u))

@@ -93,4 +93,4 @@ class DBStorage:
                 counting += len(self.__session.query(classes[clss]).all())
         return counting
 
-        return len(self.__objects)
+        # return len(self.__objects)
