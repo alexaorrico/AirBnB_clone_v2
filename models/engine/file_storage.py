@@ -2,7 +2,7 @@
 """
 Contains the FileStorage class
 """
-import models
+
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -44,7 +44,7 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict(dump="Yes")
+            json_objects[key] = self.__objects[key].to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -71,23 +71,22 @@ class FileStorage:
 
     def get(self, cls, id):
         """
-        Returns the object based on the class name and its ID, or None if not
-        found
+            retrieves one object based on class name and id
         """
-        key = "{}.{}".format(cls, id)
-        if key in self.__objects.keys():
-            return self.__objects[key]
+        if cls and id:
+            if isinstance(cls, BaseModel):
+                cls_name = str(cls).split('.')[-1]
+            if isinstance(cls, str):
+                cls_name = cls
+            else:
+                cls_name = cls.__name__
+            fetch_obj = "{}.{}".format(cls_name, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch_obj)
         return None
 
     def count(self, cls=None):
         """
-        Returns the number of objects in storage matching the given class name.
-        If no name is passed, returns the count of all objects in storage.
+        count of all objects in storage
         """
-        if cls:
-            counter = 0
-            for obj in self.__objects.values():
-                if obj.__class__.__name__ == cls:
-                    counter += 1
-            return counter
-        return len(self.__objects)
+        return (len(self.all(cls)))
