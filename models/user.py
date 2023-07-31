@@ -6,6 +6,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from hashlib import md5
 
 
 class User(BaseModel, Base):
@@ -27,3 +28,14 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+    """
+    Security is VERY important and storing passwords in plain text is
+    a horible idea.  This update incorporates md5, which isn't perfect
+    but it's better than nothing
+    """
+    def __setattr__(self, key, value):
+        """set encrypted password for users"""
+        if key == 'password':
+            value = md5(value.encode()).hexdigest()
+        super().__setattr__(key, value)
