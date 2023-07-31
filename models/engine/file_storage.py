@@ -73,8 +73,8 @@ class FileStorage:
         """object to get"""
         if cls and id:
             tmp = '{}.{}'.format(cls, id)
-            models = self.all(cls)
-            return models.get(tmp)
+            items = self.all(cls)
+            return items.get(tmp)
         else:
             return None
 

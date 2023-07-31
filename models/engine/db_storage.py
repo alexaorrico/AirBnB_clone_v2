@@ -79,10 +79,10 @@ class DBStorage:
         """method to retrieve one object"""
         if cls and id:
             tmp = cls, __name__ + "." + id
-            models = self.all(cls)
+            items = self.all(cls)
             for key in models
                 if key == tmp
-                    return models[key]
+                    return items[key]
         else:
             return None
     def count(self, cls=None):
