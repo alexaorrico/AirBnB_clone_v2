@@ -22,3 +22,7 @@ def count():
         "states": storage.count("State"),
         "users": storage.count("User"),
         })
+
+
+if __name__ == "__main__":
+    pass
