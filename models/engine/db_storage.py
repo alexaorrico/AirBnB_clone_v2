@@ -82,9 +82,11 @@ class DBStorage:
         for clss in classes:
             if clss == cls:
                 objs = self.__session.query(classes[clss]).filter_by(id=id).first()
-                return objs
-            else:
-                return None
+                if objs:
+                    return objs
+                else:
+                    return None
+        return None
 
     def count(self, cls=None):
         """query on the current database session"""
@@ -93,12 +95,12 @@ class DBStorage:
             for clss in classes:
                 if clss == cls:
                     objs = self.__session.query(classes[clss]).all()
-                    for keys, values in objs.items():
-                        count += 1
-                return count
+                    #for keys, values in objs.items():
+                    count += len(objs)
+            return count
         else:
             for clss in classes:
                 objs = self.__session.query(classes[clss]).all()
-                for keys in objs:
-                    count += 1
+                #for keys in objs:
+                count += len(objs)
             return count
