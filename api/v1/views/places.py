@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """places"""
 from api.v1.views import app_views
+from datetime import datetime
 from flask import jsonify, abort, request
 from models import storage
 from models.city import City
 from models.place import Place
-from datetime import datetime
+from models.state import State
 import uuid
 
 
@@ -121,3 +122,41 @@ def updates_place(place_id):
                 obj.longitude = request.json['longitude']
     storage.save()
     return jsonify(place_obj[0]), 200
+
+
+@app_views.route('/places_search', methods=['POST'])
+def search_places():
+    ''' retrieves all Place filerable by states,
+        cities and amenities
+    '''
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    places = storage.all("Place").values()
+
+    filters = request.get_json()
+    cities = filters.get('cities', [])
+    for state_id in filters.get('states', []):
+        state = storage.get(State, state_id)
+        if state is not None:
+            for city in state.cities:
+                cities.append(city.id)
+    cities = list(set(cities))
+
+    if len(cities) > 0:
+        places = [place for place in places if place.city_id in cities]
+
+    result = []
+    if len(filters.get('amenities', [])) > 0:
+        amsf = filters.get('amenities', [])
+        for p in places:
+            ams = [a.id for a in p.amenities if a.id in amsf]
+            if len(ams) > 0:
+                pdict = p.to_dict()
+
+                # Removes the populated amenities
+                # to avoid serialization errors.
+                pdict.pop('amenities', None)
+                result.append(pdict)
+    else:
+        result = [place.to_dict() for place in places]
+    return jsonify(result), 200
