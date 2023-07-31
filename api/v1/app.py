@@ -5,7 +5,7 @@ This is Flask App
 We are setting this up to manage  other blueprints
 """
 
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -13,6 +13,12 @@ import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+
+@app.errorhandler(404)
+def error_404(error):
+    """handles resource not found"""
+    return make_response(jsonify({"error": "Not found"}))
 
 
 @app.teardown_appcontext
