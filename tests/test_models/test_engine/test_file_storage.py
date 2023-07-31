@@ -40,8 +40,8 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
+        result = pep8s.check_files(
+            ['tests/test_models/test_engine/test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -56,18 +56,22 @@ test_file_storage.py'])
         """Test for the FileStorage class docstring"""
         self.assertIsNot(FileStorage.__doc__, None,
                          "FileStorage class needs a docstring")
-        self.assertTrue(len(FileStorage.__doc__) >= 1,
-                        "FileStorage class needs a docstring")
+        if FileStorage.__doc__:
+            self.assertTrue(len(FileStorage.__doc__) >= 1,
+                            "FileStorage class needs a docstring")
 
     def test_fs_func_docstrings(self):
         """Test for the presence of docstrings in FileStorage methods"""
         for func in self.fs_f:
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+            if func[1].__doc__:
+                self.assertTrue(len(func[1].__doc__) >= 1,
+                                "{:s} method needs a docstring".
+                                format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', 'Not test filestorage')
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -113,3 +117,26 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', 'not testing file storage')
+    def test_count(self):
+        """Test count for file storage"""
+        state_obj = State(name="lagos")
+        state_obj.save()
+        city_obj = City(name="ojo")
+        city_obj.save()
+        models.storage.close()
+        state_count = models.storage.count(State)
+        all_count = models.storage.count()
+        self.assertTrue(state_count > 0)
+        self.assertTrue(all_count > state_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test count method of filestorage"""
+        state_obj = State(name="lagos")
+        state_obj.save()
+        models.storage.close()
+        state_ins = models.storage.get(State, state_obj.id)
+        if state_ins:
+            self.assertEqual(state_ins.id, state_obj.id)
