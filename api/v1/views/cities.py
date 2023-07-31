@@ -6,7 +6,7 @@ from models import storage
 from models.city import City
 
 
-@app_views.route("/states/<state_id>/cities", method=['GET'])
+@app_views.route("/states/<state_id>/cities", methods=['GET'])
 def get_cities_in_state(state_id=None):
     states_ = storage.get('State', state_id)
 
