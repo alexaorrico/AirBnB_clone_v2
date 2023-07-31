@@ -12,6 +12,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
+from urllib.parse import quote
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -29,12 +30,13 @@ class DBStorage:
         """Instantiate a DBStorage object"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+        PASSWORD = quote(HBNB_MYSQL_PWD)
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
+                                             PASSWORD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
@@ -74,3 +76,50 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """query on the current database session"""
+        for clss in classes:
+            key = cls.__name__
+            if clss == key:
+                objs = self.__session.query(classes[clss]).filter_by(id=id).first()
+                if objs:
+                    return objs
+                else:
+                    return None
+        return None
+
+    
+    def count(self, cls=None):
+        """method to count the number of objects in storage:"""
+        new_dict = {}
+        count = 0
+        if cls is not None:
+            objs = self.__session.query(cls).all()
+            for obj in objs:
+                count += 1
+            return count
+        else:
+            for clss in classes:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    count += 1
+            return count
+        
+    def count(self, cls=None):
+        """query on the current database session"""
+        count = 0
+        if cls is not None:
+            for clss in classes:
+                key = cls.__name__
+                if clss == key:
+                    objs = self.__session.query(classes[clss]).all()
+                    for item in objs:
+                        count += 1
+            return count
+        else:
+            for clss in classes:
+                objs = self.__session.query(classes[clss]).all()
+                for value in objs:
+                    count += 1
+            return count
