@@ -24,10 +24,10 @@ def tear_down(self):
 @app.errorhandler(404)
 def not_found(error):
     """handles 404 HTTP errors"""
-    return HTTP_response (jsonify({"error": "Not found"}), 404)
+    return HTTP_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
-    host = os.getenv('HBNB_API_HOST', default='0.0.0.0')
-    port = int(os.getenv('HBNB_API_PORT', default=5000))
+    host = os.getenv("HBNB_API_HOST", default="0.0.0.0")
+    port = int(os.getenv("HBNB_API_PORT", default=5000))
     app.run(host=host, port=port, threaded=True)
