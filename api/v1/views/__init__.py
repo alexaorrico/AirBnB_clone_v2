@@ -9,3 +9,4 @@ from api.v1.views.index import *
 from .states import *
 from .cities import *
 from .amenities import *
+from .users import *
