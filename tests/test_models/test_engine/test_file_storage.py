@@ -271,6 +271,27 @@ class TestUserFsInstances(unittest.TestCase):
             if u_id in k:
                 actual = True
         self.assertTrue(actual)
+    def close(self):
+        """
+            calls remove() on private session attribute (self.session)
+        """
+        self.__session.remove()
+
+    def get(self, cls, id):
+        """
+            retrieves one object based on class name and id
+        """
+        if cls and id:
+            fetch = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(fetch)
+        return None
+
+    def count(self, cls=None):
+        """
+            returns the count of all objects in storage
+        """
+        return (len(self.all(cls)))
 
 
 if __name__ == '__main__':
