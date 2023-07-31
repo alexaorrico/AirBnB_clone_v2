@@ -76,7 +76,10 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Returns the object based on the class and its ID, or None if not found"""
+        """
+        Returns the object based on the class and its ID,
+        or None if not found
+        """
         """dictt = self.__session.all(cls)
         print (dictt)
         key = "{}.{}".format(cls.__name__, id)
@@ -109,4 +112,3 @@ class DBStorage:
                 for obj in objs:
                     count += 1
             return count
-        
