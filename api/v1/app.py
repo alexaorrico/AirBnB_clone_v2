@@ -1,57 +1,48 @@
 #!/usr/bin/python3
-
 """ Flask Application """
-from flask import Flask
-from api.v1.views import app_views
 from models import storage
-
-# Create a Flask app instance
-app = Flask(__name__)
-
-# Register the app_views blueprint with the Flask app
-app.register_blueprint(app_views, url_prefix='/api/v1')
-
-# Teardown app context to close the database session after each request
-@app.teardown_appcontext
-def teardown_app_context(exception):
-    storage.close()
-
-# Only run the app if this file is executed directly, not imported as a module
-if __name__ == "__main__":
-    # Get the host and port from environment variables or use default values
-    host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-    port = int(os.getenv("HBNB_API_PORT", "5000"))
-
-    # Run the Flask app
-    app.run(host=host, port=port, threaded=True)
-
-"""The app thet contains the principal application """
 from api.v1.views import app_views
-from models import storage
-from flask import Flask, make_response, jsonify
-from os import getenv
+from os import environ
+from flask import Flask, render_template, make_response, jsonify
 from flask_cors import CORS
 from flasgger import Swagger
+from flasgger.utils import swag_from
 
 app = Flask(__name__)
-CORS(app, origin="0.0.0.0")
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def tear_down(self):
-    """ close query after each session """
+def close_db(error):
+    """ Close Storage """
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
-    """Loads a custom 404 page not found """
-    return make_response(jsonify({"error": "Not found"}), 404)
+    """ 404 Error
+    ---
+    responses:
+      404:
+        description: a resource was not found
+    """
+    return make_response(jsonify({'error': "Not found"}), 404)
 
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone Restful API',
+    'uiversion': 3
+}
+
+Swagger(app)
 
 if __name__ == "__main__":
-    host = getenv('HBNB_API_HOST', default='0.0.0.0')
-    port = getenv('HBNB_API_HOST', default=5000)
-
-    app.run(host, int(port), threaded=True)
+    """ Main Function """
+    host = environ.get('HBNB_API_HOST')
+    port = environ.get('HBNB_API_PORT')
+    if not host:
+        host = '0.0.0.0'
+    if not port:
+        port = '5000'
+    app.run(host=host, port=port, threaded=True)
