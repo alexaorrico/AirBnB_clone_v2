@@ -1,7 +1,24 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """
 Flask App that integrates with AirBnB static HTML Template
 """
+=======
+<<<<<<< HEAD
+"""
+Flask App that integrates with AirBnB static HTML Template
+"""
+=======
+'''Contains a Flask web application API.
+
+'''
+import os
+from flask import Flask, jsonify
+from flask_cors import CORS
+
+from models import storage
+>>>>>>> fda2ee0a16bdf6f3fa9a3c4284e0ade00af330b8
+>>>>>>> 82fa0a29f1c7ade00b81b8694e921ff111fa065a
 from api.v1.views import app_views
 from flask import Flask, jsonify, make_response, render_template, url_for
 from flask_cors import CORS, cross_origin
