@@ -31,18 +31,17 @@ def get_states(state_id=None):
 
 @app_views.route('/states/<state_id>', strict_slashes=False,
                  methods=['DELETE'])
-def delete_state(state_id=None):
+def delete_state(state_id):
     """Delete a state object specified by it id"""
 
-    if state_id:
-        state = storage.get(State, state_id)
+    state = storage.get(State, state_id)
 
-        if not state:
-            abort(404)
-        else:
-            storage.delete(state)
-            storage.save()
-            return jsonify({}), 200
+    if not state:
+        abort(404)
+    else:
+        storage.delete(state)
+        storage.save()
+    return jsonify({}), 200
 
 # Route to create a state object
 

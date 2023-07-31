@@ -1,4 +1,4 @@
-"""State view for the web service API"""
+"""Amenity view for the web service API"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views  # Blueprint object
 from models import storage
@@ -30,18 +30,17 @@ def get_amenities(amenity_id=None):
 # Route to delete an amenity object
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False,
                  methods=['DELETE'])
-def delete_amenity(amenity_id=None):
+def delete_amenity(amenity_id):
     """Delete an amenity object specified by it id"""
 
-    if amenity_id:
-        amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
 
-        if not amenity:
-            abort(404)
+    if not amenity:
+        abort(404)
     else:
         storage.delete(amenity)
         storage.save()
-        return jsonify({}), 200
+    return jsonify({}), 200
 
 # Route to create an amenity object
 

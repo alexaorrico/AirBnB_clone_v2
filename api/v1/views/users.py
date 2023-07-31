@@ -1,4 +1,4 @@
-"""State view for the web service API"""
+"""User view for the web service API"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views  # Blueprint object
 from models import storage
@@ -28,7 +28,7 @@ def get_users(user_id=None):
 
 # Route to delete user object
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
-def delete_user(user_id=None):
+def delete_user(user_id):
     """Delete a user object specified by it id"""
 
     if user_id:
