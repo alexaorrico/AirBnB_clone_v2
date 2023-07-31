@@ -5,10 +5,11 @@ creates a flask application
 """
 from flask import Flask
 from os import getenv
-
-app = Flask(__name__)
+from flask import make_respons
 from models import storage
 from api.v1.views import app_views
+
+app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
@@ -19,16 +20,13 @@ def teardown():
 
 
 @app.errorhandler(404)
-def handle_error(exception):
+def handle_error(error):
     """handles error in json format"""
-    data = {
+    error_mesg = {
         "error": "Not found"
     }
 
-    res = jsonify(data)
-    res.status_code = 404
-
-    return(res)
+    return make_response(jsonify(error_mesg), 404)
 
 
 if __name__ == "__main__":
