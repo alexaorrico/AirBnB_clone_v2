@@ -3,9 +3,16 @@
     Blueprint to all ALX Headache
 """
 
+from models import storage
 from api.v1.views import app_views
 from flask import jsonify
-from models import storage
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
 @app_views.route('/status')
@@ -14,21 +21,11 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/api/v1/stats')
+@app_views.route('/stats')
 def count_objects():
     """retrieves all objects by classes"""
-    stats = {}
-    classes = ['Amenity', 'City', 'Place', 'Review', 'State', 'User']
-    for cls_name in classes:
-        cls = storage.classes.get(cls_name)
-        count = storage.count(cls)
-        stats[cls_name.lower()] = count
-
-    # Modify the keys to convert singular to plural
-    for key, val in stats.items():
-        if key.endswith('y'):
-            stats[key[:-1] + 'ies'] = stats.pop(key)
-        else:
-            stats[key + 's'] = stats.pop(key)
-
-    return jsonify(stats)
+    return jsonify({"amenities": storage.count(Amenity),
+                    "states": storage.count(State), "places": storage.count(
+                    Place), "cities": storage.count(City),
+                    "reviews": storage.count(Review),
+                    "users": storage.count(User)})
