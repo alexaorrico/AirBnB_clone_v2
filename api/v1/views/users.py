@@ -13,24 +13,20 @@ def get_users(user_id=None):
         or object of a specified id
     """
 
-    user_objs = []  # To store list of all user objects dictionary
     if user_id:
         # Get dictionary of user object by id
-        user_objs.append((storage.get(User, user_id)).to_dict())
+        user = storage.get(User, user_id)
+        if user:
+            return jsonify(user.to_dict())
+        else:
+            abort(404)
     else:
-        objects = storage.all(User)  # Get user objects
-        for key in objects:
-            # get dictionary of user objects
-            user_objs.append(objects[key].to_dict())
-
-    if len(user_objs) == 0:
-        abort(404)
-    else:
+        # Get list of user objects dictionary
+        user_objs = [v.to_dict() for k, v in storage.all(User).items()]
         return jsonify(user_objs)
 
+
 # Route to delete user object
-
-
 @app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
 def delete_user(user_id=None):
     """Delete a user object specified by it id"""

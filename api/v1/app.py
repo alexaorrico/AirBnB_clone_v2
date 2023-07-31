@@ -18,9 +18,11 @@ def close_storage(error=None):
     """ Called when application context is torn down"""
     storage.close()
 
+
 @app.errorhandler(404)  # 404 Responds handler for unavailable resources
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
     app.run(host=(os.getenv('HBNB_API_HOST', '0.0.0.0')),

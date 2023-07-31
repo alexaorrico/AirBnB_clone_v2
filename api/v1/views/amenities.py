@@ -26,6 +26,8 @@ def get_amenities(amenity_id=None):
 
     if len(amenity_objs) == 0:
         abort(404)
+    elif len(amenity_objs) == 1:
+        return jsonify(amenity_objs[0])
     else:
         return jsonify(amenity_objs)
 

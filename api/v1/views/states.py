@@ -25,6 +25,8 @@ def get_states(state_id=None):
 
     if len(state_objs) == 0:
         abort(404)
+    elif len(state_objs) == 1:
+        return jsonify(state_objs[0])
     else:
         return jsonify(state_objs)
 
