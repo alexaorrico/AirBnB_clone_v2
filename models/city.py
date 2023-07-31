@@ -12,6 +12,7 @@ class City(BaseModel, Base):
     """Representation of city """
     if models.storage_t == "db":
         __tablename__ = 'cities'
+        __table_args__ = {"mysql_default_charset": "latin1"}
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
         places = relationship("Place", backref="cities")
