@@ -12,6 +12,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
+from urllib.parse import quote
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -29,12 +30,13 @@ class DBStorage:
         """Instantiate a DBStorage object"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+        PASSWORD = quote(HBNB_MYSQL_PWD)
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
+                                             PASSWORD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
@@ -79,10 +81,8 @@ class DBStorage:
         """query on the current database session"""
         for clss in classes:
             if clss == cls:
-                objs = self.__session.query(classes[clss]).all()
-                for keys, values in objs.items():
-                    if keys.id == id:
-                        return values
+                objs = self.__session.query(classes[clss]).filter_by(id=id).first()
+                return objs
             else:
                 return None
 
