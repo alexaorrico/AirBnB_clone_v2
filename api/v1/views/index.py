@@ -22,5 +22,5 @@ def stats():
     s = storage.count("State")
     u = storage.count("User")
 
-    return (jsonify({"amenities": a}, {"cities": c}, {"places": p},
-                    {"reviews": r}, {"states": s}, {"users": u}))
+    return (jsonify({"amenities": a, "cities": c, "places": p,
+                     "reviews": r, "states": s, "users": u}))
