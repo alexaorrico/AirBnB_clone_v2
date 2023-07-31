@@ -113,3 +113,27 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get returns the correct object, or None"""
+        storage = FileStorage()
+        data = {}
+        with open("file.json", "r") as f:
+            js = f.read()
+        data = json.loads(js)
+        for obj in data.values():
+            cls = classes.get(obj.get('__class__'))
+            obj_id = obj.get('id')
+            db_obj = storage.get(cls, obj_id)
+            self.assertIsNotNone(db_obj)
+            self.assertEqual(obj_id, db_obj.id)
+            self.assertEqual(obj.get('__class__'), db_obj.__class__.__name__)
+
+        # Get items with correct class and incorrect id.
+        self.assertIsNone(storage.get(obj.__class__, "45786"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the correct number of items"""
+        classes = [Amenity, City, Place, Review, State, User]
