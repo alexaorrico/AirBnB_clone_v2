@@ -84,9 +84,9 @@ def put_place(place_id):
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def search_places():
+    if request.get_json() is None:
+        abort(400, 'Not a JSON')
     place_search = request.get_json()
-    if place_search is None:
-        abort(404, 'Not a JSON')
     if place_search and len(place_search):
         states = place_search.get('states', None)
         cities = place_search.get('cities', None)
@@ -101,6 +101,7 @@ def search_places():
             place_list = None
     else:
         place_list = None
+        amenities = None
 
     if place_list:
         places = []
