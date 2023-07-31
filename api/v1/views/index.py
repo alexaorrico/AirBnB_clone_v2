@@ -36,3 +36,4 @@ def list_counnt():
     for key, value in objects.items():
         my_dict[key] = storage.count(value)
     return jsonify(my_dict)
+# jsonify is done for dictionary by default
