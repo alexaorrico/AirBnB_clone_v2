@@ -25,3 +25,14 @@ def count():
         "users": storage.count("User")
      }
      return jsonify(cls_count)
+@app_views.route('/stats', methods=['GET'])
+def stats():
+    stats_dict = {
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
+    }
+    return jsonify(stats_dict)
