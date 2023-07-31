@@ -18,7 +18,7 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def error_404(error):
     """handles resource not found"""
-    return make_response(jsonify({"error": "Not found"}))
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 @app.teardown_appcontext
