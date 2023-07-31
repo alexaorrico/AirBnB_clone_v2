@@ -25,7 +25,7 @@ def get_states():
 def get_state(state_id):
     """ Retrieves a specific State """
     state = storage.get(State, state_id)
-    if not state:
+    if not state or state is None:
         abort(404)
 
     return jsonify(state.to_dict())
