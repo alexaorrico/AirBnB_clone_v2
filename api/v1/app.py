@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """registers the blueprint to your flask instance app"""
-import os
 from models import storage
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
