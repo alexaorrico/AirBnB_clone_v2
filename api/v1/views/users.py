@@ -15,7 +15,7 @@ def get_users():
     get user information for all users in a users list
     """
     users = []
-    for user in storage.all("User").values():
+    for user in storage.all(User).values():
         users.append(user.to_dict())
     return jsonify(users)
 
