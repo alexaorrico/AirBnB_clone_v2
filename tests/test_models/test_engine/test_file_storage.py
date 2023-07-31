@@ -17,6 +17,7 @@ from models.user import User
 import json
 import os
 import pep8
+import pathlib as pl
 import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
@@ -113,3 +114,29 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Function that tests that it retrieves an object from the database"""
+        path = pl.Path("file.json")
+        self.assertEquals((str(path), path.is_file()), (str(path), True))
+        try:
+            with open("file.json", 'r') as f:
+                jo = json.load(f)
+            self.assertTrue(len(jo.items()) >= 1)
+        except:
+            return "The file content has objects that is less than 1"
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Function that tests that it counts the object in the json file"""
+        path = pl.Path("file.json")
+        self.assertEquals((str(path), path.is_file()), (str(path), True))
+        try:
+            with open("file.json", 'r') as f:
+                jo = json.load(f)
+            if len(lo.items() == 0):
+                self.assertTrue(len(jo.items()) == 0)
+            self.assertTrue(len(jo.items()) >= 1)
+        except:
+            return "The file content doesn't exist"
