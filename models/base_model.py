@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-"""
-Contains class BaseModel
-"""
+""" class BaseModel: which will be master class 
+for others slave class"""
 
 from datetime import datetime, timedelta
 import models
@@ -49,7 +48,7 @@ class BaseModel:
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
-            self.updated_at = self.created_at
+            self.updated_at = delta
 
     def __str__(self):
         """String representation of the BaseModel class"""
