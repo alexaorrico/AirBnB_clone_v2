@@ -6,14 +6,14 @@ from models.engine.file_storage import classes
 
 
 # Create the route "/status" on the Blueprint object
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     # Return a JSON response with the status "OK"
     return jsonify({"status": "OK"})
 
 
 # stat blueprint
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats(cls=None):
     """Return number of objects by type"""
 
