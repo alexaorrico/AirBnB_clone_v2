@@ -5,7 +5,7 @@ creates a flask application
 """
 from flask import Flask
 from os import getenv
-from flask import make_respons
+from flask import make_response
 from models import storage
 from api.v1.views import app_views
 
