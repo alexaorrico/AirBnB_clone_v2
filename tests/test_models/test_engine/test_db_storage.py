@@ -477,6 +477,3 @@ class TestCountGet(unittest.TestCase):
             returns the count of all objects in storage
         """
         return (len(self.all(cls)))
-
-if __name__ == '__main__':
-    unittest.main
