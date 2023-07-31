@@ -3,7 +3,7 @@
 contains Flask web application api
 """
 
-from flask import Flask, response, jsonify
+from flask import Flask, HTTP_response, jsonify
 from api.v1.views import app_views
 from models import storage
 import os
@@ -25,7 +25,7 @@ def tear_down(self):
 @app.errorhandler(404)
 def not_found(error):
     """handles 404 HTTP errors"""
-    return response (jsonify({"error": "Not found"}), 404)
+    return HTTP_response (jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
