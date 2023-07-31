@@ -82,7 +82,8 @@ class DBStorage:
         for clss in classes:
             key = cls.__name__
             if clss == key:
-                objs = self.__session.query(classes[clss]).filter_by(id=id).first()
+                objs = self.__session.query(classes[clss]
+                                            ).filter_by(id=id).first()
                 if objs:
                     return objs
                 else:
