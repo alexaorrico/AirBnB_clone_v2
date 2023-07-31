@@ -13,22 +13,18 @@ def get_states(state_id=None):
         or object of a specified id
     """
 
-    state_objs = []  # To store list of all state objects dictionary
     if state_id:
         # Get dictionary of state object by id
-        state_objs.append((storage.get(State, state_id)).to_dict())
+        state = storage.get(State, state_id)
+        if state:
+            return jsonify(state.to_dict())
+        else:
+            abort(404)
     else:
-        objects = storage.all(State)  # Get state objects
-        for key in objects:
-            # get dictionary of state objects
-            state_objs.append(objects[key].to_dict())
-
-    if len(state_objs) == 0:
-        abort(404)
-    elif len(state_objs) == 1:
-        return jsonify(state_objs[0])
-    else:
+        # Get list of state objects dictionary
+        state_objs = [v.to_dict() for k, v in storage.all(State).items()]
         return jsonify(state_objs)
+
 
 # Route to delete a state object
 

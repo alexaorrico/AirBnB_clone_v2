@@ -37,7 +37,7 @@ def delete_user(user_id=None):
         if not user:
             abort(404)
         else:
-            storage.delete(amenity)
+            storage.delete(user)
             storage.save()
             return jsonify({}), 200
 
@@ -77,7 +77,7 @@ def update_user(user_id):
         abort(400, 'Not a Json')  # raise bad request error
     for key, value in content.items():
         if key not in ['id', 'created_at', 'updated_at', 'email']:
-            setattr(amenity, key, value)  # Update user with new data
+            setattr(user, key, value)  # Update user with new data
             user.save()
 
     return jsonify(user.to_dict()), 200

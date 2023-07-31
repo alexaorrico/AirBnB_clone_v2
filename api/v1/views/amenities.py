@@ -14,21 +14,16 @@ def get_amenities(amenity_id=None):
         or object of a specified id
     """
 
-    amenity_objs = []  # To store list of all amenity objects dictionary
     if amenity_id:
         # Get dictionary of amenity object by id
-        amenity_objs.append((storage.get(Amenity, amenity_id)).to_dict())
+        amenity = storage.get(Amenity, amenity_id)
+        if amenity:
+            return jsonify(amenity.to_dict())
+        else:
+            abort(404)
     else:
-        objects = storage.all(Amenity)  # Get amenity objects
-        for key in objects:
-            # get dictionary of amenity objects
-            amenity_objs.append(objects[key].to_dict())
-
-    if len(amenity_objs) == 0:
-        abort(404)
-    elif len(amenity_objs) == 1:
-        return jsonify(amenity_objs[0])
-    else:
+        # Get list of amenity objects dictionary
+        amenity_objs = [v.to_dict() for k, v in storage.all(Amenity).items()]
         return jsonify(amenity_objs)
 
 
