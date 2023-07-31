@@ -80,7 +80,8 @@ class DBStorage:
     def get(self, cls, id):
         """query on the current database session"""
         for clss in classes:
-            if clss == cls:
+            key = cls.__name__
+            if clss == key:
                 objs = self.__session.query(classes[clss]).filter_by(id=id).first()
                 if objs:
                     return objs
@@ -93,14 +94,15 @@ class DBStorage:
         count = 0
         if cls is not None:
             for clss in classes:
-                if clss == cls:
+                key = cls.__name__
+                if clss == key:
                     objs = self.__session.query(classes[clss]).all()
-                    #for keys, values in objs.items():
-                    count += len(objs)
+                    for item in objs:
+                        count += 1
             return count
         else:
             for clss in classes:
                 objs = self.__session.query(classes[clss]).all()
-                #for keys in objs:
-                count += len(objs)
+                for value in objs:
+                    count += 1
             return count
