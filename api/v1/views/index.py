@@ -10,3 +10,17 @@ from flask import jsonify
 def status():
     """create a Json of status"""
     return (jsonify({"status": "OK"}))
+
+
+@app_views.route('/api/v1/stats')
+def stats():
+    """retrieves the number of each objects by type"""
+    a = storage.count("Amenity")
+    c = storage.count("City")
+    p = storage.count("Place")
+    r = storage.count("Review")
+    s = storage.count("State")
+    u = storage.count("User")
+
+    return (jsonify({"amenities": a}, {"cities": c}, {"places": p},
+                    {"reviews": r}, {"states": s}, {"users": u}))
