@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-Module: 'places_reviews
+Module: 'places_reviews'
 '''
 
 from flask import Flask, jsonify, request, abort
