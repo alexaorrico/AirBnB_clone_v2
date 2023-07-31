@@ -20,10 +20,10 @@ def get_states():
 @app_views.route('/states/<path:state_id>')
 @swag_from('documentation/state/get_state.yml', methods=['GET'])
 def get_state(state_id):
-    state = storage.get(State, state_id)
-    if state is None:
+    state_obj = storage.get(State, state_id)
+    if state_obj is None:
         abort(404)
-    return jsonify(state.to_dict())
+    return jsonify(state_obj.to_dict())
 
 
 @app_views.route('/states/<path:state_id>', methods=['DELETE'],
@@ -32,12 +32,12 @@ def get_state(state_id):
 def delete_state(state_id):
     if state_id is None:
         abort(404)
-    state = storage.get(State, state_id)
-    if state is None:
+    state_obj = storage.get(State, state_id)
+    if state_obj is None:
         abort(404)
-    state.delete()
+    state_obj.delete()
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'],
@@ -45,7 +45,7 @@ def delete_state(state_id):
 @swag_from('documentation/state/post_state.yml', methods=['POST'])
 def post_state():
     res = request.get_json()
-    if type(res) != dict:
+    if type(res) != json:
         return abort(400, {'message': 'Not a JSON'})
     if 'name' not in res:
         return abort(400, {'message': 'Missing name'})
@@ -58,14 +58,14 @@ def post_state():
                  strict_slashes=False)
 @swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def put_state(state_id):
-    state = storage.get(State, state_id)
-    if state is None:
+    state_obj = storage.get(State, state_id)
+    if state_obj is None:
         abort(404)
     res = request.get_json()
-    if type(res) != dict:
+    if type(res) != json:
         return abort(400, {'message': 'Not a JSON'})
     for key, value in res.items():
         if key not in ["id", "state_id", "created_at", "updated_at"]:
-            setattr(state, key, value)
+            setattr(state_obj, key, value)
     storage.save()
-    return jsonify(state.to_dict()), 200
+    return jsonify(state_obj.to_dict()), 200
