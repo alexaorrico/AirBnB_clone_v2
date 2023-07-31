@@ -76,7 +76,7 @@ class FileStorage:
                 jso = json.load(f)
             for obj in jso.items():
                 if obj[1]['id'] == id:
-                    return f"[{cls.__name__}] ({obj[1]['id']}) {obj[1]}"
+                    return '{}.{}'.format(cls.__name__, id)
             return None
         except:
             return "There is no file named file.json"
