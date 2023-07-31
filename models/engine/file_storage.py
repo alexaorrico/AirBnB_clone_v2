@@ -12,15 +12,8 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {
-    "Amenity": Amenity,
-    "BaseModel": BaseModel,
-    "City": City,
-    "Place": Place,
-    "Review": Review,
-    "State": State,
-    "User": User
-}
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class FileStorage:
@@ -83,15 +76,26 @@ class FileStorage:
             for key, value in self.__objects.items():
                 if key == keys:
                     return value
-        return None
+        else:
+            return None
 
     def count(self, cls=None):
         """Count objects in dictionary"""
         if cls is not None:
-            count = 0
-            for key, val in self.__objects.items():
-                klass, id = key.split(".")
-                if key.startswith(cls):
+            if len(self.__objects) > 0:
+                count = 0
+                for key, val in self.__objects.items():
+                    klass, id = key.split(".")
+                    if key.startswith(klass):
+                        count += 1
+                return count
+            else:
+                return None
+        else:
+            if len(self.__objects) > 0:
+                count = 0
+                for key, val in self.__objects.items():
                     count += 1
-            return count
-        return len(self.__objects)
+                return count
+            else:
+                return None
