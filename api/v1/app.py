@@ -22,6 +22,12 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
+"""@app.errorhandler(400)
+def notJson(error):
+    response = jsonify({'error': str(error.description)})
+    return response, 400"""
+
+
 if __name__ == "__main__":
     """ """
     host = getenv('HBNB_API_HOST', '0.0.0.0')

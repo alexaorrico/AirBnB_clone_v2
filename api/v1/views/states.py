@@ -3,7 +3,7 @@
 module state.py
 """
 
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from models.state import State
 from api.v1.views import app_views
 from models import storage
@@ -22,14 +22,67 @@ def stateObjects():
     return jsonify(statesList)
 
 
-@app_views.route('/states/<int:state_id>', methods=['GET'], strict_slashes=False)
-def stateObjectWithId(id):
+@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
+def stateObjectWithId(state_id):
     """Retrieves a State object"""
+    """ this code only prints the first id in the database
+    reason not studied
     states = storage.all(State)
     for state in states.values():
-        for value in state.values():
-            if id == value:
-                stateDict = state.to_dict()
-                print (value)
-                print (state)
-                return jsonify(stateDict)
+        if state.id == state_id:
+            stateDict = state.to_dict()
+            return jsonify(stateDict)
+        else:
+            abort(404)"""
+    state = storage.get(State, state_id)
+    if state:
+        return jsonify(state.to_dict())
+    else:
+        abort(404)
+
+
+@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
+def stateDeleteWithId(state_id):
+    """Deletes a State object"""
+    state = storage.get(State, state_id)
+    if state:
+        storage.delete(state)
+        storage.save()
+        return jsonify({}), 200
+    else:
+        abort(404)
+
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def createState():
+    """Creates a State: POST /api/v1/states"""
+    if request.headers.get('Content-Type') != "application/json":
+        abort(400, description="Not a JSON")
+
+    newStateData = request.get_json()
+
+    if not newStateData.get("name"):
+        abort(400, description="Missing name")
+
+    newStateObj = State(**newStateData)
+    newStateObj.save()
+    
+    return jsonify(newStateObj.to_dict()), 201
+
+
+@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+def updateState(state_id):
+    """Updates a State object: PUT /api/v1/states/<state_id>"""
+    if not request.is_json:
+        abort(400, description="Not a JSON")
+
+    stateUpdateData = request.get_json()
+    stateObj = storage.get(State, state_id)
+    if stateObj:
+        ignoredKeys = ['id', 'created_at', 'updated_at']
+        for k, v in stateUpdateData.items():
+            if k not in ignoredKeys:
+                setattr(stateObj, k, v)
+        stateObj.save()
+        return jsonify(stateObj.to_dict()), 200
+    else:
+        abort(404)
