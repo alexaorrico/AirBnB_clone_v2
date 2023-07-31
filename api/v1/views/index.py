@@ -12,13 +12,6 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/status', strict_slashes=False)
-def status():
-    """returns status"""
-    return {
-        "status": "OK"
-    }
-
 _classes = {
     "amenities": storage.count(Amenity),
     "cities": storage.count(City),
@@ -27,6 +20,15 @@ _classes = {
     "states": storage.count(State),
     "users": storage.count(User)
     }
+
+
+@app_views.route('/status', strict_slashes=False)
+def status():
+    """returns status"""
+    return {
+        "status": "OK"
+    }
+
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
