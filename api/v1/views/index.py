@@ -22,7 +22,7 @@ def status():
 def count():
     """Retrieves the number of each objects by type """
     cls_count = {
-        "amenities": storage.count("Amenity")
+        "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
         "reviews": storage.count("Review"),
