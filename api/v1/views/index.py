@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ returns json statuses for app_views routes  """
-from . import app_views
+from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 
@@ -11,8 +11,8 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats", strict_slashes=False)
-def count():
+@app_views.route("/stats", methods=["GET"], strict_slashes=False)
+def stats():
     """an endpoint that retrieves the number of each objects by type"""
     return jsonify({
         "amenities": storage.count("Amenity"),
@@ -20,9 +20,5 @@ def count():
         "places": storage.count("Place"),
         "reviews": storage.count("Review"),
         "states": storage.count("State"),
-        "users": storage.count("User"),
-        })
-
-
-if __name__ == "__main__":
-    pass
+        "users": storage.count("User")
+    })
