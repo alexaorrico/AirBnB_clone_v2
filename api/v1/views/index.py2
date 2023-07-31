@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -15,14 +16,11 @@ def count_objects():
     for cls_name in classes:
         cls = storage.classes.get(cls_name)
         count = storage.count(cls)
-        stats[cls_name.lower()] = count
-    
-    # Modify the keys to convert singular to plural
-    for key, val in stats.items():
+        stats[cls_name.lower] = count
+    for key, val in stats:
         if key.endswith('y'):
-            stats[key[:-1] + 'ies'] = stats.pop(key)
+            key = key.replace('y', 'ies')
         else:
-            stats[key + 's'] = stats.pop(key)
-
+            key = key + "s"
     return jsonify(stats)
 
