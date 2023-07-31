@@ -2,7 +2,7 @@
 """registers the blueprint to your flask instance app"""
 import os
 from models import storage
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from api.v1.views import app_views
 from os import getenv
 
@@ -18,7 +18,7 @@ def tearDown(self):
 
 
 @app.errorhandler(404)
-def design_404(error):
+def not_found(error):
     """ returns a JSON-formatted 404 status code response"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
