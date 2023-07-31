@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """
+Module: 'file_storage'
 Contains the FileStorage class
 """
 
