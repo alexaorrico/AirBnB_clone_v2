@@ -14,6 +14,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
+* [Contribution](#contribution)
 * [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
@@ -149,6 +150,17 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
+## Contribution
+Adding web service (api) to the website.
+the various end points are as follows;
+* `/api/v1/stats` - show the numbers of data in individual table
+* `api/v1/states` - retrieves, delete, create, and update state objects
+* `/api/v1/cities/<city_id>` - reteives, delete, create and update city object base on the city_id
+* `api/v1/amenities/<amenity_id>` - retrieves, delete, create, and update amenity object base on  amenity_id
+* `api/v1/users/<user_id>` - retrieves, delete, create, and update user object base on  user_id
+* `/api/v1/places/<place_id>` - retrieves, delete, create, and update place object base on place_id
+* `/api/v1/reviews/<review_id>` - retrieve, delete, create, and update review object base on review_id
+
 
 ## Bugs
 No known bugs at this time. 
@@ -156,7 +168,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
+Provo Iyenoma - [Github](https://github.com/Provoski)
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
