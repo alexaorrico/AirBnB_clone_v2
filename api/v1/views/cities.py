@@ -68,6 +68,9 @@ def update_city(city_id):
         return jsonify({"error": "Not a JSON"}), 400
 
     data = request.get_json()
-    obj.name = data['name']
+    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
+    for key, value in data.items():
+        if key not in ignore_keys:
+            setattr(obj, key, value)
     obj.save()
     return jsonify(obj.to_dict()), 200
