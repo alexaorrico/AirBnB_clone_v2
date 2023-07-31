@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Handles all default RESTFUL API actions for places"""
 
-from flask import abort, make_response, request, jsonify
+from api.v1.views import app_views
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.place import Place
-from api.v1.views import app_views
 
 
 @app_views.route("/cities/<city_id>/places", strict_slashes=False)
@@ -47,12 +47,12 @@ def post_city_place(city_id):
     if not request.get_json():
         abort(400, "Not a JSON")
     if "user_id" not in request.get_json():
-        abort(400, 'Missing user_id')
+        return make_response(jsonify({'error': 'Missing user_id'}), 400)
     user = storage.get('User', (request.get_json()).get('user_id'))
     if not user:
         abort(404)
     if "name" not in request.get_json():
-        abort(400, "Missing name")
+        make_response(jsonify({'error': "Missing name"}))
     place_data = request.get_json()
     place_data['city_id'] = city_id
     place = Place(**place_data)
@@ -68,7 +68,7 @@ def update_place(place_id):
     if not place:
         abort(404)
     if not request.get_json():
-        abort(400, "Not a JSON")
+        return make_response(jsonify({'error': "Not a JSON"}), 400)
     for key, val in request.get_json().items():
         if key not in ignore_keys:
             setattr(place, key, val)
