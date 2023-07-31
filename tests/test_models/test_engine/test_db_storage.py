@@ -24,6 +24,7 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
 
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
+
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
@@ -71,22 +72,23 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
 
 @unittest.skipIf(STORAGE_TYPE != 'db', 'skip if environ is not db')
 class TestCountGet(unittest.TestCase):
@@ -157,6 +159,7 @@ class TestCountGet(unittest.TestCase):
         count_all = storage.count()
         expected = 8
         self.assertEqual(expected, count_all)
+
 
 if __name__ == '__main__':
     unittest.main
