@@ -12,7 +12,7 @@ def status():
     return (jsonify({"status": "OK"}))
 
 
-@app_views.route('/api/v1/stats')
+@app_views.route('/stats')
 def stats():
     """retrieves the number of each objects by type"""
     a = storage.count("Amenity")
