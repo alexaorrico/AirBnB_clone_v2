@@ -9,7 +9,7 @@ from models.engine.file_storage import classes
 @app_views.route('/status', strict_slashes=False)
 def status():
     # Return a JSON response with the status "OK"
-    return jsonify({"status": "OK"})
+    return jsonify(status='OK')
 
 
 # stat blueprint
