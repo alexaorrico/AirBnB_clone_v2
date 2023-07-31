@@ -17,16 +17,11 @@ from flasgger.utils import swag_from
 def get_all_review(place_id):
     """get reviews from a specific place"""
     place = storage.get(Place, place_id)
-
-    if not place or if place is None:
+    if not place or place is None:
         abort(404)
-
     reviews = [review.to_dict() for review in place.reviews]
-
     return jsonify(reviews)
-
-
-@app_views.route('/reviews/<review_id', methods=['GET']
+@app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentatio/reviews/get_id.yml', methods=['GET'])
 def get_a_review(review_id):
@@ -35,35 +30,29 @@ def get_a_review(review_id):
     if review is None:
         abort(404)
     return jsonify(review.to_dict())
-
-
-@app_views.route('/reviews/<review_id', methods=['DELETE']
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentatio/reviews/get_id.yml', methods=['DELETE'])
 def del_a_review(review_id):
     """ Delete a review by review_id"""
     review = storage.get(Review, review_id)
-
     if review is None:
         abort(404)
     review.delete()
     storage.save()
     return jsonify({}), 200
-
-
-@app_views.route('/places/<place_id>/reviews', methods=['POST']
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentatio/reviews/post.yml', methods=['POST'])
 def create_review(place_id):
     """ Create a review using the place_id"""
     place = storage.get(Place, place_id)
-
     if place is None:
         abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'user_id' not in request.get_json():
-        return make_response(jsonify("error": "Missing user_id"), 400)
+        return make_response(jsonify({"error": "Missing user_id"}), 400)
     if storage.get("User".request.get_json()["user_id"]) is None:
         abort(404)
     if "text" not in request.get_json():
@@ -74,8 +63,6 @@ def create_review(place_id):
         data.place_id = place_id
         data.save()
         return jsonify(data.to_dict()), 201
-
-
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
     """Update the review object using PUT method """
@@ -85,7 +72,6 @@ def update_review(review_id):
     obj = storage.get(Review, review_id)
     if obj is None:
         abort(404)
-
     ignore_keys = ("id", "user_id", "place_id", "created_at", "updated_at")
     for key, value in data.items():
         if key in ignore_keys:
@@ -94,3 +80,11 @@ def update_review(review_id):
             setattr(obj, key, value)
     storage.save()
     return jsonify(obj.to_dict())
+
+
+
+
+
+
+
+
