@@ -41,7 +41,6 @@ class FileStorage:
         if cls in classes.values():
             return len(models.storage.all(cls))
         return len(models.storage.all())
-    
 
     def all(self, cls=None):
         """returns the dictionary __objects"""
@@ -74,7 +73,8 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception as e:
+            print("Error occurred:", e)
             pass
 
     def delete(self, obj=None):
