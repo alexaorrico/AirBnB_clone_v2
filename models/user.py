@@ -39,3 +39,10 @@ class User(BaseModel, Base):
         if key == 'password':
             value = md5(value.encode()).hexdigest()
         super().__setattr__(key, value)
+
+    def to_dict(self, save_to_disk=True):
+        """ returns a dictionary containning all keys/values of the instance"""
+        new_dict = super().to_dict()
+        if not save_to_disk and 'password' in new_dict:
+            del new_dict['password']
+        return new_dict
