@@ -11,7 +11,7 @@ from api.v1.views import app_views
         '/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def get_cities_by_state(state_id):
     """Retrieve city objects linked to state_id"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
 
@@ -22,7 +22,7 @@ def get_cities_by_state(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city_id(city_id):
     """Retrieves city objects linked to city_id"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     return jsonify(city.to_dict()), 200
@@ -45,7 +45,7 @@ def delete_city(city_id):
         '/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """Creates a city"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     if not request.get_json():
@@ -63,7 +63,7 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """Updates a city object"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     if not request.get_json():
