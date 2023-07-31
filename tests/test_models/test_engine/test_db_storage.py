@@ -109,3 +109,4 @@ class TestFileStorage(unittest.TestCase):
         storage = DBStorage()
         objs = storage.all()
         self.assertEqual(len(objs), storage.count())
+
