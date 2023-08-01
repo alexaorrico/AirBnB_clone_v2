@@ -68,8 +68,10 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+    db_storage = DBStorage()
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -78,6 +80,8 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        all_objs = DBStorage.all()
+        self.assertEqual(all_objs, models.storage.all())
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
@@ -91,5 +95,11 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test that get the items retrieve in a db properly """
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_count(self):
-        """Test that count the right number of elements in the db """
+    def test_count(self, cls=None):
+        """tests that count accurately returns number of counted objs"""
+        if cls is None:
+            number_of_objs = len(db_storage.all())
+            self.assertEqual(number_of_objs, len(models.storage.all()))
+        else:
+            number_of_cls_objs = len(db_storage.all(cls))
+            self.assertEqual(number_of_cls_objs, len(models.storage.all(cls)))
