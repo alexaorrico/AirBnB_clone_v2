@@ -69,7 +69,7 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if new_dict['__class__'] is "User" and not save_to_disk:
+        if new_dict['__class__'] == "User" and not save_to_disk:
             new_dict.pop("__password", None)
         return new_dict
 
