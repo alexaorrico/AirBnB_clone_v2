@@ -1,22 +1,25 @@
 #!/usr/bin/python3
 """Flask web service API"""
 
+
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
-
 import os
+
 from models import storage
 from api.v1.views import app_views  # Blueprint
 
 app = Flask(__name__)
-# set strict slashes on routes
+"""Flask web app instace"""
+
 app.url_map.strict_slashes = False
-# Register app_views as blueprint to app
+"""set strict slashes on routes"""
+
 app.register_blueprint(app_views)
+"""Register app_views as blueprint to app"""
 
-# Set up CORS for app
 CORS(app, resources={'/*': {'origins': '0.0.0.0'}})
-
+"""Set up CORS for app"""
 
 @app.teardown_appcontext
 def close_storage(error=None):
