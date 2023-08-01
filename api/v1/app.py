@@ -20,7 +20,7 @@ def tearDown(self):
 
 @app.errorhandler(404)
 def not_found(error):
-    """ returns a JSON-formatted 404 status code response"""
+    """returns a JSON-formatted 404 status code response"""
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
