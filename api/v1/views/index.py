@@ -10,18 +10,17 @@ from models import storage
 @app_views.route('/status', methods=['GET'])
 def status():
     """
-    function for status route that returns the status
+    Function for status route that returns the status
     """
     if request.method == 'GET':
         resp = {"status": "OK"}
         return jsonify(resp)
 
-<<<<<<< HEAD
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """
-    function to return the count of all class objects
+    Function to return the count of all class objects
     """
     if request.method == 'GET':
         response = {}
@@ -36,5 +35,3 @@ def stats():
         for key, value in PLURALS.items():
             response[value] = storage.count(key)
         return jsonify(response)
-=======
->>>>>>> 6798bc24096dad3c11a65b73cd0604ffd7e26e5b
