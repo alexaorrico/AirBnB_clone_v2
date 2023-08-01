@@ -9,20 +9,25 @@ from models import storage
 @app_views.route("/status")
 def status():
     """returns a JSON with status OK"""
-    return jsonify({'status': 'OK'})
+    if request.method == 'GET':
+        return jsonify({'status': 'OK'})
 
 
 @app_views.route("/stats")
-def storage_counts():
+def stats():
     '''
         return counts of all classes in storage
     '''
+    if request.method == 'GET':
+        response = {}
     obj_counts = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
-    }
-    return jsonify(obj_counts)
+            "Amenity": "amenities",
+            "City": "cities",
+            "Place": "places",
+            "Review": "reviews",
+            "State": "states",
+            "User": "users"
+            }
+    for key, value in obj_counts.items():
+        response[value] = storage.count(key)
+    return jsonify(response)
