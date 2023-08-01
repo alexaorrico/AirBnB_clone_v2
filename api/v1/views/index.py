@@ -11,4 +11,5 @@ def status():
     Returns:
         JSON: {"status": "OK"}
     """
-    return jsonify({"status": "ok"})
+    if request.method == 'GET':
+        return jsonify({"status": "ok"})
