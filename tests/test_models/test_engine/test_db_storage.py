@@ -69,6 +69,7 @@ test_db_storage.py'])
 
 
 class TestDBStorage(unittest.TestCase):
+    """tests for DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
@@ -106,7 +107,6 @@ class TestDBStorage(unittest.TestCase):
         storage.new(state)
         storage.save()
 
-        # Check if the object is saved and has an ID
         self.assertTrue(hasattr(state, "id"))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")

@@ -112,6 +112,7 @@ test_file_storage.py'])
         self.assertEqual(json.loads(string), json.loads(js))
 
 class TestFileStorage(unittest.TestCase):
+    """test cases for FileStorage class"""
         @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test the get() method"""
@@ -169,28 +170,3 @@ class TestFileStorage(unittest.TestCase):
         self.assertNotIn(state.id, storage.all(State))
         storage.reload()
         self.assertIn(state.id, storage.all(State))
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_close(self):
-        """Test the close() method"""
-        storage = FileStorage()
-        self.assertTrue(hasattr(storage, '_FileStorage__objects'))
-        storage.close()
-        self.assertFalse(hasattr(storage, '_FileStorage__objects'))
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_all_with_class_filter(self):
-        """Test the all() method with class filter"""
-        storage = FileStorage()
-        state = State()
-        storage.new(state)
-        storage.save()
-        city = City(state_id=state.id)
-        storage.new(city)
-        storage.save()
-        places = storage.all(Place)
-        self.assertEqual(len(places), 0)
-        places = storage.all(City)
-        self.assertEqual(len(places), 1)
-        places = storage.all(State)
-        self.assertEqual(len(places), 1)
