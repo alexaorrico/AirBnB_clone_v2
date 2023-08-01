@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 
-"""
-creates a flask application
-"""
+"""creates a flask application"""
 from flask import Flask
 from os import getenv
 from flask import make_response
 from models import storage
 from api.v1.views import app_views
 
+#creates flask application
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
