@@ -72,14 +72,13 @@ class FileStorage:
     def get(self, cls, id):
         """A method to retrieve one object"""
         try:
-            with open("file.json", 'r') as f:
-                jso = json.load(f)
-            for obj in jso.items():
-                if obj[1]['id'] == id:
-                    return '{}.{}'.format(cls.__name__, id)
-            return None
-        except:
-            return "There is no file named file.json"
+            for v in self.__objects.values():
+                if v.id == id:
+                    result = v
+        except BaseException:
+            pass
+
+        return result
 
     def count(self, cls=None):
         """A method to count the number of objects in storage"""
