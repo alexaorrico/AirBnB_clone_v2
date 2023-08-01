@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" Script that imports a Blueprint and runs Flask """
+"""
+Flask App that integrates with AirBnB static HTML Template
+"""
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 from models import storage
