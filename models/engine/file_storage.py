@@ -78,8 +78,9 @@ class FileStorage:
                 or None if not found
         """
         try:
-            key = f"{cls.__name__}.{id}"  # Form key from <class name> and id
-            return self.__objects[key]  # Return object if found
+            if cls:
+                key = f"{cls.__name__}.{id}"
+                return self.__objects[key]  # Return object if found
         except KeyError:
             return None  # Return None if object not found
 
@@ -88,5 +89,5 @@ class FileStorage:
             Args:
                 cls: Optional class object to specify objects to count.
         """
-        
+
         return len(self.all(cls))

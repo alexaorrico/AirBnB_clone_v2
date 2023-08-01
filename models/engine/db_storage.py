@@ -101,5 +101,5 @@ class DBStorage:
             Args:
                 cls: Optional class object to specify object to count.
         """
-        
+
         return len(self.all(cls))
