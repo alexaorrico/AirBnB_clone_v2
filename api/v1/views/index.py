@@ -1,59 +1,42 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
-"""index"""
-from api.v1.views import app_views
-from flask import jsonify
+
 from models import storage
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
+from flask import Flask, Blueprint, jsonify
 
-classes = {"users": "User", "places": "Place", "states": "State",
-           "cities": "City", "amenities": "Amenity",
-           "reviews": "Review"}
+# Create a Flask app instance
+app = Flask(__name__)
 
+# Create a Blueprint named app_views with the URL prefix /api/v1
+app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+
+# Define the /status endpoint
 @app_views.route('/status', methods=['GET'])
 def status():
-    """Roouts to the statis basi"""
-    return jsonify({'status': 'OK'})
-
-@app_views.route('/stats', methods=['GET'])
-def count(++)
-""" retrieves number of objects of each type"""
-    count_dict = {}
-    for cls in classes:
-        count_dict[cls] = storage.count(classes[cls])
-    return jsonify(count_dict)
-=======
-"""
-This module contains endpoint(route) status
-"""
-from models import storage
-from flask import Flask
-from api.v1.views import app_views
-from flask import jsonify
-
-
-@app_views.route('/status', strict_slashes=False)
-def status():
-    """
-    Returns a JSON status
-    """
     return jsonify({"status": "OK"})
 
-
-@app_views.route('/stats', strict_slashes=False)
+# Define the /stats endpoint
+@app_views.route('/stats', methods=['GET'])
 def count():
-    """
-    Retrieves the number of each objects by type
-    """
-    return jsonify({"amenities": storage.count("Amenity"),
-                    "cities": storage.count("City"),
-                    "places": storage.count("Place"),
-                    "reviews": storage.count("Review"),
-                    "states": storage.count("State"),
-                    "users": storage.count("User")})
->>>>>>> 397375477cc2c9d89c941e75085db84bd7e4f978
+    count_dict = {
+        "users": storage.count("User"),
+        "places": storage.count("Place"),
+        "states": storage.count("State"),
+        "cities": storage.count("City"),
+        "amenities": storage.count("Amenity"),
+        "reviews": storage.count("Review")
+    }
+    return jsonify(count_dict)
+
+# Register the app_views Blueprint to the app
+app.register_blueprint(app_views)
+
+# Define the teardown_appcontext function to close the database connection after each request
+@app.teardown_appcontext
+def teardown_appcontext(exception):
+    storage.close()
+
+if __name__ == "__main__":
+    # Run the Flask server
+    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(os.getenv('HBNB_API_PORT', '5000'))
+    app.run(host=host, port=port, threaded=True)
