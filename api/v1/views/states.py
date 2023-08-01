@@ -16,8 +16,10 @@ states_blueprint = Blueprint('states', __name__)
 def get_states():
     # Retrieves the list of all State objects: GET /api/v1/states
     states = State.all()
-    return jsonify([state.to_dict() for state in states])
-
+    # Convert the list of State objects to a dictionary
+    # using the 'to_dict()' method
+    # Return the dictionary as a JSON response with the status code 200
+    return jsonify([state.to_dict() for state in states]), 200
 
 # Route to retrive a single State object by its ID
 @states_blueprint.route('/api/v1/states/<int:state_id>', methods=['GET'])
