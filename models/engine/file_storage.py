@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 Contains the FileStorage class
+mainpulates the dictionary, stores instances,
+manage serialization and deserialization
 """
 
 import json
@@ -87,7 +89,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except exception as e:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
