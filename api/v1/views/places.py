@@ -74,8 +74,8 @@ def put_place(place_id):
         abort(400, "Not a JSON")
 
     for k, v in body_request.items():
-        if k not in ['id', 'user_id', 'city_at',
-                    'created_at', 'updated_at']:
+        if k not in [
+                'id', 'user_id', 'city_at', 'created_at', 'updated_at']:
             setattr(place, k, v)
 
     storage.save()
@@ -96,7 +96,7 @@ def places_search():
         return jsonify([p.to_dict() for p in storage.all("Place").values()])
 
     places = []
-    
+
     states = data.get("states")
     if states is not None and len(states) != 0:
         for state_id in states:
