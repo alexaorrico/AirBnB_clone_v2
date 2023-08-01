@@ -5,12 +5,9 @@ from models import storage
 from models.amenity import Amenity
 from api.v1.views import app_views
 from flask import jsonify, abort, request
-from flasgger.utils import swag_from
-
 
 @app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
-@swag_from('documentation/amenity/all_amenities.yml')
 def amenities():
     """Get all Amenities"""
     res = [
@@ -21,7 +18,6 @@ def amenities():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-@swag_from('documentation/amenity/get_amenity.yml', methods=['GET'])
 def amenity_by_id(amenity_id):
     """Get Amenity filter by id"""
     res = storage.get(Amenity, amenity_id)
