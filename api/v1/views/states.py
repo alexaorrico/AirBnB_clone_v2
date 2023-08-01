@@ -5,6 +5,13 @@ from models.state import State
 # new view for State objects that handles all default RESTFul API actions
 
 
+# create a Blueprint for the State objects view
+# 'states' is the Blueprint name
+# __name__ is the module that will use this Blueprint
+states_blueprint = Blueprint('states', __name__)
+
+
+# Route to retrieve the list of all State objects
 @states_blueprint.route('/api/v1/states', methods=['GET'])
 def get_states():
     # Retrieves the list of all State objects: GET /api/v1/states
@@ -12,6 +19,7 @@ def get_states():
     return jsonify([state.to_dict() for state in states])
 
 
+# Route to retrive a single State object by its ID
 @states_blueprint.route('/api/v1/states/<int:state_id>', methods=['GET'])
 def get_state(state_id):
     # Retrieves a State object: GET /api/v1/states/<state_id>
@@ -23,6 +31,7 @@ def get_state(state_id):
     return jsonify(state.to_dict()), 200
 
 
+# Route to delete a State object by its ID
 @states_blueprint.route('/api/v1/states/<int:state_id>', methods=['DELETE'])
 def delete_state(state_id):
     # Deletes a State object: DELETE /api/v1/states/<state_id>
@@ -38,6 +47,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
+# Route to create a State object
 @states_blueprint.route('/api/v1/states', methods=['POST'])
 def post_state(state_id):
     # Creates a State: POST /api/v1/states
