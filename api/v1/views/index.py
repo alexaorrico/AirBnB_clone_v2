@@ -1,3 +1,6 @@
+#!/usr/bin/python3xx
+'''api status'''
+
 import models
 from models import storage
 from models.base_model import BaseModel
