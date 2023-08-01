@@ -46,9 +46,9 @@ def state_id(state_id):
         if state["id"] == state_id:
             if request.method == 'GET':
                 return jsonify(state), 200
-            elif request.method == 'DELETE':
-                states.remove(state)
-                return jsonify({}), 200
+            # elif request.method == 'DELETE':
+            #     states.remove(state)
+            #     return jsonify({}), 200
             # elif request.method == 'PUT':
             #     try:
             #         """extract the data passed and checks if it is
