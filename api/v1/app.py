@@ -1,10 +1,8 @@
-#!/usr/bin/python
-"""
-registers the blueprint to your flask instance app
-"""
+#!/usr/bin/python3
+"""registers the blueprint to your flask instance app"""
 from models import storage
 from flask import Flask, make_response, jsonify
-# from flask_cors import CORS
+from flask_cors import CORS
 from api.v1.views import app_views
 import os
 
@@ -14,7 +12,7 @@ app.register_blueprint(app_views)
 host = os.getenv("HBNB_API_HOST", "0.0.0.0")
 port = os.getenv("HBNB_API_PORT", 5000)
 
-# cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
 @app.teardown_appcontext
