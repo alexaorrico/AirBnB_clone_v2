@@ -2,9 +2,9 @@
 """View for State Objects that hadles all defaul RESTful
 API actions"""
 
-from flask import Flask, jsonify, request
 from models import storage
 from models.state import State
+from flask import Flask, jsonify, request
 
 
 all_state = storage.all(State)
