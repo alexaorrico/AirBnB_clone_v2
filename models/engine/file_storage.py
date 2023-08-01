@@ -79,13 +79,9 @@ class FileStorage:
         """
         try:
             key = f"{cls.__name__}.{id}"  # Form key from <class name> and id
-            keys = self.__objects.keys()  # Get list of object keys
-            if key in keys:
-                return self.__objects[key]  # Return object if found
-            else:
-                return None  # Return None if object not found
-        except Exception:
-            pass
+            return self.__objects[key]  # Return object if found
+        except KeyError:
+            return None  # Return None if object not found
 
     def count(self, cls=None):
         """Counts number of objects in storage

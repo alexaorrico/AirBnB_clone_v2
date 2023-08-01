@@ -68,9 +68,9 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -78,7 +78,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -94,7 +93,6 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -113,3 +111,46 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """test that get returns an object of a specified class by id."""
+        storage = models.storage
+        obj = User(name='Francis')
+        obj.save()
+        self.assertEqual(obj.id, storage.get(User, obj.id).id)
+        self.assertEqual(obj.name, storage.get(User, obj.id).name)
+        self.assertIsNot(obj, storage.get(User, obj.id + 'us'))
+        self.assertIsNone(storage.get(User, obj.id + 'us'))
+        self.assertIsNone(storage.get(User, 123))
+        self.assertIsNone(storage.get(None, obj.id))
+        self.assertIsNone(storage.get(int, obj.id))
+        with self.assertRaises(TypeError):
+            storage.get(User, obj.id, 'op')
+        with self.assertRaises(TypeError):
+            storage.get(User)
+        with self.assertRaises(TypeError):
+            storage.get()
+
+    def test_count(self):
+        """test that count returns the number of objects of a pecified class."""
+        
+        storage = models.storage
+        
+        self.assertIs(type(storage.count(int)), int)
+        self.assertIs(type(storage.count()), int)
+        self.assertIs(type(storage.count(None)), int)
+        self.assertIs(type(storage.count(User)), int)
+        self.assertEqual(storage.count(), storage.count(None))
+        User(name='Francis').save()
+        self.assertGreater(storage.count(User), 0)
+        User(name='Anane').save()
+        self.assertGreater(storage.count(User), 1)
+        self.assertEqual(storage.count(), storage.count(None))
+        User(name='Ofori').save()
+        count = storage.count(User)
+        User(name='Kwame').save()
+        self.assertGreater(storage.count(User), count)
+        State(name='Ashanti').save()
+        self.assertGreater(storage.count(), storage.count(User))
+        with self.assertRaises(TypeError):
+            storage.count(User, 'id')
