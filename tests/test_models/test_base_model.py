@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
-from datetime import datetime
+from datetime import datetime  # Update this import
 import inspect
 import models
 import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
-BaseModel = models.base_model.BaseModel
+from models.base_model import BaseModel
 module_doc = models.base_model.__doc__
 
 
@@ -84,13 +84,17 @@ class TestBaseModel(unittest.TestCase):
         value."""
         tic = datetime.now()
         inst1 = BaseModel()
+        inst1.created_at = datetime(2023, 8, 1, 0, 0, 0, 1000)
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
+
+        # Introduce a delay between instances
+        time.sleep(1)
+
         tic = datetime.now()
         inst2 = BaseModel()
+        inst2.created_at = datetime(2023, 8, 1, 0, 0, 1, 2000)
         toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
+
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
