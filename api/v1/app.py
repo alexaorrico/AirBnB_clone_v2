@@ -22,7 +22,7 @@ def page_not_found(error):
 
 
 @app.teardown_appcontext
-def teardown_flask(exception):
+def teardown_flask():
     storage.close()
 
 
