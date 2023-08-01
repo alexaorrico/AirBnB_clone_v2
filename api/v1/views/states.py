@@ -16,26 +16,26 @@ for state in all_state.values():
 app = Flask(__name__)
 
 
-@app.route('/api/v1/states', methods=['GET', 'POST'],
-           strict_slashes=False)
-def list_states():
-    """retrieves all State Objects or Post http body request"""
-    if request.method == 'GET':
-        return jsonify(states)
-    elif request.method == 'POST':
-        try:
-            """extract the data passed and checks if it is
-            a valid JSON data"""
-            data = request.get_json()
-            if data.get('name'):
-                """Now, checks if name is not missing"""
-                new_state = State(**data).to_dict()
-                states.append(new_state)
-                return jsonify(new_state), 201
-            return jsonify(error="Missing name"), 400
+# @app.route('/api/v1/states', methods=['GET', 'POST'],
+#            strict_slashes=False)
+# def list_states():
+#     """retrieves all State Objects or Post http body request"""
+#     if request.method == 'GET':
+#         return jsonify(states)
+#     elif request.method == 'POST':
+#         try:
+#             """extract the data passed and checks if it is
+#             a valid JSON data"""
+#             data = request.get_json()
+#             if data.get('name'):
+#                 """Now, checks if name is not missing"""
+#                 new_state = State(**data).to_dict()
+#                 states.append(new_state)
+#                 return jsonify(new_state), 201
+#             return jsonify(error="Missing name"), 400
 
-        except Exception as e:
-            return jsonify(error="Not a JSON"), 400
+#         except Exception as e:
+#             return jsonify(error="Not a JSON"), 400
 
 
 # @app.route('/api/v1/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
