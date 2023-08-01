@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+handles all default RESTFul API actions
+"""
+
+
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
@@ -9,6 +14,7 @@ from models.amenity import Amenity
 @app_views.route('/places/<place_id>/amenities',
                  methods=['GET', 'POST', 'DELETE'])
 def handle_place_amenities(place_id):
+    """handles all default RESTFul API actions"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
