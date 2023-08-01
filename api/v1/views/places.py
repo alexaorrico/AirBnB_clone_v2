@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Place view for the web service API"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views  # Blueprint object

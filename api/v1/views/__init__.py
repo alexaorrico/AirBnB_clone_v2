@@ -1,4 +1,4 @@
-
+#!/usr/bin/python3
 from flask import Blueprint
 
 # Create the Blueprint object with '/api/v1' as url_prefix
