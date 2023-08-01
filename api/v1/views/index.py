@@ -1,32 +1,33 @@
 #!/usr/bin/python3
-"""
-index file, main view file
-"""
+"""index.py to connect to API"""
 from api.v1.views import app_views
-from flask import jsonify
+from flask import Flask, Blueprint, jsonify
 from models import storage
 
 
+hbnbText = {
+    "amenities": "Amenity",
+    "cities": "City",
+    "places": "Place",
+    "reviews": "Review",
+    "states": "State",
+    "users": "User"
+}
+
+
 @app_views.route('/status', strict_slashes=False)
-def service_status():
-    """returns status of RESTful service
-    TODO check if this formatting is okay for json response
-    with checker"""
-    return jsonify({'status': 'OK'})
+def hbnbStatus():
+    """hbnbStatus"""
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', strict_slashes=False)
-def object_stats():
-    """returns the count of object types"""
+def hbnbStats():
+    """hbnbStats"""
+    return_dict = {}
+    for key, value in hbnbText.items():
+        return_dict[key] = storage.count(value)
+    return jsonify(return_dict)
 
-    classes = {
-        "amenities": "Amenity",
-        "cities": "City",
-        "places": "Place",
-        "reviews": "Review",
-        "states": "State",
-        "users": "User"
-                                                                    }
-    for k, v in classes.items():
-        classes[k] = storage.count(v)
-    return jsonify(classes)
+if __name__ == "__main__":
+    pass
