@@ -1,2 +1,1 @@
-#!/usr/bin/python3
-from . import states
+from . import State
