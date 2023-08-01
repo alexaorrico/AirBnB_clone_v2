@@ -6,8 +6,8 @@ from models.user import User
 
 
 # Route to get User
-@app_views.route('/users', strict_slashes=False, methods=['GET'])
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/users', methods=['GET'])
+@app_views.route('/users/<user_id>', methods=['GET'])
 def get_users(user_id=None):
     """Return a JSON reponse of all user objects,
         or object of a specified id
@@ -27,7 +27,7 @@ def get_users(user_id=None):
 
 
 # Route to delete user object
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
     """Delete a user object specified by it id"""
 
@@ -44,7 +44,7 @@ def delete_user(user_id):
 # Route to create a user object
 
 
-@app_views.route('/users', strict_slashes=False, methods=['POST'])
+@app_views.route('/users', methods=['POST'])
 def create_user():
     """Create a new user object"""
 
@@ -63,7 +63,7 @@ def create_user():
 # Route to update an amenity object
 
 
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
     """Update a user object specified by id"""
 

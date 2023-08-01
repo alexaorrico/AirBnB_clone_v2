@@ -6,8 +6,8 @@ from models.state import State
 
 
 # Route to get States
-@app_views.route('/states', strict_slashes=False, methods=['GET'])
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def get_states(state_id=None):
     """Return a JSON reponse of all state objects,
         or object of a specified id
@@ -29,8 +29,7 @@ def get_states(state_id=None):
 # Route to delete a state object
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False,
-                 methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """Delete a state object specified by it id"""
 
@@ -46,7 +45,7 @@ def delete_state(state_id):
 # Route to create a state object
 
 
-@app_views.route('/states', strict_slashes=False, methods=['POST'])
+@app_views.route('/states', methods=['POST'])
 def create_state():
     """Create a new state object"""
 
@@ -63,7 +62,7 @@ def create_state():
 # Route to update a state object
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """Update a state object specified by id"""
 

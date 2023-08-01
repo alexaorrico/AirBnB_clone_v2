@@ -7,7 +7,7 @@ from models.state import State
 
 
 # Route to get cities
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['GET'])
+@app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_cities(state_id):
     """Return a JSON reponse of all city objects specified by state id
     """
@@ -23,7 +23,7 @@ def get_cities(state_id):
 # Route to get a city object
 
 
-@app_views.route('/cities/<city_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Return a JSON reponse of a city object specified by city id
     """
@@ -39,7 +39,7 @@ def get_city(city_id):
 # Route to delete a city object
 
 
-@app_views.route('/cities/<city_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
     """Delete a city object specified by it id"""
 
@@ -55,7 +55,7 @@ def delete_city(city_id):
 # Route to create a city object
 
 
-@app_views.route('/states/<state_id>/cities', strict_slashes=False, methods=['POST'])
+@app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
     """Create a new city object"""
     content = request.get_json()  # Content body
@@ -74,7 +74,7 @@ def create_city(state_id):
 # Route to update a city object
 
 
-@app_views.route('/cities/<city_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_city(city_id):
     """Update a city object specified by id"""
 

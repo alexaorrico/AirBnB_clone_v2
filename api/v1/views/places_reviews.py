@@ -9,7 +9,7 @@ from models.review import Review
 # Route to get reviews
 
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['GET'])
+@app_views.route('/places/<place_id>/reviews', methods=['GET'])
 def get_reviews(place_id):
     """Return a JSON reponse of all review objects specified by place id
     """
@@ -25,7 +25,7 @@ def get_reviews(place_id):
 # Route to get a review object
 
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/reviews/<review_id>', methods=['GET'])
 def get_review(review_id):
     """Return a JSON reponse of a review object specified by place id
     """
@@ -41,7 +41,7 @@ def get_review(review_id):
 # Route to delete a review object
 
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
     """Delete a review object specified by it id"""
 
@@ -57,7 +57,7 @@ def delete_review(review_id):
 # Route to create a review object
 
 
-@app_views.route('/places/<place_id>/reviews', strict_slashes=False, methods=['POST'])
+@app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def create_review(place_id):
     """Create a new place object"""
 
@@ -83,7 +83,7 @@ def create_review(place_id):
 # Route to update a review object
 
 
-@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/reviews/<review_id>', methods=['PUT'])
 def update_review(review_id):
     """Update a review object specified by id"""
 
@@ -95,9 +95,9 @@ def update_review(review_id):
     content = request.get_json()  # Content body
     if type(content) is not dict:
         abort(400, 'Not a Json')  # raise bad request error
-    for key, value in content.items():
-        if key not in ['id', 'created_at', 'updated_at', 'place_id', 'user_id']:
-            setattr(review, key, value)  # Update review with new data
+    for k, v in content.items():
+        if k not in ['id', 'created_at', 'updated_at', 'place_id', 'user_id']:
+            setattr(review, k, v)  # Update review with new data
             review.save()
 
     return jsonify(review.to_dict()), 200

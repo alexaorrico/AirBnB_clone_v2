@@ -8,7 +8,7 @@ from models.user import User
 
 
 # Route to get places
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['GET'])
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
 def get_places(city_id):
     """Return a JSON reponse of all place objects specified by city id
     """
@@ -24,7 +24,7 @@ def get_places(city_id):
 # Route to get a place object
 
 
-@app_views.route('/places/<place_id>', strict_slashes=False, methods=['GET'])
+@app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
     """Return a JSON reponse of a place object specified by place id
     """
@@ -40,7 +40,7 @@ def get_place(place_id):
 # Route to delete a city object
 
 
-@app_views.route('/places/<place_id>', strict_slashes=False, methods=['DELETE'])
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
     """Delete a place object specified by it id"""
 
@@ -56,7 +56,7 @@ def delete_place(place_id):
 # Route to create a place object
 
 
-@app_views.route('/cities/<city_id>/places', strict_slashes=False, methods=['POST'])
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place(city_id):
     """Create a new place object"""
 
@@ -82,7 +82,7 @@ def create_place(city_id):
 # Route to update a place object
 
 
-@app_views.route('/place/<place_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/place/<place_id>', methods=['PUT'])
 def update_place(place_id):
     """Update a place object specified by id"""
 

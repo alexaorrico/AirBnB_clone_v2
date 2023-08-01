@@ -6,9 +6,8 @@ from models.amenity import Amenity
 
 
 # Route to get Amenity
-@app_views.route('/amenities', strict_slashes=False, methods=['GET'])
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
-                 methods=['GET'])
+@app_views.route('/amenities', methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def get_amenities(amenity_id=None):
     """Return a JSON reponse of all amenity objects,
         or object of a specified id
@@ -28,8 +27,7 @@ def get_amenities(amenity_id=None):
 
 
 # Route to delete an amenity object
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
-                 methods=['DELETE'])
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenity(amenity_id):
     """Delete an amenity object specified by it id"""
 
@@ -45,7 +43,7 @@ def delete_amenity(amenity_id):
 # Route to create an amenity object
 
 
-@app_views.route('/amenities', strict_slashes=False, methods=['POST'])
+@app_views.route('/amenities', methods=['POST'])
 def create_amenity():
     """Create a new amenity object"""
 
@@ -62,8 +60,7 @@ def create_amenity():
 # Route to update an amenity object
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False,
-                 methods=['PUT'])
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update_amenity(amenity_id):
     """Update an amenity object specified by id"""
 
