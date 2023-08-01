@@ -1,31 +1,22 @@
-#!/usr/bin/python3
-"""
-This module contains endpoint(route) status
-"""
-from api.v1.views import app_views
-from flask import jsonify
+import models
 from models import storage
+from models.base_model import BaseModel
+from flask import jsonify
+from api.v1.views import app_views
 
 
-@app_views.route("/status")
-def status():
-    '''
-        return JSON of OK status
-    '''
-    return jsonify({'status': 'OK'})
+@app_views.route('/status', strict_slashes=False)
+def returnstuff():
+    '''return stuff'''
+    return jsonify(status='OK')
 
 
-@app_views.route("/stats")
-def storage_counts():
-    '''
-        return counts of all classes in storage
-    '''
-    cls_counts = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
-    }
-    return jsonify(cls_counts)
+@app_views.route('/stats', strict_slashes=False)
+def stuff():
+    '''JSON Responses'''
+    todos = {'states': State, 'users': User,
+            'amenities': Amenity, 'cities': City,
+            'places': Place, 'reviews': Review}
+    for key in todos:
+        todos[key] = storage.count(todos[key])
+    return jsonify(todos)
