@@ -88,6 +88,12 @@ class FileStorage:
         Args:
             cls (str): The class type to count instance of
         """
-        if not cls:
-            return len(self.__objects)
-        return len([key for key in self.__objects if key.startswith(cls)])
+        cls_counter = 0
+
+        if cls is not None:
+            for k in self.__objects.keys():
+                if cls in k:
+                    cls_counter += 1
+        else:
+            cls_counter = len(self.__objects)
+        return cls_counter
