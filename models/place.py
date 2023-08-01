@@ -21,8 +21,8 @@ if getenv("HBNB_TYPE_STORAGE", "fs") == "db":
 
 class Place(BaseModel, Base):
     """Representation of Place """
+    __tablename__ = "places"
     if getenv("HBNB_TYPE_STORAGE", "fs") == "db":
-        __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
