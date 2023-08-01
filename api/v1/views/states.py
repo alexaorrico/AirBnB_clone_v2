@@ -21,6 +21,7 @@ def get_states():
     # Return the dictionary as a JSON response with the status code 200
     return jsonify([state.to_dict() for state in states]), 200
 
+
 # Route to retrive a single State object by its ID
 @states_blueprint.route('/api/v1/states/<int:state_id>', methods=['GET'])
 def get_state(state_id):
