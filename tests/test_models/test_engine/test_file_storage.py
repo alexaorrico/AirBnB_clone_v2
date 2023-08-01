@@ -67,9 +67,6 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +110,87 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestFileStorage(unittest.TestCase):
+        @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get() method"""
+        storage = FileStorage()
+        state = State()
+        storage.new(state)
+        storage.save()
+        retrieved_state = storage.get(State, state.id)
+        self.assertEqual(state, retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_with_invalid_parameters(self):
+        """Test the get() method with invalid parameters"""
+        storage = FileStorage()
+        state = State()
+        storage.new(state)
+        storage.save()
+        self.assertIsNone(storage.get(State, "invalid_id"))
+        self.assertIsNone(storage.get(None, state.id))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the count() method"""
+        storage = FileStorage()
+        state = State()
+        storage.new(state)
+        city1 = City(state_id=state.id)
+        city2 = City(state_id=state.id)
+        storage.new(city1)
+        storage.new(city2)
+        storage.save()
+        self.assertEqual(storage.count(), 3)
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(City), 2)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_delete(self):
+        """Test the delete() method"""
+        storage = FileStorage()
+        state = State()
+        storage.new(state)
+        storage.save()
+        self.assertIn(state.id, storage.all(State))
+        storage.delete(state)
+        self.assertNotIn(state.id, storage.all(State))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_reload(self):
+        """Test the reload() method"""
+        storage = FileStorage()
+        state = State()
+        storage.new(state)
+        storage.save()
+        storage.delete(state)
+        self.assertNotIn(state.id, storage.all(State))
+        storage.reload()
+        self.assertIn(state.id, storage.all(State))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_close(self):
+        """Test the close() method"""
+        storage = FileStorage()
+        self.assertTrue(hasattr(storage, '_FileStorage__objects'))
+        storage.close()
+        self.assertFalse(hasattr(storage, '_FileStorage__objects'))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_all_with_class_filter(self):
+        """Test the all() method with class filter"""
+        storage = FileStorage()
+        state = State()
+        storage.new(state)
+        storage.save()
+        city = City(state_id=state.id)
+        storage.new(city)
+        storage.save()
+        places = storage.all(Place)
+        self.assertEqual(len(places), 0)
+        places = storage.all(City)
+        self.assertEqual(len(places), 1)
+        places = storage.all(State)
+        self.assertEqual(len(places), 1)
