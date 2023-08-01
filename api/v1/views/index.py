@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" Index """
+""" Index create a route /status on the object
+app_views that returns a JSON: status: OK
+"""
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place

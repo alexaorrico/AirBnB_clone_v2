@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-""" objects that handle all default RestFul API actions for Places """
+"""objects that handle all default RestFul API actions for Places
+Retrieves all Place objects depending of the JSON in the body
+of the request
+"""
 from models.state import State
 from models.city import City
 from models.place import Place
