@@ -2,8 +2,8 @@
 """View for State Objects that hadles all defaul RESTful
 API actions"""
 
-from models.state import State
 from flask import Flask, jsonify, request
+from models.state import State
 from models import storage
 
 
