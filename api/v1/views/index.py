@@ -10,10 +10,12 @@ from models.state import State
 from models import storage
 from models.user import User
 
+
 @app_views.route('/status')
 def get_status():
     """get the status of the API"""
     return jsonify(status='OK')
+
 
 @app_views.route('/stats')
 def get_stats():
