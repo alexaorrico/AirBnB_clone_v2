@@ -3,8 +3,8 @@
 API actions"""
 
 from flask import Flask, jsonify, request
-from models.state import State
 from models import storage
+from models.state import State
 
 
 all_state = storage.all(State)
