@@ -46,9 +46,9 @@ def state_id(state_id):
         if state["id"] == state_id:
             if request.method == 'GET':
                 return jsonify(state), 200
-            # elif request.method == 'DELETE':
-            #     states.remove(state)
-            #     return jsonify({}), 200
+            elif request.method == 'DELETE':
+                states.remove(state)
+                return jsonify({}), 200
             # elif request.method == 'PUT':
             #     try:
             #         """extract the data passed and checks if it is
@@ -63,7 +63,7 @@ def state_id(state_id):
             #     except Exception as e:
             #         return jsonify(error=e), 400
 
-    return jsonify(error="Not found"), 404
+    # return jsonify(error="Not found"), 404
 
 
 if __name__ == "__main__":
