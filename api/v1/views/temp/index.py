@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """index"""
 from api.v1.views import app_views
 from flask import jsonify
