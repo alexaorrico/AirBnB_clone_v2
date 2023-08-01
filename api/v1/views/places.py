@@ -4,13 +4,11 @@ Contains the places view for API
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from flasgger.utils import swag_from
-from models import storage, CNC
+from models import storage
 from os import environ
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
 
-@swag_from('swagger_yaml/places_by_city.yml', methods=['GET', 'POST'])
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'])
 def places_per_city(city_id=None):
     """
@@ -45,7 +43,6 @@ def places_per_city(city_id=None):
         return jsonify(new_object.to_json()), 201
 
 
-@swag_from('swagger_yaml/places_id.yml', methods=['GET', 'DELETE', 'PUT'])
 @app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'])
 def places_with_id(place_id=None):
     """

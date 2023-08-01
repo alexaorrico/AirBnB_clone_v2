@@ -4,7 +4,7 @@ Contains the places_amenities view for API
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage, CNC
+from models import storage
 from os import environ
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
