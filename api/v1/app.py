@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 API for AirBnB_clone_v3
