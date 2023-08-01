@@ -1,12 +1,19 @@
 #!/usr/bin/python3
-from flask import Flask
+"""
+Flask App that integrates with AirBnB static HTML Template
+"""
+from flask import Flask, render_template, url_for, Blueprint
 from models import storage
 from api.v1.views import app_views
 
 
 app = Flask(__name__)
 
-# register blue print app_views
+
+# get host and ports and register app_views
+host = os.getenv('iHBNB_API_HOST', '0.0.0.0')
+port = os.getenv('HBNB_API_PORT', 5000)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 
@@ -21,14 +28,12 @@ def teardown_db(exception):
 
      :param exception: The exception object, if any.
     """
+
     storage.close()
 
 
 if __name__ == "__main__":
     import os
 
-    # get hist and ports
-    host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
-    port = int(os.environ.get('HBNB_API_PORT', 5000))
-    # run flask app with environment variables and options
-    app.run(host=host, port=port, threaded=True)
+   # run flask app with environment variables and options
+    app.run(host=host, port=port)
