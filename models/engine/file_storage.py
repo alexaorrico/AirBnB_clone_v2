@@ -92,8 +92,5 @@ class FileStorage:
             Args:
                 cls: Optional class object to specify objects to count.
         """
-        try:
-            objs = self.all(cls)  # get all objects
-            return len(objs)  # return number of objects
-        except Exception:
-            pass  # pass for now
+        
+        return len(self.all(cls))

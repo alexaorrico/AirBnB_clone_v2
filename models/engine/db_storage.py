@@ -84,34 +84,22 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Retrieves an object from storage based object id
+        """Retrieves an object from storage based on object id
             Args:
                 cls: A class instance
                 id (str): string representing the object id.
             Return: The object based on the class and its ID,
                 or None if not found
         """
-        try:
-            # Form key from <class name> and id
-            key = f"{cls.__name__}.{id}"
-            # Get list of objects from db
-            objs = self.__session.query(cls).all()
-            for obj in objs:
-                obj_id = obj.to_dict()['id']  # Get object id
-                obj_clss = obj.to_dict()['__class__']  # Get object class name
-                if key == f"{obj_clss}.{obj_id}":
-                    return obj  # return found object
-            return None  # Return None if object not found
-        except Exception:
-            pass  # for now
+
+        if cls and issubclass(cls, BaseModel):
+            return (self.__session.query(cls).filter(cls.id == id).first())
+        return None
 
     def count(self, cls=None):
         """Counts number of objects in storage
             Args:
                 cls: Optional class object to specify object to count.
         """
-        try:
-            objs = self.all(cls)  # get all objects
-            return len(objs)  # return number of objects
-        except Exception:
-            pass  # for now
+        
+        return len(self.all(cls))
