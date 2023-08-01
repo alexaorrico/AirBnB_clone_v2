@@ -135,4 +135,3 @@ class TestDBStorage(unittest.TestCase):
 
         self.assertEqual(storage.count(), 2)
         self.assertEqual(storage.count(State), 2)
-
