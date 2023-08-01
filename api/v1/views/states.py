@@ -3,12 +3,14 @@ from models.state import State
 # new view for State objects that handles all default RESTFul API actions
 
 
+@states_blueprint.route('/api/v1/states', methods=['GET'])
 def get_states():
     # Retrieves the list of all State objects: GET /api/v1/states
     states = State.all()
     return jsonify([state.to_dict() for state in states])
 
 
+@states_blueprint.route('/api/v1/states/<int:state_id>', methods=['GET'])
 def get_state(state_id):
     # Retrieves a State object: GET /api/v1/states/<state_id>
     state = State.get(state_id)
@@ -19,6 +21,7 @@ def get_state(state_id):
     return jsonify(state.to_dict()), 200
 
 
+@states_blueprint.route('/api/v1/states/<int:state_id>', methods=['DELETE'])
 def delete_state(state_id):
     # Deletes a State object: DELETE /api/v1/states/<state_id>
     # Get the State object with the given state_id from the database
@@ -33,6 +36,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
+@states_blueprint.route('/api/v1/states', methods=['POST'])
 def post_state(state_id):
     # Creates a State: POST /api/v1/states
     # You must use request.get_json from Flask transform
@@ -54,6 +58,7 @@ def post_state(state_id):
     return jsonify(new_state.to_dict()), 201
 
 
+@states_blueprint.route('/api/v1/states/<int:state_id>', methods=['PUT'])
 def put_state(state_id):
     # Updates a State object: PUT /api/v1/states/<state_id>
     state = State.get(state_id)
