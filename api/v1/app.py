@@ -24,9 +24,10 @@ def close_storage(error=None):
     storage.close()
 
 
-@app.errorhandler(404)  # 404 Responds handler for unavailable resources
+@app.errorhandler(404)
 def not_found(error):
     """Return a not found repond error"""
+
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Index view for the web service API"""
-from flask import jsonify
+from flask import jsonify, make_response
 from api.v1.views import app_views  # Blueprint object
 from models import storage
 from models.engine.file_storage import classes
@@ -9,7 +9,7 @@ from models.engine.file_storage import classes
 # Create the route "/status" on the Blueprint object
 @app_views.route('/status')
 def status():
-    # Return a JSON response with the status "OK"
+    """Return API status """
     return jsonify(status='OK')
 
 
@@ -24,4 +24,4 @@ def stats(cls=None):
         if key != 'BaseModel':
             # count objects by type from storage
             objects[key.lower()] = storage.count(value)
-    return jsonify(objects)
+    return make_response(jsonify(objects))
