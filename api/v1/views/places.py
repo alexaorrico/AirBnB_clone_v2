@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-"""places"""
+"""places.py CRUD + --search on places"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
+from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('/cities/<string:city_id>/places', methods=['GET'])
@@ -79,7 +81,7 @@ def put_place(place_id):
 
 @app_views.route('/places_search', methods=['POST'])
 def post_places_search():
-    """search a place"""
+    """searches for a place"""
     if request.get_json() is not None:
         params = request.get_json()
         states = params.get('states', [])

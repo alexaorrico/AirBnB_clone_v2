@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""index"""
-from flask import jsonify
+"""index --connect to API"""
 from api.v1.views import app_views
+from flask import Flask, Blueprint, jsonify
 from models import storage
 
 
@@ -29,3 +29,5 @@ def hbnbStats():
         return_dict[key] = storage.count(value)
     return jsonify(return_dict)
 
+if __name__ == "__main__":
+    pass
