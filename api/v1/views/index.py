@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Index.py to connect to the API"""
+"""index.py to connect to API"""
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify
 from models import storage

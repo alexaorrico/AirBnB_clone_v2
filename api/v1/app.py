@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""App to connect to API"""
+"""app.py to connect to API"""
 import os
 from models import storage
 from api.v1.views import app_views
@@ -14,7 +14,7 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown_appcontext(code):
-    """Teardown_appcontext"""
+    """teardown_appcontext"""
     storage.close()
 
 
