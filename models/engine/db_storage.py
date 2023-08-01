@@ -6,22 +6,25 @@ Contains the class DBStorage
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
-
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+from models import base_model, amenity, city, place, review, state, user
 
 
 class DBStorage:
     """interaacts with the MySQL database"""
+
+    classes = {
+            "Amenity": amenity.Amenity,
+            "City": city.City,
+            "Place": place.Place,
+            "Review": review.Review,
+            "State": state.State,
+            "User": user.User
+           }
+
     __engine = None
     __session = None
 
@@ -43,13 +46,20 @@ class DBStorage:
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+        for clss in self.classes:
+            if cls is None or cls is self.classes[clss] or cls is clss:
+                objs = self.__session.query(self.classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
+
+        for c in DBStorage.classes.values():
+            a_query = self.__session.query(c)
+            for obj in a_query:
+                obj_ref = "{}.{}".format(type(obj).__name__, obj.id)
+                new_dict[obj_ref] = obj
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -60,31 +70,42 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session obj if not None"""
-        if obj is not None:
+        """
+            deletes obj from current database session if not None
+        """
+        if obj:
             self.__session.delete(obj)
+            self.save()
+
+    def delete_all(self):
+        """delete multiple class instances for testing purposes"""
+        for c in DBStorage.classes.values():
+            a_query = self.__session.query(c)
+            all_objs = [obj for obj in a_query]
+            for obj in range(len(all_objs)):
+                to_delete = all_objs.pop(0)
+                to_delete.delete()
+        self.save()
 
     def get(self, cls, id):
         """Retrieve an object base on class name amd Id"""
-        for obj in self.all(cls).values():
-            if cls == obj.__class__ and id == obj.id:
-                return obj
-            return None
+        if cls and id:
+            search_str = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(search_str)
+        return None
 
     def count(self, cls=None):
         """Return number of objects in filestorage"""
-        if cls is None:
-            count = len(list(self.all().values()))
-            return count
-        count = len(list(self.all(cls)))
-        return count
+        return (len(self.all(cls)))
 
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = scoped_session(
+            sessionmaker(
+                bind=self.__engine,
+                expire_on_commit=False))
 
     def close(self):
         """call remove() method on the private session attribute"""
