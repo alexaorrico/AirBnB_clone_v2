@@ -6,14 +6,12 @@ from models import storage
 from models.engine.file_storage import classes
 
 
-# Create the route "/status" on the Blueprint object
 @app_views.route('/status')
 def status():
-    """Return API status """
+    """Return API status"""
     return jsonify(status='OK')
 
 
-# stat blueprint
 @app_views.route('/stats')
 def stats(cls=None):
     """Return number of objects by type"""

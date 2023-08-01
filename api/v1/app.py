@@ -9,6 +9,7 @@ import os
 from models import storage
 from api.v1.views import app_views  # Blueprint
 
+
 app = Flask(__name__)
 """Flask web app instace"""
 
@@ -20,6 +21,7 @@ app.register_blueprint(app_views)
 
 CORS(app, resources={'/*': {'origins': '0.0.0.0'}})
 """Set up CORS for app"""
+
 
 @app.teardown_appcontext
 def close_storage(error=None):
