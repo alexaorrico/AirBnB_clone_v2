@@ -2,9 +2,9 @@
 """make api"""
 from models import storage
 from os import getenv
-from api.v1.views import app_views
-from flask import Flask, make_response, jsonify
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS
+from api.v1.views.index import *
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
