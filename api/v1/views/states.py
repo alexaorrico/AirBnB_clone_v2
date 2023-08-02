@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from flask import Blueprint, jsonify, abort, request
 from models.state import State
 
