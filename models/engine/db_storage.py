@@ -77,18 +77,23 @@ class DBStorage:
 
     def get(self, cls, id):
         """A method that retrieves one object from the database"""
-         obj = self.all(cls)
-        if obj:
-            newObj = obj.items()
-            for objs in newObj:
-                if id == objs[1].id:
-                    return objs[1]
-        else:
-            return None
+        try:
+            for v in self.__objects.values():
+                if v.id == id:
+                    result = v
+        except BaseException:
+            pass
+
+        return result
 
     def count(self, cls=None):
         """Counts the number of objects in the storage"""
+        with open("file.json", 'r') as f:
+            jso = json.load(f)
         if cls:
-            obj = self.all(cls)
-            return (len(obj))
-        return len(self.all())
+            count = 0
+            for obj in jso.items():
+                if obj[1]['__class__'] == cls.__name__:
+                    count += 1
+            return count
+        return len(jso.items())
