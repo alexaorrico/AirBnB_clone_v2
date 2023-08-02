@@ -79,7 +79,7 @@ class FileStorage:
         """
         try:
             if cls:
-                key = f"{cls.__name__}.{id}"
+                key = "{}.{}".format(cls.__name__, id)
                 return self.__objects[key]  # Return object if found
         except KeyError:
             return None  # Return None if object not found
