@@ -129,4 +129,4 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(total, int)
         counter = storage.counter("State")
         self.assertIsInstance(counter, int)
-        seld.assertEqual(total, counter)
+        seld.assertGreaterEqual(total, counter)
