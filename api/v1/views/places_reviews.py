@@ -6,12 +6,10 @@ from api.v1.views import app_views
 from models.review import Review
 from models.place import Place
 from models.user import User
-from flasgger.utils import swag_from
 
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET"],
                  strict_slashes=False)
-@swag_from('documentation/reviews/get_reviews.yml', methods=['GET'])
 def review_by_place(place_id):
     """View function that return Review objects by Place"""
     place = storage.get(Place, place_id)
@@ -22,7 +20,6 @@ def review_by_place(place_id):
 
 @app_views.route("/reviews/<review_id>", methods=["GET"],
                  strict_slashes=False)
-@swag_from('documentation/reviews/get_review.yml', methods=['GET'])
 def show_review(review_id):
     """Endpoint that return a Review object"""
     review = storage.get(Review, review_id)
@@ -33,7 +30,7 @@ def show_review(review_id):
 
 @app_views.route("/reviews/<review_id>", methods=["DELETE"],
                  strict_slashes=False)
-@swag_from('documentation/reviews/delete_reviews.yml', methods=['DELETE'])
+
 def delete_review(review_id):
     """Endpoint that delete a Review object"""
     review = storage.get(Review, review_id)
@@ -46,7 +43,6 @@ def delete_review(review_id):
 
 @app_views.route("/places/<place_id>/reviews", methods=["POST"],
                  strict_slashes=False)
-@swag_from('documentation/reviews/post_reviews.yml', methods=['POST'])
 def insert_review(place_id):
     """Endpoint that insert a Review object"""
     place = storage.get(Place, place_id)
@@ -71,7 +67,6 @@ def insert_review(place_id):
 
 @app_views.route("/reviews/<review_id>", methods=["PUT"],
                  strict_slashes=False)
-@swag_from('documentation/reviews/put_reviews.yml', methods=['PUT'])
 def update_review(review_id):
     """Endpoint that update a Review object"""
     review = storage.get(Review, review_id)

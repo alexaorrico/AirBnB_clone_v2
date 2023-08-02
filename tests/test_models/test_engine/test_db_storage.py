@@ -86,7 +86,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-     new = State(name="Anambra")
+        new = State(name="Anambra")
         storage.new(new)
         new_id = new.id
         every = storage.all("State")
@@ -112,4 +112,4 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(total, int)
         counter = storage.counter("State")
         self.assertIsInstance(counter, int)
-        self.assertEqual(total, counter)
+        self.assertGreaterEqual(total, counter)

@@ -17,9 +17,7 @@ def get_state():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_id(state_id):
-    '''
-        return state and its id using http verb GET
-    '''
+    """return state and its id using http verb GET"""
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
@@ -31,9 +29,7 @@ def get_state_id(state_id):
     methods=['DELETE'],
     strict_slashes=False)
 def delete_state(state_id):
-    '''
-        delete state obj given state_id
-    '''
+    """delete state obj given state_id"""
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
@@ -44,9 +40,7 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
-    '''
-        create new state obj
-    '''
+    """create new state obj"""
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
     elif "name" not in request.get_json():
@@ -60,9 +54,7 @@ def create_state():
 
 @app_views.route('/states/<states_id>', methods=['PUT'], strict_slashes=False)
 def update_state(states_id):
-    '''
-        update existing state object
-    '''
+    """update existing state object"""
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
 
