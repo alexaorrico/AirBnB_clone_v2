@@ -154,6 +154,6 @@ EOF  all  create  destroy  help  quit  show  update
 ## Authors
 Authors:
 - James Christian Aidoo - [Github](https://github.com/ghjimchris)
-- Owuraku Buabeng - [Github](https://github.com/KuukuDev)
+- Owuraku Buabeng - [Github](https://github.com/KuukuDev) email: owurakubuabeng777@gmail.com
 
  
