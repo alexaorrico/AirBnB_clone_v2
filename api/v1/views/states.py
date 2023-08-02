@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-This module contains the view for State objects that handles all default RESTFul API actions.
+This module contains the view for State objects
+that handles all default RESTFul API actions.
 """
 
 from api.v1.views import app_views
@@ -30,7 +31,8 @@ def get_state(state_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """
     Deletes a State object by state_id.
