@@ -24,9 +24,15 @@ def storage_counts():
         "states": storage.count("State"),
         "users": storage.count("User")
     }
+<<<<<<< HEAD
+    for key, value in Obj_count.items():
+        Obj_count[key] = storage.count(value)
+    return jsonify(Obj_count)
+=======
 
     obj_dict = {}
     for key, value in classes.items():
         obj_dict[key] = storage.count(value)
 
     return jsonify(obj_dict)
+>>>>>>> f61419b9c8d53faeeaab2f7b00854c945df71058
