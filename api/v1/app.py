@@ -2,7 +2,7 @@
 """Flask web service API"""
 
 
-from flask import Flask, make_response, jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS
 import os
 
@@ -24,7 +24,7 @@ CORS(app, resources={'/*': {'origins': '0.0.0.0'}})
 
 
 @app.teardown_appcontext
-def close_storage(error=None):
+def close_storage(error):
     """ Called when application context is torn down"""
     storage.close()
 
@@ -33,7 +33,8 @@ def close_storage(error=None):
 def not_found(error):
     """Return a not found repond error"""
 
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return jsonify(error='Not found'), 404
+
 
 
 if __name__ == "__main__":
