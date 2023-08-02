@@ -3,8 +3,9 @@
     app for registering blueprint and starting flask
 """
 from os import getenv
+
 from api.v1.views import app_views
-from flask import Flask, make_response, jsonify
+from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from models import storage
 
@@ -23,6 +24,8 @@ def tear_down(self):
 def page_not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+
 if __name__ == "__main__":
-    app.run(host=getenv("HBNB_API_HOST", "0.0.0.0"),
-            port=int(getenv("HBNB_API_PORT", "5000")), threaded=True, debug=True)
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = getenv("HBNB_API_PORT", "5000")
+    app.run(host=host, port=port, threaded=True, debug=True)

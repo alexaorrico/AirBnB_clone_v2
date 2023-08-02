@@ -12,7 +12,7 @@ from models.amenity import Amenity
 
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
-@swag_from('documentation/place/get_places.yml', methods=['GET'])
+
 def place_by_city(city_id):
     """View function that return place objects by city"""
     city = storage.get(City, city_id)
@@ -23,7 +23,6 @@ def place_by_city(city_id):
 
 @app_views.route("/places/<place_id>", methods=["GET"],
                  strict_slashes=False)
-@swag_from('documentation/place/get_place.yml', methods=['GET'])
 def show_place(place_id):
     """Endpoint that return a Place object"""
     place = storage.get(Place, place_id)
@@ -34,7 +33,6 @@ def show_place(place_id):
 
 @app_views.route("/places/<place_id>", methods=["DELETE"],
                  strict_slashes=False)
-@swag_from('documentation/place/delete_place.yml', methods=['DELETE'])
 def delete_place(place_id):
     """Endpoint that delete a Place object"""
     place = storage.get(Place, place_id)
@@ -47,7 +45,6 @@ def delete_place(place_id):
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
                  strict_slashes=False)
-@swag_from('documentation/place/post_place.yml', methods=['POST'])
 def insert_place(city_id):
     """Endpoint that insert a Place object"""
     city = storage.get(City, city_id)
@@ -71,7 +68,6 @@ def insert_place(city_id):
 
 @app_views.route("/places_search", methods=["POST"],
                  strict_slashes=False)
-@swag_from('documentation/place/put_place.yml', methods=['PUT'])
 def places_search():
     """Retrieves all Place objects depending of the body of the request"""
     body = request.get_json()
@@ -114,7 +110,7 @@ def places_search():
 
 @app_views.route("/places/<place_id>", methods=["PUT"],
                  strict_slashes=False)
-@swag_from('documentation/place/post_search.yml', methods=['POST'])
+
 def update_place(place_id):
     """Endpoint that update a Place object"""
     place = storage.get(Place, place_id)

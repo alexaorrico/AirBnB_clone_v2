@@ -29,7 +29,6 @@ def storage_counts():
         Obj_count[key] = storage.count(value)
     return jsonify(Obj_count)
 
-
     obj_dict = {}
     for key, value in classes.items():
         obj_dict[key] = storage.count(value)
