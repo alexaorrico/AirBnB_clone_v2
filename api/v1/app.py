@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Flask web service API"""
 
-
 from flask import Flask, jsonify
 from flask_cors import CORS
 import os
@@ -34,7 +33,6 @@ def not_found(error):
     """Return a not found repond error"""
 
     return jsonify(error='Not found'), 404
-
 
 
 if __name__ == "__main__":
