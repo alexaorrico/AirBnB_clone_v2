@@ -88,7 +88,6 @@ class FileStorage:
         objs = self.all(cls)
 
         for obj in objs.values():
-            print(type(obj))
             if obj.id == id:
                 return obj
         return None
