@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Index view for the web service API"""
-from flask import jsonify, make_response
+from flask import jsonify
 from api.v1.views import app_views  # Blueprint object
 from models import storage
 from models.review import Review
@@ -18,7 +18,7 @@ def status():
 
 
 @app_views.route('/stats')
-def stats(cls):
+def stats():
     """Return number of objects by type"""
 
     objects = {
