@@ -25,6 +25,7 @@ def get_state(state_id):
     Retrieves a State object by state_id.
     """
     state = storage.get(State, state_id)
+    print(state)
     if state:
         return jsonify(state.to_dict())
     else:

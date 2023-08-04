@@ -8,6 +8,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 
+
 class User(BaseModel, Base):
     """Representation of a user """
     if STORAGE_TYPE == 'db':

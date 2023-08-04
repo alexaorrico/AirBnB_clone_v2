@@ -9,6 +9,7 @@ from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 
+
 class State(BaseModel, Base):
     """Representation of state """
     if STORAGE_TYPE == "db":

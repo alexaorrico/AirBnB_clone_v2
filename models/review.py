@@ -7,6 +7,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 
+
 class Review(BaseModel, Base):
     """Representation of Review """
     if STORAGE_TYPE == 'db':

@@ -9,6 +9,7 @@ from sqlalchemy.orm import relationship
 
 STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 
+
 class Amenity(BaseModel, Base):
     """Representation of Amenity """
     if STORAGE_TYPE == 'db':
