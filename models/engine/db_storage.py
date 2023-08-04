@@ -90,9 +90,10 @@ class DBStorage:
     def get(self, cls, id):
         """Retrieve an object base on class name amd Id"""
         if cls and id:
-            search_str = "{}.{}".format(cls, id)
-            all_obj = self.all(cls)
-            return all_obj.get(search_str)
+            objs = self.all(cls)
+            for obj in objs.values():
+                if id == obj.id:
+                    return obj
         return None
 
     def count(self, cls=None):
