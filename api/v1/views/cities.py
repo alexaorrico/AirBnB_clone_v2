@@ -13,12 +13,14 @@ def get_cities(state_id):
     """Return a JSON reponse of all city objects specified by state id
     """
 
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404)  # Error for invalid stat_id
+
     # Get list of city objects dictionary by state_id
     city_objs = [city.to_dict() for city in storage.all(
         City).values() if city.state_id == state_id]
 
-    if len(city_objs) == 0:
-        abort(404)
     return jsonify(city_objs)
 
 # Route to get a city object

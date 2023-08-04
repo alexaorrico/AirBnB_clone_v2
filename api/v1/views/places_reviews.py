@@ -15,12 +15,13 @@ def get_reviews(place_id):
     """Return a JSON reponse of all review objects specified by place id
     """
 
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
     # Get list of review objects dictionary by city_id
     review_objs = [review.to_dict() for review in storage.all(
         Review).values() if review.place_id == place_id]
 
-    if len(review_objs) == 0:
-        abort(404)
     return jsonify(review_objs)
 
 # Route to get a review object

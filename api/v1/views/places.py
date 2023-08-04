@@ -14,12 +14,14 @@ def get_places(city_id):
     """Return a JSON reponse of all place objects specified by city id
     """
 
+    city = storage.get(City, city_id)  # Get city by id
+    if not city:
+        abort(404)  # raise not found error for invalid id
+
     # Get list of place objects dictionary by city_id
     place_objs = [place.to_dict() for place in storage.all(
         Place).values() if place.city_id == city_id]
 
-    if len(place_objs) == 0:
-        abort(404)
     return jsonify(place_objs)
 
 # Route to get a place object
