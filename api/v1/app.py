@@ -2,10 +2,12 @@
 """registers the blueprint to your flask instance app"""
 from models import storage
 from flask import Flask, make_response, jsonify
+from flask_cors import CORS
 from api.v1.views import app_views
 import os
 
 app = Flask(__name__)
+CORS(app, origins="0.0.0.0")
 app.register_blueprint(app_views)
 
 host = os.getenv("HBNB_API_HOST", "0.0.0.0")
