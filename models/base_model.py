@@ -21,6 +21,7 @@ else:
     class Base:
         pass
 
+
 class BaseModel:
     """
         The BaseModel class from which future classes will be derived
@@ -68,8 +69,8 @@ class BaseModel:
         elif not isinstance(attr_dict['updated_at'], datetime):
             attr_dict['updated_at'] = datetime.strptime(
                 attr_dict['updated_at'], "%Y-%m-%d %H:%M:%S.%f"
-            )
-        if  STORAGE_TYPE != 'db':
+                )
+        if STORAGE_TYPE != 'db':
             attr_dict.pop('__class__', None)
         for attr, val in attr_dict.items():
             setattr(self, attr, val)
