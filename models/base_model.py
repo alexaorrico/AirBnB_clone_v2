@@ -56,15 +56,17 @@ class BaseModel:
 
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
-        new_dict = self.__dict__.copy()
-        if "created_at" in new_dict:
-            new_dict["created_at"] = new_dict["created_at"].strftime(time)
-        if "updated_at" in new_dict:
-            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
+        new_dict = dict(self.__dict__)
+        new_dict['__class__'] = self.__class__.__name__
+        new_dict['updated_at'] = self.updated_at.strftime(
+                "%Y-%m-%dT%H:%M:%S.%f")
+        new_dict['created_at'] = self.created_at.strftime(
+                "%Y-%m-%dT%H:%M:%S.%f")
+        if hasattr(self, "_sa_instance_state"):
             del new_dict["_sa_instance_state"]
-        return new_dict
+        if new_dict['__class__'] is "User" and not save_to_disk:
+            new_dict.pop("_password", None)
+        return (new_dict)
 
     def delete(self):
         """delete the current instance from the storage"""
