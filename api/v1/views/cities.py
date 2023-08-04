@@ -61,17 +61,20 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
     """Create a new city object"""
-    content = request.get_json()  # Content body
-    if type(content) is not dict:
-        abort(400, 'Not a Json')  # raise bad request error
+
     state = storage.get(State, state_id)
     if not state:
         abort(404)
+
+    content = request.get_json()  # Content body
+
+    if type(content) is not dict:
+        abort(400, 'Not a Json')  # raise bad request error
     if 'name' not in content:
         abort(400, 'Missing name')  # raise bad request error
     city = City(**content)
+    city.state_id = state_id
     city.save()
-
     return jsonify(city.to_dict()), 201
 
 # Route to update a city object

@@ -63,12 +63,13 @@ def delete_place(place_id):
 def create_place(city_id):
     """Create a new place object"""
 
-    content = request.get_json()  # Content body
-    if type(content) is not dict:
-        abort(400, 'Not a Json')  # raise bad request error
     city = storage.get(City, city_id)
     if not city:
         abort(404)
+
+    content = request.get_json()  # Content body
+    if type(content) is not dict:
+        abort(400, 'Not a Json')  # raise bad request error
     if 'user_id' not in content:
         abort(400, 'Missing user_id')  # raise bad request error
     if 'name' not in content:
@@ -77,7 +78,9 @@ def create_place(city_id):
     user = storage.get(User, content['user_id'])
     if not user:
         abort(404)
+
     place = Place(**content)
+    place.city_id = city_id
     place.save()
 
     return jsonify(place.to_dict()), 201

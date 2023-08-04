@@ -78,11 +78,14 @@ def create_review(place_id):
     if not user:
         abort(404)
     review = Review(**content)
+    review.place_id = place_id
     review.save()
 
     return jsonify(review.to_dict()), 201
 
+
 # Route to update a review object
+q
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
