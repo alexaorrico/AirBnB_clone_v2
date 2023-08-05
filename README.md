@@ -161,8 +161,6 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 <br>
 Joshua monday - [Github](https://github.com/Ojobumiche) / [LinkedIn](https://www.linkedin.com/in/monday-joshua-42875a21a)
 <br>
-Adeyemi Owolabi - [Github](https://github.com/LabyKreative) / [Twitter](https://twitter.com/LabyKreativeK)
-
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
