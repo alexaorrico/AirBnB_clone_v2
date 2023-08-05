@@ -163,6 +163,6 @@ Joshua monday - [Github](https://github.com/Ojobumiche) / [LinkedIn](https://www
 <br>
 Adeyemi Owolabi - [Github](https://github.com/LabyKreative) / [Twitter](https://twitter.com/LabyKreativeK)
 
-Second part of Airbnb: Joann Vuong
+Second part of Airbnb: Joann Vuong.
 ## License
 Public Domain. No copy write protection. 
