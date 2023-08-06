@@ -9,7 +9,7 @@ from models.state import State
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states():
     """Retrieve list of all state objects"""
-    astate =storage.all(State)
+    astate = storage.all(State)
     return jsonify([obj.to_dict() for obj in astate.values()])
 
 
@@ -20,6 +20,7 @@ def retr_state_id(state_id):
     if not state:
         abort(404)
         return jsonify(state.to_dict())
+
 
 @app_views.route('states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state():

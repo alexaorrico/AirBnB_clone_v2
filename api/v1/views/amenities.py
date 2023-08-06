@@ -14,7 +14,8 @@ def get_amenities():
     return jsonify([obj.to_dict() for obj in amenities.values()])
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+        '/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
 def amenites_id(amenity_id):
     """Get amenity information for specified amenity"""
     amenity = storage.get("Amenity", amenity_id)
@@ -23,7 +24,8 @@ def amenites_id(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+        '/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
     """Deletes an amenity based on amenity id"""
     amenity = storage.get("Amenity", amenity_id)
@@ -47,7 +49,8 @@ def post_amenity():
     return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route(
+        '/amenities/amenity_id>', methods=['PUT'], strict_slashes=False)
 def put_amenity(amenity_id):
     """Update amenity"""
     amenity = storage.get("Amenity", amenity_id)
@@ -57,7 +60,7 @@ def put_amenity(amenity_id):
     body_request = request.get_json()
     if not body_request:
         abort(404, "Not a JSON")
-    
+
     for k, v n body_request.items():
         if k != 'id' and k != 'created_at' and k != 'updated_at':
             setattr(amenity, k, v)
