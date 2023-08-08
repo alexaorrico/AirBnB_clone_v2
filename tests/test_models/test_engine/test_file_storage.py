@@ -79,6 +79,22 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(new_dict, storage._FileStorage__objects)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_returns_obj(self):
+        """Test that get returns an existing object """
+        storage = FileStorage()
+        storage.new(State())
+        first_state_obj = list(storage.all("State").values())[0]
+        state_obj = storage.get("State", first_state_obj.id)
+        self.assertIs(first_state_obj, state_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_returns_none(self):
+        """Test that get returns None for nonexisting object """
+        storage = FileStorage()
+        state_obj = storage.get("State", "IDONTEXIST")
+        self.assertIsNone(state_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -114,34 +130,12 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-
-class TestNewMethodsDb(unittest.TestCase):
-    """Test get and count methods in db_storage"""
-
-    def setUp(self):
-        """set up for db"""
-
-        self.obj_instance = State(name="Vienna")
-
-    def tearDown(self):
-        self.obj_instance.delete()
-
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """testing for count method"""
-
-        obj_count = models.storage.count(State)
-        self.obj_instance.save()
-        obj_second_count = models.storage.count(State)
-
-        self.assertEqual(obj_count + 1, obj_second_count)
-
-    def test_get(self):
-        """testing for get method"""
-
-        self.obj_instance.save()
-        id = self.obj_instance.id
-        get_obj = models.storage.get(State, id)
-
-        self.assertEqual(id, get_obj.id)
-        self.assertIsInstance(get_obj, State)
-        self.assertEqual(type(id), str)
+        """Test that count is properly return """
+        objs = models.storage.all()
+        self.assertEqual(len(objs), models.storage.count())
+        state_objs = models.storage.all("State")
+        self.assertEqual(len(state_objs), models.storage.count("State"))
+        no_objs = models.storage.all("Any")
+        self.assertEqual(len(no_objs), models.storage.count("Any"))
