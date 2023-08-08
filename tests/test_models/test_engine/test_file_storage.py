@@ -123,6 +123,7 @@ class TestNewMethodsDb(unittest.TestCase):
         self.obj_instance = State(name="Vienna")
 
     def tearDown(self):
+        """testing for the get method"""
         self.obj_instance.delete()
 
     def test_count(self):
