@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
-""" Flask Application """
+"""
+    Application for registering blueprint and starting flask
+"""
 
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
