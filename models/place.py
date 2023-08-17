@@ -1,15 +1,13 @@
 #!/usr/bin/python
 """ holds class Place"""
-import os
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
-STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 
-if STORAGE_TYPE == 'db':
+if models.storage_t == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60),
                                  ForeignKey('places.id', onupdate='CASCADE',
@@ -23,7 +21,7 @@ if STORAGE_TYPE == 'db':
 
 class Place(BaseModel, Base):
     """Representation of Place """
-    if STORAGE_TYPE == 'db':
+    if models.storage_t == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -35,9 +33,11 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", backref="place")
-        amenities = relationship("Amenity", secondary="place_amenity",
-                                 backref="place_amenities",
+        reviews = relationship("Review",
+                               backref="place",
+                               cascade="all, delete, delete-orphan")
+        amenities = relationship("Amenity",
+                                 secondary=place_amenity,
                                  viewonly=False)
     else:
         city_id = ""
@@ -56,7 +56,7 @@ class Place(BaseModel, Base):
         """initializes Place"""
         super().__init__(*args, **kwargs)
 
-    if STORAGE_TYPE != 'db':
+    if models.storage_t != 'db':
         @property
         def reviews(self):
             """getter attribute returns the list of Review instances"""
