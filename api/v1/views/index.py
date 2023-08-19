@@ -3,25 +3,35 @@
 create a route /status on the object app_views
 that returns a JSON: "status": "OK"
 """
-from api.v1.views import app_views
 from flask import jsonify
+
+from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route('/status')
-def status():
-    """return status in json format"""
-    s = {"status": "OK"}
-    return jsonify(s)
+@app_views.route('/status', methods=['GET'])
+def api_status():
+    """route:GET
+    returns a JSON response for RESTful API health
+    """
+    return jsonify(
+        {
+            'status': 'OK'
+        }
+    )
 
 
-@app_views.route('/stats')
-def stats():
-    """retrieves the number of object """
-    classes = {"amenities": "Amenity", "cities": "City",
-               "places": "Place", "reviews": "Review",
-               "states": "State", "users": "User"}
-    retval = {}
-    for key, val in classes.items():
-        retval[key] = storage.count(val)
-    return jsonify(retval)
+@app_views.route('/stats', methods=['GET'])
+def get_stats():
+    """get stats
+    retrieves the number of each objects by type
+    """
+    stats = {
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'places': storage.count('Place'),
+        'reviews': storage.count('Review'),
+        'states': storage.count('State'),
+        'users': storage.count('User')
+    }
+    return jsonify(stats)
