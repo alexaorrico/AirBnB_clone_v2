@@ -5,7 +5,7 @@ Flask App
 
 from models import storage
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, make_response, jsonify
 
 
 app = Flask(__name__)
@@ -19,6 +19,13 @@ def close_db(error):
     """
     storage.close()
 
+
+@app.errorhandler(404)
+def not_found():
+    """
+
+    """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
