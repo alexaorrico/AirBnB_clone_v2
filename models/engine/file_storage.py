@@ -84,5 +84,4 @@ class FileStorage:
             results = self.all()
         else:
             results = self.all(cls)
-
         return len(results)
