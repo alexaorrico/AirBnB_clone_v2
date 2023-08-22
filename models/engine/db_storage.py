@@ -79,7 +79,7 @@ class DBStorage:
         """Returns the object based on the class name and its ID, or None"""
         if cls is None or id is None:
             return None
-        objs = self.__session.query(classes[cls]).all()
+        objs = self.__session.query(cls).all()
         for obj in objs:
             if obj.id == id:
                 return obj
