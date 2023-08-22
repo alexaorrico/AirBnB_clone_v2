@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 """app.py module"""
-from api.v1.app import app_views
+from api.v1.views import app_views
 from flask import Flask, Blueprint
 from models import storage
 from os import getenv
 
 app = Flask(__name__)
 
-# Not sure if this is correct
-app_views = Blueprint("app_views", __name__, template_folder="templates")
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
