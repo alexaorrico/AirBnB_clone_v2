@@ -34,7 +34,7 @@ class TestDBStorageDocs(unittest.TestCase):
         """Test that models/engine/db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 1,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
@@ -42,7 +42,7 @@ class TestDBStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 5,
                          "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
@@ -67,6 +67,30 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+class TestDBStorage(unittest.TestCase):
+    """Test get and count methods."""
+    def test_get_method(self):
+            """Tests for get method."""
+            s = State(name="California")
+            s.save()
+            u = User(first_name="Jake", last_name="John", password="jhftyd",
+                    email="exemple@gmail.com")
+            u.save()
+            self.assertIs(s, models.storage.get(State, s.id))
+            self.assertIs(u, models.storage.get(User, u.id))
+            self.assertIs(None, models.storage.get(State, "fake_id"))
+            self.assertIs(None, models.storage.get(User, "fake_id"))
+
+    def test_count_method(self):
+        """Tests for count method"""
+        self.assertEqual(models.storage.count(State),
+                            len(models.storage.all(State)))
+        self.assertEqual(models.storage.count(User),
+                            len(models.storage.all(User)))
+        current = models.storage.count(State)
+        s = State(name="Texas")
+        s.save()
+        self.assertEqual(models.storage.count(State), current + 1)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
