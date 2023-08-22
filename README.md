@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Angella Lao - [Github](https://github.com/angellalao)
+Angella Lao - [Github](https://github.com/angellalao) | 
 Sophia Ji - [Github](https://github.com/YuJi-2023) 
 
 ## License
