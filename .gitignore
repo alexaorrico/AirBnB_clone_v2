@@ -1,2 +1,5 @@
 # ignore these files:
 test_get_count.py
+
+# ignore .pyc
+*.pyc
