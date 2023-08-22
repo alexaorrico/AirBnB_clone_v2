@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """app.py module"""
 from api.v1.views import app_views
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, make_response
 from models import storage
 from os import getenv
 
@@ -17,7 +17,8 @@ def teardown_db(exception):
 
 @app.errorhandler(404)
 def not_found(error):
-    return {"error": "Not found"}
+    return make_response({"error": "Not found"}, 404)
+    # return {"error": "Not found"}  # returns status code 200
 
 
 if __name__ == "__main__":
