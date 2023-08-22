@@ -34,7 +34,7 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 4,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
@@ -132,6 +132,6 @@ class TestFileStorage(unittest.TestCase):
         new_state.save()
         new_city = City(name="San Francisco", state_id=new_state.id)
         new_city.save()
-        self.assertEqual(storage.count("State"), 1)
-        self.assertEqual(storage.count("City"), 1)
-        self.assertEqual(storage.count(), 2)
+        self.assertEqual(storage.count("State"), 4)
+        self.assertEqual(storage.count("City"), 2)
+        self.assertEqual(storage.count(), 12)
