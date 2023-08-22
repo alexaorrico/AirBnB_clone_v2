@@ -74,3 +74,20 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        if isinstance(cls, Base):
+            value = self.__session.query(cls).filter_by(id=id)
+            if value is not None:
+                return value
+            else:
+                return "None"
+
+    def count(self, cls=None):
+        from sqlalchemy import func
+
+        if cls is None:
+            counter = self.__session.query(func.count()).first()
+        else:
+            counter = self.__session.query(func.count()).filter(cls).first()
+        return counter
