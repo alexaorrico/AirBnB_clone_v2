@@ -9,7 +9,7 @@
   <img width="740" height="470" src="img/diag.png">
 </p>
 
-## RESTful API
+# RESTful API
 * Expose stored objects via JSON web interface
 * Manipulate objects via custom RESTful API 
 
@@ -168,9 +168,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Second part of Airbnb: Joann Vuong
 Martin Leiro - [Github](https://github.com/hentype85)
 Lauro Lamas - [Github](https://github.com/laurolamas)
-
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
