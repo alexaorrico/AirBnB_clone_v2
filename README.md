@@ -2,11 +2,11 @@
 <h1 align ="center">AirBnB clone - RESTful API</h1><br>
 
 <p align="center">
-<img width="640" height="270" src="/hentype85/holbertonschool-AirBnB_clone/raw/master/img/hbnblogo.png" style="max-width: 100%;">
+<img width="640" height="270" src="/hentype85/holbertonschool-AirBnB_clone/raw/master/img/hbnblogo.png?raw=true" style="max-width: 100%;">
 </p>
 <br>
 <p align="center">
-  <img width="740" height="470" src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2020/9/02078cd7f0573885c85a225c7436584a5afea1f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20230822%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20230822T195719Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=0cf66cc94567eab7103c6fc909f8819a229ddcde62997a7529fdf3273724d876">
+  <img width="740" height="470" src="https://s3.eu-west-3.amazonaws.com/hbtn.intranet/uploads/medias/2020/9/02078cd7f0573885c85a225c7436584a5afea1f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MYA5JM5DUTZGMZG%2F20230822%2Feu-west-3%2Fs3%2Faws4_request&X-Amz-Date=20230822T195719Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=0cf66cc94567eab7103c6fc909f8819a229ddcde62997a7529fdf3273724d876?raw=true">
 </p>
 
 ## RESTful API
