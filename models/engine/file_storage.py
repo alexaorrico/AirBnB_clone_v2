@@ -78,7 +78,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """retrieves object based on class and id"""
-        if self.__objects[f"{cls.__name__}.{id}"]:
+        if f"{cls.__name__}.{id}" in self.__objects:
             return self.__objects[f"{cls.__name__}.{id}"]
         else:
             return None
@@ -90,6 +90,6 @@ class FileStorage:
             if cls is None:
                 count += 1
             elif element.split(".")[0] == cls.__name__:
-            # Class.Id -> Class, compare to cls
+                # Class.Id -> Class, compare to cls
                 count += 1
         return count
