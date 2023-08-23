@@ -11,7 +11,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def close_session(arg=None):
+def close_session(exception):
     "Close the session after each request"
     storage.close()
 
