@@ -9,6 +9,8 @@ app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 swagger = Swagger(app)
 app.register_blueprint(app_views)
+
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Close database connection after app context"""
@@ -19,6 +21,8 @@ def teardown_db(exception):
 def not_found(error):
     """Handle 404 errors with a JSON response"""
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
 if __name__ == "__main__":
     """Main Function"""
     host = environ.get('HBNB_API_HOST', '0.0.0.0')
