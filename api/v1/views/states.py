@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states',methods = ['GET', 'POST'], strict_slashes=False)
 def states():
     """returns list of all states"""
@@ -16,16 +17,16 @@ def states():
       return (states_list)
 
     if request.method == 'POST':
-      # If not valid JSON, error 400
-      try:
-        request_data = request.get_json()
-      except:
-         abort(400, "Not a JSON")
-      if 'name' not in request_data:
-         abort(400, "Missing name")
-      newState = State(**request_data)
-      
-      return newState.to_dict()
+        # If not valid JSON, error 400
+        try:
+            request_data = request.get_json()
+        except:
+            abort(400, "Not a JSON")
+        if 'name' not in request_data:
+            abort(400, "Missing name")
+        newState = State(**request_data)
+        
+        return newState.to_dict()
       
 
 @app_views.route('/states/<state_id>',
@@ -54,17 +55,16 @@ def state_search(state_id):
 
     # If PUT
     if request.method == 'PUT':
-      try:
-        request_data = request.get_json()
-      except:
-         abort(400, "Not a JSON")
-      print(request_data)
-      for state, value in storage.all(State).items():
-          id = (state.split(".")[1])
-          if state_id == id:
-            for key in request_data.keys():
-               if key != 'id' and key != 'created_at' and key != 'updated_at':
-                setattr(value, key, request_data[key])
-            storage.save()
+        try:
+            request_data = request.get_json()
+        except:
+            abort(400, "Not a JSON")
+        for state, value in storage.all(State).items():
+            id = (state.split(".")[1])
+            if state_id == id:
+                for k in request_data.keys():
+                    if k != 'id' and k != 'created_at' and k != 'updated_at':
+                        setattr(value, k, request_data[k])
+                storage.save()
             return value.to_dict()
-      abort(404)
+        abort(404)
