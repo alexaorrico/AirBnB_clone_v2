@@ -11,15 +11,16 @@ def app_views_status():
     """ displays a status message """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def stats():
     """ displays some stats """
     asked_classes = {
-                    "amenities": storage.count(classes['Amenity']), 
-                    "cities": storage.count(classes['City']), 
-                    "places": storage.count(classes['Place']), 
-                    "reviews": storage.count(classes['Review']), 
-                    "states": storage.count(classes['State']), 
+                    "amenities": storage.count(classes['Amenity']),
+                    "cities": storage.count(classes['City']),
+                    "places": storage.count(classes['Place']),
+                    "reviews": storage.count(classes['Review']),
+                    "states": storage.count(classes['State']),
                     "users": storage.count(classes['User'])
                     }
     return jsonify(asked_classes)
