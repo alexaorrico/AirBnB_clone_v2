@@ -51,6 +51,7 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
 
+
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
@@ -74,3 +75,21 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+    
+    def get(self, cls, id):
+        objs = self.__session.query(cls)
+        for obj in objs:
+            if obj.id == id:
+                return obj
+            else:
+                return None
+
+    def count(self, cls=None):
+        count = 0
+        if cls:
+            count += len(self.__session.query(cls).all())
+            return count
+        else:
+            for each_class in classes:
+                count += len(self.__session.query(classes[each_class]).all())
+            return count
