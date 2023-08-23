@@ -23,9 +23,9 @@ def states():
          abort(400, "Not a JSON")
       if 'name' not in request_data:
          abort(400, "Missing name")
-      fff = State(**request_data)
+      newState = State(**request_data)
       
-      return fff.to_dict()
+      return newState.to_dict()
 
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE'], strict_slashes=False)
 def state_search(state_id):
