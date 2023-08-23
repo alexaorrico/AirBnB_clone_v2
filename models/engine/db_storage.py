@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -85,5 +85,8 @@ class DBStorage:
         """Returns the number of objects matching that class"""
         if cls:
             return len(self.all(cls))
-        # count all objects (no class specified) is missing
-            
+
+        objs = 0
+        for key, value in classes.items():
+            objs += self.__session.query(func.count(value.id)).scalar()
+        return objs
