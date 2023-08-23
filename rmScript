@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -name __pycach* -exec rm -rf {} \;
