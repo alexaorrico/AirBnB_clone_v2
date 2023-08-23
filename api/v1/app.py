@@ -15,6 +15,7 @@ def close_session(exception):
     "Close the session after each request"
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(error):
     """handle 404 error"""
