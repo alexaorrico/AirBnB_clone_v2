@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""states views"""
 from models.state import State
 from flask import abort, request
 from api.v1.views import app_views
