@@ -67,6 +67,14 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_db_storange_method_get(self):
+        """Test for get method"""
+        self.assertTrue(type(DBStorage.get(self)) == dict)
+
+    def test_db_storange_method_count(self):
+        """Test fot count method"""
+        self.assertTrue(type(DBStorage.count() == int))
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""

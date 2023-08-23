@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Ruben Florez- [Github](https://github.com/rubio91147) / [Twitter](https://twitter.com/alexa_orrico)  
-
+Johnatan Ortiz - [Gituhub](https://github.com/Jsosholberton)
 
 Second part of Airbnb: Joann Vuong
 ## License
