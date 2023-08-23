@@ -122,7 +122,7 @@ class TestFileStorageGetCount(unittest.TestCase):
         """Tests function get"""
         state = State(name="Paris")
         state.save()
-        user = User()
+        user = User(email="test@email.com", password="testpassword")
         user.save()
         self.assertIs(state, models.storage.get(State, state.id))
         self.assertIs(user, models.storage.get(User, user.id))
