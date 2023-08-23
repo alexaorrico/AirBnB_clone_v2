@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """states views"""
 from models.state import State
-from flask import abort, request
+from flask import abort, request, jsonify
 from api.v1.views import app_views
 from models import storage
 
@@ -20,12 +20,12 @@ def retrives_state(state_id):
         # 2 option:
         # return list(map(lambda x: x.to_dict(), storage.all(State)))
         # 3 opttion
-        return list(state.to_dict() for state in storage.all(State).values())
+        return jsonify([state.to_dict() for state in storage.all(State).values()])
 
     if storage.get(State, state_id) is None:
         abort(404)
 
-    return storage.get(State, state_id).to_dict()
+    return jsonify(storage.get(State, state_id).to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
@@ -36,7 +36,7 @@ def delete_state(state_id):
         abort(404)
     states.delete()
     storage.save()
-    return {}, 200
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'])
@@ -50,7 +50,7 @@ def create_state():
     state = State(**json_data)
     state.save()
     # return a tuple default(data, status)
-    return state.to_dict(), 201
+    return jsonify(state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
@@ -61,7 +61,7 @@ def update_state(state_id):
         abort(400, 'Not a JSON')
     state = storage.get(State, state_id)
     for key, values in json_data.items():
-        if key is not 'id' or 'created_at' or 'updated_at':
+        if key not in ('id', 'created_at', 'updated_at'):
             setattr(state, key, values)
     state.save()
-    return state.to_dict(), 200
+    return jsonify(state.to_dict()), 200
