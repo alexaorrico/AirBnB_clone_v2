@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""States Module
+""" module states
 """
 from api.v1 import app
 from api.v1.views import app_views
@@ -10,12 +10,14 @@ from models.state import State
 
 @app.route('/api/v1/states', methods=['GET'])
 def get_states():
+    """ define get states """
     states = storage.all(State)
     return jsonify([state.to_dict() for state in states.values()])
 
 
 @app.route('/api/v1/states/<state_id>', methods=['GET'])
 def get_state(state_id):
+    """ define id for states """
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -24,6 +26,7 @@ def get_state(state_id):
 
 @app.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
+    """ delete request """
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -34,6 +37,7 @@ def delete_state(state_id):
 
 @app.route('/api/v1/states', methods=['POST'])
 def create_state():
+    """ create states """
     data = request.get_json()
     if not data:
         return jsonify(error="Not a JSON"), 400
@@ -47,6 +51,7 @@ def create_state():
 
 @app.route('/api/v1/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
+    """ update states """
     state = storage.get(State, state_id)
     if not state:
         abort(404)
