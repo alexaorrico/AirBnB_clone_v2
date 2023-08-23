@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """run script"""
 from models import storage
-from api.v1.views import app_views
 from flask import Flask
 from os import getenv
 
@@ -18,6 +17,7 @@ def close_session(arg=None):
 
 if __name__ == "__main__":
     """run the app"""
+    from api.v1.views import app_views
     host = getenv('HBNB_API_HOST', '0.0.0.0')
     port = int(getenv('HBNB_API_PORT', 5000))
     app.run(host=host, port=port, threaded=True)
