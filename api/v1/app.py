@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+Imports
+"""
 from flask import Flask
 from os import environ
 from models import storage
