@@ -26,8 +26,11 @@ def states():
       newState = State(**request_data)
       
       return newState.to_dict()
+      
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                  methods=['GET', 'DELETE', 'PUT'],
+                    strict_slashes=False)
 def state_search(state_id):
     """returns state with id or 404"""
 
@@ -49,3 +52,19 @@ def state_search(state_id):
       else:
          abort(404) 
 
+    # If PUT
+    if request.method == 'PUT':
+      try:
+        request_data = request.get_json()
+      except:
+         abort(400, "Not a JSON")
+      print(request_data)
+      for state, value in storage.all(State).items():
+          id = (state.split(".")[1])
+          if state_id == id:
+            for key in request_data.keys():
+               if key != 'id' and key != 'created_at' and key != 'updated_at':
+                setattr(value, key, request_data[key])
+            storage.save()
+            return value.to_dict()
+      abort(404)
