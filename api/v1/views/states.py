@@ -20,7 +20,7 @@ def retrives_state(state_id):
         # 2 option:
         # return list(map(lambda x: x.to_dict(), storage.all(State)))
         # 3 opttion
-        return [state.to_dict() for state in storage.all(State).values()]
+        return list(state.to_dict() for state in storage.all(State).values())
 
     if storage.get(State, state_id) is None:
         abort(404)
