@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """index module"""
 from api.v1.views import app_views
-from flask import jsonify  # Dict is not appearing as dict
 from models import storage
 from models.amenity import Amenity
 from models.city import City
