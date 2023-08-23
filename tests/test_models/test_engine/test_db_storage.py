@@ -101,7 +101,7 @@ class TestDBstorage(unittest.TestCase):
         self.assertTrue(models.storage.get(State, newstate.id))
         self.assertTrue(models.storage.get(State, newstate.id), newstate)
         models.storage.close()
-    
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """test count"""
