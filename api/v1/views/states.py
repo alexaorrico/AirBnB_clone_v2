@@ -54,6 +54,8 @@ def state_search(state_id):
     # If PUT
     if request.method == 'PUT':
         # If not valid JSON, error 400
+        if state is None:
+            abort(404)
         try:
             request_data = request.get_json()
             for state, value in storage.all(State).items():
