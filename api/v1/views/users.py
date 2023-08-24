@@ -23,7 +23,7 @@ def users():
                 abort(400, "Missing email")
             if 'password' not in request_data:
                 abort(400, "Missing password")
-            newuser = user(**request_data)
+            newuser = User(**request_data)
             newuser.save()
         except Exception:
             abort(400, "Not a JSON")
