@@ -32,8 +32,8 @@ def get_city(city_id):
                  strict_slashes=False)
 def delete_city(city_id):
     """Deletes a State object by ID"""
-    state = storage.get(State, city_id)
-    if state is not None:
+    city = storage.get(City, city_id)
+    if city is not None:
         storage.delete(City)
         storage.save()
         return make_response(jsonify({}), 200)
