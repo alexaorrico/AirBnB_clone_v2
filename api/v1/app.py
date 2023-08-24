@@ -16,6 +16,12 @@ def do_teardownZ(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def json_not_found(exception):
+    """function that handles 404 error"""
+    return {"error": "Not found"}
+
+
 if __name__ == '__main__':
     import os
     app.run(host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
