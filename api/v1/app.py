@@ -23,7 +23,7 @@ def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
-cors = CORS(app, resources={r"/*": {"origins": "http://0.0.0.0"}})
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 if __name__ == "__main__":
