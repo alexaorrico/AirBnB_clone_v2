@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""states views"""
+"""cities views"""
 from models.city import City
 from flask import abort, request, jsonify
 from api.v1.views import app_views
