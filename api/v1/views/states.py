@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-""" module states
+"""API endpoints for managing State objects.
+
+Provides methods to retrieve, update and delete State objects
+in the storage model.
 """
 from api.v1 import app
 from api.v1.views import app_views
