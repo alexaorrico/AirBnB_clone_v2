@@ -36,7 +36,7 @@ def users():
                  strict_slashes=False)
 def user_search(user_id):
     """returns user with id or 404"""
-
+    user = storage.get(User, user_id)
     #  If GET
     if request.method == 'GET':
         for user, value in storage.all(User).items():
@@ -47,17 +47,17 @@ def user_search(user_id):
 
     #  If DELETE
     if request.method == 'DELETE':
-        user = storage.get(User, user_id)
         if user is None:
             abort(404)
         user.delete()
         storage.save()
         return {}
 
-
     # If PUT
     if request.method == 'PUT':
         # If not valid JSON, error 400
+        if user is None:
+            abort(404)
         try:
             request_data = request.get_json()
             for user, value in storage.all(User).items():
