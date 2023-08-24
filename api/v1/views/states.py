@@ -12,14 +12,14 @@ from models.state import State
 from flasgger.utils import swag_from
 
 
-@api.v1.views.app_views.route('/api/v1/views/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """ define get states """
     states = storage.all(State)
     return jsonify([state.to_dict() for state in states.values()])
 
 
-@api.v1.views.app_views.route('/api/v1/views/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """ define id for states """
     state = storage.get(State, state_id)
@@ -28,7 +28,8 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@api.v1.views.app_views.route('/api/v1/views/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """ delete request """
     state = storage.get(State, state_id)
@@ -39,7 +40,7 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@api.v1.views.app_views.route('/api/v1/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'], strict_slashes=False)
 def create_state():
     """ create states """
     data = request.get_json()
@@ -53,7 +54,7 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@api.v1.views.app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """ update states """
     state = storage.get(State, state_id)
