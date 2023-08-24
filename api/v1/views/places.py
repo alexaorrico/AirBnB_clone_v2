@@ -28,9 +28,8 @@ def places_from_city_id(city_id):
         # If not valid JSON, error 400
         if city is None:
             abort(404)
-        try:
-            request_data = request.get_json()
-        except Exception:
+        request_data = request.get_json()
+        if request_data is None:
             abort(400, "Not a JSON")
         if 'name' not in request_data:
             abort(400, "Missing name")
