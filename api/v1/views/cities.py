@@ -7,6 +7,7 @@ from models import storage
 from models.state import State
 from models.city import City
 from flask import jsonify, abort, request
+from flasgger import Swagger
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
