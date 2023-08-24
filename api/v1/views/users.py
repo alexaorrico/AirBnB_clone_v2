@@ -62,7 +62,7 @@ def user_search(user_id):
                 id = (user.split(".")[1])
                 if user_id == id:
                     for k in request_data.keys():
-                        if k != 'id' and\
+                        if k != 'id' and k != 'email' and\
                                 k != 'created_at' and k != 'updated_at':
                             setattr(value, k, request_data[k])
                     storage.save()
