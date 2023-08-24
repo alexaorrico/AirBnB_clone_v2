@@ -5,6 +5,8 @@ from models import storage
 from api.v1.views import app_views
 from os import environ
 from flasgger import Swagger
+import Blueprint from flask
+
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 swagger = Swagger(app)
