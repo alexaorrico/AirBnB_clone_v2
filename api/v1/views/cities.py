@@ -20,10 +20,9 @@ def retrives_all_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def retrives_city(city_id):
     """Retrives a city from id"""
-    if storage.get(State, city_id) is None:
+    if storage.get(City, city_id) is None:
         abort(404)
-    return jsonify([
-        city.to_dict() for city in storage.get(City, city_id)])
+    return jsonify(storage.get(City, city_id).to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
