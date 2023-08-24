@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from models import storage
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -34,6 +35,9 @@ def places_from_city_id(city_id):
             if 'user_id' not in request_data:
                 abort(400, "Missing user_id")
             request_data['city_id'] = city_id
+            user = storage.get(User, request_data['user_id'])
+            if user is None:
+                abort(404)
             newPlace = Place(**request_data)
             newPlace.save()
         except Exception:
