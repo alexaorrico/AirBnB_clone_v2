@@ -17,6 +17,7 @@ def teardown_db(Exception):
     """Close session"""
     storage.close()
 
+
 @app.errorhandler(404)
 def errorhandler(error):
     """Returns a JSON-formated status code for errors"""
