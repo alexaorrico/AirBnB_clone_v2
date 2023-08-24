@@ -17,3 +17,11 @@ def list_all_cities(state_id):
         return make_response(jsonify({'error': 'Not found'}), 404)
     list_cities = [city.to_dict() for city in state.cities]
     return jsonify(list_cities)
+
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+def get_city(city_id):
+    """Retrieves a city object by ID"""
+    city = storage.get(City, city_id)
+    if city is not None:
+        return jsonify(city.to_dict())
+    return make_response(jsonify({'error': 'Not found'}), 404)
