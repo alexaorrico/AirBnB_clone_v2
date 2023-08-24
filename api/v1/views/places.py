@@ -35,7 +35,7 @@ def places_from_city_id(city_id):
             if 'user_id' not in request_data:
                 abort(400, "Missing user_id")
             request_data['city_id'] = city_id
-            user = storage.get(User, request_data['user_id'])
+            user = storage.get(User, request_data.get('user_id'))
             if user is None:
                 abort(404)
             newPlace = Place(**request_data)
