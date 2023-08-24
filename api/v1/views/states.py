@@ -58,14 +58,14 @@ def state_search(state_id):
         # If not valid JSON, error 400
         try:
             request_data = request.get_json()
+            for state, value in storage.all(State).items():
+                id = (state.split(".")[1])
+                if state_id == id:
+                    for k in request_data.keys():
+                        if k != 'id' and k != 'created_at' and k != 'updated_at':
+                            setattr(value, k, request_data[k])
+                    storage.save()
+                return jsonify(value.to_dict())
         except Exception:
             abort(400, "Not a JSON")
-        for state, value in storage.all(State).items():
-            id = (state.split(".")[1])
-            if state_id == id:
-                for k in request_data.keys():
-                    if k != 'id' and k != 'created_at' and k != 'updated_at':
-                        setattr(value, k, request_data[k])
-                storage.save()
-            return jsonify(value.to_dict())
         abort(404)
