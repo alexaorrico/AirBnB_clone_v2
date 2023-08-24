@@ -65,7 +65,7 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
 
-     def get(self, cls, id):
+    def get(self, cls, id):
         """
         Mod1
         Return an object based on class and ID
