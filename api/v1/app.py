@@ -4,6 +4,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import Flask, make_response, jsonify
 from os import getenv
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -20,6 +21,9 @@ def close_session(exception):
 def not_found(error):
     """handle 404 error"""
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+cors = CORS(app, resources={r"/*": {"origins": "http://0.0.0.0"}})
 
 
 if __name__ == "__main__":
