@@ -7,7 +7,7 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities/amenity_id>', methods=['GET'],
+@app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
 def get_amenities():
     """Retrieves the list of all Amenity objects"""
@@ -36,7 +36,7 @@ def delete_amenity(amenity_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['POST'])
+@app_views.route('/amenities', methods=['POST'])
 def create_amenity():
     """Creates a new Amenity"""
     data = request.get_json()
