@@ -15,7 +15,7 @@ from flasgger.utils import swag_from
 @app_views.route("/users", strict_slashes=False, methods=['GET'])
 def get_users():
     """define get users"""
-    users = storage.all(State)
+    users = storage.all(User)
     return jsonify([user.to_dict() for user in users.values()])
 
 
