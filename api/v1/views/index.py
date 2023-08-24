@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Route of the index"""
+
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
