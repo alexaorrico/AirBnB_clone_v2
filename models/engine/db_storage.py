@@ -85,12 +85,8 @@ class DBStorage:
     def get(self, cls, id):
         """If the object is in the dictionary, return the object"""
         try:
-            for i in classes:
-                if cls is classes[i]:
-                    objs = self.__session.query(classes[i]).all()
-                    for obj in objs:
-                        if id == obj.id:
-                            return obj
+            obj = self.__session.query(cls).filter_by(id=id).first()
+            return obj
         except Exception:
             return None
 
