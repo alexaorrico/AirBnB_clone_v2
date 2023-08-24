@@ -8,7 +8,6 @@ from os import getenv
 from flask import jsonify
 
 
-
 app = Flask(__name__)
 
 app.register_blueprint(app_views)
@@ -23,7 +22,7 @@ def tear_down(e):
 @app.errorhandler(404)
 def no_page(e):
     """ displays a 404 json mesage """
-    return jsonify({'errorCode' : 404,"error": "Not found"}), 404
+    return jsonify({'errorCode': 404, "error": "Not found"}), 404
 
 
 if __name__ == "__main__":
