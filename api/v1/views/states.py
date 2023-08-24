@@ -20,12 +20,11 @@ def states():
         # If not valid JSON, error 400
         try:
             request_data = request.get_json()
+            if 'name' not in request_data:
+                abort(400, "Missing name")
+            newState = State(**request_data)
         except Exception:
             abort(400, "Not a JSON")
-        if 'name' not in request_data:
-            abort(400, "Missing name")
-        newState = State(**request_data)
-
         return jsonify(newState.to_dict()), 201
 
 
