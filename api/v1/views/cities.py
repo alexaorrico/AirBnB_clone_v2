@@ -10,6 +10,7 @@ from flask import jsonify, abort, request
 from flasgger.utils import swag_from
 from importlib import import_module
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
     state = storage.get(State, state_id)
