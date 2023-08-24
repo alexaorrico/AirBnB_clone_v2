@@ -83,14 +83,12 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """
-        Retrieves an object from storage based on its class and ID.
-        Returns the object if found, or None if not found.
-        """
+        """If the object is in the dictionary, return the object"""
         try:
             for i in classes:
-                if cls == classes[i]:
-                    for obj in self.all(cls).values():
+                if cls is classes[i]:
+                    obj = self.__session.query(classes[i].all)
+                    for obj in objs:
                         if id == obj.id:
                             return obj
         except Exception:
@@ -98,5 +96,9 @@ class DBStorage:
 
     def count(self, cls=None):
         """count create"""
-        count = self.all(cls)
-        return(len(count))
+        if cls is None:
+            results = self.all()
+        else:
+            results = self.all(cls)
+
+        return len(results)

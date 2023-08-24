@@ -70,10 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """
-        Retrieves an object from storage based on its class and ID.
-        Returns the object if found, or None if not found.
-        """
+        """If the object is in the dictionary, return the object """
         try:
             for i in classes:
                 if cls == classes[i]:
