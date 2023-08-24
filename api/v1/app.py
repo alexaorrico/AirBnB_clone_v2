@@ -12,7 +12,7 @@ app.register_blueprint(app_views)
 
 @app.do_teardown_appcontext
 def do_teardownZ(exception):
-    """method that close the session"""
+    """method that close the session """
     storage.close()
 
 
