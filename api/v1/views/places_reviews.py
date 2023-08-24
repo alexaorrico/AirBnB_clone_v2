@@ -38,14 +38,14 @@ def post_review(place_id):
         abort(404)
     data = request.get_json()
     if not data:
-        return jsonify(error="Not a JSON"), 400
+        return jsonify({"error": "Not a JSON"}), 400
     if 'user_id' not in data:
-        return jsonify(error="Missing user_id"), 400
+        return jsonify({"error": "Missing user_id"}), 400
     user = storage.get(User, data['user_id'])
     if not user:
         abort(404)
     if 'text' not in data:
-        return jsonify(error="Missing text"), 400
+        return jsonify({"error": "Missing text"}), 400
     data['place_id'] = place_id
     review = Review(**data)
     review.save()
@@ -58,9 +58,10 @@ def put_review(review_id):
         abort(404)
     data = request.get_json()
     if not data:
-        return jsonify(error="Not a JSON"), 400
+        return jsonify({"error": "Not a JSON"}), 400
     for key, value in data.items():
         if key not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
             setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict()), 200
+
