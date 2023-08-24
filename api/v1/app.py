@@ -1,22 +1,19 @@
 #!/usr/bin/python3
 """Script that starts a Flask web application"""
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, Blueprint
 from models import storage
 from api.v1.views import app_views
 from os import environ
 from flasgger import Swagger
+
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 swagger = Swagger(app)
 app.register_blueprint(app_views)
-
-
 @app.teardown_appcontext
 def teardown_db(exception):
     """Close database connection after app context"""
     storage.close()
-
-
 @app.errorhandler(404)
 def not_found(error):
     """Handle 404 errors with a JSON response"""
