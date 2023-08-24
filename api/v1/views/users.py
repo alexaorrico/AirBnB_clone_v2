@@ -3,13 +3,14 @@
 from flask import Flask, abort, request, jsonify
 from api.v1.views import app_views
 from models import storage
+from models.user import User
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def users():
     """returns list of all users"""
     if request.method == 'GET':
         users_list = []
-        for user, value in storage.all(user).items():
+        for user, value in storage.all(User).items():
             user = value.to_dict()
             users_list.append(user)
         return jsonify(users_list)
@@ -37,7 +38,7 @@ def user_search(user_id):
 
     #  If GET
     if request.method == 'GET':
-        for user, value in storage.all(user).items():
+        for user, value in storage.all(User).items():
             id = (user.split(".")[1])
             if user_id == id:
                 return jsonify(value.to_dict())
@@ -58,7 +59,7 @@ def user_search(user_id):
         # If not valid JSON, error 400
         try:
             request_data = request.get_json()
-            for user, value in storage.all(user).items():
+            for user, value in storage.all(User).items():
                 id = (user.split(".")[1])
                 if user_id == id:
                     for k in request_data.keys():
