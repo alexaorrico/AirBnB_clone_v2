@@ -14,7 +14,7 @@ def states():
         for state, value in storage.all(State).items():
             state = value.to_dict()
             states_list.append(state)
-        return (states_list)
+        return jsonify(states_list)
 
     if request.method == 'POST':
         # If not valid JSON, error 400
@@ -26,7 +26,7 @@ def states():
             abort(400, "Missing name")
         newState = State(**request_data)
 
-        return newState.to_dict()
+        return jsonify(newState.to_dict())
 
 
 @app_views.route('/states/<state_id>',
@@ -40,7 +40,7 @@ def state_search(state_id):
         for state, value in storage.all(State).items():
             id = (state.split(".")[1])
             if state_id == id:
-                return value.to_dict()
+                return jsonify(value.to_dict())
         abort(404)
 
     #  If DELETE
@@ -55,6 +55,7 @@ def state_search(state_id):
 
     # If PUT
     if request.method == 'PUT':
+        # If not valid JSON, error 400
         try:
             request_data = request.get_json()
         except Exception:
@@ -66,5 +67,5 @@ def state_search(state_id):
                     if k != 'id' and k != 'created_at' and k != 'updated_at':
                         setattr(value, k, request_data[k])
                 storage.save()
-            return value.to_dict()
+            return jsonify(value.to_dict())
         abort(404)
