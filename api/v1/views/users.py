@@ -47,13 +47,13 @@ def user_search(user_id):
 
     #  If DELETE
     if request.method == 'DELETE':
-        user = storage.get(user, user_id)
-        if user is not None:
-            storage.delete(user)
-            storage.save()
-            return jsonify({})
-        else:
+        user = storage.get(User, user_id)
+        if user is None:
             abort(404)
+        user.delete()
+        storage.save()
+        return {}
+
 
     # If PUT
     if request.method == 'PUT':
