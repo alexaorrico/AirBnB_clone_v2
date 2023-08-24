@@ -62,7 +62,8 @@ def state_search(state_id):
                 id = (state.split(".")[1])
                 if state_id == id:
                     for k in request_data.keys():
-                        if k != 'id' and k != 'created_at' and k != 'updated_at':
+                        if k != 'id' and\
+                                k != 'created_at' and k != 'updated_at':
                             setattr(value, k, request_data[k])
                     storage.save()
                 return jsonify(value.to_dict())
