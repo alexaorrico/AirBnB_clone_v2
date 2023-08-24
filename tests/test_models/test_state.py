@@ -59,6 +59,7 @@ class TestStateDocs(unittest.TestCase):
 
 class TestState(unittest.TestCase):
     """Test the State class"""
+
     def test_is_subclass(self):
         """Test that State is a subclass of BaseModel"""
         state = State()

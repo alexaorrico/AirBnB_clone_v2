@@ -59,6 +59,7 @@ class TestUserDocs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     """Test the User class"""
+
     def test_is_subclass(self):
         """Test that User is a subclass of BaseModel"""
         user = User()
