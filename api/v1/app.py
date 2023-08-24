@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Import Modules"""
-from flask import Flask
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 from os import getenv
@@ -16,6 +16,11 @@ app.register_blueprint(app_views)
 def teardown_db(Exception):
     """Close session"""
     storage.close()
+
+@app.errorhandler(404)
+def errorhandler(error):
+    """Returns a JSON-formated status code for errors"""
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
