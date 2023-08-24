@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from flask import Flask
 from models import storage
 from os import getenv
+from flask import jsonify
 
 
 app = Flask(__name__)
@@ -16,6 +17,12 @@ app.register_blueprint(app_views)
 def tear_down(e):
     """ teardown for app """
     storage.close()
+
+@app.errorhandler(404)
+def no_page(e):
+    """ displays a 404 json mesage """
+    return(jsonify({"error": "Not found"}))
+    
 
 
 if __name__ == "__main__":
