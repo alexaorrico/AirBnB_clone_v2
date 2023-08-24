@@ -31,10 +31,28 @@ def get_city(city_id):
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
-    """Deletes a State object by ID"""
+    """Deletes a city object by ID"""
     city = storage.get(City, city_id)
     if city is not None:
         storage.delete(city)
         storage.save()
         return make_response(jsonify({}), 200)
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
+def create_city(state_id):
+    """Create a new city"""
+    state = storage.get(State, state_id)
+    if state is None:
+        return make_response(jsonify({'error': 'Not found'}), 404)
+    request_data = request.get_json()
+    if not request_data:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if 'name' not in request_data:
+        return make_response(jsonify({'error': 'Missing name'}), 400)
+    new_city = City(name=request_data['name'])
+    storage.new(new_city)
+    storage.save()
+    return make_response(jsonify(new_city.to_dict()), 201)
