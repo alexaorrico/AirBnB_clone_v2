@@ -2,7 +2,7 @@
 """
 starts a Flask web application
 """
-from flask import Flask
+from flask import Flask, make_response, jsonify
 import os
 from api.v1.views import app_views
 from models import storage
@@ -14,6 +14,10 @@ app.register_blueprint(app_views)
 def teardown(exception):
     """closes the storage on teardown"""
     storage.close()
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
