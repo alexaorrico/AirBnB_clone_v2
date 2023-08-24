@@ -66,6 +66,28 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+    def test_file_storage_get_and_count(self):
+        """
+        Test get and count methods in FileStorage
+        """
+        file_storage = FileStorage()
+
+        # Create and save a sample object
+        new_city = City(name="Los Angeles")
+        file_storage.new(new_city)
+        file_storage.save()
+
+        # Test get method
+        retrieved_city = file_storage.get(City, new_city.id)
+        self.assertEqual(retrieved_city, new_city)
+
+        # Test count method
+        city_count = file_storage.count(City)
+        self.assertEqual(city_count, 1)
+
+        # Clean up
+        file_storage.delete(new_city)
+        file_storage.save()
 
 
 class TestFileStorage(unittest.TestCase):
