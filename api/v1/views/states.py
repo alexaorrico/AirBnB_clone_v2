@@ -67,6 +67,5 @@ def state_search(state_id):
                     if k != 'id' and k != 'created_at' and k != 'updated_at':
                         setattr(value, k, request_data[k])
                 storage.save()
-            print(value.to_dict())
             return jsonify(value.to_dict())
         abort(404)
