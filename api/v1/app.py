@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Module that run the server"""
 from flask import Flask
 from models import storage
