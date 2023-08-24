@@ -12,10 +12,9 @@ def retrives_all_places(city_id):
     """Retrives the list of all places"""
     if storage.get(City, city_id) is None:
         abort(404)
+    city = storage.get(City, city_id)
     return jsonify([
-        place.to_dict() for place in storage.all(Place)
-        if place.city_id == city_id])
-
+        places.to_dict() for places in city.places])
 
 @app_views.route('/places/<place_id>', methods=['GET'])
 def retrives_place(place_id):
