@@ -34,7 +34,7 @@ def states():
                  strict_slashes=False)
 def state_search(state_id):
     """returns state with id or 404"""
-
+    state = storage.get(State, state_id)
     #  If GET
     if request.method == 'GET':
         for state, value in storage.all(State).items():
@@ -45,13 +45,11 @@ def state_search(state_id):
 
     #  If DELETE
     if request.method == 'DELETE':
-        state = storage.get(State, state_id)
-        if state is not None:
-            storage.delete(state)
-            storage.save()
-            return jsonify({})
-        else:
+        if state is None:
             abort(404)
+        storage.delete(state)
+        storage.save()
+        return jsonify({})
 
     # If PUT
     if request.method == 'PUT':
