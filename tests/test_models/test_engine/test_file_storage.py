@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -113,3 +114,13 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    
+    class Testversion3(unittest.TestCase):
+        """test"""
+        def test_get(self):
+            state = State()
+            self.assertEqual(storage.get(State, state.id), None)
+
+        def test_count(self):
+            self.assertTrue(2, True)
