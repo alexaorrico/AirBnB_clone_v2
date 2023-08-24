@@ -20,13 +20,12 @@ def states():
         # If not valid JSON, error 400
         try:
             request_data = request.get_json()
-        except:
+            if 'name' not in request_data:
+                abort(400, "Missing name")
+            newState = State(**request_data)
+        except Exception:
             abort(400, "Not a JSON")
-        if 'name' not in request_data:
-            abort(400, "Missing name")
-        newState = State(**request_data)
-
-        return jsonify(newState.to_dict())
+        return jsonify(newState.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>',
@@ -55,16 +54,18 @@ def state_search(state_id):
 
     # If PUT
     if request.method == 'PUT':
+        # If not valid JSON, error 400
         try:
             request_data = request.get_json()
-        except:
+            for state, value in storage.all(State).items():
+                id = (state.split(".")[1])
+                if state_id == id:
+                    for k in request_data.keys():
+                        if k != 'id' and\
+                                k != 'created_at' and k != 'updated_at':
+                            setattr(value, k, request_data[k])
+                    storage.save()
+                return jsonify(value.to_dict())
+        except Exception:
             abort(400, "Not a JSON")
-        for state, value in storage.all(State).items():
-            id = (state.split(".")[1])
-            if state_id == id:
-                for k in request_data.keys():
-                    if k != 'id' and k != 'created_at' and k != 'updated_at':
-                        setattr(value, k, request_data[k])
-                storage.save()
-            return jsonify(value.to_dict()), 200
         abort(404)
