@@ -19,7 +19,7 @@ def retrives_amenit(amenity_id):
     if storage.get(Amenity, amenity_id) is None:
         abort(404)
 
-    return jsonify(storage.get(Amenity, amenity_id).to_dict())
+    return jsonify([storage.get(Amenity, amenity_id).to_dict()])
 
 
 @app_views.route('/amenits/<amenit_id>', methods=['DELETE'])
