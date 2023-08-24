@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """states script"""
+
 from api.v1.views import app_views
 from flask import jsonify, make_response, request
 from models import storage
@@ -15,7 +16,7 @@ def list_all_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
-    """Retrieves a State object"""
+    """Retrieves a State object by ID"""
     state = storage.get(State, state_id)
     if state is not None:
         return jsonify(state.to_dict())
@@ -25,7 +26,7 @@ def get_state(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
-    """deletes a State object"""
+    """Deletes a State object by ID"""
     state = storage.get(State, state_id)
     if state is not None:
         storage.delete(state)
@@ -50,7 +51,7 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
-    """update a state"""
+    """Updates a State object by ID"""
     state = storage.get(State, state_id)
     if state is None:
         return make_response(jsonify({'error': 'not found'}), 404)
