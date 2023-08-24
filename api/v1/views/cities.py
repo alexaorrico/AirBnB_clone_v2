@@ -69,7 +69,7 @@ def city_from_id(city_id):
             for key in request_data.keys():
                 setattr(city, key, request_data[key])
             city.save()
-            return jsonify(city.to_dict())
+            return jsonify(city.to_dict()), 200
 
         except Exception:
             return 'Not a JSON\n', 400
