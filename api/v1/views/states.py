@@ -60,6 +60,8 @@ def update_state(state_id):
     json_data = request.get_json()
     if json_data is None:
         abort(400, 'Not a JSON')
+    if storage.get(State, state_id) is None:
+        abort(404)
     state = storage.get(State, state_id)
     for key, values in json_data.items():
         if key not in ('id', 'created_at', 'updated_at'):
