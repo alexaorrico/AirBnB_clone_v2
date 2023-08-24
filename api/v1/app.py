@@ -13,12 +13,13 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     """Close database connection after app context"""
     storage.close()
-
-
 @app.errorhandler(404)
 def not_found(error):
     """Handle 404 errors with a JSON response"""
+        return make_response(jsonify({'error': 'Not found'}), 404)
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
 if __name__ == "__main__":
     """Main Function"""
     host = environ.get('HBNB_API_HOST', '0.0.0.0')
