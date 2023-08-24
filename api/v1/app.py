@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """Script that starts a Flask web application"""
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, Blueprint
 from models import storage
 from api.v1.views import app_views
 from os import environ
 from flasgger import Swagger
-import Blueprint from flask
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -18,7 +17,6 @@ def teardown_db(exception):
 @app.errorhandler(404)
 def not_found(error):
     """Handle 404 errors with a JSON response"""
-        return make_response(jsonify({'error': 'Not found'}), 404)
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 
