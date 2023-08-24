@@ -14,18 +14,19 @@ def states():
         for state, value in storage.all(State).items():
             state = value.to_dict()
             states_list.append(state)
-        return jsonify(states_list)
+        return (states_list)
 
     if request.method == 'POST':
         # If not valid JSON, error 400
         try:
             request_data = request.get_json()
-            if 'name' not in request_data:
-                abort(400, "Missing name")
-            newState = State(**request_data)
-        except Exception:
+        except:
             abort(400, "Not a JSON")
-        return jsonify(newState.to_dict()), 201
+        if 'name' not in request_data:
+            abort(400, "Missing name")
+        newState = State(**request_data)
+
+        return newState.to_dict()
 
 
 @app_views.route('/states/<state_id>',
@@ -39,7 +40,7 @@ def state_search(state_id):
         for state, value in storage.all(State).items():
             id = (state.split(".")[1])
             if state_id == id:
-                return jsonify(value.to_dict())
+                return value.to_dict()
         abort(404)
 
     #  If DELETE
@@ -54,18 +55,16 @@ def state_search(state_id):
 
     # If PUT
     if request.method == 'PUT':
-        # If not valid JSON, error 400
         try:
             request_data = request.get_json()
             for state, value in storage.all(State).items():
                 id = (state.split(".")[1])
                 if state_id == id:
                     for k in request_data.keys():
-                        if k != 'id' and\
-                                k != 'created_at' and k != 'updated_at':
+                        if k != 'id' and k != 'created_at' and k != 'updated_at':
                             setattr(value, k, request_data[k])
                     storage.save()
-                return jsonify(value.to_dict())
-        except Exception:
+                    return jsonify(value.to_dict()), 200
+            abort(404)
+        except:
             abort(400, "Not a JSON")
-        abort(404)
