@@ -60,17 +60,16 @@ def city_from_id(city_id):
     if request.method == 'PUT':
         if city is None:
             abort(404)
-        if request.method == 'PUT':
-            try:
-                request_data = request.get_json()
-                request_data.pop('id', None)
-                request_data.pop('state_id', None)
-                request_data.pop('created_at', None)
-                request_data.pop('updated_at', None)
-                for key in request_data.keys():
-                    setattr(city, key, request_data[key])
-                city.save()
-                return jsonify(city.to_dict())
+        try:
+            request_data = request.get_json()
+            request_data.pop('id', None)
+            request_data.pop('state_id', None)
+            request_data.pop('created_at', None)
+            request_data.pop('updated_at', None)
+            for key in request_data.keys():
+                setattr(city, key, request_data[key])
+            city.save()
+            return jsonify(city.to_dict())
 
-            except Exception:
-                return 'Not a JSON\n', 400
+        except Exception:
+            return 'Not a JSON\n', 400
