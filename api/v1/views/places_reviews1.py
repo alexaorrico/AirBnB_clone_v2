@@ -16,7 +16,7 @@ def list_reviews_of_place(place_id):
     place_obj = storage.get("Place", place_id)
     if place_obj is None:
         abort(404)
-    if place_id == obj.place_id]:
+    if place_id == obj.place_id]
         return jsonify(list_reviews)
 
 
