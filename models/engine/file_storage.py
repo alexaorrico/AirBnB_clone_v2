@@ -76,7 +76,7 @@ class FileStorage:
         """
         retrived_obj = self.all(cls)
 
-        for obj in retrived_obj:
+        for obj in retrived_obj.values():
             if obj.id() == id:
                 return obj
             
