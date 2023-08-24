@@ -12,14 +12,14 @@ from models.state import State
 from flasgger.utils import swag_from
 
 
-@app.route('/api/v1/states', methods=['GET'])
+@app.route('/api/v1/views/states', methods=['GET'])
 def get_states():
     """ define get states """
     states = storage.all(State)
     return jsonify([state.to_dict() for state in states.values()])
 
 
-@app.route('/api/v1/states/<state_id>', methods=['GET'])
+@app.route('/api/v1/views/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """ define id for states """
     state = storage.get(State, state_id)
@@ -28,7 +28,7 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app.route('/api/v1/states/<state_id>', methods=['DELETE'])
+@app.route('/api/v1/views/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ delete request """
     state = storage.get(State, state_id)
