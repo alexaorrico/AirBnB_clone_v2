@@ -19,7 +19,7 @@ def do_teardownZ(exception):
 @app.errorhandler(404)
 def json_not_found(exception):
     """function that handles 404 error"""
-    return make_response(jsonify({"error": "Not found"}), 404)
+    return make_response(jsonify({"error": "Not Found"}), 404)
 
 
 if __name__ == '__main__':
