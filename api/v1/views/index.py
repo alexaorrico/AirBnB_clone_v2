@@ -17,14 +17,14 @@ def hbnbstatus():
     return jsonify({'status': "OK"})
 
 
-@app_views.route('/stats', strict_slashes=False)
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats_hbnb():
     """function: retrieves a dictionary with the amount of objects"""
-    return{
+    return jsonify({
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
         "places": storage.count(Place),
         "reviews": storage.count(Review),
         "states": storage.count(State),
         "users": storage.count(User)
-    }
+    })
