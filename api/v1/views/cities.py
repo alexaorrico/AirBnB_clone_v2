@@ -23,7 +23,7 @@ def get_cities_by_state(state_id):
 
 
 @app_views.route("/states/<state_id>/cities", methods=["POST"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def post_cities(state_id):
     data = request.get_json()
     if not data:
