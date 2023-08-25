@@ -82,7 +82,7 @@ class DBStorage:
             return self.all()[key]
         except KeyError:
             return None
-    
+
     def count(self, cls=None):
         """Count current number of class instances"""
         return len(self.all(cls))
