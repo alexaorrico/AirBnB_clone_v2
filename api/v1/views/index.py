@@ -12,10 +12,10 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """API Status"""
-    return jsonify({"status": "OK"})
+    return jsonify({'status': "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
