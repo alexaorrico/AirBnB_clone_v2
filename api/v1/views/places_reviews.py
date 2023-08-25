@@ -46,7 +46,8 @@ def reviews_from_place_id(place_id):
 
 
 @app_views.route(
-    "/reviews/<review_id>", methods=["GET", "DELETE", "PUT"], strict_slashes=False
+     "/reviews/<review_id>",
+     methods=["GET", "DELETE", "PUT"], strict_slashes=False
 )
 def review_from_id(review_id):
     """returns review from id"""
