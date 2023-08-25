@@ -11,7 +11,7 @@ from flask import jsonify, abort, request
 @app_views.routes("/cities/<city_id>/places",
                   methods=["GET"], strict_slashes=False)
 def retrieves_all_places(city_id):
-    """Retrieves the list of all Place"""
+    """Returns the list of all Place objects"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -24,7 +24,7 @@ def retrieves_all_places(city_id):
 
 @app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
 def get_places(place_id):
-    """get place by id"""
+    """Returns an object by id"""
     places = storage.get(Place, place_id)
     if not places:
         abort(404)
@@ -34,7 +34,7 @@ def get_places(place_id):
 @app_views.route("/places/<place_id>",
                  methods=["DELETE"], strict_slashes=False)
 def deletes_places(place_id):
-    """Deletes a Place object"""
+    """Deletes an object by id"""
     places = storage.get(Place, place_id)
     if not places:
         abort(404)
