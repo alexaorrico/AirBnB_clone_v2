@@ -15,8 +15,8 @@ def get_status():
 def get_stats():
     """Get stats"""
     dic = {"amenities": "Amenity", "cities": "City",
-            "places": "Place", "reviews": "Review",
-            "states": "State", "users": "User"}
+           "places": "Place", "reviews": "Review",
+           "states": "State", "users": "User"}
 
     ret = {}
     for k, v in dic.items():
