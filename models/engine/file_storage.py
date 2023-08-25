@@ -70,13 +70,13 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Method used to get object if is already in storage"""
-        key_name = cls.__name__ + '.' + id
-        for key, val in self.all().items():
-            if key_name == key:
-                return val
-        return None
+        """Method to retrieve one specific object"""
+        key = cls.__name__ + "." + id
+        try:
+            return self.all()[key]
+        except KeyError:
+            return None
 
     def count(self, cls=None):
-        """Method returning the number of instances of an obj"""
+        """Count current number of class instances"""
         return len(self.all(cls))
