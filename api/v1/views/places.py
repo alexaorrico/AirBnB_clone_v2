@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Flask application for Place class/entity"""
+"""
+Flask application for Place class/entity
+"""
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
