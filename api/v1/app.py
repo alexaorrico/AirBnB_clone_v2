@@ -7,10 +7,10 @@ from api.v1.views import app_views
 from os import environ
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
+from flasgger import Swagger
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
 # Register the blueprint containing the API routes
 app.register_blueprint(app_views)
 # Setup CORS to allow requests from any origin
@@ -32,6 +32,14 @@ def not_found():
     404 error handler
     """
     return make_response(jsonify({"error": "Not found"}), 404)
+
+
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone v3 Restful API',
+    'uiversion': 3
+}
+
+Swagger(app)
 
 
 if __name__ == "__main__":
