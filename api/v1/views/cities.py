@@ -1,18 +1,18 @@
 #!/usr/bin/python3
-"""Flask application for cities class/entity"""
+"""Flask application for City class/entity"""
 from api.v1.views import app_views
 from models import storage
-from models.state import State
 from models.city import City
+from models.state import State
 from flask import jsonify, abort, request
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET"],
-                 strict_slashes=False)
+@app_views.route("/states/<state_id>/cities",
+                 methods=["GET"], strict_slashes=False)
 def retrieves_all_cities(state_id):
     """Returns the list of all City objects"""
     state = storage.get(State, state_id)
-    if not state_id:
+    if not state:
         abort(404)
     cities = state.cities
     cities_list = []
@@ -22,30 +22,30 @@ def retrieves_all_cities(state_id):
 
 
 @app_views.route("/cities/<city_id>", methods=["GET"], strict_slashes=False)
-def retrieves_city(city_id):
+def get_city(city_id):
     """Returns an object by id"""
-    cities = storage.get(City, city_id)
-    if not cities:
+    city = storage.get(City, city_id)
+    if not city:
         abort(404)
-    return jsonify(cities.to_dict())
+    return jsonify(city.to_dict())
 
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"],
                  strict_slashes=False)
-def deletes_city(city_id):
+def delete_city(city_id):
     """Deletes an object by id"""
-    cities = storage.get(City, city_id)
-    if not cities:
+    city = storage.get(City, city_id)
+    if not city:
         abort(404)
-    storage.delete(cities)
+    storage.delete(city)
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=["POST"],
-                 strict_slashes=False)
-def creates_city(state_id):
-    """Creates an Object"""
+@app_views.route("/states/<state_id>/cities",
+                 methods=["POST"], strict_slashes=False)
+def create_city(state_id):
+    """Creates an object"""
     city_data = request.get_json()
     state = storage.get(State, state_id)
     if not state:
