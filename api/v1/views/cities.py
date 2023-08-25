@@ -44,7 +44,7 @@ def deletes_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=["POST"],
                  strict_slashes=False)
-def update_city(state_id):
+def creates_city(state_id):
     """Creates an Object"""
     city_data = request.get_json()
     state = storage.get(State, state_id)
