@@ -2,7 +2,7 @@
 """
 Contains the class DBStorage
 """
-
+import console
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
