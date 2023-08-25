@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Module that run the server"""
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 
@@ -19,7 +19,7 @@ def do_teardownZ(exception):
 @app.errorhandler(404)
 def json_not_found(exception):
     """function that handles 404 error"""
-    return {"error": "Not found"}
+    return make_response(jsonify({"error": "Not Found"}), 404)
 
 
 if __name__ == '__main__':
