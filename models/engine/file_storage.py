@@ -15,6 +15,8 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 class FileStorage:
+
+
     '''
         Serializes instances to JSON file and deserializes to JSON file.
     '''
