@@ -25,5 +25,3 @@ def stats():
                     "users": storage.count(classes['User'])
                     }
     return jsonify(asked_classes)
-
-
