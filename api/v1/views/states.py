@@ -11,6 +11,8 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def status():
+    """Gets list of states"""
+
     list = []
     states = storage.all(State).values()
     for state in states:
@@ -20,6 +22,8 @@ def status():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get(state_id):
+    """Gets a state obj"""
+
     states = storage.all(State)
     id = f"State.{state_id}"
     if id not in states:
@@ -31,6 +35,8 @@ def get(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete(state_id):
+    """Deletes state obj"""
+
     states = storage.all(State)
     id = f'State.{state_id}'
     if id not in states:
@@ -44,6 +50,8 @@ def delete(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post():
+    """Creates state obj"""
+
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
@@ -58,6 +66,8 @@ def post():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put(state_id):
+    """Upgrades state obj"""
+
     data = request.get_json()
     states = storage.all(State)
     id = f"State.{state_id}"
