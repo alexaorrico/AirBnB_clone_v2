@@ -2,7 +2,7 @@
 """Script to start the API"""
 
 
-from models.storage import storage
+from models import storage
 from api.v1.views import app_views
 from os import environ
 from flask import Flask, jsonify
