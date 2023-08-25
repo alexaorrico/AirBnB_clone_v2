@@ -8,10 +8,13 @@ import os
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 
-
 app = Flask(__name__)
+
+
 # Register the blueprint containing the API routes
 app.register_blueprint(app_views)
+
+
 # Setup CORS to allow requests from any origin
 cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
@@ -28,7 +31,7 @@ def close_db(error):
 @app.errorhandler(404)
 def not_found():
     """
-    404 error handler
+    404 status error handler
     """
     return make_response(jsonify({"error": "Not found"}), 404)
     
@@ -39,3 +42,4 @@ if __name__ == "__main__":
     """
     app.run(host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
             port=int(os.getenv('HBNB_API_PORT', '5000')))
+    
