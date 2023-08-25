@@ -38,12 +38,10 @@ class FileStorage:
         """
         Retrieve one object based on the class name and id
         """
-        if cls is not None and type(cls) is str and id is not None and type(id) is str and cls in classes:
-            key = cls + '.' + id
-            obj = self.__objects.get(key, None)
-            return obj
-        else:
-            return None
+        key = cls.__name__ + '.' + id
+        if key in self.all(cls):
+            return self.all(cls)[key]
+        return None
 
     def count(self, cls=None):
         """
