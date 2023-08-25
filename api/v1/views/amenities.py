@@ -3,10 +3,11 @@
 Create a new view for Amenity objects that
 handles all default RESTFul API actions
 """
-from flask import jsonify, request, abort
+from flask import Flask, request, jsonify, abort
 from models import storage
 from api.v1.views import app_views
-from models.amenity import Amenity
+from models.state import State
+from models.city import City
 
 
 app = Flask(__name__)
