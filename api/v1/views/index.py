@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    This module creates a status route for our blueprint
+    This module defines two routes within your app_views blueprint:
 """
 from models import storage
 from flask import jsonify

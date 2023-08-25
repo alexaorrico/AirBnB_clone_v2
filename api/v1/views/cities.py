@@ -2,7 +2,7 @@
 """
     This module creates a new view for City
     objects that handles all default REST API
-    actions.
+    actions for these objects in the Flask app.
 """
 from flask import jsonify, abort, request
 from api.v1.views import app_views

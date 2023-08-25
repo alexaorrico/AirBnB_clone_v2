@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """
-    Creates a web app using Flask
+This script is the main file of a Flask
+application,
+which configures and runs the web server.
+
 """
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
