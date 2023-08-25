@@ -15,6 +15,7 @@ app.register_blueprint(app_views)
 
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
+
 @app.teardown_appcontext
 def tear_down(e):
     """ teardown for app """
@@ -28,6 +29,6 @@ def no_page(e):
 
 
 if __name__ == "__main__":
-    """ ran the app """
+    """ run the app """
     app.run(host=getenv('HBNB_API_HOST'),
             port=getenv('HBNB_API_PORT'), threaded=True)
