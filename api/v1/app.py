@@ -32,15 +32,7 @@ def not_found():
     404 error handler
     """
     return make_response(jsonify({"error": "Not found"}), 404)
-
-
-app.config['SWAGGER'] = {
-    'title': 'AirBnB clone v3 Restful API',
-    'uiversion': 3
-}
-
-Swagger(app)
-
+    
 
 if __name__ == "__main__":
     """
