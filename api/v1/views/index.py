@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""doc"""
-
-
+"""
+    This module creates a status route for our blueprint
+"""
 from models import storage
 from flask import jsonify
 from api.v1.views import app_views
