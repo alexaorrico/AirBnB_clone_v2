@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Flask App
+Flask Application
 """
 from models import storage
 from api.v1.views import app_views
