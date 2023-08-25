@@ -98,3 +98,12 @@ class TestDbstorage(unittest.TestCase):
                 self.assertIn('count', funciones[0], "count is not present")
         self.assertGreater(models.storage.count(), 0, "no esta contando")
         self.assertEqual(type(models.storage.count()), int)
+
+    def test_dbs_get(self):
+        for funciones in self.dbs_f:
+            if funciones[0] == 'get':
+                self.assertIn('get', funciones[0], "get is not present")
+        first_state_id = list(models.storage.all(State).values())[0].id
+        f_s = list(models.storage.all(State).values())[0]
+        self.assertEqual(models.storage.get(State, first_state_id), f_s)
+        self.assertEqual(models.storage.get(State, 22222), None)

@@ -113,3 +113,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorage(unittest.TestCase):
+    """ test for count and get"""
+    fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
+
+    def test_dbs_count(self):
+        for funciones in self.fs_f:
+            if funciones[0] == 'count':
+                self.assertIn('count', funciones[0], "count is not present")
+        self.assertGreater(models.storage.count(), 0, "no esta contando")
+        self.assertEqual(type(models.storage.count()), int)
+
+    def test_dbs_get(self):
+        for funciones in self.fs_f:
+            if funciones[0] == 'get':
+                self.assertIn('get', funciones[0], "get is not present")
+        first_state_id = list(models.storage.all(State).values())[0].id
+        f_s = list(models.storage.all(State).values())[0]
+        self.assertEqual(models.storage.get(State, first_state_id), f_s)
+        self.assertEqual(models.storage.get(State, 22222), None)
