@@ -15,11 +15,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(exception):
+    """Closes session"""
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(exception):
+    """Handles 404 error"""
     return {'error': "Not found"}
 
 
@@ -28,4 +30,4 @@ if __name__ == "__main__":
     hoster = os.getenv('HBNB_API_HOST', '0.0.0.0')
     porter = os.getenv('HBNB_API_PORT', '5000')
 
-    app.run(host=hoster, port=porter, threaded=True)
+    app.run(host="hoster", port="porter")
