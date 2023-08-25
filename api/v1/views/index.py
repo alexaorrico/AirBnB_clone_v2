@@ -21,7 +21,7 @@ def status():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def number_objs():
     """
-    Endpoint
+    
     """
     response = {}
     NAME = {
