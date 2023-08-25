@@ -42,9 +42,9 @@ def creates_users():
     user_data = request.get_json()
     if not user_data:
         abort(400, "Not a JSON")
-    elif "email" is not user_data:
+    elif "email" not in user_data:
         abort(400, "Missing email")
-    elif "password" is not user_data:
+    elif "password" not in user_data:
         abort(400, "Missing password")
 
     new_users = User(**new_users)
@@ -63,4 +63,4 @@ def update_users(user_id):
         if key is not ["id", "email", "created_at", "updated_at"]:
             setattr(users, key, value)
     storage.save()
-    return jsonify({users.to_dict()}), 200
+    return jsonify(users.to_dict()), 200
