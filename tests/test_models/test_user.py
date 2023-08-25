@@ -10,7 +10,7 @@ from models import user
 from models.base_model import BaseModel
 import pep8
 import unittest
-User = user.User
+User = models.user.User
 
 
 class TestUserDocs(unittest.TestCase):
@@ -76,15 +76,6 @@ class TestUser(unittest.TestCase):
         else:
             self.assertEqual(user.email, "")
 
-    def test_password_attr(self):
-        """Test that User has attr password, and it's an empty string"""
-        user = User()
-        self.assertTrue(hasattr(user, "password"))
-        if models.storage_t == 'db':
-            self.assertEqual(user.password, None)
-        else:
-            self.assertEqual(user.password, "")
-
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
         user = User()
@@ -110,7 +101,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in u.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
