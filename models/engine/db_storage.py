@@ -77,11 +77,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """Method to retrieve one specific object"""
-        key = cls.__name__ + "." + id
-        try:
-            return self.all()[key]
-        except KeyError:
-            return None
+        all_obj = self.all()
+        search_str = "{}.{}".format(str(cls), str(id))
+        result = all_obj.get(search_str)
+        return result
 
     def count(self, cls=None):
         """Count current number of class instances"""
