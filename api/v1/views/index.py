@@ -25,7 +25,7 @@ def stats():
     return {
         'amenities': storage.count(Amenity),
         'cities': storage.count(City),
-        'place': storage.count(State),
+        'place': storage.count(Place),
         'reviews': storage.count(Review),
         'states': storage.count(State),
         'users': storage.count(User)
