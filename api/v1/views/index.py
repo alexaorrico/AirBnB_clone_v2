@@ -9,7 +9,8 @@ from models import storage
 def statrus():
     return jsonify({"status": "OK"})
 
-@app_views.route("/api/v1/stats", strict_slashes=False)
+
+@app_views.route("/stats", strict_slashes=False)
 def stats():
     """ """
     stats = {
