@@ -5,9 +5,11 @@ Server file for HBNB version 3
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app, resources={r'/api/v1/':{"origins": "*"}})
 app.register_blueprint(app_views)
 
 
