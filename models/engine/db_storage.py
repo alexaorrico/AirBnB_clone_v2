@@ -56,11 +56,8 @@ class DBStorage:
         self.__session.add(obj)
 
     def get(self, cls, id):
-        """
-        Retrieve an object based on class and ID
-        """
-        key = f"{cls.__name__}.{id}"
-        return self.__session.query(cls).get(key)
+        """get a specific element from the db"""
+        return self.__session.query(cls).filter(cls.id == id).first()
 
     def count(self, cls=None):
         """
