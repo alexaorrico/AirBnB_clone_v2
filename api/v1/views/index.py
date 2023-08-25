@@ -27,4 +27,4 @@ def stats_hbnb():
         "reviews": storage.count(Review),
         "states": storage.count(State),
         "users": storage.count(User)
-    })
+        })
