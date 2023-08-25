@@ -9,7 +9,10 @@ from api.v1.views import app_views
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', methods=['GET'])
+app = Flask(__name__)
+
+
+@app_views.route('/amenities/', methods=['GET'])
 def get_amenities():
     amenities = [
         amenity.to_dict() for amenity in storage.all(Amenity).values()
@@ -17,7 +20,7 @@ def get_amenities():
     return jsonify(amenities), 200
 
 
-@app_views.route('/amenities', methods=['POST'])
+@app_views.route('/amenities/', methods=['POST'])
 def post_amenity():
     data = request.get_json()
     if not data:
@@ -34,8 +37,8 @@ def post_amenity():
 def get_amenities_id(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
-        abort(404)
-    return jsonify(amenity.to_dict())
+        return abort(404)
+    return jsonify(amenity.to_dict()), 200
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
@@ -44,7 +47,7 @@ def put_amenity_id(amenity_id):
 
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
-        abort(404)
+        return abort(404)
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
     for key, value in data.items():
@@ -56,9 +59,13 @@ def put_amenity_id(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenities_id(amenity_id):
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
-        abort(404)
-    storage.delete(amenity)
+    to_delete = storage.get(Amenity, amenity_id)
+    if to_delete is None:
+        return abort(404)
+    storage.delete(to_delete)
     storage.save()
     return jsonify({}), 200
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="5000")
