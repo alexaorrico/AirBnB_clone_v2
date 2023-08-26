@@ -14,11 +14,11 @@ def get_reviews(place_id):
     """Return reviews list in format JSON"""
     reviews = storage.all(Review)
     place = storage.get(Place, place_id)
-    if not place:
+    if place is None:
         abort(404)
     lis_review = []
     for review in reviews.values():
-        if place.id == reviews.place_id:
+        if place.id == review.place_id:
             lis_review.append(review.to_dict())
     return jsonify(lis_review)
 
