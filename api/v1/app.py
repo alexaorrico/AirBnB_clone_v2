@@ -1,30 +1,34 @@
 #!/usr/bin/python3
-"""Module that run the server"""
-from flask import Flask, jsonify, make_response
+"""Script to start the API"""
+
 from models import storage
 from api.v1.views import app_views
-"""from flask_cors import CORS"""
+from os import environ
+from flask import Flask, jsonify, make_response
+from flask_cors import CORS
+
 
 app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
 
-"""cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})"""
+# Create a CORS instance with permissive settings (for demonstration purposes)
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
-@app.do_teardown_appcontext
-def do_teardownZ(exception):
-    """method that close the session """
+@app.teardown_appcontext
+def close_db(exception):
+    """Close storage"""
     storage.close()
 
 
 @app.errorhandler(404)
-def json_not_found(exception):
-    """function that handles 404 error"""
-    return make_response(jsonify({"error": "Not Found"}), 404)
+def not_found(exception):
+    """404 error"""
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
-if __name__ == '__main__':
-    """host and port"""
+if __name__ == "__main__":
+    """Main"""
     app.run(host='0.0.0.0', port=5000)
