@@ -20,11 +20,11 @@ def hbnbstatus():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats_hbnb():
     """function: retrieves a dictionary with the amount of objects"""
-    return jsonify({
-        "amenities": storage.count(Amenity),
-        "cities": storage.count(City),
-        "places": storage.count(Place),
-        "reviews": storage.count(Review),
-        "states": storage.count(State),
-        "users": storage.count(User)
-        })
+    obj_in_class = [Amenity, City, Place, Review, State, User]
+    names = ["amenities", "cities", "places", "reviews", 'states', 'users']
+
+    obj_amount = {}
+    for amount in range(len(obj_in_class)):
+        obj_amount[names[amount]] = storage.count(obj_in_class[amount])
+
+    return jsonify(obj_amount)
