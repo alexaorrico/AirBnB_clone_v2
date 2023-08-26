@@ -39,7 +39,7 @@ def delete_state(state_id):
     abort(404)
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'])
 def create_state():
     """Creates a State"""
     data = request.get_json()
