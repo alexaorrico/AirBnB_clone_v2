@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Module that have the route of app_views"""
+"""Index Script"""
+
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -12,19 +13,19 @@ from models.user import User
 
 
 @app_views.route('/status', strict_slashes=False)
-def hbnbstatus():
-    """function that return json on status route"""
+def status():
+    """API Status"""
     return jsonify({'status': "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def stats_hbnb():
-    """function: retrieves a dictionary with the amount of objects"""
-    obj_in_class = [Amenity, City, Place, Review, State, User]
-    names = ["amenities", "cities", "places", "reviews", 'states', 'users']
+def number_objects():
+    """Get the numbers by type"""
+    classes = [Amenity, City, Place, Review, State, User]
+    name = ["amenities", "cities", "places", "reviews", "states", "users"]
 
-    obj_amount = {}
-    for amount in range(len(obj_in_class)):
-        obj_amount[names[amount]] = storage.count(obj_in_class[amount])
+    obj_nums = {}
+    for i in range(len(classes)):
+        obj_nums[name[i]] = storage.count(classes[i])
 
-    return jsonify(obj_amount)
+    return jsonify(obj_nums)
