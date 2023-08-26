@@ -24,7 +24,7 @@ def get_status():
 
 
 @app_views.route('/stats')
-def stats():
+def newcount():
     '''
     Endpoint that returns each obj
     '''
