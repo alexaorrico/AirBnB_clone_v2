@@ -102,3 +102,29 @@ class TestDBStorageGet(unittest.TestCase):
     def test_get_object_inexistente(self):
         state_get = models.storage.get(State, "id_inexistente")
         self.assertIsNone(state_get)
+
+
+class TestDBStorageCount(unittest.TestCase):
+    """Test the count method in DBStorage"""
+
+    def test_count_all(self):
+        """Test count method for all objects"""
+        initial_count = models.storage.count()
+        new_state = State(name="Texas")
+        models.storage.new(new_state)
+        models.storage.save()
+        updated_count = models.storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
+
+    def test_count_by_class(self):
+        """Test count method for objects by class"""
+        new_state = State(name="Florida")
+        models.storage.new(new_state)
+        models.storage.save()
+        updated_count = models.storage.count(State)
+        self.assertEqual(updated_count, 1)
+
+    def test_count_nonexistent_class(self):
+        """Test count method for nonexistent class"""
+        count = models.storage.count()
+        self.assertEqual(count, 0)
