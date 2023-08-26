@@ -36,12 +36,11 @@ def get_place(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     """Delete place id"""
-    places = storage.all()
-    for place in places.values(Place):
-        if place.id == place_id:
-            storage.delete(place)
-            storage.save()
-            return jsonify({}), 200
+    place = storage.get(Place, place_id)
+    if place:
+        place.delete()
+        storage.save()
+        return jsonify({}), 200
     abort(404)
 
 
