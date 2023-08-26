@@ -36,12 +36,11 @@ def get_review(review_id):
                  strict_slashes=False)
 def delete_review(review_id):
     """Delete review id"""
-    reviews = storage.all()
-    for review in reviews.values(Review):
-        if review.id == review_id:
-            storage.delete(review)
-            storage.save()
-            return jsonify({}), 200
+    review = storage.get(Review, review_id)
+    if review:
+        review.delete()
+        storage.save()
+        return jsonify({}), 200
     abort(404)
 
 
