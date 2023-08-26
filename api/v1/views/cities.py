@@ -47,17 +47,17 @@ def create_city(state_id):
     return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_city(city_id):
     """updates given city"""
     found_city = storage.get(City, city_id)
     if found_city is None:
         return '', 404
-    http_request = request.get_json
+    http_request = request.get_json()
     if http_request is None:
         return 'Not a JSON', 400
     for key, values in http_request.items():
-        if key not in ['id', 'created_at', 'updated_at']:
+        if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(found_city, key, values)
     storage.save()
     return jsonify(found_city.to_dict()), 200
