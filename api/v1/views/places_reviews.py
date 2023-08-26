@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-Module that haldels the PLACES REVIEW RESTFull API
+Module that haldels the PLACES_REVIEW RESTFull API
 '''
 
 from flask import jsonify, abort, request, Response

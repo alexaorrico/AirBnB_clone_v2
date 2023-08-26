@@ -1,6 +1,6 @@
 #!usr/bin/python3
 '''
-Module that handles default RestFull API
+Module that Users RestFull API
 '''
 
 from flask import request, abort, Response, jsonify

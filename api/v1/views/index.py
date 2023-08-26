@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-Module that has the get status
+Module that has the get_status
 '''
 
 from flask import jsonify

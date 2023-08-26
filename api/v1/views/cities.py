@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-Module that haldles all default RESTFull API's
+Module that handles Cities  RESTFull API's
 '''
 
 from flask import jsonify, abort, request, Response
