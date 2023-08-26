@@ -35,7 +35,7 @@ def get_reviews_id(review_id):
 
 @app_views.route("/reviews/<review_id>", methods=['DELETE'])
 def delete_reviews(review_id):
-    review = storage.get(Reviews, review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         return abort(404)
     storage.delete(review)
