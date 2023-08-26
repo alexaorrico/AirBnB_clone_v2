@@ -157,6 +157,12 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
+## Updated by
+[![Updated by Santiago Echeverri](https://img.shields.io/badge/Updated%20by-Santiago%20Echeverri-blue.svg)](https://github.com/dassantoss)
+[![Updated by Tania Cauich](https://img.shields.io/badge/Updated%20by-Santiago%20Echeverri-blue.svg)](https://github.com/TaniaHillock)
+[![Python >=3.6](https://img.shields.io/badge/python-%3E%3D3.6-blue.svg)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
