@@ -28,7 +28,7 @@ def amenity(amenity_id):
     return jsonify(amenity_found.to_dict()), 200
 
 
-@app_views.route('/amenities', methods=['POST'])
+@app_views.route('/amenities/', methods=['POST'])
 def create_amenities():
     """create an amenity"""
     http_request = request.get_json(silent=True)
