@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Contains the FileStorage class
+Contains the FileStorage class in charge of
+saving objects in json format
 """
 
 import json

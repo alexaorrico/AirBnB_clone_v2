@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+Contains the class DBStorage, in charge of
+saving objects in database format.
 """
 
 import models
