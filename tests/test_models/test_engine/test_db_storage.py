@@ -88,43 +88,30 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
 
-class TestDBStorageGet(unittest.TestCase):
-    """Test the get method in DBStorage"""
+class TestDbStorage(unittest.TestCase):
+    """Tests cases for get() and count() methods"""
 
-    def test_get_object(self):
-        new_state = State(name="California")
-        models.storage.new(new_state)
-        models.storage.save()
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "Not testing db storage")
+    def test_get(self):
+        "Tests for get() method"
+        storage = DBStorage()
+        self.assertIs(storage.get(User, "Blah"), None)
+        self.assertIs(storage.get("Blah", "Blah"), None)
+        new_city = City()
+        new_city.save()
+        self.assertIs(storage.get("City", new_city.id), new_city)
 
-        state_get = models.storage.get(State, new_state.id)
-        self.assertEqual(state_get, new_state)
-
-    def test_get_object_inexistente(self):
-        state_get = models.storage.get(State, "id_inexistente")
-        self.assertIsNone(state_get)
-
-
-class TestDBStorageCount(unittest.TestCase):
-    """Test the count method in DBStorage"""
-
-    def test_count_all(self):
-        """Test count method for all objects"""
-        initial_count = models.storage.count()
-        new_state = State(name="Texas")
-        models.storage.new(new_state)
-        models.storage.save()
-        updated_count = models.storage.count()
-        self.assertEqual(updated_count, initial_count + 1)
-
-    def test_count_by_class(self):
-        """Test count method for objects by class"""
-        new_state = State(name="Florida")
-        models.storage.new(new_state)
-        models.storage.save()
-        updated_count = models.storage.count(State)
-        self.assertEqual(updated_count, 1)
-
-    def test_count_nonexistent_class(self):
-        """Test count method for nonexistent class"""
-        count = models.storage.count()
-        self.assertEqual(count, 0)
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != 'db',
+                     "Not testing db storage")
+    def test_count(self):
+        "Tests for count() method"
+        storage = DBStorage()
+        starting_len = len(storage.all())
+        self.assertIs(storage.count(), starting_len)
+        state_len = len(storage.all(State))
+        self.assertIs(state_len, storage.count(State))
+        new_state = State()
+        new_state.save()
+        self.assertIs(state_len + 1, storage.count(State))
+        self.assertIs(starting_len + 1, storage.count())
