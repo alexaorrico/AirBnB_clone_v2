@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """Flask App"""
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
+import json
 
 
 app = Flask(__name__)
@@ -14,6 +15,14 @@ app.url_map.strict_slashes = False
 def teardown_appcontext(self):
     """Close storage"""
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_404(e):
+    """Error handler for 404 (Not Found) errors"""
+    response = jsonify({"error": "No found"})
+    response.status_code = 404
+    return make_response(response)
 
 
 if __name__ == "__main__":
