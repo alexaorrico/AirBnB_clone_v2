@@ -1,69 +1,76 @@
 #!/usr/bin/python3
-"""Creates a new view for City"""
-from flask import request, jsonify, abort
+"""Cities View"""
 from api.v1.views import app_views
-from models.city import City
+from flask import Flask, jsonify, abort, request, make_response
+from models import storage
 from models.state import State
+from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
-def get_state_cities(state_id):
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                    strict_slashes=False)
+def get_cities(state_id):
     """Retrieves the list of all City objects of a State"""
-    state = State.get(state_id)
-    if not state:
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
     cities = state.cities
-    return jsonify([city.to_dict() for city in cities]), 200
+    cities_list = [city.to_dict() for city in cities]
+    return jsonify(cities_list)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['GET'],
+                    strict_slashes=False)
 def get_city(city_id):
     """Retrieves a City object"""
-    city = City.get(city_id)
-    if not city:
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
-    return jsonify(city.to_dict()), 200
+    return jsonify(city.to_dict())
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
+                    strict_slashes=False)
 def delete_city(city_id):
     """Deletes a City object"""
-    city = City.get(city_id)
-    if not city:
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
-    city.delete()
-    return jsonify({}), 200
+    storage.delete(city)
+    storage.save()
+    return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                    strict_slashes=False)
 def create_city(state_id):
     """Creates a City"""
-    state = State.get(state_id)
-    if not state:
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
     data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
-    city = City(**data)
-    city.state_id = state_id
-    city.save()
-    return jsonify(city.to_dict()), 201
+    if data is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    if "name" not in data:
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    data["state_id"] = state_id
+    new_city = City(**data)
+    new_city.save()
+    return make_response(jsonify(new_city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['PUT'],
+                    strict_slashes=False)
 def update_city(city_id):
-    """Updates a City object"""
-    city = City.get(city_id)
-    if not city:
+    """Update a City"""
+    city = storage.get(City, city_id)
+    if city is None:
         abort(404)
     data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
-    ignored_keys = ['id', 'state_id', 'created_at', 'updated_at']
+    if data is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     for key, value in data.items():
-        if key not in ignored_keys:
+        if key not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(city, key, value)
     city.save()
-    return jsonify(city.to_dict()), 200
+    return make_response(jsonify(city.to_dict()), 200)
