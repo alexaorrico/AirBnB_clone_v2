@@ -2,7 +2,8 @@
 """ View for Reviews """
 
 from flask import jsonify, abort, request, make_response
-from models import Place, Review
+from models.place import Place
+from models.review import Review
 from api.v1.views import app_views
 from models import storage
 from sqlalchemy.exc import IntegrityError

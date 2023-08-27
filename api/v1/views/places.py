@@ -2,7 +2,8 @@
 """ View for Places """
 
 from flask import jsonify, abort, request, make_response
-from models import City, Place
+from models.city import City
+from models.place import Place
 from api.v1.views import app_views
 from models import storage
 from sqlalchemy.exc import IntegrityError

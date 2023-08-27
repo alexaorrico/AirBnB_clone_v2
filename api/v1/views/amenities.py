@@ -2,7 +2,7 @@
 """ View for Amenities """
 
 from flask import jsonify, abort, request, make_response
-from models import Amenity
+from models.amenity import Amenity
 from api.v1.views import app_views
 from models import storage
 
@@ -34,7 +34,7 @@ def get_amenity(amenity_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity(amenity_id):
-    """ Deletes a `Amenity` object. """
+    """ Deletes an Amenity object. """
     amenity = storage.get(Amenity, amenity_id)
     if amenity is not None:
         storage.delete(amenity)
@@ -47,7 +47,7 @@ def delete_amenity(amenity_id):
                  methods=['POST'],
                  strict_slashes=False)
 def create_amenity():
-    """ Creates a `Amenity` object. """
+    """ Creates an Amenity object. """
     request_dict = request.get_json(silent=True)
     if request_dict is not None:
         if 'name' in request_dict.keys() and request_dict['name'] is not None:
@@ -62,7 +62,7 @@ def create_amenity():
                  methods=['PUT'],
                  strict_slashes=False)
 def update_amenity(amenity_id):
-    """ Updates a `Amenity` object. """
+    """ Updates an Amenity object. """
     request_dict = request.get_json(silent=True)
     if request_dict is not None:
         amenity = storage.get(Amenity, amenity_id)
