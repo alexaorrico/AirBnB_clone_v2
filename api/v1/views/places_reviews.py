@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+""" View for Reviews """
+
 from flask import jsonify, request, abort
 from models import Place, Review, User
 from api.v1.views import app_views

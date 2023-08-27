@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+""" View for Users """
+
 from flask import jsonify, request, abort
 from models import User
 from api.v1.views import app_views

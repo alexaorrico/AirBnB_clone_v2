@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+""" View for Places """
+
 from flask import jsonify, request, abort
 from models import City, Place, User
 from api.v1.views import app_views
