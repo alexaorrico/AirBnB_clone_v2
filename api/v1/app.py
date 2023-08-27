@@ -3,6 +3,7 @@
 from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
+import json
 
 
 app = Flask(__name__)
@@ -15,10 +16,14 @@ def teardown_appcontext(self):
     """Close storage"""
     storage.close()
 
+
 @app.errorhandler(404)
-def not_found(error):
-    """ Returns JSON response with 404 status """
-    return make_response(jsonify({"error": "Not found"}), 404)
+def handle_404(e):
+    """Error handler for 404 (Not Found) errors"""
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return make_response(response)
+
 
 if __name__ == "__main__":
     """Main function"""
