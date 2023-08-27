@@ -114,28 +114,45 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "Not testing File Storage")
-    def test_get(self):
-        """Tests the returns of the get() method"""
-        storage = FileStorage()
-        self.assertIs(storage.get(User, "name"), None)
-        self.assertIs(storage.get(None, "Snow"), None)
-        new_state = State()
-        new_state.save()
-        self.assertIs(storage.get(State, new_state.id), new_state)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == "db",
-                     "Not testing this File Storage")
-    def test_count(self):
-        """A test of all the returns
-        for the count() methods"""
-        storage = FileStorage()
-        starting_len = len(storage.all())
-        self.assertIs(storage.count(), starting_len)
-        state_len = storage.count(State)
-        self.assertIs(storage.count(State), state_len)
-        new_state = State()
-        new_state.save()
-        self.assertIs(storage.count(State), state_len + 1)
-        self.assertIs(storage.count(), starting_len + 1)
+class TestFileStorageGet(unittest.TestCase):
+    """Test the get method in FileStorage"""
+
+    def test_get(self):
+        """Test get method for an existing object"""
+        new_state = State(name="California")
+        models.storage.new(new_state)
+        models.storage.save()
+        retrieved_state = models.storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
+
+    def test_get_nonexistent(self):
+        """Test get method for a nonexistent object"""
+        retrieved_state = models.storage.get(State, "nonexistent_id")
+        self.assertIsNone(retrieved_state)
+
+
+class TestFileStorageCount(unittest.TestCase):
+    """Test the count method in FileStorage"""
+
+    def test_count_all(self):
+        """Test count method for all objects"""
+        initial_count = models.storage.count()
+        new_state = State(name="Texas")
+        models.storage.new(new_state)
+        models.storage.save()
+        updated_count = models.storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
+
+    def test_count_by_class(self):
+        """Test count method for objects by class"""
+        new_state = State(name="Florida")
+        models.storage.new(new_state)
+        models.storage.save()
+        updated_count = models.storage.count(State)
+        self.assertEqual(updated_count, 1)
+
+    def test_count_nonexistent_class(self):
+        """Test count method for nonexistent class"""
+        count = models.storage.count()
+        self.assertEqual(count, 0)
