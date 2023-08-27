@@ -10,6 +10,7 @@ from api.v1.views import app_views
                  methods=['GET'],
                  strict_slashes=False)
 def get_amenities():
+    """Retrieve the list of all Amenity objects"""
     amenities = Amenity.query.all()
     amenities_list = [amenity.to_dict() for amenity in amenities]
     return jsonify(amenities_list)
@@ -19,6 +20,7 @@ def get_amenities():
                  methods=['GET'],
                  strict_slashes=False)
 def get_amenity(amenity_id):
+    """Retrieve a specific Amenity object by its ID"""
     amenity = Amenity.query.get(amenity_id)
     if not amenity:
         abort(404)
@@ -29,6 +31,7 @@ def get_amenity(amenity_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity(amenity_id):
+    """Deletes a specific Amenity object by its ID"""
     amenity = Amenity.query.get(amenity_id)
     if not amenity:
         abort(404)
@@ -40,6 +43,7 @@ def delete_amenity(amenity_id):
                  methods=['POST'],
                  strict_slashes=False)
 def create_amenity():
+    """Creates a new Amenity object"""
     data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
@@ -54,6 +58,7 @@ def create_amenity():
                  methods=['PUT'],
                  strict_slashes=False)
 def update_amenity(amenity_id):
+    """Updates a specific Amenity object by its ID"""
     amenity = Amenity.query.get(amenity_id)
     if not amenity:
         abort(404)

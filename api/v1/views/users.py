@@ -10,6 +10,7 @@ from api.v1.views import app_views
                  methods=['GET'],
                  strict_slashes=False)
 def get_users():
+    """Retrieves the list of all User objects"""
     users = User.query.all()
     users_list = [user.to_dict() for user in users]
     return jsonify(users_list)
@@ -19,6 +20,7 @@ def get_users():
                  methods=['GET'],
                  strict_slashes=False)
 def get_user(user_id):
+    """Retrieves a specific User object by its ID"""
     user = User.query.get(user_id)
     if not user:
         abort(404)
@@ -29,6 +31,7 @@ def get_user(user_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
+    """Deletes a specific User object by its ID"""
     user = User.query.get(user_id)
     if not user:
         abort(404)
@@ -40,6 +43,7 @@ def delete_user(user_id):
                  methods=['POST'],
                  strict_slashes=False)
 def create_user():
+    """Creates a new User object"""
     data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
@@ -56,6 +60,7 @@ def create_user():
                  methods=['PUT'],
                  strict_slashes=False)
 def update_user(user_id):
+    """Updates a specific User object by its ID"""
     user = User.query.get(user_id)
     if not user:
         abort(404)

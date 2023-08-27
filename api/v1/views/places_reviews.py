@@ -10,6 +10,7 @@ from api.v1.views import app_views
                  methods=['GET'],
                  strict_slashes=False)
 def get_place_reviews(place_id):
+    """Retrieves the list of all Review objects for a specific Place"""
     place = Place.query.get(place_id)
     if not place:
         abort(404)
@@ -21,6 +22,7 @@ def get_place_reviews(place_id):
                  methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
+    """Retrieves a specific Review object by its ID"""
     review = Review.query.get(review_id)
     if not review:
         abort(404)
@@ -31,6 +33,7 @@ def get_review(review_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
+    """Deletes a specific Review object by its ID"""
     review = Review.query.get(review_id)
     if not review:
         abort(404)
@@ -42,6 +45,7 @@ def delete_review(review_id):
                  methods=['POST'],
                  strict_slashes=False)
 def create_review(place_id):
+    """Creates a new Review object for a specific Place"""
     place = Place.query.get(place_id)
     if not place:
         abort(404)
@@ -64,6 +68,7 @@ def create_review(place_id):
                  methods=['PUT'],
                  strict_slashes=False)
 def update_review(review_id):
+    """Updates a specific Review object by its ID"""
     review = Review.query.get(review_id)
     if not review:
         abort(404)

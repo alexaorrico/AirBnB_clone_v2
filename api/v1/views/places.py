@@ -10,6 +10,7 @@ from api.v1.views import app_views
                  methods=['GET'],
                  strict_slashes=False)
 def get_city_places(city_id):
+    """Retrieves the list of all Place objects for a specific City"""
     city = City.query.get(city_id)
     if not city:
         abort(404)
@@ -21,6 +22,7 @@ def get_city_places(city_id):
                  methods=['GET'],
                  strict_slashes=False)
 def get_place(place_id):
+    """Retrieves a specific Place object by its ID"""
     place = Place.query.get(place_id)
     if not place:
         abort(404)
@@ -31,6 +33,7 @@ def get_place(place_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
+    """Deletes a specific Place object by its ID"""
     place = Place.query.get(place_id)
     if not place:
         abort(404)
@@ -42,6 +45,7 @@ def delete_place(place_id):
                  methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
+    """Creates a new Place object for a specific City"""
     city = City.query.get(city_id)
     if not city:
         abort(404)
@@ -64,6 +68,7 @@ def create_place(city_id):
                  methods=['PUT'],
                  strict_slashes=False)
 def update_place(place_id):
+    """Updates a specific Place object by its ID"""
     place = Place.query.get(place_id)
     if not place:
         abort(404)
