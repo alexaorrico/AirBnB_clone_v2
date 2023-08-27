@@ -128,3 +128,13 @@ class TestDBStorageCount(unittest.TestCase):
         """Test count method for nonexistent class"""
         count = models.storage.count()
         self.assertEqual(count, 0)
+
+    def test_count_multiple_objects(self):
+        """Test count method for multiple objects"""
+        new_state1 = State(name="California")
+        new_state2 = State(name="New York")
+        models.storage.new(new_state1)
+        models.storage.new(new_state2)
+        models.storage.save()
+        updated_count = models.storage.count(State)
+        self.assertEqual(updated_count, 2)
