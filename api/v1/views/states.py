@@ -7,7 +7,8 @@ from flask import jsonify, abort, request
 from models import storage
 
 
-@app_views.route('/states/', methods=['GET'])
+@app_views.route('/states/',
+                 methods=['GET'])
 def get_all_states():
     """ Return all the states"""
     states = storage.all(State)
@@ -17,7 +18,8 @@ def get_all_states():
     return jsonify(list_of_states)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states/<state_id>',
+                 methods=['GET'])
 def get_state_by_id(state_id):
     """ Return a state based on state_id """
     state = storage.get(State, state_id)
@@ -26,7 +28,8 @@ def get_state_by_id(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'])
 def delete_state(state_id):
     """ Delete a state bases on state_id """
     state = storage.get(State, state_id)
@@ -37,7 +40,8 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states/',
+                 methods=['POST'])
 def create_state():
     """ Create new state"""
     new_state = request.get_json()
@@ -51,7 +55,8 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>',
+                 methods=['PUT'])
 def update_state(state_id):
     """ Update an exiting state"""
     state = storage.get(State, state_id)
