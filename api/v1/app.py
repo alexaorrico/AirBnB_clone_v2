@@ -2,6 +2,8 @@
 """
 Server file for HBNB version 3
 """
+
+
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
