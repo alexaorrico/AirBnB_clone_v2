@@ -11,12 +11,12 @@ from models.place import Place
 
 @app_views.route('cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def list_all_places(place_id):
+def list_all_places(city_id):
     '''Retrieves a list of all city objects of a state id'''
-    place = storage.get(Place, place_id)
-    if place is None:
+    city = storage.get(City, city_id)
+    if city is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
-    list_places = [place.to_dict() for place in place.places]
+    list_places = [place.to_dict() for place in city.places]
     return jsonify(list_places)
 
 
