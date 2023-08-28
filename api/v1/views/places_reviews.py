@@ -18,7 +18,7 @@ def list_all_reviews(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
-    list_reviews = [place.to_dict() for review in place.reviews]
+    list_reviews = [review.to_dict() for review in place.reviews]
     return jsonify(list_reviews)
 
 
