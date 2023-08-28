@@ -3,21 +3,26 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
+import json
+from os import getenv
+import pep8
+import unittest
 from datetime import datetime
-import inspect
+from inspect import inspect
+
+from sqlalchemy.orm import scoped_session, sessionmaker
+
 import models
-from models.engine import db_storage
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
+from models.engine import db_storage
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -73,20 +78,16 @@ test_db_storage.py'])
         """
         db = DBStorage()
 
-        # Create and save a sample object
         new_state = State(name="California")
         db.new(new_state)
         db.save()
 
-        # Test get method
         retrieved_state = db.get(State, new_state.id)
         self.assertEqual(retrieved_state, new_state)
 
-        # Test count method
         state_count = db.count(State)
         self.assertEqual(state_count, 1)
 
-        # Clean up
         db.delete(new_state)
         db.save()
 
@@ -109,3 +110,16 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+    @unittest.skipIf(getenv('HBNB_TYPE_STORAGE') != 'file', "not testing fs")
+    def setUp(self):
+        """Set up method"""
+        storage.reload()
+
+    def test_all_returns_dict(self):
+        """Test that all returns a dictionary"""
+        objs = storage.all()
+        self.assertIs(type(objs), dict)

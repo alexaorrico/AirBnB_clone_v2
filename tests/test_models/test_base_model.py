@@ -158,3 +158,19 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(old_created_at, new_created_at)
         self.assertTrue(mock_storage.new.called)
         self.assertTrue(mock_storage.save.called)
+
+    def test_init_with_kwargs(self):
+        """Test that object is correctly created using keyword arguments"""
+        kwargs = {
+            "id": "test_id",
+            "created_at": "2023-08-01T12:34:56.789",
+            "updated_at": "2023-08-01T12:34:56.789",
+            "name": "Test Name",
+            "my_number": 42
+        }
+        inst = BaseModel(**kwargs)
+        self.assertEqual(inst.id, "test_id")
+        self.assertEqual(inst.name, "Test Name")
+        self.assertEqual(inst.my_number, 42)
+        self.assertEqual(inst.created_at.year, 2023)
+        self.assertEqual(inst.updated_at.year, 2023)

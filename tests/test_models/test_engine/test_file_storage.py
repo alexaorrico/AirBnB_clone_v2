@@ -136,3 +136,30 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+        def test_file_storage_delete(self):
+            """Test the delete method in FileStorage"""
+            storage = FileStorage()
+            obj = City(name="Test City")
+            storage.new(obj)
+            storage.save()
+
+            self.assertIn(obj, storage._FileStorage__objects.values())
+
+            storage.delete(obj)
+            storage.save()
+            self.assertNotIn(obj, storage._FileStorage__objects.values())
+
+        def test_file_storage_close(self):
+            """Test the close method in FileStorage"""
+            storage = FileStorage()
+
+            reload_called = False
+
+            def mock_reload(self):
+                nonlocal reload_called
+                reload_called = True
+            storage.reload = mock_reload
+
+            storage.close()
+            self.assertTrue(reload_called)
