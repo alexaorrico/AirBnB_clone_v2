@@ -60,8 +60,8 @@ def create_place(city_id):
         return make_response(jsonify({'error': 'Not found'}), 404)
     if 'name' not in request_data:
         return make_response(jsonify({'error': 'Missing name'}), 400)
-    request_data['city_id'] = city_id
-    new_place = Place(name=request_data['name'], city_id=city_id)
+    new_place = Place(name=request.json['name'],
+                      user_id=request.json['user_id'], city_id=city_id)
     storage.new(new_place)
     storage.save()
     return make_response(jsonify(new_place.to_dict()), 201)
