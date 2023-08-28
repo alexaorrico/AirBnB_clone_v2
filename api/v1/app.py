@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-CORS(app, resources={r'/api/v1/*':{"origins": "*"}})
+CORS(app, resources={r'/api/v1/*': {"origins": "*"}})
 app.register_blueprint(app_views)
 
 
@@ -26,6 +26,7 @@ def not_found(exception):
 
 
 if __name__ == "__main__":
+    """run when invoked"""
     import os
     hoster = os.getenv('HBNB_API_HOST', '0.0.0.0')
     porter = os.getenv('HBNB_API_PORT', '5000')
