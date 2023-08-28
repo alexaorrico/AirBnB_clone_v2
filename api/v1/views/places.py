@@ -7,6 +7,7 @@ from models import storage
 from models.city import City
 from models.state import State
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('cities/<city_id>/places', methods=['GET'],
@@ -53,6 +54,10 @@ def create_place(city_id):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'name' not in request_data:
         return make_response(jsonify({'error': 'Missing name'}), 400)
+    user_id = request_data['user_id']
+    user = storage.get(User, user_id)
+    if user is None:
+        return make_response(jsonify({'error': 'Not found'}), 404)
     new_place = Place(name=request_data['name'], city_id=city_id)
     storage.new(new_place)
     storage.save()
@@ -69,7 +74,8 @@ def update_place(place_id):
     if not request_data:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key, value in request_data.items():
-        if key not in ['id', 'state_id', 'city_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'state_id', 'city_id', 'created_at',
+                       'updated_at']:
             setattr(place, key, value)
     storage.save()
     return make_response(jsonify(place.to_dict()), 200)
