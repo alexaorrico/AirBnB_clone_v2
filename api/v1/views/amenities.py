@@ -12,7 +12,6 @@ from models.amenity import Amenity
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def status():
     """Gets list of amenities"""
-    
     list = []
     amenities = storage.all(Amenity).values()
     for amenity in amenities:

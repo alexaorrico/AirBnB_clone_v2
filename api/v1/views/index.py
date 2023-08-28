@@ -14,7 +14,7 @@ from models.user import User
 from models.review import Review
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def get_status():
     '''
     Route Status test that returns a JSON query
