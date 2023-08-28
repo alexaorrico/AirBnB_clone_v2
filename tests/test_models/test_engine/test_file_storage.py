@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -67,6 +69,25 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_file_storage_get_and_count(self):
+        """
+        Test get and count methods in FileStorage
+        """
+        file_storage = FileStorage()
+
+        new_city = City(name="Los Angeles")
+        file_storage.new(new_city)
+        file_storage.save()
+
+        retrieved_city = file_storage.get(City, new_city.id)
+        self.assertEqual(retrieved_city, new_city)
+
+        city_count = file_storage.count(City)
+        self.assertEqual(city_count, 1)
+
+        file_storage.delete(new_city)
+        file_storage.save()
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -113,3 +134,22 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_file_storage_delete(self):
+        """Test the delete method in FileStorage"""
+        storage = FileStorage()
+        obj = City(name="Test City")
+        storage.new(obj)
+        storage.save()
+
+        self.assertIn(obj, storage._FileStorage__objects.values())
+
+        storage.delete(obj)
+        storage.save()
+        self.assertNotIn(obj, storage._FileStorage__objects.values())
+
+    def test_file_storage_close(self):
+        """Test the close method in FileStorage"""
+        storage = FileStorage()
+
+        reload_called = False
