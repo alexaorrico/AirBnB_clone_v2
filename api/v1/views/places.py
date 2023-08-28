@@ -45,8 +45,8 @@ def delete_place(place_id):
                  strict_slashes=False)
 def create_place(place_id):
     """Create a new city"""
-    place = storage.get(Place, place_id)
-    if place is None:
+    city = storage.get(City, city_id)
+    if city is None:
         return make_response(jsonify({'error': 'Not found'}), 404)
     request_data = request.get_json()
     if not request_data:
