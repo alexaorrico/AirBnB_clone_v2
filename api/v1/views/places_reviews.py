@@ -47,7 +47,7 @@ def get_review(place_id=None):
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
-def get_review(review_id=None):
+def get_reviews(review_id=None):
     """
     Emphasys on only on Review obj
     """
