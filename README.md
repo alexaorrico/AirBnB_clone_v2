@@ -159,4 +159,9 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 ## License
+
+Third part of Airbnb: 
+Kundi Machado 
+Ignacio Martinez 
+
 Public Domain. No copy write protection. 
