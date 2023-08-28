@@ -1,0 +1,5 @@
+#!/bin/bash
+
+find . -name __pycache* -exec rm -rf {} \;
+find . -name .*.pyc -exec rm -rf {} \;
+
