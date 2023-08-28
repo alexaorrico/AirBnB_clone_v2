@@ -4,11 +4,11 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
 import json
+import inspect
 from os import getenv
 import pep8
 import unittest
 from datetime import datetime
-from inspect import inspect
 
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -111,9 +111,6 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
     @unittest.skipIf(getenv('HBNB_TYPE_STORAGE') != 'file', "not testing fs")
     def setUp(self):
         """Set up method"""

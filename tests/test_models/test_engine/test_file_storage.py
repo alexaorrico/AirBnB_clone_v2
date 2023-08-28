@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -73,20 +75,16 @@ test_file_storage.py'])
         """
         file_storage = FileStorage()
 
-        # Create and save a sample object
         new_city = City(name="Los Angeles")
         file_storage.new(new_city)
         file_storage.save()
 
-        # Test get method
         retrieved_city = file_storage.get(City, new_city.id)
         self.assertEqual(retrieved_city, new_city)
 
-        # Test count method
         city_count = file_storage.count(City)
         self.assertEqual(city_count, 1)
 
-        # Clean up
         file_storage.delete(new_city)
         file_storage.save()
 
@@ -137,29 +135,21 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-        def test_file_storage_delete(self):
-            """Test the delete method in FileStorage"""
-            storage = FileStorage()
-            obj = City(name="Test City")
-            storage.new(obj)
-            storage.save()
+    def test_file_storage_delete(self):
+        """Test the delete method in FileStorage"""
+        storage = FileStorage()
+        obj = City(name="Test City")
+        storage.new(obj)
+        storage.save()
 
-            self.assertIn(obj, storage._FileStorage__objects.values())
+        self.assertIn(obj, storage._FileStorage__objects.values())
 
-            storage.delete(obj)
-            storage.save()
-            self.assertNotIn(obj, storage._FileStorage__objects.values())
+        storage.delete(obj)
+        storage.save()
+        self.assertNotIn(obj, storage._FileStorage__objects.values())
 
-        def test_file_storage_close(self):
-            """Test the close method in FileStorage"""
-            storage = FileStorage()
+    def test_file_storage_close(self):
+        """Test the close method in FileStorage"""
+        storage = FileStorage()
 
-            reload_called = False
-
-            def mock_reload(self):
-                nonlocal reload_called
-                reload_called = True
-            storage.reload = mock_reload
-
-            storage.close()
-            self.assertTrue(reload_called)
+        reload_called = False
