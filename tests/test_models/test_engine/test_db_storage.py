@@ -86,3 +86,55 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorageGet(unittest.TestCase):
+    """Test the get method in DBStorage"""
+
+    def test_get_object(self):
+        new_state = State(name="California")
+        models.storage.new(new_state)
+        models.storage.save()
+
+        state_get = models.storage.get(State, new_state.id)
+        self.assertEqual(state_get, new_state)
+
+    def test_get_object_inexistente(self):
+        state_get = models.storage.get(State, "id_inexistente")
+        self.assertIsNone(state_get)
+
+
+class TestDBStorageCount(unittest.TestCase):
+    """Test the count method in DBStorage"""
+
+    def test_count_all(self):
+        """Test count method for all objects"""
+        initial_count = models.storage.count()
+        new_state = State(name="Texas")
+        models.storage.new(new_state)
+        models.storage.save()
+        updated_count = models.storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
+
+    def test_count_by_class(self):
+        """Test count method for objects by class"""
+        new_state = State(name="Florida")
+        models.storage.new(new_state)
+        models.storage.save()
+        updated_count = models.storage.count(State)
+        self.assertEqual(updated_count, 1)
+
+    def test_count_nonexistent_class(self):
+        """Test count method for nonexistent class"""
+        count = models.storage.count()
+        self.assertEqual(count, 0)
+
+    def test_count_multiple_objects(self):
+        """Test count method for multiple objects"""
+        new_state1 = State(name="California")
+        new_state2 = State(name="New York")
+        models.storage.new(new_state1)
+        models.storage.new(new_state2)
+        models.storage.save()
+        updated_count = models.storage.count(State)
+        self.assertEqual(updated_count, 2)
