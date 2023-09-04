@@ -113,3 +113,48 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method"""
+        storage = FileStorage()
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+        retrieved_obj = storage.get(BaseModel, new_obj.id)
+        self.assertEqual(retrieved_obj, new_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent_object(self):
+        """Test get method with a non-existent object"""
+        storage = FileStorage()
+        retrieved_obj = storage.get(BaseModel, "nonexistent_id")
+        self.assertIsNone(retrieved_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the count method"""
+        storage = FileStorage()
+        # Create some objects of different classes
+        user = User()
+        state = State()
+        city = City()
+        storage.new(user)
+        storage.new(state)
+        storage.new(city)
+        storage.save()
+        
+        # Test count for all objects
+        total_count = storage.count()
+        self.assertEqual(total_count, 3)
+
+        # Test count for a specific class
+        user_count = storage.count(User)
+        self.assertEqual(user_count, 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_nonexistent_class(self):
+        """Test count method with a non-existent class"""
+        storage = FileStorage()
+        nonexistent_count = storage.count(NonExistentClass)
+        self.assertEqual(nonexistent_count, 0)
