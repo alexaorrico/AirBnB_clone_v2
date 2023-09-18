@@ -19,7 +19,7 @@ from models.user import User
 
 @app_views.route("/status", strict_slashes=False)
 def view_status():
-    """View function  that returns a JSON: "status": "OK""""
+    """View function  that returns a JSON: "status": OK """
     return jsonify({"status": "OK"})
 
 
