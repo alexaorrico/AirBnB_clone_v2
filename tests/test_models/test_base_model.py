@@ -17,7 +17,7 @@ class TestBaseModelDocs(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         """Set up for docstring tests"""
-        self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
+        cls.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
 
     def test_pep8_conformance(self):
         """Test that models/base_model.py conforms to PEP8."""
@@ -45,9 +45,7 @@ class TestBaseModelDocs(unittest.TestCase):
         """Test for the presence of docstrings in BaseModel methods"""
         for func in self.base_funcs:
             with self.subTest(function=func):
-                self.assertIsNot(
-                    func[1].__doc__,
-                    None,
+                self.assertIsNot(None,
                     "{:s} method needs a docstring".format(func[0])
                 )
                 self.assertTrue(
