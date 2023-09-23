@@ -51,6 +51,19 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
 
+    def get(self, cls, id):
+        """get an object based on its class and id"""
+        my_dict = self.all(cls)
+        for obj in range(len(my_dict.values())):
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """counts objects in the database"""
+        my_dict = self.all(cls)
+        return (range(len(my_dict)))
+
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
@@ -70,23 +83,6 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
-
-    def get(self, cls, id):
-        """Retrieve one object based on the class and its ID."""
-        if cls and id:
-            key = f"{cls.__name__}.{id}"
-            return self.__session.query(cls).get(key)
-        return None
-
-    def count(self, cls=None):
-        """Count the number of objects in storage matching the given class."""
-        if cls:
-            return len(self.all(cls))
-        else:
-            count = 0
-            for clss in classes:
-                count += len(self.all(classes[clss]))
-            return count
 
     def close(self):
         """call remove() method on the private session attribute"""
