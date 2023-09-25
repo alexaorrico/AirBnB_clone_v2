@@ -19,6 +19,7 @@ import json
 import os
 import pep8
 import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -26,6 +27,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -41,8 +43,8 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine/'
+                                   'test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -71,6 +73,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -115,8 +118,10 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+
 class TestFileStorageGet(unittest.TestCase):
     """Test the get method in FileStorage"""
+
     def test_get(self):
         """Test the get method"""
         # Create an instance of FileStorage
@@ -136,8 +141,10 @@ class TestFileStorageGet(unittest.TestCase):
         self.assertIsInstance(retrieved_obj, Amenity)
         self.assertEqual(retrieved_obj.id, test_obj.id)
 
+
 class TestFileStorageCount(unittest.TestCase):
     """Test the count method in FileStorage"""
+
     def test_count(self):
         """Test the count method"""
         # Create an instance of FileStorage
@@ -164,3 +171,7 @@ class TestFileStorageCount(unittest.TestCase):
 
         # Assert that the count of all objects is correct
         self.assertEqual(count_all_objects, 3)
+
+
+if __name__ == '__main__':
+    unittest.main()
