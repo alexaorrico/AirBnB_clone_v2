@@ -89,6 +89,35 @@ class TestDBStorageGet(unittest.TestCase):
         self.assertIsInstance(retrieved_obj, Amenity)
         self.assertEqual(retrieved_obj.id, test_obj.id)
 
+class TestDBStorageCount(unittest.TestCase):
+    """Test the count method in DBStorage"""
+    def test_count(self):
+        """Test the count method"""
+        # Create an instance of DBStorage
+        storage = DBStorage()
+
+        # Create some test objects (e.g., Amenity instances)
+        amenity1 = Amenity(name="Amenity 1")
+        amenity2 = Amenity(name="Amenity 2")
+        amenity3 = Amenity(name="Amenity 3")
+
+        # Save the test objects
+        amenity1.save()
+        amenity2.save()
+        amenity3.save()
+
+        # Use the count method to count all Amenity objects
+        count_all = storage.count(Amenity)
+
+        # Assert that the count is correct
+        self.assertEqual(count_all, 3)
+
+        # Use the count method to count all objects (no class specified)
+        count_all_objects = storage.count()
+
+        # Assert that the count of all objects is correct
+        self.assertEqual(count_all_objects, 3)
+
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
