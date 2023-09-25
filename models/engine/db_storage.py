@@ -90,7 +90,6 @@ class DBStorage:
         if cls and id:
             key = "{}.{}".format(cls.__name__, id)
             return self.__session.query(cls).get(key)
-        return None
 
     def count(self, cls=None):
         """
