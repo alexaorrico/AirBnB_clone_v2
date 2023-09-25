@@ -135,3 +135,32 @@ class TestFileStorageGet(unittest.TestCase):
         # Assert that the retrieved object has the correct class and ID
         self.assertIsInstance(retrieved_obj, Amenity)
         self.assertEqual(retrieved_obj.id, test_obj.id)
+
+class TestFileStorageCount(unittest.TestCase):
+    """Test the count method in FileStorage"""
+    def test_count(self):
+        """Test the count method"""
+        # Create an instance of FileStorage
+        storage = FileStorage()
+
+        # Create some test objects (e.g., Amenity instances)
+        amenity1 = Amenity(name="Amenity 1")
+        amenity2 = Amenity(name="Amenity 2")
+        amenity3 = Amenity(name="Amenity 3")
+
+        # Save the test objects
+        amenity1.save()
+        amenity2.save()
+        amenity3.save()
+
+        # Use the count method to count all Amenity objects
+        count_all = storage.count(Amenity)
+
+        # Assert that the count is correct
+        self.assertEqual(count_all, 3)
+
+        # Use the count method to count all objects (no class specified)
+        count_all_objects = storage.count()
+
+        # Assert that the count of all objects is correct
+        self.assertEqual(count_all_objects, 3)
