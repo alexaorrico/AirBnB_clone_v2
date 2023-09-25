@@ -84,7 +84,8 @@ class DBStorage:
             id (str): The ID of the object to retrieve.
 
         Returns:
-            object: The object based on the class and its ID, or None if not found.
+            object: The object based on the class and its ID, or None if
+            not found.
         """
         if cls and id:
             key = "{}.{}".format(cls.__name__, id)
@@ -96,7 +97,8 @@ class DBStorage:
         Count the number of objects in storage matching the given class.
 
         Args:
-            cls (class, optional): The class to count objects of. If None, count all objects.
+            cls (class, optional): The class to count objects of. If None,
+            count all objects.
 
         Returns:
             int: The number of objects in storage.
