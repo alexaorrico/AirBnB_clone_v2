@@ -7,6 +7,7 @@ from datetime import datetime
 import inspect
 import models
 from models.engine import file_storage
+from models.engine.file_storage import FileStorage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -113,3 +114,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestFileStorageGet(unittest.TestCase):
+    """Test the get method in FileStorage"""
+    def test_get(self):
+        """Test the get method"""
+        # Create an instance of FileStorage
+        storage = FileStorage()
+
+        # Create a test object (e.g., an Amenity instance)
+        test_obj = Amenity(name="Test Amenity")
+        test_obj.save()
+
+        # Use the get method to retrieve the test object
+        retrieved_obj = storage.get(Amenity, test_obj.id)
+
+        # Assert that the retrieved object is not None
+        self.assertIsNotNone(retrieved_obj)
+
+        # Assert that the retrieved object has the correct class and ID
+        self.assertIsInstance(retrieved_obj, Amenity)
+        self.assertEqual(retrieved_obj.id, test_obj.id)
