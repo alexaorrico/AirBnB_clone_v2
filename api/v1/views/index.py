@@ -7,7 +7,7 @@ from flask import jsonify
 from . import app_views
 from models import storage
 
-@app_views.route('/api/v1/stats', methods=['GET'])
+@app_views.route('/status', methods=['GET'])
 def get_status():
     counts = {}
     classes = storage.classes()
