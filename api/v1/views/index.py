@@ -1,9 +1,9 @@
 #!/usr/bin/python3
+"""
+This module defines a Flask blueprint for handling status requests.
+"""
 from flask import jsonify
-"""
-    We import the 'jsonify' function from Flask
-    to format the responses in JSON format.
-"""
+
 # We import the route set 'app_views' from the current module.
 from . import app_views
 

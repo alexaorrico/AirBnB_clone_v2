@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+This module defines a Flask Blueprint for handling API version 1 views.
+"""
 from flask import Blueprint
 
 # Create a Blueprint instance with URL prefix '/api/v1'
