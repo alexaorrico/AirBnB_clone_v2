@@ -3,15 +3,16 @@
 This module defines a Flask blueprint for handling status requests.
 """
 
+from api.v1.views import app_views
 from flask import jsonify
-from . import app_views
-from models import storage
 
-@app_views.route('/status', methods=['GET'])
-def get_status():
-    counts = {}
-    classes = storage.classes()
-    for cls in classes:
-        counts[cls] = storage.count(cls)
+@app_views.route("/status", methods=["GET"], strict_slashes=False)
+def api_status():
+    """a function to return api status"""
+    data = {
+        "status": "OK"
+    }
 
-    return jsonify(counts), 200
+    shojo = jsonify(data)
+    shojo.status_code = 200
+    return shojo
