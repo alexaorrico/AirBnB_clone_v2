@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from flask import jsonify
 from . import app_views
 
