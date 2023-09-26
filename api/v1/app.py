@@ -25,7 +25,8 @@ def close_route(error):
 def page_not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-if __name__ == "__main__":
-    host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-    port = int(os.getenv("HBNB_API_PORT", 5000))
+
+if __name__ == '__main__':
+    host = getenv("HBNB_API_HOST") if getenv("HBNB_API_HOST") else "0.0.0.0"
+    port = getenv("HBNB_API_PORT") if getenv("HBNB_API_PORT") else 5000
     app.run(host=host, port=port, threaded=True)
