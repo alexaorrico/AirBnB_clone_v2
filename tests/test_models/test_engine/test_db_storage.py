@@ -101,7 +101,7 @@ class TestNewMethodsDb(unittest.TestCase):
         self.assertEqual(id_str, get_obj.id)
         self.assertIsInstance(get_obj, State)
         self.assertEqual(type(id_str), str)
-    
+
     def test_count(self):
         """testing for count method"""
 
