@@ -2,6 +2,7 @@
 """
 This script initializes a Flask application and sets up the API routes.
 """
+
 from flask import Flask
 import os
 from models import storage
@@ -16,7 +17,9 @@ app.register_blueprint(app_views)
 # This function will be executed when the application context is closed.
 @app.teardown_appcontext
 def teardown_appcontext(exception):
-
+"""
+Closes the connection to the database when the application is closed.
+"""
     # We close the connection with the database.
     storage.close()
 
