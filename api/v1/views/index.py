@@ -14,6 +14,7 @@ from models.state import State
 from models.user import User
 
 
+
 @app_views.route("/status", methods=["GET"], strict_slashes=False)
 def api_status():
     """a function to restore the state of the API"""
@@ -28,6 +29,6 @@ def obj_stats():
 
     num_objs = {}
     for i in range(len(classes)):
-        zen_objs[name[i]] = storage.count(classes[i])
+        num_objs[name[i]] = storage.count(classes[i])
 
     return jsonify(num_objs)
