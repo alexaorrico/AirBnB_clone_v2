@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Kiirya Arnold - [Github](https://github.com/arnoldkiirya1) / [Twitter](https://twitter.com/)  
-Dennis Kiptoo Ngetich - [Github](https://github.com/dking254) / [Twitter](https://twitter.com/dekingsky)
+Dennis Kiptoo Ngetich - [Github](https://github.com/deking254) / [Twitter](https://twitter.com/dekingsky)
 
 Second part of Airbnb: Joann Vuong
 ## License
