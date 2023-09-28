@@ -67,6 +67,11 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_dbs_get(self, cls, id):
+        """Test for getting an object by class and id"""
+        ...
+
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
