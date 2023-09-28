@@ -153,9 +153,13 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
-## Authors
+## Authors of Original Repository: AirBnB_Clone_v2
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
+---
+## Authors of AirBnB_Clone_v3_RESTful_API
+- Esmond Adjei - [Github](https://github.com/esmond-adjei) / [X](https://x.com/xmon_jei)
 
 Second part of Airbnb: Joann Vuong
 ## License
