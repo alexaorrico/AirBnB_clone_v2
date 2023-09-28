@@ -69,6 +69,31 @@ test_file_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        """Set up the test environment by renaming the .json to
+        tmp (if it exists)
+        """
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+
+    @classmethod
+    def tearDown(self):
+        """Clean up the test environment by removing .json (if it exists)
+        and renaming tmp to file.json.
+        """
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
@@ -80,7 +105,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
-        """test that new adds an object to the FileStorage.__objects attr"""
+        """Test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = {}
@@ -113,3 +138,38 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method that retrieves an object from file storage"""
+        # Create a state instance
+        state = State(name="California")
+
+        # Save the state object to file storage
+        models.storage.new(state)
+        models.storage.save()
+
+        # Get the state object from file storage
+        retrieved_state = models.storage.get(State, state.id)
+        self.assertEqual(state, retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count method returns total num of objects in storage"""
+        state = State(name="California")
+        city1 = City(name="New York", state_id=state.id)
+        city2 = City(name="Miami", state_id=state.id)
+
+        # Save the objects to file storage
+        models.storage.new(state)
+        models.storage.new(city1)
+        models.storage.new(city2)
+        models.storage.save()
+
+        # Get City object count in file storage
+        city_count = models.storage.count(City)
+        self.assertEqual(city_count, 2)
+
+        # Get total object count in file storage
+        total_count = models.storage.count()
+        self.assertEqual(total_count, len(models.storage.all()))
