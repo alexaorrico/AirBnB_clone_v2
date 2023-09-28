@@ -3,6 +3,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 
 # Authors
 * Rodgers Mogaka
+* Keith Koki
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
