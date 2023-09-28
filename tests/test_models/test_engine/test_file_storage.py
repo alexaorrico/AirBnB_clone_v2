@@ -113,3 +113,45 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """
+        Test the get method in FileStorage
+        """
+        storage = FileStorage()
+        new_state = State(name="California")
+        new_state.save()
+        obj = storage.get(State, new_state.id)
+        self.assertEqual(obj, new_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent(self):
+        """
+        Test get with a non-existent object
+        """
+        storage = FileStorage()
+        obj = storage.get(State, "nonexistent_id")
+        self.assertIsNone(obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """
+        Test the count method in FileStorage
+        """
+        storage = FileStorage()
+        initial_count = storage.count(State)
+        new_state = State(name="Texas")
+        new_state.save()
+        updated_count = storage.count(State)
+        self.assertEqual(updated_count, initial_count + 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all(self):
+        """
+        Test count with no class argument (count all objects)
+        """
+        storage = FileStorage()
+        count_all = storage.count()
+        count_state = storage.count(State)
+        self.assertEqual(count_all, count_state)
