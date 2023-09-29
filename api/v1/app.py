@@ -18,6 +18,8 @@ def teardown(exception):
 
 
 if __name__ == '__main__':
-    hst = environ.get("HBNB_API_HOST") if environ.get("HBNB_API_HOST") else "0.0.0.0"
-    prt = environ.get("HBNB_API_PORT") if environ.get("HBNB_API_PORT") else 5000
+    hst = environ.get("HBNB_API_HOST") if environ.get(
+            "HBNB_API_HOST") else "0.0.0.0"
+    prt = environ.get("HBNB_API_PORT") if environ.get(
+            "HBNB_API_PORT") else 5000
     app.run(host=hst, port=prt, threaded=True)
