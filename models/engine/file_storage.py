@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Retrieve one object"""
+        """ Retrieve one object """
         key = cls.__name__ + "." + id
         return self.__objects.get(key, None)
 
