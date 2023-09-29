@@ -73,14 +73,14 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieves one object only.
-           Args:: 
+           Args::
                 cls - class name of object
                 id - The objects id.
-           Return:: 
-                Returns the object of the class and id 
+           Return::
+                Returns the object of the class and id
         """
         try:
-           clsobj = eval(cls)
+            clsobj = eval(cls)
         except NameError:
             return None
         if clsobj in classes.values():
@@ -99,7 +99,7 @@ class DBStorage:
         if cls is None:
             return sum(
                 len(self.__session.query(clses).all())
-                    for clses in classes.values()
+                for clses in classes.values()
             )
         if cls in classes.keys():
             return len(self.__session.query(cls).all())
