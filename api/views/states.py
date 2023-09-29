@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""RESTful api actions"""
+"""States api actions"""
 
 from flask import request, jsonify
 from flask import abort
