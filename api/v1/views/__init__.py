@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """
 Package initializer for API v1 views.
 """
