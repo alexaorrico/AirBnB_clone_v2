@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from models.state import City
 from models.state import State
 from models import storage
