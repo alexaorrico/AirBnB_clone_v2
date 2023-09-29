@@ -16,6 +16,15 @@ def stor_close(err):
     storage.close()
 
 
+@app.errorhandler(404)
+def notfound_err(err):
+    """
+    returns a JSON-formatted 404 status code response
+    content : "error": "Not found"
+    """
+    return jsonify(error="Not found"), 404
+
+
 if __name__ == "__main__":
     """ Run the Flask server (variable app) """
     host = environ.get('HBNB_API_HOST')
