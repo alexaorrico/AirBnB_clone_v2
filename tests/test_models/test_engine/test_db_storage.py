@@ -86,3 +86,67 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        new = BaseModel()
+        storage.save()
+        self.assertTrue(os.path.exists('file.json'))
+
+    def test_get_existing_object(self):
+        '''Create and add an object to the database'''
+        user = User(name="John")
+        self.db_storage.new(user)
+        self.db_storage.save()
+
+        retrieved_user = self.db_storage.get(User, user.id)
+
+        self.assertEqual(retrieved_user, user)
+
+    def test_get_nonexistent_object(self):
+        '''Attempt to retrieve a non-existent object'''
+        retrieved_user = self.db_storage.get(User, "nonexistent_id")
+
+        self.assertIsNone(retrieved_user)
+
+    def test_get_invalid_class_argument(self):
+        '''Attempt to retrieve an object with an invalid class argument'''
+        retrieved_object = self.db_storage.get(SomeOtherClass, "some_id")
+
+        self.assertIsNone(retrieved_object)
+
+    def test_count_all_objects(self):
+        '''Create and add objects of different classes to the database'''
+        user = User(name="John")
+        some_other_object = SomeOtherClass(name="Example")
+        self.db_storage.new(user)
+        self.db_storage.new(some_other_object)
+        self.db_storage.save()
+
+        total_count = self.db_storage.count()
+
+        self.assertEqual(total_count, 2)
+
+    def test_count_objects_of_specific_class(self):
+        '''Create and add objects of the same class to the database'''
+        user1 = User(name="John")
+        user2 = User(name="Alice")
+        self.db_storage.new(user1)
+        self.db_storage.new(user2)
+        self.db_storage.save()
+
+        user_count = self.db_storage.count(User)
+
+        self.assertEqual(user_count, 2)
+
+    def test_count_nonexistent_class(self):
+        '''Attempt to count objects of a class that does not exist'''
+        count = self.db_storage.count(NonExistentClass)
+
+        # Verify that the method returns 0 or handles the error gracefully
+        self.assertEqual(count, 0)
+
+    def test_count_objects_in_empty_database(self):
+        '''Create an instance of DBStorage with an empty database'''
+        db_storage_empty = DBStorage()
+
+        total_count = db_storage_empty.count()
+
+        self.assertEqual(total_count, 0)
