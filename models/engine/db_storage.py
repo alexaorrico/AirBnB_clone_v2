@@ -84,7 +84,7 @@ class DBStorage:
         return None
         """
         grab_obj = models.storage.all(cls)
-    
+
         for obj in grab_obj.values():
             if obj.id == id:
                 return obj
