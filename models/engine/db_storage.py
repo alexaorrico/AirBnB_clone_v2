@@ -79,4 +79,4 @@ class DBStorage:
         """Method to retrieve one object"""
         if cls is None or id is None:
             return None
-        
+         
