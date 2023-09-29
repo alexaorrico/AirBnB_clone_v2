@@ -56,31 +56,25 @@ class DBStorage:
         self.__session.add(obj)
 
     def get(self, cls, id):
-        """
-        Gets an object of a certain kind of class by ID.
-        """
-        if cls not in self.__models_available:
-            raise ValueError(f"Class {cls} is not available in the storage.")
-
-        for class_instance in self.__session.query(
-            self.__models_available[cls]):
-            if class_instance.__dict__['id'] == id:
-                return class_instance
-
-        raise ValueError(f"No instance with ID {id} found for class {cls}.")
+        """ method return objects in specific class id """
+        cls_all = self.all(cls)
+        for c in cls_all:
+            if c.split(".")[1] == id:
+                return cls_all[c]
+        return None
 
     def count(self, cls=None):
+        """method that count number of object of specific class or
+            all if not cls provided"
         """
-        Counts the number of instances of a class (cls).
-        If cls is None, counts all instances.
-        """
-        if cls is None:
-            return len(self.all())
-
-        if cls not in self.__models_available:
-            raise ValueError(f"Class {cls} is not available in the storage.")
-
-        return len(self.all(cls))
+        if cls == None:
+            obj_list = self.all()
+        else:
+            obj_list = self.all(cls)
+        num = 0;
+        for i in obj_list.keys():
+            num += 1
+        return num
 
     def save(self):
         """commit all changes of the current database session"""
