@@ -11,8 +11,8 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_app(app):
-    storage.close(app)
+def teardown_app(self):
+    storage.close()
 
 
 if __name__ == '__main__':
