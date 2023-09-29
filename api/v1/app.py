@@ -25,6 +25,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def cleanup_app_context(arg):
     """Remove SQLAlchemy  Session"""
+    # print("removing session")
     storage.close()
 
 @app.errorhandler(404)

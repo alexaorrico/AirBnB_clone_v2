@@ -81,6 +81,8 @@ class FileStorage:
         for key, value in objs_dict.items():
             if value.id == id:
                 return value
+        # ADDED THIS LINE
+        return (None)
 
         # return (objs_dict)
     
