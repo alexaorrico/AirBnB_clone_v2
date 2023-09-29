@@ -78,7 +78,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """A method to retrive one object based on it's id and
-        class"""
+        class if no obj is found return None"""
         for elements in classes:
             if classes[elements] is cls or cls is elements:
                 ids = self.__session.query(classes[elements]

@@ -70,13 +70,15 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Method to retrieve one obnject based on it's class and id"""
+        """Method to retrieve one object based on it's class and id
+        If not found returns None"""
         try:
             with open(self.__file_path, "r") as open_file:
                 data = json.load(open_file)
                 for key, obj in data.items():
-                    if obj['__class__'] == cls.__name__:
+                    if (obj['__class__'] == cls.__name__ and obj['id'] == id):
                         return self.__objects[key]
+            return None
         except Exception:
             pass
 
