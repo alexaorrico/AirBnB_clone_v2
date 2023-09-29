@@ -69,7 +69,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """one object to be retrieved"""
+        """ retrieves one object """
         obj_dict = {}
         obj = None
         if cls:
@@ -80,7 +80,7 @@ class FileStorage:
             return obj
 
     def count(self, cls=None):
-        """number of objects in a storage to be counted"""
+        """ counts number of objects of a class in storage """
         if cls:
             obj_list = []
             obj_dict = FileStorage.__objects.values()
@@ -90,7 +90,7 @@ class FileStorage:
             return len(obj_list)
         else:
             obj_list = []
-            for class_name in self.classes:
+            for class_name in self.CNC:
                 if class_name == 'BaseModel':
                     continue
                 obj_class = FileStorage.__objects
