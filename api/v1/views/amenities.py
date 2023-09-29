@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from flask import jsonify, abort, request
 from models import storage
 from models.amenity import Amenity
