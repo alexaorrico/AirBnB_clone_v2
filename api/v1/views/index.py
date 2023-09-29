@@ -32,3 +32,13 @@ def stats():
     response = json.dumps(count_dict, indent=2)
     response += '\n'
     return response
+
+@app_views.errorhandler(404)
+def not_found_error(error):
+    data = {
+        "error": "Not found"
+    }
+
+    response = json.dumps(data, indent=2)
+    response += '\n'
+    return response

@@ -2,10 +2,11 @@
 
 """Flask app"""
 
-from flask import Flask, Blueprint, render_template, abort
+from flask import Flask, Blueprint, render_template, abort, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
+import json
 
 # assign host and post values
 host = "0.0.0.0"
@@ -25,6 +26,14 @@ app.register_blueprint(app_views)
 def cleanup_app_context(arg):
     """Remove SQLAlchemy  Session"""
     storage.close()
+
+@app.errorhandler(404)
+def not_found_error(error):
+    data = {
+        "error": "Not found"
+    }
+
+    return make_response(jsonify(data), 404)
 
 if __name__ == '__main__':
     # run flask app
