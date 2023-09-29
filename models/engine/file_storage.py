@@ -36,11 +36,13 @@ class FileStorage:
     
     def get(self, cls, id):
         '''Returns an object whose id is provided'''
-        if cls and id:
-            obj_key = "{}.{}".format(cls, id)
-            objects = self.all(cls)
-            return objects.get(obj_key)
-        return None
+        objs_dict = self.all(cls)
+        if len(objs_dict) == 0:
+            return (None)
+
+        for value in objs_dict.values():
+            if value.id == id:
+                return value
 
     def count(self, cls=None):
         '''Returns the no of objects in storage matching the given class.'''
