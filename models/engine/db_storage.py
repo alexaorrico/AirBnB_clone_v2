@@ -71,6 +71,21 @@ class DBStorage:
         Session = scoped_session(sess_factory)
         self.__session = Session
 
+    def get(self, cls id):
+        """Retrieves one object only.
+           Args:: 
+                cls - class name of object
+                id - The objects id.
+           Return:: 
+                Returns the object of the class and id 
+        """
+        try:
+           clsobj = eval(cls)
+        except NameError:
+            return None
+        if clsobj in classes.values():
+            return self.__session.query(clsobj).filter(clsobj.id == id).first()
+
     def count(self, cls=None):
         """Returns no of objects in a class or all objects if no cls passed.
         Args::
