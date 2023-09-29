@@ -10,9 +10,9 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
-@app.teardown_appcontext(app)
+@app.teardown_appcontext
 def teardown_app(app):
-    return storage.close(app)
+    storage.close(app)
 
 
 if __name__ == '__main__':
