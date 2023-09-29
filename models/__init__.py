@@ -4,7 +4,8 @@ initialize the models package
 """
 
 from os import getenv
-
+import pymysql
+pymysql.install_as_MySQLdb()
 
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
