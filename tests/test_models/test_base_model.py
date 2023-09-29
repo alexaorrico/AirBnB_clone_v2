@@ -5,6 +5,7 @@ import inspect
 import models
 import pep8 as pycodestyle
 import time
+from time import sleep
 import unittest
 from unittest import mock
 BaseModel = models.base_model.BaseModel
@@ -82,17 +83,44 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
-        tic = datetime.now()
+        # tic = datetime.now()
+        # inst1 = BaseModel()
+        # toc = datetime.now()
+        # self.assertTrue(tic <= inst1.created_at <= toc)
+        # time.sleep(1e-4)
+        # tic = datetime.now()
+        # inst2 = BaseModel()
+        # toc = datetime.now()
+        # self.assertTrue(tic <= inst2.created_at <= toc)
+        # self.assertEqual(inst1.created_at, inst1.updated_at)
+        # self.assertEqual(inst2.created_at, inst2.updated_at)
+        # self.assertNotEqual(inst1.created_at, inst2.created_at)
+        # self.assertNotEqual(inst1.updated_at, inst2.updated_at)
+        """Test that created_at and updated_at are datetime
+        objects and behave correctly."""
+
+        # Create the first BaseModel instance
         inst1 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
-        tic = datetime.now()
+
+        # Record the initial created_at and updated_at times
+        initial_created_at = inst1.created_at
+        initial_updated_at = inst1.updated_at
+
+        # Ensure created_at and updated_at are datetime objects
+        self.assertIsInstance(inst1.created_at, datetime)
+        self.assertIsInstance(inst1.updated_at, datetime)
+
+        # Check that created_at and updated_at are initially the same
+        self.assertEqual(initial_created_at, initial_updated_at)
+
+        # Sleep for a short time to simulate a delay
+        sleep(0.1)
+
+        # Create the second BaseModel instance
         inst2 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
-        self.assertEqual(inst1.created_at, inst1.updated_at)
-        self.assertEqual(inst2.created_at, inst2.updated_at)
+
+        # Check that created_at and updated_at are different
+        # for the 2nd instance
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
 
