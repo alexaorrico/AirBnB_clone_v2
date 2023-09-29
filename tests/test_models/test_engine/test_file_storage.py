@@ -113,3 +113,36 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_state(self):
+        """Test that get method properly gets the object from storage."""
+        storage = FileStorage()
+        state = State(name="California")
+        state.save()
+        self.assertEqual(storage.get(State, state.id).id, state.id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_None_cls(self):
+        """Test that get method properly gets the object from storage."""
+        storage = FileStorage()
+        a_state_id = list(storage.all(State).values())[0].id
+        self.assertEqual(storage.get(None, id), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_None_id(self):
+        """Test that get method properly gets the object from storage."""
+        storage = FileStorage()
+        self.assertEqual(storage.get(State, None), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_not_found(self):
+        """Test that get method properly gets the object from storage."""
+        storage = FileStorage()
+        self.assertEqual(storage.get(State, '0'), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_undefined_class(self):
+        """Test that get method properly gets the object from storage."""
+        storage = FileStorage()
+        self.assertEqual(storage.get(FileStorage, '0'), None)
