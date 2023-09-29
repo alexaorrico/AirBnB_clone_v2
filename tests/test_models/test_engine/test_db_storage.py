@@ -86,3 +86,40 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDBStorage(unittest.TestCase):
+    """Tests for the DBSTorage class"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+        
+    def test_get(self):
+        """Test the get method for retrieving objects from the db"""
+        check_user = User(email='paul@florence.com', password='passwd')
+        check_user.save()
+        check_state = State(name='Texas')
+        check_state.save()
+        check_place = Place(name='San Antonio')
+        check_place.save()
+        self.assertIs(check_user, models.storage.get("user", check_user.id))
+        self.assertIs(check_state, models.storage.get("State", check_state.id))
+        self.assertIs(check_place, models.storage.get("Place", check_place.id))
+        self.assertIs(None, models.storage.get("paul", "macey"))
+        self.assertIs(None, models.storage.get("Place", "limbe"))
+        self.assertIs(None, models.storage.get("hey", "man"))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+
+    def test_count(self):
+        """Test the count Method for countinf objects in the db"""
+        init_count = models.storage.count()
+        self.assertEqual(models.storage.count("Paul"), 0)
+        check_user = User(email='paul@florence.com', password='passwd')
+        check_user.save()
+        check_state = State(name='South West')
+        check_state.save()
+        check_place = Place(name='Macowh')
+        check_place.save()
+        self.assertAlmostEqual(models.storage.count("User"), init_count + 1)
+        self.assertAlmostEqual(models.storage.count("Place"), init_count + 2)
+        self.assertAlmostEqual(models.storage.count(), init_count + 3)

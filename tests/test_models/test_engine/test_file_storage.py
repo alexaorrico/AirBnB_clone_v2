@@ -113,3 +113,40 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+        
+    def test_get(self):
+        """Test the get method for retrieving objects from the db"""
+        storage = FileStorage()
+        check_user = User(email='paul@florence.com', password='passwd')
+        check_user.save()
+        check_state = State()
+        check_state.save()
+        check_place = Place(name='San Antonio')
+        check_place.save()
+        self.assertIs(check_user, storage.get("user", check_user.id))
+        self.assertIs(check_state, storage.get("State", check_state.id))
+        self.assertIs(check_place, storage.get("Place", check_place.id))
+        self.assertIs(None, storage.get("paul", "macey"))
+        self.assertIs(None, storage.get("Place", "limbe"))
+        self.assertIs(None, storage.get("hey", "man"))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+
+    def test_count(self):
+        """Test the count Method for countinf objects in the db"""
+        storage = FileStorage()
+        init_count = len(storage.all())
+        self.assertEqual(storage.count("Paul"), 0)
+        check_user = User(email='paul@florence.com', password='passwd')
+        check_user.save()
+        check_state = State(name='South West')
+        check_state.save()
+        check_place = Place(name='Macowh')
+        check_place.save()
+        self.assertAlmostEqual(storage.count("User"), init_count + 1)
+        self.assertAlmostEqual(storage.count("Place"), init_count + 2)
+        self.assertAlmostEqual(storage.count(), init_count + 3)
