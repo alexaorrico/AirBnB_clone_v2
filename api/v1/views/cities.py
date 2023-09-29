@@ -8,7 +8,7 @@ from models.city import City
 
 
 def get_obj_or_abort(obj_cls, obj_id):
-    """Retrieve a State object by ID or abort with 404 if not found"""
+    """Retrieve an object by ID or abort with 404 if not found"""
     obj = storage.get(obj_cls, obj_id)
     if obj is None:
         abort(404)
@@ -16,7 +16,7 @@ def get_obj_or_abort(obj_cls, obj_id):
 
 
 def create_city(data, state_id):
-    """Create a new state in the database."""
+    """Create a new city in the database."""
     data['state_id'] = state_id
     new_city = City(**data)
     storage.new(new_city)
