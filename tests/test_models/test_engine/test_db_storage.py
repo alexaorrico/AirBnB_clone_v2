@@ -66,7 +66,30 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+    def test_with_valid_id(self):
+        """Test get method with valid id."""
+        get_obj = self.storage.get(State, self.state.id)
+        self.assertEqual(get_obj, self.state)
 
+    def test_with_invalid_id(self):
+        """Test get method with invalid id."""
+        get_obj = self.storage.get(State, "12345")
+        self.assertIsNone(get_obj)
+
+    def test_count_all(self):
+        """Test count method without class argument."""
+        count = self.storage.count()
+        self.assertTrue(count > 0)
+
+    def test_count_valid_class(self):
+        """Test count method with valid class argument."""
+        count = self.storage.count(State)
+        self.assertTrue(count > 0)
+
+    def test_count_invalid_class(self):
+        """Test count method with invalid class argument."""
+        count = self.storage.count(BaseModel)
+        self.assertEqual(count, 0)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
