@@ -9,10 +9,12 @@ from flask import Flask, Blueprint, render_template
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def stor_close(err):
     """ calls storage close """
     storage.close()
+
 
 if __name__ == "__main__":
     """ Run the Flask server (variable app) """
