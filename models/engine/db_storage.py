@@ -16,12 +16,12 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 class DBStorage:
     """interaacts with the MySQL database"""
+    classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
     __engine = None
     __session = None
 
@@ -74,3 +74,32 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """one object to be retrieved"""
+        try:
+            objof_dict = {}
+            if cls:
+                objof_cls = self.__session.query(self.classes.get(cls)).all()
+                for a in objof_cls:
+                    objof_dict[a.id] = a
+            return objof_dict[id]
+        except:
+            return None
+
+    def count(self, cls=None):
+        """counts number of objects in a storage"""
+        objof_dict = {}
+        if cls:
+            objof_cls = self.__session.query(self.classes.get(cls)).all()
+            for a in objof_cls:
+                objof_dict[a.id] = a
+            return len(objof_dict)
+        else:
+            for b in self.classes:
+                if b == 'BaseModel':
+                    continue
+                objof_cls = self.__session.query(self.classes.get(b)).all()
+                for c in objof_cls:
+                    objof_dict[c.id] = c
+            return len(objof_dict)
