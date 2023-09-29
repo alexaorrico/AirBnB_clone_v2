@@ -158,5 +158,9 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+Third part of Airbnb: Osaruonamen Jeffery Osakpawan
+The third part of this project includes a RESTful API service built with flask.
+
 ## License
 Public Domain. No copy write protection. 
