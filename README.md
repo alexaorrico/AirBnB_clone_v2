@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Mohammed Saeed - [Github](https://github.com/MohdMuslim92 / [Twitter](https://twitter.com/MohdMuslim92)
+Mohammed Saeed - [Github](https://github.com/MohdMuslim92) / [Twitter](https://twitter.com/MohdMuslim92)
 Reem Degais - [Github](https://github.com/Reem-degais) / [Email](reem.degais.33@gmail.com)
 
 Second part of Airbnb: Joann Vuong
