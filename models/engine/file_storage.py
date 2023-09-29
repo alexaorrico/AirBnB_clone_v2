@@ -12,12 +12,11 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
+    classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
     # string - path to the JSON file
     __file_path = "file.json"
@@ -68,3 +67,33 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """one object to be retrieved"""
+        obj_dict = {}
+        obj = None
+        if cls:
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if item.id == id:
+                    obj = item
+            return obj
+
+    def count(self, cls=None):
+        """number of objects in a storage to be counted"""
+        if cls:
+            obj_list = []
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
+        else:
+            obj_list = []
+            for class_name in self.classes:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = FileStorage.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)

@@ -14,14 +14,14 @@ from models.user import User
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+from sqlalchemy.orm import scoped_session, sessionmake
 
 
 class DBStorage:
     """interaacts with the MySQL database"""
+    classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
     __engine = None
     __session = None
 
@@ -74,3 +74,34 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """one object to be retrieved"""
+        try:
+            obj_dict = {}
+            if cls:
+                obj_class = self.__session.query(self.classes.get(cls)).all()
+                for item in obj_class:
+                    obj_dict[item.id] = item
+            return obj_dict[id]
+        except:
+            return None
+
+    def count(self, cls=None):
+        """
+        number of objects in a storage to be counted
+        """
+        obj_dict = {}
+        if cls:
+            obj_class = self.__session.query(self.classes.get(cls)).all()
+            for item in obj_class:
+                obj_dict[item.id] = item
+            return len(obj_dict)
+        else:
+            for cls_name in self.CNC:
+                if cls_name == 'BaseModel':
+                    continue
+                obj_class = self.__session.query(self.classes.get(cls_name)).all()
+                for item in obj_class:
+                    obj_dict[item.id] = item
+            return len(obj_dict)
