@@ -16,12 +16,12 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class DBStorage:
     """interaacts with the MySQL database"""
-    classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
     __engine = None
     __session = None
 
@@ -43,9 +43,9 @@ class DBStorage:
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in self.classes:
-            if cls is None or cls is self.classes[clss] or cls is clss:
-                objs = self.__session.query(self.classes[clss]).all()
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
@@ -74,72 +74,3 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
-<<<<<<< HEAD
-    
-    def get(self, cls, id):
-        """ retrieves one object """
-        try:
-            obj_dict = {}
-            if cls:
-                obj_class = self.__session.query(self.CNC.get(cls)).all()
-                for item in obj_class:
-                    obj_dict[item.id] = item
-            return obj_dict[id]
-        except:
-            return None
-
-    def count(self, cls=None):
-        """Counts number of objects in storage
-
-        Args:
-            cls: optional string representing the class name
-        Returns:
-            the number of objects in storage matching the given class name.
-
-            If no name is passed, returns the count of all objects in storage.
-        """
-        obj_dict = {}
-        if cls:
-            obj_class = self.__session.query(self.CNC.get(cls)).all()
-            for item in obj_class:
-                obj_dict[item.id] = item
-            return len(obj_dict)
-        else:
-            for cls_name in self.CNC:
-                if cls_name == 'BaseModel':
-                    continue
-                obj_class = self.__session.query(self.CNC.get(cls_name)).all()
-                for item in obj_class:
-                    obj_dict[item.id] = item
-            return len(obj_dict)
-=======
-
-    def get(self, cls, id):
-        """
-        Returns the object based on the class and its ID, or None if not found
-        """
-        if cls not in self.classes.values():
-            return None
-
-        all_cls = models.storage.all(cls)
-        for value in all_cls.values():
-            if (value.id == id):
-                return value
-        return None
-
-    def count(self, cls=None):
-        """
-        counts the number of objects in storage
-        """
-        all_class = self.classes.values()
-
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
-
-        else:
-            count = len(models.storage.all(cls).values())
-
-        return count
->>>>>>> storage_get_count
