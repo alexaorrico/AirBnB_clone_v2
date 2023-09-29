@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Odo Peter Ebere - [Github](https://github.com/Odo-Peter) / [Twitter](https://twitter.com/Odo_Peter_Ebere)  
-Favour Okerri - [Github](https://github.com/Favourokerri) / [Twitter](https://twitter.com/will_fill_this_in)
+Favour Okerri - [Github](https://github.com/Favourokerri) / [Twitter](https://twitter.com/Okerrifavour)
 
 Second part of Airbnb: Alexa Orrico
 ## License
