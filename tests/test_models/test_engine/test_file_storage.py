@@ -70,6 +70,12 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    def setUpClass(cls):
+        """Set up FileStorage and create some test data"""
+        cls.storage = FileStorage()
+        cls.storage.reload()
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +119,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """ Test retrieving an exissting State object by ID"""
+        test_state = State(name="Test State")
+        test_state.save()
+        retrieved_state = self.storage.get(State, test_state.id)
+        self.assertEqual(retrieved_state, test_state)
+
+        retrieved_state = self.storage.get(State, "nonexistent_id")
+        self.assertIsNone(retrieved_state)
+
+    def test_count(self):
+        """Test counting all State objects"""
+        for i in range(5):
+            state = State(name=f"State {i}")
+            state.save()
+        count = self.storage.count(State)
+        self.assertEqual(count, 5)
+
+        count = self.storage.count(NonExistentClass)
+        self.assertEqual(count, 0)
+
+        state = State(name="Test State")
+        state.save()
+
+        count = self.storage.count()
+        self.assertEqual(count, total_number_of_objects)
+
+
+if __name__ == "__main__":
+    unittest.main()
