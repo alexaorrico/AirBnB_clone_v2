@@ -19,7 +19,7 @@ def create_state():
 
     # if the name key doesnt exist in the body dict
     if body.get("name") is None:
-        abort(404, "Missing name")
+        abort(400, "Missing name")
 
     # create and save the new state instance
     new_state = State(**body)
