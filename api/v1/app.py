@@ -27,6 +27,8 @@ def create_app():
         """close the app storage "DBStorage or FileStorage" """
         storage.close()
 
+    return app
+
 
 if __name__== "__main__":
     app = create_app()
