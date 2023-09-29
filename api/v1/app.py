@@ -2,10 +2,11 @@
 """Proceeds to import Flask and run host plus port"""
 
 
-from flask import Flask
-from models import storage
 from api.v1.views import app_views
+from flask import Flask, jsonify
+from models import storage
 from os import environ
+from werkzeug.exceptions import NotFound
 app = Flask(__name__)
 
 
@@ -15,6 +16,13 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown(exception):
     storage.close()
+
+
+@app.errorhandler(NotFound)
+def handle_404(error):
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 
 if __name__ == '__main__':
