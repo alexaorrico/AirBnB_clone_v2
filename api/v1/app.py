@@ -9,6 +9,10 @@ app = Flask(__name__)
 app.register_blueprint
 
 
+@app.teardown_appcontext(app)
+def teardown_app(app):
+    return storage.close(app)
+
 
 if __name__ == '__main__':
     app.run(host='HBNB_API_HOST', port=HBNB_API_PORT, threaded=True)
