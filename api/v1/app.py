@@ -1,10 +1,11 @@
 #!/usr/bin/python3
-from flask import Flask, blueprint
+import os
+from flask import Flask, Blueprint
 from models import storage
 from api.v1.views import app_views
 
-HBNB_API_HOST = '0.0.0.0'
-HBNB_API_PORT = 5000
+HBNB_API_HOST = os.getenv('HBNB_API_HOST', '0.0.0.0')
+HBNB_API_PORT = os.getenv('HBNB_API_PORT', 5000)
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
