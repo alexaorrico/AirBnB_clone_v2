@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+"""Proceeds to import Flask and run host plus port"""
 
 
 from flask import Flask
