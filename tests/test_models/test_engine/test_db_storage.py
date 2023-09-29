@@ -29,6 +29,8 @@ class TestDBStorageDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+        cls.storage = DBStorage()
+        cls.storage.reload()
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
@@ -67,6 +69,29 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        """Test retrieving an existing State object by ID"""
+        test_state = State(name="Test State")
+        test_state.save()
+        retrieved_state = self.storage.get(State, test_state.id)
+        self.assertEqual(retrieved_state, test_state)
+
+        retrieved_state = self.storage.get(State, "nonexistent_id")
+        self.assertIsNone(retrieved_state)
+
+    def test_count(self):
+        """Test counting all State objects"""
+        for i in range(5):
+            state = State(name=f"State {i}")
+            state.save()
+            count = self.storage.count(State)
+            self.assertEqual(count, 5)
+
+        state = State(name="Test State")
+        state.save()
+        count = self.storage.count()
+        self.assertEqual(count, total_number_of_objects)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -86,3 +111,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+if __name__ == "__main__":
+    unittest.main()
