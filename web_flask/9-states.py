@@ -20,9 +20,10 @@ def states(state_id=None):
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def teardown_db(_):
     """closes the storage on teardown"""
     storage.close()
 
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port=5000)
