@@ -76,7 +76,6 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-<<<<<<< HEAD
         """
         Returns the object based on the class and its ID, or None if not found
         """
@@ -87,10 +86,7 @@ class DBStorage:
         for value in all_cls.values():
             if (value.id == id):
                 return value
-
-
         return None
-
 
     def count(self, cls=None):
         """
@@ -107,32 +103,3 @@ class DBStorage:
             count = len(models.storage.all(cls).values())
 
         return count
-=======
-        """one object to be retrieved"""
-        try:
-            objof_dict = {}
-            if cls:
-                objof_cls = self.__session.query(self.classes.get(cls)).all()
-                for a in objof_cls:
-                    objof_dict[a.id] = a
-            return objof_dict[id]
-        except:
-            return None
-
-    def count(self, cls=None):
-        """counts number of objects in a storage"""
-        objof_dict = {}
-        if cls:
-            objof_cls = self.__session.query(self.classes.get(cls)).all()
-            for a in objof_cls:
-                objof_dict[a.id] = a
-            return len(objof_dict)
-        else:
-            for b in self.classes:
-                if b == 'BaseModel':
-                    continue
-                objof_cls = self.__session.query(self.classes.get(b)).all()
-                for c in objof_cls:
-                    objof_dict[c.id] = c
-            return len(objof_dict)
->>>>>>> refs/remotes/origin/storage_get_count
