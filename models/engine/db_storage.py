@@ -14,7 +14,7 @@ from models.user import User
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmake
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 class DBStorage:
@@ -43,9 +43,9 @@ class DBStorage:
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+        for clss in self.classes:
+            if cls is None or cls is self.classes[clss] or cls is clss:
+                objs = self.__session.query(self.classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
@@ -76,32 +76,33 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """one object to be retrieved"""
-        try:
-            obj_dict = {}
-            if cls:
-                obj_class = self.__session.query(self.classes.get(cls)).all()
-                for item in obj_class:
-                    obj_dict[item.id] = item
-            return obj_dict[id]
-        except:
+        """
+        Returns the object based on the class and its ID, or None if not found
+        """
+        if cls not in self.classes.values():
             return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
+
+        return None
+
 
     def count(self, cls=None):
         """
-        number of objects in a storage to be counted
+        counts the number of objects in storage
         """
-        obj_dict = {}
-        if cls:
-            obj_class = self.__session.query(self.classes.get(cls)).all()
-            for item in obj_class:
-                obj_dict[item.id] = item
-            return len(obj_dict)
+        all_class = self.classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+
         else:
-            for cls_name in self.CNC:
-                if cls_name == 'BaseModel':
-                    continue
-                obj_class = self.__session.query(self.classes.get(cls_name)).all()
-                for item in obj_class:
-                    obj_dict[item.id] = item
-            return len(obj_dict)
+            count = len(models.storage.all(cls).values())
+
+        return count
