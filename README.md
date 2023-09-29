@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Marren Nyagaya - [Github](https://github.com/WalalaNyagaya) / [Twitter](https://twitter.com/Walala Nyagaya)  
+Marren Nyagaya - [Github](https://github.com/WalalaMarren) / [Twitter](https://twitter.com/Walala Nyagaya)  
 Nigel Omondi - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
