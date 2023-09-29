@@ -67,11 +67,11 @@ class DBStorage:
         """method that count number of object of specific class or
             all if not cls provided"
         """
-        if cls == None:
+        if cls is None:
             obj_list = self.all()
         else:
             obj_list = self.all(cls)
-        num = 0;
+        num = 0
         for i in obj_list.keys():
             num += 1
         return num
