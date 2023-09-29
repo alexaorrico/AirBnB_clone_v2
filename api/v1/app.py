@@ -1,5 +1,5 @@
-import storage from models
-import app_views from api.v1.views
+from models import storage
+from api.v1.views import app_views
 from flask import Flask
 from os import getenv
 
