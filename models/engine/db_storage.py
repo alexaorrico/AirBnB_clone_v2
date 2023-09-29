@@ -71,7 +71,7 @@ class DBStorage:
         Session = scoped_session(sess_factory)
         self.__session = Session
 
-    def get(self, cls id):
+    def get(self, cls, id):
         """Retrieves one object only.
            Args:: 
                 cls - class name of object
