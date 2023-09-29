@@ -67,7 +67,14 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_dbs_get_func(self):
+        """Test object retrieval from file storage"""
+        # Test Codes go here Kevin
 
+
+    def test_counters(self):
+        """Test counter method"""
+        # Test codes go here Kevin
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
