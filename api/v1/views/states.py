@@ -12,7 +12,7 @@ def create_state():
 
     # if body doesn't contain valid JSON
     if not request.is_json:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     # else transform HTTP body into a dict
     body = request.get_json()
@@ -66,7 +66,7 @@ def update_state(id):
 
     # if body doesn't contain valid JSON
     if not request.is_json:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
 
     # else transform HTTP body into a dict
     body = request.get_json()
