@@ -98,7 +98,8 @@ class TestDBStorage(unittest.TestCase):
     def test_get(self):
         """
         Test that get returns specific object, or none
-        Returns the object based on the class and its ID, or None if not found
+        Returns the object based on the class and its I
+        D, or None if not found
         """
         new_state = State(name="New York")
         new_state.save()
@@ -111,15 +112,14 @@ class TestDBStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
+
     def test_count(self):
-        """
-        Unittest to test  that new adds an object to the database
-        """
+        """test that new adds an object to the database"""
         initial_count = models.storage.count()
         self.assertEqual(models.storage.count("Blah"), 0)
-        new_state = State(name="Texas")
+        new_state = State(name="Florida")
         new_state.save()
-        new_user = User(email="test@alx.com", password="password")
+        new_user = User(email="bob@foobar.com", password="password")
         new_user.save()
         self.assertEqual(models.storage.count("State"), initial_count + 1)
         self.assertEqual(models.storage.count(), initial_count + 2)
