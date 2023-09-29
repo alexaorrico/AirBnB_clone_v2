@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""this file return the state of an application by rule implemented by this file"""
+"""this file return the state of an application
+by rule implemented by this file"""
 from flask import jsonify
 import models
 from api.v1.views import app_views
@@ -9,6 +10,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+
 
 @app_views.route("/status", strict_slashes=False)
 def view_status():
