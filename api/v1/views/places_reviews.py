@@ -38,11 +38,9 @@ def create_review(place_id):
     if storage.get(User, user_id) is None:  # user_id not found in storage
         abort(404)
 
-    # Add the place_id to the body dict
-    body['place_id'] = place_id
-
     # create and save the new review instance
     new_review = Review(**body)
+    new_review.place_id = place_id
     storage.new(new_review)
     storage.save()
 
@@ -97,6 +95,7 @@ def update_review(review_id):
 
     # ignore id, created_at, updated_at keys during update
     excluded_keys = ["id", "user_id", "place_id" "created_at", "updated_at"]
+
     # iterate over body dict & update the review object
     # with the new values from body dict
     for key, value in body.items():
