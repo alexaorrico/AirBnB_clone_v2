@@ -90,5 +90,5 @@ class DBStorage:
 
     def count(self, cls=None):
         """return the number os objects in the storage"""
-        cls = classes[cls] if cls and type(cls) == str else cls
+        cls = classes[cls] if isinstance(cls, str) else cls
         return (len(self.all(cls)))
