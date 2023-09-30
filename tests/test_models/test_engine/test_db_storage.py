@@ -92,7 +92,7 @@ class TestDBStorage(unittest.TestCase):
     """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
-        """Test the get method"""
+        """Test the get method dbstorage"""
         state = State(name="California")
         state.save()
         self.assertIsNone(models.storage.get(State, "1234"))
@@ -101,7 +101,7 @@ class TestDBStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Test the count method"""
+        """Test the count method dbstorage"""
         initial_count = models.storage.count()
         state = State(name="Nevada")
         state.save()

@@ -79,7 +79,7 @@ class FileStorage:
         return self.__objects.get(key, None)
 
     def count(self, cls=None):
-        """Count the number of objects in storage"""
+        """Count the number of objects in filestorage json file"""
         if cls is None:
             return len(self.__objects)
         else:
