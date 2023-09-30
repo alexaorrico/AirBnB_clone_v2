@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """A new view for User objects that handles all default
 RESTFUL API actions"""
+
+
 from flask import Flask, jsonify, request, abort
 from models.user import User
 from models import storage
