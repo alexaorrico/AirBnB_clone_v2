@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Contains the states view for the API.'''
+'''Contains the amenities view for the API.'''
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage

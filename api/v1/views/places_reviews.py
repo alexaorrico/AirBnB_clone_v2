@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Contains the states view for the API.'''
+'''Contains the places_reviews view for the API.'''
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
@@ -25,10 +25,6 @@ def create_review(place_id):
     # else transform HTTP body into a dict
     body = request.get_json()
 
-    # if the text key doesnt exist in the body dict
-    if body.get("text") is None:
-        abort(400, "Missing text")
-
     # if the user_id key doesnt exist in the body dict
     user_id = body.get("user_id")
     if user_id is None:
@@ -37,6 +33,10 @@ def create_review(place_id):
     # check using user_id to see if user exists in storage
     if storage.get(User, user_id) is None:  # user_id not found in storage
         abort(404)
+
+    # if the text key doesnt exist in the body dict
+    if body.get("text") is None:
+        abort(400, "Missing text")
 
     # create and save the new review instance
     body['place_id'] = place_id
