@@ -4,7 +4,7 @@ Blueprint for index
 """
 
 from api.v1.views import app_views
-from flask import Flask, jsonify, Blueprint
+from flask import jsonify, Blueprint
 from models import storage
 from models.state import State
 
