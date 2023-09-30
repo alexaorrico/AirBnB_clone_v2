@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-"""A new view for User objects that handles all default
-RESTFUL API actions"""
+"""A new view for User objects that handles all default RESTFUL
+API actions"""
 
 
 from flask import Flask, jsonify, request, abort
@@ -11,7 +11,7 @@ from api.v1.views import app_views
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_all_user():
-    """Retrives all User objects"""
+    """Retrives all User objects in the storage"""
     users = [u.to_dict() for u in storage.all(User).values()]
     return jsonify(users)
 
@@ -19,8 +19,7 @@ def get_all_user():
 @app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user_based_on_id(user_id):
-    """Retrives an User object given it's id
-    else return 404"""
+    """Retrives an User object given it's id else return 404"""
     user = storage.get(User, user_id)
     if user:
         return jsonify(user.to_dict())
@@ -43,7 +42,7 @@ def delete_user_object(user_id):
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user_object():
-    """Creates an User object"""
+    """Creates an User object returns the created user object"""
     data = request.get_json()
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
