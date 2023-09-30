@@ -3,7 +3,6 @@
 Contains the class DBStorage
 """
 
-import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -12,7 +11,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -77,11 +75,15 @@ class DBStorage:
 
     def get(self, cls, id):
         """retrieves an object"""
+        if type(cls) is str:
+            cls = classes.get(cls)
         return self.__session.query(cls).get(id)
 
     def count(self, cls=None):
         """counts number of objects in
         in storage"""
+        if type(cls) is str:
+            cls = classes.get(cls)
         if cls is None:
             total_count = 0
             for c in classes.values():

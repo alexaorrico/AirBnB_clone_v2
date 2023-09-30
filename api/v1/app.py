@@ -15,6 +15,13 @@ def teardown(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    """returns a status code
+    response in JSON format"""
+    return ({"error": "Not found"}), 404
+
+
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
     port = int(os.getenv('HBNB_API_PORT', 5000))
