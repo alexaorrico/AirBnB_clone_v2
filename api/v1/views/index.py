@@ -7,4 +7,5 @@ from flask import Flask, jsonify
 
 @app_views.route('/status', methods=['GET'])
 def statCode():
+    """ call storage.close() """
     return jsonify({'status': 'OK'})

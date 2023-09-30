@@ -4,6 +4,7 @@
 from flask import Flask, request
 from markupsafe import escape
 
+from sys import os
 from models import storage
 from api.v1.views import app_views
 
@@ -14,6 +15,10 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
+
+host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+port = os.getenv('HBNB_API_PORT', 5000)
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """ Clone MySQL session """
@@ -21,4 +26,5 @@ def teardown_db(exception):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, host='0.0.0.0', port=5000)
+    """ run app """
+    app.run(threaded=True, host=host, port=port)
