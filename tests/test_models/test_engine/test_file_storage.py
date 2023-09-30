@@ -113,3 +113,12 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get return cls instan if present or None if otherwise"""
+ 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def count(self):
+        """Test that count return correct total count of a cls instan or all instans"""
+                                                                                      
