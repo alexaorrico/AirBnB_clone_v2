@@ -56,7 +56,8 @@ def delete_city_obj(city_id):
     return json.dumps({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """creates a City object"""
     # forming the key of the State instance -> State.id
@@ -69,7 +70,7 @@ def create_city(state_id):
 
     if data_entered is None:  # if not valid json
         return "Not a JSON", 400
-    
+
     # if name not in dict
     if data_entered.get('name') is None:
         return "Missing name", 400
