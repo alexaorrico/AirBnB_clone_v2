@@ -17,12 +17,12 @@ def get_status():
 def get_count():
     """To get the number of any object, based on the type"""
     stats = {
-        "Amenity": "amenity",
+        "Amenity": "amenities",
         "City": "cities",
         "Place": "places",
         "Review": "reviews",
         "State": "states",
-        "User": "user"
+        "User": "users"
     }
     result = {name: storage.count(cls) for cls, name in stats.items()}
     return jsonify(result)
