@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """
-api end point
+This module defines API endpoints for Airbnb clone.
+It provides routes to retrieve status information and stats
+about various objects.
 """
-
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
