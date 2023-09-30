@@ -12,7 +12,7 @@ states = []
 for key, value in all_states.items():
     states.append(value.to_dict())
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def serve_states():
     """Retrieves a list of all State objects"""
     return json.dumps(states)
