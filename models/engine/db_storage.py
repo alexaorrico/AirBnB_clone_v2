@@ -106,3 +106,4 @@ class DBStorage:
             count = session.query(func.count()).filter(cls.id.isnot(None)).scalar()
 
         return count
+
