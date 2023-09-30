@@ -15,11 +15,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(exception):
+    """Makes a call to storage.close() to close session"""
     storage.close()
 
 
 @app.errorhandler(NotFound)
 def handle_404(error):
+    """Creates custom 404 page incase of 404 error code"""
     response = jsonify({"error": "Not found"})
     response.status_code = 404
     return response
