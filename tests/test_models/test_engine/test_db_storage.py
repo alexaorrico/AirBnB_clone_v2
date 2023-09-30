@@ -87,11 +87,11 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+
 class TestDBStorage(unittest.TestCase):
     """Tests for the DBSTorage class"""
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
-        
     def test_get(self):
         """Test the get method for retrieving objects from the db"""
         check_user = User(email='paul@florence.com', password='passwd')
@@ -109,7 +109,6 @@ class TestDBStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
-
     def test_count(self):
         """Test the count Method for countinf objects in the db"""
         init_count = models.storage.count()

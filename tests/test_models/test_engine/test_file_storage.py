@@ -116,7 +116,6 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
-        
     def test_get(self):
         """Test the get method for retrieving objects from the db"""
         storage = FileStorage()
@@ -135,7 +134,6 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
-
     def test_count(self):
         """Test the count Method for countinf objects in the db"""
         storage = FileStorage()
