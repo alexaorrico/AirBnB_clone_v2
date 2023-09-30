@@ -154,9 +154,15 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Bello Abdulsamad
 
-Second part of Airbnb: Joann Vuong
+## Third segment of Airbnb -> New Features Description:
+
+- Introduce RESTful API architectural style
+
+- Expose/display all objects stored via secure representation called JSON web interface
+
+- Enable manipulation of all the objects via a RESTful API
+
 ## License
 Public Domain. No copy write protection. 
