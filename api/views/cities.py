@@ -15,6 +15,7 @@ def all_cities():
     all_cities = [city.to_dict() for city in cities.values()]
     return jsonify(all_cities), 200
 
+
 @app_views.route("/cities/<city_id>", methods=['GET'])
 def city_by_id(id):
     """CIty objects based on city id, else 404"""
@@ -24,6 +25,7 @@ def city_by_id(id):
         return jsonify(result), 200
     else:
         abort(404)
+
 
 @app_views.route("/cities/<city_id>", methods=['DELETE'])
 def delete_city(id):
@@ -36,8 +38,9 @@ def delete_city(id):
     else:
         abort(404)
 
+
 @app_views.route("/cities/<city_id>", methods=['POST'])
-def  create_city(state_id):
+def create_city(state_id):
     """CIty objects based on state id, else 404"""
     city = storage.get_json()
     if not city:
@@ -47,10 +50,10 @@ def  create_city(state_id):
         result = {"error": "Missing name"}
         return jsonify(result), 400
     state = storage.get("State", state_id)
-    if not state :
+    if not state:
         abort(404)
 
-    existing_cities = [city for city in state.cities \
+    existing_cities = [city for city in state.cities
                        if city.name == city["name"]]
     if existing_cities:
         existing_city = existing_cities[0]
@@ -64,25 +67,26 @@ def  create_city(state_id):
     result = new_city.to_dict()
     return jsonify(result), 201
 
+
 @app_views.route("/cities/<city_id>", methods=['PUT'])
 def update_city(id):
-        """ CIty objects based on city id, else 404"""
-        city = storage.get("City", id)
-        if not city:
-            abort(404)
+    """ CIty objects based on city id, else 404"""
+    city = storage.get("City", id)
+    if not city:
+        abort(404)
 
-        update = request.get_json()
-        if not update:
-            result = {"error": "Not a JSON"}
-            return jsonify(result), 400
-        
-        keys_to_exclude = ["id", "state_id", "created_at", "updated_at"]
-        for key in keys_to_exclude:
-            update.pop(key, None)
+    update = request.get_json()
+    if not update:
+        result = {"error": "Not a JSON"}
+        return jsonify(result), 400
 
-        for key, value in update.items():
-            settatr(city, key, value)
+    keys_to_exclude = ["id", "state_id", "created_at", "updated_at"]
+    for key in keys_to_exclude:
+        update.pop(key, None)
 
-        city.save()
-        result = city.to_dict()
-        return jsonify(result), 200
+    for key, value in update.items():
+        settatr(city, key, value)
+
+    city.save()
+    result = city.to_dict()
+    return jsonify(result), 200
