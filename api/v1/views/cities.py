@@ -21,7 +21,7 @@ def return_cities(state_id):
     # raise error if state_id is not linked to any State object
     if state_key not in all_states.keys():
         return json.dumps({"error": "Not found"}), 404
-    
+
     for key, value in all_cities.items():
         if state_id == value.state_id:
             states_cities_list.append(value.to_dict())
@@ -36,7 +36,7 @@ def serve_city_id(city_id):
 
     if city_key not in all_cities.keys():
         return json.dumps({"error": "Not found"}), 404
-    
+
     # use the get method that returns an instance based on Cls and id
     found_city = storage.get(City, city_id)
     return json.dumps(found_city.to_dict())
@@ -50,8 +50,8 @@ def delete_city_obj(city_id):
 
     if city_key not in all_cities.keys():
         return json.dumps({"error": "Not found"}), 404
-    
-    city_to_delete = all_cities[city_key] # gives us the instance
+
+    city_to_delete = all_cities[city_key]  # gives us the instance
     storage.delete(city_to_delete)
     return json.dumps({}), 200
 
@@ -64,12 +64,12 @@ def update_city_obj(city_id):
 
     if city_key not in all_cities.keys():
         return json.dumps({"error": "Not found"}), 404
-    
+
     data_entered = request.get_json()  # method returns None if fails
     if data_entered is None:
         return "Not a JSON", 400
-    
-    city_to_update = all_cities[city_key] # gives us the instance
+
+    city_to_update = all_cities[city_key]  # gives us the instance
 
     # UPDATE THIS. SHOULD CHECK ALL KEY,VALUES ENTERED IN THE POST
     # REQUEST DICT, THEN USE THAT TO UPDATE THE VALUES
