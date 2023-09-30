@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
-"""serves a flask app"""
+"""this is a script that serves a flask app"""
 
-from flask import Flask, Blueprint, render_template, abort, make_response, jsonify
+from flask import Flask, abort, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -22,11 +22,13 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def cleanup_app_context(arg):
     """Remove SQLAlchemy  Session"""
     # print("removing session")
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found_error(error):
@@ -35,6 +37,7 @@ def not_found_error(error):
     }
 
     return make_response(jsonify(data), 404)
+
 
 if __name__ == '__main__':
     # run flask app
