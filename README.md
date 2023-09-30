@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Christine Wakuthii - [Github](https://github.com/Christine-design-web)
-Brian Kipsang
+Brian Kipsang - [Github](https://github.com/BrianKani)
 
 ## License
 Public Domain. No copy write protection. 
