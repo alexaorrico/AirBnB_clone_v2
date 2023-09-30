@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-"""Flask app"""
+"""serves a flask app"""
 
 from flask import Flask, Blueprint, render_template, abort, make_response, jsonify
 from models import storage
