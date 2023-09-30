@@ -153,5 +153,5 @@ class TestFileStorage(unittest.TestCase):
         """
         storage = FileStorage()
         count_all = storage.count()
-        count_state = storage.count(State)
-        self.assertEqual(count_all, count_state)
+        count_sum = sum(storage.count(cls) for cls in classes.values())
+        self.assertEqual(count_all, count_sum)
