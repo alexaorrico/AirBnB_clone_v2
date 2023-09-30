@@ -11,7 +11,7 @@ from api.v1.views import app_views
 def get_all_amenity():
     """Retrives all Amenity objects"""
     amenities = [a.to_dict() for a in storage.all(Amenity).values()]
-    return jsonify(amenities) if amenities else abort(404)
+    return jsonify(amenities)
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
@@ -34,7 +34,7 @@ def delete_amenity_object(amenity_id):
     if amenity:
         storage.delete(amenity)
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     else:
         abort(404)
 
