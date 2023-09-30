@@ -113,3 +113,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """ Unit tests for the get method in the module db_storage """
+        # start a database engine
+        Fstorage = FileStorage()
+
+        # create a new instance and save
+        myDict = {'name': 'Something'}
+        obj = User(**myDict)
+        Fstorage.new(obj)
+        Fstorage.save()
+
+        # restart a database engine
+        Fstorage = FileStorage()
+
+        # get instance
+        get_obj = Fstorage.get(User, obj.id)
+        self.assertEqual(obj, get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """ test for objects count """
+        # start a database engine
+        Fstorage = FileStorage()
+
+        # create a new instance and save
+        myDict = {'name': 'Someone'}
+        obj = User(**myDict)
+        Fstorage.new(obj)
+        Fstorage.save()
+
+        # restart a database engine
+        Fstorage = FileStorage()
+
+        # test the objects counter function
+        objs = len(Fstorage.all())
+        self.assertEqual(objs, Fstorage.count())

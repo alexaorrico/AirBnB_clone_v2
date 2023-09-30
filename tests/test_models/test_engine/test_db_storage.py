@@ -114,5 +114,5 @@ class TestFileStorage(unittest.TestCase):
         db.save()
 
         # test the objects counter function
-        objs = len(self.all())
+        objs = len(db.all())
         self.assertEqual(objs, db.count())

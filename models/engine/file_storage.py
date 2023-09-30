@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ 
+        """
             A method to retrieve one object [GET]
                 cls:  class
                 id :  string representing the object ID
@@ -84,10 +84,10 @@ class FileStorage:
                 if (objID == id):
                     return value
         return None
-    
+
     def count(self, cls=None):
-        """ 
+        """
             A method to count the number of objects in storage
-                cls: class (optional) 
+                cls: class (optional)
         """
         return (len(self.all(cls)))
