@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Cities CRUD"""
 from flask import jsonify, abort, request
 from models import storage
 from models.state import State
@@ -6,7 +7,8 @@ from models.city import City
 from api.v1.views import app_views
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["GET"],
+                 strict_slashes=False)
 def get_cities(state_id):
     """Retrieve the list of cities"""
     state = storage.get(State, state_id)
@@ -36,7 +38,8 @@ def delete_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.route("/states/<state_id>/cities", methods=["POST"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["POST"],
+                 strict_slashes=False)
 def create_city(state_id):
     """Create a new city in a state"""
     state = storage.get(State, state_id)
