@@ -15,6 +15,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import func
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -32,7 +33,7 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+        self.__engine = create_engine('mysql+mysqlconnector://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
@@ -74,3 +75,35 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """
+        Method to retrieve an object based on its cls name and id
+        args:
+            cls: class name
+            id: string representing the object ID
+        """
+
+        session = self.__session
+        try:
+            obj = session.query(cls).filter_by(id=id).first()
+            return obj
+        except Exception:
+            return None
+
+    def count(self, cls=None):
+        """
+        method to count the number of objects in storage
+        args:
+            self: self parameter
+            cls: class name(optional)
+        """
+        session = self.__session
+
+        if cls is None:
+            count = session.query(func.count()).scalar()
+        else:
+            count = session.query(func.count()).filter(cls.id.isnot(None)).scalar()
+
+        return count
+
