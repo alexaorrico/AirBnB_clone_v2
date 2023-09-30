@@ -1,11 +1,5 @@
 #!/usr/bin/python3
-"""
-This Flask app serves as the server-side component of a client-server
-integration. It provides API endpoints and serves as the backend for
-the client application. The app is configured to handle CORS
-(Cross-Origin Resource Sharing) requests,
-making it accessible from different origins.
-"""
+""" Script that imports a Blueprint and runs Flask """
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 from models import storage
