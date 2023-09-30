@@ -61,15 +61,16 @@ def create_user_object():
 def update_user(user_id):
     """Updates an User object based on the user id"""
     fetch_user = storage.get(User, user_id)
-    if fetch_user:
-        data = request.get_json()
-        if not data:
-            return jsonify({"error": "Not a JSON"}), 400
-        keep = ["id", "created_at", "updated_at", "email"]
-        for key, values in data.items():
-            if key not in keep:
-                setattr(fetch_user, key, values)
-        fetch_user.save()
-        return jsonify(fetch_user.to_dict()), 200
-    else:
+    if not fetch_user:
         abort(404)
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Not a JSON"}), 400
+    keep = ["id", "created_at", "updated_at", "email"]
+    for key, values in data.items():
+        if key not in keep:
+            setattr(fetch_user, key, values)
+
+    fetch_user.save()
+    return jsonify(fetch_user.to_dict()), 200
