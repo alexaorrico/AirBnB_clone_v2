@@ -24,8 +24,7 @@ def status():
     # print("type of res is ", type(response))
     # response += '\n'
     # return response
-    print("type is ", type(data))
-    return data
+    return jsonify(data)
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
