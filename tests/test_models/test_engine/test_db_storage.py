@@ -117,7 +117,7 @@ class TestDBStorage(unittest.TestCase):
         check_user.save()
         check_state = State(name='South West')
         check_state.save()
-        check_place = Place(name='Macowh')
+        check_place = Place(name='Mawowh')
         check_place.save()
         self.assertAlmostEqual(models.storage.count("User"), init_count + 1)
         self.assertAlmostEqual(models.storage.count("Place"), init_count + 2)
