@@ -38,6 +38,11 @@ def not_found_error(error):
 
     return make_response(jsonify(data), 404)
 
+@app.errorhandler(400)
+def bad_request(e):
+    custom_message = str(e.description if e.description else "Bad Request")
+    return  jsonify(custom_message), 400
+
 
 if __name__ == '__main__':
     # run flask app

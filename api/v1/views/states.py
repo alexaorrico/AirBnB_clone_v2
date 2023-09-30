@@ -29,12 +29,13 @@ def serve_state_id(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state_obj(state_id):
     """deletes a State object"""
-    
+    # print(f"DELETE API ROUTE")
     state_to_delete = storage.get(State, state_id)
 
     if state_to_delete is None:
         abort(404)
     
+    # print(f"\tDELETE instance:{type(state_to_delete)} dict:{state_to_delete.to_dict()}")
     storage.delete(state_to_delete)
     storage.save()
     return jsonify({}), 200
@@ -44,37 +45,47 @@ def delete_state_obj(state_id):
 def create_new_state():
     """creates a State"""
 
-    data_entered = request.get_json()
-    print("data is ", data_entered)
-    print("type is ", type(data_entered))
-    if data_entered is None:
-        return "Not a JSON", 400
+    if request.headers['Content-Type'] == 'application/json':
+        data_entered = request.get_json()
+        if data_entered is None:
+            # NOT WORKING NEEDS REPAIR !!!!!
+            abort(400, description="Not a JSON")
+    else:
+        abort(400, description="Content-Type is not application/json")
+
+    if data_entered.get('name') is None:
+        abort(400, description="Missing name")
     
     # if name not in dict
     if data_entered.get('name') is None:
-        return "Missing name", 400
-    # storage.new(data_entered)
+        abort(400, description="Missing name")
+
     new_state = State(name=data_entered.get('name'))
-    return jsonify(new_state.to_dict())
+    storage.new(new_state)
+    storage.save()
+    return jsonify(new_state.to_dict()), 201
 
     
-# @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-# def update_state_obj(state_id):
-#     """updates a State object"""
-#     # forming the key of the State instance -> State.id
-#     state_key = "State.{}".format(state_id)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def update_state_obj(state_id):
+    """updates a State object"""
+    state_to_update = storage.get(State, state_id)
 
-#     if state_key not in all_states.keys():
-#         return jsonify({"error": "Not found"}), 404
-    
-#     data_entered = request.get_json()  # method returns None if fails
-#     if data_entered is None:
-#         return "Not a JSON", 400
-    
-#     state_to_update = all_states[state_key] # gives us the instance
+    if state_to_update is None:
+        abort(404)
 
-#     # UPDATE THIS. SHOULD CHECK ALL KEY,VALUES ENTERED IN THE POST
-#     # REQUEST DICT, THEN USE THAT TO UPDATE THE VALUES
-#     # NOT AS DONE BELOW (SHOULD BE DYNAMIC)
-#     state_to_update.name = data_entered['name']
-#     return jsonify(state_to_update.to_dict()), 200
+    if request.headers['Content-Type'] == 'application/json':
+        data_entered = request.get_json()
+        if data_entered is None:
+            # NOT WORKING NEEDS REPAIR !!!!!
+            abort(400, description="Not a JSON")
+    else:
+        abort(400, description="Content-Type is not application/json")
+    
+    for key, value in data_entered.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(state_to_update, key, value)
+    
+    storage.save()
+
+    return jsonify(state_to_update.to_dict()), 200
