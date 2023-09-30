@@ -154,9 +154,11 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Amr Shoukry - [Github](https://github.com/AmrShoukry) / [LinkedIn](https://www.linkedin.com/in/amrshoukry/)  
+Omar Salah - [Github](https://github.com/0marSalah/) / [LinkedIn](https://www.linkedin.com/in/omar-salah-689497253/)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+## Additional Info
+Amr Shoukry and Omar Salah have taken on the task of forking this project on behalf of ALX SE.
