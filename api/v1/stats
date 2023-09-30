@@ -1,0 +1,14 @@
+from models.engine import db_storage
+
+@app_views.route('/stats', methods=['GET'])
+def stats():
+    """Retrieves the number of each object by type."""
+    stats = {}
+
+    classes = [cls.__name__ for cls in storage.all().values()]
+
+    for cls_name in set(classes):
+        if cls_name != "BaseModel":
+            stats[cls_name] = storage.count(cls_name)
+
+    return jsonify(stats)
