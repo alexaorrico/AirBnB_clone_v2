@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""script to serve routes related to cities objects"""
 from models.state import City
 from models.state import State
 from models import storage
