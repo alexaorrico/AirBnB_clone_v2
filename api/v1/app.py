@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -9,6 +9,11 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
+
+@app.route('/api/v1/nop')
+def status():
+    return jsonify({"error": "Not found"})
 
 
 @app.teardown_appcontext
