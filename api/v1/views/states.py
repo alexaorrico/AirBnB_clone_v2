@@ -8,7 +8,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states")
+@app_views.route("/states", methods=["GET"], strict_slashes=False)
 def all_states():
     """Retrieves a list of all state objects"""
     states = storage.all("State")
@@ -16,7 +16,29 @@ def all_states():
     return jsonify(all_states)
 
 
-@app_views.route("/states", methods=['POST'])
+@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
+def get_state(state_id):
+    """Rettrieves a state based on state id"""
+    state = storage.get("State", state_id)
+    if not state:
+        abort(404)
+        result = state.to_dict()
+        return jsnonify(result)
+
+
+@app_views.route("/states/<state_id>", methods=["DELETE"],
+                 strict_slashes=False)
+def delete_state(state_id):
+    """Deletes state based on state id"""
+    state = storage.get("State", state_id)
+    if not state:
+        abort(404)
+    storage.delete(state)
+    storage.save()
+    return jsonify({}), 200
+
+
+@app_views.route("/states/<state_id", methods=['POST'], strict_slashes=False)
 def create_state():
     """create and add a state to states"""
     data = request.get_json()
@@ -42,28 +64,22 @@ def create_state():
     return jsonify(result), 201
 
 
-@app_views.route("/states/<state_id>", methods=['GET', 'PUT', 'DELETE'],
-                 strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
 def modify_state(state_id):
-    """GET, UPDATE or DELETE state object based on id  else, 400"""
+    """UPDATE state object based on id  else, 400"""
     state = storage.get("State", state_id)
     if not state:
         abort(404)
 
-    if request.method == "PUT":
-        data = request.getjson()
-        if not data:
-            result = {"Error": "Not a JSON"}
-            return jsonify(result), 400
+    data = request.getjson()
+    if not data:
+        result = {"Error": "Not a JSON"}
+        return jsonify(result), 400
 
-        [setattr(state, key, value) for key, value in data.items()
-            if key not in ["id", "created_at", "updated_at"]]
-        state.save()
+    for key, value in data.items():
+        if key not in ["id", "created_at", "updated_at"]:
+            setattr(state, key, value)
 
-    if request.method == "DELETE":
-        state.delete()
-        storage.save()
-        return jsonify({}), 200
-
+    state.save()
     result = state.to_dict()
     return jsonify(result), 200
