@@ -52,12 +52,12 @@ def delete_state_obj(state_id):
 #     data_entered = request.get_json()
 #     print("data is ", data_entered)
 #     print("type is ", type(data_entered))
-#     if data_entered is None:
-#         return "Not a JSON", 400
+    # if data_entered is None:
+    #     return "Not a JSON", 400
     
-#     # if name not in dict
-#     if data_entered.get('name') is None:
-#         return "Missing name", 400
+    # # if name not in dict
+    # if data_entered.get('name') is None:
+    #     return "Missing name", 400
 #     storage.new(data_entered)
 #     print("all states", storage.all(State))
 

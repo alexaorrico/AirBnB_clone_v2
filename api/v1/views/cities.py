@@ -5,7 +5,7 @@ from models.state import State
 from models import storage
 from api.v1.views import app_views
 import json
-from flask import request
+from flask import request, jsonify
 
 all_states = storage.all(State)  # is a dict
 all_cities = storage.all(City)
@@ -20,7 +20,7 @@ def return_cities(state_id):
     state_key = "State.{}".format(state_id)
     # raise error if state_id is not linked to any State object
     if state_key not in all_states.keys():
-        return json.dumps({"error": "Not found"}), 404
+        return jsonify({"error": "Not found"}), 404
 
     for key, value in all_cities.items():
         if state_id == value.state_id:
@@ -54,6 +54,27 @@ def delete_city_obj(city_id):
     city_to_delete = all_cities[city_key]  # gives us the instance
     storage.delete(city_to_delete)
     return json.dumps({}), 200
+
+
+@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+def create_city(state_id):
+    """creates a City object"""
+    # forming the key of the State instance -> State.id
+    state_key = "State.{}".format(state_id)
+    # raise error if state_id is not linked to any State object
+    if state_key not in all_states.keys():
+        return jsonify({"error": "Not found"}), 404
+
+    data_entered = request.get_json()
+
+    if data_entered is None:  # if not valid json
+        return "Not a JSON", 400
+    
+    # if name not in dict
+    if data_entered.get('name') is None:
+        return "Missing name", 400
+    new_city = City(name=data_entered.get('name'))
+    return jsonify(new_city.to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
