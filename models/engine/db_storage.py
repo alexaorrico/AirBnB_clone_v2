@@ -77,7 +77,15 @@ class DBStorage:
 
     def get(self, cls, id):
         """Returns the object based on the class and its ID"""
-        classes = self.all(cls);
+        if cls and id:
+            t = cls, __name__ + "." + id
+            classes = self.all(cls);
+            for clas in classes:
+                if clas == t:
+                    return classes[clas]
+        else:
+            return None
+        """return (t)
         if cls == State:
             specific_class = classes.get("State." + id);
         elif cls == City:
@@ -91,7 +99,7 @@ class DBStorage:
         else:
             return None
         
-        return specific_class;
+        return specific_class;"""
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching cls"""

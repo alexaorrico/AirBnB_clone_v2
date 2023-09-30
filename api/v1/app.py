@@ -2,8 +2,8 @@
 """a functon to get status of API"""
 import os
 from flask.app import Flask
+from flask import make_response
 app = Flask(__name__)
-print(dir(app))
 from models import storage
 from api.v1.views import app_views
 app.register_blueprint(app_views)
@@ -12,6 +12,12 @@ app.register_blueprint(app_views)
 def handle_teardown(exception):
     """handle @app.teardown_appcontext"""
     storage.close()
+
+@app.errorhandler(404)
+def not_found(exception):
+    data = {"error": "Not found"}
+    return data, 400
+
 
 if __name__ == "__main__":
     hst = os.getenv('HBNB_API_HOST')

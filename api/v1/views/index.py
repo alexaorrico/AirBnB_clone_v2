@@ -8,7 +8,7 @@ from models.city import City
 from models.place  import Place
 from models.review  import Review
 from models.user import User
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """returns the status of an API"""
     j = {
@@ -16,7 +16,7 @@ def status():
         }
     return j
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """returns number of each class"""
     stats = {
