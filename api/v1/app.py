@@ -1,21 +1,31 @@
 #!/usr/bin/python3
+"""Create a Flask API"""
 
-"""importation of libraries and modules """
-from flask import Flask
+from flask import Flask, jsonify, make_response
 import os
 from models import storage
 from api.v1.views import app_views
+
 
 """Instantiate a flask app by calling the Flask class"""
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 def close_storage(exception=None):
     """method to handle app context storage"""
     storage.close()
 
+
 """Register the teardown function"""
 app.teardown_appcontext(close_storage)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Returns the page Not Found in JSON format"""
+    return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     host = os.environ.get("HBNB_API_HOST", "0.0.0.0")
