@@ -10,7 +10,7 @@ from models.state import State
 from models.user import User
 import json
 
-classes = {"amenities": Amenity,"cities": City,
+classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
 
 
@@ -26,16 +26,18 @@ def status():
     # return response
     return jsonify(data)
 
+
 @app_views.route('/stats', methods=['GET'])
 def stats():
     count_dict = {}
 
     for key, value in classes.items():
         count_dict[key] = storage.count(value)
-    
+
     response = json.dumps(count_dict, indent=2)
     response += '\n'
     return response
+
 
 @app_views.errorhandler(404)
 def not_found_error(error):
