@@ -74,7 +74,6 @@ class DBStorage:
             return 0
         return len(self.all(cls))
 
-
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
