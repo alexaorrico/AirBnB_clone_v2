@@ -7,4 +7,4 @@ from flask import Flask, jsonify
 
 @app_views.route('/status', methods=['GET'])
 def statCode():
-    return jsonify({"status": "OK"})
+    return jsonify({'status': 'OK'})
