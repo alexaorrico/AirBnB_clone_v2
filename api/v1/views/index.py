@@ -8,8 +8,8 @@ classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 @app_views.route('/status', strict_slashes=False)
-def hbnbStatus():
-    """hbnbStatus"""
+def status():
+    """method to return the status of our API"""
     return jsonify({"status": "OK"})
 
 @app_views.route('/stats', strict_slashes=False)
