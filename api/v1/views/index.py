@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" this script serves a flask web application's routes"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -27,8 +28,9 @@ def status():
     return jsonify(data)
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', strict_slahes=False)
 def stats():
+    """method to serve the above route"""
     count_dict = {}
 
     for key, value in classes.items():
