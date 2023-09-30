@@ -1,12 +1,9 @@
-from flask import Flask, jsonify
+from flask import Blueprint, jsonify
+
 from api.v1.views import app_views
-from models.engine import storage
-from models.base_model import BaseModel
 
+# Define your routes within the blueprint
+@app_views.route('/status')
+def route1():
 
-@app_views.route('/status', methods=['GET'])
-def status():
-    """
-    return json string indication the status_code
-    """
     return jsonify({"status": "OK"})
