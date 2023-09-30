@@ -34,9 +34,10 @@ def stats():
     for key, value in classes.items():
         count_dict[key] = storage.count(value)
 
-    response = json.dumps(count_dict, indent=2)
-    response += '\n'
-    return response
+    # response = json.dumps(count_dict, indent=2)
+    # response += '\n'
+    # return response
+    return jsonify(count_dict)
 
 
 @app_views.errorhandler(404)
