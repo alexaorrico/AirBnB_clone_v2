@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""script to serve routes related to states objects"""
 from models.state import State
 from models import storage
 from api.v1.views import app_views
