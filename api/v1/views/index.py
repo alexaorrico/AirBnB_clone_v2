@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""api end point
+"""
+api end point
 """
 
 from flask import jsonify
@@ -16,13 +17,13 @@ classes = {
         }
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """returns a json"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """retrieves the number of each objects by type"""
     objs = {}
