@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """
-This Flask app serves as the server-side component of a client-server integration.
-It provides API endpoints and serves as the backend for the client application.
-The app is configured to handle CORS (Cross-Origin Resource Sharing) requests,
+This Flask app serves as the server-side component of a client-server
+integration. It provides API endpoints and serves as the backend for
+the client application. The app is configured to handle CORS
+(Cross-Origin Resource Sharing) requests,
 making it accessible from different origins.
 """
 from flask import Flask, make_response, jsonify
@@ -11,17 +12,11 @@ from models import storage
 from api.v1.views import app_views
 from os import getenv
 
-# set up environment
 host = getenv("HBNB_API_HOST", '0.0.0.0')
 port = getenv("HBNB_API_PORT", 5000)
 
-# create an instance of Flask
 app = Flask(__name__)
-
-# register the blueprint app_views to app
 app.register_blueprint(app_views)
-
-# add CORS to the setup
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
