@@ -8,7 +8,7 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('places/<place_id>/reviews', methods=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def create_review(place_id):
     """ Creates a new review object """
