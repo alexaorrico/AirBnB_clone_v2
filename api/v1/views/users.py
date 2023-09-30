@@ -2,8 +2,6 @@
 """A new view for User objects that handles all default
 RESTFUL API actions"""
 from flask import Flask, jsonify, request, abort
-from models.place import Place
-from models.review import Review
 from models.user import User
 from models import storage
 from api.v1.views import app_views
@@ -13,7 +11,7 @@ from api.v1.views import app_views
 def get_all_user():
     """Retrives all User objects"""
     users = [u.to_dict() for u in storage.all(User).values()]
-    return jsonify(users) if users else abort(404)
+    return jsonify(users)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'],
@@ -36,7 +34,7 @@ def delete_user_object(user_id):
     if user:
         storage.delete(user)
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     else:
         abort(404)
 
