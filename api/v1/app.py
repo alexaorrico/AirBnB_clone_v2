@@ -5,7 +5,7 @@ Start API
 
 from models import storage
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask
 from os import getenv
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ def downtear(self):
 @app.errorhandler(404)
 def not_found(error):
     """Define a custom 404  error handler"""
-    return jsonify({"error": "Not found"}), 404
+    return ({'error': 'Not found'}), 404
 
 
 if __name__ == "__main__":
