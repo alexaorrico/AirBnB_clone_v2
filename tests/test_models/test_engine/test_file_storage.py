@@ -143,11 +143,13 @@ class TestFileStorage(unittest.TestCase):
         myDict = {'name': 'Someone'}
         obj = User(**myDict)
         Fstorage.new(obj)
+        obj = State(**myDict)
+        Fstorage.new(obj)
         Fstorage.save()
 
         # restart a database engine
         Fstorage = FileStorage()
 
         # test the objects counter function
-        objs = len(self.all())
+        objs = len(Fstorage.all())
         self.assertEqual(objs, Fstorage.count())
