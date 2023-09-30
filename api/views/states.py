@@ -34,7 +34,7 @@ def create_state():
             setattr(state, "name", name)
             state.save()
             result = state.to_dict()
-            return jsonify(), 200
+            return jsonify(result), 200
 
     state = State(**data)
     state.save()
@@ -65,5 +65,5 @@ def modify_state(state_id):
         storage.save()
         return jsonify({}), 200
 
-    result = {state.to_dict()}
-    return jsonify(result.state), 200
+    result = state.to_dict()
+    return jsonify(result), 200
