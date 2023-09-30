@@ -18,9 +18,11 @@ import json
 import os
 import pep8
 import unittest
+import uuid
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
+storage = models.storage
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -68,7 +70,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -86,3 +88,48 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """ tests the get method """
+        # for all classes
+        ids = {}
+        for clss in classes:
+            instance = classes[clss]()
+            ids[clss] = instance.id
+            instance.save()
+        storage.reload()
+        for clss in classes:
+            i = storage.get(clss, ids[clss])
+            self.assertEqual(i.id, ids[clss])
+            self.assertEqual(type(i), clss)
+        # errors for missing arguments
+        for clss in classes:
+            self.assertRaises(TypeError, storage.get, clss)
+            self.assertRaises(TypeError, storage.get)
+        # object not found
+        test_id = str(uuid.uuid4())
+        self.assertIsNone(storage.get(State, test_id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """ test the count method """
+        # adding 1 object and count all
+        storage.reload()
+        cn1 = storage.count()
+        i = State()
+        i.save()
+        storage.reload()
+        cn2 = storage.count()
+        self.assertEqual(cn1 + 1, cn2)
+        self.assertIsInstance(cn2, int)
+        self.assertNotEqual(cn1, cn2)
+        # adding 1 instance for each class and count each class and compare
+        counts = {}
+        for clss in classes:
+            counts[clss] = storage.count(clss)
+            instance = classes[clss]()
+            instance.save()
+            temp = storage.count(clss)
+            self.assertEqual(counts[clss] + 1, temp)
+            self.assertNotEqual(counts[clss], temp)
