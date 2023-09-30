@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""api end point
+"""init file
 """
 
 from flask import Blueprint
