@@ -34,7 +34,7 @@ def validate_json():
 
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False,
                  methods=['GET', 'POST'])
-def cities_by_state(place_id=None):
+def reviews_by_place(place_id=None):
     """Route for retrieving Review objects"""
 
     if request.method == 'GET':
@@ -44,7 +44,7 @@ def cities_by_state(place_id=None):
         return jsonify(reviews_list)
 
     if request.method == 'POST':
-        # Add a State to the list
+        # Add a Review to the list
         get_obj_or_abort('Place', place_id)
         data = validate_json()
         if "user_id" not in data:
@@ -58,23 +58,23 @@ def cities_by_state(place_id=None):
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False,
                  methods=['GET', 'PUT', 'DELETE'])
-def city_with_id(review_id=None):
-    """Route for manipulating a specific City object"""
+def review_with_id(review_id=None):
+    """Route for retrievng a specific Review object"""
 
     review = get_obj_or_abort('Review', review_id)
 
     if request.method == 'GET':
-        # Get a specific state by id
+        # Get a specific review by id
         return jsonify(review.to_dict())
 
     if request.method == 'DELETE':
-        # Delete a specific state by id
+        # Delete a specific review by id
         storage.delete(review)
         storage.save()
         return make_response(jsonify({}), 200)
 
     if request.method == 'PUT':
-        # Update a specific state by id
+        # Update a specific review by id
         data = validate_json()
         for key, value in data.items():
             if key not in ["id", "created_at", "updated_at",
