@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-    a Flask web application to be started by this script
-"""
+"""a Flask web application to be started by this script"""
 from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
