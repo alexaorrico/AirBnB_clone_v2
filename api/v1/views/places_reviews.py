@@ -39,10 +39,9 @@ def create_review(place_id):
         abort(404)
 
     # create and save the new review instance
+    body['place_id'] = place_id
     new_review = Review(**body)
-    new_review.place_id = place_id
-    storage.new(new_review)
-    storage.save()
+    new_review.save()
 
     return jsonify(new_review.to_dict()), 201
 
@@ -103,7 +102,7 @@ def update_review(review_id):
             setattr(review, key, value)
 
     # save the updated review instance
-    storage.save()
+    review.save()
 
     return jsonify(review.to_dict()), 200
 
