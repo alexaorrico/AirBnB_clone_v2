@@ -22,8 +22,8 @@ def get_state(state_id):
     state = storage.get("State", state_id)
     if not state:
         abort(404)
-        result = state.to_dict()
-        return jsnonify(result)
+    result = state.to_dict()
+    return jsonify(result)
 
 
 @app_views.route("/states/<state_id>", methods=["DELETE"],
@@ -38,7 +38,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route("/states/<state_id", methods=['POST'], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=['POST'], strict_slashes=False)
 def create_state():
     """create and add a state to states"""
     data = request.get_json()
@@ -71,7 +71,7 @@ def modify_state(state_id):
     if not state:
         abort(404)
 
-    data = request.getjson()
+    data = request.get_json()
     if not data:
         result = {"Error": "Not a JSON"}
         return jsonify(result), 400
