@@ -20,7 +20,7 @@ def statCode():
     return jsonify(js)
 
 
-@app_views.route('/api/v1/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'])
 def objStats():
     """
         a function that retrieves the number of each objects by type
