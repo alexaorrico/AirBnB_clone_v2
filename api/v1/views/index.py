@@ -19,9 +19,12 @@ def status():
     data = {
         "status": "OK"
     }
-    response = json.dumps(data, indent=2)
-    response += '\n'
-    return response
+    # response = json.dumps(data, indent=2)
+    # print("type of res is ", type(response))
+    # response += '\n'
+    # return response
+    print("type is ", type(data))
+    return data
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
