@@ -149,5 +149,5 @@ class TestFileStorage(unittest.TestCase):
         Fstorage = FileStorage()
 
         # test the objects counter function
-        objs = len(Fstorage.all())
+        objs = len(self.all())
         self.assertEqual(objs, Fstorage.count())
