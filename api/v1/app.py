@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    flask app that that integrate the client to the serverside
+flask app that that integrate the client to the serverside
 """
 
 from flask import Flask, make_response, jsonify
