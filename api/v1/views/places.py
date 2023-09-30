@@ -26,10 +26,10 @@ def create_place(data, city_id):
 
 def validate_json():
     """Validate that the request data is in JSON format."""
-    try:
-        return request.get_json()
-    except Exception:
+    data = request.get_json()
+    if not data:
         abort(400, "Not a JSON")
+    return data
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False,

@@ -25,10 +25,10 @@ def create_user(data):
 
 def validate_json():
     """Validate that the request data is in JSON format."""
-    try:
-        return request.get_json()
-    except Exception:
+    data = request.get_json()
+    if not data:
         abort(400, "Not a JSON")
+    return data
 
 
 @app_views.route('/users', strict_slashes=False, methods=['GET', 'POST'])
