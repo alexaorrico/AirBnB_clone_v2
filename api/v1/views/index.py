@@ -28,7 +28,7 @@ def status():
     return jsonify(data)
 
 
-@app_views.route('/stats', strict_slahes=False)
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """method to serve the above route"""
     count_dict = {}
@@ -48,6 +48,7 @@ def not_found_error(error):
         "error": "Not found"
     }
 
-    response = json.dumps(data, indent=2)
-    response += '\n'
-    return response
+    # response = json.dumps(data, indent=2)
+    # response += '\n'
+    # return response
+    return jsonify(data)
