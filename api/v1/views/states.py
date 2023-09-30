@@ -5,43 +5,38 @@ from models import storage
 from api.v1.views import app_views
 import json
 
-from flask import request, jsonify
-
-all_states = storage.all(State)  # is a dict
-states = []
-for key, value in all_states.items():
-    states.append(value.to_dict())
+from flask import request, jsonify, abort
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def serve_states():
     """Retrieves a list of all State objects"""
-    return json.dumps(states)
+    states = storage.all(State)
+    list_states = [ state.to_dict() for state in states.values()]
+    return jsonify(list_states)
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def serve_state_id(state_id):
     """Retrives a State object"""
-    # forming the key of the State instance -> State.id
-    state_key = "State.{}".format(state_id)
+    response = storage.get(State, state_id)
 
-    if state_key not in all_states.keys():
-        return json.dumps({"error": "Not found"}), 404
+    if response is None:
+        # return jsonify({"error": "Not found"}), 404
+        abort(404)
     
-    # use the get method that returns an instance based on Cls and id
-    found_state = storage.get(State, state_id)
-    return json.dumps(found_state.to_dict())
+    return jsonify(response.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state_obj(state_id):
     """deletes a State object"""
-    # forming the key of the State instance -> State.id
-    state_key = "State.{}".format(state_id)
-
-    if state_key not in all_states.keys():
-        return jsonify({"error": "Not found"}), 404
     
-    state_to_delete = all_states[state_key] # gives us the instance
+    state_to_delete = storage.get(State, state_id)
+
+    if state_to_delete is None:
+        abort(404)
+    
     storage.delete(state_to_delete)
+    storage.save()
     return jsonify({}), 200
 
 
@@ -63,23 +58,23 @@ def create_new_state():
     return jsonify(new_state.to_dict())
 
     
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state_obj(state_id):
-    """updates a State object"""
-    # forming the key of the State instance -> State.id
-    state_key = "State.{}".format(state_id)
+# @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+# def update_state_obj(state_id):
+#     """updates a State object"""
+#     # forming the key of the State instance -> State.id
+#     state_key = "State.{}".format(state_id)
 
-    if state_key not in all_states.keys():
-        return jsonify({"error": "Not found"}), 404
+#     if state_key not in all_states.keys():
+#         return jsonify({"error": "Not found"}), 404
     
-    data_entered = request.get_json()  # method returns None if fails
-    if data_entered is None:
-        return "Not a JSON", 400
+#     data_entered = request.get_json()  # method returns None if fails
+#     if data_entered is None:
+#         return "Not a JSON", 400
     
-    state_to_update = all_states[state_key] # gives us the instance
+#     state_to_update = all_states[state_key] # gives us the instance
 
-    # UPDATE THIS. SHOULD CHECK ALL KEY,VALUES ENTERED IN THE POST
-    # REQUEST DICT, THEN USE THAT TO UPDATE THE VALUES
-    # NOT AS DONE BELOW (SHOULD BE DYNAMIC)
-    state_to_update.name = data_entered['name']
-    return jsonify(state_to_update.to_dict()), 200
+#     # UPDATE THIS. SHOULD CHECK ALL KEY,VALUES ENTERED IN THE POST
+#     # REQUEST DICT, THEN USE THAT TO UPDATE THE VALUES
+#     # NOT AS DONE BELOW (SHOULD BE DYNAMIC)
+#     state_to_update.name = data_entered['name']
+#     return jsonify(state_to_update.to_dict()), 200
