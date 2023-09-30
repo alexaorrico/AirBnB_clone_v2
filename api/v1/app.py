@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""api end point
+"""
+    flask app that that integrate the client to the serverside
 """
 
 from flask import Flask, make_response, jsonify
@@ -7,6 +8,10 @@ from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+
+# set up environment
+host = getenv("HBNB_API_HOST", '0.0.0.0')
+port = getenv("HBNB_API_PORT", 5000)
 
 # create an instance of Flask
 app = Flask(__name__)
@@ -33,13 +38,4 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    # Get the host and port from environment variables,
-    # or use defaults if not defined
-    host = getenv("HBNB_API_HOST")
-    port = getenv("HBNB_API_PORT")
-
-    host = '0.0.0.0' if not host else host
-    port = 5000 if not port else port
-
-    # Run the Flask app with threads
     app.run(host=host, port=port, threaded=True)
