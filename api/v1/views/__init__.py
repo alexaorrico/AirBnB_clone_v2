@@ -1,6 +1,7 @@
-from flask import Flask
-from flask import Blueprint
+from flask import Blueprint, jsonify
 
-app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+# Create a Blueprint object
+app_views = Blueprint('app_views', __name__)
 
-from api.v1.views import *
+from api.v1.views.index import *
+
