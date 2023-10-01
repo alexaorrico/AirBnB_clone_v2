@@ -30,6 +30,7 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
+    cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
     host = getenv("HBNB_API_HOST", "0.0.0.0")
     port = int(getenv("HBNB_API_PORT", "5000"))
     app.run(host=host, port=port)
