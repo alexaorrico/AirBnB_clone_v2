@@ -1,4 +1,4 @@
-#1/usr/bin/python3
+#!/usr/bin/python3
 """
 User object:
 Handles all default RESTFul API actions
