@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 #blueprint registration
-app.register_blueprint(app_views, url_prefix="/api/v1")
+app.register_blueprint(app_views)
 
 #teardown method
 @app.teardown_appcontext
