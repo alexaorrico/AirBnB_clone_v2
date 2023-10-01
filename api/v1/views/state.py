@@ -6,16 +6,18 @@ from models import storage
 from models import state
 
 
-@app_views.route('/states', method=['GET','POST'])
+@app_views.route('/states', method=['GET', 'POST'])
 def states():
     """Returns a json of all states in the database"""
     if request.method == 'GET':
         allstates = storage.all("States").values()
         return jsonify([state.to_dict() for state in allstates])
+
+
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE'])
 def states_id(state_id):
-    """Returns a json of specific states 
-       GET:: 
+    """Returns a json of specific states
+       GET::
             Return the state with the id provided.
        DELETE::
             Deletes a state by its state id.
