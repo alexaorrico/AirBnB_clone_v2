@@ -69,6 +69,7 @@ class FileStorage:
         f_name = FileStorage.__file_path
         FileStorage.__objects = {}
         try:
+<<<<<<< HEAD
             with open(f_name, mode='r', encoding='utf-8') as file_io:
                 new_objs = json.load(file_io)
         except FileNotFoundError:
@@ -81,6 +82,14 @@ class FileStorage:
             d["updated_at"] = datetime.strptime(d["updated_at"],
                                                 "%Y-%m-%d %H:%M:%S.%f")
             FileStorage.__objects[obj_id] = FileStorage.classes[k_cls](**d)
+=======
+            with open(self.__file_path, 'r') as f:
+                jo = json.load(f)
+            for key in jo:
+                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
+        except as e:
+            pass
+>>>>>>> storage_get_count
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -94,3 +103,21 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """ Returns the object based on the class and its ID """
+        if cls in classes.values() and id and type(id) == str:
+            obj = self.all(cls)
+            for key, value in obj.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
+
+    def count(self, cls=None):
+        """
+            Returns the number of objects in storage matching the given class
+        """
+        obj = self.all(cls)
+        if cls in classes.values():
+            obj = self.all(cls)
+        return len(obj)
