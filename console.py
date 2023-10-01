@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" console """
+""" Command interpreter for AirBnB project """
 
 import cmd
 from datetime import datetime
