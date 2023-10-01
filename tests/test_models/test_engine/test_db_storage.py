@@ -86,3 +86,58 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not using database")
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    def setUp(self):
+        """Set up test environment"""
+        self.db = DBStorage()
+        self.db.reload()
+
+    def tearDown(self):
+        """Tear down test environment"""
+        self.db.close()
+
+    def test_all(self):
+        """Test the all method"""
+        all_objs = self.db.all()
+        self.assertIsNotNone(all_objs)
+        self.assertEqual(type(all_objs), dict)
+
+    def test_new(self):
+        """Test the new method"""
+        new_state = State(name="California")
+        new_state.save()
+        self.assertIn(new_state, self.db.all().values())
+
+    def test_save(self):
+        """Test the save method"""
+        new_city = City(name="San Francisco", state_id="CA")
+        new_city.save()
+        self.assertIn(new_city, self.db.all().values())
+
+    def test_delete(self):
+        """Test the delete method"""
+        new_amenity = Amenity(name="Wifi")
+        new_amenity.save()
+        self.assertIn(new_amenity, self.db.all().values())
+        self.db.delete(new_amenity)
+        self.assertNotIn(new_amenity, self.db.all().values())
+
+    def test_get(self):
+        """Test the get method"""
+        new_user = User(email="test@test.com", password="password")
+        new_user.save()
+        user_id = new_user.id
+        self.assertEqual(new_user, self.db.get(User, user_id))
+
+    def test_count(self):
+        """Test the count method"""
+        num_states = self.db.count(State)
+        new_state = State(name="Nevada")
+        new_state.save()
+        self.assertEqual(num_states + 1, self.db.count(State))
+        self.assertEqual(self.db.count(), len(self.db.all()))
