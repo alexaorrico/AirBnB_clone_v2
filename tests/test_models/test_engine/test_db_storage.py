@@ -67,6 +67,47 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get_method(self):
+        """ Test the get method in the DBStorage class. """
+        storage = DBStorage()
+
+        new_state = State(name="California")
+        new_state.save()
+        retrieved_state = storage.get(State, new_state.id)
+
+        self.assertEqual(retrieved_state, new_state)
+
+    def test_get_method_not_found(self):
+        """ Test the get method in the DBStorage class when the object is not found."""
+        storage = DBStorage()
+        retrieved_state = storage.get(State, "non_existent_id")
+        self.assertIsNone(retrieved_state)
+
+    def test_count_method_all_objects(self):
+        """ Test the count method in the DBStorage class for all objects."""
+        storage = DBStorage()
+        new_state1 = State(name="California")
+        new_state1.save()
+        new_state2 = State(name="New York")
+        new_state2.save()
+        count = storage.count()
+        self.assertEqual(count, 2)
+
+    def test_count_method_by_class(self):
+        """ Test the count method in the DBStorage class for objects of a specific class."""
+        storage = DBStorage()
+        new_state1 = State(name="California")
+        new_state1.save()
+        new_state2 = State(name="New York")
+        new_state2.save()
+        new_city = City(name="San Francisco", state_id=new_state1.id)
+        new_city.save()
+        new_user = User(email="test@example.com", password="password")
+        new_user.save()
+
+        count = storage.count(State)
+        self.assertEqual(count, 2)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""

@@ -113,3 +113,55 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_method(self):
+        """ Test the get method in the FileStorage class. """
+        storage = FileStorage()
+
+        # Create an object and save it to the storage
+        new_state = State(name="California")
+        new_state.save()
+
+        # Retrieve the object using the get method
+        retrieved_state = storage.get(State, new_state.id)
+
+        self.assertEqual(retrieved_state, new_state)
+
+    def test_get_method_not_found(self):
+        """ Test the get method in the FileStorage class when the object is not found. """
+        storage = FileStorage()
+
+        retrieved_state = storage.get(State, "non_existent_id")
+
+        self.assertIsNone(retrieved_state)
+
+    def test_count_method_all_objects(self):
+        """ Test the count method in the FileStorage class for all objects. """
+        storage = FileStorage()
+
+        new_state1 = State(name="California")
+        new_state1.save()
+        new_state2 = State(name="New York")
+        new_state2.save()
+
+        count = storage.count()
+
+        self.assertEqual(count, 2)
+
+    def test_count_method_by_class(self):
+        """ Test the count method in the FileStorage class for objects of a specific class. """
+        storage = FileStorage()
+
+        new_state1 = State(name="California")
+        new_state1.save()
+        new_state2 = State(name="New York")
+        new_state2.save()
+
+        new_city = City(name="San Francisco", state_id=new_state1.id)
+        new_city.save()
+        new_user = User(email="test@example.com", password="password")
+        new_user.save()
+
+        count = storage.count(State)
+
+        self.assertEqual(count, 2)
