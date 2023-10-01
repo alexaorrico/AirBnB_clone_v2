@@ -40,6 +40,22 @@ class FileStorage:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
+    def get(self, cls, id):
+        """gets specific object
+        cls: class
+        id: id of object instance
+        return: object or None
+        """
+        all_classes = self.all(cls)
+        for obj in all_classes.values():
+            if id == str(obj.id):
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """returns count of an obj instances"""
+        return len(self.all(cls))
+
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
@@ -50,20 +66,30 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
+        f_name = FileStorage.__file_path
+        FileStorage.__objects = {}
         try:
-            with open(self.__file_path, 'r') as f:
-                jo = json.load(f)
-            for key in jo:
-                self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
+            with open(f_name, mode='r', encoding='utf-8') as file_io:
+                new_objs = json.load(file_io)
+        except FileNotFoundError:
+            return
+        for obj_id, d in new_objs.items():
+            k_cls = d['__class__']
+            d.pop("__class__", None)
+            d["created_at"] = datetime.strptime(d["created_at"],
+                                                "%Y-%m-%d %H:%M:%S.%f")
+            d["updated_at"] = datetime.strptime(d["updated_at"],
+                                                "%Y-%m-%d %H:%M:%S.%f")
+            FileStorage.__objects[obj_id] = FileStorage.classes[k_cls](**d)
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
-        if obj is not None:
-            key = obj.__class__.__name__ + '.' + obj.id
-            if key in self.__objects:
-                del self.__objects[key]
+        if obj is None:
+            return
+        for k_l in list(FileStorage.__objects.keys()):
+            if obj.id == k_l.split(".")[1] and k_l.split(".")[0] in str(obj):
+                FileStorage.__objects.pop(k_l, None)
+                self.save()
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
