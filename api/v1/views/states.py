@@ -18,12 +18,12 @@ def get_states():
         State objects: GET /api/v1/states
     """
     # get all saved state objects
-    statesObjs = storage.all(State).values()
+    states = storage.all(State).values()
 
     # Convert state object to dictionary and save in list
-    objList = [obj.to_dict() for obj in statesObjs]
+    stateList = [state.to_dict() for state in states]
 
-    return jsonify(objList)
+    return jsonify(stateList)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
