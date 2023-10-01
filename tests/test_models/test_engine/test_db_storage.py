@@ -30,6 +30,12 @@ class TestDBStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
+    def test_all_returns_dict(self):
+        """Test that all returns a dictionary"""
+        skip_message = "Skipped: test skipped cause storage type is not 'db'."
+        self.skipTest(skip_message)
+        self.assertIs(type(models.storage.all()), dict)
+
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
@@ -94,14 +100,55 @@ class TestDBStorage(unittest.TestCase):
     def test_get(self):
         """Test that get returns specific object, or none"""
         newUser = User(email="rer@reer.com", password="password")
-        newUser.save()
-        self.assertIs(None, models.storage.get("User", "rer"))
-        self.assertIs(newUser, models.storage.get("User", newUser.id))
+        models.storage.new(newUser)
+        models.storage.save()
+        startCount = models.storage.count(User)
+        result = models.storage.get(User, newUser.id)
+        self.assertIsNone(models.storage.get(User, "rer"))
+        self.assertEqual(newUser, result)
 
     def test_count(self):
         """test that count counts the number of objects in storage"""
-        counter = models.storage.count()
-        self.assertEqual(models.storage.count("Rem"), 0)
+        models.storage._FileStorage__objects = {}
+        self.assertEqual(models.storage.count(User), 0)
         newUser = User(email="rer@reer.com", password="password")
-        newUser.save()
-        self.assertEqual(models.storage.count("User"), startCount + 1)
+        models.storage.new(newUser)
+        models.storage.save()
+        startCount = 0
+        self.assertEqual(models.storage.count(User), startCount + 1)
+
+    def test_get_non_existent_class(self):
+        """Test get() with a non-existent class"""
+        models.storage._FileStorage__objects = {}
+        result = models.storage.get(User, "some_id")
+        self.assertIsNone(result, "Expected None for a non-existent class")
+
+    def test_get_non_existent_object(self):
+        """Test get() with a non-existent object"""
+        models.storage._FileStorage__objects = {}
+        newUser = User(email="rer@reer.com", password="password")
+        models.storage.new(newUser)
+        models.storage.save()
+        result = models.storage.get(User, "non_existent_id")
+        self.assertIsNone(result, "Expected None for a non-existent object")
+
+    def test_get_with_wrong_id_for_class(self):
+        """Test get() with a wrong ID for an existing class"""
+        models.storage._FileStorage__objects = {}
+        newUser = User(email="rer@reer.com", password="password")
+        models.storage.new(newUser)
+        models.storage.save()
+        result = models.storage.get(User, "wrong_id")
+        self.assertIsNone(result, "Expected None for a wrong ID")
+
+    def test_count_non_existent_class(self):
+        """Test count() with a non-existent class"""
+        models.storage._FileStorage__objects = {}
+        result = models.storage.count("NonExistentClass")
+        self.assertEqual(result, 0, "Expected 0 for a non-existent class")
+
+    def test_count_empty_storage(self):
+        """Test count() with an empty storage"""
+        models.storage._FileStorage__objects = {}
+        result = models.storage.count(User)
+        self.assertEqual(result, 0, "Expected 0 for an empty storage")

@@ -123,8 +123,41 @@ class TestFileStorage(unittest.TestCase):
 
     def test_count(self):
         """test that count counts the number of objects in storage"""
+        startCount = models.storage.count(User)
         counter = models.storage.count()
         self.assertEqual(models.storage.count("Rem"), 0)
         newUser = User(email="rer@reer.com", password="password")
         newUser.save()
         self.assertEqual(models.storage.count("User"), startCount + 1)
+
+    def test_get_non_existent_class(self):
+        """Test get() with a non-existent class"""
+        result = models.storage.get("NonExistentClass", "some_id")
+        self.assertIsNone(result, "Expected None for a non-existent class")
+
+    def test_get_non_existent_object(self):
+        """Test get() with a non-existent object"""
+        newUser = User(email="rer@reer.com", password="password")
+        models.storage.new(newUser)
+        models.storage.save()
+        result = models.storage.get("User", "non_existent_id")
+        self.assertIsNone(result, "Expected None for a non-existent object")
+
+    def test_get_with_wrong_id_for_class(self):
+        """Test get() with a wrong ID for an existing class"""
+        newUser = User(email="rer@reer.com", password="password")
+        models.storage.new(newUser)
+        models.storage.save()
+        result = models.storage.get("User", "wrong_id")
+        self.assertIsNone(result, "Expected None for a wrong ID")
+
+    def test_count_non_existent_class(self):
+        """Test count() with a non-existent class"""
+        result = models.storage.count("NonExistentClass")
+        self.assertEqual(result, 0, "Expected 0 for a non-existent class")
+
+    def test_count_empty_storage(self):
+        """Test count() with an empty storage"""
+        models.storage._FileStorage__objects = {}
+        result = models.storage.count("User")
+        self.assertEqual(result, 0, "Expected 0 for an empty storage")
