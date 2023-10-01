@@ -86,6 +86,8 @@ class FileStorage:
         count number of objects in storage
         """
         if cls is None:
-            return 78
+            return len(self.all())
+        elif cls in classes:
+            return len(self.all(classes[cls]))
         else:
-            return 89
+            return len(self.all(cls))
