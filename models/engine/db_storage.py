@@ -11,10 +11,15 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
+# this helps incase you use a .env file
+try:
+    from decouple import config as getenv
+except ImportError:
+    from os import getenv
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -63,6 +68,7 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+        self.save()
 
     def reload(self):
         """reloads data from the database"""
@@ -76,25 +82,31 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Retrievs an object with id equals to @id.
-        Parameters:
-        - cls: Class of object to return.
-        - id: id attribute of object.
-        Returns: An instance of @cls with id attribute equals to @id or None.
         """
-        return self.__session.query(cls).filter_by(id=id).first()
+        Returns the object based on the class name and its ID, or
+        None if not found
+        """
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
+        return None
 
     def count(self, cls=None):
-        """Return the number of stored models.
-        Parameters:
-        - cls: Optional class.
-        If specifies, only objects of the class will be counted.
-        returns: Number of counted objects.
         """
-        if cls:
-            return self.__session.query(cls).count()
+        count the number of objects in storage
+        """
+        all_class = classes.values()
 
-        count = 0
-        for modelClass in classes.values():
-            count += self.__session.query(modelClass).count()
+        if not cls:
+            count = 0
+            for item in all_class:
+                count += len(models.storage.all(item).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
         return count
