@@ -68,8 +68,7 @@ class DBStorage:
         for value in all_cls.values():
             if (value.id == id):
                 return value
-
-        return None 
+        return None
 
     def count(self, cls=None):
         """ count the number of objects in storage"""
@@ -83,6 +82,7 @@ class DBStorage:
             count = len(models.storage.all(cls).values())
 
         return count
+
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
