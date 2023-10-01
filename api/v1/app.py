@@ -32,6 +32,7 @@ def cleanup_app_context(arg):
 
 @app.errorhandler(404)
 def not_found_error(error):
+    """404 Not found"""
     data = {
         "error": "Not found"
     }
@@ -40,6 +41,7 @@ def not_found_error(error):
 
 @app.errorhandler(400)
 def bad_request(e):
+    """400 Bad request"""
     custom_message = str(e.description if e.description else "Bad Request")
     return  jsonify(custom_message), 400
 
