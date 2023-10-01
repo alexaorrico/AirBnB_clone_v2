@@ -40,7 +40,8 @@ def get_state(state_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def del_state(state_id):
     """
         A function that Deletes a State object:
