@@ -22,6 +22,7 @@ port = os.getenv('HBNB_API_PORT', 5000)
 # global strict slashes
 app.url_map.strict_slashes = False
 
+
 @app.errorhandler(Exception)
 def global_error_handler(err):
     """
@@ -37,12 +38,14 @@ def global_error_handler(err):
         code = 500
     return make_response(jsonify(message), code)
 
+
 def setup_global_errors():
     """
     This updates HTTPException Class with custom error function
     """
     for cls in HTTPException.__subclasses__():
         app.register_error_handler(cls, global_error_handler)
+
 
 @app.teardown_appcontext
 def teardown_db(exception):
