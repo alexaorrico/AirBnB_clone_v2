@@ -10,6 +10,7 @@ from sqlalchemy.orm import relationship
 
 class City(BaseModel, Base):
     """Representation of city """
+
     if models.storage_t == "db":
         __tablename__ = 'cities'
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
@@ -21,4 +22,5 @@ class City(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes city"""
+
         super().__init__(*args, **kwargs)
