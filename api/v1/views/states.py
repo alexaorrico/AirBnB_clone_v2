@@ -58,7 +58,7 @@ def del_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def add_state(response):
+def add_state():
     """
         A function that Creates a State:
         POST /api/v1/states
