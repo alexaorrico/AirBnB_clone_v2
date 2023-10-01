@@ -4,6 +4,7 @@ Module for the main Flask application.
 """
 
 from flask import Flask, jsonify
+import json
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -27,7 +28,9 @@ def not_found(error):
     Custom 404 error handler that returns a JSON-formatted 404 status
     code response.
     """
-    return jsonify({"error": "Not found"}), 404
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return json.dumps(response.get_json(), indent=2) + '\n', 404
 
 
 if __name__ == "__main__":
