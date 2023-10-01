@@ -28,7 +28,11 @@ def state():
         new_object.save()
         return jsonify(new_object.to_dict()), 201
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
+# @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+# strict_slashes=False)
 def state_ids(state_id=None):
     """
     run directive base base on a given state id
