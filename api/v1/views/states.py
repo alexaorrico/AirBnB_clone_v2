@@ -85,21 +85,21 @@ def update_state(state_id):
         PUT /api/v1/states/<state_id>
     """
     obj = storage.get(State, state_id)
-    if (not obj):
+    if (obj):
+
+        json_str = request.get_json()
+        # Check If the HTTP body request is not valid JSON
+        if (not json_str):
+            abort('400', 'Not a JSON')
+
+        # Update state object attributes
+        to_ignore = ['id', 'created_at', 'updated_at']
+        for key, value in json_str.items():
+            if key not in to_ignore:
+                setattr(obj, key, value)
+
+        #  save and return
+        obj.save()
+        return jsonify(obj.to_dict()), 200
+    else:
         abort(404)
-
-    json_str = request.get_json()
-    # Check If the HTTP body request is not valid JSON
-    if (not json_str):
-        abort('400', 'Not a JSON')
-    
-    # Update state object attributes
-    to_ignore = ['id', 'created_at', 'updated_at']
-    for key, value in json_str.items():
-        if key not in to_ignore:
-            setattr(obj, key, value)
-
-    #  save and return
-    obj.save()
-
-    return jsonify(obj.to_dict()), 200
