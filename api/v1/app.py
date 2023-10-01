@@ -8,6 +8,7 @@ the blueprint app_views and close the storage engine after each request.
 
 from flask import Flask, jsonify
 from models import storage
+from models.state import State
 from api.v1.views import app_views
 import os
 
