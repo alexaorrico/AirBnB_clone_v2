@@ -47,17 +47,15 @@ def create_user():
         result = {"error": "Not a JSON"}
         return jsonify(result), 400
 
-    name = data.get("name", None)
-    if not name:
-        result = {"error": "Missing name"}
+    email = data.get("email", None)
+    if not email:
+        result = {"error": "Missing email"}
         return jsonify(result), 400
 
-    for user in storage.all("User").values():
-        if user.name == name:
-            setattr(user, "name", name)
-            user.save()
-            result = user.to_dict()
-            return jsonify(result), 200
+    password = data.get("password", None)
+    if not password:
+        result = {"error": "Missing password"}
+        return jsonify(result), 400
 
     new_user = User(**data)
     new_user.save()
@@ -79,7 +77,7 @@ def update_user(user_id):
         return jsonify(result), 400
 
     for key, value in data.items():
-        if key not in ["id", "created_at", "updated_at"]:
+        if key not in ["id", "created_at", "updated_at", "email"]:
             setattr(user, key, value)
 
     user.save()
