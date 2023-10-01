@@ -1,24 +1,22 @@
-from flask import Blueprint, jsonify
-from flask import Flask
+from flask import Flask, Blueprint, jsonify
 from api.v1.views import app_views
-from models import storage
-# Define your routes within the blueprint
+from models.engine import db_storage
+
+
+api_v1_stats = Blueprint('api_v1_stats', __name__)
+app = Flask(__name__)
+
 @app_views.route('/status')
 def status():
     return jsonify({"status": "OK"})
 
-app = Flask(__name__)
+@api_v1_stats.route('/api/v1/stats', methods=['GET'])
+def get_object_count():
+    storage = db_storage.DBStorage()
 
-@app_views.route('/api/v1/stats')
-def endpoint():
-    stats = {}
+    counts = storage.count()
 
-    classes = [cls.__name__ for cls in storage.all().values()]
-
-    for cls_name in set(classes):
-        if cls_name != "BaseModel":
-            stats[cls_name] = storage.count(cls_name)
-    return jsonify(stats)
+    return jsonify(counts)
 
 
 if __name__ == '__main__':

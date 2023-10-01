@@ -1,9 +1,12 @@
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
+from api.v1.views.index import api_v1_stats
 import os
+
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
+app.register_blueprint(api_v1_stats)
 
 
 @app.route('/nop')
