@@ -29,6 +29,7 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
+        # hash user password if it's in kwargs
         if "password" in kwargs:
             # hash the password
             hashed_password = hashlib.md5(kwargs["password"].encode())\
