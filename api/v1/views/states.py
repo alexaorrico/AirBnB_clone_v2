@@ -40,7 +40,7 @@ def get_state(state_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def del_state(state_id):
     """
         A function that Deletes a State object:
@@ -69,7 +69,7 @@ def add_state():
     if (not json_str):
         abort(400, 'Not a JSON')
     if ('name' not in json_str):
-        abort(404, 'Missing name')
+        abort(400, 'Missing name')
 
     # create a new state object, save and return it
     obj = State(**json_str)
