@@ -6,6 +6,7 @@ Package initializer for API v1 views.
 from flask import Blueprint
 from os import path
 from api.v1.views import *
+import os
 
 app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
 
