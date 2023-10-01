@@ -8,7 +8,6 @@ from models import storage
 from api.v1.views import app_views
 from os import getenv
 
-CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 def create_app():
     """Create an configure the Flask app"""
