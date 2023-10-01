@@ -1,0 +1,1 @@
+'{"name": "New Place created", "max_guest":11, "longitude": 22.1, "latitude": 12.2, "description": "is a cool house", "user_id": "3ea61b06-e22a-459b-bb96-d900fb8f843a", "number_rooms": 4, "number_bathrooms": 1, "price_by_night": 300}'
