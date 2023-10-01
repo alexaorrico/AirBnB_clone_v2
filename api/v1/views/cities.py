@@ -8,12 +8,8 @@ from models import storage
 from models.city import City
 
 
-<<<<<<< HEAD
 @app_views.route("/states/<state_id>/cities", methods=["GET"],
                  strict_slashes=False)
-=======
-@app_views.route("/state/<state_id>/cities", methods=["GET"], strict_slashes=False)
->>>>>>> 8c07701076350467b5e74c8dd93d0b2a1e3fc80f
 def get_cities_by_state(state_id):
     """retrieve a list of all cities"""
     state = storage.get("State", state_id)
@@ -45,7 +41,6 @@ def delete_city(city_id):
         abort(404)
 
 
-<<<<<<< HEAD
 @app_views.route("/states/<state_id>/cities", methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
@@ -55,30 +50,11 @@ def create_city(state_id):
     if 'name' not in request.get_json():
         abort(400, 'Missing name')
     state_obj = storage.get('State', str(state_id))
-    if state_obj == []:
+    if not state_obj:
         abort(404)
     cities = []
     new_city = City(name=request.json['name'], state_id=state_id)
     storage.new(new_city)
-=======
-@app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
-def create_city(state_id):
-    """CIty objects based on state id, else 404"""
-    state = storage.get("State", state_id)
-    if not state:
-        abort(404)
-
-    city_data = request.get_json()
-    if not city_data:
-        abort(400, "Not a JSON")
-
-    if 'name' not in city_data:
-        abort(400, "Missing name")
-
-    city = City(**city_data)
-    setattr(city, "state_id", state_id)
-    storage.new(city)
->>>>>>> 8c07701076350467b5e74c8dd93d0b2a1e3fc80f
     storage.save()
     cities.append(new_city.to_dict())
     return jsonify(cities[0]), 201
