@@ -1,3 +1,4 @@
+
 .container .filters {
     position: relative;
     background: white;
@@ -6,7 +7,6 @@
     border: 1px solid #DDDDDD;
     border-radius: 4px;
 }
-
 button {
     position: absolute;
     font-size: 18px;
@@ -19,53 +19,37 @@ button {
     top: 15%;
     right: 30px;
 }
-
 button:hover {
     opacity: 0.9;
-    cursor: pointer;
 }
-
 .filters div {
     display: inline-grid;
 }
-
 .filters h2 {
     margin-left: 15%;
     margin-top: 0;
     margin-bottom: 0;
     font-weight: 600;
 }
-
 .filters h3 {
     margin-left: 15%;
     margin-bottom: 0;
     font-weight: 600;
 }
-
 .filters h4 {
     margin-left: 15%;
     margin-top: 0;
     font-weight: 400;
     font-size: 14px;
 }
-
 .locations {
     height: 100%;
     width: 25%;
     border-right: 1px solid #DDDDDD;
 }
-
 .amenities {
     height: 100%;
     width: 25%;
-}
-
-.amenities h4 {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 240px;
-    height: 1.2em;
-    white-space: nowrap
 }
 
 .popover {
@@ -81,7 +65,7 @@ button:hover {
     max-height: 300px;
 }
 
-.popover::-webkit-scrollbar {
+.popover::-webkit-scrollbar{
     width: 0px;
 }
 
@@ -91,26 +75,24 @@ button:hover {
     margin-top: 0%;
 }
 
-.amenities .popover ul {
+.amenities .popover ul{
     margin: 0px;
 }
 
 .locations .popover {
     margin-top: 0%;
 }
-
 .popover ul {
     list-style-type: none;
     padding-bottom: 10px;
     padding-left: 10px;
 }
-
-.popover ul li {
+.popover ul li{
     padding: 4px;
     padding-left: 10px;
 }
 
-.popover ul h2 {
+.popover ul h2{
     margin-top: 1.5%;
     margin-bottom: 5%;
     margin-left: 0px;
