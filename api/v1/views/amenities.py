@@ -10,7 +10,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def getamenities():
+def get_amenities():
     """
     Gets all amenities available
     """
@@ -21,7 +21,7 @@ def getamenities():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'],
                  strict_slashes=False)
-def getAmenityById(amenity_id=None):
+def get_amenity_by_id(amenity_id=None):
     """
     Gets amenity by id
     """
@@ -36,7 +36,7 @@ def getAmenityById(amenity_id=None):
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
-def deleteAmenity(amenity_id=None):
+def delete_amenity(amenity_id=None):
     """
     Deletes an amenity
     """
@@ -52,7 +52,7 @@ def deleteAmenity(amenity_id=None):
 @app_views.route('/amenities',
                  methods=['POST'],
                  strict_slashes=False)
-def postAmenity():
+def post_amenity():
     """
     Posts a new amenity
     """
@@ -69,9 +69,9 @@ def postAmenity():
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-def updateAmenity(amenity_id=None):
+def update_amenity(amenity_id=None):
     """
-    Updates a amenit
+    Updates a amenity
     """
     if amenity_id is None:
         abort(404)
