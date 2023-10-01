@@ -2,4 +2,4 @@
 """
 A flask app to serve REST api service
 """
-import models
+from models import storage
