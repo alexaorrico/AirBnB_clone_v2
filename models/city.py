@@ -1,5 +1,7 @@
 #!/usr/bin/python
-""" holds class City"""
+"""
+holds class City
+"""
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -9,7 +11,9 @@ from sqlalchemy.orm import relationship
 
 
 class City(BaseModel, Base):
-    """Representation of city """
+    """
+    Representation of city
+    """
     if models.storage_t == "db":
         __tablename__ = 'cities'
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
@@ -22,3 +26,17 @@ class City(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes city"""
         super().__init__(*args, **kwargs)
+
+    if models.storage_t != 'db':
+        @property
+        def places():
+            """
+            Implementing
+            Getter for list of places related to city
+            """
+            place_list = []
+            all_places = models.storage.all(Place)
+            for place in all_places.values():
+                if place_list.id == self.id:
+                    place_list.append(place)
+            return place_list
