@@ -79,8 +79,6 @@ class DBStorage:
         """get a particular model of type cls, and with id of id
         """
         all_models = self.all(cls)
-        if all_models is None:
-            return None
         for key, val in all_models.items():
             if val.id == id:
                 return str(val)
@@ -89,7 +87,4 @@ class DBStorage:
     def count(self, cls=None):
         """get the count of models of type cls, or all models if cls is None
         """
-        all_models = self.all(cls)
-        if all_models is None:
-            return 0
         return len(all_models)
