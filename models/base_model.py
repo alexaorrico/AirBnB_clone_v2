@@ -69,8 +69,13 @@ class BaseModel:
         # if "_sa_instance_state" in new_dict:
         #     del new_dict["_sa_instance_state"]
         """Remove key '_sa_instance_state' if it exists"""
-        if ('_sa_instance_state' in new_dict):
-            new_dict.pop('_sa_instance_state')
+        if '_sa_instance_state' in new_dict:
+            del new_dict["_sa_instance_state"]
+        
+        # remove the password key, if storage is DB
+        if models.storage_t == "db":
+            if "password" in new_dict:
+                del new_dict["password"]
         return new_dict
 
     def delete(self):

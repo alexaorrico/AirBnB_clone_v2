@@ -34,16 +34,16 @@ def get_user_by_id(user_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_user_obj(user_id):
     """deletes a State object"""
-    print("trying")
+    # print("trying")
     user_to_delete = storage.get(User, user_id)
-    print("delete this ", user_to_delete)
+    # print("delete this ", user_to_delete)
 
     if user_to_delete is None:
         abort(404)
 
     storage.delete(user_to_delete)
     storage.save()
-    print("saving")
+    # print("saving")
     return jsonify({}), 200
 
 

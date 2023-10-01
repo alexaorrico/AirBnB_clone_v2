@@ -58,9 +58,8 @@ def create_new_review(place_id):
     """creates a Review object"""
 
     response = storage.get(Place, place_id)
-
     if response is None:
-        abort(404)
+        abort(404)  # NOT WORKING (STATUS CODE IS 200)
 
     if request.headers['Content-Type'] == 'application/json':
         data_entered = request.get_json()
@@ -68,14 +67,15 @@ def create_new_review(place_id):
             # NOT WORKING NEEDS REPAIR !!!!!
             abort(400, description="Not a JSON")
     else:
-        abort(400, description="Content-Type is not application/json")
+        abort(400,"Not a JSON")
+        # abort(400, description="Content-Type is not application/json")
 
     # if name not in dict
     if data_entered.get('text') is None:
-        abort(400, description="Missing name")
+        abort(400, description="Missing text")
 
     if data_entered.get('user_id') is None:
-        abort(400, description="Missing text")
+        abort(400, description="Missing user_id")
 
     # check if the entered user_id is not linked to any User object
     user_id_response = storage.get(User, data_entered.get('user_id'))
@@ -103,7 +103,8 @@ def update_review_obj(review_id):
             # NOT WORKING NEEDS REPAIR !!!!!
             abort(400, description="Not a JSON")
     else:
-        abort(400, description="Content-Type is not application/json")
+        abort(400, description="Not a JSON")
+        # abort(400, description="Content-Type is not application/json")
 
     for key, value in data_entered.items():
         if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
