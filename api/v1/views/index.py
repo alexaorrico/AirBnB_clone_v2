@@ -6,9 +6,11 @@ from models.engine import db_storage
 api_v1_stats = Blueprint('api_v1_stats', __name__)
 app = Flask(__name__)
 
+
 @app_views.route('/status')
 def status():
     return jsonify({"status": "OK"})
+
 
 @api_v1_stats.route('/api/v1/stats', methods=['GET'])
 def get_object_count():
