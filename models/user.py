@@ -33,20 +33,5 @@ class User(BaseModel, Base):
             self.hash_password(kwargs['password'])
 
     def hash_password(self, password):
-        '''
-            Hash the user's password using SHA-256.
-        '''
-        salt = uuid.uuid4().hex  # Generate a random salt
-        hashed_password = hashlib.sha256((salt + password).encode()).hexdigest()
-        self.password = salt + ':' + hashed_password  # Store salt:hashed_password
-
-    def is_valid_password(self, password):
-        '''
-            Check if a given password is valid for the user.
-        '''
-        if ':' not in self.password:
-            # Password is not hashed properly
-            return False
-
-        salt, hashed_password = self.password.split(':')
-        return hashed_password == hashlib.sha256((salt + password).encode()).hexdigest()
+        """Hash the user's password"""
+        self.password = hashlib.md5(password.encode()).hexdigest()
