@@ -27,11 +27,15 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
-        super().__init__(*args, **kwargs)
+        print("creating a new user")
+        # super().__init__(*args, **kwargs)
 
         # hash user password if it's in kwargs
-        if "password" in kwargs:
+        if "password" in kwargs and kwargs["password"] is not None:
             # hash the password
             hashed_password = hashlib.md5(kwargs["password"].encode())\
                 .hexdigest()
             kwargs["password"] = hashed_password
+
+        self.password = kwargs.get('password', '')
+        super().__init__(*args, **kwargs)
