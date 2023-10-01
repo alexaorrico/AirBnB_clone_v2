@@ -78,31 +78,24 @@ class DBStorage:
 
     def get(self, cls, id):
         """
-        Method to retrieve an object based on its cls name and id
+        retrieve an object by class id and name
         args:
-            cls: class name
-            id: string representing the object ID
+           cls: class
+           id: string representing the object ID
         """
-
-        session = self.__session
-        try:
-            obj = session.query(cls).filter_by(id=id).first()
-            return obj
-        except Exception:
-            return None
+        key = f"{cls.__name__}.{id}"
+        objs = self.all()
+        if key in objs:
+            return objs[key]
+        return None
 
     def count(self, cls=None):
         """
-        method to count the number of objects in storage
-        args:
-            self: self parameter
-            cls: class name(optional)
+        count number of objects in storage
         """
-        session = self.__session
+        objs = self.all()
 
-        if cls is None:
-            return len(self.all())
+        if not cls:
+            return len(objs)
         else:
-            count = session.query(func.count()).filter(cls.id.isnot(None)).scalar()
-
-        return count
+            return len(self.all(cls))
