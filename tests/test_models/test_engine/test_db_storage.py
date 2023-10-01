@@ -111,6 +111,8 @@ class TestFileStorage(unittest.TestCase):
         myDict = {'name': 'Someone'}
         obj = User(**myDict)
         db.new(obj)
+        obj = State(**myDict)
+        db.new(obj)
         db.save()
 
         # test the objects counter function

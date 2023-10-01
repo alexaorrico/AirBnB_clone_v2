@@ -147,7 +147,7 @@ class TestFileStorage(unittest.TestCase):
         Fstorage.new(obj)
         Fstorage.save()
 
-        # restart a database engine
+        # restart database engine
         Fstorage = FileStorage()
 
         # test the objects counter function
