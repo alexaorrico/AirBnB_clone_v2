@@ -74,7 +74,7 @@ class BaseModel:
         
         # remove the password key, if storage is DB
         if models.storage_t == "db":
-            if "password" in new_dict.keys():
+            if "password" in new_dict:
                 new_dict.pop("password")
         return new_dict
 
