@@ -30,7 +30,7 @@ def get_state(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """Deletes state based on state id"""
-    state = storage.get("State", state_id)
+    state = storage.get("State", str(state_id))
     if not state:
         abort(404)
     storage.delete(state)
@@ -71,7 +71,7 @@ def modify_state(state_id):
     if not state:
         abort(404)
 
-    data = request.getjson()
+    data = request.get_json()
     if not data:
         result = {"Error": "Not a JSON"}
         return jsonify(result), 400
