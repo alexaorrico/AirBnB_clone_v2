@@ -36,6 +36,4 @@ class User(BaseModel, Base):
         '''
             Hash the user's password.
         '''
-        secure = hashlib.md5()
-        secure.update(password.encode("utf-8"))
-        secure_password = secure.hexdigest()
+        self.password = hashlib.md5(password.encode()).hexdigest()
