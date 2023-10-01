@@ -10,6 +10,7 @@ from sqlalchemy.orm import relationship
 
 class User(BaseModel, Base):
     """Representation of a user """
+
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
@@ -26,4 +27,5 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
+
         super().__init__(*args, **kwargs)

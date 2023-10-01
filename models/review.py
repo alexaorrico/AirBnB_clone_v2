@@ -9,6 +9,7 @@ from sqlalchemy import Column, String, ForeignKey
 
 class Review(BaseModel, Base):
     """Representation of Review """
+
     if models.storage_t == 'db':
         __tablename__ = 'reviews'
         place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
@@ -21,4 +22,5 @@ class Review(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes Review"""
+
         super().__init__(*args, **kwargs)
