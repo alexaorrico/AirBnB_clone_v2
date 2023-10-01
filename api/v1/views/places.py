@@ -30,7 +30,8 @@ def get_place_by_id(place_id):
         abort(404)
 
 
-@app_views.route("/places/<place_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/places/<place_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_place(place_id):
     """ CIty objects based on city id, else 404"""
     place = storage.get("Place", place_id)
@@ -42,30 +43,34 @@ def delete_place(place_id):
         abort(404)
 
 
-@app_views.route("/cities/city_id>/places", methods=['POST'],
+@app_views.route("/cities/<city_id>/places", methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
     """CIty objects based on state id, else 404"""
-    if not request.get_json():
+    place_json = request.get_json(silent=True)
+    if place_json is None:
         abort(400, 'Not a JSON')
-    if 'name' not in request.get_json():
-        abort(400, 'Missing name')
-    if 'user_id' not in request.get_json():
+    if "name" not in place_json.keys():
+        abort('400', 'Missing name')
+    if "user_id" not in place_json.keys():
         abort(400, 'Missing user_id')
-    city = storage.get('City', str(city_id))
-    if not city:
+    if not storage.get("User", place_json["user_id"]):
         abort(404)
-    users = storage.all(User)
-    for user in users.values():
-        if user.id == request.json['user_id']:
-            places = []
-            new_place = Place(name=request.json['name'], user_id=request.json['user_id'])
-            storage.new(new_city)
-            storage.save()
-            cities.append(new_city.to_dict())
-            return jsonify(cities[0]), 201
-    else:
+    if not storage.get("City", city_id):
         abort(404)
+    if "user_id" not in place_json:
+        abort(400, 'Missing user_id')
+    if "name" not in place_json:
+        abort(400, 'Missing name')
+
+    place_json["city_id"] = city_id
+
+    new_place = Place(**place_json)
+    new_place.save()
+    resp = jsonify(new_place.to_dict())
+    resp.status_code = 201
+
+    return resp
 
 
 @app_views.route("/places/<place_id>", methods=['PUT'], strict_slashes=False)
@@ -87,5 +92,5 @@ def update_place(place_id):
         setattr(place, key, value)
 
     storage.save()
-    result = city.to_dict()
+    result = place.to_dict()
     return make_response(jsonify(result), 200)
