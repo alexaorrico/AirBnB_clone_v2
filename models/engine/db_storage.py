@@ -101,9 +101,8 @@ class DBStorage:
         session = self.__session
 
         if cls is None:
-            count = session.query(func.count()).scalar()
+            return len(self.all())
         else:
             count = session.query(func.count()).filter(cls.id.isnot(None)).scalar()
 
         return count
-
