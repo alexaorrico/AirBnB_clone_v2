@@ -8,8 +8,12 @@ from models import storage
 from models.city import City
 
 
+<<<<<<< HEAD
 @app_views.route("/states/<state_id>/cities", methods=["GET"],
                  strict_slashes=False)
+=======
+@app_views.route("/state/<state_id>/cities", methods=["GET"], strict_slashes=False)
+>>>>>>> 8c07701076350467b5e74c8dd93d0b2a1e3fc80f
 def get_cities_by_state(state_id):
     """retrieve a list of all cities"""
     state = storage.get("State", state_id)
@@ -36,11 +40,12 @@ def delete_city(city_id):
     if city:
         storage.delete(city)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
     else:
         abort(404)
 
 
+<<<<<<< HEAD
 @app_views.route("/states/<state_id>/cities", methods=['POST'],
                  strict_slashes=False)
 def create_city(state_id):
@@ -55,6 +60,25 @@ def create_city(state_id):
     cities = []
     new_city = City(name=request.json['name'], state_id=state_id)
     storage.new(new_city)
+=======
+@app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
+def create_city(state_id):
+    """CIty objects based on state id, else 404"""
+    state = storage.get("State", state_id)
+    if not state:
+        abort(404)
+
+    city_data = request.get_json()
+    if not city_data:
+        abort(400, "Not a JSON")
+
+    if 'name' not in city_data:
+        abort(400, "Missing name")
+
+    city = City(**city_data)
+    setattr(city, "state_id", state_id)
+    storage.new(city)
+>>>>>>> 8c07701076350467b5e74c8dd93d0b2a1e3fc80f
     storage.save()
     cities.append(new_city.to_dict())
     return jsonify(cities[0]), 201
@@ -69,8 +93,7 @@ def update_city(city_id):
 
     update = request.get_json()
     if not update:
-        result = {"error": "Not a JSON"}
-        return jsonify(result), 400
+        abort(400, "Not a JSON")
 
     keys_to_exclude = ["id", "state_id", "created_at", "updated_at"]
     for key in keys_to_exclude:
@@ -80,6 +103,5 @@ def update_city(city_id):
         setattr(city, key, value)
 
     storage.save()
-    city.save()
     result = city.to_dict()
-    return jsonify(result), 200
+    return make_response(jsonify(result), 200)
