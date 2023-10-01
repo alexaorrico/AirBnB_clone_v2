@@ -4,7 +4,7 @@ route for handling place and amenities linking
 """
 from flask import jsonify, abort
 from os import getenv
-
+from models import storage
 from api.v1.views import app_views, storage
 
 
@@ -21,7 +21,7 @@ def amenity_by_place(place_id):
         abort(404)
 
     for obj in fetched_obj.amenities:
-        all_amenities.append(obj.to_json())
+        all_amenities.append(obj.to_dict())
 
     return jsonify(all_amenities)
 
@@ -29,7 +29,7 @@ def amenity_by_place(place_id):
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  methods=["DELETE"],
                  strict_slashes=False)
-def unlink_amenity_from_place(place_id, amenity_id):
+def delete_amenity_of_a_place(place_id, amenity_id):
     """REmove link between place and amenity"""
     if not storage.get("Place", str(place_id)):
         abort(404)
@@ -75,16 +75,16 @@ def link_amenity_to_place(place_id, amenity_id):
             break
 
     if found_amenity is not None:
-        return jsonify(found_amenity.to_json())
+        return jsonify(found_amenity.to_dict())
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        fetched_obj.amenities.append(amenity_obj)
+        fetched_obj.amenities.append(a`menity_obj)
     else:
         fetched_obj.amenities = amenity_obj
 
     fetched_obj.save()
 
-    resp = jsonify(amenity_obj.to_json())
+    resp = jsonify(amenity_obj.to_dict())
     resp.status_code = 201
 
     return resp
