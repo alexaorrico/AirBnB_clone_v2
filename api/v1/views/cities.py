@@ -12,7 +12,7 @@ from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
 
 
-@app_views.route('states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_state_cities(state_id):
     """
@@ -67,9 +67,9 @@ def del_city(city_id):
         abort(404)
 
 
-@app_views.route('states/<state_id>/cities', methods=['POST'],
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
-def add_state(state_id):
+def add_city (state_id):
     """
         A function that Creates a City:
         POST /api/v1/states/<state_id>/cities
@@ -97,7 +97,7 @@ def add_state(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_state(city_id):
+def update_city(city_id):
     """
         A function that Updates a City object:
         PUT /api/v1/cities/<city_id>
