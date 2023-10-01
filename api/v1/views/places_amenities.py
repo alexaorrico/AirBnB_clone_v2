@@ -78,7 +78,7 @@ def link_amenity_to_place(place_id, amenity_id):
         return jsonify(found_amenity.to_dict())
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        fetched_obj.amenities.append(a`menity_obj)
+        fetched_obj.amenities.append(amenity_obj)
     else:
         fetched_obj.amenities = amenity_obj
 
