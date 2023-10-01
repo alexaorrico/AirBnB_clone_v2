@@ -11,7 +11,6 @@ def states():
     """Returns a json of all states in the database"""
     if request.method == 'GET':
         allstates = storage.all("State").values()
-        print("in")
         return jsonify([state.to_dict() for state in allstates])
     
     if request.method == 'POST':
