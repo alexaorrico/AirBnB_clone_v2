@@ -25,7 +25,7 @@ class FileStorage:
     __objects = {}
 
     CNC = {
-        'BaseModel': base_model.BaseModel,
+        'BaseModel': BaseModel,
         'Amenity': Amenity,
         'City': City,
         'Place': Place,
