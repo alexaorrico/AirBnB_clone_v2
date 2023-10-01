@@ -6,14 +6,10 @@ app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-
-
-@app.route('/api/v1/nop')
-def status():
-    return jsonify({"error": "Not found"})
+@app.route('/nop')
+def error_handler():
+    response = {"error": "Not found"}
+    return jsonify(response)
 
 
 @app.teardown_appcontext
