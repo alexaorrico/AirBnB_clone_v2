@@ -68,8 +68,9 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if models.storage_t == "db" and "password" in new_dict and save_db is None:
-            del new_dict["password"]
+        if models.storage_t == "db" or save_db is None:
+            if "password" in new_dict:
+                del new_dict["password"]
         return new_dict
 
     def delete(self):
