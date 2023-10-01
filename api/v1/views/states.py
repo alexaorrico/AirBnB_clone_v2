@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    module states
+    API module states
 """
 
 import models

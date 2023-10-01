@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-    module cities
+    API module cities
 """
 
 import models
@@ -48,7 +48,8 @@ def get_city(city_id):
         abort(404)
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'])
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def del_city(city_id):
     """
         A function that Deletes a City object:
@@ -68,7 +69,7 @@ def del_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
-def add_city (state_id):
+def add_city(state_id):
     """
         A function that Creates a City:
         POST /api/v1/states/<state_id>/cities
