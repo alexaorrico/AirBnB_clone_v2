@@ -7,6 +7,7 @@ from flask import Flask, jsonify, request, abort
 from models.city import City
 from models.place import Place
 from models.user import User
+from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 
@@ -69,7 +70,7 @@ def create_place_obj_by_city_id(city_id):
         return jsonify({"error": "Missing name"}), 400
 
     place = Place(**data)
-    place.city_id=city_id
+    place.city_id = city_id
     place.save()
     return jsonify(place.to_dict()), 201
 
@@ -88,7 +89,62 @@ def update_place(place_id):
         for key, values in data.items():
             if key not in keep:
                 setattr(fetch_place, key, values)
-        fetch_place.save()
+        storage.save()
         return jsonify(fetch_place.to_dict()), 200
     else:
         abort(404)
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def search_places():
+    """Retrives all Place objects depending of the Json in the body
+    of the request"""
+
+    data = request.get_json()
+    if data is None:
+        return jsonify({"error": "Not a JSON"})
+    if data and len(data):
+        states = data.get('states', None)
+        cities = data.get('cities', None)
+        ame = data.get('amenities', None)
+
+    if not data or not len(data) or (
+            not staes and
+            not cities and
+            not ame):
+        places = storage.all(Place).values()
+        place_list = [p.to_dict() for p in places]
+        return jsonify(place_list)
+
+    place_lst = []
+    if states:
+        state_obj = [storage.get(State, id) for id in states]
+        for items in state_obj:
+            if items:
+                for city in items.cities:
+                    if city:
+                        for place in city.places:
+                            place_lst.append(place)
+
+    if cities:
+        city_obj = [storage.get(City, id) for id in cities]
+        for items in city_obj:
+            if items:
+                for place in items.places:
+                    if place not in place_lst:
+                        place_lst.append(place)
+
+    if ame:
+        if not place_lst:
+            place_lst = storage.all(Place).values()
+        ame_obj = [storage.get(Amenity, id) for id in ame]
+        place_lst = [place for place in place_lst
+                     if all([m in place.amenities
+                            for m in ame_obj])]
+
+    new_place = []
+    for plce in place_lst:
+        remove = plce.to_dict()
+        remove.pop('amenities', None)
+        new_place.append(remove)
+    return (new_place)
