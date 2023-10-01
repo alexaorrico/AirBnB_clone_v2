@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+""" The init module """
+
 from flask import Blueprint, jsonify
 from flask import Flask
 # Create a Blueprint object

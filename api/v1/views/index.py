@@ -1,3 +1,8 @@
+#!/usr/bin/python
+"""
+The index module
+"""
+
 from flask import Flask, Blueprint, jsonify
 from api.v1.views import app_views
 from models.engine import db_storage

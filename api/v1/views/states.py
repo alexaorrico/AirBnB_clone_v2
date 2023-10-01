@@ -1,13 +1,19 @@
+#!/usr/bin/python
+"""
+The states module
+"""
 from models.engine import db_storage
 from flask import Blueprint, jsonify, request, abort
 from models.state import State
 
 state_bp = Blueprint('states', __name__, url_prefix='/api/v1/states')
 
+
 @state_bp.route('/', methods=['GET'], strict_slashes=False)
 def get_states():
     states = [state.to_dict() for state in db_storage.all(State).values()]
     return jsonify(states)
+
 
 @state_bp.route('/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
@@ -25,6 +31,7 @@ def delete_state(state_id):
     db_storage.delete(state)
     db_storage.save()
     return jsonify({})
+
 
 @state_bp.route('/', methods=['POST'], strict_slashes=False)
 def create_state():
