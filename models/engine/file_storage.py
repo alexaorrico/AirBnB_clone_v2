@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-         """get a particular model of type cls, and with id of id
+        """get a particular model of type cls, and with id of id
         """
         all_models = self.all(cls)
         if all_models is None:
