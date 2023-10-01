@@ -1,4 +1,4 @@
-#/usr/bin/python3
+#!/usr/bin/python3
 """
 Flask Blueprint for cities
 """
@@ -8,6 +8,7 @@ from flask import Flask, jsonify, abort, request, make_response
 from models import storage
 from models.city import City
 from models.state import State
+
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def getCity(city_id=None):
@@ -32,6 +33,7 @@ def getCitiesInState(state_id=None):
         abort(404)
     cts = st.cities
     return jsonify([ct.to_dict() for ct in cts])
+
 
 @app_views.route('/cities/<city_id>',
                  methods=['DELETE'],
