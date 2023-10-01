@@ -18,7 +18,7 @@ def create_app():
     def not_found(error):
         """Handles 404 not found"""
         result = {"error": "Not found"}
-        return jsonify(result)
+        return jsonify(result), 404
 
     @app.teardown_appcontext
     def close_staorage(error):

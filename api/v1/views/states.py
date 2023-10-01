@@ -30,7 +30,7 @@ def get_state(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """Deletes state based on state id"""
-    state = storage.get("State", state_id)
+    state = storage.get("State", str(state_id))
     if not state:
         abort(404)
     storage.delete(state)
@@ -38,7 +38,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route("/states/<state_id>", methods=['POST'], strict_slashes=False)
+@app_views.route("/states", methods=['POST'], strict_slashes=False)
 def create_state():
     """create and add a state to states"""
     data = request.get_json()
