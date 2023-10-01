@@ -76,9 +76,11 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """get a particular model of type cls, and with id of id
-        """
+         """get a particular model of type cls, and with id of id
+         """
         all_models = self.all(cls)
+        if all_models is None:
+            return None
         for key, val in all_models.items():
             if val.id == id:
                 return str(val)
@@ -87,4 +89,7 @@ class DBStorage:
     def count(self, cls=None):
         """get the count of models of type cls, or all models if cls is None
         """
+        all_models = self.all(cls)
+        if all_models is None:
+            return None
         return len(all_models)
