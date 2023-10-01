@@ -12,6 +12,10 @@ class TestApp(unittest.TestCase):
         """Set up the test environment."""
         self.app = app.test_client()
 
+    def tearDown(self):
+        """Tear down the test environment."""
+        pass     
+
     def test_hello_world_route(self):
         """Test the / route (hello world)."""
         response = self.client.get("/")
