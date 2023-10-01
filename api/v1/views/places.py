@@ -68,7 +68,8 @@ def create_place_obj_by_city_id(city_id):
     if "name" not in data:
         return jsonify({"error": "Missing name"}), 400
 
-    place = Place(**data, city_id=city_id)
+    place = Place(**data)
+    place.city_id=city_id
     place.save()
     return jsonify(place.to_dict()), 201
 
