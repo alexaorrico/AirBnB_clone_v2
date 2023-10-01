@@ -24,6 +24,16 @@ class FileStorage:
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
+    CNC = {
+        'BaseModel': base_model.BaseModel,
+        'Amenity': Amenity,
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State,
+        'User': User
+    }
+
     def get(self, cls, id):
         """Returns the object based on the class and its ID"""
 
@@ -91,6 +101,7 @@ class FileStorage:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
+            self.save()
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
