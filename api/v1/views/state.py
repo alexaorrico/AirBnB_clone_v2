@@ -10,7 +10,7 @@ from models import state
 def states():
     """Returns a json of all states in the database"""
     if request.method == 'GET':
-        allstates = storage.all("States").values()
+        allstates = storage.all("State").values()
         return jsonify([state.to_dict() for state in allstates])
 
 
