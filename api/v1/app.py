@@ -23,7 +23,7 @@ def close_db(obj):
 
 @app.errorhandler(404)
 def page_not_foun(error):
-    """ Loads a custom 404 page not found """
+    """ Loads a custom 404 page not found when there is no data found"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
