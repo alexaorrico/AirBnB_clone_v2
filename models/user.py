@@ -31,5 +31,6 @@ class User(BaseModel, Base):
 
         if "password" in kwargs:
             # hash the password
-            hashed_password = hashlib.md5(kwargs["password"].encode()).hexdigest()
+            hashed_password = hashlib.md5(kwargs["password"].encode())\
+                .hexdigest()
             kwargs["password"] = hashed_password
