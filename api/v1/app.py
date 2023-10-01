@@ -1,4 +1,4 @@
-#!/usr/python3
+#!/usr/bin/python3
 """AirBnb flask APP"""
 from flask import Flask
 from models import storage
