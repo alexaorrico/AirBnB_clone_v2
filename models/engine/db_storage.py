@@ -89,6 +89,7 @@ class DBStorage:
     def count(self, cls=None):
         """get the count of models of type cls, or all models if cls is None
         """
-        if cls not in classes and cls is not None:
+        length = len(self.all(cls))
+        if length is None:
             return 0
-        return len(self.all(cls))
+        return length

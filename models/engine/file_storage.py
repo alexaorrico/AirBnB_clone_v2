@@ -76,13 +76,15 @@ class FileStorage:
             return None
         all_models = self.all(cls)
         for key, val in all_models.items():
-            if val == id:
+            if val.id == id:
                 return str(val)
         return None
 
     def count(self, cls=None):
         """get the count of models of type cls, or all models if cls is None
         """
-        if cls not in classes and cls is not None:
-            return 0
-        return len(self.all(cls))
+        length = len(self.all(cls))
+
+        if length is not None:
+            return length
+        return 0
