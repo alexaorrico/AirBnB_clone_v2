@@ -38,10 +38,13 @@ class FileStorage:
         """Returns the object based on the class and its ID"""
 
         if cls is not None:
-            d_class = self.all(cls)
-            for key, value in d_class.items():
-                if value.id is id:
-                    return value
+            try:
+                d_class = self.all(cls)
+                for key, value in d_class.items():
+                    if value.id is id:
+                        return value
+            except:
+                return None
         return None
 
     def count(self, cls=None):
