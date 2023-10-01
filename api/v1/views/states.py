@@ -6,15 +6,15 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route("/states", methods=["GET", "POST"])
 def states():
     """Returns a json of all states in the database"""
-    if request.method == 'GET':
+    if request.method == "GET":
         allstates = storage.all("State").values()
         return jsonify([state.to_dict() for state in allstates])
     
-    if request.method == 'POST':
-        data = request.get_json()
+    if request.method == "POST":
+        data = request.get_json(silent=True)
         if not data:
             return 'Not a JSON', 400
         if 'name' not in data:
@@ -24,7 +24,7 @@ def states():
         return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
 def states_id(state_id):
     """Returns a json of specific states
        GET::
@@ -35,14 +35,14 @@ def states_id(state_id):
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    if request.method == 'GET':
+    if request.method == "GET":
         return jsonify(state.to_dict())
-    elif request.method == 'DELETE':
+    elif request.method == "DELETE":
         storage.delete(state)
         storage.save()
         return jsonify({}), 201
-    if request.method == 'PUT':
-        data = request.get_json()
+    if request.method == "PUT":
+        data = request.get_json(silent=True)
         if data is None:
             return 'Not a JSON', 400
         for key, value in data.items():
