@@ -4,43 +4,43 @@
 from flask import Flask, abort, request, jsonify, make_response
 from api.v1.views import app_views
 from models import storage
-from models.amenity import Amenity
+from models.user import User
 
 
-@app_views.route("/amenities", methods=["GET"], strict_slashes=False)
-def get_all_amenity():
+@app_views.route("/users", methods=["GET"], strict_slashes=False)
+def get_all_users():
     """Retrieves the list of all amenities"""
-    amenities = storage.all(Amenity)
-    return jsonify([amenity.to_dict() for amenity in amenities.values()])
+    users = storage.all(User)
+    return jsonify([user.to_dict() for user in users.values()])
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["GET"],
+@app_views.route("/users/<user_id>", methods=["GET"],
                  strict_slashes=False)
-def get_amenity(amenity_id):
+def get_user(user_id):
     """Retrieves amenities based on id"""
-    amenity = storage.get("Amenity", amenity_id)
-    if not amenity:
+    user = storage.get("User", user_id)
+    if not user:
         abort(404)
-    result = amenity.to_dict()
+    result = user.to_dict()
     return jsonify(result)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
+@app_views.route("/users/<user_id>", methods=["DELETE"],
                  strict_slashes=False)
-def delete_amenity(amenity_id):
+def delete_user(user_id):
     """Deletes amenity based on id"""
-    amenity = storage.get("Amenity", amenity_id)
-    if not amenity:
+    user = storage.get("User", user_id)
+    if not user:
         abort(404)
 
-    storage.delete()
+    storage.delete(user)
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route("/amenities", methods=["POST"],
+@app_views.route("/users", methods=["POST"],
                  strict_slashes=False)
-def create_amenity():
+def create_user():
     """Creates amenities"""
     data = request.get_json()
     if not data:
@@ -52,25 +52,25 @@ def create_amenity():
         result = {"error": "Missing name"}
         return jsonify(result), 400
 
-    for amenity in storage.all("Amenity").values():
-        if amenity.name == name:
-            setattr(amenity, "name", name)
-            amenity.save()
-            result = amenity.to_dict()
+    for user in storage.all("User").values():
+        if user.name == name:
+            setattr(user, "name", name)
+            user.save()
+            result = user.to_dict()
             return jsonify(result), 200
 
-    amenity = Amenity(**data)
-    amenity.save()
-    result = amenity.to_dict()
+    new_user = User(**data)
+    new_user.save()
+    result = new_user.to_dict()
     return jsonify(result), 201
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["PUT"],
+@app_views.route("/users/<user_id>", methods=["PUT"],
                  strict_slashes=False)
-def update_amenity(amenity_id):
+def update_user(user_id):
     """Updates amenity based on id"""
-    amenity = storage.get("Amenity", amenity_id)
-    if not amenity:
+    user = storage.get("User", user_id)
+    if not user:
         abort(404)
 
     data = request.get_json()
@@ -80,8 +80,8 @@ def update_amenity(amenity_id):
 
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:
-            setattr(amenity, key, value)
+            setattr(user, key, value)
 
-    amenity.save()
-    result = amenity.to_dict()
+    user.save()
+    result = user.to_dict()
     return jsonify(result), 200
