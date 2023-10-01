@@ -12,7 +12,7 @@ def states():
     if request.method == "GET":
         allstates = storage.all("State").values()
         return jsonify([state.to_dict() for state in allstates])
-    
+
     data = request.get_json(silent=True)
     if data is None:
         return "Not a JSON", 400
