@@ -122,6 +122,7 @@ def search_places():
 
         if amenities:
             places = [place for place in places if all(
-                amenity.id in [a.id for a in place.amenities] for amenity in amenities)]
+                amenity.id in [
+                    a.id for a in place.amenities] for amenity in amenities)]
 
     return jsonify([place.to_dict() for place in places])
