@@ -48,8 +48,7 @@ def get_city(city_id):
         abort(404)
 
 
-@app_views.route('/cities/<city_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['DELETE'])
 def del_city(city_id):
     """
         A function that Deletes a City object:
