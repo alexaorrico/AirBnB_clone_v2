@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """A new view for Place objects that handlees all default
 RESTFUL API actions"""
+
+
 from flask import Flask, jsonify, request, abort
 from models.city import City
 from models.place import Place
@@ -14,6 +16,7 @@ from api.v1.views import app_views
 def get_place_by_city_id(city_id):
     """Returns place or places given it's/their
     City id if found else return 404"""
+
     city = storage.get(City, city_id)
     if city:
         places = [p.to_dict() for p in city.places]
@@ -26,6 +29,7 @@ def get_place_by_city_id(city_id):
                  strict_slashes=False)
 def get_place_by_place_id(place_id):
     """Return a place given it's place id else 404"""
+
     place = storage.get(Place, place_id)
     return jsonify(place.to_dict()) if place else abort(404)
 
@@ -34,6 +38,7 @@ def get_place_by_place_id(place_id):
                  strict_slashes=False)
 def delete_place_object(place_id):
     """Deletes a Place object if found otherwise return 404"""
+
     place = storage.get(Place, place_id)
     if place:
         storage.delete(place)
@@ -48,6 +53,7 @@ def delete_place_object(place_id):
 def create_place_obj_by_city_id(city_id):
     """Creates a place object given a city id if city id is not
     linked to a city object return 404"""
+
     if not storage.get(City, city_id):
         abort(404)
     data = request.get_json()
@@ -71,6 +77,7 @@ def create_place_obj_by_city_id(city_id):
                  strict_slashes=False)
 def update_place(place_id):
     """Updates a Place object based on the place id"""
+
     fetch_place = storage.get(Place, place_id)
     if fetch_place:
         data = request.get_json()
