@@ -13,7 +13,6 @@ from api.v1.views import app_views
 def get_all_user():
     """Retrives all User objects in the storage
     """
-
     users = [u.to_dict() for u in storage.all(User).values()]
     return jsonify(users)
 
@@ -22,7 +21,6 @@ def get_all_user():
 def get_user_based_on_id(user_id):
     """Retrives an User object given it's id else return 404
     """
-
     user = storage.get(User, user_id)
     if user:
         return jsonify(user.to_dict())
@@ -34,7 +32,6 @@ def get_user_based_on_id(user_id):
 def delete_user_object(user_id):
     """Deletes an User object if found otherwise return 404
     """
-
     user = storage.get(User, user_id)
     if user:
         storage.delete(user)
@@ -48,7 +45,6 @@ def delete_user_object(user_id):
 def create_user_object():
     """Creates an User object returns the created user object
     """
-
     data = request.get_json()
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
@@ -65,7 +61,6 @@ def create_user_object():
 def update_user(user_id):
     """Updates an User object based on the user id
     """
-
     fetch_user = storage.get(User, user_id)
     if not fetch_user:
         abort(404)
