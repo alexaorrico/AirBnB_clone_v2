@@ -102,7 +102,7 @@ class DBStorage:
                 for clses in classes.values()
             )
         if cls in classes.keys():
-            return len(self.__session.query(cls).all())
+            return len(self.__session.query(classes[cls]).all())
         return 0
 
     def close(self):
