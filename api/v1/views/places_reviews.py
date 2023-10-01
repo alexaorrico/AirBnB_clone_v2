@@ -34,7 +34,8 @@ def get_review_based_on_id(review_id):
         abort(404)
 
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_review_object(review_id):
     """Deletes a Review object if found otherwise return 404
     """
