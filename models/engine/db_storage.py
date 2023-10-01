@@ -97,7 +97,5 @@ class DBStorage:
 
         if not cls:
             return len(objs)
-        elif cls in classes:
-            return len(objs[cls])
         else:
             return len(self.all(cls))
