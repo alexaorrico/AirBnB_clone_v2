@@ -1,25 +1,14 @@
-@app_views.route("/states/<state_id>", methods=['POST'], strict_slashes=False)
-def create_state():
-    """create and add a state to states"""
-    data = request.get_json()
-    if not data:
-        result = {"error": "Not a JSON"}
-        return jsonify(result), 400
-
-    name = data.get("name", None)
-    if not name:
-        result = {"error": "Missing name"}
-        return jsonify(result), 400
-
-    for state in storage.all("State").values():
-        if state.name == name:
-            setattr(state, "name", name)
-            state.save()
-            result = state.to_dict()
-            return jsonify(result), 200
-
-    state = State(**data)
-    state.save()
-    result = state.to_dict()
-    return jsonify(result), 201
+state = storage.get("State", str(state_id))
+    if not state:
+        abort(404)
+    storage.delete(state)
+    storage.save()
+    return jsonify({}), 200
+ city = storage.get("City", city_id)
+    if city:
+        sto.delete()
+        storage.save()
+        return jsonify({}), 200
+    else:
+        abort(404)
 
