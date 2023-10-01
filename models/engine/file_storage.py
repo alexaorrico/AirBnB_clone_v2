@@ -81,3 +81,16 @@ class FileStorage:
 	def count(self, cls=None):
     	'''class that is (optional)'''
     	return (len(self.all(cls)))
+
+def get(self, cls, id):
+    """Retrieve one object"""
+    key = "{}.{}".format(cls.__name__, id)
+    return self.__objects.get(key, None)
+
+def count(self, cls=None):
+    """Count the number of objects in storage"""
+    if cls:
+        return len([obj for obj in self.__objects.values() if obj.__class__ == cls])
+    else:
+        # If cls is not provided, count all objects
+        return len(self.__objects)
