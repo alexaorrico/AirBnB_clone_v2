@@ -113,3 +113,30 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestDBStorageDocs(unittest.TestCase):
+    # ... (existing test methods)
+
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_method(self):
+        """Test the 'get' method in DBStorage"""
+        new_state = State()
+        new_state.name = "Kenya"
+        new_state.save()
+
+        # Retrieve the object using the 'get' method
+        retrieved_state = models.storage.get(State, new_state.id)
+
+        # Check if the retrieved object is the same as the original
+        self.assertEqual(retrieved_state, new_state)
+
+    # @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_method(self):
+        """Test the 'count' method in DBStorage"""
+
+        # Get the count of objects of the specified class
+        count_reviews = len(models.storage.all(Review))
+
+        # Check if the count is equal to the number of created objects
+        self.assertEqual(count_reviews, models.storage.count(Review))
