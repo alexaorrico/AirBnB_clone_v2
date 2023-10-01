@@ -78,8 +78,6 @@ class DBStorage:
     def get(self, cls, id):
         """get a particular model of type cls, and with id of id
         """
-        if cls not in classes:
-            return None
         all_models = self.all(cls)
         for key, val in all_models.items():
             if val.id == id:
