@@ -103,3 +103,13 @@ def update_state(state_id):
         return jsonify(obj.to_dict()), 200
     else:
         abort(404)
+
+
+@app_views.errorhandler(404)
+def error_404(error):
+    """
+        Catch error related to page not found and return 404
+    """
+
+    js = {'error': 'Not found'}
+    return jsonify(js), 404
