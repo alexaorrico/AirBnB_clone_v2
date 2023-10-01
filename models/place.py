@@ -1,5 +1,7 @@
 #!/usr/bin/python
-""" holds class Place"""
+"""
+holds class Place
+"""
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -75,4 +77,6 @@ class Place(BaseModel, Base):
             for amenity in all_amenities.values():
                 if amenity.place_id == self.id:
                     amenity_list.append(amenity)
+                    if amenity.id not in self.amenity_ids:
+                        self.amenity_ids.append(amenity.id)
             return amenity_list
