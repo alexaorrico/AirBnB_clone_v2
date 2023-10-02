@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-
-'''api status'''
 from flask import Flask, jsonify
-from api.v1.views import app_views
+from . import app_views
 
 app = Flask(__name__)
 
