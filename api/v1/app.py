@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Flask application
+Flask application,initialiaze a flask app and register blueprints
 """
 
 

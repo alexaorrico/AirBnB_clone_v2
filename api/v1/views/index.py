@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-API status ok
+API status and retrieve number of each object type
 """
 
 
