@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-script creates a flask instance
+A script that creates a flask instance
 """
 
 from flask import Flask, Blueprint, jsonify, make_response
