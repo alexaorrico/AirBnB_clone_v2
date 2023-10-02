@@ -1,51 +1,27 @@
 #!/usr/bin/python3
-"""API index views module"""
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-from models import storage
+"""Returns a Json response"""
+
+from flask import jsonify
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify
+from models import amenity, city, place, review, state, user
 
 
 @app_views.route('/status')
-def status():
-    """
-    Returns json response as the status
-
-    Returns:
-        JSON: json object
-    """
-    status = {
-        "status": "OK"
-    }
-    return jsonify(status)
+def status_check():
+    '''Returns status code'''
+    return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', strict_slashes=False)
-def count():
-    """
-    returns a count of all database objects
-    """
-
-    models_avail = {
-        "User": "users",
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-    }
-    mod_objs = [Amenity, City, Place, Review, State, User]
-
-    count = {}
-    i = -1
-    for cls in models_avail.keys():
-        i += 1
-        count[models_avail[cls]] = storage.count(mod_objs[i])
-
-    return jsonify(count)
+@app_views.route('/stats', methods=['GET'])
+def object_stats():
+    """Retrieves the no of each object by type"""
+    objects = {
+            "amenities": storage.count(amenity.Amenity),
+            "cities": storage.count(city.City),
+            "places": storage.count(place.Place),
+            "reviews": storage.count(review.Review),
+            "states": storage.count(state.State),
+            "users": storage.count(user.User),
+            }
+    return jsonify(objects)
