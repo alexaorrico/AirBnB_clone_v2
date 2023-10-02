@@ -4,10 +4,12 @@
 
 from api.v1.views import app_views
 from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
 from os import environ
 from werkzeug.exceptions import NotFound
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 app.register_blueprint(app_views)
@@ -15,11 +17,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(exception):
+    """Makes a call to storage.close() to close session"""
     storage.close()
 
 
 @app.errorhandler(NotFound)
 def handle_404(error):
+    """Creates custom 404 page incase of 404 error code"""
     response = jsonify({"error": "Not found"})
     response.status_code = 404
     return response
