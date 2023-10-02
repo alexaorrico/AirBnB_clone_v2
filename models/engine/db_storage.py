@@ -94,6 +94,7 @@ class DBStorage:
                 return value
 
         # return (objs_dict)
+        return (None)
 
     def count(self, cls=None):
         """count number of objects in class"""
