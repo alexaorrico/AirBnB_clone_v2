@@ -3,6 +3,7 @@
 This module defines the view for User objects.
 """
 
+
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.user import User
@@ -64,8 +65,9 @@ def update_user(user_id):
     data = request.get_json()
     if data is None:
         return jsonify({"error": "Not a JSON"}), 400
+    ignore_keys = ['id', 'email', 'created_at', 'updated_at']
     for key, value in data.items():
-        if key not in ['id', 'email', 'created_at', 'updated_at']:
+        if key not in ignore_keys:
             setattr(user, key, value)
     storage.save()
     return jsonify(user.to_dict()), 200
