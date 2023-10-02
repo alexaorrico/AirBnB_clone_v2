@@ -27,7 +27,7 @@ class User(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
-        print("creating a new user")
+        # print("creating a new user")
         # super().__init__(*args, **kwargs)
 
         # hash user password if it's in kwargs
