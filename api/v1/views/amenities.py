@@ -35,6 +35,7 @@ def amenities_with_id(amenity_id=None):
     """
         amenities route that handles http requests with ID given
     """
+    
     amenity_obj = storage.get('Amenity', amenity_id)
     if amenity_obj is None:
         abort(404, 'Not found')

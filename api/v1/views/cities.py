@@ -7,7 +7,8 @@ from flask import abort, jsonify, request
 from models import storage, CNC
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def cities_per_state(state_id=None):
     """
         cities route to handle http method for requested cities by state
@@ -35,7 +36,8 @@ def cities_per_state(state_id=None):
         return jsonify(new_object.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def cities_with_id(city_id=None):
     """
         cities route to handle http methods for given city
