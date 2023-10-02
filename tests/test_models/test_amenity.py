@@ -10,6 +10,8 @@ from models import amenity
 from models.base_model import BaseModel
 import pep8
 import unittest
+
+
 Amenity = amenity.Amenity
 
 
