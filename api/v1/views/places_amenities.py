@@ -30,7 +30,7 @@ def get_place_amenities(place_id):
             amenityList = [amenity.to_dict() for amenity in place.amenities]
         else:
             amenityList = [storage.get(Amenity, amenityID).to_dict()
-                        for amenityID in place.amenity_ids]
+                           for amenityID in place.amenity_ids]
 
         return jsonify(amenityList)
     else:
@@ -38,7 +38,7 @@ def get_place_amenities(place_id):
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                  methods=['DELETE'], strict_slashes=False)
+                 methods=['DELETE'], strict_slashes=False)
 def del_place_amenity(place_id, amenity_id):
     """
         A function that Deletes a Amenity object to a Place:
@@ -49,7 +49,7 @@ def del_place_amenity(place_id, amenity_id):
     if (not place):
         abort(404)
 
-     # get amenities by id
+    # get amenities by id
     amenity = storage.get(Amenity, amenity_id)
 
     if (amenity):
@@ -72,7 +72,7 @@ def del_place_amenity(place_id, amenity_id):
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                  methods=['POST'], strict_slashes=False)
+                 methods=['POST'], strict_slashes=False)
 def add_place_amenity(place_id, amenity_id):
     """
         A function that Link a Amenity object to a Place:
@@ -83,7 +83,7 @@ def add_place_amenity(place_id, amenity_id):
     if (not place):
         abort(404)
 
-     # get amenities by id
+    # get amenities by id
     amenity = storage.get(Amenity, amenity_id)
 
     if (amenity):
