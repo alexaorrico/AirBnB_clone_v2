@@ -123,6 +123,10 @@ def places_search():
     if json_entered is None:  # not a json
         abort(400, description="Not a JSON")
 
+
+    # **************************************
+    # REPEATED CODE BELOW TO BE PUT IN A FUNCTION
+    # **************************************
     states_entered = json_entered["states"]
     cities_entered = json_entered["cities"]
     amenities_entered = json_entered["amenities"]
@@ -199,4 +203,4 @@ def places_search():
             for key, value in all_places.items():
                 if value.city_id == id:
                     places_to_return.append(value.to_dict())
-        return jsonify(places_to_return)
+        return jsonify(places_to_return), 201
