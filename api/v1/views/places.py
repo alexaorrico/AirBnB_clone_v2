@@ -17,17 +17,17 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def get_city_places(city_id):
     """
-        A function that Retrieves the list of all City
+        A function that Retrieves the list of all Place
         objects of a City: GET /api/v1/cities/<city_id>/places
     """
-    # get state by id
+    # get city by id
     city = storage.get(City, city_id)
 
-    # get cites in states and return
+    # get places in city, save in list and return
     if (city):
-        placeList = [place.to_dict() for place in city.places]
+        cityPlaces = [place.to_dict() for place in city.places]
 
-        return jsonify(placeList)
+        return jsonify(cityPlaces)
     else:
         abort(404)
 
@@ -36,13 +36,13 @@ def get_city_places(city_id):
                  strict_slashes=False)
 def get_place(place_id):
     """
-        A function that Retrieves a City object:
+        A function that Retrieves a Place object:
         GET /api/v1/places/<place_id>
     """
-    # get city by id
+    # get place by id
     obj = storage.get(Place, place_id)
 
-    # return city is found
+    # return place object dictionary if found
     if (obj):
         return jsonify(obj.to_dict())
     else:
@@ -53,13 +53,13 @@ def get_place(place_id):
                  strict_slashes=False)
 def del_place(place_id):
     """
-        A function that Deletes a City object:
+        A function that Deletes a Place object:
         DELETE /api/v1/places/<place_id>
     """
-    # get city by id
+    # get place by id
     obj = storage.get(Place, place_id)
 
-    # is city is found, delete object, save and return {}
+    # is place is found, delete object, save and return {}
     if (obj):
         storage.delete(obj)
         storage.save()
@@ -72,7 +72,7 @@ def del_place(place_id):
                  strict_slashes=False)
 def add_place(city_id):
     """
-        A function that Creates a City:
+        A function that Creates a Place:
         POST /api/v1/cities/<city_id>/places
     """
     json_str = request.get_json()
@@ -80,16 +80,19 @@ def add_place(city_id):
 
     if (city):
         # Check If the HTTP body request is not valid JSON
-        if (not json_str):
+        if (json_str is None):
             abort(400, 'Not a JSON')
-        if ('name' not in json_str):
+        if ('name' not in json_str.keys()):
             abort(400, 'Missing name')
-        if ('user_id' not in json_str):
+        if ('user_id' not in json_str.keys()):
             abort(400, 'Missing user_id')
 
+
         user = storage.get(User, json_str['user_id'])
-        if (not user):
+        if (user is None):
             abort(404)
+        if ('name' not in user.keys()):
+            abort(400, 'Missing name')
 
         json_str['city_id'] = city_id
 
@@ -106,19 +109,19 @@ def add_place(city_id):
                  strict_slashes=False)
 def update_place(place_id):
     """
-        A function that Updates a City object:
+        A function that Updates a Place object:
         PUT /api/v1/places/<place_id>
     """
-    # get the city by id
+    # get the place by id
     obj = storage.get(Place, place_id)
 
     if (obj):
         json_str = request.get_json()
         # Check If the HTTP body request is not valid JSON
-        if (not json_str):
+        if (json_str is None):
             abort('400', 'Not a JSON')
 
-        # Update City object attributes
+        # Update Place objects attributes
         to_ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
         for key, value in json_str.items():
             if key not in to_ignore:
