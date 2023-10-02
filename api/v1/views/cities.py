@@ -7,7 +7,7 @@ from models import storage
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def get_city_by_state(state_id):
     """Retrieves a dict of cities of a state.
@@ -24,9 +24,9 @@ def get_city_by_state(state_id):
     if request.method == 'POST':
         data = request.get_json()
         if data is None:
-            abort('Not a JSON', 400)
+            abort(400, 'Not a JSON')
         if data.get('name') is None:
-            abort('Missing Name')
+            abort(400, 'Missing Name')
         city = City(**data)
         setattr(city, 'State_id', )
         storage.new(city)
@@ -34,7 +34,7 @@ def get_city_by_state(state_id):
         return jsonify(city.to_dict), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'POST'],
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def get_city_by_id(city_id):
     """Retrieves, Deletes or Updates a city object by it's id
@@ -55,7 +55,7 @@ def get_city_by_id(city_id):
     if request.method == 'PUT':
         data = request.get_json()
         if data in None:
-            abort('Not a JSON', 400)
+            abort(400, 'Not a JSON')
         for key, value in data:
             if key not in {'created_at', 'updated_at', 'id', 'state_id'}:
                 setattr(city, key, value)
