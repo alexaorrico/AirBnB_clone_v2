@@ -10,8 +10,8 @@ def status():
     """ Returns a status of Flask view """
     return jsonify({"status": "OK"})
 
-@app_views.route('/api/v1/stats', methods=['GET'])
-def get_stats():
+@app_views.route('/api/v1/stats')
+def stats():
     """ Returns a status of each object by type"""
     stats = {
         "amenities": storage.count("Amenity"),
