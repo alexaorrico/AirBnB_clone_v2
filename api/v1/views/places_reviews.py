@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Contains the states view for the API.'''
+'''Contains the places_reviews view for the API.'''
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
@@ -8,7 +8,7 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('places/<place_id>/reviews', methods=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def create_review(place_id):
     """ Creates a new review object """
@@ -25,10 +25,6 @@ def create_review(place_id):
     # else transform HTTP body into a dict
     body = request.get_json()
 
-    # if the text key doesnt exist in the body dict
-    if body.get("text") is None:
-        abort(400, "Missing text")
-
     # if the user_id key doesnt exist in the body dict
     user_id = body.get("user_id")
     if user_id is None:
@@ -38,13 +34,14 @@ def create_review(place_id):
     if storage.get(User, user_id) is None:  # user_id not found in storage
         abort(404)
 
-    # Add the place_id to the body dict
-    body['place_id'] = place_id
+    # if the text key doesnt exist in the body dict
+    if body.get("text") is None:
+        abort(400, "Missing text")
 
     # create and save the new review instance
+    body['place_id'] = place_id
     new_review = Review(**body)
-    storage.new(new_review)
-    storage.save()
+    new_review.save()
 
     return jsonify(new_review.to_dict()), 201
 
@@ -97,6 +94,7 @@ def update_review(review_id):
 
     # ignore id, created_at, updated_at keys during update
     excluded_keys = ["id", "user_id", "place_id" "created_at", "updated_at"]
+
     # iterate over body dict & update the review object
     # with the new values from body dict
     for key, value in body.items():
@@ -104,7 +102,7 @@ def update_review(review_id):
             setattr(review, key, value)
 
     # save the updated review instance
-    storage.save()
+    review.save()
 
     return jsonify(review.to_dict()), 200
 

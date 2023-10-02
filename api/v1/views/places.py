@@ -15,6 +15,7 @@ import json
 from os import getenv
 
 
+
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
