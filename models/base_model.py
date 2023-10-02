@@ -66,8 +66,16 @@ class BaseModel:
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
+        # if "_sa_instance_state" in new_dict:
+        #     del new_dict["_sa_instance_state"]
+        """Remove key '_sa_instance_state' if it exists"""
+        if '_sa_instance_state' in new_dict:
             del new_dict["_sa_instance_state"]
+
+        # remove the password key, if storage is DB
+        if models.storage_t == "db":
+            if "password" in new_dict:
+                del new_dict["password"]
         return new_dict
 
     def delete(self):

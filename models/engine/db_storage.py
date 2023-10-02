@@ -2,7 +2,6 @@
 """
 Contains the class DBStorage
 """
-
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -49,6 +48,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
+
         return (new_dict)
 
     def new(self, obj):
@@ -57,12 +57,16 @@ class DBStorage:
 
     def save(self):
         """commit all changes of the current database session"""
+        # print(f"COMMITTING CHANGES")
         self.__session.commit()
+        # print(f"DONE COMMITTING CHANGES")
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
+            # print(f"\tStorage.delete(), Deleting {obj}")
             self.__session.delete(obj)
+        # print("DONE DELETING INSTANCE")
 
     def reload(self):
         """reloads data from the database"""
@@ -74,3 +78,27 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retrieve object"""
+
+        # use self.all() to get dict containing objects
+        objs_dict = self.all(cls)
+
+        if len(objs_dict) == 0:
+            return (None)
+
+        for key, value in objs_dict.items():
+            if value.id == id:
+                return value
+
+        # return (objs_dict)
+        return (None)
+
+    def count(self, cls=None):
+        """count number of objects in class"""
+
+        # use self.all() to get dict of objects
+        objs_dict = self.all(cls)
+
+        return (len(objs_dict))

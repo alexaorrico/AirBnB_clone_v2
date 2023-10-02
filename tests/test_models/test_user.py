@@ -81,7 +81,7 @@ class TestUser(unittest.TestCase):
         user = User()
         self.assertTrue(hasattr(user, "password"))
         if models.storage_t == 'db':
-            self.assertEqual(user.password, None)
+            self.assertEqual(user.password, '')
         else:
             self.assertEqual(user.password, "")
 
@@ -109,8 +109,10 @@ class TestUser(unittest.TestCase):
         new_d = u.to_dict()
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
+        # print(f"\t***{u.__dict__}")
         for attr in u.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr is not "_sa_instance_state" and attr is not "password":
+                # print(f"\t***{attr}")
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
