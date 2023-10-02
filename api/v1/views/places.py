@@ -79,20 +79,20 @@ def add_place(city_id):
     city = storage.get(City, city_id)
 
     if (city):
+
+        # Error handling and missing info
         # Check If the HTTP body request is not valid JSON
-        if (json_str is None):
+        if (not json_str):
             abort(400, 'Not a JSON')
-        if ('name' not in json_str.keys()):
-            abort(400, 'Missing name')
-        if ('user_id' not in json_str.keys()):
+        if ('user_id' not in json_str):
             abort(400, 'Missing user_id')
+        if ('name' not in json_str):
+            abort(400, 'Missing name')
 
 
         user = storage.get(User, json_str['user_id'])
-        if (user is None):
+        if (not user):
             abort(404)
-        if ('name' not in user.keys()):
-            abort(400, 'Missing name')
 
         json_str['city_id'] = city_id
 
