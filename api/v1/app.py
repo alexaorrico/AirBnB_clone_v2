@@ -10,7 +10,7 @@ from flask_cors import CORS
 """Instantiate a flask app by calling the Flask class"""
 app = Flask(__name__)
 app.register_blueprint(app_views)
-CORS(app, resources={'/*': {'origins': '0.0.0.0'}})
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 def close_storage(exception=None):
