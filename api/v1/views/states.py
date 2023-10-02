@@ -42,7 +42,7 @@ def get_state_cities(state_id):
 def post_state_cities(state_id):
     state = storage.get(State, state_id)
     if state is None:
-        abort(400, description="State not found")
+        abort(404)
     
     data = request.get_json()  
     
