@@ -6,7 +6,7 @@ from models import storage
 from flask import Blueprint, jsonify, request, abort
 from models.user import User
 
-users_bp = Blueprint('user', __name__, url_prefix='/api/v1/users')
+users_bp = Blueprint('users', __name__, url_prefix='/api/v1/users')
 
 
 @users_bp.route('/', methods=['GET'], strict_slashes=False)
