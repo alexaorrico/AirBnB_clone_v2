@@ -3,13 +3,17 @@
 
 from flask import Flask, jsonify, make_response
 from models import storage
-from api.v1.views import app_views, state_bp, cities_bp
+from api.v1.views import app_views, state_bp, cities_bp, amenities_bp
+from api.v1.views import users_bp
 import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.register_blueprint(state_bp)
 app.register_blueprint(cities_bp)
+app.register_blueprint(amenities_bp)
+app.register_blueprint(users_bp)
+
 
 @app.errorhandler(404)
 def handle_error(error):
