@@ -41,12 +41,12 @@ class FileStorage:
         	self.__objects[key] = obj
 
 	def save(self):
-    	"""serializes __objects to the JSON file (path: __file_path)"""
-    	json_objects = {}
-    	for key in self.__objects:
-        	json_objects[key] = self.__objects[key].to_dict()
-    	with open(self.__file_path, 'w') as f:
-        	json.dump(json_objects, f)
+    	"""Serialize __objects to the JSON file (path: __file_path)"""
+    	new_dict = {}
+    	for key, value in self.__objects.items():
+        new_dict[key] = value.to_dict()
+        if isinstance(value, User) and hasattr(value, 'password') and value.password:
+            new_dict[key]['password'] = hashlib.md5(value.password.encode()).hexdigest()
 
 	def reload(self):
     	"""deserializes the JSON file to __objects"""

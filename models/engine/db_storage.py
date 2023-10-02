@@ -52,7 +52,10 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add the object to the current database session"""
+    """Add the object to the current database session"""
+    if obj:
+        if hasattr(obj, 'password') and obj.password:
+            obj.password = hashlib.md5(obj.password.encode()).hexdigest()
         self.__session.add(obj)
 
     def save(self):
