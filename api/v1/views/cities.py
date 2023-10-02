@@ -29,8 +29,7 @@ def get_city_by_state(state_id):
             abort(400, 'Missing name')
         city = City(**data)
         setattr(city, 'state_id', state_id)
-        storage.new(city)
-        storage.save()
+        city.save()
         return jsonify(city.to_dict()), 201
 
 
@@ -59,5 +58,5 @@ def get_city_by_id(city_id):
         for key, value in data.items():
             if key not in {'created_at', 'updated_at', 'id', 'state_id'}:
                 setattr(city, key, value)
-        storage.save()
+        city.save()
         return jsonify(city.to_dict())
