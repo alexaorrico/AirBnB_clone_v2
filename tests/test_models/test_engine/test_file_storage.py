@@ -67,7 +67,6 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -113,3 +112,44 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method of FileStorage"""
+        storage = FileStorage()
+        new_instance = State(name="New York")
+        storage.new(new_instance)
+        storage.save()
+        retrieved_instance = storage.get(State, new_instance.id)
+        self.assertEqual(retrieved_instance, new_instance)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent_object(self):
+        """Test get with a non-existent object"""
+        storage = FileStorage()
+        retrieved_instance = storage.get(State, "non_existent_id")
+        self.assertIsNone(retrieved_instance)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all(self):
+        """Test the count method with no class specified"""
+        storage = FileStorage()
+        count = storage.count()
+        self.assertGreaterEqual(count, 0)  # Ensure it's a non-negative number
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_specific_class(self):
+        """Test the count method with a specific class"""
+        storage = FileStorage()
+        new_state = State(name="Texas")
+        new_city = City(name="Austin", state_id=new_state.id)
+        storage.new(new_state)
+        storage.new(new_city)
+        storage.save()
+        state_count = storage.count(State)
+        city_count = storage.count(City)
+        self.assertEqual(state_count, 1)
+        self.assertEqual(city_count, 1)
