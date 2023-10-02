@@ -9,7 +9,7 @@ from models.user import User
 users_bp = Blueprint('users', __name__, url_prefix='/api/v1/users')
 
 
-@users_bp.route('/users', methods=['GET'], strict_slashes=False)
+@users_bp.route('/', methods=['GET'], strict_slashes=False)
 def get_user():
     user = [users.to_dict() for users in storage.all(User).values()]
     return jsonify(user)
