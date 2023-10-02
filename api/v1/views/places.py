@@ -112,3 +112,56 @@ def update_place_obj(place_id):
     storage.save()
 
     return jsonify(place_to_update.to_dict()), 200
+
+
+@app_views.route("/places_search", methods=["POST"], strict_slashes=False)
+def places_search():
+    """retrieves all Place objs depending on the JSON
+    in the body of the request"""
+
+    json_entered = request.get_json()
+    if json_entered is None:  # not a json
+        abort(400, description="Not a JSON")
+
+    states_entered = json_entered["states"]
+    cities_entered = json_entered["cities"]
+    amenities_entered = json_entered["amenities"]
+
+    len_states_key = len(states_entered)
+    len_cities_key = len(cities_entered)
+    len_amenities_key = len(amenities_entered)
+
+    # If the JSON body is empty or each list of
+    # all keys are empty: retrieve all Place objects
+    all_places = storage.all(Place)
+    if len(json_entered) == 0 or (
+            len_amenities_key == 0 and
+            len_cities_key == 0 and len_states_key == 0):
+        list_places = []
+        for key, value in all_places.items():
+            list_places.append(value.to_dict())
+        return jsonify(list_places)
+
+    # if states list is not empty
+    all_cities_id = []
+    all_cities = storage.all(City)
+    if len_states_key and len_cities_key:  # not empty
+
+        # get all cities in a state
+        # for state_id in states_entered.values():
+        for state_id in states_entered:
+            for key, value in all_cities.items():
+                if value.state_id == state_id:
+                    all_cities_id.append(value.id)
+
+        for city_id in cities_entered:
+            all_cities_id.append(city_id)
+
+        # return Place objs that have the ids in the
+        # list 'all_cities_id' above
+        places_to_return = []
+        for id in all_cities_id:
+            for key, value in all_places.items():
+                if value.city_id == id:
+                    places_to_return.append(value.to_dict())
+        return jsonify(places_to_return)
