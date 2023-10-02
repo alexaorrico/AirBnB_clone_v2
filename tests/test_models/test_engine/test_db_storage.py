@@ -68,6 +68,55 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up the DBStorage instance and create a session"""
+        cls.storage = db_storage.DBStorage()
+        cls.storage.reload()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Remove the DBStorage instance and close the session"""
+        cls.storage.close()
+
+    def test_get(self):
+        """Test the get method of DBStorage"""
+        new_state = State(name="California")
+        self.storage.new(new_state)
+        self.storage.save()
+        retrieved_state = self.storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
+
+    def test_get_nonexistent_object(self):
+        """Test get with a non-existent object"""
+        retrieved_state = self.storage.get(State, "non_existent_id")
+        self.assertIsNone(retrieved_state)
+
+    def test_count_all(self):
+        """Test the count method with no class specified"""
+        count = self.storage.count()
+        self.assertGreaterEqual(count, 0)  # Ensure it's a non-negative number
+
+    def test_count_specific_class(self):
+        """Test the count method with a specific class"""
+        new_state = State(name="Texas")
+        new_city = City(name="Austin", state_id=new_state.id)
+        self.storage.new(new_state)
+        self.storage.new(new_city)
+        self.storage.save()
+        state_count = self.storage.count(State)
+        city_count = self.storage.count(City)
+        self.assertEqual(state_count, 1)
+        self.assertEqual(city_count, 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
