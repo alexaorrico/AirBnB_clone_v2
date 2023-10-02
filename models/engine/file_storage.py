@@ -4,7 +4,6 @@ Contains the FileStorage class
 """
 
 import json
-import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -60,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it's inside"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -71,31 +70,26 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """Retrievs an object with id equals to @id.
+        Parameters:
+        - cls: Class of object to return.
+        - id: id attribute of object.
+        Returns: An instance of @cls with id attribute equals to @id or None.
         """
-        Returns the object based on the class name and its ID, or
-        None if not found
-        """
-        if cls not in classes.values():
-            return None
-
-        all_cls = models.storage.all(cls)
-        for value in all_cls.values():
-            if (value.id == id):
-                return value
-
-        return None
+        return self.__objects.get(f"{cls.__name__}.{id}")
 
     def count(self, cls=None):
+        """Return the number of stored models.
+        Parameters:
+        - cls: Optional class.
+        If specifies, only objects of the class will be counted.
+        returns: Number of counted objects.
         """
-        count the number of objects in storage
-        """
-        all_class = classes.values()
-
         if not cls:
-            count = 0
-            for item in all_class:
-                count += len(models.storage.all(item).values())
-        else:
-            count = len(models.storage.all(cls).values())
+            return len(self.__objects)
 
+        count = 0
+        for obj in self.__objects.values():
+            if type(obj) == cls:
+                count += 1
         return count
