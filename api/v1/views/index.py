@@ -1,35 +1,61 @@
 #!/usr/bin/python3
-"""List of states"""
+
+""" Index module """
+
+from flask import jsonify
+
 from api.v1.views import app_views
-from flask import jsonify, request
+
 from models import storage
 
 
-@app_views.route('/status')
-def api_status():
-    """api_status"""
+
+
+
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
+
+def status():
+
+    """returns a json"""
+
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', methods=['GET'])
+
+
+
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+
 def stats():
-    """
-    returns the count of all the class objects.
-    """
-    if request.method == 'GET':
 
-        response = {}
+    """retrieves the number of each objects by type"""
 
-        PLURALS = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states",
-            "User": "users"
-        }
+    classes = {
 
-        for key, value in PLURALS.items():
-            response[value] = len(storage.all(key))
+            "amenities": "Amenity",
 
-        return jsonify(response)
+            "cities": "City",
+
+            "places": "Place",
+
+            "reviews": "Review",
+
+            "states": "State",
+
+            "users": "User"
+
+            }
+
+
+
+    objs = {}
+
+
+
+    for key, value in classes.items():
+
+        count = storage.count(value)
+
+        objs[key] = count
+
+    return jsonify(objs)
