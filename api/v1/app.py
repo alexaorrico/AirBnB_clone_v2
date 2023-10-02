@@ -2,12 +2,18 @@ from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
+from flask_cors import CORS
 
 #flask app instance
 app = Flask(__name__)
 
 #blueprint registration
 app.register_blueprint(app_views)
+
+
+# Enable CORS for your Flask app with the following configuration
+CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
+
 
 #teardown method
 @app.teardown_appcontext
