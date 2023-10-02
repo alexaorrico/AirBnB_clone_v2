@@ -5,7 +5,7 @@ Create the logic for the cities endpoint
 from models import storage
 from models.city import City
 from . import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, make_response, request
 
 
 @app_views.route('states/<state_id>/cities', methods=['GET'])
@@ -30,7 +30,7 @@ def get_city(city_id):
     all_cities = storage.all('City')
     for city in all_cities.values():
         if city.id == city_id:
-            return jsonify(city.to_dict())
+            return city.to_dict()
     abort(404)
 
 
@@ -43,7 +43,7 @@ def delete_city(city_id):
         if city.id == city_id:
             storage.delete(city)
             storage.save()
-            return make_response(jsonify({}), 200)
+            return make_response({}, 200)
     abort(404)
 
 
@@ -62,7 +62,7 @@ def create_city(state_id):
             new_city.state_id = state.id
             storage.new(new_city)
             storage.save()
-            return make_response(jsonify(new_city.to_dict()), 201)
+            return make_response(new_city.to_dict(), 201)
     abort(404)
 
 
@@ -79,5 +79,5 @@ def update_city(city_id):
             for key, val in request_body.items():
                 if key not in ['id', 'state_id', 'created_at', 'updated_at']:
                     city.key = val
-            return make_response(jsonify(city.to_dict()), 200)
+            return make_response(city.to_dict(), 200)
     abort(404)
