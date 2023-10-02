@@ -4,14 +4,17 @@
 """
 
 import os
+from flask_cors import CORS
 from flask import Flask, jsonify
-from markupsafe import escape
 
 from models import storage
 from api.v1.views import app_views
 
 
 app = Flask(__name__)
+
+# Creating a CORS instance allowing: /* for 0.0.0.0
+CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 #  register a blueprint 'app_views'
 app.register_blueprint(app_views)
@@ -39,7 +42,8 @@ if __name__ == '__main__':
     """
         run main flask web app
     """
-    # get IP adress and Port number from input
+    # get IP address and Port number from input
+    # if no found, work with default values
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
     port = os.getenv('HBNB_API_PORT', 5000)
 
