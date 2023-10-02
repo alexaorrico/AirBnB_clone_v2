@@ -7,7 +7,7 @@ from flask import abort, jsonify, request
 from models import storage, CNC
 
 
-@app_views.route('/amenities/', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
 def amenities_no_id(amenity_id=None):
     """
         amenities route that handles http requests no ID given
@@ -43,7 +43,6 @@ def amenities_with_id(amenity_id=None):
 
     if request.method == 'DELETE':
         amenity_obj.delete()
-        del amenity_obj
         return jsonify({}), 200
 
     if request.method == 'PUT':
