@@ -6,6 +6,7 @@ from api.v1.views import app_views
 import os
 from flask import Flask, jsonify, make_response, render_template, url_for
 from werkzeug.exceptions import HTTPException
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
@@ -17,6 +18,10 @@ app.register_blueprint(app_views)
 # flask server environmental setup
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
 port = os.getenv('HBNB_API_PORT', 5000)
+
+
+# Cross-Origin Resource Sharing
+cors = CORS(app, resources={r'/*': {'origins': host}})
 
 
 # global strict slashes
