@@ -3,10 +3,9 @@
 The index module
 """
 
-from flask import jsonify
-from api.v1.views import app_views
+from flask import jsonify, Blueprint
 from models import storage
-
+app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
 @app_views.route("/status", methods=["GET"])
 def status():
