@@ -3,6 +3,7 @@
 Module for the main Flask application.
 """
 
+from flask_cors import CORS
 from flask import Flask, jsonify
 import json
 from models import storage
@@ -12,6 +13,9 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
+
+
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
