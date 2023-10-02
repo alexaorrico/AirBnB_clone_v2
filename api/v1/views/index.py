@@ -16,7 +16,7 @@ def status():
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
-    """this method returns stats of object count"""
+    """this method returns status of object count"""
     dic = {}
     for key, value in classes.items():
         dic[key] = storage.count(value)
