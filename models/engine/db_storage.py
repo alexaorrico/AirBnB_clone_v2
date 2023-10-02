@@ -52,7 +52,10 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add the object to the current database session"""
+    """Add the object to the current database session"""
+    if obj:
+        if hasattr(obj, 'password') and obj.password:
+            obj.password = hashlib.md5(obj.password.encode()).hexdigest()
         self.__session.add(obj)
 
     def save(self):
@@ -70,6 +73,24 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+def get(self, cls, id):
+	"""Retrieve one object"""
+	if cls and id:
+    	key = "{}.{}".format(cls.__name__, id)
+    	return self.__session.query(cls).get(key)
+	return None
+
+def count(self, cls=None):
+	"""Count the number of objects in storage"""
+	if cls:
+    	return self.__session.query(cls).count()
+	else:
+    	# If cls is not provided, count all objects
+    	count = 0
+    	for model_cls in self.classes.values():
+        	count += self.__session.query(model_cls).count()
+    	return count
 
     def close(self):
         """call remove() method on the private session attribute"""

@@ -73,3 +73,14 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+def to_dict(self, use_db=False):
+    """Return a dictionary representation of the BaseModel instance"""
+    data = self.__dict__.copy()
+    if not use_db and 'password' in data:
+        del data['password']
+    data['created_at'] = self.created_at.isoformat()
+    data['updated_at'] = self.updated_at.isoformat()
+    data['__class__'] = self.__class__.__name__
+    return data
+
