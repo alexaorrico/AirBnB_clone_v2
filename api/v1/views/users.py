@@ -1,4 +1,5 @@
-# api/v1/views/users.py
+#!/usr/bin/python3
+"""users view"""
 
 from flask import Flask, jsonify, request, abort
 from models import storage, User

@@ -1,4 +1,5 @@
-# api/v1/views/amenities.py
+#!/usr/bin/python3
+"""Amenities view"""
 
 from flask import Flask, jsonify, request, abort
 from models import storage, Amenity

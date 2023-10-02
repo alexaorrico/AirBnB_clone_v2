@@ -1,4 +1,5 @@
-# api/v1/views/places_reviews.py
+#!/usr/bin/python3
+"""places_reviews views"""
 
 from flask import Flask, jsonify, request, abort
 from models import storage, Review, Place, User
