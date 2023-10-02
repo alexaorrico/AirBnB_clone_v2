@@ -86,3 +86,35 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDataStorage(unittest.TestCase):
+    def setUp(self):
+        self.data_storage = DataStorage()
+
+    def test_add_object(self):
+        obj1 = MyClass("1", "Object 1")
+        obj2 = MyClass("2", "Object 2")
+
+        self.data_storage.add_object(obj1)
+        self.data_storage.add_object(obj2)
+
+        self.assertEqual(len(self.data_storage.objects), 2)
+
+    def test_get_existing_object(self):
+        obj1 = MyClass("1", "Object 1")
+        self.data_storage.add_object(obj1)
+
+        result = self.data_storage.get(MyClass, "1")
+
+        self.assertEqual(result.data, "Object 1")
+
+    def test_get_non_existing_object(self):
+        obj1 = MyClass("1", "Object 1")
+        self.data_storage.add_object(obj1)
+
+        result = self.data_storage.get(MyClass, "2")
+
+        self.assertIsNone(result)
+
+if __name__ == '__main__':
+    unittest.main()
