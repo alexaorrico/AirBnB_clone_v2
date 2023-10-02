@@ -116,7 +116,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """Test that properly returns a requested object"""
+        """Test that properly returns requested object"""
         storage = FileStorage()
         user = User(name="User1")
         user.save()
@@ -124,7 +124,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """Test that properly counts all objects"""
+        """Test that properly counts every objects"""
         storage = FileStorage()
         nobjs = len(storage._FileStorage__objects)
         self.assertEqual(nobjs, storage.count())
