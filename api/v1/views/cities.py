@@ -26,7 +26,7 @@ def get_city_by_state(state_id):
         if data is None:
             abort(400, 'Not a JSON')
         if data.get('name') is None:
-            abort(400, 'Missing Name')
+            abort(400, 'Missing name')
         city = City(**data)
         setattr(city, 'State_id', )
         storage.new(city)
