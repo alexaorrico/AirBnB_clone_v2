@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+import unittest
+from your_data_storage_module import DataStorage  # Replace with the actual import
+
+class TestDataStorage(unittest.TestCase):
+    def setUp(self):
+        # Create an instance of your DataStorage class (replace with actual initialization)
+        self.storage = DataStorage()
+
+    def tearDown(self):
+        # Clean up any resources if needed
+        pass
+
+    def test_get_existing_object(self):
+        # Assuming you have a class named "YourClass" to retrieve
+        # Replace "YourClass" and "existing_id" with actual values
+        obj = self.storage.get(YourClass, existing_id)
+        self.assertIsNotNone(obj)
+
+    def test_get_non_existing_object(self):
+        # Assuming you have a class named "YourClass" and an ID that doesn't exist
+        # Replace "YourClass" and "non_existing_id" with actual values
+        obj = self.storage.get(YourClass, non_existing_id)
+        self.assertIsNone(obj)
+
+    def test_count_all_objects(self):
+        # Assuming you have a class named "YourClass" to count
+        # Replace "YourClass" with the actual class name
+        count = self.storage.count(YourClass)
+        self.assertTrue(count >= 0)
+
+    def test_count_specific_objects(self):
+        # Assuming you have a class named "YourClass" to count
+        # Replace "YourClass" with the actual class name
+        count = self.storage.count(YourClass)
+        self.assertTrue(count >= 0)
+
+if __name__ == '__main__':
+    unittest.main()
