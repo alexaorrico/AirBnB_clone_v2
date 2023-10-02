@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""API status ok"""
+"""
+API status ok
+"""
+
 
 from flask import jsonify
 from api.v1.views import app_views
@@ -8,12 +11,17 @@ from models import storage
 
 @app_views.route("/status", methods=["GET"])
 def status():
+    """
+    show API status
+    """
     return jsonify({"status": "OK"})
 
 
 @app_views.route("/stats", methods=["GET"])
 def stats():
-    """Retrieve the number of each object type"""
+    """
+    Retrieve the number of each object type
+    """
     stats_dict = {}
     classes = ["Amenity", "City", "Place", "Review", "State", "User"]
 
