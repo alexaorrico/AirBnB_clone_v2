@@ -28,7 +28,7 @@ def get_city_by_state(state_id):
         if data.get('name') is None:
             abort(400, 'Missing name')
         city = City(**data)
-        setattr(city, 'State_id', )
+        setattr(city, 'state_id', state_id)
         storage.new(city)
         storage.save()
         return jsonify(city.to_dict()), 201
