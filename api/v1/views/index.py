@@ -4,12 +4,12 @@ This module defines the routes for the API.
 """
 
 
-from flask import jsonify
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
+app = Flask(__name__)
 
-
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/api/v1/status', methods=['GET'])
 def get_status():
     """
     Returns the status of the API.
@@ -17,7 +17,7 @@ def get_status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/api/v1/stats', methods=['GET'])
 def get_stats():
     """
     Returns the number of each object by type.
@@ -31,3 +31,7 @@ def get_stats():
         "users": storage.count("User")
     }
     return jsonify(obj_count)
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
