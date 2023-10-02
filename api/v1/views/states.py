@@ -5,6 +5,7 @@ The states module
 from models import storage
 from flask import Blueprint, jsonify, request, abort
 from models.state import State
+from models.city import City
 
 state_bp = Blueprint('states', __name__, url_prefix='/api/v1/states')
 
@@ -37,6 +38,26 @@ def get_state_cities(state_id):
     return jsonify(cities_list)
 
 
+@state_bp.route('/<state_id>/cities', methods=['POST'], strict_slashes=False)
+def post_state_cities(state_id):
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(400, description="State not found")
+    
+    data = request.get_json()  
+    
+    if not data:
+        abort(400, description='Not a JSON')
+    
+    if 'name' not in data:
+        abort(400, description='Missing name') 
+    
+    data['state_id'] = state_id
+    
+    new_cities = City(**data)
+    new_cities.save()
+    
+    return jsonify(new_cities.to_dict()), 201
 
 def get_state(state_id):
     state = storage.get(State, state_id)
