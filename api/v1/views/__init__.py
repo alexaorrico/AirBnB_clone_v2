@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""app_views blueprint init"""
+"""
+app_views blueprint creation url prefix set to /api/v1
+"""
 
 
 from flask import Blueprint
