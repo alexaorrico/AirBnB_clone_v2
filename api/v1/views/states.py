@@ -10,6 +10,7 @@ def state():
     """
     function for state route that returns all the states in the database
     """
+
     if request.method == 'GET':
         all_state = storage.all("State")
         resp = []
@@ -37,6 +38,7 @@ def state_ids(state_id=None):
     """
     run directive base base on a given state id
     """
+
     state_obj = storage.get('State', state_id)
     if state_obj is None:
         abort(404, 'Not found')
