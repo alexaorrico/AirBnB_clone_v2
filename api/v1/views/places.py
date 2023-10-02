@@ -1,18 +1,17 @@
 #!/usr/bin/python3
-""" new view for place objects"""
+"""
+New view for place objects.
+"""
 
 from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models import storage, City, Place, User
-from models import storage
-from models.state import State
-from models.city import City
-from models.place import Place
-from models.amenity import Amenity
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
 def get_city_places(city_id):
-    """Retrieves the list of all Place objects of a City"""
+    """
+    Retrieves the list of all Place objects of a City.
+    """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -21,7 +20,9 @@ def get_city_places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id):
-    """Retrieves a Place object by ID"""
+    """
+    Retrieves a Place object by ID.
+    """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -29,7 +30,9 @@ def get_place(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
-    """Deletes a Place object by ID"""
+    """
+    Deletes a Place object by ID.
+    """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -39,7 +42,9 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def create_place(city_id):
-    """Creates a new Place object in a City"""
+    """
+    Creates a new Place object in a City.
+    """
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -61,7 +66,9 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    """Updates a Place object by ID"""
+    """
+    Updates a Place object by ID.
+    """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -76,7 +83,9 @@ def update_place(place_id):
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
-    """Search for Place objects based on criteria in the request body"""
+    """
+    Search for Place objects based on criteria in the request body.
+    """
     data = request.get_json()
 
     # Check if the request body is valid JSON

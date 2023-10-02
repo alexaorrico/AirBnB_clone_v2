@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" new view for places_review objects"""
+"""
+New view for places_review objects.
+"""
 
 from flask import jsonify, request, abort
 from api.v1.views import app_views
@@ -7,7 +9,9 @@ from models import storage, Place, Review, User
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
 def get_place_reviews(place_id):
-    """Retrieves the list of all Review objects of a Place"""
+    """
+    Retrieves the list of all Review objects of a Place.
+    """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -16,7 +20,9 @@ def get_place_reviews(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def get_review(review_id):
-    """Retrieves a Review object by ID"""
+    """
+    Retrieves a Review object by ID.
+    """
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -24,7 +30,9 @@ def get_review(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
 def delete_review(review_id):
-    """Deletes a Review object by ID"""
+    """
+    Deletes a Review object by ID.
+    """
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -34,7 +42,9 @@ def delete_review(review_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'], strict_slashes=False)
 def create_review(place_id):
-    """Creates a new Review object for a Place"""
+    """
+    Creates a new Review object for a Place.
+    """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -56,7 +66,9 @@ def create_review(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
-    """Updates a Review object by ID"""
+    """
+    Updates a Review object by ID.
+    """
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)

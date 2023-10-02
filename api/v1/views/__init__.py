@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+Initialization of views for the API version 1.
+"""
+
 from api.v1.views.states import *
 from api.v1.views.cities import *
 from api.v1.views.amenities import *
