@@ -72,8 +72,8 @@ class BaseModel:
 
         # remove the password from dictinary key except when it’s
         #   used by FileStorage to save data to disk.
-        if (not Fsave):
-            if 'password' in new_dict:
+        if (Fsave is None):
+            if ('password' in new_dict):
                 del new_dict['password']
         return new_dict
 
