@@ -49,7 +49,7 @@ def get_city_by_id(city_id):
     if request.method == 'GET':
         return jsonify(city.to_dict())
     if request.method == 'DELETE':
-        storage.delete(city)
+        city.delete()
         storage.save()
         return jsonify({})
     if request.method == 'PUT':
@@ -60,4 +60,4 @@ def get_city_by_id(city_id):
             if key not in {'created_at', 'updated_at', 'id', 'state_id'}:
                 setattr(city, key, value)
         storage.save()
-        return jsonify(city.to_dict()), 200
+        return jsonify(city.to_dict())
