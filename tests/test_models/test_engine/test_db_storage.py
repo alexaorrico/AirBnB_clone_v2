@@ -3,8 +3,15 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
+import unittest
+from unittest.mock import patch
+
+import json
+import os
+import pep8
 from datetime import datetime
 import inspect
+
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
@@ -14,10 +21,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -72,9 +76,15 @@ test_db_storage.py'])
         ...
 
 
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    def setUp(self) -> None:
+        self.db_storage = DBStorage()
+
+    def tearDown(self) -> None:
+        self.db_storage.close()
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -91,3 +101,23 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @patch('models.storage.DBStorage.__session')
+    def test_get(self):
+        """Test that get properly gets objects by id to file.json"""
+        mock_session = self.db_storage.__session
+        new_state = State(name="California")
+        mock_session.add(new_state)
+        mock_session.commit()
+        state_id = new_state.id
+        state = self.db_storage.get(State, state_id)
+        self.assertEqual(state, new_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @patch('models.storage.DBStorage.__session')
+    def test_count(self):
+        """Test that count properly counts objects in a table"""
+        mock_session = self.db_storage.__session
+        state_count = mock_session.query(State).count()
+        self.assertEqual(state_count, self.db_storage.count(State))
