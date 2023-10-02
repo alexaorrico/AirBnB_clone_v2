@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-this is the staets view for API
+this is the states view for API
 """
 
 from api.v1.views import app_views
