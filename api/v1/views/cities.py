@@ -11,6 +11,7 @@ from models.city import City
 from api.v1.views import app_views
 app = Flask(__name__)
 
+
 @app_views.route('/states/<string:state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities_by_state(state_id):

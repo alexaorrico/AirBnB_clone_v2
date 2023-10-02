@@ -9,6 +9,7 @@ from api.v1.views import app_views
 from models import storage
 app = Flask(__name__)
 
+
 @app_views.route('/status')
 def get_status():
     """
