@@ -15,22 +15,23 @@ def get_city_by_state(state_id):
                 - GET: retrieve specified state.
                 - POST: Creates new specified state
     """
-    if request.method == 'GET':
-        state = storage.get('State', state_id)
-        if state is None:
-            abort(404)
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
+
+    if request.method == "GET":
         return jsonify([city.to_dict() for city in state.cities])
 
-    if request.method == 'POST':
-        data = request.get_json()
-        if data is None:
-            abort(400, 'Not a JSON')
-        if data.get('name') is None:
-            abort(400, 'Missing name')
-        city = City(**data)
-        setattr(city, 'state_id', state_id)
-        city.save()
-        return jsonify(city.to_dict()), 201
+    data = request.get_json(silent=True)
+    if data is None:
+        return "Not a JSON", 400
+    if data.get("name") is None:
+        return "Missing name", 400
+    #replaced setattr
+    data["state_id"] = state_id
+    city = City(**data)
+    city.save()
+    return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -45,18 +46,19 @@ def get_city_by_id(city_id):
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    if request.method == 'GET':
+
+    if request.method == "GET":
         return jsonify(city.to_dict())
-    if request.method == 'DELETE':
+
+    elif request.method == "DELETE":
         city.delete()
         storage.save()
         return jsonify({})
-    if request.method == 'PUT':
-        data = request.get_json()
-        if data in None:
-            abort(400, 'Not a JSON')
-        for key, value in data.items():
-            if key not in {'created_at', 'updated_at', 'id', 'state_id'}:
-                setattr(city, key, value)
-        city.save()
-        return jsonify(city.to_dict())
+
+    data = request.get_json(silent=True)
+    if data is None:
+        return "Not a JSON", 400
+    nope = {"id", "state_id", "created_at", "updated_at"}
+    [setattr(city, k, v) for k, v in data.items() if k not in nope]
+    city.save()
+    return jsonify(city.to_dict())
