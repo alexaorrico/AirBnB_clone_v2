@@ -1,11 +1,11 @@
-!/usr/bin/python3
+#!/usr/bin/python3
 """
 Flask route that returns json status response
 """
+from os import environ
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage, CNC
-from os import environ
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
 
