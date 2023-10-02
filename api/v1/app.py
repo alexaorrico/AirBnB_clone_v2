@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Flask application"""
+"""
+Flask application
+"""
 
 
 from flask import Flask, jsonify
@@ -16,13 +18,17 @@ CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown_appcontext(exception):
-    """close running SQLAlchemy session"""
+    """
+    close running SQLAlchemy session
+    """
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
-    """a not found page"""
+    """
+    a not found page
+    """
     return jsonify({"error": "Not found"}), 404
 
 
