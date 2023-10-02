@@ -9,15 +9,15 @@ from api.v1.views import app_views
 from models import storage
 app = Flask(__name__)
 
-@app_views.route('/api/v1/status', methods=['GET'])
+@app_views.route('/status')
 def get_status():
     """
     Returns the status of the API.
     """
-    return jsonify({"status": "OK"})
+    return jsonify({"status": "OK"}), 200
 
 
-@app_views.route('/api/v1/stats', methods=['GET'])
+@app_views.route('/api/v1/stats')
 def get_stats():
     """
     Returns the number of each object by type.
