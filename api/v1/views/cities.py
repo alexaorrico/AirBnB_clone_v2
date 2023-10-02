@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""this script defines api for cities"""
+"""this script defines an api for cities"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
