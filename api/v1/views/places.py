@@ -89,7 +89,6 @@ def add_place(city_id):
         if ('name' not in json_str):
             abort(400, 'Missing name')
 
-
         user = storage.get(User, json_str['user_id'])
         if (not user):
             abort(404)
