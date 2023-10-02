@@ -1,62 +1,63 @@
 #!/usr/bin/python3
 """
-The user module
+The users module
 """
 from models import storage
 from flask import Blueprint, jsonify, request, abort
 from models.user import User
 
-users_bp = Blueprint('users', __name__, url_prefix='/api/v1/users')
+
+user_bp = Blueprint('users', __name__, url_prefix='/api/v1/users')
 
 
-@users_bp.route('/', methods=['GET'], strict_slashes=False)
-def get_user():
-    user = [users.to_dict() for users in storage.all(User).values()]
-    return jsonify(user)
+@user_bp.route('/', methods=['GET'], strict_slashes=False)
+def get_users():
+    users = [user.to_dict() for user in storage.all(User).values()]
+    return jsonify(users)
 
 
-@users_bp.route('/<user_id>', methods=['GET'], strict_slashes=False)
-def get_users(user_id):
-    users = storage.get(User, user_id)
-    if users is None:
+@user_bp.route('/<user_id>', methods=['GET'], strict_slashes=False)
+def get_user(user_id):
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
-    return jsonify(users.to_dict())
+    return jsonify(user.to_dict())
 
 
-@users_bp.route('/<user_id>', methods=['DELETE'], strict_slashes=False)
-def delete_users(user_id):
-    users = storage.get(User, user_id)
-    if users is None:
+@user_bp.route('/<user_id>', methods=['DELETE'], strict_slashes=False)
+def delete_user(user_id):
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
-    storage.delete(users)
+    storage.delete(user)
     storage.save()
     return jsonify({})
 
 
-@users_bp.route('/', methods=['POST'], strict_slashes=False)
-def create_users():
+@user_bp.route('/', methods=['POST'], strict_slashes=False)
+def create_user():
     data = request.get_json()
     if not data:
         abort(400, description='Not a JSON')
-    if 'password' not in data:
-        abort(400, description='Missing password')
     if 'email' not in data:
         abort(400, description='Missing email')
-    new_users = User(**data)
-    new_users.save()
-    return jsonify(new_users.to_dict()), 201
+    if 'password' not in data:
+        abort(400, description='Missing password')
+    new_user = User(**data)
+    new_user.save()
+    return jsonify(new_user.to_dict()), 201
 
 
-@users_bp.route('/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_users(user_id):
-    users = storage.get(User, user_id)
-    if users is None:
+@user_bp.route('/<user_id>', methods=['PUT'], strict_slashes=False)
+def update_user(user_id):
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
     data = request.get_json()
     if not data:
         abort(400, description='Not a JSON')
     for key, value in data.items():
-        if key not in ['id', 'email', 'created_at', 'updated_at']:
-            setattr(users, key, value)
-    users.save()
-    return jsonify(users.to_dict())
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(user, key, value)
+    user.save()
+    return jsonify(user.to_dict())
