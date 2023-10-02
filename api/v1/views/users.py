@@ -32,7 +32,8 @@ def users_no_id(user_id=None):
         return jsonify(new_object.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def user_with_id(user_id=None):
     """
         users route that handles http requests with ID given

@@ -29,7 +29,8 @@ def amenities_no_id(amenity_id=None):
         return jsonify(new_object.to_json()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def amenities_with_id(amenity_id=None):
     """
         amenities route that handles http requests with ID given
