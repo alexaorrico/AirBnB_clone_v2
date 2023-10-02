@@ -56,7 +56,7 @@ def get_city_by_id(city_id):
         data = request.get_json()
         if data in None:
             abort(400, 'Not a JSON')
-        for key, value in data:
+        for key, value in data.items():
             if key not in {'created_at', 'updated_at', 'id', 'state_id'}:
                 setattr(city, key, value)
         storage.save()
