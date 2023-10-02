@@ -90,20 +90,26 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_get(self):
         """ Tests a method to retrieve one object"""
-        first_state = list(models.storage.all().values())[0]
-        get_state = models.storage.all().get(State, first_state.id)
-        self.assertEqual(first_state, get_state)
-
-        first_city = list(models.storage.all().all(City).values())[0]
-        get_city = models.storage.all().get(City, first_city.id)
-        self.assertEqual(first_city, get_city)
+        storage = DBStorage()
+        state = State(name="Ethiopia")
+        state.save()
+        user = User(name="User_one", email="ella@gmail.com", password="123")
+        user.save()
+        city = City(state_id=state.id, name="Addis Ababa")
+        city.save()
+        place1 = Place(user_id=user.id,
+                       city_id=city.id,
+                       name="Bole")
+        place1.save()
+        amn1 = Amenity(name="Wifi")
+        amn1.save()
+        self.assertEqual(storage.get("User", user.id), user)
+        self.assertEqual(storage.get("State", state.id), state)
+        self.assertEqual(storage.get("City", city.id), city)
+        self.assertEqual(storage.get("Place", place1.id), place1)
+        self.assertEqual(storage.get("Amenity", amn1.id), amn1)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_count(self):
         """ Test method to count the number of objects in storage """
-        self.assertEqual(models.storage.all().count(),
-                         len(models.storage.all()))
-        self.assertEqual(models.storage.all().count(
-            State), len(models.storage.all().all(State)))
-        self.assertEqual(models.storage.all().count(
-            City), len(models.storage.all().all(City)))
+        self.assertEqual(len(models.storage.all()), models.storage.count())
