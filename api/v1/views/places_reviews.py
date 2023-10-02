@@ -10,6 +10,7 @@ from models import storage, Place, Review, User
 # Route to retrieve a list of all Review objects of a Place
 @app_views.route('/places/<place_id>/reviews', methods=['GET'])
 def get_reviews_by_place(place_id):
+    """get a list of all review objects of a place"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -20,6 +21,7 @@ def get_reviews_by_place(place_id):
 # Route to retrieve a specific Review object by review_id
 @app_views.route('/reviews/<review_id>', methods=['GET'])
 def get_review(review_id):
+    """get a specific Review object by review_id"""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -28,6 +30,7 @@ def get_review(review_id):
 # Route to delete a specific Review object by review_id
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
+    """delete a specific Review object by review_id"""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -38,6 +41,7 @@ def delete_review(review_id):
 # Route to create a new Review object
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def create_review(place_id):
+    """create a new Review object by id"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -63,6 +67,7 @@ def create_review(place_id):
 # Route to update a specific Review object by review_id
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
 def update_review(review_id):
+    """update a specific Review object by review_id"""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)

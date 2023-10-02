@@ -9,12 +9,14 @@ from models import storage, User
 # Route to retrieve a list of all User objects
 @app_views.route('/users', methods=['GET'])
 def get_users():
+    """get a list of all user objects"""
     users = [user.to_dict() for user in storage.all(User).values()]
     return jsonify(users)
 
 # Route to retrieve a specific User object by user_id
 @app_views.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
+    """get a specific user object by user id"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -23,6 +25,7 @@ def get_user(user_id):
 # Route to delete a specific User object by user_id
 @app_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
+    """delete a specific user object by user id"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -33,6 +36,7 @@ def delete_user(user_id):
 # Route to create a new User object
 @app_views.route('/users', methods=['POST'])
 def create_user():
+    """create a new user object"""
     data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
@@ -49,6 +53,7 @@ def create_user():
 # Route to update a specific User object by user_id
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
+    """update a specific user object by user id"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -57,7 +62,6 @@ def update_user(user_id):
     if not data:
         abort(400, description="Not a JSON")
     
-    # Ignore keys: id, email, created_at, updated_at
     for key, value in data.items():
         if key not in ['id', 'email', 'created_at', 'updated_at']:
             setattr(user, key, value)

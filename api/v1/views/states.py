@@ -9,12 +9,14 @@ from models import storage, State
 # Route to retrieve a list of all State objects
 @app_views.route('/states', methods=['GET'])
 def get_states():
+    """get a list of all state objects"""
     states = [state.to_dict() for state in storage.all(State).values()]
     return jsonify(states)
 
 # Route to retrieve a specific State object by state_id
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
+    """get a specific state object by state id"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -23,6 +25,7 @@ def get_state(state_id):
 # Route to delete a specific State object by state_id
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
+    """delete a specific state object by state id"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -33,6 +36,7 @@ def delete_state(state_id):
 # Route to create a new State object
 @app_views.route('/states', methods=['POST'])
 def create_state():
+    """create a new state object"""
     data = request.get_json()
     if not data:
         abort(400, description="Not a JSON")
@@ -47,6 +51,7 @@ def create_state():
 # Route to update a specific State object by state_id
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
+    """update a specific state object by state id"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -55,7 +60,6 @@ def update_state(state_id):
     if not data:
         abort(400, description="Not a JSON")
     
-    # Ignore keys: id, created_at, updated_at
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
