@@ -36,8 +36,8 @@ def get_amenity_by_id(amenity_id):
         return "Not a JSON", 400
     if "name" not in data:
         return "Missing name", 400
-    nope = {"id", "created_at", "updated_at"}
-    [setattr(amenity, key, val) for key, val in data.items() if key not in nope]
+    nop = {"id", "created_at", "updated_at"}
+    [setattr(amenity, key, val) for key, val in data.items() if key not in nop]
     amenity.save()
     return jsonify(amenity.to_dict()), 200
 
