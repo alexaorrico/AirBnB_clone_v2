@@ -34,6 +34,7 @@ def cities_per_state(state_id=None):
         new_object.save()
         return jsonify(new_object.to_dict()), 201
 
+
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
 def cities_with_id(city_id=None):
     """
