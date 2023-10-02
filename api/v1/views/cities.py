@@ -27,7 +27,7 @@ def get_city_by_state(state_id):
         return "Not a JSON", 400
     if data.get("name") is None:
         return "Missing name", 400
-    #replaced setattr
+    # replaced setattr
     data["state_id"] = state_id
     city = City(**data)
     city.save()
@@ -59,6 +59,6 @@ def get_city_by_id(city_id):
     if data is None:
         return "Not a JSON", 400
     nope = {"id", "state_id", "created_at", "updated_at"}
-    [setattr(city, k, v) for k, v in data.items() if k not in nope]
+    [setattr(city, key, val) for key, val in data.items() if key not in nope]
     city.save()
     return jsonify(city.to_dict())
