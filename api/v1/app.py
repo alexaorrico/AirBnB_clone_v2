@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 
@@ -13,17 +13,32 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext()
 def teardown_appcontext(exception):
     """
-    This function is a Flask decorator that is used to register a function 
+    This function is a Flask decorator that is used to register a function
     to be called when the application context is torn down.
     """
     storage.close()
 
 
+@app.errorhandler(404)
+def handle_404(exception):
+    """
+    Handles the 404 error in a Flask application.
+
+    :param exception: The exception object that represents the 404 error.
+    :return: A JSON response with the error message "Not found" and a status code of 404.
+    """
+    data = {"error": "Not found"}
+    return jsonify(data), 404
+
+
 if __name__ == "__main__":
-    host = os.environ.get('HBNB_API_HOST')
-    port = os.environ.get('HBNB_API_PORT')
+    host = os.environ.get("HBNB_API_HOST")
+    port = os.environ.get("HBNB_API_PORT")
     if not host:
-        host = '0.0.0.0'
+        host = "0.0.0.0"
     if not port:
-        port = '5000'
+        port = "5000"
+    app.run(host=host, port=port, threaded=True)
+    if not port:
+        port = "5000"
     app.run(host=host, port=port, threaded=True)
