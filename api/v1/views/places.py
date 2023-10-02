@@ -142,10 +142,29 @@ def places_search():
             list_places.append(value.to_dict())
         return jsonify(list_places)
 
-    # if states list is not empty
-    all_cities_id = []
-    all_cities = storage.all(City)
+    if len_states_key and not len_cities_key:
+        all_cities_id = []
+        all_cities = storage.all(City)
+        # get all cities in a state
+        # for state_id in states_entered.values():
+        for state_id in states_entered:
+            for key, value in all_cities.items():
+                if value.state_id == state_id:
+                    all_cities_id.append(value.id)
+
+        # return Place objs that have the ids in the
+        # list 'all_cities_id' above
+        places_to_return = []
+        for id in all_cities_id:
+            for key, value in all_places.items():
+                if value.city_id == id:
+                    places_to_return.append(value.to_dict())
+        return jsonify(places_to_return)
+
+    # if both states list and cities list are not empty
     if len_states_key and len_cities_key:  # not empty
+        all_cities_id = []
+        all_cities = storage.all(City)
 
         # get all cities in a state
         # for state_id in states_entered.values():
@@ -153,6 +172,22 @@ def places_search():
             for key, value in all_cities.items():
                 if value.state_id == state_id:
                     all_cities_id.append(value.id)
+
+        for city_id in cities_entered:
+            all_cities_id.append(city_id)
+
+        # return Place objs that have the ids in the
+        # list 'all_cities_id' above
+        places_to_return = []
+        for id in all_cities_id:
+            for key, value in all_places.items():
+                if value.city_id == id:
+                    places_to_return.append(value.to_dict())
+        return jsonify(places_to_return)
+
+    if len_cities_key and not len_states_key:  # not empty
+        all_cities_id = []
+        all_cities = storage.all(City)
 
         for city_id in cities_entered:
             all_cities_id.append(city_id)
