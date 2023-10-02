@@ -69,7 +69,7 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        #The hash password to the MD5 value if it exists
+        # The hash password to the MD5 value if it exists
         if save_to_file is None:
             if "password" in new_dict:
                 del new_dict["password"]
