@@ -16,7 +16,6 @@ def status():
     return jsonify({"status": "OK"})
 
 
-#@app_v1_stats.route("/stats", methods=["GET"])
 @app.route('/stats', methods=["GET"])
 def get_object_count():
     """Returns object count"""
