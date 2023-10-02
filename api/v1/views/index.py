@@ -3,21 +3,20 @@
 The index module
 """
 
-from flask import Blueprint, jsonify
-from api.v1.views import app_views
-from models.engine import db_storage
+from flask import Flask, Blueprint, jsonify
+from models import storage
 
-
+app = Flask(__name__)
 api_v1_stats = Blueprint('api_v1_stats', __name__)
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def status():
     """ Returns status of the api """
     return jsonify({"status": "OK"})
 
 
-@api_v1_stats.route('/api/v1/stats', methods=['GET'])
+@app_v1_stats.route('/stats', methods=['GET'])
 def get_object_count():
     """ Returns object count """
     storage = db_storage.DBStorage()

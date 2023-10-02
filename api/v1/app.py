@@ -1,18 +1,20 @@
-from flask import Flask, jsonify
+#!/usr/bin/python3
+"""This module has the blueprints"""
+
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
-from api.v1.views.index import api_v1_stats
 import os
+from api.v1.views.index import api_v1_stats
 
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
 app.register_blueprint(api_v1_stats)
 
 
-@app.route('/nop')
-def error_handler():
-    response = {"error": "Not found"}
-    return jsonify(response)
+@app.error_handler(404)
+def handle_error(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 @app.teardown_appcontext
