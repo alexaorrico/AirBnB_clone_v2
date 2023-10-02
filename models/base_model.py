@@ -3,13 +3,14 @@
 Contains class BaseModel
 """
 
-from datetime import datetime
+import uuid
 import models
-from os import getenv
+import hashlib
 import sqlalchemy
+from os import getenv
+from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -58,7 +59,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, Fsave=None):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -68,6 +69,12 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+
+        # remove the password from dictinary key except when it’s
+        #   used by FileStorage to save data to disk.
+        if (not Fsave):
+            if 'password' in new_dict:
+                del new_dict['password']
         return new_dict
 
     def delete(self):
