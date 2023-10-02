@@ -17,7 +17,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class FileStorage:
-    """serializes instances to a JSON file & deserializes back to instances"""
+    """serializes instances to a JSON file & deserializes, back to instances"""
 
     # string - path to the JSON file
     __file_path = "file.json"
@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -64,6 +64,33 @@ class FileStorage:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
+
+    def get(self, cls, id):
+        """Retrieves one object only.
+           Args::
+                cls - class name of object
+                id - The objects id.
+           Return::
+                Returns the object of the class and id
+        """
+        if cls is None or id is None:
+            return None
+        clskey = "{}.{}".format(cls, id)
+        return self.__objects.get(clskey, None)
+
+    def count(self, cls=None):
+        """Returns no of objects in a class or all objects if no cls passed.
+        Args::
+            cls - The class name
+        Return::
+            either:
+                    Number of objects of a class , if classname given.
+            or:
+                    Number of all objects if no classname given
+        """
+        if cls is None:
+            return len(self.__objects)
+        return len([obj for obj in self.__objects if obj.startswith(cls)])
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
