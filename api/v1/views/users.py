@@ -12,7 +12,6 @@ from models.user import User
 def view_users():
     """Returns the list of all User objects"""
     if request.method == 'POST':
-        # Get the attributes from the request
         data = request.get_json()
 
         if isinstance(data, dict):
@@ -32,10 +31,8 @@ def view_users():
         if 'password' not in data.keys():
             return jsonify({'error': 'Missing password'}), 400
 
-        # Create the object
         obj = User(**data)
 
-        # Save the object in storage
         storage.new(obj)
         storage.save()
         return jsonify(obj.to_dict()), 201
@@ -80,7 +77,6 @@ def view_user_id(id):
         for key, value in data.items():
             if key not in ["id", "email", "created_at", "updated_at"]:
                 setattr(user, key, value)
-        # This save is possibly not working to obtain
-        # permanent changes in the data base
+
         storage.save()
         return jsonify(user.to_dict())
