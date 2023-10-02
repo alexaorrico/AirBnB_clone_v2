@@ -19,7 +19,7 @@ def get_city_by_state(state_id):
         state = storage.get('State', state_id)
         if state is None:
             abort(404)
-        return jsonify([city.to_dict() for city in state.cities()])
+        return jsonify([city.to_dict() for city in state.cities])
 
     if request.method == 'POST':
         data = request.get_json()
@@ -31,7 +31,7 @@ def get_city_by_state(state_id):
         setattr(city, 'State_id', )
         storage.new(city)
         storage.save()
-        return jsonify(city.to_dict), 201
+        return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -60,4 +60,4 @@ def get_city_by_id(city_id):
             if key not in {'created_at', 'updated_at', 'id', 'state_id'}:
                 setattr(city, key, value)
         storage.save()
-        return jsonify(city.to_dict), 200
+        return jsonify(city.to_dict()), 200
