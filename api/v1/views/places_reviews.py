@@ -88,7 +88,7 @@ def add_review(place_id):
         if ('user_id' not in json_str):
             abort(400, 'Missing user_id')
         if ('text' not in json_str):
-            abort(404, 'Missing text')
+            abort(400, 'Missing text')
 
         # get | create user object from json string
         user = storage.get(User, json_str['user_id'])
