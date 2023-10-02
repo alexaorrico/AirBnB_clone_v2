@@ -1,0 +1,6 @@
+# ignore emacs temporary files
+*~
+
+# ignore byte compiled files
+__pycache__/
+*.byc
