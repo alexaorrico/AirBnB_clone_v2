@@ -11,21 +11,21 @@ amenities_bp = Blueprint('amenities', __name__, url_prefix='/api/v1/amenities')
 
 @amenities_bp.route('/', methods=['GET'], strict_slashes=False)
 def get_amenities():
-    amenities = [amenities.to_dict() for amenities in storage.all(Amenity).values()]
+    amenities = [a.to_dict() for a in storage.all(Amenity).values()]
     return jsonify(amenities)
 
 
-@amenities_bp.route('/<amenities_id>', methods=['GET'], strict_slashes=False)
-def get_amenity(amenities_id):
-    amenities = storage.get(Amenity, amenities_id)
+@amenities_bp.route('/<amenity_id>', methods=['GET'], strict_slashes=False)
+def get_amenity(amenity_id):
+    amenities = storage.get(Amenity, amenity_id)
     if amenities is None:
         abort(404)
     return jsonify(amenities.to_dict())
 
 
-@amenities_bp.route('/<amenities_id>', methods=['DELETE'], strict_slashes=False)
-def delete_amenities(amenities_id):
-    amenities = storage.get(Amenity, amenities_id)
+@amenities_bp.route('/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+def delete_amenities(amenity_id):
+    amenities = storage.get(Amenity, amenity_id)
     if amenities is None:
         abort(404)
     storage.delete(amenities)
@@ -45,9 +45,9 @@ def create_amenities():
     return jsonify(new_amenities.to_dict()), 201
 
 
-@amenities_bp.route('/<amenities_id>', methods=['PUT'], strict_slashes=False)
-def update_amenities(amenities_id):
-    amenities = storage.get(Amenity, amenities_id)
+@amenities_bp.route('/<amenity_id>', methods=['PUT'], strict_slashes=False)
+def update_amenities(amenity_id):
+    amenities = storage.get(Amenity, amenity_id)
     if amenities is None:
         abort(404)
     data = request.get_json()
