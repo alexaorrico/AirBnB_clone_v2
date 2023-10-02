@@ -1,24 +1,15 @@
-#!/usr/bin/python3xx
+#!/usr/bin/python3
+
 '''api status'''
-import models
-from models import storage
-from models.base_model import BaseModel
-from flask import jsonify
+from flask import Flask, jsonify
 from api.v1.views import app_views
 
+app = Flask(__name__)
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def returnstuff():
     '''return stuff'''
     return jsonify(status='OK')
 
-
-@app_views.route('/stats', strict_slashes=False)
-def stuff():
-    '''JSON Responses'''
-    todos = {'states': State, 'users': User,
-            'amenities': Amenity, 'cities': City,
-            'places': Place, 'reviews': Review}
-    for key in todos:
-        todos[key] = storage.count(todos[key])
-    return jsonify(todos)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
