@@ -2,6 +2,7 @@
 """
 route for handling Amenity objects and operations
 """
+
 from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
 from models.amenity import Amenity
@@ -13,6 +14,7 @@ def amenity_get_all():
     retrieves all Amenity objects
     :return: json of all states
     """
+
     am_list = []
     am_obj = storage.all("Amenity")
     for obj in am_obj.values():
@@ -27,6 +29,7 @@ def amenity_create():
     create amenity route
     :return: newly created amenity obj
     """
+
     am_json = request.get_json(silent=True)
     if am_json is None:
         abort(400, 'Not a JSON')
@@ -66,6 +69,7 @@ def amenity_put(amenity_id):
     :param amenity_id: amenity object ID
     :return: amenity object and 200 on success, or 400 or 404 on failure
     """
+
     am_json = request.get_json(silent=True)
     if am_json is None:
         abort(400, 'Not a JSON')
