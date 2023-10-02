@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""Index page"""
-
+"""index page"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -23,4 +22,4 @@ def get_stats():
         "states": storage.count("State"),
         "users": storage.count("User")
     }
-    return jsonify(stats), 200
+    return jsonify(stats)
