@@ -26,7 +26,7 @@ def amenities_no_id(amenity_id=None):
         Amenity = CNC.get('Amenity')
         new_object = Amenity(**req_json)
         new_object.save()
-        return jsonify(new_object.to_json()), 201
+        return jsonify(new_object.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'],
@@ -35,7 +35,7 @@ def amenities_with_id(amenity_id=None):
     """
         amenities route that handles http requests with ID given
     """
-    
+
     amenity_obj = storage.get('Amenity', amenity_id)
     if amenity_obj is None:
         abort(404, 'Not found')
