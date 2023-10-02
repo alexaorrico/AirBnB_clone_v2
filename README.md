@@ -19,11 +19,11 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [License](#license)
 
 ## Environment
-This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+This project is interpreted/tested on Ubuntu 20.04 LTS using python3 (version 3.4.3)
 
 ## Installation
-* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
+* Clone this repository: `git clone "https://github.com/0rangefist/AirBnB_clone_v3.git"`
+* Access AirBnb directory: `cd AirBnB_clone_v3`
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
@@ -54,12 +54,21 @@ Classes inherited from Base Model:
 * [state.py](/models/state.py)
 * [user.py](/models/user.py)
 
-#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
+#### `/models/engine` directory contains `FileStorage` class that handles JSON serialization and deserialization :
 [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * ` def reload(self)` -  deserializes the JSON file to __objects
+* `close(self)` - wrapper for reload() method, called to set storage state to last saved state from JSON file.
+
+#### `/models/engine` directory contains the `DBStorage` class, which handles database interactions with a MySQL database:
+[db_storage.py](/models/engine/db_storage.py) - gets and saves instances to and from a relational database
+* `all(self)` - returns the dictionary of objects from the database
+* `new(self, obj)` - adds a new object to the database session
+* `save(self)` - commits changes to the database session, persisting them in the database
+* `reload(self)` - reloads data from the database, creating necessary database tables if they don't exist
+* `close(self)` - closes the current database session
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes

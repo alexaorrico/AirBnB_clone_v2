@@ -8,19 +8,101 @@ import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 import json
-import os
+from os import getenv
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
+
+
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+    @classmethod
+    def setUpClass(cls):
+        """Set up the test environment"""
+        cls.db_engine = create_engine('sqlite:///:memory:')
+        cls.Session = sessionmaker(bind=cls.db_engine)
+        cls.db_session = cls.Session()
+        Base.metadata.create_all(bind=cls.db_engine)
+        cls.storage = DBStorage()
+        cls.storage.reload()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Clean up the test environment"""
+        cls.db_session.close()
+        Base.metadata.drop_all(bind=cls.db_engine)
+
+    def setUp(self):
+        """Start a new transaction for each test"""
+        self.transaction = self.db_session.begin_nested()
+        self.storage.reload()
+
+    def tearDown(self):
+        """Roll back the transaction after each test"""
+        self.transaction.rollback()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_returns_dict(self):
+        """Test that all returns a dictionary"""
+        self.assertIs(type(models.storage.all()), dict)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_new(self):
+        """Test that new adds an object to the database"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_save(self):
+        """Test that save properly saves objects to database"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get method retrieves an object from the database"""
+        state = State(name="California")
+
+        # Save state object to db
+        models.storage.new(state)
+        models.storage.save()
+
+        # Get object from the db
+        retrieved_state = models.storage.get(State, state.id)
+        self.assertEqual(state, retrieved_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count method returns total number of objects in db"""
+        state = State(name="California")
+        city1 = City(name="New York", state_id=state.id)
+        city2 = City(name="Miami", state_id=state.id)
+
+        # Save the objects to the database
+        models.storage.new(state)
+        models.storage.new(city1)
+        models.storage.new(city2)
+        models.storage.save()
+
+        # Get City object count in the db
+        city_count = models.storage.count(City)
+        self.assertEqual(city_count, 2)
+
+        # Get total object count in the db
+        total_count = models.storage.count()
+        self.assertEqual(total_count, len(models.storage.all()))
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -66,23 +148,3 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
-
-
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
