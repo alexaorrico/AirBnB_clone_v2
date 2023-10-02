@@ -116,7 +116,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """ 
+        """
             Unit tests for the get method in the module db_storage
         """
         # start a database engine
@@ -137,7 +137,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """ 
+        """
             test for objects count
         """
         # start a database engine
