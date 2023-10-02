@@ -6,13 +6,12 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states", methods=["GET", "POST"])
+@app_views.route("/states", methods=["GET", "POST"], strict_slashes=False)
 def states():
     """Returns a json of all states in the database"""
     if request.method == "GET":
         allstates = storage.all("State").values()
         return jsonify([state.to_dict() for state in allstates])
-
     data = request.get_json(silent=True)
     if data is None:
         return "Not a JSON", 400
@@ -23,7 +22,8 @@ def states():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
+@app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"],
+                 strict_slashes=False)
 def states_id(state_id):
     """Returns a json of specific states
        GET::
