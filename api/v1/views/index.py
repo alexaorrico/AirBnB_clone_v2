@@ -2,26 +2,22 @@
 '''API Stats'''
 
 from flask import Flask, jsonify
-from api.v1.views import app_views
 from models import storage
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
+from api.v1.views import app_views
+
+app = Flask(__name__)
 
 @app_views.route('/stats', methods=['GET'])
 def get_stats():
     '''Get the count of each object type'''
-    count_dict = {}
-    
-    object_classes = ["Amenity", "City", "Place", "Review", "State", "User"]
-    
-    for class_name in object_classes:
-        count = storage.count(class_name)
-        count_dict[class_name.lower() + 's'] = count
-    
+    count_dict = {
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
+    }
     return jsonify(count_dict)
 
 if __name__ == '__main__':
