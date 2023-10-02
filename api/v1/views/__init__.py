@@ -1,9 +1,13 @@
 #!/usr/bin/python3
-"""Initialize Blueprint views"""
+"""Initializing Blueprint views snops"""
+
+"""import blueprint class from flask"""
 from flask import Blueprint
 
+"""create blueprint objects"""
 app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
 
+"""imports for other views"""
 from api.v1.views.index import *
 from api.v1.views.amenities import *
 from api.v1.views.cities import *
