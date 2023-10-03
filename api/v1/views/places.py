@@ -4,7 +4,7 @@ The placess module
 """
 from models import storage
 from flask import Blueprint, jsonify, request, abort
-from models.city import City
+from models.place import Place
 
 places_bp = Blueprint('placess', __name__, url_prefix='/api/v1/places')
 
@@ -54,7 +54,7 @@ def update_places(places_id):
     if not data:
         abort(400, description='Not a JSON')
     for key, value in data.items():
-        if key not in ['id', 'state_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'city_id', 'created_at', 'updated_at']:
             setattr(places, key, value)
     places.save()
     return jsonify(places.to_dict())
