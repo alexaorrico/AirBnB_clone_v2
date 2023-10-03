@@ -9,7 +9,7 @@ from models.amenity import Amenity
 
 def get_amenity_or_abort(amenity_id):
     """Retrieve an object by ID or abort with 404 if not found"""
-    amenity = storage.get(Amenity, amenity_id)
+    amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
     return amenity

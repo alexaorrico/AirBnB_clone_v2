@@ -9,7 +9,7 @@ from models.user import User
 
 def get_user_or_abort(user_id):
     """Retrieve a User object by ID or abort with 404 if not found"""
-    user = storage.get(User, user_id)
+    user = storage.get("User", user_id)
     if user is None:
         abort(404)
     return user

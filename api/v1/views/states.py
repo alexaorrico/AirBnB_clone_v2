@@ -8,6 +8,7 @@ from models import storage
 from models.state import State
 
 
+<<<<<<< HEAD
 @app_views.route("/states", methods=['GET'],
                  strict_slashes=False)
 def GET_all_State():

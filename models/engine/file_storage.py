@@ -72,7 +72,7 @@ class FileStorage:
     def get(self, cls, id):
         """retrieves an object"""
         if cls and id:
-            obj = classes[cls] if isinstance(cls, str) else cls
+            obj = classes[cls]
             objs = self.all(obj)
             for ob in objs:
                 if ob.id == id:
