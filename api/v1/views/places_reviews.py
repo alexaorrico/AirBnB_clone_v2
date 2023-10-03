@@ -60,7 +60,7 @@ def create_review_object(place_id):
         return jsonify({"error": "Not a JSON"}), 400
     if "user_id" not in data:
         return jsonify({"error": "Missing user_id"}), 400
-    if ("user_id" in data and storage.get(User, data['user_id']) is None):
+    if ("user_id" in data and storage.get(User, data.get("user_id")) is None):
         abort(404)
     if "text" not in data:
         return jsonify({"error": "Missing text"}), 400
