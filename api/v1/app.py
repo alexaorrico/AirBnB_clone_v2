@@ -1,8 +1,14 @@
 #!/usr/bin/python3
 
-from flask import Flask, jsonify
 import os
+import sys
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+sys.path.append(project_root)
+
+
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 
