@@ -5,7 +5,8 @@ Create the logic for the cities endpoint
 from models import storage
 from models.city import City
 from . import app_views
-from flask import abort, jsonify, make_response, request
+
+from flask import abort, make_response, jsonify, request
 
 
 @app_views.route('states/<state_id>/cities', methods=['GET'])
@@ -80,4 +81,5 @@ def update_city(city_id):
                 if key not in ['id', 'state_id', 'created_at', 'updated_at']:
                     city.key = val
             return make_response(jsonify(city.to_dict()), 200)
+
     abort(404)

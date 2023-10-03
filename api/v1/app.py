@@ -15,6 +15,7 @@ app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
 
+
 @app.teardown_appcontext
 def tear_down(self):
     """ Calls storage.close()
@@ -27,6 +28,7 @@ def page_not_found_err(error):
     """ Return 404 not found error page
     """
     return jsonify(error='Not found'), 404
+
 
 
 if __name__ == '__main__':
