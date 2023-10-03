@@ -38,7 +38,7 @@ class User(BaseModel, Base):
                 User.__set_password(self, pwd)
         super().__init__(*args, **kwargs)
 
-        def __set_password(self, pwd):
+    def __set_password(self, pwd):
         """
             custom setter: encrypts password to MD5
         """
