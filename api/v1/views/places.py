@@ -64,7 +64,8 @@ def create_place(city_id):
         abort(404)
     data['city_id'] = city_id
     new_place = Place(**data)
-    new_place.save()
+    storage.new(new_place)
+    storage.save()
     return jsonify(new_place.to_dict()), 201
 
 
@@ -79,5 +80,5 @@ def update_place(place_id):
     for key, value in data.items():
         if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             setattr(place, key, value)
-    place.save()
-    return jsonify(place.to_dict())
+    storage.save()
+    return jsonify(place.to_dict()), 200
