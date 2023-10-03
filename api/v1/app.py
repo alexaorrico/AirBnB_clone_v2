@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
-from models import storage
-from api.v1.views import app_views
 from flask import Flask, jsonify
 import os
+
+from api.v1.views import app_views
+from models import storage
 
 
 app = Flask(__name__)
