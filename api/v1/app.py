@@ -2,7 +2,7 @@
 """The `app` module implements a Flask application"""
 
 
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -19,6 +19,12 @@ def teardown_appcontext(exception):
     closes storage connections
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def _handler_api(exception):
+    """Hanldes 404 page not found error"""
+    return make_response(jsonify(error="Not found"), 404)
 
 
 if __name__ == "__main__":
