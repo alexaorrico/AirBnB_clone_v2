@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
-@app.teardown_appcontext()
+@app.teardown_appcontext
 def teardown_appcontext(exception):
     """
     This function is a Flask decorator that is used to register a function
