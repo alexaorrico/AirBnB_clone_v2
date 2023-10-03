@@ -2,7 +2,7 @@
 """ route amenities """
 from flask import request, abort, jsonify
 from api.v1.app import *
-from api.v1.views import *
+from api.v1.views import app_views
 from models import storage, Amenity
 
 
