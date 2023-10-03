@@ -9,7 +9,7 @@ from models.state import State
 
 def get_state_or_abort(state_id):
     """Retrieve a State object by ID or abort with 404 if not found"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
     return state
