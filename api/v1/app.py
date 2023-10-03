@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""The `app` module implements a Flask application"""
+"""The `app` module implements a Flask application for HBNB"""
 
 
 from flask import Flask, jsonify, make_response
