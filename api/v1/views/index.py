@@ -22,9 +22,7 @@ def stats():
             "states": "State",
             "users": "User"
             }
-
     objs = {}
-
     for key, value in classes.items():
         count = storage.count(value)
         objs[key] = count
