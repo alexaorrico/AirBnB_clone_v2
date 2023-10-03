@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""This module has the blueprints"""
+"""
+This module has the blueprints
+its also runs the Flask app
+"""
 
 from flask import Flask, jsonify, make_response
 from models import storage
