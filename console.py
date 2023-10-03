@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-""" console """
-
+""" console file"""
 import cmd
 from datetime import datetime
 import models
@@ -19,22 +18,27 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class HBNBCommand(cmd.Cmd):
     """ HBNH console """
+
     prompt = '(hbnb) '
 
     def do_EOF(self, arg):
         """Exits console"""
+
         return True
 
     def emptyline(self):
         """ overwriting the emptyline method """
+
         return False
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
+
         return True
 
     def _key_value_parser(self, args):
         """creates a dictionary from a list of strings"""
+
         new_dict = {}
         for arg in args:
             if "=" in arg:
@@ -56,6 +60,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of a class"""
+
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -71,6 +76,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints an instance as a string based on the class and id"""
+
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -89,6 +95,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class and id"""
+
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -107,6 +114,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints string representations of instances"""
+
         args = shlex.split(arg)
         obj_list = []
         if len(args) == 0:
@@ -124,6 +132,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
+
         args = shlex.split(arg)
         integers = ["number_rooms", "number_bathrooms", "max_guest",
                     "price_by_night"]
@@ -160,5 +169,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+
 if __name__ == '__main__':
+    """app begin """
+
     HBNBCommand().cmdloop()

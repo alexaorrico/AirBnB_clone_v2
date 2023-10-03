@@ -7,6 +7,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
+
 if models.storage_t == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id', String(60),
@@ -21,6 +22,7 @@ if models.storage_t == 'db':
 
 class Place(BaseModel, Base):
     """Representation of Place """
+
     if models.storage_t == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
@@ -52,12 +54,14 @@ class Place(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes Place"""
+
         super().__init__(*args, **kwargs)
 
     if models.storage_t != 'db':
         @property
         def reviews(self):
             """getter attribute returns the list of Review instances"""
+
             from models.review import Review
             review_list = []
             all_reviews = models.storage.all(Review)
@@ -69,6 +73,7 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """getter attribute returns the list of Amenity instances"""
+
             from models.amenity import Amenity
             amenity_list = []
             all_amenities = models.storage.all(Amenity)

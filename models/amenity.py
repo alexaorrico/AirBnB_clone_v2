@@ -10,6 +10,7 @@ from sqlalchemy.orm import relationship
 
 class Amenity(BaseModel, Base):
     """Representation of Amenity """
+
     if models.storage_t == 'db':
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
@@ -18,4 +19,5 @@ class Amenity(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         """initializes Amenity"""
+
         super().__init__(*args, **kwargs)
