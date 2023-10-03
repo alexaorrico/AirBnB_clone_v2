@@ -18,10 +18,9 @@ def get_places(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    places_list = []
-    places = city.places
-    for place in places:
-        places_list.append(place.to_dict())
+
+    places_list = [place.to_dict() for place in city.places]
+
     return jsonify(places_list)
 
 
@@ -51,7 +50,7 @@ def post_places(city_id):
     """create a place for a particular ID """
     city = storage.get(City, city_id)
     if city is None:
-        abort(400)
+        abort(404)
     json_request = request.get_json()
     if not json_request:
         abort(400, 'Not a JSON')
