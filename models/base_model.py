@@ -73,7 +73,7 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if pwd_chk == False and self.__class__.__name__ == "User":
+        if pwd_chk is False and self.__class__.__name__ == "User":
             new_dict.pop("password", None)
         return new_dict
 
