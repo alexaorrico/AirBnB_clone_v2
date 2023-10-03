@@ -1,15 +1,24 @@
 #!/usr/bin/python3
 """create blueprint"""
 from flask import Blueprint
+import os
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
-# Import views from submodules explicitly
-from api.v1.views.index import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
-from api.v1.views.amenities import *
-from api.v1.views.users import *
-from api.v1.views.places import *
-from api.v1.views.places_reviews import *
-from api.v1.views.places_amenities import *
+# Dynamically import views from submodules
+modules = [
+    'index',
+    'states',
+    'cities',
+    'amenities',
+    'users',
+    'places',
+    'places_reviews',
+    'places_amenities'
+]
+
+for module in modules:
+    try:
+        __import__('api.v1.views.' + module)
+    except ImportError:
+        pass
