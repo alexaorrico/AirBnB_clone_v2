@@ -18,18 +18,20 @@ app.register_blueprint(amenities_bp)
 app.register_blueprint(users_bp)
 
 
-@app.errorhandler(404)
-def handle_error(error):
-    """ handles 404 error"""
-    return make_response(jsonify({'error': 'Not found'}), 404)
-
-
 @app.teardown_appcontext
 def teardown(exception):
     """
     calls the close() method
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_error(error):
+    """
+    handles 404 error
+    """
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == "__main__":
