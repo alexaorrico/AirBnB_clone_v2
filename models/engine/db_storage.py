@@ -82,7 +82,7 @@ class DBStorage:
     def get(self, cls, id):
         """retrieves an object"""
         if cls and id:
-            obj = f"{cls}.{id}"
+            obj = "{cls}.{id}".format(cls, id)
             objs = self.all(cls)
             return objs.get(obj)
         return None
