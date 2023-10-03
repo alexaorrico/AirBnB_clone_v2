@@ -1,82 +1,92 @@
 #!/usr/bin/python3
-"""States views"""
-from flask import jsonify, make_response, abort, request
+"""users"""
 from api.v1.views import app_views
+from flask import jsonify, abort, request
 from models import storage
 from models.user import User
+from datetime import datetime
+import uuid
 
 
-@app_views.route('/users',
-                 strict_slashes=False,
-                 methods=['GET', 'POST'])
-def view_users():
-    """Returns the list of all User objects"""
-    if request.method == 'POST':
-        data = request.get_json()
-
-        if isinstance(data, dict):
-            pass
-        else:
-            return jsonify({"error": "Not a JSON"}), 400
-
-        if 'id' in data.keys():
-            data.pop("id")
-        if 'created_at' in data.keys():
-            data.pop("created_at")
-        if 'updated_at' in data.keys():
-            data.pop("updated_at")
-
-        if 'email' not in data.keys():
-            return jsonify({'error': 'Missing email'}), 400
-        if 'password' not in data.keys():
-            return jsonify({'error': 'Missing password'}), 400
-
-        obj = User(**data)
-
-        storage.new(obj)
-        storage.save()
-        return jsonify(obj.to_dict()), 201
-
-    if request.method == 'GET':
-        users = storage.all("User")
-        list = []
-        for name, user in users.items():
-            list.append(user.to_dict())
-        return jsonify(list)
+@app_views.route('/users/', methods=['GET'])
+@app_views.route('/users', methods=['GET'])
+def list_users():
+    '''Retrieves a list of all User objects'''
+    list_users = [obj.to_dict() for obj in storage.all("User").values()]
+    return jsonify(list_users)
 
 
-@app_views.route('/users/<id>',
-                 strict_slashes=False,
-                 methods=['GET', 'DELETE', 'PUT'])
-def view_user_id(id):
-    """Returns a list of all User objects, or delete an
-    object if a given id
-    """
-    user = storage.get(User, id)
+@app_views.route('/users/<user_id>', methods=['GET'])
+def get_user(user_id):
+    '''Retrieves a User object'''
+    all_users = storage.all("User").values()
+    user_obj = [obj.to_dict() for obj in all_users if obj.id == user_id]
+    if user_obj == []:
+        abort(404)
+    return jsonify(user_obj[0])
 
-    if user is None:
-        return abort(404)
 
-    if request.method == 'GET':
+@app_views.route('/users/<user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    '''Deletes a User object'''
+    all_users = storage.all("User").values()
+    user_obj = [obj.to_dict() for obj in all_users if obj.id == user_id]
+    if user_obj == []:
+        abort(404)
+    user_obj.remove(user_obj[0])
+    for obj in all_users:
+        if obj.id == user_id:
+            storage.delete(obj)
+            storage.save()
+    return jsonify({}), 200
 
-        return jsonify(user.to_dict())
 
-    if request.method == 'DELETE':
+@app_views.route('/users/', methods=['POST'])
+def create_user():
+    '''Creates a User'''
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    if 'email' not in request.get_json():
+        abort(400, 'Missing name')
+    if 'password' not in request.get_json():
+        abort(400, 'Missing name')
+    users = []
+    new_user = User(email=request.json['email'],
+                    password=request.json['password'])
+    storage.new(new_user)
+    storage.save()
+    users.append(new_user.to_dict())
+    return jsonify(users[0]), 201
 
-        storage.delete(user)
-        storage.save()
-        return jsonify({}), 200
 
-    if request.method == 'PUT':
-        data = request.get_json()
-        if isinstance(data, dict):
-            pass
-        else:
-            return jsonify({"error": "Not a JSON"}), 400
-
-        for key, value in data.items():
-            if key not in ["id", "email", "created_at", "updated_at"]:
-                setattr(user, key, value)
-
-        storage.save()
-        return jsonify(user.to_dict())
+@app_views.route('/users/<user_id>', methods=['PUT'])
+def updates_user(user_id):
+    '''Updates a User object'''
+    all_users = storage.all("User").values()
+    user_obj = [obj.to_dict() for obj in all_users if obj.id == user_id]
+    if user_obj == []:
+        abort(404)
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    try:
+        user_obj[0]['first_name'] = request.json['first_name']
+    except:
+        pass
+    try:
+        user_obj[0]['last_name'] = request.json['last_name']
+    except:
+        pass
+    for obj in all_users:
+        if obj.id == user_id:
+            try:
+                if request.json['first_name'] is not None:
+                    obj.first_name = request.json['first_name']
+            except:
+                pass
+            try:
+                if request.json['last_name'] is not None:
+                    obj.last_name = request.json['last_name']
+            except:
+                pass
+    storage.save()
+    return jsonify(user_obj[0]), 200
