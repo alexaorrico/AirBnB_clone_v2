@@ -51,17 +51,16 @@ def delete_review_object(review_id):
 def create_review_object(place_id):
     """Creates a Review object returns the created object
     """
-    place = storage.get(Place, place_id)
-    if place is None:
+    if not storage.get(Place, place_id):
         abort(404)
 
     data = request.get_json()
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
+    if ("user_id" in data and not storage.get(User, data.get("user_id"))):
+        abort(404)
     if "user_id" not in data:
         return jsonify({"error": "Missing user_id"}), 400
-    if ("user_id" in data and storage.get(User, data.get("user_id")) is None):
-        abort(404)
     if "text" not in data:
         return jsonify({"error": "Missing text"}), 400
     review = Review(**data)
