@@ -6,7 +6,7 @@ The Flask application instance is named app. It is configured to register
 the blueprint app_views and close the storage engine after each request.
 """
 
-from flask import Flask, jsonify
+from flask import Flask,
 from flask_cors import CORS
 from models import storage
 from models.state import State
