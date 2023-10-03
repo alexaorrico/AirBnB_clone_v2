@@ -29,7 +29,7 @@ def get_state_cities(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    
+
     cities_list = []
 
     for city in state.cities:
@@ -43,27 +43,21 @@ def post_state_cities(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    
-    data = request.get_json()  
-    
+
+    data = request.get_json()
+
     if not data:
         abort(400, description='Not a JSON')
-    
+
     if 'name' not in data:
-        abort(400, description='Missing name') 
-    
+        abort(400, description='Missing name')
+
     data['state_id'] = state_id
-    
+
     new_cities = City(**data)
     new_cities.save()
-    
-    return jsonify(new_cities.to_dict()), 201
 
-def get_state(state_id):
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    return jsonify(state.to_dict())
+    return jsonify(new_cities.to_dict()), 201
 
 
 @state_bp.route('/<state_id>', methods=['DELETE'], strict_slashes=False)
