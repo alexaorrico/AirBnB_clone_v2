@@ -4,7 +4,7 @@ The placess module
 """
 from models import storage
 from flask import Blueprint, jsonify, request, abort
-from models.city import Place
+from models.city import City
 
 places_bp = Blueprint('placess', __name__, url_prefix='/api/v1/places')
 
