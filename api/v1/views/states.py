@@ -1,71 +1,73 @@
 #!/usr/bin/python3
-"""Create a new view for State objects that handles
-all default RESTFul API actions"""
-from models import storage
-from models.state import State
+""" route/states """
+
 from api.v1.views import app_views
+from flask import abort, jsonify
+from models import storage
 from flask import jsonify, abort, request
-from flasgger.utils import swag_from
+from models.state import State
 
 
+#  Add views to app_views using the route decorator
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/state/get_state.yml', methods=['GET'])
-def get_states():
-    dict_ = []
-    for val in storage.all(State).values():
-        dict_.append(val.to_dict())
-    return jsonify(dict_)
+def all_states():
+    """list of all State objects, use GET method"""
+    data = storage.all(State).values()
+    result = [obj.to_dict() for obj in data]
+
+    return (jsonify(result))
 
 
-@app_views.route('/states/<path:state_id>')
-@swag_from('documentation/state/get_state.yml', methods=['GET'])
-def get_state(state_id):
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+def states(state_id):
+    """all object state"""
     state = storage.get(State, state_id)
-    if state is None:
+    if (state is None):
         abort(404)
-    return jsonify(state.to_dict())
+    result = state.to_dict()
+    return jsonify(result)
 
 
-@app_views.route('/states/<path:state_id>', methods=['DELETE'],
-                 strict_slashes=False)
-@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
-def delete_state(state_id):
-    if state_id is None:
+@app_views.route('/states/<path:state_id>', methods=['DELETE'])
+def delete(state_id):
+    """Deletes a State object:: DELETE /api/v1/states/<state_id>"""
+    delete_state = storage.get(State, state_id)
+    if delete_state is None:
         abort(404)
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    state.delete()
-    storage.save()
-    return jsonify({})
+    else:
+        storage.delete(delete_state)
+        storage.save()
+        return (jsonify({}), 200)
 
 
-@app_views.route('/states', methods=['POST'],
-                 strict_slashes=False)
-@swag_from('documentation/state/post_state.yml', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
-    res = request.get_json()
-    if type(res) != dict:
-        return abort(400, {'message': 'Not a JSON'})
-    if 'name' not in res:
-        return abort(400, {'message': 'Missing name'})
-    new_state = State(**res)
-    new_state.save()
-    return jsonify(new_state.to_dict()), 201
+    """post a new state"""
+    posted = request.get_json()
+    if posted is None:
+        return (jsonify({'error': 'Not a JSON'}), 400)
+    if 'name' not in posted:
+        return (jsonify({'error': 'Mising name'}), 400)
+    new_obj = State(**posted)
+    new_obj.save()
+    return jsonify(new_obj.to_dict()), 201
 
 
-@app_views.route('/states/<path:state_id>', methods=['PUT'],
-                 strict_slashes=False)
-@swag_from('documentation/state/put_state.yml', methods=['PUT'])
-def put_state(state_id):
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def update_states_id(state_id):
+    ''' Update a State object, use PUT http method '''
+    body = request.get_json()
+    if body is None:
+        return (jsonify({'error': 'Not a JSON'}), 400)
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    res = request.get_json()
-    if type(res) != dict:
-        return abort(400, {'message': 'Not a JSON'})
-    for key, value in res.items():
-        if key not in ["id", "state_id", "created_at", "updated_at"]:
-            setattr(state, key, value)
-    storage.save()
-    return jsonify(state.to_dict()), 200
+    else:
+        ignore_key = ['id', 'created_at', 'updated_at']
+        for key, value in body.items():
+            if key not in ignore_key:
+                setattr(state, key, value)
+            else:
+                pass
+        state.save()
+        return (jsonify(state.to_dict()), 200)

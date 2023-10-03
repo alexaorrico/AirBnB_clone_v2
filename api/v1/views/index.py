@@ -1,31 +1,29 @@
 #!/usr/bin/python3
-"""This module implement a rule responsible for returning the
-    status of the application"""
-from flask import jsonify
-import models
+"""Define routes for blueprint    
+"""
+
 from api.v1.views import app_views
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
+from flask import jsonify
+from models import storage
 
 
-@app_views.route("/status", strict_slashes=False)
-def view_status():
-    """View function that return a json message"""
+#  Add views to app_views  using the route decorator
+@app_views.route('/status')
+def status():
+    """ Returns status application """
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats", strict_slashes=False)
-def view_stats():
-    """Veiw function that retrieves the number of each object by type"""
-    return jsonify({
-        "amenities": models.storage.count(Amenity),
-        "cities": models.storage.count(City),
-        "places": models.storage.count(Place),
-        "reviews": models.storage.count(Review),
-        "states": models.storage.count(State),
-        "users": models.storage.count(User)
-    })
+@app_views.route('/stats')
+def stats():
+    """ Method stast """
+    return jsonify(
+        {
+            "amenities": storage.count("Amenity"),
+            "cities": storage.count("City"),
+            "places": storage.count("Place"),
+            "reviews": storage.count("Review"),
+            "states": storage.count("State"),
+            "users": storage.count("User")
+        }
+    )
