@@ -76,7 +76,7 @@ class FileStorage:
            cls: class
            id: string representing the object ID
         """
-        key = f"{cls.__name__}.{id}"
+        key = "{}.{}".format({cls.__name__}, id)
         objs = self.all()
         if key in objs:
             return objs[key]
