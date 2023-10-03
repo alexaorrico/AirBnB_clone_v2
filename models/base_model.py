@@ -54,6 +54,9 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = self.created_at
+        if 'password' in kwargs:
+            kwargs['password'] = hashlib.md5(
+                    kwargs['password'].encode()).hexdigest()
 
     def __str__(self):
         """String representation of the BaseModel class"""
@@ -69,6 +72,7 @@ class BaseModel:
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
+        new_dict.pop('password', None)
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
