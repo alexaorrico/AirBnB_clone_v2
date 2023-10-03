@@ -10,6 +10,12 @@ from models.user import User
 from models.city import City
 
 
+@app_views.route("/places", methods=['GET'], strict_slashes=False)
+def get_places():
+    places = [places.to_dict() for places in storage.all(Place).values()]
+    return jsonify(places)
+
+
 @app_views.route("/cities/<city_id>/places", methods=['GET'],
                  strict_slashes=False)
 def get_places_by_city(city_id):
