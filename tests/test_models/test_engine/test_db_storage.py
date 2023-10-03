@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
+from models.state import state
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -89,12 +91,28 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
-        """Test that (get) properly returns requested object"""
-        user = User(name="User1")
-        user.save()
-        self.assertEqual(models.storage.get("User", user.id), user)
+        """Test that properly returns a requested object"""
+        for i in range(10):
+            new_state = State({"name": 'Tanzania'})
+            storage.new(new_state)
+        new_state.save()
+
+        all_states = storage.all(State)
+        key = next(iter(all_states))
+        only_id = key.split('.')[0]
+
+        self.assertEqual(all_states[key], storage.get(State, only_id),
+                         'object doesn\'t match')
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Test that properly counts every objects"""
-        self.assertEqual(len(models.storage.all()), models.storage.count())
+        """Test that properly counts all object"""
+        for i in range(10):
+            new_state = State({"name": 'Kenya'})
+            storage.new(new_state)
+        new_state.save()
+
+        quantity_states = storage.all(State)
+
+        self.assertEqual(quantity_states, storage.count(State),
+                         'state doesn\'t match')
