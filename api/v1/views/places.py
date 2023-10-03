@@ -9,19 +9,8 @@ from models.place import Place
 places_bp = Blueprint('placess', __name__, url_prefix='/api/v1/places')
 
 
-@places_bp.route('/cities/<city_id>/places', strict_slashes=False)
-def get_places_by_city(city_id):
-    """Lists all places of a city"""
-    city = storage.get("City", city_id)
-    if city is None:
-        abort(404)
-    places = [place.to_dict() for place in city.places]
-    return jsonify(places)
-
-
 @places_bp.route('/', methods=['GET'], strict_slashes=False)
 def get_placess():
-    print(storage.all())
     placess = [places.to_dict() for places in storage.all(Place).values()]
     return jsonify(placess)
 
