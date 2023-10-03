@@ -30,6 +30,12 @@ def validate_json():
     if not data:
         abort(400, "Not a JSON")
     return data
+#!/usr/bin/python3
+"""
+This module defines API endpoints for Airbnb clone.
+It provides routes to retrieve status information and stats
+about various objects.
+"""
 
 
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False,
