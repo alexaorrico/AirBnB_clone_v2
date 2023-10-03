@@ -2,8 +2,8 @@
 """ Route Cities """
 from flask import request, abort, jsonify
 from api.v1.app import *
-from api.v1.views.index import *
-from models import storage, City
+from api.v1.views.index import app_views
+from models import storage, city, state
 
 
 def validate(obj, ref_id):

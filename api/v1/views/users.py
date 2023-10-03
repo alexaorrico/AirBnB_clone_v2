@@ -3,7 +3,7 @@
 from flask import jsonify, abort, request
 from api.v1.app import *
 from api.v1.views import *
-from models import storage, User
+from models import storage, user
 
 def validate(user_id):
     """ validate if query have id to reference """
