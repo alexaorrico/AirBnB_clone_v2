@@ -10,3 +10,7 @@ MarkupSafe==2.1.3
 SQLAlchemy==2.0.21
 typing_extensions==4.8.0
 Werkzeug==2.3.7
+
+requests~=2.7.0
+pep8~=1.7.1
+fabric~=3.2.2
