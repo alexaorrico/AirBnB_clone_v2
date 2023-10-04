@@ -3,7 +3,7 @@
 Contains the FileStorage class
 """
 
-import json, models
+import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -73,28 +73,15 @@ class FileStorage:
         Returns the object based on the class and its ID, or `None` if not
         found.
         """
-        if cls not in classes.values():
-            return None
-
-        all_class = models.storage.all(cls)
-        for value in all_class.values():
-            if (value.id == id):
-                return value
-
+        objects = self.all(cls)
+        for key in objects.keys():
+            if key.find(id) != -1:
+                return objects[key]
         return None
-    
 
     def count(self, cls=None):
         """
         Returns the number of objects in storage matching the given class,
         or if no class is passed, the total count of all objects
         """
-        all_class = classes.values()
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
-        else:
-            count = len(models.storage.all(cls).values())
-
-        return count
+        return len(self.all(cls))
