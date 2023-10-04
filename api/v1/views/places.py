@@ -5,6 +5,7 @@ from api.v1.views import app_views, storage
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.state import State
 
 
 @app_views.route('/cities/<city_id>/places',
@@ -84,3 +85,50 @@ def update_place(place_id):
         storage.save()
         return make_response(jsonify(place.to_dict()), 200)
     return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+
+@app_views.route("/places_search",
+                 methods=["POST"],
+                 strict_slashes=False)
+def places_search():
+    """Search for places based on JSON request data."""
+    try:
+        data = request.get_json()
+        if data is None:
+            abort(400, "Not a JSON")
+
+        states = data.get("states", [])
+        cities = data.get("cities", [])
+        amenities = data.get("amenities", [])
+
+        places = []
+
+        if not states and not cities and not amenities:
+            places = storage.all(Place).values()
+        else:
+            if states:
+                states_places = []
+                for state_id in states:
+                    state = storage.get(State, state_id)
+                    if state:
+                        states_places.extend(state.cities)
+                for city in states_places:
+                    if city.id not in cities:
+                        cities.append(city.id)
+
+            for city_id in cities:
+                city = storage.get(City, city_id)
+                if city:
+                    places.extend(city.places)
+
+            if amenities:
+                amenities_set = set(amenities)
+                places = [place for place in places
+                          if all(amenity.id in amenities_set
+                                 for amenity in place.amenities)]
+
+        result = [place.to_dict() for place in places]
+        return jsonify(result)
+
+    except Exception as e:
+        abort(400, "Not a JSON")
