@@ -17,7 +17,6 @@ def status():
     """
     Returns a JSON response with the status message "OK"
     """
-    pdp
     return jsonify({"status": "OK"})
 
 
