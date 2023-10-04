@@ -3,12 +3,13 @@
 
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, redirect, url_for
 from flask_cors import CORS
 from models import storage
 from os import environ
 from werkzeug.exceptions import NotFound
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 

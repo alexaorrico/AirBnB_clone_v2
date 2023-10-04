@@ -3,7 +3,7 @@
 API actions"""
 
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect, url_for
 from models.place import Place
 from models.review import Review
 from models.user import User
@@ -70,7 +70,7 @@ def create_review_object(place_id):
     if not user_obj:
         abort(404)
     data['place_id'] = place_id
-    new_review = review.Review(**data)
+    new_review = Review(**data)
     new_review.save()
     return jsonify(new_review.to_dict()), 201
 
