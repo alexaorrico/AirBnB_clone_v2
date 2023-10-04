@@ -114,7 +114,7 @@ def search_places():
         place_list = [p.to_dict() for p in places]
         return jsonify(place_list)
 
-    place_set = []
+    place_set = set()
 
     if states:
         for state_id in states:
