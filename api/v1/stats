@@ -1,0 +1,17 @@
+from flask import Blueprint, jsonify
+from api.v1.views import app_views
+from models.engine import db_storage
+
+
+@app_views.route('/new_stats', methods=['GET'])
+def get_stats():
+    """Retrieves the number of each object by type."""
+    stats = {}
+
+    classes = [cls.__name__ for cls in db_storage.all().values()]
+
+    for cls_name in set(classes):
+        if cls_name != "BaseModel":
+            stats[cls_name] = db_storage.count(cls_name)
+
+    return jsonify(stats)
