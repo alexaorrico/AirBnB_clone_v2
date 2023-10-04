@@ -56,8 +56,8 @@ def create_review_object(place_id):
     content = request.get_json()
     if not obj:
         abort(404)
-    if not request.json:
-        return (jsonify("Not a JSON"), 400)
+    if not content:
+        return jsonify({"error": "Not a JSON"}), 400
     else:
         if "user_id" not in content.keys():
             return (jsonify("Missing user_id"), 400)
