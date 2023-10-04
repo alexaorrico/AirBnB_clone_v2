@@ -134,8 +134,8 @@ def search_places():
             place_set = storage.all(Place).values()
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
         place_set = [place for place in place_set
-                       if all([am in place.amenities
-                               for am in amenities_obj])]
+                     if all([am in place.amenities
+                             for am in amenities_obj])]
 
     places = []
     for p in place_set:
