@@ -17,19 +17,24 @@ def status():
     """
     Returns a JSON response with the status message "OK"
     """
+    pdp
     return jsonify({"status": "OK"})
 
 
 @app_views.route("/api/v1/stats", methods=["GET"], strict_slashes=False)
-def number_objects():
+def stats():
     """
     Returns the number of objects in each class in the storage.
 
     :return: JSON response containing the number of objects for each class.
     """
-    classes = [Amenity, City, Place, Review, State, User]
-    names = ["amenities", "cities", "places", "reviews", "states", "users"]
-
-    num_objs = {name: storage.count(cls) for name, cls in zip(names, classes)}
-
+    class_dict = {
+        "amenities": Amenity,
+        "cities": City,
+        "places": Place,
+        "reviews": Review,
+        "states": State,
+        "users": User,
+    }
+    num_objs = {name: storage.count(cls) for name, cls in class_dict.items()}
     return jsonify(num_objs)
