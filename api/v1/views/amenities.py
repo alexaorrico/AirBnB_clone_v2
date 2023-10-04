@@ -8,6 +8,7 @@ from models.amenity import Amenity
 from flask import jsonify, abort, request, make_response
 from sqlalchemy.exc import IntegrityError
 
+
 @app_views.route('/amenities',
                  methods=['GET'],
                  strict_slashes=False
