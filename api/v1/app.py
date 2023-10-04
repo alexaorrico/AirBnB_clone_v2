@@ -26,7 +26,7 @@ def handle_404(exception):
     Handles the 404 error in a Flask application.
 
     :param exception: The exception object that represents the 404 error.
-    return:response with the error message "Not found" and a 
+    return:response with the error message "Not found" and a
     status code of 404.
     """
     data = {"error": "Not found"}
