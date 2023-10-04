@@ -1,0 +1,146 @@
+EEEEEEEEEE
+======================================================================
+ERROR: test_console (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_console
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_console.py", line 8, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_amenity (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_amenity
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_amenity.py", line 11, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_base_model (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_base_model
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_base_model.py", line 6, in <module>
+    import pep8 as pycodestyle
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_city (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_city
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_city.py", line 11, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_engine.test_db_storage (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_engine.test_db_storage
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_engine/test_db_storage.py", line 90
+    @unittest.skipIf(models.storage_t != 'db'. "not testing db storage")
+                                               ^
+SyntaxError: invalid syntax
+
+
+======================================================================
+ERROR: test_models.test_engine.test_file_storage (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_engine.test_file_storage
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_engine/test_file_storage.py", line 19, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_place (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_place
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_place.py", line 11, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_review (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_review
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_review.py", line 11, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_state (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_state
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_state.py", line 11, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+======================================================================
+ERROR: test_models.test_user (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_models.test_user
+Traceback (most recent call last):
+  File "/usr/lib/python3.8/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.8/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/AirBnB_clone_v3/tests/test_models/test_user.py", line 11, in <module>
+    import pep8
+ModuleNotFoundError: No module named 'pep8'
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.001s
+
+FAILED (errors=10)
