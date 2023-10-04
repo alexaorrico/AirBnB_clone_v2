@@ -114,7 +114,7 @@ def search_places():
         place_list = [p.to_dict() for p in places]
         return jsonify(place_list)
 
-    place_set = set()
+    place_set = []
 
     if states:
         for state_id in states:
@@ -130,11 +130,17 @@ def search_places():
                 place_set.update(city.places)
 
     if amenities:
-        amenity_objs = [storage.get(Amenity, amenity_id)
-                        for amenity_id in amenities]
-        for place in place_set.copy():
-            if not all(amenity in place.amenities for amenity in amenity_objs):
-                place_set.remove(place)
+        if not place_set:
+            place_set = storage.all(Place).values()
+        amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
+        place_set = [place for place in place_set
+                       if all([am in place.amenities
+                               for am in amenities_obj])]
 
-    place_list = [place.to_dict() for place in place_set]
-    return jsonify(place_list)
+    places = []
+    for p in place_set:
+        d = p.to_dict()
+        d.pop('amenities', None)
+        places.append(d)
+
+    return jsonify(places)
