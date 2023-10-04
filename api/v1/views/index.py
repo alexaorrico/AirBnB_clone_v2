@@ -20,6 +20,16 @@ def status():
     return jsonify({"status": "OK"})
 
 
+class_dict = {
+    "amenities": Amenity,
+    "cities": City,
+    "places": Place,
+    "reviews": Review,
+    "states": State,
+    "users": User,
+}
+
+
 @app_views.route("/api/v1/stats", methods=["GET"], strict_slashes=False)
 def stats():
     """
@@ -27,13 +37,8 @@ def stats():
 
     :return: JSON response containing the number of objects for each class.
     """
-    class_dict = {
-        "amenities": Amenity,
-        "cities": City,
-        "places": Place,
-        "reviews": Review,
-        "states": State,
-        "users": User,
-    }
-    num_objs = {name: storage.count(cls) for name, cls in class_dict.items()}
+    num_objs = {}
+    for i in range(len(class_dict)):
+        num_objs[class_dict.keys[i]] = storage.count(class_dict.values[i])
+
     return jsonify(num_objs)
