@@ -5,7 +5,7 @@ from api.v1.views import app_views, storage
 from models.user import User
 
 
-@app_views.route("/users", methods=["GET"], strict_slashes=False)
+@app_views.route("/api/v1/users", methods=["GET"], strict_slashes=False)
 def user_get_all():
     """
     retrieves all User objects
@@ -19,7 +19,7 @@ def user_get_all():
     return jsonify(user_list)
 
 
-@app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/api/v1/users/<user_id>", methods=["GET"], strict_slashes=False)
 def user_get(user_id):
     """
     retrieves a User object by ID
@@ -32,7 +32,7 @@ def user_get(user_id):
     return jsonify(user.to_json())
 
 
-@app_views.route("/users/<user_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/api/v1/users/<user_id>", methods=["DELETE"], strict_slashes=False)
 def user_delete(user_id):
     """
     deletes a User object by ID
@@ -47,7 +47,7 @@ def user_delete(user_id):
     return jsonify({}), 200
 
 
-@app_views.route("/users", methods=["POST"], strict_slashes=False)
+@app_views.route("/api/v1/users", methods=["POST"], strict_slashes=False)
 def user_create():
     """
     create user route
@@ -69,7 +69,7 @@ def user_create():
     return resp
 
 
-@app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/api/v1/users/<user_id>", methods=["PUT"], strict_slashes=False)
 def user_update(user_id):
     """
     updates a User object by ID
