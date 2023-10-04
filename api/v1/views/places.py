@@ -102,7 +102,7 @@ def search_places():
 
     data = request.get_json()
     if data is None:
-        return jsonify({"error": "Not a JSON"})
+        return jsonify({"error": "Not a JSON"}), 400
     if data and len(data):
         states = data.get('states', None)
         cities = data.get('cities', None)
