@@ -103,48 +103,37 @@ def search_places():
     data = request.get_json()
     if data is None:
         return jsonify({"error": "Not a JSON"}), 400
-    if data and len(data):
-        states = data.get('states', None)
-        cities = data.get('cities', None)
-        ame = data.get('amenities', None)
 
-    if not data or not len(data) or (
-            not staes and
-            not cities and
-            not ame):
+    states = data.get('states', [])
+    cities = data.get('cities', [])
+    amenities = data.get('amenities', [])
+
+    if not states and not cities and not amenities:
         places = storage.all(Place).values()
         place_list = [p.to_dict() for p in places]
         return jsonify(place_list)
 
-    place_lst = []
+    place_set = set()
+
     if states:
-        state_obj = [storage.get(State, id) for id in states]
-        for items in state_obj:
-            if items:
-                for city in items.cities:
-                    if city:
-                        for place in city.places:
-                            place_lst.append(place)
+        for state_id in states:
+            state = storage.get(State, state_id)
+            if state:
+                for city in state.cities:
+                    place_set.update(city.places)
 
     if cities:
-        city_obj = [storage.get(City, id) for id in cities]
-        for items in city_obj:
-            if items:
-                for place in items.places:
-                    if place not in place_lst:
-                        place_lst.append(place)
+        for city_id in cities:
+            city = storage.get(City, city_id)
+            if city:
+                place_set.update(city.places)
 
-    if ame:
-        if not place_lst:
-            place_lst = storage.all(Place).values()
-        ame_obj = [storage.get(Amenity, id) for id in ame]
-        place_lst = [place for place in place_lst
-                     if all([m in place.amenities
-                            for m in ame_obj])]
+    if amenities:
+        amenity_objs = [storage.get(Amenity, amenity_id)
+                        for amenity_id in amenities]
+        for place in place_set.copy():
+            if not all(amenity in place.amenities for amenity in amenity_objs):
+                place_set.remove(place)
 
-    new_place = []
-    for plce in place_lst:
-        remove = plce.to_dict()
-        remove.pop('amenities', None)
-        new_place.append(remove)
-    return (new_place)
+    place_list = [place.to_dict() for place in place_set]
+    return jsonify(place_list)
