@@ -38,7 +38,7 @@ class TestUsersFunctions(unittest.TestCase):
             res = client.get('api/v1/users/{}'.format(user.id))
             self.assertEqual(res.status_code, 200)
             res2 = client.delete('api/v1/users/{}'.format(user.id))
-            self.assertEqual(res2.status_code, 404)
+            self.assertEqual(res2.status_code, 200)
             res3 = client.get('api/v1/users/{}'.format(user.id))
             self.assertEqual(res3.status_code, 404)
 

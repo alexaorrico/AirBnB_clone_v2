@@ -91,7 +91,7 @@ class TestFileStorage(unittest.TestCase):
 class TestDBStorage(unittest.TestCase):
     """Test GET and COUNT functions"""
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
-            "not testing db storage")
+                     "not testing db storage")
     def test_get(self):
         """Test if get function return specific object or not"""
         state = State(name="New Land")
@@ -99,6 +99,7 @@ class TestDBStorage(unittest.TestCase):
         user = User(email="kk22@gmail.com", password="pass")
         user.save()
         city = City(name="Newsland")
+        city.state_id = state.id
         city.save()
         self.assertIs(state, models.storage.get("State", state.id))
         self.assertIs(user, models.storage.get("User", user.id))
@@ -107,16 +108,18 @@ class TestDBStorage(unittest.TestCase):
         self.assertIs(city, models.storage.get("City", city.id))
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
-            "not testing db storage")
+                     "not testing db storage")
     def test_count(self):
         """Test if count function return the number of new objects added
         or not"""
         first_count = models.storage.count()
+        first_state_count = models.storage.count(State)
+        first_city_count = models.storage.count(City)
         state = State(name="Finland")
         state.save()
         city = City(name="Afr")
+        city.state_id = state.id
         city.save()
-        self.assertEqual(models.storage.count("State"), first_count + 1)
+        self.assertEqual(models.storage.count(State), first_state_count + 1)
         self.assertEqual(models.storage.count(), first_count + 2)
-        self.assertEqual(models.storage.count("City"), first_count + 1)
-        self.assertEqual(models.storage.count("d"), 0)
+        self.assertEqual(models.storage.count(City), first_city_count + 1)

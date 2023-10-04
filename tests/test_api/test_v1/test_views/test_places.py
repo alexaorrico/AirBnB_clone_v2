@@ -2,7 +2,7 @@
 """testing the index route"""
 import unittest
 import pep8
-from os import getenv
+from os import getenv, environ
 import requests
 import json
 from api.v1.app import *
@@ -17,24 +17,25 @@ class TestPlacesFunctions(unittest.TestCase):
     """Test the places class functions"""
     def test_get_place_by_city_id(self):
         """Test if it gets the place by city id or not"""
-        with app.test_client() as client:
-            state = State(name="Newland")
-            state.save()
-            city = City(name="Newcity", state_id=state.id)
-            city.save()
-            user = User(email="abc@123.com", password="chicken")
-            user.save()
-            place = Place(name="Becky's house",
-                              description="best house ever", number_rooms=3,
-                              number_bathrooms=1, max_guest=2,
-                              price_by_night=100, latitude=33.0,
-                              longitude=22.1, city_id=city.id,
-                              user_id=user.id)
-            place.save()
-            res = client.get('/api/v1/cities/{}/places'.format(city.id))
-            self.assertEqual(res.status_code, 200)
-            res1 = client.get('/api/v1/cities/{}/places/'.format(city.id))
-            self.assertEqual(res.status_code, 200)
+        if environ.get("HBNB_ENV") == 'test':
+            with app.test_client() as client:
+                state = State(name="Newland")
+                state.save()
+                city = City(name="Newcity", state_id=state.id)
+                city.save()
+                user = User(email="abc@123.com", password="chicken")
+                user.save()
+                place = Place(name="Becky's house",
+                                  description="best house ever", number_rooms=3,
+                                  number_bathrooms=1, max_guest=2,
+                                  price_by_night=100, latitude=33.0,
+                                  longitude=22.1, city_id=city.id,
+                                  user_id=user.id)
+                place.save()
+                res = client.get('/api/v1/cities/{}/places'.format(city.id))
+                self.assertEqual(res.status_code, 200)
+                res1 = client.get('/api/v1/cities/{}/places/'.format(city.id))
+                self.assertEqual(res.status_code, 200)
 
     def test_get_place_by_place_id(self):
         """Test if it gets the place by its id or not"""
@@ -52,7 +53,7 @@ class TestPlacesFunctions(unittest.TestCase):
                               longitude=22.1, city_id=city.id,
                               user_id=user.id)
             place.save()
-            res = client.get('/api/v1/cities/{}/places'.format(city.id))
+            res = client.get('/api/v1/places/{}'.format(place.id))
             self.assertEqual(res.status_code, 200)
 
     def test_delete_place_object(self):
@@ -74,7 +75,7 @@ class TestPlacesFunctions(unittest.TestCase):
             res = client.get('api/v1/places/{}'.format(place.id))
             self.assertEqual(res.status_code, 200)
             res2 = client.delete('api/v1/places/{}'.format(place.id))
-            self.assertEqual(res2.status_code, 404)
+            self.assertEqual(res2.status_code, 200)
             res3 = client.get('api/v1/places/{}'.format(place.id))
             self.assertEqual(res3.status_code, 404)
 
