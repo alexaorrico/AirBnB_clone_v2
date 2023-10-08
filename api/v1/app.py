@@ -17,6 +17,7 @@ def teardown_appcontext(self):
     """ Handles storage calls """
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(error):
     """ 404 Error
@@ -27,13 +28,13 @@ def not_found(error):
     """
     return make_response(jsonify({'error': "Not found"}), 404)
 
+
 app.config['SWAGGER'] = {
     'title': 'AirBnB clone Restful API',
     'uiversion': 3
 }
 
 Swagger(app)
-
 
 if __name__ == "__main__":
     """ Main Function """
