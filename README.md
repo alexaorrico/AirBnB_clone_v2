@@ -149,7 +149,6 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
-
 ## Bugs
 No known bugs at this time. 
 
@@ -158,5 +157,16 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+Third part of Airbnb: 
+Kundi Machado 
+Ignacio Martinez 
+
+fourth part of Airbnb:
+Nahuel Silva
+Ignacio Martinez
+
 ## License
+
+
 Public Domain. No copy write protection. 
