@@ -1,15 +1,11 @@
 header {
-    width: 100%;
-    background-color: white;
+    background: white;
     height: 70px;
+    width: 100%;
     border-bottom: 1px solid #CCCCCC;
-    display: flex;
-    align-items: center;
 }
-
-.logo {
-    width: 142px;
-    height: 60px;
-    background: url("../images/logo.png") no-repeat center;
-    padding-left: 20px;
+header .logo {
+    background: url("../images/logo.png") no-repeat;
+    left: 20px;
+    height: 100%;
 }
