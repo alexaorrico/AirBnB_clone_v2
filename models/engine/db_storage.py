@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -77,9 +77,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """ fetch a specified object from file """
-        objs = self.__session.query(cls).filter_by(id=id).all()
-        if objs:
-            return objs[0]
+        objs = self.__session.query(cls).all()
+        for obj in objs:
+            if obj.id == id:
+                return obj
         return None
 
     def count(self, cls=None):
