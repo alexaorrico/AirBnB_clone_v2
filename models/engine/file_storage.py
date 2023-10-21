@@ -10,7 +10,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from models import storage
 import json
 
 
@@ -67,7 +66,7 @@ class FileStorage:
             if cls not in classes:
                 return None
             cls = classes[cls]
-        save = storage.all(cls)
+        save = self.storage.all(cls)
         return save.get("{}.{}".format(cls.__name__, id)) 
             
             
@@ -83,8 +82,8 @@ class FileStorage:
             If no class is passed, returns the count of all objects in storage.
         """
         if cls is None:
-            return len(storage.all())
-        return len(storage.all(cls)) 
+            return len(self.storage.all())
+        return len(self.storage.all(cls)) 
 
 
     def reload(self):
