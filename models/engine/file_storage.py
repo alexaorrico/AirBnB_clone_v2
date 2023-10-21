@@ -66,7 +66,7 @@ class FileStorage:
             if cls not in classes:
                 return None
             cls = classes[cls]
-        save = self.storage.all(cls)
+        save = self.all(cls)
         return save.get("{}.{}".format(cls.__name__, id)) 
             
             
@@ -82,8 +82,8 @@ class FileStorage:
             If no class is passed, returns the count of all objects in storage.
         """
         if cls is None:
-            return len(self.storage.all())
-        return len(self.storage.all(cls)) 
+            return len(self.all())
+        return len(self.all(cls)) 
 
 
     def reload(self):
