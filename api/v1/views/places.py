@@ -23,6 +23,7 @@ def get_places(id):
     response.headers['Content-Type'] = 'application/json'
     return response
 
+
 @app_views.route('/places/<id>', methods=['GET'])
 def get_place(id):
     """retrieves places object with id"""
@@ -33,6 +34,7 @@ def get_place(id):
     response = make_response(json.dumps(res), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
+
 
 @app_views.route('/place/<id>', methods=['DELETE'])
 def delete_place(id):
@@ -52,7 +54,7 @@ def delete_place(id):
 def post_place(id):
     """inserts place if its valid json and has correct keys and city id"""
     missingMSG = "Missing name"
-    userMissingMsg="Missing user_id"
+    userMissingMsg = "Missing user_id"
     city = storage.get(City, id)
     if not city:
         abort(404)
