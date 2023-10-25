@@ -1,32 +1,20 @@
 #!/usr/bin/python3
 """ AirBnB v3 flask Api v1 entrypoint """
-from os import environ
 from flask import Flask
-from models import storage
 from api.v1.views import app_views
-
+from os import getenv
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
+host = getenv("HBNB_API_HOST")
+port = getenv("HBNB_API_PORT")
 
 @app.teardown_appcontext
-def close_db(error):
-    """ Close Storage """
+def teardown(err):
+    from models import storage
     storage.close()
 
-
 if __name__ == "__main__":
-    """ entrypoint """
-    flaskHost = environ.get('HBNB_API_HOST')
-    flaskPort = environ.get('HBNB_API_PORT')
-    if not flaskHost:
-        flaskHost = '0.0.0.0'
-    if not flaskPort:
-        flaskPort = '5000'
-    app.run(
-        host=flaskHost,
-        port=flaskPort,
-        threaded=True
-    )
+    host = '0.0.0.0' if host is None else host
+    port = '5000' if port is None else port
+    app.run(host=host, port=port, threaded=True)
