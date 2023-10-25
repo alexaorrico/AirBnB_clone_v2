@@ -32,10 +32,10 @@ def get_state(id):
     return response
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
-def delete_state(state_id):
+@app_views.route('/states/<id>', methods=['DELETE'])
+def delete_state(id):
     """delets state with id"""
-    state = storage.get(State, state_id)
+    state = storage.get(State, id)
     if not state:
         abort(404)
     storage.delete(state)
@@ -65,6 +65,30 @@ def create_state():
     instObj = State(**data)
     instObj.save()
     res = instObj.to_dict()
+    response = make_response(json.dumps(res), 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+
+@app_views.route('/states/<id>', methods=['PUT'])
+def put_state(id):
+    """update a state by id"""
+    abortMSG = "Not a JSON"
+    state = storage.get(State, id)
+    ignoreKeys = ['id', 'created_at', 'updated_at']
+    if not state:
+        abort(404)
+    if not request.get_json():
+        abort(
+            400,
+            description=abortMSG
+        )
+    data = request.get_json()
+    for key, value in data.items():
+        if key not in ignoreKeys:
+            setattr(state, key, value)
+    storage.save()
+    res = state.to_dict()
     response = make_response(json.dumps(res), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
