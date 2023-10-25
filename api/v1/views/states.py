@@ -28,7 +28,6 @@ def get_state(id):
     response_data = state.to_dict()
     response = make_response(json.dumps(response_data), 200)
     response.headers['Content-Type'] = 'application/json'
-
     return response
 
 
