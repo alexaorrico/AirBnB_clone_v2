@@ -64,7 +64,7 @@ def create_state():
     instObj = State(**data)
     instObj.save()
     res = instObj.to_dict()
-    response = make_response(json.dumps(res), 200)
+    response = make_response(json.dumps(res), 201)
     response.headers['Content-Type'] = 'application/json'
     return response
 
