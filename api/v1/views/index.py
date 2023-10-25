@@ -1,12 +1,15 @@
 #!/usr/bin/python3
+"""api index"""
 from api.v1.views import app_views
 
 @app_views.route('/status')
 def status():
+    """api status"""
     return {"status": "OK"}
 
 @app_views.route('/stats')
 def stats():
+    """api states"""
     from models import storage
     from models.amenity import Amenity
     from models.city import City
