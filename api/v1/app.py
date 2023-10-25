@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""AirBnB v3 flask Api v1 entrypoint"""
+""" AirBnB v3 flask Api v1 entrypoint """
 from os import environ
 from flask import Flask
 from models import storage
@@ -7,6 +7,7 @@ from api.v1.views import app_views
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 
@@ -17,7 +18,7 @@ def close_db(error):
 
 
 if __name__ == "__main__":
-    """entrypoint"""
+    """ entrypoint """
     flaskHost = environ.get('HBNB_API_HOST')
     flaskPort = environ.get('HBNB_API_PORT')
     if not flaskHost:
