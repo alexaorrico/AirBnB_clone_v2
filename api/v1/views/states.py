@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """api states"""
-from flask import abort, make_response
+from flask import abort, make_response, request
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -31,6 +31,7 @@ def get_state(id):
 
     return response
 
+
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """delets state with id"""
@@ -40,6 +41,30 @@ def delete_state(state_id):
     storage.delete(state)
     storage.save()
     res = {}
+    response = make_response(json.dumps(res), 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+
+@app_views.route('/states', methods=['POST'])
+def create_state():
+    """inserts state if its valid json amd has correct key"""
+    abortMSG = "Not a JSON"
+    missingMSG = "Missing name"
+    if not request.get_json():
+        abort(
+            400,
+            description=abortMSG
+        )
+    if 'name' not in request.get_json():
+        abort(
+            400,
+            description=missingMSG
+        )
+    data = request.get_json()
+    instObj = State(**data)
+    instObj.save()
+    res = instObj.to_dict()
     response = make_response(json.dumps(res), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
