@@ -21,7 +21,7 @@ def get_cities(id_state):
     response = make_response(json.dumps(res), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
-    
+
 
 @app_views.route('/cities/<id>', methods=['GET'])
 def get_city(id):
@@ -76,7 +76,7 @@ def put_state(id):
     """update a city by id"""
     abortMSG = "Not a JSON"
     city = storage.get(City, id)
-    ignoreKeys = ['id', 'state_id','created_at', 'updated_at']
+    ignoreKeys = ['id', 'state_id', 'created_at', 'updated_at']
     if not city:
         abort(404)
     if not request.get_json():
