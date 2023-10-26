@@ -161,6 +161,7 @@ creating RESTful API to allow the client from the user side to access data using
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Hajar Lamharchi - [Github](https://github.com/hajarLamharchi) / [Twitter](https://twitter.com/hajar_l92)
+Elaa Hidri - [Github](https://github.com/ela-hidri) / ([Twitter://twitter.com/HidriEla)
 
 Second part of Airbnb: Joann Vuong
 ## License
