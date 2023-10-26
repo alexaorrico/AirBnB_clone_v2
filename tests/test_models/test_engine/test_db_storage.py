@@ -71,7 +71,7 @@ test_db_storage.py'])
         '''
         testing get method
         '''
-        new = State(name = "Missouri")
+        new = State(name="Missouri")
         new.save()
         state = models.storage.get(State, str(new.id))
         self.assertEqual(state.name, "Missouri")
