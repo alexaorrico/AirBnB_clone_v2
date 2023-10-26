@@ -73,6 +73,7 @@ class TestDBStorageDocs(unittest.TestCase):
     def test_count_method(self):
         """Test case for testing the database in objects counts."""
 
+
 '''
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
