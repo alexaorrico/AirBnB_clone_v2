@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """A function to retrieve one object of a given id."""
         obj = None
-        if cls is not None and issubclass(cls, BaseModel):
+        if cls is not None and id and issubclass(cls, BaseModel):
             obj = self.__session.query(cls).filter(cls.id == id).first()
         return (obj)
 
