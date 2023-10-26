@@ -72,7 +72,7 @@ class FileStorage:
         """
         if not isinstance(cls, str):
             cls = cls.__name__
-        key = f'{cls}.{id}'
+        key = '{}.{}'.format(cls, id)
         return self.__objects.get(key)
 
     def count(self, cls=None):

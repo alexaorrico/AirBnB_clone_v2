@@ -80,7 +80,7 @@ class DBStorage:
         """
         if not isinstance(cls, str):
             cls = cls.__name__
-        key = f'{cls}.{id}'
+        key = '{}.{}'.format(cls, id)
         return self.all(cls).get(key)
 
     def count(self, cls=None):
