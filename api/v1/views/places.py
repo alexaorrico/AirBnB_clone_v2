@@ -96,3 +96,44 @@ def put_place(place_id):
     response = make_response(json.dumps(res), 200)
     response.headers['Content-Type'] = 'application/json'
     return response
+
+
+@app_views.route('/places_search', methods=['POST'])
+def places_search_enhanced():
+    """endpoint to retrieves all PlaceObj using passed JSON"""
+    abortMSG = "Not a JSON"
+    if request.get_json() is None:
+        abort(400, description=abortMSG)
+    data = request.get_json()
+    states = data.get('states', [])
+    cities = data.get('cities', [])
+    amenities = data.get('amenities', [])
+    placesList = []
+    if not any((states, cities, amenities)):
+        placesList = [place.to_dict() for place in storage.all(Place).values()]
+    else:
+        if states:
+            statesObj = [storage.get(State, s_id) for s_id in states]
+            for state in statesObj:
+                if state:
+                    for city in state.cities:
+                        if city:
+                            placesList.extend(place for place in city.places)
+        if cities:
+            city_obj = [storage.get(City, c_id) for c_id in cities]
+            for city in city_obj:
+                if city:
+                    for place in city.places:
+                        if place not in placesList:
+                            placesList.append(place)
+        if amenities:
+            if not placesList:
+                placesList = [place for place in storage.all(Place).values()]
+            amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
+            placesList = [place for place in placesList
+                           if all([am in place.amenities for am in amenities_obj])]
+    places = [place.to_dict(exclude=['amenities']) for place in placesList]
+    res = json.dumps(places)
+    response = make_response(res, 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
