@@ -8,7 +8,7 @@ from models.city import City
 import json
 
 
-@app_views.route('/states/<id_state>/cities', methods=['GET'])
+@app_views.route("/states/<id_state>/cities", methods=["GET"])
 def get_cities(id_state):
     """retrieves all cities by state id object"""
     state = storage.get(State, id_state)
@@ -19,11 +19,11 @@ def get_cities(id_state):
         citiesList.append(city.to_dict())
     res = citiesList
     response = make_response(json.dumps(res), 200)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers["Content-Type"] = "application/json"
     return response
 
 
-@app_views.route('/cities/<id>', methods=['GET'])
+@app_views.route("/cities/<id>", methods=["GET"])
 def get_city(id):
     """retrieves cities object with id"""
     city = storage.get(City, id)
@@ -31,11 +31,11 @@ def get_city(id):
         abort(404)
     response_data = city.to_dict()
     response = make_response(json.dumps(response_data), 200)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers["Content-Type"] = "application/json"
     return response
 
 
-@app_views.route('/cities/<id>', methods=['DELETE'])
+@app_views.route("/cities/<id>", methods=["DELETE"])
 def delete_city(id):
     """delets city with id"""
     city = storage.get(City, id)
@@ -45,45 +45,39 @@ def delete_city(id):
     storage.save()
     res = {}
     response = make_response(json.dumps(res), 200)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers["Content-Type"] = "application/json"
     return response
 
 
-@app_views.route('/states/<id_state>/cities', methods=['POST'])
+@app_views.route("/states/<id_state>/cities", methods=["POST"])
 def create_city(id_state):
     """inserts city if its valid json amd has correct key and state id"""
     missingMSG = "Missing name"
     state = storage.get(State, id_state)
     if not state:
         abort(404)
-    if 'name' not in request.get_json():
-        abort(
-            400,
-            description=missingMSG
-        )
+    if "name" not in request.get_json():
+        abort(400, description=missingMSG)
     data = request.get_json()
     instObj = City(**data)
     instObj.state_id = id_state
     instObj.save()
     res = instObj.to_dict()
     response = make_response(json.dumps(res), 201)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers["Content-Type"] = "application/json"
     return response
 
 
-@app_views.route('/cities/<id>', methods=['PUT'])
+@app_views.route("/cities/<id>", methods=["PUT"])
 def put_city(id):
     """update a city by id"""
     abortMSG = "Not a JSON"
     city = storage.get(City, id)
-    ignoreKeys = ['id', 'state_id', 'created_at', 'updated_at']
+    ignoreKeys = ["id", "state_id", "created_at", "updated_at"]
     if not city:
         abort(404)
     if not request.get_json():
-        abort(
-            400,
-            description=abortMSG
-        )
+        abort(400, description=abortMSG)
     data = request.get_json()
     for key, value in data.items():
         if key not in ignoreKeys:
@@ -91,5 +85,5 @@ def put_city(id):
     storage.save()
     res = city.to_dict()
     response = make_response(json.dumps(res), 200)
-    response.headers['Content-Type'] = 'application/json'
+    response.headers["Content-Type"] = "application/json"
     return response

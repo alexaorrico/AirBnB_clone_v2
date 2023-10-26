@@ -15,6 +15,7 @@ port = getenv("HBNB_API_PORT")
 def teardown(err):
     """api teardown"""
     from models import storage
+
     storage.close()
 
 
@@ -26,6 +27,6 @@ def not_found(err):
 
 if __name__ == "__main__":
     """api entrypoint"""
-    host = '0.0.0.0' if host is None else host
-    port = '5000' if port is None else port
+    host = "0.0.0.0" if host is None else host
+    port = "5000" if port is None else port
     app.run(host=host, port=port, threaded=True)

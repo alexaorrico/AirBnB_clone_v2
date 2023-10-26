@@ -116,7 +116,7 @@ class TestUser(unittest.TestCase):
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
-        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        t_format = "%Y-%m-%dT%H:%M:%S"
         u = User()
         new_d = u.to_dict()
         self.assertEqual(new_d["__class__"], "User")
