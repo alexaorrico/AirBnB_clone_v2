@@ -21,8 +21,8 @@ def teardown_appcont(exception):
 def not_reached(error):
     """Handle non existing pages"""
     e = {
-            "error": "Not Found"
-            }
+        "error": "Not Found"
+    }
     return make_response(jsonify({'error': "Not found"}), 404)
 
 
