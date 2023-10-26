@@ -13,8 +13,8 @@ Example:
     # Other views can be imported here as needed
 
 """
-
 from flask import Blueprint
+
 
 # Create a blueprint instance for version 1 of the API
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
