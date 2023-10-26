@@ -32,11 +32,10 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
+        self.__engine = create_engine(
+            f"mysql+mysqldb://{HBNB_MYSQL_USER}:{HBNB_MYSQL_PWD}@{HBNB_MYSQL_HOST}/{HBNB_MYSQL_DB}",
+            pool_pre_ping=True,
+        )
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -58,6 +57,24 @@ class DBStorage:
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
+
+    def get(self, cls, id):
+        """ Returns the object based on the class and its ID """
+        if cls in classes.values():
+            obj = self.__session.query(cls).filter(cls.id==id).first()
+            return obj
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage matching the given class.
+        """
+        count = 0
+        if cls in classes.values():
+            count = self.__session.query(cls).count()
+        elif cls is None:
+            for obj in classes.values():
+                count += self.__session.query(obj).count()
+        return count
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
