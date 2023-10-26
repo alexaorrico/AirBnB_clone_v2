@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """retreive an ob by class and id"""
         if cls and id:
-            objects = self.__session.query(classes[cls]).filter_by(id=id).first()
+            objects = self.__session.query(classes[cls.__name__]).filter_by(id=id).first()
             return objects
 
     def count(self, cls=None):
