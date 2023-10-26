@@ -26,6 +26,7 @@ def get_place_amenities(id_place):
             amenitiesList.append(amenity.to_dict())
     else:
         for id in place.amenity_ids:
+            print(id)
             amenity = storage.get(Amenity, id)
             amenitiesList.append(amenity.to_dict())
     res = amenitiesList
@@ -44,7 +45,7 @@ def delete_place_amenity(place_id, amenity_id):
     if not amenity:
         abort(404)        
     if storage_t != 'db':
-        if amenity not in place.amenity_ids:
+        if amenity_id not in place.amenity_ids:
             abort(404)
         place.amenity_ids.remove(amenity_id)
     storage.delete(amenity)
@@ -65,6 +66,7 @@ def create_place_amenity(place_id, amenity_id):
     if not amenity:
         abort(404)
     if storage_t != 'db':
+        print('3')
         if amenity_id in place.amenity_ids:
             return amenity, 200
         place.amenity_ids.append(amenity_id)
