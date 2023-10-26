@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-      """Returns object based on the class and its ID"""
+        """Returns object based on the class and its ID"""
         key = "{}.{}".format(cls.__name__, id)
         return self.__objects.get(key, None)
 
@@ -83,3 +83,4 @@ class FileStorage:
             if isinstance(obj, cls):
                 count += 1
         return count
+>>>>>>>>> Temporary merge branch 2
