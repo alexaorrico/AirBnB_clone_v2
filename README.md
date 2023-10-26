@@ -155,8 +155,8 @@ No known bugs at this time.
 
 ## Authors
 Jude Hunja - [Github](https://github.com/judhunja)
-Jennifer Huang - [Github](https://github.com/sendyTheDev) / [Twitter](https://twitter.com/SendyMauku40)
 
-Second part of Airbnb: Joann Vuong
+Sandra Mauku - [Github](https://github.com/sendyTheDev) / [Twitter](https://twitter.com/SendyMauku40)
+
 ## License
 Public Domain. No copy write protection.
