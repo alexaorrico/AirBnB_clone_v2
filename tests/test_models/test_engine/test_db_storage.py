@@ -105,4 +105,5 @@ class TestFileStorage(unittest.TestCase):
         my_base = BaseModel()
         my_base.save()
         self.assertEqual(storage.count(), len(storage.all()))
-        self.assertEqual(storage.count(BaseModel), len(storage.all('BaseModel')))
+        self.assertEqual(storage.count(BaseModel),
+                         len(storage.all('BaseModel')))
