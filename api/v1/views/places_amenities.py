@@ -26,7 +26,6 @@ def get_place_amenities(id_place):
             amenitiesList.append(amenity.to_dict())
     else:
         for id in place.amenity_ids:
-            print(id)
             amenity = storage.get(Amenity, id)
             amenitiesList.append(amenity.to_dict())
     res = amenitiesList
@@ -44,11 +43,14 @@ def delete_place_amenity(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)        
-    if storage_t != 'db':
+    if storage_t == 'db':
+        if amenity not in place.amenities:
+            abort(404)
+        place.amenities.remove(amenity)
+    else:
         if amenity_id not in place.amenity_ids:
             abort(404)
         place.amenity_ids.remove(amenity_id)
-    storage.delete(amenity)
     storage.save()
     res = {}
     response = make_response(json.dumps(res), 200)
@@ -65,12 +67,16 @@ def create_place_amenity(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
-    if storage_t != 'db':
-        print('3')
+    if storage_t == 'db':
+        if amenity in place.amenities:
+            response = make_response(json.dumps(amenity.to_dict()), 200)
+            response.headers['Content-Type'] = 'application/json'
+            return response
+        place.amenities.append(amenity)
+    else:
         if amenity_id in place.amenity_ids:
             return amenity, 200
         place.amenity_ids.append(amenity_id)
-    print(place.to_dict())
     storage.save()
     response = make_response(json.dumps(amenity.to_dict()), 201)
     response.headers['Content-Type'] = 'application/json'
