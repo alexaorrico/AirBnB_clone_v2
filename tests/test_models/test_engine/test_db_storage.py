@@ -67,11 +67,28 @@ class TestDBStorageDocs(unittest.TestCase):
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    def test_get_method(self):
+
+@unittest.skipIf(models.storage_t != 'db', "Storage not DATABASE")
+class TestDBStorage_GET(unittest.TestCase):
+    """Test cases for DBStorage"""
+
+    @classmethod
+    def teardown(cls):
+        """This is the teardown class"""
+        models.storage.close()
+
+    def test_get(self):
         """Test case for testing the databse to get object at given id."""
+        state = State(name="Lagos")
+        state.save()
+        state_get = models.storage.get(State, state.id)
+        self.assertEqual(state, state_get)
 
     def test_count_method(self):
         """Test case for testing the database in objects counts."""
+        state = State(name="lagos")
+        state.save()
+        self.assertTrue(models.storage.count(State) > 1)
 
 
 '''
