@@ -13,3 +13,6 @@ from api.v1.views.index import *
 
 # Importing views from state
 from api.v1.views.states import *
+
+# Importing the views for City
+from api.v1.views.cities import *
