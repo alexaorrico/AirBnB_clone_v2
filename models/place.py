@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #!/usr/bin/python
 """ holds class Place"""
 import models
