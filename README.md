@@ -2,6 +2,7 @@
 
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of the project is to deploy on your server a simple copy of the AirBnB website.
 
+
 #### Functionalities of this command interpreter:
 
 * Create a new object (ex: a new User or a new Place)
@@ -9,6 +10,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Do operations on objects (count, compute stats, etc...)
 * Update attributes of an object
 * Destroy an object
+
 
 ## Table of Content
 
@@ -22,9 +24,11 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [Authors For AirBNB_clone_v2](#authors-for-airbnb_clone_v2)
 * [License](#license)
 
+
 ## Environment
 
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+
 
 ## Installation
 
@@ -32,6 +36,7 @@ This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.
 * Access AirBnb directory: `cd AirBnB_clone_v3`
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
+
 
 ## File Descriptions
 
@@ -171,20 +176,26 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+
 ## Bugs
 No known bugs at this time. 
+
 
 ## Authors
 
 Jean Damascene Ngaboyimana - [Github](https://github.com/njdam) / [Twitter](https://twitter.com/cr7vanjohnson) / [LinkedIn](https://www.linkedin.com/in/jeandamn/)
+
 Hassan Cissey Tijani - [Github](https://github.com/hcissey0) / [Twitter](https://twitter.com/...) / [LinkedIn](https://www.linkedin.com/in/...)
+
 
 ## Authors For AirBnB_clone_v2
 
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
+
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
 
 ## License
 Public Domain. No copy write protection.
