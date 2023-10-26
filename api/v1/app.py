@@ -5,6 +5,7 @@ from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from os import getenv
+from flask import jsonify
 
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
@@ -14,6 +15,12 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 def closeStorage(exception):
     """Closes the storage session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(err):
+    """Custom 404 page not found json error message"""
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == '__main__':
