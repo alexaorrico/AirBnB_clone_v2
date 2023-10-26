@@ -1,0 +1,11 @@
+# Ignore Python bytecode files
+__pycache__/
+
+# Ignore virtual environment
+venv/
+
+# Ignore log files
+*.log
+
+#ignore file.json
+file.json
