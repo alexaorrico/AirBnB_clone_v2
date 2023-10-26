@@ -83,4 +83,3 @@ class FileStorage:
             if isinstance(obj, cls):
                 count += 1
         return count
->>>>>>>>> Temporary merge branch 2
