@@ -160,6 +160,7 @@ Jennifer Huang - [Github]
 
 ## Contributors 
 samuelogboye
+
 XimeonLeo 
 
 Second part of Airbnb: Joann Vuong
