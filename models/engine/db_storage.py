@@ -79,7 +79,8 @@ class DBStorage:
         """ Gets an object from DB """
         cls_name = f"{cls.__name__}.{id}"
         obj = next((x for x in self.all(cls) if x == cls_name), None)
-        return obj if obj else None
+        return self.all(cls).get(cls_name, None)
+        # return obj if obj else None
 
     def count(self, cls=None):
         """ Counts the number of objects in storage """
