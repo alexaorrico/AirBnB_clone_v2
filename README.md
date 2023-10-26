@@ -1,7 +1,9 @@
 # AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+
+The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of the project is to deploy on your server a simple copy of the AirBnB website.
 
 #### Functionalities of this command interpreter:
+
 * Create a new object (ex: a new User or a new Place)
 * Retrieve an object from a file, a database etc...
 * Do operations on objects (count, compute stats, etc...)
@@ -9,6 +11,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Destroy an object
 
 ## Table of Content
+
 * [Environment](#environment)
 * [Installation](#installation)
 * [File Descriptions](#file-descriptions)
@@ -16,19 +19,24 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [Examples of use](#examples-of-use)
 * [Bugs](#bugs)
 * [Authors](#authors)
+* [Authors For AirBNB_clone_v2](#authors_for_airbnb_clone_v2)
 * [License](#license)
 
 ## Environment
+
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
 
 ## Installation
-* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
+
+* Clone this repository: `git clone "https://github.com/njdam/AirBnB_clone_v3.git"`
+* Access AirBnb directory: `cd AirBnB_clone_v3`
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
 ## File Descriptions
-[console.py](console.py) - the console contains the entry point of the command interpreter. 
+
+[console.py](console.py) - the console contains the entry point of the command interpreter.
+
 List of commands this console current supports:
 * `EOF` - exits console 
 * `quit` - exits console
@@ -40,7 +48,9 @@ List of commands this console current supports:
 * `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
 
 #### `models/` directory contains classes used for this project:
+
 [base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
+
 * `def __init__(self, *args, **kwargs)` - Initialization of the base model
 * `def __str__(self)` - String representation of the BaseModel class
 * `def save(self)` - Updates the attribute `updated_at` with the current datetime
@@ -55,14 +65,18 @@ Classes inherited from Base Model:
 * [user.py](/models/user.py)
 
 #### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
+
 [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
+
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* ` def reload(self)` -  deserializes the JSON file to __objects
+* `def reload(self)` -  deserializes the JSON file to `__objects`
 
 #### `/tests` directory contains all unit test cases for this project:
+
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
+
 TestBaseModelDocs class:
 * `def setUpClass(cls)`- Set up for the doc tests
 * `def test_pep8_conformance_base_model(self)` - Test that models/base_model.py conforms to PEP8
@@ -78,6 +92,7 @@ TestBaseModel class:
 * `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
 
 [/test_models/test_amenity.py](/tests/test_models/test_amenity.py) - Contains the TestAmenityDocs class:
+
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_amenity(self)` - Test that models/amenity.py conforms to PEP8
 * `def test_pep8_conformance_test_amenity(self)` - Test that tests/test_models/test_amenity.py conforms to PEP8
@@ -85,6 +100,7 @@ TestBaseModel class:
 * `def test_amenity_class_docstring(self)` - Test for the Amenity class docstring
 
 [/test_models/test_city.py](/tests/test_models/test_city.py) - Contains the TestCityDocs class:
+
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_city(self)` - Test that models/city.py conforms to PEP8
 * `def test_pep8_conformance_test_city(self)` - Test that tests/test_models/test_city.py conforms to PEP8
@@ -92,6 +108,7 @@ TestBaseModel class:
 * `def test_city_class_docstring(self)` - Test for the City class docstring
 
 [/test_models/test_file_storage.py](/tests/test_models/test_file_storage.py) - Contains the TestFileStorageDocs class:
+
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_file_storage(self)` - Test that models/file_storage.py conforms to PEP8
 * `def test_pep8_conformance_test_file_storage(self)` - Test that tests/test_models/test_file_storage.py conforms to PEP8
@@ -99,6 +116,7 @@ TestBaseModel class:
 * `def test_file_storage_class_docstring(self)` - Test for the FileStorage class docstring
 
 [/test_models/test_place.py](/tests/test_models/test_place.py) - Contains the TestPlaceDoc class:
+
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_place(self)` - Test that models/place.py conforms to PEP8.
 * `def test_pep8_conformance_test_place(self)` - Test that tests/test_models/test_place.py conforms to PEP8.
@@ -106,6 +124,7 @@ TestBaseModel class:
 * `def test_place_class_docstring(self)` - Test for the Place class docstring
 
 [/test_models/test_review.py](/tests/test_models/test_review.py) - Contains the TestReviewDocs class:
+
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_review(self)` - Test that models/review.py conforms to PEP8
 * `def test_pep8_conformance_test_review(self)` - Test that tests/test_models/test_review.py conforms to PEP8
@@ -113,6 +132,7 @@ TestBaseModel class:
 * `def test_review_class_docstring(self)` - Test for the Review class docstring
 
 [/test_models/state.py](/tests/test_models/test_state.py) - Contains the TestStateDocs class:
+
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
 * `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
@@ -120,6 +140,7 @@ TestBaseModel class:
 * `def test_state_class_docstring(self)` - Test for the State class docstring
 
 [/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
+
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
 * `def test_pep8_conformance_test_user(self)` - Test that tests/test_models/test_user.py conforms to PEP8
@@ -154,9 +175,16 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
+
+Jean Damascene Ngaboyimana - [Github](https://github.com/njdam) / [Twitter](https://twitter.com/cr7vanjohnson) / [LinkedIn](https://www.linkedin.com/in/jeandamn/)
+Hassan Cissey Tijani - [Github](https://github.com/hcissey0) / [Twitter](https://twitter.com/...) / [LinkedIn](https://www.linkedin.com/in/...)
+
+## Authors For AirBnB_clone_v2
+
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
