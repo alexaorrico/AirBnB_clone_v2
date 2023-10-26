@@ -13,16 +13,18 @@ from models.user import User
 
 app = Flask(__name__)
 
+
 @app_views.route("/status")
 def status():
     json_text = jsonify({"status": "OK"})
     return json_text
 
+
 @app_views.route("/stats")
 def stats():
     """counts and returns each table values"""
-    classes = {"amenities": Amenity, "cities": City,
-           "places": Place, "reviews": Review, "states": State, "users": User}
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User}
     stats_dict = {}
     for key, value in classes.items():
         stats_dict[key] = storage.count(value)

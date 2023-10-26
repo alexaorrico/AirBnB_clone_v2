@@ -11,11 +11,19 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def tear(self):
     """Teardown method that closes the storage"""
     storage.close()
-    
+
+
+@app.errorhandler(404)
+def error(e):
+    """error handler that returns 404 in just json"""
+    json_text = {"error": "Not found"}
+    return jsonify(json_text), 404
+
 
 if __name__ == "__main__":
     host = getenv('HBNB_API_HOST', '0.0.0.0')
