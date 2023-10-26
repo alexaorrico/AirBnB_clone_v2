@@ -185,7 +185,7 @@ No known bugs at this time.
 
 Jean Damascene Ngaboyimana - [Github](https://github.com/njdam) / [Twitter](https://twitter.com/cr7vanjohnson) / [LinkedIn](https://www.linkedin.com/in/jeandamn/)
 
-Hassan Cissey Tijani - [Github](https://github.com/hcissey0) / [Twitter](https://twitter.com/...) / [LinkedIn](https://www.linkedin.com/in/...)
+Hassan Cissey Tijani - [Github](https://github.com/hcissey0) / [Twitter](https://twitter.com/hcissey0) / [LinkedIn](https://www.linkedin.com/in/hcissey0)
 
 
 ## Authors For AirBnB_clone_v2
