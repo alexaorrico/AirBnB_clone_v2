@@ -40,6 +40,25 @@ class FileStorage:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
+    def get(self, cls, id):
+        '''
+        retrieve one object
+        '''
+        obj_dict = self.all(cls)
+        for key, value in obj_dict.items():
+            if key == cls.__name__ + "." + id:
+                return value
+
+    def count(self, cls=None):
+        '''
+        count number of objects
+        '''
+        if cls:
+            obj_list = [item for item in FileStorage.__objects.values() if isinstance(item, cls)]
+        else:
+            obj_list = [item for item in FileStorage.__objects.values() if item.__class__.__name__ != 'BaseModel']
+        return len(obj_list)
+
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
