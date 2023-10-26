@@ -43,5 +43,5 @@ def not_found(error):
 
 if __name__ == "__main__":
     # Get the host and port from environment variables or use defaults
-    app.run(host = environ.get('HBNB_API_HOST', '0.0.0.0')
+    app.run(host = environ.get('HBNB_API_HOST', '0.0.0.0'),
             port = int(environ.get('HBNB_API_PORT', 5000)))
