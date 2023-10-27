@@ -79,7 +79,7 @@ class DBStorage:
         ''' method for retrieving on eobject '''
         objects_dicts = models.storage.all(cls)
         for key, val in objects_dicts.items():
-            obj_key = cls.__name_ + '.' + id
+            obj_key = cls.__name__ + '.' + id
             if key == obj_key:
                 return val
         return None
