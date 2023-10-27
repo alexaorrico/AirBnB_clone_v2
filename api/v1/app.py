@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
-
 @app.teardown_appcontext
 def teardown_appcont(exception):
     """ends db session"""
@@ -27,6 +26,6 @@ def not_reached(error):
 
 
 if __name__ == "__main__":
-    host = os.getenv("HBNB_API_HOST","0.0.0.0")
-    ports = os.getenv("HBNB_API_PORT","5000")
+    host = os.getenv("HBNB_API_HOST", "0.0.0.0")
+    ports = os.getenv("HBNB_API_PORT", "5000")
     app.run(host=host, port=ports)
