@@ -38,7 +38,7 @@ def delete_amenity(amenity_id):
     return ({}, 200)
 
 
-@app_views.route("/api/v1/amenities", methods=['POST'])
+@app_views.route("/amenities", methods=['POST'])
 def post_amenity():
     """Creates a Amenity"""
     data = request.get_json()
@@ -52,7 +52,7 @@ def post_amenity():
     return jsonify(amenity.to_dict()), 201
 
 
-@app_views.route("/api/v1/amenities/<amenity_id>", methods=['PUT'])
+@app_views.route("/amenities/<amenity_id>", methods=['PUT'])
 def update_amenity(amenity_id):
     """Updates a Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
@@ -64,6 +64,6 @@ def update_amenity(amenity_id):
     to_be_ignored = ["id", "created_at", "updated_at"]
     for key, value in data.items():
         if key not in to_be_ignored:
-            setattr(Amenity, key, value)
+            setattr(amenity, key, value)
     storage.save()
     return jsonify(amenity.to_dict(), 200)
