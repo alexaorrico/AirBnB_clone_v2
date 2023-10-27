@@ -92,6 +92,7 @@ class TestFileStorage(unittest.TestCase):
 
 class TestDbNew(unittest.TestCase):
     """ new test cases for db """
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def setUp(self):
         """ set up tests """
         host = getenv('HBNB_MYSQL_HOST')
@@ -104,6 +105,7 @@ class TestDbNew(unittest.TestCase):
         state_2 = State(name='Oklahoma')
         state_2.save()
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """ test_count """
         cursor = self.db.cursor()
@@ -111,6 +113,7 @@ class TestDbNew(unittest.TestCase):
         values = cursor.fetchall()
         self.assertEqual(len(values), storage.count(State))
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """ test retrieving object """
         first_state_id = list(storage.all(State).values())[0].id
