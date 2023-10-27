@@ -36,7 +36,7 @@ def delete_city(city_id):
     return jsonify({}, 200)
 
 
-@app_views.route("/api/v1/states/<state_id>/cities", methods=['POST'])
+@app_views.route("/states/<state_id>/cities", methods=['POST'])
 def post_city(state_id):
     """Creates a City"""
     state = storage.get(State, state_id)
@@ -53,7 +53,7 @@ def post_city(state_id):
     return jsonify(city.to_dict()), 201
 
 
-@app_views.route("/api/v1/cities/<city_id>", methods=['PUT'])
+@app_views.route("/cities/<city_id>", methods=['PUT'])
 def update_city(city_id):
     """Updates a City object"""
     city = storage.get(City, city_id)
