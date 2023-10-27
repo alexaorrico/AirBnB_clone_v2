@@ -82,7 +82,7 @@ def states_put(id: str):
         del data['created_at']
     if 'updated_at' in data.keys():
         del data['updated_at']
-    for i, j in data.items():
-        setattr(state, i, j)
-    storage.save()
+    if 'name' in data:
+        state.name = data['name']
+        storage.save()
     return jsonify(storage.get(State, state.id).to_dict()), 200
