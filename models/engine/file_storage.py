@@ -73,7 +73,7 @@ class FileStorage:
         """Get object from objects using cls and id."""
         class_dict = self.all(cls)
         for key, value in class_dict.items():
-            obj = cls + '.' + id
+            obj = f'{cls}.{id}'
             if key == obj:
                 return(value)
         return(None)
