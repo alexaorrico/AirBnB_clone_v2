@@ -1,5 +1,9 @@
 # Ignore Python bytecode files
 __pycache__/
+models/__pycache__/
+models/engine/__pycache__/
+api/v1/__pycache__/
+api/v1/views/__pycache__/
 
 # Ignore virtual environment
 venv/
