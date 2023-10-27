@@ -84,7 +84,7 @@ class DBStorage:
         """get an element based on the given id"""
         elem = (
             self.__session.query(classes.get(cls))
-            .where(classes.get(cls).id == id)
+            .filter(classes.get(cls).id == id)
             .first()
         )
         if elem:

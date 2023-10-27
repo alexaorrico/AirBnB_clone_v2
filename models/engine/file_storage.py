@@ -75,10 +75,9 @@ class FileStorage:
 
     def get(self, cls, id):
         """get an element based on the given id"""
-        for elem in self.__objects.values():
-            if cls == elem.__class__.__name__:
-                if elem.id == id:
-                    return elem
+        for elem in self.all(cls).values():
+            if elem.id == id:
+                return elem
 
         return None
 
