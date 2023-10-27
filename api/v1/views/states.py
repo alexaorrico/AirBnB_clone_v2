@@ -20,6 +20,7 @@ def get_states():
 
     return jsonify(states_list)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_id(state_id):
     """retrieves a state based on its id"""
@@ -30,7 +31,9 @@ def get_state_id(state_id):
         return jsonify(state.to_dict())
     return abort(404)
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """deletes a state based on its id"""
     from models import storage
@@ -41,6 +44,7 @@ def delete_state(state_id):
         storage.save()
         return jsonify({}), 200
     return abort(404)
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
@@ -54,6 +58,7 @@ def create_state():
     state.name = data["name"]
     state.save()
     return jsonify(state.to_dict()), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
