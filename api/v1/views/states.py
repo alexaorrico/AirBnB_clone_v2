@@ -54,7 +54,7 @@ def states_post():
     saves it to storage, and returns the State object as a JSON response.
     """
     data = request.get_json()
-    if not request.json:
+    if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in data.keys():
         return make_response(jsonify({"error": "Missing name"}), 400)
@@ -74,7 +74,7 @@ def states_put(id: str):
     if state is None:
         abort(404)
     data = request.get_json()
-    if not request.json:
+    if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'id' in data.keys():
         del data['id']
