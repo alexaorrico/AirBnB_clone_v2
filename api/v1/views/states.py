@@ -22,7 +22,8 @@ def states_get(state_id=None):
     return (jsonify(obj.to_dict()))
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def states_delete(state_id):
     """deletes a state resource if given id is found."""
     key = 'State.' + escape(state_id)
