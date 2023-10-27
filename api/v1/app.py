@@ -14,13 +14,15 @@ app.register_blueprint(app_views)
 
 @app.errorhandler(404)
 def not_found(error):
-    """This function handles the not found error"""
+    """This function handles the not found error
+    """
     return jsonify(error="Not found"), 404
 
 
 @app.teardown_appcontext
 def close_session(exe):
-    """This close the sqlAlchemy session"""
+    """This close the connection session
+    """
     return storage.close()
 
 
