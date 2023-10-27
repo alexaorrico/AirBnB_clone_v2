@@ -5,13 +5,12 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models.state import State
 from models.base_model import BaseModel
+from models import storage
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """retrieve all states"""
-    from models import storage
-
     states = storage.all(State)
     states_list = []
 
@@ -24,8 +23,6 @@ def get_states():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_id(state_id):
     """retrieves a state based on its id"""
-    from models import storage
-
     state = storage.get(State, state_id)
     if state:
         return jsonify(state.to_dict())
@@ -36,8 +33,6 @@ def get_state_id(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """deletes a state based on its id"""
-    from models import storage
-
     state = storage.get(State, state_id)
     if state:
         storage.delete(state)
@@ -63,8 +58,6 @@ def create_state():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """updates a given state"""
-    from models import storage
-
     state = storage.get(State, state_id)
     if state is None:
         return abort(404)
