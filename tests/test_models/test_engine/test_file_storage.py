@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -113,3 +114,37 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """
+        The function `test_get` tests the `get` method of the
+        `DBStorage` class by passing in an unknown
+        """
+        # testing with unknown class and id
+        self.assertTrue(storage.get(models, "id") is None)
+        self.assertTrue(storage.get(eval("State"), "id") is None)
+
+        state = State(name="California")
+        storage.new(state)
+        get_state = storage.get(State, state.id)
+        self.assertTrue(state.id == get_state.id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """
+        The `test_count` function tests the `count` method of a
+        storage object by checking the number of objects before
+        and after adding a new object.
+        """
+        # counting all class
+        first_no = storage.count()
+        # counting all `State` classes
+        first_no_state = storage.count(State)
+        self.assertTrue(type(first_no) is int)
+        state = State(name="California")
+        storage.new(state)
+        after_no = storage.count()
+        after_no_state = storage.count(State)
+        self.assertTrue(first_no_state + 1 == after_no_state)
+        self.assertTrue(first_no + 1 == after_no)
