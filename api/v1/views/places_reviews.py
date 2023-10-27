@@ -4,7 +4,10 @@ Review view for the AirBnB API.
 """
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
-from models import storage, Review, Place, User
+from models import storage
+from models.review import Review
+from models.user import User
+from models.place import Place
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],

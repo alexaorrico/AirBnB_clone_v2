@@ -4,7 +4,8 @@ Amenity view for the AirBnB API.
 """
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
-from models import storage, Amenity
+from models import storage
+from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
