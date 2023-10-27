@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" API endpoints for users """
+"""API endpoints for users"""
 from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models.user import User
@@ -10,7 +10,7 @@ from models import storage
                  methods=['GET'],
                  strict_slashes=False)
 def all_users():
-    """ Retrieve all users """
+    """Retrieve all users"""
     return jsonify(list(map(
         lambda x: x.to_dict(), storage.all(User).values()
     )))
@@ -20,7 +20,7 @@ def all_users():
                  methods=["GET"],
                  strict_slashes=False)
 def get_user(user_id):
-    """ Retrieves a particular user """
+    """Retrieves a particular user"""
     user = storage.get(User, user_id)
     return jsonify(user.to_dict()) if user else abort(404)
 
@@ -31,7 +31,7 @@ def get_user(user_id):
     strict_slashes=False
 )
 def delete_user(user_id):
-    """ Deletes a particular user """
+    """Deletes a particular user"""
     user = storage.get(User, user_id)
     if user:
         storage.delete(user)
@@ -46,7 +46,7 @@ def delete_user(user_id):
     strict_slashes=False
 )
 def post_user():
-    """ Creates a new user """
+    """Creates a new user"""
     data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
@@ -67,7 +67,7 @@ def post_user():
     strict_slashes=False
 )
 def update_user(user_id):
-    """ Updates a user """
+    """Updates a user"""
     data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
