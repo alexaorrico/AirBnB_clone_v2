@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """module containing a Flask Blueprint instance routes"""
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, make_response
 from models import storage
 from models.amenity import Amenity
 from models.city import City
@@ -24,3 +24,9 @@ def status():
 def stats():
     """returns counts for all resources"""
     return jsonify({obj: storage.count(classes[obj]) for obj in classes})
+
+
+@app_views.app_errorhandler(404)
+def not_found(error):
+    """handles 404 errors"""
+    return make_response(jsonify({"error": "Not found"}), 404)
