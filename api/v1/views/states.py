@@ -32,7 +32,7 @@ def states_id(id: str):
     return jsonify(state.to_dict()), 200
 
 
-@app_views.route('/states/<id>', methods=['DELETE'])
+@app_views.route('/states/<id>', methods=['DELETE'], strict_slashes=False)
 def states_id_delete(id: str):
     """
     The function `states_id_delete` deletes a state
@@ -64,7 +64,7 @@ def states_post():
     return jsonify(storage.get(State, state.id).to_dict()), 201
 
 
-@app_views.route('states/<id>', methods=['PUT'])
+@app_views.route('states/<id>', methods=['PUT'], strict_slashes=False)
 def states_put(id: str):
     """
     The function updates the attributes of a state object based
