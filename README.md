@@ -160,3 +160,49 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+ AirBnB clone - RESTful API
+Python
+Back-end
+API
+Webserver
+Flask
+ By: Guillaume, CTO at Holberton School
+ Weight: 2
+ Project to be done in teams of 2 people (your team: Wanjiru James Ndungu Wanjiru, Talent Gwizhi)
+ Project will start Oct 26, 2023 6:00 AM, must end by Oct 31, 2023 6:00 AM
+ Checker will be released at Oct 27, 2023 12:00 PM
+ An auto review will be launched at the deadline
+Concepts
+For this project, we expect you to look at these concepts:
+
+REST API
+AirBnB clone
+Resources
+Read or watch:
+
+REST API concept page
+Learn REST: A RESTful Tutorial
+Designing a RESTful API with Python and Flask
+HTTP access control (CORS)
+Flask cheatsheet
+What are Flask Blueprints, exactly?
+Flask
+Modular Applications with Blueprints
+Flask tests
+Flask-CORS
+Learning Objectives
+At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
+
+General
+What REST means
+What API means
+What CORS means
+What is an API
+What is a REST API
+What are other type of APIs
+Which is the HTTP method to retrieve resource(s)
+Which is the HTTP method to create a resource
+Which is the HTTP method to update resource
+Which is the HTTP method to delete resource
+How to request REST API
