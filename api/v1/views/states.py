@@ -26,7 +26,7 @@ def states_id(state_id):
     corresponding state object as a JSON response, or raises a
     404 error if the state is not found.
     """
-    state = storage.get(State, id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -38,7 +38,7 @@ def states_id_delete(state_id):
     The function `states_id_delete` deletes a state
     object from storage based on its ID.
     """
-    state = storage.get(State, id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -70,7 +70,7 @@ def states_put(state_id):
     The function updates the attributes of a state object based
     on the provided JSON data and returns the updated state
     object as a JSON response."""
-    state = storage.get(State, id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     data = request.get_json()
