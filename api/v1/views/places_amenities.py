@@ -1,16 +1,19 @@
 #!/usr/bin/python3
-"""places amenities"""
+"""places_amenities.py"""
+import os
 from api.v1.views import app_views
+from flask import abort, jsonify, make_response, request
 from models import storage
-from flask import jsonify, abort, request, Blueprint
-from models.place import Place
 from models.amenity import Amenity
+from models.place import Place
+from flasgger.utils import swag_from
 
 
-@app_views.route('/places/<place_id>/amenities', methods=['GET'],
-        strict_slashes=False)
-def get_amenits(place_id):
-    """retrieve amenities"""
+@app_views.route('/places/<string:place_id>/amenities', methods=['GET'],
+                 strict_slashes=False)
+@swag_from('documentation/place_amenity/get_id.yml', methods=['GET'])
+def get_amenities(place_id):
+    """ retrieves all amenities from a place """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -20,8 +23,9 @@ def get_amenits(place_id):
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
+@swag_from('documentation/place_amenity/delete.yml', methods=['DELETE'])
 def delete_amenity(place_id, amenity_id):
-    """delete amenity from place"""
+    """ delete amenity from place """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -37,8 +41,9 @@ def delete_amenity(place_id, amenity_id):
 
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  methods=['POST'], strict_slashes=False)
+@swag_from('documentation/place_amenity/post.yml', methods=['POST'])
 def post_amenity2(place_id, amenity_id):
-    """post amenity by id"""
+    """ post amenity by id """
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
