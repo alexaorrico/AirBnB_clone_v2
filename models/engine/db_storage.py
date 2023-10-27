@@ -90,6 +90,7 @@ class DBStorage:
         return None
 
     def count(self, cls=None):
+<<<<<<< HEAD
         """
         count the number of objects in storage
         """
@@ -101,4 +102,16 @@ class DBStorage:
                 count += len(models.storage.all(clas).values())
         else:
             count = len(models.storage.all(cls).values())
+=======
+        """returns the number of objects 
+        in storage matching the given class name. 
+        If no name is passed, returns the count 
+        of all objects in storage."""
+
+        all_cls = classes.values()
+        if not cls:
+            count = 0
+            for value in all_cls:
+                count += len(models.storage.all(value).values())
+>>>>>>> storage_get_count
         return count
