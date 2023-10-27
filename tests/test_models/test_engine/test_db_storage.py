@@ -82,7 +82,6 @@ test_db_storage.py'])
         get_state = storage.get(State, state.id)
         self.assertTrue(state.id == get_state.id)
 
-
     def test_count(self):
         """
         The `test_count` function tests the `count` method of a
