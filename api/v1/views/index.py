@@ -16,7 +16,8 @@ from models.user import User
 def status():
     """
     import app_views from api.v1.views
-create a route /status on the object app_views that returns a JSON: "status": "OK" (see example)
+create a route /status on the object app_views that
+returns a JSON: "status": "OK" (see example)
     """
     return jsonify({"status": "OK"})
 
