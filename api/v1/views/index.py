@@ -13,7 +13,6 @@ from models.review import Review
 from models.user import User
 
 
-
 @app_views.route('/status', strict_slashes=False)
 def get_status():
     return jsonify({"status": "OK"})
