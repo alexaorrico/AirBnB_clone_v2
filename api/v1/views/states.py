@@ -35,14 +35,20 @@ def states_delete(state_id):
     return (jsonify({}), 200)
 
 
+def validate_request_json(request):
+    """Checks validity of request's json content"""
+    req_json = request.get_json(silent=True)
+    if not req_json:
+        abort(jsonify({"message": "Not a JSON"}), 400)
+    if request.method == 'POST' and 'name' not in req_json:
+        abort(jsonify({"message": "Missing name"}), 400)
+    return (req_json)
+
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def states_post():
     """Creates a state resource if request content is valid."""
-    req_json = request.get_json(silent=True)
-    if not req_json:
-        return make_response(jsonify({'message': "Not a JSON"}), 400)
-    if 'name' not in req_json:
-        return make_response(jsonify({'message': "Missing name"}), 400)
+    req_json = validate_request_json(request)
     new_state = State(**req_json)
     new_state.save()
     return (jsonify(new_state.to_dict()), 201)
@@ -55,9 +61,7 @@ def states_put(state_id):
     obj = storage.all(State).get(key)
     if not obj:
         abort(404)
-    req_json = request.get_json(silent=True)
-    if not req_json:
-        return make_response(jsonify({'message': "Not a JSON"}), 400)
+    req_json = validate_request_json(request)
     ignore = ['id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:

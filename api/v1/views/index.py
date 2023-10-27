@@ -29,4 +29,4 @@ def stats():
 @app_views.app_errorhandler(404)
 def not_found(error):
     """handles 404 errors"""
-    return make_response(jsonify({"error": "Not found"}), 404)
+    return (jsonify({"error": "Not found"}), 404)
