@@ -2,14 +2,14 @@
 """
 This is the module for the index view
 """
-from api.v1.views import app_views
 from flask import jsonify
+from api.v1.views import app_views
 from models import storage
 
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """returns app_views API staus"""
+    """returns app_views API status"""
     return jsonify(status='Ok')
 
 
