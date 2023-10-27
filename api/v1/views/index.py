@@ -11,6 +11,6 @@ def status():
     with the key "status" set to "ok".
     """
     arg = {
-        "status": "ok"
+        "status": "OK"
           }
     return jsonify(**arg)
