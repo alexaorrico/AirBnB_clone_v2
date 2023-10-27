@@ -35,7 +35,6 @@ def delete_user(user_id):
 @app_views.route(
     '/users',
     methods=["POST"],
-    strict_slashes=False
 )
 def post_user():
     """ Creates a new user """
