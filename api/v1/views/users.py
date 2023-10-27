@@ -39,7 +39,7 @@ def delete_user(user_id):
 )
 def post_user():
     """ Creates a new user """
-    data: dict = request.get_json()
+    data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
 
