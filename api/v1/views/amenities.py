@@ -37,13 +37,10 @@ def delete_amenity(amenity_id):
     """
 
     amenity = storage.get(Amenity, amenity_id)
-
     if not amenity:
         abort(404)
-
     storage.delete(amenity)
     storage.save()
-
     return make_response(jsonify({}), 200)
 
 
@@ -72,14 +69,10 @@ def put_amenity(amenity_id):
     """
     if not request.get_json():
         abort(400, description="Not a JSON")
-
     ignore = ['id', 'created_at', 'updated_at']
-
     amenity = storage.get(Amenity, amenity_id)
-
     if not amenity:
         abort(404)
-
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
