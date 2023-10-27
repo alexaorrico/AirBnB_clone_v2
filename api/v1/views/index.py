@@ -23,9 +23,12 @@ def status():
     return jsonify(**arg)
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats')
 def get_stats():
-    """Return /status api route"""
+    """
+    The function `get_stats` returns a JSON object containing
+    the count of various entities in a storage system.
+    """
     stats = {
         'amenities': storage.count(Amenity),
         'cities': storage.count(City),
