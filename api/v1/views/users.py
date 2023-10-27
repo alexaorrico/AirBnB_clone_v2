@@ -13,11 +13,13 @@ def all_users():
         lambda x: x.to_dict(), storage.all(User).values()
     )))
 
+
 @app_views.route('/users/<user_id>', methods=["GET"])
 def get_user(user_id):
     """ Retrieves a particular user """
     user: User = storage.get(User, user_id)
     return jsonify(user.to_dict()) if user else abort(404)
+
 
 @app_views.route("/users/<user_id>", methods=["DELETE"])
 def delete_user(user_id: str):
@@ -29,6 +31,7 @@ def delete_user(user_id: str):
         return {}, 200
     return abort(404)
 
+
 @app_views.route(
     '/users',
     methods=["POST"],
@@ -39,16 +42,17 @@ def post_user():
     data: dict = request.get_json()
     if not data:
         abort(400, "Not a JSON")
-    
+
     if 'email' not in data:
         abort(400, "Missing email")
-    
+
     if 'password' not in data:
         abort(400, "Missing password")
     print(data)
     new_user: User = User(**data)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
+
 
 @app_views.route(
     '/users/<user_id>',
@@ -60,11 +64,11 @@ def update_user(user_id):
     print(data)
     if not data:
         abort(400, "Not a JSON")
-    
+
     user: User or None = storage.get(User, user_id)
     if not user:
         abort(404)
-    
+
     ignore = (
         'id',
         'created_at',
