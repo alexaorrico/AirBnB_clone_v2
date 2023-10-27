@@ -14,6 +14,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
+* [RESTful API](#RESTful-API)
 * [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
@@ -150,6 +151,10 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+## RESTful API
+- Expose all your objects stored via a JSON web interface
+- Manipulate your objects via a RESTful API
+
 ## Bugs
 No known bugs at this time. 
 
@@ -158,5 +163,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+- Stephen B. Oloo - [Github](https://github.com/stepholo) / [Twitter](https://twitter.com/Stevenob12)
+- Dzidedi Senaya - [Github](https://github.com/DzidediSenaya) / [Twitter](https://twitter.com/DSenaya)
 ## License
 Public Domain. No copy write protection. 
