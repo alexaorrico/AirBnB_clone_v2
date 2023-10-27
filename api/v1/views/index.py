@@ -14,13 +14,13 @@ classes = {"users": User, "places": Place, "states": State,
            "reviews": Review}
 
 
-@app_views.route('/status')
+@app_views.route('/status' methods=['GET'])
 def status():
     """returns status of API"""
     return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/stats', methods=['GET'])
 def count():
     '''retrieves the number of each objects by type'''
     count_dict = {}
