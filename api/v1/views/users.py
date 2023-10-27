@@ -17,14 +17,14 @@ def all_users():
 @app_views.route('/users/<user_id>', methods=["GET"])
 def get_user(user_id):
     """ Retrieves a particular user """
-    user: User = storage.get(User, user_id)
+    user = storage.get(User, user_id)
     return jsonify(user.to_dict()) if user else abort(404)
 
 
 @app_views.route("/users/<user_id>", methods=["DELETE"])
-def delete_user(user_id: str):
+def delete_user(user_id):
     """ Deletes a particular user """
-    user: User = storage.get(User, user_id)
+    user = storage.get(User, user_id)
     if user:
         storage.delete(user)
         storage.save()
@@ -48,7 +48,7 @@ def post_user():
 
     if 'password' not in data:
         abort(400, "Missing password")
-    new_user: User = User(**data)
+    new_user = User(**data)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
 
@@ -59,11 +59,11 @@ def post_user():
 )
 def update_user(user_id):
     """ Updates a user """
-    data: dict = request.get_json()
+    data = request.get_json()
     if not data:
         abort(400, "Not a JSON")
 
-    user: User or None = storage.get(User, user_id)
+    user = storage.get(User, user_id)
     if not user:
         abort(404)
 
