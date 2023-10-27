@@ -49,7 +49,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -76,16 +76,6 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """A method to retrieve one object"""
-        if cls is None or id is None:
-            return None
-        objs = models.storage.all(cls)
-        for obj in objs.values():
-            if obj.id == id:
-                return obj
-        return None
-
-    def get(self, cls, id):
         """
         Returns the object based on the class name and its ID, or
         None if not found
@@ -95,9 +85,8 @@ class DBStorage:
 
         all_cls = models.storage.all(cls)
         for value in all_cls.values():
-            if (value.id == id):
+            if value.id == id:
                 return value
-
         return None
 
     def count(self, cls=None):
@@ -112,5 +101,4 @@ class DBStorage:
                 count += len(models.storage.all(clas).values())
         else:
             count = len(models.storage.all(cls).values())
-
         return count
