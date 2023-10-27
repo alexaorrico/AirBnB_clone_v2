@@ -25,6 +25,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -113,3 +114,22 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """ """
+        storage = FileStorage()
+        state = State()
+        state.name = "Nador"
+        storage.new(state)
+        storage.save()
+        self.assertIs(storage.get(State, state.id), state)
+
+    def test_count(self):
+        """ """
+        storage = FileStorage()
+        states_count = len(storage.all(State))
+        state = State()
+        state.name = "Rabat"
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.count(State), states_count + 1)
