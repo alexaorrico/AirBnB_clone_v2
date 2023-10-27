@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""module containing a Flask Blueprint routes that handles
+"""Module containing a Flask Blueprint routes that handles
 all default RESTFul API actions for State resource"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -9,10 +9,9 @@ from models.state import State
 
 
 def retrive_object(state_id):
-    """Retrives a state resource based of id."""
-    key = 'State.' + escape(state_id)
-    obj = storage.all(State).get(key)
-    if not obj:
+    """Retrives a State resource based of id."""
+    obj = storage.get(State, escape(state_id))
+    if obj is None:
         abort(404)
     return (obj)
 
@@ -20,7 +19,7 @@ def retrive_object(state_id):
 def validate_request_json(request):
     """Checks validity of request's json content"""
     req_json = request.get_json(silent=True)
-    if not req_json:
+    if req_json is None:
         abort(jsonify({"message": "Not a JSON"}), 400)
     if request.method == 'POST' and 'name' not in req_json:
         abort(jsonify({"message": "Missing name"}), 400)
@@ -30,8 +29,8 @@ def validate_request_json(request):
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def states_get(state_id=None):
-    """returns a state resource if id is given, else returns all states"""
-    if not state_id:
+    """Returns a State resource if id is given, else returns all states"""
+    if state_id is None:
         states_list = [obj.to_dict() for obj in storage.all(State).values()]
         return (jsonify(states_list))
     obj = retrive_object(escape(state_id))
@@ -41,16 +40,16 @@ def states_get(state_id=None):
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def states_delete(state_id):
-    """deletes a state resource if given id is found."""
+    """Deletes a State resource if given id is found."""
     obj = retrive_object(escape(state_id))
     storage.delete(obj)
     storage.save()
-    return (jsonify({}), 200)
+    return (jsonify({}))
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def states_post():
-    """Creates a state resource if request content is valid."""
+    """Creates a State resource if request content is valid."""
     req_json = validate_request_json(request)
     new_state = State(**req_json)
     new_state.save()
@@ -59,7 +58,7 @@ def states_post():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def states_put(state_id):
-    """updates a state resource with given id."""
+    """Updates a State resource of given id if request content is valid."""
     obj = retrive_object(escape(state_id))
     req_json = validate_request_json(request)
     ignore = ['id', 'created_at', 'updated_at']
@@ -67,4 +66,4 @@ def states_put(state_id):
         if key not in ignore:
             setattr(obj, key, value)
     obj.save()
-    return (jsonify(obj.to_dict()), 200)
+    return (jsonify(obj.to_dict()))
