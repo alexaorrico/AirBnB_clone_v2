@@ -82,7 +82,7 @@ def update_place(place_id):
 def places_search():
     try:
         search_data = request.get_json()
-    except:
+    except ValueError:
         abort(400, description="Not a JSON")
 
     states = search_data.get("states", [])

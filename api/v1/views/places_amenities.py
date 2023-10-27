@@ -25,8 +25,8 @@ def get_place_amenities(place_id):
     return jsonify([amenity.to_dict() for amenity in place.amenities])
 
 
-@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["DELETE"],
-                 strict_slashes=False)
+@app_views.route("/places/<place_id>/amenities/<amenity_id>",
+                 methods=["DELETE"], strict_slashes=False)
 def delete_place_amenity(place_id, amenity_id):
     """
     Delete an Amenity from a Place.
