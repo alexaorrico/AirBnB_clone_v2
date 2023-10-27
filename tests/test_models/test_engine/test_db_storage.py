@@ -68,7 +68,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    @unittest.skipIf(models.storage_t == 'fs', "not testing file storage")
     def test_get(self):
         """
         The function `test_get` tests the `get` method of the
@@ -83,7 +82,7 @@ test_db_storage.py'])
         get_state = storage.get(State, state.id)
         self.assertTrue(state.id == get_state.id)
 
-    @unittest.skipIf(models.storage_t == 'fs', "not testing file storage")
+
     def test_count(self):
         """
         The `test_count` function tests the `count` method of a
