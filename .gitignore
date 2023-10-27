@@ -1,2 +1,10 @@
 __pycache__/
 file.json
+api/__pycache__
+api/v1/__pycache__
+api/v1/views/__pycache__
+models/__pycache__
+models/engine/__pycache__
+tests/__pycache__
+tests/test_models/__pycache__
+web_flask/__pycache__

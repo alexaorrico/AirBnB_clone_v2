@@ -96,3 +96,58 @@ def put_place(place_id):
     response = make_response(json.dumps(res), 200)
     response.headers["Content-Type"] = "application/json"
     return response
+
+
+@app_views.route('/places_search', methods=['POST'])
+def places_search_enhanced():
+    """endpoint to retrieves all PlaceObj using passed JSON"""
+    abortMSG = "Not a JSON"
+    if request.get_json() is None:
+        abort(400, description=abortMSG)
+    data = request.get_json()
+    if data and len(data):
+        states = data.get('states', None)
+        cities = data.get('cities', None)
+        amenities = data.get('amenities', None)
+    if not data or not len(data) or (
+            not states and
+            not cities and
+            not amenities):
+        places = storage.all(Place).values()
+        placesList = []
+        placesList = [place.to_dict() for place in places]
+        res = json.dumps(placesList)
+        response = make_response(res, 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    placesList = []
+    if states:
+        statesObj = [storage.get(State, s_id) for s_id in states]
+        for state in statesObj:
+            if state:
+                for city in state.cities:
+                    if city:
+                        placesList.extend(place for place in city.places)
+    if cities:
+        city_obj = [storage.get(City, c_id) for c_id in cities]
+        for city in city_obj:
+            if city:
+                for place in city.places:
+                    if place not in placesList:
+                        placesList.append(place)
+    if amenities:
+        if not placesList:
+            placesList = storage.all(Place).values()
+        amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
+        placesList = [place for place in placesList
+                       if all([am in place.amenities
+                               for am in amenities_obj])]
+    places = []
+    for aPlace in placesList:
+        filtered = aPlace.to_dict()
+        filtered.pop('amenities', None)
+        places.append(filtered)
+    res = json.dumps(places)
+    response = make_response(res, 200)
+    response.headers['Content-Type'] = 'application/json'
+    return response
