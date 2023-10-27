@@ -19,26 +19,26 @@ def all_states():
     return jsonify(my_list)
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
-def states_id(state_id):
+@app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
+def states_id(id):
     """
     The function `states_id` takes an ID as input and returns the
     corresponding state object as a JSON response, or raises a
     404 error if the state is not found.
     """
-    state = storage.get(State, state_id)
+    state = storage.get(State, id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
-def states_id_delete(state_id):
+@app_views.route('/states/<id>', methods=['DELETE'], strict_slashes=False)
+def states_id_delete(id):
     """
     The function `states_id_delete` deletes a state
     object from storage based on its ID.
     """
-    state = storage.get(State, state_id)
+    state = storage.get(State, id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -64,13 +64,13 @@ def states_post():
     return jsonify(storage.get(State, state.id).to_dict()), 201
 
 
-@app_views.route('states/<string:state_id>', methods=['PUT'], strict_slashes=False)
-def states_put(state_id):
+@app_views.route('states/<id>', methods=['PUT'], strict_slashes=False)
+def states_put(id):
     """
     The function updates the attributes of a state object based
     on the provided JSON data and returns the updated state
     object as a JSON response."""
-    state = storage.get(State, state_id)
+    state = storage.get(State, id)
     if state is None:
         abort(404)
     data = request.get_json()
