@@ -2,14 +2,14 @@
 """places amenities"""
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request, Blueprint
 from models.place import Place
 from models.amenity import Amenity
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'],
         strict_slashes=False)
-def get_amenities(place_id):
+def get_amenits(place_id):
     """retrieve amenities"""
     place = storage.get(Place, place_id)
     if place is None:
