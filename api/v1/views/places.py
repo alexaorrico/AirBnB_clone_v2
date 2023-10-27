@@ -36,10 +36,10 @@ def get_place(id):
     return response
 
 
-@app_views.route("/place/<id>", methods=["DELETE"])
+@app_views.route("/places/<id>", methods=["DELETE"])
 def delete_place(id):
     """delets city with id"""
-    place = storage.get(place, id)
+    place = storage.get(Place, id)
     if not place:
         abort(404)
     storage.delete(place)
