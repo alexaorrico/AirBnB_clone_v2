@@ -12,13 +12,13 @@ from models.user import User
 import json
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_status():
     """retuens the status"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def get_stats():
     """ retrieves the number of each objects by type"""
     from models import storage
