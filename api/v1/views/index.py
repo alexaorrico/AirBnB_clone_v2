@@ -11,10 +11,7 @@ from models.state import State
 from models.user import User
 
 
-app = Flask(__name__)
-
-
-@app_views.route("/status")
+@app_views.route("/status", strict_slashes=False)
 def status():
     json_text = jsonify({"status": "OK"})
     return json_text
