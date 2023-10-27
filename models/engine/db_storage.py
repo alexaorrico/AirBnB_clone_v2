@@ -52,7 +52,7 @@ class DBStorage:
         return (new_dict)
 
     def get(self, cls, id):
-        """This method retrive one object from storage"""
+        """This method retrive one object from database storage"""
         objects = self.__session.query(cls).all()
         if objects and id:
             for obj in objects:
