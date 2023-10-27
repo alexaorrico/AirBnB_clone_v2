@@ -7,7 +7,8 @@ from flask import Flask, jsonify, abort, request
 from models import storage, Place, City, User
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
 def get_places(city_id):
     """Retrieve a list of all Place objects of a City"""
     city = storage.get(City, city_id)
@@ -26,7 +27,8 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_place(place_id):
     """Delete a Place object by ID"""
     place = storage.get(Place, place_id)
@@ -37,7 +39,8 @@ def delete_place(place_id):
     return jsonify({})
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
 def create_place(city_id):
     """Create a new Place object"""
     city = storage.get(City, city_id)
@@ -110,6 +113,11 @@ def places_search():
 
     # Filter by amenities
     if amenities:
-        places = [place for place in places if all(amenity_id in place.amenity_ids() for amenity_id in amenities)]
+        places = [
+            place for place in places if all(
+                amenity_id in place.amenity_ids()
+                for amenity_id in amenities
+            )
+        ]
 
     return jsonify([place.to_dict() for place in places])

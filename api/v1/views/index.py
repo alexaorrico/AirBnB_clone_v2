@@ -37,6 +37,7 @@ def get_status():
     """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def get_stats():
     """
@@ -49,6 +50,7 @@ def get_stats():
     for key, value in stats.items():
         d_dict[key] = storage.count(value)
     return jsonify(d_dict)
+
 
 if __name__ == "__main__":
     pass
