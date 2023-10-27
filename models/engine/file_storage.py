@@ -71,11 +71,17 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """ Get the number of object"""
         key = "{}.{}".format(cls.__name__, id)
         return self.__objects.get(key) if key in self.__objects else None
 
     def count(self, cls=None):
+        """ Count the number of objects in storage."""
         count = len(self.__objects)
         if cls:
-            count = len({k: v for k, v in self.__objects.items() if isinstance(v, cls)})
-            return count
+            count = len({
+                k: v
+                for k, v in self.__objects.items()
+                if isinstance(v, cls)}
+            )
+        return count

@@ -82,5 +82,6 @@ class DBStorage:
     def count(self, cls=None):
         """Count the number of objects in dbstorage"""
         query = self.__session.query(cls)
-        count = query.count() if not cls else query.filter(cls.__name__ == cls.__name__).count()
+        count = query.count() if not cls else \
+            query.filter(cls.__name__ == cls.__name__).count()
         return count
