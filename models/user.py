@@ -31,7 +31,8 @@ class User(BaseModel, Base):
 
         # When creating a new user or updating the password, hash the password
         if 'password' in kwargs:
-            self.password = hashlib.md5(kwargs['password'].encode()).hexdigest()
+            self.password = hashlib.md5(kwargs['password']
+                                        .encode()).hexdigest()
         else:
             self.password = ""
 
