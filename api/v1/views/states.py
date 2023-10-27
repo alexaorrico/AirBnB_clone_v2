@@ -19,8 +19,8 @@ def all_states():
     return jsonify(my_list)
 
 
-@app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
-def states_id(id):
+@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
+def states_id(state_id):
     """
     The function `states_id` takes an ID as input and returns the
     corresponding state object as a JSON response, or raises a
@@ -32,8 +32,8 @@ def states_id(id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<id>', methods=['DELETE'], strict_slashes=False)
-def states_id_delete(id):
+@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
+def states_id_delete(state_id):
     """
     The function `states_id_delete` deletes a state
     object from storage based on its ID.
@@ -64,8 +64,8 @@ def states_post():
     return jsonify(storage.get(State, state.id).to_dict()), 201
 
 
-@app_views.route('states/<id>', methods=['PUT'], strict_slashes=False)
-def states_put(id):
+@app_views.route('states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+def states_put(state_id):
     """
     The function updates the attributes of a state object based
     on the provided JSON data and returns the updated state
