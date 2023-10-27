@@ -22,7 +22,8 @@ def get_status():
 def get_stats():
     from models import storage
     classes = [Amenity, City, Place, Review, State, User]
-    names = [c.__name__.lower() for c in classes]
+    # names = [c.__name__.lower() for c in classes]
+    names = ["amenities", "cities", "places", "reviews", "states", "users"]
     stats = {}
     for name in range(len(classes)):
         stats[names[name]] = storage.count(classes[name])
