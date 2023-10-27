@@ -27,8 +27,7 @@ def get_places(city_id):
 def get_a_place(place_id):
     """comment"""
     places = storage.get(Place, place_id)
-    return jsonify((places.to_dict())
-            if places else abort(404))
+    return jsonify((places.to_dict()) if places else abort(404))
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
