@@ -53,9 +53,12 @@ def delete_city(id):
 def create_city(id_state):
     """inserts city if its valid json amd has correct key and state id"""
     missingMSG = "Missing name"
+    abortMSG = "Not a JSON"
     state = storage.get(State, id_state)
     if not state:
         abort(404)
+    if not request.get_json():
+        abort(400, description=abortMSG)
     if "name" not in request.get_json():
         abort(400, description=missingMSG)
     data = request.get_json()
