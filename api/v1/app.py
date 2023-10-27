@@ -2,7 +2,7 @@
 """
 This is the module for our flask app
 """
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -15,7 +15,7 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def not_found(error):
     """This function handles the not found error"""
-    return jsonify(error='Not found'), 404
+    return jsonify(error="Not found"), 404
 
 
 @app.teardown_appcontext
