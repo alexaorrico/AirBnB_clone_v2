@@ -4,6 +4,12 @@
 from api.v1.views import app_views
 from flask import jsonify, make_response
 from models import storage
+from models.amenity import Amenity
+from models.state import State
+from models.city import City
+from models.user import User
+from models.place import Place
+from models.review import Review
 
 
 @app_views.route('/status')
@@ -15,12 +21,12 @@ def status():
 @app_views.route('/stats')
 def count_objects():
     """counts the number of respective object"""
-    classes = ['Amenities', 'Cities', 'Places', 'Reviews', 'States', 'Users']
-    objs = {'amenities', 'cities', 'places', 'reviews', 'states', 'users'}
+    classes = [Amenity, City, Place, Review, State, User]
+    objs = ['amenities', 'cities', 'places', 'reviews', 'states', 'users']
+    di_ct = {}
     i = 0
     for key in objs:
-        objs[key] = storage.count(classes[i])
-        i+=1
+        di_ct[key] = storage.count(classes[i])
+        i += 1
 
-    return make_response(jsonify({objs}))
-
+    return make_response(jsonify(di_ct))
