@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
@@ -119,6 +119,9 @@ class TestDbNew(unittest.TestCase):
         first_state_id = list(storage.all(State).values())[0].id
         obj = storage.get(State, first_state_id)
         self.assertEqual(obj.id, first_state_id)
+        """ check not passing arguments """
+        with self.assertRaises(TypeError):
+            storage.get()
 
 
 if __name__ == "__main__":

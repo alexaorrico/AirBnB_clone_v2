@@ -122,3 +122,16 @@ class TestFileStorage(unittest.TestCase):
         for obj in objs.values():
             count += 1
         self.assertEqual(count, models.storage.count())
+        """ test count with a class """
+        objs = models.storage.all(State)
+        count = 0
+        for obj in objs.values():
+            count += 1
+        self.assertEqual(count, models.storage.count(State))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """ test retrieving object """
+        first_state_id = list(models.storage.all(State).values())[0].id
+        obj = models.storage.get(State, first_state_id)
+        self.assertEqual(obj.id, first_state_id)
