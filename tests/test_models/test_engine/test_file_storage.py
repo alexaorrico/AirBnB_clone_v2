@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -70,6 +71,12 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def setUp(self):
+        """set up"""
+        self.file_storage = FileStorage()
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +120,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method"""
+        state = State()
+        state_id = state.id
+        self.file_storage.new(state)
+        self.file_storage.save()
+
+        get_state = self.file_storage.get(State, state_id)
+        self.assertEqual(get_state, state)
+
+        with self.assertRaises(TypeError):
+            get_state1 = self.file_storage.get(State)
+
+        with self.assertRaises(TypeError):
+            get_state2 = self.file_storage.get(state_id)
+
+        with self.assertRaises(TypeError):
+            get_state3 = self.file_storage.get()
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Count the objects"""
+        state1 = State()
+        state2 = State()
+        self.file_storage.new(state1)
+        self.file_storage.new(state2)
+        self.file_storage.save()
+
+        total = self.file_storage.count(State)
+        self.assertEqual(total, 3)
+
+        total_n = self.file_storage.count()
+        self.assertEqual(total_n, 9)
+
+        with self.assertRaises(NameError):
+            total_y = self.file_storage.count(Yes)
