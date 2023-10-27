@@ -15,10 +15,10 @@ from models.user import User
 classes = {
     "amenities": Amenity,
     "cities": City,
-    "Places": Place,
-    "Reviews": Review,
-    "States": State,
-    "Users": User,
+    "places": Place,
+    "reviews": Review,
+    "states": State,
+    "users": User,
 }
 
 
