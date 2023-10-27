@@ -17,16 +17,15 @@ def status():
     return jsonify(**arg)
 
 
-@app_views.route('/stats', methods=["GET"])
-def stats():
+@app_views.route('/stats', methods=['GET'])
+def get_stats():
     """Return /status api route"""
-    d = {
-        "amenities": "Amenity",
-        "cities": "City",
-        "places": "Place",
-        "reviews": "Review",
-        "states": "State",
-        "users": "User"
-        }
-    d = {k: storage.count(v) for k, v in d.items()}
-    return jsonify(d)
+    stats = {
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'places': storage.count('Place'),
+        'reviews': storage.count('Review'),
+        'states': storage.count('State'),
+        'users': storage.count('User')
+    }
+    return jsonify(stats)
