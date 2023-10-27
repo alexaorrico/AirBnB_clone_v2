@@ -26,6 +26,8 @@ def close_session(exe):
 if __name__ == "__main__":
 
     if getenv('HBNB_API_HOST') and getenv('HBNB_API_PORT'):
-        app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
+        hst = getenv('HBNB_API_HOST')
+        prt = getenv('HBNB_API_PORT')
+        app.run(host=hst, port=prt, threaded=True)
     else:
         app.run(host='0.0.0.0', port=5000, threaded=True)
