@@ -15,7 +15,7 @@ import json
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_status():
     """retuens the status"""
-    return jsonify({"status": "OK"})
+    return jsonify({"status":"OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
