@@ -58,13 +58,15 @@ def create_review(id_place):
     place = storage.get(Place, id_place)
     if not place:
         abort(404)
-    if "user_id" not in request.get_json():
-        abort(400, description=missingIdMSG)
-    if "text" not in request.get_json():
-        abort(400, description=missingTextMSG)
-    if not storage.get(User, request.get_json().get("user_id")):
-        abort(404)
     data = request.get_json()
+    if not data:
+        abort(400, description='Not a JSON')
+    if "user_id" not in data:
+        abort(400, description=missingIdMSG)
+    if not storage.get(User, data.get("user_id")):
+        abort(404)
+    if "text" not in data:
+        abort(400, description=missingTextMSG)
     instObj = Review(**data)
     instObj.place_id = id_place
     instObj.save()
