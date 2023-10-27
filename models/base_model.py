@@ -58,6 +58,12 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
+    def bm_update(self, name, value):
+        """
+            updates the basemodel and sets the correct attributes
+        """
+        setattr(self, name, value)
+
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
