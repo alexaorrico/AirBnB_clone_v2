@@ -84,7 +84,7 @@ class DBStorage:
         """
         if (cls is None) or (id is None):
             return None
-        if cls is not in classes.values():
+        if cls not in classes.values():
             return None
 
         obj_key = cls.__name__ + '.' + id
