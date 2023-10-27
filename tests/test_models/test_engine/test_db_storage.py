@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -93,13 +94,11 @@ class TestDBStorage(unittest.TestCase):
 
     def test_get(self):
         """Test get methon"""
-        storage = FileStorage()
         new_obj = State()
         new_obj.save()
         self.assertIs(storage.get(State, new_obj.id), new_obj)
 
     def test_count(self):
         """Test count methon"""
-        storage = FileStorage()
         self.assertEqual(storage.count(), len(storage.all()))
         self.assertEqual(storage.count(User), len(storage.all(User)))
