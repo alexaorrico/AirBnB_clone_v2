@@ -13,7 +13,7 @@ CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def teardown_appcont(exception):
+def teardown_appcont(self):
     """ends db session"""
     storage.close()
 
