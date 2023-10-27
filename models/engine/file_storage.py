@@ -40,6 +40,39 @@ class FileStorage:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
+    def get(self, cls, id):
+        """
+        Retrieve one object.
+
+        Args:
+            cls (class): The class of the object.
+            id (str): The ID of the object.
+
+        Returns:
+            obj: The object based on the class and its ID, or None if not found
+        """
+        if cls and id:
+            key = "{}.{}".format(cls.__name__, id)
+            return self.__objects.get(key, None)
+        return None
+
+    def count(self, cls=None):
+        """
+        Count the number of objects in storage.
+
+        Args:
+            cls (class, optional): The class to filter by.
+
+        Returns:
+            int: The number of objects in storage matching the given class.
+             If no class is passed, returns the count of objects in storage
+        """
+        if cls:
+            return len([obj for obj in self.__objects.values()
+                       if isinstance(obj, cls)])
+        else:
+            return len(self.__objects)
+
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
@@ -55,8 +88,8 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
