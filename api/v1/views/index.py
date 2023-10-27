@@ -17,7 +17,7 @@ def status():
     return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     "retrieves the number of each objects by type"
     return jsonify({
@@ -28,3 +28,7 @@ def stats():
         "states": storage.count(State),
         "users": storage.count(User)
     })
+
+
+if __name__ == '__main__':
+    pass
