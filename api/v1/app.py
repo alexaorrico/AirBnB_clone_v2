@@ -20,6 +20,11 @@ def close(exception):
 
 @app.errorhandler(404)
 def error_handler(error):
+    """
+    The function `error_handler` returns a response with a
+    JSON object containing an error message and a
+    status code of 404.
+    """
     return make_response(jsonify({'error': 'Not found'}),
                          404)
 
