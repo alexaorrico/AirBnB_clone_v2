@@ -20,7 +20,7 @@ def get_states():
 def get_a_state(state_id):
     """finds a unique state based of state_id"""
     state = storage.get(State, state_id)
-    if sate is None:
+    if state is None:
         abort(404)
     ret = state.to_dict()
     return jsonify(ret)
@@ -64,5 +64,5 @@ def update_a_state(state_id):
     for k, value in req.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state, k, value)
-    state.save()
+    storage.save()
     return jsonify(state.to_dict()), 200
