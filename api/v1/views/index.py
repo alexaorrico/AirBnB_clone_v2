@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Contains status, stats routes"""
+"""
+Contains status, stats routes
+"""
 from flask import jsonify
 from api.v1.views import app_views
 from models.amenity import Amenity
