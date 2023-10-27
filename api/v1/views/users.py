@@ -6,7 +6,9 @@ from models.user import User
 from models import storage
 
 
-@app_views.route('/users', methods=['GET'])
+@app_views.route('/users',
+                 methods=['GET'],
+                 strict_slashes=False)
 def all_users():
     """ Retrieve all users """
     return jsonify(list(map(
@@ -14,14 +16,20 @@ def all_users():
     )))
 
 
-@app_views.route('/users/<user_id>', methods=["GET"])
+@app_views.route('/users/<user_id>',
+                 methods=["GET"],
+                 strict_slashes=False)
 def get_user(user_id):
     """ Retrieves a particular user """
     user = storage.get(User, user_id)
     return jsonify(user.to_dict()) if user else abort(404)
 
 
-@app_views.route("/users/<user_id>", methods=["DELETE"])
+@app_views.route(
+    "/users/<user_id>",
+    methods=["DELETE"],
+    strict_slashes=False
+)
 def delete_user(user_id):
     """ Deletes a particular user """
     user = storage.get(User, user_id)
@@ -35,6 +43,7 @@ def delete_user(user_id):
 @app_views.route(
     '/users',
     methods=["POST"],
+    strict_slashes=False
 )
 def post_user():
     """ Creates a new user """
@@ -54,7 +63,8 @@ def post_user():
 
 @app_views.route(
     '/users/<user_id>',
-    methods=["PUT"]
+    methods=["PUT"],
+    strict_slashes=False
 )
 def update_user(user_id):
     """ Updates a user """
