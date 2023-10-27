@@ -124,7 +124,7 @@ class TestFileStorage(unittest.TestCase):
         storage = FileStorage()
         first_state_id = list(storage.all(State).values())[0].id
         self.assertIsNotNone(storage.get(State, new_state.id))
-        self.assertTrue(storage.get(State, first_state_id).partition('.')[2] == first_state_id)
+        self.assertIsInstance(storage.get(State, first_state_id), State)
 
     def test_get_none(self):
         """ Test"""
