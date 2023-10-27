@@ -140,8 +140,8 @@ def places_search_enhanced():
             placesList = storage.all(Place).values()
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
         placesList = [place for place in placesList
-                       if all([am in place.amenities
-                               for am in amenities_obj])]
+                      if all([am in place.amenities
+                             for am in amenities_obj])]
     places = []
     for aPlace in placesList:
         filtered = aPlace.to_dict()
