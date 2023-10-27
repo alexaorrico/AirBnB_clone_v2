@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """
-Contains the FileStorage class
+THIS MODULE CONTAINs FileStorage class
+all methods TO WRITE OBJECT INTO JSON FILE
+Class FileStorage serializes instances to a JSON file
+and deserializes JSON file to instances
 """
 
 import json
