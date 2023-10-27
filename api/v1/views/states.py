@@ -16,7 +16,7 @@ def all_states():
     my_list = []
     for i in all_state.values():
         my_list.append(i.to_dict())
-    return jsonify(my_list)
+    return jsonify(my_list), 200
 
 
 @app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
@@ -29,7 +29,7 @@ def states_id(id: str):
     state = storage.get(State, id)
     if state is None:
         abort(404)
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 200
 
 
 @app_views.route('/states/<id>', methods=['DELETE'])
