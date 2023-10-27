@@ -26,7 +26,6 @@ def not_reached(error):
     }
     return make_response(jsonify(e), 404)
 
-
 if __name__ == "__main__":
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
     ports = os.getenv("HBNB_API_PORT", "5000")
