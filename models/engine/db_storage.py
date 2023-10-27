@@ -82,11 +82,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """get an element based on the given id"""
-        elem = (
-            self.__session.query(classes.get(cls))
-            .filter(classes.get(cls).id == id)
-            .first()
-        )
+        elem = self.__session.query(eval(cls)).filter(eval(cls).id == id).first()
         if elem:
             return elem
         else:
