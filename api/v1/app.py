@@ -5,7 +5,7 @@ Main application module for the AirBnB API.
 This module creates a Flask application, registers blueprints,
 and handles app context teardown.
 """
-from flask import Flask, jsonify, make_response
+from flask import Flask, Blueprint, jsonify, make_response
 from os import environ
 from api.v1.views import app_views
 from models import storage
@@ -22,7 +22,7 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 # Define a method to handle app context teardown
 @app.teardown_appcontext
-def teardown(exception):
+def teardown_appcontext(code):
     """
     Teardown the Flask app context and close the database connection.
 
@@ -35,7 +35,7 @@ def teardown(exception):
 
 # Define a handler for 404 errors
 @app.errorhandler(404)
-def not_found(error):
+def page_not_found(error):
     """
     Handle 404 errors and return a JSON-formatted 404 response.
 
