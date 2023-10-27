@@ -12,7 +12,7 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 @app.teardown_appcontext
-def closeStorage(exception):
+def closeStorage(self):
     """Closes the storage session"""
     storage.close()
 
@@ -20,7 +20,7 @@ def closeStorage(exception):
 @app.errorhandler(404)
 def page_not_found(err):
     """Custom 404 page not found json error message"""
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
