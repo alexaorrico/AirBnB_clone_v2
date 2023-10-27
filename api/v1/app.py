@@ -5,6 +5,7 @@ This is the module for our flask app
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
+from os import getenv
 
 
 app = Flask(__name__)
@@ -23,4 +24,8 @@ def close_session(exe):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+
+    if getenv('HBNB_API_HOST') and getenv('HBNB_API_PORT'):
+        app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
+    else:
+        app.run(host='0.0.0.0', port=5000, threaded=True)
