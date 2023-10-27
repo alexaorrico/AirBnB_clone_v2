@@ -76,9 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        '''
-            Retrieve an obj w/class name and id
-        '''
+        """Retrieve an obj w/class name and id"""
         result = None
         try:
             objs = self.__session.query(models.classes[cls]).all()
@@ -90,9 +88,7 @@ class DBStorage:
         return result
 
     def count(self, cls=None):
-        '''
-            Count num objects in DBstorage
-        '''
+        """Count num objects in DBstorage"""
         cls_counter = 0
 
         if cls is not None:
