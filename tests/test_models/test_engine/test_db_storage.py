@@ -67,6 +67,41 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get_method(self):
+        """Test get method"""
+        db = DBStorage()
+        state = State(name="California")
+        db.new(state)
+        db.save()
+        obj = db.get(State, state.id)
+        self.assertEqual(state, obj)
+
+    def test_get_method_nonexistent_id(self):
+        """Test get method with nonexistent id"""
+        db = DBStorage()
+        obj = db.get(State, "nonexistent_id")
+        self.assertIsNone(obj)
+
+    def test_count_method(self):
+        """Test count method"""
+        db = DBStorage()
+        count_before = db.count(State)
+        state = State(name="New York")
+        db.new(state)
+        db.save()
+        count_after = db.count(State)
+        self.assertEqual(count_before + 1, count_after)
+
+    def test_count_method_all_objects(self):
+        """Test count method without specifying class"""
+        db = DBStorage()
+        count_before = db.count()
+        state = State(name="Texas")
+        db.new(state)
+        db.save()
+        count_after = db.count()
+        self.assertEqual(count_before + 1, count_after)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
