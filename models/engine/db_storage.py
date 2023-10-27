@@ -90,14 +90,15 @@ class DBStorage:
            Param:
                 cls - class
            Return:
-                 Returns the number of objects in storage matching the given class.
-                 If no class is passed, returns the count of all objects in storage.
+                 Returns the number of objects in storage
+                 matching the given class. If no class is passed,
+                 returns the count of all objects in storage.
         """
         if cls is None:
-            total = sum(self.__session.query(clss).count() for clss in classes.values())
+            total = sum(
+                        self.__session.query(clss).count()
+                        for clss in classes.values()
+                        )
             return total
         else:
             return self.__session.query(cls).count()
-                
-        
-        
