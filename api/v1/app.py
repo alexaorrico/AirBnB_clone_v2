@@ -24,7 +24,7 @@ def not_reached(error):
     e = {
         "error": "Not Found"
     }
-    return make_response(jsonify("error": "Not found"), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
