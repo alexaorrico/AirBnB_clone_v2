@@ -9,10 +9,8 @@ from models.amenity import Amenity
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_amenities():
     """asdasdadsa"""
-    lizt = []
     amenities = storage.all(Amenity).values()
-    for amenity in amenities:
-        lizt.append(amenity.to_dict())
+    lizt = [amenity.to_dict() for amenity in amenities]
     return jsonify(lizt)
 
 
@@ -64,7 +62,7 @@ def update_an_amenity(amenity_id):
     if not request.is_json:
         abort(400, description="Not a JSON")
     for k, value in req.items():
-        if k is not "id" and k is not "created_at" and k is not "updated_at":
+        if k not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, k, value)
     amenity.save()
     return jsonify(amenity.to_dict()), 200
