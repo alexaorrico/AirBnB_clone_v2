@@ -27,8 +27,7 @@ def get_reviews(place_id):
 def get_a_review(review_id):
     """review"""
     review = storage.get(Review, review_id)
-    return jsonify((review.to_dict())
-            if review else abort(404))
+    return jsonify((review.to_dict()) if review else abort(404))
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],

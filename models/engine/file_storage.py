@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -70,16 +70,21 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Returns the object based on the class and its ID, or None if not found"""
-        if cls and id:
-            key = cls.__name__ + '.' + id
-            return self.__session.query(cls).get(id)
+        """Returns the object based on the
+        class and its ID, or None if not found"""
+        if cls in classes.values() and id and type(id) == str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
         return None
 
     def count(self, cls=None):
-        """Returns the number of objects in storage matching the given class. If no class is passed, returns the count of all objects in storage"""
-        if cls:
-            return len(models.storage.all(cls))
-        else:
-            return sum(len(models.storage.all(c))
-                    for c in classes.values())
+        """Returns the number of objects in
+        storage matching the given class.
+        If no class is passed, returns
+        the count of all objects in storage"""
+        data = self.all(cls)
+        if cls in classes.values():
+            data = self.all(cls)
+        return len(data)

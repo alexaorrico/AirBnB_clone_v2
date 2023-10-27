@@ -2,7 +2,7 @@
 """dont trust the user"""
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, abort, request, Blueprint
+from flask import jsonify, abort, request, make_response
 from models.user import User
 
 
@@ -20,8 +20,7 @@ def get_users():
 def get_a_user(user_id):
     """get one"""
     users = storage.get(User, user_id)
-    return jsonify((users.to_dict())
-            if users else abort(404))
+    return jsonify((users.to_dict()) if users else abort(404))
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
@@ -39,14 +38,14 @@ def del_a_user(user_id):
 def create_a_user():
     """create a user"""
     req = request.get_json()
-    if user is None:
-        abort(400, "Not a JSON")
+    if req is None:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     key = 'email'
     if key not in req:
-        abort(400, "Missing email")
+        return make_response(jsonify({"error": "Missing email"}), 400)
     key = 'password'
     if key not in req:
-        abort(400, description="Missing password")
+        return make_response(jsonify({"error": "Missing password"}), 400)
     new_user = User(**req)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
@@ -65,4 +64,4 @@ def update_a_user(user_id):
         if k not in ['id', 'created_at', 'updated_at', 'email']:
             setattr(user, k, value)
     user.save()
-    return jsonify(user.to_dict()), 200
+    return jsonify(user.to_dict())

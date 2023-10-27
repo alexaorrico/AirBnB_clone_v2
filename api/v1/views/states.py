@@ -20,7 +20,10 @@ def get_states():
 def get_a_state(state_id):
     """finds a unique state based of state_id"""
     state = storage.get(State, state_id)
-    return jsonify((state.to_dict()) if state else abort(404))
+    if state is None:
+        abort(404)
+    ret = state.to_dict()
+    return jsonify(ret)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
@@ -61,5 +64,5 @@ def update_a_state(state_id):
     for k, value in req.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state, k, value)
-    state.save()
+    storage.save()
     return jsonify(state.to_dict()), 200

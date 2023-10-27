@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """config file"""
 
-from flask import Flask, Blueprint, jsonify
+from flask import Flask, Blueprint, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 import os
@@ -25,6 +25,7 @@ def not_reached(error):
         "error": "Not Found"
     }
     return make_response(jsonify(e), 404)
+
 
 if __name__ == "__main__":
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
