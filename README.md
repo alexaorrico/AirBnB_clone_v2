@@ -1,4 +1,4 @@
-##AirBnB clone - RESTful API
+## AirBnB clone - RESTful API
 This is a back-end RESTful API for an AirBnB clone, written in Python and using the Flask web framework. It provides a set of endpoints for users to interact with the AirBnB clone, such as creating and managing listings, searching for listings, and booking listings. The API can be used by a front-end web application or mobile app to provide users with a complete AirBnB-like experience.
 
 ## AirBnB Clone - The Console
