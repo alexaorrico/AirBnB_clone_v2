@@ -10,11 +10,15 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """Representation of state """
+    """state Representation"""
     if models.storage_t == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state")
+        cities = relationship(
+            "City",
+            backref="state",
+            cascade="all, delete, delete-orphan"
+        )
     else:
         name = ""
 

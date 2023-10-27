@@ -129,7 +129,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
-        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        t_format = "%Y-%m-%dT%H:%M:%S"
         bm = BaseModel()
         new_d = bm.to_dict()
         self.assertEqual(new_d["__class__"], "BaseModel")
