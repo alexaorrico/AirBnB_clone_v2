@@ -21,8 +21,10 @@ def get_amenities():
 def get_an_amenity(amenity_id):
     """return unique amenity"""
     amenities = storage.get(Amenity, amenity_id)
-    return jsonify((amenity.to_dict())
-            if amenities else abort(404))
+    if amenities is None:
+        abort(404)
+    ret = amenities.to_dict()
+    return jsonify(ret)
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
@@ -43,8 +45,9 @@ def create_an_amenity():
     req = request.get_json()
     if not request.is_json:
         abort(400, description="Not a JSON")
-    if 'name' not in req:
-        abort(400, "Missing name")
+    key = 'name'
+    if key not in req:
+        abort(400, description="Missing name")
     new_amenity = Amenity(**req)
     new_amenity.save()
     return jsonify(new_amenity.to_dict()), 201
@@ -61,7 +64,7 @@ def update_an_amenity(amenity_id):
     if not request.is_json:
         abort(400, description="Not a JSON")
     for k, value in req.items():
-        if k not in ['id', 'created_at', 'updated_at']:
+        if k is not "id" and k is not "created_at" and k is not "updated_at":
             setattr(amenity, k, value)
     amenity.save()
     return jsonify(amenity.to_dict()), 200
