@@ -19,6 +19,7 @@ import json
 import os
 import pep8
 import unittest
+import uuid
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -68,6 +69,8 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+
+class TestDBStorage(unittest.TestCase):
     def test_get(self):
         """
         The function `test_get` tests the `get` method of the
@@ -81,6 +84,11 @@ test_db_storage.py'])
         storage.new(state)
         get_state = storage.get(State, state.id)
         self.assertTrue(state.id == get_state.id)
+
+    def test_get_none(self):
+        """test for get for none existing id"""
+        state = storage.get(State, str(uuid.uuid4()))
+        self.assertIsNone(state)
 
     def test_count(self):
         """
@@ -99,23 +107,3 @@ test_db_storage.py'])
         after_no_state = storage.count(State)
         self.assertTrue(first_no_state + 1 == after_no_state)
         self.assertTrue(first_no + 1 == after_no)
-
-
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
