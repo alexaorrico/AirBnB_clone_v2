@@ -15,6 +15,19 @@ from models.user import User
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+def get(self, cls, id):
+        """Retrieve one object based on the class and its ID."""
+        if cls and id:
+            key = "{}.{}".format(cls.__name__, id)
+            return self.__objects.get(key)
+        return None
+
+    def count(self, cls=None):
+        """Count the number of objects in storage."""
+        if cls:
+            return sum(1 for key, value in self.__objects.items()
+                       if value.__class__ == cls or value.__class__.__name__ == cls)
+        return len(self.__objects)
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
