@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="34be6193-7bec-4dc3-9ede-cfbff43bc2ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/views/amenities.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/views/amenities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/views/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/views/index.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file.json" beforeDir="false" afterPath="$PROJECT_DIR$/file.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/engine/db_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/engine/db_storage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/engine/file_storage.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/engine/file_storage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_count.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_count.py" afterDir="false" />
-    </list>
+    <list default="true" id="34be6193-7bec-4dc3-9ede-cfbff43bc2ca" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,5 +49,16 @@
       <updated>1698397786802</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/api/v1/views/places_reviews.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
