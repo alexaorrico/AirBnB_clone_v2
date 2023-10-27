@@ -2,7 +2,7 @@
 """dont trust the user"""
 from api.v1.views import app_views
 from models import storage
-from flask import jsonify, abort, request, make_response 
+from flask import jsonify, abort, request, make_response
 from models.user import User
 
 
@@ -20,8 +20,7 @@ def get_users():
 def get_a_user(user_id):
     """get one"""
     users = storage.get(User, user_id)
-    return jsonify((users.to_dict())
-            if users else abort(404))
+    return jsonify((users.to_dict()) if users else abort(404))
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
