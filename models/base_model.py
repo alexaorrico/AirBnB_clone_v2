@@ -18,13 +18,6 @@ else:
     Base = object
 
 
-
-"""if models.storage_t == "db":
-    Base = declarative_base()
-else:
-    Base = object"""
-
-
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
     if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
