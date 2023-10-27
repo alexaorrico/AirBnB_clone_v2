@@ -48,7 +48,6 @@ def post_user():
 
     if 'password' not in data:
         abort(400, "Missing password")
-    print(data)
     new_user: User = User(**data)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
@@ -61,7 +60,6 @@ def post_user():
 def update_user(user_id):
     """ Updates a user """
     data: dict = request.get_json()
-    print(data)
     if not data:
         abort(400, "Not a JSON")
 
