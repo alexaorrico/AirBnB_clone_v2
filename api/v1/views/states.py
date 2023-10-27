@@ -7,7 +7,7 @@ from flask import jsonify
 from flask import abort, request
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def all_states():
     """
     The function `all_states` retrieves all instances of the
@@ -19,18 +19,17 @@ def all_states():
     return jsonify(my_list)
 
 
-@app_views.route('/states/<id>')
+@app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
 def states_id(id: str):
     """
     The function `states_id` takes an ID as input and returns the
     corresponding state object as a JSON response, or raises a
     404 error if the state is not found.
     """
-    all_state = storage.all(State)
-    for i in all_state.values():
-        if i.id == id:
-            return jsonify(i.to_dict())
-    abort(404)
+    state = storage.get(State, id)
+    if state is None:
+        abort(404)
+    return jsonify(state.to_dict())
 
 
 @app_views.route('/states/<id>', methods=['DELETE'])
@@ -39,13 +38,12 @@ def states_id_delete(id: str):
     The function `states_id_delete` deletes a state
     object from storage based on its ID.
     """
-    all_state = storage.all(State)
-    for i in all_state.values():
-        if i.id == id:
-            storage.delete(i)
-            storage.save()
-            return jsonify({}), 200
-    abort(404)
+    state = storage.get(State, id)
+    if state is None:
+        abort(404)
+    storage.delete(state)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -63,7 +61,7 @@ def states_post():
     state = State(**data)
     storage.new(state)
     storage.save()
-    return jsonify(storage.get(State, state.id).to_dict())
+    return jsonify(storage.get(State, state.id).to_dict()), 201
 
 
 @app_views.route('states/<id>', methods=['PUT'])
@@ -87,4 +85,4 @@ def states_put(id: str):
     for i, j in data.items():
         setattr(state, i, j)
     storage.save()
-    return jsonify(storage.get(State, state.id).to_dict())
+    return jsonify(storage.get(State, state.id).to_dict()), 200
