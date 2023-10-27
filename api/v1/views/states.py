@@ -20,7 +20,7 @@ def all_states():
 
 
 @app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
-def states_id(id: str):
+def states_id(id):
     """
     The function `states_id` takes an ID as input and returns the
     corresponding state object as a JSON response, or raises a
@@ -33,7 +33,7 @@ def states_id(id: str):
 
 
 @app_views.route('/states/<id>', methods=['DELETE'], strict_slashes=False)
-def states_id_delete(id: str):
+def states_id_delete(id):
     """
     The function `states_id_delete` deletes a state
     object from storage based on its ID.
@@ -65,7 +65,7 @@ def states_post():
 
 
 @app_views.route('states/<id>', methods=['PUT'], strict_slashes=False)
-def states_put(id: str):
+def states_put(id):
     """
     The function updates the attributes of a state object based
     on the provided JSON data and returns the updated state
@@ -76,12 +76,12 @@ def states_put(id: str):
     data = request.get_json()
     if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'id' in data.keys():
-        del data['id']
-    if 'created_at' in data.keys():
-        del data['created_at']
-    if 'updated_at' in data.keys():
-        del data['updated_at']
+    # if 'id' in data.keys():
+    #     del data['id']
+    # if 'created_at' in data.keys():
+    #     del data['created_at']
+    # if 'updated_at' in data.keys():
+    #     del data['updated_at']
     if 'name' in data:
         state.name = data['name']
         storage.save()
