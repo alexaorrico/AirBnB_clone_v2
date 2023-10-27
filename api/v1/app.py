@@ -10,6 +10,7 @@ import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
 @app.teardown_appcontext
