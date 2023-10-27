@@ -20,7 +20,10 @@ def get_states():
 def get_a_state(state_id):
     """finds a unique state based of state_id"""
     state = storage.get(State, state_id)
-    return jsonify((state.to_dict()) if state else abort(404))
+    if sate is None:
+        abort(404)
+    ret = state.to_dict()
+    return jsonify(ret)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
