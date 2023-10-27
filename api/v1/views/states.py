@@ -19,8 +19,8 @@ def all_states():
     return jsonify(my_list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def states_id(state_id):
+@app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
+def states_id(id):
     """
     The function `states_id` takes an ID as input and returns the
     corresponding state object as a JSON response, or raises a
@@ -32,8 +32,8 @@ def states_id(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def states_id_delete(state_id):
+@app_views.route('/states/<id>', methods=['DELETE'], strict_slashes=False)
+def states_id_delete(id):
     """
     The function `states_id_delete` deletes a state
     object from storage based on its ID.
@@ -59,13 +59,13 @@ def states_post():
     if 'name' not in data.keys():
         return make_response(jsonify({"error": "Missing name"}), 400)
     state = State(**data)
-    # storage.new(state)
+    storage.new(state)
     storage.save()
-    return jsonify(state.to_dict()), 201
+    return jsonify(storage.get(State, state.id).to_dict()), 201
 
 
-@app_views.route('states/<state_id>', methods=['PUT'], strict_slashes=False)
-def states_put(state_id):
+@app_views.route('states/<id>', methods=['PUT'], strict_slashes=False)
+def states_put(id):
     """
     The function updates the attributes of a state object based
     on the provided JSON data and returns the updated state
@@ -76,9 +76,13 @@ def states_put(state_id):
     data = request.get_json()
     if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    ignore_keys = ['id', 'created_at', 'updated_at']
-    for key, value in data.items():
-        if key not in ignore_keys:
-            setattr(state, key, value)
-    state.save()
-    return jsonify(state.to_dict()), 200
+    # if 'id' in data.keys():
+    #     del data['id']
+    # if 'created_at' in data.keys():
+    #     del data['created_at']
+    # if 'updated_at' in data.keys():
+    #     del data['updated_at']
+    if 'name' in data:
+        state.name = data['name']
+        storage.save()
+    return jsonify(storage.get(State, state.id).to_dict()), 200
