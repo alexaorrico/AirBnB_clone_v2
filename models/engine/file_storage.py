@@ -34,6 +34,23 @@ class FileStorage:
             return new_dict
         return self.__objects
 
+    def get(self, cls, id):
+        """retrieves one object  based on the class and its ID
+        or None if NotFound"""
+        for key, value in self.__objects.items():
+            if cls == value.__class__ and value.id == id:
+                return value
+        return None
+
+    def count(self, cls=None):
+        """count number of objects in storage
+        returns number of object matching passed class
+        if cls is none return number of all objects"""
+        if cls is None:
+            return len(self.all())
+        elif cls:
+            return len(self.all(cls))
+
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
@@ -55,7 +72,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception as e:
             pass
 
     def delete(self, obj=None):
