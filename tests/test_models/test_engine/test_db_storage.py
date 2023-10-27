@@ -14,9 +14,10 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -32,14 +33,14 @@ class TestDBStorageDocs(unittest.TestCase):
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/db_storage.py'])
+        style = pycodestyle.StyleGuide(quiet=True)
+        result = style.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
@@ -68,7 +69,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDbStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -86,3 +87,33 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """ testing get method with no param """
+        with self.assertRaises(TypeError):
+            storage.get()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_obj(self):
+        """ checking get method which
+        the return of an existing object """
+
+        state1 = State(name="Cali")
+        state1.save()
+        get_state = storage.get(State, state1.id)
+        self.assertEqual(state1, get_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all(self):
+        """ testing count method """
+        x = len(storage.all())
+        y = storage.count()
+        self.assertEqual(x, y)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_obj(self):
+        """ testing count method """
+        x = len(storage.all(State))
+        y = storage.count(State)
+        self.assertEqual(x, y)
