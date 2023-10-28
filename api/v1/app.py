@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """modeule for app"""
 import os
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -13,6 +13,11 @@ app.register_blueprint(app_views)
 def teardown():
     """teardown func"""
     storage.close()
+
+
+@app.errohandler(404)
+def not_found(error):
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':

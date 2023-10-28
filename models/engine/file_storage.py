@@ -25,7 +25,9 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """returns the dictionary __objects"""
+        """returns the dictionary __object
+        args:
+            cls:class name"""
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
@@ -35,7 +37,9 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """sets in __objects the obj with key <obj class name>.id
+        args:
+            obj:object"""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
@@ -59,7 +63,9 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it’s inside
+        args:
+            obj:object"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -79,7 +85,9 @@ class FileStorage:
         return self.__objects.get(key, None)
 
     def count(self, cls=None):
-        """number of objects in storage"""
+        """number of objects in storage
+        args:
+            clas:class name"""
         if cls:
             return sum(1 for obj in self.__objects.values()
                        if isinstance(obj, cls))
