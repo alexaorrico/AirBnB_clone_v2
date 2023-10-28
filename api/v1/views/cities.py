@@ -51,7 +51,7 @@ def update_city(city_id):
         abort(400, description='Not a JSON')
     city = storage.get(City, city_id)
     query = request.get_json()
-    ignore_list = ['id', ,'state_id', 'created_at', 'updated_at']
+    ignore_list = ['id', 'state_id', 'created_at', 'updated_at']
     for key, val in query.items():
         if key not in ignore_list:
             setattr(city, key, val)
