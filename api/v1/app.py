@@ -10,12 +10,12 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown():
+def teardown(exc):
     """teardown func"""
     storage.close()
 
 
-@app.errohandler(404)
+@app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({"error": "Not found"}), 404)
 
