@@ -8,7 +8,7 @@ configuration.
 """
 
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 
@@ -16,6 +16,13 @@ from models import storage
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
+@app.errorhandler(404)
+def not_found(error):
+    """ Returns a JSON-formatted 404 status code response """
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 @app.teardown_appcontext
 def close_storage_session(self):
