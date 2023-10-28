@@ -10,11 +10,15 @@ from flask import abort, jsonify, request
 @app_views.route("/states/<state_id>/cities", methods=['GET'])
 def get_cities_by_state(state_id):
     """Retrieves all City objects of a State"""
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    cities = [city.to_dict() for city in state.cities]
-    return jsonify(cities)
+    cities_all = []
+    cities = storage.all("City").values()
+    for city in cities:
+        if city.state_id == state_id:
+            cities_all.append(city.to_json())
+    return jsonify(cities_all)
 
 
 @app_views.route("/cities/<city_id>")
