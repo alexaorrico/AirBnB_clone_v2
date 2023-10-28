@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-
-'''This module Retrieves the list of all user objects,
+'''This module Retrieves the list of all user  objects,
 deletes, updates, creates and gets information of a user '''
 from flask import jsonify, request, abort
 from models import storage
@@ -9,15 +8,15 @@ from models.user import User
 
 
 @app_views.route('/users/', strict_slashes=False)
-def get_all_user():
-    ''' retreive all user '''
+def get_all_users():
+    ''' retreive all users '''
     user_objs = storage.all('User')
 
     return jsonify([obj.to_dict() for obj in user_objs.values()])
 
 
 @app_views.route('/users/<user_id>/', strict_slashes=False)
-def get_a_user(user_id):
+def get_an_user(user_id):
     '''return the user with matching id'''
     user_objs = storage.all('User')
     key = f'User.{user_id}'
@@ -29,7 +28,8 @@ def get_a_user(user_id):
     abort(404)
 
 
-@app_views.route('/users/<user_id>/', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/users/<user_id>/', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_user(user_id):
     ''' delete user matching the id'''
     user_objs = storage.all('User')
@@ -47,6 +47,7 @@ def delete_user(user_id):
 @app_views.route('/users/', methods=['POST'], strict_slashes=False)
 def create_user():
     ''' create a user '''
+
     data = request.get_json()
 
     if data is None:
@@ -61,11 +62,12 @@ def create_user():
     return jsonify(user_obj.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>/', methods=['PUT'], strict_slashes=False)
+@app_views.route('/users/<user_id>/',
+                 methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
-    ''' update user  whose id is passed'''
-    data = request.get_json()
+    ''' update user '''
 
+    data = request.get_json()
     user_objs = storage.all('User')
     key = f'User.{user_id}'
 
@@ -77,6 +79,7 @@ def update_user(user_id):
     user = user_objs.get(key)
     for k, v in data.items():
         setattr(user, k, v)
+
     user.save()
 
     return jsonify(user.to_dict()), 200
