@@ -6,11 +6,11 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
 from models import amenity
-from models import City
-from models import Place
-from models import Review
-from models import State
-from models import User
+from models import city
+from models import place
+from models import review
+from models import state
+from models import user
 from models import base_model
 
 
