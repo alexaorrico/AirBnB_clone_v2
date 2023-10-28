@@ -21,10 +21,11 @@ def status():
 def endpoint():
     """Create an endpoint"""
     stat = {}
-    objs = {"Amenity": "amenities", "City": "cities",
-            "Place": "places", "Review": "reviews",
-            "State": "states", "User": "users"
-        }
+    objs = {
+        "Amenity": "amenities", "City": "cities",
+        "Place": "places", "Review": "reviews",
+        "State": "states", "User": "users"
+    }
     for cls_name, key in objs.items():
         stat[key] = storage.count(eval(cls_name))
 
