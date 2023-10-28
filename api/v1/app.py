@@ -3,7 +3,7 @@
 
 # Importing modules from system files
 import os
-from flask import Flask
+from flask import Flask, jsonify
 
 # Importing modules from my files
 from api.v1.views import app_views
@@ -22,6 +22,12 @@ app_port = int(os.getenv('HBNB_API_PORT', '5000'))
 def teardown_flask(exception):
     """Closing The Storage after use."""
     storage.close()
+
+
+@app.errorhandler(404)
+def error_404(error):
+    """Thi function handle the 404 HTTP error code."""
+    return jsonify(error='Not found'), 404
 
 
 if __name__ == "__main__":
