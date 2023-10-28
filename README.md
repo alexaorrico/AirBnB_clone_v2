@@ -1,3 +1,7 @@
+# Auther
+Dennis Musembi Mwendwa <dennismusembi2@gmail.com>
+Ada Okonkwo <>
+
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
@@ -126,6 +130,12 @@ TestBaseModel class:
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
 * `def test_user_class_docstring(self)` - Test for the User class docstring
 
+## adding the api feature
+- api for viewing all tables from db instances
+- api to add instance
+- api to create instance
+- api to up date instanse
+- api to delete instance
 
 ## Examples of use
 ```
@@ -156,7 +166,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
+Ada Okonkwo - [Github](https://github.com/Coding-doves) / []
+Dennis Musembi Mwendwa - [Github](https://github.com/Dennismwendwa) / [Twitter/X](https://twitter.com/Dennismusembi1)
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
