@@ -70,6 +70,12 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    @classmethod
+    def teardown(cls):
+        """The teardown function"""
+        models.storage.close()
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +119,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "Storage not Database")
+    def test_get(self):
+        """This is the test case for the get function"""
+        state = State(name="Lagos")
+        state.save()
+        state_get = models.storage.get(State, state.id)
+        self.assertEqual(state, state_get)
+
+    @unittest.skipIf(models.storage_t == 'db', "Storage not Database")
+    def test_count(self):
+        """This is the test case for the count function"""
+        state = State(name="Lagos")
+        state.save()
+        self.assertTrue(models.storage.count(State) > 1)
