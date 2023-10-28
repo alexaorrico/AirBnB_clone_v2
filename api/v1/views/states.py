@@ -9,8 +9,8 @@ from models.state import State
 from api.v1.views import app_views
 
 
-@app_views.route('/states', methods=['GET'])
-@app_views.route('/states/<state_id>', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_states(state_id=None):
     """
     Get state returns a state based on the state_id if found.
@@ -36,7 +36,8 @@ def get_states(state_id=None):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """
     This function deletes a state given id 'state_id' exists for a state in
@@ -52,7 +53,7 @@ def delete_state(state_id):
         return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """
     This function creates a new state. Raises an error if the request
@@ -76,7 +77,7 @@ def create_state():
         return jsonify(error='Not a JSON'), 400
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """
     This function updates a state object in the database.
