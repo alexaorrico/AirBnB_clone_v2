@@ -59,8 +59,7 @@ def put_amenity(id):
     if not request.json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     ignore_keys = ['id', 'created_at', 'updated_at']
-    for k, v in request.get_json():
-        if k not in ignore_keys:
-            setattr(amenity, k, v)
+    if 'name' in request.get_json():
+        amenity.name = request.get_json()['name']
     amenity.save()
     return jsonify(amenity.to_dict()), 200
