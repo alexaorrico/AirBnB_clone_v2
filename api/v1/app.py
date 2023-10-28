@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 CORS(app, origins="0.0.0.0")
-hostapi = getenv('HBNB_API_HOST', '0.0.0.0')
-portapi = getenv('HBNB_API_PORT', '5000')
+hostapi = getenv('HBNB_API_HOST', "0.0.0.0")
+portapi = getenv('HBNB_API_PORT', 5000)
 
 
 @app.teardown_appcontext
@@ -23,8 +23,8 @@ def commit_data(error):
 @app.errorhandler(404)
 def not_found(error):
     """ Not Found -> (404) """
-    return jsonify({'error': 'Not found'}), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
-    app.run(host=hostapi, port=portapi, threaded=True)
+    app.run(host=hostapi, port=int(portapi), threaded=True)
