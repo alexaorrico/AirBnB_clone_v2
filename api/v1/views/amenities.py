@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-#This module Retrieves the list of all amenity objects,
-#deletes, updates, creates and gets information of a amenity '''
+'''This module Retrieves the list of all amenity objects,
+deletes, updates, creates and gets information of a amenity '''
 from flask import jsonify, request, abort
 from models import storage
 from api.v1.views import app_views
