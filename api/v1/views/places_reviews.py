@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""handles all defaults RESTful API actions for reviewa"""
+"""handles all defaults RESTful API actions for reviews"""
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request
@@ -90,7 +90,8 @@ def update_review(review_id):
     if data is None:
         return abort(400, "Not a JSON")
     for key, value in data.items():
-        if key not in ["id", "created_at", "updated_at", "user_id", "place_id"]:
+        if key not in ["id", "created_at", "updated_at", "user_id",
+                       "place_id"]:
             setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict()), 200
