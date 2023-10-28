@@ -1,53 +1,58 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
-"""
-script to get, update, create and delete a user, with api
-"""
-from flask import Blueprint, jsonify, request, abort
-from api.v1.views import app_views
+'''This module Retrieves the list of all City objects,
+deletes, updates, creates and gets information of a city '''
+
+from flask import jsonify, request, abort, make_response
 from models import storage
-from models.state import State
+from api.v1.views import app_views
+from models.user import User
 
 
-@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
-def states():
-    """Create a new view for State objects that handles all default
-    RestFul API actions.
-    """
+@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
+def get_all_users():
+    ''' retreive all users, and also create a user'''
     if request.method == 'GET':
-        return jsonify([val.to_dict() for val in storage.all('State')
-                        .values()])
-    elif request.method == 'POST':
-        post = request.get_json()
-        if post is None or type(post) != dict:
-            return jsonify({'error': 'Not a JSON'}), 400
-        elif post.get('name') is None:
-            return jsonify({'error': 'Missing name'}), 400
-        new_state = State(**post)
-        new_state.save()
-        return jsonify(new_state.to_dict()), 201
+        user_objs = storage.all('User')
+        return jsonify([obj.to_dict() for obj in user_objs.values()])
+
+    data = request.get_json()
+    if data is None:
+        abort(400, "Not a JSON")
+    if data.get("email") is None:
+        abort(400, "Missing email")
+    if data.get("password") is None:
+        abort(400, "Missing password")
+    user_obj = User(**data)
+    user_obj.save()
+    return jsonify(user_obj.to_dict()), 201
 
 
-@app_views.route('/states/<string:state_id>',
-                 methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
-def get_state_id(state_id):
-    """Retrieves a state object with a specific id"""
-    state = storage.get('State', state_id)
-    if state is None:
-        abort(404)
-    elif request.method == 'GET':
-        return jsonify(state.to_dict())
+@app_views.route('/users/<user_id>/', methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
+def get_an_user(user_id):
+    '''get or delete or update a user with matching id'''
+    user_objs = storage.all('User')
+    key = f'User.{user_id}'
+
+    if request.method == 'GET':
+        if key in user_objs:
+            user = user_objs.get(key)
+            return jsonify(user.to_dict())
     elif request.method == 'DELETE':
-        state = storage.get('State', state_id)
-        storage.delete(state)
-        storage.save()
-        return jsonify({}), 200
-    elif request.method == 'PUT':
-        put = request.get_json()
-        if put is None or type(put) != dict:
-            return jsonify({'error': 'Not a JSON'}), 400
-        for key, value in put.items():
-            if key not in ['id', 'created_at', 'updated_at']:
-                setattr(state, key, value)
-                storage.save()
-        return jsonify(state.to_dict()), 200
+        if key in user_objs:
+            obj = user_objs.get(key)
+            storage.delete(obj)
+            storage.save()
+            return jsonify({}), 200
+    else:
+        if key not in user_objs:
+            abort(404)
+        data = request.get_json()
+        if data is None:
+            abort(400, "Not a JSON")
+        user = user_objs.get(key)
+        for k, v in data.items():
+            setattr(user, k, v)
+        user.save()
+        return jsonify(user.to_dict()), 200
+    abort(404)
