@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""AirBnB v3 flask Api"""
 import os
 from os import getenv
 from flask import Flask, jsonify, Blueprint, make_response
