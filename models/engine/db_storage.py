@@ -40,6 +40,50 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
+    def get(self, cls, id):
+        """Retrieves an object based on the class name and its ID.
+
+        Performs a query on the database to retrieve the matching row if it
+        exists and uses the columns to create the object for return.
+
+        Args:
+            cls (str): String representing the class name(Place, User, Amenity)
+            id: (str): UUID4 string representing the object ID.
+
+        Returns:
+            The object if it exists. None if cls or id is None or if the
+            object does not exist.
+        """
+        if cls is None or cls not in classes or id is None or type(id) is not \
+                str:
+            return None
+        cls = classes[cls]
+        objs = self.__session.query(cls).filter(cls.id == id)
+        if objs is None:
+            return None
+        return (objs.first())
+
+    def count(self, cls=None):
+        """Retrieves the total number of object based on the class name.
+
+        Performs a query on the database to retrieve the matching row if it
+        exists and uses the columns to create the object for return.
+
+        Args:
+            cls (str): String representing the class name(Place, User, Amenity)
+
+        Returns:
+            The object if it exists. If cls is None, the total number of
+            objects stored is returned.
+        """
+        count = 0
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    count += 1
+        return count
+
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
