@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """API endpoints for users"""
-from flask import jsonify, request, abort
-from api.v1.views import app_views
-from models.user import User
 from models import storage
+from models.user import User
+from api.v1.views import app_views
+from flask import jsonify, request, abort
 
 
 @app_views.route("/users",
@@ -33,11 +33,11 @@ def get_user(user_id):
 def delete_user(user_id):
     """Deletes a particular user"""
     user = storage.get(User, user_id)
-    if user:
-        storage.delete(user)
-        storage.save()
-        return {}, 200
-    return abort(404)
+    if not user:
+        abort(404)
+    storage.delete(user)
+    storage.save()
+    return {}, 200
 
 
 @app_views.route(
@@ -49,15 +49,17 @@ def post_user():
     """Creates a new user"""
     data = request.get_json()
     if not data:
-        abort(400, "Not a JSON")
+        return jsonify({"message": "Not a JSON"}), 400
 
     if "email" not in data:
-        abort(400, "Missing email")
+        return jsonify({"message": "Missing email"}), 400
 
     if "password" not in data:
-        abort(400, "Missing password")
+        return jsonify({"message": "Missing password"}), 400
+
     new_user = User(**data)
-    new_user.save()
+    storage.new(new_user)
+    storage.save()
     return jsonify(new_user.to_dict()), 201
 
 
@@ -70,7 +72,7 @@ def update_user(user_id):
     """Updates a user"""
     data = request.get_json()
     if not data:
-        abort(400, "Not a JSON")
+        abort(400, description="Not a JSON")
 
     user = storage.get(User, user_id)
     if not user:
