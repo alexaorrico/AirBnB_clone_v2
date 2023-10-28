@@ -10,6 +10,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route("/status")
 def status():
     """ status method"""
@@ -21,7 +22,7 @@ def status():
 
 @app_views.route('/stats')
 def stats():
-
+    """stats method"""
     data = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
