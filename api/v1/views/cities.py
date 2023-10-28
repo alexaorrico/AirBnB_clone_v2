@@ -32,9 +32,10 @@ def get_cities(state_id):
 def get_city_id(city_id):
     """retrieves a city based on a given id"""
     city = storage.get(City, city_id)
-    if city:
+    if city is None:
+        abort(404)
+    else:
         return jsonify(city.to_dict())
-    return abort(404)
 
 
 @app_views.route('/cities/<city_id>',
@@ -43,11 +44,12 @@ def get_city_id(city_id):
 def delete_city(city_id):
     """deletes a city based on its id"""
     city = storage.get(City, city_id)
-    if city:
+    if city is None:
+        abort(404)
+    else:
         storage.delete(city)
         storage.save()
         return jsonify({}), 200
-    return abort(404)
 
 
 @app_views.route('/states/<state_id>/cities',
