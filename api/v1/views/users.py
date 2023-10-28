@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """api users"""
-from flask import abort, make_response, request
+from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -8,10 +8,7 @@ from models.user import User
 
 @app_views.route('/users/', methods=['GET', 'POST'], strict_slashes=False)
 def users():
-    '''this function ger all users in the storage,
-        if method is get and adds a a user to the datatbase if the method
-        is post
-    '''
+    '''this function gets all users or adds a user'''
     if request.method == 'GET':
         user_objs = storage.all('User')
         return jsonify([obj.to_dict() for obj in user_objs.values()])
@@ -28,14 +25,9 @@ def users():
     return jsonify(user_obj.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>/', methods=['GET', 'PUT', 'DELETE'],
-                 strict_slashes=False)
+@app_views.route('/users/<user_id>/', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_user(user_id):
-    '''
-    get or delete or update a user with matching id
-    user_id : (string) an id of the user to be worked of accorfing to the
-                http method passed
-    '''
+    '''get or delete or update a user with matching id'''
     user_objs = storage.all('User')
     key = f'User.{user_id}'
 
