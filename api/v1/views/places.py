@@ -19,25 +19,11 @@ def retrive_object(cls, id):
     return (obj)
 
 
-def validate_request_json(request):
-    """Checks validity of request's json content"""
-    req_json = request.get_json(silent=True)
-    if req_json is None:
-        abort(jsonify({"error": "Not a JSON"}), 400)
-    if request.method == 'POST':
-        if 'user_id' not in req_json:
-            abort(jsonify({"error": "Missing user_id"}), 400)
-        retrive_object(User, req_json['user_id'])
-        if 'name' not in req_json:
-            abort(jsonify({"error": "Missing name"}), 400)
-    return (req_json)
-
-
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def cities_places_get(city_id):
     """Returns a list of places for a City resource with given id"""
-    obj = retrive_object(City, escape(city_id))
+    obj = retrive_object(City, city_id)
     # Error when HBNB_TYPE_STORAGE is not db cause no City.places getter.
     # To fix it, added a conditonal below. (OR ADD GETTER City.places)
     if getenv('HBNB_TYPE_STORAGE') == 'db':  # use getter
@@ -53,7 +39,7 @@ def cities_places_get(city_id):
                  strict_slashes=False)
 def places_get(place_id):
     """Returns a Place resource based on given id"""
-    obj = retrive_object(Place, escape(place_id))
+    obj = retrive_object(Place, place_id)
     return (jsonify(obj.to_dict()))
 
 
@@ -61,7 +47,7 @@ def places_get(place_id):
                  strict_slashes=False)
 def places_delete(place_id):
     """Deletes a Place resource based on given id"""
-    obj = retrive_object(Place, escape(place_id))
+    obj = retrive_object(Place, place_id)
     storage.delete(obj)
     storage.save()
     return (jsonify({}))
@@ -72,8 +58,15 @@ def places_delete(place_id):
 def cities_places_post(city_id):
     """Creates a Place resource in a City of given id
     if request content is valid."""
-    obj = retrive_object(City, escape(city_id))
-    req_json = validate_request_json(request)
+    obj = retrive_object(City, city_id)
+    if not request.is_json:
+        return (jsonify({"error": "Not a JSON"}), 400)
+    req_json = request.get_json()
+    if 'user_id' not in req_json:
+        return (jsonify({"error": "Missing user_id"}), 400)
+    retrive_object(User, req_json['user_id'])
+    if 'name' not in req_json:
+        return (jsonify({"error": "Missing name"}), 400)
     req_json['city_id'] = obj.id
     new_place = Place(**req_json)
     new_place.save()
@@ -84,8 +77,10 @@ def cities_places_post(city_id):
                  strict_slashes=False)
 def places_put(place_id):
     """Updates a Place resource of given id if request content is valid."""
-    obj = retrive_object(Place, escape(place_id))
-    req_json = validate_request_json(request)
+    obj = retrive_object(Place, place_id)
+    if not request.is_json:
+        return (jsonify({"error": "Not a JSON"}), 400)
+    req_json = request.get_json()
     ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:

@@ -16,16 +16,6 @@ def retrive_object(cls, id):
     return (obj)
 
 
-def validate_request_json(request):
-    """Checks validity of request's json content"""
-    req_json = request.get_json(silent=True)
-    if req_json is None:
-        abort(jsonify({"error": "Not a JSON"}), 400)
-    if request.method == 'POST' and 'name' not in req_json:
-        abort(jsonify({"error": "Missing name"}), 400)
-    return (req_json)
-
-
 @app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
@@ -35,7 +25,7 @@ def amenities_get(amenity_id=None):
     if amenity_id is None:
         amenities = storage.all(Amenity).values()
         return (jsonify([amenity.to_dict() for amenity in amenities]))
-    obj = retrive_object(Amenity, escape(amenity_id))
+    obj = retrive_object(Amenity, amenity_id)
     return (jsonify(obj.to_dict()))
 
 
@@ -43,7 +33,7 @@ def amenities_get(amenity_id=None):
                  strict_slashes=False)
 def amenities_delete(amenity_id):
     """Deletes an Amenity resource based on given id"""
-    obj = retrive_object(Amenity, escape(amenity_id))
+    obj = retrive_object(Amenity, amenity_id)
     storage.delete(obj)
     storage.save()
     return (jsonify({}))
@@ -53,7 +43,11 @@ def amenities_delete(amenity_id):
                  strict_slashes=False)
 def amenities_post():
     """Creates an Amenity resource if request content is valid."""
-    req_json = validate_request_json(request)
+    if not request.is_json:
+        return (jsonify({"error": "Not a JSON"}), 400)
+    req_json = request.get_json()
+    if 'name' not in req_json:
+        return (jsonify({"error": "Missing name"}), 400)
     new_amenity = Amenity(**req_json)
     new_amenity.save()
     return (jsonify(new_amenity.to_dict()), 201)
@@ -63,8 +57,10 @@ def amenities_post():
                  strict_slashes=False)
 def amenities_put(amenity_id):
     """Updates an Amenity resource of given id if request content is valid."""
-    obj = retrive_object(Amenity, escape(amenity_id))
-    req_json = validate_request_json(request)
+    obj = retrive_object(Amenity, amenity_id)
+    if not request.is_json:
+        return (jsonify({"error": "Not a JSON"}), 400)
+    req_json = request.get_json()
     ignore = ['id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:

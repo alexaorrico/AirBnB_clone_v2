@@ -18,25 +18,11 @@ def retrive_object(cls, id):
     return (obj)
 
 
-def validate_request_json(request):
-    """Checks validity of request's json content"""
-    req_json = request.get_json(silent=True)
-    if req_json is None:
-        abort(jsonify({"error": "Not a JSON"}), 400)
-    if request.method == 'POST':
-        if 'user_id' not in req_json:
-            abort(jsonify({"error": "Missing user_id"}), 400)
-        retrive_object(User, req_json['user_id'])
-        if 'text' not in req_json:
-            abort(jsonify({"error": "Missing text"}), 400)
-    return (req_json)
-
-
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def places_reviews_get(place_id):
     """Returns a list of reviews for a Place resource with given id"""
-    obj = retrive_object(Place, escape(place_id))
+    obj = retrive_object(Place, place_id)
     reviews = [review.to_dict() for review in obj.reviews]
     return (jsonify(reviews))
 
@@ -45,7 +31,7 @@ def places_reviews_get(place_id):
                  strict_slashes=False)
 def reviews_get(review_id):
     """Returns a Review resource based on given id"""
-    obj = retrive_object(Review, escape(review_id))
+    obj = retrive_object(Review, review_id)
     return (jsonify(obj.to_dict()))
 
 
@@ -53,7 +39,7 @@ def reviews_get(review_id):
                  strict_slashes=False)
 def reviews_delete(review_id):
     """Deletes a Review resource based on given id"""
-    obj = retrive_object(Review, escape(review_id))
+    obj = retrive_object(Review, review_id)
     storage.delete(obj)
     storage.save()
     return (jsonify({}))
@@ -64,8 +50,15 @@ def reviews_delete(review_id):
 def places_reviews_post(place_id):
     """Creates a Review resource for a Place of given id
     if request content is valid."""
-    obj = retrive_object(Place, escape(place_id))
-    req_json = validate_request_json(request)
+    obj = retrive_object(Place, place_id)
+    if not request.is_json:
+        return (jsonify({"error": "Not a JSON"}), 400)
+    req_json = request.get_json()
+    if 'user_id' not in req_json:
+        return (jsonify({"error": "Missing user_id"}), 400)
+    retrive_object(User, req_json['user_id'])
+    if 'text' not in req_json:
+        return (jsonify({"error": "Missing text"}), 400)
     req_json['place_id'] = obj.id
     new_review = Review(**req_json)
     new_review.save()
@@ -76,8 +69,10 @@ def places_reviews_post(place_id):
                  strict_slashes=False)
 def reviews_put(review_id):
     """Updates a Review resource of given id if request content is valid."""
-    obj = retrive_object(Review, escape(review_id))
-    req_json = validate_request_json(request)
+    obj = retrive_object(Review, review_id)
+    if not request.is_json:
+        return (jsonify({"error": "Not a JSON"}), 400)
+    req_json = request.get_json()
     ignore = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:
