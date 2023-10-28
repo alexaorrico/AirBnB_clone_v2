@@ -32,7 +32,7 @@ def get_user(user_id):
 )
 def delete_user(user_id):
     """Deletes a particular user"""
-    user = storage.get('User', user_id)
+    user = storage.get(User, user_id)
     if not user:
         abort(404)
     storage.delete(user)
