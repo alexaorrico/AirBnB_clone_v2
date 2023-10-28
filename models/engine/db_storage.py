@@ -76,17 +76,17 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """ Retrieves an obhect."""
-        if cls and id:
-            my_obj = next(
-                    (obj for obj in object.values() if obj.id == id),
-                    None)
-            return my_obj
+        """ Retrieves an object."""
+        if cls in classes.values() and id and type(id) == str:
+            my_obj = self.all(cls)
+            for key, value in my_obj.items():
+                if key.split(".")[1] == id:
+                    return value
         return None
 
     def count(self, cls=None):
         """ Counts the number of objects."""
-        if cls:
-            return len(self.all(cls))
-        return sum(
-                len(self.all(_cls)) for _cls in classes.values())
+        data = self.all(cls)
+        if cls in classes.values():
+            data = self.all(cls)
+        return len(data)
