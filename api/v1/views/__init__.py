@@ -16,3 +16,6 @@ from api.v1.views.states import *
 
 # Importing the views for City
 from api.v1.views.cities import *
+
+# Importing viewf for Amenity
+from api.v1.views.amenities import *
