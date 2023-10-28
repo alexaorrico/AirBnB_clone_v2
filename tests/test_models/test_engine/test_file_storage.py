@@ -128,6 +128,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                      "not testing file storage")
     def test_count(self):
+        """test that the count the number of objects in storage"""
         storage = FileStorage()
         initial_length = len(storage.all())
         self.assertEqual(storage.count(), initial_length)
