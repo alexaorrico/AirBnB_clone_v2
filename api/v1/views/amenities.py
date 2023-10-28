@@ -43,10 +43,10 @@ def post_amenity():
     """Creates a Amenity"""
     data = request.get_json()
     if not data:
-        return jsonify(404, "Not a JSON")
+        return jsonify(400, "Not a JSON")
     if "name" not in data:
-        return abort(404, "Missing name")
-    amenity = Amenity(name=data['name'])
+        return abort(400, "Missing name")
+    amenity = Amenity(**data)
     storage.new(amenity)
     storage.save()
     return jsonify(amenity.to_dict()), 201
@@ -66,4 +66,4 @@ def update_amenity(amenity_id):
         if key not in to_be_ignored:
             setattr(amenity, key, value)
     storage.save()
-    return jsonify(amenity.to_dict(), 200)
+    return jsonify(amenity.to_dict()), 200
