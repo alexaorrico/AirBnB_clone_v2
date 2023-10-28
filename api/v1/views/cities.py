@@ -58,16 +58,15 @@ def post_city(state_id):
 @app_views.route("/cities/<city_id>", methods=['PUT'])
 def update_city(city_id):
     """Updates a City object"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     data = request.get_json()
-    if data is None:
-        abort(400, "Not a JSON")
+    if not data:
+        return jsonify({"error": "Not a JSON"}, 400)
+    to_be_ignored = ["id", "state_id", "created_at", "updated_at"]
     for key, value in data.items():
-        ignore_keys = ["id", "created_at", "updated_at"]
-        if key not in ignore_keys:
-            city.bm_update(key, value)
-    city.save()
-    city = city.to_json()
-    return jsonify(city), 200
+        if key not in to_be_ignored:
+            setattr(city, key, value)
+    storage.save()
+    return jsonify(city.to_dict()), 200
