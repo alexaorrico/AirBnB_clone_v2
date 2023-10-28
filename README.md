@@ -1,12 +1,12 @@
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
-#### Functionalities of this command interpreter:
+#### Functionalities of the command interpreter:
 * Create a new object (ex: a new User or a new Place)
-* Retrieve an object from a file, a database etc...
+* Retrievimg an object from a file, a database etc...
 * Do operations on objects (count, compute stats, etc...)
-* Update attributes of an object
-* Destroy an object
+* Updating attributes of an object
+* Destroying an object
 
 ## Table of Content
 * [Environment](#environment)
@@ -14,12 +14,11 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
-* [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
 
 ## Environment
-This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+This project is interpreted/tested on Ubuntu 20.04 LTS using python3 (version 3.4.3)
 
 ## Installation
 * Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
@@ -30,10 +29,10 @@ This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.
 ## File Descriptions
 [console.py](console.py) - the console contains the entry point of the command interpreter. 
 List of commands this console current supports:
-* `EOF` - exits console 
-* `quit` - exits console
+* `EOF` - exits the console 
+* `quit` - exits the console
 * `<emptyline>` - overwrites default emptyline method and does nothing
-* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
+* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) then prints the id
 * `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
 * `show` - Prints the string representation of an instance based on the class name and id.
 * `all` - Prints all string representation of all instances based or not on the class name. 
@@ -46,7 +45,7 @@ List of commands this console current supports:
 * `def save(self)` - Updates the attribute `updated_at` with the current datetime
 * `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
 
-Classes inherited from Base Model:
+The classes inherited from Base Model:
 * [amenity.py](/models/amenity.py)
 * [city.py](/models/city.py)
 * [place.py](/models/place.py)
@@ -59,7 +58,7 @@ Classes inherited from Base Model:
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* ` def reload(self)` -  deserializes the JSON file to __objects
+* ` def reload(self)` -  deserializing the JSON file to __objects
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -150,13 +149,10 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
-## Bugs
-No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Margaret Tabby - [Github](https://github.com/tabby400)   
+Maryanne Ngaruiya - [Github](https://github.com/Mwmuraguri)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
