@@ -5,7 +5,7 @@ from api.v1.views import app_views
 from models import storage
 from models.user import User
 from models.place import Place
-from models.review import review
+from models.review import Review
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
 def get_reviews(place_id):
