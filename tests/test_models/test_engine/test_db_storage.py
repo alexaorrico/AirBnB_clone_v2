@@ -94,3 +94,8 @@ class TestFileStorage(unittest.TestCase):
         models.storage.save()
         s = models.storage.get(State, state.id)
         self.assertEqual(s.id, state.id)
+
+    def tet_count(self):
+        """test for getting count object"""
+        num = models.storage.count(State)
+        self.assertTrue(num > 0)
