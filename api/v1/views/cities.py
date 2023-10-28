@@ -74,10 +74,15 @@ def put_city(city_id):
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    for attr, val in request.get_json().items():
-        if attr not in ['id', 'state_id', 'created_at', 'updated_at']:
-            setattr(city, attr, val)
+    try:
+        r = request.get_json()
+    except:
+        r = None
+    if r is None:
+        return "Not a JSON", 400
+    for k in ("id", "created_at", "updated_at", "state_id"):
+        r.pop(k, None)
+    for k, v in r.items():
+        setattr(city, k, v)
     city.save()
-    return jsonify(city.to_dict())
+    return jsonify(city.to_json()), 200
