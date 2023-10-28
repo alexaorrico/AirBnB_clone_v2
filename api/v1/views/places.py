@@ -46,7 +46,7 @@ def place_by_id(city_id):
     if city is None:
         abort(404)
     if not request.get_json():
-        abort make_response(jsonify({"error":"Not a JSON"}), 400)
+        abort make_response(jsonify({"error": "Not a JSON"}), 400)
     data = request.get_json()
     if 'user_id' not in data:
         return make_response(jsonify({"error": "Missing user_id"}), 400)
@@ -68,10 +68,9 @@ def place_by_id(place_id):
     if place is None:
         abort(404)
     if not request.get_json():
-        abort make_response(jsonify({"error":"Not a JSON"}), 400)
+        abort make_response(jsonify({"error": "Not a JSON"}), 400)
     data = request.get_json()
     if 'name' in request.json:
         place.name = data['name']
     place.save()
     return jsonify(place.to_dict())
-
