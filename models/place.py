@@ -31,13 +31,6 @@ class Place(BaseModel, Base):
 
     if models.storage_t == "db":
         __tablename__ = "places"
-        # city_id = Column(
-        #     String(60),
-        #     ForeignKey("cities.id", onupdate="CASCADE", ondelete="CASCADE"),
-        #     primary_key=True,
-        #     nullable=False,
-        # )
-
         city_id = Column(String(60), ForeignKey("cities.id"), nullable=True)
         user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
         name = Column(String(128), nullable=False)
