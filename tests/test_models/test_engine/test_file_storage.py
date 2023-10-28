@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_returns_object(self):
+        """Test that get returns the correct object"""
+        storage = FileStorage()
+        new_state = State(name="California")
+        new_state_key = new_state.__class__.__name__ + "." + new_state.id
+        FileStorage._FileStorage__objects = {new_state_key: new_state}
+        retrieved_state = storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent_object(self):
+        """Test that get returns None for a non-existent object"""
+        storage = FileStorage()
+        retrieved_state = storage.get(State, "nonexistent_id")
+        self.assertIsNone(retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all_objects(self):
+        """Test that count returns the total number of objects"""
+        storage = FileStorage()
+        initial_count = storage.count()
+        new_user = User(name="John")
+        storage.new(new_user)
+        storage.save()
+        updated_count = storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_specific_class_objects(self):
+        """Test that count returns the number of objects for a specific class"""
+        storage = FileStorage()
+        initial_count = storage.count(User)
+        new_user = User(name="Alice")
+        storage.new(new_user)
+        storage.save()
+        updated_count = storage.count(User)
+        self.assertEqual(updated_count, initial_count + 1)
