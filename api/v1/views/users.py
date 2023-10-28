@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-'''This module Retrieves the list of all user  objects,
-deletes, updates, creates and gets information of a user '''
+# -*- coding: utf-8 -*-
+"""
+api for user model accept, get, delete post, and update requests
+"""
 from flask import jsonify, request, abort
 from models import storage
 from api.v1.views import app_views
