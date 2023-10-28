@@ -75,7 +75,7 @@ class DBStorage:
         """
         Retrieve one object.
         Args:
-        cls (class): The class of the object.
+        cls : The class of the object.
         id (str): The ID of the object.
         Returns:
         obj: The object based on the class and its ID, or None if not found.
