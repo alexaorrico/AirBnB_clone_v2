@@ -22,13 +22,13 @@ classes = {
 }
 
 
-@app_views.route("/status")
+@app_views.route("/status", methods=["GET"], strict_slashes=False)
 def status():
     """return the status of the application"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats")
+@app_views.route("/stats", methods=["GET"], strict_slashes=False)
 def stats():
     """return the stats of the application"""
     new_d = {key: storage.count(val) for key, val in classes.items()}
