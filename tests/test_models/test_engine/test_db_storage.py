@@ -89,9 +89,9 @@ class TestFileStorage(unittest.TestCase):
 
     def test_get(self):
         """Test method to retrieve object from db storage"""
+        storage = DBStorage()
         dictionary = {"name": "Edenwory"}
         instance = State(**dictionary)
-        storage = DBStorage()
         storage.new(instance)
         storage.save()
         get_instance = storage.get(State, instance.id)
@@ -99,9 +99,9 @@ class TestFileStorage(unittest.TestCase):
 
     def test_count(self):
         """Test method to count"""
-        dictionary = {"name": "trinidad"}
-        instance = State(**dictionaryi)
         storage = DBStorage()
+        dictionary = {"name": "trinidad"}
+        instance = State(**dictionary)
         storage.new(instance)
         dictionary = {"name": "powers"}
         city = City(**dictionary)
