@@ -113,3 +113,30 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestFileStorageCount(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up the test class for FileStorage.
+        """
+        # Initialize your FileStorage instance for testing
+        cls.file_storage = FileStorage()
+        cls.file_storage.reload()  # Load data for testing
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        Perform cleanup after all tests in the class have run.
+        """
+        # Perform any cleanup if needed
+        pass
+
+    def test_file_storage_count(self):
+        """
+        Test the count method in FileStorage.
+        """
+        # Test the count method in FileStorage
+        count = self.file_storage.count(cls)
+        self.assertTrue(count >= 0)
