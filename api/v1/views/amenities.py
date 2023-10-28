@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Contains all REST actions for amenity Objects"""
 from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
 from models import storage
