@@ -10,17 +10,17 @@ from models.user import User
 
 
 @app_views.route('cities/<city_id>/places', methods=['GET'])
-def all_city_places(city_id):
+def get_city_places(city_id):
     """get all places in the city"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
     places = city.places
-    return jsonify([val.to_dict() for val in places])
+    return jsonify([place.to_dict() for place in places])
 
 
 @app_views.route('places/<place_id>', methods=['GET'])
-def place_by_id(place_id):
+def get_place(place_id):
     """get place by thier id"""
     place = storage.get(Place, place_id)
     if place is None:
@@ -29,7 +29,7 @@ def place_by_id(place_id):
 
 
 @app_views.route('places/<place_id>', methods=['DELETE'])
-def del_place(place_id):
+def delete_place(place_id):
     """delete a place by thier id"""
     place = storage.get(Place, place_id)
     if place is None:
@@ -40,7 +40,7 @@ def del_place(place_id):
 
 
 @app_views.route('cities/<city_id>/places', methods=['POST'])
-def place_create(city_id):
+def create_place(city_id):
     """create a place"""
     city = storage.get(City, city_id)
     if city is None:
@@ -52,17 +52,17 @@ def place_create(city_id):
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in request_data:
         return make_response(jsonify({"error": "Missing name"}), 400)
-    user = storage.get(User, data['user_id'])
+    user = storage.get(User, request_data['user_id'])
     if user is None:
         abort(404)
-    data['city_id'] = city_id
-    place = Place(**data)
+    request_data['city_id'] = city_id
+    place = Place(**request_data)
     place.save()
     return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
-def place_update(place_id):
+def update_place(place_id):
     """update the place info"""
     place = storage.get(Place, place_id)
     if place is None:
@@ -70,7 +70,7 @@ def place_update(place_id):
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     data = request.get_json()
-    if 'name' in request.json:
+    if 'name' in data:
         place.name = data['name']
     place.save()
     return jsonify(place.to_dict())
