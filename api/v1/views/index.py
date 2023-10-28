@@ -5,10 +5,12 @@ from api.v1.views import app_views
 from models import storage
 from models.engine.db_storage import classes
 
+
 @app_views.route('/status', strict_slashes=False)
 def status():
     """ Status ->  That Return a JSON -> ('OK') """
     return jsonify({'status': 'OK'})
+
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
