@@ -50,7 +50,7 @@ class DBStorage:
         new_dict = {}
         if not self.__session:
             self.reload()
-       for clss in classes:
+        for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
@@ -70,7 +70,7 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         """if obj is not None:
             self.__session.delete(obj)"""
-       if not self.__session:
+        if not self.__session:
            self.reload()
         if obj:
             self.__session.delete(obj)
