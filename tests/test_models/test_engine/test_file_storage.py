@@ -115,9 +115,8 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get(self):
+    def test_get_success(self):
         """test a method to retrieve one object"""
-        all = models.storage.get(State)
         storage = FileStorage()
         dic = {"name": "casa"}
         instance = State(**dic)
