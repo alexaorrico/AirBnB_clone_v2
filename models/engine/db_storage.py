@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -37,7 +37,7 @@ class DBStorage:
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
-        if HBNB_ENV == "test":
+        if  getenv('HBNB_MYSQL_ENV', 'not') == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
