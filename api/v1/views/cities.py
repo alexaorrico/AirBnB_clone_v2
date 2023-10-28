@@ -48,9 +48,9 @@ def post_city(state_id):
         return jsonify({"error": "Not a JSON"}), 400
     if "name" not in data:
         return jsonify({"error": "Missing name"}), 400
-    city = City(name=data["name"], state_id=state_id)
-    City.new(city)
-    City.save()
+    city = City(**data)
+    city.state_id = state_id
+    city.save()
     return jsonify(city.to_dict()), 201
 
 
