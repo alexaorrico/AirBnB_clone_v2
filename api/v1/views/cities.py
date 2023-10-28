@@ -21,6 +21,8 @@ def get_cities(state_id):
         for city in cities:
             if getattr(city, "state_id", "") == state_id:
                 city_list.append(city.to_dict())
+        if len(city_list) == 0:
+            abort(404)
         return jsonify(city_list)
     abort(404)
 
@@ -58,9 +60,9 @@ def create_city(state_id):
     """creates a new city"""
     data = request.get_json()
     if data is None:
-        return abort("Not a JSON", 400)
+        return abort(400, "Not a JSON")
     if "name" not in data:
-        return abort("Missing name", 400)
+        return abort(400, "Missing name")
     city = City()
     city.name = data["name"]
     city.save()
@@ -77,7 +79,7 @@ def update_city(city_id):
         return abort(404)
     data = request.get_json()
     if data is None:
-        return abort("Not a JSON", 400)
+        return abort(400, "Not a JSON")
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at", "state_id"]:
             setattr(city, key, value)

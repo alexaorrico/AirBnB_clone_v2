@@ -47,9 +47,9 @@ def create_amenity():
     """creates a new amenity"""
     data = request.get_json()
     if data is None:
-        return abort("Not a JSON", 400)
+        return abort(400, "Not a JSON")
     if "name" not in data:
-        return abort("Missing name", 400)
+        return abort(400, "Missing name")
     amenity = Amenity()
     amenity.name = data["name"]
     amenity.save()
@@ -65,7 +65,7 @@ def update_amenity(amenity_id):
         return abort(404)
     data = request.get_json()
     if data is None:
-        return abort("Not a JSON", 400)
+        return abort(400, "Not a JSON")
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(amenity, key, value)

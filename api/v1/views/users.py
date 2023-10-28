@@ -45,11 +45,11 @@ def create_user():
     """creates a new user"""
     data = request.get_json()
     if data is None:
-        return abort("Not a JSON", 400)
+        return abort(400, "Not a JSON")
     if "email" not in data:
-        return abort("Missing email", 400)
+        return abort(400, "Missing email")
     if "password" not in data:
-        return abort("Missing password", 400)
+        return abort(400, "Missing password")
     user = User()
     user.email = data["email"]
     user.password = data["password"]
@@ -65,7 +65,7 @@ def update_user(user_id):
         return abort(404)
     data = request.get_json()
     if data is None:
-        return abort("Not a JSON", 400)
+        return abort(400, "Not a JSON")
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(user, key, value)
