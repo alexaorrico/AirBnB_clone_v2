@@ -21,9 +21,9 @@ def validate_request_json(request):
     """Checks validity of request's json content"""
     req_json = request.get_json(silent=True)
     if req_json is None:
-        abort(jsonify({"message": "Not a JSON"}), 400)
+        abort(jsonify({"error": "Not a JSON"}), 400)
     if request.method == 'POST' and 'name' not in req_json:
-        abort(jsonify({"message": "Missing name"}), 400)
+        abort(jsonify({"error": "Missing name"}), 400)
     return (req_json)
 
 

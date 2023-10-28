@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """module containing a Flask app instance"""
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 
@@ -14,6 +14,12 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 def remove_session(exception):
     """Removes the current SQLAlchemy Session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Handles 404 errors"""
+    return (jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':

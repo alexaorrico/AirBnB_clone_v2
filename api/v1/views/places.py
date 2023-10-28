@@ -23,13 +23,13 @@ def validate_request_json(request):
     """Checks validity of request's json content"""
     req_json = request.get_json(silent=True)
     if req_json is None:
-        abort(jsonify({"message": "Not a JSON"}), 400)
+        abort(jsonify({"error": "Not a JSON"}), 400)
     if request.method == 'POST':
         if 'user_id' not in req_json:
-            abort(jsonify({"message": "Missing user_id"}), 400)
+            abort(jsonify({"error": "Missing user_id"}), 400)
         retrive_object(User, req_json['user_id'])
         if 'name' not in req_json:
-            abort(jsonify({"message": "Missing name"}), 400)
+            abort(jsonify({"error": "Missing name"}), 400)
     return (req_json)
 
 

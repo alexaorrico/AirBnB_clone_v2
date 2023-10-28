@@ -24,9 +24,3 @@ def status():
 def stats():
     """Returns counts for all resources"""
     return jsonify({obj: storage.count(classes[obj]) for obj in classes})
-
-
-@app_views.app_errorhandler(404)
-def not_found(error):
-    """Handles 404 errors"""
-    return (jsonify({"error": "Not found"}), 404)
