@@ -17,5 +17,8 @@ from api.v1.views.states import *
 # Importing the views for City
 from api.v1.views.cities import *
 
-# Importing viewf for Amenity
+# Importing views for Amenity
 from api.v1.views.amenities import *
+
+# Importng views for User
+from api.v1.views.users import *
