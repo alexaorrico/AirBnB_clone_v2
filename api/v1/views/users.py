@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 '''This module Retrieves the list of all user objects,
 deletes, updates, creates and gets information of a user '''
 from flask import jsonify, request, abort
