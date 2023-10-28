@@ -44,6 +44,7 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
+    """Creates a Place"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -63,6 +64,7 @@ def create_place(city_id):
     storage.new(place)
     storage.save()
     return jsonify(place.to_dict()), 201
+
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
