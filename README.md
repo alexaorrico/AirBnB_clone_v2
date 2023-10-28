@@ -24,7 +24,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 ## Environment
 
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
-![logo](https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2020/9/02078cd7f0573885c85a225c7436584a5afea1f9.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20231028%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231028T144518Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=bdfb499a2a5e2f4f89a81f1dee29cf105aa304514bf861a311b15f85345a4635)
+![python3](https://www.python.org/static/community_logos/python-logo.png)
 
 ## Installation
 
