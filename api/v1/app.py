@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """run flask server"""
 from api.v1.views import app_views
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, make_response
 from models import storage
 import os
 
@@ -12,7 +12,7 @@ app.register_blueprint(app_views)
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return {"error": "Not found"}, 404
+    return make_response({'error': 'Not found'}, 404)
 
 
 @app.teardown_appcontext
