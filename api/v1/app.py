@@ -1,14 +1,11 @@
 #!/usr/bin/python3
 '''Flask server app var'''
-
 from models import storage
 from os import getenv
-
 from flask import Flask
+from api.v1.views import app_views
 # Create a variable app, instance from flask
 app = Flask(__name__)
-
-from api.v1.views import app_views
 # register the blueprint app_views to your app
 app.register_blueprint(app_views)
 
