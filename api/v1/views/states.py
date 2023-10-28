@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ Create new view for State """
-from flask import abort, jsonify, request
-from models.state import State
+
 from api.v1.views import app_views
+from flask import abort, jsonify, request
 from models import storage
+from models.state import State
 from models.engine.db_storage import classes
 
 

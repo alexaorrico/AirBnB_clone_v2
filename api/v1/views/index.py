@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Returns a Json response"""
 
-from flask import jsonify
 from api.v1.views import app_views
+from flask import jsonify
 from models import storage
 
 

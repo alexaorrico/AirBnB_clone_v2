@@ -2,10 +2,10 @@
 """creating a flask application"""
 
 import os
-from flask import Flask
-from models import storage
 from api.v1.views import app_views
+from flask import Flask
 from flask_cors import CORS
+from models import storage
 
 
 # Create a Flask application instance

@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """ Returns the City object with the status -> (code 200) """
-from flask import jsonify, abort
-from flask import request
 from api.v1.views import app_views
+from flask import abort, jsonify, request
 from models import storage
 from models.engine.db_storage import classes
 
