@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# Task 8
 """Create a new view for Amenity objects"""
 from flask import Flask, jsonify, request, abort
 from models import storage

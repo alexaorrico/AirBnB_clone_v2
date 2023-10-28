@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# Task 11
 """Create a new view for Review object"""
 from flask import Flask, jsonify, request, abort
 from models import storage
