@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-''' this script for new view for State objects'''
+''' new view for State objects'''
 
 from flask import Flask
 from flask import Flask, abort
@@ -9,7 +9,7 @@ from models.state import State
 from flask import request
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'] strict_slashes=False)
 def toGet():
     '''getting thing'''
     objects = storage.all('State')
@@ -34,7 +34,7 @@ def toGetid():
 def posting():
     '''Creates a State'''
     response = request.get_json()
-    if response.fetch().id is None:
+    if response id None:
         abort(400, {'Not a JSON'})
     if "name" not in response:
         abort(400, {'Missing name'})
@@ -72,3 +72,4 @@ def deleting():
     storage.delete(stateObject)
     storage.save()
     return jsonify({}), '200'
+
