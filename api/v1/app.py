@@ -24,11 +24,12 @@ def not_found(error):
 
 @app.teardown_appcontext
 def teardown_appcontext(exception):
+    """api teardown"""
     storage.close()
 
 
 if __name__ == "__main__":
-    # Run the Flask server
+    """api entry start"""
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
     port = int(os.getenv('HBNB_API_PORT', 5000))
     app.run(host=host, port=port, threaded=True)
