@@ -2,13 +2,11 @@
 """Flask web application
 """
 
-from api.v1.views import app_views
-from flask import Flask, jsonify, make_response, render_template, url_for
-from flask_cors import CORS, cross_origin
-from flasgger import Swagger
-from models import storage
 import os
-from werkzeug.exceptions import HTTPException
+from flask import Flask, jsonify
+from flask_cors import CORS
+from models import storage
+from api.v1.views import app_views
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
