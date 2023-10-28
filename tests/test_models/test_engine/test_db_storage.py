@@ -87,7 +87,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-     def test_get_object(self):
+    def test_get_object(self):
         """Create an object and add it to the storage"""
         obj = SomeClass()
         obj_id = "unique_id"

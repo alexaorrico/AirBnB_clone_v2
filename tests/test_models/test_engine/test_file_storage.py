@@ -114,7 +114,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-     def test_get_object(self):
+    def test_get_object(self):
         """Create an object and add it to the storage"""
         obj = SomeClass()
         obj_id = "unique_id"
