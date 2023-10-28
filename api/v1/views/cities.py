@@ -4,10 +4,11 @@ from models import storage
 from models.state import State
 from models.city import City
 from api.v1.views import app_views
-from flask import abort, jsonify, request, make_response
+from flask import abort, jsonify, request
 
 
-@app_views.route("/states/<state_id>/cities", methods=['GET'])
+@app_views.route("/states/<state_id>/cities", methods=['GET'],
+                 strict_slashes=False)
 def get_cities_by_state(state_id):
     """Retrieves all City objects of a State"""
     state = storage.get(State, state_id)
@@ -17,7 +18,7 @@ def get_cities_by_state(state_id):
     return jsonify(cities)
 
 
-@app_views.route("/cities/<city_id>")
+@app_views.route("/cities/<city_id>", strict_slashes=False)
 def get_city(city_id):
     """Retrieves a City object"""
     city = storage.get(City, city_id)
@@ -34,7 +35,7 @@ def delete_city(city_id):
         abort(404)
     storage.delete(city)
     storage.save()
-    return make_response("{}", 200)
+    return jsonify({}), 200
 
 
 @app_views.route("/states/<state_id>/cities", methods=['POST'])
