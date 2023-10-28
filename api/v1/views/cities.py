@@ -48,35 +48,35 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def city_post(state_id):
-  """ handles POST method """
-  state = storage.get("State", state_id)
-  if state is None:
-    abort(404)
-  data = request.get_json()
-  if data is None:
-    abort(400, "Not a JSON")
-  if 'name' not in data:
-    abort(400, "Missing name")
-  city = City(**data)
-  city.state_id = state_id
-  city.save()
-  city = city.to_json()
-  return jsonify(city), 201
+   """ handles POST method """
+   state = storage.get("State", state_id)
+   if state is None:
+     abort(404)
+   data = request.get_json()
+   if data is None:
+     abort(400, "Not a JSON")
+   if 'name' not in data:
+     abort(400, "Missing name")
+   city = City(**data)
+   city.state_id = state_id
+   city.save()
+   city = city.to_json()
+   return jsonify(city), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def city_put(city_id):
-  """ handles PUT method """
-  city = storage.get("City", city_id)
-  if city is None:
-    abort(404)
-  data = request.get_json()
-  if data is None:
-    abort(400, "Not a JSON")
-  for key, value in data.items():
-    ignore_keys = ["id", "created_at", "updated_at"]
-    if key not in ignore_keys:
-      city.bm_update(key, value)
-  city.save()
-  city = city.to_json()
-  return jsonify(city), 200
+   """ handles PUT method """
+   city = storage.get("City", city_id)
+   if city is None:
+     abort(404)
+   data = request.get_json()
+   if data is None:
+     abort(400, "Not a JSON")
+   for key, value in data.items():
+      ignore_keys = ["id", "created_at", "updated_at"]
+      if key not in ignore_keys:
+       city.bm_update(key, value)
+   city.save()
+   city = city.to_json()
+   return jsonify(city), 200
