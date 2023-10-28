@@ -158,7 +158,9 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Theophilus Ackom - [Github](https://github.com/TeamKweku) / [Twitter](https://twitter.com/teamkwekutheDev)
+
 Dennis Adaku - [Github](https://github.com/KafuiAdaku)
+
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
