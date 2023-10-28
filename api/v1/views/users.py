@@ -7,11 +7,6 @@ from api.v1.views import app_views
 from models.user import User
 
 
-def error(message):
-    '''create an error message and jsonify it '''
-    return jsonify({"error": message})
-
-
 @app_views.route('/users/', strict_slashes=False)
 def get_all_user():
     ''' retreive all user '''
