@@ -11,7 +11,7 @@ from api.v1.views import app_views
 def get_all_cities(state_id):
     ''' retreive all city associted with the state obj'''
     state_objs = storage.all('State')
-    key = f'State.{state_id}'
+    key = 'State.{}'.format(state_id)
 
     if key in state_objs:
         state = state_objs.get(key)
@@ -24,7 +24,7 @@ def get_all_cities(state_id):
 def get_a_cities(city_id):
     '''return the city with matching id'''
     city_objs = storage.all('City')
-    key = f'City.{city_id}'
+    key = 'City.{}'.format(city_id)
 
     if key in city_objs:
         city = city_objs.get(key)
@@ -37,7 +37,7 @@ def get_a_cities(city_id):
 def delete_a_cities(city_id):
     ''' delete a city matching the id'''
     city_objs = storage.all('City')
-    key = f'City.{city_id}'
+    key = 'City.{}'.format(city_id)
 
     if key in city_objs:
         obj = city_objs.get(key)
@@ -55,7 +55,7 @@ def create_a_cities(state_id):
 
     data = request.get_json()
     state_objs = storage.all('State')
-    key = f'State.{state_id}'
+    key = 'State.{state_id}'
 
     if key not in state_objs:
         abort(404)
@@ -77,7 +77,7 @@ def update_a_cities(city_id):
 
     data = request.get_json()
     city_objs = storage.all('City')
-    key = f'City.{city_id}'
+    key = 'City.{}'.format(city_id)
 
     if key not in city_objs:
         abort(404)
