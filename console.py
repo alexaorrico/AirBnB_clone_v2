@@ -11,15 +11,17 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import sys
+import re
 import shlex  # for splitting the line along spaces except in double quotes
-
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
+           'State': State, 'City': City, 'Amenity': Amenity,
+           'Review': Review}
 
 
 class HBNBCommand(cmd.Cmd):
     """ HBNH console """
-    prompt = '(hbnb) '
+    prompt = '(hbnb) ' if sys.__stdin__.isatty() else '(hbnb)'
 
     def do_EOF(self, arg):
         """Exits console"""
@@ -34,34 +36,37 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def _key_value_parser(self, args):
-        """creates a dictionary from a list of strings"""
+        """creates a dictionary from strings"""
+        args = args.split(" ")
+        args = [arg for arg in args if arg]
         new_dict = {}
         for arg in args:
-            if "=" in arg:
-                kvp = arg.split('=', 1)
-                key = kvp[0]
-                value = kvp[1]
-                if value[0] == value[-1] == '"':
-                    value = shlex.split(value)[0].replace('_', ' ')
-                else:
+            [key, value] = arg.split('=', 1)
+            if value[0] == '"' and value[-1] == '"':
+                value = value[1:-1].replace('_', ' ')
+            else:
+                try:
+                    value = int(value)
+                except ValueError:
                     try:
-                        value = int(value)
-                    except:
-                        try:
-                            value = float(value)
-                        except:
-                            continue
-                new_dict[key] = value
+                        value = float(value)
+                    except ValueError:
+                        continue
+            new_dict[key] = value
         return new_dict
 
     def do_create(self, arg):
         """Creates a new instance of a class"""
-        args = arg.split()
-        if len(args) == 0:
+        pattern = """(^\w+)((?:\s+\w+=[^\s]+)+)?"""  # noqa : regex pattern
+        match_up = re.match(pattern, arg)
+        args = [part for part in match_up.groups() if part] if match_up else []
+        if not args[0]:
             print("** class name missing **")
             return False
         if args[0] in classes:
-            new_dict = self._key_value_parser(args[1:])
+            new_dict = {}
+            if len(args) != 1:
+                new_dict = self._key_value_parser(args[1])
             instance = classes[args[0]](**new_dict)
         else:
             print("** class doesn't exist **")
@@ -98,6 +103,7 @@ class HBNBCommand(cmd.Cmd):
                 if key in models.storage.all():
                     models.storage.all().pop(key)
                     models.storage.save()
+                    print(key)
                 else:
                     print("** no instance found **")
             else:
@@ -140,12 +146,12 @@ class HBNBCommand(cmd.Cmd):
                                 if args[2] in integers:
                                     try:
                                         args[3] = int(args[3])
-                                    except:
+                                    except ValueError:
                                         args[3] = 0
                                 elif args[2] in floats:
                                     try:
                                         args[3] = float(args[3])
-                                    except:
+                                    except ValueError:
                                         args[3] = 0.0
                             setattr(models.storage.all()[k], args[2], args[3])
                             models.storage.all()[k].save()
@@ -159,6 +165,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
