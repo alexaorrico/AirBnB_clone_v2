@@ -3,7 +3,7 @@
 from models import storage
 from models.user import User
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import abort, jsonify, request
 
 
 @app_views.route("/users",
@@ -12,7 +12,7 @@ from flask import jsonify, request, abort
 def all_users():
     """Retrieve all users"""
     return jsonify(list(map(
-        lambda x: x.to_dict(), storage.all(User).values()
+        lambda x: x.to_dict(), storage.all('User').values()
     )))
 
 
@@ -32,7 +32,7 @@ def get_user(user_id):
 )
 def delete_user(user_id):
     """Deletes a particular user"""
-    user = storage.get(User, user_id)
+    user = storage.get('User', user_id)
     if not user:
         abort(404)
     storage.delete(user)
@@ -49,13 +49,13 @@ def post_user():
     """Creates a new user"""
     data = request.get_json()
     if not data:
-        return jsonify({"message": "Not a JSON"}), 400
+        abort(400, description="Not a JSON")
 
     if "email" not in data:
-        return jsonify({"message": "Missing email"}), 400
+        abort(400, description="Missing email")
 
     if "password" not in data:
-        return jsonify({"message": "Missing password"}), 400
+        abort(400, description="Missing password")
 
     new_user = User(**data)
     storage.new(new_user)
