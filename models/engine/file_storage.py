@@ -70,11 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-<<<<<<< HEAD
-        """A method to retrieve one object"""
-=======
         """A function to retrieve one object of a given id."""
->>>>>>> temp
         obj = None
         if cls is not None and issubclass(cls, BaseModel):
             objs = list(
@@ -83,18 +79,8 @@ class FileStorage:
                         self.__objects.values()
                         )
                     )
-<<<<<<< HEAD
             obj = objs[0]
         return (obj)
 
-    def count(self, cls=None):
-        """A method to count the number of objects"""
-=======
-            if objs:
-                obj = objs[0]
-        return (obj)
-
-    def count(self, cls=None):
         """A function that count number of objects in storage."""
->>>>>>> temp
         return len(self.all(cls))
