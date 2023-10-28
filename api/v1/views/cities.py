@@ -6,7 +6,8 @@ from models.city import City
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 
-@app_views.route("/states/<state_id>/cities", methods=['GET'], strict_slashes=False)
+
+@app_views.route("/states/<state_id>/cities", methods=['GET'])
 def get_cities_by_state(state_id):
     """Retrieves all City objects of a State"""
     state = storage.get(State, state_id)
@@ -48,8 +49,8 @@ def post_city(state_id):
     if "name" not in data:
         return jsonify({"error": "Missing name"}), 400
     city = City(name=data["name"], state_id=state_id)
-    storage.new(city)
-    storage.save()
+    City.new(city)
+    City.save()
     return jsonify(city.to_dict()), 201
 
 
@@ -66,5 +67,5 @@ def update_city(city_id):
     for key, value in data.items():
         if key not in to_be_ignored:
             setattr(City, key, value)
-    storage.save()
+    City.save()
     return jsonify(city.to_dict()), 200
