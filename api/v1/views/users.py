@@ -1,16 +1,13 @@
 #!/usr/bin/python3
-"""
-This module Retrieves the list of all City objects,
-deletes, updates, creates and gets information of a city
-"""
-
-from flask import jsonify, request, abort, make_response
+'''This module Retrieves the list of all amenity objects,
+deletes, updates, creates and gets information of a amenity '''
+from flask import jsonify, request, abort
 from models import storage
 from api.v1.views import app_views
 from models.user import User
 
 
-@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/users/', methods=['GET', 'POST'], strict_slashes=False)
 def users():
     '''this function ger all users in the storage,
         if method is get and adds a a user to the datatbase if the method
