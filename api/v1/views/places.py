@@ -37,7 +37,8 @@ def place(id):
     return (jsonify(place.to_dict()))
 
 
-@app_views.route('/places/<string:id>/', methods=["DELETE"], strict_slashes=False)
+@app_views.route('/places/<string:id>/', methods=["DELETE"],
+                 strict_slashes=False)
 def remove_place(id):
     """REMOVE place by id"""
     place = storage.get(Place, id)
@@ -48,7 +49,8 @@ def remove_place(id):
     return {}, 200
 
 
-@app_views.route('/cities/<string:id>/places/', methods=["POST"], strict_slashes=False)
+@app_views.route('/cities/<string:id>/places/', methods=["POST"],
+                 strict_slashes=False)
 def create_place(id):
     """CREATE place by city id"""
     if request.is_json:
@@ -77,7 +79,7 @@ def update_place(id):
         abort(404)
     if request.is_json:
         forbidden = ["id", "created_at", "updated_at", "user_id",
-                      "city_id"]
+                     "city_id"]
         user = storage.get(User, id)
         if user is None:
             abort(404)
