@@ -67,4 +67,4 @@ def put_states(state_id):
         if key not in to_be_ignored:
             setattr(state, key, value)
     storage.save()
-    return jsonify(state.to_dict(), 200)
+    return jsonify(state.to_dict()), 200
