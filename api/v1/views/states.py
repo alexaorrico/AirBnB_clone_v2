@@ -86,7 +86,7 @@ def update_state(state_id):
 
 @app_views.errorhandler(404)
 def not_found(error):
-    """ Raises ERROR 404 """ 
+    """ Raises ERROR 404 """
     return jsonify({'error': 'Not found'}), 404
 
 
