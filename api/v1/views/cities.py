@@ -77,5 +77,7 @@ def put_city(city_id):
 
     for key, val in dict(request.get_json()).items():
         setattr(city, key, val)
+    
+    storage.save()
 
     return jsonify(city.to_dict())
