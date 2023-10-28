@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from os import getenv
 from flask import jsonify
 from flask_cors import CORS
-
+from flask import make_response
 
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
@@ -15,7 +15,7 @@ cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def closeStorage(exception):
+def closeStorage(self):
     """Closes the storage session"""
     storage.close()
 
@@ -23,7 +23,7 @@ def closeStorage(exception):
 @app.errorhandler(404)
 def page_not_found(err):
     """Custom 404 page not found json error message"""
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
