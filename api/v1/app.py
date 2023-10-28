@@ -2,8 +2,9 @@
 '''Flask server app var'''
 from models import storage
 from os import getenv
-from flask import Flask
+from flask import Flask, jsonify
 from api.v1.views import app_views
+
 # Create a variable app, instance from flask
 app = Flask(__name__)
 # register the blueprint app_views to your app
@@ -12,13 +13,21 @@ app.register_blueprint(app_views)
 # disables this strict trailing slash behavior.
 app.url_map.strict_slashes = False
 
+
 # method to handle the close of the app
-
-
 @app.teardown_appcontext
 def down_method(self):
     """ close the storage"""
     storage.close()
+
+
+# Function to handle 404 error
+@app.errorhandler(404)
+def page_not_gound(e):
+    """ Method to handle
+    the error page
+    """
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
