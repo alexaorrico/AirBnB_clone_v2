@@ -3,18 +3,23 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
+from datetime import datetime
 import inspect
-import uuid
+import models
 from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import json
+import os
 import pep8
 import unittest
+import uuid
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -35,11 +40,10 @@ class TestDBStorageDocs(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
-        """Test tests/test_models/test_engine/test_db_storage.py\
-conforms to PEP8."""
+        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine\
-/test_db_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine/\
+test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -67,13 +71,19 @@ conforms to PEP8."""
 
 
 class TestDBStorage(unittest.TestCase):
-    """Tests DB storage"""
     def test_get(self):
-        """Test get method of storage"""
+        """
+        The function `test_get` tests the `get` method of the
+        `DBStorage` class by passing in an unknown
+        """
+        # testing with unknown class and id
+        self.assertTrue(storage.get(models, "id") is None)
+        self.assertTrue(storage.get(eval("State"), "id") is None)
+
         state = State(name="California")
         storage.new(state)
-        re_state = storage.get(State, state.id)
-        self.assertEqual(state.id, re_state.id)
+        get_state = storage.get(State, state.id)
+        self.assertTrue(state.id == get_state.id)
 
     def test_get_none(self):
         """test for get for none existing id"""
@@ -81,8 +91,19 @@ class TestDBStorage(unittest.TestCase):
         self.assertIsNone(state)
 
     def test_count(self):
-        """Test count method of storage"""
-        all_objs = storage.count()
-        self.assertIsInstance(all_objs, int)
-        state_objs = storage.count(State)
-        self.assertIsInstance(state_objs, int)
+        """
+        The `test_count` function tests the `count` method of a
+        storage object by checking the number of objects before
+        and after adding a new object.
+        """
+        # counting all class
+        first_no = storage.count()
+        # counting all `State` classes
+        first_no_state = storage.count(State)
+        self.assertTrue(type(first_no) is int)
+        state = State(name="California")
+        storage.new(state)
+        after_no = storage.count()
+        after_no_state = storage.count(State)
+        self.assertTrue(first_no_state + 1 == after_no_state)
+        self.assertTrue(first_no + 1 == after_no)

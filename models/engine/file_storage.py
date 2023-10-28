@@ -34,16 +34,6 @@ class FileStorage:
             return new_dict
         return self.__objects
 
-    def get(self, cls, id):
-        """retrieves one object with specified class and id"""
-        objs = self.all(cls)
-        key = cls.__name__ + "." + id
-        return objs.get(key)
-
-    def count(self, cls=None):
-        """count the number of objects in storage"""
-        return len(self.all(cls))
-
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
@@ -69,11 +59,36 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it's inside"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
+
+    def get(self, cls, id):
+        """
+        The function retrieves an object of a given class
+        by its ID from a collection of objects.
+        """
+        if cls not in classes.values():
+            return
+        if type(id) is not str:
+            return
+        all_cls = self.all(cls)
+        for i in all_cls.values():
+            if i.id == id:
+                return i
+        return
+
+    def count(self, cls=None):
+        """
+        The count function returns the number of instances of a
+        given class or all classes if no class is specified.
+        """
+        if cls is None:
+            return len(self.all())
+        if cls in classes.values():
+            return len(self.all(cls))
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
