@@ -59,8 +59,8 @@ def update_user(id):
         abort(404)
     if not request.json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'password' in request.json:
-        user.password = request.get_json()['password']
+    # if 'password' in request.json:
+    #     user.password = request.get_json()['password']
     if 'first_name' in request.json:
         user.first_name = request.get_json()['first_name']
     if 'last_name' in request.json:
