@@ -9,7 +9,7 @@ from models.amenity import Amenity
 
 @app_views.route('/amenities/', strict_slashes=False)
 def get_all_amenities():
-    #''' retreive all amenities '''
+    ''' retreive all amenities '''
     amenity_objs = storage.all('Amenity')
 
     return jsonify([obj.to_dict() for obj in amenity_objs.values()])
@@ -17,7 +17,7 @@ def get_all_amenities():
 
 @app_views.route('/amenities/<amenity_id>/', strict_slashes=False)
 def get_an_amenity(amenity_id):
-    #'''return the amenity with matching id'''
+    '''return the amenity with matching id'''
     amenity_objs = storage.all('Amenity')
     key = f'Amenity.{amenity_id}'
 
@@ -31,7 +31,7 @@ def get_an_amenity(amenity_id):
 @app_views.route('/amenities/<amenity_id>/', methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity(amenity_id):
-    #''' delete amenity matching the id'''
+    ''' delete amenity matching the id'''
     amenity_objs = storage.all('Amenity')
     key = f'Amenity.{amenity_id}'
 
@@ -46,7 +46,7 @@ def delete_amenity(amenity_id):
 
 @app_views.route('/amenities/', methods=['POST'], strict_slashes=False)
 def create_amenity():
-    #''' create a amenity '''
+    ''' create a amenity '''
 
     data = request.get_json()
 
