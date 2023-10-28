@@ -16,10 +16,7 @@ def teardown(err):
 @app.errorhandler(404)
 def page_not_found(error):
     """loads a custom 404 page not found"""
-    response = jsonify({"error": "Not found"})
-    response.status_code = 404
-    return response
-
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
