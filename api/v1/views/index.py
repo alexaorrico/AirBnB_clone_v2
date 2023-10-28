@@ -2,7 +2,7 @@
 """index.py"""
 from models import storage
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import jsonify
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -13,6 +13,7 @@ from models.user import User
 
 @app_views.route("/status", strict_slashes=False)
 def status():
+    """Returns status"""
     json_text = jsonify({"status": "OK"})
     return json_text
 

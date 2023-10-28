@@ -13,13 +13,13 @@ app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def tear(self):
+def teardown(error):
     """Teardown method that closes the storage"""
     storage.close()
 
 
 @app.errorhandler(404)
-def error(e):
+def not_found(error):
     """error handler that returns 404 in just json"""
     json_text = {"error": "Not found"}
     return jsonify(json_text), 404
