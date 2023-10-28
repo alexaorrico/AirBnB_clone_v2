@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/iusr/bin/python3
 '''This module Retrieves the list of all amenity objects,
 deletes, updates, creates and gets information of a amenity '''
 from flask import jsonify, request, abort
