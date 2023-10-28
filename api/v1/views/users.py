@@ -41,14 +41,16 @@ def new_user():
     """creates a city objects"""
     if not request.json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    data = request.get_json()
-    if 'email' not in data:
+    if 'email' not in request.json:
         return make_response(jsonify({"error": "Missing email"}, 400))
-    if 'password' not in data:
+    if 'password' not in request.json:
         return make_response(jsonify({"error": "Missing password"}), 400)
+    data = request.get_json()
     user = User(**data)
+    if user is None:
+        abort(404)
     user.save()
-    return jsonify(user.to_dict()), 201
+    return make_response(jsonify(user.to_dict()), 201)
 
 
 @app_views.route('/users/<id>', methods=['PUT'], strict_slashes=False)
@@ -59,8 +61,8 @@ def update_user(id):
         abort(404)
     if not request.json:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    # if 'password' in request.json:
-    #     user.password = request.get_json()['password']
+    if 'password' in request.json:
+        user.password = request.get_json()['password']
     if 'first_name' in request.json:
         user.first_name = request.get_json()['first_name']
     if 'last_name' in request.json:
