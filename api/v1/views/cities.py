@@ -67,4 +67,4 @@ def update_city(city_id):
         if key not in to_be_ignored:
             setattr(City, key, value)
     storage.save()
-    return jsonify(city.to_dict(), 200)
+    return jsonify(city.to_dict()), 200
