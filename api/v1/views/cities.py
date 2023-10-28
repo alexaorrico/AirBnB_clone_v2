@@ -44,9 +44,9 @@ def post_city(state_id):
         abort(404)
     data = request.get_json()
     if not data:
-        return jsonify({"error": "Not a JSON"}, 400)
+        return jsonify({"error": "Not a JSON"}), 400
     if "name" not in data:
-        return jsonify({"error": "Missing name"}, 400)
+        return jsonify({"error": "Missing name"}), 400
     city = City(name=data["name"], state_id=state_id)
     storage.new(city)
     storage.save()
