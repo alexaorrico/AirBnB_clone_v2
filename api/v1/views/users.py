@@ -51,7 +51,7 @@ def user_id(user_id=None):
         return jsonify({}), 200
 
     if request.method == 'PUT':
-    req_json = request.get_json()
+        req_json = request.get_json()
     if req_json is None:
         abort(400, 'Not a JSON')
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']

@@ -6,6 +6,7 @@ from os import getenv
 
 app = Flask(__name__)
 # Cross-Origin Resource Sharing
+host = '0.0.0.0'
 cors = CORS(app, resources={r'/*': {'origins': host}})
 
 # app_views BluePrint defined in api.v1.views
