@@ -49,7 +49,7 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """this deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
@@ -70,8 +70,6 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-<<<<<<< HEAD
-
         """ Returns the object based on the class and its ID
             or None if not found
         """
@@ -79,28 +77,10 @@ class FileStorage:
             return None
         all_obj = self.__objects.get("{}.{}".format(cls.__name__, id), None)
         return all_obj
-=======
-        """ Returns the object based on the class and its ID
-            or None if not found
-        """
-        if cls in classes.value() and id and type(id) == str:
-            obj = self.all(cls)
-            for k, v in obj.items():
-                if k.split('.')[1] == id:
-                    return v
-        return None
->>>>>>> 251930b600e86ca23748d8f6a5cb34172361a5ff
 
     def count(self, cls=None):
         """ A method to count the number of objects in storage
         """
-<<<<<<< HEAD
         if cls is None:
             return len(self.all())
         return len(self.all(cls))
-=======
-        body = self.all(cls)
-        if cls in classes.values():
-            body = self.all(cls)
-        return len(body)
->>>>>>> 251930b600e86ca23748d8f6a5cb34172361a5ff
