@@ -47,9 +47,10 @@ def create_state():
     """creates a new state"""
     data = request.get_json()
     if data is None:
-        abort("Not a JSON", 400)
+        print("not json")
+        abort(400, "Not a JSON")
     if "name" not in data:
-        abort("Missing name", 400)
+        abort(400, "Missing name")
     state = State()
     state.name = data["name"]
     state.save()
@@ -64,7 +65,7 @@ def update_state(state_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        abort("Not a JSON", 400)
+        abort(400, "Not a JSON")
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(state, key, value)
