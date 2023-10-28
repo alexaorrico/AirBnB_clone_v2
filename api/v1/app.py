@@ -30,4 +30,4 @@ if __name__ == '__main__':
     useHost = getenv('HBNB_API_HOST', default='0.0.0.0')
     usePort = getenv('HBNB_API_PORT', default=5000)
 
-    app.run(host=useHost, port=usePort, threaded=True, debug=True)
+    app.run(host=useHost, port=usePort, threaded=True)
