@@ -16,14 +16,14 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 def teardown(error):
     """Clean-up method
     """
-    storage.close()
+storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
     """Custom 404 error
     """
-    return jsonify({'error': 'Not found'})
+return jsonify({'error': 'Not found'}), 404
 
 
 if __name__ == '__main__':
