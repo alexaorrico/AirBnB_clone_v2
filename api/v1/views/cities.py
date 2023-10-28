@@ -51,7 +51,7 @@ def post_city(state_id):
     if not data:
         abort(400, description="Not a JSON")
     if "name" not in data:
-        return abort(400, description="Missing name")
+        abort(400, description="Missing name")
     city = City(**data)
     city.state_id = state_id
     storage.new(city)
