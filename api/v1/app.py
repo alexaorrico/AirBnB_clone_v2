@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""creating flask app"""
+"""Creating flask app."""
 
 from api.v1.views import app_views
 from flask import Flask, jsonify
@@ -11,13 +11,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_appcontext(self):
-    """close the storage"""
+    """Close the storage."""
     storage.close()
 
 
 @app.errorhandler(404)
 def error_handler(error):
-    """handler for 404 errors"""
+    """Handle for 404 errors."""
     return jsonify({"error": "Not found"}), 404
 
 
