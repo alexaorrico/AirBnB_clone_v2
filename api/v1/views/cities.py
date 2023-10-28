@@ -20,22 +20,22 @@ def get_cities_by_state(state_id):
 @app_views.route("/cities/<city_id>")
 def get_city(city_id):
     """Retrieves a City object"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    city = city.to_json()
-    return jsonify(city)
+    return jsonify(city.to_dict())
 
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"])
 def delete_city(city_id):
     """Deletes a City object"""
-    city = storage.get(City, city_id)
+    empty_dict = {}
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     storage.delete(city)
     storage.save()
-    return jsonify({}), 200
+    return jsonify(empty_dict), 200
 
 
 @app_views.route("/states/<state_id>/cities", methods=['POST'])
