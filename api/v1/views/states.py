@@ -19,7 +19,7 @@ def all_states():
     return jsonify(my_list)
 
 
-@app_views.route('/states/<id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<id>', strict_slashes=False)
 def states_id(id):
     """
     The function `states_id` takes an ID as input and returns the
@@ -56,7 +56,7 @@ def states_post():
     data = request.get_json()
     if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'name' not in data.keys():
+    if 'name' not in data.keys() or data['name'] == "":
         return make_response(jsonify({"error": "Missing name"}), 400)
     state = State(**data)
     storage.new(state)
@@ -84,5 +84,5 @@ def states_put(id):
     #     del data['updated_at']
     if 'name' in data:
         state.name = data['name']
-        storage.save()
+        state.save()
     return jsonify(storage.get(State, state.id).to_dict()), 200
