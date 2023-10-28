@@ -23,7 +23,7 @@ def teardown(error):
 def not_found(error):
     """Custom 404 error
     """
-    return jsonify({'error': 'Not found'}), 404
+    return jsonify({'error': 'Not found'})
 
 
 if __name__ == '__main__':
