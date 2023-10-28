@@ -113,3 +113,22 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_count_cls(self):
+        """checks function with class input argument"""
+        count_user = storage.count('User')
+        expected = 1
+        self.assertEqual(expected, count_user)
+
+    def test_count_all(self):
+        """checks function with no class input"""
+        count_all = storage.count()
+        expected = 2
+        self.assertEqual(expected, count_all)
+
+    def test_get_cls_id(self):
+        """checks function with class and id inputs"""
+        duplicate = storage.get('User', self.user.id)
+        expected = self.user.id
+        actual = duplicate.id
+        self.assertEqual(expected, actual)

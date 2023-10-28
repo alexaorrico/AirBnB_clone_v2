@@ -83,6 +83,22 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+      @unittest.skipIf(STORAGE_TYPE != 'db', 'skip if environ is not db')
+      def test_get(self):
+        """checks if function returns"""
+        duplicate = storage.get('Place', self.p1.id)
+        expected = self.p1.id
+        self.assertEqual(expected, duplicate.id)
+
+    def test_count_amenity(self):
+        """checks if function returns proper count with Class input"""
+        count_amenity = storage.count('Amenity')
+        expected = 3
+        self.assertEqual(expected, count_amenity)
+
+    def test_count_all(self):
+        """... checks if functions with no class"""
+        count_all = storage.count()
+        expected = 8
+        self.assertEqual(expected, count_all)
+
