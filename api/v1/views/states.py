@@ -44,9 +44,9 @@ def post_state():
     """Posts data into db"""
     data = request.get_json()
     if not data:
-        return jsonify(400, "Not a JSON")
+        return jsonify({"message": "Not a JSON"}), 400
     if "name" not in data:
-        return abort(400, "Missing name")
+        return jsonify({"message": "Missing name"}), 400
     state = State(name=data["name"])
     storage.new(state)
     storage.save()
