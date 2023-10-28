@@ -2,7 +2,7 @@
 """
 Contains the class DBStorage
 """
-import json
+
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -76,21 +76,16 @@ class DBStorage:
         self.__session.remove()
     
     def get(self, cls, id):
-        '''get:
-        retrieves an object fom the file storage by class and id.
-        '''
-        if cls in classes.values() and id and type(id) == str:
-            d_obj = self.all(cls)
-            for key, value in d_obj.items():
-                if key.split(".")[1] == id:
-                    return value
-        return None
+        '''method to retrieve one object'''
+        if cls and id:
+            tempo = cls, __name__ + "." + id
+            count = self.all(cls)
+            for key in count:
+                if key == tempo:
+                    return count[key]
+        else:
+            return None
 
     def count(self, cls=None):
-        '''count:
-        counts the number of objects in storage matching the given class.
-        '''
-        data = self.all(cls)
-        if cls in classes.values():
-            data = self.all(cls)
-        return len(data)
+        '''class (optional)'''
+        return (len(self.all(cls)))
