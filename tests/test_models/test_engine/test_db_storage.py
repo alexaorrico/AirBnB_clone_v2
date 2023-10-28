@@ -89,6 +89,8 @@ class TestFileStorage(unittest.TestCase):
 
     def test_get(self):
         """test for getting single object"""
-        state = State("Califonia")
-        s = DBStorage.get(State, state.id)
-		self.assertEqual(s.values()["id"] == state.id)
+        state = State(name="Califonia")
+        models.storage.new(state)
+        models.storage.save()
+        s = models.storage.get(State, state.id)
+        self.assertEqual(s.id, state.id)
