@@ -9,7 +9,7 @@ from models.state import State
 from flask import request
 
 
-@app_views.route('/status', methods=['GET'] strict_slashes=False)
+@app_views.route('/status', methods=['GET'])
 def toGet():
     '''getting thing'''
     objects = storage.all('State')
