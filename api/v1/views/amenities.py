@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 
+
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_all_amenities():
     """gets list of all Amenity objects"""
@@ -23,13 +24,15 @@ def single_amenities(amenity_id):
 @app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def del_amenities(amenity_id):
-    """deletes the object and returns an empty dictionary with the status code 200"""
+    """deletes the object and returns an empty
+        dictionary with the status code 200"""
     obj = storage.get(Amenity, amenity_id)
     if not obj:
         abort(404)
     obj.delete()
     storage.save()
     return make_response(jsonify({}), 200)
+
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def post_amenity():
