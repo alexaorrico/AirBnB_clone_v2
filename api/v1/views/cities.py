@@ -60,6 +60,7 @@ def post_city(state_id):
 
     body = request.get_json()
     instance = City(**body)
+    instance.state_id = state_id
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
@@ -75,6 +76,6 @@ def put_city(city_id):
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
     for key, val in dict(request.get_json()).items():
-        city[key] = val
+        setattr(city, key, val)
 
-    return jsonify(city)
+    return jsonify(city.to_dict())
