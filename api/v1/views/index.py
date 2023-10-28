@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""A route that will display the status code"""
+"""A route that will display status"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -13,11 +13,13 @@ from models.user import User
 
 @app_views.route('/status', methods=['GET'])
 def status():
+    """To display status"""
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
+    """To display the number of objects"""
     objs = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
