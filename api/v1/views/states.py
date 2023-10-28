@@ -18,9 +18,9 @@ def retrive_object(state_id):
 
 def validate_request_json(request):
     """Checks validity of request's json content"""
-    req_json = request.get_json(silent=True)
-    if req_json is None:
+    if not request.is_json:
         abort(jsonify({"error": "Not a JSON"}), 400)
+    req_json = request.get_json()
     if request.method == 'POST' and 'name' not in req_json:
         abort(jsonify({"error": "Missing name"}), 400)
     return (req_json)
