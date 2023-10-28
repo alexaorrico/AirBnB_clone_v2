@@ -54,13 +54,18 @@ def post_state():
                  strict_slashes=False)
 def put_state(state_id):
     """update a state"""
+    try:
+        r = request.get_json()
+    except:
+        r = None
+    if r is None:
+        return "Not a JSON", 400
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    for attr, val in request.get_json().items():
-        if attr not in ['id', 'created_at', 'updated_at']:
-            setattr(state, attr, val)
+    for k in ("id", "created_at", "updated_at"):
+        r.pop(k, None)
+    for k, v in r.items():
+        setattr(state, k, v)
     state.save()
-    return jsonify(state.to_dict())
+    return jsonify(state.to_json()), 200
