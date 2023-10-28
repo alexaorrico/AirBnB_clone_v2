@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Objects that handle all default RESTful API actions for Places"""
+""" objects that handle all default RestFul API actions for Places """
 from models.state import State
 from models.city import City
 from models.place import Place
@@ -10,11 +10,10 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from flasgger.utils import swag_from
 
-# Import swag_from decorator from Flasgger
-from flasgger import swag_from
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/place/get_places.yml')
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
+@swag_from('documentation/place/get_places.yml', methods=['GET'])
 def get_places(city_id):
     """
     Retrieves the list of all Place objects of a City
@@ -28,8 +27,9 @@ def get_places(city_id):
 
     return jsonify(places)
 
+
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/place/get_place.yml')
+@swag_from('documentation/place/get_place.yml', methods=['GET'])
 def get_place(place_id):
     """
     Retrieves a Place object
@@ -40,12 +40,15 @@ def get_place(place_id):
 
     return jsonify(place.to_dict())
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
-@swag_from('documentation/place/delete_place.yml')
+
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
+@swag_from('documentation/place/delete_place.yml', methods=['DELETE'])
 def delete_place(place_id):
     """
     Deletes a Place Object
     """
+
     place = storage.get(Place, place_id)
 
     if not place:
@@ -56,8 +59,10 @@ def delete_place(place_id):
 
     return make_response(jsonify({}), 200)
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
-@swag_from('documentation/place/post_place.yml')
+
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
+@swag_from('documentation/place/post_place.yml', methods=['POST'])
 def post_place(city_id):
     """
     Creates a Place
@@ -87,8 +92,9 @@ def post_place(city_id):
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
+
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-@swag_from('documentation/place/put_place.yml')
+@swag_from('documentation/place/put_place.yml', methods=['PUT'])
 def put_place(place_id):
     """
     Updates a Place
@@ -110,12 +116,15 @@ def put_place(place_id):
     storage.save()
     return make_response(jsonify(place.to_dict()), 200)
 
+
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
-@swag_from('documentation/place/post_search.yml')
+@swag_from('documentation/place/post_search.yml', methods=['POST'])
 def places_search():
     """
-    Retrieves all Place objects depending on the JSON in the body of the request
+    Retrieves all Place objects depending of the JSON in the body
+    of the request
     """
+
     if request.get_json() is None:
         abort(400, description="Not a JSON")
 
@@ -127,9 +136,13 @@ def places_search():
         amenities = data.get('amenities', None)
 
     if not data or not len(data) or (
-            not states and not cities and not amenities):
+            not states and
+            not cities and
+            not amenities):
         places = storage.all(Place).values()
-        list_places = [place.to_dict() for place in places]
+        list_places = []
+        for place in places:
+            list_places.append(place.to_dict())
         return jsonify(list_places)
 
     list_places = []
@@ -158,6 +171,10 @@ def places_search():
                        if all([am in place.amenities
                                for am in amenities_obj])]
 
-    places = [place.to_dict() for place in list_places]
+    places = []
+    for p in list_places:
+        d = p.to_dict()
+        d.pop('amenities', None)
+        places.append(d)
 
     return jsonify(places)
