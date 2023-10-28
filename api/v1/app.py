@@ -9,7 +9,10 @@ from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-
+app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown(self):
@@ -26,4 +29,8 @@ def not_found(error):
 if __name__ == "__main__":
     host = getenv("HBNB_API_HOST", "0.0.0.0")
     port = int(getenv("HBNB_API_PORT", "5000"))
+    if not host:
+        host = '0.0.0.0'
+    if not port:
+        port = '5000'
     app.run(host, port, threaded=True)
