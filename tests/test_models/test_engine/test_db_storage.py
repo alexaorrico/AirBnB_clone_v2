@@ -1,23 +1,22 @@
-#!/usr/bin/python3
+
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
 import pep8
+from models import storage
 import unittest
+import MySQLdb
+from os import getenv
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +85,44 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+""" new test cases """
+
+
+class TestDbNew(unittest.TestCase):
+    """ new test cases for db """
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def setUp(self):
+        """ set up tests """
+        host = getenv('HBNB_MYSQL_HOST')
+        usr = getenv('HBNB_MYSQL_USER')
+        pwd = getenv('HBNB_MYSQL_PWD')
+        dbName = getenv('HBNB_MYSQL_DB')
+        self.db = MySQLdb.connect(host, usr, pwd, dbName)
+        state_1 = State(name='NYC')
+        state_1.save()
+        state_2 = State(name='Oklahoma')
+        state_2.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """ test_count """
+        cursor = self.db.cursor()
+        cursor.execute('SELECT * FROM states')
+        values = cursor.fetchall()
+        self.assertEqual(len(values), storage.count(State))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """ test retrieving object """
+        first_state_id = list(storage.all(State).values())[0].id
+        obj = storage.get(State, first_state_id)
+        self.assertEqual(obj.id, first_state_id)
+        """ check not passing arguments """
+        with self.assertRaises(TypeError):
+            storage.get()
+
+
+if __name__ == "__main__":
+    unittest.main()
