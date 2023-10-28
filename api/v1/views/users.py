@@ -1,6 +1,8 @@
 #!/usr/bin/python3
-'''This module Retrieves the list of all City objects,
-deletes, updates, creates and gets information of a city '''
+"""
+This module Retrieves the list of all City objects,
+deletes, updates, creates and gets information of a city 
+"""
 
 from flask import jsonify, request, abort, make_response
 from models import storage
@@ -10,7 +12,10 @@ from models.user import User
 
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def get_all_users():
-    ''' retreive all users, and also create a user'''
+    '''this function ger all users in the storage, 
+        if method is get and adds a a user to the datatbase if the method
+        is post
+    '''
     if request.method == 'GET':
         user_objs = storage.all('User')
         return jsonify([obj.to_dict() for obj in user_objs.values()])
@@ -30,7 +35,11 @@ def get_all_users():
 @app_views.route('/users/<user_id>/', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
 def get_an_user(user_id):
-    '''get or delete or update a user with matching id'''
+    '''
+    get or delete or update a user with matching id
+    user_id : (string) an id of the user to be worked of accorfing to the
+                http method passed
+    '''
     user_objs = storage.all('User')
     key = f'User.{user_id}'
 
