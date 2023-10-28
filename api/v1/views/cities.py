@@ -45,44 +45,38 @@ def delete_city(city_id):
     return (jsonify({}))
 
 
-@app_views.route('/states/<string:state_id>/cities/', methods=['POST'],
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
-def post_city(state_id):
-    """create a new city"""
-    try:
-        r = request.get_json()
-    except:
-        r = None
-    if r is None:
-        return "Not a JSON", 400
-    if 'name' not in r.keys():
-        return "Missing name", 400
-    s = storage.get("State", state_id)
-    if s is None:
+def city_post(state_id):
+    """ handles POST method """
+    state = storage.get("State", state_id)
+    if state is None:
         abort(404)
-    # creates the dictionary r as kwargs to create a city object
-    c = City(**r)
-    c.state_id = state_id
-    c.save()
-    return jsonify(c.to_json()), 201
+    data = request.get_json()
+    if data is None:
+        abort(400, "Not a JSON")
+    if 'name' not in data:
+        abort(400, "Missing name")
+    city = City(**data)
+    city.state_id = state_id
+    city.save()
+    city = city.to_json()
+    return jsonify(city), 201
 
 
-@app_views.route('/cities/<string:city_id>', methods=['PUT'],
-                 strict_slashes=False)
-def put_city(city_id):
-    """update a city"""
+@app_views.route('/cities/<city_id>', methods=['PUT'])
+def city_put(city_id):
+    """ handles PUT method """
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    try:
-        r = request.get_json()
-    except:
-        r = None
-    if r is None:
-        return "Not a JSON", 400
-    for k in ("id", "created_at", "updated_at", "state_id"):
-        r.pop(k, None)
-    for k, v in r.items():
-        setattr(city, k, v)
+    data = request.get_json()
+    if data is None:
+        abort(400, "Not a JSON")
+    for key, value in data.items():
+        ignore_keys = ["id", "created_at", "updated_at"]
+        if key not in ignore_keys:
+            city.bm_update(key, value)
     city.save()
-    return jsonify(city.to_json()), 200
+    city = city.to_json()
+    return jsonify(city), 200
