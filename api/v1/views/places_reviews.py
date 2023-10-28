@@ -54,52 +54,47 @@ def delete_review(review_id):
                  strict_slashes=False)
 def create_review(place_id):
     ''' create a review '''
-    try:
-        data = request.get_json()
-        place_objs = storage.all('Place')
-        key = f'Place.{place_id}'
 
-        if key not in place_objs:
-            abort(400)
-        if data is None:  # not a json
-            abort(400, "Not a JSON")
-        if data.get('user_id') is None:
-            abort("Missing user_id")
+    data = request.get_json()
+    place_objs = storage.all('Place')
+    key = f'Place.{place_id}'
 
-        user_objs = storage.all('User')
-        user_id = data.get('user_id')
-        if f'User.{user_id}' not in user_objs:
-            abort(400)
-        if data.get('text') is None:
-            abort(400, "Missing text")
+    if key not in place_objs:
+        abort(400)
+    if data is None:  # not a json
+        abort(400, "Not a JSON--")
+    if data.get('user_id') is None:
+        abort(400, "Missing user_id")
 
-        data['place_id'] = place_id
-        review_obj = Review(**data)
-        review_obj.save()
-        return jsonify(review_obj.to_dict()), 201
-    except Exception as e:
-        abort(400, "Not a JSON")
+    user_objs = storage.all('User')
+    user_id = data.get('user_id')
+    if f'User.{user_id}' not in user_objs:
+        abort(404)
+    if data.get('text') is None:
+        abort(400, "Missing text")
+
+    data['place_id'] = place_id
+    review_obj = Review(**data)
+    review_obj.save()
+    return jsonify(review_obj.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_review(review_id):
     ''' update review  whose id is passed'''
-    try:
-        data = request.get_json()
-        review_objs = storage.all('Review')
-        key = f'Review.{review_id}'
+    data = request.get_json()
+    review_objs = storage.all('Review')
+    key = f'Review.{review_id}'
 
-        if key not in review_objs:
-            abort(404)
-        if data is None:
-            abort(400, "Not a JSON")
-
-        review = review_objs.get(key)
-        for k, v in data.items():
-            setattr(review, k, v)
-        review.save()
-
-        return jsonify(review.to_dict()), 200
-    except Exception:
+    if key not in review_objs:
+        abort(404)
+    if data is None:
         abort(400, "Not a JSON")
+
+    review = review_objs.get(key)
+    for k, v in data.items():
+        setattr(review, k, v)
+    review.save()
+
+    return jsonify(review.to_dict()), 200
