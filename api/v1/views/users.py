@@ -1,84 +1,67 @@
 #!/usr/bin/python3
-'''This module Retrieves the list of all amenity objects,
-deletes, updates, creates and gets information of a amenity '''
-from flask import jsonify, request, abort
+"""
+This module Retrieves the list of all City objects,
+deletes, updates, creates and gets information of a city 
+"""
+
+from flask import jsonify, request, abort, make_response
 from models import storage
 from api.v1.views import app_views
-from models.amenity import Amenity
+from models.user import User
 
 
-@app_views.route('/amenities/', strict_slashes=False)
-def get_all_amenities():
-    ''' retreive all amenities '''
-    amenity_objs = storage.all('Amenity')
+@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
+def users():
+    '''this function ger all users in the storage, 
+        if method is get and adds a a user to the datatbase if the method
+        is post
+    '''
+    if request.method == 'GET':
+        user_objs = storage.all('User')
+        return jsonify([obj.to_dict() for obj in user_objs.values()])
 
-    return jsonify([obj.to_dict() for obj in amenity_objs.values()])
+    data = request.get_json()
+    if data is None:
+        abort(400, "Not a JSON")
+    if data.get("email") is None:
+        abort(400, "Missing email")
+    if data.get("password") is None:
+        abort(400, "Missing password")
+    user_obj = User(**data)
+    user_obj.save()
+    return jsonify(user_obj.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>/', strict_slashes=False)
-def get_an_amenity(amenity_id):
-    '''return the amenity with matching id'''
-    amenity_objs = storage.all('Amenity')
-    key = f'Amenity.{amenity_id}'
-
-    if key in amenity_objs:
-        amenity = amenity_objs.get(key)
-        return jsonify(amenity.to_dict())
-
-    abort(404)
-
-
-@app_views.route('/amenities/<amenity_id>/', methods=['DELETE'],
+@app_views.route('/users/<user_id>/', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def delete_amenity(amenity_id):
-    ''' delete amenity matching the id'''
-    amenity_objs = storage.all('Amenity')
-    key = f'Amenity.{amenity_id}'
+def get_user(user_id):
+    '''
+    get or delete or update a user with matching id
+    user_id : (string) an id of the user to be worked of accorfing to the
+                http method passed
+    '''
+    user_objs = storage.all('User')
+    key = f'User.{user_id}'
 
-    if key in amenity_objs:
-        obj = amenity_objs.get(key)
-        storage.delete(obj)
-        storage.save()
-        return jsonify({}), 200
-
+    if request.method == 'GET':
+        if key in user_objs:
+            user = user_objs.get(key)
+            return jsonify(user.to_dict())
+    elif request.method == 'DELETE':
+        if key in user_objs:
+            obj = user_objs.get(key)
+            storage.delete(obj)
+            storage.save()
+            return jsonify({}), 200
+    else:
+        if key not in user_objs:
+            abort(404)
+        data = request.get_json()
+        if data is None:
+            abort(400, "Not a JSON")
+        user = user_objs.get(key)
+        for k, v in data.items():
+            setattr(user, k, v)
+        user.save()
+        return jsonify(user.to_dict()), 200
     abort(404)
-
-
-@app_views.route('/amenities/', methods=['POST'], strict_slashes=False)
-def create_amenity():
-    ''' create a amenity '''
-
-    data = request.get_json()
-
-    if data is None:
-        abort(400, "Not a JSON")
-
-    if data.get('name') is None:
-        abort(400, "Missing name")
-
-    amenity_obj = Amenity(**data)
-    amenity_obj.save()
-    return jsonify(amenity_obj.to_dict()), 201
-
-
-@app_views.route('/amenities/<amenity_id>/',
-                 methods=['PUT'], strict_slashes=False)
-def update_amenity(amenity_id):
-    ''' update amenity '''
-
-    data = request.get_json()
-    amenity_objs = storage.all('Amenity')
-    key = f'Amenity.{amenity_id}'
-
-    if key not in amenity_objs:
-        abort(404)
-
-    if data is None:
-        abort(400, "Not a JSON")
-    amenity = amenity_objs.get(key)
-    for k, v in data.items():
-        setattr(amenity, k, v)
-
-    amenity.save()
-
-    return jsonify(amenity.to_dict()), 200
