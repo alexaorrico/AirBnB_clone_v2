@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ API status"""
-
 from api.v1.views import app_views
 from flask import jsonify
 from models.city import City
@@ -29,4 +28,3 @@ def count_obj():
     for key in objs:
         objs[key] = storage.count(objs[key])
     return jsonify(objs)
-
