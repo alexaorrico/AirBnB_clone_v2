@@ -18,7 +18,7 @@ def get_users(user_id=None):
             list_user.append(user.to_dict())
         return jsonify(list_user)
     else:
-        user = storage.get(user, user_id)
+        user = storage.get(User, user_id)
         if user is None:
             return abort(404)
         return user.to_dict()
