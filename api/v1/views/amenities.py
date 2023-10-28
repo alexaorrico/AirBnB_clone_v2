@@ -47,9 +47,9 @@ def post_amenity():
     """Creates a Amenity"""
     data = request.get_json()
     if not data:
-        return jsonify(400, "Not a JSON")
+        abort(400, description="Not a JSON")
     if "name" not in data:
-        return abort(400, "Missing name")
+        abort(400, description="Missing name")
     amenity = Amenity(**data)
     storage.new(amenity)
     storage.save()
@@ -65,7 +65,7 @@ def update_amenity(amenity_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        return jsonify({"error": "Not a JSON"}, 400)
+        abort(400, description="Not a JSON" )
     to_be_ignored = ["id", "created_at", "updated_at"]
     for key, value in data.items():
         if key not in to_be_ignored:
