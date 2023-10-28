@@ -18,10 +18,11 @@ def get_cities(state_id):
         cities = storage.all(City)
         city_list = []
 
-    for city in cities:
-        if getattr(city, "state_id", "") == state_id:
-            city_list.append(city.to_dict())
-    return jsonify(city_list)
+        for city in cities:
+            if getattr(city, "state_id", "") == state_id:
+                city_list.append(city.to_dict())
+        return jsonify(city_list)
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>',
