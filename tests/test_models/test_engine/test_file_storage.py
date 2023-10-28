@@ -113,3 +113,74 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """Test get method to retrieve an object"""
+        storage = FileStorage()
+        state = State()
+        state.name = "California"
+        storage.new(state)
+        storage.save()
+
+        obj = storage.get(State, state.id)
+        self.assertEqual(obj, state)
+
+    def test_get_invalid_class(self):
+        """Test retrieving an invalid class"""
+        storage = FileStorage()
+        state = State()
+
+        with self.assertRaises(AttributeError):
+            storage.get(None, state.id)
+
+    def test_get_invalid_id(self):
+        """Test get invalid object id"""
+        storage = FileStorage()
+        self.assertIsNone(storage.get(State, "invalid_id"))
+
+    def test_count_all(self):
+        """Test count to aggregate all objects"""
+        storage = FileStorage()
+        count = len(storage.all())
+        self.assertEqual(storage.count(), count)
+
+    def test_count_state(self):
+        """Test count state objects"""
+        storage = FileStorage()
+        states = len(storage.all(State))
+        self.assertEqual(storage.count(State), states)
+
+    def test_count_user(self):
+        """Test count user objects"""
+        storage = FileStorage()
+        users = len(storage.all(User))
+        self.assertEqual(storage.count(User), users)
+
+    def test_count_amenity(self):
+        """Test count amenity objects"""
+        storage = FileStorage()
+        a = len(storage.all(Amenity))
+        self.assertEqual(storage.count(Amenity), a)
+
+    def test_count_city(self):
+        """Test count city objects"""
+        storage = FileStorage()
+        c = len(storage.all(City))
+        self.assertEqual(storage.count(City), c)
+
+    def test_count_place(self):
+        """Test count place objects"""
+        storage = FileStorage()
+        p = len(storage.all(Place))
+        self.assertEqual(storage.count(Place), p)
+
+    def test_count_review(self):
+        """Test count review objects"""
+        storage = FileStorage()
+        r = len(storage.all(Review))
+        self.assertEqual(storage.count(Review), r)
+
+    def test_count_invalid_class(self):
+        """Test counting invalid class."""
+        storage = FileStorage()
+        self.assertEqual(storage.count("Invalid"), 0)
