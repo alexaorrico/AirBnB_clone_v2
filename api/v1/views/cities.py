@@ -8,27 +8,29 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-def get_cities(state_id):
-    """get city information for all cities in a specified state"""
+def cities_all(state_id):
+    """ returns list of all City objects linked to a given State """
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
-    cities = []
-    for city in state.cities:
-        cities.append(city.to_dict())
-    return jsonify(cities)
+    cities_all = []
+    cities = storage.all("City").values()
+    for city in cities:
+        if city.state_id == state_id:
+            cities_all.append(city.to_json())
+    return jsonify(cities_all)
 
 
-@app_views.route('/cities/<string:city_id>', methods=['GET'],
-                 strict_slashes=False)
-def get_city(city_id):
-    """get city information for specified city"""
+@app_views.route('/cities/<city_id>', methods=['GET'])
+def city_get(city_id):
+    """ handles GET method """
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    return jsonify(city.to_dict())
+    city = city.to_json()
+    return jsonify(city)
 
 
 @app_views.route('/cities/<string:city_id>', methods=['DELETE'],
