@@ -80,13 +80,13 @@ class DBStorage:
             retrieves one object based on class name and id
         """
         if cls and id:
-            fetch = "{}.{}".format(cls, id)
+            fetch = "{}.{}".format(cls.__name__, id)
             all_obj = self.all(cls)
             return all_obj.get(fetch)
         return None
- 
+
     def count(self, cls=None):
         """
             returns the count of all objects in storage
         """
-        return (len(self.all(cls)))        
+        return (len(self.all(cls)))
