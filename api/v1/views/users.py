@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
-"""
-api for user model accept, get, delete post, and update requests
-"""
-from flask import jsonify, request, abort
+'''This module Retrieves the list of all City objects,
+deletes, updates, creates and gets information of a city '''
+
+from flask import jsonify, request, abort, make_response
 from models import storage
 from api.v1.views import app_views
 from models.user import User
