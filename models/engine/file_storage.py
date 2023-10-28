@@ -34,11 +34,11 @@ class FileStorage:
             return new_dict
         return self.__objects
 
-    def get(self, cls, id):
+    def get(self, cls=None, id=''):
         """Get the object base on id and class"""
-        if cls is not None and isinstance(str, id):
-            key = cls.__name__ + '.' + data[0].id
-                return (self.__objects.get(key))
+        if cls is not None and isinstance(id, str):
+            key = cls.__name__ + '.' + id
+            return (self.__objects.get(key))
         return None
 
     def count(self, cls=None):
