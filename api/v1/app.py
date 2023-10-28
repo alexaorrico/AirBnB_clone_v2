@@ -1,11 +1,16 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 from os import getenv
 
 app = Flask(__name__)
+# Cross-Origin Resource Sharing
+cors = CORS(app, resources={r'/*': {'origins': host}})
 
+# app_views BluePrint defined in api.v1.views
 app.register_blueprint(app_views)
+
 
 @app.teardown_appcontext
 def teardown(self):
