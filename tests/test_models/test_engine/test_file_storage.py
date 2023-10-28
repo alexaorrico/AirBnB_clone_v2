@@ -120,11 +120,11 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """ Test get """
         new_state = State(name="Acraa")
-        new_state.save()
         storage = FileStorage()
-        first_state_id = list(storage.all(State).values())[0].id
+        storage.new(new_state)
+        storage.save()
         self.assertIsNotNone(storage.get(State, new_state.id))
-        self.assertIsInstance(storage.get(State, first_state_id), State)
+        self.assertIsInstance(storage.get(State, new_state.id), State)
 
     def test_get_none(self):
         """ Test"""
