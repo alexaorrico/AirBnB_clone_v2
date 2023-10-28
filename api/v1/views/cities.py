@@ -10,7 +10,7 @@ from flask import abort, jsonify, request
 @app_views.route("/states/<state_id>/cities", methods=['GET'])
 def get_cities_by_state(state_id):
     """Retrieves all City objects of a State"""
-     all_states = storage.all("State").values()
+    all_states = storage.all("State").values()
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:
         abort(404)
