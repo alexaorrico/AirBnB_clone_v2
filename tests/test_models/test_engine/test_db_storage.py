@@ -77,18 +77,50 @@ class TestDBStorage_GET(unittest.TestCase):
         """This is the teardown class"""
         models.storage.close()
 
-    def test_get(self):
+    def test_get_method(self):
         """Test case for testing the databse to get object at given id."""
         state = State(name="Lagos")
         state.save()
         state_get = models.storage.get(State, state.id)
         self.assertEqual(state, state_get)
 
+    def test_get_wrong_model(self):
+        """Testing get with wrong mode"""
+        self.assertIsNone(models.storage.get(DBStorage, "any id"))
+
+    def test_get_wrong_id(self):
+        """Testing with a wrong id"""
+        state = State(name="Accra")
+        self.assertIsNone(models.storage.get(State, "wrong id"))
+
+    def test_get_no_params(self):
+        """testing get with no params"""
+        with self.assertRaises(TypeError):
+            models.storage.get()
+
+    def test_get_more_params(self):
+        """testing get with more params"""
+        with self.assertRaises(TypeError):
+            models.storage.get(State, "id", "third param")
+
     def test_count_method(self):
         """Test case for testing the database in objects counts."""
         state = State(name="lagos")
         state.save()
         self.assertTrue(models.storage.count(State) > 1)
+
+    def test_count_wrong_model(self):
+        """Testing count with wrong class"""
+        self.assertEqual(models.storage.count("Wrong Class"), 0)
+
+    def test_count_no_args(self):
+        """Testing count with no args"""
+        self.assertIsNotNone(models.storage.count())
+
+    def test_count_more_params(self):
+        """Testing count with more parameters"""
+        with self.assertRaises(TypeError):
+            models.storage.count(State, "extra param")
 
 
 '''
