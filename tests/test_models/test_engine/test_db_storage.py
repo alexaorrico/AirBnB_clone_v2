@@ -2,7 +2,6 @@
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
-
 from datetime import datetime
 import inspect
 import models
@@ -17,11 +16,13 @@ from models.user import User
 import json
 import os
 import pep8
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
-
+os.environ['HBNB_TYPE_STORAGE'] = 'db'
 
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
@@ -74,11 +75,11 @@ class TestDBStorage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """This will prepare the database to test db storage methods"""
+        from models import storage
+        cls.storage = storage
 
-        os.putenv("HBNB_TYPE_STORAGE", "db")
-        cls.storage = DBStorage()
-        cls.storage.reload()
         cls.engine = cls.storage._DBStorage__engine
+
         cls.engine.execute(
                 "CREATE DATABASE IF NOT EXISTS hbnb_test_db; ")
         cls.engine.execute(
@@ -101,8 +102,11 @@ class TestDBStorage(unittest.TestCase):
                                            HBNB_MYSQL_HOST,
                                            HBNB_MYSQL_DB))
         cls.engine = temp_engine
-        cls.storage.reload()
-        cls.session = cls.storage._DBStorage.__session
+        # Setup sessions and engine
+        Base.metadata.create_all(cls.engine)
+        sess_factory = sessionmaker(bind=cls.session, expire_on_commit=False)
+        Session = scoped_session(sess_factory)
+        cls.session = Session
 
     @classmethod
     def tearDownClass(cls):
@@ -112,6 +116,7 @@ class TestDBStorage(unittest.TestCase):
 
     def setUp(self):
         """setup a database"""
+        os.putenv("HBNB_TYPE_STORAGE", "db")
         self.user1 = User(email='1chinonso@gmail.com', password='password')
         self.user2 = User(email='4chinonso@gmail.com', password='5password')
         self.user3 = User(email='3chinonso@gmail.com', password='6password')
