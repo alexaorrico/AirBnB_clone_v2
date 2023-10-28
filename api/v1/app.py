@@ -13,6 +13,9 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_appcontext(exception):
+    """
+    teardown function to close connection
+    """
     storage.close()
 
 if __name__ == "__main__":
