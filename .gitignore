@@ -1,6 +1,6 @@
 .vscode/settings.json
 models/engine/__pycache__
 models/__pycache__
-api/v1/views/__pycache__
 api/v1/__pycache__
 api/__pycache__
+api/v1/views/__pycache__
