@@ -61,7 +61,7 @@ def put_states(state_id):
         abort(404)
     data = request.get_json()
     if not data:
-        abort(400, "Not a JSON")
+        return jsonify({"message": "Not a JSON"}), 400
     to_be_ignored = ['id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in to_be_ignored:
