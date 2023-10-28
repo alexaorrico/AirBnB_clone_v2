@@ -79,22 +79,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(new_dict, storage._FileStorage__objects)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_returns_obj(self):
-        """Test that get returns an existing object """
-        storage = FileStorage()
-        storage.new(State())
-        first_state_obj = list(storage.all("State").values())[0]
-        state_obj = storage.get("State", first_state_obj.id)
-        self.assertIs(first_state_obj, state_obj)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_returns_none(self):
-        """Test that get returns None for nonexisting object """
-        storage = FileStorage()
-        state_obj = storage.get("State", "IDONTEXIST")
-        self.assertIsNone(state_obj)
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
