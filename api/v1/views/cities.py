@@ -18,11 +18,9 @@ def get_cities(state_id):
         cities = storage.all(City)
         city_list = []
 
-        for city in cities:
-            if getattr(city, "state_id", "") == state_id:
+        for city in cities.values():
+            if city.state_id == state_id:
                 city_list.append(city.to_dict())
-        if len(city_list) == 0:
-            abort(404)
         return jsonify(city_list)
     abort(404)
 
@@ -58,15 +56,19 @@ def delete_city(city_id):
                  strict_slashes=False)
 def create_city(state_id):
     """creates a new city"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
     data = request.get_json()
     if data is None:
         return abort(400, "Not a JSON")
     if "name" not in data:
         return abort(400, "Missing name")
     city = City()
+    city.state_id = state_id
     city.name = data["name"]
     city.save()
-    return jsonify(state.to_dict()), 201
+    return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>',
