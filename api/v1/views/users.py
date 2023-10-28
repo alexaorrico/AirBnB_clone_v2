@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 '''
 This module handles all default RESTFul API actions for the user object
 this handle actions of creating, reading and updating and Deleting user objects
