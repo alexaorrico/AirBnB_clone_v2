@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-"""
+'''
 This module handles all default RESTFul API actions for the user object
 this handle actions of creating, reading and updating and Deleting user objects
 from the storage
-"""
+'''
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
@@ -42,7 +42,7 @@ def get_user(user_id):
     DELETE REQUEST: this deletes a request with matching id in the database
     user_id : this the id of the user to perform a request on'''
     user_objs = storage.all('User')
-    key = f'User.{user_id}'
+    key = 'User.{}'.format(user_id)
 
     if request.method == 'GET':
         if key in user_objs:
