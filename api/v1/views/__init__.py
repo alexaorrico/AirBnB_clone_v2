@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-initialize blueprints
+this module initializes the blueprints
+that are associated with the api
 """
 
 from flask import Blueprint
