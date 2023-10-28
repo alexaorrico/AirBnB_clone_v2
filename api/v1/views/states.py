@@ -34,7 +34,7 @@ def toGetid():
 def posting():
     '''Creates a State'''
     response = request.get_json()
-    if response id None:
+    if response.id is None:
         abort(400, {'Not a JSON'})
     if "name" not in response:
         abort(400, {'Missing name'})
