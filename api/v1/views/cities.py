@@ -49,7 +49,7 @@ def delete_city(city_id):
                  strict_slashes=False)
 def post_city(state_id):
     """create a new city"""
-     try:
+    try:
         r = request.get_json()
     except:
         r = None
@@ -60,6 +60,7 @@ def post_city(state_id):
     s = storage.get("State", state_id)
     if s is None:
         abort(404)
+    # creates the dictionary r as kwargs to create a city object
     c = City(**r)
     c.state_id = state_id
     c.save()
