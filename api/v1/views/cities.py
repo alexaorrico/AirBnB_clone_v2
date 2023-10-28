@@ -30,11 +30,11 @@ def get_cities(city_id):
 def delete_city(city_id):
     """Deletes a City object"""
     city = storage.get(City, city_id)
-    if city_id is None:
+    if city is None:
         return (404)
     storage.delete(city)
     storage.save()
-    return jsonify({}, 200)
+    return jsonify({}), 200
 
 
 @app_views.route("/states/<state_id>/cities", methods=['POST'])
@@ -66,6 +66,6 @@ def update_city(city_id):
     to_be_ignored = ["id", "state_id", "created_at"]
     for key, value in data.items():
         if key not in to_be_ignored:
-            setattr(City, key, value)
-    City.save()
+            setattr(city, key, value)
+    storage.save()
     return jsonify(city.to_dict()), 200
