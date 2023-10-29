@@ -22,7 +22,7 @@ def get_place_amenities(place_id):
     coll = []
     if storage_type == 'db':
         amenity = [amenity.to_dict() for amenity in place.amenities]
-        coll.append(amenity)
+        coll.extend(amenity)
     else:
         for amenity_id in place.amenity_ids:
             amenity = storage.get(Amenity, amenity_id)
