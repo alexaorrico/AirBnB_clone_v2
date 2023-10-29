@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-""" Handles all default RESTful API action """
+""" Handles all default RESTful API action
+"""
+from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models.amenity import Amenity
 
 
 @app_views.route('/amenities', strict_slashes=False, methods=['GET'])

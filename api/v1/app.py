@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" Endpoint (route) that returns the status of your API
+"""
+Endpoint (route) that returns the status of your API
 """
 from models import storage
 from api.v1.views import app_views
