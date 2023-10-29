@@ -58,3 +58,21 @@ def post_state():
     instance = State(**body)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
+
+
+@app_views.route("/states/<string:state_id>", methods=["PUT"], strict_slashes=False)
+@swag_from("documentation/state/put.yml", methods=["PUT"])
+def put_state(state_id):
+    """PUTs a  state by id"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    if not request.get_json():
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+
+    for key, val in dict(request.get_json()).items():
+        setattr(state, key, val)
+
+    storage.save()
+
+    return jsonify(state.to_dict())
