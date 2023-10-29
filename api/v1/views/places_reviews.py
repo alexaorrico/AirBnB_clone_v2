@@ -60,7 +60,7 @@ def create_review(place_id):
     key = 'Place.{}'.format(place_id)
 
     if key not in place_objs:
-        abort(400)
+        abort(404)
     if data is None:  # not a json
         abort(400, "Not a JSON--")
     if data.get('user_id') is None:
