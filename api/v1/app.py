@@ -11,6 +11,7 @@ app.register_blueprint(app_views)
 host = getenv("HBNB_API_HOST")
 port = getenv("HBNB_API_PORT")
 
+
 @app.teardown_appcontext
 def teardown(err):
     """teardown content"""
