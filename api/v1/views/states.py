@@ -60,14 +60,13 @@ def state_post():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def state_put(state_id):
+    state = storage.get(State, state_id)
+    if state is None:
+        return abort(404)
     try:
-        state = storage.get(State, state_id)
-        if state is None:
-            return abort(404)
         data = request.get_json()
         for key in data:
             if key in ['id', 'created_at', 'updated_at']:
-                print(key)
                 continue
             value = data[key]
             if hasattr(state, key):
