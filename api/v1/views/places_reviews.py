@@ -5,13 +5,13 @@ all default RESTFul API actions
 
 # Importing modules from system files
 from flask import request, jsonify
-from werkzerg.exceptions import MethodNotAllowed, Notfound, BadRequest
+from werkzeug.exceptions import MethodNotAllowed, NotFound, BadRequest
 
 # Importing modules from project files
 from api.v1.views import app_views
-from models import Review
-from models import Place
-from models import User
+from models.review import Review
+from models.place import Place
+from models.user import User
 from models import storage, storage_t
 
 
@@ -66,7 +66,7 @@ def add_review(place_id=None, review_id=None):
         raise NotFound()
 
     data = request.get_json()
-    if type(data) not dict:
+    if type(data) is not dict:
         raise BadRequest(discription='Not a JSON')
     if 'user_id' not in data:
         raise BadRequest(discription='Missing user_id')

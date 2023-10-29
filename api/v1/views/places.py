@@ -9,9 +9,9 @@ from werkzeug.exceptions import MethodNotAllowed, NotFound, BadRequest
 
 # Importing modules from project files
 from api.v1.views import app_views
-from models import Place
-from models import City
-from models import User
+from models.place import Place
+from models.city import City
+from models.user import User
 from models import storage, storage_t
 
 
