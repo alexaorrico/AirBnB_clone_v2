@@ -12,7 +12,7 @@ from os import getenv
 storage_type = getenv("HBNB_TYPE_STORAGE")
 
 
-@app_views.route("/places/<id_place>/amenities", methods=["GET"],
+@app_views.route("/places/<place_id>/amenities", methods=["GET"],
                  strict_slashes=False)
 def get_place_amenities(place_id):
     """Retrieves the list of all Amenity objects of a Place"""
@@ -20,7 +20,7 @@ def get_place_amenities(place_id):
     if place is None:
         abort(404)
     if storage_type == 'db':
-        amenity = [amenity.to_dict() for amenity in place.amenity]
+        amenity = [amenity.to_dict() for amenity in place.amenities]
         return jsonify(amenity)
     else:
         for amenity_id in place.amenity_ids:
