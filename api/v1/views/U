@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-'''
-This module handles all default RESTFul API actions for the user object
-this handle actions of creating, reading and updating and Deleting user objects
-from the storage
-'''
+"""api users"""
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
@@ -12,10 +8,7 @@ from models.user import User
 
 @app_views.route('/users/', methods=['GET', 'POST'], strict_slashes=False)
 def users():
-    '''this function lists a all users from the database in the case of
-    GET REQUESTS:
-    POST  request, the post request must have
-    email address, and password and must be in json '''
+    '''this function gets all users or adds a user'''
     if request.method == 'GET':
         user_objs = storage.all('User')
         return jsonify([obj.to_dict() for obj in user_objs.values()])
@@ -32,16 +25,11 @@ def users():
     return jsonify(user_obj.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>/', methods=['GET', 'PUT', 'DELETE'],
-                 strict_slashes=False)
+@app_views.route('/users/<user_id>/', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
 def get_user(user_id):
-    '''theif gunction handles handles
-    GET REQUESTS : this looks for a user if in database and display
-    PUT REQUEST : this updates the user with matching ID in the database
-    DELETE REQUEST: this deletes a request with matching id in the database
-    user_id : this the id of the user to perform a request on'''
+    '''get or delete or update a user with matching id'''
     user_objs = storage.all('User')
-    key = 'User.{}'.format(user_id)
+    key = f'User.{user_id}'
 
     if request.method == 'GET':
         if key in user_objs:

@@ -19,7 +19,7 @@ def get_all_amenities():
 def get_an_amenity(amenity_id):
     '''return the amenity with matching id'''
     amenity_objs = storage.all('Amenity')
-    key = 'Amenity.{}'.format(amenity_id)
+    key = f'Amenity.{amenity_id}'
 
     if key in amenity_objs:
         amenity = amenity_objs.get(key)
@@ -33,7 +33,7 @@ def get_an_amenity(amenity_id):
 def delete_amenity(amenity_id):
     ''' delete amenity matching the id'''
     amenity_objs = storage.all('Amenity')
-    key = 'Amenity.{}'.format(amenity_id)
+    key = f'Amenity.{amenity_id}'
 
     if key in amenity_objs:
         obj = amenity_objs.get(key)
@@ -68,7 +68,7 @@ def update_amenity(amenity_id):
 
     data = request.get_json()
     amenity_objs = storage.all('Amenity')
-    key = 'Amenity.{}'.format(amenity_id)
+    key = f'Amenity.{amenity_id}'
 
     if key not in amenity_objs:
         abort(404)
