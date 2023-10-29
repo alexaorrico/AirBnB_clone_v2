@@ -66,7 +66,7 @@ def get_review(review_id):
 
 
 @app_views.route(
-    'api/v1/reviews/<review_id>', methods=['DELETE'], strict_slashes=False
+    '/api/v1/reviews/<review_id>', methods=['DELETE'], strict_slashes=False
 )
 def delete_review(review_id):
     '''Deletes a Review object'''
@@ -99,4 +99,6 @@ def updates_review(review_id):
             if obj.id == review_id:
                 obj.text = request.json['text']
         storage.save()
+	else:
+		abort(400. "Missing text")
     return jsonify(review_obj[0]), 200
