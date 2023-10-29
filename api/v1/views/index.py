@@ -16,11 +16,13 @@ def status():
 def stats():
     ''' endpoint that retrieves the number of each objects by type '''
     classes = {
-            "amenities": storage.count('Amenity'),
-            "cities": storage.count('City'),
-            "places": storage.count('Place'),
-            "reviews": storage.count('Review'),
-            "states": storage.count('State'),
-            "users": storage.count('User')
+
+            "Amenities": storage.count('Amenity'),
+            "Cities": storage.count('City'),
+            "Places": storage.count('Place'),
+            "Reviews": storage.count('Review'),
+            "States": storage.count('State'),
+            "Users": storage.count('User')
+
             }
     return jsonify(classes)
