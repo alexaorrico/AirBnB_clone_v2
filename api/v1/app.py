@@ -8,6 +8,8 @@ from api.v1.views import states_views
 
 # Create a variable app, instance from flask
 app = Flask(__name__)
+# For a better identation of JSON response
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # register the blueprint app_views to your app
 app.register_blueprint(app_views)
 app.register_blueprint(states_views, url_prefix="/api/v1")
