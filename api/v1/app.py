@@ -48,16 +48,18 @@ if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
 
     from flask import Flask, jsonify
-from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import NotFound
 
 app = Flask(__name)
 
 # Your existing code for other routes and imports
 
 # Handle 404 errors with a JSON response
-@app.errorhandler(404)
+@app.errorhandler(NotFound)
 def handle_404_error(e):
-    return jsonify({"error": "Not found"}), 404
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 if __name__ == "__main__":
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
