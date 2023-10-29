@@ -12,7 +12,7 @@ from api.v1.views import app_views
 def get_all_place(city_id):
     ''' retreive all place associated with the city id '''
     city_objs = storage.all('City')
-    key = f'City.{city_id}'
+    key = 'City.{}'.format(city_id)
 
     if key in city_objs:
         city = city_objs.get(key)
@@ -25,7 +25,7 @@ def get_all_place(city_id):
 def get_a_place(place_id):
     '''return the place with matching id'''
     place_objs = storage.all('Place')
-    key = f'Place.{place_id}'
+    key = 'Place.{}'.format(place_id)
 
     if key in place_objs:
         place = place_objs.get(key)
@@ -39,7 +39,7 @@ def get_a_place(place_id):
 def delete_place(place_id):
     ''' delete place matching the id'''
     place_objs = storage.all('Place')
-    key = f'Place.{place_id}'
+    key = 'Place.{}'.format(place_id)
 
     if key in place_objs:
         obj = place_objs.get(key)
@@ -57,7 +57,7 @@ def create_place(city_id):
 
     data = request.get_json()
     city_objs = storage.all('City')
-    key = f'City.{city_id}'
+    key = 'City.{}'.format(city_id)
 
     if key not in city_objs:
         abort(404)
@@ -86,7 +86,7 @@ def update_place(place_id):
 
     data = request.get_json()
     place_objs = storage.all('Place')
-    key = f'Place.{place_id}'
+    key = 'Place.{}'.format(place_id)
 
     if key not in place_objs:
         abort(404)
