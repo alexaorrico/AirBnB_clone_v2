@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ holds class User"""
-import hashlib
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -11,7 +10,6 @@ from sqlalchemy.orm import relationship
 
 class User(BaseModel, Base):
     """Representation of a user """
-    h = hashlib.md5()
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
@@ -22,7 +20,7 @@ class User(BaseModel, Base):
         reviews = relationship("Review", backref="user")
     else:
         email = ""
-        password = h.update(password.encode()).hexdigest()
+        password = ""
         first_name = ""
         last_name = ""
 
