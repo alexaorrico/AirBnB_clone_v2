@@ -28,7 +28,7 @@ def delete_user(user_id):
         abort(404)
     storage.delete(user)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
@@ -63,4 +63,4 @@ def update_user(user_id):
         if key not in keys_to_ignore:
             setattr(user, key, value)
     user.save()
-    return jsonify(user.to_dict())
+    return jsonify(user.to_dict()), 200
