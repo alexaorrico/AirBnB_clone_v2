@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+""" Flask API """
 from flask import Flask
 from models import storage
 import os
@@ -11,6 +11,7 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 
 @app.teardown_appcontext
 def close_storage(exception):
+    """ Tear down function """
     storage.close()
 
 
