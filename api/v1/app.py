@@ -4,10 +4,12 @@ from models import storage
 from os import getenv
 from flask import Flask, jsonify
 from api.v1.views import app_views
-
+from flask_cors import CORS
 
 # Create a variable app, instance from flask
 app = Flask(__name__)
+# Managing CORS (Cross Origin Resource Sharing)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 # For a better identation of JSON response
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # register the blueprint app_views to your app
