@@ -56,7 +56,7 @@ def create_a_cities(state_id):
 
     data = request.get_json()
     state_objs = storage.all('State')
-    key = 'State.{state_id}'
+    key = 'State.{}'.format(state_id)
 
     if key not in state_objs:
         abort(404)
