@@ -2,7 +2,7 @@
 """
 API
 """
-from flask import Flask
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from os import getenv
 
@@ -18,6 +18,12 @@ def teardown(err):
     from models import storage
 
     storage.close()
+
+
+@app.errorhandler(404)
+def error404(err):
+    """Return a custom 404 page"""
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
