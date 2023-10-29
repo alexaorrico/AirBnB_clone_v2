@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""
+'''
 This Python script creates a Blueprint instance with `url_prefix` set
 to `/api/v1`.
-"""
+'''
 
 
 from flask import Blueprint
