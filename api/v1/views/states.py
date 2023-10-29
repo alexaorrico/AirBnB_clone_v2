@@ -55,7 +55,7 @@ def state_post():
         storage.save()
         return make_response(new_state.to_dict(), 201)
     except Exception:
-        return make_response('Not a JSON', 400)
+        return abort(400, description="Not a JSON")
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
@@ -78,4 +78,4 @@ def state_put(state_id):
         storage.save()
         return make_response(state.to_dict(), 200)
     except Exception:
-        return make_response('Not a JSON', 400)
+        return abort(400, description="Not a JSON")
