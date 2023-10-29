@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# Task 7
 """Create a new view for City objects"""
 from flask import Flask, jsonify, request, abort
 from models import storage
@@ -29,7 +28,7 @@ def get_city(city_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
-def delete_user(city_id):
+def delete_city(city_id):
     """Deletes a City object"""
     city = storage.get(City, city_id)
     if city is None:
@@ -41,7 +40,7 @@ def delete_user(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
-def create_user(state_id):
+def create_city(state_id):
     """Creates a new City by id"""
     state = storage.get(State, state_id)
     if state is None:

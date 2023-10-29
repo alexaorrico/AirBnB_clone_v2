@@ -2,84 +2,67 @@
 """Create a new view for Review object"""
 from flask import Flask, jsonify, request, abort
 from models import storage
-from models.place import State
 from models.amenity import Amenity
 from api.v1.views import app_views
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'],
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+def get_amenities():
+    """Retrieves the list of all Amenity objects."""
+    amenities = storage.all(Amenity).values()
+    return jsonify([amenity.to_dict() for amenity in amenities])
+
+
+@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+def get_amenity(amenity_id):
+    """Retrieves an Amenity object by ID."""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
+        abort(404)
+    return jsonify(amenity.to_dict())
+
+
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def get_reviews():
-    """Retrieves the list of all Review objects of a Place"""
-    place = storage.get(Place, place_id)
-    if place is None:
+def delete_amenity(amenity_id):
+    """Deletes an Amenity object by ID."""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
-    reviews = place.reviews
-    return jsonify([review._to_dict() for review in reviews])
-
-
-@app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
-def get_review(review_id):
-    """Retrieves a Review object"""
-    reviews = storage.get(Review, review.id)
-    if reviews is None:
-        abort(404)
-    return jsonify(reviews.to_dict())
-
-
-@app_views.route('/reviews/<review_id>', methods=['DELETE'],
-                 strict_slashes=False)
-def delete_review(review_id):
-    """Deletes a Review object"""
-    reviews = storage.get(Review, review_id)
-    if reviews is None:
-        abort(404)
-    storage.delete(reviews)
+    storage.delete(amenity)
     storage.save()
     return jsonify({})
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST'],
-                 strict_slashes=False)
-def create_review(place_id):
-    """Creates a Review by id"""
-    place = storage.get(Place, place_id)
-    if place is None:
-        abort(404)
-
+@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+def create_amenity():
+    """Creates a new Amenity."""
     data = request.get_json()
     if data is None:
-        abort(404, 'Not a JSON')
-    if 'user_id' not in data:
-        abort(400, 'Missing user_id')
-    if 'text' not in data:
-        abort(400, 'Missing text')
+        abort(400, 'Not a JSON')
+    if 'name' not in data:
+        abort(400, 'Missing name')
 
-    user_id = data['user_id']
-    user = storage.get(User, user_id)
-    if user is None:
-        abort(404)
-
-    data['place_id'] = place_id
-    new_review = Review(**data)
-    new_review.save()
-    return jsonify(new_review.to_dict()), 201
+    new_amenity = Amenity(**data)
+    new_amenity.save()
+    return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
-def update_review(review_id):
-    """Updates a Review object by id."""
-    review = storage.get(Review, review_id)
-    if review is None:
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_amenity(amenity_id):
+    """Updates an Amenity object by ID."""
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
 
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
 
-    keys_to_ignore = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
+    keys_to_ignore = ['id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in keys_to_ignore:
-            setattr(review, key, value)
-    review.save()
-    return jsonify(review.to_dict())
+            setattr(amenity, key, value)
+    amenity.save()
+    return jsonify(amenity.to_dict())
