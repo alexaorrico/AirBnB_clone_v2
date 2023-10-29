@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A script that sets up the Blueprint to be used
+A script that prepares the Blueprint for utilization.
 """
 
 
