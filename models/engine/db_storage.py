@@ -77,10 +77,9 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieve objects of a specific class type"""
-        if cls in classes:
-            for obj in self.all(cls).values():
-                if getattr(obj, 'id', None) == id:
-                    return obj
+        for obj in self.all(cls).values():
+            if getattr(obj, 'id', None) == id:
+                return obj
         return None
 
     def count(self, cls=None):
