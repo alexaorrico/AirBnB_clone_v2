@@ -98,7 +98,7 @@ def places_search():
     places = []
     all_cities = []
     all_places = storage.all("Place")
-    all_places_dict = { place.city_id: place for place in all_places.values() }
+    all_places_dict = {place.city_id: place for place in all_places.values()}
 
     if states == cities == amenities == []:
         places = storage.all("Place").values()
