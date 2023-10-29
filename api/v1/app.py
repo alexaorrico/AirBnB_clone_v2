@@ -52,9 +52,6 @@ from werkzeug.exceptions import NotFound
 
 app = Flask(__name)
 
-# Your existing code for other routes and imports
-
-# Handle 404 errors with a JSON response
 @app.errorhandler(NotFound)
 def handle_404_error(e):
     response = jsonify({"error": "Not found"})
