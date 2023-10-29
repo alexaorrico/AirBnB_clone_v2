@@ -127,7 +127,8 @@ def places_search():
                 cities = storage.all(City)
                 for city in cities.values():
                     for place in places.values():
-                        if place.city_id == city.id and city.id not in places_list:
+                        if place.city_id == city.id and city.id
+                        not in places_list:
                             places_list.append(place)
         if "amenities" in data:
             if len(data["amenities"]) != 0:
@@ -148,6 +149,6 @@ def places_search():
         final_places = []
         for place in places_list:
             final_places.append(place.to_dict())
-        return jsonify(final_places)        
+        return jsonify(final_places)
     else:
         return abort(400, "Not a JSON")
