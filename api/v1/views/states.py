@@ -5,20 +5,19 @@ from flask import request, jsonify, abort
 from api.v1.views import app_views
 from models.state import State
 from models import storage
-from datetime import datetime
-import uuid
+
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def list_states():
     """retrieves list of all State"""
-    states = [state.to_dict() for state in storage.all("State").values()]
+    states = [state.to_dict() for state in storage.all(State).values()]
     return jsonify(states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """retrieves a State"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -27,7 +26,7 @@ def get_state(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """deletes a State"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -52,7 +51,7 @@ def create_state():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """updates State"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     data = request.get_json()
