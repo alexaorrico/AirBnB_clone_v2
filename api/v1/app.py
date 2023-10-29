@@ -3,7 +3,7 @@
 This module defines the structure of the flask api
 implementation for the project
 """
-from flask import Flask,jsonify,make_response
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -21,6 +21,7 @@ def teardown_appcontext(exception):
     """
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(error):
     """ 404 Error
@@ -30,6 +31,7 @@ def not_found(error):
         description: a resource was not found
     """
     return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     host_env = getenv("HBNB_API_HOST")
