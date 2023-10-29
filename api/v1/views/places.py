@@ -118,7 +118,6 @@ def places_search():
                 city = storage.get("City", city_id)
                 if city:
                     places.extend(city.places)
-
         if amenities:
             for place in places:
                 place_amenities = list(map(lambda x: x.id, place.amenities))
