@@ -117,7 +117,7 @@ def places_search():
                     places.extend(city.places)
         if amenities:
             for place in places:
-            place_amenities = list(map(lambda x: x.id, place.amenities))
+                place_amenities = list(map(lambda x: x.id, place.amenities))
             if not all(elem in place_amenities for elem in amenities):
                 places.remove(place)
 
