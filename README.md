@@ -8,3 +8,12 @@ The console is the first segment of the AirBnB project at ALX that will collecti
 * Update attributes of an object
 * Destroy an object
 
+## Table of Content
+* [Environment](#environment)
+* [Installation](#installation)
+* [File Descriptions](#file-descriptions)
+* [Usage](#usage)
+* [Examples of use](#examples-of-use)
+* [Bugs](#bugs)
+* [Authors](#authors)
+* [License](#license)
