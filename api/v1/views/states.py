@@ -1,4 +1,4 @@
-!/usr/bin/python3
+#!/usr/bin/python3
 """this view hundles states endpoints"""
 from flask import abort
 from api.v1.views import app_views
