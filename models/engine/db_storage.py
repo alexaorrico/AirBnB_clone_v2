@@ -76,7 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """retrieve objects of a specific class type"""
+        """Retrieve objects of a specific class type"""
         if cls in classes:
             for obj in self.all(cls).values():
                 if getattr(obj, 'id', None) == id:
