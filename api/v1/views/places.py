@@ -68,7 +68,7 @@ def create_place(city_id):
 
     user_objs = storage.all('User')
     user_id = data.get('user_id')
-    if f'User.{user_id}' not in user_objs:
+    if 'User.{}'.format(user_id) not in user_objs:
         abort(404)
     if data.get('name') is None:
         abort(400, "Missing name")
