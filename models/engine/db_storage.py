@@ -93,7 +93,6 @@ class DBStorage:
         obj = self.__session.query(cls).get(id)
         return obj
 
-
     def count(self, cls=None):
         """
         A method to count the number of objects in storage

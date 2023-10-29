@@ -13,6 +13,7 @@ def returnstuff():
     '''return stuff'''
     return jsonify(status='OK')
 
+
 @app_views.route('/stats', strict_slashes=False)
 def statistics():
     '''Method that returns the statistics
