@@ -20,7 +20,7 @@ def all_states():
         )
 def single_state(state_id):
     """ Returns state that matches with provided ID """
-    state = storage.get("State", str(state_id))
+    state = storage.get(State, str(state_id))
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -31,7 +31,7 @@ def single_state(state_id):
         )
 def delete_state(state_id):
     """ Deletes state that matches with provided ID """
-    sta = storage.get("State", str(state_id))
+    sta = storage.get(State, str(state_id))
     if sta is None:
         abort(404)
     storage.delete(sta)
@@ -65,7 +65,7 @@ def update_state(state_id):
     data = request.get_json(silent=True)
     if data is None:
         abort(400, 'Not a JSON')
-    state = storage.get("State", str(state_id))
+    state = storage.get(State, str(state_id))
     if state is None:
         abort(404)
     for key, val in data.items():
