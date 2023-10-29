@@ -75,10 +75,11 @@ class FileStorage:
         on the class and its ID,
         or None if not found
         """
-        if cls and id:
-            myObj = "{}.{}".format(cls, id)
-            allObjs = self.all(cls)
-            return allObjs.get(myObj)
+        all_obj = self.all(cls)
+        for c in all_obj.values():
+            if str(c.id) == id:
+                return c
+        return None
 
     def count(self, cls=None):
         """
