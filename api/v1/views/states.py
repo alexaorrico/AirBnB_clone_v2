@@ -1,14 +1,15 @@
 #!/usr/bin/python3
-""""""
+""" states.py that handles all default RestFul API actions"""
 
 from api.v1.views import app_views
 from models import storage
 from models.state import State
 from flask import abort, request, jsonify
 
+
 @app_views.route("/states", strict_slashes=False)
 def all_states():
-    """"""
+    """ all states"""
     len = storage.count(State)
     new_list = []
     for i in range(len):
@@ -20,16 +21,17 @@ def all_states():
 
 @app_views.route("/states/<string:state_id>", strict_slashes=False)
 def get_state(state_id):
-    """"""
+    """ get state"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
     return State.to_dict(state)
 
-@app_views.route("/states/<string:state_id>", methods=['DELETE']
-                 , strict_slashes=False)
+
+@app_views.route("/states/<string:state_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
-    """"""
+    """ delete state"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -40,7 +42,7 @@ def delete_state(state_id):
 
 @app_views.route("/states", methods=['POST'], strict_slashes=False)
 def post_state():
-    """"""
+    """ post state"""
 
     request_data = request.get_json()
     if not request_data:
@@ -56,10 +58,10 @@ def post_state():
     return State.to_dict(new_state), 201
 
 
-@app_views.route("/states/<string:state_id>", methods=['PUT']
-                 , strict_slashes=False)
+@app_views.route("/states/<string:state_id>", methods=['PUT'],
+                 strict_slashes=False)
 def put_state(state_id):
-    """"""
+    """ put state"""
 
     state = storage.get(State, state_id)
     if not state:
