@@ -22,6 +22,7 @@ def not_found(err):
     """page not founnd error"""
     return {"error": "Not found"}, 404
 
+
 if __name__ == "__main__":
     env_host = 'HBNB_API_HOST'
     env_port = 'HBNB_API_PORT'
