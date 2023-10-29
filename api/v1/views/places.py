@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-"""Create a new view for Place objects"""
+"""Create a new view for Place objects """
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.place import Place
-from models.user import User
+from models.city import City
 from api.v1.views import app_views
 
 
