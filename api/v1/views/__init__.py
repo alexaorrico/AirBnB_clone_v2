@@ -2,6 +2,7 @@
 """
 API views for flask app v1.
 """
+
 from flask import Blueprint
 
 
