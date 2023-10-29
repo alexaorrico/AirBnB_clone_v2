@@ -59,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """delete obj from __objects if its inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
@@ -70,22 +70,20 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """ gets objects using class and id, if not found returns None """
-        if cls in classes.values():
-            _class = models.storage.all(cls)
-            for i in _class.values():
-                if(i.id == id):
-                    return i
-        else:
-            return None
-    def count(self, cls=None):
-        """ this will return the len(objects) in stroage """
-        _class = classes.values()
+        """
+        this will get an obj by class and id
+        """
+        if cls and id:
+            obj = list(self.all(State).values())
+            for i in obj:
+                f = i.__class__.__name__ + "." + k.id
+                s = str(cls).split("'")[1].split('.')[2] + '.' + str(id)
+                if f == s:
+                    return(i)
+        return None
 
-        if not cls:
-            c = 0
-            for i in _class:
-                c += len(models.storage.all(i).values())
-        else:
-            c = len(models.storage.all(i).values())
-        return c
+    def count(self, cls=None):
+        """
+	this will count class
+        """
+        return len(self.all(cls))
