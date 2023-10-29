@@ -1,13 +1,10 @@
 #!/usr/bin/python3
 """Create a new view for Place objects"""
 from models.place import Place
-from models.user import User
-from models.amenity import Amenity
-from models.state import State
 from models.city import City
 from models import storage
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import Flask, abort, jsonify, request
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
