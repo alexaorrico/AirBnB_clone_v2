@@ -14,26 +14,27 @@ from models import storage
                  strict_slashes=False)
 def all_cities_for_state(state_id):
     """gets all cities instances"""
-    d_state = storage.get(State, state_id)
+    if state_id:
+        d_state = storage.get(State, state_id)
 
-    if d_state:
-        cities = storage.all(City).values()
-        cities_l = []
-        for city in cities:
-            if city.state_id == state_id:
-                cities_l.append(city.to_dict())
-        return jsonify(cities_l)
-    abort(404)
+        if d_state:
+            cities = storage.all(City).values()
+            cities_l = []
+            for city in cities:
+                if city.state_id == state_id:
+                    cities_l.append(city.to_dict())
+            return jsonify(cities_l)
+        abort(404)
 
 
 @app_views.route("/cities/<city_id>", methods=["GET"], strict_slashes=False)
 def get_c(city_id):
     """ gets state with the given id"""
     d_city = storage.get(City, city_id)
-    if d_city:
-        return jsonify(d_city.to_dict())
-    else:
+    if d_city is None:
         abort(404)
+    else:
+        return jsonify(d_city.to_dict())
 
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"],
@@ -41,18 +42,21 @@ def get_c(city_id):
 def delete_city(city_id):
     """deletes city with the given id"""
     d_city = storage.get(City, city_id)
-    if d_city:
+    if d_city is None:
+        abort(404)
+    else:
         storage.delete(d_city)
         storage.save()
-        return jsonify({})
-    else:
-        abort(404)
+        return make_response(jsonify({}), 200)
 
 
 @app_views.route("/states/<state_id>/cities", methods=["POST"],
                  strict_slashes=False)
 def create_city(state_id):
     """create new city with the supplied data"""
+    stat = storage.get(State, state_id)
+    if stat is None:
+        abort(404)
     if not request.get_json():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     data = request.get_json()
