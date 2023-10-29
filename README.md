@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Chelagat Pauline - [Github](https://github.com/Chelagat-Pauline-Gechure/)
+Chelagat Pauline Gechure - [Github](https://github.com/Chelagat-Pauline-Gechure/)
 Gideon Kiplangat - [Github](https://github.com/gkiplangat/)
 License
 Public Domain. No copy write protection. 
