@@ -76,7 +76,7 @@ class BaseModel:
         db = cls_name == 'DBStorage'
         method = frame.f_code.co_name == "save"
         if 'password' in new_dict:
-            if db and method:
+            if db:
                 new_dict.pop('password', None)
         return new_dict
 
