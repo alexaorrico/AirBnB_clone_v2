@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 """
-A view dedicated to State entities, overseeing all default RESTful API functions.
+A view dedicated to State entities, overseeing all default RESTful API
+functions.
 
 Author:
 Khotso Selading and Londeka Dlamini
