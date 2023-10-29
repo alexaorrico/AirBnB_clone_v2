@@ -47,7 +47,7 @@ def delete_place(place_id):
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"], strict_slashes=False)
 @swag_from("documentation/city/post_city.yml", methods=["POST"])
-def post_city(city_id):
+def post_place(city_id):
     """
     Creates a City object
     """
