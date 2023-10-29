@@ -127,9 +127,9 @@ def places_search():
                 cities = storage.all(City)
                 for city in cities.values():
                     for place in places.values():
-                        if place.city_id == city.id and city.id
-                        not in places_list:
-                            places_list.append(place)
+                        if place.city_id == city.id:
+                            if city.id not in places_list:
+                                places_list.append(place)
         if "amenities" in data:
             if len(data["amenities"]) != 0:
                 if len(places_list) == 0:
