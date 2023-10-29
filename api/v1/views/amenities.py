@@ -16,7 +16,7 @@ def list_amenities():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
-def get_amenity(amenity_id):
+def get_amenity(amenity_id: str):
     '''Retrieves an Amenity object'''
     all_amenities = storage.all("Amenity").values()
     amenity_obj = [obj.to_dict() for obj in all_amenities
@@ -27,7 +27,7 @@ def get_amenity(amenity_id):
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
-def delete_amenity(amenity_id):
+def delete_amenity(amenity_id: str):
     '''Deletes an Amenity object'''
     all_amenities = storage.all("Amenity").values()
     amenity_obj = [obj.to_dict() for obj in all_amenities
@@ -58,7 +58,7 @@ def create_amenity():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
-def updates_amenity(amenity_id):
+def updates_amenity(amenity_id: str):
     '''Updates an Amenity object'''
     all_amenities = storage.all("Amenity").values()
     amenity_obj = [obj.to_dict() for obj in all_amenities
