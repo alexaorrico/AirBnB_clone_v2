@@ -4,11 +4,9 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.amenity import Amenity
-from datetime import datetime
-import uuid
 
 
-@app_views.route('/amenities/', methods=['GET'])
+@app_views.route('/amenities', methods=['GET'])
 def list_amenities():
     '''Retrieves a list of all Amenity objects'''
     list_amenities = [obj.to_dict() for obj in storage.all("Amenity").values()]
