@@ -8,6 +8,10 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Update attributes of an object
 * Destroy an object
 
+## New Contribution
+
+We created a RestfulAPI for the AirBnB clone using python and flask
+
 ## Table of Content
 * [Environment](#environment)
 * [Installation](#installation)
@@ -156,6 +160,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Caroline Mwita - [Github](https://github.com/carokil1)
+Anthony Ndolo - [Github](https://github.com/Afpex)
 
 Second part of Airbnb: Joann Vuong
 ## License
