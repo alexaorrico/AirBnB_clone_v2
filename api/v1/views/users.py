@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Create a new view for User object"""
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.user import User
