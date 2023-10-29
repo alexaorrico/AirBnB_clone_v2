@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# Task 10
 """Create a new view for Place objects"""
 from flask import Flask, jsonify, request, abort
 from models import storage

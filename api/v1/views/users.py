@@ -2,14 +2,14 @@
 """Create a new view for User object"""
 from flask import Flask, jsonify, request, abort
 from models import storage
-from models.amenity import User
+from models.user import User
 from api.v1.views import app_views
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
     """Retrieves the list of all User objects"""
-    users = storage.all(User).value()
+    users = storage.all(User).values()
     return jsonify([user.to_dict() for user in users])
 
 
@@ -49,7 +49,7 @@ def create_user():
     return jsonify(new_user.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', method=['PUT'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
     """Updates a User object by id"""
     user = storage.get(User, user_id)
