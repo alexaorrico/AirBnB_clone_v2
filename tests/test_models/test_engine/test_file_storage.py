@@ -55,9 +55,9 @@ test_file_storage.py'])
     def test_file_storage_class_docstring(self):
         """Test for the FileStorage class docstring"""
         self.assertIsNot(FileStorage.__doc__, None,
-                         "State class needs a docstring")
+                         "FileStorage class needs a docstring")
         self.assertTrue(len(FileStorage.__doc__) >= 1,
-                        "State class needs a docstring")
+                        "FileStorage class needs a docstring")
 
     def test_fs_func_docstrings(self):
         """Test for the presence of docstrings in FileStorage methods"""
@@ -70,9 +70,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -80,8 +78,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -97,8 +94,7 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -118,26 +114,24 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
-    def test_get(self):
-        """Test that the get method properly retrievs objects"""
+    def test_get_obj(self):
+        """Tests the method get retrieves an obj/objs"""
         storage = FileStorage()
-        self.assertIs(storage.get("User", "blah"), None)
-        self.assertIs(storage.get("blah", "blah"), None)
-        new_user = User()
-        new_user.save()
-        self.assertIs(storage.get("User", new_user.id), new_user)
+        self.assertIs(storage.get(User, "milly"), None)
+        user_obj = User()
+        user_obj.save()
+        self.assertIs(storage.get(User, user_obj.id), user_obj)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
-    def test_count(self):
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == 'db',
+                     "it is db storage")
+    def test_count_obj(self):
+        """Tests for counting objects of a class"""
         storage = FileStorage()
-        initial_length = len(storage.all())
-        self.assertEqual(storage.count(), initial_length)
-        state_len = len(storage.all("State"))
-        self.assertEqual(storage.count("State"), state_len)
-        new_state = State()
-        new_state.save()
-        self.assertEqual(storage.count(), initial_length + 1)
-        self.assertEqual(storage.count("State"), state_len + 1)
+        firs_len = len(storage.all())
+        self.assertEqual(storage.count(), firs_len)
+        statelen = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), statelen)
+        state_obj = State()
+        state_obj.save()
+        self.assertEqual(storage.count(), firs_len + 1)
+        self.assertEqual(storage.count("State"), statelen + 1)
