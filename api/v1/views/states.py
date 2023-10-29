@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """this view hundles states endpoints"""
+from flask import abort
 from api.v1.views import app_views
 from flask import jsonify
-from flask import abort
 from flask import request
-from models import storage
-from models.state import State
 from flask import make_response
+from models.state import State
+from models import storage
 
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
@@ -23,10 +23,10 @@ def all_states():
 def get_state(states_id):
     """gets state with the given id"""
     d_state = storage.get(State, states_id)
-    if d_state is None:
-        abort(404)
-    else:
+    if d_state:
         return jsonify(d_state.to_dict())
+    else:
+        abort(404)
 
 
 @app_views.route("/states/<states_id>", methods=["DELETE"],
@@ -34,12 +34,12 @@ def get_state(states_id):
 def delete_state(states_id):
     """deletes state with the given id"""
     d_state = storage.get(State, states_id)
-    if d_state is None:
-        abort(404)
-    else:
+    if d_state:
         storage.delete(d_state)
         storage.save()
         return make_response(jsonify({}), 200)
+    else:
+        abort(404)
 
 
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
