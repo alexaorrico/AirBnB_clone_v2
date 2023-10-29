@@ -48,8 +48,6 @@ def state_delete(state_id):
 def state_post():
     try:
         data = request.get_json()
-        if not data:
-            return abort(400, description="Not a JSON")
         if 'name' not in data:
             return abort(400, description='Missing name')
         new_state = State(**data)
@@ -67,10 +65,9 @@ def state_put(state_id):
         if state is None:
             return abort(404)
         data = request.get_json()
-        if not data:
-            return abort(400, description="Not a JSON")
         for key in data:
-            if key in ['id', 'created_at', 'updated_at']:
+            if key in ['id', 'state_id', 'created_at', 'updated_at']:
+                print(key)
                 continue
             value = data[key]
             if hasattr(state, key):
