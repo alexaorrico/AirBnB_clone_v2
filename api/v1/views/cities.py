@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''This module Retrieves the list of all City objects,
 deletes, updates, creates and gets information of a city '''
+
 from flask import jsonify, request, abort
 from models import storage
 from models.city import City
