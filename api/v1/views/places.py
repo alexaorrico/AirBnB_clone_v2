@@ -105,7 +105,7 @@ def places_search():
                 city = storage.get("City", city_id)
                 if city:
                     places.extend(city.places)
-        if states and not cities:
+        if states:
             for state_id in states:
                 state = storage.get("State", state_id)
                 if state:
