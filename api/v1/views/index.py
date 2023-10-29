@@ -1,32 +1,30 @@
-#!/usr/bin/python3xx
-'''this script for api status'''
-import models
-from models import storage
-from models.base_model import BaseModel
-from flask import jsonify
+#!/usr/bin/python3
+"""Define routes for blueprint
+"""
+
 from api.v1.views import app_views
+from flask import jsonify
+from models import storage
 
 
-@app_views.route('/status', methods=['GET'])
-def api_status():
-    '''
-    Returns a JSON response for RESTful API health.
-    '''
-    response = {'status': 'OK'}
-    return jsonify(response)
- 
+@app_views.route('/status', strict_slashes=False)
+def status():
+    """Return status of application
+    """
+    return jsonify({'status': 'OK'})
 
-@app_views.route('/stats', methods=['GET'])
-def get_stats():
-    '''
-    Retrieves the number of each objects by type.
-    '''
-    stats = {
-        'amenities': storage.count('Amenity'),
-        'cities': storage.count('City'),
-        'places': storage.count('Place'),
-        'reviews': storage.count('Review'),
-        'states': storage.count('State'),
-        'users': storage.count('User')
-    }
-    return jsonify(stats)
+
+@app_views.route('/stats')
+def count():
+    """ returns number of each objects by type """
+    total = {}
+    classes = {"Amenity": "amenities",
+               "City": "cities",
+               "Place": "places",
+               "Review": "reviews",
+               "State": "states",
+               "User": "users"}
+    for cls in classes:
+        count = storage.count(cls)
+        total[classes.get(cls)] = count
+    return jsonify(total)
