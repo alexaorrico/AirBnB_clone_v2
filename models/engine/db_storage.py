@@ -49,7 +49,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -88,6 +88,6 @@ class DBStorage:
             objs = self.all(cls)
             return len(objs)
         else:
-            all_objs = {k: v for k, v in self.__session.query(cls).all() for cls
-                        in classes}
+            all_objs = {k: v for cls in classes for k, v in
+                        self.__session.query(cls).all()}
             return len(all_objs)
