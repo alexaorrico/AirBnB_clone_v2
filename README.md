@@ -46,3 +46,11 @@ List of commands this console current supports:
 * `def __str__(self)` - String representation of the BaseModel class
 * `def save(self)` - Updates the attribute `updated_at` with the current datetime
 * `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
+
+Classes inherited from Base Model:
+* [amenity.py](/models/amenity.py)
+* [city.py](/models/city.py)
+* [place.py](/models/place.py)
+* [review.py](/models/review.py)
+* [state.py](/models/state.py)
+* [user.py](/models/user.py)
