@@ -86,3 +86,89 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+        
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_returns_dict(self):
+        """Test that all returns a dictionary"""
+        storage = DBStorage()
+        self.assertIs(type(storage.all()), dict)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        city = City(name="San Francisco", state_id=state.id)
+        city.save()
+        amenity = Amenity(name="Wifi")
+        amenity.save()
+        objs = storage.all()
+        self.assertIn("State." + state.id, objs)
+        self.assertIn("City." + city.id, objs)
+        self.assertIn("Amenity." + amenity.id, objs)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_new(self):
+        """Test that new adds an object to the database"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        objs = storage.all()
+        self.assertIn("State." + state.id, objs)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_save(self):
+        """Test that save properly saves objects to the database"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        storage.save()
+        objs = storage.all()
+        key = "State." + state.id
+        self.assertIn(key, objs)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete(self):
+        """Test that delete properly deletes objects from the database"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        storage.delete(state)
+        storage.save()
+        objs = storage.all()
+        key = "State." + state.id
+        self.assertNotIn(key, objs)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_reload(self):
+        """Test that reload properly reloads objects from the database"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        storage.save()
+        storage.reload()
+        objs = storage.all()
+        key = "State." + state.id
+        self.assertIn(key, objs)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get properly retrieves an object from the database"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        retrieved_state = storage.get(State, state.id)
+        self.assertEqual(state, retrieved_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count properly counts the number of objects in the database"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        count = storage.count()
+        self.assertEqual(count, 1)

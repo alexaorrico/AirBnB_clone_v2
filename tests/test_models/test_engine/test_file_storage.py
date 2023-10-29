@@ -113,3 +113,77 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+
+    def setUp(self):
+        """Set up for the test"""
+        self.storage = FileStorage()
+
+    def tearDown(self):
+        """Tear down for the test"""
+        try:
+            os.remove("file.json")
+        except FileNotFoundError:
+            pass
+
+    def test_all(self):
+        """Test the all method"""
+        # Test that all returns a dictionary
+        self.assertIsInstance(self.storage.all(), dict)
+
+        # Test that all returns the __objects attribute
+        self.assertIs(self.storage.all(), self.storage._FileStorage__objects)
+
+        # Test that all returns only objects of a certain class
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.storage.save()
+        self.assertEqual(self.storage.all(BaseModel), {"BaseModel." + obj.id: obj})
+
+    def test_new(self):
+        """Test the new method"""
+        # Test that new adds an object to __objects
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.assertIn("BaseModel." + obj.id, self.storage._FileStorage__objects)
+
+    def test_save(self):
+        """Test the save method"""
+        # Test that save writes to file.json
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.storage.save()
+        with open("file.json", "r") as f:
+            self.assertIn("BaseModel." + obj.id, json.load(f))
+
+    def test_reload(self):
+        """Test the reload method"""
+        # Test that reload reads from file.json
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.storage.save()
+        self.storage.reload()
+        self.assertIn("BaseModel." + obj.id, self.storage.all())
+
+    def test_delete(self):
+        """Test the delete method"""
+        # Test that delete removes an object from __objects
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.storage.save()
+        self.storage.delete(obj)
+        self.assertNotIn("BaseModel." + obj.id, self.storage.all())
+
+    def test_get(self):
+        """Test the get method"""
+        # Test that get returns an object based on class name and ID
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.storage.save()
+        self.assertIs(self.storage.get(BaseModel, obj.id), obj)
+
+    def test_count(self):
+        """Test the count method"""
+        # Test that count returns the number of objects in __objects
+        self.assertEqual(self.storage.count(), len(self.storage.all()))

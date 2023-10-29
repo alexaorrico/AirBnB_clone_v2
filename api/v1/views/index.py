@@ -2,9 +2,14 @@
 """
 index of API
 """
-
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, make_response
 from models import storage
 dic_data = {
     "amenities": "Amenity",
@@ -16,17 +21,20 @@ dic_data = {
 }
 
 
-
-@app_views.route('/status', strict_slashes=False)
-def hbnb_status():
-    """ hbnb status """
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
+def status():
+    """ Status of API """
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', strict_slashes=False)
-def app_status():
-    """ app status"""
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def number_objects():
+    """ Retrieves the number of each objects by type """
+    classes = [Amenity, City, Place, Review, State, User]
+    names = ["amenities", "cities", "places", "reviews", "states", "users"]
 
-    for key, value in dic_data.items():
-        dic_data[key] = storage.count(value)
-    return jsonify(dic_data)
+    num_objs = {}
+    for i in range(len(classes)):
+        num_objs[names[i]] = storage.count(classes[i])
+
+    return jsonify(num_objs)
