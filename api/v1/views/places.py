@@ -97,6 +97,8 @@ def places_search():
 
     places = []
     all_cities = []
+    all_places = storage.all("Place")
+    all_places_dict = { place.city_id: place for place in all_places.values() }
 
     if states == cities == amenities == []:
         places = storage.all("Place").values()
@@ -112,9 +114,10 @@ def places_search():
 
         if all_cities:
             for city_id in all_cities:
-                city = storage.get("City", city_id)
-                if city:
-                    places.extend(city.places)
+                place = all_places_dict.get(city_id, None)
+            if place:
+                places.append(all_places_dict[city_id])
+
         if amenities:
             for place in places:
                 place_amenities = list(map(lambda x: x.id, place.amenities))
