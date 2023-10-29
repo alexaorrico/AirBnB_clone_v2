@@ -4,7 +4,7 @@ from models import storage
 from os import getenv
 from flask import Flask, jsonify
 from api.v1.views import app_views
-from api.v1.views import states_views
+
 
 # Create a variable app, instance from flask
 app = Flask(__name__)
