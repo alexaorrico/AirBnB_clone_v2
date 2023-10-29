@@ -98,12 +98,12 @@ def update_place(place_id):
     place.save()
     return jsonify(place.to_dict()), 200
 
-
+"""
 @app_views.route('/places_search',
                  methods=['POST'],
                  strict_slashes=False)
 def places_search():
-    """ retrieves all Place objects depending of the JSON"""
+     retrieves all Place objects depending of the JSON
     data = request.get_json()
     if request.is_json:
         places = storage.all(Place)
@@ -151,3 +151,4 @@ def places_search():
         return jsonify(final_places)        
     else:
         return abort(400, "Not a JSON")
+"""
