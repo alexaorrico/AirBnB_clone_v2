@@ -48,10 +48,18 @@ class Place(BaseModel, Base):
         price_by_night = 0
         latitude = 0.0
         longitude = 0.0
-        amenity_ids = []
+        # amenity_ids = []  # moved to __init__()
 
     def __init__(self, *args, **kwargs):
         """initializes Place"""
+    # amenity_ids forced to be an instance attribute since it is not necessarly
+    # +passed as a key word argument upon first instantiation like others which
+    # +would have made it an instance attribute. This way its present in
+    # +self.__dict__ and its state can be saved in filestorage mode. Its popped
+    # +in BaseModel.to_dict(mode=None) if mode is not file_save. But visible in
+    # +methods that call self.__dict__ directly like BaseModel.str().
+        if models.storage_t != 'db':
+            self.amenity_ids = []
         super().__init__(*args, **kwargs)
 
     if models.storage_t != 'db':
@@ -68,11 +76,16 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """getter attribute returns the list of Amenity instances"""
+            """returns the list of 'Amenity' instances
+            associated with place instance"""
             from models.amenity import Amenity
-            amenity_list = []
-            all_amenities = models.storage.all(Amenity)
-            for amenity in all_amenities.values():
-                if amenity.place_id == self.id:
-                    amenity_list.append(amenity)
-            return amenity_list
+            all_amenities = models.storage.all(Amenity).values()
+            return [amenity for amenity in all_amenities
+                    if amenity.id in self.amenity_ids]
+
+        @amenities.setter
+        def amenities(self, amenity):
+            from models.amenity import Amenity
+            """associates amenity to place instance"""
+            if type(amenity) is Amenity and amenity.id not in self.amenity_ids:
+                self.amenity_ids.append(amenity.id)
