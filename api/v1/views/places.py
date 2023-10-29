@@ -9,67 +9,58 @@ from datetime import datetime
 import uuid
 
 
-@app_views.route(
-    '/cities/<city_id>/places', methods=['GET'], strict_slashes=False
-)
-def list_places(city_id):
-    '''Retrieves a list of all places objects'''
-    citites = storage.all("City").values()
-    city = [obj.to_dict() for obj in citites if city_id == obj.id]
-    if city == []:
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places/', methods=['GET'])
+def list_places_of_city(city_id):
+    '''Retrieves a list of all Place objects in city'''
+    all_cities = storage.all("City").values()
+    city_obj = [obj.to_dict() for obj in all_cities if obj.id == city_id]
+    if city_obj == []:
         abort(404)
+    list_places = [obj.to_dict() for obj in storage.all("Place").values()
+                   if city_id == obj.city_id]
+    return jsonify(list_places)
 
-    places = [obj.to_dict() for obj in storage.all("place").values()
-              if obj.city_id == city_id]
-    return jsonify(places)
 
-
-@app_views.route(
-    '/api/v1/places/<place_id>', methods=['GET'], strict_slashes=False
-)
-def places(place_id):
-    """ Get the place by the place id"""
-    places = storage.all("Place").values()
-    obj_id = [obj.to_dict for obj in places
-              if obj.id == place_id]
-    if obj_id == []:
+@app_views.route('/places/<place_id>', methods=['GET'])
+def get_place(place_id):
+    '''Retrieves a Place object'''
+    all_places = storage.all("Place").values()
+    place_obj = [obj.to_dict() for obj in all_places if obj.id == place_id]
+    if place_obj == []:
         abort(404)
-    return jsonify(obj_id[0])
+    return jsonify(place_obj[0])
 
 
-@app_views.route(
-    '/api/v1/places/<place_id>', methods=['DELETE'], strict_slashes=False
-)
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
-    """ Delete place"""
-    places = storage.all("Place").values()
-    obj_id = [obj.to_dict for obj in places
-              if obj.id == place_id]
-    if obj_id == []:
+    '''Deletes a Place object'''
+    all_places = storage.all("Place").values()
+    place_obj = [obj.to_dict() for obj in all_places
+                 if obj.id == place_id]
+    if place_obj == []:
         abort(404)
-    obj_id.remove(obj_id[0])
-    for place in places:
-        if place.id == place_id:
-            storage.delete(place)
+    place_obj.remove(place_obj[0])
+    for obj in all_places:
+        if obj.id == place_id:
+            storage.delete(obj)
             storage.save()
     return jsonify({}), 200
 
 
-@app_views.route(
-    '/api/v1/cities/<city_id>/places', methods=['PSOT'], strict_slashes=False
-)
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place(city_id):
-    """ Create place"""
+    '''Creates a Place'''
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'user_id' not in request.get_json():
         abort(400, 'Missing user_id')
     if 'name' not in request.get_json():
         abort(400, 'Missing name')
-    citites = storage.all("City").values()
-    city_id = [obj.to_dict for obj in citites
-               if obj.id == city_id]
-    if city_id == []:
+    all_cities = storage.all("City").values()
+    city_obj = [obj.to_dict() for obj in all_cities
+                if obj.id == city_id]
+    if city_obj == []:
         abort(404)
     places = []
     new_place = Place(name=request.json['name'],
@@ -85,9 +76,7 @@ def create_place(city_id):
     return jsonify(places[0]), 201
 
 
-@app_views.route(
-    '/places/<place_id>', methods=['PUT'], strict_slashes=False
-)
+@app_views.route('/places/<place_id>', methods=['PUT'])
 def updates_place(place_id):
     '''Updates a Place object'''
     all_places = storage.all("Place").values()
