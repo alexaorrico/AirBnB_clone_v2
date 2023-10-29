@@ -112,11 +112,10 @@ def places_search():
         all_cities.extend(cities)
         all_cities = list(set(all_cities))
 
-        if all_cities:
-            for city_id in all_cities:
-                place = all_places_dict.get(city_id, None)
-                if place:
-                    places.append(all_places_dict[city_id])
+        for city_id in all_cities:
+            place = all_places_dict.get(city_id, None)
+            if place:
+                places.append(all_places_dict[city_id])
 
         if amenities:
             for place in places:
