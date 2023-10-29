@@ -87,36 +87,30 @@ def update_place(place_id):
 @app_views.route('/api/v1/places_search', methods=['POST'])
 def places_search():
     if not request.is_json:
-        return jsonify({"error": "Not a JSON"}), 400
+        abort(400, 'Not a JSON')
 
     data = request.get_json()
-
     if not data or all(not data.get(key) for key in ['states', 'cities',
                                                      'amenities']):
         # Retrieve all places if JSON body is empty || each list is empty
-        return jsonify(places)
-
-    filtered_places = places
-
+        return jsonify(data.to_dict())
+    filtered_places = data
     if data.get('states'):
-        # Filter Places by Sstates
+        # Filter Places by States
         filtered_places = [
             place for place in filtered_places if place['state'] /
             in data['states']
         ]
-
     if data.get('cities'):
         # Filter Places by Cities
         filtered_places = [
             place for place in filtered_places if place['city'] /
             in data['cities']
         ]
-
     if data.get('amenities'):
         # Filter places by Amenities
         filtered_places = [
             place for place in filtered_places /
             if set(data['amenities']).issubset(place['amenities'])
         ]
-
     return jsonify(filtered_places)
