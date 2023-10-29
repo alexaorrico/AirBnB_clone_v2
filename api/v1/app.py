@@ -26,5 +26,5 @@ if __name__ == "__main__":
         app.run(host=os.getenv('HBNB_API_HOST'),
                 port=os.getenv('HBNB_API_PORT'),
                 threaded=True)
-    except:
+    except Exception:
         app.run(host='0.0.0.0', port=5000, threaded=True)
