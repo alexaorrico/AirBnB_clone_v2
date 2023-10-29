@@ -6,6 +6,8 @@ from api.v1.views import app_views
 from models import storage
 from models.city import City
 from models.place import Place
+from models.state import State
+from models.amenity import Amenity
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
@@ -80,3 +82,37 @@ def update_place(place_id):
             setattr(place, key, value)
     storage.save()
     return make_response(jsonify(place.to_dict()), 200)
+
+
+@app_views.route('/api/v1/places_search', methods=['POST'])
+def places_search():
+    if not request.is_json:
+        return jsonify({"error": "Not a JSON"}), 400
+
+    data = request.get_json()
+
+    if not data or all(not data.get(key) for key in ['states', 'cities', 'amenities']):
+        # Retrieve all places if JSON body is empty || each list is empty
+        return jsonify(places)
+
+    filtered_places = places
+
+    if data.get('states'):
+        # Filter Places by Sstates
+        filtered_places = [
+            place for place in filtered_places if place['state'] in data['states']
+        ]
+
+    if data.get('cities'):
+        # Filter Places by Cities
+        filtered_places = [
+            place for place in filtered_places if place['city'] in data['cities']
+        ]
+
+    if data.get('amenities'):
+        # Filter places by Amenities
+        filtered_places = [
+            place for place in filtered_places if set(data['amenities']).issubset(place['amenities'])
+        ]
+
+    return jsonify(filtered_places)
