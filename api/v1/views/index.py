@@ -1,4 +1,4 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
 """THis is the index page view"""
 
 from flask import jsonify
