@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" Handles all default RESTful API action """
+""" Handles all default RESTful API action  relating to states """
+
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -8,6 +9,13 @@ from models.state import State
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def get_states():
+	"""
+	Get all states from the storage and return them as a JSON response.
+
+	Returns:
+		- A JSON response containing a list of all states.
+		- A status code of 200 if the request was successful.
+	"""
 	states = storage.all("State")
 	states_list = []
 	for state in states.values():
@@ -17,6 +25,12 @@ def get_states():
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def get_state(state_id):
+	"""
+	Get a state by its ID.
+
+	:param state_id: The ID of the state to retrieve.
+	:return: A JSON response containing the state information.
+	"""
 	state = storage.get(State, state_id)
 	if not state:
 		abort(404, description="State not found")
@@ -25,6 +39,14 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
+	"""
+	Deletes a state from the database.
+
+	:param state_id: The ID of the state to be deleted.
+	:type state_id: int
+	:return: A JSON response indicating the success of the deletion.
+	:rtype: dict
+	"""
 	state = storage.get(State, state_id)
 	if not state:
 		abort(404)
@@ -35,6 +57,18 @@ def delete_state(state_id):
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def post_state():
+	"""
+	Creates a new state.
+
+	Parameters:
+	- None
+
+	Returns:
+	- A JSON response containing the newly created state.
+
+	Raises:
+	- 400 Bad Request if the request is not a JSON or if the 'name' field is missing.
+	"""
 	if not request.get_json():
 		abort(400, description="Not a JSON")
 	if 'name' not in request.get_json():
@@ -48,6 +82,14 @@ def post_state():
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def put_state(state_id):
+	"""
+	Update a state by its ID.
+
+	:param state_id: The ID of the state to update.
+	:type state_id: int
+	:return: A JSON response containing the updated state.
+	:rtype: dict
+	"""
 	if not request.get_json():
 		abort(400, description="Not a JSON")
 	state = storage.get(State, state_id)
