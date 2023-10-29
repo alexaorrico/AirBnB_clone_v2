@@ -93,11 +93,9 @@ def updates_review(review_id):
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'text' in request.get_json():
-        review_obj[0]['text'] = request.json['text']
+        review_obj[0]['text'] = request.get_json()['text']
         for obj in all_reviews:
             if obj.id == review_id:
                 obj.text = request.json['text']
         storage.save()
-    else:
-        abort(400, "Missing text")
     return jsonify(review_obj[0]), 200
