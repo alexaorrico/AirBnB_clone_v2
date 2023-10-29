@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Application module"""
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -15,6 +15,13 @@ port = getenv("HBNB_API_PORT")
 def tear_down(self):
     """closes query after each session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(err):
+    """Returns a JSON-formatted 404 status code response"""
+    response = {'error': "Not found"}
+    return make_response(jsonify(response), 404)
 
 
 if __name__ == "__main__":
