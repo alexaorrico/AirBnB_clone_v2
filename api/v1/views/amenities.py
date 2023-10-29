@@ -27,12 +27,12 @@ def amenity_methods(amenity_id=None):
 
     # DELETE ALL REQUESTS
     elif request.method == 'DELETE':
-        try:
-            key = 'Amenity.' + amenity_id
-            storage.delete(amenities[key])
+        key = 'Amenity.' + amenity_id
+        if key in amenities:
+            del amenities[key]
             storage.save()
             return jsonify({}), 200
-        except:
+        else:
             abort(404)
 
     # POST ALL REQUESTS

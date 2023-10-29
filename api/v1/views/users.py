@@ -26,12 +26,12 @@ def users_method(user_id=None):
 
     # DELETE ALL REQUESTS
     elif request.method == 'DELETE':
+        key = 'User.' + user_id
         try:
-            key = 'User.' + user_id
-            storage.delete(users[key])
+            del users[key]
             storage.save()
             return jsonify({}), 200
-        except:
+        except KeyError:
             abort(404)
 
     # POST ALL REQUESTS
