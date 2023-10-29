@@ -11,8 +11,7 @@ from models import storage
 from flask import jsonify, abort, request
 
 
-@app_views.route('/cities/<string:id>/places/', methods=["GET"],
-                 strict_slashes=False)
+@app_views.route('/cities/<string:id>/places', methods=["GET"])
 def places_by_city(id):
     """GET Place by city id"""
     city = storage.get(City, id)
@@ -28,7 +27,7 @@ def places_by_city(id):
     return (jsonify(places_list))
 
 
-@app_views.route('/places/<string:id>/', methods=["GET"], strict_slashes=False)
+@app_views.route('/places/<string:id>', methods=["GET"])
 def place(id):
     """GET Place by id"""
     place = storage.get(Place, id)
@@ -37,8 +36,7 @@ def place(id):
     return (jsonify(place.to_dict()))
 
 
-@app_views.route('/places/<string:id>/', methods=["DELETE"],
-                 strict_slashes=False)
+@app_views.route('/places/<string:id>', methods=["DELETE"])
 def remove_place(id):
     """REMOVE place by id"""
     place = storage.get(Place, id)
@@ -49,8 +47,7 @@ def remove_place(id):
     return {}, 200
 
 
-@app_views.route('/cities/<string:id>/places/', methods=["POST"],
-                 strict_slashes=False)
+@app_views.route('/cities/<string:id>/places/', methods=["POST"])
 def create_place(id):
     """CREATE place by city id"""
     if request.is_json:
@@ -71,7 +68,7 @@ def create_place(id):
         abort(400, description="Not a JSON")
 
 
-@app_views.route('/places/<string:id>/', methods=["PUT"], strict_slashes=False)
+@app_views.route('/places/<string:id>', methods=["PUT"])
 def update_place(id):
     """UPDATE Place by id"""
     place = storage.get(Place, id)
@@ -80,15 +77,15 @@ def update_place(id):
     if request.is_json:
         forbidden = ["id", "created_at", "updated_at", "user_id",
                      "city_id"]
-        user = storage.get(User, id)
-        if user is None:
-            abort(404)
+        # user = storage.get(User, id)
+        # if user is None:
+        #     abort(404)
         json_place = request.get_json()
-        storage.delete(place)
+        # storage.delete(place)
         for k, v in json_place.items():
             if json_place[k] not in forbidden:
                 setattr(place, k, v)
-        storage.new(place)
+        # storage.new(place)
         storage.save()
         return place.to_dict(), 200
     else:
