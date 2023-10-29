@@ -91,7 +91,8 @@ def places_search():
 
     data = request.get_json()
 
-    if not data or all(not data.get(key) for key in ['states', 'cities', 'amenities']):
+    if not data or all(not data.get(key) for key in ['states', 'cities',
+                                                     'amenities']):
         # Retrieve all places if JSON body is empty || each list is empty
         return jsonify(places)
 
@@ -100,19 +101,22 @@ def places_search():
     if data.get('states'):
         # Filter Places by Sstates
         filtered_places = [
-            place for place in filtered_places if place['state'] in data['states']
+            place for place in filtered_places if place['state'] /
+            in data['states']
         ]
 
     if data.get('cities'):
         # Filter Places by Cities
         filtered_places = [
-            place for place in filtered_places if place['city'] in data['cities']
+            place for place in filtered_places if place['city'] /
+            in data['cities']
         ]
 
     if data.get('amenities'):
         # Filter places by Amenities
         filtered_places = [
-            place for place in filtered_places if set(data['amenities']).issubset(place['amenities'])
+            place for place in filtered_places /
+            if set(data['amenities']).issubset(place['amenities'])
         ]
 
     return jsonify(filtered_places)
