@@ -1,64 +1,43 @@
 #!/usr/bin/python3
 """
-Flask App that integrates with AirBnB static HTML Temolate
+This module contains the principal application
 """
-from api.v1.views import app_views
-from flask import Flask, jsonify, make_response, render_template, url_for
-from flask_cors import CORS, cross_origin
-from flasgger import Swagger
 from models import storage
-import os
-from werkzeug.exceptions import HTTPException
+from api.v1.views import app_views
+from flask import Flask, make_response, jsonify
+from os import getenv
+from flask_cors import CORS
+from flasgger import Swagger
 
-# Global Flask Application Variable: app
 app = Flask(__name__)
-swagger = Swagger(app)
-
-# Global strict slashes
-app.url_map.strict_slashes = False
-
-# Flask server environmental setup
-host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-port = os.getenv('HBNB_API_PORT', 5000)
-
-# Cross-Origin Resource Sharing
-cors = CORS(app, resources={r'/*': {'origins': host}})
-
-# app_views BluePrint defined in api.v1.views
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
-# Begin flask page rendering
 @app.teardown_appcontext
-def teardown_db(exception):
-    """
-    After each request, this method calls .close() (i.e. .remove()) on the
-    current SQLALchemy Session
-    """
+def close_db(obj):
+    """ calls methods close() """
     storage.close()
 
 
-@app.errorhandler(Exception)
-def global_error_handler(err):
-    """
-    Global Route to handle All Error Status Codes
-    """
-    if isisnstance(err, HTTPException):
-        if type(err).__name__ == 'NotFound':
-            err.description = "Not found"
-            message = {'error': err.description}
-            code = err.code
-    else:
-        message = {'error': err}
-        code = 500
-    return make_response(jsonify(message), code)
+@app.errorhandler(404)
+def page_not_foun(error):
+    """ Loads a custom 404 page not found """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
-def setup_global_errors():
-    for cls in HTTPException.__subclasses__():
-        app.register_error_handler(cls, global_erro_handler)
+app.config['SWAGGER'] = {
+    'title': 'AirBnB clone - RESTful API',
+    'description': 'This is the api that was created for the hbnb restful api project,\
+    all the documentation will be shown below',
+    'uiversion': 3}
 
+Swagger(app)
 
 if __name__ == "__main__":
-    setup_global_errors()
-    app.run(host=host, port=port)
+
+    host = getenv('HBNB_API_HOST', default='0.0.0.0')
+    port = getenv('HBNB_API_PORT', default=5000)
+
+    app.run(host, int(port), threaded=True)
