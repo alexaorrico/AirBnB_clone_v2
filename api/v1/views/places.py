@@ -51,7 +51,6 @@ def modify_place(place_id):
     if request.method == 'GET':
         return jsonify(place.to_dict())
 
-
     if request.method == 'DELETE':
         storage.delete(place)
         storage.save()
@@ -68,4 +67,3 @@ def modify_place(place_id):
                 setattr(place, k, v)
         storage.save()
         return jsonify(place.to_dict()), 200
-
