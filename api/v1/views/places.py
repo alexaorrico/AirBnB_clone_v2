@@ -36,7 +36,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
@@ -80,4 +80,4 @@ def update_place(place_id):
         if key not in keys_to_ignore:
             setattr(place, key, value)
     place.save()
-    return jsonify(place.to_dict())
+    return jsonify(place.to_dict()), 200
