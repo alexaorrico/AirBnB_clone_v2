@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-A script to start a Flask web application
+Script that starts a Flask web application
 """
 
 import os
@@ -18,7 +18,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """The teardown function to close the storage"""
+    """Teardown function that closes the storage."""
     storage.close()
 
 
