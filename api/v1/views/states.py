@@ -66,7 +66,7 @@ def state_put(state_id):
             return abort(404)
         data = request.get_json()
         for key in data:
-            if key in ['id', 'state_id', 'created_at', 'updated_at']:
+            if key in ['id', 'created_at', 'updated_at']:
                 print(key)
                 continue
             value = data[key]
