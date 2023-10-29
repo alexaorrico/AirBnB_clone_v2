@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 """
-A view responsible for Place entities, managing all standard RESTful API operations.
+A view responsible for Place entities, managing all standard RESTful API
+operations.
 
 Author:
 Khotso Selading and Londeka Dlamini
