@@ -100,7 +100,6 @@ def places_search():
     all_places = storage.all("Place")
     all_places_dict = {v.city_id: v for k, v in all_places.items()}
 
-
     if states == cities == amenities == []:
         places = all_places.values()
     else:
