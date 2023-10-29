@@ -16,7 +16,8 @@ def list_places_of_city(city_id):
     city = storage.get(City, str(city_id))
     if city is None:
         abort(404)
-    places = [place.to_dict() for place in city.places]
+    city_id = str(city_id)
+    places = [p.to_dict() for p in storage.all(Place) if p.city_id == city_id]
     return jsonify(places)
 
 
@@ -26,7 +27,7 @@ def list_places_of_city(city_id):
 def get_place(place_id):
     '''Retrieves a Place object'''
     place_obj = storage.get(Place, str(place_id))
-    if not place_obj:
+    if place_obj is None:
         abort(404)
     return jsonify(place_obj.to_dict())
 
@@ -41,7 +42,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place_obj)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route(
@@ -67,7 +68,7 @@ def create_place(city_id):
     new_place = Place(**data)
     storage.new(new_place)
     storage.save()
-    res = jsonify(new_place)
+    res = jsonify(new_place.to_dict())
     res.status_code = 201
     return res
 
@@ -78,7 +79,7 @@ def create_place(city_id):
 def updates_place(place_id):
     '''Updates a Place object'''
     place_obj = storage.get(Place, str(place_id))
-    if not place_obj:
+    if place_obj is None:
         abort(404)
     data = request.get_json(silent=True)
     if data is None:
