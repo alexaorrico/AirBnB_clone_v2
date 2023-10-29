@@ -86,3 +86,72 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get(self):
+        """Test the get method of DBStorage"""
+        # Create a new State object and save it
+        new_state = State(name="California")
+        new_state.save()
+
+        # Use the get method to retrieve the saved State object
+        retrieved_state = storage.get(State, new_state.id)
+        self.assertEqual(new_state, retrieved_state)
+
+    def test_get_nonexistent_object(self):
+        """Test get with an ID that doesn't exist"""
+        non_existent_state = storage.get(State, "non_existent_id")
+        self.assertIsNone(non_existent_state)
+
+    def test_count(self):
+        """Test the count method of DBStorage"""
+        # Create a new City object and save it
+        new_city = City(name="Los Angeles")
+        new_city.save()
+
+        # Create another City object but don't save it
+        unsaved_city = City(name="San Francisco")
+
+        # Count the number of City objects
+        city_count = storage.count(City)
+        self.assertEqual(city_count, 1)
+
+    def test_count_all_objects(self):
+        """Test count with no class argument"""
+        # Count all objects in storage
+        total_count = storage.count()
+        self.assertTrue(total_count >= 2)  # At least 2 objects should exist
+
+    def test_get(self):
+        """Test the get method of DBStorage"""
+        # Create a new State object and save it
+        new_state = State(name="California")
+        new_state.save()
+
+        # Use the get method to retrieve the saved State object
+        retrieved_state = storage.get(State, new_state.id)
+        self.assertEqual(new_state, retrieved_state)
+
+    def test_get_nonexistent_object(self):
+        """Test get with an ID that doesn't exist"""
+        non_existent_state = storage.get(State, "non_existent_id")
+        self.assertIsNone(non_existent_state)
+
+    def test_count(self):
+        """Test the count method of DBStorage"""
+        # Create a new City object and save it
+        new_city = City(name="Los Angeles")
+        new_city.save()
+
+        # Create another City object but don't save it
+        unsaved_city = City(name="San Francisco")
+
+        # Count the number of City objects
+        city_count = storage.count(City)
+        self.assertEqual(city_count, 1)
+
+    def test_count_all_objects(self):
+        """Test count with no class argument"""
+        # Count all objects in storage
+        total_count = storage.count()
+        self.assertTrue(total_count >= 2)  # At least 2 objects should exist
+
