@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
 """
-a view for City objects that handles all default RESTFul API actions
+A City object view that manages all standard RESTful API operations.
 
-Author: Khotso Selading and Londeka Dlamini
+Author:
+Khotso Selading and Londeka Dlamini
 """
 
 
