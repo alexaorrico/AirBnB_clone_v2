@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
 """
-a view for Place objects that handles all default RESTFul API actions
+A view responsible for Place entities, managing all standard RESTful API operations.
 
-Author: Khotso Selading and Londeka Dlamini
+Author:
+Khotso Selading and Londeka Dlamini
 """
 
 
