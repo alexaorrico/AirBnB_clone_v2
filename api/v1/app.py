@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This will return the status code"""
 from flask import Flask
+from flask import jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 import os
@@ -15,6 +16,12 @@ app.register_blueprint(app_views)
 def close_session(ctx):
     """To remove the current SQL Alchemy"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Method that returns 404 error using JSON"""
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
