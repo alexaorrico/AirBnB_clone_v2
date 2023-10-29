@@ -7,8 +7,8 @@ from models import storage
 
 
 @app_views.route(
-        '/states', methods=["GET"], strict_slashes=False
-        )
+    '/states', methods=["GET"], strict_slashes=False
+)
 def all_states():
     """ Return all states objects in DB """
     all_states = [state.to_dict() for state in storage.all(State).values()]
@@ -16,8 +16,8 @@ def all_states():
 
 
 @app_views.route(
-        '/states/<state_id>', methods=["GET"], strict_slashes=False
-        )
+    '/states/<state_id>', methods=["GET"], strict_slashes=False
+)
 def single_state(state_id):
     """ Returns state that matches with provided ID """
     state = storage.get(State, str(state_id))
@@ -27,8 +27,8 @@ def single_state(state_id):
 
 
 @app_views.route(
-        '/states/<state_id>', methods=["DELETE"], strict_slashes=False
-        )
+    '/states/<state_id>', methods=["DELETE"], strict_slashes=False
+)
 def delete_state(state_id):
     """ Deletes state that matches with provided ID """
     sta = storage.get(State, str(state_id))
@@ -40,8 +40,8 @@ def delete_state(state_id):
 
 
 @app_views.route(
-        '/states/', methods=["POST"], strict_slashes=False
-        )
+    '/states/', methods=["POST"], strict_slashes=False
+)
 def add_state():
     """ Adds state object to DB """
     data = request.get_json(silent=True)
@@ -58,8 +58,8 @@ def add_state():
 
 
 @app_views.route(
-        '/states/<state_id>', methods=["PUT"], strict_slashes=False
-        )
+    '/states/<state_id>', methods=["PUT"], strict_slashes=False
+)
 def update_state(state_id):
     """Updates state object"""
     data = request.get_json(silent=True)
