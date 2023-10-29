@@ -17,6 +17,8 @@ def places_by_city(id):
     city = storage.get(City, id)
     if city is None:
         abort(404)
+    if city.places is None:
+        abort(404)
     else:
         places = city.places
         places_list = []
