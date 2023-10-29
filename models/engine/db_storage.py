@@ -47,7 +47,7 @@ class DBStorage:
             if cls is None or cls is classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
+                    key = obj.__class__.__name__ + '.' + str(obj.id)
                     new_dict[key] = obj
         return (new_dict)
 
@@ -74,3 +74,12 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retreives object by id and class"""
+        identifier = "{}.{}".format(cls.__name__, id)
+        return self.all(cls).get(identifier, None)
+
+    def count(self, cls=None):
+        """count number of object created"""
+        return len(self.all(cls))
