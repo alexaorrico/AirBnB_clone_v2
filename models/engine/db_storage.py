@@ -79,12 +79,10 @@ class DBStorage:
         """
         Returns the object based on the class and its ID, or None if not found
         """
-        if cls and id:
-            all_obj = self.all(cls)
-            temp = cls.__name__ + "." + id
-            for c in all_obj:
-                if c == temp:
-                    return all_obj[c]
+        all_obj = self.all(cls)
+        for c in all_obj.values():
+            if str(c.id) == id:
+                return c
         else:
             return None
 
