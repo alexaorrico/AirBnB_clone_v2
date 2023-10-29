@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 
 """
-a view for Place->Amenity relationship that handles all default RESTFul
-API actions
+A view for the Place to Amenity relationship that manages
+all standard RESTful API operations.
 
-Author: Khotso Selading and Londeka Dlamini
+Author:
+Khotso Selading
+Londeka Dlamini
 """
 
 
