@@ -49,7 +49,7 @@ def create_review(place_id):
     storage.new(new_review)
     storage.save()
     reviews.append(new_review.to_dict())
-    return jsonify(reviews), 201
+    return jsonify(reviews[0]), 201
 
 
 @app_views.route(
