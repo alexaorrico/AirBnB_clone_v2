@@ -98,6 +98,6 @@ def updates_review(review_id):
             if obj.id == review_id:
                 obj.text = request.json['text']
         storage.save()
-        else:
-            abort(400. "Missing text")
+    else:
+        abort(400, "Missing text")
     return jsonify(review_obj[0]), 200
