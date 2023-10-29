@@ -3,6 +3,7 @@
 all default RESTFul API actions for User resource"""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
+from hashlib import md5
 from markupsafe import escape
 from models import storage
 from models.user import User
@@ -63,9 +64,11 @@ def users_put(user_id):
     if not request.is_json:
         return (jsonify({"error": "Not a JSON"}), 400)
     req_json = request.get_json()
-    ignore = ['id', 'email', 'created_at', 'updated_at']
+    ignore = ['id', 'email', 'created_at', 'password', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:
             setattr(obj, key, value)
+        if key == 'password':  # hash password
+            setattr(obj, key, md5(value.encode()).hexdigest())
     obj.save()
     return (jsonify(obj.to_dict()))
