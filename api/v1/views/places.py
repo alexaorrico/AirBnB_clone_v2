@@ -8,7 +8,10 @@ from models.place import Place
 from datetime import datetime
 import uuid
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+
+@app_views.route(
+    '/cities/<city_id>/places', methods=['GET'], strict_slashes=False
+)
 def list_places(city_id):
     '''Retrieves a list of all places objects'''
     citites = storage.all("City").values()
@@ -21,17 +24,22 @@ def list_places(city_id):
     return jsonify(places)
 
 
-@app_views.route('/api/v1/places/<place_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/api/v1/places/<place_id>', methods=['GET'], strict_slashes=False
+)
 def places(place_id):
     """ Get the place by the place id"""
     places = storage.all("Place").values()
     obj_id = [obj.to_dict for obj in places
-                if obj.id == place_id]
+              if obj.id == place_id]
     if obj_id == []:
         abort(404)
     return jsonify(obj_id[0])
 
-@app_views.route('/api/v1/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route(
+    '/api/v1/places/<place_id>', methods=['DELETE'], strict_slashes=False
+)
 def delete_place(place_id):
     """ Delete place"""
     places = storage.all("Place").values()
@@ -46,7 +54,10 @@ def delete_place(place_id):
             storage.save()
     return jsonify({}), 200
 
-@app_views.route('/api/v1/cities/<city_id>/places', methods=['PSOT'], strict_slashes=False)
+
+@app_views.route(
+    '/api/v1/cities/<city_id>/places', methods=['PSOT'], strict_slashes=False
+)
 def create_place(city_id):
     """ Create place"""
     if not request.get_json():
@@ -72,9 +83,11 @@ def create_place(city_id):
     storage.save()
     places.append(new_place.to_dict())
     return jsonify(places[0]), 201
-    
 
-@app_views.route('/places/<place_id>', methods=['PUT'])
+
+@app_views.route(
+    '/places/<place_id>', methods=['PUT'], strict_slashes=False
+)
 def updates_place(place_id):
     '''Updates a Place object'''
     all_places = storage.all("Place").values()
