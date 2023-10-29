@@ -8,8 +8,8 @@ from models.state import State
 
 
 @app_views.route(
-    '/states/<state_id>/cities', methods=["GET"], strict_slashes=False
-)
+        '/states/<state_id>/cities', methods=["GET"], strict_slashes=False
+        )
 def all_state_cities(state_id):
     """ Return all state cities objects in the DB """
     state = storage.get(State, str(state_id))
@@ -20,8 +20,8 @@ def all_state_cities(state_id):
 
 
 @app_views.route(
-    '/cities/<city_id>', methods=["GET"], strict_slashes=False
-)
+        '/cities/<city_id>', methods=["GET"], strict_slashes=False
+        )
 def single_city(city_id):
     """ Returns city that matches with provided ID """
     city = storage.get(City, str(city_id))
@@ -31,8 +31,8 @@ def single_city(city_id):
 
 
 @app_views.route(
-    '/cities/<city_id>', methods=["DELETE"], strict_slashes=False
-)
+        '/cities/<city_id>', methods=["DELETE"], strict_slashes=False
+        )
 def delete_city(city_id):
     """ Deletes city that matches with provided ID """
     city = storage.get(City, str(city_id))
@@ -44,8 +44,8 @@ def delete_city(city_id):
 
 
 @app_views.route(
-    '/states/<state_id>/cities', methods=["POST"], strict_slashes=False
-)
+        '/states/<state_id>/cities', methods=["POST"], strict_slashes=False
+        )
 def add_city(state_id):
     """ Adds city object to DB """
     state = storage.get(State, str(state_id))
@@ -66,8 +66,8 @@ def add_city(state_id):
 
 
 @app_views.route(
-    '/cities/<city_id>', methods=["PUT"], strict_slashes=False
-)
+        '/cities/<city_id>', methods=["PUT"], strict_slashes=False
+        )
 def update_city(city_id):
     """Updates city object"""
     data = request.get_json(silent=True)
