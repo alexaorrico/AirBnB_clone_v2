@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 
 """
-A view designed for User instances, responsible for managing all
-default RESTful API operations.
+a view for User objects that handles all default RESTFul API actions
 
-Author:
-Khotso Selading and Londeka Dlamini
+Authors: Khotso Selading and Londeka Dlamini
 """
 
 
@@ -25,24 +23,20 @@ def users():
                  methods=['GET'])
 def get_user(user_id):
     """retrieves specific user obj"""
-    user_object = storage.get(User, user_id)
-
-    if not user_object:
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
-
-    return jsonify(user_object.to_dict())
+    return jsonify(user.to_dict())
 
 
 @app_views.route('/users/<user_id>',
                  strict_slashes=False, methods=['DELETE'])
 def del_user(user_id):
     """deletes specific state object"""
-    user_object = storage.get(User, user_id)
-
-    if not user_object:
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
-
-    user_object.delete()
+    user.delete()
     storage.save()
     return make_response(jsonify({}), 200)
 
@@ -50,16 +44,14 @@ def del_user(user_id):
 @app_views.route('/users', strict_slashes=False, methods=['POST'])
 def post_user():
     """adds new state object to filestorage/database"""
-    new_user_object = request.get_json()
-
-    if not new_user_object:
+    json_body = request.get_json()
+    if json_body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if new_user_object.get('email') is None:
+    if json_body.get('email') is None:
         return make_response(jsonify({"error": "Missing email"}), 400)
-    if new_user_object.get('password') is None:
+    if json_body.get('password') is None:
         return make_response(jsonify({"error": "Missing password"}), 400)
-
-    user = User(**new_user_object)
+    user = User(**json_body)
     user.save()
     return make_response(jsonify(user.to_dict()), 201)
 
@@ -68,17 +60,14 @@ def post_user():
                  methods=['PUT'])
 def put_user(user_id):
     """adds new state object to filestorage/database"""
-    user_object = storage.get(User, user_id)
-
-    if not user_object:
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
-    new_user_object = request.get_json()
-    if new_user_object is None:
+    json_body = request.get_json()
+    if json_body is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-
-    for key, value in new_user_object.items():
+    for key, value in json_body.items():
         if key not in {'id', 'created_at', 'updated_at'}:
-            setattr(user_object, key, value)
-
-    user_object.save()
-    return make_response(jsonify(user_object.to_dict()), 200)
+            setattr(user, key, value)
+    user.save()
+    return make_response(jsonify(user.to_dict()), 200)
