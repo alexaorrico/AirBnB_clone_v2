@@ -100,11 +100,6 @@ def places_search():
     if states == cities == amenities == []:
         places = storage.all("Place").values()
     else:
-        if cities:
-            for city_id in cities:
-                city = storage.get("City", city_id)
-                if city:
-                    places.extend(city.places)
         if states:
             for state_id in states:
                 state = storage.get("State", state_id)
@@ -113,6 +108,11 @@ def places_search():
                         city = storage.get("City", city_id)
                         if city:
                             places.extend(city.places)
+        if cities:
+            for city_id in cities:
+                city = storage.get("City", city_id)
+                if city:
+                    places.extend(city.places)
         if amenities:
             places = [place for place in places
                       if all(amenity_id in place.amenities
