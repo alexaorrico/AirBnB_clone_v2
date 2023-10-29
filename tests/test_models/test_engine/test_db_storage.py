@@ -134,7 +134,7 @@ class TestDBStorage(unittest.TestCase):
         dbc.close()
 
     def test_delete(self):
-        """ Object is correctly deleted from database """
+        """ testing if Object is deleted from database """
         new = User(
             email='john2020@gmail.com',
             password='password',
@@ -166,7 +166,7 @@ class TestDBStorage(unittest.TestCase):
         dbc.close()
 
     def test_reload(self):
-        """ Testing the reload of the database session """
+        """ Testing the reload of database session """
         dbc = MySQLdb.connect(
             host=os.getenv('HBNB_MYSQL_HOST'),
             port=3306,
@@ -242,32 +242,8 @@ class TestDBStorage(unittest.TestCase):
         cursor.close()
         dbc.close()
 
-    def test_get(self):
-        """Testing  the get"""
-        new = State(
-            id='oboy',
-            name='lagos',
-            email='bohn2020@gmail.com',
-            password='password',
-            first_name='John',
-            last_name='Zoldyck'
-        )
-        dbc = MySQLdb.connect(
-            host=os.getenv('HBNB_MYSQL_HOST'),
-            port=3306,
-            user=os.getenv('HBNB_MYSQL_USER'),
-            passwd=os.getenv('HBNB_MYSQL_PWD'),
-            db=os.getenv('HBNB_MYSQL_DB')
-        )
-        if 'State.' + new.id not in storage.all().keys():
-            new.save()
-            self.assertTrue(new in storage.all().values())
-        dbc.close()
-        hold = storage.get(State, new.id)
-        self.assertEqual(new.id, hold.id)
-
     def test_count(self):
-        """Testing the count"""
+        """Testing count method"""
         initial_count = len(storage.all())
         initial_user_count = len(storage.all(User))
         method_count = storage.count()
@@ -294,3 +270,27 @@ class TestDBStorage(unittest.TestCase):
         user_count = storage.count(User)
         self.assertEqual(initial_count + 1, method_count)
         self.assertEqual(initial_user_count + 1, user_count)
+
+    def test_get(self):
+        """Testing the get """
+        new = State(
+            id='oboy',
+            name='lagos',
+            email='bohn2020@gmail.com',
+            password='password',
+            first_name='John',
+            last_name='Zoldyck'
+        )
+        dbc = MySQLdb.connect(
+            host=os.getenv('HBNB_MYSQL_HOST'),
+            port=3306,
+            user=os.getenv('HBNB_MYSQL_USER'),
+            passwd=os.getenv('HBNB_MYSQL_PWD'),
+            db=os.getenv('HBNB_MYSQL_DB')
+        )
+        if 'State.' + new.id not in storage.all().keys():
+            new.save()
+            self.assertTrue(new in storage.all().values())
+        dbc.close()
+        hold = storage.get(State, new.id)
+        self.assertEqual(new.id, hold.id)
