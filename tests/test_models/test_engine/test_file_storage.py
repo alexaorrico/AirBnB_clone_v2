@@ -114,3 +114,55 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorage2(unittest.TestCase):
+    def setUp(self):
+        """ Set up an empty storage dictionary before each test"""
+        models.storage._FileStorage__objects = {}
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test retrieving an object from FileStorage"""
+        state1 = State(name="state1")
+        state2 = State(name="state2")
+        state3 = State(name="state3")
+        models.storage.new(state1)
+        models.storage.new(state2)
+        models.storage.new(state3)
+        models.storage.save()
+
+        first_state = list(models.storage.all(State).values())[0]
+        first_state_id = first_state.id
+        get = models.storage.get(State, first_state_id)
+
+        self.assertEqual(get.id, first_state_id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test counting objects in FileStorage"""
+        state1 = State(name="state1")
+        state2 = State(name="state2")
+        state3 = State(name="state3")
+        city1 = City(state_id=state1.id, name="San Francisco")
+        city2 = City(state_id=state2.id, name="San Francisco2")
+        city3 = City(state_id=state3.id, name="San Francisco3")
+        models.storage.new(state1)
+        models.storage.new(state2)
+        models.storage.new(state3)
+        models.storage.new(city1)
+        models.storage.new(city2)
+        models.storage.new(city3)
+        models.storage.save()
+
+        total_objects = len(models.storage.all())
+        total_states = len(models.storage.all(State))
+        count_objects = models.storage.count()
+        count_states = models.storage.count(State)
+
+        self.assertEqual(total_objects, count_objects)
+        self.assertEqual(total_states, count_states)
+
+
+if __name__ == "__main__":
+    unittest.main()
