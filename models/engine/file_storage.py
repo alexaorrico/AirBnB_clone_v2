@@ -72,6 +72,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+<<<<<<< Updated upstream
         '''object to get'''
         if cls and id:
             takeObj = '{}.{}'.format(cls, id)
@@ -83,3 +84,21 @@ class FileStorage:
     def count(self, cls=None):
         '''class that is (optional)'''
         return (len(self.all(cls)))
+=======
+        """ Get an object of specific class """
+        if not cls and not id:
+            return None
+        key = f"{cls().__class__.__name__}.{id}"
+        return  self.all(cls).get(key)
+        
+    def count(self, cls=None):
+        """ 
+            Return total number of object
+            of specific class or all objects
+            class arg is not provided
+        """
+        objects = self.all(cls)
+        if cls:
+            return len(objects)
+        return len(objects)
+>>>>>>> Stashed changes

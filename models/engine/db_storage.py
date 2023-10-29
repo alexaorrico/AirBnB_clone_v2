@@ -67,13 +67,14 @@ class DBStorage:
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session_factory)
         self.__session = Session
 
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+<<<<<<< Updated upstream
     
     def get(self, cls, id):
         '''method to retrieve one object'''
@@ -89,3 +90,17 @@ class DBStorage:
     def count(self, cls=None):
         '''class (optional)'''
         return (len(self.all(cls)))
+=======
+        
+    def get(self, cls=None, id=None):
+        """  Return object of specific id """
+        if cls and id:
+            return None
+        key = f"{cls().__class__.__name__}.{id}"
+        return self.all(cls).get(key)
+
+    def count(self, cls=None):
+        """ Return total count of objs """
+        return len(self.all(cls))
+        
+>>>>>>> Stashed changes
