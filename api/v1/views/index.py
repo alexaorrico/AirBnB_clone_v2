@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
 """
-this view handles default responses from the API
+this view manages default responses from the API
 
-Author: Khotso Selading and Londeka Dlamini
+Author:
+Khotso Selading and Londeka Dlamini
 """
 
 from api.v1.views import app_views
