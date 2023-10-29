@@ -77,7 +77,7 @@ def update_place(place_id):
 
     keys_to_ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for key, value in data.items():
-        if key not in keys_to ignore:
+        if key not in keys_to_ignore:
             setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict())
