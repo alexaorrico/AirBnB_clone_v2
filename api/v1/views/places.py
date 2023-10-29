@@ -121,5 +121,5 @@ def places_search():
             if not all(elem in place_amenities for elem in amenities):
                 places.remove(place)
 
-    result = [place.to_dict() for place in places]
+    result = list(map(lambda x: x.to_dict(), places))
     return jsonify(result)
