@@ -79,14 +79,8 @@ class DBStorage:
         """
         Retrieve an object based on the class and its ID
         """
-        if cls not in classes.values():
-            return None
-
-        all_cls = models.storage.all(cls)
-        for value in all_cls.values():
-            if (value.id == id):
-                return Value
-
+        if cls and id:
+            return self.__session.query(cls).get(id)
         return None
 
     def count(self, cls=None):
@@ -98,8 +92,8 @@ class DBStorage:
         if not cls:
             count = 0
             for clas in all_class:
-                count += len(models.storage.all(clas).values())
+                count += len(self.all(clas).values())
         else:
-            count = len(models.storage.all(cls).values())
+            count = self.__session.query(cls).count()
 
         return count
