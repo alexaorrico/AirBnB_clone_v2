@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+!/usr/bin/python3
 """
 place
 """
@@ -16,8 +16,6 @@ def places_by_city(id):
     """GET Place by city id"""
     city = storage.get(City, id)
     if city is None:
-        abort(404)
-    if city.places is None:
         abort(404)
     else:
         places = city.places
