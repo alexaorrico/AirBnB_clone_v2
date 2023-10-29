@@ -1,49 +1,30 @@
 #!/usr/bin/python3
-""" Fabric script (file 1-pack_web_static.py) -> distributes archive """
+"""
+Fabric script based on the file 1-pack_web_static.py that distributes an
+archive to the web servers
+"""
 
-from fabric.api import *
-from datetime import datetime
-from os import path
-
-
-@task
-def do_pack():
-    """ do pack """
-    try:
-        f_current_time = datetime.now().strftime('%Y%m%d%H%M%S')
-        file_name = f'web_static_{f_current_time}.tgz web_static'
-        local("mkdir -p versions")
-        local(f"tar -cvzf versions/{file_name}")
-        return "versions/"
-    except Exception as e:
-        return None
+from fabric.api import put, run, env
+from os.path import exists
+env.hosts = ['142.44.167.228', '144.217.246.195']
 
 
-@task
 def do_deploy(archive_path):
-    """ do deploy """
-    env.hosts = ['100.25.220.124', '54.160.81.217']
-    if not os.path.exists(archive_path):
+    """distributes an archive to the web servers"""
+    if exists(archive_path) is False:
         return False
     try:
-        for host in env.hosts:
-            env.host_string = host
-            filename = archive_path.split('/')[-1]
-            filename = filename.split('.')[0]
-            put(archive_path, '/tmp/')
-            run(f'mkdir -p /data/web_static/releases/{filename}/')
-            run(f'tar -xzf /tmp/{filename}.tgz -C \
-                /data/web_static/releases/{filename}/')
-            run(f'rm /tmp/{filename}.tgz')
-            run(f'mv /data/web_static/releases/{filename}/web_static/* \
-                /data/web_static/releases/{filename}/')
-            run(
-                f'rm -rf /data/web_static/releases/{filename}/web_static')
-            run(f'rm -rf /data/web_static/current')
-            run(f'ln -s /data/web_static/releases/{filename}/ \
-                /data/web_static/current')
-            print('New version deployed!')
-
+        file_n = archive_path.split("/")[-1]
+        no_ext = file_n.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}{}/'.format(path, no_ext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_n, path, no_ext))
+        run('rm /tmp/{}'.format(file_n))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except Exception as e:
+    except:
         return False
