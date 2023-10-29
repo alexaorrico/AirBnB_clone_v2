@@ -1,25 +1,8 @@
 # AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
-
-#### Functionalities of this command interpreter:
-* Create a new object (ex: a new User or a new Place)
-* Retrieve an object from a file, a database etc...
-* Do operations on objects (count, compute stats, etc...)
-* Update attributes of an object
-* Destroy an object
-
-## Table of Content
-* [Environment](#environment)
-* [Installation](#installation)
-* [File Descriptions](#file-descriptions)
-* [Usage](#usage)
-* [Examples of use](#examples-of-use)
-* [Bugs](#bugs)
-* [Authors](#authors)
-* [License](#license)
+The console is the first segment of the AirBnB project at ALX that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
 ## Environment
-This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+This project is interpreted/tested on Ubuntu 20.04 LTS using python3 (version 3.4.3)
 
 ## Installation
 * Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
@@ -160,3 +143,49 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+ AirBnB clone - RESTful API
+Python
+Back-end
+API
+Webserver
+Flask
+ By: Guillaume, CTO at Holberton School
+ Weight: 2
+ Project to be done in teams of 2 people (your team: Wanjiru James Ndungu Wanjiru, Talent Gwizhi)
+ Project will start Oct 26, 2023 6:00 AM, must end by Oct 31, 2023 6:00 AM
+ Checker will be released at Oct 27, 2023 12:00 PM
+ An auto review will be launched at the deadline
+Concepts
+For this project, we expect you to look at these concepts:
+
+REST API
+AirBnB clone
+Resources
+Read or watch:
+
+REST API concept page
+Learn REST: A RESTful Tutorial
+Designing a RESTful API with Python and Flask
+HTTP access control (CORS)
+Flask cheatsheet
+What are Flask Blueprints, exactly?
+Flask
+Modular Applications with Blueprints
+Flask tests
+Flask-CORS
+Learning Objectives
+At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
+
+General
+What REST means
+What API means
+What CORS means
+What is an API
+What is a REST API
+What are other type of APIs
+Which is the HTTP method to retrieve resource(s)
+Which is the HTTP method to create a resource
+Which is the HTTP method to update resource
+Which is the HTTP method to delete resource
+How to request REST API
