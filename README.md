@@ -28,16 +28,16 @@ This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
 ## File Descriptions
-[console.py](console.py) - the console contains the entry point of the command interpreter. 
+[console.py](console.py) - the console contains the entry point of the command interpreter.
 List of commands this console current supports:
-* `EOF` - exits console 
+* `EOF` - exits console
 * `quit` - exits console
 * `<emptyline>` - overwrites default emptyline method and does nothing
 * `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
-* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
+* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file).
 * `show` - Prints the string representation of an instance based on the class name and id.
-* `all` - Prints all string representation of all instances based or not on the class name. 
-* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
+* `all` - Prints all string representation of all instances based or not on the class name.
+* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).
 
 #### `models/` directory contains classes used for this project:
 [base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
@@ -71,7 +71,7 @@ TestBaseModelDocs class:
 * `def test_bm_class_docstring(self)` - Test for the BaseModel class docstring
 * `def test_bm_func_docstrings(self)` - Test for the presence of docstrings in BaseModel methods
 
-TestBaseModel class:
+estBaseModel class:
 * `def test_is_base_model(self)` - Test that the instatiation of a BaseModel works
 * `def test_created_at_instantiation(self)` - Test created_at is a pub. instance attribute of type datetime
 * `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
@@ -156,7 +156,11 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Chukwu Cyprian O - [Github](https://github.com/chukwucyprian)
+Iwuegbulem Daniel I - [Github](https://github.com/Danielikye)
 
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+                                                                                                                                                    162,1         Bot                                                                                                                                                    140,1         85%
+                                                                                                                                                    92,1          59%                                                                                                                                                    1,1           Top
