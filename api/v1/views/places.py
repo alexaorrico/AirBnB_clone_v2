@@ -94,3 +94,53 @@ def work_place(place_id=None):
             return jsonify({}), 200
         except KeyError:
             abort(404)
+
+
+@app_views.route("/places_search", methods=["POST"], strict_slashes=False)
+def search_place():
+    """this endpoint searches for places"""
+    if request.is_json:
+        data = request.get_json()
+    else:
+        abort(400, "Not a JSON")
+
+    p_list = []
+    if "states" in data:
+        for state_id in data["states"]:
+            d_state = storage.get(State, state_id)
+            if d_state is not None:
+                for city in d_state.cities:
+                    for place in city.places:
+                        p_list.append(place)
+
+    if "cities" in data:
+        for city_id in data["cities"]:
+            city = storage.get(City, city_id)
+            if city:
+                for place in city.places:
+                    p_list.append(place)
+
+    # search for amenities
+    if "amenities" in data and len(data["amenities"]) > 0:
+        if len(p_list) == 0:
+            p_list = [p for p in storage.all(Place).value()]
+
+        bad_list = []
+        for place in p_list:
+            for amenity_id in data["amenites"]:
+                amenity = storage.get(Amenity, amenity_id)
+                if amenity not in place.amenities:
+                    bad_list.append(place)
+                    break
+        for place in bad_list:
+            p_list.remove(place)
+    if len(p_list) == 0:
+        p_list = [p for p in storage.all(Place).values()]
+
+    p_list = [p.to_dict() for p in p_list]
+    for p in p_list:
+        try:
+            del p["amenities"]
+        except KeyError:
+            pass
+    return jsonify(p_list)
