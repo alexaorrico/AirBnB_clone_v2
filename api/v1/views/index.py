@@ -12,7 +12,7 @@ def status():
 
 
 @app_views.route('/stats')
-def count():
+def gt_count():
     """returns jsonfiy all objects"""
     classes = {
             "amenities": storage.count("Amenity"),
