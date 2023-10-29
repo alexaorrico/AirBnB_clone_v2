@@ -21,8 +21,8 @@ if os.getenv("HBNB_API_HOST"):
 else:
     host = "0.0.0.0"
 
-if os.getenv("HBNB_API_PORT "):
-    port = int(os.getenv("HBNB_API_PORT "))
+if os.getenv("HBNB_API_PORT"):
+    port = int(os.getenv("HBNB_API_PORT"))
 else:
     port = 5000
 
