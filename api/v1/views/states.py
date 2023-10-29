@@ -26,7 +26,7 @@ def states_list():
         200)
 
 
-@app_views.route('/states/<state_id>')
+@app_views.route('/states/<state_id>', methods=["GET"])
 def state_obj(state_id):
     obj = storage.get(State, state_id)
     if obj is None:
@@ -48,6 +48,8 @@ def state_delete(state_id):
 def state_post():
     try:
         data = request.get_json()
+        if not data:
+            return abort(400, description="Not a JSON")
         if 'name' not in data:
             return abort(400, description='Missing name')
         new_state = State(**data)
@@ -65,6 +67,8 @@ def state_put(state_id):
         if state is None:
             return abort(404)
         data = request.get_json()
+        if not data:
+            return abort(400, description="Not a JSON")
         for key in data:
             if key in ['id', 'created_at', 'updated_at']:
                 continue
