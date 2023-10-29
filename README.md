@@ -54,3 +54,7 @@ Classes inherited from Base Model:
 * [review.py](/models/review.py)
 * [state.py](/models/state.py)
 * [user.py](/models/user.py)
+
+#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
+[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
+* `def all(self)` - returns the dictionary __objects
