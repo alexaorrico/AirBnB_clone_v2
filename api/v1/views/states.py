@@ -9,6 +9,7 @@ from models.place import Place
 from models.review import Review
 from models.user import User
 from models import storage
+from json import dumps
 
 
 def json_ser(obj):
@@ -18,9 +19,11 @@ def json_ser(obj):
     return (json_obj)
 
 
-@app_views.route('/states')
+@app_views.route('/states', methods=["GET"])
 def states_list():
-    return make_response(list(json_ser(storage.all(State)).values()))
+    return make_response(
+        dumps(list(json_ser(storage.all(State)).values())),
+        200)
 
 
 @app_views.route('/states/<state_id>')
@@ -46,13 +49,13 @@ def state_post():
     try:
         data = request.get_json()
         if 'name' not in data:
-            return make_response('Missing name', 404)
+            return make_response('Missing name', 400)
         new_state = State(**data)
         storage.new(new_state)
         storage.save()
         return make_response(new_state.to_dict(), 201)
     except Exception:
-        return make_response('Not a JSON', 404)
+        return make_response('Not a JSON', 400)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
@@ -75,4 +78,4 @@ def state_put(state_id):
         storage.save()
         return make_response(state.to_dict(), 200)
     except Exception:
-        return make_response('Not a JSON', 404)
+        return make_response('Not a JSON', 400)
