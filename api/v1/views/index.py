@@ -1,17 +1,29 @@
 #!/usr/bin/python3
-"""api index"""
+"""API Index Module
+
+This module defines routes for the API status and statistics endpoints.
+"""
+
 from api.v1.views import app_views
 
-
-@app_views.route("/status")
+@app_views.route("/status", methods=["GET"])
 def status():
-    """api status"""
+    """API Status Endpoint
+
+    Returns:
+        dict: A dictionary with the status message.
+    """
     return {"status": "OK"}
 
-
-@app_views.route("/stats")
+@app_views.route("/stats", methods=["GET"])
 def stats():
-    """api states"""
+    """API Statistics Endpoint
+
+    Computes and returns the count of objects for each model class in the storage.
+
+    Returns:
+        dict: A dictionary containing counts of different object types.
+    """
     from models import storage
     from models.amenity import Amenity
     from models.city import City
@@ -20,6 +32,7 @@ def stats():
     from models.state import State
     from models.user import User
 
+    # Count objects for each model class
     count = {
         "amenities": storage.count(Amenity),
         "cities": storage.count(City),
@@ -28,4 +41,5 @@ def stats():
         "states": storage.count(State),
         "users": storage.count(User),
     }
+
     return count
