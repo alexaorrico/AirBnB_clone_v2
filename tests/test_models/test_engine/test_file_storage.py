@@ -113,6 +113,7 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+<<<<<<< HEAD
 
     def test_get_obj(self):
         """Tests the method get retrieves an obj/objs"""
@@ -135,3 +136,5 @@ class TestFileStorage(unittest.TestCase):
         state_obj.save()
         self.assertEqual(storage.count(), firs_len + 1)
         self.assertEqual(storage.count("State"), statelen + 1)
+=======
+>>>>>>> master
