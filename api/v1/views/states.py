@@ -20,7 +20,7 @@ def json_ser(obj):
 
 @app_views.route('/states')
 def states_list():
-    return list(json_ser(storage.all(State)).values())
+    return make_response(list(json_ser(storage.all(State)).values()))
 
 
 @app_views.route('/states/<state_id>')
@@ -28,7 +28,7 @@ def state_obj(state_id):
     obj = storage.get(State, state_id)
     if obj is None:
         return abort(404)
-    return obj.to_dict()
+    return make_response(obj.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
@@ -38,7 +38,7 @@ def state_delete(state_id):
         return abort(404)
     storage.delete(obj)
     storage.save()
-    return {}, 200
+    return make_response({}, 200)
 
 
 @app_views.route('/states', methods=['POST'])
@@ -50,7 +50,7 @@ def state_post():
         new_state = State(**data)
         storage.new(new_state)
         storage.save()
-        return new_state.to_dict(), 201
+        return make_response(new_state.to_dict(), 201)
     except Exception:
         return make_response('Not a JSON', 404)
 
@@ -73,6 +73,6 @@ def state_put(state_id):
                     pass
             setattr(state, key, value)
         storage.save()
-        return state.to_dict(), 200
+        return make_response(state.to_dict(), 200)
     except Exception:
         return make_response('Not a JSON', 404)
