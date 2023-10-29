@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """this view hundles states endpoints"""
-from flask import abort
 from api.v1.views import app_views
 from flask import jsonify
+from flask import abort
 from flask import request
-from flask import make_response
-from models.state import State
 from models import storage
+from models.state import State
+from flask import make_response
 
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
@@ -23,10 +23,10 @@ def all_states():
 def get_state(states_id):
     """gets state with the given id"""
     d_state = storage.get(State, states_id)
-    if d_state:
-        return jsonify(d_state.to_dict())
-    else:
+    if d_state is None:
         abort(404)
+    else:
+        return jsonify(d_state.to_dict())
 
 
 @app_views.route("/states/<states_id>", methods=["DELETE"],
@@ -34,12 +34,12 @@ def get_state(states_id):
 def delete_state(states_id):
     """deletes state with the given id"""
     d_state = storage.get(State, states_id)
-    if d_state:
+    if d_state is None:
+        abort(404)
+    else:
         storage.delete(d_state)
         storage.save()
-        return jsonify({})
-    else:
-        abort(404)
+        return make_response(jsonify({}), 200)
 
 
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
@@ -49,7 +49,7 @@ def create_state():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     data = request.get_json()
     if "name" not in data:
-        return make_response(jsonify({"error": "Name required"}), 400)
+        return make_response(jsonify({"error": "Missing name"}), 400)
     new = State(**data)
     new.save()
     return make_response(jsonify(new.to_dict()), 201)
