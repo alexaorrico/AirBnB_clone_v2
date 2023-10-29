@@ -19,13 +19,15 @@ def get_place_amenities(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
+    coll = []
     if storage_type == 'db':
         amenity = [amenity.to_dict() for amenity in place.amenities]
-        return jsonify(amenity)
+        coll.append(amenity)
     else:
         for amenity_id in place.amenity_ids:
             amenity = storage.get(Amenity, amenity_id)
-            return jsonify(amenity.to_dict())
+            coll.append(amenity.to_dict())
+    return jsonify(coll)
 
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=['DELETE'],
