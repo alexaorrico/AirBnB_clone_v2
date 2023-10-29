@@ -32,6 +32,6 @@ def stats():
         "cities": cities,
         "places": places,
         "reviews": reviews,
-        "states":states,
-        "users":users
+        "states": states,
+        "users": users,
     }
