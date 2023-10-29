@@ -1,5 +1,5 @@
 #!/usr/bin/python3
 from flask import Blueprint
 
-app_views = Blueprint(url_prefix="/api/v1")
+app_views = Blueprint('app_views', __name__, template_folder='views')
 from api.v1.views.index import *
