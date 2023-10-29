@@ -8,6 +8,8 @@ import os
 
 app = Flask(__name__)
 
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 app.register_blueprint(app_views, url_prefix="/api/v1")
 
 
@@ -20,7 +22,9 @@ def teardown(exception):
 @app.errorhandler(404)
 def not_found(err):
     """page not founnd error"""
-    return jsonify({"error": "Not found"}), 404
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 
 if __name__ == "__main__":
