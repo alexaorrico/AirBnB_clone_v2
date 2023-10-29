@@ -1,86 +1,82 @@
 #!/usr/bin/python3
-""" holds class Place"""
+""" Create a view for Place """
 
 from flask import Flask, jsonify, request, abort, make_response
 from api.v1.views import app_views
-import models
 from models import storage
 from models.city import City
 from models.place import Place
-from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String, Integer
-from sqlalchemy import Float, ForeignKey, Table
-from sqlalchemy.orm import relationship
 
 
-if models.storage_t == 'db':
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60),
-                                 ForeignKey('places.id', onupdate='CASCADE',
-                                            ondelete='CASCADE'),
-                                 primary_key=True),
-                          Column('amenity_id', String(60),
-                                 ForeignKey('amenities.id', onupdate='CASCADE',
-                                            ondelete='CASCADE'),
-                                 primary_key=True))
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
+def get_places_by_city(city_id):
+    """Retrieves the list of all Place objects of a city"""
+    city = storage.get("City", city_id)
+    if not city:
+        abort(404)
+    return jsonify([place.to_dict() for place in city.places])
 
 
-class Place(BaseModel, Base):
-    """ Place """
-    if models.storage_t == 'db':
-        __tablename__ = 'places'
-        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
-        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-        name = Column(String(128), nullable=False)
-        description = Column(String(1024), nullable=True)
-        number_rooms = Column(Integer, nullable=False, default=0)
-        number_bathrooms = Column(Integer, nullable=False, default=0)
-        max_guest = Column(Integer, nullable=False, default=0)
-        price_by_night = Column(Integer, nullable=False, default=0)
-        latitude = Column(Float, nullable=True)
-        longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", backref="place")
-        amenities = relationship("Amenity", secondary="place_amenity",
-                                 backref="place_amenities", viewonly=False)
-    else:
-        city_id = ""
-        user_id = ""
-        name = ""
-        description = ""
-        number_rooms = 0
-        number_bathrooms = 0
-        max_guest = 0
-        price_by_night = 0
-        latitude = 0.0
-        longitude = 0.0
-        amenity_ids = []
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+def get_place(place_id):
+    """Retrieves a place object by ID"""
+    place = storage.get("Place", place_id)
+    if place is None:
+        abort(404)
+    return jsonify(place.to_dict())
 
-    def __init__(self, *args, **kwargs):
-        """ Initialize Place """
-        super().__init__(*args, **kwargs)
 
-    if models.storage_t != 'db':
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_place(place_id):
+    """Deletes a Place object by ID"""
+    place = storage.get("Place", place_id)
+    if place is None:
+        abort(404)
+    place.delete()
+    storage.save()
+    return make_response(jsonify({}), 200)
 
-        @property
-        def reviews(self):
-            """ List of Review Instances """
-            from models.review import Review
-            review_list = []
-            all_reviews = models.storage.all(Review)
-            for review in all_reviews.values():
-                if review.place_id == self.id:
-                    review_list.append(review)
-            return review_list
 
-        @property
-        def amenities(self):
-            """ Retrieve List of Instances of Amenity """
-            from models.amenity import Amenity
-            amenity_list = []
-            all_amenities = models.storage.all(Amenity)
-            for amenity in all_amenities.values():
-                if amenity.place_id == self.id:
-                    amenity_list.append(amenity)
-            return amenity_list
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
+def create_place(city_id):
+    """Creates a Place object"""
+    city = storage.get("City", city_id)
+    if not city:
+        abort(404)
+    data = request.get_json()
+    if not data:
+        abort(400, 'Not a JSON')
+    if 'user_id' not in data:
+        abort(400, 'Missing user_id')
+    user = storage.get("User", data["user_id"])
+    if not user:
+        abort(404)
+    if 'name' not in data:
+        abort(400, 'Missing name')
+    place = Place(**data)
+    setattr(place, 'city_id', city_id)
+    storage.new(place)
+    storage.save()
+    return make_response(jsonify(place.to_dict()), 201)
+
+
+@app_views.route('/places/<place_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_place(place_id):
+    """Updates a Place object by ID"""
+    place = storage.get("Place", place_id)
+    if place is None:
+        abort(404)
+    data = request.get_json()
+    if not data:
+        abort(400, 'Not a JSON')
+
+    # Update the State object's attributes based on the JSON data
+    for key, value in data.items():
+        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            setattr(place, key, value)
+    storage.save()
+    return make_response(jsonify(place.to_dict()), 200)
