@@ -20,7 +20,8 @@ def get_places_by_city(city_id):
     return jsonify([place.to_dict() for place in city.places])
 
 
-@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_place(place_id):
     """Retrieves a place object by ID"""
     place = storage.get("Place", place_id)
@@ -76,9 +77,10 @@ def update_place(place_id):
     if not data:
         abort(400, 'Not a JSON')
 
-    # Update the State object's attributes based on the JSON data
+    # Update the Place object's attributes based on the JSON data
     for key, value in data.items():
-        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'city_id', 'created_at',
+                       'updated_at']:
             setattr(place, key, value)
     storage.save()
     return make_response(jsonify(place.to_dict()), 200)
@@ -87,30 +89,36 @@ def update_place(place_id):
 @app_views.route('/api/v1/places_search', methods=['POST'])
 def places_search():
     if not request.is_json:
-        abort(400, 'Not a JSON')
+        return jsonify({"error": "Not a JSON"}), 400
 
     data = request.get_json()
     if not data or all(not data.get(key) for key in ['states', 'cities',
                                                      'amenities']):
         # Retrieve all places if JSON body is empty || each list is empty
-        return jsonify(data.to_dict())
-    filtered_places = data
+        return jsonify([place.to_dict() for place
+                        in storage.all(Place).values()])
+
+    filtered_places = storage.all(Place).values()
+
     if data.get('states'):
         # Filter Places by States
         filtered_places = [
-            place for place in filtered_places if place['state'] /
+            place for place in filtered_places if place.state_id
             in data['states']
         ]
+
     if data.get('cities'):
         # Filter Places by Cities
         filtered_places = [
-            place for place in filtered_places if place['city'] /
+            place for place in filtered_places if place.city_id
             in data['cities']
         ]
+
     if data.get('amenities'):
         # Filter places by Amenities
         filtered_places = [
-            place for place in filtered_places /
-            if set(data['amenities']).issubset(place['amenities'])
+            place for place in filtered_places if
+            all(amenity.id in place.amenities for amenity in data['amenities'])
         ]
-    return jsonify(filtered_places)
+
+    return jsonify([place.to_dict() for place in filtered_places])
