@@ -13,6 +13,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route("/status", methods=["GET"])
 def status():
     """API Status Endpoint
@@ -23,11 +24,13 @@ def status():
     response = {"status": "OK"}
     return jsonify(response)
 
+
 @app_views.route("/stats", methods=["GET"])
 def stats():
     """API Statistics Endpoint
 
-    Computes and returns the count of objects for each model class in the storage.
+    Computes and returns the count of
+    objects for each model class in the storage.
 
     Returns:
         dict: A dictionary containing counts of different object types.
