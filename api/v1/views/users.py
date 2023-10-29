@@ -65,6 +65,6 @@ def modify_user(user_id):
     ignored_key = ['id', 'email', 'created_at', 'updated_at']
     for k, v in user_data.items():
         if k not in ignored_key:
-            setattr(User, k, v)
+            setattr(user, k, v)
     user.save()
     return jsonify(user.to_dict()), 200
