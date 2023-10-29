@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+!/usr/bin/python3
 """this view hundles states endpoints"""
 from flask import abort
 from api.v1.views import app_views
@@ -37,7 +37,7 @@ def delete_state(states_id):
     if d_state:
         storage.delete(d_state)
         storage.save()
-        return make_response(jsonify({}), 200)
+        return jsonify({})
     else:
         abort(404)
 
