@@ -1,8 +1,9 @@
+from api.v1.views import app_views
 from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
-from api.v1.views import app_views
 from os import getenv
+
 
 app = Flask(__name__)
 # Cross-Origin Resource Sharing
@@ -18,8 +19,8 @@ def teardown(self):
     """
     this method calls storage.close() function
     """
-    
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):

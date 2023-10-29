@@ -4,6 +4,7 @@ from models import storage
 from models.state import State
 from models.city import City
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities(state_id):
@@ -18,6 +19,7 @@ def get_cities(state_id):
         return jsonify(cities)
     abort(404)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def get_city(city_id):
@@ -29,6 +31,7 @@ def get_city(city_id):
         response = city.to_dict()
         return jsonify(response)
     abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
@@ -42,6 +45,7 @@ def delete_city(city_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
@@ -58,11 +62,12 @@ def create_city(state_id):
     data = request.get_json()
     if 'name' not in data:
         abort(400, 'Missing name')
-    
+
     city = City(name=data['name'], state_id=state_id)
     city.save()
     response = city.to_dict()
     return jsonify(response), 201
+
 
 @app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)

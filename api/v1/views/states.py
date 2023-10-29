@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, abort
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """
@@ -12,6 +13,7 @@ def get_states():
     for state in storage.all(State).values():
         states.append(state.to_dict())
     return jsonify(states)
+
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
@@ -26,7 +28,9 @@ def get_state(state_id):
         return jsonify(response)
     abort(404)
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """
     deletes a State object
@@ -37,6 +41,7 @@ def delete_state(state_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
@@ -53,6 +58,7 @@ def create_state():
     state.save()
     response = state.to_dict()
     return jsonify(response), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):

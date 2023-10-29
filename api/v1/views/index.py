@@ -11,6 +11,7 @@ from models.user import User
 classes = {"amenities": Amenity, "cities": City, "places": Place,
            "reviews": Review, "states": State, "users": User}
 
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def check_status():
     """
@@ -20,6 +21,7 @@ def check_status():
         response = {"status": "OK"}
         return jsonify(response)
 
+
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def get_stats():
     """
@@ -27,5 +29,5 @@ def get_stats():
     """
     response = {}
     for key, value in classes.items():
-        response[key]= storage.count(value)
+        response[key] = storage.count(value)
     return jsonify(response)
