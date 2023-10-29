@@ -16,8 +16,7 @@ def list_places_of_city(city_id):
     city = storage.get(City, str(city_id))
     if city is None:
         abort(404)
-    city_id = str(city_id)
-    places = [p.to_dict() for p in storage.all(Place) if p.city_id == city_id]
+    places = [place.to_dict() for place in city.places]
     return jsonify(places)
 
 
@@ -42,7 +41,7 @@ def delete_place(place_id):
         abort(404)
     storage.delete(place_obj)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route(
