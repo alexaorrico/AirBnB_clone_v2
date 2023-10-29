@@ -3,7 +3,6 @@
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.place import Place
-from models.city import City
 from api.v1.views import app_views
 
 
@@ -14,7 +13,6 @@ def get_places(city_id):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-
     places = city.places
     return jsonify([place.to_dict() for place in places])
 
@@ -48,7 +46,7 @@ def create_place(city_id):
     if city is None:
         abort(404)
 
-    data = request.get_json
+    data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
     if 'user_id' not in data:
