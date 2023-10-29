@@ -3,8 +3,7 @@
 
 This module defines routes for the API status and statistics endpoints.
 """
-
-from flask import jsonify
+from flask import flask, jsonify
 from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
