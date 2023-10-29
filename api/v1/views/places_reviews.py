@@ -18,6 +18,8 @@ def reviews_by_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
+    if place.reviews is None:
+        abort(404)
     else:
         reviews = place.reviews
         reviews_list = []
@@ -64,6 +66,7 @@ def create_review(place_id, strict_slashes=False):
 
         json_review["place_id"] = place_id
         new_review = Review(**json_review)
+        storage.new(new_review)
         storage.save()
         return new_review.to_dict(), 201
     else:
@@ -79,9 +82,11 @@ def update_review(review_id):
     if request.is_json:
         forbidden = ["id", "user_id", "place_id", "created_at", "updated_at"]
         review_json = request.get_json()
+        storage.delete(review)
         for k, v in review_json.items():
             if k not in forbidden:
                 setattr(review, k, v)
+        storage.new(review)
         storage.save()
         return review.to_dict(), 200
     else:
