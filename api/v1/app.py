@@ -2,10 +2,10 @@
 """creating a flask application"""
 
 import os
-from api.v1.views import app_views
 from flask import Flask
-from flask_cors import CORS
 from models import storage
+from api.v1.views import app_views
+from flask_cors import CORS
 
 
 # Create a Flask application instance
@@ -37,3 +37,4 @@ if __name__ == '__main__':
     # getenv returns a string and port is an int
     # THREADED is set to true so it can serve multiple requests at once
     app.run(host=host, port=port, threaded=True)
+    
