@@ -49,7 +49,7 @@ def state_post():
     try:
         data = request.get_json()
         if 'name' not in data:
-            return make_response('Missing name', 400)
+            return abort(400, description='Missing name')
         new_state = State(**data)
         storage.new(new_state)
         storage.save()
