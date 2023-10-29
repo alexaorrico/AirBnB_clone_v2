@@ -10,8 +10,8 @@ from models.user import User
 from models.place import Place
 
 
-@app_views.route("/cities/<city_id>/cities", methods=["GET"], strict_slashes=False)
-def get_state_cities(city_id):
+@app_views.route("/cities/<city_id>/places", methods=["GET"], strict_slashes=False)
+def get_place_cities(city_id):
     """return a list of places in the city object"""
     city = storage.get(City, city_id)
     if city is None:

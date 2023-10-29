@@ -11,7 +11,7 @@ from models.user import User
 
 
 @app_views.route("/places/<place_id>/reviews", methods=["GET"], strict_slashes=False)
-def get_place_cities(place_id):
+def get_place_reviews(place_id):
     """return a list of cities in the place object"""
     place = storage.get(Place, place_id)
     if place is None:
