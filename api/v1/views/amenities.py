@@ -16,7 +16,7 @@ def list_amenities():
 @app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
 def get_amenity(amenity_id):
     """Retrieves a specific Amenity object"""
-    amenity = stoirage.get(Amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
@@ -53,6 +53,7 @@ def update_amenity(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
+    
     data = request.get_json()
     if data is None:
         return jsonify({"error": "Not a JSON"}), 400
