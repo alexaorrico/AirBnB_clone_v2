@@ -12,7 +12,6 @@ app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 # register the blueprint app_views to your app
 app.register_blueprint(app_views)
-app.register_blueprint(states_views, url_prefix="/api/v1")
 # disables this strict trailing slash behavior.
 app.url_map.strict_slashes = False
 
@@ -31,12 +30,6 @@ def page_not_found(e):
     the error page
     """
     return jsonify({"error": "Not found"}), 404
-
-# Handles 400 errors
-#@app.errorhandler(400)
-#def err_handler(e):
-#    """ Handles 400 error """
-#    return jsonify({"error": e.description}), 400
 
 
 if __name__ == "__main__":
