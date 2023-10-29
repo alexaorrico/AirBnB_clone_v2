@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 
 """
-a view for User objects that handles all default RESTFul API actions
+A view designed for User instances, responsible for managing all
+default RESTful API operations.
 
-Author: Khotso Selading and Londeka Dlamini
+Author:
+Khotso Selading and Londeka Dlamini
 """
 
 
