@@ -7,6 +7,7 @@ from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -86,3 +87,27 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_counter(self):
+        """ Test the count method """
+        accra = State(name='Accra')
+        storage.new(accra)
+        tema = City(name='Tema', state_id=accra.id)
+        storage.new(tema)
+        storage.save()
+        self.assertTrue(len(storage.all()) == storage.count())
+
+    def test_get(self):
+        """ Test retrieving obj """
+        state = State(name='California')
+        city = City(name='Compton', state_id=state.id)
+        storage.new(city)
+        storage.new(state)
+        storage.save()
+        self.assertIsInstance(
+            storage.get(City, city.id), City
+        )
+        from_db = storage.get(City, city.id)
+        self.assertEqual(
+            from_db.state_id, state.id
+        )
