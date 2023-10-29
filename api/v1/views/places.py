@@ -97,11 +97,11 @@ def places_search():
 
     places = []
     all_cities = []
-    all_places = storage.all("Place")
-    all_places_dict = {place.city_id: place for place in all_places.values()}
+    all_places = storage.all("Place").values()
+    all_places_dict = {place.city_id: place for place in all_places}
 
     if states == cities == amenities == []:
-        places = storage.all("Place").values()
+        places = all_places
     else:
         if states:
             for state_id in states:
