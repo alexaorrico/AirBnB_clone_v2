@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """ Index """
 from models.amenity import Amenity
 from models.city import City
@@ -29,19 +28,3 @@ def number_objects():
         num_objs[names[i]] = storage.count(classes[i])
 
     return jsonify(num_objs)
-=======
-"""
-This module defines a route status for a Flask application using a Blueprint.
-"""
-from flask import jsonify
-from api.v1.views import app_views
-
-
-@app_views.route('/status', strict_slashes=False)
-def hbnb_status():
-    """
-    This function is linked to the '/status' route.
-    It returns a JSON object with the status of the API.
-    """
-    return jsonify({'status': 'OK'})
->>>>>>> 06b410135511d330f62384b22242c5fb082e4dc0
