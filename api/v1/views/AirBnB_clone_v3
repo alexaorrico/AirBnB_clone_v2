@@ -1,0 +1,129 @@
+AirBnB_clone_v3
+├── .dist
+├── .gitignore
+├── 0-setup_web_static.sh
+├── 1-pack_web_static.py
+├── 2-do_deploy_web_static.py
+├── 3-deploy_web_static.py
+├── AUTHORS
+├── README.md
+├── api
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   └── __init__.cpython-38.pyc
+│   └── v1
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-38.pyc
+│       │   └── app.cpython-38.pyc
+│       ├── app.py
+│       └── views
+│           ├── __init__.py
+│           ├── __pycache__
+│           │   ├── __init__.cpython-38.pyc
+│           │   └── index.cpython-38.pyc
+│           └── index.py
+├── console.py
+├── models
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-38.pyc
+│   │   ├── amenity.cpython-38.pyc
+│   │   ├── base_model.cpython-38.pyc
+│   │   ├── city.cpython-38.pyc
+│   │   ├── place.cpython-38.pyc
+│   │   ├── review.cpython-38.pyc
+│   │   ├── state.cpython-38.pyc
+│   │   └── user.cpython-38.pyc
+│   ├── amenity.py
+│   ├── base_model.py
+│   ├── city.py
+│   ├── engine
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-38.pyc
+│   │   │   └── db_storage.cpython-38.pyc
+│   │   ├── db_storage.py
+│   │   └── file_storage.py
+│   ├── place.py
+│   ├── review.py
+│   ├── state.py
+│   └── user.py
+├── setup_mysql_dev.sql
+├── setup_mysql_test.sql
+├── tests
+│   ├── __init__.py
+│   ├── test_console.py
+│   └── test_models
+│       ├── __init__.py
+│       ├── test_amenity.py
+│       ├── test_base_model.py
+│       ├── test_city.py
+│       ├── test_engine
+│       │   ├── __init__.py
+│       │   ├── test_db_storage.py
+│       │   └── test_file_storage.py
+│       ├── test_place.py
+│       ├── test_review.py
+│       ├── test_state.py
+│       └── test_user.py
+├── web_flask
+│   ├── 0-hello_route.py
+│   ├── 1-hbnb_route.py
+│   ├── 10-hbnb_filters.py
+│   ├── 2-c_route.py
+│   ├── 3-python_route.py
+│   ├── 4-number_route.py
+│   ├── 5-number_template.py
+│   ├── 6-number_odd_or_even.py
+│   ├── 7-states_list.py
+│   ├── 8-cities_by_states.py
+│   ├── 9-states.py
+│   ├── README.md
+│   ├── __init__.py
+│   ├── static
+│   │   ├── images
+│   │   │   ├── icon.png
+│   │   │   └── logo.png
+│   │   └── styles
+│   │       ├── 3-footer.css
+│   │       ├── 3-header.css
+│   │       ├── 4-common.css
+│   │       └── 6-filters.css
+│   └── templates
+│       ├── 10-hbnb_filters.html
+│       ├── 5-number.html
+│       ├── 6-number_odd_or_even.html
+│       ├── 7-states_list.html
+│       ├── 8-cities_by_states.html
+│       └── 9-states.html
+└── web_static
+    ├── 0-index.html
+    ├── 1-index.html
+    ├── 2-index.html
+    ├── 3-index.html
+    ├── 4-index.html
+    ├── 5-index.html
+    ├── 6-index.html
+    ├── 7-index.html
+    ├── 8-index.html
+    ├── README.md
+    ├── images
+    │   ├── icon.png
+    │   ├── icon_bath.png
+    │   ├── icon_bed.png
+    │   ├── icon_group.png
+    │   └── logo.png
+    └── styles
+        ├── 2-common.css
+        ├── 2-footer.css
+        ├── 2-header.css
+        ├── 3-common.css
+        ├── 3-footer.css
+        ├── 3-header.css
+        ├── 4-common.css
+        ├── 4-filters.css
+        ├── 5-filters.css
+        ├── 6-filters.css
+        ├── 7-places.css
+        └── 8-places.css
