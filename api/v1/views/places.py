@@ -121,7 +121,8 @@ def search_places(states, cities, amenities):
             amenity = storage.get(Amenity, amenity_id)
             if amenity:
                 places_to_return = {
-                    place for place in places_to_return if all(amen in place.amenities for amen in amenities)
+                    place for place in places_to_return if all(
+                        amen in place.amenities for amen in amenities)
                 }
             else:
                 abort(404)
