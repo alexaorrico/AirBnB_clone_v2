@@ -104,13 +104,12 @@ def places_search():
             for state_id in states:
                 state = storage.get("State", state_id)
                 if state:
-                    cities_ids = [city.to_dict() for city in state.cities]
+                    cities_ids = cities.extend(state.cities)
                     if cities_ids:
                         for city_id in cities_ids:
                             city = storage.get("City", city_id)
                             if city:
-                                places = [place.to_dict() for place
-                                          in city.places]
+                                places = places.extend(city.places)
         if cities:
             for city_id in cities:
                 city = storage.get("City", city_id)
