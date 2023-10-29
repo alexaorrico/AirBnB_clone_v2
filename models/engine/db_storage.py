@@ -78,15 +78,10 @@ class DBStorage:
     def get(self, cls, id):
         """Method to retrieve one object"""
         allObjs = self.all(cls)
-        for ky, vlue in allObjs.items():
-            if ky.split('.')[-1] == id:
-                return vlue
-        return None
+        return allObjs.get(cls.__name__ + '.' + id)
 
     def count(self, cls=None):
         """Count the number of objects in storage"""
         objsAll = self.all(cls)
-        count = 0
-        for eachObj in objsAll:
-            count += 1
+        count = len(objsAll)
         return count
