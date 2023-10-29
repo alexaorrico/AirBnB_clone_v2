@@ -9,6 +9,7 @@ from flasgger.utils import swag_from
 # Import swag_from decorator from Flasgger
 from flasgger import swag_from
 
+
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/amenity/all_amenities.yml')
 def get_amenities():
@@ -19,7 +20,9 @@ def get_amenities():
     list_amenities = [amenity.to_dict() for amenity in all_amenities]
     return jsonify(list_amenities)
 
-@app_views.route('/amenities/<amenity_id>/', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/amenities/<amenity_id>/', methods=['GET'],
+                 strict_slashes=False)
 @swag_from('documentation/amenity/get_amenity.yml')
 def get_amenity(amenity_id):
     """ Retrieves an amenity """
@@ -28,7 +31,9 @@ def get_amenity(amenity_id):
         abort(404)
     return jsonify(amenity.to_dict())
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
 @swag_from('documentation/amenity/delete_amenity.yml')
 def delete_amenity(amenity_id):
     """
@@ -40,6 +45,7 @@ def delete_amenity(amenity_id):
     storage.delete(amenity)
     storage.save()
     return make_response(jsonify({}), 200)
+
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 @swag_from('documentation/amenity/post_amenity.yml')
@@ -56,7 +62,9 @@ def post_amenity():
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 @swag_from('documentation/amenity/put_amenity.yml')
 def put_amenity(amenity_id):
     """
