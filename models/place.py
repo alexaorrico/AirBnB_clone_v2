@@ -48,16 +48,10 @@ class Place(BaseModel, Base):
         price_by_night = 0
         latitude = 0.0
         longitude = 0.0
-        # amenity_ids = []  # moved to __init__()
 
     def __init__(self, *args, **kwargs):
         """initializes Place"""
-    # amenity_ids forced to be an instance attribute since it is not necessarly
-    # +passed as a key word argument upon first instantiation like others which
-    # +would have made it an instance attribute. This way its present in
-    # +self.__dict__ and its state can be saved in filestorage mode. Its popped
-    # +in BaseModel.to_dict(mode=None) if mode is not file_save. But visible in
-    # +methods that call self.__dict__ directly like BaseModel.str().
+        # makes amenity_ids an instance attribute
         if models.storage_t != 'db':
             self.amenity_ids = []
         super().__init__(*args, **kwargs)

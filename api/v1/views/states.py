@@ -33,16 +33,16 @@ def states_get(state_id=None):
     if state_id is None:
         states_list = [obj.to_dict() for obj in storage.all(State).values()]
         return (jsonify(states_list))
-    obj = retrive_object(state_id)
-    return (jsonify(obj.to_dict()))
+    state = retrive_object(state_id)
+    return (jsonify(state.to_dict()))
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def states_delete(state_id):
     """Deletes a State resource if given id is found."""
-    obj = retrive_object(state_id)
-    storage.delete(obj)
+    state = retrive_object(state_id)
+    storage.delete(state)
     storage.save()
     return (jsonify({}))
 
@@ -59,11 +59,11 @@ def states_post():
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def states_put(state_id):
     """Updates a State resource of given id if request content is valid."""
-    obj = retrive_object(state_id)
+    state = retrive_object(state_id)
     req_json = validate_request_json(request)
     ignore = ['id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:
-            setattr(obj, key, value)
-    obj.save()
-    return (jsonify(obj.to_dict()))
+            setattr(state, key, value)
+    state.save()
+    return (jsonify(state.to_dict()))

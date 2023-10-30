@@ -26,8 +26,7 @@ def validate_request_json(request):
     return (req_json)
 
 
-@app_views.route('/amenities', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
 def amenities_get(amenity_id=None):
@@ -35,22 +34,21 @@ def amenities_get(amenity_id=None):
     if amenity_id is None:
         amenities = storage.all(Amenity).values()
         return (jsonify([amenity.to_dict() for amenity in amenities]))
-    obj = retrive_object(Amenity, amenity_id)
-    return (jsonify(obj.to_dict()))
+    amenity = retrive_object(Amenity, amenity_id)
+    return (jsonify(amenity.to_dict()))
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def amenities_delete(amenity_id):
     """Deletes an Amenity resource based on given id"""
-    obj = retrive_object(Amenity, amenity_id)
-    storage.delete(obj)
+    amenity = retrive_object(Amenity, amenity_id)
+    storage.delete(amenity)
     storage.save()
     return (jsonify({}))
 
 
-@app_views.route('/amenities', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def amenities_post():
     """Creates an Amenity resource if request content is valid."""
     req_json = validate_request_json(request)
@@ -63,11 +61,11 @@ def amenities_post():
                  strict_slashes=False)
 def amenities_put(amenity_id):
     """Updates an Amenity resource of given id if request content is valid."""
-    obj = retrive_object(Amenity, amenity_id)
+    amenity = retrive_object(Amenity, amenity_id)
     req_json = validate_request_json(request)
     ignore = ['id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:
-            setattr(obj, key, value)
-    obj.save()
-    return (jsonify(obj.to_dict()))
+            setattr(amenity, key, value)
+    amenity.save()
+    return (jsonify(amenity.to_dict()))
