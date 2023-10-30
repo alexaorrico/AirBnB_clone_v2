@@ -23,7 +23,7 @@ def endpoint():
     """It creates an endpoint"""
     stat = {}
     objs = {
-            "Amenity": "amenities", 
+            "Amenity": "amenities",
             "User": "users",
             "City": "cities",
             "Place": "places",
