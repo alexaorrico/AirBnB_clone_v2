@@ -4,6 +4,7 @@ Contains class BaseModel
 """
 
 from datetime import datetime
+from hashlib import md5
 import models
 from os import getenv
 import sqlalchemy
@@ -30,7 +31,7 @@ class BaseModel:
         """Initialization of the base model"""
         if kwargs:
             for key, value in kwargs.items():
-                if key != "__class__":
+                if key not in ["__class__", "password"]:
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
@@ -42,6 +43,8 @@ class BaseModel:
                 self.updated_at = datetime.utcnow()
             if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
+            if "password" in kwargs:
+                self.password = md5(kwargs['password'].encode()).hexdigest()
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
@@ -58,7 +61,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, mode=None):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -68,6 +71,9 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if mode != 'file_save':  # if not for saving to filestorage
+            new_dict.pop('password', None)
+            new_dict.pop('amenity_ids', None)
         return new_dict
 
     def delete(self):
