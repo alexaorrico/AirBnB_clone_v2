@@ -118,10 +118,9 @@ def places_search():
                 if city:
                     places.extend(city.places)
         if amenities:
-            for place in places:
-                place_amenities = list(map(lambda x: x.id, place.amenities))
-            if not all(elem in place_amenities for elem in amenities):
-                places.remove(place)
+            places = [place for place in places
+                      if all(amenity_id in place.amenities
+                             for amenity_id in amenities)]
 
     result = list(map(lambda x: x.to_dict(), places))
     return jsonify(result)
