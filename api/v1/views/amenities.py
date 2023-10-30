@@ -34,7 +34,7 @@ def amenity_by_id(amenity_id):
     """
     Retrieves an Amenity object by the amenity id
     """
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     else:
@@ -47,12 +47,11 @@ def delete_amenity(amenity_id):
     """
     Deletes an Amenity object by the amenity id
     """
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     else:
         storage.delete(amenity)
-        storage.save()
         return jsonify({}), 200
 
 
@@ -82,7 +81,7 @@ def update_amenity(amenity_id):
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
 
-    amenity = storage.get('Amenity', amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     amenity.name = request.get_json().get('name')

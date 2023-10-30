@@ -27,7 +27,7 @@ def reviews_by_place(place_id):
     using the place_id
     """
     if place_id is not None:
-        place = storage.get('Place', place_id)
+        place = storage.get(Place, place_id)
         if place is None:
             abort(404)
         reviewList = [review.to_dict() for review in place.reviews]
@@ -39,7 +39,7 @@ def review_by_id(review_id):
     """
     Retrieves a Review object by the review_id
     """
-    review = storage.get('Review', review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     else:
@@ -52,12 +52,11 @@ def delete_review(review_id):
     """
     Deletes a Review object by the review_id
     """
-    review = storage.get('Review', review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     else:
         storage.delete(review)
-        storage.save()
         return jsonify({}), 200
 
 
@@ -75,10 +74,10 @@ def create_review(place_id):
         return jsonify({"error": "Missing user_id"}), 400
     elif "text" not in request.get_json():
         return jsonify({"error": "Missing text"}), 400
-    elif storage.get('User', user_id) is None:
+    elif storage.get(User, user_id) is None:
         abort(404)
     else:
-        place = storage.get('Place', place_id)
+        place = storage.get(Place, place_id)
         if place is None:
             abort(404)
         new_review = Review()
@@ -97,7 +96,7 @@ def update_review(review_id):
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
 
-    review = storage.get('Review', review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     review.text = request.get_json().get('text')
