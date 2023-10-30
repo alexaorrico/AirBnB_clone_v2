@@ -3,11 +3,11 @@
 """
 create new view for City objects
 that handles all default RESTFul API actions
-    - retrive a city object by state id
-    - retrive a city object
-    - delete a city object
-    - create a new city object
-    - update a city object
+    - retrive a list of City object by state id
+    - retrive a City object
+    - delete a City object
+    - create a new City object
+    - update a City object
 """
 
 
@@ -80,7 +80,7 @@ def create_city(state_id):
         return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """
     update a city object
