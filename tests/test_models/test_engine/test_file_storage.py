@@ -3,7 +3,7 @@
 Contains the TestFileStorageDocs classes
 """
 
-from datetime import datetime
+# from datetime import datetime
 import inspect
 import models
 from models.engine import file_storage
@@ -15,7 +15,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
-import os
+# import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -141,7 +141,9 @@ class TestFileStorage(unittest.TestCase):
         storage = FileStorage()
         save = FileStorage._FileStorage__objects
         s1 = State(name="Ogun")
+        storage.new(s1)
         s2 = State(name="Lagos")
+        storage.new(s2)
         new_dict = storage.all(State)
         count = storage.count(State)
         self.assertEqual(len(new_dict), count)

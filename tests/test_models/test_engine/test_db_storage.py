@@ -78,6 +78,15 @@ class TestDbStorage(unittest.TestCase):
         self.assertEqual(result.id, s1.id)
         self.assertIsInstance(result, State)
 
+    def test_count(self):
+        """Test count returns the right number of objects"""
+        dict1 = models.storage.all()
+        count1 = models.storage.count()
+        self.assertEqual(len(dict1), count1)
+        dict2 = models.storage.all(State)
+        count2 = models.storage.count(State)
+        self.assertEqual(len(dict2), count2)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
