@@ -5,7 +5,8 @@ route for handling place and amenities linking
 from flask import jsonify, abort
 from os import getenv
 
-from api.v1.views import app_views, storage
+from api.v1.views import app_views
+from models import storage
 
 
 @app_views.route("/places/<place_id>/amenities",
