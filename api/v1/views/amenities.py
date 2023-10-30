@@ -12,7 +12,7 @@ def amenities():
     """route to return all amenities"""
     if request.method == "GET":
         amenities_dict = storage.all("Amenity")
-        amenities_list = [obj.to_json() for obj in amenities_dict.values()]
+        amenities_list = [obj.to_dict() for obj in amenities_dict.values()]
         return jsonify(amenities_list)
 
     if request.method == "POST":
@@ -24,7 +24,7 @@ def amenities():
 
         newAmenity = Amenity(**request_json)
         newAmenity.save()
-        return jsonify(newAmenity.to_json()), 201
+        return jsonify(newAmenity.to_dict()), 201
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET", "DELETE", "PUT"])
@@ -36,7 +36,7 @@ def amenity(amenity_id=None):
         abort(404, "Not found")
 
     if request.method == "GET":
-        return jsonify(amenity_obj.to_json())
+        return jsonify(amenity_obj.to_dict())
 
     if request.method == "DELETE":
         amenity_obj.delete()
@@ -48,4 +48,4 @@ def amenity(amenity_id=None):
         if request_json is None:
             abort(400, "Not a JSON")
         amenity_obj.bm_update(request_json)
-        return jsonify(amenity_obj.to_json()), 200
+        return jsonify(amenity_obj.to_dict()), 200
