@@ -31,10 +31,10 @@ def ToDeleteAmenity(place_id, amenity_id):
     if obj is None:
         abort(404)
 
-    if amenity_obj not in place.amenities:
+    if amenity_obj not in place_obj.amenities:
         abort(404)
 
-    place.amenities.remove(amenity_obj)
+    place_obj.amenities.remove(amenity_obj)
     storge.save()
 
     return jsonify({}), 200
@@ -53,10 +53,10 @@ def ToPostAmenity(place_id, amenity_id):
     if amenity_obj is None:
         abort(404)
 
-    if amenity_obj in place.amenities:
+    if amenity_obj in place_obj.amenities:
         return jsonify(amenity.to_dict()), 200
 
-    place.amenities.append(amenity_obj)
+    place_obj.amenities.append(amenity_obj)
     storage.save()
 
     return jsonify(amenity_obj.to_dict()), 201
