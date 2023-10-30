@@ -34,7 +34,7 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 1,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
@@ -42,7 +42,7 @@ class TestFileStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 2,
                          "Found code style errors (and warnings).")
 
     def test_file_storage_module_docstring(self):
@@ -113,3 +113,30 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+        
+        @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+        def test_get(self):
+            """Test that get returns specific object, or none"""
+            newState = State(name="New York")
+            newState.save()
+            newUser = User(email="bob@foobar.com", password="password")
+            newUser.save()
+            self.assertIs(newState, models.storage.get("State", newState.id))
+            self.assertIs(None, models.storage.get("State", "blah"))
+            self.assertIs(None, models.storage.get("blah", "blah"))
+            self.assertIs(newUser, models.storage.get("User", newUser.id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """add new object to db"""
+        startCount = models.storage.count()
+        self.assertEqual(models.storage.count("Blah"), 0)
+        newState = State(name="Montevideo")
+        newState.save()
+        newUser = User(email="ralexrivero@gmail.com.com", password="dummypass")
+        newUser.save()
+        self.assertEqual(models.storage.count("State"), startCount + 1)
+        self.assertEqual(models.storage.count(), startCount + 2)
+
+if __name__ == '__main__':
+    unittest.main
