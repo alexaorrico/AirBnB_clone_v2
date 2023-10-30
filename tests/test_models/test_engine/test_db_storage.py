@@ -126,3 +126,12 @@ class TestAddedMethods(unittest.TestCase):
     def testHasCount(self):
         """Test if count function exists"""
         self.assertTrue(hasattr(DBStorage, 'count'))
+
+    def testNoClassCount(self):
+        """Passing no class"""
+        from models import storage
+        from os import environ
+
+        environ['HBNB_TYPE_STORAGE'] = 'db'
+        noClsCount = storage.count()
+        self.assertTrue(noClsCount > 0)
