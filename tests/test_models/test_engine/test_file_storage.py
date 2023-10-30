@@ -138,7 +138,7 @@ class TestAddedMethods(unittest.TestCase):
         self.assertIsNot(FileStorage.get.__doc__, None,
                          "get needs a docstring")
 
-    # def test_count_docstring(self):
-    #     """Test for the db_storage.py module docstring"""
-    #     self.assertIsNot(FileStorage.count.__doc__, None,
-    #                         "count needs a docstring")
+    def test_count_docstring(self):
+        """Test for the db_storage.py module docstring"""
+        self.assertIsNot(FileStorage.count.__doc__, None,
+                         "count needs a docstring")
