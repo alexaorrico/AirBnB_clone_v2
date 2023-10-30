@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""amenities al7bin"""
 from flask import abort, make_response, request
 from api.v1.views import app_views
 from models import storage
