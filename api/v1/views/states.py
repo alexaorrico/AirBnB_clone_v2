@@ -11,8 +11,7 @@ from models import storage
 def list_states():
     """retrieves list of all State"""
     states = [state.to_dict() for state in storage.all(State).values()]
-    print(states)
-    return jsonify(states)
+    return (states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
