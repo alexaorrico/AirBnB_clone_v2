@@ -1,0 +1,64 @@
+flasgger endpoint for GET, POST request for reviews data
+GET: returns all reviews by place_id
+POST: creates a new review in the place with attribute {place_id}
+---
+paths:
+  '/places/{place_id}/reviews':
+tags:
+  - GET POST /places/{place_id}/reviews
+get:
+post:
+parameters:
+  - name: place_id
+    in: path
+    data: string
+    required: true
+    schema:
+      properties:
+        name:
+          type: string
+          description: place_id attribute of the review to create
+  - name: name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: text attribute of the review to create
+  - name: user_id
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: user_id attribute of the review to create
+responses:
+  200:
+    description: objectss attributes names and values in JSON
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        place_id:
+          type: string
+          description: required attribute of the object
+        text:
+          type: string
+          description: required attribute of the object
+        user_id:
+          type: string
+          description: required attribute of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated

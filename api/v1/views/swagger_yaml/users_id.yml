@@ -1,0 +1,65 @@
+flasgger endpoint for GET, DELETE, PUT request for users data
+GET: returns all users data
+DELETE: deletes a user
+PUT: retrieves a user
+---
+paths:
+  '/users/{user_id}':
+get:
+delete:
+put:
+tags:
+  - GET, DELETE, PUT /users/{user_id}
+parameters:
+  - name: user_id
+    in: path
+    data: string
+    required: true
+    description: the unique user id of user to update
+  - name: password
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: password attribute of the user to update
+  - name: first_name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: first name attribute of the user to update
+  - name: last_name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: last name attribute of the user to update
+responses:
+  200:
+    description: objects's attributes names and values in JSON
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        email:
+          type: string
+          description: email attribute of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated
