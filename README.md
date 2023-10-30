@@ -2,7 +2,7 @@
 
 In this project, we use `restful API` and python `flask` for our AirBnB_clone version 3 project
 
-### Concepts used and learnt in this project
+## Concepts used and learnt in this project
 
 - [x] Rest API
 - [x] Flask
