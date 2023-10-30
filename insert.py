@@ -24,6 +24,8 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Generate random data and insert into tables
+
+
 def create_fake_users(num_users):
     for _ in range(num_users):
         user = User(
@@ -36,6 +38,7 @@ def create_fake_users(num_users):
         session.add(user)
     session.commit()
 
+
 def create_fake_states(num_states):
     for _ in range(num_states):
         state = State(
@@ -43,6 +46,7 @@ def create_fake_states(num_states):
         )
         session.add(state)
     session.commit()
+
 
 def create_fake_cities(num_cities, states):
     for _ in range(num_cities):
@@ -53,6 +57,7 @@ def create_fake_cities(num_cities, states):
         session.add(city)
     session.commit()
 
+
 def create_fake_amenities(num_amenities):
     for _ in range(num_amenities):
         amenity = Amenity(
@@ -60,6 +65,7 @@ def create_fake_amenities(num_amenities):
         )
         session.add(amenity)
     session.commit()
+
 
 def create_fake_places(num_places, cities, users):
     for _ in range(num_places):
@@ -78,6 +84,7 @@ def create_fake_places(num_places, cities, users):
         session.add(place)
     session.commit()
 
+
 def create_fake_reviews(num_reviews, places, users):
     for _ in range(num_reviews):
         review = Review(
@@ -87,6 +94,7 @@ def create_fake_reviews(num_reviews, places, users):
         )
         session.add(review)
     session.commit()
+
 
 if __name__ == "__main__":
     # Define the number of fake records you want to generate
