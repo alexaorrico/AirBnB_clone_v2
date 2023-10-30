@@ -48,12 +48,14 @@ def city(city_id=None):
 
     if request.method == "DELETE":
         city_obj.delete()
+        storage.save()
         del city_obj
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
         city_obj.bm_update(request_json)
-        return jsonify(city_obj.to_dict()), 200
+        storage.save()
+        return make_response(jsonify(city_obj.to_dict()), 200)
