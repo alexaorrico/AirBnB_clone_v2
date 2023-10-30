@@ -18,7 +18,7 @@ def reviews(place_id=None):
         abort(404, 'Not found')
 
     if request.method == "GET":
-        reviews_dict = storage.all("Review")
+        reviews_dict = storage.all(Review)
         reviews_list = [obj.to_dict()
                         for obj in reviews_dict.values()
                         if obj.place_id == place_id
@@ -45,7 +45,7 @@ def reviews(place_id=None):
 @app_views.route("/reviews/<review_id>", methods=["GET", "DELETE", "PUT"])
 def review(review_id=None):
     """Get, update or delete review with review id"""
-    review_obj = storage.get("Review", review_id)
+    review_obj = storage.get(Review, review_id)
 
     if review_obj is None:
         abort(404, "Not found")

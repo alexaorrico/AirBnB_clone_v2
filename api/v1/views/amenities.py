@@ -11,7 +11,7 @@ from models.amenity import Amenity
 def amenities():
     """route to return all amenities"""
     if request.method == "GET":
-        amenities_dict = storage.all("Amenity")
+        amenities_dict = storage.all(Amenity)
         amenities_list = [obj.to_dict() for obj in amenities_dict.values()]
         return jsonify(amenities_list)
 
@@ -30,7 +30,7 @@ def amenities():
 @app_views.route("/amenities/<amenity_id>", methods=["GET", "DELETE", "PUT"])
 def amenity(amenity_id=None):
     """Get, update or delete state with amenity id"""
-    amenity_obj = storage.get("Amenity", amenity_id)
+    amenity_obj = storage.get(Amenity, amenity_id)
 
     if amenity_obj is None:
         abort(404, "Not found")

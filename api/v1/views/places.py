@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from flask import request, jsonify, abort, make_response
 from models import storage
 from models.place import Place
+from models.city import City
 from os import environ
 STOR_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
@@ -13,7 +14,7 @@ STOR_TYPE = environ.get('HBNB_TYPE_STORAGE')
 def places(city_id=None):
     """route to return all cities"""
 
-    city_obj = storage.get("City", city_id)
+    city_obj = storage.get(City, city_id)
     if city_obj is None:
         abort(404, 'Not found')
 

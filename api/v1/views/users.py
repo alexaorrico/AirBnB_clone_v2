@@ -11,7 +11,7 @@ from models.user import User
 def users():
     """route to return all users"""
     if request.method == "GET":
-        users_dict = storage.all("User")
+        users_dict = storage.all(User)
         users_list = [obj.to_dict() for obj in users_dict.values()]
         return jsonify(users_list)
 
@@ -30,7 +30,7 @@ def users():
 @app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"])
 def user(user_id=None):
     """Get, update or delete state with state id"""
-    user_obj = storage.get("User", user_id)
+    user_obj = storage.get(User, user_id)
 
     if user_obj is None:
         abort(404, "Not found")

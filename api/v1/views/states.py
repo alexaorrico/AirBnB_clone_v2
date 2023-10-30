@@ -11,7 +11,7 @@ from models.state import State
 def states():
     """route to return all states"""
     if request.method == "GET":
-        states_dict = storage.all("State")
+        states_dict = storage.all(State)
         states_list = [obj.to_dict() for obj in states_dict.values()]
         return jsonify(states_list)
 
@@ -30,7 +30,7 @@ def states():
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
 def state(state_id=None):
     """Get, update or delete state with state id"""
-    state_obj = storage.get("State", state_id)
+    state_obj = storage.get(State, state_id)
 
     if state_obj is None:
         abort(404, "Not found")
