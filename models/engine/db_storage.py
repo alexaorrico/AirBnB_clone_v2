@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""It contains the class DBStorage"""
+"""
+Contains the class DBStorage
+"""
 
 import models
 from models.amenity import Amenity
@@ -19,12 +21,12 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """It interaacts with the MySQL database"""
+    """interaacts with the MySQL database"""
     __engine = None
     __session = None
 
     def __init__(self):
-        """It instantiates a DBStorage object"""
+        """Instantiate a DBStorage object"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
@@ -39,7 +41,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """A query on the current database session"""
+        """query on the current database session"""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -50,46 +52,55 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """It adds the object to the current database session"""
+        """add the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """It commits all changes of the current database session"""
+        """commit all changes of the current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """It deletes from the current database session obj if not None"""
+        """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """It reloads data from the database"""
+        """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
 
     def close(self):
-        """It calls remove() method on the private session attribute"""
+        """call remove() method on the private session attribute"""
         self.__session.remove()
 
     def get(self, cls, id):
-        """It returns the object based on the class name and its ID."""
+        """
+        Returns the object based on the class name and its ID, or
+        None if not found
+        """
         if cls not in classes.values():
             return None
-        dic = models.storage.all(cls)
-        for data in dic.values():
-            if (data.id == id):
-                return data
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
+        return None
 
     def count(self, cls=None):
-        """It counts the number of objects in dbstorage"""
-        dic = classes.values()
+        """
+        count the number of objects in storage
+        """
+        all_class = classes.values()
 
         if not cls:
             count = 0
-            for m in dic:
-                count += len(models.storage.all(m).values())
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
         else:
             count = len(models.storage.all(cls).values())
+
         return count
