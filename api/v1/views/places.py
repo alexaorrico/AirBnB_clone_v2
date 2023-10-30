@@ -116,7 +116,7 @@ def search_place():
     if "cities" in data:
         for city_id in data["cities"]:
             city = storage.get(City, city_id)
-            if city:
+            if city is not None:
                 for place in city.places:
                     p_list.append(place)
 
@@ -127,7 +127,7 @@ def search_place():
 
         bad_list = []
         for place in p_list:
-            for amenity_id in data["amenites"]:
+            for amenity_id in data["amenities"]:
                 amenity = storage.get(Amenity, amenity_id)
                 if amenity not in place.amenities:
                     bad_list.append(place)
