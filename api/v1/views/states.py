@@ -1,5 +1,26 @@
 #!/usr/bin/python3
-''' Define the states API views '''
+"""
+API State View Module
+
+Defines the API views for the state objects, providing RESTful
+endpoints to interact with state resources.
+
+Endpoints:
+- GET /api/v1/: Retrieves a list of all objects.
+- GET /api/v1/states/<state_id>: Retrieves an object by its ID.
+- DELETE /api/v1/states/<state_id>: Removes an object by its ID.
+- POST /api/v1/states: Creates a new object.
+- PUT /api/v1/states/<state_id>: Updates an object by its ID.
+
+Each endpoint performs specific actions on state resources and returns
+results in JSON format.
+
+HTTP status codes:
+- 200: OK: The request has been successfully processed.
+- 201: 201 Created: The new resource has been created.
+- 400: Bad Request: The server cannot process the request.
+- 404: Not Found: The requested resource could not be found on the server.
+"""
 from flask import jsonify, request, make_response, abort
 from api.v1.views import app_views
 from models import storage
