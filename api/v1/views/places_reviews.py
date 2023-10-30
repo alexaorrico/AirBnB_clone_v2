@@ -2,7 +2,7 @@
 """Module containing a Flask Blueprint routes that handles
 all default RESTFul API actions for Review resource"""
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, make_response, jsonify, request
 from markupsafe import escape
 from models import storage
 from models.place import Place
@@ -16,6 +16,20 @@ def retrive_object(cls, id):
     if obj is None:
         abort(404)
     return (obj)
+
+
+def validate_request_json(request):
+    """Checks validity of request's json content"""
+    if not request.is_json:
+        abort(make_response(jsonify(error="Not a JSON"), 400))
+    req_json = request.get_json()
+    if request.method == 'POST':
+        if 'user_id' not in req_json:
+            abort(make_response(jsonify(error="Missing user_id"), 400))
+        retrive_object(User, req_json['user_id'])
+        if 'text' not in req_json:
+            abort(make_response(jsonify(error="Missing text"), 400))
+    return (req_json)
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
@@ -51,14 +65,7 @@ def places_reviews_post(place_id):
     """Creates a Review resource for a Place of given id
     if request content is valid."""
     obj = retrive_object(Place, place_id)
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
-    if 'user_id' not in req_json:
-        return (jsonify({"error": "Missing user_id"}), 400)
-    retrive_object(User, req_json['user_id'])
-    if 'text' not in req_json:
-        return (jsonify({"error": "Missing text"}), 400)
+    req_json = validate_request_json(request)
     req_json['place_id'] = obj.id
     new_review = Review(**req_json)
     new_review.save()
@@ -70,9 +77,7 @@ def places_reviews_post(place_id):
 def reviews_put(review_id):
     """Updates a Review resource of given id if request content is valid."""
     obj = retrive_object(Review, review_id)
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
+    req_json = validate_request_json(request)
     ignore = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:

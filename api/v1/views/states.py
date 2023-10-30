@@ -2,7 +2,7 @@
 """Module containing a Flask Blueprint routes that handles
 all default RESTFul API actions for State resource"""
 from api.v1.views import app_views
-from flask import abort, jsonify, request, make_response
+from flask import abort, make_response, jsonify, request
 from markupsafe import escape
 from models import storage
 from models.state import State

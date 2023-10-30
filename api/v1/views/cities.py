@@ -2,7 +2,7 @@
 """Module containing a Flask Blueprint routes that handles
 all default RESTFul API actions for City resource"""
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, make_response, jsonify, request
 from markupsafe import escape
 from models import storage
 from models.city import City
@@ -15,6 +15,16 @@ def retrive_object(cls, id):
     if obj is None:
         abort(404)
     return (obj)
+
+
+def validate_request_json(request):
+    """Checks validity of request's json content"""
+    if not request.is_json:
+        abort(make_response(jsonify(error="Not a JSON"), 400))
+    req_json = request.get_json()
+    if request.method == 'POST' and 'name' not in req_json:
+        abort(make_response(jsonify(error="Missing name"), 400))
+    return (req_json)
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
@@ -50,11 +60,7 @@ def state_cities_post(state_id):
     """Creates a City resource in a State of given id
     if request content is valid."""
     obj = retrive_object(State, state_id)
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
-    if 'name' not in req_json:
-        return (jsonify({"error": "Missing name"}), 400)
+    req_json = validate_request_json(request)
     req_json['state_id'] = obj.id
     new_city = City(**req_json)
     new_city.save()
@@ -66,9 +72,7 @@ def state_cities_post(state_id):
 def cities_put(city_id):
     """Updates a City resource of given id if request content is valid."""
     obj = retrive_object(City, city_id)
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
+    req_json = validate_request_json(request)
     ignore = ['id', 'state_id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:

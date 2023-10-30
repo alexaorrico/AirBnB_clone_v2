@@ -2,7 +2,7 @@
 """Module containing a Flask Blueprint routes that handles
 all default RESTFul API actions for Amenity resource"""
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, make_response, jsonify, request
 from markupsafe import escape
 from models import storage
 from models.amenity import Amenity
@@ -14,6 +14,16 @@ def retrive_object(cls, id):
     if obj is None:
         abort(404)
     return (obj)
+
+
+def validate_request_json(request):
+    """Checks validity of request's json content"""
+    if not request.is_json:
+        abort(make_response(jsonify(error="Not a JSON"), 400))
+    req_json = request.get_json()
+    if request.method == 'POST' and 'name' not in req_json:
+        abort(make_response(jsonify(error="Missing name"), 400))
+    return (req_json)
 
 
 @app_views.route('/amenities', methods=['GET'],
@@ -43,11 +53,7 @@ def amenities_delete(amenity_id):
                  strict_slashes=False)
 def amenities_post():
     """Creates an Amenity resource if request content is valid."""
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
-    if 'name' not in req_json:
-        return (jsonify({"error": "Missing name"}), 400)
+    req_json = validate_request_json(request)
     new_amenity = Amenity(**req_json)
     new_amenity.save()
     return (jsonify(new_amenity.to_dict()), 201)
@@ -58,9 +64,7 @@ def amenities_post():
 def amenities_put(amenity_id):
     """Updates an Amenity resource of given id if request content is valid."""
     obj = retrive_object(Amenity, amenity_id)
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
+    req_json = validate_request_json(request)
     ignore = ['id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:
