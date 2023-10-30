@@ -16,7 +16,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class FileStorage:
-    """It serializes instances to a JSON file & deserializes back to instances"""
+    """serializes instances to a JSON file & deserializes back to instances"""
 
     # string - path to the JSON file
     __file_path = "file.json"
@@ -40,7 +40,7 @@ class FileStorage:
             self.__objects[key] = obj
 
     def save(self):
-        """It serializes __objects to the JSON file (path: __file_path)"""
+        """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
             json_objects[key] = self.__objects[key].to_dict()
@@ -65,21 +65,21 @@ class FileStorage:
                 del self.__objects[key]
 
     def close(self):
-        """It calls reload() method for deserializing the JSON file to objects"""
+        """Deserializing the JSON file to objects"""
         self.reload()
 
     def get(self, cls, id):
-        """It gets the number of object"""
-        if cls not in classes.values():
+        """Gets the number of object"""
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
             return None
 
-        dic = models.storage.all(cls)
-        for m in dic.values():
-            if (m.id == id):
-                return m
-
     def count(self, cls=None):
-        """It counts the number of objects in storage."""
+        """Counts the number of objects in storage."""
         dic = classes.values()
 
         if not cls:
