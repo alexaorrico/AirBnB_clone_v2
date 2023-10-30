@@ -114,6 +114,7 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+
 class TestDBStorage(unittest.TestCase):
     """Test the DBStorage class"""
 
@@ -142,4 +143,3 @@ class TestDBStorage(unittest.TestCase):
         newUser.save()
         self.assertEqual(models.storage.count("State"), startCount + 1)
         self.assertEqual(models.storage.count(), startCount + 2)
-
