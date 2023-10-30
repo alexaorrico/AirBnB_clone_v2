@@ -41,13 +41,13 @@ class FileStorage:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
-    def save(self, fsmode=200):
+    def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
             if key == "password":
                 json_objects[key].decode()
-            json_objects[key] = self.__objects[key].to_dict(fsmode=200)
+            json_objects[key] = self.__objects[key].to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -71,13 +71,19 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
-
+    
     def get(self, cls, id):
-        """retrieve one object"""
-        cls_objs = self.all(cls)
-        return cls_objs.get(cls.__name__ + '.' + id)
-
+        """Method to retrieve one object"""
+        allObjs = self.all(cls)
+        for ky, vlue in allObjs.items():
+            if ky.split('.')[-1] == id:
+                return vlue
+        return None
+    
     def count(self, cls=None):
-        """count the number of objects in storage"""
-        cls_objs = self.all(cls)
-        return len(cls_objs)
+        """Count the number of objects in storage"""
+        objsAll = self.all(cls)
+        count = 0
+        for eachObj in objsAll:
+            count += 1
+        return count
