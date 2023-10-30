@@ -108,3 +108,8 @@ class TestAddedMethods(unittest.TestCase):
         environ['HBNB_TYPE_STORAGE'] = 'db'
         allObjs = storage.count()
         self.assertTrue(allObjs > 0)
+
+    def test_db_storage_module_docstring(self):
+        """Test for the db_storage.py module docstring"""
+        self.assertIsNot(DBStorage.get.__doc__, None,
+                         "db_storage.py needs a docstring")
