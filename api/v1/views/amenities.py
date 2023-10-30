@@ -20,8 +20,8 @@ def all_amenity_by_id(amenity_id):
     """return json"""
     amenity = storage.get(Amenity, amenity_id)
     if amenity:
-        return jsonify(amenity.to_dict())
-    return jsonify(abort(404))
+        abort(404)
+    return jsonify(amenity.to_dict())
 
 
 @app_views.route("/amenity/<string:amenity_id>", methods=['DELETE'],
@@ -30,7 +30,7 @@ def del_amenity_by_id(amenity_id):
     """return json"""
     amenity = storage.get(Amenity, amenity_id)
     if Amenity is None:
-        return jsonify(abort(404))
+        abort(404)
     amenity.delete()
     storage.save()
     return make_response(jsonify({}), 200)
