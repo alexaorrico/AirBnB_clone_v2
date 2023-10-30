@@ -8,7 +8,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('places/<place_id>/amenities',
-                methods=['GET'], strict_slashes=False)
+                 methods=['GET'], strict_slashes=False)
 def getPlaceAmenity(place_id):
     """To GET place amenity using place_id"""
     place = storage.get(Place, place_id)
@@ -20,7 +20,7 @@ def getPlaceAmenity(place_id):
 
 
 @app_views.route('places/<place_id>/amenities/<amenity_id>',
-                methods=['DELETE'], strict_slashes=False)
+                 methods=['DELETE'], strict_slashes=False)
 def ToDeleteAmenity(place_id, amenity_id):
     """To delete amenity objects"""
     place_obj = storage.get(Place, place_id)
