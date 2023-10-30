@@ -7,7 +7,7 @@ from models.amenity import Amenity
 
 
 @app_views.route("/amenities", methods=['GET'], strict_slashes=False)
-def all_states():
+def all_amenity():
     """return json"""
     for amenity in storage.all(Amenity).values():
         all_amenity = [amenity.to_dict()]
