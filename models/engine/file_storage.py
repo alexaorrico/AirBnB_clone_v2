@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
 Contains the FileStorage class
 """
@@ -44,7 +45,9 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
+            if key == "password":
+                json_objects[key].decode()
+            json_objects[key] = self.__objects[key].to_dict(save_fs=1)
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
@@ -68,3 +71,15 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls=None, id=None):
+        """  Return object of specific id """
+        if not cls in classes.values() or \
+         not cls in classes.keys() or not cls or not id:
+            return None
+        key = f"{cls().__class__.__name__}.{id}"
+        return self.all(cls).get(key)
+
+    def count(self, cls=None):
+        """ Return total count of objs """
+        return len(self.all(cls))

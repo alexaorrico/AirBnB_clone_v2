@@ -32,11 +32,11 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
+        self.__engine = create_engine('mysql+pymysql://{}:{}@{}/{}'.
+                                      format("root",
+                                             "wordpass12345",
+                                             "localhost",
+                                             "hbnb_dev_db"))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -67,10 +67,24 @@ class DBStorage:
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session_factory)
         self.__session = Session
 
     def close(self):
         """call remove() method on the private session attribute"""
-        self.__session.remove()
+
+        
+    def get(self, cls=None, id=None):
+        """  Return object of specific id """
+        if not cls in classes.values() or \
+        not cls in classes.keys() or not cls or not id:
+          return None
+
+        key = f"{cls().__class__.__name__}.{id}"
+        return self.all(cls).get(key)
+
+    def count(self, cls=None):
+        """ Return total count of objs """
+        return len(self.all(cls))
+  
