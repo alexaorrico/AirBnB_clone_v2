@@ -57,13 +57,16 @@ def place(place_id=None):
     if request.method == "DELETE":
         place_obj.delete()
         storage.save()
-        del place_obj
         return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        place_obj.bm_update(request_json)
+        if request_json is None:
+            abort(400, "Not a JSON")
+        for k, v in request_json.items():
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(place_obj, k, v)
         storage.save()
         return make_response(jsonify(place_obj.to_dict()), 200)

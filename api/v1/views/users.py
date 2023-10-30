@@ -24,7 +24,7 @@ def users():
 
         newUser = User(**request_json)
         newUser.save()
-        return jsonify(newUser.to_dict()), 201
+        return make_response(jsonify(newUser.to_dict()), 201)
 
 
 @app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"])
@@ -41,13 +41,16 @@ def user(user_id=None):
     if request.method == "DELETE":
         user_obj.delete()
         storage.save()
-        del user_obj
-        return make_response(jsonify({}), 200)
+        return jsonify({})
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        user_obj.bm_update(request_json)
+        if request_json is None:
+            abort(400, "Not a JSON")
+        for k, v in request_json.items():
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(user_obj, k, v)
         storage.save()
-        return make_response(jsonify(user_obj.to_dict()), 200)
+        return jsonify(user_obj.to_dict())

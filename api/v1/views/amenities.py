@@ -24,7 +24,7 @@ def amenities():
 
         newAmenity = Amenity(**request_json)
         newAmenity.save()
-        return jsonify(newAmenity.to_dict()), 201
+        return make_response(jsonify(newAmenity.to_dict()), 201)
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["GET", "DELETE", "PUT"])
@@ -41,13 +41,14 @@ def amenity(amenity_id=None):
     if request.method == "DELETE":
         amenity_obj.delete()
         storage.save()
-        del amenity_obj
-        return make_response(jsonify({}), 200)
+        return jsonify({})
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        amenity_obj.bm_update(request_json)
+        for k, v in request_json.items():
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(amenity_obj, k, v)
         storage.save()
-        return make_response(jsonify(amenity_obj.to_dict()), 200)
+        return jsonify(amenity_obj.to_dict())

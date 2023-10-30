@@ -32,7 +32,7 @@ def cities(state_id=None):
         request_json["state_id"] = state_id
         newCity = City(**request_json)
         newCity.save()
-        return jsonify(newCity.to_dict()), 201
+        return make_response(jsonify(newCity.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
@@ -49,13 +49,16 @@ def city(city_id=None):
     if request.method == "DELETE":
         city_obj.delete()
         storage.save()
-        del city_obj
-        return make_response(jsonify({}), 200)
+        return jsonify({}), 200
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        city_obj.bm_update(request_json)
+        if request_json is None:
+            abort(400, "Not a JSON")
+        for k, v in request_json.items():
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(city_obj, k, v)
         storage.save()
         return make_response(jsonify(city_obj.to_dict()), 200)
