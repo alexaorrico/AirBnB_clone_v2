@@ -88,9 +88,9 @@ def updates_place(place_id):
     if data is None:
         abort(400, 'Not a JSON')
 
-	for k, v in data.items():
-		if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
-			setattr(place, k, v)
+    for k, v in data.items():
+        if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
+            setattr(place, k, v)
 
-	place_obj.save()
-	return jsonify(place_obj.to_dict()), 200
+    place_obj.save()
+    return jsonify(place_obj.to_dict()), 200
