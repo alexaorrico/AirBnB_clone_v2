@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 Contains the class DBStorage to store the data in sql
+update kiasi kuona kaa tutamerge
 """
 
 import models
