@@ -138,3 +138,13 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         num = storage.count()
         self.assertEqual(len(storage.all()), num)
+
+    def test_count_model(self):
+        """test a method count with arg"""
+        storage = FileStorage()
+        dic = {"name": "casa"}
+        state = State(**dic)
+        storage.new(state)
+        storage.save()
+        num = storage.count(State)
+        self.assertEqual(len(storage.all(State)), num)
