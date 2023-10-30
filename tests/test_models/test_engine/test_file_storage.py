@@ -116,4 +116,11 @@ class TestFileStorage(unittest.TestCase):
 
     def test_get(self):
         """Test that get properly retrieves objects from file.json"""
-       
+        storage = FileStorage()
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+        storage = FileStorage()
+        state_get = storage.get(State, state.id)
+        self.assertEqual(state_get.id, state.id)
+        self.assertEqual(state_get.name, state.name)
