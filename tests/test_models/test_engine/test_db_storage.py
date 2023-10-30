@@ -21,10 +21,8 @@ import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
-STOR_TYPE = environ.get("HBNB_TYPE_STORAGE")
 
-
-@unittest.skipIf(STOR_TYPE != "db", "Skip")
+@unittest.skipIf(models.storage_t != "db", "Skip")
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
@@ -102,7 +100,7 @@ class TestFileStorage(unittest.TestCase):
         storage.new(state)
         storage.save()
         newState = storage.get(State, state.id)
-        self.assertEquals(newState, state)
+        self.assertEqual(newState, state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
@@ -115,4 +113,4 @@ class TestFileStorage(unittest.TestCase):
         city = City(**value)
         storage.new(city)
         storage.save()
-        self.assertEquals(len(storage.all()), storage.count())
+        self.assertEqual(len(storage.all()), storage.count())
