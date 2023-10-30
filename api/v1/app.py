@@ -1,12 +1,17 @@
 #!/usr/bin/python3
 """It returns the status of your API"""
-
+import os
 from models import storage
 from api.v1.views import app_views
 from os import environ
+<<<<<<< HEAD
+from flask import Flask, render_template, make_response, jsonify, Response
+from flask_cors import CORS
+=======
 from flask import Flask, render_template, make_response, jsonify
 from flask_cors import CORS
 
+>>>>>>> 908576d76a73e0493fe7dcad9f02b3f5a8c8b25e
 app = Flask(__name__)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
