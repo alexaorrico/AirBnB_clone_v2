@@ -158,3 +158,11 @@ class TestAddedMethods(unittest.TestCase):
 
         noClsCt = storage.count()
         self.assertTrue(noClsCt > 0)
+
+    def testPassClass(self):
+        """Passing class"""
+        from models import storage
+        from os import environ
+
+        noClsCount = storage.count(State)
+        self.assertTrue(noClsCount > 0)
