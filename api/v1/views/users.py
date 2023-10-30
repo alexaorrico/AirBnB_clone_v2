@@ -4,6 +4,7 @@ from models.user import User
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+import hashlib
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -85,5 +86,7 @@ def put_user(user_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(user, key, value)
+        if key == "password":
+            setattr(user, key, hashlib.md5(value.encode()).hexdigest())
     storage.save()
     return make_response(jsonify(user.to_dict()), 200)
