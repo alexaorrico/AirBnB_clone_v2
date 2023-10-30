@@ -12,7 +12,7 @@ from models.city import City
 def all_city_by_id(state_id):
     """return json"""
     city_list = []
-    state = storage.get(State, user_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     for city in state.cities:
@@ -20,7 +20,8 @@ def all_city_by_id(state_id):
     return jsonify(city_list)
 
 
-@app_views.route("/cities/<string:city_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/cities/<string:city_id>", methods=['GET'],
+                 strict_slashes=False)
 def all_city(city_id):
     """return json"""
     city = storage.get(City, city_id)
@@ -41,7 +42,8 @@ def del_city_by_id(city_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/states/<string:state_id>/cities", methods=['POST'], strict_slashes=False)
+@app_views.route("/states/<string:state_id>/cities", methods=['POST'],
+                 strict_slashes=False)
 def post_city(state_id):
     """return json"""
     state = storage.get(State, state_id)
