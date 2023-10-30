@@ -107,6 +107,7 @@ def search_places(states, cities, amenities):
             state = storage.get(State, state_id)
             if state:
                 cities.extend([city.id for city in state.cities])
+                places_to_return.update(state.cities)
             else:
                 abort(404)
     if cities:
