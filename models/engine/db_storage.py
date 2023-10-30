@@ -88,6 +88,5 @@ class DBStorage:
             objs = self.all(cls)
             return len(objs)
         else:
-            all_objs = {k: v for cls in classes for k, v in
-                        self.__session.query(cls).all()}
+            all_objs = {k: v for cls in classes for k, v in self.__session.query(cls).all()}
             return len(all_objs)
