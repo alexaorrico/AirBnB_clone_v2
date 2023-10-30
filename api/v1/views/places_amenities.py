@@ -11,7 +11,7 @@ from os import getenv
 
 
 def retrive_object(cls, id):
-    """Retrives a resource based on given class and id."""
+    """Retrive a resource based on given class and id."""
     obj = storage.get(cls, escape(id))
     if obj is None:
         abort(404)
