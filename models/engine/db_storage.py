@@ -87,7 +87,6 @@ class DBStorage:
         for value in all_cls.values():
             if (value.id == id):
                 return value
-
         return None
 
     def count(self, cls=None):
@@ -102,5 +101,4 @@ class DBStorage:
                 count += len(models.storage.all(clas).values())
         else:
             count = len(models.storage.all(cls).values())
-
         return count
