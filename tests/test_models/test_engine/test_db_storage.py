@@ -18,7 +18,9 @@ import json
 import os
 import pep8
 import unittest
+
 DBStorage = db_storage.DBStorage
+STORAGE_TYPE = os.getenv("HBNB_TYPE_STORAGE")
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -70,19 +72,56 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
+        storage = DBStorage()
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        storage = DBStorage()
+        storage.reload()
+        self.assertIsNotNone(storage.all())
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        storage = DBStorage()
+        storage.reload()
+        state = State(name='California')
+        storage.new(state)
+        self.assertIn(state, storage.all(State).values())
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        storage = DBStorage()
+        storage.reload()
+        state = State(name='Nevada')
+        storage.new(state)
+        storage.save()
+        self.assertIn(state, storage.all(State).values())
+
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get method"""
+        storage = DBStorage()
+        storage.reload()
+        state = State(name='Oregon')
+        storage.new(state)
+        storage.save()
+        fetched = storage.get(State, state.id)
+        self.assertEqual(fetched.id, state.id)
+
+    @unittest.skipIf(STORAGE_TYPE != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count method"""
+        storage = DBStorage()
+        storage.reload()
+        initial_count = storage.count(State)
+        state = State(name='Washington')
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.count(State), initial_count + 1)
