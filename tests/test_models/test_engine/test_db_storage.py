@@ -243,7 +243,7 @@ class TestDBStorage(unittest.TestCase):
         dbc.close()
 
     def test_count(self):
-        """Testing count method"""
+        """Testing count method """
         initial_count = len(storage.all())
         initial_user_count = len(storage.all(User))
         method_count = storage.count()
