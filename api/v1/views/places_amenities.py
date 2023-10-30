@@ -1,13 +1,8 @@
-#!/usr/bin/python3
-"""handles all default RESTful API actions for places and amenity objects"""
-from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, request, abort
 from models import storage
-from models.city import City
 from models.place import Place
 from models.amenity import Amenity
-from models.user import User
-from os import getenv
+from api.v1.views import app_views
 
 
 @app_views.route(
@@ -17,14 +12,15 @@ def get_amenities_objs(place_id):
     '''Retrieves the list of all Amenity objects of a Place'''
     place = storage.get(Place, place_id)
     if place is None:
-        abort(404)
-    if getenv("HBNB_TYPE_STORAGE") == "db":
+        return jsonify(error="Not found"), 404
+
+    if storage.__class__.__name__ == 'DBStorage':
         place_amenities = [amenity.to_dict() for amenity in place.amenities]
     else:
-        place_amenities = place.amenity_ids
-    res = jsonify(place_amenities)
-    res.status_code = 200
-    return res
+        place_amenities = [storage.get(
+            Amenity, amenity_id).to_dict() for amenity_id in place.amenity_ids]
+
+    return jsonify(place_amenities)
 
 
 @app_views.route(
@@ -32,71 +28,48 @@ def get_amenities_objs(place_id):
     methods=['DELETE'], strict_slashes=False
 )
 def delete_amenity_from_place(place_id, amenity_id):
-    '''Deletes a Amenity object from a Place'''
-    linked = False
-    place_obj = storage.get(Place, place_id)
-    amenity_obj = storage.get(Amenity, amenity_id)
-    if place_obj is None or amenity_obj is None:
-        abort(404)
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-        amenities = place_obj.amenities
-        for amenity in amenities:
-            if amenity.id == amenity_id:
-                place_obj.amenities.remove(amenity)
-                linked = True
-                break
+    '''Deletes an Amenity object from a Place'''
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
+
+    if place is None or amenity is None:
+        return jsonify(error="Not found"), 404
+
+    if storage.__class__.__name__ == 'DBStorage':
+        if amenity in place.amenities:
+            place.amenities.remove(amenity)
+        else:
+            return jsonify(error="Not found"), 404
     else:
-        amenities = place_obj.amenity_ids
-        for amenity in amenities:
-            if amenity == amenity_id:
-                place_obj.amenity_ids.remove(amenity)
-                linked = True
-                break
-    place_obj.save()
-    if not linked:
-        abort(404)
-    res = jsonify({})
-    res.status_code = 200
-    return res
+        if amenity_id in place.amenity_ids:
+            place.amenity_ids.remove(amenity_id)
+        else:
+            return jsonify(error="Not found"), 404
+
+    storage.save()
+    return jsonify({})
 
 
 @app_views.route(
-    '/places/<place_id>/amenities/link', methods=['POST'], strict_slashes=False
+    '/places/<place_id>/amenities/<amenity_id>',
+    methods=['POST'], strict_slashes=False
 )
 def link_amenity_to_place(place_id, amenity_id):
     '''Link an Amenity object to a Place'''
-    linked = None
-    place_obj = storage.get(Place, place_id)
-    amenity_obj = storage.get(Amenity, amenity_id)
-    if place_obj is None or amenity_obj is None:
-        abort(404)
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
 
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-        for amenity in place_obj.amenities:
-            if amenity.id == amenity_id:
-                linked = amenity
-                break
-    else:
-        for amenity in place_obj.amenity_ids:
-            if amenity == amenity_id:
-                linked = amenity_obj
-                break
+    if place is None or amenity is None:
+        return jsonify(error="Not found"), 404
 
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-        if linked is not None:
-            return jsonify(linked), 200
-        else:
-            place_obj.amenities.append(amenity_obj)
-            place_obj.save()
-            res = jsonify(amenity_obj)
-            res.status_code = 201
-            return res
+    if storage.__class__.__name__ == 'DBStorage':
+        if amenity in place.amenities:
+            return jsonify(amenity.to_dict()), 200
+        place.amenities.append(amenity)
     else:
-        if linked is not None:
-            return jsonify(linked)
-        else:
-            place_obj.amenity_ids.append(amenity_id)
-            place_obj.save()
-            res = jsonify(amenity_obj)
-            res.status_code = 201
-            return res
+        if amenity_id in place.amenity_ids:
+            return jsonify(amenity.to_dict()), 200
+        place.amenity_ids.append(amenity_id)
+
+    storage.save()
+    return jsonify(amenity.to_dict()), 201
