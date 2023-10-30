@@ -6,9 +6,9 @@ from flask import jsonify
 from flask import abort
 from flask import request
 from models import storage
-from models.state import State
 from models.city import City
 from models.user import User
+from models.state import State
 from models.place import Place
 from models.amenity import Amenity
 
