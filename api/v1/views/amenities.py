@@ -19,7 +19,7 @@ def all_amenity():
 def all_amenity_by_id(amenity_id):
     """return json"""
     amenity = storage.get(Amenity, amenity_id)
-    if amenity:
+    if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
 
@@ -57,7 +57,7 @@ def put_amenity_by_id(amenity_id):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
-        return jsonify(abort(404))
+        abort(404)
     for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, key, value)
