@@ -6,6 +6,7 @@ from flask import jsonify
 from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
+from models import storage
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -23,6 +24,7 @@ def teardown(error):
 def page_not_found(error):
     """This is a custom 404 error"""
     return jsonify({'error': 'Not found'}), 404
+
 
 if __name__ == '__main__':
     app.run(host=getenv('HBNB_API_HOST'),
