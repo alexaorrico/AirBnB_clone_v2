@@ -6,6 +6,8 @@ from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.state import State
+from models.amenity import Amenity
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
@@ -57,8 +59,7 @@ def create_place(city_id):
         abort(404)
     if 'name' not in data:
         abort(400, 'Missing name')
-    place = Place(**{key: value for key, value in data.items()
-                  if key not in ['id', 'created_at', 'updated_at']})
+    place = Place(**data)
     place.city_id = city_id
     place.save()
     return jsonify(place.to_dict()), 201
