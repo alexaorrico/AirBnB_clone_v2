@@ -69,9 +69,7 @@ def create_place(city_id):
     new_place = Place(**data)
     storage.new(new_place)
     storage.save()
-    res = jsonify(new_place.to_dict())
-    res.status_code = 201
-    return res
+    return jsonify(new_place.to_dict()), 201
 
 
 @app_views.route(
