@@ -11,6 +11,7 @@ from models.base_model import BaseModel
 import pep8
 import unittest
 Amenity = amenity.Amenity
+from os import getenv
 
 
 class TestAmenityDocs(unittest.TestCase):
@@ -71,7 +72,7 @@ class TestAmenity(unittest.TestCase):
         """Test that Amenity has attribute name, and it's as an empty string"""
         amenity = Amenity()
         self.assertTrue(hasattr(amenity, "name"))
-        if models.storage_t == 'db':
+        if getenv('HBNB_TYPE_STORAGE', 'file') == 'db':
             self.assertEqual(amenity.name, None)
         else:
             self.assertEqual(amenity.name, "")
