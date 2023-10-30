@@ -5,14 +5,14 @@ from api.v1.views import app_views
 from flask import request, jsonify
 from models import storage
 
-@app_views.route("/status", method=["GET"])
+@app_views.route("/status", methods=["GET"])
 def status():
     """request status route"""
     if request.method == "GET":
         return jsonify({"status": "OK"})
 
 
-app_views.route("/stats", method=["GET"])
+app_views.route("/stats", methods=["GET"])
 def stats():
     """an endpoint that retrieves the number of each objects by type:"""
     if request.method == "GET":

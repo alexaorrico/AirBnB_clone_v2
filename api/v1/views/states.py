@@ -6,7 +6,7 @@ from flask import request, jsonify, abort, make_response
 from models import storage
 from models.state import State
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route("/states", methods=['GET', 'POST'])
 def states():
     """route to return all states"""
     if request.method == "GET":
