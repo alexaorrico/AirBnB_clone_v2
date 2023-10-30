@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 """
+Initialization...
 create variable app_views - instance of Blueprint
 """
 
@@ -11,7 +12,6 @@ from flask import Blueprint
 app_views = Blueprint('app_views', __name__, url_prefix="/api/v1")
 
 
-from models.city import City
-
-
 from api.v1.views.index import *
+from api.v1.views.city import *
+from api.v1.views.amenity import *
