@@ -123,6 +123,6 @@ class TestAddedMethods(unittest.TestCase):
         """Test if get function exists"""
         self.assertTrue(hasattr(DBStorage, 'get'))
 
-    # def testHasCount(self):
-    #     """Test if count function exists"""
-    #     self.assertTrue(hasattr(DBStorage, 'count'))
+    def testHasCount(self):
+        """Test if count function exists"""
+        self.assertTrue(hasattr(DBStorage, 'count'))
