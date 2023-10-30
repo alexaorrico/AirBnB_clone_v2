@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """amenity module"""
 from api.v1.views import app_views
-from flask import jsonify, Flask, abort, request
+from flask import jsonify, Flask, abort, request, make_response
 from models import storage
 from models.amenity import Amenity
 
@@ -33,7 +33,7 @@ def del_amenity_by_id(amenity_id):
         return jsonify(abort(404))
     amenity.delete()
     storage.save()
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route("/amenity", methods=['POST'], strict_slashes=False)
