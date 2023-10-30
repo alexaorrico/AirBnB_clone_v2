@@ -1,11 +1,7 @@
 #!/usr/bin/python3
 """This will return the status code"""
-<<<<<<< HEAD
 from flask import Flask
 from flask import jsonify, make_response
-=======
-from flask import Flask, jsonify, make_response
->>>>>>> bebbe178e43556701afe74e0cf5eba07ec6eaa36
 from models import storage
 from api.v1.views import app_views
 import os
