@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Return the status of your API"""
+"""It returns the status of your API"""
+
 from models import storage
 from api.v1.views import app_views
 from os import environ
@@ -12,13 +13,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(error):
-    """Close the storage on teardown"""
+    """It closes the storage on teardown"""
     storage.close()
 
 
 @app.errorhandler(404)
 def ops_404(error):
-    """Create a handler for 404 errors"""
+    """It creates a handler for 404 errors"""
     return jsonify({'error': 'Not found'}), 404
 
 

@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Create a new view for Review object"""
+"""It creates a new view for Review object"""
+
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.place import Place
@@ -11,7 +12,7 @@ from api.v1.views import app_views
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def get_reviews(place_id):
-    """Retrieves the list of all Review objects of a Place."""
+    """It retrieves the list of all Review objects of a Place."""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -22,7 +23,7 @@ def get_reviews(place_id):
 @app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
-    """Retrieves a Review object by ID."""
+    """It retrieves a Review object by ID."""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -32,7 +33,7 @@ def get_review(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
-    """Deletes a Review object by ID."""
+    """it deletes a Review object by ID."""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -44,7 +45,7 @@ def delete_review(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def create_review(place_id):
-    """Creates a new Review for a Place."""
+    """It creates a new Review for a Place."""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -71,7 +72,7 @@ def create_review(place_id):
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_review(review_id):
-    """Updates a Review object by ID."""
+    """It updates a Review object by ID."""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)

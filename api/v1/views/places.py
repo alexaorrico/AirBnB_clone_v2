@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Create a new view for Place objects"""
+"""It creates a new view for Place objects"""
+
 from models.place import Place
 from models.city import City
 from models import storage
@@ -10,7 +11,7 @@ from flask import Flask, abort, jsonify, request
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places(city_id):
-    """Retrieves the list of all Place objects of a City"""
+    """It retrieves the list of all Place objects of a City"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -21,7 +22,7 @@ def get_places(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id):
-    """Retrieves a Place object"""
+    """It retrieves a Place object"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -31,7 +32,7 @@ def get_place(place_id):
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(places, place_id):
-    """Deletes a Place Object"""
+    """It deletes a Place Object"""
     places = storage.get(Place, place_id)
     if not places:
         abort(404)
@@ -44,7 +45,7 @@ def delete_place(places, place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
-    """Creates a Place"""
+    """It creates a Place"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -55,7 +56,7 @@ def create_place(city_id):
         abort(400, 'Missing user_id')
 
     data = request.get_json()
-    user = storage.get(User, data['user_id'])
+    user = storage.get(user, data['user_id'])
     if not user:
         abort(404)
     if 'name' not in request.get_json():
@@ -69,7 +70,7 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    """Updates a Place"""
+    """It updates a Place"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
