@@ -8,5 +8,7 @@ from api.v1.views.index import *
 from models import storage
 from models.state import State
 from models.city import City
+from models.amenity import Amenity
 from api.v1.views.states import *
 from api.v1.views.cities import *
+from api.v1.views.amenities import *
