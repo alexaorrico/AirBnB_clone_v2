@@ -1,22 +1,18 @@
 #!/usr/bin/python3
 """It creates a new view for Review object"""
 
-import os
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.place import Place
 from models.user import User
-from models.amenity import Amenity
 from models.review import Review
 from api.v1.views import app_views
-from datetime import datetime
-import uuid
-from os import getenv
+
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def get_reviews(place_id):
-    """It retrieves the list of all Review objects of a Place."""
+    """retrieves the list of all Review objects of a Place."""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -27,7 +23,7 @@ def get_reviews(place_id):
 @app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
-    """It retrieves a Review object by ID."""
+    """retrieves a Review object by ID."""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -37,7 +33,7 @@ def get_review(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
-    """it deletes a Review object by ID."""
+    """deletes a Review object by ID."""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -49,7 +45,7 @@ def delete_review(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
 def create_review(place_id):
-    """It creates a new Review for a Place."""
+    """creates a new Review for a Place."""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -76,7 +72,7 @@ def create_review(place_id):
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_review(review_id):
-    """It updates a Review object by ID."""
+    """updates a Review object by ID."""
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
