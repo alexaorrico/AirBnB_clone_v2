@@ -116,32 +116,34 @@ def places_search():
             if len(data["states"]) != 0:
                 states = storage.all(State)
                 cities = storage.all(City)
-                for state in states.values():
+                for state in data["states"]:
                     for place in places.values():
                         for city in cities.values():
-                            if city.state_id == state.id:
+                            if city.state_id == state:
                                 if place.city_id == city.id:
                                     places_list.append(place)
         if "cities" in data:
             if len(data["cities"]) != 0:
                 cities = storage.all(City)
-                for city in cities.values():
+                for city in data["cities"]:
                     for place in places.values():
-                        if place.city_id == city.id:
-                            if city.id not in places_list:
+                        if place.city_id == city:
+                            if place not in places_list:
                                 places_list.append(place)
         if "amenities" in data:
             if len(data["amenities"]) != 0:
                 if len(places_list) == 0:
                     amenities = storage.all(Amenity)
-                    for amenity in amenities.values():
+                    for amenity in data["amenities"]:
                         for place in places.values():
-                            if amenity not in place.amenities:
+                            val = storage.get(Amenity, amenity)
+                            if val not in place.amenities:
                                 places_list.append(place)
                 else:
-                    for amenity in amenities.values():
+                    for amenity in data["amenities"]:
                         for place in places_list:
-                            if amenity not in place.amenities:
+                            val = storage.get(Amenity, amenity)
+                            if val not in place.amenities:
                                 places_list.remove(place)
         if len(places_list) == 0:
             for place in places.values():
