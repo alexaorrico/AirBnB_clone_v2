@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ Handle state API"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
