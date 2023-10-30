@@ -113,3 +113,31 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorage_get_count(unittest.TestCase):
+    """Test the FileStorage class new methods get and count"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not tests of file storage")
+    def test_get(self):
+        """"Test for get method of filestorage"""
+        storage = FileStorage()
+        self.assertIs(storage.get(State, "192273"), None)
+        self.assertIs(storage.get("blah", "blah"), None)
+        state = State()
+        state.save()
+        self.assertIs(storage.get(State, state.id), state)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not tests of file storage")
+    def test_count(self):
+        """"Test for count method of filestorage"""
+        storage = FileStorage()
+        initial_len = len(storage.all())
+        self.assertEqual(storage.count(), initial_len)
+        state_len = len(storage.all(State))
+        self.assertEqual(storage.count(State), state_len)
+        state = State()
+        state.save()
+        self.assertEqual(storage.count(), initial_len + 1)
+        self.assertEqual(storage.count(State), state_len + 1)

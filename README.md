@@ -14,6 +14,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
+* [REST API with Flask](#rest-api-with-flask)
 * [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
@@ -150,12 +151,21 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+## REST API with Flask
+We've enhanced our Airbnb clone project by incorporating a RESTful API using Flask.
+- **Create (POST):** We can now add new data, such as new states, cities and places through POST requests.
+- **Read (GET):** Retrieve data, through GET requests.
+- **Update (PUT):** Modify existing data, making it possible to update data via PUT requests.
+- **Delete (DELETE):** Remove data from our database, which is done by sending DELETE requests.
+
 ## Bugs
 No known bugs at this time. 
 
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Adil El Bali - [Github](https://github.com/Elbadil) / [Twitter](https://twitter.com/Adil_ElBali)
+Safouane El Mail - [Github](https://github.com/Safuan04) / [Twitter](https://twitter.com/ElmailSafuan)
 
 Second part of Airbnb: Joann Vuong
 ## License
