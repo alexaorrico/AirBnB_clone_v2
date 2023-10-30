@@ -9,7 +9,7 @@ from models.state import State
 
 
 def retrive_object(state_id):
-    """Retrives a State resource based of id."""
+    """Retrive a State resource based of id."""
     obj = storage.get(State, escape(state_id))
     if obj is None:
         abort(404)
