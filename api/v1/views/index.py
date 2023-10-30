@@ -1,6 +1,5 @@
-from flask import Flask
+from flask import Flask, jsonify
 from api.v1.views import app_views
-from flask import jsonify
 
 app = Flask(__name__)
 
