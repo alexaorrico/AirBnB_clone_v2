@@ -10,6 +10,7 @@ from models.user import User
 
 places_reviews = Blueprint('places_reviews', __name__)
 
+
 @places_reviews.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
 def handle_place_reviews(place_id):
     # Check if the place_id is linked to a Place object
@@ -41,6 +42,7 @@ def handle_place_reviews(place_id):
         review = Review(user_id=user_id, place_id=place_id, text=data['text'])
         review.save()
         return jsonify(review.to_dict()), 201
+
 
 @places_reviews.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'])
 def handle_review(review_id):
