@@ -10,7 +10,7 @@ from models.amenity import Amenity
 def all_amenity():
     """return json"""
     for amenity in storage.all(Amenity).values():
-        all_amenity = amenity.to_dict()
+        all_amenity = [amenity.to_dict()]
     return jsonify(all_amenity)
 
 
