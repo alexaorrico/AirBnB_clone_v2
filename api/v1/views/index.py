@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Create a route /status on the object app_views"""
+"""It creates a route /status on the object app_views"""
+
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
@@ -13,16 +14,16 @@ from models.user import User
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """Return a JSON"""
+    """It returns a JSON"""
     return jsonify({'status': 'OK'})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def endpoint():
-    """Create an endpoint"""
+    """It creates an endpoint"""
     stat = {}
     objs = {
-            "Amenity": "amenities", 
+            "Amenity": "amenities",
             "User": "users",
             "City": "cities",
             "Place": "places",

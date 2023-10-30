@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the FileStorage class
-"""
+"""It contains the FileStorage class"""
 
 import json
 import models
@@ -36,7 +34,7 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """It sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
@@ -50,7 +48,7 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """It deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
@@ -60,28 +58,28 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """It deletes obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
 
     def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
+        """Deserializing the JSON file to objects"""
         self.reload()
 
     def get(self, cls, id):
-        """ Get the number of object"""
-        if cls not in classes.values():
+        """Gets the number of object"""
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
             return None
 
-        dic = models.storage.all(cls)
-        for m in dic.values():
-            if (m.id == id):
-                return m
-
     def count(self, cls=None):
-        """ Count the number of objects in storage."""
+        """Counts the number of objects in storage."""
         dic = classes.values()
 
         if not cls:
