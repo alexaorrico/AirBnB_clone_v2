@@ -91,4 +91,5 @@ def updates_place(place_id):
             del data[key]
     place_obj.__dict__.update(data)
     storage.save()
-	return jsonify(place_obj.to_dict()), 200
+
+    return jsonify(place_obj.to_dict()), 200
