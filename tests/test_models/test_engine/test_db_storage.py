@@ -3,19 +3,19 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
+# from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
+# from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
+# import json
+# import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
@@ -66,6 +66,17 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+class TestDbStorage(unittest.TestCase):
+    """Testing DB_Storage class"""
+    def test_get(self):
+        """Test get returns object of class & Id passed"""
+        s1 = State(name="Abuja")
+        models.storage.new(s1)
+        result = models.storage.get(State, s1.id)
+        self.assertEqual(result.id, s1.id)
+        self.assertIsInstance(result, State)
 
 
 class TestFileStorage(unittest.TestCase):
