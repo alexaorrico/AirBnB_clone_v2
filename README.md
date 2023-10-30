@@ -6,3 +6,5 @@ Using `restful API` and python `flask` for our AirBnB_clone project
 
 - [x] Rest API
 - [x] CORS
+- [x] HTTP
+- [x] HTTP request methods: `GET`, `POST`, `PUT` and `DELETE`
