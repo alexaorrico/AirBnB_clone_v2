@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """A script that handles api between places and amenity"""
-from flask import jsonify, abort, request
+from flask import jsonify
+from flask import abort, request
 from models import storage
 from api.v1.views import app_views
 from models.place import Place
@@ -24,18 +25,18 @@ def getPlaceAmenity(place_id):
 def ToDeleteAmenity(place_id, amenity_id):
     """To delete amenity objects"""
     place_obj = storage.get(Place, place_id)
-    if obj is None:
+    if place_obj is None:
         abort(404)
 
     amenity_obj = storage.get(Amenity, amenity_id)
-    if obj is None:
+    if amenity_obj is None:
         abort(404)
 
     if amenity_obj not in place_obj.amenities:
         abort(404)
 
     place_obj.amenities.remove(amenity_obj)
-    storge.save()
+    storage.save()
 
     return jsonify({}), 200
 
