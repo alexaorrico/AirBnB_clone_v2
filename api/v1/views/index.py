@@ -1,15 +1,8 @@
 #!/usr/bin/python3
 """It creates a route /status on the object app_views"""
-from flask import jsonify
+from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
-from models.amenity import Amenity
-from models.base_model import BaseModel
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
@@ -27,3 +20,4 @@ def endpoint():
                     "reviews": storage.count("Review"),
                     "states": storage.count("State"),
                     "users": storage.count("User")
+                    )}
