@@ -116,7 +116,6 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                      "not testing file storage")
-
     def test_get(self):
         """To test get method"""
         s = State(name="Colorado")
@@ -126,7 +125,6 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
-
     def test_count(self):
         """to test the count method"""
         c = model.storage.count()
