@@ -4,8 +4,6 @@ from flask import jsonify, abort, request
 from models.place import Place
 from models.city import City
 from models.user import User
-from models.state import State
-from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 
@@ -79,52 +77,3 @@ def update_place(place_id):
             setattr(place, key, value)
     storage.save()
     return jsonify(place.to_dict())
-
-
-@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
-def places_search():
-    """Search for Place objects based on JSON request data."""
-    data = request.get_json()
-    if data is None:
-        return jsonify({"error": "Not a JSON"}), 400
-    states = data.get("states", [])
-    cities = data.get("cities", [])
-    amenities = data.get("amenities", [])
-    places_to_return = []
-    if not states and not cities and not amenities:
-        places_to_return = storage.all(Place).values()
-    else:
-        places_to_return = search_places(states, cities, amenities)
-    places_to_dict = [place.to_dict() for place in places_to_return]
-    return jsonify(places_to_dict)
-
-
-def search_places(states, cities, amenities):
-    """Search for Place objects based on the search criteria."""
-    places_to_return = set()
-    if states:
-        for state_id in states:
-            state = storage.get(State, state_id)
-            if state:
-                cities.extend([city.id for city in state.cities])
-            else:
-                abort(404)
-    if cities:
-        for city_id in cities:
-            city = storage.get(City, city_id)
-            if city:
-                places_to_return.update(city.places)
-            else:
-                abort(404)
-    if amenities:
-        for amenity_id in amenities:
-            amenity = storage.get(Amenity, amenity_id)
-            if amenity:
-                places_to_return = {
-                    place for place in places_to_return if all(
-                        amen in place.amenities for amen in amenities)
-                }
-            else:
-                abort(404)
-
-    return list(places_to_return)
