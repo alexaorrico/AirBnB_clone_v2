@@ -50,7 +50,7 @@ def delete_city(city_id):
     """
     Deletes a City object by the id
     """
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     else:
