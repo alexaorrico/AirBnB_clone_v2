@@ -1,7 +1,13 @@
 #!/usr/bin/python3
 
 """
-
+create new view for City objects
+that handles all default RESTFul API actions
+    - retrive a city object by state id
+    - retrive a city object
+    - delete a city object
+    - create a new city object
+    - update a city object
 """
 
 
