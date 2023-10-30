@@ -19,10 +19,10 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
-    """ Retrieves a list of all City objects """
+    ''' Get all the City objects linked to a given State '''
     state = storage.get(State, state_id)
     cities_list = []
     for elem in state.cities:
@@ -30,10 +30,10 @@ def get_cities(state_id):
     return jsonify(cities_list)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def create_city(state_id):
-    """ Creates a new City object """
+    ''' Create a new City object and linkes it to the given State'''
     if not storage.get(State, state_id):
         abort(404)
     if not request.get_json():
@@ -49,7 +49,7 @@ def create_city(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city(city_id):
-    """ Retrieves an City object by its ID """
+    ''' Get a City object by ID '''
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -58,7 +58,7 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
-    """ Removes an City object by its ID """
+    ''' Delete a City object '''
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -68,7 +68,7 @@ def delete_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
-    """ Update an City object by its ID """
+    ''' Update the values of a City object '''
     if not storage.get(City, state_id):
         abort(404)
     if request.content_type != 'application/json':

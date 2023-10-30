@@ -11,7 +11,6 @@ HTTP status codes:
 - 400: Bad Request: The server cannot process the request.
 - 404: Not Found: The requested resource could not be found on the server.
 """
-
 from flask import jsonify, request, make_response, abort
 from api.v1.views import app_views
 from models import storage
@@ -20,10 +19,10 @@ from models.user import User
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=['GET'], strict_slashes=False)
 def get_places(city_id):
-    """ Retrieves a list of all Place objects """
+    ''' Get all the Place objects linked to a given City object '''
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -33,10 +32,10 @@ def get_places(city_id):
     return jsonify(places_list)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=['POST'], strict_slashes=False)
 def create_place(city_id):
-    """ Creates an Place object by its ID """
+    ''' Create a new Place Object and link it to the given City object '''
     if not storage.get(City, city_id):
         abort(404)
     query = request.get_json()
@@ -56,17 +55,17 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id):
-    """ Gets an Place object by its ID """
+    ''' Get a Place object by ID '''
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
     return jsonify(place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_place(place_id):
-    """ Deletes an Place object by its ID """
+    ''' Delete a Place object '''
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -76,7 +75,7 @@ def delete_place(place_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    """ Updates an Place object by its ID """
+    ''' Update the values of a given Place object '''
     if not storage.get(Place, place_id):
         abort(404)
     if request.content_type != 'application/json':

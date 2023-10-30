@@ -21,7 +21,6 @@ HTTP status codes:
 - 400: Bad Request: The server cannot process the request.
 - 404: Not Found: The requested resource could not be found on the server.
 """
-
 from flask import jsonify, request, make_response, abort
 from api.v1.views import app_views
 from models import storage
@@ -30,7 +29,7 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
-    """ Retrieves a list of all State objects """
+    ''' Retrive all the states objects '''
     states_dict = storage.all(State)
     states_list = []
     for elem in states_dict.values():
@@ -40,7 +39,7 @@ def get_states():
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
-    """ Creates a new State object """
+    ''' Create a new State object '''
     if not request.get_json():
         abort(400, description='Not a JSON')
     if 'name' not in request.get_json():
@@ -53,17 +52,17 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
-    """ Retrieves a State object by its ID """
+    ''' Get a State object by ID '''
     state = storage.get(State, state_id)
     if not state:
         abort(404)
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
-    """ Remove a State object by its ID """
+    ''' Delete a State object '''
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -73,7 +72,7 @@ def delete_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
-    """ Update a State object by its ID """
+    ''' Update a State object's values '''
     if not storage.get(State, state_id):
         abort(404)
     if request.content_type != 'application/json':

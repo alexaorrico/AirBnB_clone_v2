@@ -11,7 +11,6 @@ HTTP status codes:
 - 400: Bad Request: The server cannot process the request.
 - 404: Not Found: The requested resource could not be found on the server.
 """
-
 from flask import jsonify, request, make_response, abort
 from api.v1.views import app_views
 from models import storage
@@ -20,10 +19,10 @@ from models.place import Place
 from models.review import Review
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                 methods=['GET'], strict_slashes=False)
 def get_reviews(place_id):
-    """ Gets places ID Reviews list"""
+    ''' Get all the Review objects linked to a given Place object '''
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -33,10 +32,10 @@ def get_reviews(place_id):
     return jsonify(reviews_list)
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST'],
-                 strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                 methods=['POST'], strict_slashes=False)
 def create_review(place_id):
-    """ Creates an Review object by its ID """
+    ''' Create a new Review object and link it to the given Place object '''
     if not storage.get(Place, place_id):
         abort(404)
     query = request.get_json()
@@ -54,19 +53,20 @@ def create_review(place_id):
     return make_response(jsonify(new.to_dict()), 201)
 
 
-@app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/reviews/<review_id>',
+                 methods=['GET'], strict_slashes=False)
 def get_review(review_id):
-    """ Gets an Review object by its ID """
+    ''' Get a Review object by ID '''
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
     return jsonify(review.to_dict())
 
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/reviews/<review_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_review(review_id):
-    """ Deletes an Review object by its ID """
+    ''' Delete a Review object '''
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
@@ -74,9 +74,10 @@ def delete_review(review_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/reviews/<review_id>',
+                 methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
-    """ Updates an Review object by its ID """
+    ''' Update the values of a given Review object '''
     if not storage.get(Review, review_id):
         abort(404)
     if request.content_type != 'application/json':
