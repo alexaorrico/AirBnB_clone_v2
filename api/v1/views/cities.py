@@ -17,7 +17,7 @@ def cities(state_id=None):
 
     if request.method == "GET":
         cities_dict = storage.all("City")
-        cities_list = [obj.to_json() for obj in cities_dict.values()
+        cities_list = [obj.to_dict() for obj in cities_dict.values()
                        if obj.state_id == state_id]
         return jsonify(cities_list)
 
@@ -31,7 +31,7 @@ def cities(state_id=None):
         request_json["state_id"] = state_id
         newCity = City(**request_json)
         newCity.save()
-        return jsonify(newCity.to_json()), 201
+        return jsonify(newCity.to_dict()), 201
 
 
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
@@ -43,7 +43,7 @@ def city(city_id=None):
         abort(404, "Not found")
 
     if request.method == "GET":
-        return jsonify(city_obj.to_json())
+        return jsonify(city_obj.to_dict())
 
     if request.method == "DELETE":
         city_obj.delete()
@@ -55,4 +55,4 @@ def city(city_id=None):
         if request_json is None:
             abort(400, "Not a JSON")
         city_obj.bm_update(request_json)
-        return jsonify(city_obj.to_json()), 200
+        return jsonify(city_obj.to_dict()), 200

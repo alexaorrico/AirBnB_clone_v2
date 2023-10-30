@@ -12,7 +12,7 @@ def users():
     """route to return all users"""
     if request.method == "GET":
         users_dict = storage.all("User")
-        users_list = [obj.to_json() for obj in users_dict.values()]
+        users_list = [obj.to_dict() for obj in users_dict.values()]
         return jsonify(users_list)
 
     if request.method == "POST":
@@ -24,7 +24,7 @@ def users():
 
         newUser = User(**request_json)
         newUser.save()
-        return jsonify(newUser.to_json()), 201
+        return jsonify(newUser.to_dict()), 201
 
 
 @app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"])
@@ -36,7 +36,7 @@ def user(user_id=None):
         abort(404, "Not found")
 
     if request.method == "GET":
-        return jsonify(user_obj.to_json())
+        return jsonify(user_obj.to_dict())
 
     if request.method == "DELETE":
         user_obj.delete()
@@ -48,4 +48,4 @@ def user(user_id=None):
         if request_json is None:
             abort(400, "Not a JSON")
         user_obj.bm_update(request_json)
-        return jsonify(user_obj.to_json()), 200
+        return jsonify(user_obj.to_dict()), 200
