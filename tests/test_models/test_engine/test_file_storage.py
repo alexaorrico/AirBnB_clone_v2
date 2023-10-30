@@ -160,7 +160,14 @@ class TestFileStorage(unittest.TestCase):
                 self.assertIn(first_id, output)
 
     @unittest.skipIf(models.storage_t == "db", "not testint db storage")
-    def test_count(self):
+    def test_count_without_data(self):
+        """Test count return the number of objects"""
+        storage = FileStorage()
+        FileStorage._FileStorage__objects = {}
+        self.assertEqual(len(storage.all()), 0)
+
+    @unittest.skipIf(models.storage_t == "db", "not testint db storage")
+    def test_count_with_data(self):
         """Test count return the number of objects"""
         storage = FileStorage()
         FileStorage._FileStorage__objects = {}

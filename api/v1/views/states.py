@@ -45,7 +45,8 @@ def post_state():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({'error': 'Missing name'}), 400)
-    state = State(**request.get_json())
+    post_data = request.get_json()
+    state = State(**post_data)
     state.save()
     return make_response(jsonify(state.to_dict()), 201)
 
@@ -63,4 +64,4 @@ def put_state(state_id):
         if attr not in ['id', 'created_at', 'updated_at']:
             setattr(state, attr, val)
     state.save()
-    return jsonify(state.to_dict())
+    return make_response(jsonify(state.to_dict()), 200)
