@@ -5,6 +5,7 @@ from flask import jsonify
 from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
+from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -21,16 +22,9 @@ def status():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def endpoint():
     """It creates an endpoint"""
-    stat = {}
-    objs = {
-            "Amenity": "amenities",
-            "User": "users",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states"
-        }
-    for cls_name, key in objs.items():
-        stat[key] = storage.count(eval(cls_name))
-
-    return jsonify(stat)
+    return jsonify({"amenities": storage.count("Amenity"),
+                    "User": storage.count("User"),
+                    "City": storage.count("City"),
+                    "Place": storage.count("Place"),
+                    "Review": storage.count("Review"),
+                    "State": storage.count("State")})
