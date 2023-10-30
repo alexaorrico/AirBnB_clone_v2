@@ -53,13 +53,15 @@ def post_states():
                  strict_slashes=False)
 def put_states_by_id(state_id):
     """return json"""
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
+
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+
     for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
     storage.save()
-    return jsonify(state.to_dict()), 200
+    return make_response(jsonify(state.to_dict()), 200)
