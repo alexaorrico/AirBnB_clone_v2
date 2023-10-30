@@ -3,6 +3,7 @@
 from flask import abort, make_response, request
 from api.v1.views import app_views
 from models import storage
+from models.base_model import pwd_md5
 from models.user import User
 from json import dumps
 
@@ -78,6 +79,9 @@ def update_user(user_id):
                 value = type(getattr(user, key))(value)
             except ValueError:
                 pass
-        setattr(user, key, value)
+        if key == 'password':
+            setattr(user, key, pwd_md5(value))
+        else:
+            setattr(user, key, value)
     storage.save()
     return make_response(user.to_dict(), 200)

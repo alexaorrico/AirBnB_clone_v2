@@ -4,6 +4,7 @@ Contains class BaseModel
 """
 
 from datetime import datetime
+import hashlib
 import models
 from os import getenv
 import sqlalchemy
@@ -17,6 +18,12 @@ if models.storage_t == "db":
     Base = declarative_base()
 else:
     Base = object
+
+
+def pwd_md5(password):
+    m = hashlib.md5()
+    m.update(password.encode('utf-8'))
+    return m.hexdigest()
 
 
 class BaseModel:
@@ -42,6 +49,9 @@ class BaseModel:
                 self.updated_at = datetime.utcnow()
             if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
+            if kwargs["__class__"] == 'User':
+                if 'password' in kwargs:
+                    setattr(self, 'password', pwd_md5(kwargs["password"]))
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.utcnow()
@@ -68,6 +78,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if self.__class__.__name__ == 'User' and models.storage_t == "db":
+            del new_dict["password"]
         return new_dict
 
     def delete(self):
