@@ -13,7 +13,7 @@ from os import getenv
 @app_views.route(
         '/places/<place_id>/amenities', methods=['GET'], strict_slashes=False
         )
-def place_amenities_objs(place_id):
+def get_amenities_objs(place_id):
     '''Retrieves the list of all Amenity objects of a Place'''
     place = storage.get(Place, str(place_id))
     if place is None:
@@ -32,7 +32,7 @@ def place_amenities_objs(place_id):
         methods=['DELETE'],
         strict_slashes=False
         )
-def delete_amenity(place_id, amenity_id):
+def delete_amenity_from_place(place_id, amenity_id):
     '''Deletes a Amenity object to a Place'''
     linked = False
     place_obj = storage.get(Place, str(place_id))
