@@ -86,3 +86,44 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """
+        Test the get method in DBStorage
+        """
+        storage = DBStorage()
+        new_state = State(name="California")
+        new_state.save()
+        obj = storage.get(State, new_state.id)
+        self.assertEqual(obj, new_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_nonexistent(self):
+        """
+        Test get non-existent object
+        """
+        storage = DBStorage()
+        b = storage.get(State, "nonexistent_id")
+        self.assertIsNone(b)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """
+        Test count method of DBStorage
+        """
+        storage = DBStorage()
+        ini_count = storage.count(State)
+        n_state = State(name="Texas")
+        n_state.save()
+        updated_count = storage.count(State)
+        self.assertEqual(updated_count, ini_count + 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all(self):
+        """
+        Test count with no class argument (count all objects)
+        """
+        storage = DBStorage()
+        cnt_tall = storage.count()
+        cnt_state = storage.count(State)
+        self.assertEqual(cnt_all, cnt_state)
