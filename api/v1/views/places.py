@@ -77,17 +77,20 @@ def create_place(city_id):
         )
 def updates_place(place_id):
     '''Updates a Place object'''
+
     place_obj = storage.get("Place", place_id)
+
     if place_obj is None:
         abort(404)
+
     data = request.get_json(silent=True)
+
     if data is None:
         abort(400, 'Not a JSON')
-    data = data.copy()
-    for key in ["id", "user_id", "city_id", "created_at", "updated_at"]:
-        if key in data:
-            del data[key]
-    place_obj.__dict__.update(data)
-    storage.save()
 
-    return jsonify(place_obj.to_dict()), 200
+	for k, v in data.items():
+		if key not in ['id', 'created_at', 'updated_at', 'user_id', 'city_id']:
+			setattr(place, k, v)
+
+	place_obj.save()
+	return jsonify(place_obj.to_dict()), 200
