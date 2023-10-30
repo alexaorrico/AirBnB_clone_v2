@@ -105,7 +105,8 @@ class TestFileStorage(unittest.TestCase):
             new_dict[instance_key] = instance
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = new_dict
-        storage.save()
+        with open('output.txt', 'w') as f:
+            storage.save()
         FileStorage._FileStorage__objects = save
         for key, value in new_dict.items():
             new_dict[key] = value.to_dict()
