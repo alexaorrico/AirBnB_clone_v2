@@ -142,3 +142,7 @@ class TestAddedMethods(unittest.TestCase):
         """Test for the db_storage.py module docstring"""
         self.assertIsNot(FileStorage.count.__doc__, None,
                          "count needs a docstring")
+
+    def testIsGet(self):
+        """Test if get function exists"""
+        self.assertTrue(hasattr(FileStorage, 'get'))
