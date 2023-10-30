@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the class DBStorage
-"""
+"""Class for DBStorage"""
 
 import models
 from models.amenity import Amenity
@@ -70,7 +68,19 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
-
-    def close(self):
-        """call remove() method on the private session attribute"""
+        
+        def get(self, cls, id):
+            """Retrieves an object of a specific class using its ID."""
+            obj = None
+            if cls is not None and issubclass(cls, Basemodel):
+                obj = self.__session.query(cls).filter(cls.id == id).first()
+            return obj
+        
+        def count(self, cls, id):
+            """Collects the count of objects belonging to a specific class
+            or collects the count of all objects if cls is set to None."""
+            return len(self.all(cls))
+        
+        def close(self):
+        """Call remove() method on the private session attribute"""
         self.__session.remove()
