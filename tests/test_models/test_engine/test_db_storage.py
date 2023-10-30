@@ -118,3 +118,11 @@ class TestAddedMethods(unittest.TestCase):
         """Test for the db_storage.py module docstring"""
         self.assertIsNot(DBStorage.count.__doc__, None,
                          "count needs a docstring")
+
+    def testHasGet(self):
+        """Test if get function exists"""
+        self.assertTrue(hasattr(DBStorage, 'get'))
+
+    # def testHasCount(self):
+    #     """Test if count function exists"""
+    #     self.assertTrue(hasattr(DBStorage, 'count'))
