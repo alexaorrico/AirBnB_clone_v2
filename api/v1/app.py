@@ -17,6 +17,7 @@ def close_conn(self):
     """
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found(error):
     """json 404 page"""
