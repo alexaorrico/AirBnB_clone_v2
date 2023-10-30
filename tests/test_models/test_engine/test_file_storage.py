@@ -132,3 +132,13 @@ class TestAddedMethods(unittest.TestCase):
 
         allObjs = storage.count()
         self.assertTrue(allObjs > 0)
+
+    def test_get_docstring(self):
+        """Test for the db_storage.py module docstring"""
+        self.assertIsNot(FileStorage.get.__doc__, None,
+                         "get needs a docstring")
+
+    # def test_count_docstring(self):
+    #     """Test for the db_storage.py module docstring"""
+    #     self.assertIsNot(FileStorage.count.__doc__, None,
+    #                         "count needs a docstring")
