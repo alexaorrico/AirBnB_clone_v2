@@ -1,6 +1,6 @@
 # AirBnB_clone_v3
 
-In this project, we use `restful API` and python's webframework `flask` for our AirBnB_clone version 3 project
+In this project, we use `restful API` and python's webframework `Flask` for our AirBnB_clone version 3 project
 
 ## Concepts used and learnt in this project
 
