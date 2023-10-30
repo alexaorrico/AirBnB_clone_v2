@@ -8,3 +8,8 @@ try.py
 tests/__pycache__/
 tests/test_models/__pycache__/
 tests/test_models/test_engine/__pycache__/
+api/__pycache__/
+api/v1/__pycache__/
+api/v1/views/b
+api/v1/views/A
+api/v1/views/U
