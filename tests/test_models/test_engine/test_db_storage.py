@@ -70,6 +70,7 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    from models import storage
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -89,31 +90,31 @@ class TestFileStorage(unittest.TestCase):
 
     def test_get_object(self):
         """Create an object and add it to the storage"""
-        obj = SomeClass()
+        obj = BaseModel()
         obj_id = "unique_id"
         self.storage.save(obj)
 
         """Retrieve the object using the get method"""
-        retrieved_obj = self.storage.get(SomeClass, obj_id)
+        retrieved_obj = self.storage.get(BaseModel, obj_id)
 
         """Assert that the retrieved object matches the original one"""
         self.assertEqual(retrieved_obj, obj)
 
     def test_count_objects(self):
         """Create and add multiple objects to the storage"""
-        obj1 = SomeClass()
-        obj2 = SomeClass()
-        obj3 = AnotherClass()
+        obj1 = BaseModel()
+        obj2 = BaseModel()
+        obj3 = State()
         self.storage.save(obj1)
         self.storage.save(obj2)
         self.storage.save(obj3)
 
         """Count the number of objects of SomeClass"""
-        count = self.storage.count(SomeClass)
+        count = self.storage.count(BaseModel)
         self.assertEqual(count, 2)
 
         """Count the number of objects of AnotherClass"""
-        count = self.storage.count(AnotherClass)
+        count = self.storage.count(State)
         self.assertEqual(count, 1)
 
         """Count the total number of objects"""
