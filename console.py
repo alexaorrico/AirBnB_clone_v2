@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" console """
+"""The HBNB console """
 
 import cmd
 from datetime import datetime
@@ -11,14 +11,14 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import shlex  # for splitting the line along spaces except in double quotes
+import shlex
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
-    """ HBNH console """
+    """The HBNH console """
     prompt = '(hbnb) '
 
     def do_EOF(self, arg):
@@ -26,15 +26,16 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """ overwriting the emptyline method """
+        """It overwriting the emptyline method """
         return False
 
     def do_quit(self, arg):
-        """Quit command to exit the program"""
+        """It is a quit command to exit the program"""
         return True
 
     def _key_value_parser(self, args):
-        """creates a dictionary from a list of strings"""
+        """It creates a dictionary from a list of strings"""
+
         new_dict = {}
         for arg in args:
             if "=" in arg:
@@ -55,7 +56,8 @@ class HBNBCommand(cmd.Cmd):
         return new_dict
 
     def do_create(self, arg):
-        """Creates a new instance of a class"""
+        """It creates a new instance of a class"""
+
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -70,7 +72,8 @@ class HBNBCommand(cmd.Cmd):
         instance.save()
 
     def do_show(self, arg):
-        """Prints an instance as a string based on the class and id"""
+        """It prints an instance as a string based on the class and id"""
+
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -88,7 +91,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class and id"""
+        """It deletes an instance based on the class and id"""
+
         args = shlex.split(arg)
         if len(args) == 0:
             print("** class name missing **")
@@ -106,7 +110,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_all(self, arg):
-        """Prints string representations of instances"""
+        """It prints string representations of instances"""
+
         args = shlex.split(arg)
         obj_list = []
         if len(args) == 0:
@@ -123,7 +128,9 @@ class HBNBCommand(cmd.Cmd):
         print("]")
 
     def do_update(self, arg):
-        """Update an instance based on the class name, id, attribute & value"""
+
+        """It updates an instance based on the class name,id,
+        attribute & value"""
         args = shlex.split(arg)
         integers = ["number_rooms", "number_bathrooms", "max_guest",
                     "price_by_night"]
@@ -159,6 +166,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
