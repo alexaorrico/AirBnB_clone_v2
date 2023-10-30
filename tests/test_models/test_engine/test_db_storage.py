@@ -135,3 +135,12 @@ class TestAddedMethods(unittest.TestCase):
         environ['HBNB_TYPE_STORAGE'] = 'db'
         noClsCount = storage.count()
         self.assertTrue(noClsCount > 0)
+
+    def testPassClass(self):
+        """Passing class"""
+        from models import storage
+        from os import environ
+
+        environ['HBNB_TYPE_STORAGE'] = 'db'
+        noClsCount = storage.count(State)
+        self.assertTrue(noClsCount > 0)
