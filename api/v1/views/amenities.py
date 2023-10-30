@@ -33,7 +33,7 @@ def del_amenity_by_id(amenity_id):
         return jsonify(abort(404))
     amenity.delete()
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route("/amenity", methods=['POST'], strict_slashes=False)
