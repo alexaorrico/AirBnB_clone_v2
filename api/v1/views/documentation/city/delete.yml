@@ -1,0 +1,15 @@
+DELETE method, delete place instance by id
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    type: string
+    required: true
+    description: the unique id of the city to be delete
+responses:
+  404:
+    description: City not found 😳
+  200:
+    description: Successful request ✔️
