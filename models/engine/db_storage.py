@@ -52,11 +52,11 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add the object to the current database session"""
+        """adds the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session"""
+        """commits all changes of the current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
