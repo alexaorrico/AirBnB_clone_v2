@@ -24,6 +24,23 @@ class FileStorage:
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
+    def get(self, cls, id):
+        """A method to retrieve one object"""
+        key = f"{cls}.{id}"
+        objects = self.all(cls)
+        if key in objects:
+            return objects[key]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """A method to count the number of objects in storage"""
+        objects = self.all(cls)
+        if len(objects) == 0:
+            return len(self.all())
+        else:
+            return len(objects)
+
     def all(self, cls=None):
         """returns the dictionary __objects"""
         if cls is not None:
