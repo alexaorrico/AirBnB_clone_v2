@@ -90,14 +90,11 @@ class DBStorage:
             cls: class name
             id: instance id
         """
-        try:
-            data = self.all(cls)
-            for item in data:
-                if id == item.split(".")[1]:
-                    return item
-            return None
-        except Exception:
-            return None
+        if cls and id:
+            key = "{}.{}".format(cls, id)
+            all_obj = self.all(cls)
+            return all_obj.get(key)
+        return None
 
     def count(self, cls=None):
         """

@@ -86,11 +86,8 @@ class FileStorage:
         """
         try:
             data = self.__objects
-            for key in data:
-                if id == key.split(".")[1]:
-                    return data[key]
-            return None
-        except Exception as e:
+            return data['{}.{}'.format(cls, id)]
+        except Exception:
             return None
 
     def count(self, cls=None):
