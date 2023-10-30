@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """Representation of state """
+    """Blueprint of the State Class"""
     if models.storage_t == "db":
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
