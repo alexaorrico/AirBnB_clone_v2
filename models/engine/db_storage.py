@@ -77,7 +77,8 @@ class DBStorage:
         
     def get(self, cls=None, id=None):
         """  Return object of specific id """
-        if cls and id:
+        if not cls in classes.values() or \
+        not cls in classes.keys() or not cls or not id:
             return None
         key = f"{cls().__class__.__name__}.{id}"
         return self.all(cls).get(key)
