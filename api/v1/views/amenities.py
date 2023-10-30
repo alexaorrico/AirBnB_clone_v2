@@ -4,7 +4,7 @@
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
-from models import storage, CNC
+from models import storage
 from flasgger.utils import swag_from
 
 
