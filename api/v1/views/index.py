@@ -28,6 +28,7 @@ def status_report():
 
 @app_views.route('/status')
 def get_status():
+    """Get the status"""
     status = jsonify({
         "status": "OK"
     })
