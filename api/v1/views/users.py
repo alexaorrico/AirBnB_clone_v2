@@ -65,6 +65,6 @@ def update_user(user_id):
     keys_to_ignore = ['id', 'email', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in keys_to_ignore:
-            setattr( key, value)
+            setattr(User, key, value)
     user.save()
     return jsonify(user.to_dict()), 200
