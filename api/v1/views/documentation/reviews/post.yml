@@ -1,0 +1,29 @@
+Post a new review.
+---
+tags:
+  - Reviews
+parameters:
+  - name: review_id
+    in: path
+    type: string
+    required: true
+    description: review id
+  - name: user_id and text
+    in: body
+    required: true
+    requires:
+      - user_id
+      - text
+    properties:
+      user_id:
+        type: string
+      text:
+        type: string
+
+responses:
+  404:
+    description: review not found 😳
+  400:
+    description: Not a Valid JSON
+  200:
+    description: Successful request ✔️
