@@ -27,7 +27,7 @@ def teardown_db(exception):
 @app.errorhandler(404)
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
-    return jsonify({"error": "Not found"}
+    return jsonify({"error": "Not found"})
 
 
 def setup_error_handler():
