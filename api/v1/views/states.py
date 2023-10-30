@@ -40,9 +40,9 @@ def del_states_by_id(state_id):
 def post_states():
     """return json"""
     if not request.get_json():
-        abort(400, description='Not a JSON')
+        abort(400, description="Not a JSON")
     if 'name' not in request.get_json():
-        abort(400, description='Missing name')
+        abort(400, description="Missing name")
     state = request.get_json()
     st = State(**state)
     st.save()
