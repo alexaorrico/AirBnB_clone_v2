@@ -41,8 +41,10 @@ def post_user():
     """return json"""
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({'error': 'Missing name'}), 400)
+    if 'email' not in request.get_json():
+        return make_response(jsonify({'error': 'Missing email'}), 400)
+    if 'password' not in request.get_json():
+        return make_response(jsonify({'error': 'Missing password'}), 400)
     user = request.get_json()
     us = User(**user)
     us.save()
