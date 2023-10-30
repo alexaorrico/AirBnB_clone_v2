@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from models import storage, storage_t
 from models.user import User
 from models.state import State
@@ -16,15 +18,18 @@ print(storage_t)
 # print(counts)
 
 # TESTING DB
-state1 = State()
-state2 = State()
-city1 = City()
-user1 = User()
+state1 = State(name="Abuja")
+state2 = State(name="Lagos")
+state3 = State(name="Abia")
+state4 = State(name="Jos")
+city1 = City(name="Life Camp", state_id=state1.id)
+city2 = City(name="Platue", state_id=state4.id)
 
-storage.add(state1)
-storage.add(state2)
-storage.add(city1)
-storage.add(user1)
+
+storage.new(state1)
+storage.new(state2)
+storage.new(city1)
+
 storage.save()
 
 objs = storage.all()
