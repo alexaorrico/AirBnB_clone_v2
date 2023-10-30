@@ -9,12 +9,11 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from api.v1.views import app_views
+from api.v1.views.cities import cities
 
 
-app = Flask(__name__)
-
-
-@app.route('/api/v1/stats', methods = ['GET'], strict_slashs=True)
+@app_views.route('/stats', methods = ['GET'], strict_slashs=True)
 def status_report():
     """report the status of the api"""
     status_dict = {
@@ -26,3 +25,11 @@ def status_report():
         "users": storage.count(User)
     }
     return jsonify(status_dict)
+
+@app_views.route('/status')
+def get_status():
+    status = jsonify({
+        "status": "OK"
+    })
+    status.status_code = 200
+    return status
