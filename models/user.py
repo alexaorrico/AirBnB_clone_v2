@@ -30,12 +30,12 @@ class User(BaseModel, Base):
         super().__init__(*args, **kwargs)
 
     @property
-    def md5_pswd(self):
+    def password(self):
         """Gets hashed value of password"""
-        return self.password
+        return self.__dict__.get("password")
 
-    @md5_pswd.setter
-    def md5_pswd(self, psswd):
+    @password.setter
+    def password(self, psswd):
         """
         Hash password with mds function of hashlib
         """
