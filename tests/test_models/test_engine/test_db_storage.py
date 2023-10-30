@@ -86,3 +86,51 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """ Test the DBStorage class """
+    @unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_get(self):
+        new_state = State(name="New York")
+        new_state.save()
+        new_user = User("bob@foobar.com", password="password")
+        new_user.save()
+        self.assertIs(new_state, models.storage.get("State", new_state.id))
+        self.assertIs(None, models.storage.get("State", "blah"))
+        self.assertIs(None, models.storage.get("blah", "blah"))
+        self.assertIs(new_user, models.storage.get("User", new_user.id))
+
+    @unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_count(self):
+        initial_ct = models.storage.count()
+        self.assertEqual(models.storage.count("Blah"), 0)
+        new_state = State(name="Florida")
+        new_state.save()
+        new_user = User("bob@foobar.com", password="password")
+@unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_get(self):
+        storage = FileStorage
+        self.assertIs(storage.get("User", "blah"), None)
+        self.assertIs(storage.get("blah", "blah"), None)
+        new_user = User()
+        new_user.save()
+        self.assertIs(storage.get("User", new_user.id), new_user)
+
+    @unittest.skipIf(os.getenv(
+        'HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_count(self):
+        storage = FileStorage
+        initial_len = len(storage.all())
+        self.assertEqual(storage.count(), initial_len)
+        state_len = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), state_len)
+        new_state = State()
+        new_state.save()
+        self.assertEqual(storage.count(), initial_len + 1)
+        self.assertEqual(storage.count("State"), state_len + 1)        new_user.save()
+        self.assertEqual(models.storage.count("State"), initial_ct + 1)
+        self.assertEqual(models.storage.count(), initial_ct + 2)
