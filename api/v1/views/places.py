@@ -33,20 +33,20 @@ def get_place(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     """Deletes a Place Object"""
-    place = storage.get(Place, place_id)
+    place = storage.get("Place", place_id)
     if place is None:
         abort(404)
 
     place.delete()
     storage.save()
-    return jsonify({}), 200
+    return jsonify({})
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
     """Creates a Place"""
-    city = storage.get(City, city_id)
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
 
