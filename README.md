@@ -12,6 +12,7 @@ In this project, we use `restful API` and python `flask` for our AirBnB_clone ve
 - [x] HTTP request methods: `GET`, `POST`, `PUT` & `DELETE`
 - [x] How to request REST API
 - [x] Curl
-- [x] Using curl to request api data
+- [x] Requesting data
+- [x] Using curl to request and access api data
 - [x] Unittests
 - [x] Using Python style-guides: pep8 & pycodestyle
