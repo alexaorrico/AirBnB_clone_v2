@@ -57,7 +57,7 @@ def put_states_by_id(state_id):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify(abort(404))
+        abort(404)
     for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
