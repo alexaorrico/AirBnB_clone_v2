@@ -143,6 +143,10 @@ class TestAddedMethods(unittest.TestCase):
         self.assertIsNot(FileStorage.count.__doc__, None,
                          "count needs a docstring")
 
-    def testIsGet(self):
+    def testHasGet(self):
         """Test if get function exists"""
         self.assertTrue(hasattr(FileStorage, 'get'))
+
+    def testHasCount(self):
+        """Test if count function exists"""
+        self.assertTrue(hasattr(FileStorage, 'count'))
