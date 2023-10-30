@@ -54,7 +54,7 @@ def ToPostAmenity(place_id, amenity_id):
         abort(404)
 
     if amenity_obj in place_obj.amenities:
-        return jsonify(amenity.to_dict()), 200
+        return jsonify(amenity_obj.to_dict()), 200
 
     place_obj.amenities.append(amenity_obj)
     storage.save()
