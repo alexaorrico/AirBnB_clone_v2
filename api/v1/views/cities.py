@@ -14,23 +14,25 @@ def cities(state_id=None):
     state_obj = storage.get("State", state_id)
     if state_obj is None:
         abort(404, 'Not found')
-    
+
     if request.method == "GET":
         cities_dict = storage.all("City")
-        cities_list = [obj.to_json() for obj in cities_dict.values() if obj.state_id == state_id]
+        cities_list = [obj.to_json() for obj in cities_dict.values()
+                       if obj.state_id == state_id]
         return jsonify(cities_list)
-    
+
     if request.method == "POST":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
         if request_json.get("name") is None:
-            abort(400,"Missing name")
-        
+            abort(400, "Missing name")
+
         request_json["state_id"] = state_id
         newCity = City(**request_json)
         newCity.save()
         return jsonify(newCity.to_json()), 201
+
 
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
 def city(city_id=None):
@@ -39,15 +41,15 @@ def city(city_id=None):
 
     if city_obj is None:
         abort(404, "Not found")
-    
+
     if request.method == "GET":
         return jsonify(city_obj.to_json())
-    
+
     if request.method == "DELETE":
         city_obj.delete()
         del city_obj
         return jsonify({}), 200
-    
+
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:

@@ -8,6 +8,7 @@ from models.review import Review
 from os import environ
 STOR_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
+
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
 def reviews(place_id=None):
     """route to return all reviews"""
@@ -15,27 +16,31 @@ def reviews(place_id=None):
     place_obj = storage.get("Place", place_id)
     if place_obj is None:
         abort(404, 'Not found')
-    
+
     if request.method == "GET":
         reviews_dict = storage.all("Review")
-        reviews_list = [obj.to_json() for obj in reviews_dict.values() if obj.place_id == place_id]
+        reviews_list = [obj.to_json()
+                        for obj in reviews_dict.values()
+                        if obj.place_id == place_id
+                        ]
         return jsonify(reviews_list)
-    
+
     if request.method == "POST":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
         if request_json.get("user_id") is None:
-            abort(400,"Missing user_id")
+            abort(400, "Missing user_id")
         if storage.get("User", request_json.get("user_id")) is None:
             abort(404, "Not found")
         if request_json.get("name") is None:
-            abort(400,"Missing name")
-        
+            abort(400, "Missing name")
+
         request_json["place_id"] = place_id
         newReview = Review(**request_json)
         newReview.save()
         return jsonify(newReview.to_json()), 201
+
 
 @app_views.route("/reviews/<review_id>", methods=["GET", "DELETE", "PUT"])
 def review(review_id=None):
@@ -44,15 +49,15 @@ def review(review_id=None):
 
     if review_obj is None:
         abort(404, "Not found")
-    
+
     if request.method == "GET":
         return jsonify(review_obj.to_json())
-    
+
     if request.method == "DELETE":
         review_obj.delete()
         del review_obj
         return jsonify({}), 200
-    
+
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:

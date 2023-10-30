@@ -17,6 +17,7 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": host}})
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Close storage"""
@@ -35,6 +36,7 @@ def error_handler(error):
         msg = error
         code = 500
     return make_response(jsonify({"error": msg}), code)
+
 
 def setup_error_handler():
     """
