@@ -5,15 +5,13 @@ from flask import abort, jsonify, request
 from models.place import Place
 from os import getenv
 import json
-
-
-app = Flask(__name__)
+from api.v1.views import app_views
 
 
 host = getenv('HBNB_API_HOST')
 port = getenv('HBNB_API_PORT')
 
-@app.route('/api/v1/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
 def get_list_of_all_places(city_id):
     """Retrieves the list of all Place objects"""
     from models import storage
@@ -29,7 +27,7 @@ def get_list_of_all_places(city_id):
     abort(404)
 
 
-@app.route('/api/v1/places/<place_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place_obj(place_id):
     """Retrieves a State object"""
     from models import storage
@@ -40,7 +38,7 @@ def get_place_obj(place_id):
     abort(404)
 
 
-@app.route('/api/v1/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
 def delete_place_ob(place_id):
     """Deletes a Place object"""
     from models import storage
@@ -53,7 +51,7 @@ def delete_place_ob(place_id):
     abort(404)
 
 
-@app.route('/api/v1/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
 def create_place(city_id):
     """Creates a Place"""
     try:
@@ -75,7 +73,7 @@ def create_place(city_id):
     return (new_place.to_dict()), 201
 
 
-@app.route('/api/v1/places/<place_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
     """Updates a State object"""
     ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
@@ -93,7 +91,3 @@ def update_place(place_id):
         place.save()
         return (place.to_dict())
     abort(404)  # If no matching place is found, return a 404 error
-
-
-if __name__ == "__main__":
-    app.run(host=host, port=port)

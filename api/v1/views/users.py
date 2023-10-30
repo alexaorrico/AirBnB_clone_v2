@@ -5,16 +5,14 @@ from flask import abort, jsonify, request
 from models.user import User
 from os import getenv
 import json
-
-
-app = Flask(__name__)
+from api.v1.views import app_views
 
 
 host = getenv('HBNB_API_HOST')
 port = getenv('HBNB_API_PORT')
 
-@app.route('/api/v1/users', methods=['GET'], strict_slashes=False)
-def get_list_of_all_states():
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+def get_list_of_all_users():
     """Retrieves the list of all State objects"""
     from models import storage
     storage.reload
@@ -23,8 +21,8 @@ def get_list_of_all_states():
     return jsonify(users_dict)
 
 
-@app.route('/api/v1/users/<user_id>', methods=['GET'], strict_slashes=False)
-def get_state_obj(user_id):
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
+def get_user_obj(user_id):
     """Retrieves a State object"""
     from models import storage
     storage.reload
@@ -34,8 +32,8 @@ def get_state_obj(user_id):
     abort(404)
 
 
-@app.route('/api/v1/users/<user_id>', methods=['DELETE'], strict_slashes=False)
-def delete_state_ob(user_id):
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+def delete_user_ob(user_id):
     """Deletes a State object"""
     from models import storage
     storage.reload
@@ -47,8 +45,8 @@ def delete_state_ob(user_id):
     abort(404)
 
 
-@app.route('/api/v1/users', methods=['POST'], strict_slashes=False)
-def create_state():
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def create_user():
     """Creates a State"""
     try:
         data = request.get_json()
@@ -64,8 +62,8 @@ def create_state():
     return (new_user.to_dict()), 201
 
 
-@app.route('/api/v1/users/<user_id>', methods=['PUT'], strict_slashes=False)
-def update_state(user_id):
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def update_user(user_id):
     """Updates a State object"""
     try:
         data = request.get_json()
@@ -80,7 +78,3 @@ def update_state(user_id):
         user.save()
         return (user.to_dict())
     abort(404)  # If no matching state is found, return a 404 error
-
-
-if __name__ == "__main__":
-    app.run(host=host, port=port)
