@@ -4,7 +4,7 @@ import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
-import hashlib
+from hashlib import md5
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
@@ -39,5 +39,5 @@ class User(BaseModel, Base):
         """
         Hash password with mds function of hashlib
         """
-        md5 = hashlib.md5(psswd.encode("utf-8"))
-        self.__dict__["password"] = md5.hexdigest()
+        md5_obj = md5(psswd.encode('utf-8'))
+        self.__dict__["password"] = md5_obj.hexdigest()
