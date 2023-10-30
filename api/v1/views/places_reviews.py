@@ -14,7 +14,7 @@ def get_reviews(place_id):
     place = storage.get('Place', place_id)
     if place is None:
         abort(404)
-    reviews = [review.to_dict() for review in place.reviews]
+
     return jsonify(reviews)
 
 
@@ -27,7 +27,8 @@ def get_review(review_id):
     return jsonify(review.to_dict())
 
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_review(review_id):
     """Deletes a Review object"""
     review = storage.get('Review', review_id)
@@ -49,7 +50,7 @@ def create_review(place_id):
         abort(400, {'message': 'Not a JSON'})
     if 'text' not in request.get_json():
         abort(400, {'message': 'Missing text'})
-    if not 'user_id' in request.get_json():
+    if 'user_id' not in request.get_json():
         abort(400, {'message': 'Missing user_id'})
     data = request.get_json()
     user = storage.get('User', data['user_id'])
