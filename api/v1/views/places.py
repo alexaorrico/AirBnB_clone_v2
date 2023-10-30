@@ -13,12 +13,11 @@ from models.user import User
         )
 def list_places_of_city(city_id):
     '''Retrieves a list of all Place objects in city'''
-    city = storage.get(City, str(city_id))
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     places = [place.to_dict() for place in city.places]
     res = jsonify(places)
-    res.status_code = 200
     return res
 
 
@@ -27,7 +26,7 @@ def list_places_of_city(city_id):
         )
 def get_place(place_id):
     '''Retrieves a Place object'''
-    place_obj = storage.get(Place, str(place_id))
+    place_obj = storage.get("Place", place_id)
     if place_obj is None:
         abort(404)
     return jsonify(place_obj.to_dict())
@@ -38,14 +37,13 @@ def get_place(place_id):
         )
 def delete_place(place_id):
     '''Deletes a Place object'''
-    place_obj = storage.get(Place, str(place_id))
+    place_obj = storage.get("Place", place_id)
     if place_obj is None:
         abort(404)
     storage.delete(place_obj)
     storage.save()
     res = jsonify({})
-    res.status_code = 200
-    return res
+    return jsonify({}), 200
 
 
 @app_views.route(
@@ -53,7 +51,7 @@ def delete_place(place_id):
         )
 def create_place(city_id):
     '''Creates a Place'''
-    city = storage.get(City, str(city_id))
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     data = request.get_json(silent=True)
@@ -63,7 +61,7 @@ def create_place(city_id):
         abort(400, 'Missing user_id')
     if 'name' not in data:
         abort(400, 'Missing name')
-    user = storage.get(User, str(data["user_id"]))
+    user = storage.get("User", str(data["user_id"]))
     if user is None:
         abort(404)
 
@@ -81,7 +79,7 @@ def create_place(city_id):
         )
 def updates_place(place_id):
     '''Updates a Place object'''
-    place_obj = storage.get(Place, str(place_id))
+    place_obj = storage.get("Place", place_id)
     if place_obj is None:
         abort(404)
     data = request.get_json(silent=True)
@@ -93,6 +91,4 @@ def updates_place(place_id):
             del data[key]
     place_obj.__dict__.update(data)
     storage.save()
-    res = jsonify(place_obj.to_dict())
-    res.status_code = 200
-    return res
+	return jsonify(place_obj.to_dict()), 200
