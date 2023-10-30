@@ -26,7 +26,7 @@ def all_place_amenity(place_id):
     return jsonify(d_amen)
 
 
-@app_views.route("/places/<place_id>/amenites/<amenity_id>",
+@app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  methods=["DELETE"], strict_slashes=False)
 def kill_place(place_id, amenity_id):
     """deletes places with id supplied"""
