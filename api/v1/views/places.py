@@ -30,13 +30,13 @@ def get_place(place_id):
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_place(places, place_id):
+def delete_place(place_id):
     """Deletes a Place Object"""
-    places = storage.get(Place, place_id)
-    if not places:
+    place = storage.get(Place, place_id)
+    if place is None:
         abort(404)
 
-    storage.delete(places, place_id)
+    place.delete()
     storage.save()
     return jsonify({}), 200
 
@@ -45,26 +45,24 @@ def delete_place(places, place_id):
                  strict_slashes=False)
 def create_place(city_id):
     """Creates a Place"""
-    city = storage.get(City, city_id)
-    if not city:
+    city = storage.get("City", city_id)
+    if city is None:
         abort(404)
 
     if not request.get_json():
-        abort(400, 'Not a JSON')
-    if 'user_id' not in request.get_json():
-        abort(400, 'Missing user_id')
-
-    data = request.get_json()
-    user = storage.get(User, data['user_id'])
-    if not user:
+        return jsonify({'error': 'Not a JSON'}), 400
+    kwargs = request.get_json()
+    if 'user_id' not in kwargs:
+        return jsonify({'error': 'Missing user_id'}), 400
+    user = storage.get("User", kwargs['user_id'])
+    if user is None:
         abort(404)
-    if 'name' not in request.get_json():
-        abort(400, 'Missing name')
-
-    data["city_id"] = city_id
-    new = Place(**data)
-    new.save()
-    return jsonify(new.to_dict()), 201
+    if 'name' not in kwargs:
+        return make_response(jsonify({'error': 'Missing name'}), 400)
+    kwargs['city_id'] = city_id
+    place = Place(**kwargs)
+    place.save()
+    return jsonify(place.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
