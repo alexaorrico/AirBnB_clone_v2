@@ -89,3 +89,8 @@ class TestFileStorage(unittest.TestCase):
     
     def test_get(self):
         """Test that get properly retrieves objects from database"""
+        state = State(name="California")
+        DBStorage.new(state)
+        DBStorage.save()
+        state_id = state.id
+        self.assertEqual(state, DBStorage.get(State, state_id))
