@@ -18,7 +18,10 @@ def place_amenities_objs(place_id):
     place = storage.get(Place, str(place_id))
     if place is None:
         abort(404)
-    place_amenities = [amenity.to_dict() for amenity in place.amenities]
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        place_amenities = [amenity.to_dict() for amenity in place.amenities]
+    else:
+        place_amenities = [amenity for amenity in place.amenity_ids]
     res = jsonify(place_amenities)
     res.status_code = 200
     return res
@@ -29,22 +32,28 @@ def place_amenities_objs(place_id):
         methods=['DELETE'],
         strict_slashes=False
         )
-def delete_place_amenity(place_id, amenity_id):
+def delete_amenity(place_id, amenity_id):
     '''Deletes a Amenity object to a Place'''
     linked = False
     place_obj = storage.get(Place, str(place_id))
     amenity_obj = storage.get(Amenity, str(amenity_id))
     if place_obj is None or amenity_obj is None:
         abort(404)
-    for amenity in place_obj.amenities:
-        if amenity.id == str(amenity_id):
-            if getenv("HBNB_TYPE_STORAGE") == "db":
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        amenities = place_obj.amenities
+        for amenity in amenities:
+            if amenity.id == str(amenity_id):
                 place_obj.amenities.remove(amenity)
-            else:
-                place_obj.amenity_ids.remove(amenity.id)
-            linked = True
-            place_obj.save()
-            break
+                linked = True
+                break
+    else:
+        amenities = place_obj.amenity_ids
+        for amenity in amenities:
+            if amenity == amenity_id:
+                place_obj.amenity_ids.remove(amenity)
+                linked = True
+                break
+    place_obj.save()
     if linked is False:
         abort(404)
     else:
@@ -60,20 +69,38 @@ def delete_place_amenity(place_id, amenity_id):
         )
 def link_amenity_to_place(place_id, amenity_id):
     '''Link a Amenity object to a Place'''
+    linked = None
     place_obj = storage.get(Place, str(place_id))
     amenity_obj = storage.get(Amenity, str(amenity_id))
     if place_obj is None or amenity_obj is None:
         abort(404)
 
-    for amenity in place_obj.amenities:
-        if amenity.id == str(amenity_id):
-            return jsonify(amenity.to_dict())
+    if getenv("HBNB_TYPE_STORAGE") == "db":
+        for amenity in place_obj.amenities:
+            if amenity.id == str(amenity_id):
+                linked = amenity
+                break
+    else:
+        for amenity in place_obj.amenity_ids:
+            if amenity == str(amenity_id):
+                linked = amenity_obj
+                break
 
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        place_obj.amenities.append(amenity_obj)
+        if linked is not None:
+            return jsonify(linked), 200
+        else:
+            place_obj.amenities.append(amenity_obj)
+            place_obj.save()
+            res = jsonify(amenity_obj)
+            res.status_code = 201
+            return res
     else:
-        place_obj.amenities = amenity_obj
-    place_obj.save()
-    res = jsonify(amenity_obj.to_dict())
-    res.status_code = 201
-    return res
+        if linked is not None:
+            return jsonify(linked)
+        else:
+            place_obj.amenity_ids.append(amenity_id)
+            place_obj.save()
+            res = jsonify(amenity_obj)
+            res.status_code = 201
+            return res
