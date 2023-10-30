@@ -150,3 +150,11 @@ class TestAddedMethods(unittest.TestCase):
     def testHasCount(self):
         """Test if count function exists"""
         self.assertTrue(hasattr(FileStorage, 'count'))
+
+    def testNoClassCount(self):
+        """Passing no class"""
+        from models import storage
+        from models.state import State
+
+        noClsCt = storage.count()
+        self.assertTrue(noClsCt > 0)
