@@ -74,7 +74,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """returns the object based on the class and its ID,
+        """gets the object based on the class and its ID,
         or None if not found"""
         if not cls or not id:
             return None
