@@ -109,3 +109,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != "db", "not testint db storage")
     def test_get(self):
         """Test get return only one object if found"""
+
+    @unittest.skipIf(models.storage_t != "db", "not testint db storage")
+    def test_count(self):
+        """Test count return the number of objects"""

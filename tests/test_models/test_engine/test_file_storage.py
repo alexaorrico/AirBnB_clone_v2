@@ -158,3 +158,19 @@ class TestFileStorage(unittest.TestCase):
                 first_id = list(storage.all(cls).values())[0].id
                 output = str(storage.get(cls, first_id))
                 self.assertIn(first_id, output)
+
+    @unittest.skipIf(models.storage_t == "db", "not testint db storage")
+    def test_count(self):
+        """Test count return the number of objects"""
+        storage = FileStorage()
+        FileStorage._FileStorage__objects = {}
+        from console import HBNBCommand
+        from unittest.mock import patch
+        from io import StringIO
+        console = HBNBCommand()
+        for cls in classes.values():
+            with self.subTest(cls=cls):
+                with patch("sys.stdout", new=StringIO()) as output:
+                    console.onecmd('create {}'.format(cls))
+        storage.reload()
+        self.assertEqual(len(storage.all()), len(classes))
