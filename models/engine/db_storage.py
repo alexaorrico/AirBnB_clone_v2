@@ -70,17 +70,17 @@ class DBStorage:
         self.__session = Session
         
         def get(self, cls, id):
-            """Retrieves an object of a specific class using its ID."""
+            """retrieves an object of a specific class using its ID."""
             obj = None
             if cls is not None and issubclass(cls, Basemodel):
                 obj = self.__session.query(cls).filter(cls.id == id).first()
             return obj
         
         def count(self, cls, id):
-            """Collects the count of objects belonging to a specific class
+            """collects the count of objects belonging to a specific class
             or collects the count of all objects if cls is set to None."""
             return len(self.all(cls))
         
         def close(self):
-        """Call remove() method on the private session attribute"""
+        """call remove() method on the private session attribute"""
         self.__session.remove()
