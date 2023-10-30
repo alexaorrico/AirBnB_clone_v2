@@ -18,10 +18,15 @@ import json
 import os
 import pep8
 import unittest
+from os import getenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from models.state import State
+from models.base_model import Base, BaseModel
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
-
 
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
@@ -66,3 +71,56 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_all(self):
+        """Test that all returns the list of all objects"""
+        storage = DBStorage()
+        all_objs = storage.all()
+        self.assertIsNot(all_objs, None, "all() must return a dict")
+        self.assertEqual(type(all_objs), dict, "all() must return a dict")
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_new(self):
+        """Test that new adds an object to the database"""
+        storage = DBStorage()
+        new_state = State(name="California")
+        new_state.save()
+        all_objs = storage.all(State)
+        self.assertTrue(all_objs[new_state.id] == new_state, "State not added to database")
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_save(self):
+        """Test that save properly saves objects to the database"""
+        storage = DBStorage()
+        new_state = State(name="Nevada")
+        new_state.save()
+        storage.save()
+        Session = sessionmaker(bind=storage._DBStorage__engine)
+        session = Session()
+        result = session.query(State).filter_by(name="Nevada").first()
+        self.assertIsNot(result, None, "State not saved to database")
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get retrieves an object by class and ID"""
+        storage = DBStorage()
+        new_state = State(name="California")
+        new_state.save()
+        retrieved_state = storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state, "State not retrieved correctly")
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the correct count of objects in storage"""
+        storage = DBStorage()
+        state_count = storage.count(State)
+        new_state = State(name="Texas")
+        new_state.save()
+        updated_state_count = storage.count(State)
+        self.assertEqual(updated_state_count, state_count + 1, "Count not updated correctly")
+
+if __name__ == "__main__":
+    unittest.main()
