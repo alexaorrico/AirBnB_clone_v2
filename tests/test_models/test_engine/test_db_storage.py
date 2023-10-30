@@ -96,7 +96,8 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test for the get"""
         storage = DBStorage()
-        state = State(name: "Ogun")
+        value = {"name": "Ogun"}
+        state = State(**value)
         storage.new(state)
         storage.save()
         newState = storage.get(State, state.id)
@@ -106,10 +107,11 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test for Count"""
         storage = DBStorage()
-        state = State(name="Lagos")
+        value = {"name": "Ogun"}
+        state = State(**value)
         storage.new(state)
-        city = City(name="Yaba", state_id: state.id)
+        value = {"name": "Yaba", "state_id": state.id}
+        city = City(**value)
         storage.new(city)
         storage.save()
-        total = storage.count()
-        self.assertEquals(len(storage.all()), total)
+        self.assertEquals(len(storage.all()), storage.count())

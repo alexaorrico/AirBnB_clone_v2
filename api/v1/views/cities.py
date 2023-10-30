@@ -28,9 +28,9 @@ def cities(state_id=None):
             abort(400,"Missing name")
         
         request_json["state_id"] = state_id
-        newState = City(**request_json)
-        newState.save()
-        return jsonify(newState.to_json()), 201
+        newCity = City(**request_json)
+        newCity.save()
+        return jsonify(newCity.to_json()), 201
 
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
 def city(city_id=None):
