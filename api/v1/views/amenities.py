@@ -10,7 +10,7 @@ from models.amenity import Amenity
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_amenities():
     """Get all the amenity objects"""
-    objs = storage.all(State).values()
+    objs = storage.all(Amenity).values()
     return jsonify([amenities.to_dict() for amenities in objs])
 
 
