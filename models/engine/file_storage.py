@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from os import getenv
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -42,11 +43,14 @@ class FileStorage:
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
-        json_objects = {}
+        json_objs = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
+            if getenv('HBNB_TYPE_STORAGE') == 'db':
+                json_objs[key] = self.__objects[key].to_dict()
+            else:
+                json_objs[key] = self.__objects[key].to_dict(mode='file_save')
         with open(self.__file_path, 'w') as f:
-            json.dump(json_objects, f)
+            json.dump(json_objs, f)
 
     def reload(self):
         """deserializes the JSON file to __objects"""

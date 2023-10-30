@@ -108,7 +108,7 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         FileStorage._FileStorage__objects = save
         for key, value in new_dict.items():
-            new_dict[key] = value.to_dict()
+            new_dict[key] = value.to_dict(mode='file_save')
         string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()
