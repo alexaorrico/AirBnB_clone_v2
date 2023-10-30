@@ -90,8 +90,9 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get properly retrieves objects from database"""
+        storage = DBStorage()
         state = State(name="California")
-        DBStorage.new(state)
-        DBStorage.save()
+        storage.new(state)
+        storage.save()
         state_id = state.id
-        self.assertEqual(state, DBStorage.get(State, state_id))
+        self.assertEqual(state, storage.get(State, state_id))
