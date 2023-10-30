@@ -113,3 +113,8 @@ class TestAddedMethods(unittest.TestCase):
         """Test for the db_storage.py module docstring"""
         self.assertIsNot(DBStorage.get.__doc__, None,
                          "db_storage.py needs a docstring")
+
+    def test_db_storage_module_docstring(self):
+        """Test for the db_storage.py module docstring"""
+        self.assertIsNot(DBStorage.count.__doc__, None,
+                         "db_storage.py needs a docstring")
