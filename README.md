@@ -14,4 +14,4 @@ In this project, we use `restful API` and python `flask` for our AirBnB_clone ve
 - [x] Curl
 - [x] Using curl to request data
 - [x] Unittests
-- [x] Using Python style-guides: pep8
+- [x] Using Python style-guides: pep8 and pycodestyle
