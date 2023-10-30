@@ -30,7 +30,7 @@ def del_states_by_id(state_id):
     """return json"""
     state = storage.get(State, state_id)
     if state is None:
-        return jsonify(abort(404))
+        abort(404)
     state.delete()
     storage.save()
     return jsonify({})
@@ -40,9 +40,9 @@ def del_states_by_id(state_id):
 def post_states():
     """return json"""
     if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 404)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'name' not in request.get_json():
-        return make_response(jsonify({'error': 'Missing name'}), 404)
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     state = request.get_json()
     st = State(**state)
     st.save()
@@ -54,7 +54,7 @@ def post_states():
 def put_states_by_id(state_id):
     """return json"""
     if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 404)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     state = storage.get(State, state_id)
     if state is None:
         return jsonify(abort(404))
