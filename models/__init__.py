@@ -12,6 +12,7 @@ from models.review import Review
 from models.state import State
 from models.user import User"""
 
+
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 if storage_t == "db":

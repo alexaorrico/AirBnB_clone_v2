@@ -20,22 +20,14 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """Close storage"""
+    """Closes database storage"""
     storage.close()
 
 
-@app.errorhandler(Exception)
-def error_handler(error):
-    """Handles 404 error"""
-    if isinstance(error, HTTPException):
-        if type(error).__name__ == "NotFound":
-            error.description = "Not found"
-        msg = error.description
-        code = error.code
-    else:
-        msg = error
-        code = 500
-    return make_response(jsonify({"error": msg}), code)
+@app.errorhandler(404)
+def handle_exception(e):
+    """Return JSON instead of HTML for HTTP errors."""
+    return jsonify({"error": "Not found"}
 
 
 def setup_error_handler():
@@ -48,5 +40,4 @@ def setup_error_handler():
 
 if __name__ == "__main__":
     """Flask runner"""
-    setup_error_handler()
     app.run(host=host, port=port, threaded=True)
