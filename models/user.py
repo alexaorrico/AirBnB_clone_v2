@@ -33,5 +33,5 @@ class User(BaseModel, Base):
 
     def hash_pass(self, password):
         """This method encrypt user password"""
-        hash_pwd = hashlib..md5(password.encode()).hexdigest()
+        hash_pwd = hashlib.md5(password.encode()).hexdigest()
         setattr(self, 'password', hash_pwd)
