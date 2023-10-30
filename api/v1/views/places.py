@@ -5,6 +5,7 @@ from flask import jsonify, request, abort
 from models import storage
 from models.place import Place
 from models.city import City
+from models.state import State
 from api.v1.views import app_views
 
 
@@ -99,3 +100,48 @@ def update_place(place_id):
         setattr(place, k, v)
     place.save()
     return jsonify(place.to_dict()), 200
+
+
+@app_views.route('/places_search', methods=['POST'],
+                 strict_slashes=False)
+def search_place():
+    ''' serach for place object depending on the pararameters passed'''
+    data = request.get_json()
+
+    if data is None:
+        abort(400, "Not a JSON")
+    if not data or (not data.get("states") and not data.get("cities")
+                    and not data.get("amenities")):
+        place_objs = storage.all('Place')
+        return jsonify([obj.to_dict() for obj in place_objs.values()])
+
+    place_inState = []
+    if data.get("states"):
+        for state_id in data.get("states"):
+            state = storage.get(State, state_id)
+            if state:
+                for city in state.cities:
+                    places = city.places
+                    place_inState.extend(places)
+
+    if data.get("cities"):
+        for city_id in data.get("cities"):
+            city = storage.get(City, city_id)
+            if city:
+                places = city.places
+                place_inState.extend(places)
+
+    place_inState = list(set(place_inState))  # remove dups
+
+    if data.get("amenities"):
+        place_with_amenity = []
+        if data.get("states") or data.get("cities"):
+            place_objs = place_inState
+        else:
+            place_objs = storage.all('Place').values()
+        for place in place_objs:
+            if place.amenities == data.get("amenities"):
+                place_with_amenity.append(place)
+        return jsonify([obj.to_dict() for obj in place_with_amenity])
+
+    return jsonify([obj.to_dict() for obj in place_inState])
