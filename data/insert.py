@@ -18,11 +18,12 @@ from models.user import User
 fake = Faker()
 
 # Create a database connection
-engine = create_engine('mysql://hbnb_dev:hbnb_dev_pwd@localhost/hbnb_dev_db')
+engine = create_engine("mysql://hbnb_dev:hbnb_dev_pwd@localhost/hbnb_dev_db")
 
 # Create a session
 Session = sessionmaker(bind=engine)
 session = Session()
+
 
 # Generate random data and insert into tables
 def create_fake_users(num_users):
@@ -31,31 +32,28 @@ def create_fake_users(num_users):
             email=fake.email(),
             password=fake.password(),
             first_name=fake.first_name(),
-            last_name=fake.last_name()
+            last_name=fake.last_name(),
         )
         session.add(user)
 
+
 def create_fake_states(num_states):
     for _ in range(num_states):
-        state = State(
-            name=fake.state()
-        )
+        state = State(name=fake.state())
         session.add(state)
+
 
 def create_fake_cities(num_cities, states):
     for _ in range(num_cities):
-        city = City(
-            name=fake.city(),
-            state_id=random.choice(states).id
-        )
+        city = City(name=fake.city(), state_id=random.choice(states).id)
         session.add(city)
+
 
 def create_fake_amenities(num_amenities):
     for _ in range(num_amenities):
-        amenity = Amenity(
-            name=fake.word()
-        )
+        amenity = Amenity(name=fake.word())
         session.add(amenity)
+
 
 def create_fake_places(num_places, cities, users):
     for _ in range(num_places):
@@ -69,18 +67,20 @@ def create_fake_places(num_places, cities, users):
             max_guest=random.randint(1, 10),
             price_by_night=random.randint(50, 300),
             latitude=random.uniform(10, 90),
-            longitude=random.uniform(-180, 180)
+            longitude=random.uniform(-180, 180),
         )
         session.add(place)
+
 
 def create_fake_reviews(num_reviews, places, users):
     for _ in range(num_reviews):
         review = Review(
             place_id=random.choice(places).id,
             user_id=random.choice(users).id,
-            text=fake.paragraph()
+            text=fake.paragraph(),
         )
         session.add(review)
+
 
 if __name__ == "__main__":
     # Define the number of fake records you want to generate
