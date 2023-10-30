@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """states module"""
 from api.v1.views import app_views
-from flask import jsonify, Flask, abort, request, make_request
+from flask import jsonify, Flask, abort, request, make_response
 from models import storage
 from models.state import State
 
