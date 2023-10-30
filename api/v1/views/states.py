@@ -2,7 +2,7 @@
 """Module containing a Flask Blueprint routes that handles
 all default RESTFul API actions for State resource"""
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, jsonify, request, make_response
 from markupsafe import escape
 from models import storage
 from models.state import State
@@ -14,6 +14,16 @@ def retrive_object(state_id):
     if obj is None:
         abort(404)
     return (obj)
+
+
+def validate_request_json(request):
+    """Checks validity of request's json content"""
+    if not request.is_json:
+        abort(make_response(jsonify(error="Not a JSON"), 400))
+    req_json = request.get_json()
+    if request.method == 'POST' and 'name' not in req_json:
+        abort(make_response(jsonify(error="Missing name"), 400))
+    return (req_json)
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -40,11 +50,7 @@ def states_delete(state_id):
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def states_post():
     """Creates a State resource if request content is valid."""
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
-    if 'name' not in req_json:
-        return (jsonify({"error": "Missing name"}), 400)
+    req_json = validate_request_json(request)
     new_state = State(**req_json)
     new_state.save()
     return (jsonify(new_state.to_dict()), 201)
@@ -54,9 +60,7 @@ def states_post():
 def states_put(state_id):
     """Updates a State resource of given id if request content is valid."""
     obj = retrive_object(state_id)
-    if not request.is_json:
-        return (jsonify({"error": "Not a JSON"}), 400)
-    req_json = request.get_json()
+    req_json = validate_request_json(request)
     ignore = ['id', 'created_at', 'updated_at']
     for key, value in req_json.items():
         if key not in ignore:
