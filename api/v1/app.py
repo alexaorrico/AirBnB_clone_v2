@@ -3,10 +3,10 @@
 A Flask App that integrates with AirBnB static HTML Template
 """
 from api.v1.views import app_views
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify
 from models import storage
 import os
-from werkzeug.exceptions import HTTPException
+
 
 app = Flask(__name__)
 
@@ -23,24 +23,13 @@ def teardown_db(exception):
     """
     storage.close()
 
-def handle_exception(err):
-    is_http_exception = isinstance(err, HTTPException)
-
-    err_description = err.description if is_http_exception else str(err)
-    code = err.code if is_http_exception else 500
-
-    message = {'error': 'Not found' if is_http_exception and
-            isinstance(err, NotFound) else err_description}
-
-    return make_response(jsonify(message), code)
-
-@app.errorhandler(Exception)
-def global_error_handler(err):
+@app.errorhandler(404)
+def not_found():
     """
-    Global Route to handle All Error Status Codes
+    a method to handle page not found error
     """
-    return handle_exception(err)
-    
+    return jsonify({'error': 'Not found'}), 404
+
 if __name__ == "__main__":
     """
     MAIN Flask App starter
