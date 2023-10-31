@@ -27,7 +27,7 @@ def oops_not_found(error):
 
 
 if __name__ == "__main__":
-    hsti = os.getenv("HBNB_API_HOST", default="0.0.0.0")
-    pt = int(os.getenv("HBNB_API_PORT", default=5000))
-    app.run(host=hsti, port=pt, threaded=True)
+    hst = os.getenv("HBNB_API_HOST", default="0.0.0.0")
+    prt = int(os.getenv("HBNB_API_PORT", default=5000))
+    app.run(host=hst, port=prt, threaded=True)
 
