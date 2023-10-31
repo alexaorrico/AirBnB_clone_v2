@@ -1,3 +1,6 @@
+"""
+the __init__ file for the views
+"""
 from flask import Blueprint
 
 

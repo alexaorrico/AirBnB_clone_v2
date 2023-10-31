@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+this script contains the code for the api app
+"""
 from api.v1.views import app_views
 from flask import Flask, jsonify
 from flask_cors import CORS
@@ -25,6 +28,9 @@ def teardown(self):
 
 @app.errorhandler(404)
 def not_found(error):
+    """
+    this method handles 404 error
+    """
     response = {"error": "Not found"}
     return jsonify(response), 404
 

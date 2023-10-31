@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+this script handles the api views
+"""
+
 from api.v1.views import app_views
 from flask import jsonify, request
 from models import storage
