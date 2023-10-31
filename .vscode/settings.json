@@ -8,21 +8,19 @@
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+      "source.organizeImports": true
     },
   },
-"isort.args": [
-    "--profile",
-    "black"
-],
-"editor.defaultFormatter": "ms-python.black-formatter",
-"isort.importStrategy": "fromEnvironment",
-"isort.check": true,
-"isort.path": [
-    "/home/netrobe/.local/bin/isort"
-],
+  "isort.args": ["--profile", "black"],
+  "editor.defaultFormatter": "ms-python.black-formatter",
+  "isort.importStrategy": "fromEnvironment",
+  "isort.check": true,
+  "isort.path": ["/home/netrobe/.local/bin/isort"],
 "cSpell.words": [
     "appcontext",
     "HBNB"
+],
+"black-formatter.args": [
+    "--line-length 79"
 ],
 }
