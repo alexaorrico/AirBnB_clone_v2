@@ -6,6 +6,7 @@ from flask import Flask, jsonify, abort, request
 from models import storage
 from models.user import User
 from models.place import Place
+from models.state import State
 from models.city import City
 
 
@@ -96,3 +97,68 @@ def put_a_places(place_id):
 
     place.save()
     return jsonify(place.to_dict()), 200
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def places_search():
+    """
+    retrieves all Place objects depending of the JSON in the body
+    of the request
+    """
+    data = request.get_json(silent=True)
+    if data is None:
+        abort(400, 'Not a JSON')
+
+    all_empty = False
+    states_ids = []
+    cities_ids = []
+    amenities_ids = []
+
+    if data:
+        for key in data:
+            if key == "states":
+                states_ids = data.get("states", [])
+            elif key == "cities":
+                cities_ids = data.get("cities", [])
+            elif key == "amenities":
+                amenities_ids = data.get("amenities", [])
+    else:
+        all_empty = True
+
+    results = []
+    all_cities = []
+    if all_empty or (not states_ids and not cities_ids):
+        results = list(storage.all(Place).values())
+    if states_ids:
+        for state_id in states_ids:
+            state = storage.get(State, str(state_id))
+            state_cities = state.cities
+            for city in state_cities:
+                all_cities.append(str(city.id))
+                places = city.places
+                results.extend(places)
+    if cities_ids:
+        for city_id in cities_ids:
+            if str(city_id) in all_cities:
+                continue
+            city = storage.get(City, str(city_id))
+            places = city.places
+            results.extend(places)
+
+    return_results = []
+    if amenities_ids:
+        for place in results:
+            qualified = True
+            amenities = place.amenities
+            if not amenities or amenities == []:
+                qualified = False
+            place_amenities_ids = [str(amenity.id) for amenity in amenities]
+            for id_ in amenities_ids:
+                if id_ not in place_amenities_ids:
+                    qualified = False
+                    break
+            if qualified:
+                return_results.append(place.to_dict())
+    else:
+        return_results = [result.to_dict() for result in results]
+    return jsonify(return_results)
