@@ -31,11 +31,11 @@ def states(state_id):
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_states(state_id):
-    """ delete state by id"""
+    """ delete state by id """
     state = storage.get(State, state_id)
     if state is None:
         abort(400)
-    state.delete()
+    storage.delete(state)
     storage.save()
     return jsonify({})
 
