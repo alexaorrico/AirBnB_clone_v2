@@ -92,7 +92,7 @@ def places_search():
     if len(state_cities) > 0:
         all_places = [p for p in all_places if p.city_id in state_cities]
     elif amenities is None or len(amenities) == 0:
-        output = [place.to_json() for place in all_places]
+        output = [place.to_dict() for place in all_places]
         return jsonify(output)
     places_amenities = []
     if amenities and len(amenities) > 0:
@@ -108,5 +108,5 @@ def places_search():
                 places_amenities.append(p)
     else:
         places_amenities = all_places
-    output = [place.to_json() for place in places_amenities]
+    output = [place.to_dict() for place in places_amenities]
     return jsonify(output)
