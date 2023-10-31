@@ -15,7 +15,7 @@ def list_amenities():
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'])
 def get_amenity(amenity_id):
-    '''Retrieves an Amenity object'''
+    """Retrieves an Amenity object"""
     all_amenities = storage.all("Amenity").values()
     amenity_obj = [obj.to_dict() for obj in all_amenities
                    if obj.id == amenity_id]
