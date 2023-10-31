@@ -2,7 +2,7 @@
 
 """Create a view for Place"""
 
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
 from api.v1.views.places import *
 from models import storage
@@ -97,29 +97,27 @@ def places_search():
 
     places = []
     all_cities = []
-    all_places = storage.all("Place")
-
-    if states == cities == amenities == []:
-        places = all_places.values()
+    all_places = storage.all("Place").values()
+    if data == {} or (states == cities == amenities == []):
+        return jsonify(list(map(lambda p: p.to_dict(), all_places.values())))
+    if states == cities == []:
+        places = list(map(lambda p: p, all_places))
     else:
-        if states:
-            for state_id in states:
-                state = storage.get("State", state_id)
-                if state:
-                    all_cities.extend(list(map(lambda s: s.id, state.cities)))
-
-        all_cities.extend(cities)
-        all_cities = list(set(all_cities))
-
-        if all_cities:
-            for city_id in all_cities:
-                city = storage.get("City", city_id)
-                if city:
+        for state_id in states:
+            state = storage.get("State", state_id)
+            if state:
+                for city in state.cities:
                     places.extend(city.places)
-        if amenities:
-            places = [place for place in places
-                      if all(amenity_id in place.amenities
-                             for amenity_id in amenities)]
+        for city_id in cities:
+            city = storage.get("City", city_id)
+            if city:
+                places.extend(city.places)
+    places = list(set(places))
+
+    if amenities:
+        places = [place for place in places
+                  if all(amenity_id in place.amenities
+                         for amenity_id in amenities)]
 
     result = list(map(lambda x: x.to_dict(), places))
     return jsonify(result)
