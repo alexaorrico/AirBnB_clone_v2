@@ -24,7 +24,7 @@ def states():
 
         newState = State(**request_json)
         newState.save()
-        return jsonify(newState.to_dict()), 201
+        return make_response(jsonify(newState.to_dict()), 201)
 
 
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
@@ -40,12 +40,17 @@ def state(state_id=None):
 
     if request.method == "DELETE":
         state_obj.delete()
-        del state_obj
-        return jsonify({}), 200
+        storage.save()
+        return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        state_obj.bm_update(request_json)
-        return jsonify(state_obj.to_dict()), 200
+        if request_json is None:
+            abort(400, "Not a JSON")
+        for k, v in request_json.items():
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(state_obj, k, v)
+        storage.save()
+        return make_response(jsonify(state_obj.to_dict()), 200)
