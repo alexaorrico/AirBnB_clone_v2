@@ -88,6 +88,8 @@ def update_place(place_id):
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
+    if not request.is_json:
+        abort(400, "Not a JSON")
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
