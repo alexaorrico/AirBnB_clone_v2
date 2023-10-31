@@ -45,4 +45,3 @@ class User(BaseModel, Base):
                 super().__setattr__(__name, m.hexdigest())
         else:
             super().__setattr__(__name, __value)
-            
