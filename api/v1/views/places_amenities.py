@@ -11,7 +11,7 @@ STOR_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
-def amenities(place_id=None):
+def place_amenities(place_id=None):
     """route to return all amenities"""
 
     place_obj = storage.get(Place, place_id)
