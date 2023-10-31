@@ -73,7 +73,7 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
-    
+
     def update(self, data=None):
         """Updates the storage after putting"""
         exceptions = [
