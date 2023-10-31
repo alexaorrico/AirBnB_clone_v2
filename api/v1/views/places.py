@@ -110,8 +110,10 @@ def search_place():
 
     if data is None:
         abort(400, "Not a JSON")
-    if not data or (not data.get("states") and not data.get("cities")
-                    and not data.get("amenities")):
+    if not data or (
+                    not data.get("states") and
+                    not data.get("cities") and
+                    not data.get("amenities")):
         place_objs = storage.all('Place')
         return jsonify([obj.to_dict() for obj in place_objs.values()])
 
