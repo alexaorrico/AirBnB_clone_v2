@@ -102,13 +102,17 @@ def places_search():
 def search_places(states, cities, amenities):
     """Search for Place objects based on the search criteria."""
     places_to_return = set()
+    state_city_ids = []
     if states:
         for state_id in states:
             state = storage.get(State, state_id)
             if state:
-                cities.extend([city.id for city in state.cities])
+                state_city_ids.extend([city.id for city in state.cities])
             else:
                 abort(404)
+
+    if state_city_ids:
+        cities.extend(state_city_ids)
     if cities:
         for city_id in cities:
             city = storage.get(City, city_id)
@@ -116,6 +120,7 @@ def search_places(states, cities, amenities):
                 places_to_return.update(city.places)
             else:
                 abort(404)
+
     if amenities:
         for amenity_id in amenities:
             amenity = storage.get(Amenity, amenity_id)
