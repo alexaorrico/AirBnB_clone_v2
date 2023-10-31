@@ -10,6 +10,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
+import hashlib
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -58,7 +59,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, save_to_disk=False):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -69,6 +70,9 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
+        if 'password' in dictionary and not save_to_disk:
+            del dictionary['password']
+        return dicionary
 
     def delete(self):
         """delete the current instance from the storage"""
