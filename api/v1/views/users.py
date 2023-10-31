@@ -61,7 +61,7 @@ def create_user():
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def updates_user(user_id):
-    '''Updates a User object'''
+    """Updates a User object"""
     all_users = storage.all("User").values()
     user_obj = [obj.to_dict() for obj in all_users if obj.id == user_id]
     if user_obj == []:
