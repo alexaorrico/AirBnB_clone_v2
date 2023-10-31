@@ -10,6 +10,7 @@ from models.state import State
 from models.amenity import Amenity
 import os
 
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places(city_id):
@@ -98,29 +99,28 @@ def places_search():
     if not states and not cities and not amenities:
         places = storage.all(Place).values()
     else:
-        places = set()
+        places = []
 
         # Retrieve places based on states
         for state_id in states:
             state = storage.get(State, state_id)
             if state:
                 for city in state.cities:
-                    places.update(city.places)
+                    for place in city.places:
+                        places.append(place)
 
         # Retrieve places based on individual cities
         for city_id in cities:
             city = storage.get(City, city_id)
             if city:
-                places.update(city.places)
+                for place in city.places:
+                    if place not in places:
+                        places.append(place)
 
         # Filter places based on amenities
         if amenities:
-            amenities_set = set(amenities)
-            filtered_places = set()
-            for place in places:
-                place_amenities = {amenity.id for amenity in place.amenities}
-                if amenities_set.issubset(place_amenities):
-                    filtered_places.add(place)
-            places = filtered_places
+            places = [place for place in places if all \
+                        (amenity.id in place.amenities_ids for
+                         amenity in amenities)]
 
-    return jsonify([place.to_dict() for place in places])
+        return jsonify([place.to_dict() for place in places]), 200
