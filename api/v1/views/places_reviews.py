@@ -1,130 +1,94 @@
 #!/usr/bin/python3
-""" Module containing Review View """
+# -*- coding: utf-8 -*-
+
+"""view for Review object that handles all default RESTFul API actions"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.review import Review
+from models.place import Place
+from datetime import datetime
+import uuid
+
+# get list of all reviews
 
 
-@app_views.route('/places/<string:place_id>/reviews', methods=['GET'],
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def get_reviews(place_id):
-    """ Retrieves the list of all Review objects associated with a Place
-        object.
-
-    Args:
-        place_id (str): The UUID4 string representing a Place object.
-
-    Returns:
-        List of dictionaries representing Review objects in JSON format.
-        404 error if `place_id` is not linked to any Place object.
-    """
-    place_obj = storage.get("Place", place_id)
-    if place_obj is None:
+    """get list of all reviews"""
+    place = storage.get(Place, place_id)
+    if place is None:
         abort(404)
-    reviews = [review.to_dict() for review in place_obj.reviews]
+    reviews = [review.to_dict() for review in place.reviews]
     return jsonify(reviews)
 
+# get review by id
 
-@app_views.route('/reviews/<string:review_id>', methods=['GET'],
+
+@app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
 def get_review(review_id):
-    """ Retrieves a Review object based on `review_id`.
-
-    Args:
-        review_id (str): The UUID4 string representing a review object.
-
-    Returns:
-        Dictionary represention of a Review object in JSON format.
-        404 error if `review_id` is not linked to any Review object.
-    """
-    review_obj = storage.get("Review", review_id)
-    if review_obj is None:
+    """get review by id"""
+    review = storage.get(Review, review_id)
+    if review is None:
         abort(404)
-    return jsonify(review_obj.to_dict())
+    return jsonify(review.to_dict())
+
+# delete review by id
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['DELETE'],
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
-    """ Deletes a Review object based on `review_id`.
-
-    Args:
-        review_id (str): The UUID4 string representing a Review object.
-
-    Returns:
-        Returns an empty dictionary with the status code 200.
-        404 error if `review_id` is not linked to any Review object.
-    """
-    review_obj = storage.get("Review", review_id)
-    if review_obj is None:
+    """delete review by id"""
+    review = storage.get(Review, review_id)
+    if review is None:
         abort(404)
-    review_obj.delete()
+    storage.delete(review)
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
+
+# create review
 
 
-@app_views.route('/places/<string:place_id>/reviews', methods=['POST'],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def add_review(place_id):
-    """ Creates a Review object to associate to a Place object with the HTTP
-        body request fields as the values to set the Review object with.
-
-    Args:
-        place_id (str): The UUID4 string representing a Place object the new
-        Review object will be associated to.
-
-    Returns:
-        Returns the new Review object as a  dictionary in JSON format
-        with the status code 201.
-        400 error if HTTP body request is not a valid JSON or if the dictionary
-        passed does not contain the key `email` and/or `password`.
-        404 error if `place_id` is not linked to any Place object.
-    """
-    place_obj = storage.get("Place", place_id)
-    if place_obj is None:
+def create_review(place_id):
+    """create review"""
+    place = storage.get(Place, place_id)
+    if place is None:
         abort(404)
-    if request.json is None:
-        return "Not a JSON", 400
-    fields = request.get_json()
-    u_id = fields.get('user_id')
-    if u_id is None:
-        return "Missing user_id", 400
-    if storage.get("User", u_id) is None:
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    if 'user_id' not in request.get_json():
+        abort(400, 'Missing user_id')
+    if 'text' not in request.get_json():
+        abort(400, 'Missing text')
+    user_id = request.get_json()['user_id']
+    user = storage.get(User, user_id)
+    if user is None:
         abort(404)
-    if fields.get('text') is None:
-        return "Missing text", 400
-    fields["place_id"] = place_id
-    new_review = Review(**fields)
-    new_review.save()
-    """ May need to call `get` on new_user for all attributes to show """
-    return jsonify(new_review.to_dict()), 201
+    review = Review(**request.get_json())
+    review.place_id = place_id
+    review.save()
+    return jsonify(review.to_dict()), 201
+
+# update review by id
 
 
-@app_views.route('/reviews/<string:review_id>', methods=['PUT'],
+@app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
-def edit_review(review_id):
-    """ Edit a Review object using `review_id` and HTTP body request fields.
-
-    Args:
-        review_id (str): The UUID4 string representing a Review object.
-
-    Returns:
-        Returns the Review object as a dictionary in JSON format with the
-        status code 200.
-        400 error if the HTTP body request is not a valid JSON.
-        404 error if `review_id` is not linked to a Reivew object.
-    """
-    review_obj = storage.get("Review", review_id)
-    if review_obj is None:
+def update_review(review_id):
+    """update review by id"""
+    review = storage.get(Review, review_id)
+    if review is None:
         abort(404)
-    if request.json is None:
-        return "Not a JSON", 400
-    fields = request.get_json()
-    for key in fields:
-        if key in ['id', 'user_id', 'place_id', 'created_at', 'update_at']:
-            continue
-        if hasattr(review_obj, key):
-            setattr(review_obj, key, fields[key])
-    review_obj.save()
-    return jsonify(review_obj.to_dict()), 200
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    for key, value in request.get_json().items():
+        if key not in ['id', 'user_id', 'place_id',
+                       'created_at', 'updated_at']:
+            setattr(review, key, value)
+    review.save()
+    return jsonify(review.to_dict()), 200
