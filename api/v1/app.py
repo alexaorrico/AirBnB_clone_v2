@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from flask import Flask, jsonify, make_response
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from models import storage
 from os import getenv
 from werkzeug.exceptions import HTTPException
@@ -28,7 +28,7 @@ def teardown_db(exception):
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
     if isinstance(e, HTTPException):
-        if type(e).__name__ == "Notfound":
+        if type(e).__name__ == "NotFound":
             e.description = "Not found"
             dsp = {"error": e.description}
             cod = e.code
@@ -43,7 +43,7 @@ def setup_error_handler():
     updates HTTPException class with error function
     """
     for cls in HTTPException.__subclasses__():
-        app.register_error_handler(cls, error_handler)
+        app.register_error_handler(cls, handle_exception)
 
 
 if __name__ == "__main__":
