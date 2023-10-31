@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 '''
 Createw Flask app; and register the blueprint app_views to Flask instance app.
 '''
