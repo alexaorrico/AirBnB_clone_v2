@@ -2,14 +2,15 @@
 """
 API endpoints related to linking Place objects and Amenity objects.
 """
+import os
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.amenity import Amenity
 from models.place import Place
 
 
-@app_views.route("/places/<place_id>/amenities", methods=["GET"],
+@app_views.route("/places/<string:place_id>/amenities", methods=["GET"],
                  strict_slashes=False)
 def get_place_amenities(place_id):
     """
@@ -24,10 +25,17 @@ def get_place_amenities(place_id):
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    return jsonify([amenity.to_dict() for amenity in place.amenities])
+    amenities = []
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        amenity_objects = place.amenities
+    else:
+        amenity_objects = place.amenity_ids
+    for amenity in amenity_objects:
+        amenities.append(amenity.to_dict())
+    return jsonify(amenities)
 
 
-@app_views.route("/places/<place_id>/amenities/<amenity_id>",
+@app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
                  methods=["DELETE"], strict_slashes=False)
 def delete_place_amenity(place_id, amenity_id):
     """
@@ -42,20 +50,21 @@ def delete_place_amenity(place_id, amenity_id):
     """
     place = storage.get("Place", place_id)
     amenity = storage.get("Amenity", amenity_id)
-
     if place is None or amenity is None:
         abort(404)
-
-    if amenity not in place.amenities:
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        place_amenities = place.amenities
+    else:
+        place_amenities = place.amenity_ids
+    if amenity not in place_amenities:
         abort(404)
+    place_amenities.remove(amenity)
+    place.save()
+    return jsonify({})
 
-    place.amenities.remove(amenity)
-    storage.save()
-    return jsonify({}), 200
 
-
-@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["POST"],
-                 strict_slashes=False)
+@app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
+                 methods=["POST"], strict_slashes=False)
 def link_amenity_to_place(place_id, amenity_id):
     """
     Link an Amenity to a Place.
@@ -69,13 +78,14 @@ def link_amenity_to_place(place_id, amenity_id):
     """
     place = storage.get("Place", place_id)
     amenity = storage.get("Amenity", amenity_id)
-
     if place is None or amenity is None:
         abort(404)
-
-    if amenity in place.amenities:
-        return jsonify(amenity.to_dict()), 200
-
-    place.amenities.append(amenity)
-    storage.save()
-    return jsonify(amenity.to_dict()), 201
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        place_amenities = place.amenities
+    else:
+        place_amenities = place.amenity_ids
+    if amenity in place_amenities:
+        return jsonify(amenity.to_dict())
+    place_amenities.append(amenity)
+    place.save()
+    return make_response(jsonify(amenity.to_dict()), 201)
