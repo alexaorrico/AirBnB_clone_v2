@@ -67,19 +67,19 @@ def create_place(city_id):
     if not city:
         abort(404)
 
-    if not request.get_json():
+    data = request.get_json()
+    if not data:
         abort(400, description="Not a JSON")
 
-    if 'user_id' not in request.get_json():
+    if 'user_id' not in data:
         abort(400, description="Missing user_id")
 
-    data = request.get_json()
     user = storage.get(User, data['user_id'])
 
     if not user:
         abort(404)
 
-    if 'name' not in request.get_json():
+    if 'name' not in data:
         abort(400, description="Missing name")
 
     data["city_id"] = city_id
@@ -118,10 +118,9 @@ def places_search():
     of the request
     """
 
-    if request.get_json() is None:
-        abort(400, description="Not a JSON")
-
     data = request.get_json()
+    if data is None:
+        abort(400, description="Not a JSON")
 
     if data and len(data):
         states = data.get('states', None)
@@ -161,13 +160,13 @@ def places_search():
             list_places = storage.all(Place).values()
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
         list_places = [place for place in list_places
-                       if all([am in place.amenities
-                               for am in amenities_obj])]
+                       if all([amenity in place.amenities
+                               for amenity in amenities_obj])]
 
     places = []
-    for p in list_places:
-        d = p.to_dict()
-        d.pop('amenities', None)
-        places.append(d)
+    for place in list_places:
+        data = place.to_dict()
+        data.pop('amenities', None)
+        places.append(data)
 
     return jsonify(places)
