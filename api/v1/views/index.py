@@ -25,6 +25,6 @@ def count():
     classes = ["User", "State", "City", "Amenity", "Place", "Review"]
 
     for cls in classes:
-        counter[cls] = storage.count(cls)
+        count[cls] = storage.count(cls)
 
     return jsonify(count)
