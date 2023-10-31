@@ -74,7 +74,7 @@ class BaseModel:
         """delete the current instance from the storage"""
         models.storage.delete(self)
         models.storage.save()
-    
+
     def update(self, data=None):
         """Updates the storage after putting"""
         exceptions = [

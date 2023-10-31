@@ -31,7 +31,7 @@ def stats():
                 "amenities", "cities", "places", "reviews", "states", "users"
                 ]
         result = {}
-        for i in range(len(classes)):
+        for i in range(len(names)):
             name = names[i]
             result[name] = storage.count(classes[name])
         return jsonify(result)
