@@ -10,7 +10,9 @@ from flask_cors import CORS
 from flasgger import Swagger
 
 app = Flask(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
@@ -18,6 +20,10 @@ def storage_close(obj):
     """ Close Storage"""
     storage.close()
 
+@app.errorhandler(404)
+def page_not_found(error):
+    """Error 404"""
+    return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main":
     host = getenv('HBNB_API_HOST', default='0.0.0.0')
