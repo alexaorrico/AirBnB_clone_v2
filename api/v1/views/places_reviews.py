@@ -39,7 +39,7 @@ def reviews(place_id=None):
         request_json["place_id"] = place_id
         newReview = Review(**request_json)
         newReview.save()
-        return make_response(jsonify(newReview.to_dict()), 201)
+        return jsonify(newReview.to_dict()), 201
 
 
 @app_views.route("/reviews/<review_id>", methods=["GET", "DELETE", "PUT"])
@@ -55,17 +55,12 @@ def review(review_id=None):
 
     if request.method == "DELETE":
         review_obj.delete()
-        storage.save()
-        return make_response(jsonify({}), 200)
+        del review_obj
+        return jsonify({}), 200
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        if request_json is None:
-            abort(400, "Not a JSON")
-        for k, v in request_json.items():
-            if k not in ['id', 'created_at', 'updated_at']:
-                setattr(review_obj, k, v)
-        storage.save()
-        return make_response(jsonify(review_obj.to_dict()), 200)
+        review_obj.bm_update(request_json)
+        return jsonify(review_obj.to_dict()), 200
