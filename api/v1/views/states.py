@@ -49,6 +49,7 @@ def add_state():
         abort(400, 'Not a JSON')
     if "name" not in data:
         abort(400, 'Missing name')
+
     new_state = State(**data)
     storage.new(new_state)
     storage.save()
