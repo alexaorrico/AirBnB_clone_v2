@@ -49,13 +49,8 @@ class BaseModel:
 
     def __str__(self):
         """String representation of the BaseModel class"""
-<<<<<<< HEAD
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
-                                         self.__dict__)
-=======
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__,
                                          self.id, self.__dict__)
->>>>>>> 9fea6f059ad027caee4ef3d5e4ea2a35c6bb187a
 
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
@@ -72,21 +67,15 @@ class BaseModel:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
-<<<<<<< HEAD
-            del new_dict["_sa_instance_state"]        
-        if save_fs is None: 
-            if "password" in new_dict:
-                del new_dict["password"]
-=======
             del new_dict["_sa_instance_state"]
 
         if save_fs is None:
             if "password" in new_dict:
                 del new_dict["password"]
 
->>>>>>> 9fea6f059ad027caee4ef3d5e4ea2a35c6bb187a
         return new_dict
 
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
