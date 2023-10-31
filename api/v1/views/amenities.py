@@ -40,6 +40,7 @@ def amenity(amenity_id=None):
 
     if request.method == "DELETE":
         amenity_obj.delete()
+        storage.save()
         return jsonify({})
 
     if request.method == "PUT":

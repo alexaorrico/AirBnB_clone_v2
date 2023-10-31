@@ -40,7 +40,8 @@ def user(user_id=None):
 
     if request.method == "DELETE":
         user_obj.delete()
-        return make_response(jsonify({}), 200)
+        storage.save()
+        return jsonify({})
 
     if request.method == "PUT":
         request_json = request.get_json()
