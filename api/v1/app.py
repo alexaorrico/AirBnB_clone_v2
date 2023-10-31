@@ -21,7 +21,13 @@ def teardown_db(exception):
     storage.close()
 
 
-if __name__ == '__main__':
-    HBNB_API_HOST = getenv('HBNB_API_HOST', '0.0.0.0')
-    HBNB_API_PORT = getenv('HBNB_API_PORT', '5000')
+@app.errorhandler(404)
+def page_not_found(exception):
+    """returns a 404 error"""
+    return {"error": "Not found"}, 404
+
+
+if __name__ == "__main__":
+    HBNB_API_HOST = getenv("HBNB_API_HOST", "0.0.0.0")
+    HBNB_API_PORT = getenv("HBNB_API_PORT", "5000")
     app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
