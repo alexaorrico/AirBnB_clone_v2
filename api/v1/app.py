@@ -6,6 +6,7 @@ from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from models import storage
 from os import getenv
+from flasgger import Swagger
 from werkzeug.exceptions import HTTPException
 
 
@@ -13,6 +14,7 @@ host = getenv("HBNB_API_HOST", "0.0.0.0")
 port = getenv("HBNB_API_PORT", 5000)
 
 app = Flask(__name__)
+swagger = Swagger(app)
 app.url_map.strict_slashes = False
 cors = CORS(app, resources={r"/*": {"origins": host}})
 app.register_blueprint(app_views)
@@ -40,4 +42,5 @@ def setup_error_handler():
 
 if __name__ == "__main__":
     """Flask runner"""
+    setup_error_handler()
     app.run(host=host, port=port, threaded=True)
