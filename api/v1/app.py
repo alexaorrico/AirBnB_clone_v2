@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Module containing Flask application """
+# Module containing Flask application """
 from flask import Flask, jsonify
 from flask_cors import CORS
 from models import storage
