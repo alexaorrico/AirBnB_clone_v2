@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""index.py to connect to API"""
+'''index.py to connect to API'''
 from api.v1.views import app_views
 from flask import jsonify, request
 from models import storage
@@ -7,20 +7,20 @@ from models import storage
 
 @app_views.route('/status', strict_slashes=False)
 def status_ok():
-    """Status Ok method
+    '''Status Ok method
 
     :return: it returns json status ok message
-    """
+    '''
     return jsonify({"status": "OK"})
 
 @app_views.route('/stats', methods=['GET'])
 def get_objS_stats():
-    """
+    '''
     Get statistics about the total number of objects of each type
 
     :return: A JSON response containing the number of each object type.
     :rtype: flask.Response
-    """
+    '''
     if request.method == 'GET':
         cls_objs = {
                 "Amenity": "amenities",
