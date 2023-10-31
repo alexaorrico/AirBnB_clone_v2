@@ -20,10 +20,12 @@ def storage_close(obj):
     """ Close Storage"""
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """Error 404"""
     return jsonify({"error": "Not found"}), 404
+
 
 if __name__ == "__main":
     host = getenv('HBNB_API_HOST', default='0.0.0.0')
