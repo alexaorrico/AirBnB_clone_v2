@@ -94,6 +94,51 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
+    def tearDown(self):
+        """Clean up resources after tests"""
+        if os.path.exists(self.file_path):
+            os.remove(self.file_path)
+
+    def test_get(self):
+        """Test the get method"""
+        # Add a test object to FileStorage
+        test_obj = BaseModel()
+        self.storage.new(test_obj)
+        self.storage.save()
+
+        # Test get with valid class and ID
+        obj = self.storage.get(BaseModel, test_obj.id)
+        self.assertEqual(obj.id, test_obj.id)
+
+        # Test get with invalid ID
+        obj = self.storage.get(BaseModel, "12345")
+        self.assertIsNone(obj)
+
+        # Test get with None as class
+        obj = self.storage.get(None, test_obj.id)
+        self.assertIsNone(obj)
+
+        # Test get with None as ID
+        obj = self.storage.get(BaseModel, None)
+        self.assertIsNone(obj)
+
+    def test_count(self):
+        """Test the count method"""
+        # Add test objects to FileStorage
+        obj1 = BaseModel()
+        obj2 = BaseModel()
+        self.storage.new(obj1)
+        self.storage.new(obj2)
+        self.storage.save()
+
+        # Test count with specific class
+        count = self.storage.count(BaseModel)
+        self.assertEqual(count, 2)
+
+        # Test count with no class (should count all objects)
+        count = self.storage.count()
+        self.assertEqual(count, 2)
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""

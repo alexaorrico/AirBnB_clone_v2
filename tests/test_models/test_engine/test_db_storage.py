@@ -29,6 +29,55 @@ class TestDBStorageDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+    
+    def setUp(self):
+        """Set up for the tests"""
+        self.storage = DBStorage()
+        self.session = self.storage._DBStorage__session
+
+    def tearDown(self):
+        """Clean up resources after tests"""
+        self.session.rollback()
+        self.session.close()
+
+    def test_get(self):
+        """Test the get method"""
+        # Add a test object to the database
+        test_obj = BaseModel()
+        self.session.add(test_obj)
+        self.session.commit()
+
+        # Test get with valid class and ID
+        obj = self.storage.get(BaseModel, test_obj.id)
+        self.assertEqual(obj.id, test_obj.id)
+
+        # Test get with invalid ID
+        obj = self.storage.get(BaseModel, "12345")
+        self.assertIsNone(obj)
+
+        # Test get with None as class
+        obj = self.storage.get(None, test_obj.id)
+        self.assertIsNone(obj)
+
+        # Test get with None as ID
+        obj = self.storage.get(BaseModel, None)
+        self.assertIsNone(obj)
+
+    def test_count(self):
+        """Test the count method"""
+        # Add test objects to the database
+        obj1 = BaseModel()
+        obj2 = BaseModel()
+        self.session.add_all([obj1, obj2])
+        self.session.commit()
+
+        # Test count with specific class
+        count = self.storage.count(BaseModel)
+        self.assertEqual(count, 2)
+
+        # Test count with no class (should count all objects)
+        count = self.storage.count()
+        self.assertEqual(count, 2)
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
