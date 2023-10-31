@@ -32,7 +32,7 @@ def get_review(review_id):
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
-    return (jsonify(review.to_dict()))
+    return jsonify(review.to_dict())
 
 
 @app_views.route(
@@ -66,8 +66,10 @@ def create_review(place_id):
         abort(404)
     if "text" not in review:
         abort(400, "Missing text")
+
+    review['place_id'] = place_id
     review = Review(**review)
-    review.place_id = place_id
+    # review.place_id = place_id
     review.save()
     return jsonify(review.to_dict()), 201
 
