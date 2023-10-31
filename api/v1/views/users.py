@@ -28,7 +28,7 @@ def get_user(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    '''Deletes a User object'''
+    """Deletes a User object"""
     all_users = storage.all("User").values()
     user_obj = [obj.to_dict() for obj in all_users if obj.id == user_id]
     if user_obj == []:
