@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """It creates a new view for User object"""
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
 from models import storage
 from models.user import User
 from api.v1.views import app_views
@@ -25,14 +25,21 @@ def get_user(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('documentation/user/delete_user.yml', methods=['DELETE'])
 def delete_user(user_id):
-    """Deletes a User object by ID."""
+    """
+    Deletes a user Object
+    """
+
     user = storage.get(User, user_id)
-    if user is None:
+
+    if not user:
         abort(404)
+
     storage.delete(user)
     storage.save()
-    return jsonify({}), 200
+
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
