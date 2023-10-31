@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """ Module containing Flask application """
 from flask import Flask, jsonify
