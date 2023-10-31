@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Flask App for the HBNB API
+This module contains the app
 """
 
 from flask import Flask
