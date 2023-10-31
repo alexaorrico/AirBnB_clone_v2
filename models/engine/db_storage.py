@@ -81,12 +81,12 @@ class DBStorage:
         Return None if noting is found
         """
         if cls in classes.value():
-           all_cls = models.storage.all(cls)
-           for value in all_cls.values():
+            all_cls = models.storage.all(cls)
+            for value in all_cls.values():
                 if value.id == id:
-                      return value
+                    return value
 
-           return None
+            return None
 
     def count(self, cls=None):
         """
