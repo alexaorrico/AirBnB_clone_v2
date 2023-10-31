@@ -18,7 +18,8 @@
   "isort.path": ["/home/netrobe/.local/bin/isort"],
 "cSpell.words": [
     "appcontext",
-    "HBNB"
+    "HBNB",
+    "jsonify"
 ],
 "black-formatter.args": [
     "--line-length 79"
