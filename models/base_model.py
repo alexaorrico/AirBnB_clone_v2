@@ -64,7 +64,7 @@ class BaseModel:
         dct = self.__dict__.copy()
         dct['__class__'] = self.__class__.__name__
         for k in dct:
-            if type(dct[k]) is datetime:
+            if isinstance(dct[k], datetime):
                 dct[k] = dct[k].isoformat()
         if '_sa_instance_state' in dct.keys():
             del dct['_sa_instance_state']
