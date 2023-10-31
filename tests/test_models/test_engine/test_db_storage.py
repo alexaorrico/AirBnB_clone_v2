@@ -124,6 +124,6 @@ class TestFileStorage(unittest.TestCase):
         Test count with no class argument (count all objects)
         """
         storage = DBStorage()
-        cnt_tall = storage.count()
+        cnt_all = storage.count()
         cnt_state = storage.count(State)
         self.assertEqual(cnt_all, cnt_state)
