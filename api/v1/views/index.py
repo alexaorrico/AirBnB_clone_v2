@@ -1,4 +1,4 @@
-#usr/bin/env python
+ #!/usr/bin/python3
 """Beginning of the index"""
 
 from api.v1.views import app_views
