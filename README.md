@@ -158,4 +158,4 @@ Heritage Adeleke - [Github](https://github.com/Adetops) / [Twitter](https://twit
 
 Second part of Airbnb: Heritage and Leo
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
