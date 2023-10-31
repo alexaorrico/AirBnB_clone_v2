@@ -91,8 +91,6 @@ def places_search():
     if not request.is_json:
         abort(400, "Not a JSON")
     data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
     states = data.get('states', [])
     cities = data.get('cities', [])
     amenities = data.get('amenities', [])
