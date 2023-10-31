@@ -11,8 +11,8 @@ from models.state import State
 def states():
     """route to return all states"""
     if request.method == "GET":
-        states_dict = storage.all("State")
-        states_list = list(obj.to_json() for obj in states_dict.values())
+        states_dict = storage.all(State)
+        states_list = list(obj.to_dict() for obj in states_dict.values())
         return jsonify(states_list)
 
     if request.method == "POST":
@@ -24,28 +24,31 @@ def states():
         State = CNC.get("State")
         newState = State(**request_json)
         newState.save()
-        return jsonify(newState.to_json()), 201
+        return make_response(jsonify(newState.to_dict()), 201)
 
 
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
 def state(state_id=None):
     """Get, update or delete state with state id"""
-    state_obj = storage.get("State", state_id)
+    state_obj = storage.get(State, state_id)
 
     if state_obj is None:
         abort(404, "Not found")
 
     if request.method == "GET":
-        return jsonify(state_obj.to_json())
+        return jsonify(state_obj.to_dict())
 
     if request.method == "DELETE":
         state_obj.delete()
-        del state_obj
-        return jsonify({})
+        storage.save()
+        return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        stote_obj.bm_update(request_json)
-        return jsonify(state_obj.to_json())
+        for k, v in request_json.items():
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(state_obj, k, v)
+        storage.save()
+        return make_response(jsonify(state_obj.to_dict(), 200))
