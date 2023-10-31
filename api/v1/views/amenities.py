@@ -40,12 +40,11 @@ def amenity(amenity_id=None):
 
     if request.method == "DELETE":
         amenity_obj.delete()
-        del amenity_obj
-        return jsonify({}), 200
+        return jsonify({})
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        amenity_obj.bm_update(request_json)
+        amenity_obj.update(request_json)
         return jsonify(amenity_obj.to_dict()), 200

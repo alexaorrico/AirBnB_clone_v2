@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from flask import request, jsonify, abort, make_response
 from models import storage
 from models.review import Review
+from models.place import Place
 from os import environ
 STOR_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
@@ -13,7 +14,7 @@ STOR_TYPE = environ.get('HBNB_TYPE_STORAGE')
 def reviews(place_id=None):
     """route to return all reviews"""
 
-    place_obj = storage.get("Place", place_id)
+    place_obj = storage.get(Place, place_id)
     if place_obj is None:
         abort(404, 'Not found')
 
@@ -39,7 +40,7 @@ def reviews(place_id=None):
         request_json["place_id"] = place_id
         newReview = Review(**request_json)
         newReview.save()
-        return jsonify(newReview.to_dict()), 201
+        return make_response(jsonify(newReview.to_dict()), 201)
 
 
 @app_views.route("/reviews/<review_id>", methods=["GET", "DELETE", "PUT"])
@@ -55,12 +56,11 @@ def review(review_id=None):
 
     if request.method == "DELETE":
         review_obj.delete()
-        del review_obj
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        review_obj.bm_update(request_json)
-        return jsonify(review_obj.to_dict()), 200
+        review_obj.update(request_json)
+        return make_response(jsonify(review_obj.to_dict()), 200)

@@ -19,7 +19,7 @@ def places(city_id=None):
         abort(404, 'Not found')
 
     if request.method == "GET":
-        places_dict = storage.all("Places")
+        places_dict = storage.all(Place)
         places_list = [obj.to_dict()
                        for obj in places_dict.values()
                        if obj.city_id == city_id
@@ -40,13 +40,13 @@ def places(city_id=None):
         request_json["city_id"] = city_id
         newPlace = Place(**request_json)
         newPlace.save()
-        return jsonify(newPlace.to_dict()), 201
+        return make_response(jsonify(newPlace.to_dict()), 201)
 
 
 @app_views.route("/places/<place_id>", methods=["GET", "DELETE", "PUT"])
 def place(place_id=None):
     """Get, update or delete place with place id"""
-    place_obj = storage.get("Place", place_id)
+    place_obj = storage.get(Place, place_id)
 
     if place_obj is None:
         abort(404, "Not found")
@@ -56,12 +56,11 @@ def place(place_id=None):
 
     if request.method == "DELETE":
         place_obj.delete()
-        del place_obj
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        place_obj.bm_update(request_json)
-        return jsonify(place_obj.to_dict()), 200
+        place_obj.update(request_json)
+        return make_response(jsonify(place_obj.to_dict()), 200)

@@ -24,7 +24,7 @@ def users():
 
         newUser = User(**request_json)
         newUser.save()
-        return jsonify(newUser.to_dict()), 201
+        return make_response(jsonify(newUser.to_dict()), 201)
 
 
 @app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"])
@@ -40,12 +40,11 @@ def user(user_id=None):
 
     if request.method == "DELETE":
         user_obj.delete()
-        del user_obj
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
 
     if request.method == "PUT":
         request_json = request.get_json()
         if request_json is None:
             abort(400, "Not a JSON")
-        user_obj.bm_update(request_json)
-        return jsonify(user_obj.to_dict()), 200
+        user_obj.update(request_json)
+        return make_response(jsonify(user_obj.to_dict()), 200)

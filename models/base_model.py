@@ -73,3 +73,18 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+        models.storage.save()
+    
+    def update(self, data=None):
+        """Updates the storage after putting"""
+        exceptions = [
+            'id', 'created_at', 'updated_at', 'email',
+            'user_id', 'state_id', 'city_id', 'place_id'
+        ]
+        if data:
+            updated_data = {
+                k: v for k, v in data.items() if k not in exceptions
+            }
+            for k, v in updated_data.items():
+                setattr(self, k, v)
+            self.save()
