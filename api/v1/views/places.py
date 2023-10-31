@@ -112,12 +112,10 @@ def places_search():
                 city = storage.get("City", city_id)
                 if city:
                     places.extend(city.places)
+    places = list(set(places))
     if amenities:
-        filtered_places = []
         for place in places:
-            place_amenities = place.amenities
-            if all(amenity_id in place_amenities for amenity_id in amenities):
-                filtered_places.append(place)
-        return jsonify(list(map(lambda p: p.to_dict(), filtered_places)))
-    
+            if amenities not in place.amenities:
+                places.remove(place)
+
     return jsonify(list(map(lambda p: p.to_dict(), places)))
