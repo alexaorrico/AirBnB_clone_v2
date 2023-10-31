@@ -113,3 +113,48 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_existing_object(self):
+        """Test that get returns an existing object of a given class by ID."""
+        storage = models.storage
+        obj = State(name='Colorado')
+        obj.save()
+        retrieved_obj = storage.get(State, obj.id)
+        self.assertIsNotNone(retrieved_obj)
+        self.assertEqual(obj.id, retrieved_obj.id)
+        self.assertEqual(obj.name, retrieved_obj.name)
+        storage = models.storage
+        non_existent_id = 'non_existent_id'
+        retrieved_obj = storage.get(State, non_existent_id)
+        self.assertIsNone(retrieved_obj)
+        storage = models.storage
+        with self.assertRaises(TypeError):
+            storage.get(State, obj.id, 'extra_argument')
+        with self.assertRaises(TypeError):
+            storage.get(State)
+        with self.assertRaises(TypeError):
+            storage.get()
+
+    def test_count(self):
+        """Test that count returns the number of objects of a given class."""
+        storage = models.storage
+        objects_count = storage.count
+        self.assertIs(type(objects_count()), int)
+        self.assertIs(type(objects_count(None)), int)
+        self.assertIs(type(objects_count(int)), int)
+        self.assertIs(type(objects_count(State)), int)
+        self.assertEqual(objects_count(), objects_count(None))
+        state_lagos = State(name='Lagos')
+        state_lagos.save()
+        self.assertGreater(objects_count(State), 0)
+        self.assertEqual(objects_count(), objects_count(None))
+        a = objects_count(State)
+        state_enugu = State(name='Enugu')
+        state_enugu.save()
+        self.assertGreater(objects_count(State), a)
+        amenity_wifi = Amenity(name='Free WiFi')
+        amenity_wifi.save()
+        self.assertGreater(objects_count(), objects_count(State))
+        with self.assertRaises(TypeError):
+            objects_count(State, 'op')
