@@ -1,5 +1,17 @@
+# 0x05. AirBnB clone - RESTful API
+REST API is a software architectural style for Backend.
+
+REST = “REpresentational State Transfer”. API = Application Programming Interface
+
+Its purpose is to induce performance, scalability, simplicity, modifiability, visibility, portability, and reliability.
+
+REST API is Resource-based, a resource is an object and can be access by a URI. An object is “displayed”/transferred via a representation (typically JSON). HTTP methods will be actions on a resource.
+
+In this part of the AirBnB clone project, we will be using python and flask to build RESTFUL web applications
+
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
