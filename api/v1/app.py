@@ -6,7 +6,6 @@ from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from models import storage
 from os import getenv
-from flasgger import Swagger
 from werkzeug.exceptions import HTTPException
 
 
@@ -14,7 +13,6 @@ host = getenv("HBNB_API_HOST", "0.0.0.0")
 port = getenv("HBNB_API_PORT", 5000)
 
 app = Flask(__name__)
-swagger = Swagger(app)
 app.url_map.strict_slashes = False
 cors = CORS(app, resources={r"/*": {"origins": host}})
 app.register_blueprint(app_views)
@@ -26,10 +24,18 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.errorhandler(404)
+@app.errorhandler(Exception)
 def handle_exception(e):
     """Return JSON instead of HTML for HTTP errors."""
-    return jsonify({"error": "Not found"})
+    if isinstance(e, HTTPException):
+        if type(e).__name__ == "Notfound":
+            e.description = "Not found"
+            dsp = {"error": e.description}
+            cod = e.code
+        else:
+            dsp = {"error": e}
+            cod = 500
+        return make_response(jsonify(dsp), cod)
 
 
 def setup_error_handler():
