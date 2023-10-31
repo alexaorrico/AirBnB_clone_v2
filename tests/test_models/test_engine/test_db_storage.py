@@ -23,12 +23,17 @@ classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
 
+@unittest.skipIf(models.storage_t != "db", "Skip")
 class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+
+    def tearDownClass():
+        """Tests for removing storage objects"""
+        db_storage.delete_all()
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
@@ -86,3 +91,27 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test for the get"""
+        storage = DBStorage()
+        value = {"name": "Ogun"}
+        state = State(**value)
+        storage.new(state)
+        storage.save()
+        newState = storage.get(State, state.id)
+        self.assertEqual(newState, state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test for Count"""
+        storage = DBStorage()
+        value = {"name": "Ogun"}
+        state = State(**value)
+        storage.new(state)
+        value = {"name": "Yaba", "state_id": state.id}
+        city = City(**value)
+        storage.new(city)
+        storage.save()
+        self.assertEqual(len(storage.all()), storage.count())

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#script to push
+git add .
+git commit -m "Update"
+git push origin master

@@ -58,7 +58,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, file_storage=False):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -68,8 +68,24 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if not file_storage and self.__class__.__name__ == "User":
+            del new_dict["password"]
         return new_dict
 
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def update(self, data=None):
+        """Updates the storage after putting"""
+        exceptions = [
+            'id', 'created_at', 'updated_at', 'email',
+            'user_id', 'state_id', 'city_id', 'place_id'
+        ]
+        if data:
+            updated_data = {
+                k: v for k, v in data.items() if k not in exceptions
+            }
+            for k, v in updated_data.items():
+                setattr(self, k, v)
+            self.save()
