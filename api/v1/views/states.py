@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from flask import request, jsonify, abort, make_response
-from models import storage, CNC
+from models import storage
 from models.state import State
 
 
@@ -21,7 +21,6 @@ def states():
             abort(400, "Not a JSON")
         if request_json.get("name") is None:
             abort(400, "Missing name")
-        State = CNC.get("State")
         newState = State(**request_json)
         newState.save()
         return make_response(jsonify(newState.to_dict()), 201)
