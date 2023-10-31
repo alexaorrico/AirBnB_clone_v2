@@ -65,7 +65,7 @@ def create_place(city_id):
     data['city_id'] = city_id
     place = Place(**data)
     place.save()
-    return make_response(jsonify(place.to_dict()), )
+    return make_response(jsonify(place.to_dict()), 201)
 
 
 @app_views.route('/places/<string:place_id>', methods=['PUT'], strict_slashes=False)
@@ -76,7 +76,7 @@ def update_place(place_id):
         abort(404)
     data = request.get_json()
     if not data:
-        return nake_response(jsonify({"error": "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     for key, value in data.items():
         if key not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
             setattr(place, key, value)
