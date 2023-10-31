@@ -29,9 +29,6 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
-    @property
-    def password(self, pwd):
-        """
-        hashes the password to a MD5 value when a new user object is created
-        """
-        self.__password = hashlib.md5(pwd.encode()).hexdigest()
+        if 'password' in kwargs:
+            self.password = hashlib.md5(kwargs['password'].encode()) \
+                            .hexdigest()
