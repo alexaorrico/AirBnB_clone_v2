@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module contains endpoint(route) status
+This is the endpoint (route) status
 """
 from models import storage
 from flask import Flask
@@ -14,3 +14,13 @@ def get_status():
     Route to return a JSON status
     """
     return jsonify({"status": "OK"})
+
+@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
+def get_count():
+    counter = {}
+    classes = ["User", "State", "City", "Amenity", "Place", "Review"]
+
+    for cls in classes:
+        counter[cls] = storage.count(cls)
+
+    return jsonify(counter)
