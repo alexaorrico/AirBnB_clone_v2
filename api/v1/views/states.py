@@ -12,7 +12,9 @@ from models import storage, CNC
 @swag_from('swagger_yaml/states_no_id.yml', methods=['GET', 'POST'])
 def states_no_id():
     """
-        states route to handle http method for requested states no id provided
+    states route to handle http method for requested states no id provided
+
+    :return: return all stated jsonified or error
     """
     if request.method == 'GET':
         all_states = storage.all('State')
@@ -35,7 +37,9 @@ def states_no_id():
 @swag_from('swagger_yaml/states_id.yml', methods=['PUT', 'GET', 'DELETE'])
 def states_with_id(state_id=None):
     """
-        states route to handle http method for requested state by id
+    states route to handle http method for requested state by id
+
+    :return: return states id or error
     """
     state_obj = storage.get('State', state_id)
     if state_obj is None:

@@ -24,28 +24,15 @@ def teardown_db(exception):
     """
     storage.close()
 
-@app.errorhandler(Exception)
-def handle_exception(err):
+@app.errorhandler(404)
+def not_found():
     """
-    A method to handle errors
+    A method to handle the 404 error
+
+    :return: Response with error details
     """
-    is_http_exception = isinstance(err, HTTPException)
-
-    err_description = err.description if is_http_exception else str(err)
-    code = err.code if is_http_exception else 500
-
-    message = {'error': 'Not found' if is_http_exception and
-            isinstance(err, NotFound) else err_description}
-
-    return make_response(jsonify(message), code)
-
-def global_error_handler():
-    """
-    Global Route to handle All Error Status Codes
-    """
-    for cls in HTTPException.__subclasses__():
-        app.register_error_handler(cls, handle_exception)
-
+    return jsonify({'error': 'Not found'}), 404
+   
 if __name__ == "__main__":
     """
     MAIN Flask App starter

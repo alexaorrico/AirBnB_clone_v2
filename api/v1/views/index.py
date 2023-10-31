@@ -7,14 +7,19 @@ from models import storage
 
 @app_views.route('/status', strict_slashes=False)
 def status_ok():
-    """Status Ok method"""
+    """Status Ok method
+
+    :return: it returns json status ok message
+    """
     return jsonify({"status": "OK"})
 
 @app_views.route('/stats', methods=['GET'])
 def get_objS_stats():
     """
-    A method to return the total/count of
-    all objects
+    Get statistics about the total number of objects of each type
+
+    :return: A JSON response containing the number of each object type.
+    :rtype: flask.Response
     """
     if request.method == 'GET':
         cls_objs = {
