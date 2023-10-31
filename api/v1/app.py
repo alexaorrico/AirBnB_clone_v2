@@ -26,6 +26,9 @@ def teardown_db(exception):
 
 @app.errorhandler(Exception)
 def handle_exception(err):
+    """
+    A method to handle errors
+    """
     is_http_exception = isinstance(err, HTTPException)
 
     err_description = err.description if is_http_exception else str(err)
