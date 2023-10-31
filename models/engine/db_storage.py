@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage to store the data in sql
-update kiasi kuona kaa tutamerge
+Contains the class DBStorage
 """
 
 import models
@@ -22,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -40,50 +39,6 @@ class DBStorage:
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
-
-    def get(self, cls, id):
-        """Retrieves an object based on the class name and its ID.
-
-        Performs a query on the database to retrieve the matching row if it
-        exists and uses the columns to create the object for return.
-
-        Args:
-            cls (str): String representing the class name(Place, User, Amenity)
-            id: (str): UUID4 string representing the object ID.
-
-        Returns:
-            The object if it exists. None if cls or id is None or if the
-            object does not exist.
-        """
-        if cls is None or cls not in classes or id is None or type(id) is not \
-                str:
-            return None
-        cls = classes[cls]
-        objs = self.__session.query(cls).filter(cls.id == id)
-        if objs is None:
-            return None
-        return (objs.first())
-
-    def count(self, cls=None):
-        """Retrieves the total number of object based on the class name.
-
-        Performs a query on the database to retrieve the matching row if it
-        exists and uses the columns to create the object for return.
-
-        Args:
-            cls (str): String representing the class name(Place, User, Amenity)
-
-        Returns:
-            The object if it exists. If cls is None, the total number of
-            objects stored is returned.
-        """
-        count = 0
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    count += 1
-        return count
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -115,6 +70,20 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """retrieves objects"""
+        if cls is None or id is None:
+            return None
+        objs = self.__session.query(cls).all()
+        for obj in objs:
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """Counts the number of objects in storage"""
+        return len(self.all(cls))
 
     def close(self):
         """call remove() method on the private session attribute"""
