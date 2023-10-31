@@ -12,7 +12,7 @@ def states():
     """route to return all states"""
     if request.method == "GET":
         states_dict = storage.all("State")
-        states_list = [obj.to_dict() for obj in states_dict.values()]
+        states_list = list(obj.to_json() for obj in states_dict.values())
         return jsonify(states_list)
 
     if request.method == "POST":
@@ -30,7 +30,7 @@ def states():
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
 def state(state_id=None):
     """Get, update or delete state with state id"""
-    state_obj = storage.get(State, state_id)
+    state_obj = storage.get("State", state_id)
 
     if state_obj is None:
         abort(404, "Not found")
@@ -48,4 +48,4 @@ def state(state_id=None):
         if request_json is None:
             abort(400, "Not a JSON")
         stote_obj.bm_update(request_json)
-        return jsonify(state_obj.to_json)
+        return jsonify(state_obj.to_json())
