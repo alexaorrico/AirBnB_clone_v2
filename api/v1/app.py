@@ -38,4 +38,4 @@ if __name__ == "__main__":
     MAIN Flask App starter
     '''
     # start Flask app
-    app.run(host=host, port=port, threaded=True))
+    app.run(host=host, port=port, threaded=True)
