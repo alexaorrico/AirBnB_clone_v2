@@ -32,7 +32,7 @@ def get_review(review_id):
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
-    return (jsonify(review.to_dict()))
+    return jsonify(review.to_dict())
 
 
 @app_views.route(
@@ -58,16 +58,18 @@ def create_review(place_id):
         abort(404)
     review = request.get_json()
     if type(review) != dict:
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
     if "user_id" not in review:
-        abort(404, "Missing user_id")
+        abort(400, "Missing user_id")
     user = storage.get(User, review["user_id"])
     if not user:
         abort(404)
     if "text" not in review:
         abort(400, "Missing text")
+
+    review['place_id'] = place_id
     review = Review(**review)
-    review.place_id = place_id
+    # review.place_id = place_id
     review.save()
     return jsonify(review.to_dict()), 201
 
