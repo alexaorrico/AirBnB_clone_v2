@@ -9,9 +9,10 @@ from models.state import State
 @app_views.route("/states", methods=['GET'], strict_slashes=False)
 def all_states():
     """return json"""
+    list_state=[]
     for state in storage.all(State).values():
-        all_state = [state.to_dict()]
-    return jsonify(all_state)
+        list_state.append(state.to_dict())
+    return jsonify(list_state)
 
 
 @app_views.route("/states/<state_id>", methods=['GET'],
