@@ -99,7 +99,7 @@ def places_search():
     all_cities = []
     all_places = storage.all("Place").values()
     if data == {} or (states == cities == amenities == []):
-        return jsonify(list(map(lambda p: p.to_dict(), all_places.values())))
+        return jsonify(list(map(lambda p: p.to_dict(), all_places)))
     if states == cities == []:
         places = list(map(lambda p: p, all_places))
     else:
