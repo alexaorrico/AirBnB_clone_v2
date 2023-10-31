@@ -63,23 +63,6 @@ class BaseModel:
         """returns a dictionary containing all keys/values of the instance"""
         dictionary = dict(self.__dict__)
 
-        if not include_password:
-            dictionary.pop('password', None)
-
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
-        dictionary['__class__'] = self.__class__.__name__
-
-        return dictionary
-        new_dict = self.__dict__.copy()
-        if "created_at" in new_dict:
-            new_dict["created_at"] = new_dict["created_at"].strftime(time)
-        if "updated_at" in new_dict:
-            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
-        return new_dict
 
     def delete(self):
         """delete the current instance from the storage"""
