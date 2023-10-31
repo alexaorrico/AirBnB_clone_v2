@@ -26,7 +26,7 @@ def get_amenity(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenity(amenity_id):
-    '''Deletes an Amenity object'''
+    """Deletes an Amenity object"""
     all_amenities = storage.all("Amenity").values()
     amenity_obj = [obj.to_dict() for obj in all_amenities
                    if obj.id == amenity_id]
