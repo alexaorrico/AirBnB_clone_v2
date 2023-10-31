@@ -11,7 +11,7 @@ from models.state import State
 def states_no():
     """route to return all states"""
     state_list = []
-    state_obj = storage.get(state, state_id)
+    state_obj = storage.get(State, state_id)
     if request.method == "GET":
         if state_id is None:
             obj = storage.all(State).values()
