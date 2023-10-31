@@ -67,6 +67,7 @@ def place(place_id=None):
         place_obj.update(request_json)
         return make_response(jsonify(place_obj.to_dict()), 200)
 
+
 @app_views.route('/places_search', methods=['POST'])
 def places_search():
     """Searching places in cities with places_search endpoint"""
@@ -74,7 +75,7 @@ def places_search():
     request_json = request.get_json()
     if request_json is None:
         abort(400, 'Not a JSON')
-    
+
     states = request_json.get('states')
     if states and len(states) > 0:
         all_cities = storage.all(City)

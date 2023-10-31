@@ -26,18 +26,21 @@ def amenities(place_id=None):
                 amenities_list.append(amenity.to_dict())
         else:
             for amenity_id in place_obj.amenity_ids:
-                amenities_list.append(storage.get(Amenity, amenity_id).to_dict())
+                amenities_list.append(storage.get(
+                    Amenity, amenity_id).to_dict())
         return jsonify(amenities_list)
 
 
-@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["DELETE"])
+@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=[
+    "DELETE"
+    ])
 def delete_amenity(place_id, amenity_id):
     """Deletes amenity with place id and amenity id"""
     place_obj = storage.get(Place, place_id)
 
     if place_obj is None:
         abort(404, "Not found")
-    
+
     amenity_obj = storage.get(Amenity, amenity_id)
 
     if amenity_obj is None:
@@ -54,6 +57,7 @@ def delete_amenity(place_id, amenity_id):
     storage.save()
     return make_response(jsonify({}), 200)
 
+
 @app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["POST"])
 def create_amenity(place_id, amenity_id):
     """Creates amentity for a place using the place id"""
@@ -61,7 +65,7 @@ def create_amenity(place_id, amenity_id):
 
     if place_obj is None:
         abort(404, "Not found")
-    
+
     amenity_obj = storage.get(Amenity, amenity_id)
 
     if amenity_obj is None:
