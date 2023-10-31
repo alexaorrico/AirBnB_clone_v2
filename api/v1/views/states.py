@@ -8,10 +8,10 @@ from models.state import State
 
 
 @app_views.route("/states", methods=['GET', 'POST'])
-def states():
+def states_no():
     """route to return all states"""
     if request.method == "GET":
-        states_dict = storage.all(State)
+        states_dict = storage.all('State')
         states_list = list(obj.to_dict() for obj in states_dict.values())
         return jsonify(states_list)
 
@@ -23,13 +23,13 @@ def states():
             abort(400, "Missing name")
         newState = State(**request_json)
         newState.save()
-        return make_response(jsonify(newState.to_dict()), 201)
+        return jsonify(newState.to_dict()), 201
 
 
 @app_views.route("/states/<state_id>", methods=["GET", "DELETE", "PUT"])
-def state(state_id=None):
+def state_with(state_id=None):
     """Get, update or delete state with state id"""
-    state_obj = storage.get(State, state_id)
+    state_obj = storage.get('State', state_id)
 
     if state_obj is None:
         abort(404, "Not found")
@@ -40,7 +40,7 @@ def state(state_id=None):
     if request.method == "DELETE":
         state_obj.delete()
         storage.save()
-        return make_response(jsonify({}), 200)
+        return jsonify({})
 
     if request.method == "PUT":
         request_json = request.get_json()
@@ -50,4 +50,4 @@ def state(state_id=None):
             if k not in ['id', 'created_at', 'updated_at']:
                 setattr(state_obj, k, v)
         storage.save()
-        return make_response(jsonify(state_obj.to_dict(), 200))
+        return jsonify(state_obj.to_dict()), 200
