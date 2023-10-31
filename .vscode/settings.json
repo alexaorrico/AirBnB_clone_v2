@@ -1,0 +1,28 @@
+{
+  "editor.tabSize": 4,
+  "formatFiles.runOrganizeImports": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+  },
+"isort.args": [
+    "--profile",
+    "black"
+],
+"editor.defaultFormatter": "ms-python.black-formatter",
+"isort.importStrategy": "fromEnvironment",
+"isort.check": true,
+"isort.path": [
+    "/home/netrobe/.local/bin/isort"
+],
+"cSpell.words": [
+    "appcontext",
+    "HBNB"
+],
+}

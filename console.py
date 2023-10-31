@@ -1,19 +1,20 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
-import sys
-import re
 import os
-from datetime import datetime
+import re
+import sys
 import uuid
-from models.base_model import BaseModel
+from datetime import datetime
+
 from models import storage
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
 from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
 from models.review import Review
+from models.state import State
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):

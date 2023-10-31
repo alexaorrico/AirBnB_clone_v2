@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ """
-from tests.test_models.test_base_model import test_basemodel
+import unittest
+
+import env
 from models.city import City
 from models.state import State
-import env
-import unittest
+from tests.test_models.test_base_model import test_basemodel
 
 
 class test_City(test_basemodel):

@@ -62,6 +62,33 @@ class DBStorage:
                 del dct[key].__dict__['_sa_instance_state']
         return dct
 
+    def get(self, cls, id):
+        """
+        A method to retrieve one object.
+        Returns the object based on the class and its ID, or None if not found
+
+        :param id: string representing the object ID
+        :type id: string
+        """
+        if cls is None or id is None:
+            return None
+        try:
+            return self.__session.query(cls).filter(cls.id == id).one()
+        except Exception:
+            return None
+
+    def count(self, cls=None):
+        """
+        A method to count the number of objects in storage.
+
+        :param cls: class name
+        :type cls: class
+        """
+        if cls is None:
+            return len(self.all())
+        else:
+            return len(self.all(cls))
+
     def new(self, obj):
         """adds the obj to the current db session"""
         if obj is not None:

@@ -19,11 +19,38 @@ class FileStorage:
                 dct[key] = self.__objects[key]
         return dct
 
+    def get(self, cls, id):
+        """
+        A method to retrieve one object.
+        Returns the object based on the class and its ID, or None if not found
+
+        :param id: string representing the object ID
+        :type id: string
+        """
+        if cls is None or id is None:
+            return None
+        try:
+            return self.__objects[cls.__name__ + '.' + id]
+        except Exception:
+            return None
+
+    def count(self, cls=None):
+        """
+        A method to count the number of objects in storage.
+
+        :param cls: class name
+        :type cls: class
+        """
+        if cls is None:
+            return len(self.__objects)
+        else:
+            return len(self.all(cls))
+
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.__objects.update(
             {obj.to_dict()['__class__'] + '.' + obj.id: obj}
-            )
+        )
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -36,19 +63,19 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
         from models.amenity import Amenity
+        from models.base_model import BaseModel
+        from models.city import City
+        from models.place import Place
         from models.review import Review
+        from models.state import State
+        from models.user import User
 
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
         try:
             temp = {}
             with open(self.__file_path, 'r') as f:

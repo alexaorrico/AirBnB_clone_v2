@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """ """
-from time import sleep
-from tests.test_models.test_base_model import test_basemodel
-from models.state import State
-import env
 import unittest
+from time import sleep
+
+import env
 from models.city import City
+from models.state import State
+from tests.test_models.test_base_model import test_basemodel
 
 
 class test_state(test_basemodel):

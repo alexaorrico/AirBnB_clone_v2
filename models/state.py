@@ -4,9 +4,9 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+import env
 from models.base_model import Base, BaseModel
 from models.city import City
-import env
 
 
 class State(BaseModel, Base):
