@@ -8,7 +8,7 @@ from models import storage
 
 
 @app_views.route('/status', methods=['GET'])
-def status():
+def api_status():
     """
     function for status route that returns the status
     """
