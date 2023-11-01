@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Oussama El Ouali - [Github]([(https://github.com/OussamaBaOu)]) 
+pelumi olaosebikan - [Github]([(https://github.com/OluwaPella)
 
 ## License
 Public Domain. No copy write protection. 
