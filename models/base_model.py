@@ -10,7 +10,6 @@ import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
-import hashlib
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -59,9 +58,10 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self, save_to_disk=False):
+    def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         dictionary = dict(self.__dict__)
+        return dictionary
 
 
     def delete(self):
