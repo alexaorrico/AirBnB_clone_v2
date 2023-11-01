@@ -3,11 +3,15 @@
 This module contains the app
 """
 
+import os  # Add the import for the 'os' module
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
 
-app = Flask(__name__)
+app = Flask(__name)
+
+# Register the blueprint
+app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(exception):
