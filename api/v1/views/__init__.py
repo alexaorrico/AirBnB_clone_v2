@@ -1,14 +1,21 @@
 #!/usr/bin/python3
+"""blueprint"""
 
 from flask import Blueprint
+from .. import models
 
-app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
+Review, Amenity = models.review.Review, models.amenity.Amenity
+City, Place = models.city.City, models.place.Place
+storage = models.storage
+User, State = models.user.User, models.state.State
 
-from api.v1.views.index import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
-from api.v1.views.amenities import *
-from api.v1.views.users import *
-from api.v1.views.places import *
-from api.v1.views.places_reviews import *
-from api.v1.views.place_amenities import *
+app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
+
+from .amenities import *
+from .cities import *
+from .index import *
+from .places import *
+from .states import *
+from .places_amenities import *
+from .places_reviews import *
+from .users import *

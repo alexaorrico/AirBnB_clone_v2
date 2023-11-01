@@ -1,23 +1,33 @@
 #!/usr/bin/python3
-"""
-This module contains the app
-"""
+"""API status codes"""
 
-import os  # Add the import for the 'os' module
-from flask import Flask
-from models import storage
-from api.v1.views import app_views
+from flask import Flask, jsonify
+from .views import app_views
+from . import models
+from os import getenv
+from flask_cors import CORS
 
-app = Flask(__name)
 
-# Register the blueprint
+app = Flask(__name__)
+
+CORS(app, resources=r"/*", origins=["0.0.0.0"])
+
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
-def teardown(exception):
-    storage.close()
+def teardown(e=None):
+    """Clean up the application context and exit."""
+    models.storage.close()
+
+
+@app.errorhandler(404)
+def error(e):
+    """Checks if the request is not found and returns a 404 error"""
+    error = str(e).split()[0]
+    output = e.description if "Not found" in e.description else "Not found"
+    return jsonify({"error": output}), error
+
 
 if __name__ == "__main__":
-    host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
-    port = int(os.environ.get('HBNB_API_PORT', 5000))
-    app.run(host=host, port=port, threaded=True)
+    app.run(getenv("HBNB_API_HOST"), getenv("HBNB_API_PORT"))
