@@ -71,6 +71,14 @@ test_file_storage.py'])
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    def setUp(self):
+        self.storage = FileStorage()
+        self.storage.reload()
+
+    def tearDown(self):
+        self.storage.close()
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
