@@ -68,6 +68,7 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
@@ -113,3 +114,30 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_existing_object(self):
+        new_user = User()
+        new_user.save()
+        retrieved_user = self.storage.get(User, new_user.id)
+        self.assertEqual(retrieved_user, new_user)
+
+    def test_get_non_existing_object(self):
+        non_existent_user = self.storage.get(User, 'non_existent_id')
+        self.assertIsNone(non_existent_user)
+
+    def test_count_all_objects(self):
+        new_user = User()
+        new_user.save()
+        count = self.storage.count()
+        self.assertEqual(count, 1)
+
+    def test_count_objects_of_specific_class(self):
+        new_user = User()
+        new_user.save()
+        new_state = State()
+        new_state.save()
+        count = self.storage.count(User)
+        self.assertEqual(count, 1)
+
+if __name__ == '__main__':
+    unittest.main()
