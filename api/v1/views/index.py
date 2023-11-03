@@ -9,6 +9,7 @@ from flask import jsonify
 def status():
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'])
 def stats():
     '''return object stats'''
