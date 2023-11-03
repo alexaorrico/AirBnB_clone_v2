@@ -22,8 +22,8 @@ The console is the segment of the AirBnB project at ALX that will collectively c
 This project is interpreted/tested on Ubuntu 20.04 LTS using python3 (version 3.4.3)
 
 ## Installation
-* Clone this repository: `git clone "https://github.com/Gmwongela/AirBnB_clone_v3.git"`
-* Access AirBnb directory: `cd AirBnB_clone_v3`
+* Clone this repository: `git clone "https://github.com/Gmwongela/AirBnB_clone_v4.git"`
+* Access AirBnb directory: `cd AirBnB_clone_v4`
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Gideon David - [Github](https://github.com/Gmwongela)   
-James Mathenge - [Github](https://github.com/JamesMathenge)
+ ISHAQ RAJAB - [Github](https://github.com/Kidd0raj)
 
 ## License
 Public Domain. No copy write protection. 
