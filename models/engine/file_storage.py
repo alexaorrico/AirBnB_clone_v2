@@ -84,6 +84,8 @@ class FileStorage:
         """
         total = 0
         if type(cls) == str and cls in classes:
+            total = len(self.all(eval(cls)))
+        elif type(cls) != str and cls in classes.values():
             total = len(self.all(cls))
         elif cls is None:
             total = len(self.__objects)
