@@ -5,6 +5,15 @@ from models import storage
 from flask import jsonify
 
 
+classes = {
+    "amenities": "Amenity",
+    "cities": "City",
+    "places": "Place",
+    "reviews": "Review",
+    "states": "State",
+    "users": "User"
+}
+
 @app_views.route('/status', methods=['GET'])
 def status():
     return jsonify({"status": "OK"})
@@ -14,9 +23,7 @@ def status():
 def stats():
     '''return object stats'''
     stat_count = {}
-    for key, value in storage.all().items():
-        key = key.split('.')[0]
-        if key.lower() not in stat_count:
-            stat_count[key.lower()] = storage.count(key)
+    for key, value in classes.items():
+        stat_count[key] = storage.count(value)
 
     return jsonify(stat_count)
