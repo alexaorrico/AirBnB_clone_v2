@@ -15,8 +15,7 @@ def stats():
     stat_count = {}
     for key, value in storage.all().items():
         key = key.split('.')[0]
-        if key not in stat_count:
-            print(storage.count(key))
-            stat_count[key] = storage.count(key)
+        if key.lower() not in stat_count:
+            stat_count[key.lower()] = storage.count(key)
 
     return jsonify(stat_count)
