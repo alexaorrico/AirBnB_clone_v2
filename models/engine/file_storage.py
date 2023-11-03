@@ -82,10 +82,9 @@ class FileStorage:
         """returns the number of objects in storage matching the given class
         name. If no name is passed, returns the count of all objects in storage
         """
-        if cls is None:
-            return len(self.__objects)
-        count = 0
-        for key, value in self.__objects.items():
-            if key.split('.')[0] == cls.__name__:
-                count += 1
-        return count
+        total = 0
+        if type(cls) == str and cls in classes:
+            total = len(self.all(cls))
+        elif cls is None:
+            total = len(self.__objects)
+        return total
