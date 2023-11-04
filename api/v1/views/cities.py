@@ -6,6 +6,20 @@ from models import storage
 from models.city import City
 
 
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
+def get_cities_by_state(state_id=None):
+    '''get cities by state'''
+    state = storage.get('State', state_id)
+    if state:
+        cities = []
+        for city in state.cities:
+            cities.append(city.to_dict())
+        return jsonify(cities)
+    else:
+        abort(404)
+
+
 @app_views.route('/cities', methods=['GET'], strict_slashes=False)
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_cities(city_id=None):
@@ -22,7 +36,7 @@ def get_cities(city_id=None):
     return jsonify(all_cities)
 
 
-@app_views.route('cities/<city_id>', methods=['DELETE'],
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id=None):
     '''delete city'''
@@ -30,7 +44,7 @@ def delete_city(city_id=None):
     if city:
         city.delete()
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     else:
         abort(404)
 
