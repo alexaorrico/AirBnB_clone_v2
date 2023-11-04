@@ -4,13 +4,14 @@ from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
 from models.city import City
+from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def get_cities_by_state(state_id=None):
     '''get cities by state'''
-    state = storage.get('State', state_id)
+    state = storage.get(State, state_id)
     if state:
         cities = []
         for city in state.cities:
