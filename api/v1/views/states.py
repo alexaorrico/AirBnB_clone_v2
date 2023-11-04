@@ -34,6 +34,7 @@ def delete_state(state_id=None):
     else:
         abort(404)
 
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
     '''post state'''
@@ -44,3 +45,21 @@ def post_state():
     state = State(**request.get_json())
     state.save()
     return jsonify(state.to_dict()), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def update_state(state_id=None):
+    '''UPdate State'''
+    if not request.get_json():
+        return jsonify({'error': 'Not a JSON'}), 400
+    state = storage.get(State, state_id)
+    if state:
+        (request.get_json()).pop('id', None)
+        (request.get_json()).pop('updated_at', None)
+        (request.get_json()).pop('created_at', None)
+        for key, value in request.get_json().items():
+            setattr(state, key, value)
+        state.save()
+        return jsonify(state.to_dict())
+    else:
+        abort(404)
