@@ -69,21 +69,21 @@ def post_review(place_id=None):
     abort(404)
 
 
-# @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-# def update_place(place_id=None):
-#     '''UPdate place'''
-#     if not request.get_json():
-#         return jsonify({'error': 'Not a JSON'}), 400
-#     place = storage.get(Place, place_id)
-#     if place:
-#         (request.get_json()).pop('id', None)
-#         (request.get_json()).pop('updated_at', None)
-#         (request.get_json()).pop('created_at', None)
-#         (request.get_json()).pop('city_id', None)
-#         (request.get_json()).pop('user_id', None)
-#         for key, value in request.get_json().items():
-#             setattr(place, key, value)
-#         place.save()
-#         return jsonify(place.to_dict())
-#     else:
-#         abort(404)
+@app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
+def update_review(review_id=None):
+    '''UPdate review'''
+    if not request.get_json():
+        return jsonify({'error': 'Not a JSON'}), 400
+    review = storage.get(Review, review_id)
+    if review:
+        (request.get_json()).pop('id', None)
+        (request.get_json()).pop('updated_at', None)
+        (request.get_json()).pop('created_at', None)
+        (request.get_json()).pop('place_id', None)
+        (request.get_json()).pop('user_id', None)
+        for key, value in request.get_json().items():
+            setattr(review, key, value)
+        review.save()
+        return jsonify(review.to_dict())
+    else:
+        abort(404)
