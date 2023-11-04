@@ -22,19 +22,19 @@ def get_cities(city_id=None):
     return jsonify(all_cities)
 
 
-# @app_views.route('/states/<state_id>', methods=['DELETE'],
-#                  strict_slashes=False)
-# def delete_state(state_id=None):
-#     '''delete state'''
-#     state = storage.get(State, state_id)
-#     if state:
-#         state.delete()
-#         storage.save()
-#         return jsonify({})
-#     else:
-#         abort(404)
-#
-#
+@app_views.route('cities/<city_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_city(city_id=None):
+    '''delete city'''
+    city = storage.get(City, city_id)
+    if city:
+        city.delete()
+        storage.save()
+        return jsonify({})
+    else:
+        abort(404)
+
+
 # @app_views.route('/states', methods=['POST'], strict_slashes=False)
 # def post_state():
 #     '''post state'''
