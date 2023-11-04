@@ -67,19 +67,20 @@ def post_cities(state_id=None):
     abort(404)
 
 
-# @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-# def update_state(state_id=None):
-#     '''UPdate State'''
-#     if not request.get_json():
-#         return jsonify({'error': 'Not a JSON'}), 400
-#     state = storage.get(State, state_id)
-#     if state:
-#         (request.get_json()).pop('id', None)
-#         (request.get_json()).pop('updated_at', None)
-#         (request.get_json()).pop('created_at', None)
-#         for key, value in request.get_json().items():
-#             setattr(state, key, value)
-#         state.save()
-#         return jsonify(state.to_dict())
-#     else:
-#         abort(404)
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def update_cities(city_id=None):
+    '''UPdate cities'''
+    if not request.get_json():
+        return jsonify({'error': 'Not a JSON'}), 400
+    city = storage.get(City, city_id)
+    if city:
+        (request.get_json()).pop('id', None)
+        (request.get_json()).pop('updated_at', None)
+        (request.get_json()).pop('created_at', None)
+        (request.get_json()).pop('state_id', None)
+        for key, value in request.get_json().items():
+            setattr(city, key, value)
+        city.save()
+        return jsonify(city.to_dict())
+    else:
+        abort(404)
