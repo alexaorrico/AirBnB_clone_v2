@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''states.py'''
+'''amenity.py'''
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
@@ -23,44 +23,44 @@ def get_amenities(amenity_id=None):
     return jsonify(all_amenities)
 
 
-# @app_views.route('/states/<state_id>', methods=['DELETE'],
-#                  strict_slashes=False)
-# def delete_state(state_id=None):
-#     '''delete state'''
-#     state = storage.get(State, state_id)
-#     if state:
-#         state.delete()
-#         storage.save()
-#         return jsonify({})
-#     else:
-#         abort(404)
-#
-#
-# @app_views.route('/states', methods=['POST'], strict_slashes=False)
-# def post_state():
-#     '''post state'''
-#     if not request.get_json():
-#         return jsonify({'error': 'Not a JSON'}), 400
-#     if 'name' not in request.get_json():
-#         return jsonify({'error': 'Missing name'}), 400
-#     state = State(**request.get_json())
-#     state.save()
-#     return jsonify(state.to_dict()), 201
-#
-#
-# @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-# def update_state(state_id=None):
-#     '''UPdate State'''
-#     if not request.get_json():
-#         return jsonify({'error': 'Not a JSON'}), 400
-#     state = storage.get(State, state_id)
-#     if state:
-#         (request.get_json()).pop('id', None)
-#         (request.get_json()).pop('updated_at', None)
-#         (request.get_json()).pop('created_at', None)
-#         for key, value in request.get_json().items():
-#             setattr(state, key, value)
-#         state.save()
-#         return jsonify(state.to_dict())
-#     else:
-#         abort(404)
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_amenity(amenity_id=None):
+    '''delete amenity'''
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity:
+        amenity.delete()
+        storage.save()
+        return jsonify({})
+    else:
+        abort(404)
+
+
+@app_views.route('/amenities/', methods=['POST'], strict_slashes=False)
+def post_amenity():
+    '''post amenity'''
+    if not request.get_json():
+        return jsonify({'error': 'Not a JSON'}), 400
+    if 'name' not in request.get_json():
+        return jsonify({'error': 'Missing name'}), 400
+    amenity = Amenity(**request.get_json())
+    amenity.save()
+    return jsonify(amenity.to_dict()), 201
+
+
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+def update_amenity(amenity_id=None):
+    '''UPdate amenity'''
+    if not request.get_json():
+        return jsonify({'error': 'Not a JSON'}), 400
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity:
+        (request.get_json()).pop('id', None)
+        (request.get_json()).pop('updated_at', None)
+        (request.get_json()).pop('created_at', None)
+        for key, value in request.get_json().items():
+            setattr(amenity, key, value)
+        amenity.save()
+        return jsonify(amenity.to_dict())
+    else:
+        abort(404)
