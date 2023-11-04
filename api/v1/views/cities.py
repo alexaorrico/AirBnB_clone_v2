@@ -50,18 +50,23 @@ def delete_city(city_id=None):
         abort(404)
 
 
-# @app_views.route('/states', methods=['POST'], strict_slashes=False)
-# def post_state():
-#     '''post state'''
-#     if not request.get_json():
-#         return jsonify({'error': 'Not a JSON'}), 400
-#     if 'name' not in request.get_json():
-#         return jsonify({'error': 'Missing name'}), 400
-#     state = State(**request.get_json())
-#     state.save()
-#     return jsonify(state.to_dict()), 201
-#
-#
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
+def post_cities(state_id=None):
+    '''post cities'''
+    if not request.get_json():
+        return jsonify({'error': 'Not a JSON'}), 400
+    if 'name' not in request.get_json():
+        return jsonify({'error': 'Missing name'}), 400
+    state = storage.get(State, state_id)
+    if state:
+        city = City(**request.get_json())
+        city.state_id = state.id
+        city.save()
+        return jsonify(city.to_dict()), 201
+    abort(404)
+
+
 # @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 # def update_state(state_id=None):
 #     '''UPdate State'''
