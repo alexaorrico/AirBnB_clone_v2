@@ -58,7 +58,11 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, save_to_disk=False):
+        dict_obj = {...}
+        if not save_to_disk:
+            dict_obj.pop('password', None)
+        return dict_obj
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -69,7 +73,6 @@ class BaseModel:
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
         return new_dict
-
 
     def delete(self):
         """delete the current instance from the storage"""
