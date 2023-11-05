@@ -12,6 +12,7 @@ from os import getenv
 import requests
 import json
 
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places_by_city(city_id=None):
@@ -150,7 +151,6 @@ def post_places_search():
             if amenity:
                 amenities_obj.append(amenity)
 
-        removed_places = []
         for place in filtered_places:
             place_api = url + '{}/amenities'
             req = place_api.format(place.id)
@@ -162,10 +162,7 @@ def post_places_search():
 
             for amenity in amenities_obj:
                 if amenity not in amity_id_list:
-                    removed_places.append(place)
+                    filtered_places.remove(place)
                     break
-
-        for place in removed_places:
-            filtered_places.remove(place)
 
     return jsonify([place.to_dict() for place in filtered_places])
