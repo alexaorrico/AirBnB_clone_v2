@@ -134,19 +134,25 @@ def post_places_search():
 
     if not filtered_places:
         places = storage.all(Place)
-        return jsonify([place.to_dict() for place in places.values()])
+        filtered_places = [place for place in places.values()]
 
     if req_body.get('amenities'):
         amenities_obj = []
         for amenity_id in req_body.get('amenities'):
             amenity = storage.get(Amenity, amenity_id)
             if amenity:
-                amenities_obj.append(amenity)
+                amenities_obj.append(amenity.id)
 
+        removed_places = []
         for place in filtered_places:
+            amity_id_list = [storage.get(Amenity, amity_id.id).id
+                             for amity_id in place.amenities]
             for amenity in amenities_obj:
-                if amenity not in place.amenities:
-                    filtered_places.remove(place)
+                if amenity not in amity_id_list:
+                    removed_places.append(place)
                     break
+
+        for place in removed_places:
+            filtered_places.remove(place)
 
     return jsonify([place.to_dict() for place in filtered_places])
