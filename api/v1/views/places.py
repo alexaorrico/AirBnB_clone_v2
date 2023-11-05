@@ -8,7 +8,9 @@ from models.city import City
 from models.place import Place
 from models.user import User
 from models.state import State
-
+from os import getenv
+import requests
+import json
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
@@ -138,15 +140,26 @@ def post_places_search():
 
     if req_body.get('amenities'):
         amenities_obj = []
+        HBNB_API_PORT = getenv('HBNB_API_PORT')
+
+        port = 5000 if not HBNB_API_PORT else HBNB_API_PORT
+        url = "http://0.0.0.0:{}/api/v1/places/".format(port)
+
         for amenity_id in req_body.get('amenities'):
             amenity = storage.get(Amenity, amenity_id)
             if amenity:
-                amenities_obj.append(amenity.id)
+                amenities_obj.append(amenity)
 
         removed_places = []
         for place in filtered_places:
-            amity_id_list = [storage.get(Amenity, amity_id.id).id
-                             for amity_id in place.amenities]
+            place_api = url + '{}/amenities'
+            req = place_api.format(place.id)
+            response = requests.get(req)
+            places_obj = json.loads(response.text)
+
+            amity_id_list = [storage.get(Amenity, amenity['id'])
+                             for amenity in places_obj]
+
             for amenity in amenities_obj:
                 if amenity not in amity_id_list:
                     removed_places.append(place)
