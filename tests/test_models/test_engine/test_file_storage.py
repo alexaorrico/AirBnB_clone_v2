@@ -68,7 +68,8 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "not testing file storage")
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
 
@@ -146,6 +147,7 @@ class TestFileStorage(unittest.TestCase):
         new_state.save()
         count = self.storage.count(User)
         self.assertEqual(count, 1)
+
 
 if __name__ == '__main__':
     unittest.main()
