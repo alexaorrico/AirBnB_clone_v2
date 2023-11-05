@@ -155,6 +155,6 @@ No known bugs at this time.
 
 ## Author
 Ojeifo David - [Github](https://github.com/Kingvadee) / [Twitter](https://twitter.com/king_dave0496)  
-
+Levin Lavatsa - [github](https://github.com/Levlav) / [Twitter](https://twitter.com/Levin_Lavazza)
 ## License
 Public Domain. No copy write protection. 
