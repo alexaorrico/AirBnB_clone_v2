@@ -151,6 +151,7 @@ def post_places_search():
             if amenity:
                 amenities_obj.append(amenity)
 
+        removed_places = []
         for place in filtered_places:
             place_api = url + '{}/amenities'
             req = place_api.format(place.id)
@@ -162,7 +163,10 @@ def post_places_search():
 
             for amenity in amenities_obj:
                 if amenity not in amity_id_list:
-                    filtered_places.remove(place)
+                    removed_places.append(place)
                     break
+
+        for place in removed_places:
+            filtered_places.remove(place)
 
     return jsonify([place.to_dict() for place in filtered_places])
