@@ -41,7 +41,9 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """query on the current database session
+        args:
+            cls:class"""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -60,7 +62,9 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session obj if not None"""
+        """delete from the current database session obj if not None
+        args:
+            obj:object"""
         if obj is not None:
             self.__session.delete(obj)
 
@@ -74,3 +78,27 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """A method to retrieve one object
+        arg:
+           cls:class
+           id: string repre id
+        """
+        if cls and id:
+            key = cls.__name__ + '.' + id
+            return self.__session.query(cls).get(id)
+        return None
+
+    def count(self, cls=None):
+        """Number of objects in storage
+        args:
+            cls:classs name"""
+        if cls:
+            return len(self.__session.query(cls).all())\
+                    if cls in classes.values() else 0
+        else:
+            total_count = 0
+            for class_name in classes.values():
+                total_count += len(self.__session.query(class_name).all())
+            return total_count
