@@ -75,9 +75,10 @@ def update_place(place_id):
     data = request.get_json()
     if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
+    keys_to_ignore = ['id', 'user_id', 'city_id', 'created_at',
+                      'updated_at', 'name']
     for key, value in data.items():
-        if key not in ['id', 'user_id', 'city_id', 'created_at',
-                       'updated_at', 'name']:
+        if key not in keys_to_ignore:
             setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict()), 200
