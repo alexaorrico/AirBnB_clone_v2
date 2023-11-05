@@ -86,41 +86,27 @@ def update_place(place_id):
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
     """Retrieve Place objects based on search criteria in the request JSON"""
-
-    request_json = request.get_json()
-
-    if request_json is None:
-        abort(400, 'Not a JSON')
-
-    states = request_json.get('states', [])
-    cities = request_json.get('cities', [])
-    amenities = request_json.get('amenities', [])
-
-    if not states and not cities and not amenities:
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    data = request.get_json()
+    states = data.get('states', [])
+    cities = data.get('cities', [])
+    amenities = data.get('amenities', [])
+    if not any([states, cities, amenities]):
         places = storage.all(Place).values()
     else:
         places = []
-
-        # Retrieve places based on states
         for state_id in states:
             state = storage.get(State, state_id)
             if state:
                 for city in state.cities:
-                    for place in city.places:
-                        places.append(place)
-
-        # Retrieve places based on individual cities
+                    places.extend(city.places)
         for city_id in cities:
             city = storage.get(City, city_id)
             if city:
-                for place in city.places:
-                    if place not in places:
-                        places.append(place)
-
-        # Filter places based on amenities
+                places.extend(city.places)
         if amenities:
-            places = [place for place in places if all(
-                amenity.id in place.amenities_ids for amenity in amenities
-            )]
-
-        return jsonify([place.to_dict() for place in places]), 200
+            places = [place for place in places
+                      if all(amenity in place.amenities
+                             for amenity in amenities)]
+    return jsonify([place.to_dict() for place in places])
