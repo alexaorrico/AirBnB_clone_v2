@@ -97,14 +97,14 @@ def post_places_search():
 
     req_body = request.get_json()
 
-    if not req_body:
+    if req_body is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
     if req_body == {} or (req_body.get('states') is None and
                           req_body.get('cities') is None and
                           req_body.get('amenities') is None):
         places = storage.all(Place)
-        return jsonify([place.to_dict() for place in places])
+        return jsonify([place.to_dict() for place in places.values()])
 
     filtered_places = []
 
@@ -134,7 +134,7 @@ def post_places_search():
 
     if not filtered_places:
         places = storage.all(Place)
-        return jsonify([place.to_dict() for place in places])
+        return jsonify([place.to_dict() for place in places.values()])
 
     if req_body.get('amenities'):
         amenities_obj = []
