@@ -104,7 +104,8 @@ def post_places_search(city_id=None):
             places.append(place.to_dict())
         return jsonify(places)
 
-    if 'states' in request.get_json() and 'cities' in request.get_json() and 'amenities' in request.get_json():
+    if 'states' in request.get_json() and 'cities' in request.get_json()\
+            and 'amenities' in request.get_json():
         states = request.get_json()['states']
         cities = request.get_json()['cities']
         amenities = request.get_json()['amenities']
@@ -115,7 +116,8 @@ def post_places_search(city_id=None):
                 for city in state.cities:
                     if city.id in cities:
                         for place in city.places:
-                            if all(amenity in place.amenities for amenity in amenities):
+                            if all(amenity in place.amenities\
+                                    for amenity in amenities):
                                 places.append(place.to_dict())
         return jsonify(places)
 
