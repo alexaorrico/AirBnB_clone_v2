@@ -69,14 +69,14 @@ def create_review(place_id):
 def update_review(review_id):
     """Updates a Review object"""
     review = storage.get(Review, review_id)
-    if review is None:
+    if not review:
         abort(404)
-    data = request.get_json()
-    if data is None:
-        abort(400, 'Not a JSON')
-    for key, value in data.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at',
-                       'updated_at', 'text']:
+    if not request.get_json():
+        abort(400, description='Not a JSON')
+    keys_to_ignore = ['id', 'user_id', 'place_id', 'created_at',
+                      'updated_at']
+    for key, value in request.get_json().items():
+        if key not in keys_to_ignore:
             setattr(review, key, value)
-    review.save()
+    storage.save()
     return jsonify(review.to_dict()), 200
