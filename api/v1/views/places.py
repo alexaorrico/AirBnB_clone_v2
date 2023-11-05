@@ -74,7 +74,7 @@ def update_place(place_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        return jsonify({'eror': 'Not a JSON'}), 400
+        return jsonify({'error': 'Not a JSON'}), 400
     for key, value in data.items():
         if key not in ['id', 'user_id', 'city_id', 'created_at',
                        'updated_at', 'name']:
@@ -119,8 +119,8 @@ def places_search():
 
         # Filter places based on amenities
         if amenities:
-            places = [place for place in places if all \
-                        (amenity.id in place.amenities_ids for
-                         amenity in amenities)]
+            places = [place for place in places if all(
+                amenity.id in place.amenities_ids for amenity in amenities
+            )]
 
         return jsonify([place.to_dict() for place in places]), 200
