@@ -59,10 +59,6 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self, save_to_disk=False):
-        dict_obj = {...}
-        if not save_to_disk:
-            dict_obj.pop('password', None)
-        return dict_obj
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
