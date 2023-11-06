@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -41,11 +41,12 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """query on the current database session.
+        Each record of a table is an instance of a class."""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+                objs = self.__session.query(classes[clss]).all()  # all records
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
@@ -74,3 +75,32 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retrieves an object based on the specified class and its id."""
+
+        if cls is None or id is None:
+            return None
+
+        try:
+            obj = self.__session.query(cls).filter(cls.id == id).first()
+            return obj
+        except exc.SQLAlchemyError:
+            return None
+
+    def count(self, cls=None):
+        """counts the number of objects in storage."""
+
+        if cls is not None:
+            count = self.__session.query(cls).count()
+        else:
+            # count total objects of each class
+            tot_count = 0
+
+            for clss in classes.values():
+                count = self.__session.query(clss).count()
+                tot_count += count
+
+            count = tot_count
+
+        return count
