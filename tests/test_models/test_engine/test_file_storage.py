@@ -113,3 +113,39 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_city(self):
+        """test for returning city object"""
+        storage = FileStorage()
+        entered_state = State(name="Oklahoma")
+        entered_state.save()
+        entered_city = City(name="Tulsa")
+        entered_city.save()
+        self.assertIs(entered_city, storage.get("City",
+                                                        entered_state.id))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_no_id(self):
+        """test returns for invalid id"""
+        storage = FileStorage()
+        self.assertIsNone(storage.get("State", ""))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_none(self):
+        """test returns for none"""
+        storage = FileStorage()
+        self.assertIsNone(storage.get("", ""))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        storage = FileStorage()
+        self.assertEqual(0, storage.count())
+        self.assertEqual(0, storage.count(City))
+        entered_state = State(name="Oklahoma")
+        entered_state.save()
+        entered_city = City(name="Tulsa")
+        entered_city.save()
+        self.assertEqual(1, storage.count(City))
+        self.assertEqual(2, storage.count())
+
