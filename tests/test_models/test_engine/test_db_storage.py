@@ -86,3 +86,57 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """Test for dbstorage for get and count"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_state(self):
+        """test for returning a state object"""
+        entered_state = State(name="Oklahoma")
+        entered_state.save()
+        self.assertIs(entered_state, models.storage.get("State",
+                                                        entered_state.id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_user(self):
+        """test for returning user object"""
+        entered_user = User(email="johndoe@gmail.com", password="pwd")
+        entered_user.save()
+        self.assertIs(entered_user, models.storage.get("User",
+                                                       entered_user.id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_city(self):
+        """test for returning city object"""
+        entered_state = State(name="Oklahoma")
+        entered_state.save()
+        entered_city = City(name="Tulsa")
+        entered_city.save()
+        self.assertIs(entered_city, models.storage.get("City",
+                                                        entered_state.id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_invalid_id(self):
+        """test for class but know id"""
+        self.assertIsNone(models.storage.get("State", ""))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_starting_count(self):
+        """test if count starts at zero"""
+        self.assertEqual(0, models.storage(""))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        entered_state = State(name="Oklahoma")
+        entered_state.save()
+        entered_city = City(name="Tulsa")
+        entered_city.save()
+        entered_user = User(email="johndoe@gmail.com", password="pwd")
+        entered_user.save()
+        self.assertEqual(models.storage.count() + 1,
+                         models.storage.count(City))
+        self.assertEqual(models.storage.count() + 3,
+                         models.storage.count())
+
