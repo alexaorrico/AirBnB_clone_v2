@@ -21,11 +21,11 @@ def status():
     api_status = {"status": "OK"}
     return jsonify(api_status)
 
-@app_views.route('/stats')
+
+@app_views.route('/api/v1/stats')
 def stats():
     """Stats route methods"""
     info_dict = {}
     for key, values in classes.items():
         info_dict[key] = storage.count(values)
     return jsonify(info_dict)
-
