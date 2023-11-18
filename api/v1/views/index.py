@@ -11,8 +11,8 @@ from models.state import State
 from models.user import User
 
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {"amenity": Amenity, "city": City,
+           "place": Place, "review": Review, "state": State, "user": User}
 
 
 @app_views.route('/status')
@@ -22,7 +22,7 @@ def status():
     return jsonify(api_status)
 
 
-@app_views.route('/api/v1/stats')
+@app_views.route('/stats')
 def stats():
     """Stats route methods"""
     info_dict = {}
