@@ -26,6 +26,6 @@ def status():
 def stats():
     """Stats route methods"""
     info_dict = {}
-    for key, values in classes.items():
-        info_dict.update({key: storage.count(values)})
+    for key, value in classes.items():
+        info_dict.update({key: storage.count(value)})
     return jsonify(info_dict)
