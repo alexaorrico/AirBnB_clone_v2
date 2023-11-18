@@ -134,7 +134,7 @@ vagrantAirBnB_clone$./console.py
 
 Documented commands (type help <topic>):
 ========================================
-EOF  all  create  destroy  help  quit  show  update
+all  create  destroy  help  quit  show  update
 
 (hbnb) all MyModel
 ** class doesn't exist **
