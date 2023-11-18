@@ -45,22 +45,30 @@ while true; do
     fi
 done
 
-# ask if they wants to push
+# ask for the branch to push to
 while true; do
-    read -p "Committed! Ready to push? (y/n) or press enter to push: " push_repo
-    case $push_repo in
-        [Yy]* | "")
-            echo "Okay!"
-            if ! git push; then
-                # if git push fails, let em know!
-                echo -e "Rut-Roh, something's funky with git, the push was unsuccessful!\n"
-                exit 1
-            fi
-            break
-            ;;
-        [Nn]* ) echo "Sure thing homie! Don't forget to push later!"; exit 0;;
-        * ) echo "Oops, lets try that again. ";;
-    esac
+  read -p "Branch to push to: " branch_to_push
+  if [ -z "$branch_to_push" ]; then
+      echo -e "Oops, gotta have a branch to push to!\n"
+  else
+      # Show user what changes will be pushed to the selected branch
+      echo "Changes to be pushed to $branch_to_push:"
+      git diff --stat --cached $branch_to_push
+      read -p "Do you want to push to this branch? (y/n) or press enter to change branch: " push_to_this_branch
+      case $push_to_this_branch in
+          [Yy]* | "")
+              echo "Okay!"
+              if ! git push -u origin $branch_to_push; then
+                 # if git push fails, let em know!
+                 echo -e "Rut-Roh, something's funky with git, the push was unsuccessful!\n"
+                 exit 1
+              fi
+              break
+              ;;
+          [Nn]* ) echo "Sure thing homie! Let's change the branch.";;
+          * ) echo "Oops, lets try that again. ";;
+      esac
+  fi
 done
 # To make this executable from anywhere on a MacOS,
 # copy the following commands:
