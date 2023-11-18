@@ -11,8 +11,8 @@ from models.state import State
 from models.user import User
 
 
-classes = {"amenity": Amenity, "city": City,
-           "place": Place, "review": Review, "state": State, "user": User}
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 @app_views.route('/status')
@@ -27,5 +27,5 @@ def stats():
     """Stats route methods"""
     info_dict = {}
     for key, values in classes.items():
-        info_dict[key] = storage.count(values)
+        info_dict.update({key: storage.count(values)})
     return jsonify(info_dict)
