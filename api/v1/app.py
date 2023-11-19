@@ -11,12 +11,12 @@ if __name__ == "__main__":
     port = int(os.environ.get("HBNB_API_PORT", "5000"))
     app.run(host=host, port=port, threaded=True)
 
-    app = Flask(__name__)
-    app_views = Blueprint("app_views", __name__)
+app = Flask(__name__)
+app_views = Blueprint("app_views", __name__)
 
-    app.register_blueprint(app_views)
+app.register_blueprint(app_views)
 
-    @app.teardown_appcontext
-    def teardown():
-        """closes application"""
-        storage.close()
+@app.teardown_appcontext
+def teardown():
+    """closes application"""
+    storage.close()
