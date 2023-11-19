@@ -2,11 +2,21 @@
 """ API Status Application Instance Module """
 from api.v1.views import app_views
 from flask import Flask
+from flask import jsonify
 from models import storage
 from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+
+@app.errorhandler(404)
+def not_found(e):
+    """handles 404 error"""
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 
 @app.teardown_appcontext
