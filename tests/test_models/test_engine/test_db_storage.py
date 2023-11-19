@@ -115,7 +115,7 @@ class TestDBStorage(unittest.TestCase):
         entered_city = City(name="Tulsa")
         entered_city.save()
         self.assertIs(entered_city, models.storage.get("City",
-                                                        entered_state.id))
+                                                       entered_state.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_invalid_id(self):
@@ -139,4 +139,3 @@ class TestDBStorage(unittest.TestCase):
                          models.storage.count(City))
         self.assertEqual(models.storage.count() + 3,
                          models.storage.count())
-
