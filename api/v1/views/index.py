@@ -11,12 +11,13 @@ from models.state import State
 from models.user import User
 
 
-classes = {"amenity": Amenity,
-           "city": City,
-           "place": Place,
-           "review": Review,
-           "state": State,
-           "user": User
+classes = {
+    "amenity": Amenity,
+    "city": City,
+    "place": Place,
+    "review": Review,
+    "state": State,
+    "user": User
 }
 
 
