@@ -9,11 +9,15 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.errorhandler(404)
-def not_found(exception):
+def not_found(e):
     """handles 404 error"""
-    not_found_error = {"error": "Not found"}
-    return jsonify(not_found_error)
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
 
 @app.teardown_appcontext
 def teardown_db(exception):
