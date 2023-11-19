@@ -2,12 +2,18 @@
 """ API Status Application Instance Module """
 from api.v1.views import app_views
 from flask import Flask
+from flask import jsonify
 from models import storage
 from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+@app.errorhandler(404)
+def not_found(exception):
+    """handles 404 error"""
+    not_found_error = {"error": "Not found"}
+    return jsonify(not_found_error)
 
 @app.teardown_appcontext
 def teardown_db(exception):
