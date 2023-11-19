@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 #Michael edited 11/19 8:36 PM
-"""API"""
+""" This is the module for the API. """
 
 from flask import Flask
 from models import storage
