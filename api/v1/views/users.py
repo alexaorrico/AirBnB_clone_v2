@@ -68,6 +68,7 @@ def update_user(user_id):
             for key, value in json_body:
                 if key not in ['id', 'email', 'created_at', 'updated_at']:
                     setattr(user_obj, key, value)
+            user_obj.save()
             return make_response(jsonify({user_obj.to_dict()}), 200)
         else:
             abort(404)
