@@ -2,7 +2,7 @@
 """This is the module for the API"""
 # Michael edited 11/19 8:36 PM
 
-from flask import Flask
+from flask import Flask, Blueprint
 from models import storage
 from api.v1.views import app_views
 import os
