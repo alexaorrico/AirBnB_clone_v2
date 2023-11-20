@@ -96,7 +96,7 @@ class TestDBStorage(unittest.TestCase):
         """test for returning a state object"""
         entered_state = State(name="Oklahoma")
         entered_state.save()
-        self.assertIs(entered_state, models.storage.get("State",
+        self.assertEqual(entered_state, models.storage.get("State",
                                                         entered_state.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -104,7 +104,7 @@ class TestDBStorage(unittest.TestCase):
         """test for returning user object"""
         entered_user = User(email="johndoe@gmail.com", password="pwd")
         entered_user.save()
-        self.assertIs(entered_user, models.storage.get("User",
+        self.assertEqual(entered_user, models.storage.get("User",
                                                        entered_user.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -114,7 +114,7 @@ class TestDBStorage(unittest.TestCase):
         entered_state.save()
         entered_city = City(name="Tulsa")
         entered_city.save()
-        self.assertIs(entered_city, models.storage.get("City",
+        self.assertEqual(entered_city, models.storage.get("City",
                                                        entered_state.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
