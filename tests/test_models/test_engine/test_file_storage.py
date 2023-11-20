@@ -116,17 +116,17 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_state(self):
-        """test for returning city object"""
+        """test for returning state object"""
         storage = FileStorage()
-        entered_state = State(name="Oklahoma")
+        entered_state = State(name="Texas")
         entered_state.save()
-        self.assertEqual(entered_state, storage.get("State", entered_state.id))
+        self.assertEqual(entered_state, storage.get(State, entered_state.id))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_no_id(self):
         """test returns for invalid id"""
         storage = FileStorage()
-        self.assertIsNone(storage.get("State", ""))
+        self.assertIsNone(storage.get(State, ""))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_none(self):
@@ -137,9 +137,9 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         storage = FileStorage()
-        self.assertEqual(len(storage.all()), storage.count())
+        count_a = models.storage.count()
+        count_s = models.storage.count(State)
         entered_state = State(name="Oklahoma")
         entered_state.save()
-        entered_city = City(name="Tulsa")
-        entered_city.save()
-        self.assertEqual(1, storage.count(City))
+        self.assertEqual(count_a + 1, storage.count())
+        self.assertEqual(count_s + 1, storage.count(State))
