@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """ Gets a single object based on class name and id """
         if cls and id:
-            this_one = "{}.{}". format(cls, id)
+            this_one = "{}.{}". format(cls.__name__, id)
             obj_list = self.all(cls)
             if this_one in obj_list:
                 return self.all(cls)[this_one]
