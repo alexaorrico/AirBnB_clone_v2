@@ -56,7 +56,7 @@ def post_city(state_id):
         return make_response(jsonify({"error": "Missing name"}), 400)
     if state_obj is None:
         abort(404)
-    # obj["state_id"] = state_id
+    obj["state_id"] = state_id
     created_city = City(**obj)
     created_city.save()
     return make_response(jsonify(created_city.to_dict()), 201)
