@@ -12,12 +12,12 @@ from models.user import User
 
 
 classes = {
-    "amenity": Amenity,
-    "city": City,
-    "place": Place,
-    "review": Review,
-    "state": State,
-    "user": User
+    "amenities": Amenity,
+    "cities": City,
+    "places": Place,
+    "reviews": Review,
+    "states": State,
+    "users": User
 }
 
 
