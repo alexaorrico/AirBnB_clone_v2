@@ -3,11 +3,11 @@
 View for State objects that will handle all default
 RESTful API actions
 """
-#Allison Edited 11/20 2:43 PM
+# Allison Edited 11/20 2:43 PM
 from models.state import State
 from models import storage
 from api.v1.views import app_views
-from flask import abort, jsonify, make_respone, request
+from flask import abort, jsonify, make_response, request
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -42,24 +42,46 @@ def del_state(state_id):
     storage.delete(state)
     storage.save()
 
-    return make_respone(jsonify({}), 200)
+    return make_response(jsonify({}), 200)
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def new_state():
     """Creates a new state - transforms the HTTP body request to a dictionary
     handles error raises, returns new state with status code 201"""
 
-    response_data = request.get_json()
+    new_data = request.get_json()
 
-    if response_data is None:
+    if new_data is None:
         abort(400, description="Not a JSON")
-    if 'name' not in response_data:
+    if 'name' not in new_data:
         abort(400, description="Missing name")
 
-    new_state = State(**response_data)
+    new_state = State(**new_data)
     """** -> double asterisks unpacks a dictionary and passes
     the key-value pairs as arguments to the state constructor!"""
     storage.new(new_state)
     storage.save()
 
     return jsonify(new_state.to_dict()), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_da_state(state_id):
+    state = storage.get(State, state_id)
+
+    if not state:
+        abort(404)
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    key_ignore = ['id', 'created_at', 'updated_at']
+
+    new_data = request.get_json
+    for key, value in new_data.items():
+        if key not in key_ignore:
+            setattr(state, key, value)
+
+    storage.save()
+    return make_response(jsonify(state.to_dict()), 200)
