@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-#Michael edited 11/19 8:49 PM
 """ index for RESTful API """
-import app_views from api.v1.views
+# Michael edited 11/19 8:49 PM
+
+from api.v1.views import app_views
 from flask import jsonify
 
 @app_views.route("/status")
