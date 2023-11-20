@@ -68,6 +68,8 @@ def new_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_da_state(state_id):
+    """updates a state based off of state id given in request, returns the
+    city object and status code 200"""
     state = storage.get(State, state_id)
 
     if not state:
