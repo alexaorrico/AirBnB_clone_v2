@@ -72,7 +72,7 @@ def new_city(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_da_state(city_id):
+def update_the_city(city_id):
     """updates a city based off of city id given in request, returns the
     city object and status code 200"""
     city = storage.get(City, city_id)
