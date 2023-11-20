@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-#Michael edited 4:16 PM
 """
 Contains the class DBStorage
 """
@@ -87,8 +86,6 @@ class DBStorage:
         for item in object_list.values():
             if item.id == id:
                 return item
-            elif item.id is None:
-                return None
         return None
 
     def count(self, cls=None):
