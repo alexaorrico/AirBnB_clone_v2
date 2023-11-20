@@ -77,7 +77,6 @@ class FileStorage:
 
         self.reload()
         object_list = self.all(cls)
-        print(object_list)
 
         for item in object_list.values():
             if item.id == id:
