@@ -75,7 +75,7 @@ class FileStorage:
         if cls is None or id is None:
             return None
 
-        self.reload()
+        # self.reload()
         object_list = self.all(cls)
 
         for item in object_list.values():
