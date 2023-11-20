@@ -27,7 +27,6 @@ def city_by_id(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-
     return jsonify(city.to_dict())
 
 
