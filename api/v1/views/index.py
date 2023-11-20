@@ -15,7 +15,7 @@ def stats():
     """ Stats of API """
     from models import storage
     classes = {
-        "amenities": :"Amenity", 
+        "amenities": "Amenity", 
         "cities": "City", 
         "places": "Place", 
         "reviews": "Review", 
