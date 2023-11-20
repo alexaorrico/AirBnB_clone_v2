@@ -43,3 +43,23 @@ def del_state(state_id):
     storage.save()
 
     return make_respone(jsonify({}), 200)
+
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def new_state():
+    """Creates a new state - transforms the HTTP body request to a dictionary
+    handles error raises, returns new state with status code 201"""
+
+    response_data = request.get_json()
+
+    if response_data is None:
+        abort(400, description="Not a JSON")
+    if 'name' not in response_data:
+        abort(400, description="Missing name")
+
+    new_state = State(**response_data)
+    """** -> double asterisks unpacks a dictionary and passes
+    the key-value pairs as arguments to the state constructor!"""
+    storage.new(new_state)
+    storage.save()
+
+    return jsonify(new_state.to_dict()), 201
