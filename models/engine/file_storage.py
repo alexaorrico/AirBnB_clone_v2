@@ -81,6 +81,8 @@ class FileStorage:
         for item in object_list.values():
             if item.id == id:
                 return item
+            elif item.id is None:
+                return None
         return None
 
     def count(self, cls=None):
