@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Michael edited 4:11 PM
+# Michael edited 12:37 PM
 """
 Contains the FileStorage class
 """
@@ -77,11 +77,10 @@ class FileStorage:
 
         self.reload()
         object_list = self.all(cls)
-        print(object_list)
 
         for item in object_list.values():
             if item.id == id:
-                return items
+                return item
         return None
 
     def count(self, cls=None):
