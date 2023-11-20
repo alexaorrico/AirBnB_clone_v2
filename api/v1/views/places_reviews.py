@@ -63,6 +63,7 @@ def post_review(place_id):
                 return make_response(jsonify({'error': 'Missing text'}), 400)
             else:
                 if storage.get(User, json_body['user_id']):
+                    json_body["place_id"] = place_id
                     new_review = Review(**json_body)
                     new_review.save()
                     return make_response(jsonify(new_review.to_dict()), 201)
