@@ -92,20 +92,12 @@ class TestDBStorage(unittest.TestCase):
     """Test for dbstorage for get and count"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get_state(self):
-        """test for returning a state object"""
-        entered_state = State(name="Oklahoma")
-        entered_state.save()
-        self.assertEqual(entered_state,
-                         models.storage.get("State", entered_state.id))
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_user(self):
         """test for returning user object"""
         entered_user = User(email="johndoe@gmail.com", password="pwd")
         entered_user.save()
         self.assertEqual(entered_user,
-                         models.storage.get("User", entered_user.id))
+                         models.storage.get(User, entered_user.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_state(self):
