@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This is the module for the API"""
-# Michael edited 11/20 10:25 AM
+# Michael edited 11/20 10:47 AM full checks
 
 from flask import Flask, make_response, jsonify
 from models import storage
