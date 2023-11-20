@@ -63,6 +63,7 @@ def post_place(city_id):
                 return make_response(jsonify({'error': 'Missing name'}), 400)
             else:
                 if storage.get(User, json_body['user_id']):
+                    json_body["city_id"] = city_id
                     new_place = Place(**json_body)
                     new_place.save()
                     return make_response(jsonify(new_place.to_dict()), 201)
