@@ -77,7 +77,7 @@ def update_da_state(state_id):
 
     key_ignore = ['id', 'created_at', 'updated_at']
 
-    new_data = request.get_json
+    new_data = request.get_json()
     for key, value in new_data.items():
         if key not in key_ignore:
             setattr(state, key, value)
