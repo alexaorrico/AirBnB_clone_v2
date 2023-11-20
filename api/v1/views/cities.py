@@ -3,7 +3,7 @@
 View for State objects that will handle all default
 RESTful API actions
 """
-# Allison Edited 11/20 3:45 PM
+# Allison Edited 11/20 4:45 PM
 from models.state import State
 from models.city import City
 from models import storage
@@ -21,6 +21,7 @@ def get_cities(state_id):
         abort(404)
     for city in state.cities:
         city_list.append(city.to_dict())
+    return jsonify(city_list)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
@@ -57,9 +58,9 @@ def new_city(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    if not request.get_json:
+    if not request.get_json():
         abort(400, description="Not a JSON")
-    if 'name' not in request.get_json:
+    if 'name' not in request.get_json():
         abort(400, description="Missing name")
 
     new_info = request.get_json()
