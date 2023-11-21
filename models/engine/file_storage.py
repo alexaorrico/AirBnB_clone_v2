@@ -75,7 +75,10 @@ class FileStorage:
     def get(self, cls, id):
         """ get method """
         key = c_lasses[cls] + '.' + id
-        return self.__objects[key]
+        try:
+            return self.__objects[key]
+        except KeyError:
+            return None
 
     def count(self, cls=None):
         """ count method """
