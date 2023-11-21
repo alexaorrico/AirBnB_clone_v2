@@ -85,7 +85,7 @@ class DBStorage:
             return diction[key]
 
     def count(self, cls=None):
-        """ count method """
+        """ count method test """
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
