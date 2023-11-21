@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """index creates route for status"""
 
+
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -12,10 +13,12 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/status')
 def get_status():
     """returns status"""
     return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats')
 def get_count():
