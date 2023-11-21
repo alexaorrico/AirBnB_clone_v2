@@ -21,8 +21,11 @@ def index():
 def stats():
     classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
+    c_lasses = {Amenity: "amenities", City: "cities",
+           Place: "places", Review:  "reviews", State: "states", User:  "users"}
     obj_count = {}
     for item in classes:
-        count = storage.count(classes[item])
-        obj_count.update({item: count})
+        obj_type = classes[item]
+        count = storage.count(obj_type)
+        obj_count.update({c_lasses[obj_type]: count})
     return jsonify(obj_count)
