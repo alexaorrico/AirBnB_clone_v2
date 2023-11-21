@@ -76,7 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """If the object is in the dictionary, return the object"""
+        """returns the object if it is in the dictionary"""
         try:
             obj = self.__session.query(cls).filter_by(id=id).first()
             return obj
@@ -84,7 +84,7 @@ class DBStorage:
             return None
 
     def count(self, cls=None):
-        """count create"""
+        """creates a counter"""
         if cls is None:
             results = self.all()
         else:
