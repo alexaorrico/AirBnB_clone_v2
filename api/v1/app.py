@@ -2,7 +2,7 @@
 """api app"""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 
@@ -13,6 +13,13 @@ app.register_blueprint(app_views)
 def teardown_appcontext(exception):
     """closes storage"""
     storage.close()
+
+@app.errorhandler(404)
+def handle_not_found_error(e):
+    """handles 404 errors"""
+    response = jsonify({"error": "Not found"})
+    response.status_code = 404
+    return response
 
 
 if __name__ == '__main__':
