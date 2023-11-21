@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-'''
-pl8ces
-'''
+"""
+pl8vces
+"""
 from models import storage
 from models.city import City
 from models.place import Place
