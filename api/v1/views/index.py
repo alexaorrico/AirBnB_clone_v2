@@ -16,3 +16,13 @@ def index():
     return jsonify({
         "status": "OK"
         })
+
+@app_views.route('/stats')
+def stats():
+    classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+    obj_count = {}
+    for item in classes:
+        count = storage.count(classes[item])
+        obj_count.update({item: count})
+    return jsonify(obj_count)
