@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" tbc """
 from api.v1.views import app_views
 from models.amenity import Amenity
 from models.city import City
