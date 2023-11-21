@@ -84,7 +84,6 @@ class DBStorage:
         if key in diction:
             return diction[key]
 
-
     def count(self, cls=None):
         """ count method """
         new_dict = {}
