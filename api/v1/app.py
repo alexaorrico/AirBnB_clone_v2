@@ -15,6 +15,16 @@ def teardown(e=None):
     """ tbc """
     storage.close()
 
+@app.errorhandler(HTTPException)
+def not_found(e):
+    response = e.get_response()
+    # replace the body with JSON
+    response.data = json.dumps({
+        "error": "Not found"
+    })
+    response.content_type = "application/json"
+    return response
+
 if __name__ == '__main__':
     if getenv('HBNB_API_HOST') is not None:
         the_host = getenv('HBNB_API_HOST')
