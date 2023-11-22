@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""user api Endpoints"""
+"""User api Endpoints"""
 
 from flask import Flask, jsonify, abort, request
 from models import user, storage
@@ -9,7 +9,7 @@ from api.v1.views import app_views
 
 @app_views.route("/users", methods=["GET"], strict_slashes=False)
 def get_users():
-    """retrieve a list of users"""
+    """Retrieve a list of users"""
     user_list = []
     use = storage.all(User).values()
     if use is None:
@@ -22,7 +22,7 @@ def get_users():
 @app_views.route("/users/<user_id>",
                  methods=["GET"], strict_slashes=False)
 def get_user(user_id):
-    """retrieve information about a user"""
+    """Retrieve information about a user"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -32,7 +32,7 @@ def get_user(user_id):
 @app_views.route("/users/<user_id>",
                  methods=["DELETE"], strict_slashes=False)
 def delete_user(user_id):
-    """delete a user"""
+    """Delete a user"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -43,7 +43,7 @@ def delete_user(user_id):
 
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user():
-    """create a user"""
+    """Create a user"""
     user = request.get_json(silent=True)
     if user is None:
         abort(400, "Not a Json")
@@ -59,7 +59,7 @@ def create_user():
 @app_views.route("/users/<user_id>",
                  methods=["PUT"], strict_slashes=False)
 def update_user(user_id):
-    """update user information"""
+    """Update user information"""
     user_and_id = storage.get(User, user_id)
     use = request.get_json(silent=True)
 
