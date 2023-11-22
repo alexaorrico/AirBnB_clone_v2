@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, abort
 from models.state import State
 from models import storage
 from api.v1.views import app_views
+from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
 
@@ -30,6 +31,8 @@ def get_one_states(state_id):
 def delete_one_states(state_id):
     """ tbc """
     the_state = storage.get(State, state_id)
-    storage.delete(the_state)
-    storage.save()
-    return jsonify({}), 200
+    if the_state is not None:
+        storage.delete(the_state)
+        storage.save()
+        return jsonify({}), 200
+    abort(404)
