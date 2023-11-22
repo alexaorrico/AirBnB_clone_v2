@@ -48,6 +48,7 @@ List of commands this console current supports:
 
 Classes inherited from Base Model:
 * [amenity.py](/models/amenity.py)
+* [index.py](/models/index.py)
 * [city.py](/models/city.py)
 * [place.py](/models/place.py)
 * [review.py](/models/review.py)
