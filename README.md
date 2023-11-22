@@ -48,6 +48,7 @@ List of commands this console current supports:
 
 Classes inherited from Base Model:
 * [amenity.py](/models/amenity.py)
+* [index.py](/models/index.py)
 * [city.py](/models/city.py)
 * [place.py](/models/place.py)
 * [review.py](/models/review.py)
@@ -59,7 +60,9 @@ Classes inherited from Base Model:
 * `def all(self)` - returns the dictionary __objects
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* ` def reload(self)` -  deserializes the JSON file to __objects
+* `def reload(self)` -  deserializes the JSON file to __objects
+* `def get(self, cls, id)` - returns the object if it is in the dictionary
+* `def count(self, cls=none)` - creates a counter
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -156,6 +159,8 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Chris Gillis
+Connor True
 
 Second part of Airbnb: Joann Vuong
 ## License
