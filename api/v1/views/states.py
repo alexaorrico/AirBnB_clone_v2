@@ -66,4 +66,4 @@ def put_state_attribute(state_id):
         if j[i] != 'id' and j[i] != 'created_at' != j[i] != 'updated_at':
             setattr(the_state, i, j[i])
     storage.save()
-    return jsonify(the_state.to_dict()), 201
+    return jsonify(the_state.to_dict()), 200
