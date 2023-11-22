@@ -66,12 +66,13 @@ def new_amenity():
     return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_amenity(amenity_id):
     """updates an amenity based off of amenity id given in request, returns the
     amenity object and status code 200"""
-    amenity = storage.get(Amenity, amenity_id)
 
+    amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
     if not request.get_json():
