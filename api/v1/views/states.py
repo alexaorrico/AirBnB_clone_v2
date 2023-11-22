@@ -36,3 +36,18 @@ def delete_one_states(state_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
+
+@app_views.route('/states/', methods=['POST'])
+def post_state():
+    """ tbc """
+    content = request.headers.get('Content-type')
+    if content != 'application/json':
+        abort(400, description='Not a JSON')
+    json_dict = request.json
+    if 'name' not in json_dict:
+        abort(400, description='Missing name')
+    new_state = State()
+    for item in json_dict:
+        setattr(new_state, item, json_dict[item])
+    storage.save()
+    return jsonify(new_state.to_dict()), 201
