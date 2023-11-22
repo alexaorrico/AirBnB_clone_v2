@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ tbc """
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from models.state import State
 from models import storage
 from api.v1.views import app_views
@@ -24,3 +24,12 @@ def get_one_states(state_id):
     for item in states_dict:
         if states_dict[item].to_dict()['id'] == state_id:
             return jsonify(states_dict[item].to_dict())
+    abort(404)
+
+@app_views.route('/states/<state_id>', methods=['DELETE'])
+def delete_one_states(state_id):
+    """ tbc """
+    the_state = storage.get(State, state_id)
+    storage.delete(the_state)
+    storage.save()
+    return jsonify({}), 200
