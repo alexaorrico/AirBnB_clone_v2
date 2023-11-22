@@ -113,3 +113,35 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_close_method(self):
+        """Test the close method of FileStorage class"""
+        storage = FileStorage()
+        storage.close()
+        self.assertTrue(storage.reload.called)
+
+    def test_get_method(self):
+        """Test the get method of FileStorage class"""
+        storage = FileStorage()
+        obj = BaseModel()
+        storage.new(obj)
+        storage.save()
+        retrieved_obj = storage.get(BaseModel, obj.id)
+        self.assertIs(obj, retrieved_obj)
+
+    def test_get_method_returns_none_if_object_not_found(self):
+        """Test the get method of FileStorage class when object is not found"""
+        storage = FileStorage()
+        obj = storage.get(BaseModel, "nonexistent-id")
+            self.assertIsNone(obj)
+
+    def test_count_method(self):
+        """Test the count method of FileStorage class"""
+        storage = FileStorage()
+        storage.new(BaseModel())
+        storage.new(BaseModel())
+        storage.new(Amenity())
+        storage.save()
+        self.assertEqual(storage.count(BaseModel), 2)
+        self.assertEqual(storage.count(Amenity), 1)
+        self.assertEqual(storage.count(), 3)
