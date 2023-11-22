@@ -7,7 +7,7 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def get_all_ameniies():
+def get_all_amenities():
     """gets all amenity objects"""
     amenities = storage.all(Amenity).values()
     amenity_list = [amenity.to_dict() for amenity in amenities]
@@ -28,7 +28,7 @@ def get_amenity(amenity_id):
                  strict_slashes=False)
 def delete_amenity(amenity_id):
     """deletes an amenity by id"""
-    amenity = storage.get(amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     amenity.delete()
@@ -63,4 +63,4 @@ def update_amenity(amenity_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, key, value)
     storage.save()
-    return jsonify(amenity.to_dict())
+    return jsonify(amenity.to_dict()), 200
