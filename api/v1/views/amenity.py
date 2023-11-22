@@ -3,7 +3,7 @@
 View for Amenity objects that will handle all default
 RESTful API actions
 """
-# Allison Edited 11/20 4:45 PM
+# Allison Edited 11/22 9:45 AM
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
