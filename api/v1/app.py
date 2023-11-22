@@ -2,7 +2,7 @@
 """ Creates the api """
 
 from flask import Flask, Blueprint, jsonify, make_response
-from models import storage
+/workspaces/holbertonschool-AirBnB_clone_v3/api/v1from models import storage
 from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
