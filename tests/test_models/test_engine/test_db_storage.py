@@ -18,6 +18,9 @@ import json
 import os
 import pep8
 import unittest
+from unittest.mock import patch
+from io import StringIO
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +89,40 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get method"""
+        storage = DBStorage()
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+
+        retrieved_obj = storage.get(BaseModel, new_obj.id)
+        self.assertEqual(retrieved_obj, new_obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all_objects(self):
+        """Test count method for all objects"""
+        storage = DBStorage()
+        initial_count = storage.count()
+
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+
+        updated_count = storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_specific_class(self):
+        """Test count method for a specific class"""
+        storage = DBStorage()
+        initial_count = storage.count(BaseModel)
+
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+
+        updated_count = storage.count(BaseModel)
+        self.assertEqual(updated_count, initial_count + 1)

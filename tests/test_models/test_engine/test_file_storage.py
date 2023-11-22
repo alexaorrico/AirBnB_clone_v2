@@ -18,6 +18,9 @@ import json
 import os
 import pep8
 import unittest
+from unittest.mock import patch
+from io import StringIO
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +116,40 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method"""
+        storage = FileStorage()
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+
+        retrieved_obj = storage.get(BaseModel, new_obj.id)
+        self.assertEqual(retrieved_obj, new_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all_objects(self):
+        """Test count method for all objects"""
+        storage = FileStorage()
+        initial_count = storage.count()
+
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+
+        updated_count = storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_specific_class(self):
+        """Test count method for a specific class"""
+        storage = FileStorage()
+        initial_count = storage.count(BaseModel)
+
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+
+        updated_count = storage.count(BaseModel)
+        self.assertEqual(updated_count, initial_count + 1)
