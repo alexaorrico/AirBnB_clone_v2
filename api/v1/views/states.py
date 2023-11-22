@@ -51,3 +51,19 @@ def post_state():
         setattr(new_state, item, json_dict[item])
     storage.save()
     return jsonify(new_state.to_dict()), 201
+
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def put_state_attribute(state_id):
+    """ tbc """
+    the_state = storage.get(State, state_id)
+    if the_state is None:
+        abort(404)
+    content = request.headers.get('Content-type')
+    if content != 'application/json':
+        abort(400, description='Not a JSON')
+    j = request.json
+    for i in j:
+        if j[i] != 'id' and j[i] != 'created_at' != j[i] != 'updated_at':
+            setattr(the_state, i, j[i])
+    storage.save()
+    return jsonify(the_state.to_dict()), 201
