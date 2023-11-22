@@ -14,9 +14,11 @@ CORS(app)
 
 app.register_blueprint(app_views, url_prefix="/api/v1")
 
+
 @app.teardown_appcontext
 def teardown_app_context(exception):
     storage.close()
+
 
 @app.errorhandler(404)
 def page_not_found(e):
