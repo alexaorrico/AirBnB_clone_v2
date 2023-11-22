@@ -1,8 +1,25 @@
 #!/usr/bin/python3
-from flask import Blueprint
+"""index script"""
 
-app_views = Blueprint('app_views', __name__, url_prefix='/api/v1/')
+from models import storage
+from api.v1.views import app_views
+from flask import jsonify
 
-from api.v1.views.index import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
+
+@app_views.route("/status")
+def status():
+    """retrieve the status of the API"""
+    return jsonify({"status": "OK"})
+
+
+@app_views.route("/stats")
+def objects():
+    """retrieve statistics on various objects"""
+    return jsonify({
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
+    })
