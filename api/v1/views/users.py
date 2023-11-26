@@ -58,7 +58,7 @@ def post_user():
     content = request.headers.get('Content-type')
     if content != 'application/json':
         abort(400, description='Not a JSON')
-    json_dict = request.json()
+    json_dict = request.json
     if 'email' not in json_dict:
         abort(400, description='Missing email')
     if 'password' not in json_dict:
@@ -68,7 +68,6 @@ def post_user():
         setattr(new_user, item, json_dict[item])
     storage.save()
     return jsonify(new_user.to_dict()), 201
-
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def put_user_attribute(user_id):
