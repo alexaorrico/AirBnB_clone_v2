@@ -58,13 +58,14 @@ def post_user():
     content = request.headers.get('Content-type')
     if content != 'application/json':
         abort(400, description='Not a JSON')
-    json_dict = request.json
-    if 'email' not in json_dict or 'password' not in json_dict:
-        abort(400, description='Missing email or password')
+    json_dict = request.json()
+    if 'email' not in json_dict:
+        abort(400, description='Missing email')
+    if 'password' not in json_dict:
+        abort(400, description='Missing password')
     new_user = User()
     for item in json_dict:
-        if item not in ['id', 'email', 'created_at', 'updated_at']:
-            setattr(new_user, item, json_dict[item])
+        setattr(new_user, item, json_dict[item])
     storage.save()
     return jsonify(new_user.to_dict()), 201
 
