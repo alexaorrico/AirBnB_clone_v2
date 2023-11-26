@@ -9,6 +9,7 @@ from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
 
+
 @app_views.route('/states/', methods=['GET'])
 def get_all_states():
     """ tbc """
@@ -17,6 +18,7 @@ def get_all_states():
     for item in states_dict:
         state_list.append(states_dict[item].to_dict())
     return jsonify(state_list)
+
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_one_states(state_id):
@@ -27,6 +29,7 @@ def get_one_states(state_id):
             return jsonify(states_dict[item].to_dict())
     abort(404)
 
+
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_one_states(state_id):
     """ tbc """
@@ -36,6 +39,7 @@ def delete_one_states(state_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/states/', methods=['POST'])
 def post_state():
@@ -51,6 +55,7 @@ def post_state():
         setattr(new_state, item, json_dict[item])
     storage.save()
     return jsonify(new_state.to_dict()), 201
+
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def put_state_attribute(state_id):
