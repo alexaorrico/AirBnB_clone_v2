@@ -2,7 +2,8 @@
 """ tbc """
 import json
 from flask import Flask, request, jsonify, abort
-from models.state import City
+from models.city import City
+from models.state import State
 from models import storage
 from api.v1.views import app_views
 from werkzeug.exceptions import HTTPException
