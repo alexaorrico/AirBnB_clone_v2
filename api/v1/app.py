@@ -50,10 +50,11 @@ def not_found(e):
     response.content_type = "application/json"
     return response
 
-    if __name__ == '__main__':
-        """
-        Runs the Flask application.
-        """
+
+if __name__ == '__main__':
+    """
+    Runs the Flask application.
+    """
     if getenv('HBNB_API_HOST') is not None:
         the_host = getenv('HBNB_API_HOST')
     else:
