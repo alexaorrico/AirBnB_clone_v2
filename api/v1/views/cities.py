@@ -9,6 +9,7 @@ from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_all_cities(state_id):
     """ tbc """
@@ -21,6 +22,7 @@ def get_all_cities(state_id):
         return cities_list
     abort(404)
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_one_city(city_id):
     """ tbc """
@@ -28,6 +30,7 @@ def get_one_city(city_id):
     if the_city is not None:
         return jsonify(the_city.to_dict())
     abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_one_city(city_id):
@@ -38,6 +41,7 @@ def delete_one_city(city_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def post_city(state_id):
@@ -55,6 +59,7 @@ def post_city(state_id):
         setattr(new_city, item, json_dict[item])
     storage.save()
     return jsonify(new_city.to_dict()), 201
+
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def put_city_attribute(city_id):
