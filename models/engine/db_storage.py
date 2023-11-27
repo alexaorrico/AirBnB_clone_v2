@@ -2,7 +2,6 @@
 """
 Contains the class DBStorage
 """
-
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -16,8 +15,19 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {"Amenity": Amenity,
+           "City": City,
+           "Place": Place,
+           "Review": Review,
+           "State": State,
+           "User": User}
+c_lasses = {Amenity: "Amenity",
+            BaseModel: "BaseModel",
+            City: "City",
+            Place: "Place",
+            Review: "Review",
+            State: "State",
+            User:  "User"}
 
 
 class DBStorage:
@@ -74,3 +84,35 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """
+        Get an object from the database.
+
+        Args:
+            cls (Class): The class of the object to get.
+            id (str): The ID of the object to get.
+
+        Returns:
+            Base: The object with the given class and ID.
+        """
+        key = c_lasses[cls] + '.' + id
+        diction = self.all()
+        if key in diction:
+            return diction[key]
+
+    def count(self, cls=None):
+        """ Count the number of objects of the given class in the database.
+        Args:
+            cls (Class, optional): The class of the objects to count.
+        Returns:
+            int: The number of objects of the given class in the database.
+        """
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
+        return len(new_dict)

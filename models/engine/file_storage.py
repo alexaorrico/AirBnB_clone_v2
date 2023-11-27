@@ -2,7 +2,6 @@
 """
 Contains the FileStorage class
 """
-
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -12,13 +11,24 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {"Amenity": Amenity,
+           "BaseModel": BaseModel,
+           "City": City,
+           "Place": Place,
+           "Review": Review,
+           "State": State,
+           "User": User}
+c_lasses = {Amenity: "Amenity",
+            BaseModel: "BaseModel",
+            City: "City",
+            Place: "Place",
+            Review:  "Review",
+            State: "State",
+            User:  "User"}
 
 
 class FileStorage:
     """serializes instances to a JSON file & deserializes back to instances"""
-
     # string - path to the JSON file
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
@@ -55,7 +65,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +78,22 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """ get method """
+        key = c_lasses[cls] + '.' + id
+        try:
+            return self.__objects[key]
+        except KeyError:
+            return None
+
+    def count(self, cls=None):
+        """ count method """
+        if cls is None:
+            return len(self.__objects)
+        else:
+            count_list = []
+            for item in self.__objects.values():
+                if item.to_dict()['__class__'] == c_lasses[cls]:
+                    count_list.append(item)
+            return len(count_list)
