@@ -37,7 +37,7 @@ def get_one_place(place_id):
 @app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_one_place(place_id):
     """ tbc """
-    the_place = storage.get(place, place_id)
+    the_place = storage.get(Place, place_id)
     if the_place is not None:
         storage.delete(the_place)
         storage.save()
