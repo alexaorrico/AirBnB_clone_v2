@@ -4,6 +4,7 @@ import json
 from flask import Flask, request, jsonify, abort
 from models.place import Place
 from models.city import City
+from models.user import User
 from models import storage
 from api.v1.views import app_views
 from werkzeug.exceptions import HTTPException
@@ -56,6 +57,11 @@ def post_place(city_id):
     if content != 'application/json':
         abort(400, description='Not a JSON')
     json_dict = request.json
+    if 'user_id' not in json_dict:
+        abort(400, description='Missing user_id')
+    the_user = storage.get(User, json_dict['user_id'])
+    if the_user is None:
+        abort(404)
     if 'name' not in json_dict:
         abort(400, description='Missing name')
     new_place = Place()
