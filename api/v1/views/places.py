@@ -46,7 +46,7 @@ def delete_one_place(place_id):
     abort(404)
 
 
-@app_views.route('/citys/<city_id>/places', methods=['POST'],
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def post_place(city_id):
     """ tbc """
