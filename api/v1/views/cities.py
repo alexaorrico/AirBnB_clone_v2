@@ -11,10 +11,9 @@ from werkzeug.exceptions import HTTPException
 app = Flask(__name__)
 
 
-@app_views.route('/states/<state_id>/cities/', methods=['GET'])
+@app_views.route('/states/<state_id>/cities/', methods=['GET'], strict_slashes=False)
 def get_all_cities(state_id):
     """ tbc """
-    storage.reload()
     the_state = storage.get(State, state_id)
     if the_state is None:
         abort(404)
@@ -23,5 +22,5 @@ def get_all_cities(state_id):
     for item in cities_dict:
         if cities_dict[item].to_dict()['state_id'] == state_id:
             cities_list.append(cities_dict[item].to_dict())
-    if cities_list is not None:
-        return cities_list
+    return cities_list
+
