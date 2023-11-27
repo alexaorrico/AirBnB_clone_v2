@@ -48,6 +48,9 @@ def delete_one_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def post_city(state_id):
     """ tbc """
+    the_state = storage.get(State, state_id)
+    if the_state is None:
+        abort(404)
     content = request.headers.get('Content-type')
     if content != 'application/json':
         abort(400, description='Not a JSON')
