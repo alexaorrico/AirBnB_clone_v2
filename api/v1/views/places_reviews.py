@@ -62,8 +62,8 @@ def post_review(place_id):
     the_user = storage.get(User, json_dict['user_id'])
     if the_user is None:
         abort(404)
-    if 'name' not in json_dict:
-        abort(400, description='Missing name')
+    if 'text' not in json_dict:
+        abort(400, description='Missing text')
     new_review = Review()
     setattr(new_review, 'place_id', place_id)
     for item in json_dict:
