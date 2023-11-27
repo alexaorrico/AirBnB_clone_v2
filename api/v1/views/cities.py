@@ -45,7 +45,8 @@ def delete_one_city(city_id):
     abort(404)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def post_city(state_id):
     """ tbc """
     the_state = storage.get(State, state_id)
