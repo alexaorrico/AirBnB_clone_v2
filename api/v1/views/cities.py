@@ -54,7 +54,6 @@ def post_city(state_id):
     json_dict = request.json
     if 'name' not in json_dict:
         abort(400, description='Missing name')
-    print(json_dict)
     new_city = City()
     setattr(new_city, 'state_id', state_id)
     for item in json_dict:
