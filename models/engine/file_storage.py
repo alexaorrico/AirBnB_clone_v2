@@ -34,6 +34,27 @@ class FileStorage:
             return new_dict
         return self.__objects
 
+    def get(self, cls, id):
+        """get instance based on class"""
+        classes = [Amenity, BaseModel, City, Place, Review, State, User]
+        if cls not in classes:
+            return None
+        key = cls.__name__ + "." + id
+        if key in self.__objects:
+            return self.__objects[key]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """count instances"""
+        if cls is None:
+            return len(self.__objects)
+        count = 0
+        for k, v in self.__objects.items():
+            if cls.__name__ == k.split('.')[0]:
+                count += 1
+        return count
+
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
@@ -55,7 +76,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception:
             pass
 
     def delete(self, obj=None):
