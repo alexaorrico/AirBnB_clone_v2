@@ -4,7 +4,10 @@ API endpoints for Review objects related to Places.
 """
 from flask import abort, jsonify, request
 from api.v1.views import app_views
-from models import storage, Place, User, Review
+from models import storage
+from models.place import Place
+from models.user import User
+from models.review import Review
 
 
 @app_views.route('/places/<place_id>/reviews',
