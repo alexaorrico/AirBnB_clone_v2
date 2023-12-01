@@ -67,6 +67,19 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        """Test that get properly retrieves one object"""
+        new_state = State(name="California")
+        storage.new(new_state)
+        storage.save()
+        state_retrieved = storage.get(State, new_state.id)
+        self.assertEqual(state_retrieved, new_state)
+
+    def test_get_none(self):
+        """Test that gest properly handles cls=None"""
+        state_retrieved = storage.get(State, "123")
+        self.assertIsNone(state_retrieved)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
