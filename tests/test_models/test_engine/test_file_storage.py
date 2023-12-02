@@ -16,6 +16,9 @@ from models.state import State
 from models.user import User
 import json
 import os
+import sys
+from unittest.mock import patch
+from io import StringIO
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -94,7 +97,7 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -113,3 +116,18 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test filestorage count"""
+        self.assertEquals(len(models.storage.all().values()),
+                          models.storage.count())
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test files storage get"""
+        id_state = State(name="Arizona")
+        id_state.save()
+        models.storage.reload()
+        self.assertEquals((models.storage.get(State, id_state.id)).id,
+                          id_state_.id)
