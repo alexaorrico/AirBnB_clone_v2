@@ -78,7 +78,7 @@ class DBStorage:
     # Retrieves an obj from the DB based on the class name & obj ID.
     def get(self, cls, id):
         """
-        Retrieves an obj from the database based on
+        Retrieves an obj from the db based on
         the class name (cls) and object ID (id).
         """
         if cls in classes.values() and id and type(id) == str:
