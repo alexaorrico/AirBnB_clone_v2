@@ -79,7 +79,11 @@ class DBStorage:
     def get(self, cls, id):
         """
         Retrieves an obj from the db based on
+<<<<<<< HEAD
         the class name (cls) and obj ID (id).
+=======
+        the class name (cls) and object ID (id).
+>>>>>>> c6cb41cb94661c68f3a2c3dd1e773ca5d6fb0093
         """
         if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
