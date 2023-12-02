@@ -65,11 +65,23 @@ class DBStorage:
             self.__session.delete(obj)
 
     def reload(self):
-        """reloads data from the database"""
-        Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        """
+        This method creates tables and a new database session
+        """
+        try:
+            # Clear the existing session, if any
+            if self.__session:
+                self.__session.close()
+
+            # Create tables
+            Base.metadata.create_all(self.__engine)
+
+            # Use existing scoped session class &assign a new session to it
+            self.__session = scoped_session(
+                    sessionmaker(bind=self.__engine, expire_on_commit=False))
+        except Exception as e:
+            print(f"Error during reload: {e}")
+            raise  # Reraise the exception to see the full traceback
 
     def close(self):
         """call remove() method on the private session attribute"""
@@ -79,7 +91,11 @@ class DBStorage:
     def get(self, cls, id):
         """
         Retrieves an obj from the db based on
+<<<<<<< HEAD
+        the class name (cls) and obj ID (id).
+=======
         the class name (cls) and object ID (id).
+>>>>>>> c6cb41cb94661c68f3a2c3dd1e773ca5d6fb0093
         """
         if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
