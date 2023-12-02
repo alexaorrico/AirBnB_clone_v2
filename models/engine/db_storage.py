@@ -93,7 +93,7 @@ class DBStorage:
         """
         counts the number of obj in storage matching the given class.
         """
-        data = self.all(cls)
+        obj_data = self.all(cls)
         if cls in classes.values():
-            data = self.all(cls)
-            return len(data)
+            obj_data = self.all(cls)
+            return len(obj_data)
