@@ -14,8 +14,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
@@ -76,8 +74,14 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+    def test_count_type(self):
+        """Test that count return an int"""
+        self.assertIs(type(models.storage.count()), int)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_type(self):
+        """Test that get return a None"""
+        self.assertIs(models.storage.get(State, "non-existing-id"), None)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
