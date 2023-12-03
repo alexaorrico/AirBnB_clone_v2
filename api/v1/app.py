@@ -32,8 +32,7 @@ def teardown_engine(exception):
     storage.close()
 
 
-# Updated the comment for error handler
-
+# Updated comment for error handler
 
 @app.errorhandler(404)
 def not_found(error):
