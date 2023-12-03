@@ -3,6 +3,7 @@
 Contains the class DBStorage
 """
 
+
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -15,6 +16,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -65,12 +67,49 @@ class DBStorage:
             self.__session.delete(obj)
 
     def reload(self):
-        """reloads data from the database"""
-        Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        """
+        This method creates tables and a new database session
+        """
+        try:
+            # Clear the existing session, if any
+            if self.__session:
+                self.__session.close()
+
+            # Create tables
+            Base.metadata.create_all(self.__engine)
+
+            # Use existing scoped session class &assign a new session to it
+            self.__session = scoped_session(
+                    sessionmaker(bind=self.__engine, expire_on_commit=False))
+        except Exception as e:
+            print(f"Error during reload: {e}")
+            raise  # Reraise the exception to see the full traceback
 
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    # Retrieves an obj from the DB based on the class name & obj ID.
+
+    def get(self, cls, id):
+        """
+        Retrieves an obj from the db based on
+        the class name (cls) and obj ID (id)
+        """
+        if cls in classes.values() and id and type(id) == str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
+                return None
+
+    # Counts the number of objects in storage
+
+    def count(self, cls=None):
+        """
+        This method counts the nbr of obj in storage matching the given class.
+        """
+        obj_data = self.all(cls)
+        if cls in classes.values():
+            obj_data = self.all(cls)
+            return len(obj_data)
