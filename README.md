@@ -158,5 +158,10 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+RESTful API Update
+Laide Endeley - [Github] (https://github.com/bondress) / [Email] (endeleylaide@gmail.com)
+Purity Ngugi - [Github] (https://github.com/purengugi) / [Email] (purity2004ngugi@gmail.com)
+
 ## License
 Public Domain. No copy write protection. 
