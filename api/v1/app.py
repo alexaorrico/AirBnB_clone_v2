@@ -42,9 +42,9 @@ def teardown_thingy():
 
 if __name__ == "__main__":
 
-	host = if getenv('HBNB_API_HOST') else ('0.0.0.0') """might be an error"""
+	host = getenv("HBNB_API_HOST") if getenv("HBNB_API_HOST") else "0.0.0.0" """might be an error"""
 
-	port = getenv('HBNB_API_PORT', '5000')
+	port = getenv("HBNB_API_PORT") if getenv("HBNB_API_HOST") else "5000"
 
 	app.run(host=host, port=port, threaded=True)
 
