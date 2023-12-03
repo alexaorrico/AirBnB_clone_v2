@@ -32,7 +32,7 @@ def teardown_engine(exception):
     storage.close()
 
 
-# Updated comment for error handler
+# Updated the comment for error handler
 
 
 @app.errorhandler(404)
