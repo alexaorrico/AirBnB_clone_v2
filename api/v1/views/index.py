@@ -1,30 +1,30 @@
 #!/usr/bin/python3
-"""This module creates a route that
-returns a JSON"""
-
+""" Index """
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+from models import storage
 from api.v1.views import app_views
 from flask import jsonify
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """This function returns a JSON string"""
+    """ Status of API """
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
-def stats():
-    """
-    Get number of objects
-    """
-    objs = {
-            'amenities': Amenity,
-            'citites': City,
-            'reviews': Review,
-            'users': User,
-            'places': Place,
-            'states': State
-            }
-    for k, value in objs.items():
-        objs[k] = storage.count(value)
-    return jsonify(objs)
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def number_objects():
+    """ Retrieves the number of each objects by type """
+    classes = [Amenity, City, Place, Review, State, User]
+    names = ["amenities", "cities", "places", "reviews", "states", "users"]
+
+    num_objs = {}
+    for i in range(len(classes)):
+        num_objs[names[i]] = storage.count(classes[i])
+
+    return jsonify(num_objs)
