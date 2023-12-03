@@ -23,8 +23,6 @@ app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
 
-
-
 @app.teardown_appcontext
 def teardown_engine(exception):
     """
@@ -36,9 +34,6 @@ def teardown_engine(exception):
 
 # Updated comment for error handler
 
-
-
-
 @app.errorhandler(404)
 def not_found(error):
     """
@@ -47,8 +42,6 @@ def not_found(error):
     """
     response = {'error': 'Not found'}
     return jsonify(response), 404
-
-
 
 
 if __name__ == '__main__':
