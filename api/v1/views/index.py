@@ -8,3 +8,20 @@ from flask import jsonify
 def status():
     """This function returns a JSON string"""
     return jsonify({"status": "OK"})
+
+@app_views.route('/stats')
+def stats():
+    """
+    Get number of objects
+    """
+    objs = {
+            'amenities': Amenity,
+            'citites': City,
+            'reviews': Review,
+            'users': User,
+            'places': Place,
+            'states': State
+            }
+    for k, value in objs.items():
+        objs[k] = storage.count(value)
+    return jsonify(objs)
