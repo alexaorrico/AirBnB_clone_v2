@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""This module defines a flask application serving our API"""
 
 from flask import Flask
 from models import storage
