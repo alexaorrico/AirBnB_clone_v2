@@ -1,8 +1,3 @@
-#!/usr/bin/python3
-"""
-Contains the TestDBStorageDocs and TestDBStorage classes
-"""
-
 from datetime import datetime
 import inspect
 import models
@@ -67,12 +62,51 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_db_storage_get(self):
+        """Test the get method in DBStorage"""
+        storage = DBStorage()
+        obj = User()
+        storage.new(obj)
+        storage.save()
+
+        # Test when the object is found
+        retrieved_obj = storage.get(User, obj.id)
+        self.assertEqual(retrieved_obj, obj)
+
+        # Test when the object is not found
+        non_existent_obj = storage.get(User, 'nonexistent_id')
+        self.assertIsNone(non_existent_obj)
+
+    def test_db_storage_count_all(self):
+        """Test the count method in DBStorage with all classes"""
+        storage = DBStorage()
+        count = storage.count()
+        self.assertEqual(count, len(storage.all()))
+
+    def test_db_storage_count_specific_class(self):
+        """Test the count method in DBStorage with a specific class"""
+        storage = DBStorage()
+        obj1 = User()
+        obj2 = User()
+        storage.new(obj1)
+        storage.new(obj2)
+        storage.save()
+
+        count = storage.count(User)
+        self.assertEqual(count, 2)
+
+    def test_db_storage_count_nonexistent_class(self):
+        """Test the count method in DBStorage with a nonexistent class"""
+        storage = DBStorage()
+        count = storage.count(NonExistentClass)
+        self.assertEqual(count, 0)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
+        """Test that all returns a dictionary"""
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
