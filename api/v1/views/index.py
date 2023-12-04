@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Creates a route that returns a JSON
+Creates a status and stats route that returns a JSON
 """
 
 
@@ -10,9 +10,9 @@ from models import storage
 
 
 @app_views.route("/status", strict_slashes=False)
-def status_check():
+def get_status():
     """
-    Sends okay status
+    Retrieves ok status
     """
     return jsonify({"status": "OK"})
 

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-Module for handling HTTP requests related to Amenity objects
+Module for handling HTTP requests for Amenity objs
 """
 
 from api.v1.views import app_views
@@ -11,22 +11,22 @@ from flask import abort, jsonify, make_response, request
 
 
 @app_views.route("/amenities", methods=['GET'], strict_slashes=False)
-def get_all_amenities():
+def get_amenities():
     """
-    Retrieve all amenities
+    Amenities retrieved
     """
     all_amenities = storage.all(Amenity)
-    res = []
+    result = []
     for amenity in all_amenities.values():
-        res.append(amenity.to_dict())
-    return jsonify(res)
+        result.append(amenity.to_dict())
+    return jsonify(result)
 
 
 @app_views.route("/amenities/<string:amenity_id>", methods=['GET'],
                  strict_slashes=False)
-def get_amenity_by_id(amenity_id):
+def get_amenity_id(amenity_id):
     """
-    Retrieve an amenity with the given id
+    Retrieve an amenity using specified id
     """
     instance = storage.get(Amenity, amenity_id)
     if instance is None:
@@ -36,9 +36,9 @@ def get_amenity_by_id(amenity_id):
 
 @app_views.route("/amenities/<string:amenity_id>", methods=['DELETE'],
                  strict_slashes=False)
-def delete_amenity_by_id(amenity_id):
+def delete_amenity_id(amenity_id):
     """
-    Delete an amenity with the given id
+    Delete an amenity of a given id
     """
     instance = storage.get(Amenity, amenity_id)
     if instance is None:
@@ -49,33 +49,33 @@ def delete_amenity_by_id(amenity_id):
 
 
 @app_views.route("/amenities", methods=['POST'], strict_slashes=False)
-def create_new_amenity():
+def create_amenity():
     """
-    Create a new amenity
+    Creates new amenity
     """
-    res = request.get_json()
-    if res is None:
+    result = request.get_json()
+    if result is None:
         abort(400, 'Not a JSON')
-    if 'name' not in res:
+    if 'name' not in result:
         abort(400, 'Missing name')
-    instance = Amenity(**res)
+    instance = Amenity(**result)
     instance.save()
     return jsonify(instance.to_dict()), 201
 
 
 @app_views.route("/amenities/<string:amenity_id>", methods=['PUT'],
                  strict_slashes=False)
-def update_amenity_by_id(amenity_id):
+def update_amenity_id(amenity_id):
     """
-    Update an amenity with the given id
+    Update an amenity of a specified id
     """
     instance = storage.get(Amenity, amenity_id)
     if instance is None:
         abort(404)
-    res = request.get_json()
-    if res is None:
+    result = request.get_json()
+    if result is None:
         abort(400, 'Not a JSON')
-    for idx, idy in res.items():
+    for idx, idy in result.items():
         setattr(instance, idx, idy)
     instance.save()
     return jsonify(instance.to_dict())

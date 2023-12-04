@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module for handling HTTP requests related to User objects
+Module for User objects
 """
 
 import json
@@ -11,60 +11,60 @@ from flask import jsonify, request, abort
 
 
 @app_views.route("/users", methods=['GET'], strict_slashes=False)
-def get_all_users():
+def get_allusers():
     """
-    Retrieve all users
+    Get all users
     """
 
     all_users = storage.all(User).values()
-    res = []
+    result = []
     for a_user in all_users:
-        res.append(a_user.to_dict())
-    return jsonify(res)
+        result.append(a_user.to_dict())
+    return jsonify(result)
 
 
 @app_views.route("/users/<string:user_id>", methods=['GET'],
                  strict_slashes=False)
-def get_user_by_id(user_id):
+def get_userid(user_id):
     """
-    Retrieve an user with the given id
+    Get a user with given id
     """
-    res = storage.get(User, user_id)
-    if res is None:
+    result = storage.get(User, user_id)
+    if result is None:
         abort(404)
-    return jsonify(res.to_dict())
+    return jsonify(result.to_dict())
 
 
 @app_views.route("/users/<string:user_id>", methods=['DELETE'],
                  strict_slashes=False)
-def delete_user_by_id(user_id):
+def delete_userid(user_id):
     """
-    Delete an user with the given id
+    Delete a user using specified id
     """
-    res = storage.get(User, user_id)
-    if res is None:
+    result = storage.get(User, user_id)
+    if result is None:
         abort(404)
-    storage.delete(res)
+    storage.delete(result)
     storage.save()
     return jsonify({}), 200
 
 
 @app_views.route("/users", methods=['POST'],
                  strict_slashes=False)
-def create_new_user():
+def create_user():
     """
-    Create a new user
+    Create new User
     """
     if not request.is_json:
         abort(400, description="Not a JSON")
-    res = request.get_json()
+    result = request.get_json()
 
-    if "password" not in res:
+    if "password" not in result:
         abort(400, description="Missing password")
-    if "email" not in res:
+    if "email" not in result:
         abort(400, description="Missing email")
 
-    item = User(**res)
+    item = User(**result)
     storage.new(item)
     storage.save()
     return item.to_dict(), 201
@@ -72,12 +72,12 @@ def create_new_user():
 
 @app_views.route("/users/<user_id>", methods=['PUT', 'GET'],
                  strict_slashes=False)
-def update_user_by_id(user_id):
+def update_userid(user_id):
     """
-    Update an user with the given id
+    Updates a User with specified id
     """
-    res = storage.get(User, user_id)
-    if not res:
+    result = storage.get(User, user_id)
+    if not result:
         abort(404)
     if not request.is_json:
         abort(400, description="Not a JSON")
@@ -85,6 +85,6 @@ def update_user_by_id(user_id):
     json_file = request.get_json()
     for idx, idy in json_file.items():
         if idx != "id" and idx != "updated_at" and idx != "created_at":
-            setattr(res, idx, idy)
+            setattr(result, idx, idy)
     storage.save()
-    return res.to_dict(), 200
+    return result.to_dict(), 200

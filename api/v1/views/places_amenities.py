@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Handles Place Amenities"""
+""" Place Amenities"""
 
 from os import environ
 from models import storage
@@ -11,9 +11,9 @@ from flask import abort, jsonify, make_response
 
 @app_views.route('places/<place_id>/amenities', methods=['GET'],
                  strict_slashes=False)
-def get_p_amenity(place_id):
+def get_place_amenity(place_id):
     """
-    Gets all the places amenities
+    Gets places amenities
     """
     get_p = storage.get(Place, place_id)
 
@@ -29,9 +29,9 @@ def get_p_amenity(place_id):
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_p_a(place_id, amenity_id):
+def delete_place_a(place_id, amenity_id):
     """
-    Delestes the place amenity
+    Delestes place amenity of given id
     """
     get_p = storage.get(Place, place_id)
     if not get_p:
@@ -53,9 +53,9 @@ def delete_p_a(place_id, amenity_id):
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['POST'],
                  strict_slashes=False)
-def create_p_a(place_id, amenity_id):
+def create_place_a(place_id, amenity_id):
     """
-    Create a place amenity
+    Creates place amenity
     """
     get_p = storage.get(Place, place_id)
     if not get_p:

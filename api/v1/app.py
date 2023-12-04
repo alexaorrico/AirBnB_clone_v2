@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Flask Application """
+""" Apllication using Flask """
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -13,18 +13,18 @@ cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
 @app.teardown_appcontext
-def close_db(err):
-    """ Close Storage """
+def db_close(err):
+    """ Closes the storage when app shutdown"""
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(err):
-    """ 404 Error
+    """Print 404 Error
     ---
     responses:
       404:
-        description: a resource was not found
+        description: not found
     """
     return jsonify({"error": "Not found"}), 404
 

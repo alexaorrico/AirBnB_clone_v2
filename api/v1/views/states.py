@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Defining State API """
+""" State API """
 
 import json
 from models import storage
@@ -11,35 +11,35 @@ from flask import Flask, Blueprint, jsonify, request, url_for, abort
 
 @app_views.route("/states", methods=['GET'], strict_slashes=False)
 def get_states():
-    """ get all sates """
+    """ Retrieves all states """
 
     all_states = storage.all(State).values()
-    res = []
+    result = []
     for state in all_states:
-        res.append(state.to_dict())
-    return jsonify(res)
+        result.append(state.to_dict())
+    return jsonify(result)
 
 
 @app_views.route("/states/<string:state_id>", methods=['GET'],
                  strict_slashes=False)
-def get_state_by_id(state_id):
-    """ Retrieves states with id """
+def get_state_id(state_id):
+    """ Gets states using id """
 
-    res = storage.get(State, state_id)
-    if res is None:
+    result = storage.get(State, state_id)
+    if result is None:
         abort(404)
-    return jsonify(res.to_dict())
+    return jsonify(result.to_dict())
 
 
 @app_views.route("/states/<string:state_id>", methods=['DELETE'],
                  strict_slashes=False)
-def delete_by_id(state_id):
-    """Deletes state by given id"""
+def delete_id(state_id):
+    """Deletes state of specified id"""
 
-    res = storage.get(State, state_id)
-    if res is None:
+    result = storage.get(State, state_id)
+    if result is None:
         abort(404)
-    storage.delete(res)
+    storage.delete(result)
     storage.save()
     return jsonify({}), 200
 
@@ -47,16 +47,16 @@ def delete_by_id(state_id):
 @app_views.route("/states", methods=['POST'],
                  strict_slashes=False)
 def create_state():
-    """Adds new state to db"""
+    """Create new state to db"""
 
     if not request.is_json:
         abort(400, description="Not a JSON")
-    res = request.get_json()
+    result = request.get_json()
 
-    if "name" not in res:
+    if "name" not in result:
         abort(400, description="Missing name")
 
-    state = State(**res)
+    state = State(**result)
     storage.new(state)
     storage.save()
     return state.to_dict(), 201
@@ -65,11 +65,11 @@ def create_state():
 @app_views.route("/states/<state_id>", methods=['PUT', 'GET'],
                  strict_slashes=False)
 def update_state(state_id):
-    """ Updates state info """
+    """ Update State using id """
 
-    res = storage.get(State, state_id)
+    result = storage.get(State, state_id)
 
-    if not res:
+    if not result:
         abort(404)
 
     if not request.is_json:
@@ -78,6 +78,6 @@ def update_state(state_id):
 
     for idx, idy in r_json.items():
         if idx != "id" and idx != "updated_at" and idx != "created_at":
-            setattr(res, idx, idy)
+            setattr(result, idx, idy)
     storage.save()
-    return res.to_dict(), 200
+    return result.to_dict(), 200
