@@ -68,6 +68,11 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        stack = inspect.stack()[1]
+        mod = inspect.getmodule(stack[0])
+        if mod.__name__ != "models.engine.file_storage":
+            if "password" in new_dict:
+                del new_dict["password"]
         return new_dict
 
     def delete(self):
