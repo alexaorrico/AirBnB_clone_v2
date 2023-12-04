@@ -82,3 +82,4 @@ class FileStorage:
             return sum(1 for obj_key in self.__objects.keys() if cls == self.__objects[obj_key].__class__ or cls == self.__objects[obj_key].__class__.__name__)
         else:
             return len(self.__objects)
+
