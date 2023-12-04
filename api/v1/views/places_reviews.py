@@ -10,10 +10,10 @@ from flask import abort, jsonify, request
 @app_views.route("/places/<place_id>/reviews", methods=['GET'])
 def get_review_place(place_id):
     """Gets all reviews using place id"""
-    get_p = storage.get("Place", place_id)
-    if not get_p:
+    get_pl = storage.get("Place", place_id)
+    if not get_pl:
         abort(404)
-    return jsonify([r.to_dict() for r in get_p.reviews])
+    return jsonify([r.to_dict() for r in get_pl.reviews])
 
 
 @app_views.route("/reviews/<review_id>", methods=['GET'])
@@ -21,10 +21,10 @@ def get_review_id(review_id):
     """
     Gets review by id
     """
-    instance = storage.get("Review", review_id)
-    if not instance:
+    r_instance = storage.get("Review", review_id)
+    if not r_instance:
         abort(404)
-    return jsonify(instance.to_dict())
+    return jsonify(r_instance.to_dict())
 
 
 @app_views.route("/reviews/<review_id>", methods=['DELETE'],
@@ -33,10 +33,10 @@ def delete_reviewid(review_id):
     """
     Deletes review using id
     """
-    instance = storage.get("Review", review_id)
-    if not instance:
+    r_instance = storage.get("Review", review_id)
+    if not r_instance:
         abort(404)
-    storage.delete(instance)
+    storage.delete(r_instance)
     storage.save()
     return jsonify({}), 200
 
@@ -47,8 +47,8 @@ def create_review(place_id):
     """
     Creates new Review
     """
-    get_p = storage.get("Place", place_id)
-    if not get_p:
+    get_pl = storage.get("Place", place_id)
+    if not get_pl:
         abort(404)
     result = request.get_json()
     if result is None:

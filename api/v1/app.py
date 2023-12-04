@@ -22,9 +22,9 @@ def db_close(err):
 def not_found(err):
     """Print 404 Error
     ---
-    responses:
+    Responses:
       404:
-        description: not found
+        Description: not found
     """
     return jsonify({"error": "Not found"}), 404
 

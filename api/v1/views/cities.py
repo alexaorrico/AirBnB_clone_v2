@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-Module for handling HTTP requests for City objs
+Module for HTTP requests for City objs
 """
 
 from api.v1.views import app_views
@@ -17,10 +17,10 @@ def get_cities_stateid(state_id):
     """
     Retrieves cities using state id
     """
-    state_instance = storage.get(State, state_id)
-    if state_instance is None:
+    instance_state = storage.get(State, state_id)
+    if instance_state is None:
         abort(404, "State not found")
-    cities_list = [city.to_dict() for city in state_instance.cities]
+    cities_list = [city.to_dict() for city in instance_state.cities]
     return jsonify(cities_list)
 
 
@@ -30,10 +30,10 @@ def get_city_id(city_id):
     """
     Retrieves a city of a specified id
     """
-    city_instance = storage.get(City, city_id)
-    if city_instance is None:
+    instance_city = storage.get(City, city_id)
+    if instance_city is None:
         abort(404, "City not found")
-    return jsonify(city_instance.to_dict())
+    return jsonify(instance_city.to_dict())
 
 
 @app_views.route("/cities/<string:city_id>", methods=['DELETE'],
@@ -51,12 +51,12 @@ def delete_city_id(city_id):
 
 @app_views.route("/states/<string:state_id>/cities", methods=['POST'],
                  strict_slashes=False)
-def create_city_state_id(state_id):
+def create_city_stateid(state_id):
     """
     Creates a city using state id
     """
-    state_instance = storage.get(State, state_id)
-    if state_instance is None:
+    instance_state = storage.get(State, state_id)
+    if instance_state is None:
         abort(404, "State not found")
     result = request.get_json()
     if result is None:
@@ -71,7 +71,7 @@ def create_city_state_id(state_id):
 
 @app_views.route("/cities/<string:city_id>", methods=['PUT'],
                  strict_slashes=False)
-def update_city_id(city_id):
+def update_cityid(city_id):
     """
     Updates a city with a specified id
     """

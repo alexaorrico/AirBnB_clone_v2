@@ -16,12 +16,12 @@ def get_places_city(city_id):
     """
     Retrieves all places with city id
     """
-    get_city = storage.get(City, city_id)
-    if get_city is None:
+    city_get = storage.get(City, city_id)
+    if city_get is None:
         abort(404)
-    instance = get_city.places
+    city_instance = city_get.places
     result = []
-    for item in instance:
+    for item in city_instance:
         result.append(item.to_dict())
     return jsonify(result)
 
@@ -32,10 +32,10 @@ def get_place_by_id(place_id):
     """
     Reyrieve place using specified id
     """
-    instance = storage.get(Place, place_id)
-    if instance is None:
+    p_instance = storage.get(Place, place_id)
+    if p_instance is None:
         abort(404)
-    return jsonify(instance.to_dict())
+    return jsonify(p_instance.to_dict())
 
 
 @app_views.route("/places/<string:place_id>", methods=['DELETE'],
@@ -44,10 +44,10 @@ def delete_place_id(place_id):
     """
     Deletes a place of specified id
     """
-    instance = storage.get(Place, place_id)
-    if instance is None:
+    p_instance = storage.get(Place, place_id)
+    if p_instance is None:
         abort(404)
-    storage.delete(instance)
+    storage.delete(p_instance)
     storage.save()
     return jsonify({}), 200
 
@@ -58,8 +58,8 @@ def create_place(city_id):
     """
     Creates a place
     """
-    get_city = storage.get(City, city_id)
-    if get_city is None:
+    city_get = storage.get(City, city_id)
+    if city_get is None:
         abort(404)
     result = request.get_json()
     if result is None:
@@ -83,8 +83,8 @@ def update_placeid(place_id):
     """
     Updates an place using specified id
     """
-    instance = storage.get(Place, place_id)
-    if instance is None:
+    p_instance = storage.get(Place, place_id)
+    if p_instance is None:
         abort(404)
     result = request.get_json()
     if result is None:
@@ -92,9 +92,9 @@ def update_placeid(place_id):
     for idx, idy in result.items():
         if idx not in ['id', 'city_id', 'user_id', 'updated_at',
                        'created_at']:
-            setattr(instance, idx, idy)
-    instance.save()
-    return jsonify(instance.to_dict()), 200
+            setattr(p_instance, idx, idy)
+    p_instance.save()
+    return jsonify(p_instance.to_dict()), 200
 
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
