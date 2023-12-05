@@ -76,7 +76,7 @@ class DBStorage:
         self.__session.remove()
   
     def get(self, cls, id):
-        '''method to retrieve one object'''
+        """method to retrieve one object"""
         if cls and id:
             tempo = cls, __name__ + "." + id
             count = self.all(cls)
