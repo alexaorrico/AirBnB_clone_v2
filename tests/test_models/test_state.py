@@ -112,5 +112,5 @@ class TestStateInstances(unittest.TestCase):
         expected = "betty"
         self.assertEqual(expected, actual)
 
-if __name__ == '__main__':
-    unittest.main
+    if __name__ == '__main__':
+        unittest.main
