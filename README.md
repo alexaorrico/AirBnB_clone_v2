@@ -154,9 +154,16 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+### V1 contributed to the hbnb project
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-Second part of Airbnb: Joann Vuong
+### V2 contributed to the hbnb project
+Joann Vuong
+
+### V3 contributed to the hbnb project
+Olive T'SERVRANCX - [Github](https://github.com/electrikbox)<br>
+Mickael TARTAR - [Github](https://github.com/mickaeltartar)
+
 ## License
 Public Domain. No copy write protection. 
