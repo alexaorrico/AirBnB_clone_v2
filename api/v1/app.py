@@ -1,29 +1,28 @@
 #!/usr/bin/python3
 """ Flask Application """
+from flask import Flask
+from os import environ
 from models import storage
 from api.v1.views import app_views
-from os import environ
-from flask import Flask, render_template, make_response, jsonify
-from flask_cors import CORS
-from flasgger import Swagger
-from flasgger.utils import swag_from
 
+# Create a variable app, instance of Flask
 app = Flask(__name__)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+# Register the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
-cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
+# Declare a method to handle @app.teardown_appcontext that calls storage.close()
 @app.teardown_appcontext
-def close_db(error):
+def teardown_db(exception):
     """ Close Storage """
     storage.close()
 
+
+# Inside if __name__ == "__main__":, run your Flask server (variable app) with:
 if __name__ == "__main__":
+    # host = environment variable HBNB_API_HOST or 0.0.0.0 if not defined
     host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
-    port = environ.get('HBNB_API_PORT')
-    if not host:
-        host = '0.0.0.0'
-    if not port:
-        port = '5000'
+    # port = environment variable HBNB_API_PORT or 5000 if not defined
+    port = environ.get('HBNB_API_PORT', '5000')
     app.run(host=host, port=port, threaded=True)
