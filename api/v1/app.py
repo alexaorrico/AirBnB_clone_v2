@@ -10,10 +10,12 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.errorhandler(404)
 def not_found(error):
     """404 error handler"""
     return make_response({"error": "Not found"}, 404)
+
 
 @app.teardown_appcontext
 def teardown_db(exception):
