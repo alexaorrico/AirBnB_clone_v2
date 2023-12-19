@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """app.py"""
-
-from flask import Flask
-from os import environ
 from models import storage
 from api.v1.views import app_views
+from os import environ
+from flask import Flask, render_template, jsonify
 
 # Create a variable app, instance of Flask
 app = Flask(__name__)
