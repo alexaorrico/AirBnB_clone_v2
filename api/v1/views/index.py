@@ -17,7 +17,7 @@ def status():
     """ return status of object """
     return jsonify({"status": "OK"})
 
-@app_views.route("/api/v1/stats", methods=['GET'])
+@app_views.route("/stats", methods=['GET'])
 def number_of_objects():
     """ Retrieves the number of each object type. """
     stats_dict = {
