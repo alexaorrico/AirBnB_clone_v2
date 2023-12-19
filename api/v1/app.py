@@ -20,8 +20,11 @@ def teardown_db(exception):
 
 # Inside if __name__ == "__main__":, run your Flask server (variable app) with:
 if __name__ == "__main__":
-    # host = environment variable HBNB_API_HOST or 0.0.0.0 if not defined
-    host = environ.get('HBNB_API_HOST', '0.0.0.0')
-    # port = environment variable HBNB_API_PORT or 5000 if not defined
-    port = environ.get('HBNB_API_PORT', '5000')
+    """ Main Function """
+    host = environ.get('HBNB_API_HOST')
+    port = environ.get('HBNB_API_PORT')
+    if not host:
+        host = '0.0.0.0'
+    if not port:
+        port = '5000'
     app.run(host=host, port=port, threaded=True)
