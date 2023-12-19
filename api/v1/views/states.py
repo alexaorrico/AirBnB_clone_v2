@@ -30,7 +30,46 @@ def delete_state(state_id):
         abort(404)
     state.delete()
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
+
+@app_views.route('/states>', methods=['POST'], strict_slashes=False)
+def create_state():
+    """Creates a State object."""
+    try:
+        data = request.get_json()
+    except Exception as e:
+            abort(400, description="Not a JSON")
+    if not data or 'name' not in data:
+        abort(400, description="Missing name")
+
+    new_state = State(**data)
+    new_state.save()
+
+    return jsonify(new_state.to_dict()), 201
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def update_state(state_id):
+    """Updates a State object."""
+    # Vérifiez si state_id est lié à un objet State
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+
+    # Utilisez request.get_json() pour transformer le corps de la requête en un dictionnaire
+    data = request.get_json()
+    if not data:
+        abort(400, 'Not a JSON')
+
+    # Mettez à jour l'objet State avec toutes les paires clé-valeur du dictionnaire
+    for key, value in data.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(state, key, value)
+
+    # Enregistrez les modifications dans la base de données
+    storage.save()
+
+    # Retournez l'objet State mis à jour avec le code d'état 200
+    return jsonify(state.to_dict()), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
