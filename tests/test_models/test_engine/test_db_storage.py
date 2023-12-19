@@ -19,8 +19,6 @@ import os
 import pep8
 import unittest
 from models import storage
-
-
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -90,32 +88,23 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def test_get(self):
-        user = User()
-        user.id = "123"
-        storage.new(user)
+    def test_get_db(self):
+        """ Tests method for obtaining an instance db storage"""
+        dic = {"name": "Cundinamarca"}
+        instance = State(**dic)
+        storage.new(instance)
         storage.save()
+        get_instance = storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
 
-        retrieved_user = storage.get(User, "123")
-        self.assertEqual(retrieved_user, user)
-
-    def test_count_all(self):
-        initial_count = storage.count()
-        user = User()
-        storage.new(user)
+    def test_count(self):
+        """ Tests count method db storage """
+        dic = {"name": "Vecindad"}
+        state = State(**dic)
+        storage.new(state)
+        dic = {"name": "Mexico", "state_id": state.id}
+        city = City(**dic)
+        storage.new(city)
         storage.save()
-        updated_count = storage.count()
-        self.assertEqual(updated_count, initial_count + 1)
-
-    def test_count_by_class(self):
-        initial_count = storage.count(User)
-        user = User()
-        storage.new(user)
-        storage.save()
-        updated_count = storage.count(User)
-        self.assertEqual(updated_count, initial_count + 1)
-
-
-    
-if __name__ == '__main__':
-    unittest.main()    
+        c = storage.count()
+        self.assertEqual(len(storage.all()), c)
