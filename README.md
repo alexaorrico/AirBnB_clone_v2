@@ -179,6 +179,7 @@ No known bugs at this time.
 ## Authors
 
 Gabriel Castro - [Github](https://github.com/thatfireboi)
+
 Natalia Rivera - [Github](https://github.com/nataliagrivera)
 
 ## License
