@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""app.py"""
+
 from flask import Flask
 from os import environ
 from models import storage
