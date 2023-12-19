@@ -181,8 +181,6 @@ No known bugs at this time.
 Gabriel Castro - [Github](https://github.com/thatfireboi)
 Natalia Rivera - [Github](https://github.com/nataliagrivera)
 
-Second part of Airbnb: Joann Vuong
-
 ## License
 
 Public Domain. No copy write protection.
