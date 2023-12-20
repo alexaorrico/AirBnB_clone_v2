@@ -67,6 +67,24 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    # Task 3 - Unit Tests
+    def test_get(self):
+        """Test that get returns the obj based on the class name and its ID"""
+        storage = FileStorage()
+        new_state = State()
+        storage.new(new_state)
+        storage.save()
+        self.assertIs(storage.get(State, new_state.id), new_state)
+
+    def test_count(self):
+        """Test that count returns the number of objects in storage"""
+        storage = FileStorage()
+        new_state = State()
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(), 1)
+    # Task 3 - End
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -113,3 +131,7 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+if __name__ == "__main__":
+    unittest.main()
