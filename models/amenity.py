@@ -7,7 +7,6 @@ import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-
 class Amenity(BaseModel, Base):
     """Representation of Amenity """
     if models.storage_t == 'db':
