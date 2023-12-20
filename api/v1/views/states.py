@@ -2,11 +2,13 @@
 """
 Defines the API routes for handling State objects.
 """
-
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.state import State
 from api.v1.views import app_views
+
+
+app = Flask(__name__)
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
