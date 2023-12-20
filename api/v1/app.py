@@ -12,10 +12,8 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
-"""Declare a method to handle @app.teardown_appcontext
-that calls storage.close()"""
-
-
+# Declare a method to handle @app.teardown_appcontext
+# that calls storage.close()
 @app.teardown_appcontext
 def teardown_db(exception):
     """Close the storage on teardown."""
