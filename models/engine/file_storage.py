@@ -79,5 +79,5 @@ class FileStorage:
     def count(self, cls=None):
         """ method that count object """
         if cls is None:
-            return len(self.__objects())
+            return len(self.__objects)
         return len(self.all(cls.__name__))
