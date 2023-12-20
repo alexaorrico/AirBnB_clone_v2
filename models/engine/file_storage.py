@@ -70,12 +70,14 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
+        """ get object for each classes """
         key = cls.__name__ + "." + id
         if key in self.all(cls):
             return self.all(cls)[key]
         return None
 
     def count(self, cls=None):
+        """ method that count object """
         if cls is None:
             return len(self.__objects())
         return len(self.all(cls.__name__))
