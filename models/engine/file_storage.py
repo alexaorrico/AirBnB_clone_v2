@@ -68,3 +68,23 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """Method to retrieve one object"""
+        """Spec_key= one object we are looking for"""
+        """All func is used to retrieve all dictionaries in a class"""
+        """Dict_of_objs is the dictionary of objects"""
+        """Spec_key is the specified key"""
+        """ID will return str representing obj ID"""
+        """Get will return the value of the item with the specified key"""
+        if cls.__name__ not in classes:
+            return None
+        Dict_of_objs = self.all(cls)
+        spec_key = cls.__name__ + '.' + str(id)
+        return Dict_of_objs.get(spec_key)
+
+    def count(self, cls=None):
+        """Method to count the number of objects in storage"""
+        """Len func will return number of objects in dictionary"""
+        Dict_of_objs = self.all(cls)
+        return len(Dict_of_objs)
