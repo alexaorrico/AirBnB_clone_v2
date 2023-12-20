@@ -60,44 +60,25 @@ def post_amenity():
     return jsonify(amenity.to_dict()), 201
 
 
-# @app_views.route('/amenities/<amenity_id>',
-#                  methods=['PUT'], strict_slashes=False)
-# def update_amenety(amenity_id):
-#     """ update amenity object """
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['PUT'], strict_slashes=False)
+def put_amenety(amenity_id):
+    """ update amenity object """
 
-#     amenity = storage.get(Amenity, amenity_id)
-#     if amenity is None:
-#         abort(404)
-
-#     json_request = request.get_json()
-
-#     if json_request is None:
-#         abort(400, "Not a JSON")
-
-#     for key, value in json_request.item():
-#         if key not in ["id", "created_at", "updated_at"]:
-#             setattr(amenity, key, value)
-
-#     amenity.save()
-#     return jsonify(amenity.to_dict()), 200
-
-@app_views.route("/amenities/<amenity_id>", methods=["PUT"],
-                 strict_slashes=False)
-def put_amenity(amenity_id):
-    """ Updates an amenity by its id """
     amenity = storage.get(Amenity, amenity_id)
-
     if amenity is None:
         abort(404)
 
-    data = request.get_json()
+    json_request = request.get_json()
 
-    if data is None:
-        abort(400, description="Not a JSON")
+    if json_request is None:
+        abort(400, "Not a JSON")
 
-    for key, value in data.items():
+    for key, value in json_request.item():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(amenity, key, value)
 
     amenity.save()
     return jsonify(amenity.to_dict()), 200
+
+
