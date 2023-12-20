@@ -19,6 +19,12 @@ def teardown_db(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """Error handler for a JSON-formatted 404 status code response."""
+    return jsonify({'error': 'Not found'}), 404
+
+
 # Inside if __name__ == "__main__":, run your Flask server (variable app) with:
 if __name__ == "__main__":
     """ Main Function """
