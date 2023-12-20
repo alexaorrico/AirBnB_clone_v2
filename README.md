@@ -56,7 +56,7 @@ Classes inherited from Base Model:
 
 #### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
 [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
-* `def all(self)` - returns the dictionary __objects
+* `def all(self)` - returns the dictionary __objects iiiiii
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * ` def reload(self)` -  deserializes the JSON file to __objects
