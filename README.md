@@ -160,7 +160,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 
 Authors for this paricular fork of Cohort 21:
-Christian Rosario - [Github](https://github.com/GreyLeaf23)
+Christian Rosario - [Github](https://github.com/GreyLeaf23) /
 Joshua E Santiago - [Github](https://github.com/Joshua7792)
 
 ## License
