@@ -7,6 +7,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
+
 # Route to retrieve the list of all State objects
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
@@ -19,6 +20,7 @@ def get_states():
 
     # Return the list of State dictionaries as JSON
     return jsonify(list_states)
+
 
 # Route to retrieve a specific State by ID
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
@@ -34,8 +36,10 @@ def get_state(state_id):
     # Return the State dictionary as JSON
     return jsonify(state.to_dict())
 
+
 # Route to delete a specific State by ID
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State Object"""
     # Get the State object with the specified ID from the storage
@@ -51,6 +55,7 @@ def delete_state(state_id):
 
     # Return an empty JSON response with status 200 OK
     return make_response(jsonify({}), 200)
+
 
 # Route to create a new State
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -73,6 +78,7 @@ def post_state():
 
     # Return the State dictionary as JSON with status 201 Created
     return make_response(jsonify(instance.to_dict()), 201)
+
 
 # Route to update a specific State by ID
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
