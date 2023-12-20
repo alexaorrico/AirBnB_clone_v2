@@ -20,7 +20,7 @@ def get_all_users():
 # GET 1 user
 # ============================================================================
 
-@app_views.route('users/<user_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def get_user(user_id):
     """get user by id"""
     user = storage.get(User, user_id)
@@ -32,7 +32,7 @@ def get_user(user_id):
 # DELETE a user
 # ============================================================================
 
-@app_views.route('users/<user_id>',
+@app_views.route('/users/<user_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
     """delete user by id"""
