@@ -50,10 +50,10 @@ def post_amenity():
     json_request = request.get_json()
 
     if json_request is None:
-        abort(404), ("Not a JSON")
+        abort(400, 'Not a JSON')
 
     if 'name' not in json_request:
-        abort(404), ("Missing name")
+        abort(400, 'Missing name')
 
     amenity = Amenity(**json_request)
     amenity.save()
