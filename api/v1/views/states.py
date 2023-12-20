@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """Objects that handle all default RestFul API actions for States"""
 
-from flask import jsonify, abort, request
+from models.state import State
+from models import storage
 from api.v1.views import app_views
-from models import storage, State
+from flask import abort, jsonify, make_response, request
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
