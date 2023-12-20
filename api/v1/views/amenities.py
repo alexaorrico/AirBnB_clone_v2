@@ -62,7 +62,7 @@ def post_amenity():
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
-def put_amenety(amenity_id):
+def update_amenity(amenity_id):
     """ update amenity object """
 
     amenity = storage.get(Amenity, amenity_id)
@@ -80,5 +80,3 @@ def put_amenety(amenity_id):
 
     amenity.save()
     return jsonify(amenity.to_dict()), 200
-
-
