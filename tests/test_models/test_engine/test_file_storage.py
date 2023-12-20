@@ -14,8 +14,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
-import os
 import pep8
 import unittest
 FileStorage = file_storage.FileStorage
@@ -113,3 +113,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_get(self):
+        """get method test"""
+        new_state = State(name='Holberton')
+        storage.new(new_state)
+        storage.save()
+        get_state = models.storage.get(State, new_state.id)
+        self.assertEqual(get_state, new_state)
+        storage.delete(new_state)
+        storage.save()
+        tmp_state = models.storage.get(State, new_state.id)
+        self.assertIsNone(tmp_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count(self):
+        """count method test"""
+        self.assertEqual(type(models.storage.count()), int)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count2(self):
+        """count method test"""
+        # Test count all
+        num = models.storage.count()
+        self.assertEqual(num, len(models.storage.all()))
+        # Test count State class
+        num_state = models.storage.count(State)
+        all_obj1 = models.storage.all(State)
+        all_obj2 = models.storage.all()
+        self.assertEqual(num_state, len(all_obj1))
+        self.assertNotEqual(all_obj1, all_obj2)
