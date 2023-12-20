@@ -5,7 +5,7 @@ from flask import jsonify, abort, request
 
 @app_views.route('/amenities', method=['GET'], strict_slashes=False)
 def get_amenities():
-    amenities = storage.all(Amenity).values
+    amenities = storage.all(Amenity).values()
     list_amenities = [amenity.to_dict() for amenity in amenities]
     return jsonify(list_amenities)
 
