@@ -78,6 +78,7 @@ def update_user(user_id):
         abort(404)
 
     data = request.get_json()
+
     if not data:
         abort(400, 'Not a JSON')
 
@@ -88,4 +89,4 @@ def update_user(user_id):
             setattr(user, key, value)
 
     user.save()
-    return jsonify(), 200
+    return jsonify(user.to_dict()), 200
