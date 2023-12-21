@@ -113,3 +113,22 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_count_method(self):
+        """Test the count method of FileStorage"""
+        storage = FileStorage()
+        initial_count = storage.count("State")
+        state = State(name="Another State")
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.count("State"), initial_count + 1)
+
+    def test_get_method_none(self):
+        """Test get method with none parameters"""
+        storage = FileStorage()
+        self.assertIsNone(storage.get(None, None))
+
+    def test_count_method_none(self):
+        """Test count method with none as class parameter"""
+        storage = FileStorage()
+        self.assertIsInstance(storage.count(None), int)
