@@ -5,19 +5,10 @@ from api.v1.views import app_views
 
 from models import storage
 
-
-
 @app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
     """status"""
-    data = {
-        "status":"OK"
-    }
-
-    resp = jsonify(data)
-    resp .status_code = 200
-    
-    return resp
+    return jsonify({"status": "OK"})
 
 
 
