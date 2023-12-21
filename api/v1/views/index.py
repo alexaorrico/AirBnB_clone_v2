@@ -9,7 +9,7 @@ this module contains flask app routes
 from api.v1.views import app_views
 from flask import jsonify
 
-"""import all models"""
+# import all models
 from models import storage
 from models.base_model import BaseModel
 from models.amenity import Amenity
