@@ -12,7 +12,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.stats('/stats')
+@app_views.route('/stats')
 def count():
     """use count method to count obj"""
     dict = {}
