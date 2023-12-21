@@ -4,9 +4,10 @@ and stats"""
 
 from api.v1.views import app_views
 from flask import jsonify
-from models import storage 
+from models import storage
 
-@app_views.route('/status')
+
+@app_views.route('/status', stritc_slashes=False)
 def status():
     """returns the API status"""
     return jsonify({"status": "OK"})
