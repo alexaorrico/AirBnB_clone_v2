@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """module for app file of hbnb clone"""
-
 from api.v1.views import app_views
 from flask import Flask
-from models import storage
 import os
+from models import storage
 
 
 # set up app_views blueprint and flask instance
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
 
 @app.teardown_appcontext
 def teardown(self):
