@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -32,14 +32,14 @@ class TestDBStorageDocs(unittest.TestCase):
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
@@ -86,3 +86,52 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get returns the correct object"""
+        # Test getting existing object
+        obj = models.storage.get(BaseModel, self.state.id)
+        self.assertIsNone(obj)
+
+        # Test getting non-existent object
+        obj = models.storage.get(BaseModel, "fake_id")
+        self.assertIsNone(obj)
+        # Test None parameters
+        self.assertIsNone(models.storage.get(None, None))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the number of objects in storage"""
+        count = models.storage.count()
+        self.assertEqual(count, 0)
+
+        count = models.storage.count(BaseModel)
+        self.assertEqual(count, 0)
+
+        count = models.storage.count(User)
+        self.assertEqual(count, 0)
+
+        count = models.storage.count(State)
+        self.assertEqual(count, 0)
+
+        count = models.storage.count(City)
+        self.assertEqual(count, 0)
+
+        count = models.storage.count(Amenity)
+        self.assertEqual(count, 0)
+
+        count = models.storage.count(Place)
+        self.assertEqual(count, 0)
+
+        count = models.storage.count(Review)
+        self.assertEqual(count, 0)
+
+        count = models.storage.count()
+        self.assertEqual(count, 1)
+
+        count = models.storage.count(BaseModel)
+        self.assertEqual(count, 1)
+
+        count = models.storage.count("NonExistentClass")
+        self.assertEqual(count, 0)

@@ -10,6 +10,10 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
+from api.v1.views import app_views
+from flask import jsonify
+
 
 # Define route to return JSON status
 @app_views.route("/status")
@@ -17,6 +21,7 @@ def status():
     """Returns status of API"""
     # Return a JSON response with the status
     return jsonify({"status": "OK"})
+
 
 # Define route to return JSON stats
 @app_views.route("/stats")
