@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" app folder for API"""
+""" app folder for API """
 from models import storage
 from flask import Flask, Blueprint
 from api.v1.views import app_views
