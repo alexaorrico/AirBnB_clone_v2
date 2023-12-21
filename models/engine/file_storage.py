@@ -70,8 +70,8 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, obj_id):
-        if cls in classes.values() and obj_id is not None:
-            return self.objects.get((cls, obj_id), None)
+        if cls in classes.values() and id is not None:
+            return self.objects.get((cls, id), None)
         return None
 
     def count(self, cls=None):
