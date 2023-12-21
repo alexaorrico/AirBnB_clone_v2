@@ -71,8 +71,12 @@ class FileStorage:
 
     def get(self, cls, id):
         """method that retrieve an object"""
-        if cls in classes.values() and id is not None:
-            return self.all(cls)[str(cls.__name__)+'.'+id]
+        if self.__objects is not None:
+            object = None
+            for objs in self.all(cls).values():
+                if objs.id == id:
+                    object = objs
+            return(object)
         else:
             return None
 
@@ -82,4 +86,5 @@ class FileStorage:
             result = self.all()
         else:
             result = self.all(cls)
+        
         return len(result)
