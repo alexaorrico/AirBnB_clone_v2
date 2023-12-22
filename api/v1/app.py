@@ -13,7 +13,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def not_found(error):
-    """close storage session""""
+    """close storage session"""
     storage.close()
 
 
