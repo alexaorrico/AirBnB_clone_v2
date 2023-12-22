@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """module for app file of hbnb clone"""
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, render_template, make_response, jsonify
 import os
 from models import storage
 
