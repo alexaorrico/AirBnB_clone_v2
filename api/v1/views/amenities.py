@@ -18,7 +18,7 @@ def amenities_get_all():
     return jsonify(am_list)
 
 
-@app_views.route('/amenities', methods=['GET'], stric_slashes=False)
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def amenity_create():
     """creates amenity route"""
     am_json = request.get_json(silent=True)
