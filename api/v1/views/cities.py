@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ module used to handle cities """
-
 from flask import jsonify, request
 from api.v1.views import app_views
 import json
@@ -11,7 +10,6 @@ from models.city import State
 
 @app_views.route('/states/<state_id>/cities')
 def city_index(state_id):
-    """Retrieve the list of all City objects of a State"""
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
@@ -21,7 +19,6 @@ def city_index(state_id):
 
 @app_views.route('/cities/<city_id>')
 def get_city(city_id):
-    """Retrieve a City object by its id"""
     cities = storage.all(City).values()
     for city in cities:
         if city.id == city_id:
@@ -31,7 +28,6 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
-    """Delete a City object by its id"""
     city = storage.all(City).values()
     for city in cities:
         if city.id == city_id:
@@ -43,14 +39,13 @@ def delete_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=["POST"])
 def post_city(state_id):
-    """ create and post city function """
     states = storage.all(State).values()
     for state in states:
         if state.id == states_id:
             try:
                 info = request.get_json()
                 if "name" not in info:
-                    return jsonify({"message": "Missing name"}),400
+                    return jsonify({"message": "Missing name"}), 400
                 city = City()
                 city.name = info[name]
                 city.state_id = state.id
@@ -64,7 +59,6 @@ def post_city(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_city(city_id):
-    """update city function"""
     try:
         info = request.get_json()
         city = storage.all(City).values()
