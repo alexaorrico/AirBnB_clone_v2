@@ -21,7 +21,7 @@ def amenities_get_all():
 @app_views.route('/amenities', methods=['GET'], stric_slashes=False)
 def amenity_create():
     """creates amenity route"""
-    am_json =request.get_json(silent=True)
+    am_json = request.get_json(silent=True)
     if am_json is None:
         abort(400, "Not a JSON")
     if "name" not in am_json:
@@ -33,6 +33,7 @@ def amenity_create():
     resp.status_code = 201
 
     return resp
+
 
 @app_views.route("/amenities/<amenity_id>",  methods=["GET"],
                  strict_slashes=False)
@@ -47,6 +48,7 @@ def amenity_by_id(amenity_id):
         abort(404)
 
     return jsonify(fetched_obj.to_json())
+
 
 @app_views.route("/amenities/<amenity_id>",  methods=["PUT"],
                  strict_slashes=False)
@@ -87,4 +89,3 @@ def amenity_delete_by_id(amenity_id):
     storage.save()
 
     return jsonify({})
-

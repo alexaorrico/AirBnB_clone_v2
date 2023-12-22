@@ -10,6 +10,7 @@ def status():
     """status"""
     return jsonify({"status": "OK"})
 
+
 @app_views.route("/status", strict_slashes=False)
 def stats():
     """get stats"""
@@ -21,7 +22,6 @@ def stats():
         "states": storage.count("State"),
         "users": storage.count("User")
     }
-    
     resp = jsonify(data)
     resp.dtatus_code = 200
 
