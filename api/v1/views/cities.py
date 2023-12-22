@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """ Module for handling cities """
 
-
-from flask import make_response, jsonify, request
+from flask import jsonify, request
 from api.v1.views import api_views
 import json
 from models import storage
@@ -17,7 +16,7 @@ def city_index(state_id):
         if state.id == state_id:
             return j.dumps(list(city, city.to_dict(),
                                 state.cities))
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return jsonify({'error': 'Not found'}), 404
 
 
 @app.views.route('/cities/<city_id>')
@@ -27,7 +26,7 @@ def get_city(city_id):
     for city in cities:
         if city.id == city_id:
             return json.dumps(city.to_dict)
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return jsonify({'error': 'Not found'}), 404
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
@@ -38,8 +37,8 @@ def delete_city(city_id):
         if city.id == city_id:
             storage.delete(city)
             storage.save()
-            return make_response(jsonify({}), 200)
-    return make_response(jsonify({'error': 'Not found'}), 404)
+            return jsonify({}), 200
+    return jsonify({'error': 'Not found'}), 404
 
 
 @app.views.route('/states/<state_id>/cities', methods=["POST"])
@@ -51,17 +50,16 @@ def post_city(state_id):
             try:
                 info = request.get_json()
                 if "name" not in info:
-                    return make_response(jsonify({"message": "Missing name"}),
-                                         400)
+                    return jsonify({"message": "Missing name"}),400
                 city = City()
                 city.name = info[name]
                 city.state_id = state.id
                 storage.new(city)
                 storage.save()
-                return make_response(city.to_dict(), 201)
+                return (city.to_dict(), 201)
             except Exception:
-                return make_response(jsonify({"message": "Not a JSON"}), 400)
-        return make_response(jsonify({'error': 'Not found'}), 404)
+                return jsonify({"message": "Not a JSON"}), 400
+        return jsonify({'error': 'Not found'}), 404
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
@@ -74,7 +72,7 @@ def update_city(city_id):
             if key not in ["id", "state_id", "created_at", "updated_at"]:
                 setattr(city, key, value)
             storage.save()
-            return make_response(city.to_dict(), 200)
-        return make_response(jsonify({'error': 'Not found'}), 404)
+            return (city.to_dict(), 200)
+        return jsonify({'error': 'Not found'}), 404
     except Exception:
-        return make_response(jsonify({"message": "Not a JSON"}), 400)
+        return jsonify({"message": "Not a JSON"}), 400
