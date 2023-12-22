@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""module used to handle cities"""
+"""create a new view for City objects that handles all default RESTFul API actions"""
 from flask import jsonify, request
 from api.v1.views import app_views
 import json
