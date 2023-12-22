@@ -17,6 +17,12 @@ def teardown(self):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(error):
+    """404 error handler"""
+    return make_response(jsonifiy({"error": "Not found"}), 404)
+
+
 if __name__ == "__main__":
     HBNB_API_HOST = os.getenv('HBNB_API_HOST', default='0.0.0.0')
     HBNB_API_PORT = os.getenv('HBNB_API_PORT', default='5000')
