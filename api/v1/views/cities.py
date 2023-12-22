@@ -5,7 +5,7 @@ from api.v1.views import app_views
 import json
 from models import storage
 from models.city import City
-from models.city import State
+from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
@@ -28,7 +28,7 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
-    city = storage.all(City).values()
+    cities = storage.all(City).values()
     for city in cities:
         if city.id == city_id:
             storage.delete(city)
@@ -41,7 +41,7 @@ def delete_city(city_id):
 def post_city(state_id):
     states = storage.all(State).values()
     for state in states:
-        if state.id == states_id:
+        if state.id == state_id:
             try:
                 info = request.get_json()
                 if "name" not in info:
