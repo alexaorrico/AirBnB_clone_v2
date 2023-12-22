@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Module for handling cities """
+""" module used to handle cities """
 
 from flask import jsonify, request
 from api.v1.views import api_views
@@ -16,7 +16,6 @@ def city_index(state_id):
         if state.id == state_id:
             return j.dumps(list(city, city.to_dict(),
                                 state.cities))
-    return jsonify({'error': 'Not found'}), 404
 
 
 @app.views.route('/cities/<city_id>')
