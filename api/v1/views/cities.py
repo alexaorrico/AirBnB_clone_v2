@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-""" citie module """
-
+"""Module for handling cities"""
 
 from flask import make_response, jsonify, request
 from api.v1.views import api_views
@@ -11,6 +10,7 @@ from models.city import City
 
 @app.views.route('/states/<state_id>/cities')
 def city_index(state_id):
+    """Retrieve the list of all City objects of a State"""
     states = storage.all(State).values()
     for state in states:
         if state.id == state_id:
@@ -21,6 +21,7 @@ def city_index(state_id):
 
 @app.views.route('/cities/<city_id>')
 def get_city(city_id):
+    """Retrieve a City object by its id"""
     cities = storage.all(City).values()
     for city in cities:
         if city.id == city_id:
@@ -30,6 +31,7 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
+    """Delete a City object by its id"""
     city = storage.all(City).values()
     for city in cities:
         if city.id == city_id:
