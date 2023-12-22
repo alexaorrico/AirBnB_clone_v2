@@ -6,6 +6,7 @@ from api.v1.views import api_views
 import json
 from models import storage
 from models.city import City
+from models.city import State
 
 
 @app.views.route('/states/<state_id>/cities')
