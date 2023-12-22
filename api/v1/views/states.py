@@ -45,14 +45,16 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
-    data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
 
     existing_state = storage.get(State, state_id)
     if existing_state is None:
         abort(404)
-    for k, v in request.get_json().items():
+
+    data = request.get_json()
+    if not data:
+        abort(400, 'Not a JSON')
+
+    for k, v in data.items():
         if k not in {'id', 'created_at', 'updated_at'}:
             setattr(existing_state, k, v)
     storage.save()
