@@ -76,8 +76,10 @@ class DBStorage:
         :param cls: class of object
         :return: number of objects in storage matching class
         """
-
-        return len(self.all(cls))
+        if cls:
+            return len(self.all(cls))
+        else:
+            return len(self.all())
 
     def save(self):
         """commit all changes of the current database session"""
