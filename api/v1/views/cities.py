@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Module for handling cities"""
+""" Module for handling cities """
+
 
 from flask import make_response, jsonify, request
 from api.v1.views import api_views
@@ -39,3 +40,41 @@ def delete_city(city_id):
             storage.save()
             return make_response(jsonify({}), 200)
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.views.route('/states/<state_id>/cities', methods=["POST"])
+def post_city(state_id):
+    """ create and post city function """
+    states = storage.all(State).values()
+    for state in states:
+        if state.id == states_id:
+            try:
+                info = request.get_json()
+                if "name" not in info:
+                    return make_response(jsonify({"message": "Missing name"}),
+                                         400)
+                city = City()
+                city.name = info[name]
+                city.state_id = state.id
+                storage.new(city)
+                storage.save()
+                return make_response(city.to_dict(), 201)
+            except Exception:
+                return make_response(jsonify({"message": "Not a JSON"}), 400)
+        return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app_views.route('/cities/<city_id>', methods=['PUT'])
+def update_city(city_id):
+    """update city function"""
+    try:
+        info = request.get_json()
+        city = storage.all(City).values()
+        for key, value in info.items():
+            if key not in ["id", "state_id", "created_at", "updated_at"]:
+                setattr(city, key, value)
+            storage.save()
+            return make_response(city.to_dict(), 200)
+        return make_response(jsonify({'error': 'Not found'}), 404)
+    except Exception:
+        return make_response(jsonify({"message": "Not a JSON"}), 400)
