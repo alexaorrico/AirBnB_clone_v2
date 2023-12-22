@@ -1,40 +1,54 @@
 #!/usr/bin/python3
-"""This module generates views for the Place class"""
+"""
+route for handling Place objects and operations
+"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
 from models.place import Place
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'],
+@app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
 def places_by_city(city_id):
-    """Retrieves the list of all Place objects of a City"""
+    """
+    retrieves all Place objects by city
+    :return: json of all Places
+    """
     place_list = []
     city_obj = storage.get("City", str(city_id))
     for obj in city_obj.places:
         place_list.append(obj.to_json())
-        
+
     return jsonify(place_list)
 
 
-@app_views.route("/cities/<city_id>/places", methods=["POST"], strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", methods=["POST"],
+                 strict_slashes=False)
 def place_create(city_id):
-    """Creates a Place object"""
+    """
+    create place route
+    :return: newly created Place obj
+    """
     place_json = request.get_json(silent=True)
     if place_json is None:
-        abort(400, "Not a JSON")
+        abort(400, 'Not a JSON')
     if not storage.get("User", place_json["user_id"]):
         abort(404)
+    if not storage.get("City", city_id):
+        abort(404)
     if "user_id" not in place_json:
-        abort(400, "Missing user_id")
+        abort(400, 'Missing user_id')
     if "name" not in place_json:
-        abort(400, "Missing name")
+        abort(400, 'Missing name')
 
     place_json["city_id"] = city_id
 
     new_place = Place(**place_json)
     new_place.save()
-    return jsonify(new_place.to_json()), 201
+    resp = jsonify(new_place.to_json())
+    resp.status_code = 201
+
+    return resp
 
 
 @app_views.route("/places/<place_id>",  methods=["GET"],
