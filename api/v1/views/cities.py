@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" module used to handle cities """
+"""module used to handle cities"""
 from flask import jsonify, request
 from api.v1.views import app_views
 import json
