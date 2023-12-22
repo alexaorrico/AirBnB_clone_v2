@@ -17,7 +17,7 @@ def places_by_city(city_id):
     place_list = []
     city_obj = storage.get("City", str(city_id))
     for obj in city_obj.places:
-        place_list.append(obj.to_json())
+        place_list.append(obj.to_dict())
 
     return jsonify(place_list)
 
@@ -45,7 +45,7 @@ def place_create(city_id):
 
     new_place = Place(**place_json)
     new_place.save()
-    resp = jsonify(new_place.to_json())
+    resp = jsonify(new_place.to_dict())
     resp.status_code = 201
 
     return resp
@@ -65,7 +65,7 @@ def place_by_id(place_id):
     if fetched_obj is None:
         abort(404)
 
-    return jsonify(fetched_obj.to_json())
+    return jsonify(fetched_obj.to_dict())
 
 
 @app_views.route("/places/<place_id>",  methods=["PUT"],
@@ -92,7 +92,7 @@ def place_put(place_id):
 
     fetched_obj.save()
 
-    return jsonify(fetched_obj.to_json())
+    return jsonify(fetched_obj.to_dict())
 
 
 @app_views.route("/places/<place_id>",  methods=["DELETE"],
