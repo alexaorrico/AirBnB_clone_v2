@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-route for handling state objects and operations
+route for handling State objects and operations
 """
 from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
@@ -10,7 +10,7 @@ from models.state import State
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
 def state_get_all():
     """
-    retrived all States objects
+    retrieves all State objects
     :return: json of all states
     """
     state_list = []
@@ -18,7 +18,7 @@ def state_get_all():
     for obj in state_obj.values():
         state_list.append(obj.to_json())
 
-        return jsonify(state_list)
+    return jsonify(state_list)
 
 
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
@@ -41,23 +41,23 @@ def state_create():
     return resp
 
 
-@app_view.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>",  methods=["GET"], strict_slashes=False)
 def state_by_id(state_id):
     """
     gets a specific State object by ID
-    :param state_id: state id
-    :return: state object with the specific id or error
+    :param state_id: state object id
+    :return: state obj with the specified id or error
     """
 
-    state_obj = storage.get("State", state_id)
+    fetched_obj = storage.get("State", str(state_id))
 
-    if state_obj is None:
+    if fetched_obj is None:
         abort(404)
 
-    return jsonify(state_obj.to_json())
+    return jsonify(fetched_obj.to_json())
 
 
-@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/states/<state_id>",  methods=["PUT"], strict_slashes=False)
 def state_put(state_id):
     """
     updates specific State object by ID
@@ -95,4 +95,3 @@ def state_delete_by_id(state_id):
     storage.save()
 
     return jsonify({})
-
