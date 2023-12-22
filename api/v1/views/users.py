@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""Module used to handle cities"""
-
+""" Module used to handle users """
 from flask import jsonify, request, abort
 from api.v1.views import api_views
 from models import storage
 from models.user import User
+
 
 @api_views.route('/users', methods=['GET'])
 def get_all_users():
@@ -13,13 +13,15 @@ def get_all_users():
     for user in users:
         return jsonify([user.to_dict()])
 
+
 @api_views.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     """Retrieves a User object by its id"""
     user = storage.get(User, user_id)
     if user is None:
-       return jsonify({'error': 'Not found'}), 404 
+        return jsonify({'error': 'Not found'}), 404
     return jsonify(user.to_dict())
+
 
 @api_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
@@ -30,6 +32,7 @@ def delete_user(user_id):
     storage.delete(user)
     storage.save()
     return jsonify({}), 200
+
 
 @api_views.route('/users', methods=['POST'])
 def create_user():
@@ -46,7 +49,7 @@ def create_user():
         return jsonify(user.to_dict()), 201
     except Exception:
         return jsonify({"message": "Not a JSON"}), 400
-        
+
 
 @api_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
@@ -57,7 +60,8 @@ def update_user(user_id):
         if user is None:
             return jsonify({'error': 'Not found'}), 404
         for key, value in data.items():
-            if key not in ["id", "email", "created_at", "updated_at", "password"]:
+            if key not in ["id", "email", "created_at",
+                           "updated_at", "password"]:
                 setattr(user, key, value)
         storage.save()
         return jsonify(user.to_dict()), 200
