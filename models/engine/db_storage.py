@@ -62,13 +62,10 @@ class DBStorage:
         :param id: id of object as string
         :return: found object or none
         """
-        all_class = self.all(cls)
-        
-        for obj in all_class.values():
-            if id == str(obj.id):
+        for obj in self.all(cls).values():
+            if obj.id == id:
                 return obj
-
-            return None
+        return None
 
     def count(self, cls=None):
         """
