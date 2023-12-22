@@ -2,14 +2,14 @@
 """ module used to handle cities """
 
 from flask import jsonify, request
-from api.v1.views import api_views
+from api.v1.views import app_views
 import json
 from models import storage
 from models.city import City
 from models.city import State
 
 
-@app.views.route('/states/<state_id>/cities')
+@app_views.route('/states/<state_id>/cities')
 def city_index(state_id):
     """Retrieve the list of all City objects of a State"""
     states = storage.all(State).values()
@@ -19,7 +19,7 @@ def city_index(state_id):
                                 state.cities))
 
 
-@app.views.route('/cities/<city_id>')
+@app_views.route('/cities/<city_id>')
 def get_city(city_id):
     """Retrieve a City object by its id"""
     cities = storage.all(City).values()
@@ -41,7 +41,7 @@ def delete_city(city_id):
     return jsonify({'error': 'Not found'}), 404
 
 
-@app.views.route('/states/<state_id>/cities', methods=["POST"])
+@app_views.route('/states/<state_id>/cities', methods=["POST"])
 def post_city(state_id):
     """ create and post city function """
     states = storage.all(State).values()
