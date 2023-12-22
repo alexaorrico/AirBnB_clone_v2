@@ -8,7 +8,7 @@ from models.city import City
 from models.city import State
 
 
-@app_views.route('/states/<state_id>/cities')
+@app_views.route('/states/<state_id>/cities', methods=['GET'])
 def city_index(state_id):
     states = storage.all(State).values()
     for state in states:
@@ -17,7 +17,7 @@ def city_index(state_id):
                                 state.cities))
 
 
-@app_views.route('/cities/<city_id>')
+@app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     cities = storage.all(City).values()
     for city in cities:
