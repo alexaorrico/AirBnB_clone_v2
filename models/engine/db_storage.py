@@ -76,11 +76,11 @@ class DBStorage:
         self.__session.remove()
         
     
-def count(self, cls=None):
-    """eaaaaaa"""
-    return len(self.all(cls))
+    def count(self, cls=None):
+        """eaaaaaa"""
+        return len(self.all(cls))
 
-def get(self, cls, id):
-    """ssssssss"""
-    return self.all()[f"{cls}.{id}"]
+    def get(self, cls, id):
+        """ssssssss"""
+        return self.all()[f"{cls}.{id}"]
     
