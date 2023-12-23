@@ -9,9 +9,11 @@ from flask import Flask, jsonify, abort, request
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'])
-def all_places():
+def all_places(city_id):
+    if storage.get(City, city_id) is None:
+        abort(404)
     all_places = []
-    for place in storage.all(Place).values():
+    for place in storage.get(City, city_id).places:
         all_places.append(place.to_dict())
     return jsonify(all_places)
 
