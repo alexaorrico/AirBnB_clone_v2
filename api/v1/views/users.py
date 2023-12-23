@@ -8,7 +8,6 @@ from models.user import User
 
 @app_views.route('/users', methods=['GET'])
 def get_all_users():
-    """Retrieves the list of all User objects"""
     users = storage.all(User).values()
     for user in users:
         return jsonify([user.to_dict()])
@@ -36,34 +35,31 @@ def delete_user(user_id):
 
 @app_views.route('/users', methods=['POST'])
 def create_user():
-    """Creates a User"""
-    try:
-        data = request.get_json()
-        if not data or "email" not in data or "password" not in data:
-            abort(400, description="Not a JSON or Missing email or password")
+    data = request.get_json()
+    if not data:
+        abort(400, description='Not a JSON')
+    if "email" not in data:
+        abort(400, description="Missing email")
+    if "password" not in data:
+        abort(400, description="Missing password")
 
-        user = User(**data)
-        storage.new(user)
-        storage.save()
-
-        return jsonify(user.to_dict()), 201
-    except Exception:
-        return jsonify({"message": "Not a JSON"}), 400
-
+    user = User(**data)
+    storage.new(user)
+    storage.save()
+    return jsonify(user.to_dict()), 201
+    
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
-    """Updates a User object by its id"""
-    try:
-        data = request.get_json()
-        user = storage.get(User, user_id)
-        if user is None:
-            return jsonify({'error': 'Not found'}), 404
+    data = request.get_json()
+    user = storage.get(User, user_id)
+    if not data:
+        abort (400, description= "Not a JSON")
+    if user is None:
+        return jsonify({'error': 'Not found'}), 404
         for key, value in data.items():
             if key not in ["id", "email", "created_at",
                            "updated_at", "password"]:
                 setattr(user, key, value)
         storage.save()
         return jsonify(user.to_dict()), 200
-    except Exception:
-        abort(400, description="Not a JSON or Missing email or password")
