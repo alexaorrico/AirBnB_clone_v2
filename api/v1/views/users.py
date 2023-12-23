@@ -44,8 +44,8 @@ def create_user():
         abort(400, "Missing password")
 
     new_user = User(**data)
-    storage.save()
-    return jsonify(user.to_dict()), 201
+    new_user.save()
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
@@ -60,5 +60,5 @@ def update_user(user_id):
         if key not in ["id", "email", "created_at",
                        "updated_at"]:
             setattr(user, key, value)
-    storage.save()
+    user.save()
     return jsonify(user.to_dict()), 200

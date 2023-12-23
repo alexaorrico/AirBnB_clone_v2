@@ -17,7 +17,7 @@ def get_all_reviews(place_id):
     reviews_list = []
     for k in place.reviews:
         reviews_list.append(k.to_dict())
-    return jsonify(reviews_list)
+    return jsonify(reviews_list), 200
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'])
@@ -25,7 +25,7 @@ def get_review(review_id):
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
-    return jsonify(review.to_dict())
+    return jsonify(review.to_dict()), 200
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
@@ -50,13 +50,16 @@ def post_review(place_id):
         return jsonify({"Missing user_id"}), 400
     if "text" not in data:
         return jsonify({"Missing text"}), 400
+    
     user_id = data["user_id"]
     user = storage.get(User, user_id)
     if not user:
         abort(404)
-    review = Review(place_id=place_id, **data)
-    storage.new(review)
-    storage.save()
+        
+    data['place_id'] = place.id
+    new_review = Review(**data)
+    new_review.save()
+    
     return jsonify(review.to_dict()), 201
 
 
@@ -71,5 +74,5 @@ def update_review(review_id):
     for k, value in data.items():
         if k not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
             setattr(review, key, value)
-    storage.save()
+    review.save()
     return jsonify(user.to_dict()), 200
