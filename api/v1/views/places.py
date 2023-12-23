@@ -25,6 +25,7 @@ from flask import abort, jsonify, request
 # import all needed models
 from models import storage
 from models.city import City
+from models.user import User
 from models.place import Place
 
 
@@ -69,6 +70,8 @@ def create_place(city_id):
         return jsonify({"error": "Not a JSON"}), 400
     if "user_id" not in request.get_json():
         return jsonify({"error": "Missing user_id"}), 400
+    if (storage.get(User, (request.get_json())["user_id"])) is None:
+        abort(404)
     if "name" not in request.get_json():
         return jsonify({"error": "Missing name"}), 400
     obj_dict = request.get_json()
