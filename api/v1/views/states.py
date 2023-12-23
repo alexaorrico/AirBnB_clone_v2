@@ -9,7 +9,7 @@ from models.state import State
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
 def state_get_all():
-    """
+    """from flask import jsonify
     retrieves all State objects
     :return: json of all states
     """

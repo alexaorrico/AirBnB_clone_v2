@@ -9,7 +9,7 @@ from api.v1.views import app_views
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
     """gets all users"""
-    users = user[to.to_dict() for user in storage.all(User).values()]
+    users = [user.to_dict() for user in storage.all(User).values()]
     return jsonify(users)
 
 

@@ -5,7 +5,7 @@ folder of the AirBnB Clone repo
 """
 
 from datetime import datetime
-from fabric.api import local
+from fabric import local
 from os.path import isdir
 
 
