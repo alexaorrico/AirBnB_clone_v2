@@ -40,6 +40,17 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
+
+    def get(self, cls, id):
+
+        if id and cls:
+            return self.all(cls)[str(cls.__name__)+'.'+id]
+        else:
+            return None
+        
+    def count(self, cls=None):
+        return (len(self.all(cls)))
+
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
