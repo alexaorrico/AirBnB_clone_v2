@@ -61,8 +61,10 @@ def create_User():
     """creates a new User instance"""
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
-    if "name" not in request.get_json():
-        return jsonify({"error": "Missing name"}), 400
+    if "email" not in request.get_json():
+        return jsonify({"error": "Missing email"}), 400
+    if "password" not in request.get_json():
+        return jsonify({"error": "Missing password"}), 400
     obj = User(**(request.get_json()))
     obj.save()
     return jsonify(obj.to_dict()), 201
