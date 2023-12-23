@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""create a new view for City objects that handles all default RESTFul API actions"""
-from flask import jsonify, request
+"""create a new view for City objects that handles
+all default RESTFul API actions"""
+from flask import jsonify, request, abort
 from api.v1.views import app_views
-import json
 from models import storage
 from models.city import City
 from models.state import State
@@ -10,11 +10,12 @@ from models.state import State
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def city_index(state_id):
-    states = storage.all(State).values()
-    for state in states:
-        if state.id == state_id:
-            return j.dumps(list(city, city.to_dict(),
-                                state.cities))
+    if storage.get(State, state_id):
+        abort(404)
+    all_cities = []
+    for city in storage.get(State, state_id).cities:
+        all_cities.append(city.to_dict())
+    return jsonify(all_cities)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
@@ -22,8 +23,8 @@ def get_city(city_id):
     cities = storage.all(City).values()
     for city in cities:
         if city.id == city_id:
-            return json.dumps(city.to_dict)
-    return jsonify({'error': 'Not found'}), 404
+            return jsonify(city.to_dict)
+    return jsonify(error='Not found'), 404
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
