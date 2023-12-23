@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+storage = models.storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -66,6 +67,60 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+class TestDBStorage(unittest.TestCase):
+    """Tests for DBStorage methods."""
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the tests"""
+        cls.storage = DBStorage()
+        cls.storage.reload()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Clean up after tests"""
+        del cls.storage
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_method(self):
+        """Test the count method of DBStorage"""
+        initial_state_count = self.storage.count(State)
+        new_state = State(name="New State")
+        self.storage.new(new_state)
+        self.storage.save()
+        self.assertEqual(self.storage.count(State), initial_state_count + 1)
+
+        total_initial_count = self.storage.count()
+        new_user = User(email='user@example.com', password='password')
+        self.storage.new(new_user)
+        self.storage.save()
+        self.assertEqual(self.storage.count(), total_initial_count + 1)
+
+    def test_count_method_none(self):
+        """Test count method with none as class parameter"""
+        self.assertIsInstance(self.storage.count(None), int)
+
+    def test_fake_count_method(self):
+        """Test the count method with a fake DBStorage"""
+        fake_storage = DBStorage()
+        fake_storage.count = lambda cls=None: -1
+        self.assertEqual(fake_storage.count("State"), -1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_method(self):
+        """Test get method with valid and invalid IDs"""
+        new_state = State(name="California")
+        self.storage.new(new_state)
+        self.storage.save()
+        retrieved_state = self.storage.get(State, new_state.id)
+        self.assertEqual(new_state, retrieved_state)
+
+        self.assertIsNone(self.storage.get(State, "invalid_id"))
+
+    def test_get_method_none(self):
+        """Test get method with none parameters"""
+        self.assertIsNone(self.storage.get(None, None))
 
 
 class TestFileStorage(unittest.TestCase):
