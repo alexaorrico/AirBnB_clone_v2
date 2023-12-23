@@ -43,12 +43,12 @@ def create_place(city_id):
         abort(404)
     if not data:
         abort(400, 'Not a JSON')
+    if "name" not in data:
+        abort(400, 'Missing name')
     if 'user_id' not in data:
         abort(400, 'Missing user_id')
     if user is None:
         abort(404)
-    if "name" not in data:
-        abort(400, 'Missing name')
 
     data['city_id'] = city.id
     data['user_id'] = user.id
