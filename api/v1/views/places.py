@@ -50,7 +50,7 @@ def create_place(city_id):
         if 'user_id' not in data:
             return jsonify({"message": "Missing user_id"}), 400
         data['city_id'] = city.id
-        data['city_id'] = user.id
+        data['user_id'] = user.id
         new_city = Place(**data)
         storage.new(new_city)
         storage.save()
