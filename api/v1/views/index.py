@@ -12,9 +12,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
 
 @app_views.route('/status')
 def status():
@@ -25,10 +22,13 @@ def status():
 @app_views.route('/stats')
 def count():
     """use count method to count obj"""
-    dict = {}
-
-    for cls, class_list in classes.items():
-        counter = storage.count(cls)
-        dict[cls] = counter
-
-    return jsonify(dict)
+    return jsonify(
+        {
+            "amenities": storage.count(Amenity),
+            "cities": storage.count(City),
+            "places": storage.count(Place),
+            "reviews": storage.count(Review),
+            "states": storage.count(State),
+            "users": storage.count(User)
+        }
+    )
