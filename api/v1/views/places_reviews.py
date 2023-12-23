@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Reviews API endpoints"""
+"""Reviews view module"""
 from flask import jsonify, abort, request, make_response
 from models import storage
 from models.place import Place
