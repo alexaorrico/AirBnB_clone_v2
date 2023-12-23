@@ -73,16 +73,16 @@ def create_place(city_id):
         return jsonify({"error": "Missing name"}), 400
     obj_dict = request.get_json()
     obj_dict["city_id"] = city_id
-    obj = City(**obj_dict)
+    obj = Place(**obj_dict)
     obj.save()
     return jsonify(obj.to_dict()), 201
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"])
-def update_place(city_id):
+def update_place(place_id):
     """update a place instance using ID"""
     ignore_keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
-    obj = storage.get(City, city_id)
+    obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
     if not request.get_json():
