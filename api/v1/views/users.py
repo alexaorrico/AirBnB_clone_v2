@@ -1,5 +1,5 @@
-#!usr/bin/python3
-"""module for users view"""
+#!/usr/bin/python3
+"""Users API endpoints"""
 from flask import Flask, jsonify, abort, request, make_response
 from models import storage
 from models.user import User
@@ -8,24 +8,23 @@ from api.v1.views import app_views
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
-    """gets all users"""
+    """Retrieve all User objects"""
     users = [user.to_dict() for user in storage.all(User).values()]
     return jsonify(users)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def get_user(user_id):
-    """gets a user"""
+    """Retrieve a specific User object"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
     return jsonify(user.to_dict())
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
-    """deletes a user"""
+    """Delete a specific User object"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -36,7 +35,7 @@ def delete_user(user_id):
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
-    """creates a user"""
+    """Create a new User object"""
     if not request.get_json():
         abort(400, description="Not a JSON")
     elif 'email' not in request.get_json():
@@ -50,7 +49,7 @@ def create_user():
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
-    """updates a user"""
+    """Update a specific User object"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
