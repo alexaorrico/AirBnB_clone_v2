@@ -10,7 +10,7 @@ from models.state import State
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def city_index(state_id):
-    if storage.get(State, state_id):
+    if storage.get(State, state_id) is None:
         abort(404)
     all_cities = []
     state = storage.get(State, state_id)
