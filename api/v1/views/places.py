@@ -42,13 +42,13 @@ def create_place(city_id):
     if city is None:
         abort(404)
     if not data:
-        return jsonify({"message": "Not a JSON"}), 400
+        abort(400, 'Not a JSON')
     if 'user_id' not in data:
-        return jsonify({"message": "Missing user_id"}), 400
+        abort(400, 'Missing user_id')
     if user is None:
         abort(404)
     if "name" not in data:
-        return jsonify({"message": "Missing name"}), 400
+        abort(400, 'Missing name')
 
     data['city_id'] = city.id
     data['user_id'] = user.id
