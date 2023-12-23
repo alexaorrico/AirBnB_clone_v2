@@ -64,18 +64,20 @@ def remove_place(place_id):
 @app_views.route("/cities/<city_id>/places", methods=["POST"])
 def create_place(city_id):
     """creates a place instance"""
-    if (storage.get(City, city_id)) is None:
-        abort(404)
     if not request.get_json():
         return jsonify({"error": "Not a JSON"}), 400
     if "user_id" not in request.get_json():
         return jsonify({"error": "Missing user_id"}), 400
-    if (storage.get(User, (request.get_json())["user_id"])) is None:
-        abort(404)
     if "name" not in request.get_json():
         return jsonify({"error": "Missing name"}), 400
+    city = storage.get(City, city_id)
+    user = storage.get(User, (request.get_json())["user_id"])
+    if city is None or user is None:
+        abort(404)
+
     obj_dict = request.get_json()
-    obj_dict["city_id"] = city_id
+    obj_dict["city_id"] = city.id
+    obj_dict["user_id"] = user.id
     obj = Place(**obj_dict)
     obj.save()
     return jsonify(obj.to_dict()), 201
