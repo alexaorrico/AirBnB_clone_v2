@@ -50,8 +50,7 @@ def create_place(city_id):
     if user is None:
         abort(404)
 
-    data['city_id'] = city.id
-    data['user_id'] = user.id
+    data['city_id'] = city_id
     new_place = Place(**data)
     storage.new(new_place)
     storage.save()
