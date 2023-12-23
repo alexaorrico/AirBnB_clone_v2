@@ -13,7 +13,8 @@ def city_index(state_id):
     if storage.get(State, state_id):
         abort(404)
     all_cities = []
-    for city in storage.get(State, state_id).cities:
+    state = storage.get(State, state_id)
+    for city in state.cities:
         all_cities.append(city.to_dict())
     return jsonify(all_cities)
 
