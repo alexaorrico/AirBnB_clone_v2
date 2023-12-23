@@ -58,7 +58,7 @@ def post_review(place_id):
     return jsonify(review.to_dict()), 201
 
 
-@api_views.route('/reviews/<review_id>', methods=['PUT'])
+@app_views.route('/reviews/<review_id>', methods=['PUT'])
 def update_review(review_id):
     data = request.get_json()
     review = storage.get(Review, review_id)
