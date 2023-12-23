@@ -75,4 +75,9 @@ class FileStorage:
 
     def get(self, cls, id):
         """ssssssss"""
-        return self.all()[f"{cls}.{id}"]
+        dic = self.all()
+        for obj in dic:
+            if obj.__class__.__name__ == cls:
+                if obj.id == id:
+                    return obj
+    
