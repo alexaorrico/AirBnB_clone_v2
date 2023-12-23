@@ -6,6 +6,7 @@ import json
 from models import storage
 from models.review import Review
 from models.place import Place
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'])
@@ -40,11 +41,13 @@ def post_review(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    if not request.get_json():
-        abort(400, description="Not a JSON")
     data = request.get_json()
-    if not data or "user_id" not in data or "text" not in data:
-        return jsonify({"Not a JSON or Missing user_id or text"}), 400
+    if not data:
+        abort(400, description="Not a JSON")
+    if "user_id" not in data:
+        return jsonify({"Missing user_id"}), 400
+    if "text" not in data:
+        return jsonify({"Missing text"}), 400
     user_id = data["user_id"]
     user = storage.get(User, user_id)
     if user is None:
@@ -61,8 +64,10 @@ def update_review(review_id):
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    for key, value in data.items():
-            if key not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
-                setattr(review, key, value)
+    if not data:
+        abort(400, description='Not a JSON')
+    for k, value in data.items():
+        if k not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
+            setattr(review, key, value)
     storage.save()
     return jsonify(user.to_dict()), 200
