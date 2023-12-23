@@ -44,7 +44,8 @@ def create_user():
         return jsonify({"Missing password"}), 400
 
     new_user = User(**data)
-    new_user.save()
+    storage.new(new_user)
+    storage.save()
     return jsonify(new_user.to_dict()), 201
 
 
