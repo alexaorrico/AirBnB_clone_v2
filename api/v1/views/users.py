@@ -19,7 +19,7 @@ def get_user(user_id):
     """Retrieves a User object by its id"""
     user = storage.get(User, user_id)
     if user is None:
-        return jsonify({'error': 'Not found'}), 404
+        abort(404)
     return jsonify(user.to_dict())
 
 
@@ -28,7 +28,7 @@ def delete_user(user_id):
     """Deletes a User object by its id"""
     user = storage.get(User, user_id)
     if user is None:
-        return jsonify({'error': 'Not found'}), 404
+        abort(404)
     storage.delete(user)
     storage.save()
     return jsonify({}), 200
@@ -57,10 +57,10 @@ def update_user(user_id):
     if not data:
         abort(400, description="Not a JSON")
     if user is None:
-        return jsonify({'error': 'Not found'}), 404
+        abort(404)
         for key, value in data.items():
             if key not in ["id", "email", "created_at",
-                           "updated_at", "password"]:
+                           "updated_at"]:
                 setattr(user, key, value)
         storage.save()
         return jsonify(user.to_dict()), 200

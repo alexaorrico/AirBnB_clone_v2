@@ -14,14 +14,16 @@ def get_all_reviews(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    reviews = [review.to_dict() for review in place.reviews]
-    return jsonify(reviews)
+    reviews_list = []
+    for k in place.reviews:
+        reviews_list.append(k.to_dict())
+    return jsonify(reviews_list)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'])
 def get_review(review_id):
     review = storage.get(Review, review_id)
-    if review is None:
+    if not review:
         abort(404)
     return jsonify(review.to_dict())
 
@@ -29,7 +31,7 @@ def get_review(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
     review = storage.get(Review, review_id)
-    if review is None:
+    if not review:
         abort(404)
     storage.delete(review)
     storage.save()
@@ -39,7 +41,7 @@ def delete_review(review_id):
 @app_views.route('/api/v1/places/<place_id>/reviews', methods=['POST'])
 def post_review(place_id):
     place = storage.get(Place, place_id)
-    if place is None:
+    if not place:
         abort(404)
     data = request.get_json()
     if not data:
@@ -50,7 +52,7 @@ def post_review(place_id):
         return jsonify({"Missing text"}), 400
     user_id = data["user_id"]
     user = storage.get(User, user_id)
-    if user is None:
+    if not user:
         abort(404)
     review = Review(place_id=place_id, **data)
     storage.new(review)
@@ -62,7 +64,7 @@ def post_review(place_id):
 def update_review(review_id):
     data = request.get_json()
     review = storage.get(Review, review_id)
-    if review is None:
+    if not review:
         abort(404)
     if not data:
         abort(400, description='Not a JSON')
