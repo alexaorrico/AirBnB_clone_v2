@@ -23,6 +23,6 @@ def stats():
         "users": storage.count("User")
     }
     resp = jsonify(data)
-    resp.dtatus_code = 200
+    resp.status_code = 200
 
     return resp
