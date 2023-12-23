@@ -42,13 +42,14 @@ class DBStorage:
 
 
     def get(self, cls, id):
-
+        """get an obj"""
         if id and cls:
             return self.all(cls)[str(cls.__name__)+'.'+id]
         else:
             return None
         
     def count(self, cls=None):
+        """count obj"""
         return (len(self.all(cls)))
 
     def all(self, cls=None):
