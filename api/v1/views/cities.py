@@ -36,7 +36,7 @@ def delete_city(city_id):
     return jsonify({'error': 'Not found'}), 404
 
 
-@app_views.route('/states/<state_id>/cities', methods=["POST"])
+@app_views.route('/states/<state_id>/cities/', methods=["POST"])
 def post_city(state_id):
     info = request.get_json()
     if not info:
