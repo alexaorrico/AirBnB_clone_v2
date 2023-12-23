@@ -36,25 +36,27 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places/', methods=['POST'])
 def create_place(city_id):
-    if storage.get(City, city_id) is None:
+    city = storage.get(City, city_id)
+    user = storage.get(User, request.get_json()["user_id"])
+    if city is None:
         abort(404)
-    data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
-    if 'user_id' not in data:
-        abort(400, 'Missing user_id')
-    if storage.get(User, data['user_id']) is None:
+    if user is None:
         abort(404)
-    if 'name' not in data:
-        abort(400, 'Missing name')
-    city = storage.get(User, city_id)
-    user = storage.get(User, data['user_id'])
-    data['city_id'] = city.id
-    data['user_id'] = user.id
-    new_place = Place(**data)
-    storage.new(new_place)
-    storage.save()
-    return jsonify(new_place.to_dict()), 201
+
+    try:
+        data = request.get_json()
+        if "name" not in data:
+            return jsonify({"message": "Missing name"}), 400
+        if 'user_id' not in data:
+            return jsonify({"message": "Missing user_id"}), 400
+        data['city_id'] = city.id
+        data['city_id'] = user.id
+        new_city = Place(**data)
+        storage.new(new_city)
+        storage.save()
+        return jsonify(new_city.to_dict()), 201
+    except Exception:
+        return jsonify({"message": "Not a JSON"}), 400
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'])
