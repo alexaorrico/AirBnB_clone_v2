@@ -37,14 +37,13 @@ def delete_user(user_id):
 def create_user():
     data = request.get_json()
     if not data:
-        abort(400, 'Not a JSON')
+        return jsonify({"error": "Not a JSON"}), 400
     if 'email' not in data:
         abort(400, 'Missing email')
     if "password" not in data:
         abort(400, "Missing password")
 
-    user = User(**data)
-    storage.new(user)
+    new_user = User(**data)
     storage.save()
     return jsonify(user.to_dict()), 201
 
@@ -53,14 +52,11 @@ def create_user():
 def update_user(user_id):
     data = request.get_json()
     user = storage.get(User, user_id)
-
-    if storage.get(User, data['user_id']) is None:
+    if user is None:
         abort(404)
-
     if not data:
-        abort(400, "Not a JSON")
-
-    for key, value in data.items():
+       return jsonify({"error": "Not a JSON"}), 400
+    for key, value in request.get_json().items():
         if key not in ["id", "email", "created_at",
                        "updated_at"]:
             setattr(user, key, value)
