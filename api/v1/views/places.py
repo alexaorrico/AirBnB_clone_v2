@@ -47,8 +47,10 @@ def create_place(city_id):
         abort(404)
     if 'name' not in data:
         abort(400, 'Missing name')
-    data['city_id'] = storage.get(User, city_id).id
-    data['user_id'] = storage.get(User, data['user_id']).id
+    city = storage.get(User, city_id)
+    user = storage.get(User, data['user_id'])
+    data['city_id'] = city.id
+    data['user_id'] = user.id
     new_place = Place(**data)
     storage.new(new_place)
     storage.save()
