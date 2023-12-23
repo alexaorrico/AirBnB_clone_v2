@@ -9,9 +9,11 @@ from models.user import User
 
 @app_views.route('/users', methods=['GET'])
 def get_all_users():
+    all_users = []
     users = storage.all(User).values()
     for user in users:
-        return jsonify([user.to_dict()])
+        all_users.append(user.to_dict())
+    return jsonify(all_users)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'])
@@ -24,7 +26,7 @@ def get_user(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    if storage.get(User, user_id):
+    if storage.get(User, user_id) is None:
         abort(404)
     storage.delete(storage.get(User, user_id))
     storage.save()
@@ -35,9 +37,9 @@ def delete_user(user_id):
 def create_user():
     data = request.get_json()
     if not data:
-        abort(400, description='Not a JSON')
-    if "email" not in data:
-        abort(400, "Missing email")
+        abort(400, 'Not a JSON')
+    if 'email' not in data:
+        abort(400, 'Missing email')
     if "password" not in data:
         abort(400, "Missing password")
 
@@ -49,15 +51,18 @@ def create_user():
 
 @app_views.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
+    data = request.get_json()
     user = storage.get(User, user_id)
+
     if storage.get(User, data['user_id']) is None:
         abort(404)
-    data = request.get_json()
+
     if not data:
-        abort(400, description="Not a JSON")
+        abort(400, "Not a JSON")
+
     for key, value in data.items():
         if key not in ["id", "email", "created_at",
                        "updated_at"]:
             setattr(user, key, value)
-        storage.save()
-        return jsonify(user.to_dict()), 200
+    storage.save()
+    return jsonify(user.to_dict()), 200
