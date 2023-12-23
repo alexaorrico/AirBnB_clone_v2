@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""create a new view for Review objects
-that handles all default RESTFul API actions"""
+"""create a new view for Review that handles all default RESTFul API actions"""
 from flask import jsonify, request
 from api.v1.views import app_views
 import json
@@ -56,18 +55,14 @@ def post_review(place_id):
     return jsonify(review.to_dict()), 201
 
 
-@api_views.route('/users/<user_id>', methods=['PUT'])
-def put_user(user_id):
+@api_views.route('/reviews/<review_id>', methods=['PUT'])
+def update_review(review_id):
     data = request.get_json()
-    user = storage.get(User, user_id)
-    if user is None:
+    review = storage.get(Review, review_id)
+    if review is None:
         abort(404)
-    data = request.get_json()
-    if not data:
-        abort(400, description='Not a JSON')
-
     for key, value in data.items():
-        if key not in ["id", "email", "created_at", "updated_at", "password"]:
-            setattr(user, key, value)
+            if key not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
+                setattr(review, key, value)
     storage.save()
     return jsonify(user.to_dict()), 200
