@@ -34,7 +34,7 @@ def delete_place(place_id):
     return {}, 200
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'])
+@app_views.route('/cities/<city_id>/places/', methods=['POST'])
 def create_place(city_id):
     if storage.get(City, city_id) is None:
         abort(404)
