@@ -21,11 +21,9 @@ def city_index(state_id):
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
-    cities = storage.all(City).values()
-    for city in cities:
-        if city.id == city_id:
-            return jsonify(city.to_dict)
-    return jsonify(error='Not found'), 404
+    if storage.get(City, city_id) is None:
+        abort(404)
+    return jsonify(storage.get(City, city_id).to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
