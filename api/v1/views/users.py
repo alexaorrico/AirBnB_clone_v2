@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Create a new view for User object that
 handles all default RESTFul API actions"""
-from flask import  Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -38,10 +38,10 @@ def create_user():
     data = request.get_json()
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
-    if 'email' not in data:
-        abort(400, 'Missing email')
-    if "password" not in data:
-        abort(400, "Missing password")
+    if data.get("email") is None:
+        return jsonify ({"Missing email"}), 400
+    if data.get("password") is None:
+        return jsonify ({"Missing password"}), 400
 
     new_user = User(**data)
     new_user.save()
@@ -55,7 +55,7 @@ def update_user(user_id):
     if user is None:
         abort(404)
     if not data:
-       return jsonify({"error": "Not a JSON"}), 400
+        return jsonify({"error": "Not a JSON"}), 400
     for key, value in request.get_json().items():
         if key not in ["id", "email", "created_at",
                        "updated_at"]:
