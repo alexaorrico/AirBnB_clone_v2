@@ -114,14 +114,35 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count_method(self):
         """Test the count method of FileStorage"""
         storage = FileStorage()
-        initial_count = storage.count("State")
-        state = State(name="Another State")
-        storage.new(state)
+
+        initial_state_count = storage.count("State")
+        new_state = State(name="Another State")
+        storage.new(new_state)
         storage.save()
-        self.assertEqual(storage.count("State"), initial_count + 1)
+        self.assertEqual(storage.count("State"), initial_state_count + 1)
+
+        total_objects_before = storage.count()
+        new_city = City()
+        storage.new(new_city)
+        storage.save()
+        self.assertEqual(storage.count(), total_objects_before + 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_method(self):
+        """Test get method with valid and invalid IDs"""
+        storage = FileStorage()
+
+        new_city = City(id="test_city_id")
+        storage.new(new_city)
+        storage.save()
+        retrieved_city = storage.get(City, 'test_city_id')
+        self.assertEqual(new_city, retrieved_city)
+
+        self.assertIsNone(storage.get(City, 'invalid_id'))
 
     def test_get_method_none(self):
         """Test get method with none parameters"""
