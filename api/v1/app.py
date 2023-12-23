@@ -16,6 +16,7 @@ def teardown(exception):
     """
     storage.close()
 
+
 if __name__ == '__main__':
     """
         main function
