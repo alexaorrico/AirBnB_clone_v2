@@ -4,7 +4,7 @@
         flask APP routes:
         methods:
             GET:
-                /Amenitys:
+                /amenities:
                     list all Amenitys
                 /amenities/<amenity_id>:
                     display Amenity dictionary using ID
@@ -12,7 +12,7 @@
                 /amenities/<amenity_id>:
                     delete a Amenity using ID
             POST:
-                /Amenitys:
+                /amenities:
                     creates a new Amenity
             PUT:
                 /amenities/<amenity_id>:
