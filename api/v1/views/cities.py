@@ -46,9 +46,9 @@ def post_city(state_id):
         info = request.get_json()
         if "name" not in info:
             return jsonify({"message": "Missing name"}), 400
-        city = City()
-        city.name = info['name']
-        city.state_id = state.id
+
+        info['state_id'] = state.id
+        city = City(**info)
         storage.new(city)
         storage.save()
         return jsonify(city.to_dict()), 201
