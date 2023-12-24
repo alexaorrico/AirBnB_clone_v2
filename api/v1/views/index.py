@@ -15,6 +15,7 @@ def statusRoute():
         "status": "OK"
     })
 
+
 @app_views.route('/stats')
 def statsRoute():
     """Stats Route"""
