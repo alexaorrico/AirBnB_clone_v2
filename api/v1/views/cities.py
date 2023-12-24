@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+http methods for manipulating city class resources
+"""
 from flask import Flask, jsonify, abort, request
 from models import storage
 from models.state import State

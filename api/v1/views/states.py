@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-http methods for manipulating sate class resources
+http methods for manipulating state class resources
 """
 
 from api.v1.views import app_views

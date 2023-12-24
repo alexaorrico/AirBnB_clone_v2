@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+http methods for manipulating amenity class resources
+"""
 from flask import Flask, jsonify, abort, request
 from models import storage
 from models.amenity import Amenity
