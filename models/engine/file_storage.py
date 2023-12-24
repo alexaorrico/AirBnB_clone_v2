@@ -57,7 +57,20 @@ class FileStorage:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
         except:
             pass
+    
+    def get(self, cls, id):
+        dict_c = self.all(cls)
+        for key, val in dict_c.items():
+            if id in key:
+                return dict_c[key]
 
+    def count(self, cls=None):
+        dic_c = self.all(cls)
+        count = 0
+        for _ in dic_c.keys():
+            count += 1
+        return count
+   
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
         if obj is not None:
