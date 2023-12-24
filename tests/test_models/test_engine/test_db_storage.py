@@ -18,7 +18,7 @@ import json
 import os
 import pep8
 import unittest
-DBStorage = db_storage.DBStorage
+DBStorage = (db_storage.DBStorage)()
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -73,6 +73,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
+        DBStorage.reload()
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -86,3 +87,43 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test if get properly returns None or Object instance"""
+        DBStorage.reload()
+
+        # test valid cls and id
+        obj = State(name="TestGet")
+        obj.save()
+        obj_val = DBStorage.get(State, obj.id)
+        self.assertIsNotNone(obj_val)
+
+        # test fake id
+        obj_val = DBStorage.get(State, "fake_id")
+        self.assertIsNone(obj_val)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test if count properly returns an int and it is count of
+        all object or all instances of cls"""
+        DBStorage.reload()
+
+        # test none class
+        count = DBStorage.count()
+        self.assertIsInstance(count, int)
+        self.assertEqual(count, 0)
+
+        obj = State(name="TestCount0")
+        obj.save()
+        DBStorage.save()
+        count = DBStorage.count()
+        self.assertGreater(count, 0)
+
+        # test State class
+        for n in range(1, 10):
+            obj = State(name=f"TestCount{n}")
+            obj.save()
+            DBStorage.save()
+        count = DBStorage.count(State)
+        self.assertEqual(count, 10)
