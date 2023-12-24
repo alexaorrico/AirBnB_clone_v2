@@ -27,3 +27,10 @@ def statsRoute():
         "states": storage.count("State"),
         "users": storage.count("User")
     })
+
+
+@app.errorhandler(404)
+def not_found(e):
+    """404 error page
+    """
+    return jsonify({"error": "Not found"})
