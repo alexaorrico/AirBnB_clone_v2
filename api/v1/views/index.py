@@ -30,7 +30,6 @@ def number_of_each_obj():
         "places": storage.count(Place),
         "reviews": storage.count(Review),
         "states": storage.count(State),
-        "user": storage.count(User)
+        "users": storage.count(User)
     }
-
     return jsonify(number_of_obj)
