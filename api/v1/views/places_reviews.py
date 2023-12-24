@@ -43,7 +43,7 @@ def delete_review(review_id):
 def create_review(place_id):
     place = storage.get(Place, place_id)
     if place is None:
-        abort(404, 'Place not found')
+        abort(404)
 
     data = request.get_json()
     if not data:
@@ -53,7 +53,7 @@ def create_review(place_id):
     user_id = data['user_id']
     user = storage.get(User, user_id)
     if user is None:
-        abort(404, 'User not found')
+        abort(404)
     if 'text' not in data:
         abort(400, 'Missing text')
 
