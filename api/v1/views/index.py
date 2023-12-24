@@ -12,7 +12,7 @@ def statusRoute():
     """Status Route"""
     return jsonify({
         "status": "OK"
-    }), 404
+    })
 
 
 @app_views.route('/stats')
