@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 import inspect
 import models
 import pep8 as pycodestyle
-import pytz
 import time
 import unittest
 from unittest import mock
@@ -84,12 +83,13 @@ class TestBaseModel(unittest.TestCase):
         and that upon creation have identical updated_at and created_at
         value."""
         delta_t = timedelta(seconds=1)
-        tic1 = datetime.now(pytz.utc)
+        tic1 = datetime.utcnow()
         inst1 = BaseModel()
-        toc1 = datetime.now(pytz.utc)
-        print(f"\n{tic1}, {inst1.created_at}, {toc1}", flush=True)
+        toc1 = datetime.utcnow()
+        print(f"\ntic1 = {tic1}, inst1 = {inst1.created_at}, toc1 {toc1}",
+              flush=True)
         self.assertTrue(tic1 <= inst1.created_at <= toc1 + delta_t)
-        time.sleep(0.001)
+        time.sleep(1e-4)
         tic2 = datetime.now()
         inst2 = BaseModel()
         toc2 = datetime.now()
