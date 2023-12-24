@@ -81,9 +81,8 @@ class DBStorage:
 
     def get(self, cls, id):
         """ssssssss"""
-        dic = self.all()
-        for obj in dic:
-            if obj.__class__ == cls:
-                if obj.id == id:
-                    return obj
+        dic = self.all(cls)
+        for key, val in dic.items():
+            if id in key:
+                return dic[key]
     
