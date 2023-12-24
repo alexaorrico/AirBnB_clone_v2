@@ -57,7 +57,7 @@ def create_review(place_id):
     if 'text' not in data:
         abort(400, 'Missing text')
 
-    data['place_id'] = place.id
+    data['place_id'] = place_id
     new_review = Review(**data)
     storage.new(new_review)
     storage.save()
