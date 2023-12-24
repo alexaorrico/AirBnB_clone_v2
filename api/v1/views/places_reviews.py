@@ -68,7 +68,6 @@ def post_review(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
 def update_review(review_id):
-
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
@@ -81,4 +80,4 @@ def update_review(review_id):
         if k not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
             setattr(review, k, value)
     storage.save()
-    return jsonify(user.to_dict()), 200
+    return jsonify(review.to_dict()), 200
