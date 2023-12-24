@@ -40,24 +40,22 @@ def delete_review(review_id):
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
-def post_review(place_id):
-    user = storage.get(User, user_id)
-    if user is None:
-        abort(404)
+def create_review(place_id):
+    place = storage.get(Place, place_id)
+    if place is None:
+        abort(404, 'Place not found')
+
     data = request.get_json()
     if not data:
         abort(400, 'Not a JSON')
-    if "user_id" not in data:
+    if 'user_id' not in data:
         abort(400, 'Missing user_id')
-    if "text" not in data:
-        abort(400, 'Missing text')
-    user = storage.get(User, data["user_id"])
+    user_id = data['user_id']
+    user = storage.get(User, user_id)
     if user is None:
-        abort(400)
-
-    place = storage.get(Place, place_id)
-    if place is None:
-        abort(404)
+        abort(404, 'User not found')
+    if 'text' not in data:
+        abort(400, 'Missing text')
 
     data['place_id'] = place.id
     new_review = Review(**data)
