@@ -32,7 +32,7 @@ def get_review(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
     review = storage.get(Review, review_id)
-    if Review is None:
+    if review is None:
         abort(404)
     storage.delete(review)
     storage.save()
@@ -55,7 +55,7 @@ def post_review(place_id):
 
     user_id = data["user_id"]
     user = storage.get(User, user_id)
-    if User is None:
+    if user is None:
         abort(404)
 
     data['place_id'] = place.id
@@ -63,7 +63,7 @@ def post_review(place_id):
     storage.new(new_review)
     storage.save()
 
-    return jsonify(review.to_dict()), 201
+    return jsonify(new_review.to_dict()), 201
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
@@ -79,6 +79,6 @@ def update_review(review_id):
 
     for k, value in data.items():
         if k not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
-            setattr(review, key, value)
+            setattr(review, k, value)
     storage.save()
     return jsonify(user.to_dict()), 200
