@@ -27,7 +27,10 @@ class FileStorage:
     def get(self, cls, id):
         """get an obj"""
         if id and cls:
-            return self.all(cls)[str(cls.__name__)+'.'+id]
+            try:
+                return self.all(cls)[str(cls.__name__)+'.'+id]
+            except Exception:
+                return None
         else:
             return None
 
