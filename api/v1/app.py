@@ -3,7 +3,7 @@
     Script that sets up a Flask application
 """
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 
@@ -15,6 +15,12 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 def teardown_appcontext(exeption):
     """ Function to close the storage connection """
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """ Handler page not found """
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
