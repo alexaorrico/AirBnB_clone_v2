@@ -85,7 +85,7 @@ class FileStorage:
     def count(self, cls=None):
         counter = 0
         if (cls):
-            counter = len(list(filter(lambda o: isinstance(o, cls),
+            counter = len(list(filter(lambda s: isinstance(s, cls),
                                self.__objects.values())))
         else:
             counter = len(self.__objects)

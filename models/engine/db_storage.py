@@ -90,7 +90,7 @@ class DBStorage:
     def count(self, cls=None):
         counter = 0
         if (cls):
-            counter = sum(map(lambda c: self.__session.query(c).count(),
+            counter = sum(map(lambda s: self.__session.query(s).count(),
                               classes.values()))
         else:
             counter = self.__session.query(cls).count()
