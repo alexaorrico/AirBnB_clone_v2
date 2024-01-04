@@ -157,7 +157,8 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-Harmony Wisdom - [Github](https://github.com/wisdomwest/) / [Twitter](https://twitter.com/_Wizzie_k)
+Harmony  - [Github](https://github.com/wisdomwest/) / [Twitter](https://twitter.com/_Wizzie_k)
+Youssef Charif Hamidi - [Github](https://github.com/Chareeef/) / [LinkedIn](https://www.linkedin.com/in/youssef-charif-hamidi)
 
 Second part of Airbnb: Joann Vuong
 ## License
