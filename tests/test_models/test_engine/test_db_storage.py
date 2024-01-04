@@ -7,6 +7,7 @@ from datetime import datetime
 import inspect
 import models
 from models.engine import db_storage
+from models.engine.db_storage import DBStorage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -18,7 +19,6 @@ import json
 import os
 import pep8
 import unittest
-DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -86,3 +86,44 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """test that get(obj) correctly retrieves obj from the storage"""
+        storage = DBStorage()
+        storage.reload()
+
+        user = User(email="user@example.com", password="passwd")
+        user.save()
+
+        objs_dict = storage.all()
+
+        retrieved_user = storage.get(User, user.id)
+        self.assertEqual(retrieved_user.id, user.id)
+        self.assertEqual(retrieved_user.email, user.email)
+        self.assertEqual(retrieved_user.password, user.password)
+
+        state = State(name="Texas")
+
+        retrieved_state = storage.get(State, state.id)
+        self.assertIsNone(retrieved_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test that count([cls]) correctly counts the storage obj"""
+        storage = DBStorage()
+        storage.reload()
+
+        self.assertEqual(storage.count(), 0)
+
+        user1 = User(email="user1@example.com", password="passwd")
+        user2 = User(email="user2@example.com", password="dwssap")
+        state = State(name="Texas")
+        user1.save()
+        user2.save()
+        state.save()
+
+        self.assertEqual(storage.count(), 3)
+        self.assertEqual(storage.count(User), 2)
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(City), 0)

@@ -25,6 +25,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -70,6 +71,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +115,40 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test that get(obj) correctly retrieves obj from the storage"""
+        storage = FileStorage()
+        user = User(email="user@example.com", password="passwd")
+        user.save()
+
+        objs_dict = storage.all()
+
+        retrieved_user = storage.get(User, user.id)
+        self.assertEqual(retrieved_user, user)
+
+        state = State(name="Texas")
+
+        retrieved_state = storage.get(State, state.id)
+        self.assertIsNone(retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test that count([cls]) correctly counts the storage obj"""
+        storage = FileStorage()
+        storage.delete_all()
+
+        self.assertEqual(storage.count(), 0)
+
+        user1 = User(email="user1@example.com", password="passwd")
+        user2 = User(email="user2@example.com", password="dwssap")
+        state = State(name="Texas")
+        storage.new(user1)
+        storage.new(user2)
+        storage.new(state)
+
+        self.assertEqual(storage.count(), 3)
+        self.assertEqual(storage.count(User), 2)
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(City), 0)
