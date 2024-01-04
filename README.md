@@ -157,6 +157,10 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
+#### Date Modified: 04/01/2024
+- Emmanuel Godwin - [Github](https://github.com/maelstrom0x8) / [Twitter]()
+- Blain Muema - [Github](https://github.com/octocatblain) / [Twitter](https://twitter.com/birdblain)
+
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
