@@ -132,3 +132,23 @@ class TestFileStorage(unittest.TestCase):
 
         retrieved_state = storage.get(State, state.id)
         self.assertIsNone(retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test that count([cls]) correctly counts the storage obj"""
+        storage = FileStorage()
+        storage.delete_all()
+
+        self.assertEqual(storage.count(), 0)
+
+        user1 = User(email="user1@example.com", password="passwd")
+        user2 = User(email="user2@example.com", password="dwssap")
+        state = State(name="Texas")
+        storage.new(user1)
+        storage.new(user2)
+        storage.new(state)
+
+        self.assertEqual(storage.count(), 3)
+        self.assertEqual(storage.count(User), 2)
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(City), 0)
