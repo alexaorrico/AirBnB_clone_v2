@@ -158,7 +158,6 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Harmony  - [Github](https://github.com/wisdomwest/) / [Twitter](https://twitter.com/_Wizzie_k)
-
 Youssef Charif Hamidi - [Github](https://github.com/Chareeef/) / [LinkedIn](https://www.linkedin.com/in/youssef-charif-hamidi)
 
 Second part of Airbnb: Joann Vuong
