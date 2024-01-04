@@ -1,0 +1,9 @@
+*.json
+venv/
+__pycache__/*
+*/__pycache__/*
+models/*/__pycache__/*
+models/*/*/__pycache__/*
+tests/*/__pycache__/*
+tests/*/*/__pycache__/*
+tests/*/*/*/__pycache__/*
