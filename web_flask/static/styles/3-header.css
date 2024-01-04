@@ -7,9 +7,11 @@ header {
     align-items: center;
 }
 
-.logo {
+#header_logo {
     width: 142px;
     height: 60px;
-    background: url("../images/logo.png") no-repeat center;
-    padding-left: 20px;
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+	background-position: center;
+    margin-left: 20px;
 }
