@@ -16,8 +16,15 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {
+        'BaseModel': base_model.BaseModel,
+        'Amenity': amenity.Amenity,
+        'City': city.City,
+        'Place': place.Place,
+        'Review': review.Review,
+        'State': state.State,
+        'User': user.User
+    }
 
 
 class DBStorage:
@@ -82,7 +89,7 @@ class DBStorage:
         try:
             obj_dict = {}
             if cls:
-                obj_class = self.__session.query(self.CNC.get(cls)).all()
+                obj_class = self.__session.query(self.classes.get(cls)).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
             return obj_dict[id]
@@ -95,15 +102,15 @@ class DBStorage:
         """
         obj_dict = {}
         if cls:
-            obj_class = self.__session.query(self.CNC.get(cls)).all()
+            obj_class = self.__session.query(self.classes.get(cls)).all()
             for item in obj_class:
                 obj_dict[item.id] = item
             return len(obj_dict)
         else:
-            for cls_name in self.CNC:
+            for cls_name in self.classes:
                 if cls_name == 'BaseModel':
                     continue
-                obj_class = self.__session.query(self.CNC.get(cls_name)).all()
+                obj_class = self.__session.query(self.classes.get(cls_name)).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
             return len(obj_dict)
