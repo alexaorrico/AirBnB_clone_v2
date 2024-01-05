@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""view for City objects handles all
+"""view for User objects handles all
    default RESTFul API actions"""
 
 from api.v1.views import app_views
@@ -22,7 +22,7 @@ def all_users():
 @app_views.route("/users/<user_id>", methods=["GET"],
                  strict_slashes=False)
 def get_user(user_id):
-    """Retrieves City info/object"""
+    """Retrieves user info/object"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -32,7 +32,7 @@ def get_user(user_id):
 @app_views.route("/users/<user_id>", methods=["DELETE"],
                  strict_slashes=False)
 def delete_user(user_id):
-    """Deletes a City object"""
+    """Deletes a user object"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -43,7 +43,7 @@ def delete_user(user_id):
 
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def new_user():
-    """create a new city"""
+    """create a new user"""
     data = request.get_json()
 
     if data is None:
@@ -61,7 +61,7 @@ def new_user():
 @app_views.route("/users/<user_id>", methods=["PUT"],
                  strict_slashes=False)
 def update_user(user_id):
-    """update city object"""
+    """update user object"""
     data = request.get_json()
     user = storage.get(User, user_id)
     ignore_keys = ['id', 'email', 'created_at', 'updated_at']
