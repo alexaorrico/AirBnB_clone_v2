@@ -86,10 +86,19 @@ class FileStorage:
     """
     Counts the number of objects of a class in storage.
     """
-    if cls:
-        obj_list = [item for item in FileStorage.__objects.values() if type(item).__name__ == cls]
-        return len(obj_list)
-    else:
-        obj_list = [item for item in FileStorage.__objects if type(item).__name__ != 'BaseModel']
-        return len(obj_list)
-
+        if cls:
+            obj_list = []
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
+        else:
+            obj_list = []
+            for class_name in self.CNC:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = FileStorage.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)
