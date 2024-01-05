@@ -9,7 +9,7 @@ import models
 from models import place
 from models.base_model import BaseModel
 from os import remove
-# import pep8
+import pep8
 import unittest
 Place = place.Place
 
@@ -29,19 +29,19 @@ class TestPlaceDocs(unittest.TestCase):
         except Exception:
             pass
 
-    # def test_pep8_conformance_place(self):
-    #     """Test that models/place.py conforms to PEP8."""
-    #     pep8s = pep8.StyleGuide(quiet=True)
-    #     result = pep8s.check_files(['models/place.py'])
-    #     self.assertEqual(result.total_errors, 0,
-    #                      "Found code style errors (and warnings).")
+    def test_pep8_conformance_place(self):
+        """Test that models/place.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/place.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    # def test_pep8_conformance_test_place(self):
-    #     """Test that tests/test_models/test_place.py conforms to PEP8."""
-    #     pep8s = pep8.StyleGuide(quiet=True)
-    #     result = pep8s.check_files(['tests/test_models/test_place.py'])
-    #     self.assertEqual(result.total_errors, 0,
-    #                      "Found code style errors (and warnings).")
+    def test_pep8_conformance_test_place(self):
+        """Test that tests/test_models/test_place.py conforms to PEP8."""
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_models/test_place.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_place_module_docstring(self):
         """Test for the place.py module docstring"""
@@ -172,13 +172,13 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(type(place.longitude), float)
             self.assertEqual(place.longitude, 0.0)
 
-    # @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
-    # def test_amenity_ids_attr(self):
-    #     """Test Place has attr amenity_ids, and it's an empty list"""
-    #     place = Place()
-    #     self.assertTrue(hasattr(place, "amenity_ids"))
-    #     self.assertEqual(type(place.amenity_ids), list)
-    #     self.assertEqual(len(place.amenity_ids), 0)
+    @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
+    def test_amenity_ids_attr(self):
+        """Test Place has attr amenity_ids, and it's an empty list"""
+        place = Place()
+        self.assertTrue(hasattr(place, "amenity_ids"))
+        self.assertEqual(type(place.amenity_ids), list)
+        self.assertEqual(len(place.amenity_ids), 0)
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""

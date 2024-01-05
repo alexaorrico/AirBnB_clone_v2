@@ -4,7 +4,7 @@ from datetime import datetime
 import inspect
 import models
 from os import remove
-# import pep8 as pycodestyle
+import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
@@ -28,13 +28,13 @@ class TestBaseModelDocs(unittest.TestCase):
         except Exception:
             pass
 
-    # def test_pep8_conformance(self):
-    #     """Test that models/base_model.py conforms to PEP8."""
-    #     for path in ['models/base_model.py',
-    #                  'tests/test_models/test_base_model.py']:
-    #         with self.subTest(path=path):
-    #             errors = pycodestyle.Checker(path).check_all()
-    #             self.assertEqual(errors, 0)
+    def test_pep8_conformance(self):
+        """Test that models/base_model.py conforms to PEP8."""
+        for path in ['models/base_model.py',
+                     'tests/test_models/test_base_model.py']:
+            with self.subTest(path=path):
+                errors = pycodestyle.Checker(path).check_all()
+                self.assertEqual(errors, 0)
 
     def test_module_docstring(self):
         """Test for the existence of module docstring"""
