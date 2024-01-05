@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>AirBnB clone</title>
+
+		<link rel="shortcut icon" href="{{ url_for('static', filename='images/icon.ico') }}"/>
+
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}"/>
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}"/>
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}"/>
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}"/>
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') }}"/>
+	</head>
+    <body>
+		<header>
+			<div id="header_logo"></div>
+		</header>
+		<div class="container">
+			<section class="filters">
+				<button>Search</button>
+				<div class="locations">
+					<h3>States</h3>
+					&nbsp;
+					{% if data["states"] %}
+					<ul class="popover">
+						{% for state in data["states"] %}
+						<li><h2>{{state[1].name}}</h2>
+							{% if state[1].cities %}
+							<ul>
+							{% for city in state[1].cities %}
+								<li><h4>{{city.name}}</h4></li>
+							{% endfor %}
+							</ul>
+							{% endif %}
+						</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+				<div class="amenities">
+					<h3>Amenities</h3>
+					&nbsp;
+					{% if data["amenities"] %}
+					<ul class="popover">
+						{% for value in data["amenities"] %}
+						<li><h4>{{value[1].name}}</h4></li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+
+			</section>
+			<section class="places">
+				<h1>Places</h1>
+				{% if data['places'] %}
+				{% for value in data['places'] %}
+				<article>
+					<div class="headline">
+						<h2>{{value[1].name}}</h2>
+						<div class="price_by_night">${{value[1].price_by_night}}</div>
+					</div>
+					<div class="information">
+						<div class="max_guest">
+							<div class="guest_icon"></div>
+							<p>{{value[1].max_guest}} Guests</p>
+						</div>
+						<div class="number_rooms">
+							<div class="bed_icon"></div>
+							<p>{{value[1].number_rooms}} Bedroom</p>
+						</div>
+						 <div class="number_bathrooms">
+							<div class="bath_icon"></div>
+							<p>{{value[1].number_bathrooms}} Bathroom</p>
+						</div>
+					</div>
+					<div class="user"><b>Owner</b>: {{value[1].owner}}</div>
+					<div class="description">{{value[1].description|safe}}</div>
+				</article>
+				{% endfor %}
+				{% endif %}
+			</section>
+		</div>
+		<footer>
+			<p>Holberton School</p>
+		</footer>
+	</body>
+</html>
