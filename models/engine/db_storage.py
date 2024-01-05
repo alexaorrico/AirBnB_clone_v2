@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-ontains the class DBStorage
+Contains the class DBStorage
 """
 
 import models
@@ -106,4 +106,4 @@ class DBStorage:
             total_count = 0
             for clss in classes.values():
                 total_count += self.__session.query(clss).count()
-            return (total_count)
+            return total_count
