@@ -80,11 +80,24 @@ class DBStorage:
         Gets objects as list
         """
         try:
-            dict_of_objs = {}
+            obj_dict = {}
             if cls:
-                object_ = self._session.query(self.CNC.get(cls)).all()
-                for item in object_:
-                    dict_of_objs[item.id] = item
-            return dict_of_objs[id]
+                obj_class = self.__session.query(self.CNC.get(cls)).all()
+                for item in obj_class:
+                    obj_dict[item.id] = item
+            return obj_dict[id]
         except:
             return None
+
+def count(self, cls=None):
+    """Counts the number of objects of a class in storage."""
+    obj_dict = {}
+
+    if cls:
+        obj_class = self.__session.query(self.CNC.get(cls)).all()
+        obj_dict = {item.id: item for item in obj_class}
+        return len(obj_dict)
+    else:
+        obj_dict = {item.id: item for cls_name in self.CNC if cls_name != 'BaseModel'
+                    for item in self.__session.query(self.CNC.get(cls_name)).all()}
+        return len(obj_dict)
