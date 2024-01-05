@@ -68,7 +68,41 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method ineeds a docstring".format(func[0]))
 
-    @patch('storage.DBStorage.__session') 
+    def test_count_empty(self):
+        """tests foe method count when empty"""
+        storage_t = 'db'
+
+        self.assertEqual(self.storage.count(), 0)
+
+    def test_count_after_creating(self):
+        """tests for method count"""
+        storage = DBStorage()
+
+        self.storage.new(State(name='California'))
+        self.storage.new(State(name='Ohio'))
+        self.assertEqual(self.storage.count(), 2)
+
+    def test_count_nonexistent_class(self):
+        """test for count when we parse a nonexistent class"""
+        with self.assertRaises(ValueError):
+            self.storage.count(NonExistentClass)
+
+    def test_count_after_deleting(self):
+        """test for count number after deleting"""
+        self.storage.new(State(name='Nevada'))
+        self.storage.new(State(name='Miami'))
+        self.storage.delete(State, 'Miami')
+        self.assertEqual(self.storage.count(), 1)
+        self.storage.delete(State, 'Nevada')
+        self.assertEqual(self.storage.count(), 0)
+
+    def test_count_after_reloading(self):
+        """test after reloading storage"""
+        self.storage.new(State(name='Illinois'))
+        self.storage.reload()
+        self.assertEqual(self.storage.count(), 1)
+
+    @patch('storage.DBStorage.__session')
     def test_get_found_obj(self, mock_session):
         """method that tests if get method retrieves one object
         and the object exists"""
@@ -90,7 +124,7 @@ test_db_storage.py'])
         mock_query = mock_session.query.return_value.filter.return_value
         mock_query.first.return_value = None
 
-        storage =DBStorage()
+        storage = DBStorage()
         state = storage.get(State, '567')
 
         # Assertions
@@ -98,7 +132,6 @@ test_db_storage.py'])
         mock_session.query.assert_called_once_with(State)
         mock_session.filter.assert_called_once_with(State.id == '567')
         mock_query.first.assert_called_once()
-
 
 
 class TestFileStorage(unittest.TestCase):
@@ -121,5 +154,4 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     def test_get(self):
-        """Test that tests the get method"
-
+        """Test that tests the get method"""
