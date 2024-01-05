@@ -1,0 +1,236 @@
+/usr/local/lib/python3.11/site-packages/pep8.py:110: FutureWarning: Possible nested set at position 1
+  EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[[({] | []}),;:]')
+test_HBNBCommand_class_docstring (test_console.TestConsoleDocs.test_HBNBCommand_class_docstring)
+Test for the HBNBCommand class docstring ... ok
+test_console_module_docstring (test_console.TestConsoleDocs.test_console_module_docstring)
+Test for the console.py module docstring ... ok
+test_pep8_conformance_console (test_console.TestConsoleDocs.test_pep8_conformance_console)
+Test that console.py conforms to PEP8. ... ok
+test_pep8_conformance_test_console (test_console.TestConsoleDocs.test_pep8_conformance_test_console)
+Test that tests/test_console.py conforms to PEP8. ... ok
+test_is_subclass (test_models.test_amenity.TestAmenity.test_is_subclass)
+Test that Amenity is a subclass of BaseModel ... ok
+test_name_attr (test_models.test_amenity.TestAmenity.test_name_attr)
+Test that Amenity has attribute name, and it's as an empty string ... ok
+test_str (test_models.test_amenity.TestAmenity.test_str)
+test that the str method has the correct output ... ok
+test_to_dict_creates_dict (test_models.test_amenity.TestAmenity.test_to_dict_creates_dict)
+test to_dict method creates a dictionary with proper attrs ... ok
+test_to_dict_values (test_models.test_amenity.TestAmenity.test_to_dict_values)
+test that values in dict returned from to_dict are correct ... ok
+test_amenity_class_docstring (test_models.test_amenity.TestAmenityDocs.test_amenity_class_docstring)
+Test for the Amenity class docstring ... ok
+test_amenity_func_docstrings (test_models.test_amenity.TestAmenityDocs.test_amenity_func_docstrings)
+Test for the presence of docstrings in Amenity methods ... ok
+test_amenity_module_docstring (test_models.test_amenity.TestAmenityDocs.test_amenity_module_docstring)
+Test for the amenity.py module docstring ... ok
+test_pep8_conformance_amenity (test_models.test_amenity.TestAmenityDocs.test_pep8_conformance_amenity)
+Test that models/amenity.py conforms to PEP8. ... ok
+test_pep8_conformance_test_amenity (test_models.test_amenity.TestAmenityDocs.test_pep8_conformance_test_amenity)
+Test that tests/test_models/test_amenity.py conforms to PEP8. ... ok
+test_datetime_attributes (test_models.test_base_model.TestBaseModel.test_datetime_attributes)
+Test that two BaseModel instances have different datetime objects ... ok
+test_instantiation (test_models.test_base_model.TestBaseModel.test_instantiation)
+Test that object is correctly created ... ok
+test_save (test_models.test_base_model.TestBaseModel.test_save)
+Test that save method updates `updated_at` and calls ... ok
+test_str (test_models.test_base_model.TestBaseModel.test_str)
+test that the str method has the correct output ... ok
+test_to_dict (test_models.test_base_model.TestBaseModel.test_to_dict)
+Test conversion of object attributes to dictionary for json ... ok
+test_to_dict_values (test_models.test_base_model.TestBaseModel.test_to_dict_values)
+test that values in dict returned from to_dict are correct ... ok
+test_uuid (test_models.test_base_model.TestBaseModel.test_uuid)
+Test that id is a valid uuid ... ok
+test_class_docstring (test_models.test_base_model.TestBaseModelDocs.test_class_docstring)
+Test for the BaseModel class docstring ... ok
+test_func_docstrings (test_models.test_base_model.TestBaseModelDocs.test_func_docstrings)
+Test for the presence of docstrings in BaseModel methods ... ok
+test_module_docstring (test_models.test_base_model.TestBaseModelDocs.test_module_docstring)
+Test for the existence of module docstring ... ok
+test_pep8_conformance (test_models.test_base_model.TestBaseModelDocs.test_pep8_conformance)
+Test that models/base_model.py conforms to PEP8. ... ok
+test_is_subclass (test_models.test_city.TestCity.test_is_subclass)
+Test that City is a subclass of BaseModel ... ok
+test_name_attr (test_models.test_city.TestCity.test_name_attr)
+Test that City has attribute name, and it's an empty string ... ok
+test_state_id_attr (test_models.test_city.TestCity.test_state_id_attr)
+Test that City has attribute state_id, and it's an empty string ... ok
+test_str (test_models.test_city.TestCity.test_str)
+test that the str method has the correct output ... ok
+test_to_dict_creates_dict (test_models.test_city.TestCity.test_to_dict_creates_dict)
+test to_dict method creates a dictionary with proper attrs ... ok
+test_to_dict_values (test_models.test_city.TestCity.test_to_dict_values)
+test that values in dict returned from to_dict are correct ... ok
+test_city_class_docstring (test_models.test_city.TestCityDocs.test_city_class_docstring)
+Test for the City class docstring ... ok
+test_city_func_docstrings (test_models.test_city.TestCityDocs.test_city_func_docstrings)
+Test for the presence of docstrings in City methods ... ok
+test_city_module_docstring (test_models.test_city.TestCityDocs.test_city_module_docstring)
+Test for the city.py module docstring ... ok
+test_pep8_conformance_city (test_models.test_city.TestCityDocs.test_pep8_conformance_city)
+Test that models/city.py conforms to PEP8. ... ok
+test_pep8_conformance_test_city (test_models.test_city.TestCityDocs.test_pep8_conformance_test_city)
+Test that tests/test_models/test_city.py conforms to PEP8. ... ok
+test_count_all (test_models.test_engine.test_db_storage.TestCountGet.test_count_all)
+... checks if count() functions with no class ... skipped 'skip if environ is not db'
+test_count_amenity (test_models.test_engine.test_db_storage.TestCountGet.test_count_amenity)
+... checks if count() returns proper count with Class input ... skipped 'skip if environ is not db'
+test_get (test_models.test_engine.test_db_storage.TestCountGet.test_get)
+... checks if get() function returns properly ... skipped 'skip if environ is not db'
+test_db_storage_class_docstring (test_models.test_engine.test_db_storage.TestDBStorageDocs.test_db_storage_class_docstring)
+Test for the DBStorage class docstring ... ok
+test_db_storage_module_docstring (test_models.test_engine.test_db_storage.TestDBStorageDocs.test_db_storage_module_docstring)
+Test for the db_storage.py module docstring ... ok
+test_dbs_func_docstrings (test_models.test_engine.test_db_storage.TestDBStorageDocs.test_dbs_func_docstrings)
+Test for the presence of docstrings in DBStorage methods ... ok
+test_pep8_conformance_db_storage (test_models.test_engine.test_db_storage.TestDBStorageDocs.test_pep8_conformance_db_storage)
+Test that models/engine/db_storage.py conforms to PEP8. ... ok
+test_pep8_conformance_test_db_storage (test_models.test_engine.test_db_storage.TestDBStorageDocs.test_pep8_conformance_test_db_storage)
+Test tests/test_models/test_db_storage.py conforms to PEP8. ... ok
+test_all_no_class (test_models.test_engine.test_db_storage.TestFileStorage.test_all_no_class)
+Test that all returns all rows when no class is passed ... skipped 'not testing db storage'
+test_all_returns_dict (test_models.test_engine.test_db_storage.TestFileStorage.test_all_returns_dict)
+Test that all returns a dictionaty ... skipped 'not testing db storage'
+test_new (test_models.test_engine.test_db_storage.TestFileStorage.test_new)
+test that new adds an object to the database ... skipped 'not testing db storage'
+test_save (test_models.test_engine.test_db_storage.TestFileStorage.test_save)
+Test that save properly saves objects to file.json ... skipped 'not testing db storage'
+test_count_all (test_models.test_engine.test_file_storage.TestCountGet.test_count_all)
+... checks if count() functions with no class ... skipped 'skip if environ is not db'
+test_count_amenity (test_models.test_engine.test_file_storage.TestCountGet.test_count_amenity)
+... checks if count() returns proper count with Class input ... skipped 'skip if environ is not db'
+test_get (test_models.test_engine.test_file_storage.TestCountGet.test_get)
+... checks if get() function returns properly ... skipped 'skip if environ is not db'
+test_all_returns_dict (test_models.test_engine.test_file_storage.TestFileStorage.test_all_returns_dict)
+Test that all returns the FileStorage.__objects attr ... ok
+test_new (test_models.test_engine.test_file_storage.TestFileStorage.test_new)
+test that new adds an object to the FileStorage.__objects attr ... ok
+test_save (test_models.test_engine.test_file_storage.TestFileStorage.test_save)
+Test that save properly saves objects to file.json ... ok
+test_file_storage_class_docstring (test_models.test_engine.test_file_storage.TestFileStorageDocs.test_file_storage_class_docstring)
+Test for the FileStorage class docstring ... ok
+test_file_storage_module_docstring (test_models.test_engine.test_file_storage.TestFileStorageDocs.test_file_storage_module_docstring)
+Test for the file_storage.py module docstring ... ok
+test_fs_func_docstrings (test_models.test_engine.test_file_storage.TestFileStorageDocs.test_fs_func_docstrings)
+Test for the presence of docstrings in FileStorage methods ... ok
+test_pep8_conformance_file_storage (test_models.test_engine.test_file_storage.TestFileStorageDocs.test_pep8_conformance_file_storage)
+Test that models/engine/file_storage.py conforms to PEP8. ... ok
+test_pep8_conformance_test_file_storage (test_models.test_engine.test_file_storage.TestFileStorageDocs.test_pep8_conformance_test_file_storage)
+Test tests/test_models/test_file_storage.py conforms to PEP8. ... ok
+test_amenity_ids_attr (test_models.test_place.TestPlace.test_amenity_ids_attr)
+Test Place has attr amenity_ids, and it's an empty list ... ok
+test_city_id_attr (test_models.test_place.TestPlace.test_city_id_attr)
+Test Place has attr city_id, and it's an empty string ... ok
+test_description_attr (test_models.test_place.TestPlace.test_description_attr)
+Test Place has attr description, and it's an empty string ... ok
+test_is_subclass (test_models.test_place.TestPlace.test_is_subclass)
+Test that Place is a subclass of BaseModel ... ok
+test_latitude_attr (test_models.test_place.TestPlace.test_latitude_attr)
+Test Place has attr latitude, and it's a float == 0.0 ... ok
+test_longitude_attr (test_models.test_place.TestPlace.test_longitude_attr)
+Test Place has attr longitude, and it's a float == 0.0 ... ok
+test_max_guest_attr (test_models.test_place.TestPlace.test_max_guest_attr)
+Test Place has attr max_guest, and it's an int == 0 ... ok
+test_name_attr (test_models.test_place.TestPlace.test_name_attr)
+Test Place has attr name, and it's an empty string ... ok
+test_number_bathrooms_attr (test_models.test_place.TestPlace.test_number_bathrooms_attr)
+Test Place has attr number_bathrooms, and it's an int == 0 ... ok
+test_number_rooms_attr (test_models.test_place.TestPlace.test_number_rooms_attr)
+Test Place has attr number_rooms, and it's an int == 0 ... ok
+test_price_by_night_attr (test_models.test_place.TestPlace.test_price_by_night_attr)
+Test Place has attr price_by_night, and it's an int == 0 ... ok
+test_str (test_models.test_place.TestPlace.test_str)
+test that the str method has the correct output ... ok
+test_to_dict_creates_dict (test_models.test_place.TestPlace.test_to_dict_creates_dict)
+test to_dict method creates a dictionary with proper attrs ... ok
+test_to_dict_values (test_models.test_place.TestPlace.test_to_dict_values)
+test that values in dict returned from to_dict are correct ... ok
+test_user_id_attr (test_models.test_place.TestPlace.test_user_id_attr)
+Test Place has attr user_id, and it's an empty string ... ok
+test_pep8_conformance_place (test_models.test_place.TestPlaceDocs.test_pep8_conformance_place)
+Test that models/place.py conforms to PEP8. ... ok
+test_pep8_conformance_test_place (test_models.test_place.TestPlaceDocs.test_pep8_conformance_test_place)
+Test that tests/test_models/test_place.py conforms to PEP8. ... ok
+test_place_class_docstring (test_models.test_place.TestPlaceDocs.test_place_class_docstring)
+Test for the Place class docstring ... ok
+test_place_func_docstrings (test_models.test_place.TestPlaceDocs.test_place_func_docstrings)
+Test for the presence of docstrings in Place methods ... ok
+test_place_module_docstring (test_models.test_place.TestPlaceDocs.test_place_module_docstring)
+Test for the place.py module docstring ... ok
+test_is_subclass (test_models.test_review.TestReview.test_is_subclass)
+Test if Review is a subclass of BaseModel ... ok
+test_place_id_attr (test_models.test_review.TestReview.test_place_id_attr)
+Test Review has attr place_id, and it's an empty string ... ok
+test_str (test_models.test_review.TestReview.test_str)
+test that the str method has the correct output ... ok
+test_text_attr (test_models.test_review.TestReview.test_text_attr)
+Test Review has attr text, and it's an empty string ... ok
+test_to_dict_creates_dict (test_models.test_review.TestReview.test_to_dict_creates_dict)
+test to_dict method creates a dictionary with proper attrs ... ok
+test_to_dict_values (test_models.test_review.TestReview.test_to_dict_values)
+test that values in dict returned from to_dict are correct ... ok
+test_user_id_attr (test_models.test_review.TestReview.test_user_id_attr)
+Test Review has attr user_id, and it's an empty string ... ok
+test_pep8_conformance_review (test_models.test_review.TestReviewDocs.test_pep8_conformance_review)
+Test that models/review.py conforms to PEP8. ... ok
+test_pep8_conformance_test_review (test_models.test_review.TestReviewDocs.test_pep8_conformance_test_review)
+Test that tests/test_models/test_review.py conforms to PEP8. ... ok
+test_review_class_docstring (test_models.test_review.TestReviewDocs.test_review_class_docstring)
+Test for the Review class docstring ... ok
+test_review_func_docstrings (test_models.test_review.TestReviewDocs.test_review_func_docstrings)
+Test for the presence of docstrings in Review methods ... ok
+test_review_module_docstring (test_models.test_review.TestReviewDocs.test_review_module_docstring)
+Test for the review.py module docstring ... ok
+test_is_subclass (test_models.test_state.TestState.test_is_subclass)
+Test that State is a subclass of BaseModel ... ok
+test_name_attr (test_models.test_state.TestState.test_name_attr)
+Test that State has attribute name, and it's as an empty string ... ok
+test_str (test_models.test_state.TestState.test_str)
+test that the str method has the correct output ... ok
+test_to_dict_creates_dict (test_models.test_state.TestState.test_to_dict_creates_dict)
+test to_dict method creates a dictionary with proper attrs ... ok
+test_to_dict_values (test_models.test_state.TestState.test_to_dict_values)
+test that values in dict returned from to_dict are correct ... ok
+test_pep8_conformance_state (test_models.test_state.TestStateDocs.test_pep8_conformance_state)
+Test that models/state.py conforms to PEP8. ... ok
+test_pep8_conformance_test_state (test_models.test_state.TestStateDocs.test_pep8_conformance_test_state)
+Test that tests/test_models/test_state.py conforms to PEP8. ... ok
+test_state_class_docstring (test_models.test_state.TestStateDocs.test_state_class_docstring)
+Test for the State class docstring ... ok
+test_state_func_docstrings (test_models.test_state.TestStateDocs.test_state_func_docstrings)
+Test for the presence of docstrings in State methods ... ok
+test_state_module_docstring (test_models.test_state.TestStateDocs.test_state_module_docstring)
+Test for the state.py module docstring ... ok
+test_email_attr (test_models.test_user.TestUser.test_email_attr)
+Test that User has attr email, and it's an empty string ... ok
+test_first_name_attr (test_models.test_user.TestUser.test_first_name_attr)
+Test that User has attr first_name, and it's an empty string ... ok
+test_is_subclass (test_models.test_user.TestUser.test_is_subclass)
+Test that User is a subclass of BaseModel ... ok
+test_last_name_attr (test_models.test_user.TestUser.test_last_name_attr)
+Test that User has attr last_name, and it's an empty string ... ok
+test_password_attr (test_models.test_user.TestUser.test_password_attr)
+Test that User has attr password, and it's an empty string ... ok
+test_str (test_models.test_user.TestUser.test_str)
+test that the str method has the correct output ... ok
+test_to_dict_creates_dict (test_models.test_user.TestUser.test_to_dict_creates_dict)
+test to_dict method creates a dictionary with proper attrs ... ok
+test_to_dict_values (test_models.test_user.TestUser.test_to_dict_values)
+test that values in dict returned from to_dict are correct ... ok
+test_pep8_conformance_test_user (test_models.test_user.TestUserDocs.test_pep8_conformance_test_user)
+Test that tests/test_models/test_user.py conforms to PEP8. ... ok
+test_pep8_conformance_user (test_models.test_user.TestUserDocs.test_pep8_conformance_user)
+Test that models/user.py conforms to PEP8. ... ok
+test_user_class_docstring (test_models.test_user.TestUserDocs.test_user_class_docstring)
+Test for the City class docstring ... ok
+test_user_func_docstrings (test_models.test_user.TestUserDocs.test_user_func_docstrings)
+Test for the presence of docstrings in User methods ... ok
+test_user_module_docstring (test_models.test_user.TestUserDocs.test_user_module_docstring)
+Test for the user.py module docstring ... ok
+
+----------------------------------------------------------------------
+Ran 114 tests in 0.369s
+
+OK (skipped=10)
+{'id': 'fd03cb44-741b-4604-8308-9348cf23fb4b', 'created_at': datetime.datetime(2024, 1, 5, 16, 45, 32, 256811), 'updated_at': datetime.datetime(2024, 1, 5, 16, 45, 32, 256811)}
