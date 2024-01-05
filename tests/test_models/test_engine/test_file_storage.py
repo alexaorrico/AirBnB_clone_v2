@@ -5,7 +5,7 @@ Contains the TestFileStorageDocs classes
 
 # from datetime import datetime
 import inspect
-import models
+# import models
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -14,7 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
+# import json
 import os
 # import pep8
 import unittest
@@ -96,7 +96,7 @@ class TestFileStorageDocs(unittest.TestCase):
 #         for key, value in classes.items():
 #             with self.subTest(key=key, value=value):
 #                 instance = value()
-#                 instance_key = instance.__class__.__name__ + "." + instance.id
+#                instance_key = instance.__class__.__name__ + "." + instance.id
 #                 storage.new(instance)
 #                 test_dict[instance_key] = instance
 #                 self.assertEqual(test_dict, storage._FileStorage__objects)

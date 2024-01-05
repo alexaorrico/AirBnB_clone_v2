@@ -5,7 +5,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 # from datetime import datetime
 import inspect
-import models
+# import models
 from models.engine import db_storage
 from models.amenity import Amenity
 # from models.base_model import BaseModel
