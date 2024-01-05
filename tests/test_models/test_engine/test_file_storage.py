@@ -18,13 +18,18 @@ import json
 import os
 import pep8
 import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+storage = models.storage
+F = 'file.json'
+
 
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -70,6 +75,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +119,47 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestGetCountFS(unittest.TestCase):
+    """testing get and count methods"""
+
+    def setUp(self):
+        """initializes new state and cities for testing"""
+        if os.path.isfile(F):
+            os.remove(F)
+        storage.reload()
+        self.state = State()
+        self.state.name = 'California'
+        self.state.save()
+        self.city1 = City()
+        self.city1.name = 'Fremont'
+        self.city1.state_id = self.state.id
+        self.city1.save()
+        self.city2 = City()
+        self.city2.name = 'San_Francisco'
+        self.city2.state_id = self.state.id
+        self.city2.save()
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """check if the get method returns state"""
+
+        real_state = storage.get(State, self.state.id)
+        fake_state = storage.get(State, "12345")
+
+        self.assertEqual(real_state, self.state)
+        self.assertIsNone(fake_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """checks if count method returns correct numbers"""
+        state_count = storage.count(State)
+        city_count = storage.count(City)
+        place_count = storage.count(Place)
+        all_count = storage.count(None)
+
+        self.assertEqual(state_count, 1)
+        self.assertEqual(city_count, 2)
+        self.assertEqual(place_count, 0)
+        self.assertEqual(all_count, 3)
