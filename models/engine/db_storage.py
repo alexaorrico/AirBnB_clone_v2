@@ -90,7 +90,9 @@ class DBStorage:
             return None
 
 def count(self, cls=None):
-    """Counts the number of objects of a class in storage."""
+    """
+    Counts the number of objects of a class in storage.
+    """
     obj_dict = {}
 
     if cls:
