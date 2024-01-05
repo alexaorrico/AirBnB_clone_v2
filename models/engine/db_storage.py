@@ -41,15 +41,49 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
-        new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+        """ this querys the db session and returns
+            a dict of all objects in the query """
+        if not self.__session:
+            return {}
+        from models.user import User
+        from models.city import City
+        from models.place import Place
+        from models.state import State
+        from models.review import Review
+        from models.amenity import Amenity
+        name_to_class_mapper = {"User": User, "City": City, "Place": Place,
+                                "State": State, "Review": Review,
+                                "Amenity": Amenity}
+        if not cls:
+            cls_list = name_to_class_mapper.values()
+            res_list = []
+            res_dict = {}
+            for entry in cls_list:
+                res = self.__session.query(entry).all()
+                res_list.extend(res)
+            for entry in res_list:
+                x = entry
+                res_dict[f"{entry.to_dict()['__class__']}"
+                         f".{entry.id}"] = x.__str__()
+            return res_dict
+        else:
+            if not (type(cls) == str):
+                if cls.__name__ not in name_to_class_mapper:
+                    return {}
+                res = self.__session.query(name_to_class_mapper
+                                           [cls.__name__]).all()
+                res_dict = {}
+                for entry in res:
+                    res_dict[f"{cls}.{entry.id}"] = entry
+            else:
+                if cls not in name_to_class_mapper:
+                    return {}
+                res = self.__session.query(name_to_class_mapper
+                                           [cls]).all()
+                res_dict = {}
+                for entry in res:
+                    res_dict[f"{cls}.{entry.id}"] = entry
+            return res_dict
 
     def new(self, obj):
         """add the object to the current database session"""

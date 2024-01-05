@@ -87,6 +87,19 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+    def do_count(self, args):
+        """Count current number of class instances"""
+        from models import storage
+        count = 0
+        if (args):
+            for k, v in storage.all(args).items():
+                if args == k.split('.')[0]:
+                    count += 1
+        else:
+            count = len(storage.all().items())
+
+        print(count)
+
     def do_destroy(self, arg):
         """Deletes an instance based on the class and id"""
         args = shlex.split(arg)

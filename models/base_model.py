@@ -48,9 +48,12 @@ class BaseModel:
             self.updated_at = self.created_at
 
     def __str__(self):
-        """String representation of the BaseModel class"""
-        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
-                                         self.__dict__)
+        """Returns a string representation of the instance"""
+        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        return '[{}] ({}) {}'.format(cls, self.id,
+                                     {key: value for key,
+                                      value in self.__dict__.items()
+                                      if key != "_sa_instance_state"})
 
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
@@ -67,7 +70,7 @@ class BaseModel:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
+            new_dict.pop("_sa_instance_state")
         return new_dict
 
     def delete(self):
