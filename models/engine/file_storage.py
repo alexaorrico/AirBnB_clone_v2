@@ -73,17 +73,19 @@ class FileStorage:
         """
         Gets objects in list
         """
-        dict_of_objs = {}
-        objects = None
+        obj_dict = {}
+        obj = None
         if cls:
-            dict_of_objs = FileStorage.__objects.values()
-            for i in dict_of_objs:
-                if i.id == id:
-                    objects = i
-            return objects
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if item.id == id:
+                    obj = item
+            return obj
 
     def count(self, cls=None):
-    """Counts the number of objects of a class in storage."""
+    """
+    Counts the number of objects of a class in storage.
+    """
     if cls:
         obj_list = [item for item in FileStorage.__objects.values() if type(item).__name__ == cls]
         return len(obj_list)
