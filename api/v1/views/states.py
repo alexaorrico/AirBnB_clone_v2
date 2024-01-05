@@ -13,19 +13,19 @@ from api.v1.views import app_views
 def states_all():
     """ returns list of all State objects """
     states_all = []
-    states = storage.all("State").values()
+    states = storage.all(State).values()
     for state in states:
-        states_all.append(state.to_json())
+        states_all.append(state.to_dict())
     return jsonify(states_all)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def state_get(state_id):
     """ handles GET method """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    state = state.to_json()
+    state = state.to_dict()
     return jsonify(state)
 
 
@@ -33,7 +33,7 @@ def state_get(state_id):
 def state_delete(state_id):
     """ handles DELETE method """
     empty_dict = {}
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     storage.delete(state)
@@ -51,23 +51,23 @@ def state_post():
         abort(400, "Missing name")
     state = State(**data)
     state.save()
-    state = state.to_json()
+    state = state.to_dict()
     return jsonify(state), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def state_put(state_id):
     """ handles PUT method """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
     for key, value in data.items():
-        ignore_keys = ["id", "created_at", "updated_at"]
-        if key not in ignore_keys:
-            state.bm_update(key, value)
+        special_keys = ["id", "created_at", "updated_at"]
+        if key not in special_keys:
+            setattr(state, key, value)
     state.save()
-    state = state.to_json()
+    state = state.to_dict()
     return jsonify(state), 200
