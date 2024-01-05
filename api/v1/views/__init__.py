@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# This is the init page
 
 from flask import Blueprint
 
