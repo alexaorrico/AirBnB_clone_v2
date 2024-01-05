@@ -18,7 +18,6 @@ import json
 import os
 import pep8
 import unittest
-from models import storage_t
 from unittest.mock import patch
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -29,9 +28,9 @@ class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
     def setUpClass(cls):
+        cls.storage = DBStorage()
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
-        cls.storage = DBStorage()
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
@@ -69,9 +68,9 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method ineeds a docstring".format(func[0]))
-g
+
     def test_count_empty(self):
-        """tests foe method count when empty"""
+        """tests for method count when empty"""
         self.assertEqual(self.storage.count(), 0)
 
     def test_count_after_creating(self):
@@ -85,7 +84,7 @@ g
     def test_count_nonexistent_class(self):
         """test for count when we parse a nonexistent class"""
         with self.assertRaises(ValueError):
-            cls.storage.count(NonExistentClass)
+            self.storage.count(NonExistentClass)
 
     def test_count_after_deleting(self):
         """test for count number after deleting"""
