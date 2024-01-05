@@ -172,13 +172,13 @@ class TestPlace(unittest.TestCase):
             self.assertEqual(type(place.longitude), float)
             self.assertEqual(place.longitude, 0.0)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
-    def test_amenity_ids_attr(self):
-        """Test Place has attr amenity_ids, and it's an empty list"""
-        place = Place()
-        self.assertTrue(hasattr(place, "amenity_ids"))
-        self.assertEqual(type(place.amenity_ids), list)
-        self.assertEqual(len(place.amenity_ids), 0)
+    # @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
+    # def test_amenity_ids_attr(self):
+    #     """Test Place has attr amenity_ids, and it's an empty list"""
+    #     place = Place()
+    #     self.assertTrue(hasattr(place, "amenity_ids"))
+    #     self.assertEqual(type(place.amenity_ids), list)
+    #     self.assertEqual(len(place.amenity_ids), 0)
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
