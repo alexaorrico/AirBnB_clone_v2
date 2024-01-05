@@ -81,3 +81,13 @@ class FileStorage:
                 if i.id == id:
                     objects = i
             return objects
+
+    def count(self, cls=None):
+    """Counts the number of objects of a class in storage."""
+    if cls:
+        obj_list = [item for item in FileStorage.__objects.values() if type(item).__name__ == cls]
+        return len(obj_list)
+    else:
+        obj_list = [item for item in FileStorage.__objects if type(item).__name__ != 'BaseModel']
+        return len(obj_list)
+
