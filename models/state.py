@@ -10,25 +10,23 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """Representation of state """
-    if models.storage_t == "db":
-        __tablename__ = 'states'
+    ''' The State class '''
+    __tablename__ = 'states'
+
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
         name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state")
+        cities = relationship('City', backref="state", cascade="all, delete")
     else:
-        name = ""
+        name = ''
 
-    def __init__(self, *args, **kwargs):
-        """initializes state"""
-        super().__init__(*args, **kwargs)
-
-    if models.storage_t != "db":
         @property
         def cities(self):
-            """getter for list of city instances related to the state"""
-            city_list = []
-            all_cities = models.storage.all(City)
-            for city in all_cities.values():
+            '''Retrieve all cities associated with this state'''
+            dict_objs = storage.all(City)
+            state_cities = []
+
+            for city in dict_objs.values():
                 if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+                    state_cities.append(city)
+
+            return state_cities
