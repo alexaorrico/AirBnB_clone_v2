@@ -16,6 +16,7 @@ def get_all_states():
 
     return jsonify(states_list)
 
+
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """return a state by id in the database"""
@@ -25,3 +26,16 @@ def get_state(state_id):
         abort(404)
 
     return jsonify(state.to_dict()), 200
+
+
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+def delete_state(state_id):
+    """return a state by id in the database"""
+    state = storage.get(State, state_id)
+
+    if not state:
+        abort(404)
+
+    storage.delete(state)
+
+    return jsonify({}), 200
