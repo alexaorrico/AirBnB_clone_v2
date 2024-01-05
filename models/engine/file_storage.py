@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
-Contains the FileStorage class
+Comprises DBStorage class.
 """
 
 import json
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -11,21 +12,22 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from hashlib import md5
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class FileStorage:
-    """serializes instances to a JSON file & deserializes back to instances"""
+    """Deserializes to instances after serializing instances to JSON file"""
 
-    # string - path to the JSON file
+    # string: the location of the JSON file
     __file_path = "file.json"
-    # dictionary - empty but will store all objects by <class name>.id
+    # dictionary: not filled in but will hold object by <class name>.ID
     __objects = {}
 
     def all(self, cls=None):
-        """returns the dictionary __objects"""
+        """gives back the __objects dictionary."""
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
@@ -35,21 +37,23 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """inserts object with key <obj class name>.id into __objects."""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
     def save(self):
-        """serializes __objects to the JSON file (path: __file_path)"""
+        """JSON file (path: __file_path) is serialized using __objects."""
         json_objects = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
+            if key == "password":
+                json_objects[key].decode()
+            json_objects[key] = self.__objects[key].to_dict(save_fs=1)
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """The JSON file is deserialized to __objects."""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
@@ -59,12 +63,39 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """If an object is inside __objects delete it."""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
 
     def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
+        """Use the reload() function to convert the JSON file to objects."""
         self.reload()
+
+    def get(self, cls, id):
+        """gives back the object using the class name and ID."""
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
+        return None
+
+    def count(self, cls=None):
+        """
+        Tally the quantity of storage items.
+        """
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
+        return count
