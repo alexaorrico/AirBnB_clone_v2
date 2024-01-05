@@ -72,3 +72,28 @@ def create_place(city_id):
     new_place = Place(**place_dict)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
+
+
+@app_views.route('/places/<place_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_place(place_id):
+    """update a place by id in the database"""
+    place = storage.get(Place, place_id)
+
+    if not place:
+        abort(404)
+
+    try:
+        place_dict = request.get_json()
+    except Exception:
+        return 'Not a JSON', 400
+
+    ignored_keys = ['id', 'created_at', 'updated_at']
+
+    for key, value in place_dict.items():
+        if key not in ignored_keys:
+            setattr(place, key, value)
+
+    place.save()
+
+    return jsonify(place.to_dict()), 200
