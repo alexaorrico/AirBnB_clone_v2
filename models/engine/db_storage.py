@@ -89,10 +89,10 @@ class DBStorage:
         except:
             return None
 
-def count(self, cls=None):
-    """
-    Counts the number of objects of a class in storage.
-    """
+    def count(self, cls=None):
+        """
+        Counts the number of objects of a class in storage.
+        """
         obj_dict = {}
         if cls:
             obj_class = self.__session.query(self.CNC.get(cls)).all()
@@ -106,4 +106,4 @@ def count(self, cls=None):
                 obj_class = self.__session.query(self.CNC.get(cls_name)).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
-            return len(obj_dict)
+                return len(obj_dict)
