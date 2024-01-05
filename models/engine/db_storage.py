@@ -106,4 +106,4 @@ class DBStorage:
                 obj_class = self.__session.query(self.CNC.get(cls_name)).all()
                 for item in obj_class:
                     obj_dict[item.id] = item
-                return len(obj_dict)
+            return len(obj_dict)
