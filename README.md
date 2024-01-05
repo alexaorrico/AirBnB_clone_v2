@@ -161,7 +161,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Rophen PADONOU - [Email](mailto:rophenp@gmail.com)
-Atuokwu Fortune - [Email](mailto:atuokwu.fortune@gmail.com) [Github](https://github.com/Fortz47)
+Atuokwu Fortune - [Email](mailto:atuokwu.fortune@gmail.com) / [Github](https://github.com/Fortz47)
 
 Second part of Airbnb: Joann Vuong
 ## License
