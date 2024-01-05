@@ -9,6 +9,7 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """calls storage.close"""
