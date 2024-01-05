@@ -39,11 +39,12 @@ def state_detail_view(state_id):
         return {}
     elif request.method == 'PUT':
         try:
-            special_keys = ['id', 'created_at', 'updated_at']
-            prev_data = state.to_dict()
-            data = {k: v for k, v in request.get_json() if k not in special_keys}
-            new_data = prev_data.update(data)
-            updated_state = State(new_data)
-            return updated_state.to_dict(), 200
+            special_keys = ['id', 'created_at', 'updated_at', '__class__']
+            data = request.get_json()
+            for k, v in data.items():
+                if k not in special_keys:
+                    setattr(state, k, v)
+            state.save()
+            return state.to_dict(), 200
         except BadRequest:
             return jsonify({"error": "Not a JSON"}), 400
