@@ -1,0 +1,132 @@
+{
+    "BaseModel.bdde8b4c-11b6-4b0c-ae6f-6440635d0f47": {
+        "id": "bdde8b4c-11b6-4b0c-ae6f-6440635d0f47",
+        "created_at": "2023-10-15T12:14:49.957242",
+        "updated_at": "2023-10-15T12:14:49.957243",
+        "__class__": "BaseModel"
+    },
+    "BaseModel.9e3e8229-bfd6-47f0-86fb-1c7c210d6c57": {
+        "id": "9e3e8229-bfd6-47f0-86fb-1c7c210d6c57",
+        "created_at": "2023-10-15T12:14:49.957390",
+        "updated_at": "2023-10-15T12:14:49.957393",
+        "__class__": "BaseModel"
+    },
+    "Amenity.7e06c74c-07d3-400e-add6-6df61d111404": {
+        "id": "7e06c74c-07d3-400e-add6-6df61d111404",
+        "created_at": "2023-10-15T12:14:51.501273",
+        "updated_at": "2023-10-15T12:14:51.501276",
+        "__class__": "Amenity"
+    },
+    "Amenity.e6e67367-836f-47eb-8cb5-c421f9aebb81": {
+        "id": "e6e67367-836f-47eb-8cb5-c421f9aebb81",
+        "created_at": "2023-10-15T12:14:51.501347",
+        "updated_at": "2023-10-15T12:14:51.501348",
+        "__class__": "Amenity"
+    },
+    "BaseModel.a78c1e7a-a89e-45b6-a651-bdfbbddb9c50": {
+        "id": "a78c1e7a-a89e-45b6-a651-bdfbbddb9c50",
+        "created_at": "2023-10-15T13:39:11.940210",
+        "updated_at": "2023-10-15T13:39:11.940215",
+        "name": "My_First_Model",
+        "my_number": 89,
+        "__class__": "BaseModel"
+    },
+    "User.c5e5dedd-32a7-436c-94db-96b43890ed7c": {
+        "id": "c5e5dedd-32a7-436c-94db-96b43890ed7c",
+        "created_at": "2023-10-15T13:39:11.940413",
+        "updated_at": "2023-10-15T13:53:38.695510",
+        "first_name": "cqc",
+        "last_name": "Homlnad",
+        "name": "97",
+        "hola": "32",
+        "email": "aibnb@mdazdail.com",
+        "age": 105,
+        "__class__": "User"
+    },
+    "State.292be8d1-ec58-4b10-abd9-23b7f5fb0e96": {
+        "id": "292be8d1-ec58-4b10-abd9-23b7f5fb0e96",
+        "created_at": "2023-10-15T13:39:11.941029",
+        "updated_at": "2023-10-15T13:39:11.941033",
+        "name": "sakia elhemra",
+        "__class__": "State"
+    },
+    "Place.521302be-2322-4873-ad66-b2b7366737ae": {
+        "id": "521302be-2322-4873-ad66-b2b7366737ae",
+        "created_at": "2023-10-15T13:39:11.941400",
+        "updated_at": "2023-10-15T13:39:11.941404",
+        "name": "Gym",
+        "__class__": "Place"
+    },
+    "City.6c41c1a2-1959-4a97-8f4f-822bc129aecd": {
+        "id": "6c41c1a2-1959-4a97-8f4f-822bc129aecd",
+        "created_at": "2023-10-15T13:39:11.941673",
+        "updated_at": "2023-10-15T13:39:11.941677",
+        "name": "Rabat",
+        "__class__": "City"
+    },
+    "Amenity.064d60f6-34f7-4913-ae5a-6baba8a8d941": {
+        "id": "064d60f6-34f7-4913-ae5a-6baba8a8d941",
+        "created_at": "2023-10-15T13:39:11.941930",
+        "updated_at": "2023-10-15T13:39:11.941933",
+        "name": "nothing",
+        "__class__": "Amenity"
+    },
+    "Review.ce6a799f-0189-4e40-80ce-b64dcfc78115": {
+        "id": "ce6a799f-0189-4e40-80ce-b64dcfc78115",
+        "created_at": "2023-10-15T13:39:11.942197",
+        "updated_at": "2023-10-15T13:39:11.942201",
+        "text": "5 Star rating",
+        "__class__": "Review"
+    },
+    "BaseModel.8a12fe27-6626-4dec-ad54-8d19d4d2aad6": {
+        "id": "8a12fe27-6626-4dec-ad54-8d19d4d2aad6",
+        "created_at": "2023-10-15T15:55:02.988038",
+        "updated_at": "2023-10-15T15:55:02.988110",
+        "name": "My_First_Model",
+        "my_number": 89,
+        "__class__": "BaseModel"
+    },
+    "User.0751973e-314d-49fb-990e-0eb981551b24": {
+        "id": "0751973e-314d-49fb-990e-0eb981551b24",
+        "created_at": "2023-10-15T15:55:02.988512",
+        "updated_at": "2023-10-15T15:55:02.988518",
+        "first_name": "Minii",
+        "last_name": "Homlnad",
+        "__class__": "User"
+    },
+    "State.4fdde320-a8d7-479d-88f8-9adca9bbf8b0": {
+        "id": "4fdde320-a8d7-479d-88f8-9adca9bbf8b0",
+        "created_at": "2023-10-15T15:55:02.988944",
+        "updated_at": "2023-10-15T15:55:02.988948",
+        "name": "sakia elhemra",
+        "__class__": "State"
+    },
+    "Place.8e1cb78f-49f7-4344-b941-4923255dabc1": {
+        "id": "8e1cb78f-49f7-4344-b941-4923255dabc1",
+        "created_at": "2023-10-15T15:55:02.989341",
+        "updated_at": "2023-10-15T15:55:02.989344",
+        "name": "Gym",
+        "__class__": "Place"
+    },
+    "City.f87ea3f2-a28b-4845-bafb-e3f7d2994d2f": {
+        "id": "f87ea3f2-a28b-4845-bafb-e3f7d2994d2f",
+        "created_at": "2023-10-15T15:55:02.989708",
+        "updated_at": "2023-10-15T15:55:02.989712",
+        "name": "Rabat",
+        "__class__": "City"
+    },
+    "Amenity.1bdc0426-26d1-461d-b226-2d53eeca34ca": {
+        "id": "1bdc0426-26d1-461d-b226-2d53eeca34ca",
+        "created_at": "2023-10-15T15:55:02.990070",
+        "updated_at": "2023-10-15T15:55:02.990073",
+        "name": "nothing",
+        "__class__": "Amenity"
+    },
+    "Review.baf81185-8334-4d04-8f73-431562c97140": {
+        "id": "baf81185-8334-4d04-8f73-431562c97140",
+        "created_at": "2023-10-15T15:55:02.990434",
+        "updated_at": "2023-10-15T15:55:02.990437",
+        "text": "5 Star rating",
+        "__class__": "Review"
+    }
+}
