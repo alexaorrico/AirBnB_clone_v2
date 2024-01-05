@@ -2,7 +2,7 @@
 """Simple flask-powered REST API"""
 import os
 
-from flask import Flask
+from flask import Flask, jsonify
 
 from api.v1 import app_views
 from models import storage
@@ -16,6 +16,12 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     """Closes a db session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """404 handler"""
+    return jsonify({'error': 'Not Found'}), 404
 
 
 if __name__ == '__main__':
