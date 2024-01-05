@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -66,6 +67,19 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+    def test_get(self):
+        # Create an object and save it
+        obj = BaseModel()
+        obj.save()
+
+        # Retrieve the object using get method
+        retrieved_obj = storage.get(BaseModel, obj.id)
+        self.assertEqual(retrieved_obj, obj)
+
+        # Test non-existing object
+        non_existing_obj = storage.get(BaseModel, "non_existing_id")
+        self.assertIsNone(non_existing_obj)
 
 
 class TestFileStorage(unittest.TestCase):
