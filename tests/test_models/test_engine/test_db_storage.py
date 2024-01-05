@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from unittest.mock import patch
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -65,7 +66,39 @@ test_db_storage.py'])
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+                            "{:s} method ineeds a docstring".format(func[0]))
+
+    @patch('storage.DBStorage.__session') 
+    def test_get_found_obj(self, mock_session):
+        """method that tests if get method retrieves one object
+        and the object exists"""
+        mock_query = mock_session.query.return_value
+        mock_query.first.return_value = State(id="234", name='Ohio')
+
+        storage = DBStorage()
+        state = storage.get(State, "234")
+
+        # Assertions
+        self.assertEqual(state.id, '234')
+        self.assertEqual(state.name, 'Ohio')
+        mock_query.assert_called_once_with(State)
+        mock_query.filter.assert_called_once_with(State.id == '234')
+
+    @patch('storage.DBStorage.__session')
+    def test_get_notfound_obj(self, mock_session):
+        """test when the object is not found"""
+        mock_query = mock_session.query.return_value.filter.return_value
+        mock_query.first.return_value = None
+
+        storage =DBStorage()
+        state = storage.get(State, '567')
+
+        # Assertions
+        self.assertIsNone(state)
+        mock_session.query.assert_called_once_with(State)
+        mock_session.filter.assert_called_once_with(State.id == '567')
+        mock_query.first.assert_called_once()
+
 
 
 class TestFileStorage(unittest.TestCase):
@@ -86,3 +119,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get(self):
+        """Test that tests the get method"
+
