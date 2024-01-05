@@ -76,6 +76,7 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
+        """get method for get item"""
         flag = 0
         for k, v in classes.items():
             if cls == k:
@@ -88,6 +89,7 @@ class DBStorage:
             return None
 
     def count(self, cls=None):
+        """count method for count items"""
         counter = 0
         if (cls):
             counter = sum(map(lambda s: self.__session.query(s).count(),
