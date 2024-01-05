@@ -3,6 +3,7 @@
 from flask import Flask, render_template, Markup
 from markupsafe import escape
 import os
+import subprocess
 
 current_directory = os.getenv("PWD")
 storage = None
@@ -113,8 +114,8 @@ if storage:
         res_data["cities"] = cities
         res_data["states"] = states
         res_data["amenities"] = amenities
-        for value in res_data["states"]:
-            print(f"states: {value}")
+        # for value in res_data["states"]:
+        #     print(f"states: {value}")
         return render_template('10-hbnb_filters.html', data=res_data)
 
     @app.route("/hbnb", strict_slashes=False)
@@ -134,7 +135,6 @@ if storage:
         res_data["amenities"] = amenities
         res_data["places"] = places
         for value in res_data["places"]:
-            print(f"place: {value[1]}")
             user = [x for x in storage.all('User').values()
                     if x.id == value[1].user_id]
             if user:
@@ -142,7 +142,6 @@ if storage:
             else:
                 value[1].owner = ""
             value[1].description = Markup(value[1].description)
-            print(f"place: {value[1].owner}")
         return render_template('100-hbnb.html', data=res_data)
 
     def teardown_requests(exception=None):
