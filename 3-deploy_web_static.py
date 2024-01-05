@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!usr/bin/python3
 """
 Fabric script based on the file 2-do_deploy_web_static.py that creates and
 distributes an archive to the web servers
@@ -19,7 +19,7 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except:
+    except Exception:
         return None
 
 
@@ -40,7 +40,7 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except:
+    except Exception:
         return False
 
 
