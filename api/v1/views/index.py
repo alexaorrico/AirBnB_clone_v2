@@ -7,12 +7,12 @@ from models import storage
 
 
 ClassDict = {
-    "states":"State",
-    "cities":"City",
-    "places":"Place",
-    "amenities":"Amenity",
-    "users":"User",
-    "reviews":"Review"
+    "states": "State",
+    "cities": "City",
+    "places": "Place",
+    "amenities": "Amenity",
+    "users": "User",
+    "reviews": "Review"
 }
 
 
