@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """module for REST API entry point"""
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -15,6 +15,12 @@ app.register_blueprint(app_views)
 def close_connection(self):
     """close DB connections"""
     storage.close()
+
+
+@app.errorhandler(404)
+def handle_404_error(self):
+    """handle 404 error"""
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
