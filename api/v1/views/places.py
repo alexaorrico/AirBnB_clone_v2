@@ -88,6 +88,9 @@ def update_place(place_id):
     except Exception:
         return 'Not a JSON', 400
 
+    if not place_dict:
+        return 'Not a JSON', 400
+
     ignored_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
 
     for key, value in place_dict.items():
