@@ -24,7 +24,7 @@ def status():
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
-    """ provides an itemized count of objects stored in each class.
+    """ Itemized count of the objects stored in each class.
 
     """
     stats = OrderedDict()
