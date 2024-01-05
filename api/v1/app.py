@@ -1,4 +1,13 @@
 #!/usr/bin/python3
+"""
+Flask API Application
+
+This script defines a Flask application for an API.
+It includes a Blueprint named 'app_views' for handling API routes.
+The application is configured to handle the endpoint '/status'
+\tprovided in the 'app_views' Blueprint.
+
+"""
 from flask import Flask
 from models import storage
 import os
@@ -10,7 +19,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def close_flask(exception):
-    """ """
+    """
+    Teardown method to close the database connection when the Flask application
+    context ends.
+
+    Parameters:
+    - exception: An exception object if an exception occurred during processing
+    """
     storage.close()
 
 
