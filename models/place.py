@@ -56,7 +56,7 @@ class Place(BaseModel, Base):
 
     if models.storage_t != 'db':
         @property
-        def reviews(self):
+        def list_reviews(self):
             """getter attribute returns the list of Review instances"""
             from models.review import Review
             review_list = []
@@ -67,7 +67,7 @@ class Place(BaseModel, Base):
             return review_list
 
         @property
-        def amenities(self):
+        def list_amenities(self):
             """getter attribute returns the list of Amenity instances"""
             from models.amenity import Amenity
             amenity_list = []
