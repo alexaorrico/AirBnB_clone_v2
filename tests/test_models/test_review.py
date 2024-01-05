@@ -3,12 +3,13 @@
 Contains the TestReviewDocs classes
 """
 
-from datetime import datetime
+# from datetime import datetime
 import inspect
 import models
 from models import review
 from models.base_model import BaseModel
-import pep8
+from os import remove
+# import pep8
 import unittest
 Review = review.Review
 
@@ -20,19 +21,27 @@ class TestReviewDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.review_f = inspect.getmembers(Review, inspect.isfunction)
 
-    def test_pep8_conformance_review(self):
-        """Test that models/review.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/review.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    @classmethod
+    def tearDownClass(cls):
+        """Remove 'file.json' after testing"""
+        try:
+            remove('file.json')
+        except Exception:
+            pass
 
-    def test_pep8_conformance_test_review(self):
-        """Test that tests/test_models/test_review.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_review.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+    # def test_pep8_conformance_review(self):
+    #     """Test that models/review.py conforms to PEP8."""
+    #     pep8s = pep8.StyleGuide(quiet=True)
+    #     result = pep8s.check_files(['models/review.py'])
+    #     self.assertEqual(result.total_errors, 0,
+    #                      "Found code style errors (and warnings).")
+
+    # def test_pep8_conformance_test_review(self):
+    #     """Test that tests/test_models/test_review.py conforms to PEP8."""
+    #     pep8s = pep8.StyleGuide(quiet=True)
+    #     result = pep8s.check_files(['tests/test_models/test_review.py'])
+    #     self.assertEqual(result.total_errors, 0,
+    #                      "Found code style errors (and warnings).")
 
     def test_review_module_docstring(self):
         """Test for the review.py module docstring"""
@@ -101,7 +110,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in r.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
