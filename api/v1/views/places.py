@@ -61,7 +61,9 @@ def create_place(city_id):
     except Exception:
         return 'Not a JSON', 400
 
-    if 'user_id' not in place_dict:
+    if not place_dict:
+        return 'Not a JSON', 400
+    elif 'user_id' not in place_dict:
         return 'Missing user_id', 400
     elif not storage.get(User, place_dict['user_id']):
         abort(404)
