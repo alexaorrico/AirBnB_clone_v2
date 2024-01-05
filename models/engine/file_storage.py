@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import models
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -70,11 +71,10 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """
-        A method to retrieve one object
-        """
-        for obj in self.__objects.values():
-            if obj.__class__.__name__ == cls and obj.id == id:
+        """A method to retrieve one object:"""
+        result_objs = models.storage.all(cls)
+        for obj in result_objs.values():
+            if (obj.id == id):
                 return obj
         return None
 
@@ -82,7 +82,10 @@ class FileStorage:
         """
         Returns the number of objects in storage matching the given class name.
         """
+        length = 0
         if cls is None:
-            return len(self.__objects)
-        else:
-            return len([obj for obj in self.__objects.values() if obj.__class__.__name__ == cls])
+            for CLASS in classes:
+                length += len(models.storage.all(classes[CLASS]))
+        elif cls :
+            length = len(models.storage.all(cls))
+        return length

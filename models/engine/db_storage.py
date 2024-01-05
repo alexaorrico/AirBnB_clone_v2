@@ -77,8 +77,8 @@ class DBStorage:
 
     def get(self, cls, id):
         """A method to retrieve one object:"""
-        result_objs = self.__session.query(classes[cls])
-        for obj in result_objs:
+        result_objs = models.storage.all(cls)
+        for obj in result_objs.values():
             if (obj.id == id):
                 return obj
         return None
@@ -90,9 +90,7 @@ class DBStorage:
         length = 0
         if cls is None:
             for CLASS in classes:
-                length += self.__session.query(classes[CLASS]).count()
-        elif cls not in classes:
-            return 0
-        else:
-            return self.__session.query(classes[cls]).count()
+                length += len(models.storage.all(classes[CLASS]))
+        elif cls :
+            length = len(models.storage.all(cls))
         return length
