@@ -74,9 +74,6 @@ def update_state(state_id):
     except Exception:
         return 'Not a JSON', 400
 
-    if not state_dict:
-        return 'Not a JSON', 400
-
     ignored_keys = ['id', 'created_at', 'updated_at']
 
     for key, value in state_dict.items():
