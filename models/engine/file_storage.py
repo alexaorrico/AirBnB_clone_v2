@@ -70,19 +70,15 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        flag = 0
-        for k, v in classes.items():
-            if cls == v:
-                flag = 1
-                break
-        if flag == 1:
-            for k, va in self.__objects.items():
-                if va == id:
-                    return va
-        else:
+        """get mehod for file storage"""
+        if (not cls):
             return None
+        for k, va in self.__objects.items():
+            if isinstance(va, cls) and va.id == id:
+                return va
 
     def count(self, cls=None):
+        """count mehod for file storag"""
         counter = 0
         if (cls):
             counter = len(list(filter(lambda s: isinstance(s, cls),

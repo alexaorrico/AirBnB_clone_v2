@@ -117,6 +117,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """test get method"""
+        from models import FileStorage
         name = "Cairo"
         state = State(name="Cairo")
         state.save()

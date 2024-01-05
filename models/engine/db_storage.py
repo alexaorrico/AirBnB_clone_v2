@@ -77,23 +77,16 @@ class DBStorage:
 
     def get(self, cls, id):
         """get method for get item"""
-        flag = 0
-        for k, v in classes.items():
-            if cls == k:
-                flag = 1
-                break
-        if flag == 1:
-            result = self.__session.query(cls).filter_by(id=id)
-            return result.first()
-        else:
+        if (not cls):
             return None
+        result = self.__session.query(cls).filter_by(id=id).first()
+        return result
 
     def count(self, cls=None):
         """count method for count items"""
-        counter = 0
-        if (cls):
-            counter = sum(map(lambda s: self.__session.query(s).count(),
-                              classes.values()))
+        if cls:
+            return self.__session.query(cls).count()
         else:
-            counter = self.__session.query(cls).count()
+            counter = sum(map(lambda s: self.__session.query(s).count(),
+                              classes.keyss()))
         return counter
