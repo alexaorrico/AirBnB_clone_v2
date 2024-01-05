@@ -9,9 +9,11 @@ from flask import abort, request, jsonify
 
 
 @app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
-def state_list_view():
-    """GET states or create a new state"""
-    if request.method == 'GET':
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
+def state_view(state_id=None):
+    """states endpoint: GET, POST, UPDATE, DELETE"""
+    if request.method == 'GET' and not state_id:
         return [state.to_dict() for state in storage.all(State).values()]
     elif request.method == 'POST':
         try:
@@ -23,12 +25,6 @@ def state_list_view():
             return state.to_dict(), 201
         except BadRequest:
             return jsonify({"error": "Not a JSON"}), 400
-
-
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
-                 strict_slashes=False)
-def state_detail_view(state_id):
-    """GET, UPDATE or DELETE a state"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -36,7 +32,7 @@ def state_detail_view(state_id):
         return state.to_dict()
     elif request.method == 'DELETE':
         storage.delete(state)
-        return {}
+        return {}, 200
     elif request.method == 'PUT':
         try:
             special_keys = ['id', 'created_at', 'updated_at', '__class__']
