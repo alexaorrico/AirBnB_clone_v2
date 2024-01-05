@@ -68,8 +68,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +86,40 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """test that get method retrieves an object """
+        storage = DBStorage()
+        obj = State(name='Accra')
+        obj.save()
+        self.assertEqual(obj.id, storage.get(State, obj.id).id)
+        self.assertEqual(obj.name, storage.get(State, obj.id).name)
+        self.assertIsNot(obj, storage.get(State, "0003"))
+        self.assertIsNone(storage.get(State, '0003'))
+        self.assertIsNone(storage.get(State, 5))
+        self.assertIsNone(storage.get(None, obj.id))
+        self.assertIsNone(storage.get(float, obj.id))
+        with self.assertRaises(TypeError):
+            storage.get(State, obj.id, '0003')
+        with self.assertRaises(TypeError):
+            storage.get(State)
+        with self.assertRaises(TypeError):
+            storage.get()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test that count returns the number of objects of a given class."""
+        storage = DBStorage()
+        self.assertIs(type(storage.count()), int)
+        self.assertEqual(storage.count(), storage.count(None))
+        all_obj_count = storage.count()
+        state_count = storage.count(State)
+        State(name='Accra').save()
+        self.assertGreater(storage.count(), all_obj_count)
+        self.assertGreater(storage.count(State), state_count)
+        self.assertGreater(storage.count(State), 0)
+        with self.assertRaises(TypeError):
+            storage.count(State, '0003')
+        with self.assertRaises(TypeError):
+            storage.count(State, 3)
