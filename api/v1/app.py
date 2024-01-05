@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""create an api"""
+"""Create an api"""
 from models import storage
 from os import getenv
 from api.v1.views import app_views
@@ -15,7 +15,7 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown_appcontext(self):
-    """dismantling technique"""
+    """Dismantling technique"""
     storage.close()
 
 
