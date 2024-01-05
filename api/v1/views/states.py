@@ -58,3 +58,31 @@ def create_state():
         return jsonify(new_state.to_dict()), 201
     except Exception:
         return 'Not a JSON', 400
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_state(state_id):
+    """update a state by id in the database"""
+    state = storage.get(State, state_id)
+
+    if not state:
+        abort(404)
+
+    try:
+        state_dict = request.get_json()
+    except Exception:
+        return 'Not a JSON', 400
+
+    if not state_dict:
+        return 'Not a JSON', 400
+
+    ignored_keys = ['id', 'created_at', 'updated_at']
+
+    for key, value in state_dict.items():
+        if key not in ignored_keys:
+            setattr(state, key, value)
+
+    state.save()
+
+    return jsonify(state.to_dict()), 200
