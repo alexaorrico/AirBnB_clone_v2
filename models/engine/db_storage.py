@@ -93,13 +93,19 @@ def count(self, cls=None):
     """
     Counts the number of objects of a class in storage.
     """
-    obj_dict = {}
-
-    if cls:
-        obj_class = self.__session.query(self.CNC.get(cls)).all()
-        obj_dict = {item.id: item for item in obj_class}
-        return len(obj_dict)
-    else:
-        obj_dict = {item.id: item for cls_name in self.CNC if cls_name != 'BaseModel'
-                    for item in self.__session.query(self.CNC.get(cls_name)).all()}
-        return len(obj_dict)
+        if cls:
+            obj_list = []
+            obj_dict = FileStorage.__objects.values()
+            for item in obj_dict:
+                if type(item).__name__ == cls:
+                    obj_list.append(item)
+            return len(obj_list)
+        else:
+            obj_list = []
+            for class_name in self.CNC:
+                if class_name == 'BaseModel':
+                    continue
+                obj_class = FileStorage.__objects
+                for item in obj_class:
+                    obj_list.append(item)
+            return len(obj_list)
