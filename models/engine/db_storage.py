@@ -60,7 +60,7 @@ class DBStorage:
             key_id = cls.__name__ + '.' + id
             new_dict = self.all(cls)
             try:
-                return new_dict[key_id]
+                return new_dict
             except KeyError:
                 return "key not found"
         return None

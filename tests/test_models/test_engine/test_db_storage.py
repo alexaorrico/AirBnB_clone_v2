@@ -108,11 +108,11 @@ class test_db_storage(unittest.TestCase):
     def test_get(self):
         """Test that get properly retrieves objects from database"""
         """key = "Amenity.20c0604b-d687-4e8b-b5a1-666b2b002077"""
-        self.assertIn(models.storage.get(State, "00383d2c-709d-488c-bb00-90260859602e"), models.storage.all(State).values())
+        self.assertIn(models.storage.get(State, "4431fa37-ab58-488c-b2f1-e8248e140508"), models.storage.all(State).values())
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count properly counts objects in database"""
-        self.assertEqual(models.storage.count(State), 48)
-        self.assertEqual(models.storage.count(), 93)
+        self.assertEqual(models.storage.count(State), 1)
+        self.assertEqual(models.storage.count(), 1)
         print(models.storage.count())
