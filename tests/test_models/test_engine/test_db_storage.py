@@ -132,6 +132,11 @@ test_db_storage.py'])
         mock_session.filter.assert_called_once_with(State.id == '567')
         mock_query.first.assert_called_once()
 
+#    def test_get_method(self):
+#        """tests the get method returns the required value"""
+#        self.assertEqual(DBStorage.get(User, "1234"), self.user1)
+#        self.assertIsNone(DBStorage.get(User, "5789"))
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
