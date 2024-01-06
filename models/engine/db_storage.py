@@ -79,13 +79,12 @@ class DBStorage:
         """Returns an object based on its ID"""
         try:
             return self.__session.query(cls).filter(cls.id == id).first()
-        except:
+        except Exception:
             return None
 
     def count(self, cls=None):
         """Returns the number of objects in storage"""
         try:
             return len(self.all(cls))
-        except:
+        except Exception:
             return None
-        
