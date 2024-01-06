@@ -86,3 +86,11 @@ class DBStorage:
             return (objs[key])
         else:
             return (None)
+
+    def count(self, cls=None):
+        # Count the number of instance of a class
+        if not cls:
+            objs = DBStorage.all(self)
+        else:
+            objs = DBStorage.get(self, cls)
+        return (len(objs))
