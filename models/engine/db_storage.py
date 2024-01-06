@@ -13,7 +13,8 @@ from models.review import Review
 from sqlalchemy import create_engine
 
 
-all_classes = {"State", "City", "Amenity", "User", "Place", "Review"}
+all_classes = {"Amenity": Amenity, "City": City,
+               "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
