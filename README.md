@@ -153,13 +153,9 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
-## Bugs
-No known bugs at this time. 
-
 ## Authors
 Ebube Joshua - [Github](https://github.com/Josh-dev69)  
 Dike Ikechukwu - [Github](https://github.com/MrkielCode)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
