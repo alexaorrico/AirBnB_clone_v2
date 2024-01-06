@@ -11,7 +11,8 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-@reviews_view.route('/places/<place_id>/reviews', methods=['GET'], 
+
+@reviews_view.route('/places/<place_id>/reviews', methods=['GET'],
                     strict_slashes=False)
 def get_place_reviews(place_id):
     """Retrieves the list of all Review objects of a Place"""
@@ -20,14 +21,14 @@ def get_place_reviews(place_id):
         abort(404)
 
     reviews = storage.all(Review).values()
-    place_reviews = [review.to_dict() for review in reviews if 
+    place_reviews = [review.to_dict() for review in reviews if
                      review.place_id == place_id]
 
     return jsonify(place_reviews)
 
 
-@reviews_view.route('/reviews/<review_id>', methods=['GET'], 
-                          strict_slashes=False)
+@reviews_view.route('/reviews/<review_id>', methods=['GET'],
+                    strict_slashes=False)
 def get_review(review_id):
     """Retrieves a Review object."""
     review = storage.get(Review, review_id)
@@ -38,8 +39,8 @@ def get_review(review_id):
     return jsonify(review.to_dict())
 
 
-@reviews_view.route('/reviews/<review_id>', methods=['DELETE'], 
-                          strict_slashes=False)
+@reviews_view.route('/reviews/<review_id>', methods=['DELETE'],
+                    strict_slashes=False)
 def delete_review(review_id):
     """Deletes a Review object"""
     review = storage.get(Review, review_id)
@@ -52,8 +53,8 @@ def delete_review(review_id):
     return jsonify({}), 200
 
 
-@reviews_view.route('/places/<place_id>/reviews', methods=['POST'], 
-                          strict_slashes=False)
+@reviews_view.route('/places/<place_id>/reviews', methods=['POST'],
+                    strict_slashes=False)
 def create_review(place_id):
     """Creates a Review"""
     place = storage.get(Place, place_id)
@@ -83,8 +84,8 @@ def create_review(place_id):
     return jsonify(new_review.to_dict()), 201
 
 
-@reviews_view.route('/reviews/<review_id>', methods=['PUT'], 
-                          strict_slashes=False)
+@reviews_view.route('/reviews/<review_id>', methods=['PUT'],
+                    strict_slashes=False)
 def update_review(review_id):
     """Updates a review object"""
     review = storage.get(Review, review_id)
@@ -97,7 +98,8 @@ def update_review(review_id):
         abort(400, description="Not a JSON")
 
     for key, value in data.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id', 'created_at',
+                       'updated_at']:
             setattr(review, key, value)
 
     review.save()
