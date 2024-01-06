@@ -92,5 +92,5 @@ class DBStorage:
         if not cls:
             objs = DBStorage.all(self)
         else:
-            objs = DBStorage.get(self, cls)
+            objs = DBStorage.all(self, cls)
         return (len(objs))
