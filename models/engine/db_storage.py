@@ -64,7 +64,7 @@ class DBStorage:
             except KeyError:
                 return key_id + " not found" + self.all(cls).keys()
         return None
-    
+
     def count(self, cls=None):
         """
         returns the number of objects in storage
