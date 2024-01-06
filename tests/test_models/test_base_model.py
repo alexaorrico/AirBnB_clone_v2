@@ -34,7 +34,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_datetime_attributes(self):
         """
-        Test that two BaseModel instances have different datetime objects 
+        Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at value
         """
         inst1 = BaseModel()
