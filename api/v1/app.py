@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+"""
+Starts the flask app.py
+"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views

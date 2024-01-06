@@ -1,3 +1,6 @@
+"""
+Creates a blueprint
+"""
 from flask import Blueprint
 
 app_views = Blueprint('/api/v1', __name__)

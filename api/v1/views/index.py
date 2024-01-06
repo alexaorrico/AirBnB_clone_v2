@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+"""
+Creates a route for app_views
+"""
 from api.v1.views import app_views
 
 
