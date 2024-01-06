@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """module for REST API entry point"""
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -18,9 +18,9 @@ def close_connection(self):
 
 
 @app.errorhandler(404)
-def handle_404_error(self):
+def resource_not_found(self):
     """handle 404 error"""
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
