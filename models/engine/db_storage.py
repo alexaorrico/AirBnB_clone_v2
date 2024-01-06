@@ -81,7 +81,7 @@ class DBStorage:
         
         Keyword arguments:
         cls -- The class
-        id -- the string representing the id
+        id -- the string representing the id'
         Return: The object based on the class and its id or none if not found
         """
         if cls in classes.values() and id and type(id) == str:
