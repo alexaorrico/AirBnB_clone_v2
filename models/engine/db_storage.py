@@ -57,10 +57,11 @@ class DBStorage:
         name and its ID, or None if not found
         """
         if cls is not None and id is not None:
-            key = cls.__name__ + '.' + id
-            new_dict = DBStorage.all(cls)
-            if key in new_dict:
-                return new_dict[key]
+            key_id = cls.__name__ + '.' + id
+            new_dict = self.all(cls)
+            for key, value in new_dict.items():
+                if key_id == key:
+                    return value
             return -1
         return None
     
