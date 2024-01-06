@@ -17,6 +17,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
+* [Version3](#version3)
 
 ## Environment
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
@@ -156,7 +157,29 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Natalie Wanjiru - [Github](https://github.com/Wanjiruwanjiku-tech) / [Twitter](https://twitter.com/NatalieWanjiru4?t=eo-1wVLQccb581AwVitTjQ&s=08)
+Allan Cheruiyot - [Github](https://github.com/kc-allan) / [Twitter](https://twitter.com/kc_allan_)
 
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+## Version3
+
+REST API
+------------------------
+
+![restapi](https://th.bing.com/th/id/OIP.f-4u01cDYiy6N5IRBktZnwHaEp?rs=1&pid=ImgDetMain)
+-----------------------------------------
+
+- REST API is a software architectural style for Backend.
+
+- REST = “REpresentational State Transfer”. API = Application Programming Interface
+
+- Its purpose is to induce performance, scalability, simplicity, modifiability, visibility, portability, and reliability.
+
+- REST API is Resource-based, a resource is an object and can be access by a URI. An object is “displayed”/transferred via a representation (typically JSON). HTTP methods will be actions on a resource.
+
+This project seeks to dive deeper into REST APIs
+
+![dive](https://th.bing.com/th/id/R.60573d571253be3a5af345335160c4a6?rik=chcfvJblhU5Vxw&riu=http%3a%2f%2f4.bp.blogspot.com%2f-Rac8YX0ExLs%2fURm1bz-VRTI%2fAAAAAAAABT4%2fkwGoKvH6vUw%2fs1600%2fScooby%2bdiving%2b(final).jpg&ehk=ajQrMJs%2f9JWduKDJNORScIXJ36HjHQUNisV28Yt%2bOxQ%3d&risl=&pid=ImgRaw&r=0)
