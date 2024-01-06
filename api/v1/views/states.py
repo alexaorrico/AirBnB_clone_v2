@@ -2,10 +2,10 @@
 """ The module handles the default RESTful API acstions """
 
 # Import the required Modules
-from flask import abort, jsonify, request, make_response
-from models.state import State
 from api.v1.views import app_views
+from flask import abort, jsonify, request, make_response
 from models import storage
+from models.state import State
 
 # Route for retrieving all state objs
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
