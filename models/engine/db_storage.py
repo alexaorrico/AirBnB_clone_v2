@@ -59,7 +59,7 @@ class DBStorage:
         if cls is not None and id is not None:
             key_id = cls.__name__ + '.' + id
             new_dict = self.all(cls)
-            return new_dict[key_id]
+            return key_id
             # for key, value in new_dict.items():
             #     if key_id == key:
             #         return value
