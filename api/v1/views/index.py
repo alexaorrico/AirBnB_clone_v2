@@ -1,8 +1,11 @@
 #!/usr/bin/python3
-"""Flask route that returns json status response"""
+"""
+Flask route that returns json status response
+"""
 from api.v1.views import app_views
 from flask import jsonify, request
 from models import storage
+
 
 @app_views.route('/status', methods=['GET'])
 def status():
@@ -17,7 +20,7 @@ def status():
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """
-    return the count of all class objects
+    function to return the count of all class objects
     """
     if request.method == 'GET':
         response = {}
