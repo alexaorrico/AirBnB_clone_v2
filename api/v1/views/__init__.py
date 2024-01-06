@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Blueprint for API"""
-# from api.v1.views.index import *
+from api.v1.views.index import *
 from flask import Blueprint
 
 
