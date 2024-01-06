@@ -85,6 +85,7 @@ class test_db_storage(unittest.TestCase):
             instance_key = instance.__class__.__name__ + "." + instance.id
             new_dict[instance_key] = instance
         self.assertEqual(models.storage.all(), new_dict)
+        self.maxDiff = None
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
