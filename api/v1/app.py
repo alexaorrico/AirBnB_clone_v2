@@ -9,7 +9,7 @@ import json
 from flask_cors import CORS
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 
@@ -22,7 +22,7 @@ def teardown(ret):
 @app.errorhandler(404)
 def get_nop(e):
     """handler for 404 errors"""
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
