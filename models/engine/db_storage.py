@@ -82,6 +82,7 @@ class DBStorage:
     def get(self, cls, id):
         """Retrieves an object of a class with id"""
         obj = None
+        """check if cls is instance of Basemodel"""
         if cls is not None and isinstance(cls(), BaseModel):
             obj = self.__session.query(cls).filter(cls.id == id).first()
         return obj
