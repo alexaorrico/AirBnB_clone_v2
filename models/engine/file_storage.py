@@ -44,7 +44,8 @@ class FileStorage:
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
+            json_objects[key] = self.__objects[key].\
+                                to_dict(hide_password=False)
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
