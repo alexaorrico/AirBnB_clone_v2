@@ -22,7 +22,8 @@ def status_returns():
 @app_views.route("/stats")
 def no_of_objects():
     """returns the number of objects"""
-    data = {"amenities": storage.count(Amenity),
+    data = {
+            "amenities": storage.count(Amenity),
             "cities": storage.count(City),
             "Places": storage.count(Place),
             "reviews": storage.count(Review),
