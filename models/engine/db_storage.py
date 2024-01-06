@@ -60,9 +60,9 @@ class DBStorage:
             key_id = cls.__name__ + '.' + id
             new_dict = self.all(cls)
             try:
-                return new_dict
+                return new_dict[key_id]
             except KeyError:
-                return "key not found"
+                return key_id + " not found" + self.all(cls).keys()
         return None
     
     def count(self, cls=None):
