@@ -3,7 +3,7 @@
 
 # Import the required Modules
 from api.v1.views import app_views
-from flask import abort, jsonify, request, make_response
+from flask import abort, jsonify, make_response, request
 from models import storage
 from models.state import State
 
@@ -18,7 +18,7 @@ def get_all_states():
     return jsonify(state_list)
 
 # Route for retrieving specific stated by their id
-@app_views.route('/states/<state_id>', methods=['GET'], strictslashes=False)
+@app_views.route('/states/<string:state_id>', methods=['GET'], strictslashes=False)
 def get_state(state_id):
     """
     GETs a specified state
