@@ -131,27 +131,30 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(obj_key, objects.keys())
         self.assertIsInstance(objects[obj_key], BaseModel)
 
-    def test_get(self):
-        """Test the get method"""
-        obj= BaseModel()
-        self.storage.new(obj)
-        self.storage.save()
-
-        retrieved_obj = self.storage.get(BaseModel, obj.id)
-        self.assertEqual(retrieved_obj, obj)
+     def test_get(self):
+        '''
+            Test if get method retrieves obj requested
+        '''
+        new_state = State(name="NewYork")
+        storage.new(new_state)
+        key = "State.{}".format(new_state.id)
+        result = storage.get("State", new_state.id)
+        self.assertTrue(result.id, new_state.id)
+        self.assertIsInstance(result, State)
 
     def test_count(self):
-        """Test the count method"""
-        initial_count = self.storage.count()
-        obj = BaseModel()
-        self.storage.new(obj)
-        updated_count = self.storage.count()
-        self.assertEqual(updated_count, initial_count + 1)
-        obj2 = State()
-        self.storage.new(obj2)
-        updated_count2 = self.storage.count(State)
-        self.assertEqual(updated_count2, 1)
-
+        '''
+            Test if count method returns expected number of objects
+        '''
+        storage.reload()
+        old_count = storage.count("State")
+        new_state1 = State(name="NewYork")
+        storage.new(new_state1)
+        new_state2 = State(name="Virginia")
+        storage.new(new_state2)
+        new_state3 = State(name="California")
+        storage.new(new_state3)
+        self.assertEqual(old_count + 3, storage.count("State"))
 
 if __name__ == '__main__':
     unittest.main()

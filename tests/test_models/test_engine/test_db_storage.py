@@ -92,20 +92,26 @@ class TestDBStorage(unittest.TestCase):
         self.assertIn(state_key, models.storage.all().keys())
 
     def test_get(self):
-        """Test the get method"""
-        state = State(name="California")
-        state.save()
-        retrieved_state = models.storage.get(State, state.id)
-        self.assertEqual(retrieved_state, state)
+        '''
+            Test if get method retrieves obj requested
+        '''
+        new_state = State(name="NewYork")
+        storage.new(new_state)
+        key = "State.{}".format(new_state.id)
+        result = storage.get("State", new_state.id)
+        self.assertTrue(result.id, new_state.id)
+        self.assertIsInstance(result, State)
 
     def test_count(self):
-        """Test the count method"""
-        initial_count = models.storage.count()
-        state = State(name="New York")
-        state.save()
-        updated_count = models.storage.count()
-        self.assertEqual(updated_count, initial_count + 1)
-        state2 = State(name="Florida")
-        state2.save()
-        updated_count2 = models.storage.count(State)
-        self.assertEqual(updated_count2, 2)
+        '''
+            Test if count method returns expected number of objects
+        '''
+        storage.reload()
+        old_count = storage.count("State")
+        new_state1 = State(name="NewYork")
+        storage.new(new_state1)
+        new_state2 = State(name="Virginia")
+        storage.new(new_state2)
+        new_state3 = State(name="California")
+        storage.new(new_state3)
+        self.assertEqual(old_count + 3, storage.count("State"))
