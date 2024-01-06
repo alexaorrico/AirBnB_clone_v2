@@ -82,6 +82,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
 <<<<<<< HEAD
+<<<<<<< HEAD
         """test that new adds an object to the database"""
 =======
         """test that new adds an object to the database"""
@@ -114,3 +115,6 @@ class TestFileStorage(unittest.TestCase):
             c = storage.count()
             self.assertEqual(len(storage.all()), c)
 >>>>>>> 589afbb02125c19d9b358411e74ff81cebe0d93a
+=======
+        """test that new adds an object to the database"""
+>>>>>>> 41d329972e2286bee07fa277e2a3a03e9fb1a5b9

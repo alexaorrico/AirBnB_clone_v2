@@ -69,6 +69,7 @@ class FileStorage:
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
 <<<<<<< HEAD
+<<<<<<< HEAD
    
 =======
 
@@ -109,3 +110,5 @@ class FileStorage:
             count = len(models.storage.all(cls).values())
         return count
 >>>>>>> 589afbb02125c19d9b358411e74ff81cebe0d93a
+=======
+>>>>>>> 41d329972e2286bee07fa277e2a3a03e9fb1a5b9

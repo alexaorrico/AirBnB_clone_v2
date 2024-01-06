@@ -109,10 +109,11 @@ class TestFileStorage(unittest.TestCase):
         FileStorage._FileStorage__objects = save
         for key, value in new_dict.items():
             new_dict[key] = value.to_dict()
-        string = json.dumps(new_dict)
+            string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+<<<<<<< HEAD
 <<<<<<< HEAD
         
 =======
@@ -145,3 +146,5 @@ class TestFileStorage(unittest.TestCase):
          c = storage.count()
          self.assertEqual(len(storage.all()), c)
 >>>>>>> 589afbb02125c19d9b358411e74ff81cebe0d93a
+=======
+>>>>>>> 41d329972e2286bee07fa277e2a3a03e9fb1a5b9
