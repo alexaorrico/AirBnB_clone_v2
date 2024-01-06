@@ -81,40 +81,9 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
-<<<<<<< HEAD
-<<<<<<< HEAD
         """test that new adds an object to the database"""
-=======
-        """test that new adds an object to the database"""
-
+    
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-
-    def test_get(self):
-        """
-        Test method for obtaining an instance
-        """
-        storage = DBStorage()
-        dic = {"name": "Cundinamarca"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
-
-        def test_count(self):
-            """Test method for the count method"""
-            storage = DBStorage()
-            dic = {"name": "Vecindad"}
-            state = State(**dic)
-            storage.new(state)
-            dic = {"name": "Mexico", "state_id": state.id}
-            city = City(**dic)
-            storage.new(city)
-            c = storage.count()
-            self.assertEqual(len(storage.all()), c)
->>>>>>> 589afbb02125c19d9b358411e74ff81cebe0d93a
-=======
-        """test that new adds an object to the database"""
->>>>>>> 41d329972e2286bee07fa277e2a3a03e9fb1a5b9
+        
