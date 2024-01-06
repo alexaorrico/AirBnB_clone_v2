@@ -67,6 +67,25 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_count_all_objects(self):
+        """Test count method for all objects."""
+        count = storage.count()
+        self.assertIsInstance(count, int)
+        self.assertGreater(count, 0)
+
+    def test_count_specific_class(self):
+        """Test count method for specific class."""
+        count = storage.count(State)
+        self.assertIsInstance(count, int)
+        self.assertGreater(count, 0)
+
+    def test_get_method(self):
+        """Test get method."""
+        first_state_id = "126f3b81-5a34-4183-81e4-e8f9f0d8a807"
+        state = storage.get(State, first_state_id)
+        self.assertIsInstance(state, State)
+        self.assertEqual(state.id, first_state_id)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
