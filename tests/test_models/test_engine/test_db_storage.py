@@ -3,6 +3,7 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 import unittest
+import hashlib
 import os
 import inspect
 import pep8
@@ -230,7 +231,8 @@ class TestWithUser(unittest.TestCase):
 
         self.assertIn(key, storage_objs)
         self.assertEqual(storage_objs[key].id, obj.id)
-        self.assertEqual(storage_objs[key].password, 'mlmlml')
+        self.assertEqual(storage_objs[key].password,
+                         hashlib.md5(str('mlmlml').encode()).hexdigest())
 
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', 'Using FileStorage')

@@ -4,6 +4,7 @@ Contains the TestFileStorageDocs classes
 """
 
 from datetime import datetime
+import hashlib
 import inspect
 import models
 from models.engine import file_storage
@@ -101,16 +102,17 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
         new_dict = {}
-        for key, value in classes.items():
-            instance = value()
+        for key, obj in classes.items():
+            instance = obj()
             instance_key = instance.__class__.__name__ + "." + instance.id
             new_dict[instance_key] = instance
+
         save = FileStorage._FileStorage__objects
         FileStorage._FileStorage__objects = new_dict
         storage.save()
         FileStorage._FileStorage__objects = save
-        for key, value in new_dict.items():
-            new_dict[key] = value.to_dict()
+        for key, obj in new_dict.items():
+            new_dict[key] = obj.to_dict(hide_password=False)
         string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()

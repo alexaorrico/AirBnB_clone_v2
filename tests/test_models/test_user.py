@@ -4,6 +4,7 @@ Contains the TestUserDocs classes
 """
 
 from datetime import datetime
+import hashlib
 import inspect
 import models
 from models import user
@@ -83,7 +84,8 @@ class TestUser(unittest.TestCase):
         if models.storage_t == 'db':
             self.assertEqual(user.password, None)
         else:
-            self.assertEqual(user.password, "")
+            self.assertEqual(user.password,
+                             hashlib.md5("".encode()).hexdigest())
 
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
@@ -110,7 +112,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in u.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr not in ["_sa_instance_state", "password"]:
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
