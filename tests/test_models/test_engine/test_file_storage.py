@@ -113,3 +113,38 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get returns the correct object"""
+        storage = FileStorage()
+        new_dict = {}
+        for value in classes.values():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        self.assertEqual(storage.get(User, instance.id), instance)
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count returns the correct number of objects"""
+        storage = FileStorage()
+        new_dict = {}
+        for value in classes.values():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        self.assertEqual(storage.count(), len(new_dict))
+        search = {}
+        for value in classes.values():
+            instance = value()
+            if instance.__class__ == User:
+                instance_key = instance.__class__.__name__ + "." + instance.id
+                search[instance_key] = instance
+        self.assertEqual(storage.count(User), len(search))
+        FileStorage._FileStorage__objects = save
