@@ -79,7 +79,7 @@ class DBStorage:
         """Retrives one object and returns it based on class and its id"""
         if cls and id:
             obj = self.__session.query(cls).filter_by(id=id).first()
-            return f"[{obj.__class__.__name__}] ({obj.id}) {obj.__dict__}"
+            return obj
 
         return None
 
