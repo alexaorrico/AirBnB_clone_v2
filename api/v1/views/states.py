@@ -9,7 +9,7 @@ from models.state import State
 
 @app_views.route("/states", strict_slashes=False)
 def all_states():
-    """retrieves all state objects by type"""
+    """retrieves all state objects by class name"""
     states = []
     for state in storage.all('State').values():
         states.append(state.to_dict())
@@ -18,7 +18,7 @@ def all_states():
 
 @app_views.route("/states/<state_id>", strict_slashes=False)
 def state(state_id):
-    """retrieves the number of each objects by type"""
+    """retrieves the class obj by id"""
     state = storage.get("State", state_id)
     if not state:
         abort(404)
@@ -27,7 +27,7 @@ def state(state_id):
 
 @app_views.route("/states/<state_id>", strict_slashes=False, methods=['DELETE'])
 def delete_state(state_id):
-    """retrieves the number of each objects by type"""
+    """deletes state by id"""
     state = storage.get("State", state_id)
     if not state:
         abort(404)
@@ -38,7 +38,7 @@ def delete_state(state_id):
 
 @app_views.route("/states", methods=["POST"])
 def create_state():
-    '''Creates the specified test'''
+    '''Creates the required test case'''
     if not request.get_json():
         abort(400, description="Not a JSON")
 
