@@ -4,7 +4,7 @@ script To return the status of API
 """
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import *
 from models import storage
 from os import getenv
@@ -17,6 +17,14 @@ app.register_blueprint(app_views)
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    """ returns a JSON-formatted 404 status code response """
+    response = jsonify({'error': 'Not Found'})
+    response.status_code = 404
+    return response
 
 
 if __name__ == "__main__":
