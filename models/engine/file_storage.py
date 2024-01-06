@@ -80,3 +80,11 @@ class FileStorage:
             return (objs[key])
         else:
             return (None)
+
+    def count(self, cls=None):
+        # Count the number of instance of a class
+        if not cls:
+            objs = FileStorage.all(self)
+        else:
+            objs = FileStorage.all(self, cls)
+        return (len(objs))
