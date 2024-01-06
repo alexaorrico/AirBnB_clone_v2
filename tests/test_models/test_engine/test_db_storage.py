@@ -124,7 +124,10 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """Test the count() method for counting the number of objects in storage"""
+        """
+        Test the count() method for counting the number of objects in
+        storage
+        """
         storage = models.storage
         review1 = Review(text="Review 1")
         review2 = Review(text="Review 2")
