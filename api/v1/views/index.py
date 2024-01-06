@@ -18,14 +18,6 @@ def get_status():
 
 
 @app_views.route('/stats')
-def statistics():
-    """Retuens the number of objects in storage"""
-    stats = storage.count()
-    response_body = jsonify(stats)
-    status_code = 200
-    return response_body, status_code
-
-@app_views.route('/stats')
 def get_stats():
     """Gets number of objects for each type"""
     objects = {
