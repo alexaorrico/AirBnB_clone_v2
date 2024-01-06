@@ -98,7 +98,7 @@ class test_db_storage(unittest.TestCase):
         state = State(name="California")
         state.save()
         models.storage.reload()
-        self.assertIn(state, models.storage.all().values())
+        self.assertIn(state.__class__.__name__ + "." + state.id, models.storage.all().keys())
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
