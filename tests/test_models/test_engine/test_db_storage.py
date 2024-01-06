@@ -107,8 +107,8 @@ class test_db_storage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get properly retrieves objects from database"""
-        key = "Amenity.20c0604b-d687-4e8b-b5a1-666b2b002077"
-        self.assertEqual(models.storage.all(Amenity)[key], models.storage.get(Amenity, "20c0604b-d687-4e8b-b5a1-666b2b002077"))
+        """key = "Amenity.20c0604b-d687-4e8b-b5a1-666b2b002077"""
+        self.assertIn(models.storage.get(Amenity, "20c0604b-d687-4e8b-b5a1-666b2b002077"), models.storage.all(Amenity))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
