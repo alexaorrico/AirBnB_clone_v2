@@ -8,10 +8,10 @@ import hashlib
 import inspect
 import models
 from models import user
+from models.user import User
 from models.base_model import BaseModel
 import pep8
 import unittest
-User = user.User
 
 
 class TestUserDocs(unittest.TestCase):
@@ -60,9 +60,15 @@ class TestUserDocs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     """Test the User class"""
+
+    def setUp(self):
+        """Run before every test"""
+        from models import storage
+        self.storage = storage
+
     def test_is_subclass(self):
         """Test that User is a subclass of BaseModel"""
-        user = User()
+        user = User(email="example@mail.com", password="secured")
         self.assertIsInstance(user, BaseModel)
         self.assertTrue(hasattr(user, "id"))
         self.assertTrue(hasattr(user, "created_at"))
@@ -70,26 +76,26 @@ class TestUser(unittest.TestCase):
 
     def test_email_attr(self):
         """Test that User has attr email, and it's an empty string"""
-        user = User()
+        user = User(email="example@mail.com", password="secured")
         self.assertTrue(hasattr(user, "email"))
-        if models.storage_t == 'db':
-            self.assertEqual(user.email, None)
-        else:
-            self.assertEqual(user.email, "")
+        self.assertEqual(user.email, "example@mail.com")
 
     def test_password_attr(self):
-        """Test that User has attr password, and it's an empty string"""
-        user = User()
+        """Test that User has attr password"""
+        user = User(email="example@mail.com", password="secured")
+        self.storage.new(user)
+        self.storage.save()
         self.assertTrue(hasattr(user, "password"))
-        if models.storage_t == 'db':
-            self.assertEqual(user.password, None)
-        else:
-            self.assertEqual(user.password,
-                             hashlib.md5("".encode()).hexdigest())
+        self.assertEqual(self.storage.get(User, user.id).password,
+                         hashlib.md5("secured".encode()).hexdigest())
+        user.password = "super secured"
+        user.save()
+        self.assertEqual(self.storage.get(User, user.id).password,
+                         hashlib.md5("super secured".encode()).hexdigest())
 
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
-        user = User()
+        user = User(email="example@mail.com", password="secured")
         self.assertTrue(hasattr(user, "first_name"))
         if models.storage_t == 'db':
             self.assertEqual(user.first_name, None)
@@ -98,7 +104,7 @@ class TestUser(unittest.TestCase):
 
     def test_last_name_attr(self):
         """Test that User has attr last_name, and it's an empty string"""
-        user = User()
+        user = User(email="example@mail.com", password="secured")
         self.assertTrue(hasattr(user, "last_name"))
         if models.storage_t == 'db':
             self.assertEqual(user.last_name, None)
@@ -107,7 +113,7 @@ class TestUser(unittest.TestCase):
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
-        u = User()
+        u = User(email="example@mail.com", password="secured")
         new_d = u.to_dict()
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
@@ -119,7 +125,7 @@ class TestUser(unittest.TestCase):
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
-        u = User()
+        u = User(email="example@mail.com", password="secured")
         new_d = u.to_dict()
         self.assertEqual(new_d["__class__"], "User")
         self.assertEqual(type(new_d["created_at"]), str)
@@ -129,6 +135,6 @@ class TestUser(unittest.TestCase):
 
     def test_str(self):
         """test that the str method has the correct output"""
-        user = User()
+        user = User(email="example@mail.com", password="secured")
         string = "[User] ({}) {}".format(user.id, user.__dict__)
         self.assertEqual(string, str(user))
