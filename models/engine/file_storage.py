@@ -33,11 +33,12 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
-    
+
     def get(self, cls, id):
         """retrieves an object of a class with id"""
         if cls is not None:
-            result = [obj for obj in self.__objects.values() if isinstance(obj, cls) and obj.id ==id]
+            result = [obj for obj in self.__objects.values()
+                      if isinstance(obj, cls) and obj.id == id]
             if result:
                 return result[0]
             return None
@@ -67,7 +68,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception:
             pass
 
     def delete(self, obj=None):
