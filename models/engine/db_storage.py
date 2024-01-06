@@ -88,7 +88,12 @@ class DBStorage:
             objs = storage.all(cls).values()
             count = len(objs)
             return (count)
+        
     def get(self, cls, id):
-        from models import storage
-        all_objs = storage.all().items()
+        """Retrieves an object of a class with id"""
+        obj = None
+        if cls is not None and isinstance(cls(), BaseModel):
+            obj = self.__session.query(cls).filter(cls.id == id).first()
+        return obj
+
         
