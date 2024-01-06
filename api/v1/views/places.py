@@ -3,8 +3,13 @@
 
 from flask import jsonify, request, abort
 from api.v1.views import place_view
-from models import storage, City, Place, User
-
+from models import storage
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 @place_view.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
 def get_city_places(city_id):
