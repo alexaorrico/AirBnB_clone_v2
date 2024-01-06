@@ -7,7 +7,7 @@ from models import storage
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """Returns status"""
+    """Returns status of API"""
     if request.method == 'GET':
         answer = ({"status": "OK"})
         return jsonify(answer)
