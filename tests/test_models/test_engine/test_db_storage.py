@@ -91,6 +91,7 @@ class test_db_storage(unittest.TestCase):
         state = State(name="California")
         state.save()
         self.assertIn(state, models.storage.all().values())
+        models.storage.reload()
         models.storage.delete(state)
         models.storage.save()
 
@@ -99,8 +100,8 @@ class test_db_storage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
         state = State(name="California")
         state.save()
-        models.storage.reload()
         self.assertIn(state.__class__.__name__ + "." + state.id, models.storage.all().keys())
+        models.storage.reload()
         models.storage.delete(state)
         models.storage.save()
 
@@ -110,6 +111,7 @@ class test_db_storage(unittest.TestCase):
         state = State(name="California")
         state.save()
         self.assertEqual(state, models.storage.get(State, state.id))
+        models.storage.reload()
         models.storage.delete(state)
         models.storage.save()
 
