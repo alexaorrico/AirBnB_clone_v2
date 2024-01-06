@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """module for index blueprints"""
 
 from api.v1.views import app_views
@@ -21,7 +20,7 @@ def count():
         stats_result = storage.count(obj)
         stats[obj] = stats_result
     return jsonify(stats)
-=======
+    
 """Includes Flask routes for airbnb clone"""
 
 from api.v1.views import app_views
@@ -35,4 +34,3 @@ def status():
     if request.method == 'GET':
         answer = ({"status": "OK"})
         return jsonify(answer)
->>>>>>> 6338784aeb158049a5574267bcaba8774a776573
