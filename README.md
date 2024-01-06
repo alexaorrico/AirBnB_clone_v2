@@ -45,6 +45,8 @@ List of commands this console current supports:
 * `def __str__(self)` - String representation of the BaseModel class
 * `def save(self)` - Updates the attribute `updated_at` with the current datetime
 * `def to_dict(self)` - returns a dictionary containing all keys/values of the instance
+* `def get(self, cls, id) - retrieves an object from  a database
+* `def count(self, cls=None) -counts the number of objects in storage(class is optional)
 
 Classes inherited from Base Model:
 * [amenity.py](/models/amenity.py)
@@ -156,7 +158,10 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Samuel Njau - [Gthub](https://github.com/mcmmie) / [Twitter](https://twitter.com/mcmmie)
 
 Second part of Airbnb: Joann Vuong
+
+Third part of Airbnb: Samuel Njau
 ## License
 Public Domain. No copy write protection. 
