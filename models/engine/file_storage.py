@@ -29,7 +29,7 @@ class FileStorage:
         if not cls:
             return FileStorage.__objects
         else:
-            if (type(cls) == str):
+            if type(cls) is str:
                 return {key: value for key, value in
                         FileStorage.__objects.items() if key.startswith(cls)}
             return {key: value for key, value in

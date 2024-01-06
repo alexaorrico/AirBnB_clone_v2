@@ -67,7 +67,7 @@ class DBStorage:
                          f".{entry.id}"] = x.__str__()
             return res_dict
         else:
-            if not (type(cls) == str):
+            if type(cls) is not str:
                 if cls.__name__ not in name_to_class_mapper:
                     return {}
                 res = self.__session.query(name_to_class_mapper
