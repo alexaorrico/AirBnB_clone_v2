@@ -66,7 +66,44 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method of DBStorage"""
+        storage = DBStorage()
+        obj = User()
+        storage.new(obj)
+        storage.save()
 
+        retrieved_obj = storage.get(User, obj.id)
+        self.assertEqual(retrieved_obj, obj)
+
+        non_existent_obj = storage.get(User, 'nonexistent_id')
+        self.assertIsNone(non_existent_obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_count(self):
+        """Test the count method of DBStorage"""
+        storage = DBStorage()
+        obj1 = User()
+        obj2 = User()
+        obj3 = Review()
+        storage.new(obj1)
+        storage.new(obj2)
+        storage.new(obj3)
+        storage.save()
+
+        total_count = storage.count()
+        self.assertEqual(total_count, 3)
+
+        user_count = storage.count(User)
+        self.assertEqual(user_count, 2)
+
+        review_count = storage.count(Review)
+        self.assertEqual(review_count, 1)
+
+        non_existent_ccount = storage.count(Amenity)
+        self.assertEqual(non_existent_count, 0)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
