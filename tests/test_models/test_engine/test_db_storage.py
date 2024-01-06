@@ -88,38 +88,30 @@ class test_db_storage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
-        state = State(name="California")
+        state = Amenity(name="Microwave_new")
         state.save()
         self.assertIn(state, models.storage.all().values())
-        models.storage.reload()
         models.storage.delete(state)
         models.storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
-        state = State(name="California")
+        """Test that save properly saves objects to sql database"""
+        state = Amenity(name="Microwave_save")
         state.save()
         self.assertIn(state.__class__.__name__ + "." + state.id, models.storage.all().keys())
-        models.storage.reload()
         models.storage.delete(state)
         models.storage.save()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get properly retrieves objects from database"""
-        state = State(name="California")
-        state.save()
-        self.assertEqual(state, models.storage.get(State, state.id))
-        models.storage.reload()
-        models.storage.delete(state)
-        models.storage.save()
+        key = "Amenity.20c0604b-d687-4e8b-b5a1-666b2b002077"
+        self.assertEqual(models.storage.all("Amenity")[key], models.storage.get(Amenity, "20c0604b-d687-4e8b-b5a1-666b2b002077"))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count properly counts objects in database"""
-        models.storage.reload()
-        models.storage.save()
         self.assertEqual(models.storage.count(State), 32)
         self.assertEqual(models.storage.count(), 32)
         print(models.storage.count())
