@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """ Flask application for aibrnb clone"""
 from api.v1.views import app_views
 from flask import Flask, jsonify, make_response, render_template, url_for
@@ -15,6 +16,10 @@ def teardown_storage(exception=None):
     """closes current sqlalchemy session"""
     storage.close()
 
+@app.errorhandler(404)
+def page_not_found(exception):
+    """ Provides a JSON-formatted response with a 404 status code. """
+    return jsonify({'error': 'Not found'}), 404
 
 if __name__ == "__main__":
     """Main function for flask app"""
