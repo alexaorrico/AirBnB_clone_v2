@@ -11,7 +11,9 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-@place_view.route('/cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+
+@place_view.route('/cities/<city_id>/places', methods=['GET'],
+                  strict_slashes=False)
 def get_city_places(city_id):
     """Retrieves the list of all Place objects of a City"""
     city = storage.get(City, city_id)
@@ -19,12 +21,14 @@ def get_city_places(city_id):
         abort(404)
 
     places = storage.all(Place).values()
-    city_places = [place.to_dict() for place in places if place.city_id == city_id]
+    city_places = [place.to_dict() for place in places if
+                   place.city_id == city_id]
 
     return jsonify(city_places)
 
 
-@place_view.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+@place_view.route('/places/<place_id>', methods=['GET'],
+                  strict_slashes=False)
 def get_place(place_id):
     """Retrieves a Place object."""
     place = storage.get(Place, place_id)
@@ -35,7 +39,8 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@place_view.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@place_view.route('/places/<place_id>', methods=['DELETE'],
+                  strict_slashes=False)
 def delete_place(place_id):
     """Deletes a Place object"""
     place = storage.get(Place, place_id)
@@ -48,7 +53,8 @@ def delete_place(place_id):
     return jsonify({}), 200
 
 
-@place_view.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@place_view.route('/cities/<city_id>/places', methods=['POST'],
+                  strict_slashes=False)
 def create_place(city_id):
     """Creates a Place"""
     city = storage.get(City, city_id)
