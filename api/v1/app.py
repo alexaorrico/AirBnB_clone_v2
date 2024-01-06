@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ start a flask application """
 
-from flask import Flask, make_response
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -16,6 +16,12 @@ app.register_blueprint(app_views)
 def teardown(ret):
     """ call storage.close method """
     storage.close()
+
+
+@app.errorhandler(404)
+def get_nop(e):
+    """handler for 404 errors"""
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
