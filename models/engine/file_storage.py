@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Contains the FileStorage class
+Contains the FileStorage class.
+Serializes instances to a JSON file & deserializes back to instances.
 """
 
 import json
@@ -12,59 +13,104 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {
+    "Amenity": Amenity,
+    "BaseModel": BaseModel,
+    "City": City,
+    "Place": Place,
+    "Review": Review,
+    "State": State,
+    "User": User
+}
 
 
 class FileStorage:
-    """serializes instances to a JSON file & deserializes back to instances"""
+    """
+    Serializes instances to a JSON file & deserializes back to instances.
+    """
 
-    # string - path to the JSON file
+    __instance = None
     __file_path = "file.json"
-    # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
+    def __new__(cls):
+        """Creates a new instance only if it doesn't exist"""
+        if not cls.__instance:
+            cls.__instance = super(FileStorage, cls).__new__(cls)
+        return cls.__instance
+
     def all(self, cls=None):
-        """returns the dictionary __objects"""
-        if cls is not None:
-            new_dict = {}
-            for key, value in self.__objects.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    new_dict[key] = value
-            return new_dict
-        return self.__objects
+        """Returns the dictionary __objects"""
+        if not cls:
+            return self.__objects
+        elif type(cls) == str:
+            return {
+                k: v for k, v in self.__objects.items()
+                if v.__class__.__name__ == cls
+            }
+        else:
+            return {
+                k: v for k, v in self.__objects.items()
+                if v.__class__ == cls
+            }
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """Sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
     def save(self):
-        """serializes __objects to the JSON file (path: __file_path)"""
-        json_objects = {}
-        for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
+        """Serializes __objects to the JSON file (path: __file_path)"""
+        json_objects = {
+            key: self.__objects[key].to_dict()
+            for key in self.__objects
+        }
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """Deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
-        """delete obj from __objects if it’s inside"""
+        """Deletes obj from __objects if it's inside"""
         if obj is not None:
-            key = obj.__class__.__name__ + '.' + obj.id
-            if key in self.__objects:
-                del self.__objects[key]
+            del self.__objects[obj.__class__.__name__ + '.' + obj.id]
+            self.save()
 
     def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
+        """Deserialize JSON file to objects"""
         self.reload()
+   
+    def get(self, cls, id):
+    """Retrieves an object."""
+        if (
+        cls is not None
+        and isinstance(cls, str)
+        and id is not None
+        and isinstance(id, str)
+        and cls in classes
+        ):
+        key = f"{cls.__name__}.{id}"
+        obj = self.__objects.get(key, None)
+        return obj
+        else:
+        return None   
+    def count(self, cls=None):
+        '''
+        counts number of objects in a class (if given)
+        Args:
+            cls (str): class name
+        Returns:
+            number of objects in class, if no class name given
+            return total number of objects in database
+        '''
+        obj_dict = self.all(cls)
+        return len(obj_dict)
