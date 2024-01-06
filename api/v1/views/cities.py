@@ -20,8 +20,8 @@ def get_create_city(state_id):
 
 
 @app_views.route("/cities/<city_id>", methods=["GET", "DELETE", "PUT"])
-def get_delete_city(city_id):
-    """retrieves or deletes a City object"""
+def get_delete_update_city(city_id):
+    """retrieves, deletes or update a City object"""
     city = storage.get("City", city_id)
     if not city:
         abort(404)
@@ -35,7 +35,7 @@ def get_delete_city(city_id):
         return jsonify({}), 200
 
     city_data = request.get_json(silent=True)
-    if city is None:
+    if city_data is None:
         abort(400, "Not a JSON")
 
     ignore_attr = ["id", "updated_at", "created_at", "state_id"]
