@@ -7,3 +7,5 @@ web_flask/__pycache__/
 tests/__pycache__/
 tests/test_models/__pycache__/
 tests/test_models/test_engine/__pycache__/
+tests/test_models/test_engine/__pycache__/test_db_storage.cpython-310.pyc
+tests/test_models/test_engine/__pycache__/test_file_storage.cpython-310.pyc

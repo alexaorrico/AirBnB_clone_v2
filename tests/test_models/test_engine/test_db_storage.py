@@ -96,7 +96,6 @@ class TestFileStorage(unittest.TestCase):
         valid_id = self.instance.get("User", id)
         self.assertIsNotNone(valid_id)
 
-        # Replace invalid_id with an invalid ID
         invalid_id = self.instance.get("User", "12345")
         self.assertIsNone(invalid_id)
 
