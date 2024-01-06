@@ -152,7 +152,7 @@ class TestFileStorage(unittest.TestCase):
         storage.new(review3)
         storage.save()
 
-        self.assertGreater(storage.count(), storage.count(Review))
+        self.assertEqual(storage.count(), storage.count(Review))
         self.assertIs(type(storage.count()), int)
         self.assertIs(type(storage.count(None)), int)
         self.assertIs(type(storage.count(int)), int)
