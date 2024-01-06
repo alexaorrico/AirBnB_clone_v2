@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """app for registering blueprint and starting flask"""
 
+from os import getenv
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
