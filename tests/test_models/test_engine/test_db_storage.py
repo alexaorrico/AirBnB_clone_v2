@@ -79,6 +79,7 @@ class test_db_storage(unittest.TestCase):
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
         new_dict = {}
+        models.storage.reload()
         for value in classes.values():
             instance = value()
             instance_key = instance.__class__.__name__ + "." + instance.id
