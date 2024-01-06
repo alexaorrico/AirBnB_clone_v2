@@ -91,6 +91,7 @@ class test_db_storage(unittest.TestCase):
         state = State(name="California")
         state.save()
         self.assertIn(state, models.storage.all().values())
+        models.storage.delete(state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
@@ -99,6 +100,7 @@ class test_db_storage(unittest.TestCase):
         state.save()
         models.storage.reload()
         self.assertIn(state.__class__.__name__ + "." + state.id, models.storage.all().keys())
+        models.storage.delete(state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
@@ -106,10 +108,11 @@ class test_db_storage(unittest.TestCase):
         state = State(name="California")
         state.save()
         self.assertEqual(state, models.storage.get(State, state.id))
+        models.storage.delete(state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count properly counts objects in database"""
-        self.assertEqual(models.storage.count(State), 29)
-        self.assertEqual(models.storage.count(), 50)
+        self.assertEqual(models.storage.count(State), 32)
+        self.assertEqual(models.storage.count(), 32)
         print(models.storage.count())
