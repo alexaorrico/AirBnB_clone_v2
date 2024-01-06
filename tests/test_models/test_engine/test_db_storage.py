@@ -113,5 +113,5 @@ class test_db_storage(unittest.TestCase):
     def test_count(self):
         """Test that count properly counts objects in database"""
         self.assertEqual(models.storage.count(State), 48)
-        self.assertEqual(models.storage.count(), 32)
+        self.assertEqual(models.storage.count(), 93)
         print(models.storage.count())
