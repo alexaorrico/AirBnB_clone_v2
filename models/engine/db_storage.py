@@ -105,7 +105,8 @@ class DBStorage:
                 storage if no class is passed
         """
         if cls is None:
-            total_count = sum(self.__session.query(cls).count() for cls in classes.values())
-            return total_count
+            counts = {cls.__name__.lower(): self.__session.query(cls).count() for cls in classes.values()}
+            return jsonify(counts)
         else:
-            return self.__session.query(cls).count()
+            count = self.__session.query(cls).count()
+            return jsonify({cls.__name__.lower(): count})
