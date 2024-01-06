@@ -113,3 +113,48 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_existing_object(self):
+        """Test the get method when retrieving an existing object"""
+        storage = FileStorage()
+        new_state = State(name="California")
+        storage.new(new_state)
+        storage.save()
+
+        retrieved_state = storage.get(State, new_state.id)
+        self.assertEqual(new_state, retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent_object(self):
+        """Test the get method when retrieving a nonexistent object"""
+        storage = FileStorage()
+
+        retrieved_state = storage.get(State, "nonexistent_id")
+        self.assertIsNone(retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_no_class(self):
+        """Test the count method without specifying a class"""
+        storage = FileStorage()
+        initial_count = storage.count()
+
+        new_state = State(name="California")
+        storage.new(new_state)
+        storage.save()
+
+        updated_count = storage.count()
+        self.assertEqual(initial_count + 1, updated_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_with_class(self):
+        """Test the count method with specifying a class"""
+        storage = FileStorage()
+        initial_count = storage.count(State)
+
+        new_state = State(name="California")
+        storage.new(new_state)
+        storage.save()
+
+        updated_count = storage.count(State)
+        self.assertEqual(initial_count + 1, updated_count)
