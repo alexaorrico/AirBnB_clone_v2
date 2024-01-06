@@ -15,12 +15,13 @@ from models import storage
 def index():
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def count_objs():
     """ retrieve the number of each object by type """
     classes = [Amenity, City, Place, Review, State, User]
     names = ["amenities", "cities", "places", "reviews", "states", "users"]
-    count = {}
+    counts = {}
     for num in range(len(classes)):
-        count[names[num]] = storage.count(classes[num])
-    return jsonify(count)
+        counts[names[num]] = storage.count(classes[num])
+    return jsonify(counts)
