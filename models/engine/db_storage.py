@@ -5,7 +5,7 @@ Contains the class DBStorage
 
 # import models
 from models.amenity import Amenity
-from models.base_model import Base  # , BaseModel
+from models.base_model import Base, BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -77,10 +77,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """Returns an object based on its ID"""
-        try:
-            return self.__session.query(cls).filter(cls.id == id).first()
-        except Exception:
-            return None
+        obj = None
+        if cls is not None and issubclass(cls, BaseModel):
+            obj = self.__session.query(cls).filter(cls.id == id).first()
+        return obj
 
     def count(self, cls=None):
         """Returns the number of objects in storage"""
