@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Contains Blueprint object"""
+"""Contains Blueprint object for initial start of Flask app"""
 
 from flask import Blueprint
 
