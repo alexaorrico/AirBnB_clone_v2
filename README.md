@@ -150,12 +150,15 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+## New Updates
+Setting up RESTful APIs for the AirBnB Clone
+
 ## Bugs
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Jesufemi Omitogun - [Github](https://https://github.com/omitogunjesufemi)
+Oluwaseyi Akintola - [Github](https://https://github.com/alexoluwaseyi)
 
 Second part of Airbnb: Joann Vuong
 ## License
