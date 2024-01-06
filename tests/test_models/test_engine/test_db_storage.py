@@ -201,4 +201,3 @@ class TestFileStorage(unittest.TestCase):
             storage.new(city)
             c = storage.count()
             self.assertEqual(len(storage.all()), c)
->>>>>>> refs/remotes/origin/master

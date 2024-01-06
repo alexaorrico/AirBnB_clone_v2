@@ -165,5 +165,3 @@ class FileStorage:
         else:
             count = len(self.__objects)
         return count
->>>>>>> origin/storage_get_count
->>>>>>> refs/remotes/origin/master
