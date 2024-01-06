@@ -22,4 +22,4 @@ def close_con(error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host=host_env, port=port_env, threaded=True)
+    app.run(host=host_env, port=port_env, threaded=True)
