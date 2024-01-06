@@ -125,6 +125,8 @@ class TestFileStorage(unittest.TestCase):
         storage = models.storage
 
         obj = User(name='Freddie McKenzie')
+        storage.new(obj)
+        storage.save()
         self.assertEqual(obj, storage.get(User, obj.id))
         self.assertEqual(obj.id, storage.get(User, obj.id).id)
         self.assertEqual(obj.name, storage.get(User, obj.id).name)
