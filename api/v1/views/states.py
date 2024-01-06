@@ -6,12 +6,14 @@ from models import storage
 from models.state import State
 from flask import abort, jsonify, request
 
+
 @app_views.route("/states", methods=["GET"],
                  strict_slashes=False)
 def states():
     """ method to get all states """
     states = storage.all(State).values()
     return jsonify([state.to_dict() for state in states]), 200
+
 
 @app_views.route("/states/<state_id>", methods=["GET"],
                  strict_slashes=False)
@@ -64,7 +66,7 @@ def update_state(state_id):
     if data is None:
         abort(400, "Not a JSON")
     for key, val in data.items():
-        if key in ["id", "created_at", "updated_at":
+        if key in ["id", "created_at", "updated_at"]:
             continue
         setattr(state, key, value)
 

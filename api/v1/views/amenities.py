@@ -64,7 +64,7 @@ def update_amenity(amenity_id):
     if data is None:
         abort(400, "Not a JSON")
     for key, val in data.items():
-        if key in ["id", "created_at", "updated_at":
+        if key in ["id", "created_at", "updated_at"]:
             continue
         setattr(amenity, key, value)
 
