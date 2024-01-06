@@ -81,11 +81,10 @@ class test_db_storage(unittest.TestCase):
         new_dict = {}
         models.storage.reload()
         for value in classes.values():
-            instance = value()
-            instance_key = instance.__class__.__name__ + "." + instance.id
-            new_dict[instance_key] = instance
+            for instance in models.storage.all(value).values():
+                key = instance.__class__.__name__ + "." + instance.id
+                new_dict[key] = instance
         self.assertEqual(models.storage.all(), new_dict)
-        self.maxDiff = None
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
