@@ -56,11 +56,10 @@ class DBStorage:
         returns the object based on the class,
         name and its ID, or None if not found
         """
-
         if cls is not None and id is not None:
             key = cls.__name__ + '.' + id
-            if key in self.all(cls):
-                new_dict = self.all(cls)
+            new_dict = self.all(cls)
+            if key in new_dict:
                 return new_dict[key]
         return None
     
