@@ -13,3 +13,4 @@ from api.v1.views.index import *
 from api.v1.views.states import state_view
 from api.v1.views.places import place_view
 from api.v1.views.places_reviews import reviews_view
+from api.v1.views.cities import*
