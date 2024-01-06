@@ -1,4 +1,4 @@
-#!/usr/bin7python3
+#!/usr/bin/python3
 """Includes Flask routes for airbnb clone"""
 from api.v1.views import app_views
 from flask import jsonify, request
