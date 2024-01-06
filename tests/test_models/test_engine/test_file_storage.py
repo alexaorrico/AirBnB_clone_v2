@@ -113,3 +113,35 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestFileStorage2(unittest.TestCase):
+    """Test"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_method(self):
+        """test get method"""
+        first_state = State(name="state1")
+        sec_state = State(name="state2")
+        models.storage.new(first_state)
+        models.storage.new(sec_state)
+        models.storage.save()
+        first_state_id = list(model.storage.all(State).values())[0].id
+        get_id = models.storage.get(State, first_state_id)
+        self.assertEqual(get_id.id, first_state_id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test count method"""
+        first_state = State(name="state1")
+        sec_state = State(name="state2")
+        first_city = City(state_id=first_state.id, name="statename")
+        models.storage.new(first_state)
+        models.storage.new(sec_state)
+        models.storage.new(first_city)
+        models.storage.save()
+        models.storage.close()
+        All = len(models.storage.all())
+        state_total = len(models.storage.all(State))
+        count_All = models.storage.count()
+        state_count = count_state = models.storage.count(State)
+        self.assertEqual(All, count_All)
+        self.assertEqual(state_total, state_count)
