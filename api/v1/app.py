@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from models import storage
 from api.v1.views import app_views
 from flask import make_response
