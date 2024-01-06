@@ -100,6 +100,7 @@ class TestFileStorage(unittest.TestCase):
         get_id = models.storage.get(State, first_state_id)
         self.assertEqual(get_id.id, first_state_id)
 
+
 class TestFileStorage2(unittest.TestCase):
     """test doc doc"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -119,5 +120,3 @@ class TestFileStorage2(unittest.TestCase):
         state_count = count_state = models.storage.count(State)
         self.assertEqual(All, count_All)
         self.assertEqual(state_total, state_count)
-
-
