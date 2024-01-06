@@ -16,10 +16,12 @@ def teardown_storage(exception=None):
     """closes current sqlalchemy session"""
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(exception):
     """ Provides a JSON-formatted response with a 404 status code. """
     return jsonify({'error': 'Not found'}), 404
+
 
 if __name__ == "__main__":
     """Main function for flask app"""
