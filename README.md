@@ -159,7 +159,7 @@ Welcome to the AirBnB_clone_v3 project! This project involves working on a new c
 
 ## Author
 
-- Kelvin Njoroge
+- Kelvin Njoroge Gachihi
 - Fardosa Hassan
 
 ## Project Structure
