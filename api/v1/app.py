@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-"""
-starting a Flask application
-"""
+"""starting a Flask application"""
+
 from os import getenv
 from flask import Flask, jsonify
 from models import storage
