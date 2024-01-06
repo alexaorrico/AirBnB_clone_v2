@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -132,9 +133,9 @@ class TestFileStorage(unittest.TestCase):
 
     def test_get(self):
         """Test the get method"""
-        obj = BaseModel()
+        obj= BaseModel()
         self.storage.new(obj)
-        selfstorage.save()
+        self.storage.save()
 
         retrieved_obj = self.storage.get(BaseModel, obj.id)
         self.assertEqual(retrieved_obj, obj)
