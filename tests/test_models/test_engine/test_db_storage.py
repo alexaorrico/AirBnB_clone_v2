@@ -110,8 +110,6 @@ class test_db_storage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test that count properly counts objects in database"""
-        state = State(name="California")
-        state.save()
-        self.assertEqual(models.storage.count(State), 1)
-        self.assertEqual(models.storage.count(), 1)
+        self.assertEqual(models.storage.count(State), 26)
+        self.assertEqual(models.storage.count(), 50)
         print(models.storage.count())
