@@ -55,7 +55,6 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-
         except Exception as e:
             pass
 
@@ -96,7 +95,9 @@ class FileStorage:
             If no class is passed, returns the count of all objects in storage.
         """
         if cls:
-            count = sum(1 for obj in self.__objects.values() if isinstance(obj, cls))
+            count = sum(
+                    1 for obj in self.__objects.values()
+                    if isinstance(obj, cls))
         else:
             count = len(self.__objects)
         return count
