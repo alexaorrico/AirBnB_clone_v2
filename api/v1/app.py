@@ -8,7 +8,19 @@ from os import getenv
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
+app.url_map.strict_slashes = False
+
+
+@app.errorhandler(404)
+def resource_not_found(self):
+    """handle 404 error"""
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+
+@app_views.errorhandler(400)
+def handle_invalid_json(error):
+    """handle invalid json error"""
+    return make_response(jsonify({"error": f"{error.description}"}), 400)
 
 
 @app.teardown_appcontext
@@ -17,10 +29,7 @@ def close_connection(self):
     storage.close()
 
 
-@app.errorhandler(404)
-def resource_not_found(self):
-    """handle 404 error"""
-    return make_response(jsonify({"error": "Not found"}), 404)
+app.register_blueprint(app_views)
 
 
 if __name__ == "__main__":
