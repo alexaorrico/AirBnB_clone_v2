@@ -19,7 +19,7 @@ def get_states():
     return jsonify(states), 200
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'],
+@app_views.route('/states/<state_id>', methods=['GET'],
                  strict_slashes=False)
 def get_state_by_id(state_id):
     """Returns a State object based on state_id"""
@@ -30,7 +30,7 @@ def get_state_by_id(state_id):
     return jsonify(states_dictionary), 200
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+@app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object based on state_id"""
@@ -42,7 +42,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates a State"""
     answer = request.get_json()
@@ -56,7 +56,7 @@ def create_state():
     return jsonify(state_dictionary), 201
 
 
-@app_views.route('/states/<string:state_id>', methods=['PUT'],
+@app_views.route('/states/<state_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_state(state_id):
     """Updates a State object based on state_id"""
