@@ -106,7 +106,6 @@ class DBStorage:
         """
         if cls is None:
             counts = {cls.__name__.lower(): self.__session.query(cls).count() for cls in classes.values()}
-            return jsonify(counts)
+            return counts
         else:
-            count = self.__session.query(cls).count()
-            return jsonify({cls.__name__.lower(): count})
+            return {cls.__name__.lower(): self.__session.query(cls).count()}
