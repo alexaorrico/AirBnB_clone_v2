@@ -67,8 +67,6 @@ def update_state_objects(state_id):
     if not data:
         abort(404, "Not a JSON")
 
-    storage.delete(obj)
-
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(obj, key, value)
