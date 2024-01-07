@@ -12,10 +12,12 @@ from api.v1.views import app_views
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def cities_all(state_id):
     """Returns a list of all City objects of a given state"""
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    return jsonify(state.to_dict())
+    cities = storage.all(City).values()
+    state_cities = []
+    for city in cities:
+        if city.state_id == state_id:
+            state_cities.append(city.to_dict())
+    return jsonify(state_cities)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
