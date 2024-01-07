@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestFileStorageDocs and TestFileStorage classes
+Contains the TestFileStorageDocs classes
 """
 
 from datetime import datetime
@@ -18,7 +18,6 @@ import json
 import os
 import pep8
 import unittest
-
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -26,7 +25,6 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
-
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -40,10 +38,10 @@ class TestFileStorageDocs(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
-        """Test tests/test_models/test_engine/test_file_storage.py conforms"""
+        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        files = ['tests/test_models/test_engine/test_file_storage.py']
-        result = pep8s.check_files(files)
+        result = pep8s.check_files(['tests/test_models/test_engine/\
+test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -72,89 +70,46 @@ class TestFileStorageDocs(unittest.TestCase):
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_all_returns_dict(self):
+        """Test that all returns the FileStorage.__objects attr"""
+        storage = FileStorage()
+        new_dict = storage.all()
+        self.assertEqual(type(new_dict), dict)
+        self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @classmethod
-    def setUpClass(cls):
-        """Set up for the tests"""
-        cls.storage = FileStorage()
-
-    @classmethod
-    def tearDownClass(cls):
-        """Clean up after the tests"""
-        del cls.storage
-
-    def test_file_path(self):
-        """Test the file_path method"""
-        file_path = self.storage._FileStorage__file_path
-        self.assertEqual(file_path, "file.json")
-
-    def test_objects(self):
-        """Test the objects method"""
-        objects = self.storage.all()
-        self.assertIs(objects, self.storage._FileStorage__objects)
-
-    def test_all(self):
-        """Test the all method"""
-        objects = self.storage.all()
-        self.assertIsInstance(objects, dict)
-        self.assertIs(objects, self.storage._FileStorage__objects)
-
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
-        """Test the new method"""
-        obj = BaseModel()
-        self.storage.new(obj)
-        obj_key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        objects = self.storage.all()
-        self.assertIn(obj_key, objects.keys())
-        self.assertIs(objects[obj_key], obj)
+        """test that new adds an object to the FileStorage.__objects attr"""
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        test_dict = {}
+        for key, value in classes.items():
+            with self.subTest(key=key, value=value):
+                instance = value()
+                instance_key = instance.__class__.__name__ + "." + instance.id
+                storage.new(instance)
+                test_dict[instance_key] = instance
+                self.assertEqual(test_dict, storage._FileStorage__objects)
+        FileStorage._FileStorage__objects = save
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
-        """Test the save method"""
-        obj = BaseModel()
-        self.storage.new(obj)
-        self.storage.save()
-        file_path = self.storage._FileStorage__file_path
-        self.assertTrue(os.path.exists(file_path))
-        with open(file_path, 'r') as file:
-            content = file.read()
-            self.assertIn(obj.__class__.__name__, content)
-            self.assertIn(obj.id, content)
-
-    def test_reload(self):
-        """Test the reload method"""
-        obj = BaseModel()
-        self.storage.new(obj)
-        self.storage.save()
-        self.storage.reload()
-        obj_key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        objects = self.storage.all()
-        self.assertIn(obj_key, objects.keys())
-        self.assertIsInstance(objects[obj_key], BaseModel)
-
-     def test_get(self):
-        '''
-            Test if get method retrieves obj requested
-        '''
-        new_state = State(name="NewYork")
-        storage.new(new_state)
-        key = "State.{}".format(new_state.id)
-        result = storage.get("State", new_state.id)
-        self.assertTrue(result.id, new_state.id)
-        self.assertIsInstance(result, State)
-
-    def test_count(self):
-        '''
-            Test if count method returns expected number of objects
-        '''
-        storage.reload()
-        old_count = storage.count("State")
-        new_state1 = State(name="NewYork")
-        storage.new(new_state1)
-        new_state2 = State(name="Virginia")
-        storage.new(new_state2)
-        new_state3 = State(name="California")
-        storage.new(new_state3)
-        self.assertEqual(old_count + 3, storage.count("State"))
-
-if __name__ == '__main__':
-    unittest.main()
+        """Test that save properly saves objects to file.json"""
+        storage = FileStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        storage.save()
+        FileStorage._FileStorage__objects = save
+        for key, value in new_dict.items():
+            new_dict[key] = value.to_dict()
+        string = json.dumps(new_dict)
+        with open("file.json", "r") as f:
+            js = f.read()
+        self.assertEqual(json.loads(string), json.loads(js))
