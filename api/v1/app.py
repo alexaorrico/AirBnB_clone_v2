@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Flask web application API """
 import os
+from flask_cors import CORS
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views, state_view, place_view
@@ -32,6 +33,7 @@ def teardown_flask(exception):
     """ Flask request context listener """
     storage.close()
 
+CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 
 if __name__ == '__main__':
     app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
