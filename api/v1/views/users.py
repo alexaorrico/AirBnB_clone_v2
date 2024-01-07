@@ -4,7 +4,7 @@ handles all default RESTFul API actions"""
 from api.v1.views import app_views
 from models.user import User
 from models import storage
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 
 
 @app_views.route("/users", methods=["GET"],
