@@ -48,7 +48,7 @@ def delete_place(place_id):
                  strict_slashes=False)
 def post_place(city_id):
     """create a new place"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     if not request.get_json():
@@ -56,7 +56,7 @@ def post_place(city_id):
     kwargs = request.get_json()
     if 'user_id' not in kwargs:
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
-    user = storage.get("User", kwargs['user_id'])
+    user = storage.get(User, kwargs['user_id'])
     if user is None:
         abort(404)
     if 'name' not in kwargs:
