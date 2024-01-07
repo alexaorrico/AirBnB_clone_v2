@@ -1,13 +1,17 @@
+#!/usr/bin/python3
+'''The app module'''
 from models import storage
 from flask import Flask, make_response
 from api.v1.views import app_views
 from os import getenv
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-
+CORS(app, resources={
+    r"/*": {"origins": "*"}
+})
 
 @app.teardown_appcontext
 def onTearDownContext(self):

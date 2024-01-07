@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+'''The index routes'''
 from . import app_views
 from flask import make_response, abort
 from models import storage, amenity, state, city, place, review, user
