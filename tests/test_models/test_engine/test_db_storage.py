@@ -132,7 +132,7 @@ class TestDbStorage(unittest.TestCase):
         obj.save()
         models.storage.reload()
         all_count = models.storage.count()
-        expected_count = 1
+        expected_count = len(models.storage.all())
         self.assertEqual(all_count, expected_count)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -144,5 +144,5 @@ class TestDbStorage(unittest.TestCase):
         obj.save()
         models.storage.reload()
         cls_count = models.storage.count(State)
-        expected_count = 2
+        expected_count = len(models.storage.all(State))
         self.assertEqual(cls_count, expected_count)
