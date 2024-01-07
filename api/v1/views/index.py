@@ -1,23 +1,24 @@
 #!/usr/bin/python3
-"""Includes Flask routes for airbnb clone"""
+"""Defines a Flask route"""
 from flask import jsonify, request
 from api.v1.views import app_views
 from models import storage
-from models.state import State
+from models.amenity import Amenity
 from models.city import City
 from models.place import Place
-from models.user import User
 from models.review import Review
-from models.amenity import Amenity
+from models.state import State
+from models.user import User
+
+
+@app_views.route('/status', methods=['GET'])
+def status():
+    """Returns a JSON response with the status OK"""
+    return jsonify({"status": "OK"})
+
 
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
-
-
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
-def status():
-    """Returns status of API"""
-    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
