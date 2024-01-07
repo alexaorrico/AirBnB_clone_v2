@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''Users Routes'''
 from flask import make_response, abort, request
-from . import app_views
+from api.v1.views import app_views
 from models import storage
 from models.user import User
 

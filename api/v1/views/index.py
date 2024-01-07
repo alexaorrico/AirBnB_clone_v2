@@ -1,17 +1,22 @@
 #!/usr/bin/python3
 '''The index routes'''
+<<<<<<< HEAD
 from . import app_views
 from flask import make_response, abort
+=======
+from api.v1.views import app_views
+from flask import make_response
+>>>>>>> 7499a0cd98030d1aa4bf908bea327e0dca0f755f
 from models import storage, amenity, state, city, place, review, user
 
 
-@app_views.get('/status')
+@app_views.route('/status', methods=['GET'])
 def showStatus():
     ''' Shows status of API '''
     return make_response({"status": "OK"})
 
 
-@app_views.get('/stats')
+@app_views.route('/stats', methods=['GET'])
 def showStat():
     '''  retrieves the number of each objects by type '''
     data = {

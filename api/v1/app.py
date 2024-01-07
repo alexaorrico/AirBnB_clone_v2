@@ -29,10 +29,10 @@ if __name__ == '__main__':
     host = getenv('HBNB_API_HOST')
     port = getenv('HBNB_API_PORT')
 
-    print(app.url_map)
+    # print(app.url_map)
     app.run(
         host=host if host else '0.0.0.0',
         port=port if port else 5000,
         threaded=True,
-        debug=True
+        # debug=True
     )
