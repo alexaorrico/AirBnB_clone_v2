@@ -2,7 +2,7 @@
 """Wrapper of AirBnB web app built using Flask"""
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort, make_response
 from os import getenv
 from models import storage
 
@@ -20,7 +20,7 @@ def close_session(exc):
 @app.errorhandler(404)
 def page_not_found(err):
     """Return page not found message in JSON format"""
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 host = getenv("HBNB_API_HOST", default="0.0.0.0")
