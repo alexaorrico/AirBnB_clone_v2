@@ -1,24 +1,29 @@
 #!/usr/bin/python3
-""" creates a new view for Amenity object """
+""" creates a new view for amenities object """
 from models.amenity import Amenity
 from models import storage
 from api.v1.views import app_views
 from flask import make_response, jsonify, abort, request
 
 
-@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities',
+                 methods=['GET'], strict_slashes=False)
 def get_amenities():
-    """ get list of amenities """
+    """ get list of amenities in a city """
     amenities = storage.all(Amenity).values()
-    amenities_all = []
+    if not amenities:
+        abort(404)
+
+    all_amenities = []
     for amenity in amenities:
-        amenities_all.append(amenity.to_dict())
-    return jsonify(amenities_all)
+        all_amenities.append(amenity.to_dict())
+    return jsonify(all_amenities)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=['GET'], strict_slashes=False)
 def get_amenity(amenity_id):
-    """ get list by id """
+    """ get amenity by id """
     amenity = storage.get("Amenity", amenity_id)
     if not amenity:
         abort(404)
@@ -37,15 +42,17 @@ def delete_amenity(amenity_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+@app_views.route('/amenities',
+                 methods=['POST'], strict_slashes=False)
 def post_amenity():
-    """ post method for adding amenity """
-    if not request.get_json():
+    """ post method for adding an amenity """
+    res = request.get_json()
+    if not res:
         abort(400, description="Not a JSON")
-    if 'name' not in request.get_json():
+
+    if 'name' not in res:
         abort(400, description="Missing name")
 
-    res = request.get_json()
     amenity = Amenity(**res)
     storage.new(amenity)
     storage.save()
