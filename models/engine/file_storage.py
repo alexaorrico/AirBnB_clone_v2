@@ -4,7 +4,7 @@ Contains the FileStorage class
 """
 
 import json
-import models
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -78,7 +78,7 @@ class FileStorage:
     def count(self, cls=None):
         """Counts number of objects if any"""
         numObjects = 0
-        for obj in models.storage:
+        for obj in storage:
             if isinstance(obj, cls) or cls == None:
                 numObjects = numObjects + 1
         return numObjects
