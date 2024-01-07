@@ -29,12 +29,14 @@ def close_flask(exception):
     """
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """
     Handles 404 errors
     """
     return jsonify({"error": "Not found"})
+
 
 if __name__ == "__main__":
     app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
