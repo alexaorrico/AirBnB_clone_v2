@@ -51,7 +51,7 @@ def delete_place(place_id):
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
                  strict_slashes=False)
-def create_place():
+def create_place(city_id):
     """method to create a new place"""
     city = storage.get(City, city_id)
     data = request.get_json()
