@@ -23,10 +23,10 @@ class User(BaseModel, Base):
 
     @property
     def password(self):
-    """Getter for the password attribute """
-    return self.__password
+        """Getter for the password attribute """
+        return self.__password
 
     @password.setter
     def password(self, value):
-    """Setter for the password attribute """
-    self.__password = hashlib.md5(value.encode()).hexdigest()
+        """Setter for the password attribute """
+        self.__password = hashlib.md5(value.encode()).hexdigest()
