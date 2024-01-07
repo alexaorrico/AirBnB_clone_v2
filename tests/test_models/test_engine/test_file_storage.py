@@ -130,7 +130,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """Test that count returns the correct number of objects"""
+        """Test that count returns the correct number of objects in storage"""
         storage = FileStorage()
         new_dict = {}
         for value in classes.values():
