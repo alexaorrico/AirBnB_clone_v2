@@ -3,7 +3,7 @@
 from api.v1.views import user_view
 from flask import jsonify, abort, request
 from models import storage
-from models.user import user
+from models.user import User
 import hashlib
 
 

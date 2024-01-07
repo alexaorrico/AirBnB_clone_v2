@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views, state_view, place_view
-from api.v1.views import reviews_view, city_view
+from api.v1.views import reviews_view, city_view, amenities_view, user_view
 
 
 app = Flask(__name__)
@@ -14,11 +14,10 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 app.register_blueprint(state_view)
 app.register_blueprint(city_view)
+app.register_blueprint(amenities_view)
+app.register_blueprint(user_view)
 app.register_blueprint(place_view)
 app.register_blueprint(reviews_view)
-
-# app.register_blueprint(amenities_view)
-# app.register_blueprint(user_view)
 
 
 @app.errorhandler(404)
