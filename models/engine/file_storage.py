@@ -106,12 +106,12 @@ class FileStorage:
 
     def count(self, cls=None):
         """
-        counts number of objects in a class (if given)
+        Counts number of objects in a class (if given).
         Args:
             cls (str): class name
         Returns:
-            number of objects in class, if no class name given
-            return total number of objects in database
+            Number of objects in class, if no class name given,
+            returns total number of objects in the database.
         """
         obj_dict = self.all(cls)
         return len(obj_dict)
