@@ -60,7 +60,7 @@ def update_user(user_id):
         abort(404)
     data = request.get_json()
     if data is None:
-        abort(404, 'Not a JSON')
+        abort(400, 'Not a JSON')
     for key, value in data.items():
         special_keys = ['id', 'created_at', 'updated_at']
         if key not in special_keys:
