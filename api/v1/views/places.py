@@ -7,7 +7,8 @@ from models import storage
 from models.city import City
 from models.place import Place
 from models.user import User
-
+from models.amenity import Amenity
+from models.state import State
 
 @app_views.route('/cities/<string:city_id>/places', methods=['GET'],
                  strict_slashes=False)
@@ -89,8 +90,8 @@ def post_places_search():
     """searches for a place"""
     if request.get_json() is not None:
         params = request.get_json()
-        states = params.get('states', [])
-        cities = params.get('cities', [])
+        states = params.get(states, [])
+        cities = params.get(cities, [])
         amenities = params.get(amenities, [])
         amenity_objects = []
         for amenity_id in amenities:
