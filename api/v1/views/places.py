@@ -12,7 +12,7 @@ from models.user import User
 
 
 @app_views.route("/cities/<string:city_id>/places", strict_slashes=False)
-def get_cities(city_id):
+def get_places(city_id):
     """
     Retrieves the list of all Place objects of a City
     """
@@ -55,21 +55,21 @@ def create_place(city_id):
     Creates a Place instance
     """
     city = storage.get(City, city_id)
-    if city is None:
+    if not city:
         abort(404)
 
     valid_json = request.get_json()
 
     if valid_json is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if 'user_id' not in request.get_json():
+    if 'user_id' not in valid_json:
         return make_response(jsonify({"error": "Missing user_id"}), 400)
     if 'name' not in valid_json:
         return make_response(jsonify({"error": "Missing name"}), 400)
 
     valid_json['city_id'] = city_id
     user = storage.get(User, valid_json['user_id'])
-    if user is None:
+    if not user:
         abort(404)
     obj = Place(**valid_json)
     obj.save()
