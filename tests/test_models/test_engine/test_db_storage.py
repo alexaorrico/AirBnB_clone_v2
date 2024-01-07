@@ -130,6 +130,7 @@ class TestDbStorage(unittest.TestCase):
         obj = State()
         obj.name = "Ogun"
         obj.save()
+        models.storage.reload()
         all_count = models.storage.count()
         expected_count = 1
         self.assertEqual(all_count, expected_count)
@@ -141,6 +142,7 @@ class TestDbStorage(unittest.TestCase):
         obj = State()
         obj.name = "Ogun"
         obj.save()
+        models.storage.reload()
         cls_count = models.storage.count(State)
         expected_count = 2
         self.assertEqual(cls_count, expected_count)
