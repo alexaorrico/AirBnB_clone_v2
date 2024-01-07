@@ -20,7 +20,7 @@ def get_reviews(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    reviews = [obj.to_dict() for obj in places.reviews]
+    reviews = [obj.to_dict() for obj in place.reviews]
     return jsonify(reviews)
 
 
@@ -95,6 +95,6 @@ def update_review(review_id):
     for key, value in valid_json.items():
         if key not in ['id', 'user_id', 'place_id', 'created_at',
                        'updated_at']:
-            setattr(place, key, value)
+            setattr(review, key, value)
     storage.save()
     return make_response(jsonify(review.to_dict()), 200)
