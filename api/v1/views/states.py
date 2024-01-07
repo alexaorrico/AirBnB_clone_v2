@@ -5,7 +5,7 @@ actions
 """
 from models import storage
 from models.state import State
-from flask import Flask, abort, jsonify, request, make_response
+from flask import abort, jsonify, request, make_response
 from api.v1.views import app_views
 
 
@@ -25,7 +25,8 @@ def get_state_objects(state_id):
     return jsonify(obj.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state_objects(state_id):
     """ """
     obj = storage.get(State, state_id)
