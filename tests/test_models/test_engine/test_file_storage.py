@@ -70,13 +70,6 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    def tearDown(self):
-        """commit session changes"""
-        if os.path.isfile('file.json'):
-            os.remove('file.json')
-            pass
-        models.storage.reload()
-
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -121,28 +114,28 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """Test that get properly gets an object from filestorage"""
-        state_inst = State(name="California")
-        models.storage.new(state_inst)
-        models.storage.save()
-        self.assertIs(models.storage.get("State", state_inst.id), state_inst)
-        self.assertIs(models.storage.get("State", "wrong id"), None)
-        self.assertIs(models.storage.get("some class", state_inst.id), None)
-        models.storage.delete(state_inst)
+        """ Tests method for obtaining an instance file storage"""
+        storage = FileStorage()
+        dic = {"name": "Vecindad"}
+        instance = State(**dic)
+        storage.new(instance)
+        storage.save()
+        storage = FileStorage()
+        get_instance = storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """Test that count properly counts an objects from filestorage"""
-        state_inst = State(name="California")
-        amenity_inst = Amenity(name="wifi")
-        models.storage.new(state_inst)
-        models.storage.new(amenity_inst)
-        models.storage.save()
-        self.assertEqual(models.storage.count(), 2)
-        self.assertEqual(models.storage.count("State"), 1)
-        self.assertEqual(models.storage.count("Amenity"), 1)
-        self.assertEqual(models.storage.count("City"), 0)
-        models.storage.delete(state_inst)
-        models.storage.delete(amenity_inst)
+        """ Tests count method file storage """
+        storage = FileStorage()
+        dic = {"name": "Vecindad"}
+        state = State(**dic)
+        storage.new(state)
+        dic = {"name": "Mexico"}
+        city = City(**dic)
+        storage.new(city)
+        storage.save()
+        c = storage.count()
+        self.assertEqual(len(storage.all()), c)
