@@ -5,6 +5,7 @@ Starts the flask app.py
 from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
+from flask import make_response
 from os import getenv
 
 
@@ -23,8 +24,9 @@ def close_con(error):
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    """creates a 'Not found'"""
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host=host_env, port=port_env, threaded=True)
+    app.run(host=host_env, port=port_env, threaded=True)
