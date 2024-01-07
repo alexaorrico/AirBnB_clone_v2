@@ -56,7 +56,8 @@ def post_state():
         new_state = State(**body)
         storage.new(new_state)
         storage.save()
-        return make_response(jsonify(new_state.to_dict()), 201)
+        all_states = [x.to_dict() for x in storage.all(State).values()]
+        return make_response(jsonify(all_states), 201)
     except Exception as e:
         return make_response(jsonify("Not a JSON"), 400)
 
@@ -75,6 +76,7 @@ def put_state(state_id):
         for key in body:
             res.__dict__[key] = body[key]
         storage.save()
-        return make_response(jsonify(res.to_dict()), 200)
+        all_states = [x.to_dict() for x in storage.all(State).values()]
+        return make_response(jsonify(all_states), 200)
     except Exception as e:
         return make_response(jsonify("Not a JSON"), 400)
