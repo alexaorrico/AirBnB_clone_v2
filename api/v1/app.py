@@ -11,7 +11,7 @@ from api.v1.views import app_views
 from flask import jsonify
 
 app = Flask(__name__)
-# Enable CORS
+# Enable CORS code for task 12
 CORS(app, resources={r'/api/v1/*': {'origins': '0.0.0.0'}})
 app.register_blueprint(app_views)
 app.url_map.strict_slashes=False
