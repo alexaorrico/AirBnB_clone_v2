@@ -51,7 +51,7 @@ class DBStorage:
                     new_dict[key] = obj
         return (new_dict)
 
-     def get(self, cls, id):
+    def get(self, cls, id):
         """a method to retrieve one object"""
         for value in classes.values():
             if value == cls:
