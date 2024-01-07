@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Creates a view for Amenity objects - handles all default RESTful API actions.
-"""
+"""Creates a view for Amenity objects - handles all default RESTful API actions."""
 from flask import abort, jsonify, request
 from models.amenity import Amenity
 from api.v1.views import app_views
