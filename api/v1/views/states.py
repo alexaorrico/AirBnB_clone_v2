@@ -8,7 +8,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states", strict_slashes=False, methods=['GET'])
+@app_views.route("/states", strict_slashes=False)
 def get_states():
     """
     Retrieves the list of all State objects:
@@ -17,8 +17,7 @@ def get_states():
     return jsonify(objs)
 
 
-@app_views.route("/states/<string:state_id>", strict_slashes=False,
-                 methods=['GET'])
+@app_views.route("/states/<string:state_id>", strict_slashes=False)
 def get_state(state_id):
     """
     Retrieves a State object
@@ -48,14 +47,14 @@ def create_state():
     """
     Creates a State
     """
-    valid_json = request.get_json()
-    obj = State(**valid_json)
 
+    valid_json = request.get_json()
     if valid_json is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in valid_json:
         return make_response(jsonify({"error": "Missing name"}), 400)
 
+    obj = State(**valid_json)
     obj.save()
     return make_response(jsonify(obj.to_dict()), 201)
 
