@@ -2,6 +2,7 @@
 """
 Creates a view for Amenity objects - handles all default RESTful API actions.
 """
+from datetime import datetime
 from flask import abort, jsonify, request
 from models.amenity import Amenity
 from api.v1.views import app_views
@@ -10,82 +11,73 @@ from models import storage
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def all_amenities():
-    amenities = storage.all(Amenity).values()"""convert object ot dictionary"""
-    return jsonify([amenity.to_dict() for amenity in amenities])
+    """convert object ot dictionary"""
+    amenities = storage.all(Amenity)
+    amenity_dict = [amenity.to_dict() for amenity in amenities.values()]
+    return jsonify(amenity_dict), 200
 
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['GET'], strict_slashes=False)
-"""Retrieves an Amenity object"""
-
-
 def get_amenity(amenity_id):
+    """Retrieves an Amenity object"""
     amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        return jsonify(amenity.to_dict())
+    if amenity is None:
+        abort(404)
     else:
-        abort(404)"""Return 404 error if the Amenity object is not found"""
+        return jsonify(amenity.to_dict()), 200
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
-"""
-Deletes an Amenity object'''
-Get the Amenity object with the given ID from the storage
-"""
-
-
 def delete_amenity(amenity_id):
+    """
+    Deletes an Amenity object'''
+    Get the Amenity object with the given ID from the storage
+    """
     amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        storage.delete(amenity)
-        storage.save()"""returns 200 code"""
+    if amenity is None:
         abort(404)
+    storage.delete(amenity)
+    storage.save()
+    return jsonify({})
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
-"""
-Creates an Amenity object
-Return 400 error if the request data is not in JSON format
-"""
-
-
 def create_amenity():
-    if not request.get_json():
+    """
+    Creates an Amenity object
+    Return 400 error if the request data is not in JSON format
+    """
+    data = request.get_json()
+    if not data:
         abort(400, 'Not a JSON')
-        data = request.get_json()
-        if 'name' not in data:
-            abort(400, 'Missing name')
-            """ Create a new Amenity object with the JSON data"""
-            amenity = Amenity(**data)
-            amenity.save()
-            """
-            Return the newly created Amenity
-            object in JSON format with 201 status code
-            """
-            return jsonify(amenity.to_dict()), 201
+    if 'name' not in data:
+        abort(400, 'Missing name')
+    amenity = Amenity(**data)
+    amenity.save()
+    return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-"""
-Updates an Amenity object
-Get the Amenity object with the given ID from the storage
-"""
-
-
 def update_amenity(amenity_id):
+    """
+    Updates an Amenity object
+    Get the Amenity object with the given ID from the storage
+    """
     amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        if not request.get_json():
-            abort(400, 'Not a JSON')
-            """Get the JSON data from the request"""
-            data = request.get_json()
-            ignore_keys = ['id', 'created_at', 'updated_at']
-            """update amenity attributes"""
-            for key, value in data.items():
-                if key not in ignore_keys:
-                    setattr(amenity, key, value)
-                    amenity.save()
-                    return jsonify(amenity.to_dict()), 200
-                else:
-                    abort(404)
+    if not amenity:
+        abort(404)
+
+    data = request.get_json()
+    if not data:
+        abort(400, 'Not a JSON')
+
+    for key, value in data.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(amenity, key, value)
+
+    amenity.updated_at = datetime.utcnow()
+    amenity.save()
+
+    return jsonify(amenity.to_dict()), 200
