@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """starts a flask application"""
 
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -14,6 +14,12 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 def teardown_db(exception):
     """calls storage.close"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """custom 404 response"""
+    return make_response(jsonify({'error': 'Not Found'}), 404)
 
 
 if __name__ == '__main__':

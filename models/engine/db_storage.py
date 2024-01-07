@@ -77,8 +77,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """ Retrieve object """
-        if (cls and id is not(None) and type(cls) and type(id) is str and
-           cls in classes):
+        # if (cls and id is not(None) and type(cls) and type(id) is str and
+        # cls in classes):
+        if cls is not None and type(cls) is str and id is not None and\
+           type(id) is str and cls in classes:
             cls = classes[cls]
             Object = self.__session.query(cls).filter(cls.id == id).first()
             return Object
