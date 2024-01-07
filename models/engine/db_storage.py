@@ -58,8 +58,9 @@ class DBStorage:
         """
         if cls is not None and id is not None:
             key_id = cls.__name__ + '.' + id
-            if key_id in self.__objects:
-                return self.__objects[key_id]
+            new_dict = self.all(cls)
+            if key_id in new_dict:
+                return new_dict[key_id]
         return None
 
     def count(self, cls=None):
