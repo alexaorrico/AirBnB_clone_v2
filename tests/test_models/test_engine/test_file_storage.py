@@ -117,37 +117,35 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test that get properly retrieves objects"""
-        self.instance = User()
-        id = self.instance.id
 
-        valid_id = self.instance.get("User", id)
-        self.assertIsNotNone(valid_id)
-
-        invalid_id = self.instance.get("User", "12345")
-        self.assertIsNone(invalid_id)
-
-        empty_id = self.instance.get("User", "")
-        self.assertIsNone(empty_id)
-
-        invalid_cls = self.instance.get("Use", id)
-        self.assertIsNone(invalid_cls)
-
-        none_cls = self.instance.get(None, id)
-        self.assertIsNone(none_cls)
+        state = State(name="Some state")
+        state.save()
+        return_state = models.storage.get('State', 'not_valid_id')
+        self.assertEqual(return_state, None)
+        return_state = models.storage.get('Not_valid_class', state.id)
+        self.assertEqual(return_state, None)
+        return_state = models.storage.get('State', 33333)
+        self.assertEqual(return_state, None)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """Test that count properly works"""
-        self.instance = User()
 
-        count = self.instance.count()
-        self.assertIsInstance(count, int)
+        count = models.storage.count()
+        obj = State(name="Some state")
+        obj.save()
+        new_count = models.storage.count()
+        self.assertEqual(count + 1, new_count)
 
-        count_valid_cls = self.instance.count("User")
-        self.assertIsInstance(count_valid_cls, int)
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_fstorage_cls(self):
+        """Test that count properly works  with class name"""
 
-        count_invalid_cls = self.instance.count("InvalidClass")
-        self.assertEqual(count_invalid_cls, 0)
-
-        count_none = self.instance.count(None)
-        self.assertIsInstance(count_none, int)
+        count = models.storage.count()
+        count_cls = models.storage.count('State')
+        obj = State(name="New York")
+        obj.save()
+        new_count = models.storage.count()
+        new_count_cls = models.storage.count('State')
+        self.assertEqual(count + 1, new_count)
+        self.assertEqual(count_cls + 1, new_count_cls)
