@@ -9,14 +9,14 @@ from flask import Flask, abort, jsonify, request, make_response
 from api.v1.views import app_views
 
 
-@app_views.route('/api/v1/states', method=['GET'])
+@app_views.route('/api/v1/states', methods=['GET'])
 def list_state_objects():
     """ """
     all_objs = storage.all(State)
     return [obj.to_dict() for obj in all_objs.values()]
 
 
-@app_views.route('/api/v1/states/<state_id>', method=['GET'])
+@app_views.route('/api/v1/states/<state_id>', methods=['GET'])
 def get_state_objects(state_id):
     """ """
     obj = storage.get(State, state_id)
@@ -25,7 +25,7 @@ def get_state_objects(state_id):
     return jsonify(obj.to_dict())
 
 
-@app_views.route('/api/v1/states/<state_id>', method=['DELETE'])
+@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_state_objects(state_id):
     """ """
     obj = storage.get(State, state_id)
@@ -38,7 +38,7 @@ def delete_state_objects(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/api/v1/states', method=['POST'])
+@app_views.route('/api/v1/states', methods=['POST'])
 def create_state():
     """ """
     data = request.get_json()
@@ -55,7 +55,7 @@ def create_state():
     return make_response(jsonify(obj), 201)
 
 
-@app_views.route('/api/v1/states/<state_id>', method=['PUT'])
+@app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
 def update_state_objects(state_id):
     """ """
     obj = storage.get(State, state_id)
