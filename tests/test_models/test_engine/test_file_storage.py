@@ -113,3 +113,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get properly retrieves objects"""
+        self.instance = User()
+        id = self.instance.id
+
+        valid_id = self.instance.get("User", id)
+        self.assertIsNotNone(valid_id)
+
+        invalid_id = self.instance.get("User", "12345")
+        self.assertIsNone(invalid_id)
+
+        empty_id = self.instance.get("User", "")
+        self.assertIsNone(empty_id)
+
+        invalid_cls = self.instance.get("Use", id)
+        self.assertIsNone(invalid_cls)
+
+        none_cls = self.instance.get(None, id)
+        self.assertIsNone(none_cls)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count properly works"""
+        self.instance = User()
+
+        count = self.instance.count()
+        self.assertIsInstance(count, int)
+
+        count_valid_cls = self.instance.count("User")
+        self.assertIsInstance(count_valid_cls, int)
+
+        count_invalid_cls = self.instance.count("InvalidClass")
+        self.assertEqual(count_invalid_cls, 0)
+
+        count_none = self.instance.count(None)
+        self.assertIsInstance(count_none, int)
