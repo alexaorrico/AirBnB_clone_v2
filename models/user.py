@@ -21,12 +21,12 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
-@property
-def password(self):
+    @property
+    def password(self):
     """Getter for the password attribute """
     return self.__password
 
-@password.setter
-def password(self, value):
+    @password.setter
+    def password(self, value):
     """Setter for the password attribute """
     self.__password = hashlib.md5(value.encode()).hexdigest()
