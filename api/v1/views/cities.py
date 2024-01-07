@@ -50,12 +50,12 @@ def post_city(state_id):
         abort(400, "Not a JSON")
     if "name" not in new_city:
         abort(400, " Missing name")
-    city = City(**new_city)
-    setattr(city, 'state_id', state_id)
-    storage.new(city)
-    storage.save()
-    return jsonify(city.to_dict()), 200
+   #  city = City(**new_city)
+   #  setattr(city, 'state_id', state_id)
+    new_city = City(state_id=state_id, name=name)
+    new_city.save()
 
+    return jsonify(new_city.to_dict()), 201
 
 @city_view.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
