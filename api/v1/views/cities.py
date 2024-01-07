@@ -8,10 +8,11 @@ from flask import abort, jsonify, request
 app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def get_cities(state_id):
     """Gets all the cities for a given state"""
+    state = storage.get("State", state_id)
+    if state is None:
+        abort(404)
+
     if request.method == 'GET':
-        state =  storage.get("State", state_id)
-        if state is None:
-            abort(404)
         cities = [city.to_dict() for city in state.cities]
         return jsonify(cities)
 
@@ -21,9 +22,6 @@ def get_cities(state_id):
             abort(400, 'Not a JSON')
         if 'name' not in data:
             abort(400, 'Missing name')
-        state = storage.get("State", state_id)
-        if state is None:
-            abort(404)
         city = City(**data)
         city.state_id = state_id
         city.save()
@@ -36,6 +34,7 @@ def method_city(city_id):
     city = storage.get('City', city_id)
     if city is None:
         abort(404)
+
     if request.method == 'GET':
         return jsonify(city.to_dict())
     if request.method == 'DELETE':
