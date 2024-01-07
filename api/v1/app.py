@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-
-""" Flask application for aibrnb clone"""
-
-from api.v1.views import app_views
+""" Flask application  initialization for aibrnb clone"""
 from flask import Flask, jsonify, make_response, render_template, url_for
 from models import storage
+from api.v1.views import app_views
 import os
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
@@ -26,4 +25,4 @@ if __name__ == "__main__":
     """Main function for flask app"""
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
     port = int(os.getenv('HBNB_API_PORT', '5000'))
-    app.run(host=host, port=port, threaded=True, debug=True)
+    app.run(host=host, port=port, threaded=True)
