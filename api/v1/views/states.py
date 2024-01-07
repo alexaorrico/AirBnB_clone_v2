@@ -13,24 +13,25 @@ def get_all_states():
     """
     GETs all state objects
     """
-    states = storage.all(State).values()
-    state_list = [state.to_dict() for state in states]
-    return jsonify(state_list)
+    states = []
+    for state in storage.all("State").values():
+        states.append(state.to_dict())
+    return jsonify(states)
 
 # Route for retrieving specific stated by their id
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """
     GETs a specified state
     """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if state:
         return jsonify(state.to_dict())
     else:
         abort(404)
 
 # Route for deleting a specific State by id
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """
     DELETEs a state by their id
@@ -38,7 +39,7 @@ def delete_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    storage.delete(state)
+    state.delete()
     storage.save()
     return (jsonify({}), 200)
 

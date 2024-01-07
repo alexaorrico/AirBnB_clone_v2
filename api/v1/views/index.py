@@ -4,30 +4,36 @@ Create a route `/status` on the object app_views.
 """
 # Import the required modules
 from api.v1.views import app_views
-from flask import jsonify
+from flask import Flask, Blueprint, jsonify
 from models import storage
 
+hbnbStats = {
+     "amenities": "Amenity",
+    "cities": "City",
+    "places": "Place",
+    "reviews": "Review",
+    "states": "State",
+    "users": "User"
+}
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', strict_slashes=False)
 def api_status():
     """
-    Returns a JSON response for RESTful API health.
+    Returns a JSON response for RESTful API status.
     """
-    response = {'status': 'OK'}
+    response = {"status": "OK"}
     return jsonify(response)
 
 
-@app_views.route('/stats', methods=['GET'])
-def get_stats():
+@app_views.route('/stats', strict_slashes=False)
+def hbnb_stats():
     """
     Retrieves the number of each objects by type.
     """
-    stats = {
-        'amenities': storage.count('Amenity'),
-        'cities': storage.count('City'),
-        'places': storage.count('Place'),
-        'reviews': storage.count('Review'),
-        'states': storage.count('State'),
-        'users': storage.count('User')
-    }
-    return jsonify(stats)
+    return_dict = {}
+    for key, value in hbnbStats.items():
+        return_dict[key] = storage.count(value)
+    return jsonify(return_dict)
+
+if __name__ == "__main__":
+    pass
