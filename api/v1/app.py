@@ -11,6 +11,7 @@ The application is configured to handle the endpoint '/status'
 from api.v1.views import app_views
 from flask import Flask
 from models import storage
+from flask import jsonify
 import os
 
 app = Flask(__name__)
@@ -29,9 +30,18 @@ def close_flask(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    """
+    Handles 404 errors
+    """
+    return jsonify({"error": "Not found"})
+
+
 if __name__ == "__main__":
     app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
     app_port = int(os.getenv('HBNB_API_PORT', '5000'))
+    app.debug = True
     app.run(
         host=app_host,
         port=app_port,
