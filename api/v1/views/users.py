@@ -19,7 +19,7 @@ def users():
                  strict_slashes=False)
 def get_user(user_id):
     """method to get user id"""
-    user = get(User, user_id)
+    user = storage.get(User, user_id)
 
     if user is None:
         abort(404)
