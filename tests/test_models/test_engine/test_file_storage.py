@@ -147,4 +147,5 @@ class TestFileStorage(unittest.TestCase):
                 instance_key = instance.__class__.__name__ + "." + instance.id
                 search[instance_key] = instance
         self.assertEqual(storage.count(User), len(search))
+        print(storage.count(User))
         FileStorage._FileStorage__objects = save
