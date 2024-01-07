@@ -1,32 +1,46 @@
 #!/usr/bin/python3
 """
-This module defines routes for the API status and object counts.
+Flask route that returns json status response
 """
-
-from flask import jsonify
 from api.v1.views import app_views
+from flask import jsonify, request
 from models import storage
 
-# Create a route for /status on the app_views blueprint
+
 @app_views.route('/status', methods=['GET'])
+<<<<<<< HEAD
 def get_status():
     status = 
 {
 "status": "OK"
 }
     return jsonify(status)
+=======
+def status():
+    """
+    function for status route that returns the status
+    """
+    if request.method == 'GET':
+        resp = {"status": "OK"}
+        return jsonify(resp)
+>>>>>>> 091a2d41393fcc22cb4b7f73b2c0cd7d8d39b641
 
-# Create a route for /stats on the app_views blueprint
+
 @app_views.route('/stats', methods=['GET'])
-def get_stats():
-    classes = {
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-        "User": "users"
-    }
-
-    stats = {class_name: storage.count(class_name) for class_name in classes}
-    return jsonify(stats)
+def stats():
+    """
+    function to return the count of all class objects
+    """
+    if request.method == 'GET':
+        response = {}
+        PLURALS = {
+            "Amenity": "amenities",
+            "City": "cities",
+            "Place": "places",
+            "Review": "reviews",
+            "State": "states",
+            "User": "users"
+        }
+        for key, value in PLURALS.items():
+            response[value] = storage.count(key)
+        return jsonify(response)
