@@ -72,7 +72,7 @@ class FileStorage:
 
     def count(self, cls=None):
         """
-            to retrieve one object
+            A method to count the number of objects in storage:
         """
         dic = classes.values()
 
@@ -83,3 +83,16 @@ class FileStorage:
         else:
             cnt = len(models.storage.all(cls).values())
         return cnt
+
+    def get(self, cls, id):
+        """
+            Gets the number of object
+        """
+
+        if cls is not None and type(cls) is str and id is not \
+            None and type(id) is str and cls in classes:
+            key = cls + '.' + id
+            obj = self.__objects.get(key, None)
+            return obj
+        else:
+            return None
