@@ -7,7 +7,7 @@ from flask import make_response, jsonify, abort, request
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-def get_state():
+def get_states():
     """ get list of states """
     states = storage.all(State).values()
     states_all = []
@@ -17,9 +17,9 @@ def get_state():
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state_by_id(state_id):
+def get_state(state_id):
     """ get list by id """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if not state:
         abort(404)
     return jsonify(state.to_dict())
@@ -29,10 +29,10 @@ def get_state_by_id(state_id):
                  methods=['DELETE'], strict_slashes=False)
 def delete_state(state_id):
     """ deletes a state """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if not state:
         abort(404)
-    storage.delete(state)
+    state.delete()
     storage.save()
     return make_response(jsonify({}), 200)
 
@@ -47,23 +47,25 @@ def post_state():
 
     res = request.get_json()
     state = State(**res)
-    state.save()
+    storage.new(state)
+    storage.save()
     return make_response(jsonify(state.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
     """ updates state based on id """
-    state = storage.get(State, state_id)
+    state = storage.get("State", state_id)
     if not state:
         abort(404)
 
     if not request.get_json():
         abort(400, description="Not a JSON")
-    fields = ['id', 'created_at', 'updated_at']
+
     data = request.get_json()
+
     for key, value in data.items():
-        if key not in fields:
+        if k != 'id' and k != 'created_at' and k != 'updated_at':
             setattr(state, key, value)
     storage.save()
     return make_response(jsonify(state.to_dict()), 200)
