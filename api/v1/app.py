@@ -2,18 +2,26 @@
 """module app.py"""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 
 app = Flask(__name__)
-
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
 def teardown_appcontext(exception):
     storage.close()
+
+@app.errorhandler(404)
+def not_found_error(error):
+    """handles 404 errors"""
+    response = jsonify({'error': 'Not found'})
+    response.status_code = 404
+    # response.headers['Connection'] = 'close'
+    return response
 
 
 if __name__ == "__main__":
