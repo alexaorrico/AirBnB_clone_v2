@@ -9,26 +9,17 @@ from models import storage
 from flask import jsonify, abort, request
 
 
-@app_views.route("/places", methods=["GET"],
-                 strict_slashes=False)
-def places():
-    """get all places objects"""
-    places = storage.all(Place).values()
-    return jsonify([place.to_dict() for place in places]), 200
-
-
 @app_views.route("/cities/<city_id>/places", methods=["GET"],
                  strict_slashes=False)
 def getPlaceCity(city_id):
     """method to get places of a city"""
     city = storage.get(City, city_id)
-    places = storage.all(Place).values()
-    city.places = [place for place in places if place.city_id == city_id]
+    places_list = [place.to_dict() for place in city.places]
 
     if city is None:
         abort(404)
 
-    return jsonify(city.places.to_dict()), 200
+    return jsonify(places_list), 200
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
@@ -70,7 +61,8 @@ def create_place():
         abort(400, "Not a JSON")
     if "user_id" not in data:
         abort(400, "Missing user_id")
-    if "user_id" is None:
+    user = storage.get(User, data["user_id"])
+    if user is None:
         abort(404)
     if "name" not in data:
         abort(400, "Missing name")
