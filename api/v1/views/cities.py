@@ -27,7 +27,7 @@ def cities_by_state(state_id):
     state = storage.get(State, state_id)
 
     if state is None:
-           abort(404)
+        abort(404)
 
     if request.method == 'GET':
         cities = [city.to_dict() for city in state.cities]
@@ -49,6 +49,7 @@ def cities_by_state(state_id):
         city.state_id = state_id
         city.save()
         return jsonify(city.to_dict()), 201
+
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'PUT', 'DELETE'])
 def city_by_id(city_id):
