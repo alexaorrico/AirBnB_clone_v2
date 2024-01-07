@@ -72,7 +72,7 @@ def put_city(city_id):
 @app_views.errorhandler(400)
 def bad_request(error):
     """Returns a JSON string"""
-    return jsonify({"error": 'Bad Request'}), 400
+    return jsonify({"error": error}), 400
 
 
 @app_views.errorhandler(404)
