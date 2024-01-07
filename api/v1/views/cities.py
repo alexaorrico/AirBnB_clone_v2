@@ -15,7 +15,8 @@ def get_create_city(state_id):
         abort(404)
 
     if request.method == "GET":
-        return jsonify([city.to_dict() for city in state.cities])
+        return make_response(jsonify([city.to_dict()
+                                      for city in state.cities]), 200)
     return create_city(state_id)
 
 
@@ -27,12 +28,12 @@ def get_delete_update_city(city_id):
         abort(404)
 
     if request.method == "GET":
-        return jsonify(city.to_dict())
+        return make_response(jsonify(city.to_dict()), 200)
 
     if request.method == "DELETE":
         storage.delete(city)
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
 
     city_data = request.get_json(silent=True)
     if city_data is None:
@@ -42,6 +43,7 @@ def get_delete_update_city(city_id):
     [setattr(city, attr, city_data[attr])
      for attr in city_data if attr not in ignore_attr]
 
+    storage.save()
     return jsonify(city.to_dict())
 
 
