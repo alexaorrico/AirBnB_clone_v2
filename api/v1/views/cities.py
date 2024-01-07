@@ -61,7 +61,7 @@ def put_city(city_id):
     if city is None:
         abort(404)
     if not request.get_json():
-        abort(400, "Not a JSON")
+        abort(404)
     for key, value in request.get_json().items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(city, key, value)
