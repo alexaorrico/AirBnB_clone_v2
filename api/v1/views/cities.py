@@ -40,7 +40,7 @@ def del_city(city_id):
     """
     city = storage.get(City, city_id)
     if city:
-        state.delete()
+        city.delete()
         storage.save()
         return make_response(jsonify({}), 200)
     abort(404)
@@ -52,15 +52,19 @@ def create_city(state_id):
     """
     Creates a City instance
     """
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+
     valid_json = request.get_json()
-    obj = City(**valid_json)
-    obj.state_id = state.id
 
     if valid_json is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in valid_json:
         return make_response(jsonify({"error": "Missing name"}), 400)
 
+    obj = City(**valid_json)
+    obj.state_id = state.id
     obj.save()
     return make_response(jsonify(obj.to_dict()), 201)
 
@@ -84,4 +88,4 @@ def update_city(city_id):
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(city, key, value)
     storage.save()
-    return make_response(jsonify(state.to_dict()), 200)
+    return make_response(jsonify(city.to_dict()), 200)
