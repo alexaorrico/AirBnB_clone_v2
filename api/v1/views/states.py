@@ -20,7 +20,7 @@ def get_states():
                  strict_slashes=False)
 def get_state(state_id):
     """get state information for specified state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
