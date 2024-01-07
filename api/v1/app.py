@@ -20,6 +20,7 @@ app.register_blueprint(reviews_view)
 # app.register_blueprint(amenities_view)
 # app.register_blueprint(user_view)
 
+
 @app.errorhandler(404)
 def not_found_error(error):
     response = {
@@ -33,7 +34,9 @@ def teardown_flask(exception):
     """ Flask request context listener """
     storage.close()
 
+
 CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
+
 
 if __name__ == '__main__':
     app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
