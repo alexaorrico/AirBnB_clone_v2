@@ -59,7 +59,7 @@ def put_amenity(amenity_id):
         abort(404)
 
     data_request = request.get_json()
-    if not body_data:
+    if not data_request:
         abort(400, "Not a JSON")
 
     for key, value in data_request.items():
