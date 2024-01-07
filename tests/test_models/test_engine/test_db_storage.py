@@ -66,6 +66,25 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+    def test_get_id(self):
+	""""test valid id"""
+	result = storage.get(User, "invalid_id")
+	self.asserIsNone(result)
+    
+    def test_get_class(self):
+	"""test valid class"""
+	result = storage.get("InvalidClass", "random_id")
+	self.asserIsNone(result)
+
+    def test_count(self):
+	"""test number of objects"""
+	result = storage.count(User)
+	self.asserEqual(result, 0)
+
+    def test_count_all(self):
+	"""return total count"""
+	result = storage.count()
+	self.assertGreater(result, 0)
 
 
 class TestFileStorage(unittest.TestCase):
@@ -86,3 +105,23 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get_id_file(self):
+	"""check if class is unsuported"""
+	result = storage.get(User, "invalid_id")
+	self.assertIsNone(result)
+
+    def test_get_invalid_class(self):
+	"""test for valid class"""
+	result = storage.get("InvalidClass", "random_id")
+	self.assertIsNone(result)
+
+    def test_count_objects(self):
+	"""count number of objects"""
+	result = storage.count(User)
+	self.assertEqual(result, 0)
+
+    def test_count_all(self):
+	"""test all files count"""
+	result = storage.count()
+	self.assertGreater(result, 0)
