@@ -61,11 +61,47 @@ test_db_storage.py'])
 
     def test_dbs_func_docstrings(self):
         """Test for the presence of docstrings in DBStorage methods"""
+
         for func in self.dbs_f:
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+class TestDBStorage(unittest.TestCase):
+    """ Tests DB storage class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """class initialization"""
+        cls.dbstorage = DBStorage()
+        cls.output = StringIO()
+        sys.stdout = cls.output
+
+    @classmethod
+    def tearDownClass(cls):
+        """variable deletion"""
+        del cls.dbstorage
+        del cls.output
+
+    def test_storage_get(self):
+        """tests instance in storage"""
+
+        new_object = State(name="Texas")
+        _object = self.dbstorage.get("State", "id")
+        self.assertIsNone(_object)
+
+    def test_storage_count(self):
+        """checks counting of objects in storage"""
+        self.dbstorage.reload()
+        all_items = self.dbstorage.count()
+        self.assertIsInstance(all_items, int)
+
+        state_count = self.dbstorage.count("State")
+        self.assertIsinstance(state_count, int)
+        # ensure all count is more than object count
+        self.assertGreaterEqual(all_items, state_count)
 
 
 class TestFileStorage(unittest.TestCase):
