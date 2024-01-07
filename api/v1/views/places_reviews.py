@@ -51,7 +51,7 @@ def del_review(review_id):
 
 @app_views.route("/places/<string:place_id>/reviews", strict_slashes=False,
                  methods=['POST'])
-def create_review(review_id):
+def create_review(place_id):
     """
     Creates a review instance
     """
