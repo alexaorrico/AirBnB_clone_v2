@@ -86,7 +86,7 @@ class FileStorage:
         Or None if not found
         cls: class
         id: string representation of object ID"""
-        
+        dct = {}
         # Checks if id has been provided
         if not id:
             return None
@@ -97,12 +97,16 @@ class FileStorage:
 
         try:
             for key, value in self.__objects.items():
-                print("Now here")
-                print(self.__objects)
+                print(key.split("."))
                 objs_id = key.split(".")[-1]
-                if obj_id == id:
-                    return objs
-            return None
+                print(objs_id)
+                if objs_id == id:
+                    print("id is true")
+                    break
+                print(objs_id)
+                #dct[key] = self.__objects[key]
+                #return dct
+
         except Exception as e:
             pass
 
