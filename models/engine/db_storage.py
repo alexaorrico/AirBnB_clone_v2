@@ -70,7 +70,6 @@ class DBStorage:
                 count += self.__session.query(clss).count()
         return count
 
-
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
