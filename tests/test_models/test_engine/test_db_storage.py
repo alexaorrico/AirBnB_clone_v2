@@ -73,16 +73,36 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+        result = storage.all()
+        self.assertIs(type(result), dict)
+        #self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        storage.new(User())
+        storage.save()
+        result = storage.all()
+        self.assertEqual(len(result), 1)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        obj = User()
+        storage.new(obj)
+        storage.save()
+        result = storage.all(User)
+        self.assertIn(obj, reult.values())
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        obj = User()
+        storage.new(obj)
+        storage.save()
+        result = storage.all(User)
+        self.assertIn(obj, reult.values())
+
+
+if __name__ == "__main__":
+    unittest.main()
