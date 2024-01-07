@@ -120,6 +120,17 @@ class TestFileStorage(unittest.TestCase):
 
         state = State(name="Some state")
         state.save()
+        models.storage.save()
+        return_state = list(models.storage.all(State).values())[0].id
+        data = str(models.storage.all()['State.' + return_state])
+        self.assertNotEqual(data, None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_with_none(self):
+        """Test that get returns None"""
+
+        state = State(name="Some state")
+        state.save()
         return_state = models.storage.get('State', 'not_valid_id')
         self.assertEqual(return_state, None)
         return_state = models.storage.get('Not_valid_class', state.id)
