@@ -19,4 +19,3 @@ from api.v1.views.places_reviews import reviews_view
 from api.v1.views.cities import city_view
 from api.v1.views.amenities import amenities_view
 from api.v1.views.Users import user_view
-*
