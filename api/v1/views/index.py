@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-'''
-contains the following routes:
-/status shows the OK json
-/stats shows the number of each entity as json
-'''
+'''Contains the index view for the API.'''
 from flask import jsonify
 
 from api.v1.views import app_views
