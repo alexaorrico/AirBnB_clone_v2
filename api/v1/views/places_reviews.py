@@ -1,9 +1,10 @@
+#!/usr/bin/python3
 '''Review routes'''
 from flask import make_response, abort, request
 from models import storage
 from models.review import Review
 from models.place import Place
-from . import app_views
+from api.v1.views import app_views
 
 
 @app_views.get('places/<place_id>/reviews')
