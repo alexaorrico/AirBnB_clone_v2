@@ -11,7 +11,7 @@ from models.state import State
 def get_states():
     """get state information for all states"""
     states = []
-    for state in storage.all("State").values():
+    for state in storage.all(State).values():
         states.append(state.to_dict())
     return jsonify(states)
 
@@ -30,7 +30,7 @@ def get_state(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """deletes a state based on its state_id"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -54,7 +54,7 @@ def post_state():
                  strict_slashes=False)
 def put_state(state_id):
     """update a state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if not request.get_json():
