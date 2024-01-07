@@ -1,14 +1,19 @@
 #!/usr/bin/python3
 """ creates a new view for State object """
-from models.state import City
-from models import storage
 from api.v1.views import app_views
 from flask import make_response, jsonify, abort, request
+from models import storage
+from models.state import State
+from models.city import City
 
 
-@app_views.route('/cities', methods=['GET'], strict_slashes=False)
-def get_cities():
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
+def get_cities(state_id):
     """ get list of cities """
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404)
     cities = storage.all(City).values()
     cities_all = []
     for city in cities:
