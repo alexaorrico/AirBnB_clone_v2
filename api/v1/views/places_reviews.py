@@ -9,7 +9,7 @@ from models.state import State
 from models.city import City
 from models.place import Place
 from models.user import User
-from models.user import Review
+from models.review import Review
 
 
 @app_views.route("/places/<string:place_id>/reviews", strict_slashes=False)
