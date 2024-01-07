@@ -11,7 +11,8 @@ from flask import jsonify, abort, request
                  strict_slashes=False)
 def get_amenities():
     """Returns a JSON string"""
-    amenities = [amenity.to_dict() for amenity in storage.all("Amenity").values()]
+    amenities_storage = storage.all(Amenity).values()
+    amenities = [amenity.to_dict() for amenity in amenities_storage]
     return jsonify(amenities)
 
 
