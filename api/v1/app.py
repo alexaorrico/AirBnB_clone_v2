@@ -2,7 +2,7 @@
 """app for registering blueprint and starting flask"""
 
 from os import getenv
-from flask import Flask, jsonify
+from flask import Flask, make_response, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -18,6 +18,8 @@ def tearDown(self):
 
 @app.errorhandler(404)
 def not_found_error(error):
+    """Customized error code
+    """
     return jsonify({"error": "Not found"}), 404
 
 
