@@ -57,7 +57,7 @@ class FileStorage:
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
@@ -82,7 +82,7 @@ class FileStorage:
     def delete(self, obj=None):
         """Deletes obj from __objects if it's inside"""
         if obj is not None:
-            del self.__objects[obj.__class__.__name__ + '.' + obj.id]
+            del self.__objects["{}.{}".format(obj.__class__.__name__, obj.id)]
             self.save()
 
     def close(self):
@@ -98,7 +98,7 @@ class FileStorage:
             and isinstance(id, str)
             and cls in classes
         ):
-            key = f"{cls}.{id}"
+            key = "{}.{}".format(cls, id)
             obj = self.__objects.get(key, None)
             return obj
         else:
