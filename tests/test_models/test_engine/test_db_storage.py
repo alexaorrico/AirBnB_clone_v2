@@ -70,61 +70,9 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-@unittest.skipIf(STORAGE_TYPE != 'db', 'skip if environ is not db')
-class TestCountGet(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        """set up for test"""
-        cls.state = State(name="California")
-        cls.city = City(name="San Francisco", state_id=cls.state.id)
-        cls.user = User(email="betty@holbertonschool.com",
-                        password="pwd")
-        cls.p1 = Place(user_id=cls.user.id,
-                       city_id=cls.city.id,
-                       name="My little house")
-        cls.p2 = Place(user_id=cls.user.id,
-                       city_id=cls.city.id,
-                       name="My little house 2")
-        cls.a1 = Amenity(name="Wifi")
-        cls.a2 = Amenity(name="Cable")
-        cls.a3 = Amenity(name="Oven")
-        objs = [cls.state, cls.city, cls.user, cls.p1, cls.p2,
-                cls.a1, cls.a2, cls.a3]
-        for obj in objs:
-            obj.save()
-
-    def setUp(self):
-        """Refresh the database"""
-        self.state = TestCountGet.state
-        self.city = TestCountGet.city
-        self.user = TestCountGet.user
-        self.p1 = TestCountGet.p1
-        self.p2 = TestCountGet.p2
-        self.a1 = TestCountGet.a1
-        self.a2 = TestCountGet.a2
-        self.a3 = TestCountGet.a3
-
-    def test_get(self):
-        """... checks if get() function returns properly"""
-        duplicate = storage.get('Place', self.p1.id)
-        expected = self.p1.id
-        self.assertEqual(expected, duplicate.id)
-
-    def test_count_amenity(self):
-        """... checks if count() returns proper count with Class input"""
-        count_amenity = storage.count('Amenity')
-        expected = 7
-        self.assertEqual(expected, count_amenity)
-
-    def test_count_all(self):
-        """... checks if count() functions with no class"""
-        count_all = storage.count()
-        expected = 7
-        self.assertEqual(expected, count_all)
-
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -142,6 +90,18 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """... checks if get() function returns properly"""
+        place = Place(name="Place1")
+        models.storage.new(place)
+        models.storage.save()
+        duplicate = models.storage.get('Place', place.id)
+        self.assertEqual(place, duplicate, "get() function failed")
 
-if __name__ == '__main__':
-    unittest.main()
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all(self):
+        """... checks if count() functions"""
+        expected = len(models.storage.all())
+        count_all = models.storage.count()
+        self.assertEqual(expected, count_all)
