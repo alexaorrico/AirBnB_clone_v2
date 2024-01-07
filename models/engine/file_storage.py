@@ -88,7 +88,6 @@ class FileStorage:
     def close(self):
         """Deserialize JSON file to objects"""
         self.reload()
-   
     def get(self, cls, id):
     """Retrieves an object."""
         if (
@@ -103,14 +102,15 @@ class FileStorage:
         return obj
         else:
         return None   
-    def count(self, cls=None):
-        '''
+   
+ def count(self, cls=None):
+        """
         counts number of objects in a class (if given)
         Args:
             cls (str): class name
         Returns:
             number of objects in class, if no class name given
             return total number of objects in database
-        '''
+        """
         obj_dict = self.all(cls)
         return len(obj_dict)
