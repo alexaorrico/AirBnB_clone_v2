@@ -61,7 +61,7 @@ def put_city(city_id):
     if city is None:
         abort(404)
     if not request.get_json():
-        abort(404)
+        abort(400, "Not a JSON")
     for key, value in request.get_json().items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(city, key, value)
@@ -72,7 +72,7 @@ def put_city(city_id):
 @app_views.errorhandler(400)
 def bad_request(error):
     """Returns a JSON string"""
-    return jsonify({"error": error.description}), 400
+    return jsonify({"error": "Not a JSON"}), 400
 
 
 @app_views.errorhandler(404)
