@@ -11,7 +11,7 @@ import hashlib
 def users():
     """ Retrieves the list of User objects """
     r_user = storage.all(User)
-    return jsonify([obj.to_dict() for obj in d_users.values()])
+    return jsonify([obj.to_dict() for obj in r_user.values()])
 
 
 @user_view.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
@@ -31,7 +31,7 @@ def delete_user(user_id):
         abort(404)
     user.delete()
     storage.save()
-    return jsonify({}), 201
+    return jsonify({}), 200
 
 
 @user_view.route('/users', methods=['POST'], strict_slashes=False)
