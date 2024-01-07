@@ -17,10 +17,10 @@ def resource_not_found(self):
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
-@app_views.errorhandler(400)
-def handle_invalid_json(error):
-    """handle invalid json error"""
-    return make_response(jsonify({"error": f"{error.description}"}), 400)
+# @app_views.errorhandler(400)
+# def handle_invalid_json(error):
+#     """handle invalid json error"""
+#     return make_response(jsonify({"error": f"{error.description}"}), 400)
 
 
 @app.teardown_appcontext
