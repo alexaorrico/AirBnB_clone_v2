@@ -33,26 +33,24 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
-    
+
     def get(self, cls, id):
-        """query on the current database session"""
+        """
+        returns the object based on the class and its ID, or None if not found
+        """
         if cls and id:
-            objs = self.__session.query(classes[cls]).all()
-            for obj in objs:
-                if obj.id == id:
-                    return obj
+            key = cls.__name__ + '.' + id
+            if key in self.__objects:
+                return self.__objects[key]
         return None
-    
+
     def count(self, cls=None):
-        """count the number of objects in storage"""
+        """
+        returns the number of objects in storage matching the given class
+        """
         if cls:
-            objs = self.__session.query(classes[cls]).all()
-            return len(objs)
-        else:
-            objs = []
-            for clss in classes:
-                objs += self.__session.query(classes[clss]).all()
-            return len(objs)
+            return len(self.all(cls))
+        return len(self.all())
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""

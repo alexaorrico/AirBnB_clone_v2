@@ -39,37 +39,35 @@ class DBStorage:
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
-    
-    def get(self, cls, id):
-        """query on the current database session"""
-        if cls and id:
-            objs = self.__session.query(classes[cls]).all()
-            for obj in objs:
-                if obj.id == id:
-                    return obj
-        return None
-    
-    def count(self, cls=None):
-        """count the number of objects in storage"""
-        if cls:
-            objs = self.__session.query(classes[cls]).all()
-            return len(objs)
-        else:
-            objs = []
-            for clss in classes:
-                objs += self.__session.query(classes[clss]).all()
-            return len(objs)
 
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+        if cls:
+            for key, value in self.__session.query(cls).all():
+                new_dict[key] = value
+        else:
+            for key, value in self.__session.query(cls).all():
+                new_dict[key] = value
+        return new_dict
+
+    def get(self, cls, id):
+        """
+        returns the object based on the class and its ID, or None if not found
+        """
+        if cls and id:
+            key = cls.__name__ + '.' + id
+            if key in self.__objects:
+                return self.__objects[key]
+        return None
+
+    def count(self, cls=None):
+        """
+        returns the number of objects in storage matching the given class
+        """
+        if cls:
+            return len(self.all(cls))
+        return len(self.all())
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -87,8 +85,8 @@ class DBStorage:
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
-        sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
+        ses_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(ses_factory)
         self.__session = Session
 
     def close(self):
