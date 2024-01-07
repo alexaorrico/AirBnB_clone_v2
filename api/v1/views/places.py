@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-contains endpoints(routes) for city objects
+contains endpoints(routes) for place objects
 """
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response, request
