@@ -7,7 +7,7 @@ from models.state import State
 from api.v1.views import app_views
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/', methods=['GET'])
 def get_states():
     """Retrives the list of all State objects
     """
@@ -40,7 +40,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'])
 def post_state():
     """Creates a State
     """
