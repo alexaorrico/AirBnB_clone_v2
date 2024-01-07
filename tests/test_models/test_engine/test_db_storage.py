@@ -69,20 +69,78 @@ test_db_storage.py'])
 
 
 class TestDbStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
-
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def setUp(self):
+        """Setup db"""
         pass
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def tearDown(self):
+        """Drop db"""
+        pass
+
+    """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_returns_dict(self):
+        """Test that all returns a dictionaty"""
+        self.assertIs(type(models.storage.all(State)), dict)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+        self.assertIs(type(models.storage.all()), dict)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
         pass
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         pass
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_retrieve_one_object(self):
+        """Test get() retrieves just one object with right id"""
+        obj = State()
+        obj.name = "Ogun"
+        obj.save()
+        search_id = obj.id
+        class_name = State
+        cls_object = models.storage.get(class_name, search_id)
+        self.assertTrue(isinstance(obj, class_name))
+        self.assertTrue(isinstance(cls_object, class_name))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_wrong_id_return_none(self):
+        """Test get() return none if wrong id or not found"""
+        obj = State()
+        obj.name = "Ogun"
+        obj.save()
+        search_id = obj.id
+        class_name = State
+        cls_object = models.storage.get(class_name,
+                                        "ffffffff-ff79-dfdc-rrra-wwdqqqqcdyyc")
+        self.assertTrue(cls_object is None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all_objects_if_no_class_passed(self):
+        """Test count() returns the count of all objects in storage"""
+        obj = State()
+        obj.name = "Ogun"
+        obj.save()
+        all_count = models.storage.count()
+        expected_count = 1
+        self.assertEqual(all_count, expected_count)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_objects_with_given_class(self):
+        """Test count() returns the number of objects in storage
+        matching the given class"""
+        obj = State()
+        obj.name = "Ogun"
+        obj.save()
+        cls_count = models.storage.count(State)
+        expected_count = 2
+        self.assertEqual(cls_count, expected_count)
