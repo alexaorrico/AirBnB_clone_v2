@@ -9,6 +9,7 @@ from models.place import Place
 from models.user import User
 from models.amenity import Amenity
 from os import environ
+STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
 @app_views.route('/cities/<string:city_id>/places', methods=['GET'],
                  strict_slashes=False)
@@ -118,7 +119,6 @@ def places_search():
             a_id for a_id in amenities if storage.get(Amenity, a_id)])
         for p in all_places:
             p_amenities = None
-            STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
             if STORAGE_TYPE == 'db' and p.amenities:
                 p_amenities = [a.id for a in p.amenities]
             elif len(p.amenities) > 0:
