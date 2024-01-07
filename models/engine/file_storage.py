@@ -92,13 +92,13 @@ class FileStorage:
             return None
         
         # Checks if class exists
-        if cls is None or cls not in classes.values():
+        if cls.__name__ not in classes.keys():
             return None
 
         try:
-            for key, value in self.__object.items():
-                print("printing key: {}".format(key))
-                print("printing value: {}".format(value))
+            for key, value in self.__objects.items():
+                print("Now here")
+                print(self.__objects)
                 objs_id = key.split(".")[-1]
                 if obj_id == id:
                     return objs
@@ -107,20 +107,6 @@ class FileStorage:
             pass
 
         return None
-        """
-        try:
-            # Load file storage - file.json
-            with open(self.__file_path, 'r') as f:
-                allObjects = json.load(f)
-
-                for thisObject in allObjects:
-                    for key, value in thisObject.items():
-                        key_id = key.split(".")[-1]
-                        if key_id == id:
-                            return thisObject
-        except Exception as e:
-            pass
-        """
 
     def count(self, cls=None):
         """
@@ -138,9 +124,9 @@ class FileStorage:
 
         # Else, iterate and check class name of individual objects and compare
         else:
-            for objs in self.__objects:
-                objs_cls = objs.split(".")[0]
-                if cls == objs_cls:
+            for key, value in self.__objects.items():
+                objs_cls = key.split(".")[0]
+                if cls.__name__ == objs_cls:
                     count += 1
             
         return count
