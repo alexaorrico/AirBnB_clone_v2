@@ -1,5 +1,4 @@
 ## Introduction
-
 Welcome to the AirBnB Clone - RESTful API project! This is an extension of the
 AirBnB_clone_v2 codebase, specifically focusing on the development of a RESTful API
 for an AirBnB-like application.
