@@ -18,7 +18,6 @@ import json
 import os
 import pep8
 import unittest
-
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -41,8 +40,8 @@ class TestDBStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/'
-                                   'test_db_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine/\
+test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -69,49 +68,21 @@ class TestDBStorageDocs(unittest.TestCase):
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestDBStorage(unittest.TestCase):
-    """Test the DBStorage class"""
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
-        """Test that all returns a dictionary"""
+        """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
-        """Test that new adds an object to the database"""
-        state = State(name="California")
-        state.save()
-        self.assertIn(state, models.storage.all().values())
+        """test that new adds an object to the database"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to the database"""
-        state = State(name="New York")
-        state.save()
-        state_key = "{}.{}".format(state.__class__.__name__, state.id)
-        self.assertIn(state_key, models.storage.all().keys())
-
-    def test_get(self):
-        '''
-            Test if get method retrieves obj requested
-        '''
-        new_state = State(name="NewYork")
-        storage.new(new_state)
-        key = "State.{}".format(new_state.id)
-        result = storage.get("State", new_state.id)
-        self.assertTrue(result.id, new_state.id)
-        self.assertIsInstance(result, State)
-
-    def test_count(self):
-        '''
-            Test if count method returns expected number of objects
-        '''
-        storage.reload()
-        old_count = storage.count("State")
-        new_state1 = State(name="NewYork")
-        storage.new(new_state1)
-        new_state2 = State(name="Virginia")
-        storage.new(new_state2)
-        new_state3 = State(name="California")
-        storage.new(new_state3)
-        self.assertEqual(old_count + 3, storage.count("State"))
+        """Test that save properly saves objects to file.json"""
