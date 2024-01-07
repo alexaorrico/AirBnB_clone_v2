@@ -43,7 +43,7 @@ class FileStorage:
         """Returns the dictionary __objects"""
         if not cls:
             return self.__objects
-        elif type(cls) == str:
+        elif isinstance(cls, str):
             return {
                 k: v for k, v in self.__objects.items()
                 if v.__class__.__name__ == cls
@@ -90,25 +90,28 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """Retrieves an object"""
+        """Retrieves an object."""
         if (
             cls is not None
-            and type(cls) is str
+            and isinstance(cls, str)
             and id is not None
-            and type(id) is str
+            and isinstance(id, str)
             and cls in classes
         ):
-            key = cls + '.' + id
+            key = f"{cls}.{id}"
             obj = self.__objects.get(key, None)
             return obj
         else:
             return None
 
     def count(self, cls=None):
-        """Counts the number of objects in storage"""
-        total = 0
-        if type(cls) == str and cls in classes:
-            total = len(self.all(cls))
-        elif cls is None:
-            total = len(self.__objects)
-        return total
+        """
+        counts number of objects in a class (if given)
+        Args:
+            cls (str): class name
+        Returns:
+            number of objects in class, if no class name given
+            return total number of objects in database
+        """
+        obj_dict = self.all(cls)
+        return len(obj_dict)

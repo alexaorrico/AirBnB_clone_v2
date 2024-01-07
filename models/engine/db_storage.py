@@ -4,6 +4,7 @@ Database storage engine using SQLAlchemy with a mysql+mysqldb database
 """
 
 import os
+import models
 from models.base_model import Base
 from models.amenity import Amenity
 from models.city import City
@@ -13,6 +14,7 @@ from models.review import Review
 from models.user import User
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
+import re  # Added import for re
 
 name2class = {
     'Amenity': Amenity,
@@ -48,7 +50,7 @@ class DBStorage:
         if not self.__session:
             self.reload()
         objects = {}
-        if type(cls) == str:
+        if isinstance(cls, str):
             cls = name2class.get(cls, None)
         if cls:
             for obj in self.__session.query(cls):
@@ -82,26 +84,34 @@ class DBStorage:
             self.__session.delete(obj)
 
     def close(self):
-        """Dispose of current session if active"""
+        """Dispose of the current session if active"""
         self.__session.remove()
 
     def get(self, cls, id):
-        """Retrieve an object"""
-        if cls is not None and type(cls) is str and id is not None and\
-           type(id) is str and cls in name2class:
-            cls = name2class[cls]
-            result = self.__session.query(cls).filter(cls.id == id).first()
-            return (result)
-        else:
-            return(None)
+        """
+        gets an object
+        Args:
+            cls (str): class name
+            id (str): object ID
+        Returns:
+            an object based on class name and its ID
+        """
+        obj_dict = models.storage.all(cls)
+        for k, v in obj_dict.items():
+            matchstring = cls + '.' + id
+            if k == matchstring:
+                return v
+
+        return None
 
     def count(self, cls=None):
-        """Count number of objects in storage"""
-        total = 0
-        if type(cls) == str and cls in name2class:
-            cls = name2class[cls]
-            total = self.__session.query(cls).count()
-        elif cls is None:
-            for cls in name2class.values():
-                total += self.__session.query(cls).count()
-        return total
+        """
+        counts number of objects of a class (if given)
+        Args:
+            cls (str): class name
+        Returns:
+            number of objects in class, if no class name given
+            return total number of objects in database
+        """
+        obj_dict = models.storage.all(cls)
+        return len(obj_dict)
