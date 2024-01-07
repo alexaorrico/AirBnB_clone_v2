@@ -75,4 +75,4 @@ def update_state_objects(state_id):
 
     storage.save()
 
-    return make_response(jsonify(obj), 200)
+    return make_response(jsonify(obj.to_dict()), 200)
