@@ -74,16 +74,21 @@ class FileStorage:
         """
         Retrieve an object.
         """
-        key = "{}.{}".format(cls.__name__, id)
-        return self._FileStorage__objects.get(key, None)
+        # key = "{}.{}".format(cls.__name__, id)
+        # return self._FileStorage__objects.get(key, None)
+        if cls and id:
+            result = self.all(cls)
+            query = "{}.{}".format(cls, id)
+            return result.get(query)
 
     def count(self, cls=None):
         """
         Returns the number of objects in storage matching the given class.
         If no class is passed, returns the count of all objects in storage.
         """
-        if cls:
-            return sum(1 for obj_key in self.FileStorage__objects.keys()
-                       if obj_key.startswith(cls.__name__))
-        else:
-            return len(self._FileStorage__objects)
+        # if cls:
+        #     return sum(1 for obj_key in self.FileStorage__objects.keys()
+        #                if obj_key.startswith(cls.__name__))
+        # else:
+        #     return len(self._FileStorage__objects)
+        return len(self.all(cls))

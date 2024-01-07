@@ -75,7 +75,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that all returns a dictionaty"""
         result = storage.all()
         self.assertIs(type(result), dict)
-        #self.assertIs(type(models.storage.all()), dict)
+        # self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
