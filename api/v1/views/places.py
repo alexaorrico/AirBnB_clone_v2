@@ -1,9 +1,10 @@
+#!/usr/bin/python3
 '''Place Routes'''
 from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
-from . import app_views
+from api.v1.views import app_views
 from flask import make_response, abort, request
 
 
@@ -14,8 +15,8 @@ def getPlaceByCity(city_id):
     if not city:
         abort(404)
     places = storage.all(Place)
-    filtered_places = [place.to_dict()
-                       for place in places.values() if place.city_id == city_id]
+    filtered_places = [p.to_dict()
+                       for p in places.values() if p.city_id == city_id]
     return make_response(filtered_places)
 
 
@@ -25,7 +26,7 @@ def getPlace(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    return make_response(place_id.to_dict())
+    return make_response(place.to_dict())
 
 
 @app_views.delete('places/<place_id>')

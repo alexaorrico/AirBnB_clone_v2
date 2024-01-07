@@ -1,14 +1,15 @@
+#!/usr/bin/python3
 '''Users Routes'''
-from flask import make_response, abort, request
-from . import app_views
+from flask import abort, request, jsonify
+from api.v1.views import app_views
 from models import storage
 from models.user import User
 
 
-@app_views.get('users', defaults={'user_id': None})
-@app_views.get('users/<user_id>')
-def retrieveUser(user_id):
-    '''Gets all user or a single user'''
+@app_views.route('/users', defaults={'user_id': None}, methods=['GET'])
+@app_views.route('/users/<user_id>', methods=['GET'])
+def retrieve_user(user_id):
+    """Gets all user or a single user"""
     if not user_id:
         data = [user.to_dict() for user in storage.all(User).values()]
     else:
@@ -16,23 +17,23 @@ def retrieveUser(user_id):
         if not data:
             abort(404)
         data = data.to_dict()
-    return make_response(data)
+    return jsonify(data)
 
 
-@app_views.delete('users/<user_id>')
-def deleteUser(user_id):
-    '''Deletes a user'''
+@app_views.route('/users/<user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    """Deletes a user"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)
     storage.delete(user)
     storage.save()
-    return make_response({})
+    return jsonify({})
 
 
-@app_views.post('users')
-def createUser():
-    '''Creates a user'''
+@app_views.route('/users', methods=['POST'])
+def create_user():
+    """Creates a user"""
     data = request.get_json(silent=True)
     if not data:
         abort(400, 'Not a JSON')
@@ -42,12 +43,12 @@ def createUser():
         abort(400, 'Missing password')
     user = User(**data)
     user.save()
-    return make_response(user.to_dict(), 201)
+    return jsonify(user.to_dict()), 201
 
 
-@app_views.put('users/<user_id>')
-def updateUser(user_id):
-    '''Updates a user'''
+@app_views.route('/users/<user_id>', methods=['PUT'])
+def update_user(user_id):
+    """Updates a user"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -61,4 +62,4 @@ def updateUser(user_id):
             if k in user.__dict__:
                 setattr(user, k, v)
     user.save()
-    return make_response(user.to_dict())
+    return jsonify(user.to_dict())
