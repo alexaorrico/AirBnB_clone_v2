@@ -9,7 +9,7 @@ from models.state import State
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
-    """get state information"""
+    """get state information for all states"""
     states = []
     for state in storage.all("State").values():
         states.append(state.to_dict())
