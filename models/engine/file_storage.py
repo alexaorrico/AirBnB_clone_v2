@@ -9,11 +9,11 @@ from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
 from models.place import Place
-from models.review import Review
-from models.state import State
 from models.user import User
+from models.state import State
+from models.review import Review
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+classes = {"BaseModel": BaseModel, "Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
@@ -89,10 +89,8 @@ class FileStorage:
             Gets the number of object
         """
 
-        if cls is not None and type(cls) is str and id is not \
-            None and type(id) is str and cls in classes:
-            key = cls + '.' + id
-            obj = self.__objects.get(key, None)
-            return obj
-        else:
-            return None
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+        return None
