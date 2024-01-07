@@ -13,7 +13,7 @@ def get_cities(state_id):
     """Returns a JSON string"""
     state = storage.get(State, state_id)
     if state is None:
-        abort(400, "none")
+        abort(404)
     cities = [city.to_dict() for city in state.cities]
     return jsonify(cities)
 
@@ -23,7 +23,7 @@ def get_city(city_id):
     """Returns a JSON string"""
     city = storage.get(City, city_id)
     if city is None:
-        abort(400,"city id")
+        abort(404)
     return jsonify(city.to_dict())
 
 
@@ -32,7 +32,7 @@ def delete_city(city_id):
     """Returns a JSON string"""
     city = storage.get(City, city_id)
     if city is None:
-        abort(400, "delete city")
+        abort(404)
     city.delete()
     storage.save()
     return jsonify({}), 200
