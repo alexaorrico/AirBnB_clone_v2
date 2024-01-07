@@ -45,17 +45,17 @@ def post_city(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    new_city = request.get_json()
-    if not new_city:
+    new_city_data = request.get_json()
+    if not new_city_data:
         abort(400, "Not a JSON")
-    if "name" not in new_city:
+    if "name" not in new_city_data:
         abort(400, " Missing name")
-   #  city = City(**new_city)
-   #  setattr(city, 'state_id', state_id)
+    name = new_city_data['name']
     new_city = City(state_id=state_id, name=name)
     new_city.save()
 
     return jsonify(new_city.to_dict()), 201
+
 
 @city_view.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
@@ -69,7 +69,7 @@ def update_city(city_id):
         abort(400, "Not a JSON")
 
     for key, value in body_data.items():
-        if key not in ['id', 'state_id' 'created_at', 'updated_at']:
+        if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(city, key, value)
 
     storage.save()
