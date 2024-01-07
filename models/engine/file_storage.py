@@ -97,15 +97,8 @@ class FileStorage:
 
         try:
             for key, value in self.__objects.items():
-                print(key.split("."))
-                objs_id = key.split(".")[-1]
-                print(objs_id)
-                if objs_id == id:
-                    print("id is true")
-                    break
-                print(objs_id)
-                #dct[key] = self.__objects[key]
-                #return dct
+                if value.__class__ == cls and value.id == id:
+                    return value
 
         except Exception as e:
             pass
