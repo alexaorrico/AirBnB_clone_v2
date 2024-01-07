@@ -114,3 +114,28 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_count(self, cls=None):
+        """Test that the count method
+        returns the correct number of models """
+        storage = FileStorage()
+        if cls not in set(classes.values()):
+            return
+        init_count = storage.count(cls)
+        newUser = User(first_name="new user 1",
+                       password="new_user_pwd", email="new_user")
+        newUser.save()
+        later_count = storage.count(cls)
+        self.assertTrue(later_count > init_count)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'file',
+                     "not testing db storage")
+    def test_get(self):
+        """Tests that the user we retrieved using
+            get() method matches the one we created"""
+        storage = FileStorage()
+        newUser = User(first_name="new user 2",
+                       password="new_user_pwd2", email="new_user@2")
+        newUser.save()
+        retrievedUser = storage.get(User, newUser.id)
+        self.assertTrue(retrievedUser is newUser)
