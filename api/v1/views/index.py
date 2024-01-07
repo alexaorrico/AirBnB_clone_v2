@@ -2,7 +2,6 @@
 """
   route in object that returns a json
 """
-
 from api.v1 import app_views
 from flask import jsonify
 
