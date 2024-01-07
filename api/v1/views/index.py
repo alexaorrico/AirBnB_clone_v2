@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Includes Flask routes for airbnb clone"""
-from api.v1.views import app_views
 from flask import jsonify, request
+from api.v1.views import app_views
 from models import storage
 from models.state import State
 from models.city import City
@@ -17,9 +17,7 @@ classes = {"amenities": Amenity, "cities": City,
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """Returns status of API"""
-    if request.method == 'GET':
-        answer = ({"status": "OK"})
-        return jsonify(answer)
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
