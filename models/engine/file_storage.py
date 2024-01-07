@@ -3,7 +3,6 @@
 Contains the FileStorage class.
 Serializes instances to a JSON file & deserializes back to instances.
 """
-
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -43,7 +42,7 @@ class FileStorage:
         """Returns the dictionary __objects"""
         if not cls:
             return self.__objects
-        elif type(cls) == str:
+        elif isinstance(cls, str):
             return {
                 k: v for k, v in self.__objects.items()
                 if v.__class__.__name__ == cls
@@ -57,7 +56,7 @@ class FileStorage:
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
@@ -82,35 +81,36 @@ class FileStorage:
     def delete(self, obj=None):
         """Deletes obj from __objects if it's inside"""
         if obj is not None:
-            del self.__objects[obj.__class__.__name__ + '.' + obj.id]
+            del self.__objects["{}.{}".format(obj.__class__.__name__, obj.id)]
             self.save()
 
     def close(self):
         """Deserialize JSON file to objects"""
         self.reload()
+
     def get(self, cls, id):
-    """Retrieves an object."""
+        """Retrieves an object."""
         if (
-        cls is not None
-        and isinstance(cls, str)
-        and id is not None
-        and isinstance(id, str)
-        and cls in classes
+            cls is not None
+            and isinstance(cls, str)
+            and id is not None
+            and isinstance(id, str)
+            and cls in classes
         ):
-        key = f"{cls.__name__}.{id}"
-        obj = self.__objects.get(key, None)
-        return obj
+            key = "{}.{}".format(cls, id)
+            obj = self.__objects.get(key, None)
+            return obj
         else:
-        return None   
-   
- def count(self, cls=None):
+            return None
+
+    def count(self, cls=None):
         """
-        counts number of objects in a class (if given)
+        Counts number of objects in a class (if given).
         Args:
             cls (str): class name
         Returns:
-            number of objects in class, if no class name given
-            return total number of objects in database
+            Number of objects in class, if no class name given,
+            returns total number of objects in the database.
         """
         obj_dict = self.all(cls)
         return len(obj_dict)
