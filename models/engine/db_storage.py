@@ -86,12 +86,7 @@ class DBStorage:
     
     def count(self, cls=None):
         '''
-        counts number of objects of a class (if given)
-        Args:
-            cls (str): class name
-        Returns:
-            number of objects in class, if no class name given
-            return total number of objects in database
+        counts number of objects of a class.
         '''
         obj_dict = models.storage.all(cls)
         return len(obj_dict)
