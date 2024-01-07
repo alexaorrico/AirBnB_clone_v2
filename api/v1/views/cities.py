@@ -9,7 +9,7 @@ from models.state import State
 
 
 @app_views.route('/states/<state_id>/cities',
-                  methods=['GET'], strict_slashes=False)
+                 methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
     """Returns a JSON string"""
     state = storage.get(State, state_id)
@@ -20,7 +20,7 @@ def get_cities(state_id):
 
 
 @app_views.route('/cities/<city_id>',
-                  methods=['GET'], strict_slashes=False)
+                 methods=['GET'], strict_slashes=False)
 def get_city(city_id):
     """Returns a JSON string"""
     city = storage.get(City, city_id)
@@ -30,7 +30,7 @@ def get_city(city_id):
 
 
 @app_views.route('/cities/<city_id>',
-                  methods=['DELETE'], strict_slashes=False)
+                 methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
     """Returns a JSON string"""
     city = storage.get(City, city_id)
@@ -42,7 +42,7 @@ def delete_city(city_id):
 
 
 @app_views.route('/states/<state_id>/cities',
-                  methods=['POST'], strict_slashes=False)
+                 methods=['POST'], strict_slashes=False)
 def post_city(state_id):
     """Returns a JSON string"""
     state = storage.get(State, state_id)
@@ -59,7 +59,7 @@ def post_city(state_id):
 
 
 @app_views.route('/cities/<city_id>',
-                  methods=['PUT'], strict_slashes=False)
+                 methods=['PUT'], strict_slashes=False)
 def put_city(city_id):
     """Returns a JSON string"""
     city = storage.get(City, city_id)

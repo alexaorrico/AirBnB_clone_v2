@@ -8,7 +8,7 @@ from flask import jsonify, abort, request
 
 
 @app_views.route('/amenities', methods=['GET'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def get_amenities():
     """Returns a JSON string"""
     amenities = [amenity.to_dict() for amenity in storage.all("Amenity").values()]
@@ -16,7 +16,7 @@ def get_amenities():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def get_amenity(amenity_id):
     """Returns a JSON string"""
     amenity = storage.get(Amenity, amenity_id)
@@ -26,7 +26,7 @@ def get_amenity(amenity_id):
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def delete_amenity(amenity_id):
     """Returns a JSON string"""
     amenity = storage.get(Amenity, amenity_id)
@@ -38,7 +38,7 @@ def delete_amenity(amenity_id):
 
 
 @app_views.route('/amenities', methods=['POST'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def post_amenity():
     """Returns a JSON string"""
     if not request.get_json():
@@ -51,7 +51,7 @@ def post_amenity():
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
-                  strict_slashes=False)
+                 strict_slashes=False)
 def put_amenity(amenity_id):
     """Returns a JSON string"""
     amenity = storage.get(Amenity, amenity_id)
