@@ -9,7 +9,7 @@ from models import storage
 
 
 @app_views.route('/status', methods=['GET'])
-def hbnbApi_status():
+def api_status():
     """
     Returns a JSON response for RESTful API health.
     """
@@ -18,7 +18,7 @@ def hbnbApi_status():
 
 
 @app_views.route('/stats', methods=['GET'])
-def getVerb_stats():
+def get_stats():
     """
     Retrieves the number of each objects by type.
     """
