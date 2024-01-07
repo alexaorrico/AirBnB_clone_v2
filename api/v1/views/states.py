@@ -8,7 +8,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/states", strict_slashes=False)
+@app_views.route("/states", strict_slashes=False, methods=['GET'])
 def get_states():
     """
     Retrieves the list of all State objects:
@@ -17,7 +17,8 @@ def get_states():
     return jsonify(objs)
 
 
-@app_views.route("/states/<string:state_id>", strict_slashes=False)
+@app_views.route("/states/<string:state_id>", strict_slashes=False,
+                 methods=['GET'])
 def get_state(state_id):
     """
     Retrieves a State object
