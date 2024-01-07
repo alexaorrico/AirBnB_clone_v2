@@ -13,7 +13,7 @@ from api.v1.views import app_views
 def list_state_objects():
     """ """
     all_objs = storage.all(State)
-    return [obj.to_dict() for obj in all_objs.values()]
+    return jsonify([obj.to_dict() for obj in all_objs.values()])
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
