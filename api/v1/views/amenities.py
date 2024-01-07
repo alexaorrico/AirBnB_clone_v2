@@ -19,7 +19,7 @@ def get_amenities():
     return jsonify(objs)
 
 
-@ app_views.route("/amenities/<string:amenity_id>", strict_slashes=False)
+@app_views.route("/amenities/<string:amenity_id>", strict_slashes=False)
 def get_amenity(amenity_id):
     """
     Retrieves an Amenity
@@ -30,8 +30,8 @@ def get_amenity(amenity_id):
     return jsonify(amenity)
 
 
-@ app_views.route("/amenities/<string:amenity_id>", strict_slashes=False,
-                  methods=['DELETE'])
+@app_views.route("/amenities/<string:amenity_id>", strict_slashes=False,
+                 methods=['DELETE'])
 def del_amenity(amenity_id):
     """
     Deletes an Amenity object
@@ -44,8 +44,8 @@ def del_amenity(amenity_id):
     abort(404)
 
 
-@ app_views.route("/amenities/", strict_slashes=False,
-                  methods=['POST'])
+@app_views.route("/amenities/", strict_slashes=False,
+                 methods=['POST'])
 def create_amenity():
     """
     Creates an Amenity instance
@@ -62,8 +62,8 @@ def create_amenity():
     return make_response(jsonify(obj.to_dict()), 201)
 
 
-@ app_views.route("/amenities/<string:amenity_id>", strict_slashes=False,
-                  methods=['PUT'])
+@app_views.route("/amenities/<string:amenity_id>", strict_slashes=False,
+                 methods=['PUT'])
 def update_amenity(amenity_id):
     """
     Updates an Amenity object
