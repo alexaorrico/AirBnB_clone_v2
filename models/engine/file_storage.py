@@ -90,7 +90,7 @@ class FileStorage:
         # Checks if id has been provided
         if not id:
             return None
-        
+
         # Checks if class exists
         if cls.__name__ not in classes.keys():
             return None
@@ -125,5 +125,5 @@ class FileStorage:
                 objs_cls = key.split(".")[0]
                 if cls.__name__ == objs_cls:
                     count += 1
-            
+
         return count
