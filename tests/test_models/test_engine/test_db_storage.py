@@ -67,6 +67,33 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        """Test get method"""
+        storage = DBStorage()
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.get(State, state.id), state)
+        self.assertEqual(storage.get(State, "1234"), None)
+        self.assertEqual(storage.get(None, None), None)
+        self.assertEqual(storage.get(None, "1234"), None)
+        self.assertEqual(storage.get(State, None), None)
+        self.assertEqual(storage.get("State", None), None)
+        self.assertEqual(storage.get("State", "1234"), None)
+        self.assertEqual(storage.get("State", state.id), state)
+        self.assertEqual(storage.get("State", "1234"), None)
+        self.assertEqual(storage.get(None, state.id), None)
+
+    def test_count(self):
+        """Test count method"""
+        storage = DBStorage()
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(City), 0)
+        self.assertEqual(storage.count(None), 0)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -86,3 +113,32 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test get method"""
+        storage = DBStorage()
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.get(State, state.id), state)
+        self.assertEqual(storage.get(State, "1234"), None)
+        self.assertEqual(storage.get(None, None), None)
+        self.assertEqual(storage.get(None, "1234"), None)
+        self.assertEqual(storage.get(State, None), None)
+        self.assertEqual(storage.get("State", None), None)
+        self.assertEqual(storage.get("State", "1234"), None)
+        self.assertEqual(storage.get("State", state.id), state)
+        self.assertEqual(storage.get("State", "1234"), None)
+        self.assertEqual(storage.get(None, state.id), None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test count method"""
+        storage = DBStorage()
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+        self.assertEqual(storage.count(State), 1)
+        self.assertEqual(storage.count(City), 0)
+        self.assertEqual(storage.count(None), 0)
