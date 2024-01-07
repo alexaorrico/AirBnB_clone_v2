@@ -88,7 +88,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
     def test_get(self):
-        """for specific object, or none Test that get returns"""
+        """Test that for specific object, or none Test that get returns"""
         new_state = State(name="New York")
         new_state.save()
         new_user = User(email="bob@foobar.com", password="password")
@@ -101,7 +101,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      "not testing db storage")
     def test_count(self):
-        """after an object to the database module test that new adds """
+        """Test that after an object to the database module test that new adds """
         initial_count = models.storage.count()
         self.assertEqual(models.storage.count("Blah"), 0)
         new_state = State(name="Florida")

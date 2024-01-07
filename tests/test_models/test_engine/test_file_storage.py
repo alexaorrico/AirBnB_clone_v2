@@ -117,7 +117,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                      "not testing file storage")
     def test_get(self):
-        """will Test a get method properly if retrievs objects"""
+        """Test that will Test a get method properly if retrievs objects"""
         storage = FileStorage()
         self.assertIs(storage.get("User", "blah"), None)
         self.assertIs(storage.get("blah", "blah"), None)
@@ -128,7 +128,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                      "not testing file storage")
     def test_count(self):
-        """will Test a count method properly if counts objects"""
+        """Test that will Test a count method properly if counts objects"""
         storage = FileStorage()
         initial_length = len(storage.all())
         self.assertEqual(storage.count(), initial_length)
