@@ -112,3 +112,14 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(models.storage.count(State), length)
         length = len(models.storage.all().values())
         self.assertEqual(models.storage.count(), length)
+
+    
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get properly retrieves objects from database"""
+        state = State(name="California")
+        state.save()
+        state_id = state.id
+        self.assertEqual(models.storage.get(State, state_id), state)
+        models.storage.delete(state)
+        models.storage.save()
