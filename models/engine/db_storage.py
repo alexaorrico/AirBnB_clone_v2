@@ -124,5 +124,5 @@ class DBStorage:
             count = sum(len(models.storage.all(clas).values())
                         for clas in all_class)
         else:
-            count = len(models.storage.all(cls).values()
+            count = len(models.storage.all(cls).values())
         return count
