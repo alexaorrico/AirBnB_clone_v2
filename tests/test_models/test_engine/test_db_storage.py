@@ -113,7 +113,6 @@ class TestFileStorage(unittest.TestCase):
         length = len(models.storage.all().values())
         self.assertEqual(models.storage.count(), length)
 
-    
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test that get properly retrieves objects from database"""
