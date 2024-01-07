@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-  route ib object that returns a json
+  route in object that returns a json
 """
 
 from api.v1 import app_views
