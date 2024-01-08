@@ -103,7 +103,7 @@ from models import storage
 
 # Route for retrieving all state objs
 @app_views.route('/state', method=['GET'], strict_slashes=False)
-def get_all_states:
+def get_all_states():
     """
     GETs all state objects
     """
@@ -138,7 +138,7 @@ def delete_state(state_id):
 
 # Route for creating a new state
 @app_views.route('/states', method=['POST'], strict_slashes=False)
-def create_state:
+def create_state():
     """ PUTs in a new state """
     if not request.get_json:
         abort(400, 'Not a JSON')
