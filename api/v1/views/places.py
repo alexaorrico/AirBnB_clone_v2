@@ -3,6 +3,8 @@
 View for places that handles all RESTful API actions
 """
 from flask import jsonify, request, abort
+from werkzeug.exceptions import BadRequest
+
 from models import storage
 from models.city import City
 from models.place import Place
@@ -90,12 +92,13 @@ def has_amenities(place, amenities):
 @app_views.route('/places_search', methods=['POST'])
 def search_places():
     """Returns a list of places that matches the search criteria"""
-    data = request.get_json()
-    if data is None:
-        abort(400, 'Not a JSON')
-    state_ids = data.get('states', [])
-    city_ids = data.get('cities', [])
-    amenity_ids = data.get('amenities', [])
+    try:
+        data = request.get_json()
+        state_ids = data.get('states', [])
+        city_ids = data.get('cities', [])
+        amenity_ids = data.get('amenities', [])
+    except (BadRequest, AttributeError):
+        return jsonify({"error": "Not a JSON"}), 400
     city_ids = set(city_ids)
     for state_id in state_ids:
         state = storage.get(State, state_id)
