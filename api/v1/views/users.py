@@ -9,7 +9,9 @@ from models import storage
 from models.user import User
 
 
-@app_views.route('/users/<user_id>', methods=['GET', 'PUT', 'DELETE'])
+@app_views.route('/users/<user_id>',
+                 methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
 def get_user_or_update_user(user_id):
     """
     Retrieves, updates, or deletes a User object by ID.
@@ -30,7 +32,7 @@ def get_user_or_update_user(user_id):
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(user.to_dict())
+        return jsonify(user.to_dict()), 200
 
     if request.method == 'PUT':
         try:
@@ -46,7 +48,7 @@ def get_user_or_update_user(user_id):
             if key not in ignore_keys:
                 setattr(user, key, value)
         user.save()
-        return jsonify(user.to_dict())
+        return jsonify(user.to_dict()), 200
 
     if request.method == 'DELETE':
         user.delete()
@@ -54,7 +56,7 @@ def get_user_or_update_user(user_id):
         return jsonify({}), 200
 
 
-@app_views.route('/users', methods=['GET', 'POST'])
+@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def get_users_or_create_user():
     """
     Retrieves the list of all User objects or creates a new User.
@@ -67,7 +69,7 @@ def get_users_or_create_user():
     """
     if request.method == 'GET':
         users = storage.all(User).values()
-        return jsonify([user.to_dict() for user in users])
+        return jsonify([user.to_dict() for user in users]), 200
 
     if request.method == 'POST':
         try:
@@ -86,4 +88,4 @@ def get_users_or_create_user():
 
         new_user = User(**data)
         new_user.save()
-        return jsonify(new_user.to_dict()), 200
+        return jsonify(new_user.to_dict()), 201
