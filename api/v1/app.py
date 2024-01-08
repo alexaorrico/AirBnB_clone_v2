@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-modules imported
+modules imported in
 """
 from api.v1.views import app_views
 from flasgger import Swagger
