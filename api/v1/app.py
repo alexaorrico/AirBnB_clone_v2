@@ -3,10 +3,12 @@
 
 from api.v1.views import app_views
 from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
 import os
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.register_blueprint(app_views)
 
@@ -14,6 +16,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown_appcontext(exception):
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found_error(error):
