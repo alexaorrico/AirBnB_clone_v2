@@ -67,8 +67,7 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -86,3 +85,29 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_count_all_objects(self):
+        """Test counting all objects in storage"""
+        storage = DBStorage()
+        # Add some objects to storage
+        # ...
+        expected_count = 10  # Example value, replace with the actual expected count
+        count = storage.count()
+        self.assertEqual(count, expected_count)
+
+    def test_count_objects_by_class(self):
+        """Test counting objects of a specific class in storage"""
+        storage = DBStorage()
+        # Add some objects to storage
+        # ...
+        SomeClass = State  # Replace with the actual class you want to test
+        expected_count = 5  # Example value, replace with the actual expected count
+        count = storage.count(cls=SomeClass)
+        self.assertEqual(count, expected_count)
+
+    def test_count_invalid_class(self):
+        """Test counting objects with an invalid class"""
+        storage = DBStorage()
+        InvalidClass = InvalidClass  # Replace with the actual invalid class you want to test
+        count = storage.count(cls=InvalidClass)
+        self.assertEqual(count, 0)
