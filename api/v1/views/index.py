@@ -8,7 +8,7 @@ from models import storage
 
 
 @app_views.route('/status', strict_slashes=False)
-def health_check():
+def page_status():
     """
     function to handle status of webpage
     """
@@ -16,7 +16,7 @@ def health_check():
 
 
 @app_views.route("/stats")
-def count():
+def obj_stats():
     """
     function to handle state/route
     """
