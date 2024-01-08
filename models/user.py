@@ -35,6 +35,6 @@ class User(BaseModel, Base):
         """returns  dict contain  all keys/values of the instance"""
         new_dict = super().to_dict()
         if exclude_password and 'password' in new_dict:
-        del new_dict['password']
-        return new_dict
+            del new_dict['password']
+            return new_dict
 
