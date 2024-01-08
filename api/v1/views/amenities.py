@@ -25,8 +25,7 @@ def get_amenity(amenity_id):
     return jsonify(amenity.to_dict())
 
 # Route for deleting an amenity
-@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
-                 strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
     """deletes an amenity based on its amenity_id"""
     amenity = storage.get("Amenity", amenity_id)
@@ -34,7 +33,7 @@ def delete_amenity(amenity_id):
         abort(404)
     amenity.delete()
     storage.save()
-    return (jsonify({}))
+    return (jsonify({}), 200)
 
 # Route for creating a new amenity
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
