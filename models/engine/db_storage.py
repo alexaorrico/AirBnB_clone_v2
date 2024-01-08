@@ -27,6 +27,7 @@ class DBStorage:
 
     def __init__(self):
         """Instantiate a DBStorage object"""
+        self.storage = {}
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
@@ -70,6 +71,30 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """
+        this method is meant to return the objects
+        based on its class and ID
+        """
+        if cls in self.storage:
+            return self.storage[cls].get(id, None)
+        else:
+            return None
+
+    def count(self, cls=None):
+        from models import storage
+        """
+        counts the number of objects in a class
+        """
+        if cls is None:
+            count = sum(len(objects) for objects in self.storage.values())
+        elif cls in self.storage:
+            count = len(self.storage[cls])
+        else:
+            count = 0
+
+        return count
 
     def close(self):
         """call remove() method on the private session attribute"""
