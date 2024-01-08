@@ -17,8 +17,8 @@ from models.user import User
 def status():
     """return status"""
     stat = {"status": "OK"}
-    json_response_stat = jsonify(stat)
-    return json_response_stat
+# json_response_stat = jsonify(stat)
+    return jsonify(stat), 200
 
 
 @app_views.route('/stats')
@@ -33,5 +33,4 @@ def stats():
         "users": storage.count(User)
     }
 
-    json_obj_count = jsonify(obj_count)
-    return (json_obj_count)
+    return jsonify(obj_count), 200

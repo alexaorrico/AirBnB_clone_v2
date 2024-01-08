@@ -157,6 +157,8 @@ No known bugs at this time.
 Emil henway - [Github](https://github.com/Emildawood123) / [Twitter](https://twitter.com/0SJ0GvO14ycsgpk)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
+Rahaf Hazem - [Github](https://github.com/rhf007) / [Twitter](https://twitter.com/rhazem512)
+
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
