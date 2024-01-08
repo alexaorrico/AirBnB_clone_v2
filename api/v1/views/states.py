@@ -3,19 +3,22 @@
 
 from flask import abort, jsonify, make_response, request
 from api.v1.views import app_views
+from flasgger.utils import swag_from
 
 import models
 from models.state import State
 
 
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
+@swag_from('documentation/state/get_state.yml', methods=['GET'])
 def get_states():
     all_states = models.storage.all(State)
-    man = [x.to_dict() for x in all_states.values()]
-    return jsonify(man)
+    states = [x.to_dict() for x in all_states.values()]
+    return jsonify(states)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
+@swag_from('documentation/state/get_id_state.yml', methods=['get'])
 def get_state(state_id):
     state = models.storage.get(State, state_id)
     if state is not None:
@@ -26,6 +29,7 @@ def get_state(state_id):
 @app_views.route('/states/<state_id>',
                  strict_slashes=False,
                  methods=['DELETE'])
+@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     state = models.storage.get(State, state_id)
     if state is not None:
@@ -36,6 +40,7 @@ def delete_state(state_id):
 
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
+@swag_from('documentation/state/post_state.yml', methods=['POST'])
 def create_state():
     """
     Creates a State
@@ -53,6 +58,7 @@ def create_state():
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
+@swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def update_state(state_id):
     """
     updates a state give a valid id
