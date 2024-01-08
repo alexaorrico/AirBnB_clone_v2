@@ -7,7 +7,9 @@ import json
 
 @app_views.route('/status', methods=['GET'])
 def get_status():
-    response = {'status': 'OK'}
+    response = {
+            'status': 'OK'
+            }
     formatted_json = json.dumps(response, indent=2)
     print(formatted_json)
     return jsonify(response)
