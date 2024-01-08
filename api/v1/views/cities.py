@@ -53,7 +53,7 @@ def post_city(state_id):
     if 'name' not in json_data:
         return jsonify({"error": "Missing name"}), 400
     json_data['state_id'] = state_id
-    city = City(**jsonx_data)
+    city = City(**json_data)
     city.save()
     return jsonify(city.to_dict()), 201
 
