@@ -66,7 +66,30 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+    def test_get(self):
+        """
+            Test to see if the method retirves the object correctly
+        """
+        new_state = State(name="Littoral")
+        storage.new(new_state)
+        key = "State.{}".format(new_state.id)
+        result = storage.get("State", new_state.id)
+        self.assertTrue(result.id, new_state.id)
+        self.assertIsInstance(result, State)
 
+    def test_count(self):
+        """
+            Test if count retuns the expected numbe rof objects
+        """
+        storage.reload()
+        old_count = storage.count("State")
+        new_state1 = State(name="Littoral")
+        storage.new(new_state1)
+        new_state2 = State(name="NorthWest")
+        storage.new(new_state2)
+        new_state3 = State(name="South")
+        storage.new(new_state3)
+        self.assertEqual(old_count + 3, storage.count("State"))
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -82,6 +105,8 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        new_object = State(name="Douala")
+        self.assertEqual(new_object.name, "Douala")
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):

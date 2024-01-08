@@ -95,6 +95,33 @@ class TestFileStorage(unittest.TestCase):
         FileStorage._FileStorage__objects = save
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """
+            Test to see if the method retirves the object correctly
+        """
+        new_state = State(name="Littoral")
+        storage.new(new_state)
+        key = "State.{}".format(new_state.id)
+        result = storage.get("State", new_state.id)
+        self.assertTrue(result.id, new_state.id)
+        self.assertIsInstance(result, State)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """
+            Test if count retuns the expected numbe rof objects
+        """
+        storage.reload()
+        old_count = storage.count("State")
+        new_state1 = State(name="Littoral")
+        storage.new(new_state1)
+        new_state2 = State(name="NorthWest")
+        storage.new(new_state2)
+        new_state3 = State(name="South")
+        storage.new(new_state3)
+        self.assertEqual(old_count + 3, storage.count("State"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
