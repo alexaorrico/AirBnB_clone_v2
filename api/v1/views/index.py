@@ -8,4 +8,4 @@ from api.v1.views import app_views
 def get_status():
     '''Gets the status of the API.
     '''
-    return jsonify(status='OK')
+    return jsonify({"status": "OK"})
