@@ -1,12 +1,33 @@
 #!/usr/bin/python3
 """This file returns the JSON status ok"""
 
+from flask import Flask, jsonify
+
 from api.v1.views import app_views
-from flask import jsonify
-from models import storage
+
+import models
+from models.amenity import Amenity
+from models.base_model import BaseModel, Base
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 @app_views.route('/status', strict_slashes=False)
-def status_api():
+def index():
     """home screen of the app"""
     return jsonify({"status": "OK"})
+
+
+@app_views.route('/stats')
+def num_objects():
+    result = {}
+    for key, value in classes.items():
+        total = models.storage.count(value)
+        result[key.lower()] = total
+    return jsonify(result)
