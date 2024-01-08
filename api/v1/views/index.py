@@ -18,16 +18,13 @@ def status():
     return jsonify({"status": "OK"})
 
 
-#@app_views.route("/stats", strict_slashes=False)
-#def stats():
-#    """Returns the number of items in storage in JSON format"""
-#    from models import storage
-#    classes = {"amenities": Amenity, "cities": City, "places": Place,
-#               "reviews": Review, "states": State, "users": User
-#               }
+@app_views.route("/stats", strict_slashes=False)
+def stats():
+    """Returns the number of items in storage in JSON format"""
+    from models import storage
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User
+               }
 
-#    all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
-#    return jsonify(all_cls_stats)
-
-if __name__ == "__main__":
-    pass
+    all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
+    return jsonify(all_cls_stats)
