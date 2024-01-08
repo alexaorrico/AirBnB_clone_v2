@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-modules to handle REST API actions for users
+modules to handle REST API actions for useisrs
 """
 from api.v1.views import app_views
 from flask import jsonify
