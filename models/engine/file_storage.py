@@ -71,13 +71,18 @@ class FileStorage:
 
     def get(self, cls, id):
         """retrieves one object from storage"""
-        try:
-            # _objects = self.__objects.get(cls, [])
-            for item in self.__objects.values():
-                if item.id == id:
-                    return (item)
-        except Exception as e:
-            return (None)
+        if cls.__name__ in classes and id and type(id) is str:
+            try:
+                _objects = self.__objects.get(cls + '.' + id, None)
+                # for item in _objects:
+                # print("items include {}".format(item))
+                return (_objects)
+                # for item in self.__objects.values():
+                # if item.id == id:
+                # return (item)
+            except Exception as e:
+                print("Exception found: {}".format(e))
+                return (None)
 
     def count(self, cls=None):
         """counts number of objects in storage"""
@@ -87,11 +92,10 @@ class FileStorage:
             if cls is not None:
                 # objects = self.__objects.get(cls, [])
                 for j in self.__objects.keys():
+                    print(j)
                     if cls in j:
                         count += 1
             else:
-                # count = sum(len(objects) for objects
-                # Cin self.__objects.values())
                 count = len(self.__objects)
             return (count)
         except Exception as e:
