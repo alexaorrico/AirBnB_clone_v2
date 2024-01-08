@@ -7,7 +7,7 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/', methods=['GET'])
 def get_states():
     """get status method"""
     get = storage.all(State)
@@ -26,7 +26,7 @@ def get_states_by_id(state_id):
         return jsonify(get.to_dict())
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states/', methods=['POST'])
 def post_states():
     get_json = request.get_json()
     if not get_json:
