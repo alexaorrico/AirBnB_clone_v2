@@ -1,6 +1,7 @@
 #!/usr/bin/python
 """ holds class Place"""
 import models
+from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
@@ -75,11 +76,12 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """getter attribute returns the list of Amenity instances"""
-            from models.amenity import Amenity
-            amenity_list = []
-            all_amenities = models.storage.all(Amenity)
-            for amenity in all_amenities.values():
-                if amenity.place_id == self.id:
-                    amenity_list.append(amenity)
-            return amenity_list
+            from models import storage
+            all_amenities = list(storage.all(Amenity).values())
+            return list(filter((lambda a: a.id in self.amenity_ids),
+                               all_amenities))
+
+        @amenities.setter
+        def amenities(self, value):
+            if isinstance(value, Amenity):
+                self.amenity_ids.append(Amenity.id)
