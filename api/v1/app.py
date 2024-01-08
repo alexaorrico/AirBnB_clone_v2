@@ -3,7 +3,7 @@
 
 from flask import Flask
 from models import storage
-import sys
+import os
 from api.v1.views import app_views
 
 app = Flask(__name__)
@@ -11,12 +11,12 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tear():
-    return storage.close()
+def tear(exception):
+    storage.close()
 
 
-value_host = getattr(sys.modules[__name__], 'HBNB_API_HOST', None)
-value_port = getattr(sys.modules[__name__], 'HBNB_API_PORT', None)
+value_host = os.getenv('HBNB_API_HOST')
+value_port = os.getenv('HBNB_API_PORT')
 if value_host is not None:
     host = value_host
 else:
