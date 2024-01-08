@@ -100,20 +100,17 @@ def update_place(place_id):
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def post_places_search():
-    """
-    retrieves Place objects depending of the JSON in the body of the request.
-    """
-    valid_json = request.get_json()
-
-    if valid_json:
-        states = valid_json.get('states', [])
-        cities = valid_json.get('cities', [])
-        amenities = valid_json.get('amenities', [])
-        amenity_obj = []
+    """searches for a place"""
+    if request.get_json() is not None:
+        params = request.get_json()
+        states = params.get('states', [])
+        cities = params.get('cities', [])
+        amenities = params.get('amenities', [])
+        amenity_objects = []
         for amenity_id in amenities:
             amenity = storage.get('Amenity', amenity_id)
             if amenity:
-                amenity_obj.append(amenity)
+                amenity_objects.append(amenity)
         if states == cities == []:
             places = storage.all('Place').values()
         else:
