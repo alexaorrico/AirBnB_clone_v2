@@ -17,7 +17,7 @@ def get_all_states():
 
 
 # route for getting a state obj based on its id
-@app_views.route('/states/<state_id>', method=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """returns state obj for the id input"""
     state = storage.get(State, state_id)
@@ -28,7 +28,7 @@ def get_state(state_id):
 
 
 # route for deleting a file
-@app_views.route('/api/v1/states/<state_id>', method=['DELETE'])
+@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """deletes a state obj"""
     state = storage.get(State, state_id)
@@ -41,7 +41,7 @@ def delete_state(state_id):
 
 
 # route for creating a file
-@app_views.route('/api/v1/states', method=['POST'], strict_slashes=False)
+@app_views.route('/api/v1/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """creates a state obj"""
     if not request.get_json():
@@ -59,7 +59,7 @@ def create_state():
 
 
 # route for updating a file
-@app_views.route('/api/v1/states/<state_id>', method=['PUT'])
+@app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """updates a state obj"""
     state = storage.get(State, state_id)
@@ -78,3 +78,17 @@ def update_state(state_id):
         return jsonify(state.to_dict()), 200
     else:
         abort(404)
+
+
+# to handle 404 error
+@app_views.errorhandler(404)
+def error_handler(error):
+    """handles 404 error"""
+    return jsonify({"error": "Not found"}), 404
+
+
+# to handle error 400
+@app_views.errorhandler(400)
+def error_handler(error):
+    """handles 400 error"""
+    return jsonify({"error": "Bad Request"}), 400
