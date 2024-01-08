@@ -30,7 +30,7 @@ def amenities():
         return new_amenity_json
 
 
-@app_views.route('amenities/<amenity_id>', methods=["GET"])
+@app_views.route('/amenities/<amenity_id>', methods=["GET"])
 def amenities_id(amenity_id):
     """retrieve amenity with id"""
     amenity = storage.get(Amenity, amenity_id)
@@ -40,7 +40,7 @@ def amenities_id(amenity_id):
     return amenity_json
 
 
-@app_views.route('amenities/<amenity_id>', methods=["DELETE"])
+@app_views.route('/amenities/<amenity_id>', methods=["DELETE"])
 def delete_amenity(amenity_id):
     """delete an amenity"""
     amenity = storage.get(Amenity, amenity_id)
@@ -51,7 +51,7 @@ def delete_amenity(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('amenities/<amenity_id>', methods=["PUT"])
+@app_views.route('/amenities/<amenity_id>', methods=["PUT"])
 def update_amenity(amenity_id):
     """update an amenity"""
     amenity = storage.get(Amenity, amenity_id)
