@@ -94,7 +94,6 @@ test_file_storage.py'])
 
         self.assertEqual(state_count, 2)
 
-
 if __name__ == '__main__':
     unittest.main()
 
