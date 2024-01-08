@@ -78,12 +78,6 @@ class FileStorage:
 
     def count(self, cls=None):
         """A method to count the number of objects in storage"""
-        count = 0
-        with open(self.__file_path, 'r') as f:
-            objects = json.load(f)
-            if cls is not None:
-                haveCls = [clss for clss in objects if clss[__class__] == cls]
-                count = len(haveCls)
-            else:
-                count = len(objects)
+        from models import storage
+        count = len(storage.all())
         return (count)
