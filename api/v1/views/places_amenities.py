@@ -44,14 +44,18 @@ def del_amenity(place_id, amenity_id):
                  strict_slashes=False, methods=['POST'])
 def create_amenity2(place_id, amenity_id):
     """
-    Creates an amenity instance
+    Creates a new amenity instance and associates it with the place
     """
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
         abort(404)
+
     if amenity in place.amenities:
         return make_response(jsonify(amenity.to_dict()), 200)
-    place.amenities.append(amenity)
+
+    new_amenity = Amenity(name=amenity.name)
+    place.amenities.append(new_amenity)
     storage.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+
+    return make_response(jsonify(new_amenity.to_dict()), 201)
