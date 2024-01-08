@@ -37,7 +37,7 @@ def delete_amenity(amenity_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'])
+@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def post_amenity():
     """Adds a new amenity"""
     data = request.get_json()
@@ -60,8 +60,8 @@ def update_amenity(amenity_id):
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
+    special_keys = ['id', 'created_at', 'updated_at']
     for key, value in data.items():
-        special_keys = ['id', 'created_at', 'updated_at']
         if key not in special_keys:
             setattr(amenity, key, value)
         amenity.save()
