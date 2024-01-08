@@ -6,7 +6,6 @@ import hashlib
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
-
 class User(BaseModel, Base):
     """Representation of a user """
     if getenv("HBNB_TYPE_STORAGE") == 'db':
@@ -30,6 +29,7 @@ class User(BaseModel, Base):
     def password(self, value):
         """Setter for the password attribute """
         self.__password = hashlib.md5(value.encode()).hexdigest()
+        
     def to_dict(self, exclude_password=True):
         """returns a dict contain all keys/values of the instnce"""
         new_dict = super().to_dict()
