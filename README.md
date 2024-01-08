@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Aaron Leonard Oluk - [Github](https://github.com/Leon12-aaryson) / [Twitter](https://twitter.com/oluk_aaron)  
-Edeko Ethan - [GITHUB] (HTTPS://github.com/edeoethan) / [Twitter] (https://twitter.com/erothan99)
+Edeko Ethan - [GITHUB] (https://github.com/edeoethan) / [Twitter] (https://twitter.com/erothan99)
 
 
 Second part of Airbnb: Joann Vuong
