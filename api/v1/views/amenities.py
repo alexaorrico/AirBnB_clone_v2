@@ -5,7 +5,7 @@ all default RESTful API actions
 """
 
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import request, abort, jsonify, make_response
 from models import storage
 from models.amenity import Amenity
 
@@ -14,7 +14,7 @@ from models.amenity import Amenity
 def all_amenities():
     """Retrieves the list of all amenities"""
     amenities = storage.all("Amenity").values()
-    return jsonify([amenity.to_dict for amenity in amenities])
+    return jsonify([amenity.to_dict() for amenity in amenities])
 
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
