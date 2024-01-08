@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""index default view"""
+"""Place object api resource view"""
 
 from flask import jsonify, abort, make_response, request
 from api.v1.views import app_views
@@ -81,7 +81,7 @@ def update_place(place_id):
 
     for k, v in request.get_json().items():
         if k == "id" or k == "created_at" or k == "updated_at"\
-        or k == "user_id" or k == "city_id":
+                or k == "user_id" or k == "city_id":
             continue
         else:
             setattr(place, k, v)
