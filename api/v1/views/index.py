@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-# This is the index page
+"""
+This is the index page
+"""
 
 from api.v1.views import app_views
 from flask import jsonify
