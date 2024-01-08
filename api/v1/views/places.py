@@ -103,7 +103,7 @@ def search_places():
     for state_id in state_ids:
         state = storage.get(State, state_id)
         if not state:
-            return []
+            continue
         city_ids.update([city.id for city in state.cities])
     city_ids = list(city_ids)
     places = storage.all(Place).values()
