@@ -22,7 +22,7 @@ def close_storage(err):
 def error(err):
     """Return error dict of
     stat code 404"""
-    return make_response(jsonify({'error': "Not found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
