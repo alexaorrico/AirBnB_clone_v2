@@ -90,5 +90,3 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """tests the get method in db storage"""
         storage = DBStorage()
-
-        
