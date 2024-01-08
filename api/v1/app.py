@@ -8,7 +8,7 @@ from models import storage
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-app.url_map.strict_slashes = False
+# app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
