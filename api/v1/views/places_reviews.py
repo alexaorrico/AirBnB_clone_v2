@@ -83,6 +83,5 @@ def update_review(review_id):
     for key, value in data.items():
         if key not in special_keys:
             setattr(review, key, value)
-        review.save()
-        review = review.to_dict()
-        return jsonify(review), 200
+    review.save()
+    return jsonify(review.to_dict()), 200

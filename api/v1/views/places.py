@@ -87,7 +87,7 @@ def has_amenities(place, amenities):
     return bool(set(place_amenities) & set(amenities))
 
 
-@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+@app_views.route('/places_search', methods=['POST'])
 def search_places():
     """Returns a list of places that matches the search criteria"""
     data = request.get_json()
