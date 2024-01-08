@@ -26,7 +26,7 @@ def get_states_by_id(state_id):
         return jsonify(get.to_dict())
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states', methods=['POST'])
 def post_states():
     get_json = request.get_json()
     if not get_json:
