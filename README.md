@@ -153,10 +153,18 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
+## Jukunye & Lisa contribution
+- Expose all your objects stored via a JSON web interface
+- Manipulate your objects via a RESTful API
+
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Lisa Powell-Kuyk - [Github](https://github.com/LisaPowell1991) / [Twitter](https://twitter.com/lisapowell46)
+Jukunye Shira - [Github](https://github.com/jukunye) / [Twitter](https://twitter.com/jucunye)
 
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+## 
