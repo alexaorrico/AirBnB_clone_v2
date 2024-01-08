@@ -3,12 +3,13 @@
 from api.v1.views import app_views
 from models import storage
 from models.city import City
+from models.state import State
 from flask import abort, jsonify, request
 
 app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def get_cities(state_id):
     """Gets all the cities for a given state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -33,7 +34,7 @@ def get_cities(state_id):
 app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT', 'POST'])
 def method_city(city_id):
     """Method for cities"""
-    city = storage.get('City', city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
