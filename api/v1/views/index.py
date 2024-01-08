@@ -17,15 +17,17 @@ from models.user import User
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
+
 @app_views.route('/status', strict_slashes=False)
 def index():
     """home screen of the app"""
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def num_objects():
     result = {}
     for key, value in classes.items():
-        total = storage.count(value)
+        total = models.storage.count(value)
         result[key] = total
     return jsonify(result)
