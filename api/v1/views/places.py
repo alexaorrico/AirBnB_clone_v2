@@ -62,11 +62,11 @@ def create_place(city_id):
 
     data = request.get_json()
     if data is None:
-        abort(400, "Not a JSON")
+        abort(400, description="Not a JSON")
     elif 'user_id' not in data:
-        abort(400, "Missing user_id")
+        abort(400, description="Missing user_id")
     elif 'name' not in data:
-        return jsonify(400, "Missing name")
+        abort(400, description="Missing name")
 
     user = storage.get(User, data['user_id'])
     if user is None:
@@ -90,7 +90,7 @@ def update_place(place_id):
 
     data = request.get_json()
     if data is None:
-        abort(400, "Not a JSON")
+        abort(400, description="Not a JSON")
 
     ignored_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for key, value in data.items():
