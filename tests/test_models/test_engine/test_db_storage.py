@@ -68,61 +68,6 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestDBStorage(unittest.TestCase):
-    """Test the DBStorage class"""
-    @classmethod
-    def setUpClass(cls):
-        """Set up the class with necessary configurations."""
-        # Configure DBStorage for testing
-        models.storage.reload()
-
-    def test_get_method(self):
-        """Test the get method in DBStorage"""
-        # Create an example object to store in the database
-        example_obj = State(name="ExampleState")
-        example_obj.save()
-
-        # Use get method to retrieve the object by class and ID
-        retrieved_obj = models.storage.get(State, example_obj.id)
-
-        # Check if the retrieved object matches the original object
-        self.assertEqual(retrieved_obj, example_obj)
-
-    def test_get_method_nonexistent_object(self):
-        """Test the get method with a nonexistent object"""
-        # Use get method with a class and ID that do not exist
-        retrieved_obj = models.storage.get(State, "nonexistent_id")
-
-        # Check if the method returns None for nonexistent objects
-        self.assertIsNone(retrieved_obj)
-
-    def test_count_method(self):
-        """Test the count method in DBStorage"""
-        # Create several example objects to store in the database
-        State(name="State1").save()
-        State(name="State2").save()
-        State(name="State3").save()
-
-        # Use count method to get the number of State objects
-        count_states = models.storage.count(State)
-
-        # Check if the count matches the number of created State objects
-        self.assertEqual(count_states, 3)
-
-    def test_count_method_all_objects(self):
-        """Test the count method without specifying a class"""
-        # Create objects of different classes to store in the database
-        State(name="State").save()
-        City(name="City").save()
-        User(username="User").save()
-
-        # Use count method to get the total number of objects
-        count_all_objects = models.storage.count()
-
-        # Check if the count matches the total number of created objects
-        self.assertEqual(count_all_objects, 3)
-
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
