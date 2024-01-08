@@ -3,7 +3,6 @@
 Contains the class DBStorage
 """
 
-from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -83,7 +82,7 @@ class DBStorage:
     def count(self, cls=None):
         """Counts number of objects if any"""
         numObjects = 0
-        for obj in storage:
-            if isinstance(obj, cls) or cls == None:
+        for obj in self.all(cls):
+            if isinstance(obj, cls) or cls is None:
                 numObjects = numObjects + 1
         return numObjects

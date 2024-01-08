@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """app.py to connect to API"""
 import os
-from models import storage
+import models
 from api.v1.views import app_views
 from flask import Flask, Blueprint, jsonify, make_response
 from flask_cors import CORS
@@ -15,7 +15,7 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 @app.teardown_appcontext
 def teardown_appcontext(code):
     """teardown_appcontext"""
-    storage.close()
+    models.storage.close()
 
 
 @app.errorhandler(404)
