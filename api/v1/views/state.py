@@ -70,11 +70,14 @@ def put_state(state_id):
         abort(404)
     try:
         body = request.get_json()
+        ignore_keys = ["id", "updated_at", "created_at"]
         if 'name' not in body.keys():
-            return make_response(jsonify("Missing name"), 400)
+            abort(400, description="Missing name")
         for key in body:
-            res.__dict__[key] = body[key]
+            if key not in ignore_keys:
+                res.__dict__[key] = body[key]
+        res.save()
         storage.save()
         return make_response(jsonify(res.to_dict()), 200)
     except Exception as e:
-        return make_response(jsonify("Not a JSON"), 400)
+        abort(400, description="Not a JSON")
