@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-"""The index.py to connect to API"""
-from api.v1.views import app_views
+"""Main file to set up API endpoints"""
+
 from flask import Flask, Blueprint, jsonify
+from api.v1.views import app_views
 from models import storage
 
 
 hbnbText = {
-    "amenities": "Amenity",
     "cities": "City",
-    "places": "Place",
-    "reviews": "Review",
+    "amenities": "Amenity",
     "states": "State",
     "users": "User"
+    "places": "Place",
+    "reviews": "Review",
 }
 
 
@@ -28,6 +29,7 @@ def hbnbStats():
     for key, value in hbnbText.items():
         return_dict[key] = storage.count(value)
     return jsonify(return_dict)
+
 
 if __name__ == "__main__":
     pass

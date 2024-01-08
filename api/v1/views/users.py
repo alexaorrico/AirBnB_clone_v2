@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-"""users.py"""
+"""Endpoint for managing users"""
 
-from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+from api.v1.views import app_views
 from models import storage
 from models.user import User
 

@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-"""places_amenities.py"""
+"""Endpoint for handling place amenities"""
+
 import os
-from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+from api.v1.views import app_views
 from models import storage
 from models.amenity import Amenity
 from models.place import Place
