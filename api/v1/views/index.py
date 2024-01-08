@@ -29,4 +29,3 @@ def object_status():
         key: storage.count(value)for key, value in objects.items()
         }
     return jsonify(object_counts)
-
