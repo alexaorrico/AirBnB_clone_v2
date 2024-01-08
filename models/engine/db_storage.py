@@ -79,7 +79,7 @@ class DBStorage:
         """Method to retrieve a specific object"""
         try:
             return self.__session.query(cls).filter(cls.id == id).one()
-        except:
+        except NoResultFound:
             return None
 
     def count(self, cls=None):
