@@ -15,17 +15,13 @@ def api_status():
 
 @app_views.route('/stats', methods=['GET'])
 def returns_no():
-    """returning count for all objects by type"""
-    if request.method == 'GET':
-        res = {}
-        clss = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states",
-            "User": "users"
-            }
-        for k, v in clss.items():
-            res[v] = storage.count(k)
-        return jsonify(res)
+        """Retrieves the number of each object type"""
+    stats_dict = {
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'places': storage.count('Place'),
+        'reviews': storage.count('Review'),
+        'states': storage.count('State'),
+        'users': storage.count('User')
+    }
+    return jsonify(stats_dict)
