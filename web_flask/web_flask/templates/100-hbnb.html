@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<HTML lang="en">
+
+<HEAD>
+    <TITLE>AirBnB clone</TITLE>
+
+    <LINK rel="shortcut icon" href="../static/images/icon.ico" />
+
+    <LINK rel="stylesheet" href="../static/styles/4-common.css" />
+    <LINK rel="stylesheet" href="../static/styles/3-header.css" />
+    <LINK rel="stylesheet" href="../static/styles/3-footer.css" />
+    <LINK rel="stylesheet" href="../static/styles/6-filters.css" />
+    <LINK rel="stylesheet" href="../static/styles/8-places.css" />
+</HEAD>
+
+<BODY>
+    <HEADER>
+        <DIV class="logo"></DIV>
+    </HEADER>
+    <DIV class="container">
+        <SECTION class="filters">
+            <button>Search</button>
+            <DIV class="locations">
+                <H3>States</H3>
+                <h4>&nbsp;</h4>
+                <UL class="popover">
+                    {% for state in states %}
+                    <LI>
+                        <H2>{{ state.name }}</H2>
+                        <UL>
+                            {% for city in state.cities %}
+                            <LI>
+                                <h4>{{ city.name }}</h4>
+                            </LI>
+                            {% endfor %}
+                        </UL>
+                    </LI>
+                    {% endfor %}
+                </UL>
+            </DIV>
+            <DIV class="amenities">
+                <H3>Amenities</H3>
+                <H4>&nbsp;</H4>
+                <UL class="popover">
+                    {% for amenity in amenities %}
+                    <LI>
+                        <H4>{{ amenity.name }}</H4>
+                    </LI>
+                    {% endfor %}
+                </UL>
+            </DIV>
+        </SECTION>
+        <SECTION class="places">
+            <H1>Places</H1>
+            {% for place in places %}
+            <ARTICLE>
+                <DIV class="headline">
+                    <H2>{{ place.name }}</H2>
+                    <DIV class="price_by_night">${{ place.price_by_night }}</DIV>
+                </DIV>
+                <DIV class="information">
+                    <DIV class="max_guest">
+                        <DIV class="guest_icon"></DIV>
+                        <P>{{ place.max_guest }} Guests</P>
+                    </DIV>
+                    <DIV class="number_rooms">
+                        <DIV class="bed_icon"></DIV>
+                        <P>{{ place.number_rooms }} Bedroom</P>
+                    </DIV>
+                    <DIV class="number_bathrooms">
+                        <DIV class="bath_icon"></DIV>
+                        <P>{{ place.number_bathrooms }} Bathroom</P>
+                    </DIV>
+                </DIV>
+                <DIV class="user">
+                    <B>Owner</B>: {{ place.user.first_name }} {{ place.user.last_name }}
+                </DIV>
+                <DIV class="description">{{ place.description|safe }}</DIV>
+            </ARTICLE>
+            {% endfor %}
+        </SECTION>
+    </DIV>
+    <FOOTER>
+        <P>Holberton School</P>
+    </FOOTER>
+</BODY>
+
+</HTML>
