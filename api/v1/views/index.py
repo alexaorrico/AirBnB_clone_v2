@@ -12,13 +12,13 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route("/status")
+@app_views.route("/status", strict_slashes=False)
 def status():
     """Returns the api status in JSON format"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats")
+@app_views.route("/stats", strict_slashes=False)
 def stats():
     """Returns the number of items in storage in JSON format"""
     from models import storage
@@ -28,3 +28,6 @@ def stats():
 
     all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
     return jsonify(all_cls_stats)
+
+if __name__ == "__main__":
+    pass
