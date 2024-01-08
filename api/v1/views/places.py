@@ -6,6 +6,7 @@ from flask import jsonify, request, abort
 from models import storage
 from models.city import City
 from models.place import Place
+from models.state import State
 from models.user import User
 from api.v1.views import app_views
 
@@ -78,3 +79,42 @@ def update_place(place_id):
             setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict()), 200
+
+
+def has_amenities(place, amenities):
+    """Check if a place has any of the passed amenities"""
+    place_amenities = [amenity.id for amenity in place.amenities]
+    return bool(set(place_amenities) & set(amenities))
+
+
+@app_views.route('/places_search', methods=['POST'],
+                 strict_slashes=False)
+def search_places():
+    """Returns a list of places that matches the search criteria"""
+    data = request.get_json()
+    if data is None:
+        abort(400, 'Not a JSON')
+    state_ids = data.get('states', [])
+    city_ids = data.get('cities', [])
+    amenity_ids = data.get('amenities', [])
+    if not (state_ids or city_ids or amenity_ids):
+        places = storage.all(Place)
+        return jsonify([place.todict() for place in places])
+    places = []
+    seen_cities = set()
+    for state_id in state_ids:
+        state = storage.get(State, state_id)
+        if state:
+            for city in state.cities:
+                places += city.places
+                seen_cities.add(city.id)
+    city_ids = list(set(city_ids) - seen_cities)
+    for city_id in city_ids:
+        city = storage.get(City, city_id)
+        if city:
+            places += city.places
+    if not amenity_ids:
+        return jsonify([place.to_dict() for place in places])
+    places = places or storage.all(Place)
+    return jsonify([place.to_dict() for place in places if
+                    has_amenities(place, amenity_ids)])
