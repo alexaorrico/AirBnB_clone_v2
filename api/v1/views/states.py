@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Objects that handles all default RESTful API actions
-"""
+""" Objects that handles all default RESTful API actions """
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
