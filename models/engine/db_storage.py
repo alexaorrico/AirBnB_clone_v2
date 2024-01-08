@@ -93,5 +93,5 @@ class DBStorage:
         """
         y = self.all(cls)
         if cls in classes.values():
-            data = self.all(cls)
+            y = self.all(cls)
         return len(y)
