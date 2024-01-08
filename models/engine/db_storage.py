@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the class DBStorage
-"""
+"""Contains the class DBStorage"""
 
 import models
 from models.amenity import Amenity
@@ -15,6 +13,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -50,6 +49,25 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
+
+    def get(self, cls, id):
+        """
+        returns a single class object based on the ID
+        and None if not found
+        """
+        if cls not in classes.values():
+            return None
+        class_items = models.storage.all(cls)
+        for key, value in class_items.items():
+            if value.id == id:
+                return class_items[key]
+        return None
+
+    def count(self, cls=None):
+        """
+        returns a count of all objects based on the class
+        """
+        return len(models.storage.all(cls))
 
     def new(self, obj):
         """add the object to the current database session"""
