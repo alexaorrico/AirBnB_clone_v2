@@ -28,6 +28,3 @@ def stats():
 
     all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
     return jsonify(all_cls_stats)
-
-if __name__ == "__main__":
-    pass
