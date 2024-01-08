@@ -31,11 +31,10 @@ def count_func():
     users = storage.count(User)
 
     return jsonify(
-        amenities= amenities,
+        amenities=amenities,
         cities=cities,
         places=places,
         reviews=reviews,
         states=states,
         users=users
     )
-
