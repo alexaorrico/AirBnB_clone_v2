@@ -79,9 +79,9 @@ class DBStorage:
         """A method to retrieve  one object and return the object based on
         the class and it's ID or none if not found.
         """
-        if cls in class.values() and id and type(id) = str:
-            ob = self.all(cls)
-            for key, value in ob.itms():
+        if cls in class.values() and id and type(id) == str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.itms():
                 if key.split(".")[1] == id:
                     return value
         return None
@@ -91,7 +91,7 @@ class DBStorage:
          number of objects in storage matching the given class. If no class is
          If no class is passed, returns the count of all objects in storage.
         """
-        ynx = self.all(cls)
+        data = self.all(cls)
         if cls in classes.values():
-            ynx = self.all(cls)
-        return len(ynx)
+            data = self.all(cls)
+        return len(data)
