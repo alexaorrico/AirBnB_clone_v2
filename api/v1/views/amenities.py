@@ -27,7 +27,7 @@ def amenities():
         new_amenity = Amenity(**amenity_dict)
         new_amenity.save()
         new_amenity_json = jsonify(new_amenity.to_dict())
-        return new_amenity_json
+        return new_amenity_json, 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=["GET"])
