@@ -15,14 +15,11 @@ from models.user import User
 def get_user_or_update_user(user_id):
     """
     Retrieves, updates, or deletes a User object by ID.
-
     GET /api/v1/users/<user_id> - Retrieves a User object.
     PUT /api/v1/users/<user_id> - Updates a User object.
     DELETE /api/v1/users/<user_id> - Deletes a User object.
-
     Args:
     user_id (str): ID of the User.
-
     Returns:
     JSON: User obj or success message.
     """
@@ -60,10 +57,8 @@ def get_user_or_update_user(user_id):
 def get_users_or_create_user():
     """
     Retrieves the list of all User objects or creates a new User.
-
     GET /api/v1/users - Retrieves the list of all User objects.
     POST /api/v1/users - Creates a new User.
-
     Returns:
     JSON: List of User objects or newly created User.
     """
