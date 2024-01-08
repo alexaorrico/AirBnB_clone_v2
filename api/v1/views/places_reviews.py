@@ -43,7 +43,7 @@ def delete_review(review_id):
 
 
 @app_views.route('places/<place_id>/reviews', methods=['POST'], strict_slashes=False)
-def post_place(place_id):
+def post_review(place_id):
     """Creates a place"""
     from models import storage
     from models.user import User
