@@ -2,9 +2,9 @@
 """
 this module is to use CORs for api testing
 """
+from api.v1.views import app_views
 import sys
 from flask import Flask
-from api.v1.views import app_views
 from models import storage
 
 
