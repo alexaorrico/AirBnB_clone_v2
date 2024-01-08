@@ -7,10 +7,12 @@ from models import storage
 from api.v1.views import app_views
 from models.state import State
 
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_status():
     """Check the status of the route"""
     return jsonify({'status': 'OK'})
+
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def object_status():
@@ -27,4 +29,3 @@ def object_status():
         key: storage.count(value)for key, value in objects.items()
         }
     return jsonify(object_counts)
-

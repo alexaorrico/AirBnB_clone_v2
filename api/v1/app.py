@@ -15,11 +15,13 @@ CORS(app, origins="0.0.0.0")
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Close SQLAlchemy session"""
     storage.close()
-    
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     """Handler for 404 errors."""
