@@ -14,14 +14,10 @@ from api.v1.views import app_views
                  strict_slashes=False)
 def all_places(city_id):
     """Returns a list of all places in a given city"""
-    data = []
-    if storage.get(City, city_id) is None:
+    city = storage.get(City, city_id)
+    if not city:
         abort(404)
-    places = storage.all(Place).values()
-    for place in places:
-        if place.city_id == city_id:
-            data.append(place.to_dict())
-    return jsonify(data)
+    return jsonify([place.to_dict() for place in city.places])
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
@@ -30,8 +26,7 @@ def get_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    place = place.to_dict()
-    return jsonify(place)
+    return jsonify(place.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
@@ -60,13 +55,12 @@ def post_place(city_id):
         abort(400, 'Missing user_id')
     if 'name' not in data:
         abort(400, 'Missing name')
-    if storage.get(User, data['user_id']) is None:
+    if storage.get(User, data.get('user_id')) is None:
         abort(404)
     data['city_id'] = city_id
     place = Place(**data)
     place.save()
-    place = place.to_dict()
-    return jsonify(place), 201
+    return jsonify(place.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
@@ -78,10 +72,9 @@ def update_place(place_id):
     data = request.get_json()
     if data is None:
         abort(400, 'Not a JSON')
+    special_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
     for key, value in data.items():
-        special_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
         if key not in special_keys:
             setattr(place, key, value)
-        place.save()
-        place = place.to_dict()
-        return jsonify(place), 200
+    place.save()
+    return jsonify(place.to_dict()), 200
