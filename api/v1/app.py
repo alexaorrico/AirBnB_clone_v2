@@ -24,7 +24,7 @@ def teardown(args=None):
 @app.errorhandler(404)
 def not_found(error):
     # This method returns a json error message when a url is not found
-    return jsonify(error='Not found')
+    return jsonify(error='Not found'), 404
 
 
 if __name__ == "__main__":
