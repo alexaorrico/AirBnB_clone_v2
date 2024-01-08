@@ -7,6 +7,7 @@ from flask import abort, jsonify, make_response, request
 from models import storage
 from models.state import State
 
+
 # Route for retrieving all state objs
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
@@ -18,8 +19,13 @@ def get_all_states():
         states.append(state.to_dict())
     return jsonify(states)
 
+
 # Route for retrieving specific stated by their id
-@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
+@app_views.route(
+    '/states/<string:state_id>',
+    methods=['GET'],
+    strict_slashes=False
+)
 def get_state(state_id):
     """
     GETs a specified state
@@ -30,8 +36,13 @@ def get_state(state_id):
     else:
         abort(404)
 
+
 # Route for deleting a specific State by id
-@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route(
+    '/states/<string:state_id>',
+    methods=['DELETE'],
+    strict_slashes=False
+)
 def delete_state(state_id):
     """
     DELETEs a state by their id
@@ -42,6 +53,7 @@ def delete_state(state_id):
     state.delete()
     storage.save()
     return (jsonify({}), 200)
+
 
 # Route for creating a new state
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
@@ -55,6 +67,7 @@ def create_state():
     state.save()
     return make_response(jsonify(state.to_dict()), 201)
 
+
 # Route for updating an existing state
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
@@ -65,8 +78,7 @@ def update_state(state_id):
     if state is None:
         abort(404)
     if not request.get_json():
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for attr, val in request.get_json().items():
         if attr not in ['id', 'created_at', 'updated_at']:
             setattr(state, attr, val)

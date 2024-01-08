@@ -4,17 +4,18 @@ Create a route `/status` on the object app_views.
 """
 # Import the required modules
 from api.v1.views import app_views
-from flask import Flask, Blueprint, jsonify
+from flask import jsonify
 from models import storage
 
 hbnbStats = {
-     "amenities": "Amenity",
+    "amenities": "Amenity",
     "cities": "City",
     "places": "Place",
     "reviews": "Review",
     "states": "State",
     "users": "User"
 }
+
 
 @app_views.route('/status', strict_slashes=False)
 def api_status():
@@ -34,6 +35,7 @@ def hbnb_stats():
     for key, value in hbnbStats.items():
         return_dict[key] = storage.count(value)
     return jsonify(return_dict)
+
 
 if __name__ == "__main__":
     pass
