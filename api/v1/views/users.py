@@ -5,6 +5,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
+
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
     """ Retrieves the list of all user objects or a specific user """
