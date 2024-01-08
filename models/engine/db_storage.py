@@ -91,5 +91,4 @@ class DBStorage:
             for clss in classes.values():
                 count += len(self.all(clss))
 
-            return count
-        
+            return count 
