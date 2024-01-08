@@ -61,10 +61,9 @@ def state_put(state_id):
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
+    special_keys = ["id", "created_at", "updated_at"]
     for key, value in data.items():
-        special_keys = ["id", "created_at", "updated_at"]
         if key not in special_keys:
             setattr(state, key, value)
     state.save()
-    state = state.to_dict()
     return jsonify(state), 200
