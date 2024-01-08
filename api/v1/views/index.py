@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+this file is used to output the json of the flask task
+"""
 from api.v1.views import app_views
 from flask import jsonify
 

@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+This module declares the blueprint of the system 
+"""
 from flask import Blueprint
 from api.v1.views.index import *
 

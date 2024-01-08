@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+creation of the blue print of the project
+"""
 from flask import Blueprint
 
 
