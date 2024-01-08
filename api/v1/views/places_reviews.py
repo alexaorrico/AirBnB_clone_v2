@@ -20,7 +20,7 @@ def getReviewPlace(place_id):
     if place is None:
         abort(404)
 
-    return jsonify(review_list)
+    return jsonify(review_list), 200
 
 
 @app_views.route("/reviews/<review_id>", methods=["GET"],
@@ -32,7 +32,7 @@ def get_review(review_id):
     if review is None:
         abort(404)
 
-    return jsonify(review.to_dict())
+    return jsonify(review.to_dict()), 200
 
 
 @app_views.route("/reviews/<review_id>", methods=["DELETE"],
