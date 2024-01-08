@@ -55,7 +55,7 @@ def state_put(state_id):
     """ Updates a State object """
     state = storage.get("State", state_id)
     if not state:
-        abort(400)
+        abort(404)
 
     request_body = request.get_json()
     if not request_body:
