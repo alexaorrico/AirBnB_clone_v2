@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''
-    Main application script for starting a Flask API with a registered blueprint.
+    Main application script for starting
+    a Flask API with a registered blueprint.
 '''
 
 from flask import Flask, make_response, jsonify
