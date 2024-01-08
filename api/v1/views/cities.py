@@ -16,7 +16,7 @@ def get_cities(state_id):
         all_cities = storage.all('City')
         cities = [city.to_dict() for city in all_cities.values() 
                   if city.state_id == state_id]
-        return jsonify(cities)
+        return jsonify(cities), 200
 
     if request.method  == 'POST':
         data =  request.get_json()
