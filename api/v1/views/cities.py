@@ -74,7 +74,7 @@ def city_by_id(city_id):
     if request.method == 'GET':
         return jsonify(city.to_dict())
 
-    if request.metod == 'PUT':
+    if request.method == 'PUT':
         try:
             data = request.get_json()
         except Exception:
@@ -82,6 +82,9 @@ def city_by_id(city_id):
 
         if data is None:
             abort(400, 'Not a JSON')
+
+        if 'name' not in data:
+            abort(400, 'Missing name')
 
         ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
         for key, value in data.items():
