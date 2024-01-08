@@ -38,7 +38,7 @@ def delete_city(city_id):
         abort(404)
     city.delete()
     storage.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
@@ -72,4 +72,4 @@ def update_city(city_id):
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(city, key, value)
     city.save()
-    return jsonify(city.to_dict())
+    return jsonify(city.to_dict()), 200
