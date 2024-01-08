@@ -71,7 +71,6 @@ class FileStorage:
 
     def get(self, cls, id):
         """A method to retrieve one object"""
-        import sys
         if cls is None or id is None:
             return None
         elif cls not in classes.values():
@@ -80,7 +79,6 @@ class FileStorage:
             return None
         else:
             for obj in self.all(cls).values():
-                print(obj.id, id)
                 if obj.id == id:
                     return obj
             return None
