@@ -75,15 +75,15 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-def get(self, cls, id):
-        """retrieves one obkject"""
-        if cls not in classes.values():
-            return None
+    def get(self, cls, id):
+            """retrieves one obkject"""
+            if cls not in classes.values():
+                return None
 
-        values = self.all(cls)
-        for value in values.values():
-            if value.id == id:
-                return value
+            values = self.all(cls)
+            for value in values.values():
+                if value.id == id:
+                    return value
 
     def count(self, cls=None):
         """count the number of objects in storage"""

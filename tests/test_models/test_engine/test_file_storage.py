@@ -113,3 +113,28 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_count(self):
+        """tests count method"""
+        storage = FileStorage()
+        obj = State(name="Accra")
+        obj.save()
+        self.assertEqual(len(storage.all(State)), storage.count(State))
+
+    def test_count_all(self):
+        """tests count all method"""
+        storage = FileStorage()
+        self.assertEqual(len(storage.all()), storage.count())
+
+    def test_get(self):
+        """tests get method"""
+        storage = FileStorage()
+        obj = State(name="Accra")
+        obj.save()
+        self.assertIsNotNone(storage.get(State, obj.id))
+        # self.assertIsInstance(State, storage.get(State, obj.id))
+
+    def test_get_none(self):
+        """tests get when no class is passed"""
+        storage = FileStorage()
+        self.assertEqual(storage.get(State, 123), None)
