@@ -32,5 +32,5 @@ class User(BaseModel, Base):
     def __setattr__(self, key, value):
         """sets user pasword"""
         if key == "password":
-            value = hashlib.md5(v.encode()).hexdigest()
+            value = hashlib.md5(value.encode()).hexdigest()
         super().__setattr__(key, value)
