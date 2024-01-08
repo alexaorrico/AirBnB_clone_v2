@@ -24,7 +24,7 @@ def amenities():
             abort(400, "Not a JSON")
         if "name" not in amenity_dict:
             abort(400, "Missing name")
-        new_amenity = Amenity({"name": amenity_dict.get("name")})
+        new_amenity = Amenity(**amenity_dict)
         new_amenity.save()
         new_amenity_json = jsonify(new_amenity.to_dict())
         return new_amenity_json
