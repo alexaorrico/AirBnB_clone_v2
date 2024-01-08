@@ -1,0 +1,44 @@
+documentation:
+"explication des  modifications faites concernant le fichier base_model pour le task 14 "
+
+
+
+
+voici une version mise à jour du premier code (models/base_model.py) qui prend en compte les changements nécessaires pour sécuriser le stockage du mot de passe, tout en conservant la même fonctionnalité que le deuxième code :
+
+Avec ces modifications, le mot de passe sera hashé lors de la création ou de la mise à jour de l'objet User, et il sera exclu de la représentation en dictionnaire à moins que spécifié autrement.
+
+
+Import de hashlib :
+
+python
+Copy code
+import hashlib
+Intérêt : hashlib est utilisé pour générer des hash sécurisés, et dans ce cas, nous l'utilisons pour hasher le mot de passe de l'utilisateur.
+
+
+Hashage du mot de passe à l'initialisation :
+
+python
+Copy code
+# Hash the password if it exists in kwargs
+if hasattr(self, 'password') and 'password' in kwargs:
+    self.password = hashlib.md5(kwargs['password'].encode()).hexdigest()
+Intérêt : Cela garantit que si un mot de passe est passé lors de la création d'un objet User, il sera immédiatement hashé avant d'être stocké dans l'instance.
+
+
+
+Exclusion du mot de passe dans to_dict par défaut :
+
+python
+Copy code
+def to_dict(self, include_password=False):
+    # ...
+    # Exclude password from the dictionary unless include_password is True
+    if not include_password and hasattr(self, 'password') and 'password' in new_dict:
+        del new_dict['password']
+    # ...
+Intérêt : Cela empêche le mot de passe d'être inclus dans la représentation en dictionnaire par défaut de l'objet User. Il ne sera inclus que si include_password est explicitement défini sur True. Cela évite de divulguer le mot de passe dans des contextes où ce n'est pas nécessaire.
+
+
+En résumé, ces changements permettent de garantir que le mot de passe est toujours hashé lors de la création ou de la mise à jour d'un objet User et offre un contrôle sur son inclusion dans la représentation en dictionnaire, contribuant ainsi à la sécurisation du stockage du mot de passe.
