@@ -3,13 +3,8 @@
 
 from flask import jsonify
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 from api.v1.views import app_views
 
-=======
-=======
->>>>>>> Stashed changes
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -21,10 +16,6 @@ from models.user import User
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 @app_views.route('/status', strict_slashes=False)
 def index():
