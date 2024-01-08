@@ -8,9 +8,9 @@ from flask import Flask, jsonify, request, abort
 from models import storage
 
 
-@app_views.route('/amenities', methods=["GET", "POST"], strict_slashes=False)
-def amenities():
-    """retrieve or create amenities depending on request method"""
+@app_views.route('/users', methods=["GET", "POST"], strict_slashes=False)
+def users():
+    """retrieve or create users depending on request method"""
     if request.method == "GET":
         user = storage.all(User).values()
         user_list = []
@@ -30,9 +30,9 @@ def amenities():
         return new_user_json, 201
 
 
-@app_views.route('/amenities/<user_id>', methods=["GET"],
+@app_views.route('/users/<user_id>', methods=["GET"],
                  strict_slashes=False)
-def amenities_id(user_id):
+def users_id(user_id):
     """retrieve user with id"""
     user = storage.get(User, user_id)
     if user is None:
@@ -41,7 +41,7 @@ def amenities_id(user_id):
     return user_json
 
 
-@app_views.route('/amenities/<user_id>', methods=["DELETE"],
+@app_views.route('/users/<user_id>', methods=["DELETE"],
                  strict_slashes=False)
 def delete_user(user_id):
     """delete an user"""
@@ -53,7 +53,7 @@ def delete_user(user_id):
     return jsonify({}), 200
 
 
-@app_views.route('/amenities/<user_id>', methods=["PUT"],
+@app_views.route('/users/<user_id>', methods=["PUT"],
                  strict_slashes=False)
 def update_user(user_id):
     """update an user"""
