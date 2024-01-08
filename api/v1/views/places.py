@@ -62,7 +62,8 @@ def create_place(city_id):
         return jsonify({"error": "Missing name"}), 400
     else:
         new_place = Place(**data)
-        new_place.save()
+        new_place.new()
+        storage.save()
         return jsonify(new_place.to_dict()), 201
 
 
@@ -83,5 +84,5 @@ def update_place(place_id):
         if key not in ignored_keys:
             setattr(place, key, value)
 
-    place.save()
+    storage.save()
     return jsonify(place.to_dict()), 200
