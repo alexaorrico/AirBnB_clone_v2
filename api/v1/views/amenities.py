@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""index default view"""
+"""Amenity resource view"""
 
 from flask import jsonify, abort, make_response, request
 from api.v1.views import app_views
@@ -28,7 +28,7 @@ def amenity(amenity_id):
 @app_views.route("/amenities/<amenity_id>",
                  strict_slashes=False, methods=['DELETE'])
 def delete_amenity(amenity_id):
-    """retrieves the number of each objects by amenity_id"""
+    """delete an amenity by id"""
     amenity = storage.get("Amenity", amenity_id)
     if not amenity:
         abort(404)

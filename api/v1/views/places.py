@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""index default view"""
+"""Place object api resource view"""
 
 from flask import jsonify, abort, make_response, request
 from api.v1.views import app_views
@@ -7,7 +7,7 @@ from models import storage
 from models.place import Place
 
 
-@app_views.route("/cities/<city_id>/places", strict_slashes=False)
+@app_views.route("/cities/<city_id>/places")
 def all_places(city_id):
     """retrieves all Place objects by class name"""
     if not storage.get('City', city_id):
@@ -20,17 +20,16 @@ def all_places(city_id):
     return jsonify(places)
 
 
-@app_views.route("/places/<place_id>", strict_slashes=False)
+@app_views.route("/places/<place_id>")
 def place(place_id):
     """retrieves the number of each objects by place_id"""
     place = storage.get("Place", place_id)
-    if not plce:
+    if not place:
         abort(404)
     return jsonify(place.to_dict())
 
 
-@app_views.route("/places/<place_id>", strict_slashes=False,
-                 methods=['DELETE'])
+@app_views.route("/places/<place_id>", methods=['DELETE'])
 def delete_place(place_id):
     """retrieves the number of each objects by place_id"""
     place = storage.get("Place", place_id)
