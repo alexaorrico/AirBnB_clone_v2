@@ -67,6 +67,36 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get_method(self):
+        """Create an instance of State and add it to the storage"""
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+
+        retrieved_state = storage.get(State, state.id)
+
+        self.assertEqual(state, retrieved_state)
+
+    def test_count_method(self):
+        # Create instances of State and City and add them to the storage
+        state1 = State(name="California")
+        state2 = State(name="New York")
+        city1 = City(name="Los Angeles", state_id=state1.id)
+        city2 = City(name="New York City", state_id=state2.id)
+
+        storage.new(state1)
+        storage.new(state2)
+        storage.new(city1)
+        storage.new(city2)
+        storage.save()
+
+        state_count = storage.count(State)
+
+        self.assertEqual(state_count, 2)
+
+
+if __name__ == '__main__':
+    unittest.main()
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -113,3 +143,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_method(self):
+        """ Create an instance of State and add it to the storage"""
+        state = State(name="California")
+        storage.new(state)
+        storage.save()
+
+        retrieved_state = storage.get(State, state.id)
+
+        self.assertEqual(state, retrieved_state)
+
+    def test_count_method(self):
+        """ Create instances of State and City and add them to the storage"""
+        state1 = State(name="California")
+        state2 = State(name="New York")
+        city1 = City(name="Los Angeles", state_id=state1.id)
+        city2 = City(name="New York City", state_id=state2.id)
+
+        storage.new(state1)
+        storage.new(state2)
+        storage.new(city1)
+        storage.new(city2)
+        storage.save()
+
+        state_count = storage.count(State)
+
+        self.assertEqual(state_count, 2)
+
+
+if __name__ == '__main__':
+    unittest.main()
