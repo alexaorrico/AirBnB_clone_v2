@@ -60,7 +60,10 @@ def create_amenity2(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if not place or not amenity:
         abort(404)
-
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        place_amenities = place.amenities
+    else:
+        place_amenities = place.amenity_ids
     if amenity in place.amenities:
         return make_response(jsonify(amenity.to_dict()), 200)
 
