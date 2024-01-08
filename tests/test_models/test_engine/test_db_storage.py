@@ -18,7 +18,9 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
+STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -70,6 +72,7 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +89,19 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """... checks if get() function returns properly"""
+        place = Place(name="Place1")
+        models.storage.new(place)
+        models.storage.save()
+        duplicate = models.storage.get('Place', place.id)
+        self.assertEqual(place, duplicate, "get() function failed")
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all(self):
+        """... checks if count() functions"""
+        expected = len(models.storage.all())
+        count_all = models.storage.count()
+        self.assertEqual(expected, count_all)

@@ -18,9 +18,12 @@ import json
 import os
 import pep8
 import unittest
+from models.engine.file_storage import FileStorage
+STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
+storage = models.storage
 
 
 class TestFileStorageDocs(unittest.TestCase):
@@ -113,3 +116,20 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """... checks if get() function returns properly"""
+        place = Place(name="Place1")
+        models.storage.new(place)
+        models.storage.save()
+        duplicate = models.storage.get('Place', place.id)
+        self.assertEqual(place, duplicate, "get() function failed")
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all(self):
+        """... checks if count() functions"""
+        storage = FileStorage()
+        expected = len(storage._FileStorage__objects)
+        count_all = models.storage.count()
+        self.assertEqual(expected, count_all)
