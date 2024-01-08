@@ -5,7 +5,8 @@ from models import storage, Place, Amenity
 from api.v1.views import app_views
 
 
-@app_views.route('/places/<place_id>/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route(
+        '/places/<place_id>/amenities', methods=['GET'], strict_slashes=False)
 def get_place_amenities(place_id):
     """Retrieve the list of all amenities of a Place"""
     place = storage.get(Place, place_id)
