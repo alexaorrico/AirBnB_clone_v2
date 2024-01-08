@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """introducing a flask file"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -8,6 +8,12 @@ import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+
+@app.errorhandler(404)
+def error_handler(error):
+    """Handles error 404"""
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
