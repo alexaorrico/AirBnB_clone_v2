@@ -35,6 +35,12 @@ def del_amenity(place_id, amenity_id):
         abort(404)
     if amenity not in place.amenities:
         abort(404)
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        place_amenities = place.amenities
+    else:
+        place_amenities = place.amenity_ids
+    if amenity not in place_amenities:
+        abort(404)
     place.amenities.remove(amenity)
     storage.save()
     return make_response(jsonify({}), 200)
@@ -42,16 +48,20 @@ def del_amenity(place_id, amenity_id):
 
 @app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
                  strict_slashes=False, methods=['POST'])
-def post_amenity2(place_id, amenity_id):
-    """ post amenity by id """
+def create_amenity2(place_id, amenity_id):
+    """
+    Creates a new amenity instance and associates it with the place
+    """
     place = storage.get(Place, place_id)
-    if place is None:
-        abort(404)
     amenity = storage.get(Amenity, amenity_id)
-    if amenity is None:
+    if not place or not amenity:
         abort(404)
+
     if amenity in place.amenities:
-        return (jsonify(amenity.to_dict()), 200)
-    place.amenities.append(obj)
+        return make_response(jsonify(amenity.to_dict()), 200)
+
+    new_amenity = Amenity(name=amenity.name)
+    place.amenities.append(new_amenity)
     storage.save()
-    return (jsonify(amenity.to_dict(), 201))
+
+    return make_response(jsonify(new_amenity.to_dict()), 201)
