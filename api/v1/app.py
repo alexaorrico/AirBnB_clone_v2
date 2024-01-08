@@ -9,9 +9,6 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
-app.config['JSON_SORT_KEYS'] = False
-app.url_map.strict_slashes = False
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
@@ -28,7 +25,7 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
-    host = getenv('HBNB_API_HOST', default='0.0.0.0')
-    port = getenv('HBNB_API_PORT', default='5000')
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = getenv('HBNB_API_PORT', '5000')
 
     app.run(host=host, port=port, threaded=True)
