@@ -33,7 +33,7 @@ def delete_state(state_id):
     if state is not None:
         storage.delete(state)
         storage.save()
-        return {}, 200
+        return make_response(jsonify({}), 200)
     abort(404)
 
 
@@ -52,7 +52,7 @@ def create_state():
     data = request.get_json()
     instance = State(**data)
     instance.save()
-    return jsonify(instance.to_dict()), 201
+    return make_response(jsonify(instance.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
