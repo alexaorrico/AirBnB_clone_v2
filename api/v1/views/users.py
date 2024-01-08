@@ -8,12 +8,14 @@ from api.v1.views import app_views
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def get_users():
+    """get users"""
     users = storage.all(User).values()
     return jsonify([user.to_dict() for user in users])
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def get_user(user_id):
+    """get users with id"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -22,6 +24,7 @@ def get_user(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id):
+    """delete users with user id"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
@@ -32,6 +35,7 @@ def delete_user(user_id):
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
+    """create users"""
     data = request.get_json()
     if data is None:
         abort(400, description="Not a JSON")
@@ -49,6 +53,7 @@ def create_user():
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
+    """update users with user id"""
     user = storage.get(User, user_id)
     if user is None:
         abort(404)

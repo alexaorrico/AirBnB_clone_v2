@@ -11,6 +11,7 @@ from api.v1.views import app_views
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_places_by_city(city_id):
+    """get place with city id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -21,6 +22,7 @@ def get_places_by_city(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id):
+    """get place with place id"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -30,6 +32,7 @@ def get_place(place_id):
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
+    """delete place with place id"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -41,6 +44,7 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place(city_id):
+    """create place with city id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -66,6 +70,7 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
+    """update place with place id"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
