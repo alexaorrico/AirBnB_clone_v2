@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """starts a flask app for our api"""
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 import os
 from api.v1.views import app_views
@@ -14,6 +14,11 @@ app.register_blueprint(app_views)
 def tear(exception):
     """closes the app and frees up resources"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({"error": "Not found"}), 404
 
 
 value_host = os.getenv('HBNB_API_HOST')
