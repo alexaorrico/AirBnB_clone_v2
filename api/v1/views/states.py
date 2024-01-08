@@ -12,7 +12,7 @@ from flasgger.utils import swag_from
 def get_states():
     all_states = storage.all(State)
     states = [x.to_dict() for x in all_states.values()]
-    return jsonify(states)
+    return make_response(jsonify(states))
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
@@ -20,7 +20,7 @@ def get_states():
 def get_state(state_id):
     state = storage.get(State, state_id)
     if state is not None:
-        return jsonify(state.to_dict())
+        return make_response(jsonify(state.to_dict()))
     abort(404)
 
 
