@@ -11,10 +11,13 @@ from api.v1.views import app_views
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_cities(state_id):
     """get cities"""
+    li = []
     get_stat = storage.get(State, state_id)
     if not get_stat:
         abort(404)
-    return jsonify(get_stat.cities)
+    for item in get_stat.cities:
+        li.append(item.to_dict())
+    return jsonify(li)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'])
