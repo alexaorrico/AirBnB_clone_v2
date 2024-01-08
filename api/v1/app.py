@@ -14,7 +14,7 @@ app.register_blueprint(app_views)
 def tear(exception):
     """closes the app and frees up resources"""
     storage.close()
-
+print(app.url_map)
 
 @app.errorhandler(404)
 def not_found(e):
