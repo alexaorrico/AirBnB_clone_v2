@@ -50,6 +50,13 @@ class Place(BaseModel, Base):
         longitude = 0.0
         amenity_ids = []
 
+    def to_dict(self, keep_password=False):
+        """Remove amenities key to avoid serialization error"""
+        res = super().to_dict(keep_password)
+        if 'amenities' in res:
+            del res['amenities']
+        return res
+
     def __init__(self, *args, **kwargs):
         """initializes Place"""
         super().__init__(*args, **kwargs)
