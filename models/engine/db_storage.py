@@ -91,7 +91,7 @@ class DBStorage:
          number of objects in storage matching the given class. If no class is
          If no class is passed, returns the count of all objects in storage.
         """
-        y = self.all(cls)
+        ynx = self.all(cls)
         if cls in classes.values():
-            y = self.all(cls)
-        return len(y)
+            ynx = self.all(cls)
+        return len(ynx)

@@ -130,11 +130,11 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """count"""
         storage = FileStorage()
-        d = {"name":"nam"}
-        state = State(**d)
+        dn = {"name":"nam"}
+        state = State(**dn)
         storage.new(state)
-        d = {"name": "Mexico"}
-        city = city(**d)
+        dn = {"name": "Mexico"}
+        city = city(**dn)
         storage.new(city)
         storage.save()
         b = storage.count()
