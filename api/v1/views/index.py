@@ -13,6 +13,11 @@ def get_status():
     """Check the status of the route"""
     return jsonify({'status': 'OK'})
 
+@app_views.route('/api/v1/nop', methods=['GET'], strict_slashes=False)
+def nop():
+    """Handles GET request to /api/v1/nop"""
+    return jsonify({'error': 'Not found'}), 404
+
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def object_status():
