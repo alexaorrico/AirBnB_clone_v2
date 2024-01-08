@@ -29,5 +29,5 @@ def num_objects():
     result = {}
     for key, value in classes.items():
         total = models.storage.count(value)
-        result[key] = total
+        result[key.lower()] = total
     return jsonify(result)
