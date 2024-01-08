@@ -1,36 +1,35 @@
 #!/usr/bin/python3
 """
-a new view for Amenity objects that handles all default RESTFul API actions.
+a new view for User objects that handles all default RESTFul API actions.
 """
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models import storage
-from models.amenity import Amenity
+from models.user import User
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET', 'PUT', 'DELETE'])
-def amenity_by_id(amenity_id):
+@app_views.route('/users/<user_id>',
+                 methods=['GET', 'PUT', 'DELETE'],
+                 strict_slashes=False)
+def get_user_or_update_user(user_id):
     """
-    Retrieves, updates, or deletes a Amenity object by ID.
-
-    GET /api/v1/amenities/<amenity_id> - Retrieves a Amenity object.
-    PUT /api/v1/amenities/<amenity_id> - Updates a Amenity object.
-    DELETE /api/v1/amenities/<amenity_id> - Deletes a Amenity object.
-
+    Retrieves, updates, or deletes a User object by ID.
+    GET /api/v1/users/<user_id> - Retrieves a User object.
+    PUT /api/v1/users/<user_id> - Updates a User object.
+    DELETE /api/v1/users/<user_id> - Deletes a User object.
     Args:
-    amenity_id (str): ID of the Amenity.
-
+    user_id (str): ID of the User.
     Returns:
-    JSON: Amenity obj or success message, or an empty dictionary.
+    JSON: User obj or success message.
     """
-    amenity = storage.get(Amenity, amenity_id)
+    user = storage.get(User, user_id)
 
-    if amenity is None:
+    if user is None:
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(amenity.to_dict())
+        return jsonify(user.to_dict()), 200
 
     if request.method == 'PUT':
         try:
@@ -41,33 +40,31 @@ def amenity_by_id(amenity_id):
         if data is None:
             abort(400, 'Not a JSON')
 
-        ignore_keys = ['id', 'created_at', 'updated_at']
+        ignore_keys = ['id', 'email', 'created_at', 'updated_at']
         for key, value in data.items():
             if key not in ignore_keys:
-                setattr(amenity, key, value)
-        amenity.save()
-        return jsonify(amenity.to_dict())
+                setattr(user, key, value)
+        user.save()
+        return jsonify(user.to_dict()), 200
 
     if request.method == 'DELETE':
-        amenity.delete()
+        user.delete()
         storage.save()
         return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['GET', 'POST'])
-def amenities_list():
+@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
+def get_users_or_create_user():
     """
-    Retrieves the list of all Amenity obj or creates a new Amenity.
-
-    GET /api/v1/amenities - Retrieves the list of all Amenity objects.
-    POST /api/v1/amenities - Creates a new Amenity.
-
+    Retrieves the list of all User objects or creates a new User.
+    GET /api/v1/users - Retrieves the list of all User objects.
+    POST /api/v1/users - Creates a new User.
     Returns:
-    JSON: List of Amenity obj or new Amenity with status code.
+    JSON: List of User objects or newly created User.
     """
     if request.method == 'GET':
-        amenities = storage.all(Amenity).values()
-        return jsonify([amenity.to_dict() for amenity in amenities])
+        users = storage.all(User).values()
+        return jsonify([user.to_dict() for user in users]), 200
 
     if request.method == 'POST':
         try:
@@ -78,9 +75,12 @@ def amenities_list():
         if data is None:
             abort(400, 'Not a JSON')
 
-        if 'name' not in data:
-            abort(400, 'Missing name')
+        if 'email' not in data:
+            abort(400, 'Missing email')
 
-        new_amenity = Amenity(**data)
-        new_amenity.save()
-        return jsonify(new_amenity.to_dict()), 201
+        if 'password' not in data:
+            abort(400, 'Missing password')
+
+        new_user = User(**data)
+        new_user.save()
+        return jsonify(new_user.to_dict()), 201
