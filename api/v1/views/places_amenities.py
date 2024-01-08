@@ -19,7 +19,8 @@ def get_place_amenities(place_id):
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         res = [amenity.to_dict() for amenity in place.amenities]
     else:
-        res = [storage.get("Amenity", id).to_dict() for id in place.amenity_ids]
+        res = [storage.get("Amenity", id).to_dict()
+               for id in place.amenity_ids]
     return [res]
 
 

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """ creates a new view for State object """
-from models.state import State
-from models import storage
 from api.v1.views import app_views
 from flask import make_response, jsonify, abort, request
+from models.state import State
+from models import storage
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -39,13 +39,15 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post_state():
-    """ post method for adding State """
-    if not request.get_json():
+    """
+    post method for adding State
+    """
+    res = request.get_json()
+    if res is None:
         abort(400, description="Not a JSON")
-    if 'name' not in request.get_json():
+    if 'name' not in res:
         abort(400, description="Missing name")
 
-    res = request.get_json()
     state = State(**res)
     storage.new(state)
     storage.save()
@@ -54,7 +56,9 @@ def post_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state(state_id):
-    """ updates state based on id """
+    """
+    updates state based on id
+    """
     state = storage.get("State", state_id)
     if not state:
         abort(404)

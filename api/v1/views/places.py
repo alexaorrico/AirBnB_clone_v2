@@ -107,7 +107,7 @@ def post_place_search():
         return jsonify([place.to_dict() for place in places.values()])
 
     places = []
-    
+
     if res.get('states'):
         states = [storage.get("State", id) for id in res.get('cities')]
         for city in cities:
