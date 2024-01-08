@@ -4,7 +4,6 @@
 
 This module creates and configures the Flask app, registers blueprints,
 and sets up the teardown_appcontext to close the database connection.
-
 """
 
 
