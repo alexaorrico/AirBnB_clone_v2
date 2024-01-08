@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """initializes the app environment"""
 from flask import Blueprint
 
