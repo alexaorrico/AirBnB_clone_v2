@@ -4,6 +4,7 @@ Contains class BaseModel
 """
 
 from datetime import datetime
+import time
 import models
 from os import getenv
 import sqlalchemy
@@ -11,7 +12,7 @@ from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
-time = "%Y-%m-%dT%H:%M:%S.%f"
+time = '%Y-%m-%dT%H:%M:%S.%f'
 
 if models.storage_t == "db":
     Base = declarative_base()
@@ -23,8 +24,8 @@ class BaseModel:
     """The BaseModel class from which future classes will be derived"""
     if models.storage_t == "db":
         id = Column(String(60), primary_key=True)
-        created_at = Column(DateTime, default=datetime.utcnow)
-        updated_at = Column(DateTime, default=datetime.utcnow)
+        created_at = Column(DateTime, default=datetime.now())
+        updated_at = Column(DateTime, default=datetime.now())
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
@@ -35,16 +36,16 @@ class BaseModel:
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
             else:
-                self.created_at = datetime.utcnow()
+                self.created_at = datetime.now()
             if kwargs.get("updated_at", None) and type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(kwargs["updated_at"], time)
             else:
-                self.updated_at = datetime.utcnow()
+                self.updated_at = datetime.now()
             if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
+            self.created_at = datetime.now()
             self.updated_at = self.created_at
 
     def __str__(self):
