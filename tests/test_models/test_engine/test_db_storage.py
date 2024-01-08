@@ -68,25 +68,51 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
     def test_get(self):
         """Test method to retrieve one object"""
+        new_state = State(name="New York")
+        new_state.save()
+        new_user = User(email="name@email.com", password="password")
+        new_user.save()
+        self.assertIs(new_state, models.storage.get("State", new_state.id))
+        self.assertIs(None, models.storage.get("State", "state"))
+        self.assertIs(None, models.storage.get("Lara", "aral"))
+        self.assertIs(new_user, models.storage.get("User", new_user.id))
 
-     def test_count(self):
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_count(self):
          """Test method to count the number of objects in storage"""
-
+         initial_count = models.storage.count()
+         self.assertEqual(models.storage.count("Aral"), 0)
+         new_state = State(name="Morocco")
+         new_state.save()
+         new_user = User(email="user@email.com", password="password")
+         new_user.save()
+         self.assertEqual(models.storage.count("State"), initial_count + 1)
+         self.assertEqual(models.storage.count(), initial_count + 2)
+    
