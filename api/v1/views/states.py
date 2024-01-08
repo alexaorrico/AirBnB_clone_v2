@@ -8,6 +8,8 @@ from api.v1.views import app_views
 
 # use strict_slashes because /states is different from /states/
 # task asks for /states but example uses /states/
+
+
 @app_views.route('/states/', methods=['GET'], strict_slashes=False)
 def get_states():
     """get status method"""
@@ -44,7 +46,8 @@ def post_states():
     return jsonify(new.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 methods=['DELETE'], strict_slashes=False)
 def del_states(state_id):
     """delete status"""
     get = storage.get(State, state_id)
@@ -65,9 +68,6 @@ def put_states(state_id):
     if not get_json:
         abort(400, "Not a JSON")
     for item in storage.all(State):
-    
-        # if (item["id"] == state_id):
-            # storage.all(State)["State." + state_id]["name"] == get_json["name"]
         # easier approach and loops through ALL object attributes,
         # not just the name
 

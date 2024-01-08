@@ -8,7 +8,8 @@ from models import storage
 from api.v1.views import app_views
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def get_cities(state_id):
     """get cities"""
     li = []
@@ -40,7 +41,8 @@ def del_cities(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def post_cities(state_id):
     """post city"""
     if not storage.get(State, state_id):
@@ -66,7 +68,7 @@ def put_city(city_id):
     if not get_json:
         abort(400, "Not a JSON")
     for k, v in get_json.items():
-            if k not in ["id", "created_at", "updated_at", "state_id"]:
-                setattr(get, k, v)
+        if k not in ["id", "created_at", "updated_at", "state_id"]:
+            setattr(get, k, v)
     storage.save()
     return jsonify(get.to_dict())
