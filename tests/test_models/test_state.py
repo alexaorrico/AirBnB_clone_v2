@@ -10,11 +10,13 @@ from models import state
 from models.base_model import BaseModel
 import pep8
 import unittest
+
 State = state.State
 
 
 class TestStateDocs(unittest.TestCase):
     """Tests to check the documentation and style of State class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -23,42 +25,46 @@ class TestStateDocs(unittest.TestCase):
     def test_pep8_conformance_state(self):
         """Test that models/state.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/state.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+        result = pep8s.check_files(["models/state.py"])
+        self.assertEqual(
+            result.total_errors, 0, "Found code style errors (and warnings)."
+        )
 
     def test_pep8_conformance_test_state(self):
         """Test that tests/test_models/test_state.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_state.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+        result = pep8s.check_files(["tests/test_models/test_state.py"])
+        self.assertEqual(
+            result.total_errors, 0, "Found code style errors (and warnings)."
+        )
 
     def test_state_module_docstring(self):
         """Test for the state.py module docstring"""
-        self.assertIsNot(state.__doc__, None,
-                         "state.py needs a docstring")
-        self.assertTrue(len(state.__doc__) >= 1,
-                        "state.py needs a docstring")
+        self.assertIsNot(state.__doc__, None, "state.py needs a docstring")
+        self.assertTrue(len(state.__doc__) >= 1, "state.py needs a docstring")
 
     def test_state_class_docstring(self):
         """Test for the State class docstring"""
-        self.assertIsNot(State.__doc__, None,
-                         "State class needs a docstring")
-        self.assertTrue(len(State.__doc__) >= 1,
-                        "State class needs a docstring")
+        msg = "State class needs a docstring"
+        self.assertIsNot(State.__doc__, None, msg)
+        self.assertTrue(len(State.__doc__) >= 1, msg)
 
     def test_state_func_docstrings(self):
         """Test for the presence of docstrings in State methods"""
         for func in self.state_f:
-            self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+            output = "{:s} method needs a docstring".format(func[0])
+            self.assertIsNot(
+                func[1].__doc__, None, output
+            )
+            self.assertTrue(
+                len(func[1].__doc__) >= 1,
+                "{:s} method needs a docstring".format(func[0]),
+            )
 
 
 class TestState(unittest.TestCase):
     """Test the State class"""
+
     def test_is_subclass(self):
         """Test that State is a subclass of BaseModel"""
         state = State()
@@ -71,7 +77,7 @@ class TestState(unittest.TestCase):
         """Test that State has attribute name, and it's as an empty string"""
         state = State()
         self.assertTrue(hasattr(state, "name"))
-        if models.storage_t == 'db':
+        if models.storage_t == "db":
             self.assertEqual(state.name, None)
         else:
             self.assertEqual(state.name, "")
