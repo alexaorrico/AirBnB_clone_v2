@@ -10,6 +10,22 @@ from models.amenity import Amenity
 from models.place import Place
 
 
+@app_views.route("/places/<string:place_id>/amenities", strict_slashes=False)
+def get_amenities(place_id):
+    """
+    Retrieves the list of all amenities objects of a place
+    """
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        amenity_objects = place.amenities
+    else:
+        amenity_objects = place.amenity_ids
+    amenities = [obj.to_dict() for obj in place.amenities]
+    return jsonify(amenities)
+
+
 @app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
                  strict_slashes=False, methods=['DELETE'])
 def del_amenity(place_id, amenity_id):
