@@ -40,21 +40,24 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
-     def all(self, cls=None):
+    def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+        if cls:
+            for key, value in self.__session.query(cls).all():
+                new_dict[key] = value
+        else:
+            for key, value in self.__session.query(cls).all():
+                new_dict[key] = value
+        return new_dict
 
     def get(self, cls, id):
         """
         returns the object based on the class and its ID, or None if not found
         """
+        if cls not in classes.values():
+            return None
+
         if cls and id:
             key = cls.__name__ + '.' + id
             if key in self.__objects:
