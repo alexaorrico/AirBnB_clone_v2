@@ -12,19 +12,19 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route("/status", strict_slashes=False)
+@app_views.get("/status")
 def status():
     """Returns the api status in JSON format"""
     return jsonify({"status": "OK"})
 
 
-#@app_views.route("/stats", strict_slashes=False)
-#def stats():
-#    """Returns the number of items in storage in JSON format"""
-#    from models import storage
-#    classes = {"amenities": Amenity, "cities": City, "places": Place,
-#               "reviews": Review, "states": State, "users": User
-#               }
-#
-#    all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
-#    return jsonify(all_cls_stats)
+@app_views.get("/stats")
+def stats():
+    """Returns the number of items in storage in JSON format"""
+    from models import storage
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User
+               }
+
+    all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
+    return jsonify(all_cls_stats)
