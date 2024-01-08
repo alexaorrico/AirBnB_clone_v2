@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Index of app_views  """
+"""Index of app_views"""
 
 from api.v1 import app_views
 from flask import jsonify

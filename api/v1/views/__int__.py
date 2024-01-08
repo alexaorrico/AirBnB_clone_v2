@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Initialize the views module """
+"""Initialize the views module"""
 
 from flask import Blueprint
 

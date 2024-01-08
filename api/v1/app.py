@@ -7,7 +7,6 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from os import getenv
 
-
 app = Flask(__name__)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})

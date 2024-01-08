@@ -26,7 +26,6 @@ def city_places(city_id):
     else:
         abort(404)
 
-
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place(place_id):
     """Retrieves a place based on it's ID"""
