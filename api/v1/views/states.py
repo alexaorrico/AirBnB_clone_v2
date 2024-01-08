@@ -31,22 +31,28 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>',
-                 strict_slashes=False,
-                 methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 @swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
+    """
+    Deletes a State Object
+    """
+
     state = storage.get(State, state_id)
-    if state is not None:
-        storage.delete(state)
-        storage.save()
-        return make_response(jsonify({}), 200)
-    abort(404)
+
+    if not state:
+        abort(404)
+
+    storage.delete(state)
+    storage.save()
+
+    return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states', strict_slashes=False, methods=['POST'])
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 @swag_from('documentation/state/post_state.yml', methods=['POST'])
-def create_state():
+def post_state():
     """
     Creates a State
     """
