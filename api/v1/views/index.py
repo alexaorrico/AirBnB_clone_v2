@@ -3,7 +3,7 @@
 module that is used for api index page
 """
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, request
 from models import storage
 
 
