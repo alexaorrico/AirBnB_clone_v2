@@ -6,6 +6,7 @@ import hashlib
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+
 class User(BaseModel, Base):
     """Representation of a user """
     if getenv("HBNB_TYPE_STORAGE") == 'db':
