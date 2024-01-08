@@ -58,9 +58,11 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, keep_password=False):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
+        if 'password' in new_dict and not keep_password:
+            del new_dict['password']
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
