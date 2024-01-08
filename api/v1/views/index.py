@@ -27,7 +27,9 @@ def stats():
             "states": State,
             "users": User
             }
-    stats = {}
-    for key, value in resources.items():
-        stats[key] = storage.count(value)
+    stats = OrderedDict()
+    for key in sorted(resources.keys()):
+        count = storage.count(resources[key])
+        if count > 0:
+            stats[key] = count
     return jsonify(stats)

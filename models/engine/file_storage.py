@@ -71,9 +71,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """reurn object based on the class and id"""
-        if cls in classes.values():
-            obj = self.__session.query(cls).filter(cls.id == id).first()
-            return obj
+        obj_dict = self.all(cls)
+        for obj in obj_dict.values():
+            if obj.id == id:
+                return obj
         return None
 
     def count(self,cls=None):

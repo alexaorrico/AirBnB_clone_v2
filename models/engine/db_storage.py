@@ -78,8 +78,8 @@ class DBStorage:
     def get(self, cls, id):
         """reurn object based on the class and id"""
         if cls in classes.values():
-            obj = self.__session.query(cls).filter(cls.id == id).first()
-            return obj
+            objct = self.__session.query(cls).filter(cls.id == id).first()
+            return objct
         return None
 
     def count(self,cls=None):
