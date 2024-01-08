@@ -59,8 +59,8 @@ class DBStorage:
             return obj
 
     def count(self, cls=None):
-    """ method to count the number of objects in storage"""
-    return len(self.all(cls))
+        """ method to count the number of objects in storage"""
+        return len(self.all(cls))
 
     def new(self, obj):
         """add the object to the current database session"""
