@@ -10,9 +10,14 @@ from flasgger.utils import swag_from
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 @swag_from('documentation/state/get_state.yml', methods=['GET'])
 def get_states():
-    all_states = storage.all(State)
-    states = [x.to_dict() for x in all_states.values()]
-    return make_response(jsonify(states))
+    """
+    Retrieves the list of all State objects
+    """
+    all_states = storage.all(State).values()
+    list_states = []
+    for state in all_states:
+        list_states.append(state.to_dict())
+    return jsonify(list_states)
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
@@ -20,7 +25,7 @@ def get_states():
 def get_state(state_id):
     state = storage.get(State, state_id)
     if state is not None:
-        return make_response(jsonify(state.to_dict()))
+        return jsonify(state.to_dict())
     abort(404)
 
 
