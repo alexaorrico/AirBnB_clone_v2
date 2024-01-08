@@ -101,6 +101,8 @@ def search_places():
         places = storage.all(Place)
         return jsonify([place.todict() for place in places])
     places = []
+    if not (state_ids or city_ids):
+        places = storage.all(Place)
     seen_cities = set()
     for state_id in state_ids:
         state = storage.get(State, state_id)
@@ -115,6 +117,5 @@ def search_places():
             places += city.places
     if not amenity_ids:
         return jsonify([place.to_dict() for place in places])
-    places = places or storage.all(Place)
     return jsonify([place.to_dict() for place in places if
                     has_amenities(place, amenity_ids)])
