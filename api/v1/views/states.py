@@ -34,7 +34,7 @@ def post_states():
     if not get_json:
         abort(400, "Not a JSON")
     if not get_json.get("name"):
-        abort("400", "Missing name")
+        abort(400, "Missing name")
     new = State({"name": get_json.get("name")})
     storage.new(new)
     storage.save()
