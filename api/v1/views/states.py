@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+model is for the state method and it returns Json
+values.
+It is mainly to work with the state objects of the project
+"""
 from flask import jsonify, abort, request
 from api.v1.views import app_views
 from models import storage
