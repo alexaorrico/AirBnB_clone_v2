@@ -19,6 +19,7 @@ def get_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_states_by_id(state_id):
+    """get states by id"""
     get = storage.get(State, state_id)
     if (get is None):
         abort(404)
@@ -28,6 +29,7 @@ def get_states_by_id(state_id):
 
 @app_views.route('/states/', methods=['POST'])
 def post_states():
+    """post status"""
     get_json = request.get_json()
     if not get_json:
         abort(400, "Not a JSON")
@@ -41,6 +43,7 @@ def post_states():
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def del_states(state_id):
+    """delete status"""
     get = storage.get(State, state_id)
     if (get is None):
         abort(404)
@@ -51,6 +54,7 @@ def del_states(state_id):
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def put_states(state_id):
+    """put in status"""
     get = storage.get(State, state_id)
     get_json = request.get_json()
     if not get:
