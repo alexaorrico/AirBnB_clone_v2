@@ -30,6 +30,7 @@ class User(BaseModel, Base):
         """initializes user"""
         password = kwargs.get('password')
         if password:
-            password = hashlib.md5(password.encode('utf-8')).hexdigest().lower()
+            password = (hashlib.md5(password.encode('utf-8')).hexdigest().
+                        lower())
             kwargs['password'] = password
         super().__init__(*args, **kwargs)
