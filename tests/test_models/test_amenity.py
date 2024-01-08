@@ -8,7 +8,7 @@ import inspect
 import models
 from models import amenity
 from models.base_model import BaseModel
-import pycodestyle
+import pep8
 import unittest
 Amenity = amenity.Amenity
 
@@ -22,14 +22,17 @@ class TestAmenityDocs(unittest.TestCase):
 
     def test_pep8_conformance_amenity(self):
         """Test that models/amenity.py conforms to PEP8."""
-        result = pycodestyle.Checker('models/amenity.py').check_all()
-        self.assertEqual(result, 0, "Found code style errors (and warnings).")
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/amenity.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_amenity(self):
         """Test that tests/test_models/test_amenity.py conforms to PEP8."""
-        path = 'tests/test_models/test_amenity.py'
-        result = pycodestyle.Checker(path).check_all()
-        self.assertEqual(result, 0, "Found code style errors (and warnings).")
+        pep8s = pep8.StyleGuide(quiet=True)
+        result = pep8s.check_files(['tests/test_models/test_amenity.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_amenity_module_docstring(self):
         """Test for the amenity.py module docstring"""
@@ -81,7 +84,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in am.__dict__:
-            if attr != "_sa_instance_state":
+            if attr is not "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
