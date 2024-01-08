@@ -98,3 +98,53 @@ def put_place(place_id):
         return make_response(jsonify(res.to_dict()), 200)
     except Exception as e:
         return make_response(jsonify("Not a JSON"), 400)
+
+
+@app_views.post('/places_search')
+def places_search_advance():
+    """this is the view for the /api/v1/places_search
+        endpoint"""
+    if not request.get_json():
+        return make_response(jsonify("Not a JSON"), 400)
+    data = request.get_json()
+    states, cities, amenities = None, None, None
+    if data and len(data):
+        states, cities = data.get('states', None), data.get('cities', None)
+        amenities = data.get('amenities', None)
+    if not data or not len(data) or (
+            not states and
+            not cities and
+            not amenities):
+        places = storage.all(Place).values()
+        places_list = []
+        places_list = [place.to_dict() for place in places]
+        return make_response(jsonify(places_list), 200)
+    places_list = []
+    if states:
+        statesObj = [storage.get(State, obj_id) for obj_id in states]
+        statesObj = [x for x in statesObj if x]
+        for state in statesObj:
+            state_cities = [x for x in state.cities if x]
+            for city in state_cities:
+                places_list.extend(place for place in city.places)
+    if cities:
+        city_obj = [storage.get(City, obj_id) for obj_id in cities]
+        city_obj = [x for x in city_obj if x]
+        for city in city_obj:
+            for place in city.places:
+                if place not in places_list:
+                    places_list.append(place)
+    if amenities:
+        if not places_list:
+            places_list = storage.all(Place).values()
+        amenities_obj = [storage.get(Amenity, obj_id) for obj_id in amenities]
+        places_list = [place for place in places_list
+                       if all([am in place.amenities
+                               for am in amenities_obj])]
+    places = []
+    for aPlace in places_list:
+        filtered = aPlace.to_dict()
+        filtered.pop('amenities', None)
+        places.append(filtered)
+    res = jsonify(places)
+    return make_response(res, 200)
