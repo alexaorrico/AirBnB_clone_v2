@@ -67,6 +67,54 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db")
+    def tesst_get_success(self):
+        """Test get success"""
+        storage = DBStorage()
+        storage.reload()
+        obj = storage.get("State", "1")
+        self.assertEqual(obj.id, "1")
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db")
+    def tesst_get_fail(self):
+        """Test get fail"""
+        storage = DBStorage()
+        storage.reload()
+        obj1 = storage.get("State", None)
+        self.assertEqual(obj1, None)
+        obj2 = storage.get(None, "1")
+        self.assertEqual(obj2, None)
+        obj3 = storage.get(None, None)
+        self.assertEqual(obj3, None)
+        obj4 = storage.get("State", 123)
+        self.assertEqual(obj4, None)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db")
+    def test_count_class_success(self):
+        """Test count success"""
+        storage = DBStorage()
+        storage.reload()
+        count = storage.count("State")
+        self.assertEqual(count, len(storage.all("State")))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db")
+    def test_count_all_classes_success(self):
+        """Test count all states"""
+        storage = DBStorage()
+        storage.reload()
+        count = storage.count()
+        self.assertEqual(count, len(storage.all()))
+        count2 = storage.count(None)
+        self.assertEqual(count2, len(storage.all()))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', "not testing db")
+    def test_count_fail(self):
+        """Test count fail"""
+        storage = DBStorage()
+        storage.reload()
+        count1 = storage.count("123")
+        self.assertEqual(count1, 0)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
