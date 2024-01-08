@@ -34,11 +34,11 @@ class BaseModel:
                 if key != "__class__":
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
-                self.created_at = datetime.fromtimestamp(kwargs["created_at"])
+                self.created_at = datetime.strptime(kwargs["created_at"], time)
             else:
                 self.created_at = datetime.now()
             if kwargs.get("updated_at", None) and type(self.updated_at) is str:
-                self.updated_at = datetime.fromtimestamp(kwargs["updated_at"])
+                self.updated_at = datetime.strptime(kwargs["updated_at"], time)
             else:
                 self.updated_at = datetime.now()
             if kwargs.get("id", None) is None:
