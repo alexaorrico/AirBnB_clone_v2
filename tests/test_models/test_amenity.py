@@ -23,7 +23,7 @@ class TestAmenity(unittest.TestCase):
         """Test that Amenity has attribute name, and it's as an empty string"""
         amenity = Amenity()
         self.assertTrue(hasattr(amenity, "name"))
-        if models.storage_type == 'db':
+        if hasattr(models, 'storage_type') and models.storage_type == 'db':
             self.assertEqual(amenity.name, None)
         else:
             self.assertEqual(amenity.name, "")
@@ -36,7 +36,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in am.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
