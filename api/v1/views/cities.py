@@ -51,3 +51,19 @@ def post_cities(state_id):
     storage.new(new)
     storage.save()
     return jsonify(new.to_dict()), 201
+
+
+@app_views.route('/cities/<city_id>', methods=['PUT'])
+def put_city(city_id):
+    """put in status"""
+    get = storage.get(City, city_id)
+    get_json = request.get_json()
+    if not get:
+        abort(404)
+    if not get_json:
+        abort(400, "Not a JSON")
+    for item in storage.all(City):
+        if (item["id"] == city_id):
+            storage.all(State)["State." + city_id]["name"] == get_json["name"]
+    storage.save()
+    return jsonify(get.to_dict())
