@@ -15,7 +15,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tear_down(self):
+def close_storage(exception):
     '''
     close query after each session
     '''
@@ -23,7 +23,7 @@ def tear_down(self):
 
 
 @app.errorhandler(404)
-def not_found(error):
+def resource_not_found(error):
     '''
     return JSON formatted 404 status code response
     '''
@@ -31,5 +31,6 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    app.run(host=getenv("HBNB_API_HOST", "0.0.0.0"),
-            port=int(getenv("HBNB_API_PORT", "5000")), threaded=True)
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = int(getenv("HBNB_API_PORT", "5000"))
+    app.run(host=host, port=port, threaded=True)

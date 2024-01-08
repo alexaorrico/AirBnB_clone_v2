@@ -2,7 +2,7 @@
 '''
     RESTful API for class User
 '''
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
 from models.user import User
@@ -46,15 +46,15 @@ def create_user():
     '''
         create new user obj
     '''
-    if not request.get_json():
-        return jsonify({"error": "Not a JSON"}), 400
-    elif "email" not in request.get_json():
-        return jsonify({"error": "Missing email"}), 400
-    elif "password" not in request.get_json():
-        return jsonify({"error": "Missing password"}), 400
+    data = request.get_json()
+    if not data:
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
+    elif "email" not in data:
+        return make_response(jsonify({"error": "Missing email"}), 400)
+    elif "password" not in data:
+        return make_response(jsonify({"error": "Missing password"}), 400)
     else:
-        obj_data = request.get_json()
-        obj = User(**obj_data)
+        obj = User(**data)
         obj.save()
         return jsonify(obj.to_dict()), 201
 
@@ -64,17 +64,15 @@ def update_user(user_id):
     '''
         update existing user object
     '''
-    if not request.get_json():
+    data = request.get_json()
+    if not data:
         return jsonify({"error": "Not a JSON"}), 400
     obj = storage.get("User", user_id)
     if obj is None:
         abort(404)
-    obj_data = request.get_json()
-    ignore = ("id", "email", "created_at", "updated_at")
-    for k in obj_data.keys():
-        if k in ignore:
-            pass
-        else:
-            setattr(obj, k, obj_data[k])
+    keys = ["id", "email", "created_at", "updated_at"]
+    for key in data.keys():
+        if key not in keys:
+            setattr(obj, key, data[keys])
     obj.save()
     return jsonify(obj.to_dict()), 200
