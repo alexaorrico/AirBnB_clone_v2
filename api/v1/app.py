@@ -18,6 +18,13 @@ def close_storage(err):
     storage.close()
 
 
+@app.errorhandler(404)
+def error(err):
+    """Return error dict of
+    stat code 404"""
+    return make_responsponse({'error': "Not found"}, 404)
+
+
 if __name__ == '__main__':
     if host is None:
         host = '0.0.0.0'
