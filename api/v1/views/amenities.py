@@ -25,7 +25,8 @@ def amenity(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route("/amenities/<amenity_id>", strict_slashes=False, methods=['DELETE'])
+@app_views.route("/amenities/<amenity_id>",
+                 strict_slashes=False, methods=['DELETE'])
 def delete_amenity(amenity_id):
     """retrieves the number of each objects by amenity_id"""
     amenity = storage.get("Amenity", amenity_id)

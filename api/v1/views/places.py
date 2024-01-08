@@ -7,37 +7,42 @@ from models import storage
 from models.place import Place
 
 
-@app_views.route("/cities", strict_slashes=False)
-def all_amenities():
-    """retrieves all Amenity objects by class name"""
-    amenities = []
-    for amenity in storage.all('Amenity').values():
-        amenities.append(amenity.to_dict())
-    return jsonify(amenities)
-
-
-@app_views.route("/amenities/<amenity_id>", strict_slashes=False)
-def amenity(amenity_id):
-    """retrieves the number of each objects by amenity_id"""
-    amenity = storage.get("Amenity", amenity_id)
-    if not amenity:
+@app_views.route("/cities/<city_id>/places", strict_slashes=False)
+def all_places(city_id):
+    """retrieves all Place objects by class name"""
+    if not storage.get('City', city_id):
         abort(404)
-    return jsonify(amenity.to_dict())
+
+    places = []
+    for place in storage.all('Place').values():
+        if place.city_id == city_id:
+            places.append(place.to_dict())
+    return jsonify(places)
 
 
-@app_views.route("/amenities/<amenity_id>", strict_slashes=False, methods=['DELETE'])
-def delete_amenity(amenity_id):
-    """retrieves the number of each objects by amenity_id"""
-    amenity = storage.get("Amenity", amenity_id)
-    if not amenity:
+@app_views.route("/places/<place_id>", strict_slashes=False)
+def place(place_id):
+    """retrieves the number of each objects by place_id"""
+    place = storage.get("Place", place_id)
+    if not plce:
         abort(404)
-    storage.delete(amenity)
+    return jsonify(place.to_dict())
+
+
+@app_views.route("/places/<place_id>", strict_slashes=False,
+                 methods=['DELETE'])
+def delete_place(place_id):
+    """retrieves the number of each objects by place_id"""
+    place = storage.get("Place", place_id)
+    if not place:
+        abort(404)
+    storage.delete(place)
     storage.save()
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/amenities", methods=["POST"])
-def create_amenity():
+@app_views.route("/cities/<city_id>/places", methods=["POST"])
+def create_place(city_id):
     '''Creates the required test case'''
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -45,26 +50,40 @@ def create_amenity():
     if not request.get_json().get('name'):
         abort(400, description="Missing name")
 
-    amenity = Amenity()
-    amenity.name = request.get_json()['name']
-    amenity.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+    user_id = request.get_json().get('user_id')
+
+    if not user_id:
+        abort(400, description="Missing user_id")
+
+    if not storage.get("User", user_id):
+        abort(404)
+
+    if not request.get_json().get('name'):
+        abort(400, description="Missing name")
+
+    place = Place()
+    place.name = request.get_json()['name']
+    place.city_id = city_id
+    place.user_id = user_id
+    place.save()
+    return make_response(jsonify(place.to_dict()), 201)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['PUT'])
-def update_amenity(amenity_id):
-    '''Updates the target amenity with the corressponding id'''
-    amenity = storage.get("Amenity", amenity_id)
-    if not amenity:
+@app_views.route("/places/<place_id>", methods=['PUT'])
+def update_place(place_id):
+    '''Updates the target place with the corressponding id'''
+    place = storage.get("Place", place_id)
+    if not place:
         abort(404)
 
     if not request.get_json():
         abort(400, description="Not a JSON")
 
     for k, v in request.get_json().items():
-        if k == "id" or k == "created_at" or k == "updated_at":
+        if k == "id" or k == "created_at" or k == "updated_at"\
+        or k == "user_id" or k == "city_id":
             continue
         else:
-            setattr(amenity, k, v)
+            setattr(place, k, v)
     storage.save()
-    return make_response(jsonify(amenity.to_dict()), 200)
+    return make_response(jsonify(place.to_dict()), 200)
