@@ -4,7 +4,7 @@ This is the base file for my api
 """
 
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -19,6 +19,12 @@ app.url_map.strict_slashes = False
 def teardown(args=None):
     # This func closes the storage
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    # This method returns a json error message when a url is not found
+    return jsonify(error='Not found')
 
 
 if __name__ == "__main__":
