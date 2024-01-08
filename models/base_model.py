@@ -61,7 +61,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, fsmode=None):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -70,7 +70,8 @@ class BaseModel:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
-            new_dict.pop("_sa_instance_state")
+            del new_dict["_sa_instance_state"]
+        new_dict.pop("password", None) if fsmode is None else None
         return new_dict
 
     def delete(self):
