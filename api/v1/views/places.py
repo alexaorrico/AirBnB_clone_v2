@@ -11,7 +11,8 @@ from flask import Flask, jsonify, request, abort
 from models import storage
 
 
-@app_views.route('/cities/<city_id>/places', methods=["GET", "POST"], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 methods=["GET", "POST"], strict_slashes=False)
 def places(city_id):
     """retrieve or create places depending on request method"""
     if request.method == "GET":
