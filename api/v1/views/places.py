@@ -98,7 +98,7 @@ def search_places():
         city_ids = data.get('cities', [])
         amenity_ids = data.get('amenities', [])
     except (BadRequest, AttributeError):
-        return jsonify({"error": "Not a JSON"}), 400
+        abort(400, 'Not a JSON')
     city_ids = set(city_ids)
     for state_id in state_ids:
         state = storage.get(State, state_id)
