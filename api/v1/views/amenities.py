@@ -12,29 +12,29 @@ from models.amenity import Amenity
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def fetch_amenities():
     """Fetch all amenities from the store"""
-    states = storage.all(Amenity).values()
-    return jsonify([state.to_dict() for state in states])
+    amenities = storage.all(Amenity).values()
+    return jsonify([amenity.to_dict() for amenity in amenities])
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
-def fetch_state_by_id(amenity_id: int):
+def fetch_amenity_by_id(amenity_id: int):
     """Fetch a single amenity by it's ID"""
-    state = storage.get(Amenity, amenity_id)
-    if not state:
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
         abort(404)
 
-    return jsonify(state.to_dict())
+    return jsonify(amenity.to_dict())
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity_by_id(amenity_id: int):
     """Delete an amaenity by it's ID"""
-    state = storage.get(Amenity, amenity_id)
-    if not state:
+    amenity = storage.get(Amenity, amenity_id)
+    if not amenity:
         abort(404)
-    storage.delete(state)
+    storage.delete(amenity)
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -55,7 +55,7 @@ def create_amenity():
     return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
 def update_amenity(amenity_id):
     """Update an amenity"""
     amenity = storage.get(Amenity, amenity_id)
