@@ -66,6 +66,7 @@ def create_place(city_id):
         abort(404)
     if "name" not in data:
         abort(400, "Missing name")
+    data['city_id'] = city_id
     place = Place(**data)
     place.save()
 
