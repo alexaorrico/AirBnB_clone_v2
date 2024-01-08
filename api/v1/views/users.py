@@ -4,7 +4,7 @@ handles all default RESTFul API actions"""
 from api.v1.views import app_views
 from models.user import User
 from models import storage
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 
 
 @app_views.route("/users", methods=["GET"],
@@ -39,7 +39,7 @@ def delete_user(user_id):
     storage.delete(user)
     storage.save()
 
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route("/users", methods=["POST"],
@@ -57,7 +57,7 @@ def create_user():
     storage.new(user)
     storage.save()
 
-    return jsonify(user.to_dict()), 201
+    return make_response(jsonify(user.to_dict()), 201)
 
 
 @app_views.route("/users/<user_id>", methods=["PUT"],
@@ -77,4 +77,4 @@ def update_user(user_id):
         setattr(user, key, value)
 
     storage.save()
-    return jsonify(user.to_dict()), 200
+    return make_response(jsonify(user.to_dict()), 200)
