@@ -121,3 +121,13 @@ def updates_place(place_id):
                 obj.longitude = request.json['longitude']
     storage.save()
     return jsonify(place_obj[0]), 200
+
+
+@app_views.route('/places_search', methods=['POST'])
+def places_search():
+    """Searches for places based on JSON parameters"""
+    request_json = request.get_json()
+    if not request_json:
+        abort(400, description="Not a JSON")
+
+    states
