@@ -24,7 +24,7 @@ def index():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', strict_slashes=False)
+@app_views.route('/stats')
 def num_objects():
     result = {}
     for key, value in classes.items():
