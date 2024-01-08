@@ -97,24 +97,15 @@ def search_places():
     state_ids = data.get('states', [])
     city_ids = data.get('cities', [])
     amenity_ids = data.get('amenities', [])
-    if not (state_ids or city_ids or amenity_ids):
-        places = storage.all(Place)
-        return jsonify([place.todict() for place in places])
-    places = []
-    if not (state_ids or city_ids):
-        places = storage.all(Place)
-    seen_cities = set()
+    city_ids = set(city_ids)
     for state_id in state_ids:
         state = storage.get(State, state_id)
         if state:
-            for city in state.cities:
-                places += city.places
-                seen_cities.add(city.id)
-    city_ids = list(set(city_ids) - seen_cities)
-    for city_id in city_ids:
-        city = storage.get(City, city_id)
-        if city:
-            places += city.places
+            city_ids.update([city.id for city in state.cities])
+    city_ids = list(city_ids)
+    places = storage.all(Place).values()
+    if city_ids:
+        places = [place for place in places if place.city_id in city_ids]
     if not amenity_ids:
         return jsonify([place.to_dict() for place in places])
     return jsonify([place.to_dict() for place in places if
