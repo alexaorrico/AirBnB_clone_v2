@@ -65,11 +65,6 @@ def update_user(user_id):
     user_dict = request.get_json()
     if user_dict is None:
         abort(400, "Not a JSON")
-
-    # easier way to update objects
-    # AND update all object attributes
-    # not just the name
-
     for k, v in user_dict.items():
         if k not in ["id", "created_at", "updated_at"]:
             setattr(user, k, v)
