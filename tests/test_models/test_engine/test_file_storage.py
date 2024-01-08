@@ -126,6 +126,7 @@ class TestFileStorage(unittest.TestCase):
         get_instance = storage.get(State,instance.id)
         self.assertEqual(get_instance, instance)
 
+    @unittests
     def test_count(self):
         """count"""
         storage = FileStorage()
