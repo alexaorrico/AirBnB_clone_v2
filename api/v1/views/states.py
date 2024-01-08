@@ -2,71 +2,60 @@
 """ The module handles the default RESTful API acstions """
 
 # Import the required Modules
-from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
-from models import storage
+from flask import abort, jsonify, request
 from models.state import State
-
+from api.v1.views import app_views
+from models import storage
 
 # Route for retrieving all state objs
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/state', method=['GET'], strict_slashes=False)
 def get_all_states():
     """
     GETs all state objects
     """
-    states = []
-    for state in storage.all("State").values():
-        states.append(state.to_dict())
-    return jsonify(states)
+    states = storage.all(State).values()
+    state_list = [state.to_dict() for state in states]
+    return jsonify(state_list)
 
-
-# Route for retrieving specific stated by their id
-@app_views.route(
-    '/states/<string:state_id>',
-    methods=['GET'],
-    strict_slashes=False
-)
+# Route for retrieving specific stated by thier id
+@app_views.route('/state/<state_id>', method=['GET'], strictslashes=False)
 def get_state(state_id):
     """
     GETs a specified state
     """
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state:
-        return jsonify(state.to_dict())
+        return jsonify(state.to_dict)
     else:
         abort(404)
 
-
 # Route for deleting a specific State by id
-@app_views.route(
-    '/states/<string:state_id>',
-    methods=['DELETE'],
-    strict_slashes=False
-)
+@app_views.route('/states/<state_id>', method=['DELETE'])
 def delete_state(state_id):
     """
-    DELETEs a state by their id
+    DELETEs a state by thier id
     """
     state = storage.get(State, state_id)
-    if state is None:
+    if state:
+        storage.delete(state)
+        return jsonify({}), 200
+    else:
         abort(404)
-    state.delete()
-    storage.save()
-    return (jsonify({}), 200)
-
 
 # Route for creating a new state
-@app_views.route('/states/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', method=['POST'], strict_slashes=False)
 def create_state():
-    """ POSTs in a new state """
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({'error': 'Missing name'}), 400)
-    state = State(**request.get_json())
-    state.save()
-    return make_response(jsonify(state.to_dict()), 201)
+    """ PUTs in a new state """
+    if not request.get_json:
+        abort(400, 'Not a JSON')
 
+    kwargs = request.get_json
+    if 'name' not in kwargs:
+        abort(400, 'Missing name')
+
+    state = State(**kwargs)
+    state.save()
+    return jsonify(state.to_dict()), 201
 
 # Route for updating an existing state
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
@@ -74,13 +63,31 @@ def update_state(state_id):
     """
     Updates an existing state
     """
-    state = storage.get("State", state_id)
-    if state is None:
+    state = storage.get(State, state_id)
+    if state:
+        if not request.get.json():
+            abort(400, 'Not a JSON')
+
+        data = request.get_json()
+        ignore_keys = ['id', 'created_at', 'updated_at']
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(state, key, value)
+        state.save()
+        return jsonify(state.to_dict()), 200
+    else:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    for attr, val in request.get_json().items():
-        if attr not in ['id', 'created_at', 'updated_at']:
-            setattr(state, attr, val)
-    state.save()
-    return jsonify(state.to_dict())
+
+
+# Error Handlers
+@app_views.errorhandler(404)
+def not_found(error):
+    """ Handles the 404 code """
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
+
+@app_views.errorhandler(400)
+def bad_request(error):
+    """ Handles the 400 status code """
+    response = {'error': 'Bad Request'}
+    return jsonify(response), 400
