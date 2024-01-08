@@ -27,7 +27,7 @@ def teardown_appcontext(exception):
 # Error handlers for expected app behavior:
 @app.errorhandler(404)
 def not_found(error):
-    """
+    """0
     Return errmsg `Not Found`.
     """
     response = {'error': 'Not found'}
