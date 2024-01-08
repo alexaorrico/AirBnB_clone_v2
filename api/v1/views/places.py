@@ -24,10 +24,11 @@ def places(city_id):
             places.append(place.to_dict())
         places_json = jsonify(places)
         return places_json
-    else:
+    elif request.method == "POST":
         place_dict = request.get_json()
         if place_dict is None:
             abort(400, "Not a JSON")
+            
         place_user_id = place_dict.get("user_id")
         if place_user_id is None:
             abort(400, "Missing user_id")
