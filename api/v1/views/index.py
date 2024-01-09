@@ -19,12 +19,6 @@ def get_status():
     return jsonify({'status': 'OK'})
 
 
-@app_views.route('/api/v1/nop', methods=['GET'], strict_slashes=False)
-def nop():
-    """Handles GET request to /api/v1/nop"""
-    return jsonify({'error': 'Not found'}), 404
-
-
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def object_status():
     """Create an endpoint that retrieves the number of each object by type"""
@@ -36,7 +30,6 @@ def object_status():
         "states": 'State',
         "users": 'User'
     }
-    object_counts = {
-       key: storage.count(value) for key, value in objects.items()
-   }
-   return jsonify(object_counts)
+    for key, value in objects.items():
+        objects[key] = storage.count(value)
+    return jsonify(objects)
