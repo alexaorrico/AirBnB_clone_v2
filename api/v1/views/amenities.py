@@ -9,15 +9,17 @@ from models.amenity import Amenity
 # Define route for amenities handling GET and POST requests
 @app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
 def get_post_amenities():
-    """Handles GET (retrieve all amenities) and POST (create new amenity) requests"""
+    """Handles GET (retrieve all amenities) and
+    POST (create new amenity) requests"""
     if request.method == 'GET':
-        # Retrieve all amenities and return in JSON format
+        """Retrieve all amenities and 
+          return in JSON format"""
         all_amenities = [amenity.to_dict() for amenity in storage.all('Amenity').values()]
         return jsonify(all_amenities)
     elif request.method == 'POST':
         # Create a new amenity based on POST data in JSON format
         request_data = request.get_json()
-        if request_data is None or type(request_data) != dict:
+        if request_data is None or not isinstance(request_data, dict):
             return jsonify({'error': 'Invalid JSON'}), 400
         elif 'name' not in request_data:
             return jsonify({'error': 'Missing name parameter'}), 400
@@ -42,10 +44,10 @@ def get_put_delete_amenity(amenity_id):
     elif request.method == 'PUT':
         # Update attributes of the amenity based on PUT data in JSON format
         put_data = request.get_json()
-        if put_data is None or type(put_data) != dict:
+        if put_data is None or not isinstance(put_data, dict):
             return jsonify({'error': 'Invalid JSON'}), 400
         for key, value in put_data.items():
-            if key != 'id' and key != 'created_at' and key != 'updated_at':
+            if key not in ('id', 'created_at', 'updated_at'):
                 setattr(amenity, key, value)
         storage.save()  # Save changes
         return jsonify(amenity.to_dict()), 200  # Return updated amenity details

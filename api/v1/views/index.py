@@ -13,6 +13,7 @@ def get_status():
     """Check the status of the route"""
     return jsonify({'status': 'OK'})
 
+
 @app_views.route('/api/v1/nop', methods=['GET'], strict_slashes=False)
 def nop():
     """Handles GET request to /api/v1/nop"""
