@@ -26,7 +26,7 @@ def not_found(error):
       404:
         description: a resource was not found
     """
-    return make_response(jsonify({'error': "Not found"}), 404)
+    return jsonify({'error': "Not found"}), 404
 
 
 value_host = os.getenv('HBNB_API_HOST')
