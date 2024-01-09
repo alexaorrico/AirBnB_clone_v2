@@ -118,7 +118,7 @@ class BaseModel:
             })
         if not saving_file_storage and obj_class == 'User':
             bm_dict.pop('password', None)
-        return bm_dict
+        return (bm_dict)
 
     def __str__(self):
         """
