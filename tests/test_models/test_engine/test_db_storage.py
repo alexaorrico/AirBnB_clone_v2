@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -90,17 +91,15 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_get(self):
         """Test that get returns the right object"""
-        storage = DBStorage()
-        new_state = State({"name": "Anambra", "number_of_states": 23})
+        new_state = State(**{"name": "Anambra", "number_of_states": 23})
         storage.new(new_state)
         self.assertEqual(new_state, storage.get(State, new_state.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
     def test_count(self):
         """Test that get returns the right object"""
-        storage = DBStorage()
         len1 = len(storage.all())
-        new_state = State({"name": "Anambra", "number_of_states": 23})
+        new_state = State(**{"name": "Anambra", "number_of_states": 23})
         storage.new(new_state)
         len2 = len(storage.all())
         self.assertTrue(len1 < len2)
