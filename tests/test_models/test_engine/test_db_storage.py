@@ -99,9 +99,9 @@ class TestFileStorage(unittest.TestCase):
 
     def test_count(self):
         """Test that get returns the right object"""
-        len1 = len(storage.all())
+        len1 = storage.count(State)
         new_state = State(**{"name": "Anambra", "number_of_states": 23})
         storage.new(new_state)
         storage.save()
-        len2 = len(storage.all())
+        len2 = storage.count(State)
         self.assertTrue(len1 < len2)
