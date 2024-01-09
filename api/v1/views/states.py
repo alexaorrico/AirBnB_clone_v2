@@ -42,8 +42,8 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
-def post_state():
+@app_views.route('/states', strict_slashes=False, methods=['POST'])
+def create_state():
     """
     Creates a State
     """
