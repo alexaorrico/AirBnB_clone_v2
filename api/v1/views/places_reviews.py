@@ -20,7 +20,6 @@ from models.user import User
 def reviews(place_id):
     """function to handle reviews"""
     place = storage.get(Place, place_id)
-    print(place)
     if place is None:
         abort(404)
 
@@ -34,12 +33,10 @@ def reviews(place_id):
             return jsonify({'error': 'Not a JSON'}), 400
 
         user_id = post_data.get('user_id')
-        print(user_id)
         if user_id is None:
             return jsonify({'error': 'Missing user_id'}), 400
 
         my_user = storage.get(User, user_id)
-        print(my_user)
         if my_user is None:
             abort(404)
 
