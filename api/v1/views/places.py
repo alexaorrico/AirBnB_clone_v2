@@ -20,7 +20,7 @@ def get_places(city_id):
         abort(404)
 
     places = [place.to_dict() for place in city.places]
-    return jsonify(places), 200
+    return jsonify(places)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
@@ -31,7 +31,7 @@ def get_place(place_id):
     if place is None:
         abort(404)
 
-    return jsonify(place.to_dict()), 200
+    return jsonify(place.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
@@ -62,13 +62,14 @@ def create_place(city_id):
         return jsonify({"error": "Missing user_id"}), 400
     elif 'name' not in data:
         return jsonify({"error": "Missing name"}), 400
-    user = storage.get(User, data['user_id'])
-    if user is None:
-        abort(404)
+    else:
+        user = storage.get(User, data['user_id'])
+        if user is None:
+            abort(404)
 
-    new_place = Place(city_id=city_id, user_id=user_id, **data)
-    new_place.save()
-    return jsonify(new_place.to_dict()), 201
+        new_place = Place(city_id=city_id, user_id=user_id, **data)
+        new_place.save()
+        return jsonify(new_place.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
