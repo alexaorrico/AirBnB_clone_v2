@@ -28,7 +28,7 @@ def get_state(state_id):
 
 
 # route for deleting a file
-@app_views.route('/api/v1/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """deletes a state obj"""
     state = storage.get(State, state_id)
@@ -41,7 +41,7 @@ def delete_state(state_id):
 
 
 # route for creating a file
-@app_views.route('/api/v1/states', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """creates a state obj"""
     if not request.get_json():
@@ -59,7 +59,7 @@ def create_state():
 
 
 # route for updating a file
-@app_views.route('/api/v1/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """updates a state obj"""
     state = storage.get(State, state_id)
