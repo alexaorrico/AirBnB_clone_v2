@@ -29,13 +29,14 @@ def nop():
 def object_status():
     """Create an endpoint that retrieves the number of each object by type"""
     objects = {
-        "amenities": Amenity,
-        "cities": City,
-        "places": Place,
-        "reviews": Review,
-        "states": State,
-        "users": User
+        "amenities": 'Amenity',
+        "cities": 'City',
+        "places": 'Place',
+        "reviews": 'Review',
+        "states": 'State',
+        "users": 'User'
     }
-    for key, value in objects.items():
-        objects[key] = storage.count(value)
-    return jsonify(objects)
+    object_counts = {
+       key: storage.count(value) for key, value in objects.items()
+   }
+   return jsonify(object_counts)
