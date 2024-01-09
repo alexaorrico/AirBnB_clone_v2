@@ -1,4 +1,16 @@
 #!/usr/bin/python3
+"""Main application module for the API.
+
+This module initializes the Flask application, registers blueprints,
+defines custom error handlers, and starts the development server.
+
+Classes:
+    - App: A Flask application with custom error handlers.
+
+Functions:
+    - teardown_appcontext: Closes the storage on teardown.
+
+"""
 
 
 import os
@@ -16,6 +28,7 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 def teardown_appcontext(exception):
     """Closes the storage on teardown."""
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
