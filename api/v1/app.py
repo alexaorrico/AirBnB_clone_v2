@@ -37,4 +37,3 @@ if __name__ == "__main__":
     if fetched_port is None:
         fetched_port = 5000
     app.run(host=fetched_host, port=fetched_port, threaded=True)
-
