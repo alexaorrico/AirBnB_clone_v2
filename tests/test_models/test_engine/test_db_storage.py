@@ -137,4 +137,3 @@ class TestDBStorage(unittest.TestCase):
         """Test that count of object or specific class"""
         self.assertIsInstance(storage.count(), int)
         self.assertIsInstance(storage.count(State), int)
-
