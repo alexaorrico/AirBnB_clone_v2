@@ -132,5 +132,6 @@ class TestFileStorage(unittest.TestCase):
         len1 = len(storage.all())
         new_state = State(**{"name": "Anambra", "number_of_states": 23})
         storage.new(new_state)
+        storage.save()
         len2 = len(storage.all())
         self.assertTrue(len1 < len2)
