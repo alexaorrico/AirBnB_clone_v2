@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
 from models import storage
 from models.city import City
 from models.state import State
@@ -15,6 +15,9 @@ def get_cities_by_state(state_id):
     if state is None:
         abort(404)
     cities = [city.to_dict() for city in state.cities]
+#    cities = []
+#    for city in state.cities:
+#        cities.append(city.to_dict())
     return jsonify(cities)
 
 
@@ -54,8 +57,10 @@ def create_city(state_id):
         abort(400, description="Missing name")
 
     new_city = City(state_id=state_id, **data)
-    new_city.save()
-    return jsonify(new_city.to_dict()), 201
+    setattr(new_city, 'state_id', state_id)
+    storage.new(new_city)
+    storage.save()
+    return make_response(jsonify(new_city.to_dict()), 201)
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
@@ -74,4 +79,4 @@ def update_city(city_id):
             setattr(city, key, value)
 
     city.save()
-    return jsonify(city.to_dict()), 200
+    return make_response(jsonify(city.to_dict()), 200)

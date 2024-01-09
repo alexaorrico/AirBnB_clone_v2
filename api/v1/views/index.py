@@ -16,20 +16,28 @@ def status():
     status = {"status": "OK"}
     return jsonify(status)
 
-@app_views.route('/api/v1/stats',strict_slashes=False)
+@app_views.route('/stats',strict_slashes=False)
 def stats():
     """no. of each objects"""
     resources = {
-            "amenities": Amenity,
+           "amenities": Amenity,
             "cities": City,
             "places": Place,
             "reviews": Review,
             "states": State,
             "users": User
             }
-    stats = OrderedDict()
-    for key in sorted(resources.keys()):
-        count = storage.count(resources[key])
-        if count > 0:
-            stats[key] = count
+    stats = {}
+    for key, value in (resources.items()):
+        stats[key] = storage.count(value)
     return jsonify(stats)
+
+#@app_views.route('/stats', methods=['GET'])
+#def count_objs():
+#    """ retrieve the number of each object by type """
+#    return jsonify(amenities=storage.count("Amenity"),
+#                   cities=storage.count("City"),
+#                   places=storage.count("Place"),
+#                   reviews=storage.count("Review"),
+#                   states=storage.count("State"),
+#                   users=storage.count("User"))
