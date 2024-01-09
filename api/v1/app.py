@@ -16,6 +16,12 @@ def handle_application(application):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found_error(error):
+    """Handle 404 not found error"""
+    return jsonify({"error": "Not found"}), 404
+
+
 if __name__ == "__main__":
     """entry point"""
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
