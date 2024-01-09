@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """ holds class Place_reviews"""
 from flask import Blueprint, jsonify, request, abort
 from api.v1.views import app_views
