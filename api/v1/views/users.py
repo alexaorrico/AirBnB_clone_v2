@@ -38,13 +38,14 @@ def del_user_based_on_id(user_id):
 def add_user_to_db():
     """ adds new user to db """
     json_data = request.get_json()
-    if not js_data:
+    if not json_data:
         abort(400, 'Not a JSON')
     if 'email' not in json_data:
         return jsonify({"error": "Missing email"}), 400
     if 'password' not in json_data:
         return jsonify({"error": "Missing password"}), 400
     user = User(**json_data)
+    storage.new(user)
     user.save()
     return jsonify(user.to_dict()), 201
 
@@ -61,5 +62,5 @@ def update_user_in_db(user_id):
     for k, v in json_data.items():
         if k not in ["id", "email", "created_at", "updated_at"]:
             setattr(user, k, v)
-    user.save()
+    storage.save()
     return jsonify(user.to_dict()), 200
