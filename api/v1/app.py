@@ -17,7 +17,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def teardown_db(error):
     """Close SQLAlchemy session"""
     storage.close()
 
