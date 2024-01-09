@@ -63,7 +63,7 @@ def post_state():
     data = request.get_json()
     instance = State(**data)
     instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
+    return jsonify(instance.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
