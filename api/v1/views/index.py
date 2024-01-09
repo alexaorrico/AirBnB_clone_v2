@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+"""endpoint that ritrievs the number of each objects by type"""
+
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
