@@ -1,0 +1,22 @@
+Links a review to a place.
+---
+tags:
+  - Place_Amenities
+parameters:
+  - name: place_id
+    in: path
+    type: string
+    required: true
+    description: Amenity id
+  - name: amenity_id
+    in: path
+    type: string
+    required: true
+    description: id of the place to be linked
+responses:
+  404:
+    description: Not found
+  201:
+    description: Successful request ✔️
+  201:
+    description: Amenity already linked to a place
