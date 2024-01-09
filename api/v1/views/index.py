@@ -1,6 +1,9 @@
 #!/usr/bin/python3
-"""Define routes for blueprint erererereretert
-weweweweweweweweeweww wwwjjwjwjwjwjns iwiweiw iqwij
+
+"""
+Define routes for blueprint erererereretert
+Retrieve count of objects in storage
+Return status of application
 """
 
 from api.v1.views import app_views
