@@ -1,17 +1,7 @@
 #!/usr/bin/python3
 '''The index routes'''
-<<<<<<< HEAD
-<<<<<<< HEAD
-from . import app_views
-from flask import make_response, abort
-=======
 from api.v1.views import app_views
 from flask import make_response
->>>>>>> 7499a0cd98030d1aa4bf908bea327e0dca0f755f
-=======
-from api.v1.views import app_views
-from flask import make_response
->>>>>>> eac090383e57976bf63e826af8101a492d5e60c4
 from models import storage, amenity, state, city, place, review, user
 
 
