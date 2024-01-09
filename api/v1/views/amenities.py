@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""states.py"""
+"""this is for amenities amenities.py"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -28,9 +28,9 @@ def get_amenity(amenity_id):
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_amenity(unique_amenity_id):
+def delete_amenity(amenity_id):
     """Deletes an amenity based on its unique_amenity_id"""
-    unique_amenity_instance = storage.get("Amenity", unique_amenity_id)
+    unique_amenity_instance = storage.get("Amenity", amenity_id)
     if unique_amenity_instance is None:
         abort(404)
     unique_amenity_instance.delete()
@@ -52,9 +52,9 @@ def post_amenity():
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_amenity(unique_amenity_id):
+def put_amenity(amenity_id):
     """Update an amenity"""
-    unique_amenity_instance = storage.get("Amenity", unique_amenity_id)
+    unique_amenity_instance = storage.get("Amenity", amenity_id)
     if unique_amenity_instance is None:
         abort(404)
     if not request.get_json():
