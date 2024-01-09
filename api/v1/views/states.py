@@ -7,24 +7,26 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
-def get_post_states():
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
+def get_states():
     """Handles GET and POST requests"""
-    if request.method == 'GET':
-        # Retrieve all states and return in JSON format
-        return jsonify([
+    return jsonify([
             state.to_dict() for state in storage.all('State').values()
             ])
-    elif request.method == 'POST':
-        # Create a new state based on POST data in JSON format
-        request_data = request.get_json()
-        if request_data is None or not isinstance(request_data, dict):
-            return jsonify({'error': 'Invalid JSON'}), 400
-        elif 'name' not in request_data:
-            return jsonify({'error': 'Missing name parameter'}), 400
-        new_state = State(**request_data)
-        new_state.save()
-        return jsonify(new_state.to_dict()), 201
+
+
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def post_state():
+   """Handles POST requests"""
+   # Create a new state based on POST data in JSON format
+   request_data = request.get_json()
+   if request_data is None or not isinstance(request_data, dict):
+       return jsonify({'error': 'Invalid JSON'}), 400
+   elif 'name' not in request_data:
+       return jsonify({'error': 'Missing name parameter'}), 400
+   new_state = State(**request_data)
+   new_state.save()
+   return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route(
