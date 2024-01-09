@@ -98,4 +98,3 @@ def link_amenity_to_a_place(place_id, amenity_id):
     else:
         place.amenity_ids.append(amenity.id)
     storage.save()
-
