@@ -18,16 +18,17 @@ from models.city import City
     strict_slashes=False)
 def cities_states(state_id):
     """function to handles states route"""
-    c_state = storage.get("State", state_id)
+    c_state = storage.get(State, state_id)
+    print(c_state)
     if c_state is None:
         abort(404)
 
     if request.method == 'GET':
         return jsonify(
-            [obj.to_dict() for obj in my_state.cities])
+            [obj.to_dict() for obj in c_state.cities])
     if request.method == 'POST':
         city_post = request.get_json()
-        if city_post is None or type(post_data) != dict:
+        if city_post is None or type(city_post) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
         new_city = city_post.get('name')
         if new_city is None:
@@ -43,7 +44,7 @@ def cities_states(state_id):
     strict_slashes=False)
 def id_city(city_id):
     """handles states route with a parameter state_id"""
-    city = storage.get("City", city_id)
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
     if request.method == 'GET':
@@ -57,5 +58,8 @@ def id_city(city_id):
         if put_data is None or type(put_data) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
         to_ignore = ['id', 'created_at', 'updated_at', 'state_id']
-        city.update(to_ignore, **put_data)
+        for k, v in put_data.items():
+            if k not in to_ignore:
+                setattr(city, k, v)
+        storage.save()
         return jsonify(city.to_dict()), 200
