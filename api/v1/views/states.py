@@ -55,7 +55,8 @@ def create_state():
 
     data = request.get_json()
     instance = State(**data)
-    instance.save()
+    models.storage.new(instance)
+    models.storage.save()
     return jsonify(instance.to_dict()), 201
 
 
