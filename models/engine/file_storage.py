@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """Retrieve a single object"""
-        self.reload()
+        self.close()
         key = cls.__name__ + '.' + id
         new_dict = self.all(cls)
         obj = new_dict[key]
@@ -79,6 +79,6 @@ class FileStorage:
 
     def count(self, cls=None):
         """Count the number of object in storage"""
-        self.reload()
+        self.close()
         new_dict = self.all(cls)
         return len(new_dict)

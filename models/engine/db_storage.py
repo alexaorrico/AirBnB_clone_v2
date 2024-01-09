@@ -80,11 +80,16 @@ class DBStorage:
         self.reload()
         key = cls.__name__ + '.' + id
         new_dict = self.all(cls)
-        obj = new_dict[key]
-        return obj
+        if key in new_dict:
+            obj = new_dict[key]
+            return obj
+        return None
 
     def count(self, cls=None):
         """Count the number of object in storage"""
         self.reload()
-        new_dict = self.all(cls)
-        return len(new_dict)
+        if cls:
+            new_dict = self.all(cls)
+        else:
+            new_dict = self.all()
+        return new_dict
