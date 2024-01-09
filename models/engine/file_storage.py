@@ -73,7 +73,7 @@ class FileStorage:
         """retrieves one object"""
         for key in classes.values():
             if cls == key:
-                key = f'{cls.__name__}.{id}'
+                key = "{}.{}".format(cls.__name__, id)
                 if key in self.__objects:
                     return self.__objects[key]
 
