@@ -32,7 +32,7 @@ def states():
             # Attempt to get JSON data from the request
             state_json = request.get_json()
         except Exception as e:
-            return f"Not a JSON", 400
+            abort(400, 'Not a JSON')
 
         if "name" not in state_json:
             abort(400, description="Missing name")
@@ -88,7 +88,7 @@ def state(state_id):
         try:
             state_json = request.get_json()
         except Exception as e:
-            return f"Not a JSON", 400
+            abort(400, 'Not a JSON')
 
         state.name = state_json['name']
         state.save()
