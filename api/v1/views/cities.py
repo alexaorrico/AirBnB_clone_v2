@@ -61,7 +61,7 @@ def create_city(state_id):
         abort(400, "Missing name")
 
     new_city = City(**data)
-    new_city.state_id = state_id
+    new_city.state_id = state.id
 
     new_city.save()
 
