@@ -32,3 +32,13 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     city_list.append(city)
             return city_list
+
+    def to_dict(self):
+        """Returns the dictionary representation of a State instance."""
+        state_dict = {
+            'id': self.id,
+            'created_at': self.created_at.strftime('%Y-%m-%dT%H:%M:%S'),
+            'updated_at': self.updated_at.strftime('%Y-%m-%dT%H:%M:%S'),
+            'name': self.name
+        }
+        return state_dict
