@@ -1,0 +1,34 @@
+GET method, retrieve a amenities base on place
+---
+tags:
+  - Place_Amenities
+parameters:
+  - name: amenity_id
+    in: path
+    type: string
+    required: true
+    description: amenity id
+responses:
+  200:
+    description: Succsesful resquest
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: "string"
+          created_at:
+            type: string
+            description: datetime of instance creation
+          updated_at:
+            type: string
+            description: time of last update of the instance
+          id:
+            type: string
+            description: The unique id of the state instance
+          name:
+            type: string
+            description: Place name
+
+  404:
+    description: Place not found
