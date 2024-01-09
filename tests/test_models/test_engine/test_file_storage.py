@@ -121,7 +121,7 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test that get returns the right object"""
         storage = FileStorage()
-        new_state = State({"name": "Anambra", "number_of_states": 23})
+        new_state = State(**{"name": "Anambra", "number_of_states": 23})
         storage.new(new_state)
         self.assertEqual(new_state, storage.get(State, new_state.id))
 
@@ -130,7 +130,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that get returns the right object"""
         storage = FileStorage()
         len1 = len(storage.all())
-        new_state = State({"name": "Anambra", "number_of_states": 23})
+        new_state = State(**{"name": "Anambra", "number_of_states": 23})
         storage.new(new_state)
         len2 = len(storage.all())
         self.assertTrue(len1 < len2)
