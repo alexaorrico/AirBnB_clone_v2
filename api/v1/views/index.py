@@ -4,10 +4,9 @@
 from flask import Flask, jsonify
 
 from api.v1.views import app_views
-
 from models import storage
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base, BaseModel
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -27,6 +26,7 @@ def index():
 
 @app_views.route('/stats')
 def num_objects():
+    """counts each object in store"""
     result = {}
     for key, value in classes.items():
         total = storage.count(value)
