@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Objects that handles all default RESTful API actions for Users """
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import Flask, jsonify, abort, request
 from models import storage
 from models.user import User
 
