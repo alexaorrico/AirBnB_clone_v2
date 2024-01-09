@@ -1,28 +1,23 @@
 #!/usr/bin/python3
 """this module handles all default RESTFul API actions"""
 from flask import abort, jsonify, make_response, request
-
 from api.v1.views import app_views
-from models import storage
+
+import models
 from models.state import State
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
+@app_views.route('/states', strict_slashes=False, methods=['GET'])
 def get_states():
-    """
-    Retrieves the list of all State objects
-    """
-    all_states = storage.all(State).values()
-    list_states = []
-    for state in all_states:
-        list_states.append(state.to_dict())
-    return jsonify(list_states)
+    all_states = models.storage.all(State)
+    states = [x.to_dict() for x in all_states.values()]
+    return jsonify(states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """ Retrieves a specific State """
-    state = storage.get(State, state_id)
+    state = models.storage.get(State, state_id)
     if not state:
         abort(404)
 
@@ -36,13 +31,13 @@ def delete_state(state_id):
     Deletes a State Object
     """
 
-    state = storage.get(State, state_id)
+    state = models.storage.get(State, state_id)
 
     if not state:
         abort(404)
 
-    storage.delete(state)
-    storage.save()
+    models.storage.delete(state)
+    models.storage.save()
 
     return jsonify({}), 200
 
@@ -69,7 +64,7 @@ def put_state(state_id):
     """
     Updates a State
     """
-    state = storage.get(State, state_id)
+    state = models.storage.get(State, state_id)
 
     if not state:
         abort(404)
@@ -83,5 +78,5 @@ def put_state(state_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(state, key, value)
-    storage.save()
+    models.storage.save()
     return jsonify(state.to_dict()), 200
