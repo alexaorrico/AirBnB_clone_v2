@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Objects that handles all default RESTful API actions """
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import Flask, jsonify, request, abort
 from models import storage
 from models.state import State
 
@@ -9,7 +9,7 @@ from models.state import State
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """ Retrieve the list of all State objects """
-    states = storage.all(State).values()
+    states = []
     return jsonify([state.to_dict() for state in states])
 
 
