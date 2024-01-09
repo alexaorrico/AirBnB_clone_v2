@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from models import storage
 from api.v1.views.index import app_views
