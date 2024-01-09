@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 """starts a flask app for our api"""
 
-from flask import Flask, jsonify, make_response
-from models import storage
 import os
+
+from flask import Flask, jsonify, make_response
+
 from api.v1.views import app_views
+from models import storage
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -14,7 +16,7 @@ app.register_blueprint(app_views)
 def tear(exception):
     """closes the app and frees up resources"""
     storage.close()
-print(app.url_map)
+
 
 @app.errorhandler(404)
 def not_found(error):
