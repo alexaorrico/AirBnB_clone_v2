@@ -47,7 +47,7 @@ def delete_city(city_id):
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
-    """updates the City object of specified state
+    """Create the City object of specified state
     """
     data = request.get_json()
 
@@ -61,10 +61,9 @@ def create_city(state_id):
         abort(400, "Missing name")
 
     new_city = City(**data)
-    setattr(new_city, 'state_id', state_id)
+    new_city.state_id = state_id
 
-    new_city.new()
-    storage.save()
+    new_city.save()
 
     return jsonify(new_city.to_dict()), 201
 
