@@ -42,7 +42,7 @@ def stats():
     """
     if request.method == 'GET':
         response = {}
-# Dictionary mapping singular class names to respective plural form for endpoint
+# Dictionary mapping singular class names to respective plural form
         PLURALS = {
             "Amenity": "amenities",
             "City": "cities",
