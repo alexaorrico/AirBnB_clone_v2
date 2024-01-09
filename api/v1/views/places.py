@@ -2,6 +2,7 @@
 """Creates a new view for Review objects that
 handles all default RESTFul API actions"""
 from flask import abort, jsonify, request
+from flask_cors import CORS
 from models.place import Place
 from models.user import User
 from models.amenity import Amenity
