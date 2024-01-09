@@ -6,6 +6,11 @@ from flask import jsonify
 from models import storage
 from api.v1.views import app_views
 from models.state import State
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.user import User
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
@@ -24,14 +29,13 @@ def nop():
 def object_status():
     """Create an endpoint that retrieves the number of each object by type"""
     objects = {
-        "amenities": 'Amenity',
-        "cities": 'City',
-        "places": 'Place',
-        "reviews": 'Review',
-        "states": 'State',
-        "users": 'User'
+        "amenities": Amenity,
+        "cities": City,
+        "places": Place,
+        "reviews": Review,
+        "states": State,
+        "users": User
     }
-    object_counts = {
-        key: storage.count(value)for key, value in objects.items()
-        }
-    return jsonify(object_counts)
+    for key, value in objects.items():
+        objects[key] = storage.count(value)
+    return jsonify(objects)
