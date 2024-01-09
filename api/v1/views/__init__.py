@@ -10,8 +10,11 @@ from api.v1.views.cities import *
 from api.v1.views.amenities import *
 from api.v1.views.users import *
 <<<<<<< HEAD
+<<<<<<< HEAD
 from api.v1.views.places_reviews import *
 from api.v1.views.places_amenities import *
 =======
 from api.v1.views.places import *
 >>>>>>> parent of 0128115 (Fix pycodestyle)
+=======
+>>>>>>> parent of 405c817 (Implement places_reviews)
