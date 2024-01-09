@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" objects that handle all default RestFul API actions for Users """
+"""
+objects that handle all default RestFul API actions for User
+"""
 from models.user import User
 from models import storage
 from api.v1.views import app_views
