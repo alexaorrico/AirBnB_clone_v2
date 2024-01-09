@@ -22,3 +22,15 @@ class City(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes city"""
         super().__init__(*args, **kwargs)
+
+    def to_dict(self):
+        """Returns a dictionary representation of the City instance"""
+        dictionary = {
+            "id": self.id,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
+            "name": self.name
+        }
+        if models.storage_t == "db":
+            dictionary["state_id"] = self.state_id
+        return dictionary
