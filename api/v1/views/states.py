@@ -3,9 +3,10 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 
-@app_views.route("/api/v1/states", methods=["GET"], strict_slashes=False)
+
+@app.route("/api/v1/states", methods=["GET"], strict_slashes=False)
 def get_states():
-    states = request.get(storage.all(State).values())
+    states = storage.all(State).values()
     return jsonify([state.to_dict() for state in states])
 
 
