@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """this module handles all default RESTFul API actions"""
-from flasgger.utils import swag_from
 from flask import abort, jsonify, make_response, request
 
 from api.v1.views import app_views
@@ -32,7 +31,6 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
     Deletes a State Object
@@ -46,7 +44,7 @@ def delete_state(state_id):
     storage.delete(state)
     storage.save()
 
-    return make_response(jsonify({}), 200)
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -86,4 +84,4 @@ def put_state(state_id):
         if key not in ignore:
             setattr(state, key, value)
     storage.save()
-    return make_response(jsonify(state.to_dict()), 200)
+    return jsonify(state.to_dict()), 200
