@@ -43,7 +43,7 @@ def users():
     strict_slashes=False)
 def user_id(user_id):
     """handles states route with a parameter state_id"""
-    user = storage.get("User", user_id)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
     if request.method == 'GET':
@@ -57,5 +57,9 @@ def user_id(user_id):
         if put_data is None or type(put_data) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
         to_ignore = ['id', 'created_at', 'updated_at', 'email']
-        user.update(to_ignore, **put_data)
+        for k, v in put_data.items():
+            if k not in to_ignore:
+                setattr(user, k, v)
+        storage.save()
+        # user.update(to_ignore, **put_data)
         return jsonify(user.to_dict()), 200
