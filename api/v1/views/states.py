@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-'''
-    RESTful API for class State
-'''
+''' REST API blueprint for State class '''
 
 from flask import Flask, jsonify, abort, request, make_response
 from models import storage
@@ -10,19 +8,15 @@ from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-def get_state():
-    '''
-        return state in json form
-    '''
-    state_list = [s.to_dict() for s in storage.all('State').values()]
-    return jsonify(state_list)
+def get_all_states():
+    ''' returns all state objects in storage in json format '''
+    states = [state.to_dict() for state in storage.all('State').values()]
+    return jsonify(states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state_id(state_id):
-    '''
-        return state and its id using http verb GET
-    '''
+def get_state_by_id(state_id):
+    ''' find and returns state with macthing id '''
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
@@ -34,22 +28,18 @@ def get_state_id(state_id):
     methods=['DELETE'],
     strict_slashes=False)
 def delete_state(state_id):
-    '''
-        delete state obj given state_id
-    '''
+    ''' deletes a state object with maching given state_id '''
     state = storage.get("State", state_id)
     if state is None:
         abort(404)
     state.delete()
     storage.save()
-    return jsonify({}), 200
+    return (jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create_state():
-    '''
-        create new state obj
-    '''
+def create_new_state():
+    ''' creates a new state object '''
     data = request.get_json()
     if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
@@ -58,14 +48,12 @@ def create_state():
     else:
         obj = State(**data)
         obj.save()
-        return jsonify(obj.to_dict()), 201
+        return (jsonify(obj.to_dict()), 201)
 
 
 @app_views.route('/states/<states_id>', methods=['PUT'], strict_slashes=False)
 def update_state(states_id):
-    '''
-        update existing state object
-    '''
+    ''' updates an existing state object '''
     data = request.get_json()
     if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
@@ -77,4 +65,4 @@ def update_state(states_id):
         if attr not in ['id', 'created_at', 'updated_at']:
             setattr(obj, attr, value)
     obj.save()
-    return jsonify(obj.to_dict()), 200
+    return (jsonify(obj.to_dict()), 200)

@@ -1,28 +1,20 @@
 #!/usr/bin/python3
-'''
-    flask application with routes
-    routes:
-        /status:    display "status":"OK"
-        /stats:     dispaly total for all classes
-'''
+''' flask blueprint module '''
+
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
 
 
 @app_views.route("/status")
-def status():
-    '''
-        returns JSON of OK status
-    '''
+def get_status():
+    ''' returns JSON of OK status for status route '''
     return jsonify({'status': 'OK'})
 
 
 @app_views.route("/stats")
 def storage_stats():
-    '''
-        counts all instances of all classes in storage
-    '''
+    ''' counts all instances of all classes in application storage '''
     stats = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),

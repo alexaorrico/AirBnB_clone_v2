@@ -11,9 +11,7 @@ from models.review import Review
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 def get_review_by_place(place_id):
-    '''
-        return reviews by place, json form
-    '''
+    ''' returns reviews with maching place id using json format '''
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
@@ -22,10 +20,8 @@ def get_review_by_place(place_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
-def get_review_id(review_id):
-    '''
-        return review given its id using GET
-    '''
+def get_review_by_id(review_id):
+    ''' find and returns review with maching id '''
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
@@ -35,9 +31,7 @@ def get_review_id(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
-    '''
-        delete review obj given review_id
-    '''
+    ''' deletes review object with maching review_id '''
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
@@ -48,7 +42,7 @@ def delete_review(review_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def create_review(place_id):
+def create_new_review(place_id):
     '''
         create new review obj through place association using POST
     '''
@@ -72,9 +66,7 @@ def create_review(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
-    '''
-        update review city object using PUT
-    '''
+    ''' updates review object using given id '''
     data = request.get_json()
     obj = storage.get("Review", review_id)
     if not data:

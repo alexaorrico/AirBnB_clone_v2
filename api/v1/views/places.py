@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-'''
-    RESTful API for class Place
-'''
+''' REST API blueprint for Place class '''
+
 from flask import Flask, jsonify, abort, request, make_response
 from models import storage
 from models.place import Place
@@ -11,21 +10,17 @@ from api.v1.views import app_views
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_place_by_city(city_id):
-    '''
-        return places in city using GET
-    '''
+    ''' Find and returns places in city using city_d '''
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    places_list = [p.to_dict() for p in city.places]
-    return jsonify(places_list), 200
+    places_list = [place.to_dict() for place in city.places]
+    return (jsonify(places_list), 200)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
-def get_place_id(place_id):
-    '''
-        return place and its id using GET
-    '''
+def get_place_by_id(place_id):
+    ''' returns place with matching id '''
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
@@ -35,9 +30,7 @@ def get_place_id(place_id):
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_place(place_id):
-    '''
-        DELETE place obj given place_id
-    '''
+    ''' Deletes place object with given place_id '''
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
@@ -48,10 +41,8 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def create_place(city_id):
-    '''
-        create new place obj through city association using POST
-    '''
+def create_place_by_city_id(city_id):
+    ''' creates new place object through city id '''
     data = request.get_json()
     if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
@@ -74,9 +65,7 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
 def update_place(place_id):
-    '''
-        update existing place object using PUT
-    '''
+    ''' updates existing place object with maching id '''
     data = request.get_json()
     if not data:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
@@ -93,7 +82,7 @@ def update_place(place_id):
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def search_by_post():
-    """ searches for a plaec using list of ids """
+    """ searches for a place using list of ids """
     ids = request.get_json()
     if not ids:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
