@@ -1,10 +1,6 @@
 #!/usr/bin/python3
-'''Users Routes'''
-<<<<<<< HEAD
-from flask import make_response, abort, request
-=======
-from flask import abort, request, jsonify
->>>>>>> eac090383e57976bf63e826af8101a492d5e60c4
+"""Users Routes"""
+from flask import abort, request, jsonify, make_response
 from api.v1.views import app_views
 from models import storage
 from models.user import User
