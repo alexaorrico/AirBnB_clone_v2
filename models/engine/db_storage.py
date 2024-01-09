@@ -40,6 +40,27 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
+    def get(self, cls, id):
+        """ Retrieve an object by class and ID """
+        if isinstance(cls, str):
+            cls = classes.get(cls)
+        if cls is None:
+            return None
+        return self.__session.query(cls).filter(cls.id == id).first()
+
+    def count(self, cls=None):
+        """ Count number of objects in storage """
+        if cls is None:
+            return len(self.all())
+
+        if isinstance(cls, str):
+            cls = classes.get(cls)
+
+        if cls is None:
+            return 0
+
+        return self.__session.query(cls).count()
+
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
