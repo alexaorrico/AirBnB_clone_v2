@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""place"""
 from flask import Blueprint, jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
