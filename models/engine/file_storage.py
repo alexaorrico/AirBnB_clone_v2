@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 import json
+
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -82,7 +83,7 @@ class FileStorage:
         number_objects = 0
         if cls is not None:
             for key, value in self.__objects.items():
-                if cls == value.__class__ or value.__class__.__name__:
+                if cls == value.__class__.__name__:
                     number_objects += 1
             return number_objects
         else:
