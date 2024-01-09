@@ -4,6 +4,7 @@ This module defines routes related to the status of the API
 """
 from api.v1.views import app_views
 from models import storage
+from flask import Flask
 from flask import jsonify
 
 
@@ -15,7 +16,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats")
+@app_views.route('/stats', strict_slashes=False)
 def count():
     """
     Return JSON stats response
