@@ -68,19 +68,22 @@ def post_state():
     return make_response(jsonify(instance.to_dict()), 201)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
-def update_state(state_id):
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('documentation/state/put_state.yml', methods=['PUT'])
+def put_state(state_id):
     """
-    updates a state give a valid id
+    Updates a State
     """
+    state = storage.get(State, state_id)
+
+    if not state:
+        abort(404)
+
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(400)
-
     ignore = ['id', 'created_at', 'updated_at']
+
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
