@@ -7,7 +7,6 @@ from api.v1.views import app_views
 from flask import jsonify, request
 from werkzeug.exceptions import NotFound
 from models import storage
-from models.place import place
 from models.place import Place
 from models.user import User
 
