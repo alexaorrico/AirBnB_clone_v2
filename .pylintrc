@@ -631,4 +631,8 @@ init-import=no
 
 # List of qualified module names which can have objects that can redefine
 # builtins.
-redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
+#redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
+#[MESSAGES CONTROL]
+disable=missing-docstring
+enable=pylint.extensions.docparams
+
