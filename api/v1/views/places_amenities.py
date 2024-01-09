@@ -14,7 +14,8 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/places/<place_id>/amenities', strict_slashes=False)
+@app_views.route('/places/<place_id>/amenities',
+                 strict_slashes=False, methods=["GET"])
 def get_amenities_of_place(place_id):
     """this is the view for the /api/v1/places/[SLUG]/amenities
         endpoint"""
@@ -29,8 +30,8 @@ def get_amenities_of_place(place_id):
     return jsonify(res)
 
 
-@app_views.delete('/places/<place_id>/amenities/<amenity_id>',
-                  strict_slashes=False)
+@app_views.route('/places/<place_id>/amenities/<amenity_id>',
+                 strict_slashes=False, methods=["DELETE"])
 def delete_amenity_from_place(place_id, amenity_id):
     """this is the view for the /api/v1/places/[SLUG]/amenities/[SLUG]
         endpoint"""
@@ -55,7 +56,7 @@ def delete_amenity_from_place(place_id, amenity_id):
     return jsonify({})
 
 
-@app_views.post("/places/<place_id>/amenities/<amenity_id>")
+@app_views.route("/places/<place_id>/amenities/<amenity_id>", methods=["POST"])
 def create_place_amenity(place_id, amenity_id):
     """this is the view for the /api/v1/places/[SLUG]/amenities/[SLUG]
         endpoint"""

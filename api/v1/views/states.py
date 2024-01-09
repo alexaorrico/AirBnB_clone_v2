@@ -14,7 +14,7 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/states', strict_slashes=False)
+@app_views.route('/states', strict_slashes=False, methods=["GET"])
 def get_states():
     """this is the view for the /api/v1/states
         endpoint"""
@@ -22,7 +22,7 @@ def get_states():
     return jsonify(all_states)
 
 
-@app_views.get('/states/<state_id>', strict_slashes=False)
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=["GET"])
 def get_state(state_id):
     """this is the view for the /api/v1/states/[SLUG]
         endpoint"""
@@ -33,7 +33,8 @@ def get_state(state_id):
     return jsonify(res)
 
 
-@app_views.delete('/states/<state_id>', strict_slashes=False)
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False, methods=["DELETE"])
 def delete_state(state_id):
     """this is the view for the /api/v1/states/[SLUG]
         endpoint"""
@@ -45,7 +46,7 @@ def delete_state(state_id):
     return jsonify({})
 
 
-@app_views.post('/states', strict_slashes=False)
+@app_views.route('/states', strict_slashes=False, methods=["POST"])
 def post_state():
     """this is the view for the /api/v1/states
         endpoint"""
@@ -62,7 +63,7 @@ def post_state():
         return make_response(jsonify("Not a JSON"), 400)
 
 
-@app_views.put('/states/<state_id>', strict_slashes=False)
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=["PUT"])
 def put_state(state_id):
     """this is the view for the /api/v1/states/[SLUG]
         endpoint"""

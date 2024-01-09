@@ -14,7 +14,8 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/amenities/<amenity_id>', strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=["GET"])
 def get_amenity(amenity_id):
     """this is the view for the /api/v1/amenities/[SLUG]
         endpoint"""
@@ -25,7 +26,8 @@ def get_amenity(amenity_id):
     return jsonify(res)
 
 
-@app_views.get('/amenities', strict_slashes=False)
+@app_views.route('/amenities',
+                 strict_slashes=False, methods=["GET"])
 def get_amenities():
     """this is the view for the /api/v1/amenities
         endpoint"""
@@ -33,7 +35,8 @@ def get_amenities():
     return jsonify(res)
 
 
-@app_views.delete('/amenities/<amenity_id>', strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=["DELETE"])
 def delete_amenity(amenity_id):
     """this is the view for the /api/v1/amenities/[SLUG]
         endpoint"""
@@ -45,7 +48,8 @@ def delete_amenity(amenity_id):
     return jsonify({})
 
 
-@app_views.post('/amenities/', strict_slashes=False)
+@app_views.route('/amenities/',
+                 strict_slashes=False, methods=["POST"])
 def post_amenity():
     """this is the view for the /api/v1/amenities
         endpoint"""
@@ -61,7 +65,8 @@ def post_amenity():
         return make_response(jsonify("Not a JSON"), 400)
 
 
-@app_views.put('/amenities/<amenity_id>', strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 strict_slashes=False, methods=["PUT"])
 def put_amenity(amenity_id):
     """this is the view for the /api/v1/amenities/[SLUG]
         endpoint"""

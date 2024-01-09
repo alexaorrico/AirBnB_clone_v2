@@ -14,7 +14,8 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/states/<state_id>/cities', strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 strict_slashes=False, methods=["GET"])
 def get_cities_of_state(state_id):
     """this is the view for the /api/v1/states/[SLUG]/cities
         endpoint"""
@@ -26,7 +27,7 @@ def get_cities_of_state(state_id):
     return jsonify(res)
 
 
-@app_views.get('/cities/<city_id>', strict_slashes=False)
+@app_views.route('/cities/<city_id>', strict_slashes=False, methods=["GET"])
 def get_city(city_id):
     """this is the view for the /api/v1/cities/[SLUG]
         endpoint"""
@@ -37,7 +38,7 @@ def get_city(city_id):
     return jsonify(res)
 
 
-@app_views.get('/cities', strict_slashes=False)
+@app_views.route('/cities', strict_slashes=False, methods=["GET"])
 def get_cities():
     """this is the view for the /api/v1/cities
         endpoint"""
@@ -46,7 +47,7 @@ def get_cities():
     return jsonify(res)
 
 
-@app_views.delete('/cities/<city_id>', strict_slashes=False)
+@app_views.route('/cities/<city_id>', strict_slashes=False, methods=["DELETE"])
 def delete_city(city_id):
     """this is the view for the /api/v1/cities/[SLUG]
         endpoint"""
@@ -58,7 +59,8 @@ def delete_city(city_id):
     return jsonify({})
 
 
-@app_views.post('/states/<state_id>/cities', strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 strict_slashes=False, methods=["POST"])
 def post_cities_of_state(state_id):
     """this is the view for the /api/v1/states
         endpoint"""
@@ -79,7 +81,7 @@ def post_cities_of_state(state_id):
         return make_response(jsonify("Not a JSON"), 400)
 
 
-@app_views.put('/cities/<city_id>', strict_slashes=False)
+@app_views.route('/cities/<city_id>', strict_slashes=False, methods=["PUT"])
 def put_city(city_id):
     """this is the view for the /api/v1/cities/[SLUG]
         endpoint"""

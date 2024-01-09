@@ -14,7 +14,8 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/cities/<place_id>/places', strict_slashes=False)
+@app_views.route('/cities/<place_id>/places',
+                 strict_slashes=False, methods=["GET"])
 def get_places_of_city(place_id):
     """this is the view for the /api/v1/cities/[SLUG]/places
         endpoint"""
@@ -26,7 +27,8 @@ def get_places_of_city(place_id):
     return jsonify(res)
 
 
-@app_views.get('/places/<place_id>', strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 strict_slashes=False, methods=["GET"])
 def get_place(place_id):
     """this is the view for the /api/v1/places/[SLUG]
         endpoint"""
@@ -37,7 +39,7 @@ def get_place(place_id):
     return jsonify(res)
 
 
-@app_views.get('/places', strict_slashes=False)
+@app_views.route('/places', strict_slashes=False, methods=["GET"])
 def get_places():
     """this is the view for the /api/v1/places
         endpoint"""
@@ -45,7 +47,8 @@ def get_places():
     return jsonify(res)
 
 
-@app_views.delete('/places/<place_id>', strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 strict_slashes=False, methods=["DELETE"])
 def delete_place(place_id):
     """this is the view for the /api/v1/places/[SLUG]
         endpoint"""
@@ -57,7 +60,8 @@ def delete_place(place_id):
     return jsonify({})
 
 
-@app_views.post('/cities/<city_id>/places', strict_slashes=False)
+@app_views.route('/cities/<city_id>/places',
+                 strict_slashes=False, methods=["POST"])
 def post_place_of_cities(city_id):
     """this is the view for the /api/v1/states
         endpoint"""
@@ -80,7 +84,7 @@ def post_place_of_cities(city_id):
         return make_response(jsonify("Not a JSON"), 400)
 
 
-@app_views.put('/places/<place_id>', strict_slashes=False)
+@app_views.route('/places/<place_id>', strict_slashes=False, methods=["PUT"])
 def put_place(place_id):
     """this is the view for the /api/v1/places/[SLUG]
         endpoint"""
@@ -100,7 +104,7 @@ def put_place(place_id):
         return make_response(jsonify("Not a JSON"), 400)
 
 
-@app_views.post('/places_search')
+@app_views.route('/places_search', methods=["POST"])
 def places_search_advance():
     """this is the view for the /api/v1/places_search
         endpoint"""

@@ -14,7 +14,8 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/places/<place_id>/reviews', strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                 strict_slashes=False, methods=["GET"])
 def get_reviews_of_place(place_id):
     """this is the view for the /api/v1/places/[SLUG]/reviews
         endpoint"""
@@ -26,7 +27,7 @@ def get_reviews_of_place(place_id):
     return jsonify(res)
 
 
-@app_views.get('/reviews/<review_id>', strict_slashes=False)
+@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=["GET"])
 def get_review(review_id):
     """this is the view for the /api/v1/reviews/[SLUG]
         endpoint"""
@@ -37,7 +38,8 @@ def get_review(review_id):
     return jsonify(res)
 
 
-@app_views.delete('/reviews/<review_id>', strict_slashes=False)
+@app_views.route('/reviews/<review_id>',
+                 strict_slashes=False, methods=["DELETE"])
 def delete_review(review_id):
     """this is the view for the /api/v1/reviews/[SLUG]
         endpoint"""
@@ -49,7 +51,8 @@ def delete_review(review_id):
     return jsonify({})
 
 
-@app_views.post('/places/<place_id>/reviews', strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews',
+                 strict_slashes=False, methods=["POST"])
 def post_review_of_places(place_id):
     """this is the view for the /api/v1/places/[SLUG]/reviews
         endpoint"""
@@ -72,7 +75,7 @@ def post_review_of_places(place_id):
         return make_response(jsonify("Not a JSON"), 400)
 
 
-@app_views.put('/reviews/<review_id>', strict_slashes=False)
+@app_views.route('/reviews/<review_id>', strict_slashes=False, methods=["PUT"])
 def put_review(review_id):
     """this is the view for the /api/v1/reviews/[SLUG]
         endpoint"""

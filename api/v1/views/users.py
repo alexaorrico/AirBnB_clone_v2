@@ -14,7 +14,7 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/users/<user_id>', strict_slashes=False)
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=["GET"])
 def get_user(user_id):
     """this is the view for the /api/v1/users/[SLUG]
         endpoint"""
@@ -25,7 +25,7 @@ def get_user(user_id):
     return jsonify(res)
 
 
-@app_views.get('/users', strict_slashes=False)
+@app_views.route('/users', strict_slashes=False, methods=["GET"])
 def get_users():
     """this is the view for the /api/v1/users
         endpoint"""
@@ -33,7 +33,7 @@ def get_users():
     return jsonify(res)
 
 
-@app_views.delete('/users/<user_id>', strict_slashes=False)
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=["DELETE"])
 def delete_user(user_id):
     """this is the view for the /api/v1/users/[SLUG]
         endpoint"""
@@ -45,7 +45,7 @@ def delete_user(user_id):
     return jsonify({})
 
 
-@app_views.post('/users', strict_slashes=False)
+@app_views.route('/users', strict_slashes=False, methods=["POST"])
 def post_user():
     """this is the view for the /api/v1/states
         endpoint"""
@@ -63,7 +63,7 @@ def post_user():
         return make_response(jsonify("Not a JSON"), 400)
 
 
-@app_views.put('/users/<user_id>', strict_slashes=False)
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=["PUT"])
 def put_user(user_id):
     """this is the view for the /api/v1/users/[SLUG]
         endpoint"""

@@ -12,13 +12,13 @@ from models.state import State
 from models.user import User
 
 
-@app_views.get("/status")
+@app_views.route("/status", methods=["GET"])
 def status():
     """Returns the api status in JSON format"""
     return jsonify({"status": "OK"})
 
 
-@app_views.get("/stats")
+@app_views.route("/stats", methods=["GET"])
 def stats():
     """Returns the number of items in storage in JSON format"""
     from models import storage
