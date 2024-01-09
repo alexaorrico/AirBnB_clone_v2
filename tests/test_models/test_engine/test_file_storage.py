@@ -133,9 +133,10 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Tests that the user we retrieved using
             get() method matches the one we created"""
-        storage = FileStorage()
-        newUser = User(first_name="new user 2",
-                       password="new_user_pwd2", email="new_user@2")
-        newUser.save()
-        retrievedUser = storage.get(User, newUser.id)
-        self.assertTrue(retrievedUser is newUser)
+            storage = FileStorage()
+            obj = BaseModel()
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            storage.new(obj)
+            self.assertEqual(storage.get(BaseModel, obj.id), obj)
+            self.assertIsNone(storage.get(BaseModel, "nonexistent_id"))
+
