@@ -8,17 +8,18 @@ from flask import jsonify, request
 from werkzeug.exceptions import NotFound
 from models import storage
 from models.place import Place
+from models.city import City
 from models.user import User
 
 
-@app_views.route('/cities/<place_id>/places', methods=['GET'],
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-def fetch_cities_places(place_id=None):
+def fetch_cities_places(city_id=None):
     """Fetches all places for a place from the database"""
-    place = storage.get(Place, place_id)
-    if not place:
+    cities = storage.get(City, city_id)
+    if not cities:
         raise NotFound
-    return jsonify([place.to_dict() for place in place.places])
+    return jsonify([place.to_dict() for place in cities.places])
 
 
 @app_views.route('/places/<place_id>', methods=['GET'],
