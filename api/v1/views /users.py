@@ -36,7 +36,7 @@ def users_method(user_id=None):
             storage.delete(users[key])
             storage.save()
             return jsonify({}), 200
-        except:
+        except Exception:
             abort(404)
 
     # POST REQUESTS
