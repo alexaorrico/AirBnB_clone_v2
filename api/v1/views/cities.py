@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """ holds class City"""
 
 from flask import Blueprint, jsonify, request, abort
