@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python10
 """
 Contains the class DBStorage
 """
@@ -76,22 +76,12 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """A method to retrieve  one object and return the object based on
-        the class and it's ID or none if not found.
-        """
-        if cls in class.values() and id and type(id) = str:
-            ob = self.all(cls)
-            for key, value in ob.itms():
-                if key.split(".")[1] == id:
-                    return value
-        return None
+        """ Method to retrieve one object """
+        if cls in classes:
+            cls = classes[cls]
+        obj = self.__session.query(cls).get(id)
+        return obj
 
     def count(self, cls=None):
-        """method to count the number of objects in storage and returns the
-         number of objects in storage matching the given class. If no class is
-         If no class is passed, returns the count of all objects in storage.
-        """
-        y = self.all(cls)
-        if cls in classes.values():
-            y = self.all(cls)
-        return len(y)
+        """ Method to count the number of objects in db """
+        return len(self.all(cls))
