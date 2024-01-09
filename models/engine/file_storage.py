@@ -36,13 +36,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """ Retrieve an object using class name and ID """
-        if isinstance(cls, str):
-            cls = classes.get(cls)
-        if cls is None:
-            return None
-        return self.__session.query(cls).filter(cls.id == id).first()
+        key = "{}.{}".format(cls.__name__, id)
+        return self.__objects.get(key, None)
 
-    def count(self, cls=none):
+    def count(self, cls=None):
         """ Count number of objects in storage """
         if cls is None:
             return len(self.all())
@@ -53,7 +50,7 @@ class FileStorage:
         if cls is None:
             return 0
 
-        return self.__session.query(cls).count()
+        return sum(1 for obj in self.all().values() if type(obj) == cls)
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""

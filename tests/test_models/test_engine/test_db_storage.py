@@ -75,7 +75,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that returns a  specific object or none """
         n_state = State(name="New York")
         n_state.save()
-        n_user = User(email="sol@foobar.com", password="password")
+        n_user = User(email="bob@foobar.com", password="password")
         n_user.save()
         retrieved_state = models.storage.get("State", n_state.id)
         retrieved_non_state = models.storage.get("State", "blah")
@@ -95,7 +95,7 @@ class TestFileStorage(unittest.TestCase):
 
         n_state = State(name="Florida")
         n_state.save()
-        n_user = User(email="bob@foobar.com", password="password")
+        n_user = User(email="sel@gmail.com", password="password")
         n_user.save()
 
         self.assertEqual(models.storage.count("State"), init_count + 1)
