@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """starts a flask app for our api"""
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 import os
 from api.v1.views import app_views
@@ -17,8 +17,14 @@ def tear(exception):
 print(app.url_map)
 
 @app.errorhandler(404)
-def not_found(e):
-    return jsonify({"error": "Not found"}), 404
+def not_found(error):
+    """ 404 Error
+    ---
+    responses:
+      404:
+        description: a resource was not found
+    """
+    return make_response(jsonify({'error': "Not found"}), 404)
 
 
 value_host = os.getenv('HBNB_API_HOST')
