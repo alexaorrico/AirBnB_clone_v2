@@ -9,12 +9,12 @@ from flask import Flask
 @app_views.route('/status', strict_slashes=False)
 def status():
     """Return JSON status response"""
-    status = {"status": "OK"}
-    return jsonify(status)
+    statuse = {"status": "OK"}
+    return jsonify(statuse)
 
 
 @app_views.route('/stats', strict_slashes=False)
-def stats():
+def count():
     """Return JSON stats response"""
     stats_data = {
             'amenities': storage.count('Amenity'),
