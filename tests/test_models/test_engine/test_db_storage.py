@@ -92,7 +92,7 @@ class TestFileStorage(unittest.TestCase):
         """ test to get instance db storage
         """
         storage = DBStorage()
-        d = {"name":"name"}
+        d = {"name" : "name"}
         instance = State(**d)
         storage.new(instance)
         storage.save()
@@ -112,4 +112,3 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         b = storage.count()
         self.assertEqual(len(storage.all()), b)
-
