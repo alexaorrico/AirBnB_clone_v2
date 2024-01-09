@@ -1,21 +1,21 @@
 #!/usr/bin/python3
-"""Creates a new view for Place objects that
+"""Creates a new view for Review objects that
 handles all default RESTFul API actions"""
 from flask import abort, jsonify, request
-from models.state import State
-from models.city import City
 from models.place import Place
 from models.user import User
 from models.amenity import Amenity
+from models.state import State
+from models.city import City
 from api.v1.views import app_views
 from models import storage
 
 
-# route to get all place objects
+# route to get all review objects
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def get_all_places(city_id):
-    """returns all place objects"""
+    """returns all review objects"""
     city = storage.all(City, city_id)
     if not city:
         abort(404)
