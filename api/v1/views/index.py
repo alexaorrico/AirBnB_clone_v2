@@ -14,6 +14,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """
@@ -26,19 +27,22 @@ def status():
         response = {"status": "OK"}
         return jsonify(response)
 
+
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """
     Endpoint to retrieve counts of various class objects.
 
-    Iterates through predefined classes and fetches their respective counts using the storage engine.
+    Iterates through predefined classes and fetches their
+    respective counts using the storage engine.
 
     Returns:
-        JSON object: A JSON response containing counts of Amenity, City, Place, Review, State, and User objects.
+        JSON object: A JSON response containing counts of
+          Amenity, City, Place, Review, State, and User objects.
     """
     if request.method == 'GET':
         response = {}
-        # Dictionary mapping singular class names to their respective plural form for endpoint
+# Dictionary mapping singular class names to respective plural form for endpoint
         PLURALS = {
             "Amenity": "amenities",
             "City": "cities",
@@ -47,7 +51,7 @@ def stats():
             "State": "states",
             "User": "users"
         }
-        # Iterate through classes, count objects, and populate the response dictionary
+# Iterate through classes, count objects, and populate the response dictionary
         for singular, plural in PLURALS.items():
             response[plural] = storage.count(eval(singular))
         return jsonify(response)
