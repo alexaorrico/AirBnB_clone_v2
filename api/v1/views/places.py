@@ -48,12 +48,12 @@ def delete_place(place_id):
     raise NotFound
 
 
-@app_views.route('/cities/<place_id>/places', methods=['POST'],
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def create_place(place_id):
+def create_place(city_id):
     """Creates a new place and saves it to the db"""
-    place = storage.get(Place, place_id)
-    if not place:
+    city = storage.get(City, city_id)
+    if not city:
         raise NotFound
     place = request.get_json()
     if not place:
@@ -66,7 +66,7 @@ def create_place(place_id):
     if 'name' not in place:
         return jsonify(error='Missing name'), 400
     place = Place(**place)
-    setattr(place, 'place_id', place_id)
+    setattr(place, 'city_id', city_id)
     storage.new(place)
     storage.save()
     return jsonify(place.to_dict()), 201
