@@ -4,7 +4,7 @@ handles all default RESTFul API actions"""
 from flask import abort, jsonify, request
 from models.state import State
 from models.city import City
-from models.amenity imprt Amenity
+from models.amenity import Amenity
 from api.v1.views import app_views
 from models import storage
 
