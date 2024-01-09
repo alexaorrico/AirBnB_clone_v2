@@ -113,3 +113,45 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorageMethods(unittest.TestCase):
+
+    def setUp(self):
+        # Set up any necessary resources before each test
+        self.file_storage = storage
+
+    def tearDown(self):
+        # Clean up any resources after each test
+        self.file_storage.reload()  # Reload to restore initial state
+
+    def test_get_existing_object(self):
+        """Test the get method with an existing object"""
+        new_state = State(name="California")
+        self.file_storage.new(new_state)
+        self.file_storage.save()
+        retrieved_state = self.file_storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
+
+    def test_get_nonexistent_object(self):
+        """Test the get method with a nonexistent object"""
+        retrieved_state = self.file_storage.get(State, "nonexistent_id")
+        self.assertIsNone(retrieved_state)
+
+    def test_count_all_objects(self):
+        """Test the count method with all objects"""
+        initial_count = self.file_storage.count()
+        new_user = User(name="John Doe")
+        self.file_storage.new(new_user)
+        self.file_storage.save()
+        updated_count = self.file_storage.count()
+        self.assertEqual(updated_count, initial_count + 1)
+
+    def test_count_objects_of_specific_class(self):
+        """Test the count method with objects of a specific class"""
+        initial_count = self.file_storage.count(State)
+        new_state = State(name="Texas")
+        self.file_storage.new(new_state)
+        self.file_storage.save()
+        updated_count = self.file_storage.count(State)
+        self.assertEqual(updated_count, initial_count + 1)
