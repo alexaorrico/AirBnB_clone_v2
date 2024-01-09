@@ -7,14 +7,19 @@ from models import storage
 from api.vi.views import app_views
 from flask_cors import CORS
 
+#instance of flask application
 app = Flask(__name__)
 
+
+#blueprint registration
 app.register_blueprint(app_views)
 
+#initializing CORS
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown(exception):
+    """close curent session"""
     storage.close()
 
 
