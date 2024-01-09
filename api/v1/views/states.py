@@ -13,15 +13,12 @@ Routes:
 
 """
 
-from flask import Blueprint
 from flask import jsonify
 from flask import request
 from models import storage
 from models.state import State
 from api.v1.app import not_found
 
-
-app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
