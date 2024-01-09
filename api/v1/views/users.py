@@ -46,7 +46,7 @@ def add_user_to_db():
         return jsonify({"error": "Missing password"}), 400
     user = User(**json_data)
     storage.new(user)
-    user.save()
+    storage.save()
     return jsonify(user.to_dict()), 201
 
 
