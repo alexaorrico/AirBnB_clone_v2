@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 """this module handles all default RESTFul API actions"""
-from models.state import State
-from models import storage
-from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
 from flasgger.utils import swag_from
+from flask import abort, jsonify, make_response, request
+
+from api.v1.views import app_views
+from models import storage
+from models.state import State
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/state/get_state.yml', methods=['GET'])
 def get_states():
     """
     Retrieves the list of all State objects
@@ -21,7 +21,6 @@ def get_states():
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/state/get_id_state.yml', methods=['get'])
 def get_state(state_id):
     """ Retrieves a specific State """
     state = storage.get(State, state_id)
