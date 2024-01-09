@@ -12,8 +12,8 @@ from models.user import User
 def get_list_od_users(user_id=None):
     """returns list of all users"""
     if user_id is None:
-        users = [user.to_dict() for user in storage.all(User).values()]
-        return jsonify(users)
+        users = storage.all(User).values()
+        return jsonify([user.to_dict() for user in users])
     else:
         user = storage.get(User, user_id)
         if not user:
@@ -61,5 +61,5 @@ def update_user_in_db(user_id):
     for k, v in json_data.items():
         if k not in ["id", "email", "created_at", "updated_at"]:
             setattr(user, k, v)
-    storage.save()
+    user.save()
     return jsonify(user.to_dict()), 200
