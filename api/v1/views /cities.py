@@ -66,7 +66,7 @@ def cities_id_mothods(city_id):
             storage.delete(cities[key])
             storage.save()
             return jsonify({}), 200
-        except:
+        except (Exception):
             abort(404)
     # PUT REQUESTS
     elif request.method == "PUT":

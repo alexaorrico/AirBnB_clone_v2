@@ -32,7 +32,7 @@ def amenity_methods(amenity_id=None):
             storage.delete(amenities[key])
             storage.save()
             return jsonify({}), 200
-        except:
+        except (Exception):
             abort(404)
 
     # POST REQUESTS
