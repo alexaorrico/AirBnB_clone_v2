@@ -31,5 +31,6 @@ def hbnb_stats():
         return_dict[key] = storage.count(value)
     return jsonify(return_dict)
 
+
 if __name__ == "__main__":
     pass
