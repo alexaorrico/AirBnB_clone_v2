@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Define routes for blueprint"""
+"""Define routes for blueprint erererereretert
+weweweweweweweweeweww wwwjjwjwjwjwjns iwiweiw iqwij
+"""
 
 from api.v1.views import app_views
 from flask import jsonify
