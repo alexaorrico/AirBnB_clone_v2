@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """application entry point"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -16,8 +16,8 @@ def handle_application(application):
     storage.close()
 
 
-@app.route('/api/v1/notexist')
-def not_exist():
+@app.errorhandler(404)
+def not_exist(error):
     """Handle 404 not found error"""
     return jsonify({"error": "Not found"}), 404
 
