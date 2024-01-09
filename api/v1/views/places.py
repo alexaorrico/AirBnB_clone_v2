@@ -15,7 +15,7 @@ from models.user import User
                  strict_slashes=False)
 def fetch_cities_places(place_id=None):
     """Fetches all places for a place from the database"""
-    place = storage.get(place, place_id)
+    place = storage.get(Place, place_id)
     if not place:
         raise NotFound
     return jsonify([place.to_dict() for place in place.places])
@@ -25,7 +25,7 @@ def fetch_cities_places(place_id=None):
                  strict_slashes=False)
 def fetch_place(place_id):
     """Fetches a place obj using the place id"""
-    places = storage.all(place)
+    places = storage.all(Place)
     if place_id:
         for place in places.values():
             if place.id == place_id:
@@ -37,7 +37,7 @@ def fetch_place(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     """Deletes a place obj using the place id"""
-    places = storage.all(place)
+    places = storage.all(Place)
     if place_id:
         for place in places.values():
             if place.id == place_id:
@@ -51,7 +51,7 @@ def delete_place(place_id):
                  strict_slashes=False)
 def create_place(place_id):
     """Creates a new place and saves it to the db"""
-    place = storage.get(place, place_id)
+    place = storage.get(Place, place_id)
     if not place:
         raise NotFound
     place = request.get_json()
