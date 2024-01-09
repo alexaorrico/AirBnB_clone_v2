@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestAmenityDocs classes
+Contains the TestplaceDocs classes
 """
 
 import inspect
@@ -11,7 +11,7 @@ import unittest
 import pep8
 
 import models
-from models import amenity
+from models import place
 from models.base_model import BaseModel
 
 Amenity = amenity.Amenity
