@@ -1,22 +1,24 @@
 #!/usr/bin/python3
-"""
-Flask web application
-Flask web application
-Flask web application
-"""
+"""creating a flask application"""
 
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS
-
+# Create a Flask application instance
 app = Flask(__name__)
+
 app.register_blueprint(app_views)
+
+# Register the blueprint app_views
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+# Initialize CORS with the app instance
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
+# Declare a method to handle teardown
 @app.teardown_appcontext
 def teardown(error):
     """Clean-up method"""
