@@ -8,7 +8,7 @@ from models import storage
 
 
 @app_views.route('/states/<string:state_id>/cities',
-                    methods=['GET'],
+                 methods=['GET'],
                  strict_slashes=False)
 def cities(state_id):
     """get's all cities"""
@@ -41,7 +41,8 @@ def delete_cities(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 def post_cities(state_id):
     """post cities"""
     validated_states = storage.get(State, state_id)
