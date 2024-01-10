@@ -1,52 +1,55 @@
 #!/usr/bin/python3
-"""State blueprint"""
-from models import storage
-from flask import jsonify, abort, make_request, request
+"""State module"""
 from api.v1.views import app_views
-from flasgger.utils import swag_from
+from flask import jsonify, abort, request, make_response
+from models import storage
 from models.state import State
+from flasgger.utils import swag_from
 
 
-@app_views.route('/states', methods['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get.yml', methods=['GET'])
 def get_all():
-    '''Get all state by id'''
-    state_list = [obj.to_dict() for obj in storage.all(State).values()]
-    return jsonify(state_list)
+    """ get all by id """
+    all_list = [obj.to_dict() for obj in storage.all(State).values()]
+    return jsonify(all_list)
 
 
-@app_views.route('/states/<state_id>', methods['GET'])
+@app_views.route('/states/<string:state_id>', methods=['GET'],
+                 strict_slashes=False)
 @swag_from('documentation/state/get_id.yml', methods=['GET'])
-def get_by_id(state_id):
-    """Get state by id"""
-    state_data = storage.get(State, state_id)
-    if state_data is None:
+def get_method_state(state_id):
+    """ get state by id"""
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
-    return jsonify(state_data.to_dict())
+    return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods['DELETE'])
+@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 @swag_from('documentation/state/delete.yml', methods=['DELETE'])
-def delete_state(state_id):
-    """Delete state by id"""
-    state_data = storage.get(State, state_id)
-    if state_data is None:
+def del_method(state_id):
+    """ delete state by id"""
+    state = storage.get(State, state_id)
+    if state is None:
         abort(404)
-    state_data.delete()
-    state_data.save()
+    state.delete()
+    storage.save()
     return jsonify({})
 
 
 @app_views.route('/states/', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/state/post.yml', methods=['POST'])
-def crete_state():
-    """Create ne instance"""
+def create_obj():
+    """ create new instance """
     if not request.get_json():
-        return make_request(jsonify({"error": "Not a JSON"}), 400)
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in request.get_json():
-        return make_request(jsonify({"error": "Missing name"}), 400)
-    obj = State(request.get_json())
+        return make_response(jsonify({"error": "Missing name"}), 400)
+    js = request.get_json()
+    obj = State(**js)
     obj.save()
     return jsonify(obj.to_dict()), 201
 
