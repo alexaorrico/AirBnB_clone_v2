@@ -21,6 +21,7 @@ def state():
 
 @app_views.route("/states/<string:state_id>", methods=['GET'])
 def state_id(state_id):
+    """state with id"""
     for key, value in all_states.items():
         newkey = key.split('.')[1]
         if state_id == newkey:
@@ -30,6 +31,7 @@ def state_id(state_id):
 
 @app_views.route('/states/<string:state_id>', methods=['DELETE'])
 def delete_state(state_id):
+    """delete state"""
     for key, value in all_states.items():
         if state_id in key:
             return {}, 200
@@ -38,6 +40,7 @@ def delete_state(state_id):
 
 @app_views.route('/states/', methods=['POST'])
 def post_state():
+    """post state"""
     try:
         message = request.get_json()
     except Exception:
@@ -52,6 +55,7 @@ def post_state():
 
 @app_views.route("/states/<string:state_id>", methods=['PUT'])
 def update_state(state_id):
+    """update state"""
     try:
         message = request.get_json()
     except Exception:
