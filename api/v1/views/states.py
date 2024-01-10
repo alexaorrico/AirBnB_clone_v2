@@ -4,6 +4,7 @@ from models import storage
 from flask import jsonify, abort, make_request, request
 from api.v1.views import app_views
 from flasgger.utils import swag_from
+from models.state import State
 
 
 @app_views.route('/states', methods['GET'])
