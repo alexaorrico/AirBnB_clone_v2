@@ -67,3 +67,20 @@ def add_place(city_id):
     place = Place(**json_data)
     place.save()
     return jsonify(place.to_dict()), 201
+
+
+@app_views.route('/places/<place_id>', strict_slashes=False,
+                 methods=['PUT'])
+def updating_place(place_id=None):
+    """updates place based on given id"""
+    place = storage.get(Place, place_id)
+    if place is None:
+        abort(404)
+    json_data = request.get_json()
+    if json_data is None:
+        abort(404, description="Not a JSON")
+    for k, v in json_data.items():
+        if k not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            setattr(place, k, v)
+    place.save()
+    return jsonify(place.to_dict()), 200
