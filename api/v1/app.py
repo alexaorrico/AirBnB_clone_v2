@@ -13,6 +13,7 @@ app.register_blueprint(app_views)
 
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
+
 @app.teardown_appcontext
 def handle_application(application):
     """handle application"""
