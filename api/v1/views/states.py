@@ -6,7 +6,6 @@ from flask import jsonify, abort, request
 from models import storage
 
 
-
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def state():
     """get's all states"""
@@ -44,11 +43,9 @@ def post_state():
         abort(400, description="Not a JSON")
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
-    
     data = request.get_json()
     new_state = State(**data)
     new_state.save()
-    
     return jsonify(new_state.to_dict()), 201
 
 
@@ -58,16 +55,11 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    
     if not request.get_json():
         abort(400, description="Not a JSON")
-    
     data = request.get_json()
-    
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
-    
     state.save()
-    
     return jsonify(state.to_dict()), 200
