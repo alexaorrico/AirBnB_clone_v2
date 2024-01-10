@@ -39,7 +39,7 @@ def delete_cities(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['POST'])
+@app_views.route('/states/<string:state_id>/cities', methods=['POST'], strict_slashes=False)
 def post_cities(state_id):
     """post cities"""
     validated_states = storage.get(State, state_id)
@@ -50,6 +50,7 @@ def post_cities(state_id):
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
     data = request.get_json()
+    print(data)
     city_instance = City(state_id=state_id, **data)
     city_instance.save()
     return jsonify(city_instance.to_dict()), 201
@@ -63,7 +64,7 @@ def update_cities(cities_id):
         abort(404)
     if not request.get_json():
         abort(400, description="Not a JSON")
-    data = request.get_json()
+    data = request.get_json(force=True, silent=True)
     for key, value in data.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(cities, key, value)
