@@ -1,16 +1,21 @@
 #!/usr/bin/python3
 """API part of the AirBnB clone project"""
 
+from flask import Flask, jsonify, abort, make_response
 from models import storage
 from api.v1.views import app_views
-from flask import Flask, make_response, jsonify
 import os
 from api.v1.views.states import *
 
 app = Flask(__name__)
 
-# register the blueprint app_views to your Flask instance app
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 app.register_blueprint(app_views)
+# register the blueprint app_views to your Flask instance app
+#app.register_blueprint(app_views)
 
 # environment variables
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
@@ -28,12 +33,9 @@ def teardown_db(exception):
 
     storage.close()
 
-@app.errorhandler(404)
-def not_found(error):
-    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
     """Runs the flask app"""
 
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port, threaded=True, debug=True)

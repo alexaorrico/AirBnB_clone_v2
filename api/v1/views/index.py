@@ -2,19 +2,18 @@
 """index file for the api views"""
 
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, make_response, request
 from models import storage
 
 
 
 @app_views.route('/status', methods=['GET'])
-def status():
+def view_status():
     """
     endpoint for the /status route
     """
 
-    if request.method == 'GET':
-        return jsonify({"status": "Ok"})
+    return jsonify({"status": "Ok"})
 
 
 @app_views.route('/stats', methods=['GET'])
