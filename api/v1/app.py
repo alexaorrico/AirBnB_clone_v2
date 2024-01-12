@@ -9,13 +9,15 @@ from api.v1.views.states import *
 
 app = Flask(__name__)
 
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+
 app.register_blueprint(app_views)
 # register the blueprint app_views to your Flask instance app
-#app.register_blueprint(app_views)
+# app.register_blueprint(app_views)
 
 # environment variables
 host = os.getenv('HBNB_API_HOST', '0.0.0.0')
@@ -32,7 +34,6 @@ def teardown_db(exception):
     """
 
     storage.close()
-
 
 
 if __name__ == "__main__":

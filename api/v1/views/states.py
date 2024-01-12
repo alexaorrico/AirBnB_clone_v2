@@ -4,20 +4,22 @@ from models import storage
 from models.state import State
 
 
-@app_views.route("/api/v1/states", methods=["GET"], strict_slashes=False)
+@app_views.route("/states", strict_slashes=False, methods=['GET'])
 def get_states():
     states = storage.all(State).values()
     return jsonify([state.to_dict() for state in states])
 
 
-@app_views.route("/api/v1/states/<state_id>", methods=["GET"], strict_slashes=False)
-def state_id(state_id):
-    state = storage.get(state, state_id)
+@app_views.route("/states/<state_id>", strict_slashes=False, methods=['GET'])
+def get_state(state_id):
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    return jsonify(state.ti_dict())
+    return jsonify(state.to_dict())
 
-@app_views.route("/api/v1/states/<state_id>", methods=["DELETE"], strict_slashes=False)
+
+@app_views.route("/states/<state_id>", methods=["DELETE"],
+                 strict_slashes=False)
 def delete_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
@@ -26,19 +28,21 @@ def delete_state(state_id):
     storage.save()
     return jsonify({}), 200
 
-@app_views.route("/api/v1/states", methods=["POST"], strict_slashes=False)
+
+@app_views.route("/states", methods=["POST"], strict_slashes=False)
 def create_state():
     data = request.get_json()
     if data is None:
         abort(400, "Not a JSON")
     if "name" not in date:
-        abort(400,"Missing name")
+        abort(400, "Missing name")
     new_state = State(**data)
     storage.new(new_state)
     storage.save()
     return jsonify(new_state.to_dict()), 201
 
-@app_views.route("/api/v1/states/<state_id>", methods=["PUT"], strict_slashes=False)
+
+@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
 def update_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
