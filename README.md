@@ -160,7 +160,7 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-Rophen PADONOU - [Email](mailto:rophenp@gmail.com)  
+Rophen PADONOU - [Email](mailto:rophenp@gmail.com) / [Github](https://github.com/Rophpad)
 Atuokwu Fortune - [Email](mailto:atuokwu.fortune@gmail.com) / [Github](https://github.com/Fortz47)
 
 Second part of Airbnb: Joann Vuong
