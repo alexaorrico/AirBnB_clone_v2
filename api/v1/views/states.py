@@ -40,6 +40,7 @@ def del_state(state_id):
 def add_state():
     """adds a state object"""
     data = request.get_json()
+    # Use make_response() instead of abort
     if data is None:
         abort(400, 'Not a JSON')
     if not data['name']:
@@ -47,6 +48,7 @@ def add_state():
     new_state = State(**data)
     storage.new(new_state)
     storage.save()
+    # return make_reponse(jsonify(new_state.to_dict()), 201)
     return jsonify(new_state.to_dict()), 201
 
 
