@@ -16,14 +16,18 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+"""
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
+        """
 
 
 class DBStorage:
     """interaacts with the MySQL database"""
     __engine = None
     __session = None
+    classes = {"Amenity": Amenity, "City": City,
+               "Place": Place, "Review": Review, "State": State, "User": User}
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -37,15 +41,20 @@ class DBStorage:
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
+        self.__session = sessionmaker(bind=self.__engine)()
+
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+        classes = {"Amenity": Amenity, "City": City,
+                   "Place": Place, "Review": Review,
+                   "State": State, "User": User}
+        for clss in self.classes:
+            if cls is None or cls is self.classes[clss] or cls is clss:
+                objs = self.__session.query(self.classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
@@ -70,6 +79,34 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
+
+    def get(self, cls, id):
+        """
+        Returns the object bases on the class and its ID,
+        or None if not found.
+        """
+
+        if cls and id:
+            result = self.all(cls)
+            query = "{}.{}".format(cls, id)
+            return result.get(query)
+        # return self.__session.query(cls).filter_by(id=id).first()
+        return None
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
+        # if cls:
+        #     return self.__session.query(cls).count()
+        # else:
+        #     total_count = 0
+        #     for stored_cls in self.classes.values():
+        #         total_count = self.__session.query(stored_cls).count()
+        #     return total_count
+
+        return len(self.all(cls))
 
     def close(self):
         """call remove() method on the private session attribute"""
