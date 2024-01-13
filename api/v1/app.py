@@ -9,7 +9,7 @@ from os import getenv
 from flask_cors import CORS
 
 app = Flask(__name__)
-cors = CORS(app, resource={r"/api/v1/*":{"origin":"0.0.0.0"}})
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 
