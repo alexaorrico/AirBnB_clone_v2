@@ -150,13 +150,102 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
-## Bugs
-No known bugs at this time. 
 
-## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+# AirBnB_clone_v3
 
-Second part of Airbnb: Joann Vuong
-## License
-Public Domain. No copy write protection. 
+## Project Overview
+
+Welcome to the AirBnB_clone_v3 project! This project involves working on a new codebase for an AirBnB clone. The primary focus is on enhancing the existing codebase, improving storage functionality, implementing a RESTful API, and creating views for various objects.
+
+## Author
+
+- Kelvin Njoroge Gachihi
+- Fardosa Hassan
+
+## Project Structure
+
+### 0. Restart from Scratch!
+
+If you're the owner of this codebase, create a new repository called `AirBnB_clone_v3` and copy over all files from `AirBnB_clone_v2`.
+
+### 1. Never Fail!
+
+To ensure the stability of the project, make sure that all current tests pass. Add new tests for any new features or changes you introduce.
+
+```bash
+python3 -m unittest discover tests 2>&1 | tail -1
+HBNB_ENV=test HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db python3 -m unittest discover tests 2>&1 /dev/null | tail -n 1
+```
+
+### 2. Improve Storage
+
+Update `DBStorage` and `FileStorage` in the `storage_get_count` branch, adding two new methods: `get` and `count`. Don't forget to add new tests for these methods.
+
+```bash
+./test_get_count.py
+```
+
+### 3. Status of Your API
+
+Implement the first endpoint to return the status of your API.
+
+```bash
+HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_API_HOST=0.0.0.0 HBNB_API_PORT=5000 python3 -m api.v1.app
+```
+
+In another terminal:
+
+```bash
+curl -X GET http://0.0.0.0:5000/api/v1/status
+```
+
+### 4. Some Stats?
+
+Create an endpoint that retrieves the number of each object type.
+
+```bash
+curl -X GET http://0.0.0.0:5000/api/v1/stats
+```
+
+### 5. Not Found
+
+Design a JSON-formatted 404 error response.
+
+```bash
+curl -X GET http://0.0.0.0:5000/api/v1/nop
+```
+
+### 6. State
+
+Create a new view for State objects that handles all default RESTful API actions.
+
+```bash
+curl -X GET http://0.0.0.0:5000/api/v1/states
+curl -X GET http://0.0.0.0:5000/api/v1/states/<state_id>
+curl -X DELETE http://0.0.0.0:5000/api/v1/states/<state_id>
+curl -X POST http://0.0.0.0:5000/api/v1/states -H "Content-Type: application/json" -d '{"name": "California"}'
+curl -X PUT http://0.0.0.0:5000/api/v1/states/<state_id> -H "Content-Type: application/json" -d '{"name": "California is so cool"}'
+```
+
+### 7. City
+
+Create a new view for City objects that handles all default RESTful API actions.
+
+```bash
+curl -X GET http://0.0.0.0:5000/api/v1/states/<state_id>/cities
+curl -X GET http://0.0.0.0:5000/api/v1/cities/<city_id>
+curl -X DELETE http://0.0.0.0:5000/api/v1/cities/<city_id>
+curl -X POST http://0.0.0.0:5000/api/v1/states/<state_id>/cities -H "Content-Type: application/json" -d '{"name": "Alexandria"}'
+curl -X PUT http://0.0.0.0:5000/api/v1/cities/<city_id> -H "Content-Type: application/json" -d '{"name": "Bossier City"}'
+```
+
+### 8. Amenity
+
+Create a new view for Amenity objects that handles all default RESTful API actions.
+
+```bash
+curl -X GET http://0.0.0.0:5000/api/v1/amenities
+curl -X GET http://0.0.0.0:5000/api/v1/amenities/<amenity_id>
+curl -X DELETE http://0.0.0.0:5000/api/v1/amenities/<amenity_id>
+curl -X POST http://0.0.0.0:5000/api/v1/amenities -H "Content-Type: application/json" -d '{"name": "Pool"}'
+curl -X PUT http://0.0
