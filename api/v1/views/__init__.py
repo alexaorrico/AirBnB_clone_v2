@@ -1,13 +1,17 @@
-#!/usr/bin/python3
+# api/v1/views/__init__.py
 """Init file for views module"""
 from flask import Blueprint
+import sys
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
-from api.v1.views.index import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
-from api.v1.views.amenities import *
-from api.v1.views.users import *
-from api.v1.views.places import *
-from api.v1.views.places_reviews import *
-from api.v1.views.places_amenities import *
+
+sys.path.append('/AirBnB_clone_v3/api/vi')
+
+from views.index import *  
+from views.states import *  
+from views.cities import *  
+from views.amenities import *
+from views.users import *  
+from views.places import * 
+from views.places_reviews import * 
+from views.places_amenities import * 

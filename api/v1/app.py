@@ -2,8 +2,15 @@
 """
 App with Flask 
 """
-from flask import Flask, make_response, jsonify
+import sys
+
+sys.path.append('/AirBnB_clone_v3')
+
 from models import storage
+from flask import Flask, make_response, jsonify
+
+sys.path.append('/AirBnB_clone_v3/api/v1')
+
 from api.v1.views import app_views
 from os import getenv
 from flask_cors import CORS

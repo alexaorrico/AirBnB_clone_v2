@@ -2,7 +2,14 @@
 """
 Flask route on the object app_views that returns json status response
 """
-from api.v1.views import app_views
+import sys
+
+sys.path.append('/AirBnB_clone_v3/api/v1')
+
+from views import app_views
+
+sys.path.append('/AirBnB_clone_v3')
+
 import models
 from models import storage
 from models.amenity import Amenity
