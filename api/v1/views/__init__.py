@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-Module for defining Blueprint and importing views for API
+    Module for defining Blueprint and importing views for API
 """
+
 
 from flask import Blueprint
 
