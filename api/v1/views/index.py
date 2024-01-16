@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-""" Module for defining API routes related to index.
-
-    This module defines the API route for status and stats.
-
-    Functions:
-        - get_status: Returns the status as JSON.
-        - get_stats: Retrieves the number of each object type.
 """
+Module for defining API routes related to index.
+This module defines the API route for status and stats.
+Functions:
+    - get_status: Returns the status as JSON.
+    - get_stats: Retrieves the number of each object type.
+"""
+
 
 from api.v1.views import app_views
 from flask import jsonify
