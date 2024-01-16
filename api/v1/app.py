@@ -1,15 +1,14 @@
 #!/usr/bin/python3
-""" Main application module for the API.
-
-    This module initializes the Flask application, registers blueprints,
-    defines custom error handlers, and starts the development server.
-
-    Classes:
-        - App: A Flask application with custom error handlers.
-
-    Functions:
-        - teardown_appcontext: Closes the storage on teardown.
 """
+Main application module for the API.
+This module initializes the Flask application, registers blueprints,
+defines custom error handlers, and starts the development server.
+Classes:
+    - App: A Flask application with custom error handlers.
+Functions:
+- teardown_appcontext: Closes the storage on teardown.
+"""
+
 
 import os
 from flask import Flask
