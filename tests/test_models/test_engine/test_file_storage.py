@@ -124,3 +124,15 @@ class TestFileStorage(unittest.TestCase):
         new_user = User()
         new_user.save()
         self.assertIs(storage.get("User", new_user.id), new_user)
+
+    def test_count(self):
+        """Test the quantity of objects stored in the storage"""
+        storage = FileStorage()
+        initial_length = len(storage.all())
+        self.assertEqual(storage.count(), initial_length)
+        states_length = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), states_length)
+        new_state = State()
+        new_state.save()
+        self.assertEqual(storage.count(), initial_length + 1)
+        self.assertEqual(storage.count("State"), states_length + 1)
