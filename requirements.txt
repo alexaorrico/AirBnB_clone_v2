@@ -7,6 +7,7 @@ decorator==5.1.1
 Deprecated==1.2.14
 Fabric3==1.14.post1
 flask==3.0.0
+Flask-Cors==4.0.0
 greenlet==3.0.1
 importlib-metadata==7.0.1
 invoke==2.2.0
