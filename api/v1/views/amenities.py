@@ -21,6 +21,7 @@ def Amenity():
 
 @app_views.route('/api/v1/amenities/<string:amenity_id>')
 def Amenity_id(amenity_id):
+    """get amenity with id"""
     verify_id = storage.get(Amenity, amenity_id)
     if verify_id is None:
         abort(404)
