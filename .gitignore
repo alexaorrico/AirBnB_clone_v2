@@ -2,7 +2,7 @@
 venv/
 
 # Ignore tmp files files
-__pycache__/
+**/__pycache__/
 
 # Ignore .json
 *.json
