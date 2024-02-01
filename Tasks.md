@@ -13,7 +13,7 @@
 -   ~~`tests/test_models/test_engine/test_db_storage.py`~~
 -   ~~`tests/test_models/test_engine/test_file_storage.py`~~
 
-## Task 3
+## Task 3 (Elvis)
 
 **Summary**
 
@@ -30,7 +30,7 @@
 -   `api/v1/views/index.py`
 -   `api/v1/app.py`
 
-## Task 4
+## Task 4 (Sarah)
 
 **Summary**
 
