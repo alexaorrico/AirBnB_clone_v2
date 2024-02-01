@@ -2,7 +2,7 @@
 
 **Summary**
 
--   Need to create a branch _storage_get_count_
+-   Need to create a branch `storage_get_count`
 -   Update DBStorage and FileStorage adding 2 methods...
     -   method to retrive one object and another to count objects in storage
 
