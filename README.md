@@ -157,6 +157,5 @@ No known bugs at this time.
 Sarah Kisiangani - [Github](https://github.com/Sarahkiss215)  
 Joan Otieno - [Github](https://github.com/joan254)
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
