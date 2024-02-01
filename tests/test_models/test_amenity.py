@@ -7,8 +7,9 @@ import inspect
 import unittest
 from datetime import datetime
 
-import models
 import pep8
+
+import models
 from models import amenity
 from models.base_model import BaseModel
 

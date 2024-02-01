@@ -5,8 +5,9 @@ Contains the class TestConsoleDocs
 
 import unittest
 
-import console
 import pep8
+
+import console
 
 HBNBCommand = console.HBNBCommand
 
