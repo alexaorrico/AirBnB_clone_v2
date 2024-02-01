@@ -180,7 +180,3 @@ No known bugs at this time.
 
 ![Static Badge](https://img.shields.io/badge/Author%20-%20Abdeljalil%20-%20green?style=for-the-badge&logo=github&cacheSeconds=https%3A%2F%2Fgithub.com%2FAbdeljalil37)
 ![Static Badge](https://img.shields.io/badge/Author%20-%20Ayman%20Sadiki%20-%20green?style=for-the-badge&logo=github&cacheSeconds=https%3A%2F%2Fgithub.com%2FAymanSdk)
-
-## License
-
-Public Domain. No copy write protection.
