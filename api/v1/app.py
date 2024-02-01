@@ -9,6 +9,7 @@ from flask import Flask
 from models import storage
 
 app = Flask(__name__)
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
