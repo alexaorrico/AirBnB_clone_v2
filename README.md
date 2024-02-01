@@ -178,7 +178,8 @@ No known bugs at this time.
 
 ## Authors
 
-Elvis Fiador - [Github](https://github.com/Dragonixj)  
+Elvis Fiador - [Github](https://github.com/Dragonixj)
+Sarah Ahmed - [Github](https://github.com/sarora2200)
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
