@@ -32,7 +32,8 @@
   "State.de182eee-f7b0-452c-80aa-b9afa7eb6d2b": {
     "id": "de182eee-f7b0-452c-80aa-b9afa7eb6d2b",
     "created_at": "2024-02-01T14:35:28.640190",
-    "updated_at": "2024-02-01T14:35:28.640190",
+    "updated_at": "2024-02-01T21:44:45.267128",
+    "name": "Ohio",
     "__class__": "State"
   },
   "User.b6841d0d-cb47-48e1-9a48-06b69c8f5034": {
@@ -40,5 +41,17 @@
     "created_at": "2024-02-01T14:35:28.640205",
     "updated_at": "2024-02-01T14:35:28.640205",
     "__class__": "User"
+  },
+  "State.9597a35a-be7b-4179-ac99-23afd80ce140": {
+    "id": "9597a35a-be7b-4179-ac99-23afd80ce140",
+    "created_at": "2024-02-01T21:39:15.212818",
+    "updated_at": "2024-02-01T21:39:15.212882",
+    "__class__": "State"
+  },
+  "State.711f4d97-8c32-4d46-a14c-2ac31f49bf69": {
+    "id": "711f4d97-8c32-4d46-a14c-2ac31f49bf69",
+    "created_at": "2024-02-01T21:45:02.731002",
+    "updated_at": "2024-02-01T21:45:02.731056",
+    "__class__": "State"
   }
 }
