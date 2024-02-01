@@ -8,10 +8,10 @@
 
 **Files to create/Update - Including test files**
 
--   `models/engine/db_storage.py`
--   `models/engine/file_storage.py`
--   `tests/test_models/test_engine/test_db_storage.py`
--   `tests/test_models/test_engine/test_file_storage.py`
+-   ~~`models/engine/db_storage.py`~~
+-   ~~`models/engine/file_storage.py`~~
+-   ~~`tests/test_models/test_engine/test_db_storage.py`~~
+-   ~~`tests/test_models/test_engine/test_file_storage.py`~~
 
 ## Task 3
 
