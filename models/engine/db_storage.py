@@ -80,7 +80,7 @@ class DBStorage:
         if cls is None or id is None:
             return None
         if cls:
-            # SELECT * FROM users WHERE id = <id>;
+            # SELECT * FROM cls WHERE id = <id>;
             return self.__session.query(cls).get(id)
 
     def count(self, cls=None):
