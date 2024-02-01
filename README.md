@@ -157,6 +157,5 @@ No known bugs at this time.
 Yassmine El Ghalbzouri - [Github](https://github.com/yassminee00)
 Innocent Chukwuma
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
