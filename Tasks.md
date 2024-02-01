@@ -24,11 +24,11 @@
 
 **Files to create/Update - Including test files**
 
--   `api/__init__.py`
--   `api/v1/__init__.py`
--   `api/v1/views/__init__.py`
--   `api/v1/views/index.py`
--   `api/v1/app.py`
+-   ~~`api/__init__.py`~~
+-   ~~`api/v1/__init__.py`~~
+-   ~~`api/v1/views/__init__.py`~~
+-   ~~`api/v1/views/index.py`~~
+-   ~~`api/v1/app.py`~~
 
 ## Task 4 (Sarah)
 
@@ -40,7 +40,7 @@
 
 **Files to create**
 
--   `api/v1/views/index.py`
+-   ~~`api/v1/views/index.py`~~
 
 ## Task 5
 
@@ -51,7 +51,7 @@
 
 **Files to create/Update**
 
--   `api/v1.py`
+-   `api/v1/app.py`
 
 ## Task 6
 
