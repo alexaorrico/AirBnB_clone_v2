@@ -5,8 +5,6 @@ Contains the class DBStorage
 
 from os import getenv
 
-import models
-import sqlalchemy
 from models.amenity import Amenity
 from models.base_model import Base, BaseModel
 from models.city import City
