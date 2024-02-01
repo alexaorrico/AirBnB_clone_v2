@@ -30,13 +30,15 @@ def all_states():
 
         # Create a new State instance and save it
         new_state = State(**data)
-        new_state.save()
+        storage.new(new_state)
+        storage.save()
         return jsonify(new_state.to_dict()), 201
 
 
 # Define a route for handling GET, PUT, and DELETE requests
 # for a specific state
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
 def state_by_id(state_id):
     """Handles GET, DELETE, and PUT requests for a specific State object.
     """
@@ -67,7 +69,6 @@ def state_by_id(state_id):
         for key, value in data.items():
             if key not in ignore_keys:
                 setattr(state, key, value)
-
         # Save the updated State object
         storage.save()
         return jsonify(state.to_dict()), 200
