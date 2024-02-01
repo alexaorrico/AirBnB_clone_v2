@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 
-from flask import Flask, Blueprint, jsonify, make_response
-from flask_cors import CORS
-from models import storage
 from api.v1.views import app_views
-import environ
+from flasgger import Swagger
+from flask import (Blueprint, Flask, jsonify, make_response)
+from flask_cors import (CORS, cross_origin)
+from models import storage
+from os import getenv
 
 app = Flask(__name__)
 
@@ -16,10 +17,12 @@ def teardown_db(self):
     """teardown db"""
     storage.close()
 
+
 @app.errorhandler(404)
 def err404(error):
     """404 error"""
-    return jsonify({"error": "Not found"}), 404
+    return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     app.run(

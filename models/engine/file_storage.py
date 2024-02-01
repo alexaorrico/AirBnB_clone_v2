@@ -97,4 +97,4 @@ class FileStorage:
             return len(self.__objects)
         if cls in classes.values():
             return len(self.all(cls))
-        return -1;     
+        return -1
