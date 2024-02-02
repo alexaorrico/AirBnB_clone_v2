@@ -5,8 +5,9 @@ Starts a flask application
 import os
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
+from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -18,6 +19,13 @@ def teardown_db(exc):
     method that calls storage.close()
     """
     storage.close()
+
+
+@app.errorhandler(NotFound)
+def handle_not_found_error(e):
+    response = jsonify({"error": "Not found"})
+    respons.status_code = 404
+    return response
 
 
 if __name__ == "__main__":
