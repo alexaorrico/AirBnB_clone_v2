@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """states view"""
+from flask import abort, request
+
+from api.v1.views import app_views
 from models import storage
 from models.state import State
-from api.v1.views import app_views
-from flask import abort, request
 
 
 @app_views.get('/states')

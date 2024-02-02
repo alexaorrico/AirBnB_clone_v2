@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-"""app"""
+"""Entry point of the api"""
 from flask import Flask
-from models import storage
 import os
+
+from models import storage
 from api.v1.views import app_views
 
 app = Flask(__name__)
@@ -18,7 +19,7 @@ def teardown(exception):
 
 @app.errorhandler(404)
 def not_found(e):
-    """ """
+    """404 error Handler"""
     return {'error': 'Not found'}, 404
 
 
