@@ -10,13 +10,13 @@ from models.user import User
 from models import storage
 
 
-@app_views.get('/status')
+@app_views.route('/status', methods=['GET'])
 def status():
     """display, 'status': 'ok'"""
     return {'status': "ok"}
 
 
-@app_views.get('/stats')
+@app_views.route('/stats', methods=['GET'])
 def stats():
     """retrieves the number of each objects by type"""
     classes = [Amenity, City, Place, Review, State, User]

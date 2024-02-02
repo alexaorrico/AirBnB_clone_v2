@@ -8,7 +8,7 @@ from models.state import State
 from models.city import City
 
 
-@app_views.get('/states/<state_id>/cities')
+@app_views.route('/states/<state_id>/cities', methods=['GET'])
 def cities_of_state(state_id):
     "Get a list of all cities of a state"
     state = storage.get(State, state_id)
@@ -18,7 +18,7 @@ def cities_of_state(state_id):
     return abort(404)
 
 
-@app_views.get('/cities/<id>')
+@app_views.route('/cities/<id>', methods=['GET'])
 def city_by_id(id):
     "Get a city by ID"
     city = storage.get(City, id)
@@ -28,7 +28,7 @@ def city_by_id(id):
     return abort(404)
 
 
-@app_views.delete('/cities/<id>')
+@app_views.route('/cities/<id>', methods=['DELETE'])
 def delete_city(id):
     "Delete the city with ID"
     city = storage.get(City, id)
@@ -40,7 +40,7 @@ def delete_city(id):
     return abort(404)
 
 
-@app_views.post('/states/<state_id>/cities')
+@app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
     "Create a new city"
     if not storage.get(State, state_id):

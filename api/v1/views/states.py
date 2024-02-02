@@ -7,13 +7,13 @@ from models import storage
 from models.state import State
 
 
-@app_views.get('/states')
+@app_views.route('/states', methods=['GET'])
 def states():
     """display all states"""
     return [obj.to_dict() for obj in storage.all(State).values()]
 
 
-@app_views.get('/states/<id>')
+@app_views.route('/states/<id>', methods=['GET'])
 def state_by_id(id):
     """display state by id"""
     state = storage.get(State, id)
@@ -22,7 +22,7 @@ def state_by_id(id):
     return abort(404)
 
 
-@app_views.delete('/states/<id>')
+@app_views.route('/states/<id>', methods=['DELETE'])
 def delete_state(id):
     """delete a state by its id"""
     state = storage.get(State, id)
@@ -33,7 +33,7 @@ def delete_state(id):
     return abort(404)
 
 
-@app_views.post('/states', strict_slashes=False)
+@app_views.route('/states', methods=['POST'])
 def create_state():
     """create a new state"""
     if request.is_json:
@@ -47,7 +47,7 @@ def create_state():
     return 'Not a JSON', 400
 
 
-@app_views.put('/states/<id>')
+@app_views.route('/states/<id>', methods=['PUT'])
 def update_state(id):
     """update a state by its id"""
     state = storage.get(State, id)
