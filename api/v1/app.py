@@ -25,7 +25,7 @@ else:
 
 @app.errorhandler(404)
 def notFound(err):
-    return make_response(jsonify({"statue": " Not Found 404"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 @app.teardown_appcontext
