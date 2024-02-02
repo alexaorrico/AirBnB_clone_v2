@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import models
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -36,19 +37,17 @@ class FileStorage:
 
     def get(self, cls, id):
         """retrieves an object of a class with id"""
-        obj = None
-        if cls is not None and issubclass(cls, BaseModel):
-            obj = self.__session.query(cls).filter(cls.id == id).first()
-        return (obj)
+        key = cls.__name__ + '.' + id
+        return self.__objects.get(key, None)
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
-        if cls is not None:
-            count = sum(1 for obj in self.__objects.values()
-                        if obj.__class__.__name__ == cls)
+        all_class = classes.values()
+        if not cls:
+          count = sum(len(models.storage.all(cl).values()) for cl in all_class)
         else:
-            count = len(self.__objects)
-            return (count)
+          count = len(models.storage.all(cls).values())
+        return count
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
