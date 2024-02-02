@@ -15,7 +15,7 @@ from models.place import Place
                  methods=['GET', 'POST'])
 def places_of_city(city_id):
     """ Function for retrieving and posting places by city_id """
-    city = storage.all(City, city_id)
+    city = storage.get(City, city_id)
     # Checking if the city exists
     if city is None:
         abort(404)
