@@ -80,7 +80,7 @@ class DBStorage:
         if cls and id:
             key = f"{cls.__name__}.{id}"
             return self.__objects.get(key, None)
-    
+
     def count(self, cls=None):
         """Counts the number of objects in storage"""
         if cls:
