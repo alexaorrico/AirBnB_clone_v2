@@ -1,4 +1,4 @@
-## Task 2
+## Task 2 (Sarah)
 
 **Summary**
 
@@ -24,11 +24,11 @@
 
 **Files to create/Update - Including test files**
 
--   `api/__init__.py`
--   `api/v1/__init__.py`
--   `api/v1/views/__init__.py`
--   `api/v1/views/index.py`
--   `api/v1/app.py`
+-   ~~`api/__init__.py`~~
+-   ~~`api/v1/__init__.py`~~
+-   ~~`api/v1/views/__init__.py`~~
+-   ~~`api/v1/views/index.py`~~
+-   ~~`api/v1/app.py`~~
 
 ## Task 4 (Sarah)
 
@@ -40,9 +40,9 @@
 
 **Files to create**
 
--   `api/v1/views/index.py`
+-   ~~`api/v1/views/index.py`~~
 
-## Task 5
+## Task 5 (Sarah)
 
 **Summary**
 
@@ -51,9 +51,9 @@
 
 **Files to create/Update**
 
--   `api/v1.py`
+-   ~~`api/v1/app.py`~~
 
-## Task 6
+## Task 6 (Sarah)
 
 **Summary**
 
@@ -63,15 +63,15 @@
 
 **Files to create/Update**
 
--   `api/v1/views/states.py`
--   `api/v1/views/__init__.py`
+-   ~~`api/v1/views/states.py`~~
+-   ~~`api/v1/views/__init__.py`~~
 
-## Task 7
+## Task 7 (Elvis)
 
 **Files to create/Update**
 
--   `api/v1/views/cities.py`
--   `api/v1/views/__init__.py`
+-   ~~`api/v1/views/cities.py`~~
+-   ~~`api/v1/views/__init__.py`~~
 
 ## Task 8
 

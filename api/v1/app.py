@@ -24,7 +24,7 @@ def teardown_db(exc):
 @app.errorhandler(NotFound)
 def handle_not_found_error(e):
     response = jsonify({"error": "Not found"})
-    respons.status_code = 404
+    response.status_code = 404
     return response
 
 
