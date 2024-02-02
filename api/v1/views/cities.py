@@ -8,16 +8,15 @@ from models.state import State
 from models.city import City
 
 
-
 @app_views.get('/states/<state_id>/cities')
 def cities_of_state(state_id):
     "Get a list of all cities of a state"
     state = storage.get(State, state_id)
     if state:
         return [city.to_dict() for city in state.cities]
-    
+
     return abort(404)
-    
+
 
 @app_views.get('/cities/<id>')
 def city_by_id(id):
@@ -25,7 +24,7 @@ def city_by_id(id):
     city = storage.get(City, id)
     if city:
         return city.to_dict()
-    
+
     return abort(404)
 
 
@@ -37,7 +36,7 @@ def delete_city(id):
         storage.delete(city)
         storage.save()
         return {}
-    
+
     return abort(404)
 
 
