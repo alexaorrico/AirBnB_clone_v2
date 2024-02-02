@@ -66,7 +66,7 @@ class DBStorage:
         """Retrieves an object from the database session"""
         if cls not in classes.values():
             return None
-        return (self.__session.query(cls).filter( id == cls.id).one_or_none())
+        return self.__session.query(cls).filter(id == cls.id).one_or_none()
 
     def new(self, obj):
         """add the object to the current database session"""
