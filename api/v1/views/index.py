@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Index model holds the endpoint (route)
+"""
 
 from api.v1.views import app_views
 from flask import jsonify
