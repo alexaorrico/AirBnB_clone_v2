@@ -2,17 +2,11 @@
 """
 Index model holds the endpoint (route)
 """
-
-from api.v1.views import app_views
+from api.v1.views import app_views, storage
 from flask import jsonify
-from models import storage
-
-status = {
-    "status": "OK",
-}
 
 
-@app_views.route('/status')
+@app_views.route('/status/')
 def status():
     """Example endpoint returns status
     returns the current status of the API
@@ -33,10 +27,10 @@ def status():
         examples:
             {"status": "OK"}
     """
-    return jsonify(status)
+    return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
+@app_views.route('/stats/')
 def stats():
     """Example endpoint returns stats
     returns a number of objects of each class
