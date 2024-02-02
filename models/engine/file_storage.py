@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-
+        """ get obj based on the id"""
         if cls not in classes.values():
             return None
 
@@ -82,6 +82,7 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
+        """ count elems """
         all_class = classes.values()
 
         if not cls:
