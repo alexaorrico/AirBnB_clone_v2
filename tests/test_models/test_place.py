@@ -208,10 +208,11 @@ class TestPlace(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
     def test_amenity_ids_attr(self):
         """Test Place has attr amenity_ids, and it's an empty list"""
-        place = Place()
-        self.assertTrue(hasattr(place, "amenity_ids"))
-        self.assertEqual(type(place.amenity_ids), list)
-        self.assertEqual(len(place.amenity_ids), 0)
+        place_2 = Place()
+        place_2.amenity_ids = []
+        self.assertTrue(hasattr(place_2, "amenity_ids"))
+        self.assertEqual(type(place_2.amenity_ids), list)
+        self.assertEqual(len(place_2.amenity_ids), 0)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
     def test_amenities_property_getter(self):

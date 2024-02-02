@@ -39,7 +39,7 @@ class BaseModel:
             if kwargs.get("updated_at", None) and type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(kwargs["updated_at"], time)
             else:
-                self.updated_at = datetime.utcnow()
+                self.updated_at = self.created_at
             if kwargs.get("id", None) is None:
                 self.id = str(uuid.uuid4())
         else:
