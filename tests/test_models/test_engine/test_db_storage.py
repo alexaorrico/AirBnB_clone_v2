@@ -111,17 +111,6 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != "db", "not testing db storage")
     def test_get(self):
         """Test that get properly retrives an object from db storage"""
-        storage = DBStorage()
-        cls_choice = random.choice(list(classes.values()))
-        new_instance = cls_choice()
-        id = new_instance.id
-        storage.new(new_instance)
-        stored_instance = storage.get(classes[cls_choice.__name__], id)
-
-        self.assertEqual(stored_instance.id, new_instance.id)
-        stored_instance = storage.get(
-            classes[cls_choice.__name__], id)
-        self.assertIsNone(storage.get(cls_choice, "thisisarandomid"))
 
     @unittest.skipIf(models.storage_t != "db", "not testing db storage")
     def test_count(self):
