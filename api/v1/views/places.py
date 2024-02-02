@@ -1,14 +1,15 @@
 #!/usr/bin/python3
+
 """
 A view for Place objects that handles all default RESTFul API Actions
 """
-
 
 from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models import storage
 from models.city import City
 from models.place import Place
+from models.user import User
 
 
 @app_views.route("/cities/<city_id>/places", strict_slashes=False,
@@ -19,12 +20,11 @@ def places_of_city(city_id):
     # Checking if the city exists
     if city is None:
         abort(404)
+    # Retrieve places associated with the city
     places_obj = city.places
     # Action for GET method
     if request.method == 'GET':
-        places = []
-        for obj in places_obj:
-            places.append(obj.to_dict())
+        places = [obj.to_dict() for obj in places_obj]
         return jsonify(places)
     # Action for POST method
     data = request.get_json()
@@ -32,6 +32,7 @@ def places_of_city(city_id):
         return jsonify({"error": "Not a JSON"}), 400
     if 'user_id' not in data:
         return jsonify({"error": "Missing user_id"}), 400
+    user_id = data['user_id']
     if storage.get(User, user_id) is None:
         abort(404)
     if 'name' not in data:
@@ -46,7 +47,8 @@ def places_of_city(city_id):
 @app_views.route("/places/<place_id>", strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
 def place_by_id(place_id):
-    """ Function that retrieves, delete or update a place by id """
+    """Retrieves, deletes, or updates a place by id."""
+    # Retrieve the Place object with the given place_id
     place = storage.get(Place, place_id)
     # Check if the place exists
     if place is None:
