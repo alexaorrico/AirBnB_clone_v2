@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """ This file contains the views implementation of
 cities request as blueprint"""
-from models.cities import City
+from models.city import City
 from models.state import State
 from models import storage 
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response
+from flask import abort, jsonify, make_response, request
 
 
 @app_views.route("/states/<state_id>/cities", methods=["GET", "POST"])
@@ -42,8 +42,8 @@ def retrieve_city_object(city_id, methods=['GET', 'DELETE', 'PUT']):
         user_data = request.get_json
         if not user_data:
             abort(400, description="Not a JSON")
+        ignored_keys = ["id", "state_id", "created_at", "updated_at"]
         for key in user_data:
-            if (key != "id" or key != "state_id"
-                    key != "created_at" or key != "updated_at"):
+            if key not in ignored_keys:
                 city_object.to_dict()[key] = user_data["key"]
         return make_response(jsonify(city_object.to_dict()), 200)
