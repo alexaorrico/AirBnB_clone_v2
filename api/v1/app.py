@@ -10,7 +10,7 @@ from models import storage
 from flask import Flask, make_response, jsonify
 
 app = Flask('__name__')
-app.register_blueprint(app_views)
+app.register_blueprint(app_views, url_prefix="/api/v1")
 
 if os.getenv("HBNB_API_HOST"):
     HBNB_HOST = os.getenv("HBNB_API_HOST")
