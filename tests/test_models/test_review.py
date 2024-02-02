@@ -10,6 +10,8 @@ from models import review
 from models.base_model import BaseModel
 import pep8
 import unittest
+
+
 Review = review.Review
 
 
@@ -67,6 +69,34 @@ class TestReview(unittest.TestCase):
         self.assertTrue(hasattr(review, "created_at"))
         self.assertTrue(hasattr(review, "updated_at"))
 
+    def test_instantiation_with_kwargs(self):
+        """Test that the object is correctly created using **kwargs"""
+        kwargs = dict(
+            place_id="123f332d-acf12-149f-13298f2f3f2",
+            user_id="321f332d-acf12-149f-132982f3f2f",
+            text="good and reliefed...")
+        place_id = "123f332d-acf12-149f-13298f2f3f2"
+        user_id = "321f332d-acf12-149f-132982f3f2f"
+        tic = datetime.utcnow()
+        inst = Review(**kwargs)
+        toc = datetime.utcnow()
+        attrs_types = {
+            "id": str,
+            "created_at": datetime,
+            "updated_at": datetime,
+            "text": str,
+            "place_id": str
+        }
+        for attr, typ in attrs_types.items():
+            with self.subTest(attr=attr, typ=typ):
+                self.assertIn(attr, inst.__dict__)
+                self.assertIs(type(inst.__dict__[attr]), typ)
+        self.assertEqual(inst.text, "good and reliefed...")
+        self.assertEqual(inst.place_id, place_id)
+        self.assertEqual(inst.user_id, user_id)
+        self.assertTrue(tic <= inst.created_at <= toc)
+        self.assertEqual(inst.created_at, inst.updated_at)
+
     def test_place_id_attr(self):
         """Test Review has attr place_id, and it's an empty string"""
         review = Review()
@@ -101,7 +131,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in r.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 

@@ -7,10 +7,10 @@ from datetime import datetime
 import inspect
 import models
 from models import city
+from models.city import City
 from models.base_model import BaseModel
 import pep8
 import unittest
-City = city.City
 
 
 class TestCityDocs(unittest.TestCase):
@@ -67,6 +67,31 @@ class TestCity(unittest.TestCase):
         self.assertTrue(hasattr(city, "created_at"))
         self.assertTrue(hasattr(city, "updated_at"))
 
+    def test_instantiation_with_kwargs(self):
+        """Test that the object is correctly created using **kwargs"""
+        kwargs = dict(
+            name="Holbertonland",
+            state_id="123f332d-acf12-149f-13298f2f3f2")
+        state_id = "123f332d-acf12-149f-13298f2f3f2"
+        tic = datetime.utcnow()
+        inst = City(**kwargs)
+        toc = datetime.utcnow()
+        attrs_types = {
+            "id": str,
+            "created_at": datetime,
+            "updated_at": datetime,
+            "name": str,
+            "state_id": str
+        }
+        for attr, typ in attrs_types.items():
+            with self.subTest(attr=attr, typ=typ):
+                self.assertIn(attr, inst.__dict__)
+                self.assertIs(type(inst.__dict__[attr]), typ)
+        self.assertEqual(inst.name, "Holbertonland")
+        self.assertEqual(inst.state_id, state_id)
+        self.assertTrue(tic <= inst.created_at <= toc)
+        self.assertEqual(inst.created_at, inst.updated_at)
+
     def test_name_attr(self):
         """Test that City has attribute name, and it's an empty string"""
         city = City()
@@ -92,7 +117,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in c.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
