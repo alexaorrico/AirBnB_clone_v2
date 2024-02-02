@@ -76,5 +76,13 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Retrieves an object based on its class name and ID"""
-        return self.__session.query(cls).filter(cls.id)
+        """Retrieve an object based on its class name and ID
+
+        Args:
+            cls: class
+            id: string representing the object ID
+
+        Returns:
+            The obect based on the class and its ID, or None if not found
+        """
+        return self.__session.query(cls).filter(cls.id == id).first()
