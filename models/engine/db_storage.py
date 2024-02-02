@@ -88,4 +88,4 @@ class DBStorage:
             else:
                 return len(self.__objects)
 
-            # return len[v for k, v in self.all().items if k.split(" ")[1] == id]
+        # return len[v for k, v in self.all().items if k.split(" ")[1] == id]
