@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""states view"""
 from models import storage
 from models.state import State
 from api.v1.views import app_views
