@@ -79,7 +79,25 @@ class DBStorage:
         """
         this method retrieves one object
         """
-        if cls in classes:
-            objs = self.__session.query(classes[cls]).filter(classes[cls].id == id).first()
+        if cls.__name__ in classes:
+            objs = self.__session.query(classes[cls.__name__]).\
+                filter(classes[cls.__name__].id == id).first()
             return objs
         return None
+
+    def count(self, cls=None):
+        """
+        method to count the number of objects in storage
+        """
+        a = 0
+        if not cls:
+            for clss in classes:
+                objs = self.__session.query(classes[clss]).all()
+                for ob in objs:
+                    a += 1
+            return a
+        else:
+            objs = self.__session.query(classes[cls.__name__]).all()
+            for ob in objs:
+                a += 1
+            return a
