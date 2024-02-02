@@ -30,21 +30,24 @@ def delete_state(id):
     return abort(404)
 
 
-@app_views.post('/states')
+@app_views.post('/states', strict_slashes=False)
 def create_state():
     """create a new state"""
     if request.is_json:
         data = request.get_json()
+        print(data)
         if not data.get('name'):
-           return 'Missing name' , 400
-        new_state = State(data['name'])
+            return 'Missing name', 400
+        new_state = State(**data)
+        new_state.save()
         return new_state.to_dict(), 201
 
     return 'Not a JSON', 400
 
 
-@app_views.put('/states/<id>')   
+@app_views.put('/states/<id>')
 def update_state(id):
+    """update a state by its id"""
     state = storage.get(State, id)
     if not state:
         return abort(404)
@@ -54,4 +57,5 @@ def update_state(id):
     for k, v in data.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state, k, v)
+    storage.save()
     return state.to_dict(), 200
