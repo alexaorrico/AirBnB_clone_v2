@@ -158,5 +158,8 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+## Contributor and author for 0x05. AirBnB clone - RESTful API ALX project
+Nouhaila Hmidouch -[email](hmidouchnouhaila2@gmail.com)
 ## License
 Public Domain. No copy write protection. 
