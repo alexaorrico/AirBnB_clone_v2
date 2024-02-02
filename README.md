@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/abdelhadia72) / [Twitter](https://twitter.com/AbdelhadiBousa2)  
+Abdelhadi Bousadaa - [Github](https://github.com/abdelhadia72) / [Twitter](https://twitter.com/AbdelhadiBousa2)  
 Othman SALAHI - [Github](https://github.com/othmansalahi) / [Twitter](https://twitter.com/othmansalahi)
 
 Second part of Airbnb: Joann Vuong
