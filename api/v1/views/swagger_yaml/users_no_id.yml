@@ -1,0 +1,73 @@
+flasgger endpoint for GET, POST request for users data
+GET: returns all users data
+POST: returns all users data
+---
+paths:
+  '/users/':
+get:
+post:
+tags:
+  - GET, POST /users/
+parameters:
+  - name: email
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: email attribute of the user to create
+  - name: password
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: password attribute of the user to create
+  - name: first_name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: first name attribute of the user to create
+  - name: last_name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: last name attribute of the user to create
+responses:
+  200:
+    description: objects's attributes names and values in JSON
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        email:
+          type: string
+          description: required attribute of the object
+        first_name:
+          type: string
+          description: optional attribute of the object
+        last_name:
+          type: string
+          description: optional attribute of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated
