@@ -76,12 +76,25 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        if cls in classes.values():
-            all_data = DBStorage.all()
-            for data in all_data:
-                if (data.id == id):
-                    return data
+
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
         return None
     
     def count(self, cls=None):
-        pass
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
+        return count
