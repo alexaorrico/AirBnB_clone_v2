@@ -15,13 +15,14 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
+# begin flask page rendering
 @app.teardown_appcontext
-def teardown():
+def teardown_db(exception):
     """
-    Teardown the application context.
+    after each request, this method calls .close() (i.e. .remove()) on
+    the current SQLAlchemy Session
     """
     storage.close()
-
 
 if __name__ == '__main__':
     host = os.getenv('HBNB_API_HOST', '0.0.0.0')
