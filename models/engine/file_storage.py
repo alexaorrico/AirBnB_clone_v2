@@ -63,7 +63,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except FileNotFoundError:
             pass
 
     def delete(self, obj=None):
@@ -81,7 +81,8 @@ class FileStorage:
         """Returns object based on class and its ID, or None if not found"""
         if cls is not None:
             res = list(
-                filter(lambda x: type(x) is cls and x.id == id, self.__objects.values())
+                filter(lambda x: type(x) is cls and x.id == id,
+                       self.__objects.values())
             )
             if res:
                 return res[0]
