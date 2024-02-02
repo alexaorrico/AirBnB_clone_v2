@@ -11,6 +11,8 @@ from models.city import City
 from models.base_model import BaseModel
 import pep8
 import unittest
+from os import getenv
+import MySQLdb
 
 
 class TestCityDocs(unittest.TestCase):
@@ -59,6 +61,35 @@ class TestCityDocs(unittest.TestCase):
 
 class TestCity(unittest.TestCase):
     """Test the City class"""
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the doc tests"""
+        if models.storage_t == 'db':
+            """
+            TestCity.HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
+            TestCity.HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+            TestCity.HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
+            TestCity.HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
+
+            TestCity.db_conn = MySQLdb.connect(
+                user=TestCity.HBNB_MYSQL_USER,
+                password=TestCity.HBNB_MYSQL_PWD,
+                host=TestCity.HBNB_MYSQL_HOST,
+                database=TestCity.HBNB_MYSQL_DB)
+            """
+            pass
+
+    @classmethod
+    def tearDownClass(cls):
+        """Close database connections"""
+        if models.storage_t == 'db':
+            pass
+
+    def setUp(self):
+        """Setup database for each testcase"""
+        if models.storage_t == 'db':
+            pass
+
     def test_is_subclass(self):
         """Test that City is a subclass of BaseModel"""
         city = City()
@@ -100,6 +131,52 @@ class TestCity(unittest.TestCase):
             self.assertEqual(city.name, None)
         else:
             self.assertEqual(city.name, "")
+
+    @unittest.skipIf(models.storage_t != 'db1', "no test db Storage")
+    def test_places_relationship(self):
+        """Test cities places relationship"""
+        self.cur = TestCity.db_conn.cursor()
+        self.cur.execute(
+            '''DROP TABLE IF EXISTS
+            place_amenity, amenities, states,
+            users, cities, places, reviews;
+            ''')
+        models.storage.reload()
+        self.cur.execute('''INSERT INTO
+        states (name, id)
+        VALUES ("Khartoum", "123456789efef");
+        ''')
+        TestCity.db_conn.close()
+        city = City()
+        city.name = "Khartoum2"
+        city.state_id = "123456789efef"
+        city.save()
+        models.storage.close()
+        TestCity.db_conn = MySQLdb.connect(
+                user=TestCity.HBNB_MYSQL_USER,
+                password=TestCity.HBNB_MYSQL_PWD,
+                host=TestCity.HBNB_MYSQL_HOST,
+                database=TestCity.HBNB_MYSQL_DB)
+        self.cur = TestCity.db_conn.cursor()
+        self.cur.execute('''INSERT INTO
+        users (email, password, first_name, last_name, id)
+        VALUES ("janedoe@mail.com", "janedoe", "Jane", "Doe", "123456789abcd");
+        ''')
+        self.cur.execute(f'''INSERT INTO
+        places (city_id, user_id, name,
+        number_rooms, number_bathrooms,
+        max_guest, price_by_night, id)
+        VALUES
+        ("{city.id}", "123456789abcd", "TINY PLACE",
+        2, 1, 2, 79, "123456789fefe"),
+        ("{city.id}", "123456789abcd", "LARG HUP",
+        4, 2, 4, 89, "123456789cdcd"),
+        ("{city.id}", "123456789abcd", "SUMMERRR",
+        1, 1, 1, 49, "123456789abab")
+        ''')
+        TestCity.db_conn.close()
+        places = city.places
+        print(places)
 
     def test_state_id_attr(self):
         """Test that City has attribute state_id, and it's an empty string"""

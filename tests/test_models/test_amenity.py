@@ -67,6 +67,24 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(hasattr(amenity, "created_at"))
         self.assertTrue(hasattr(amenity, "updated_at"))
 
+    def test_init_with_kwargs(self):
+        """Test Amenity with **kwargs"""
+        from uuid import uuid4
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        tic = datetime.utcnow()
+        kwargs = dict(
+            name="WIFI",
+            created_at=tic.strftime(t_format),
+            ubdated_at=tic.strftime(t_format),
+            id=str(uuid4())
+            )
+        amenity = Amenity(**kwargs)
+        for key, val in kwargs.items():
+            if key != "created_at" and key != "updated_at":
+                self.assertEqual(val, amenity.__dict__[key])
+            else:
+                self.assertEqual(val, amenity.__dict__[key].strftime(t_format))
+
     def test_name_attr(self):
         """Test that Amenity has attribute name, and it's as an empty string"""
         amenity = Amenity()
