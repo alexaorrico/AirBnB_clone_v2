@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """API main routes"""
 
-from flask import  jsonify
+from flask import jsonify
 
 from api.v1.views import app_views
 from models import storage
@@ -14,6 +14,7 @@ from models.user import User
 
 classes = {"amenities": Amenity, "cities": City,
            "places": Place, "reviews": Review, "states": State, "users": User}
+
 
 @app_views.route("/status", strict_slashes=False)
 def status():
@@ -28,4 +29,3 @@ def stats():
     for cls_name, cls in classes.items():
         stats_dict[cls_name] = storage.count(cls)
     return jsonify(stats_dict)
-    

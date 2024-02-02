@@ -17,7 +17,7 @@ def close(eexception):
     """Closes the storage"""
     storage.close()
 
-from flask import jsonify
+
 @app.errorhandler(404)
 def error_handler_404(error):
     '''Returns the JSON {"error": "Not found"} if resource wasn't found'''
