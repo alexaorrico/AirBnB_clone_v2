@@ -84,9 +84,6 @@ class FileStorage:
         Returns The number of objects in the database.
         """
         if cls is not None:
-            return self.__session.query(self.__classes[cls]).count()
+            return len(self.all(cls))
         else:
-            count = 0
-            for clss in self.__classes:
-                count += self.__session.query(self.__classes[clss]).count()
-            return count
+            return sum(len(self.all(c)) for c in classes.values())
