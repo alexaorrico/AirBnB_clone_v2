@@ -94,9 +94,6 @@ class FileStorage:
             objs = self.all()
             for o in objs:
                 name = o.split(".")[0]
-                print(name)
-                print(cls.__name__)
-                print('----')
                 if cls.__name__ == name:
                     a += 1
             return a
