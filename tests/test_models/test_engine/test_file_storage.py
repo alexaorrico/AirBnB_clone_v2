@@ -3,6 +3,8 @@
 Contains the TestFileStorageDocs classes
 """
 
+import unittest
+from models.engine.file_storage import FileStorage
 from datetime import datetime
 import inspect
 import models
@@ -113,3 +115,81 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+
+class TestFileStorageGet(unittest.TestCase):
+    """Tests for the get method of FileStorage class"""
+
+    def setUp(self):
+        """Set up test cases"""
+        self.storage = FileStorage()
+        self.amenity = Amenity()
+        self.base_model = BaseModel()
+        self.city = City()
+        self.place = Place()
+        self.review = Review()
+        self.state = State()
+        self.user = User()
+
+    def test_get_existing_object(self):
+        """Test get method with an existing object"""
+        self.storage.new(self.amenity)
+        self.assertEqual(self.storage.get(Amenity, self.amenity.id), self.amenity)
+
+    def test_get_non_existing_object(self):
+        """Test get method with a non-existing object"""
+        self.assertIsNone(self.storage.get(Amenity, "non_existing_id"))
+
+    def test_get_object_with_wrong_class(self):
+        """Test get method with an object of wrong class"""
+        self.storage.new(self.amenity)
+        self.assertIsNone(self.storage.get(BaseModel, self.amenity.id))
+
+
+    def setUp(self):
+        """Set up test cases"""
+        self.storage = FileStorage()
+        self.amenity = Amenity()
+        self.base_model = BaseModel()
+        self.city = City()
+        self.place = Place()
+        self.review = Review()
+        self.state = State()
+        self.user = User()
+
+    def test_count_all_objects(self):
+        """Test count method with all objects"""
+        self.storage.new(self.amenity)
+        self.storage.new(self.base_model)
+        self.storage.new(self.city)
+        self.storage.new(self.place)
+        self.storage.new(self.review)
+        self.storage.new(self.state)
+        self.storage.new(self.user)
+        self.assertEqual(self.storage.count(), 7)
+
+    def test_count_objects_of_specific_class(self):
+        """Test count method with objects of a specific class"""
+        self.storage.new(self.amenity)
+        self.storage.new(self.base_model)
+        self.storage.new(self.city)
+        self.storage.new(self.place)
+        self.storage.new(self.review)
+        self.storage.new(self.state)
+        self.storage.new(self.user)
+        self.assertEqual(self.storage.count(Amenity), 1)
+        self.assertEqual(self.storage.count(BaseModel), 1)
+        self.assertEqual(self.storage.count(City), 1)
+        self.assertEqual(self.storage.count(Place), 1)
+        self.assertEqual(self.storage.count(Review), 1)
+        self.assertEqual(self.storage.count(State), 1)
+        self.assertEqual(self.storage.count(User), 1)
+
+if __name__ == '__main__':
+    unittest.main()
