@@ -10,7 +10,7 @@ from models import storage
 from flask import Flask, make_response, jsonify
 
 app = Flask('__name__')
-app.register_blueprint(app_views, url_prefix="/api/v1")
+app.register_blueprint(app_views)
 
 if os.getenv("HBNB_API_HOST"):
     HBNB_HOST = os.getenv("HBNB_API_HOST")
@@ -28,7 +28,7 @@ def notFound(err):
     return make_response(jsonify({"statue": " Not Found 404"}), err)
 
 
-@app_views.teardown_appcontext
+@app.teardown_appcontext
 def teardown_db(exception=None):
     """ Close the database """
     storage.close()
