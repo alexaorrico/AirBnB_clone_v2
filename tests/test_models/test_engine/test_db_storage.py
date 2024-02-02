@@ -68,21 +68,72 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+        """Test that all returns a dictionary"""
+        storage = DBStorage()
+        self.assertIs(type(storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        storage = DBStorage()
+        objs = [BaseModel(), City(), User()]
+        for obj in objs:
+            storage.new(obj)
+        storage.save()
+        all_objs = storage.all()
+        self.assertEqual(len(all_objs), len(objs))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
-        """test that new adds an object to the database"""
+        """Test that new adds an object to the database"""
+        storage = DBStorage()
+        obj = BaseModel()
+        storage.new(obj)
+        storage.save()
+        key = obj.__class__.__name__ + '.' + obj.id
+        self.assertIn(key, storage.all())
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects to the database"""
+        storage = DBStorage()
+        obj = BaseModel()
+        storage.new(obj)
+        storage.save()
+        key = obj.__class__.__name__ + '.' + obj.id
+        self.assertIn(key, storage.all())
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get method"""
+        storage = DBStorage()
+        obj = BaseModel()
+        storage.new(obj)
+        storage.save()
+        retrieved_obj = storage.get(BaseModel, obj.id)
+        self.assertEqual(retrieved_obj, obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test the count method"""
+        storage = DBStorage()
+        self.assertEqual(storage.count(BaseModel), 1)
+
+        new_obj1 = BaseModel()
+        storage.new(new_obj1)
+        storage.save()
+        self.assertEqual(storage.count(BaseModel), 2)
+
+        new_obj2 = BaseModel()
+        storage.new(new_obj2)
+        storage.save()
+        self.assertEqual(storage.count(BaseModel), 3)
+
+
+if __name__ == '__main__':
+    unittest.main()
