@@ -81,7 +81,7 @@ test_db_storage.py'])
 
         # Assert that the retrieved object is the same as the original object
         self.assertEqual(retrieved_obj, obj)
-    
+
     def test_count(self):
         """Test that count returns the number of objects in storage"""
         obj = State()
@@ -96,6 +96,7 @@ test_db_storage.py'])
 
         # Assert that the count is 1
         self.assertEqual(count, 1)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
