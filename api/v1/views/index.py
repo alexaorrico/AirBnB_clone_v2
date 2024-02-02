@@ -9,12 +9,12 @@ from models import storage
 
 
 @app_views.route('/status',  methods=['GET'])
-def index():
+def status():
     return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats',  methods=['GET'])
-def index():
+def stats():
     """an endpoint that retrieves the number of each objects by type:"""
     response = {}
     key_val = {
