@@ -80,7 +80,7 @@ class FileStorage:
                 return value
 
         return None
-    
+
     def count(self, cls=None):
         all_class = classes.values()
 
