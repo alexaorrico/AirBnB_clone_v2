@@ -215,6 +215,26 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(len(place_2.amenity_ids), 0)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
+    def test_reviews_property_getter(self):
+        """Test Place reviews getter"""
+        from models.review import Review
+
+        place = Place()
+        reviews_list = []
+        for i in range(3):
+            rev = Review()
+            rev.text = "Amazing to go on avication in summer"
+            rev.place_id = place.id
+            models.storage.new(rev)
+            models.storage.save()
+            reviews_list.append(rev)
+
+        models.storage.new(place)
+        models.storage.save()
+        for rev in reviews_list:
+            self.assertTrue(rev in place.reviews)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing File Storage")
     def test_amenities_property_getter(self):
         """Test Place amenities getter"""
         from models.amenity import Amenity

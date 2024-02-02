@@ -59,16 +59,16 @@ class Place(BaseModel, Base):
         def reviews(self):
             """getter attribute returns the list of Review instances"""
             from models.review import Review
-            review_list = [rev for rev in storage.all(Review).values()
+
+            review_list = [rev for rev in models.storage.all(Review).values()
                            if rev.place_id == self.id]
             return review_list
 
         @property
         def amenities(self):
             """ getter for self.amenities """
-            from models import storage
             from models.amenity import Amenity
-            return [amenity for amenity in storage.all(Amenity).values()
+            return [amenity for amenity in models.storage.all(Amenity).values()
                     if amenity.id in self.amenity_ids]
 
         @amenities.setter
