@@ -41,7 +41,7 @@ def del_city(city_id):
 
 
 @app_views.route(
-    "/api/v1/states/<state_id>/cities", methods=["PUT"], strict_slashes=False
+    "/api/v1/states/<state_id>/cities", methods=["POST"], strict_slashes=False
 )
 def create_city(state_id):
     """Creates one city with the state_id given"""
