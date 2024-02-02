@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 ''' Create a new view for City objects - handles all default RESTful API actions.
 '''
-# Import necessary modules
 from flask import abort, jsonify, request
-# Import the State and City models
 from models.state import State
 from models.city import City
 from api.v1.views import app_views

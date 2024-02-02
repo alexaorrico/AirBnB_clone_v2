@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 ''' Create a view for Place objects - handles all default RESTful API actions
 '''
-# Import necessary modules
+
 from flask import abort, jsonify, request
-# Import the required models
 from models.city import City
 from models.place import Place
 from models.state import State
@@ -11,7 +10,7 @@ from models.user import User
 from models.amenity import Amenity
 from api.v1.views import app_views
 from models import storage
-# Route for retrieving all Place objects of a City
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
 strict_slashes=False)
 def get_places_by_city(city_id):
