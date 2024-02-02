@@ -32,6 +32,7 @@ def cities_of_state(state_id):
         return jsonify({"error": "Not a JSON"}), 400
     if 'name' not in data:
         return jsonify({"error": "Missing name"}), 400
+    data['state_id'] = state_id
     new_city = City(**data)
     storage.new(new_city)
     storage.save()
