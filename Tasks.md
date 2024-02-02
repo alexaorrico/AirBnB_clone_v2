@@ -1,4 +1,4 @@
-## Task 2
+## Task 2 (Sarah)
 
 **Summary**
 
@@ -42,7 +42,7 @@
 
 -   ~~`api/v1/views/index.py`~~
 
-## Task 5
+## Task 5 (Sarah)
 
 **Summary**
 
@@ -51,7 +51,7 @@
 
 **Files to create/Update**
 
--   `api/v1/app.py`
+-   ~~`api/v1/app.py`~~
 
 ## Task 6
 
