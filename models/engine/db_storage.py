@@ -79,7 +79,8 @@ class DBStorage:
         """Method to retrieve one object"""
         if cls and id:
             try:
-                result = [v for k, v in self.all(cls).items() if k.split(".")[1] == id]
+                result = [v for k, v in self.all(cls).
+                          items() if k.split(".")[1] == id]
                 if result != []:
                     return result[0]
             except Exception:
