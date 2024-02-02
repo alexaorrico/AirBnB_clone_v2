@@ -77,7 +77,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """get"""
-        return self.all().get(f'{cls}.{id}')
+        return self.all().get(f'{cls.__name__}.{id}')
 
     def count(self, cls=None):
         """count"""
