@@ -1,4 +1,5 @@
 # pycache
 /__pycache__/
 */__pycache__/
+*.pyc__pycache__/
 *.pyc
