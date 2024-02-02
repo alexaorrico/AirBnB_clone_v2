@@ -53,7 +53,7 @@
 
 -   ~~`api/v1/app.py`~~
 
-## Task 6
+## Task 6 (Sarah)
 
 **Summary**
 
@@ -63,15 +63,15 @@
 
 **Files to create/Update**
 
--   `api/v1/views/states.py`
--   `api/v1/views/__init__.py`
+-   ~~`api/v1/views/states.py`~~
+-   ~~`api/v1/views/__init__.py`~~
 
-## Task 7
+## Task 7 (Elvis)
 
 **Files to create/Update**
 
--   `api/v1/views/cities.py`
--   `api/v1/views/__init__.py`
+-   ~~`api/v1/views/cities.py`~~
+-   ~~`api/v1/views/__init__.py`~~
 
 ## Task 8
 
