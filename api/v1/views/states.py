@@ -38,7 +38,6 @@ def create_state():
     """create a new state"""
     if request.is_json:
         data = request.get_json()
-        print(data)
         if not data.get('name'):
             return 'Missing name', 400
         new_state = State(**data)
