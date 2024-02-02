@@ -53,7 +53,7 @@ def view_all_cities(state_id=None):
 
     """
     body = storage.get("State", state_id)
-    if body is None or state_id is None:
+    if body is None:
         abort(404)
     cities = []
     for city in body.cities:
@@ -84,7 +84,7 @@ def view_city(cities_id=None):
             'updated_at': '2017-03-25T02:17:06'}
     """
     body = storage.get("City", cities_id)
-    if body is None or cities_id is None:
+    if body is None:
         abort(404)
     return jsonify(body.to_dict())
 
@@ -110,7 +110,7 @@ def delete_city(city_id=None):
             {}
     """
     body = storage.get("City", city_id)
-    if body is None or city_id is None:
+    if body is None:
         abort(404)
     storage.delete(body)
     storage.save()
@@ -144,7 +144,7 @@ def create_city(state_id=None):
         body = storage.get("State", state_id)
     except:
         body = None
-    if body is None or state_id is None:
+    if body is None:
         abort(404)
     try:
         content = request.get_json()
@@ -188,7 +188,7 @@ def update_city(city_id=None):
         body = storage.get("City", city_id)
     except:
         body = None
-    if body is None or city_id is None:
+    if body is None:
         abort(404)
     try:
         content = request.get_json()
