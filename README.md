@@ -153,10 +153,21 @@ EOF  all  create  destroy  help  quit  show  update
 ## Bugs
 No known bugs at this time. 
 
+## Updates in AirBnB Clone v3
+- Implemented new features such as [Feature Name], which allows users to [Feature Functionality].
+- Enhanced performance by optimizing [Component Name].
+- Addressed and fixed known bugs from the previous version, improving stability and user experience.
+- Added comprehensive unit tests to ensure reliability and robustness of the new features.
+
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+third part of Airbnb : 
+Samari hamza - [Github](https://github.com/himza25)
+Anas Elbaidouri - [Github](https://github.com/Axcis380)
+
 ## License
 Public Domain. No copy write protection. 
