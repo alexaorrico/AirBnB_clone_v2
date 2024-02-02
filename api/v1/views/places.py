@@ -121,7 +121,6 @@ def update_place(place_id):
 def not_found(error):
     ''' Returns 404: Not Found
     '''
-    # Return a JSON response for 404 error
     response = {'error': 'Not found'}
     return jsonify(response), 404
 @app_views.errorhandler(400)
