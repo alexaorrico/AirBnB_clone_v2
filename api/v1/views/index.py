@@ -9,3 +9,5 @@ from api.v1.views import app_views
 def status():
     """ test status OK """
     return jsonify({"status": "OK"})
+
+
