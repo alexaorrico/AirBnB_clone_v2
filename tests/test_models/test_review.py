@@ -119,5 +119,10 @@ class TestReview(unittest.TestCase):
     def test_str(self):
         """test that the str method has the correct output"""
         review = Review()
-        string = "[Review] ({}) {}".format(review.id, review.__dict__)
+        _dict = review.__dict__.copy()
+
+        if _dict.get("_sa_instance_state") is not None:
+            del _dict["_sa_instance_state"]
+
+        string = "[Review] ({}) {}".format(review.id, _dict)
         self.assertEqual(string, str(review))
