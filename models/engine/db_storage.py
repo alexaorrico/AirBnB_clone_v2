@@ -88,3 +88,12 @@ class DBStorage:
                         ret_obj = obj
                         break
         return ret_obj
+
+    def count(self, cls=None):
+        """return the number of objects in storage"""
+        nb_objs = 0
+        for clss in classes:
+            if cls is None or cls is classes[clss]:
+                objs = self.__session.query(classes[clss]).all()
+                nb_objs += len(objs)
+        return nb_objs
