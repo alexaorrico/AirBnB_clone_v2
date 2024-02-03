@@ -9,7 +9,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models import storage
-
+from sqlalchemy.sql.functions import user
 
 @app_views.route('/status')
 def status():
