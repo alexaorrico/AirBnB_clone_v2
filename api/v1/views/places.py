@@ -1,12 +1,16 @@
 #!/usr/bin/python3
-"""This module contains the view for the place resource."""
+"""This module contains the view for the place resource.
+
+city_places: handler for city's places
+places: handler for places
+"""
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models.city import City
 from models.place import Place
-from models import storage
 from models.user import User
+from models import storage
 
 
 @app_views.route(
@@ -15,6 +19,7 @@ from models.user import User
     strict_slashes=False,
 )
 def city_places(city_id):
+    """Handler for places in existing cities."""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -46,6 +51,7 @@ def city_places(city_id):
     strict_slashes=False,
 )
 def places(place_id):
+    """Handler for places."""
     place: Place | None = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -60,11 +66,8 @@ def places(place_id):
             for k, v in body.items()
             if k
             not in [
-                "id",
-                "created_at",
-                "updated_at",
-                "user_id",
-                "city_id",
+                "id", "created_at",
+                "updated_at", "user_id", "city_id",
             ]
         }.items():
             setattr(place, name, value)
