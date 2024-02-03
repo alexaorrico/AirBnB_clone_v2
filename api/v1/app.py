@@ -9,8 +9,7 @@ from models import storage
 
 
 app = Flask(__name__)
-app.register_blueprint(app_views)
-
+app.register_blueprint(app_views, url_prefix="/api/v1")
 
 @app.teardown_appcontext
 def teardown_db(exception = None):
@@ -31,4 +30,4 @@ else:
 
 if __name__ == "__main__":
     """Main Function"""
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, threaded=True, debug=True)
