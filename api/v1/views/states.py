@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, abort
 from models import storage
 
 
@@ -10,3 +10,18 @@ def get_states():
     '''returns json to the route'''
     obj = [obj.to_dict() for obj in storage.all('State').values()]
     return jsonify(obj)
+
+
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+def get_states_id(state_id):
+    '''return by id'''
+    obj = [obj.to_dict() for obj in storage.all('State').values()]
+    for j in obj:
+        if j['id'] == state_id:
+            return j
+    abort(404)
+
+
+#@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+#def del_status_id(state_id):
+
