@@ -113,3 +113,9 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_filestorage_count_cls(self):
+        """ Test method for counting number of objs """
+        all_objs = models.storage.all(classes['State'])
+        c_obj = models.storage.count(classes['State'])
+        self.assertEqual(len(all_objs), c_obj)
