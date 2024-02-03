@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""sharing app_views Blueprint"""
+""" contains and sharing app_views Blueprint"""
 
 from flask import Blueprint
 
