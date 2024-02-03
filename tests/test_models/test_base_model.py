@@ -3,11 +3,13 @@
 from datetime import datetime
 import inspect
 import models
+from models.base_model import BaseModel
 import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
-BaseModel = models.base_model.BaseModel
+
+
 module_doc = models.base_model.__doc__
 
 
@@ -78,18 +80,42 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(inst.name, "Holberton")
         self.assertEqual(inst.number, 89)
 
+    def test_instantiation_with_kwargs(self):
+        """Test that the object is correctly created using **kwargs"""
+        kwargs = dict(
+            name="Holberton",
+            number=89)
+        tic = datetime.utcnow()
+        inst = BaseModel(**kwargs)
+        toc = datetime.utcnow()
+        attrs_types = {
+            "id": str,
+            "created_at": datetime,
+            "updated_at": datetime,
+            "name": str,
+            "number": int
+        }
+        for attr, typ in attrs_types.items():
+            with self.subTest(attr=attr, typ=typ):
+                self.assertIn(attr, inst.__dict__)
+                self.assertIs(type(inst.__dict__[attr]), typ)
+        self.assertEqual(inst.name, "Holberton")
+        self.assertEqual(inst.number, 89)
+        self.assertTrue(tic <= inst.created_at <= toc)
+        self.assertEqual(inst.created_at, inst.updated_at)
+
     def test_datetime_attributes(self):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
-        tic = datetime.now()
+        tic = datetime.utcnow()
         inst1 = BaseModel()
-        toc = datetime.now()
+        toc = datetime.utcnow()
         self.assertTrue(tic <= inst1.created_at <= toc)
         time.sleep(1e-4)
-        tic = datetime.now()
+        tic = datetime.utcnow()
         inst2 = BaseModel()
-        toc = datetime.now()
+        toc = datetime.utcnow()
         self.assertTrue(tic <= inst2.created_at <= toc)
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)

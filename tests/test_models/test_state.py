@@ -10,6 +10,8 @@ from models import state
 from models.base_model import BaseModel
 import pep8
 import unittest
+
+
 State = state.State
 
 
@@ -67,6 +69,31 @@ class TestState(unittest.TestCase):
         self.assertTrue(hasattr(state, "created_at"))
         self.assertTrue(hasattr(state, "updated_at"))
 
+    def test_instantiation_with_kwargs(self):
+        """Test that the object is correctly created using **kwargs"""
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        tic = datetime.utcnow()
+        kwargs = dict(
+            name="Holbertonland",
+            created_at=tic.strftime(t_format),
+            updated_at=tic.strftime(t_format)
+        )
+
+        inst = State(**kwargs)
+        attrs_types = {
+            "id": str,
+            "created_at": datetime,
+            "updated_at": datetime,
+            "name": str,
+        }
+        for attr, typ in attrs_types.items():
+            with self.subTest(attr=attr, typ=typ):
+                self.assertIn(attr, inst.__dict__)
+                self.assertIs(type(inst.__dict__[attr]), typ)
+        self.assertEqual(inst.name, "Holbertonland")
+        self.assertEqual(tic, inst.created_at)
+        self.assertEqual(inst.created_at, inst.updated_at)
+
     def test_name_attr(self):
         """Test that State has attribute name, and it's as an empty string"""
         state = State()
@@ -83,9 +110,33 @@ class TestState(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in s.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
+
+    @unittest.skipIf(models.storage_t == 'db', "not test File Storage")
+    def test_cities_property(self):
+        """Test State cities property"""
+        from models.city import City
+        cities = []
+        inst = State()
+        for i in range(3):
+            city = City()
+            city.name = f"City{i}"
+            city.state_id = inst.id
+            models.storage.new(city)
+            models.storage.save()
+            cities.append(city)
+
+        models.storage.new(inst)
+        models.storage.save()
+        for city in cities:
+            self.assertTrue(city in inst.cities)
+
+    """
+    TODO: add the places and reviews test after add them to User
+          in File Storage storage type
+    """
 
     def test_to_dict_values(self):
         """test that values in dict returned from to_dict are correct"""

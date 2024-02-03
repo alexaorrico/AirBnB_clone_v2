@@ -15,6 +15,8 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import func
+
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -36,7 +38,8 @@ class DBStorage:
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
+                                             HBNB_MYSQL_DB),
+                                      pool_pre_ping=True)
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -55,6 +58,17 @@ class DBStorage:
         """add the object to the current database session"""
         self.__session.add(obj)
 
+    def get(self, cls, id):
+        """get instance from the database based on the
+           class 'cls' and the 'id', or None if there no
+           instance
+        """
+        try:
+            inst = self.__session.query(cls).filter_by(id=id).first()
+            return inst
+        except Exception:
+            return None
+
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
@@ -64,12 +78,26 @@ class DBStorage:
         if obj is not None:
             self.__session.delete(obj)
 
+    def count(self, cls=None):
+        """Retrun number of all records on database, or for certian cls"""
+        try:
+            if cls:
+                cls_insts = self.__session.query(cls).count()
+                return cls_insts
+            else:
+                db_insts = 0
+                for cls in classes.values():
+                    db_insts += self.__session.query(cls).count()
+                return db_insts
+        except Exception as e:
+            return 0
+
     def reload(self):
         """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess_factory)
-        self.__session = Session
+        DBStorage.Session = scoped_session(sess_factory)
+        self.__session = DBStorage.Session
 
     def close(self):
         """call remove() method on the private session attribute"""

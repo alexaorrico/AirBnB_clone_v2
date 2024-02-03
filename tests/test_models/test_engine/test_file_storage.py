@@ -68,9 +68,30 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @classmethod
+    def setUpClass(cls):
+        """setup test environment"""
+        storage = FileStorage()
+        jsonfile = "file.json"
+        try:
+            os.rename(jsonfile, f"{jsonfile}.og")
+        except Exception:
+            pass
+
+    @classmethod
+    def tearDownClass(cls):
+        """Retrive the json-file data after finshed testing"""
+        storage = FileStorage()
+        jsonfile = "file.json"
+        try:
+            os.remove(f"{jsonfile}")
+            os.rename(f"{jsonfile}.og", jsonfile)
+        except Exception:
+            pass
+
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -78,7 +99,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -94,7 +114,6 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -113,3 +132,57 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_method(self):
+        """Test FileStorage.get method"""
+        storage = FileStorage()
+        state = State()
+        state.name = "Khartoum"
+        state.save()
+        get_state = storage.get(State, state.id)
+        self.assertIsInstance(get_state, State)
+        self.assertEqual(state.id, get_state.id)
+        self.assertEqual(state.name, get_state.name)
+
+    def test_get_no_inst(self):
+        """Test DBStorage.get based on the class and id
+        No id matched
+        """
+        storage = FileStorage()
+        get_state = storage.get(State, "1234567")
+        self.assertTrue(get_state is None)
+
+    def test_get_none_class(self):
+        """Test DBStorage.get based on the class and id
+        provide cls as None
+        """
+        storage = FileStorage()
+        get_state = storage.get(None, "1234567")
+        self.assertTrue(get_state is None)
+
+    def test_acount_method(self):
+        """Test DBStorage.count
+        """
+        storage = FileStorage()
+        state = State()
+        state.name = "Khartoum"
+        state.save()
+        for i in range(3):
+            city = City()
+            city.name = f"Khartoum{i}"
+            city.state_id = state.id
+            city.save()
+        storage.close()
+        all_db_instances = storage.count()
+        state_db_instances = storage.count(State)
+        city_db_instances = storage.count(City)
+
+        self.assertEqual(all_db_instances, 4)
+        self.assertEqual(state_db_instances, 1)
+        self.assertEqual(city_db_instances, 3)
+
+    def test_acount_method_wrong_cls(self):
+        """Test DBStorage.count with wrong class"""
+        storage = FileStorage()
+        db_instances = storage.count("WRONG")
+        self.assertEqual(db_instances, 0)

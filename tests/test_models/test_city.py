@@ -7,10 +7,12 @@ from datetime import datetime
 import inspect
 import models
 from models import city
+from models.city import City
 from models.base_model import BaseModel
 import pep8
 import unittest
-City = city.City
+from os import getenv
+import MySQLdb
 
 
 class TestCityDocs(unittest.TestCase):
@@ -59,6 +61,35 @@ class TestCityDocs(unittest.TestCase):
 
 class TestCity(unittest.TestCase):
     """Test the City class"""
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the doc tests"""
+        if models.storage_t == 'db':
+            """
+            TestCity.HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
+            TestCity.HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+            TestCity.HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
+            TestCity.HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
+
+            TestCity.db_conn = MySQLdb.connect(
+                user=TestCity.HBNB_MYSQL_USER,
+                password=TestCity.HBNB_MYSQL_PWD,
+                host=TestCity.HBNB_MYSQL_HOST,
+                database=TestCity.HBNB_MYSQL_DB)
+            """
+            pass
+
+    @classmethod
+    def tearDownClass(cls):
+        """Close database connections"""
+        if models.storage_t == 'db':
+            pass
+
+    def setUp(self):
+        """Setup database for each testcase"""
+        if models.storage_t == 'db':
+            pass
+
     def test_is_subclass(self):
         """Test that City is a subclass of BaseModel"""
         city = City()
@@ -66,6 +97,31 @@ class TestCity(unittest.TestCase):
         self.assertTrue(hasattr(city, "id"))
         self.assertTrue(hasattr(city, "created_at"))
         self.assertTrue(hasattr(city, "updated_at"))
+
+    def test_instantiation_with_kwargs(self):
+        """Test that the object is correctly created using **kwargs"""
+        kwargs = dict(
+            name="Holbertonland",
+            state_id="123f332d-acf12-149f-13298f2f3f2")
+        state_id = "123f332d-acf12-149f-13298f2f3f2"
+        tic = datetime.utcnow()
+        inst = City(**kwargs)
+        toc = datetime.utcnow()
+        attrs_types = {
+            "id": str,
+            "created_at": datetime,
+            "updated_at": datetime,
+            "name": str,
+            "state_id": str
+        }
+        for attr, typ in attrs_types.items():
+            with self.subTest(attr=attr, typ=typ):
+                self.assertIn(attr, inst.__dict__)
+                self.assertIs(type(inst.__dict__[attr]), typ)
+        self.assertEqual(inst.name, "Holbertonland")
+        self.assertEqual(inst.state_id, state_id)
+        self.assertTrue(tic <= inst.created_at <= toc)
+        self.assertEqual(inst.created_at, inst.updated_at)
 
     def test_name_attr(self):
         """Test that City has attribute name, and it's an empty string"""
@@ -75,6 +131,52 @@ class TestCity(unittest.TestCase):
             self.assertEqual(city.name, None)
         else:
             self.assertEqual(city.name, "")
+
+    @unittest.skipIf(models.storage_t != 'db1', "no test db Storage")
+    def test_places_relationship(self):
+        """Test cities places relationship"""
+        self.cur = TestCity.db_conn.cursor()
+        self.cur.execute(
+            '''DROP TABLE IF EXISTS
+            place_amenity, amenities, states,
+            users, cities, places, reviews;
+            ''')
+        models.storage.reload()
+        self.cur.execute('''INSERT INTO
+        states (name, id)
+        VALUES ("Khartoum", "123456789efef");
+        ''')
+        TestCity.db_conn.close()
+        city = City()
+        city.name = "Khartoum2"
+        city.state_id = "123456789efef"
+        city.save()
+        models.storage.close()
+        TestCity.db_conn = MySQLdb.connect(
+                user=TestCity.HBNB_MYSQL_USER,
+                password=TestCity.HBNB_MYSQL_PWD,
+                host=TestCity.HBNB_MYSQL_HOST,
+                database=TestCity.HBNB_MYSQL_DB)
+        self.cur = TestCity.db_conn.cursor()
+        self.cur.execute('''INSERT INTO
+        users (email, password, first_name, last_name, id)
+        VALUES ("janedoe@mail.com", "janedoe", "Jane", "Doe", "123456789abcd");
+        ''')
+        self.cur.execute(f'''INSERT INTO
+        places (city_id, user_id, name,
+        number_rooms, number_bathrooms,
+        max_guest, price_by_night, id)
+        VALUES
+        ("{city.id}", "123456789abcd", "TINY PLACE",
+        2, 1, 2, 79, "123456789fefe"),
+        ("{city.id}", "123456789abcd", "LARG HUP",
+        4, 2, 4, 89, "123456789cdcd"),
+        ("{city.id}", "123456789abcd", "SUMMERRR",
+        1, 1, 1, 49, "123456789abab")
+        ''')
+        TestCity.db_conn.close()
+        places = city.places
+        print(places)
 
     def test_state_id_attr(self):
         """Test that City has attribute state_id, and it's an empty string"""
@@ -92,7 +194,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in c.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
