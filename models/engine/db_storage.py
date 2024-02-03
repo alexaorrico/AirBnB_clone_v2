@@ -75,7 +75,10 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7c3fb2a9f7f99d84800a26cbc5638203f3135736
     def get(self, cls, id):
         '''this def returns a single obj if present'''
         if cls is not None:
@@ -83,7 +86,10 @@ class DBStorage:
             return self.all()[key]
         return None
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7c3fb2a9f7f99d84800a26cbc5638203f3135736
     def count(self, cls=None):
         '''this returns number of objs'''
         count = 0
