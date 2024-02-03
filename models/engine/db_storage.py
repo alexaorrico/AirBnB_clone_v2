@@ -76,7 +76,9 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """ retrieves """
+        """ def get(self, cls, id):
+    	cls: class
+    	id: string representing the object ID retrieves """
         if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
             for key, value in d_obj.items():
