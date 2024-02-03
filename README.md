@@ -132,7 +132,10 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-Alvin Wachira - [Github](https://github.com/jhuang10123)
+
+Alvin Wachira - [Github](https://github.com/spaceadh)
+
+Afonja Omotomiwa - [Github](https://github.com/omotomiwa26) / [Twitter](https://twitter.com/i_am_omotomiwa)
 
 ## License
 Public Domain. No copy write protection. 
