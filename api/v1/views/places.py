@@ -1,9 +1,5 @@
 #!/usr/bin/python3
-"""This module contains the view for the place resource.
-
-city_places: handler for city's places
-places: handler for places
-"""
+"""This module contains the view for the place resource."""
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
@@ -19,13 +15,15 @@ from models import storage
     strict_slashes=False,
 )
 def city_places(city_id):
-    """Handler for places in existing cities."""
-    city = storage.get(City, city_id)
-    if city is None:
-        abort(404)
     if request.method == "GET":
+        city = storage.get(City, city_id)
+        if city is None:
+            abort(404)
         return jsonify([place.to_dict() for place in city.places])
     elif request.method == "POST":
+        city = storage.get(City, city_id)
+        if city is None:
+            abort(404)
         if not request.is_json:
             return jsonify({"error": "Not a JSON"}), 400
         body = request.get_json(force=True)
@@ -49,13 +47,15 @@ def city_places(city_id):
     "/places/<place_id>", methods=["GET", "PUT", "DELETE"],
     strict_slashes=False)
 def places(place_id):
-    """Handler for places."""
-    place = storage.get(Place, place_id)
-    if place is None:
-        abort(404)
     if request.method == "GET":
+        place = storage.get(Place, place_id)
+        if place is None:
+            abort(404)
         return jsonify(place.to_dict())
     elif request.method == "PUT":
+        place = storage.get(Place, place_id)
+        if place is None:
+            abort(404)
         if not request.is_json:
             return jsonify({"error": "Not a JSON"}), 400
         body = request.get_json(force=True)
@@ -72,6 +72,9 @@ def places(place_id):
         place.save()
         return jsonify(place.to_dict()), 200
     elif request.method == "DELETE":
+        place = storage.get(Place, place_id)
+        if place is None:
+            abort(404)
         place.delete()
         storage.save()
         return jsonify({}), 200
