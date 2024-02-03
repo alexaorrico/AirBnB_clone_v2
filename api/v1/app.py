@@ -12,16 +12,16 @@ app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 
-@app.teardown_appcontext
-def teardown(exception):
-    "Close connection"
-    storage.close()
-
-
 @app.errorhandler(404)
 def not_found(e):
     """404 error Handler"""
     abort(404)
+
+
+@app.teardown_appcontext
+def teardown(exception):
+    "Close connection"
+    storage.close()
 
 
 if __name__ == '__main__':
