@@ -134,7 +134,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-Alvin Wachira - [Github](https://github.com/spaceadh)
+Alvin Wachira - [Github](https://github.com/spaceadh) / [Twiiter](htpps://twitter.com/AlvinWachira_KE)
 
 Afonja Omotomiwa - [Github](https://github.com/omotomiwa26) / [Twitter](https://twitter.com/i_am_omotomiwa)
 
