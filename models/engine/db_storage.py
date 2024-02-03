@@ -15,6 +15,8 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import func
+
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -56,6 +58,17 @@ class DBStorage:
         """add the object to the current database session"""
         self.__session.add(obj)
 
+    def get(self, cls, id):
+        """get instance from the database based on the
+           class 'cls' and the 'id', or None if there no
+           instance
+        """
+        try:
+            inst = self.__session.query(cls).filter_by(id=id).first()
+            return inst
+        except Exception:
+            return None
+
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
@@ -64,6 +77,20 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+
+    def count(self, cls=None):
+        """Retrun number of all records on database, or for certian cls"""
+        try:
+            if cls:
+                cls_insts = self.__session.query(cls).count()
+                return cls_insts
+            else:
+                db_insts = 0
+                for cls in classes.values():
+                    db_insts += self.__session.query(cls).count()
+                return db_insts
+        except Exception as e:
+            return 0
 
     def reload(self):
         """reloads data from the database"""
