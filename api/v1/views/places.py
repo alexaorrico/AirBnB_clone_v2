@@ -74,4 +74,5 @@ def places(place_id):
     elif request.method == "DELETE":
         place.delete()
         storage.save()
+        return jsonify({}), 200
     abort(405)
