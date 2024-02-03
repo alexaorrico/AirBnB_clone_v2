@@ -57,15 +57,14 @@ def create_city(state_id):
 
 @app_views.route('/cities/<id>', methods=['PUT'])
 def update_city(id):
-	city = storage.get(City, id)
-	if not city:
-		abort(404)
-	if not request.is_json:
-		abort(400, 'Not a JSON')
-	data = request.get_json()
-	for k, v in data.items():
-		if k not in ['id', 'state_is', 'created_at', 'updated_id']:
-			setattr(city, k, v)
-	city.save()
-	return city.to_dict()
-
+    city = storage.get(City, id)
+    if not city:
+        abort(404)
+    if not request.is_json:
+        abort(400, 'Not a JSON')
+    data = request.get_json()
+    for k, v in data.items():
+    	if k not in ['id', 'state_is', 'created_at', 'updated_id']:
+            setattr(city, k, v)
+    city.save()
+    return city.to_dict()
