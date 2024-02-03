@@ -30,7 +30,8 @@ def stats():
     """Returns statistics about the data stored in the application.
 
     Returns:
-        JSON: A JSON object containing the count of all objects stored in the application.
+        JSON: A JSON object containing the count
+        of all objects stored in the application.
     """
     amenities = storage.count(Amenity)
     cities = storage.count(City)
