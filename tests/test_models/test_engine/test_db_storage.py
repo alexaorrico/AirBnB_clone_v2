@@ -58,7 +58,7 @@ class TestDBStorageDocs(unittest.TestCase):
         '''
         new_state = State(name="NewYork")
         storage.new(new_state)
-        
+
         # Pass the class itself, not a string
         key = "State.{}".format(new_state.id)
         result = storage.get("State", new_state.id)
