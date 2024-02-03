@@ -25,6 +25,7 @@ else:
 
 @app.errorhandler(404)
 def notFound(err):
+    """ handler error 404 """
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
