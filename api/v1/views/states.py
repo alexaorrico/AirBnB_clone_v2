@@ -39,12 +39,12 @@ def create_state():
     if request.is_json:
         data = request.get_json()
         if not data.get('name'):
-            return 'Missing name', 400
+            abort(400, 'Missing name')
         new_state = State(**data)
         new_state.save()
         return new_state.to_dict(), 201
 
-    return 'Not a JSON', 400
+    abort(400, 'Not a JSON')
 
 
 @app_views.route('/states/<id>', methods=['PUT'])
@@ -52,12 +52,12 @@ def update_state(id):
     """update a state by its id"""
     state = storage.get(State, id)
     if not state:
-        return abort(404)
+        abort(404)
     if not request.is_json:
-        return 'Not a JSON', 400
+        abort(400, 'Not a JSON')
     data = request.get_json()
     for k, v in data.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(state, k, v)
     storage.save()
-    return state.to_dict(), 200
+    return state.to_dict()
