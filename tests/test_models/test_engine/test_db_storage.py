@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models.base_model import Base
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -87,6 +88,11 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+<<<<<<< HEAD
+
+# new tests
+=======
+>>>>>>> a8456694baa0de1a1c9089beefa564dd260533f2
 class TestDBStorageMethods(unittest.TestCase):
     """Test the new DBStorage methods"""
     def setUp(self):
@@ -131,4 +137,7 @@ class TestDBStorageMethods(unittest.TestCase):
 
         count_after = self.db_storage.count(State)
         self.assertEqual(count_after, count_before + 1)
+<<<<<<< HEAD
+=======
 
+>>>>>>> a8456694baa0de1a1c9089beefa564dd260533f2
