@@ -10,13 +10,6 @@ from models import storage
 app = Flask(__name__)
 app.register_blueprint(app_views, url_prefix="/api/v1")
 
-
-@app.teardown_appcontext
-def teardown_db(exception=None):
-    """Closes storage on teardown"""
-    storage.close()
-
-
 if getenv('HBNB_API_HOST'):
     HBNB_HOST = getenv('HBNB_API_HOST')
 else:
@@ -26,6 +19,11 @@ if getenv('HBNB_API_HOST'):
     HBNB_PORT = getenv('HBNB_API_PORT')
 else:
     HBNB_PORT = '5000'
+
+@app.teardown_appcontext
+def teardown_db(exception=None):
+    """Closes storage on teardown"""
+    storage.close()
 
 @app.errorhandler(404)
 def notFound(err):
