@@ -156,7 +156,12 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Lamin Jawla - [Github](https://github.com/laminjawla1) / [Twitter](https://twitter.com/Lamin_Sage
 
 Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
+
+# Contribution
+
+Transforming the project into a RESTFul API Web Service
