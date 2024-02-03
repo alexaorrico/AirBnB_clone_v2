@@ -64,15 +64,15 @@ def create_amenity():
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'])
 def update_amenity(amenity_id):
     '''update amenity by id'''
-    try:
-        data = request.get_json()
-    except Exception:
-        return jsonify('Not a JSON'), 400
-
     am = storage.get(Amenity, amenity_id)
 
     if am is None:
         abort(404)
+
+    try:
+        data = request.get_json()
+    except Exception:
+        return jsonify('Not a JSON'), 400
 
     for key, value in data.items():
         if key == 'id' or key == 'created_at' or key == 'updated_at':
