@@ -72,7 +72,7 @@ class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
+        """Test that all returns a dictionary"""
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -86,3 +86,28 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestDBStorageMethods(unittest.TestCase):
+    """Test the additional methods in DBStorage"""
+
+    def setUp(self):
+        """Set up for the test"""
+        models.storage.reload()
+
+    def test_get_method(self):
+        """Test the get method"""
+        state_id = list(models.storage.all(State).values())[0].id
+        retrieved_state = models.storage.get(State, state_id)
+        self.assertIsNotNone(retrieved_state)
+        self.assertIsInstance(retrieved_state, State)
+        self.assertEqual(retrieved_state.id, state_id)
+
+    def test_count_method(self):
+        """Test the count method"""
+        total_objects = models.storage.count()
+        self.assertEqual(total_objects, 1013)  # Replace with actual count
+
+        state_objects = models.storage.count(State)
+        self.assertEqual(state_objects, 27)  # Replace with actual count
