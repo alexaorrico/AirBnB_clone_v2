@@ -11,9 +11,10 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import os
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+        "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class FileStorage:
@@ -23,6 +24,19 @@ class FileStorage:
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
+
+    def get(self, cls, id):
+        """object based on class and id"""
+        key = "{}.{}".format(cls.__name__, id)
+        return self.__objects.get(key, None)
+
+    def count(self, cls=None):
+        """Count the number of objects in storage."""
+        if cls:
+            count = sum(1 for obj in self.__objects.values() if isinstance(obj, cls))
+        else:
+            count = len(self.__objects)
+        return count
 
     def all(self, cls=None):
         """returns the dictionary __objects"""

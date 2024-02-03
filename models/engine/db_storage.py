@@ -17,13 +17,28 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+        "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
     """interaacts with the MySQL database"""
     __engine = None
     __session = None
+
+    def get(self, cls, id):
+        """object based on class and ID."""
+        if cls and id:
+            query_result = self.__session.query(cls).get(id)
+            return query_result
+        return None
+
+    def count(self, cls=None):
+        """Count the number of objects in storage."""
+        if cls:
+            count = self.__session.query(cls).count()
+        else:
+            count = sum(self.__session.query(sub_cls).count() for sub_cls in Base.__subclasses__())
+        return count
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -33,10 +48,10 @@ class DBStorage:
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(HBNB_MYSQL_USER,
-                                             HBNB_MYSQL_PWD,
-                                             HBNB_MYSQL_HOST,
-                                             HBNB_MYSQL_DB))
+                format(HBNB_MYSQL_USER,
+                    HBNB_MYSQL_PWD,
+                    HBNB_MYSQL_HOST,
+                    HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
