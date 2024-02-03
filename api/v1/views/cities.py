@@ -64,7 +64,7 @@ def update_city(id):
         abort(400, 'Not a JSON')
     data = request.get_json()
     for k, v in data.items():
-    	if k not in ['id', 'state_is', 'created_at', 'updated_id']:
+        if k not in ['id', 'state_is', 'created_at', 'updated_id']:
             setattr(city, k, v)
     city.save()
     return city.to_dict()
