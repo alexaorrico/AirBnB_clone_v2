@@ -35,4 +35,4 @@ def notFound(err):
 
 if __name__ == "__main__":
     """func"""
-    app.run(host=HBNB_HOST, port=HBNB_PORT, debug=True)
+    app.run(host=HBNB_HOST, port=HBNB_PORT, threaded=True)
