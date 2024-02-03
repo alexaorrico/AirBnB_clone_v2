@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """amenities view"""
-from flask import abort, request
+from flask import abort, request, jsonify
 
 from api.v1.views import app_views
 from models import storage
@@ -10,7 +10,7 @@ from models.amenity import Amenity
 @app_views.route('/amenities', methods=['GET'])
 def amenities():
     """display all amenities"""
-    return [obj.to_dict() for obj in storage.all(Amenity).values()]
+    return jsonify([obj.to_dict() for obj in storage.all(Amenity).values()])
 
 
 @app_views.route('/amenities/<id>', methods=['GET'])
@@ -19,7 +19,7 @@ def amenity_by_id(id):
     amenity = storage.get(Amenity, id)
     if amenity:
         return amenity.to_dict()
-    return abort(404)
+    abort(404)
 
 
 @app_views.route('/amenities/<id>', methods=['DELETE'])
@@ -30,7 +30,7 @@ def delete_amenity(id):
         storage.delete(amenity)
         storage.save()
         return {}
-    return abort(404)
+    abort(404)
 
 
 @app_views.route('/amenities', methods=['POST'])
@@ -39,12 +39,12 @@ def create_amenity():
     if request.is_json:
         data = request.get_json()
         if not data.get('name'):
-            return 'Missing name', 400
+            abort(400, 'Missing name')
         new_amenity = Amenity(**data)
         new_amenity.save()
         return new_amenity.to_dict(), 201
 
-    return 'Not a JSON', 400
+    abort(400, 'Not a JSON')
 
 
 @app_views.route('amenities/<id>', methods=['PUT'])
@@ -54,10 +54,10 @@ def update_amenity(id):
     if not amenity:
         return abort(404)
     if not request.is_json:
-        return 'Not a JSON', 400
+        abort(400, 'Not a JSON')
     data = request.get_json()
     for k, v in data.items():
         if k not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, k, v)
     storage.save()
-    return amenity.to_dict(), 200
+    return amenity.to_dict()
