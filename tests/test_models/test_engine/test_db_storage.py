@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestDBStorageDocs, TestDBStorage, and TestFileStorage classes
+Test model Contains the TestDBStorageDocs, TestDBStorage, and TestFileStorage classes
 """
 
 from datetime import datetime
