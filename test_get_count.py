@@ -15,7 +15,7 @@ host = os.environ.get('HBNB_MYSQL_HOST')
 database = os.environ.get('HBNB_MYSQL_DB')
 
 # Create the SQLAlchemy engine
-engine = create_engine(f'mysql://{user}:{password}@{host}/{database}')
+engine = create_engine('mysql://' + user + ':' + password + '@' + host + '/' + database)
 
 print("All objects: {}".format(storage.count()))
 print("State objects: {}".format(storage.count(State)))
