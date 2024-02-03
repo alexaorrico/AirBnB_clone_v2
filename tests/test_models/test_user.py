@@ -10,6 +10,8 @@ from models import user
 from models.base_model import BaseModel
 import pep8
 import unittest
+
+
 User = user.User
 
 
@@ -67,6 +69,40 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(user, "created_at"))
         self.assertTrue(hasattr(user, "updated_at"))
 
+    def test_instantiation_with_kwargs(self):
+        """Test that the object is correctly created using **kwargs"""
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        tic = datetime.utcnow()
+        kwargs = dict(
+            first_name="Jane",
+            last_name="Doe",
+            email="janedoe@email.com",
+            password="123456789",
+            created_at=tic.strftime(t_format),
+            updated_at=tic.strftime(t_format)
+        )
+
+        inst = User(**kwargs)
+        attrs_types = {
+            "id": str,
+            "created_at": datetime,
+            "updated_at": datetime,
+            "first_name": str,
+            "last_name": str,
+            "email": str,
+            "password": str,
+        }
+        for attr, typ in attrs_types.items():
+            with self.subTest(attr=attr, typ=typ):
+                self.assertIn(attr, inst.__dict__)
+                self.assertIs(type(inst.__dict__[attr]), typ)
+        self.assertEqual(inst.first_name, "Jane")
+        self.assertEqual(inst.last_name, "Doe")
+        self.assertEqual(inst.email, "janedoe@email.com")
+        self.assertEqual(inst.password, "123456789")
+        self.assertEqual(tic, inst.created_at)
+        self.assertEqual(inst.created_at, inst.updated_at)
+
     def test_email_attr(self):
         """Test that User has attr email, and it's an empty string"""
         user = User()
@@ -110,7 +146,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in u.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 

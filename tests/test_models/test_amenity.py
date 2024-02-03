@@ -7,10 +7,10 @@ from datetime import datetime
 import inspect
 import models
 from models import amenity
+from models.amenity import Amenity
 from models.base_model import BaseModel
 import pep8
 import unittest
-Amenity = amenity.Amenity
 
 
 class TestAmenityDocs(unittest.TestCase):
@@ -67,6 +67,24 @@ class TestAmenity(unittest.TestCase):
         self.assertTrue(hasattr(amenity, "created_at"))
         self.assertTrue(hasattr(amenity, "updated_at"))
 
+    def test_init_with_kwargs(self):
+        """Test Amenity with **kwargs"""
+        from uuid import uuid4
+        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        tic = datetime.utcnow()
+        kwargs = dict(
+            name="WIFI",
+            created_at=tic.strftime(t_format),
+            ubdated_at=tic.strftime(t_format),
+            id=str(uuid4())
+            )
+        amenity = Amenity(**kwargs)
+        for key, val in kwargs.items():
+            if key != "created_at" and key != "updated_at":
+                self.assertEqual(val, amenity.__dict__[key])
+            else:
+                self.assertEqual(val, amenity.__dict__[key].strftime(t_format))
+
     def test_name_attr(self):
         """Test that Amenity has attribute name, and it's as an empty string"""
         amenity = Amenity()
@@ -79,12 +97,12 @@ class TestAmenity(unittest.TestCase):
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
         am = Amenity()
-        print(am.__dict__)
+        # print(am.__dict__)
         new_d = am.to_dict()
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in am.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
