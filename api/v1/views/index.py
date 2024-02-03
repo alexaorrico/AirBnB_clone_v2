@@ -8,9 +8,8 @@ from flask import jsonify
 from api.v1.views import app_views
 from models import storage
 
-
-@app_views.route('/status', methods=['GET'])
-def api_status():
+@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
+def get_stats():       
     '''
     Returns a JSON response for RESTful API health.
     '''
@@ -31,4 +30,4 @@ def get_stats():
         'states': storage.count('State'),
         'users': storage.count('User')
     }
-    return jsonify(stats
+    return jsonify(stats)
