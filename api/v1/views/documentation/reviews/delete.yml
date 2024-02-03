@@ -1,0 +1,15 @@
+Removes a review by id
+---
+tags:
+  - Reviews
+parameters:
+  - name: review_id
+    in: path
+    type: string
+    required: true
+    description: the unique id of the review to be delete
+responses:
+  404:
+    description: Review not found in place 😳
+  200:
+    description: Successful request ✔️
