@@ -75,8 +75,8 @@ class FileStorage:
     def get(self, cls, id):
         """Gets a specific instance from a specific class"""
         for key, value in self.__objects.items():
-            if value.__class__ == cls or
-            value.__class__.__name__ and key == id:
+            c_name = value.__class__.__name__
+            if value.__class__ == cls or c_name == cls and key == id:
                 return value
         return None
 
