@@ -21,14 +21,3 @@ def get_states_id(state_id):
         if j['id'] == state_id:
             return j
     abort(404)
-
-
-@app_views.route('/states/<state_id>', methods=['DELETE'],
-                 strict_slashes=False)
-def del_status_id(state_id):
-    '''delete obj'''
-    stat = storage.get(State, state_id)
-    d = [stat.to_dict()]
-    storage.delete(stat)
-    storage.save()
-    return []
