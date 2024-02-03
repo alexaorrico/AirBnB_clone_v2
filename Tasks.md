@@ -98,8 +98,8 @@
 
 **Files to create/Update**
 
--   `api/v1/views/places_reviews.py`
--   `api/v1/views/__init__.py`
+-   ~~`api/v1/views/places_reviews.py`~~
+-   ~~`api/v1/views/__init__.py`~~
 
 ## Task 12
 
