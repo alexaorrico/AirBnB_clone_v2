@@ -113,26 +113,40 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    def test_get_fs(self):
-        """Test that get returns the object based on the class
-        name and its ID, or None if not found"""
-        storage = FileStorage()
-        obj = State(name="X")
+    def test_get(self):
+        """test that get returns an object of a given class by id."""
+        storage = models.storage
+        obj = State(name='Michigan')
         obj.save()
-        self.assertIs(obj, storage.get("State", obj.id))
-        self.assertIs(None, storage.get("State", "bad id"))
+        self.assertEqual(obj.id, storage.get(State, obj.id).id)
+        self.assertEqual(obj.name, storage.get(State, obj.id).name)
+        self.assertIsNot(obj, storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, 45))
+        self.assertIsNone(storage.get(None, obj.id))
+        self.assertIsNone(storage.get(int, obj.id))
+        with self.assertRaises(TypeError):
+            storage.get(State, obj.id, 'op')
+        with self.assertRaises(TypeError):
+            storage.get(State)
+        with self.assertRaises(TypeError):
+            storage.get()
 
-    def test_count_db(self):
-        """Test that count returns the number of objects in
-        storage matching the given class name. If no name is
-        passed, returns the count of all objects in storage."""
-        storage = FileStorage()
-        count_state = storage.count("State")
-        count_all = storage.count()
-        obj = State(name="X")
-        obj.save()
-        obj2 = User(email="Y", password="Z")
-        obj2.save()
-        self.assertEqual(storage.count("bad state"), 0)
-        self.assertEqual(storage.count("State"), count_state + 1)
-        self.assertEqual(storage.count(), count_all + 2)
+    def test_count(self):
+        """test that count returns the number of objects of a given class."""
+        storage = models.storage
+        self.assertIs(type(storage.count()), int)
+        self.assertIs(type(storage.count(None)), int)
+        self.assertIs(type(storage.count(int)), int)
+        self.assertIs(type(storage.count(State)), int)
+        self.assertEqual(storage.count(), storage.count(None))
+        State(name='Lagos').save()
+        self.assertGreater(storage.count(State), 0)
+        self.assertEqual(storage.count(), storage.count(None))
+        a = storage.count(State)
+        State(name='Enugu').save()
+        self.assertGreater(storage.count(State), a)
+        Amenity(name='Free WiFi').save()
+        self.assertGreater(storage.count(), storage.count(State))
+        with self.assertRaises(TypeError):
+            storage.count(State, 'op')
