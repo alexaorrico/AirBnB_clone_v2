@@ -1,0 +1,21 @@
+Post a new amenity.
+---
+tags:
+  - Users
+parameters:
+  - name: user and pasword
+    in: body
+    required: true
+    requires:
+      - email:
+      - password:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+responses:
+  400:
+    description: Missing email/password or Not Valid JSON 😳
+  201:
+    description: Successful request ✔️
