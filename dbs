@@ -1,0 +1,3 @@
+#!/usr/bin/python3
+def tr():
+    return 'inint'
