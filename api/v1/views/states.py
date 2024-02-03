@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''routes'''
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 
@@ -32,3 +32,17 @@ def del_status_id(state_id):
     storage.delete(stat)
     storage.save()
     return []
+
+
+@app_views.route('/states', methods=['POST'],
+                 strict_slashes=False)
+def create_state():
+    '''creates a State obj'''
+    data = request.get_json()
+    create = State()
+    for key, value in data.items():
+        setattr(create, key, value)
+    storage.new(create)
+    storage.save()
+    create = create.to_dict()
+    return jsonify(create), 201
