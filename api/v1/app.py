@@ -20,10 +20,12 @@ if getenv('HBNB_API_HOST'):
 else:
     HBNB_PORT = '5000'
 
+
 @app.teardown_appcontext
 def teardown_db(exception=None):
     """Closes storage on teardown"""
     storage.close()
+
 
 @app.errorhandler(404)
 def notFound(err):
