@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""App API"""
+"""App API
+
+Flask App"""
 
 
 from api.v1.views import app_views
@@ -23,16 +25,24 @@ else:
 
 @app.teardown_appcontext
 def teardown_db(exception=None):
-    """Closes storage on teardown"""
+    """ Closes storage on teardown
+
+    Args:
+        exception: error
+    """
     storage.close()
 
 
 @app.errorhandler(404)
 def notFound(err):
-    """ handler error 404 """
+    """ handler error 404
+
+    Args:
+        err: error
+    """
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
-    """func"""
+    """ main func"""
     app.run(host=HBNB_HOST, port=HBNB_PORT, debug=True)

@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Flask App"""
+"""Flask App
+
+Flask App"""
 
 
 from flask import Blueprint
