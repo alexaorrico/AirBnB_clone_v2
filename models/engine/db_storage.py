@@ -84,7 +84,7 @@ class DBStorage:
         if cls and id:
             objs_dict = self.all(cls)
             for key, value in objs_dict:
-                if key.split('.')[1] = id:
+                if key.split('.')[1] == id:
                     return value
 
         return None
