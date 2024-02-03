@@ -84,4 +84,4 @@ def update_amenity(amenity_id):
     storage.save()
     am = am.to_dict()
 
-    return (jsonify(am), 200)
+    return jsonify(am), 200

@@ -1,21 +1,17 @@
 #!/usr/bin/python3
 '''index for the api app'''
-
-
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, Flask
 from models import storage
 
-jb = {"status": "OK"}
 
-
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     '''returns json to the route'''
-    return jsonify(jb)
+    return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stat():
     '''returns number of each obj by type'''
     return jsonify({"amenities": storage.count('Amenity'),
