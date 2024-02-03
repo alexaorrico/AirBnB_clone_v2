@@ -52,7 +52,7 @@ class FileStorage:
         """Retrieves one object"""
         if cls not in classes.values():
             return None
-        index = f"{cls.__name__}.{id}"
+        index = "{}.{}".format(cls.__name__, id)
         return self.__objects.get(index)
 
     def new(self, obj):
