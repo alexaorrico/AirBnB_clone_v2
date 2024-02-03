@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+
 """handles all default RESTful API actions"""
 
 from models.amenity import Amenity
