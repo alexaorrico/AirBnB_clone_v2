@@ -18,6 +18,7 @@ def teardown_db(exception=None):
 
 
 if __name__ == "__main__":
+    """func"""
     if environ.get('HBNB_API_HOST'):
         HBNB_HOST = environ.get('HBNB_API_HOST')
     else:
