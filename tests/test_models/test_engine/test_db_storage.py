@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
+
+Don’t forget to add new tests for these 2 methods on each storage engine.
 """
 
 from datetime import datetime
@@ -86,3 +88,15 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test get method"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test count method"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test get method"""
