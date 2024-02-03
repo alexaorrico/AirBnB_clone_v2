@@ -25,15 +25,3 @@ def get_states_id(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def del_status_id(state_id):
-#    st_del = storage.get(State, state_id)
-#    if st_del is None:
-#        abort(404)
-#    st_del.delete()
-#    storage.save()
-#    return {}
-    state = storage.get(State, state_id)
-    if state is None:
-        abort(404)
-    state.delete()
-    storage.save()
-    return jsonify({})
