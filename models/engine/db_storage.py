@@ -88,13 +88,3 @@ class DBStorage:
             for model_class in classes.values():
                 count += slef.__session.query(model_class).count()
             return count
-
-    def get(self, cls, id):
-        ''' retieves one object '''
-        key = "{}.{}".format(cls, id)
-        return (self.all(cls).get(key))
-
-    def count(self, cls=None):
-        ''' count the number of objects in storage '''
-        objectCount = len(self.all(cls))
-        return objectCount
