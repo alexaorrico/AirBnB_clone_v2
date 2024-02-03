@@ -8,7 +8,7 @@ from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-# app.url_map.strict_slashes = False
+app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
@@ -18,6 +18,8 @@ def teardown(self):
 
 
 if __name__ == "__main__":
-    host = getenv("HBNB_API_HOST") or "0.0.0.0"
-    port = getenv("HBNB_API_PORT") or 5000
-    app.run(host=host, port=int(port), threaded=True)
+    app.run(
+        host=getenv("HBNB_API_HOST", default="0.0.0.0"),
+        port=int(getenv("HBNB_API_PORT", default=5000)),
+        threaded=True
+    )
