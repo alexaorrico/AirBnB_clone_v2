@@ -11,6 +11,7 @@ from models import storage
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_all_amenities():
+    """gets all amenities"""
     amenities = storage.all(Amenity).values()
     amenity_list = [amenity.to_dict() for amenity in amenities]
     return jsonify(amenity_list)
@@ -21,6 +22,7 @@ def get_all_amenities():
     methods=['GET'],
     strict_slashes=False)
 def get_amenity(amenity_id):
+    """gets amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
@@ -32,6 +34,7 @@ def get_amenity(amenity_id):
     methods=['DELETE'],
     strict_slashes=False)
 def delete_amenity(amenity_id):
+    """deletes amenity obj"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
@@ -42,6 +45,7 @@ def delete_amenity(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
+    """creates amenity obj"""
     if not request.get_json():
         abort(400, 'Not a JSON')
 
@@ -59,6 +63,7 @@ def create_amenity():
     methods=['PUT'],
     strict_slashes=False)
 def update_amenity(amenity_id):
+    """updates amenity"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
@@ -78,9 +83,11 @@ def update_amenity(amenity_id):
 
 @app_views.errorhandler(404)
 def not_found(error):
+    """prints error"""
     return jsonify({'error': 'Not found'}), 404
 
 
 @app_views.errorhandler(400)
 def bad_request(error):
+    """prints in case of a bad response"""
     return jsonify({'error': 'Bad Request'}), 400
