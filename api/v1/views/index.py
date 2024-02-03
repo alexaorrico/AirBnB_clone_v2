@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""This module implements a Flask application."""
+"""Flask App"""
+
 
 from api.v1.views import app_views
 from flask import jsonify
@@ -35,8 +36,7 @@ def stats():
     reviews = storage.count(Review)
     states = storage.count(State)
     users = storage.count(User)
-
-    statistics = {
+    return {
         "amenities": amenities,
         "cities": cities,
         "places": places,
@@ -44,5 +44,3 @@ def stats():
         "states": states,
         "users": users
     }
-
-    return jsonify(statistics)
