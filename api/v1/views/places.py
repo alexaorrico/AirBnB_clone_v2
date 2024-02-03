@@ -52,7 +52,7 @@ def create_place(city_id):  # Create a city in a place
     if not user:
         abort(404)
     new_place = Place(**data)
-    new_place.user_id = data.get("user_id")
+    new_place.city_id = city_id
     new_place.save()
     return make_response(jsonify(new_place.to_dict()), 201)
 
