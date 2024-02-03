@@ -46,13 +46,11 @@ def city_places(city_id):
 
 
 @app_views.route(
-    "/places/<place_id>",
-    methods=["GET", "PUT", "DELETE"],
-    strict_slashes=False,
-)
+    "/places/<place_id>", methods=["GET", "PUT", "DELETE"],
+    strict_slashes=False)
 def places(place_id):
     """Handler for places."""
-    place: Place | None = storage.get(Place, place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     if request.method == "GET":
