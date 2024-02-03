@@ -86,3 +86,56 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorageGetCount(unittest.TestCase):
+    """Test the get and count methods of the DBStorage class."""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the tests."""
+        models.storage.reload()
+        cls.state = State(name="TestState")
+        models.storage.new(cls.state)
+        models.storage.save()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Clean up actions after tests."""
+        models.storage.delete(cls.state)
+        models.storage.save()
+
+    def test_get_method_valid_id(self):
+        """Test retrieval of object by valid ID."""
+        obj = models.storage.get("State", self.state.id)
+        self.assertEqual(obj, self.state)
+
+    def test_get_method_invalid_id(self):
+        """Test retrieval with an invalid ID returns None."""
+        obj = models.storage.get("State", "invalid_id")
+        self.assertIsNone(obj)
+
+    def test_get_method_invalid_class(self):
+        """Test retrieval with an invalid class returns None."""
+        obj = models.storage.get("InvalidClass", self.state.id)
+        self.assertIsNone(obj)
+
+    def test_count_method_with_class(self):
+        """Test counting objects of a specific class."""
+        initial_count = models.storage.count("State")
+        new_state = State(name="AnotherTestState")
+        models.storage.new(new_state)
+        models.storage.save()
+        self.assertEqual(models.storage.count("State"), initial_count + 1)
+        models.storage.delete(new_state)
+        models.storage.save()
+
+    def test_count_method_no_class(self):
+        """Test counting all objects in storage."""
+        initial_count = models.storage.count()
+        new_state = State(name="YetAnotherTestState")
+        models.storage.new(new_state)
+        models.storage.save()
+        self.assertTrue(models.storage.count() > initial_count)
+        models.storage.delete(new_state)
+        models.storage.save()
