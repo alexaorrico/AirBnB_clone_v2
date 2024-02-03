@@ -11,6 +11,7 @@ from models.user import User
 from models import storage
 from sqlalchemy.sql.functions import user
 
+
 @app_views.route('/status')
 def status():
     """returns a JSON says the status of the API is OK"""
