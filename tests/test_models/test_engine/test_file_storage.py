@@ -116,7 +116,7 @@ class TestFileStorage(unittest.TestCase):
 
 
 class TestFileStorageGetCount(unittest.TestCase):
-    """Tet .get() and .count() methods"""
+    """Tet get() and count() methods"""
 
     @classmethod
     def setUpClass(cls):
