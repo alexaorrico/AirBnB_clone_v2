@@ -27,6 +27,4 @@ if __name__ == "__main__":
         HBNB_PORT = environ.get('HBNB_API_PORT')
     else:
         HBNB_PORT = '5000'
-    print("host :", HBNB_HOST)
-    print("port : ", HBNB_PORT)
     app.run(host=HBNB_HOST, port=HBNB_PORT, debug=True)
