@@ -12,13 +12,13 @@ from models.place import Place
 from models.city import City
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def status():
     """ return the status of the request """
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', strict_slashes=False)
 def stats():
     """ return the statistic of all class objects in the storage """
     amenities_count = storage.count(Amenity)
