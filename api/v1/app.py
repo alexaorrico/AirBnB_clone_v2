@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Flask App"""
+"""App API"""
 
 
 from api.v1.views import app_views
