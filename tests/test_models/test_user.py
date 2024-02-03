@@ -8,7 +8,7 @@ import inspect
 import models
 from models import user
 from models.base_model import BaseModel
-import pep8
+import pycodestyle as pep8
 import unittest
 User = user.User
 
@@ -59,6 +59,7 @@ class TestUserDocs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     """Test the User class"""
+
     def test_is_subclass(self):
         """Test that User is a subclass of BaseModel"""
         user = User()
@@ -110,7 +111,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in u.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 

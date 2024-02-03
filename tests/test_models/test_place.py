@@ -8,7 +8,7 @@ import inspect
 import models
 from models import place
 from models.base_model import BaseModel
-import pep8
+import pycodestyle as pep8
 import unittest
 Place = place.Place
 
@@ -59,6 +59,7 @@ class TestPlaceDocs(unittest.TestCase):
 
 class TestPlace(unittest.TestCase):
     """Test the Place class"""
+
     def test_is_subclass(self):
         """Test that Place is a subclass of BaseModel"""
         place = Place()
@@ -178,7 +179,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in p.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
