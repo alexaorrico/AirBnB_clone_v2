@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""handles all default RESTful API actions"""
+"""
+handles all default RESTful API actions
+"""
 
 from models.amenity import Amenity
 from api.v1.views import app_views
