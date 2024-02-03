@@ -11,7 +11,7 @@ from models import storage
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def get_all_amenities():
-    """gets all amenities"""
+    """gets the list of all Amenity obj"""
     amenities = storage.all(Amenity).values()
     amenity_list = [amenity.to_dict() for amenity in amenities]
     return jsonify(amenity_list)
@@ -22,7 +22,7 @@ def get_all_amenities():
     methods=['GET'],
     strict_slashes=False)
 def get_amenity(amenity_id):
-    """gets amenity"""
+    """Retrieves an Amenity obj"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
@@ -34,7 +34,7 @@ def get_amenity(amenity_id):
     methods=['DELETE'],
     strict_slashes=False)
 def delete_amenity(amenity_id):
-    """deletes amenity obj"""
+    """Deletes an Amenity obj"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
@@ -45,11 +45,11 @@ def delete_amenity(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
-    """creates amenity obj"""
-    if not request.get_json():
+    """Creates an Amenity obj"""
+    if not request.json:
         abort(400, 'Not a JSON')
 
-    data = request.get_json()
+    data = request.json
     if 'name' not in data:
         abort(400, 'Missing name')
 
@@ -63,15 +63,15 @@ def create_amenity():
     methods=['PUT'],
     strict_slashes=False)
 def update_amenity(amenity_id):
-    """updates amenity"""
+    """Updates an Amenity obj"""
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
 
-    if not request.get_json():
+    if not request.json:
         abort(400, 'Not a JSON')
 
-    data = request.get_json()
+    data = request.json
     ignore_keys = ['id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in ignore_keys:
@@ -83,11 +83,11 @@ def update_amenity(amenity_id):
 
 @app_views.errorhandler(404)
 def not_found(error):
-    """prints error"""
+    '''Returns 404: Not Found'''
     return jsonify({'error': 'Not found'}), 404
 
 
 @app_views.errorhandler(400)
 def bad_request(error):
-    """prints in case of a bad response"""
+    """Return Bad Request message"""
     return jsonify({'error': 'Bad Request'}), 400
