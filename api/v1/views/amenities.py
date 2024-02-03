@@ -44,11 +44,11 @@ def create_amenity():
     try:
         data = request.get_json()
     except Exception:
-        return jsonify({'error': 'Not a JSON'}), 400
+        return jsonify('Not a JSON'), 400
     create = Amenity()
     for key, value in data.items():
         if key != 'name':
-            return jsonify({'error': 'Missing name'}), 400
+            return jsonify('Missing name'), 400
         setattr(create, key, value)
     create = create.to_dict()
     return jsonify(create), 201
@@ -61,7 +61,7 @@ def update_amenity(amenity_id):
     try:
         data = request.get_json()
     except Exception:
-        return jsonify({'error': 'Not a JSON'}), 400
+        return jsonify('Not a JSON'), 400
     am = storage.get(Amenity, amenity_id)
     if am is None:
         abort(404)
