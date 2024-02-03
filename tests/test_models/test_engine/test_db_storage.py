@@ -5,7 +5,10 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
+from random import randint
+
 import models
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -68,8 +71,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +89,64 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "Not testing DB storage")
+    def test_get(self):
+        """Tests DBStorage.get() method"""
+
+        self.assertIsNone(storage.get(State, "Not_found"))
+        self.assertIsNone(storage.get(datetime, "Not_found"))
+
+        state = State(name="A state")
+        city = City(name="A city", state_id=state.id)
+        user = User(email="user@email.add", password="pw")
+        place = Place(name="A Place", city_id=city.id, user_id=user.id,
+                      number_rooms=1, number_bathrooms=1, max_guest=1,
+                      price_by_night=1)
+        amenity = Amenity(name="An amenity")
+        review = Review(place_id=place.id, user_id=user.id, text="review")
+        objs = [state, city, user, place, amenity, review]
+
+        for obj in objs:
+            obj.save()
+            cls = obj.__class__
+            id = obj.id
+            result = storage.get(cls, id)
+            self.assertIsInstance(result, cls)
+            self.assertIs(result, obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "Not testing DB storage")
+    def test_count(self):
+        """Tests DBStorage.count() method"""
+
+        self.assertEqual(storage.count(), len(storage.all()))
+        self.assertIsNone(storage.count(datetime))
+
+        for cls in classes.values():
+            self.assertEqual(storage.count(cls), len(storage.all(cls)))
+
+        storage.close()
+        storage.__init__()
+        storage.reload()
+
+        self.assertEqual(storage.count(), 0)
+        for cls in classes.values():
+            self.assertEqual(storage.count(cls), 0)
+
+        for i in range(1, randint(3, 9)):
+            state = State(name="A state")
+            city = City(name="A city", state_id=state.id)
+            user = User(email="user@email.add", password="pw")
+            place = Place(name="A Place", city_id=city.id, user_id=user.id,
+                          number_rooms=1, number_bathrooms=1, max_guest=1,
+                          price_by_night=1)
+            amenity = Amenity(name="An amenity")
+            review = Review(place_id=place.id, user_id=user.id, text="review")
+
+            objs = [state, city, user, place, amenity, review]
+            for obj in objs:
+                obj.save()
+
+        self.assertEqual(storage.count(), i * len(objs))
+        for cls in classes.values():
+            self.assertEqual(storage.count(cls), i)

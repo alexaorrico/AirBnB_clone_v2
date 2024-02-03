@@ -42,12 +42,10 @@ class FileStorage:
         if cls not in classes.values():
             return None
 
-        for cls in classes.values():
-            # cls_name = cls.__name__
-            count = 0
-            for obj in self.__objects.values():
-                if isinstance(obj, cls):
-                    count += 1
+        count = 0
+        for obj in self.__objects.values():
+            if obj.__class__ == cls:
+                count += 1
         return count
 
     def get(self, cls, id):
@@ -73,6 +71,8 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
+        self.__objects = {}
+
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
