@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""Flask App"""
-
+"""This module implements a Flask application."""
 
 from api.v1.views import app_views
 from flask import jsonify
@@ -15,20 +14,29 @@ from models import storage
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """test status OK"""
+    """Returns the status of the Flask application.
+
+    Returns:
+        JSON: A JSON object containing the status of the application.
+    """
     return jsonify({"status": "OK"})
 
 
 @app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
-    """return the count of all objects"""
+    """Returns statistics about the data stored in the application.
+
+    Returns:
+        JSON: A JSON object containing the count of all objects stored in the application.
+    """
     amenities = storage.count(Amenity)
     cities = storage.count(City)
     places = storage.count(Place)
     reviews = storage.count(Review)
     states = storage.count(State)
     users = storage.count(User)
-    return {
+
+    statistics = {
         "amenities": amenities,
         "cities": cities,
         "places": places,
@@ -36,3 +44,5 @@ def stats():
         "states": states,
         "users": users
     }
+
+    return jsonify(statistics)
