@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models.base_model import BaseModel
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -13,6 +14,7 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
+from models import storage
 from models.user import User
 import json
 import os
@@ -68,9 +70,10 @@ test_file_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+@unittest.skipIf(models.storage_t == 'db', "not testing file storage")
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -78,7 +81,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -94,7 +96,6 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -113,3 +114,40 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def setUp(self):
+        """Set up for the tests"""
+        # Assuming BaseModel import is correct
+        self.model = BaseModel()
+        self.model.save()
+
+    def tearDown(self):
+        """Tear down tests"""
+        # Make sure to delete the model from storage to avoid test side-effects
+        del self.model
+
+    def test_get_existing_object(self):
+        """Test retrieving an existing object by class and ID"""
+        obj = storage.get("BaseModel", self.model.id)
+        self.assertIsNotNone(obj)
+
+    def test_get_non_existent_object(self):
+        """Test attempting to retrieve a non-existent object"""
+        obj = storage.get("BaseModel", "non-existent-id")
+        self.assertIsNone(obj)
+
+    def test_count_specific_class(self):
+        """Test counting objects of a specific class"""
+        initial_count = storage.count("BaseModel")
+        new_model = BaseModel()
+        new_model.save()
+        self.assertEqual(storage.count("BaseModel"), initial_count + 1)
+        storage.delete(new_model)
+
+    def test_count_all_objects(self):
+        """Test counting all objects when no class is specified"""
+        initial_count = storage.count()
+        new_model = BaseModel()
+        new_model.save()
+        self.assertEqual(storage.count(), initial_count + 1)
+        storage.delete(new_model)

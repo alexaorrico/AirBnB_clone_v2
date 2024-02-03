@@ -13,6 +13,7 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
+from models import storage
 from models.user import User
 import json
 import os
@@ -70,19 +71,54 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+
+    def setUp(self):
+        """Set up for the tests"""
+        self.state = State(name="TestState")
+        storage.new(self.state)
+        storage.save()
+
+    def tearDown(self):
+        """Tear down the tests"""
+        storage.delete(self.state)
+
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get_existing_object(self):
+        """Test retrieving an existing object"""
+        obj = storage.get(State, self.state.id)
+        self.assertIsNotNone(obj)
+
+    def test_get_non_existent_object(self):
+        """Test attempting to retrieve a non-existent object"""
+        obj = storage.get(State, "non-existent-id")
+        self.assertIsNone(obj)
+
+    def test_count_specific_class(self):
+        """Test counting objects of a specific class"""
+        initial_count = storage.count(State)
+        new_state = State(name="AnotherTestState")
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(State), initial_count + 1)
+        storage.delete(new_state)
+
+    def test_count_all_objects(self):
+        """Test counting all objects when no class is specified"""
+        initial_count = storage.count()
+        new_state = State(name="YetAnotherTestState")
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(), initial_count + 1)
+        storage.delete(new_state)
