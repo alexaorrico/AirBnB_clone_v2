@@ -178,7 +178,7 @@ No known bugs at this time.
 
 ## Authors
 
-Youness Elalouani - aymanosbenayada@gmail.com
+Youness Elalouani - [Gmail](aymanosbenayada@gmail.com)
 
 ## License
 
