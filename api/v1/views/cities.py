@@ -3,7 +3,7 @@
 cities request as blueprint"""
 from models.city import City
 from models.state import State
-from models import storage 
+from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 
@@ -23,6 +23,8 @@ def list_cities(state_id):
             abort(400, description="Not a JSON")
         if "name" not in json_data.keys():
             abort(400, description="Missing name")
+        state_object.cities.append(City(**json_data))
+        storage.save()
         return make_response(jsonify(json_data), 201)
 
 
@@ -46,5 +48,6 @@ def retrieve_city_object(city_id):
         ignored_keys = ["id", "state_id", "created_at", "updated_at"]
         for key in user_data:
             if key not in ignored_keys:
-                city_object.to_dict()[key] = user_data[key]
+                setattr(city_object, key, user_data[key])
+        storage.save()
         return make_response(jsonify(city_object.to_dict()), 200)
