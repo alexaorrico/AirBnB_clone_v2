@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""State RESTAPI"""
+"""City RESTAPI"""
 from api.v1.views import app_views
 from models.state import State
 from models.city import City
@@ -15,7 +15,7 @@ def get_cities(state_id):  # Get all cities of a state
     abort(404)
 
 
-@app_views.route("/cities/<string:city_id>", strict_slashes=False)
+@app_views.route("/cities/<city_id>/", strict_slashes=False)
 def get_city(city_id):  # get a specific city
     city = storage.get(City, city_id)
     if city:
@@ -26,7 +26,7 @@ def get_city(city_id):  # get a specific city
 @app_views.route("/cities/<string:city_id>",
                  strict_slashes=False, methods=["DELETE"])
 def delete_city(city_id):  # Delete a city
-    city = storage.get(State, city_id)
+    city = storage.get(City, city_id)
     if city:
         storage.delete(city)
         storage.save()
