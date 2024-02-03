@@ -20,18 +20,21 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(error):
+    '''Handles the 404 HTTP error code.'''
     return {"error": "Not found"}, 404
 
 
 @app.errorhandler(400)
-def page_not_found(e):
-    message = e.description
+def page_not_found(error):
+    '''Handles the 400 HTTP error code.'''
+    message = error.description
     return message, 400
 
 
 @app.teardown_appcontext
 def close(ctx):
+    '''The Flask app/request context end event listener.'''
     storage.close()
 
 
