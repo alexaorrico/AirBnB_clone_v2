@@ -8,7 +8,7 @@ from os import getenv
 from models import storage
 
 app = Flask(__name__)
-app.register_blueprint(app_views, url_prefix="/api/v1")
+app.register_blueprint(app_views)
 
 if getenv('HBNB_API_HOST'):
     HBNB_HOST = getenv('HBNB_API_HOST')
@@ -18,7 +18,7 @@ else:
 if getenv('HBNB_API_HOST'):
     HBNB_PORT = getenv('HBNB_API_PORT')
 else:
-    HBNB_PORT = '5000'
+    HBNB_PORT = 5000
 
 
 @app.teardown_appcontext
