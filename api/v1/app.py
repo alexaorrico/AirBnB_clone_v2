@@ -12,10 +12,12 @@ CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Close the storage resource at the end."""
     storage.close()
+
 
 @app.errorhandler(404)
 def page_not_found(error):
