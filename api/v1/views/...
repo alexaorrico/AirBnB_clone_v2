@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-'''routes'''
+
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, abort
 from models import storage
 from models.state import State
 
@@ -21,3 +21,19 @@ def get_states_id(state_id):
         if j['id'] == state_id:
             return j
     abort(404)
+
+
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+def del_status_id(state_id):
+#    st_del = storage.get(State, state_id)
+#    if st_del is None:
+#        abort(404)
+#    st_del.delete()
+#    storage.save()
+#    return {}
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+    state.delete()
+    storage.save()
+    return jsonify({})

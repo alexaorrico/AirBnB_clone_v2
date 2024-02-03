@@ -79,8 +79,10 @@ class DBStorage:
     def get(self, cls, id):
         '''this def returns a single obj if present'''
         if cls is not None:
-            key = cls.__name__ + '.' + id
-            return self.all()[key]
+            ob = self.all(cls)
+            for k, v in ob.items():
+                if k.split('.')[1] == id:
+                    return v
         return None
 
     def count(self, cls=None):
