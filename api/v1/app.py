@@ -17,15 +17,17 @@ def teardown_db(exception=None):
     storage.close()
 
 
+if getenv('HBNB_API_HOST'):
+    HBNB_HOST = getenv('HBNB_API_HOST')
+else:
+    HBNB_HOST = '0.0.0.0'
+
+if getenv('HBNB_API_HOST'):
+    HBNB_PORT = getenv('HBNB_API_PORT')
+else:
+    HBNB_PORT = '5000'
+
+
 if __name__ == "__main__":
     """func"""
-    if getenv('HBNB_API_HOST'):
-        HBNB_HOST = getenv('HBNB_API_HOST')
-    else:
-        HBNB_HOST = '0.0.0.0'
-
-    if getenv('HBNB_API_HOST'):
-        HBNB_PORT = getenv('HBNB_API_PORT')
-    else:
-        HBNB_PORT = '5000'
     app.run(host=HBNB_HOST, port=HBNB_PORT, debug=True)
