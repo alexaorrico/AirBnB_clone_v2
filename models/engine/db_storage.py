@@ -25,22 +25,6 @@ class DBStorage:
     __engine = None
     __session = None
 
-    def get(self, cls, id):
-        """object based on class and ID."""
-        if cls and id:
-            query_result = self.__session.query(cls).get(id)
-            return query_result
-        return None
-
-    def count(self, cls=None):
-        """Count the number of objects in storage."""
-        if cls:
-            count = self.__session.query(cls).count()
-        else:
-            count = sum(self.__session.query(sub_cls).count()
-                        for sub_cls in Base.__subclasses__())
-        return count
-
     def __init__(self):
         """Instantiate a DBStorage object"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
@@ -90,3 +74,18 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """object based on class and ID."""
+        if cls and id:
+            query_result = self.__session.query(cls).get(id)
+        return query_result
+
+    def count(self, cls=None):
+        """Count the number of objects in storage."""
+        if cls:
+            count = self.__session.query(cls).count()
+        else:
+            count = sum(self.__session.query(sub_cls).count()
+                        for sub_cls in Base.__subclasses__())
+        return count
