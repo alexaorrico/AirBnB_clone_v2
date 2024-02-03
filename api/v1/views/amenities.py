@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''amenities route'''
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models import storage
 from models.amenity import Amenity
 
@@ -14,7 +14,8 @@ def all_amenities():
     return jsonify(am)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'])
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def amenity_by_id(amenity_id):
     '''retrieve amenity by id'''
     am = storage.get(Amenity, amenity_id)
@@ -27,7 +28,8 @@ def amenity_by_id(amenity_id):
     return jsonify(am)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_amenity(amenity_id):
     '''delere amenity by id'''
     am = storage.get(Amenity, amenity_id)
@@ -35,27 +37,26 @@ def delete_amenity(amenity_id):
     if am is None:
         abort(404)
 
-    storage.delete(am)
+    am.delete()
     storage.save()
 
-    return {}, 200
+    return jsonify({}), 200
 
 
-@app_views.route('/amenities', methods=['POST'])
+@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
     '''creates an amenity instance'''
     try:
         data = request.get_json()
     except Exception:
-        return jsonify('Not a JSON'), 400
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
-    create = Amenity()
+    if 'name' not in data:
+        return make_response(jsonify({'error': 'Missing name'}), 400)
 
-    for key, value in data.items():
-        if key != 'name':
-            return jsonify('Missing name'), 400
-        setattr(create, key, value)
-
+    create = Amenity(**data)
+    
+    create.save()
     create = create.to_dict()
 
     return jsonify(create), 201
@@ -72,14 +73,14 @@ def update_amenity(amenity_id):
     try:
         data = request.get_json()
     except Exception:
-        return jsonify('Not a JSON'), 400
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     for key, value in data.items():
         if key == 'id' or key == 'created_at' or key == 'updated_at':
             continue
         setattr(am, key, value)
 
-    storage.save()
+    am.save()
     am = am.to_dict()
 
     return jsonify(am), 200
