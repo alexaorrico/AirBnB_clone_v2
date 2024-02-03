@@ -64,9 +64,8 @@ def updates_state(state_id):
         abort(404)
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in request.get_json():
-        return make_response(jsonify({'error': 'Missing name'}), 400)
-    states[0]['name'] = request.json['name']
+    if 'name' in request.get_json():
+        states[0]['name'] = request.json['name']
     for obj in all_states:
         if obj.id == state_id:
             obj.name = request.json['name']
