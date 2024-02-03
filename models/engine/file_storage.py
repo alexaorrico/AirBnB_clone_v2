@@ -70,21 +70,13 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """returns the object based on the class and its ID,
-        or None if not found"""
-        if cls is None:
+        """ Method retrieves one object """
+        key = "{}.{}".format(cls, id)
+        if cls and id and key in self.all(cls):
+            return self.all(cls)[key]
+        else:
             return None
-        if type(cls) is str:
-            if cls not in classes:
-                return None
-            cls = classes[cls]
-        save = models.storage.all(cls)
-        return save.get("{}.{}".format(cls.__name__, id))
 
     def count(self, cls=None):
-        """returns the number of objects in storage matching the given class.
-        If no class is passed, returns the count of all objects in storage."""
-        if cls is None:
-            return len(models.storage.all())
-        return len(models.storage.all(cls))
-    
+        """ Method counts the number of objects """
+        return len(self.all(cls))
