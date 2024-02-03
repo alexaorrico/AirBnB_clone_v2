@@ -113,3 +113,35 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorageGet(unittest.TestCase):
+    """Test the get method of FileStorage class."""
+
+    def setUp(self):
+        """Set up test environment."""
+        self.storage = FileStorage()
+        self.state = State(name="TestState")
+        self.storage.new(self.state)
+        self.storage.save()
+
+    def tearDown(self):
+        """Clean up actions."""
+        if hasattr(self, 'state'):
+            self.storage.delete(self.state)
+            self.storage.save()
+
+    def test_get_valid_id(self):
+        """Test retrieval of object by valid ID."""
+        obj = self.storage.get("State", self.state.id)
+        self.assertEqual(obj, self.state)
+
+    def test_get_invalid_id(self):
+        """Test retrieval with invalid ID returns None."""
+        obj = self.storage.get("State", "invalid_id")
+        self.assertIsNone(obj)
+
+    def test_get_invalid_class(self):
+        """Test retrieval with invalid class returns None."""
+        obj = self.storage.get("InvalidClass", self.state.id)
+        self.assertIsNone(obj)
