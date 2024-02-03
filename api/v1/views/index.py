@@ -5,9 +5,7 @@
 from api.v1.views import app_views
 from flask import jsonify
 
-jb = {
-  "status": "OK"
-}
+jb = {"status": "OK"}
 
 
 @app_views.route('/status')
