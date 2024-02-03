@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Entry point of the api"""
-from flask import Flask
+from flask import Flask, abort
 import os
 
 from models import storage
@@ -21,7 +21,7 @@ def teardown(exception):
 @app.errorhandler(404)
 def not_found(e):
     """404 error Handler"""
-    return {'error': 'Not found'}, 404
+    abort(404)
 
 
 if __name__ == '__main__':
