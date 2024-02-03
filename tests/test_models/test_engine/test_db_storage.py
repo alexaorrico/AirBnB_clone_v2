@@ -97,7 +97,7 @@ class TestDBStorageGetCount(unittest.TestCase):
         pass
 
     def test_get_count(self):
-        """Test .get() and .count() methods"""
+        """Test get() and count() methods"""
         print("All objects: {}".format(storage.count()))
         print("State objects: {}".format(storage.count(State)))
 
