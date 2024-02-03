@@ -5,10 +5,12 @@ from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
 import os import getenv
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
-app.register_blueprint(app_views, url_prefix='/myapp')
 
 @app.teardown_appcontext
 def teardown_db(exception):
