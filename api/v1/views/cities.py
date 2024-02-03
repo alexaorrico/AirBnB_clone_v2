@@ -74,7 +74,7 @@ def update_city(city_id):
         abort(400, "Not a JSON")
 
     for key, value in rq.items():
-        if key not in ["id", "created_at", "update_at", "state_id"]:
+        if key not in ["id", "created_at", "updated_at", "state_id"]:
             setattr(obj, key, value)
 
-    return make_response(jsonify())
+    return make_response(jsonify(obj.to_dict()), 200)
