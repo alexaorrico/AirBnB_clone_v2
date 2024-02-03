@@ -3,7 +3,7 @@
 
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from os import getenv
 from models import storage
 
@@ -26,6 +26,11 @@ if getenv('HBNB_API_HOST'):
     HBNB_PORT = getenv('HBNB_API_PORT')
 else:
     HBNB_PORT = '5000'
+
+@app.errorhandler(404)
+def notFound(err):
+    """ handler error 404 """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
