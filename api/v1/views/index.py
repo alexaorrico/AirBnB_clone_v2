@@ -1,37 +1,36 @@
 #!/usr/bin/python3
-"""
-API V1 index views.
-This module provides the HTTP methods for status and stats routes.
-"""
+'''Contains the index view for the API.'''
 from flask import jsonify
+
 from api.v1.views import app_views
 from models import storage
-
-# Dictionary mapping class names to their respective types in storage.
-OBJECT_DICT = {
-    'amenities': 'Amenity',
-    'cities': 'City',
-    'places': 'Place',
-    'reviews': 'Review',
-    'states': 'State',
-    'users': 'User'
-}
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route('/status')
 def get_status():
-    """
-    Returns a JSON response with the status of the API.
-    """
-    return jsonify({"status": "OK"})
+    '''Gets the status of the API.
+    '''
+    return jsonify(status='OK')
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/stats')
 def get_stats():
-    """
-    Retrieves the count of each object type from storage.
-    Converts class names in OBJECT_DICT to actual classes using the globals() function.
-    Returns a JSON with the count of each object type.
-    """
-    stats = {obj: storage.count(globals()[cls]) for obj, cls in OBJECT_DICT.items()}
-    return jsonify(stats)
+    '''Gets the number of objects for each type.
+    '''
+    objects = {
+        'amenities': Amenity,
+        'cities': City,
+        'places': Place,
+        'reviews': Review,
+        'states': State,
+        'users': User
+    }
+    for key, value in objects.items():
+        objects[key] = storage.count(value)
+    return jsonify(objects)
