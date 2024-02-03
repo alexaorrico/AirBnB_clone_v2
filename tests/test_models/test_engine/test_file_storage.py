@@ -99,10 +99,8 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-        def test_get(self):
-        '''
-            Test if get method retrieves obj requested
-        '''
+    def test_get(self):
+        ''' Test if get method retrieves obj requested '''
         new_state = State(name="NewYork")
         storage.new(new_state)
 
