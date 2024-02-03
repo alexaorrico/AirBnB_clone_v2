@@ -14,6 +14,7 @@ def close_session(exception):
     """close the session after every request"""
     storage.close()
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     """ the function is called when a page is not found """
