@@ -9,8 +9,8 @@ from os import getenv
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.url_map.strict_slashes = False
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 app.register_blueprint(app_views)
 
 
@@ -25,11 +25,11 @@ def page_not_found(error):
     """handles 404 error by returning a JSON."""
     error_dict = {"error": "Not found"}
     status_code = 404
-    return jsonify(error_dict), status_code
+    return (jsonify(error_dict), status_code)
 
 
 if __name__ == "__main__":
     """port and host"""
-    host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-    port = int(os.getenv("HBNB_API_PORT", 5000))
-    app.run(host="localhost", port=port, threaded=True)
+    host = getenv("HBNB_API_HOST", "0.0.0.0")
+    port = getenv("HBNB_API_PORT", 5000)
+    app.run(host=host, port=port, threaded=True)
