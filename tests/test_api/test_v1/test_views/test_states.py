@@ -15,13 +15,13 @@ USER = getenv("HBNB_MYSQL_USER")
 PASSWORD = getenv("HBNB_MYSQL_PWD")
 
 
-@unittest.skipIf(STORAGE.TYPE != 'db', "no db storage test")
+@unittest.skipIf(STORAGE_TYPE != 'db', "no db storage test")
 class TestStates(unittest.TestCase):
     """Test the states routes for the API"""
     def test_states_GetAllStates_statusCode_contentType(self):
         """Test /states route with get request"""
         testter = app.test_client()
-        res = tesster.get('/states')
+        res = testter.get('/api/v1/states')
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.content_type, 'application/json')
 
@@ -34,29 +34,32 @@ class TestStates(unittest.TestCase):
         db_conn = MySQLdb.connect(
             host=HOST, database=DB,
             user=USER, password=PASSWORD)
-        cur = db.conn.cursor()
+        cur = db_conn.cursor()
         cur.execute(
             """
             INSERT INTO states (id, name)
             VALUES ("8f165686-c98d-46d9-87d9-d6059ade2d99", "Louisiana");
             """)
+        db_conn.commit()
+        cur.close()
         db_conn.close()
 
         testter = app.test_client()
-        res = tesster.get('/states/8f165686-c98d-46d9-87d9-d6059ade2d99')
+        res = testter.get('/api/v1/states/8f165686-c98d-46d9-87d9-d6059ade2d99')
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.content_type, 'application/json')
 
         state = json.loads(res.to_json())
+        self.assertEqual(state["__class__"], "State")
         self.assertEqual(state["id"], "8f165686-c98d-46d9-87d9-d6059ade2d99")
-        self.assertEqual(state["name"], "Louisiana")
+        self.assertEqual(state["name"], "Louisiana")        
 
     def test_states_GetState_statusCode_404(self):
         """Test /states/<state_id> route with get request
            Wrong instance id
         """
         testter = app.test_client()
-        res = tesster.get('/states/1234nonono')
+        res = testter.get('/api/v1/states/1234nonono')
         self.assertEqual(res.status_code, 404)
         self.assertEqual(res.content_type, 'application/json')
 
@@ -69,15 +72,17 @@ class TestStates(unittest.TestCase):
         db_conn = MySQLdb.connect(
             host=HOST, database=DB,
             user=USER, password=PASSWORD)
-        cur = db.conn.cursor()
+        cur = db_conn.cursor()
         cur.execute(
             """
             INSERT INTO states (id, name)
             VALUES ("8f165686-c98d-46d9-87d9-d6059ade2df9", "Louisiana2");
             """)
+        db_conn.commit()
+        cur.close()
         db_conn.close()
         testter = app.test_client()
-        res = tesster.delete('/states/8f165686-c98d-46d9-87d9-d6059ade2df9')
+        res = testter.delete('/api/v1/states/8f165686-c98d-46d9-87d9-d6059ade2df9')
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.content_type, 'application/json')
         self.assertDictEqual(json.loads(res.to_json()), {})
@@ -87,17 +92,18 @@ class TestStates(unittest.TestCase):
            Wrong instance id
         """
         testter = app.test_client()
-        res = tesster.delete('/states/1234nonono')
+        res = testter.delete('/api/v1/states/1234nonono')
         self.assertEqual(res.status_code, 404)
         self.assertEqual(res.content_type, 'application/json')
 
     def test_states_PostState_statusCode(self):
         """Test /states route with post request"""
         testter = app.test_client()
-        res = testter.post('/states', json={'name': 'Khartoum'})
+        res = testter.post('/api/v1/states', json={'name': 'Khartoum'})
         state = json.loads(res.to_json())
 
         self.assertEqual(res.status_code, 201)
+        self.assertEqual(state["__class__"], "State")
         self.assertEqual(res.content_type, 'application/json')
         self.assertEqual(state["name"], "Khartoum")
 
@@ -105,7 +111,7 @@ class TestStates(unittest.TestCase):
         """Test /states route with post request
            Not a JSON"""
         testter = app.test_client()
-        res = testter.post('/states', data={'name': 'Khartoum \ Sudan'})
+        res = testter.post('/api/v1/states', data={'name': 'Khartoum \ Sudan'})
         state = json.loads(res.to_json())
 
         self.assertEqual(res.status_code, 400)
@@ -116,7 +122,7 @@ class TestStates(unittest.TestCase):
         """Test /states route with post request
             Missing name on the requests"""
         testter = app.test_client()
-        res = testter.post('/states', json={'name2': 'Khartoum'})
+        res = testter.post('/api/v1/states', json={'name2': 'Khartoum'})
         state = json.loads(res.to_json())
 
         self.assertEqual(res.status_code, 400)
@@ -128,21 +134,24 @@ class TestStates(unittest.TestCase):
         db_conn = MySQLdb.connect(
             host=HOST, database=DB,
             user=USER, password=PASSWORD)
-        cur = db.conn.cursor()
+        cur = db_conn.cursor()
         cur.execute(
             """
             INSERT INTO states (id, name)
             VALUES ("8f165686-c98d-46d9-87d9-d6059ade2dff", "Louisiana3");
             """)
+        db_conn.commit()
+        cur.close()
         db_conn.close()
 
         testter = app.test_client()
-        res = testter.put('/states/8f165686-c98d-46d9-87d9-d6059ade2dff',
+        res = testter.put('/api/v1/states/8f165686-c98d-46d9-87d9-d6059ade2dff',
                           json={'name': 'NotLouisiana3',
                                 'id': '8f165686-c98d-46d9-87d9-d6059ade2fff'})
         state = json.loads(res.to_json())
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.content_type, 'application/json')
+        self.assertEqual(state["__class__"], "State")
         self.assertEqual(state["name"], "NotLouisiana3")
         self.assertTrue(state["id"] != "8f165686-c98d-46d9-87d9-d6059ade2fff")
         self.assertTrue(state["id"] == "8f165686-c98d-46d9-87d9-d6059ade2dff")
@@ -152,7 +161,7 @@ class TestStates(unittest.TestCase):
            Wrong instance id
         """
         testter = app.test_client()
-        res = tesster.put('/states/1234nonono',
+        res = testter.put('/api/v1/states/1234nonono',
                           json={'name': 'NotLouisiana3',
                                 'id': '8f165686-c98d-46d9-87d9-d6059ade2fff'})
         self.assertEqual(res.status_code, 404)
@@ -162,10 +171,16 @@ class TestStates(unittest.TestCase):
         """Test /states/<state_id> route with put request
            Wrong JSON format
         """
-        res = testter.put('/states/8f165686-c98d-46d9-87d9-d6059ade2dff',
+        res = testter.put('/api/v1/states/8f165686-c98d-46d9-87d9-d6059ade2dff',
                           data={'name': 'NotLouisiana3 \ yes',
                                 'id': '8f165686-c98d-46d9-87d9-d6059ade2fff'})
 
         self.assertEqual(res.status_code, 400)
         self.assertEqual(res.content_type, 'application/json')
         self.assertEqual(json.loads(res.to_json()), 'Not a JSON')
+
+    def test_states_GetStates_returnValue(self):
+        """
+        TODO: ADD TEST CASE FOR get('/api/v1/states') RETURN VALUE
+        """
+        pass

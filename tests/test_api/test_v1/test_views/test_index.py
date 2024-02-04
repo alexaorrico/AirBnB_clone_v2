@@ -11,7 +11,7 @@ from api.v1.app import app
 
 STORAGE_TYPE = getenv("HBNB_TYPE_STORAGE")
 
-
+@unittest.skipIf(STORAGE_TYPE != 'db', "no database test")
 class TestIndex(unittest.TestCase):
     """Test the index route for the API app"""
     def test_index_status(self):
@@ -63,8 +63,9 @@ class TestIndex(unittest.TestCase):
         for table in message.values():
             cur.execute('SELECT count(*) FROM {};'.format(table))
             meassge[table] = int(cur.first())
-
+        db_conn.commit()
+        cur.close()
         db_conn.close()
-        tesster = app.test_client()
-        res = tesster.get('/stats')
+        testter = app.test_client()
+        res = testter.get('/stats')
         self.assertDictEqual(json.loads(res.to_json()), message)
