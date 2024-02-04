@@ -56,6 +56,9 @@ def delete_put_get_state_obj(state_id):
             storage.delete(state)
             storage.save()
             return jsonify({}), 200
+        else:
+            abort(400, description="referenced by cities")
+
     elif request.method == 'PUT':
         try:
             state_dict = request.get_json()
