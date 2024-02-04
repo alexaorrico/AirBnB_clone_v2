@@ -79,7 +79,7 @@ class TestDBStorage(unittest.TestCase):
         """Test that all returns all rows when no class is passed"""
 
     def test_new(self):
-        """test that new adds an object to the database"""
+        """Test that new adds an object to the database"""
 
     def test_save(self):
         """Test that save properly saves objects to file.json"""
