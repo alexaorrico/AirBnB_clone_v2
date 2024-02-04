@@ -2,6 +2,7 @@
 import os
 from flask import Flask, jsonify
 from flask_cors import CORS
+
 from models import storage
 from api.v1.views import app_views
 
@@ -41,6 +42,6 @@ def bad_request(error):
 if __name__ == '__main__':
     app.run(
         host=os.getenv('HBNB_API_HOST', '0.0.0.0'),
-        port==int(os.getenv('HBNB_API_PORT', '5000')),
+        port=int(os.getenv('HBNB_API_PORT', '5000')),
         threaded=True
     )
