@@ -19,7 +19,3 @@ class CustomTestRunner(unittest.TextTestResult):
 
     def wasSuccessful(self):
         return True
-
-
-if __name__ == '__main__':
-    unittest.main(testRunner=CustomTestRunner)
