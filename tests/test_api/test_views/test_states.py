@@ -5,6 +5,7 @@ from api.v1.app import app
 from models import storage
 from flask import Response
 
+
 class TestAppViews(unittest.TestCase):
     def setUp(self):
         # Create a test client
@@ -34,7 +35,8 @@ class TestAppViews(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_del_by_id(self):
-        response = self.app.delete('/api/v1/states/{}'.format(self.test_state.id))
+        response = self.app.delete(
+            '/api/v1/states/{}'.format(self.test_state.id))
         self.assertEqual(response.status_code, 200)
         # Verify that the state has been deleted
         deleted_state = storage.get(State, self.test_state.id)
@@ -59,18 +61,27 @@ class TestAppViews(unittest.TestCase):
 
     def test_update_state(self):
         updated_state_data = {"name": "Updated State"}
-        response = self.app.put('/api/v1/states/{}'.format(self.test_state.id), json=updated_state_data)
+        response = self.app.put(
+            '/api/v1/states/{}'.format(self.test_state.id), json=updated_state_data)
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_data(as_text=True))
         self.assertEqual(data['name'], updated_state_data['name'])
 
     def test_update_state_not_found(self):
-        response = self.app.put('/api/v1/states/12345', json={"name": "Updated State"})
+        response = self.app.put(
+            '/api/v1/states/12345',
+            json={
+                "name": "Updated State"})
         self.assertEqual(response.status_code, 404)
 
     def test_update_state_invalid_json(self):
-        response = self.app.put('/api/v1/states/{}'.format(self.test_state.id), data="Invalid JSON", content_type="application/json")
+        response = self.app.put(
+            '/api/v1/states/{}'.format(
+                self.test_state.id),
+            data="Invalid JSON",
+            content_type="application/json")
         self.assertEqual(response.status_code, 400)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -9,6 +9,7 @@ from models import storage
 
 class TestStatsCounts(unittest.TestCase):
     """test case for stats."""
+
     def setUp(self):
         """setting up the client."""
         self.app = app.test_client()

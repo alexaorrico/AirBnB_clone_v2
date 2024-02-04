@@ -55,7 +55,7 @@ def create_amenity():
         return make_response(jsonify({'error': 'Missing name'}), 400)
 
     create = Amenity(**data)
-    
+
     create.save()
     create = create.to_dict()
 
