@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
-from datetime import datetime
+import re
 import inspect
 import models
 import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
+from datetime import datetime
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
@@ -83,6 +84,7 @@ class TestBaseModel(unittest.TestCase):
         and that upon creation have identical updated_at and created_at
         value."""
         tic = datetime.now()
+        time.sleep(0.001)  # Add a small delay
         inst1 = BaseModel()
         toc = datetime.now()
         self.assertTrue(tic <= inst1.created_at <= toc)
@@ -95,6 +97,15 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
+
+    def test_save(self):
+        """Test that the save method updates the updated_at attribute"""
+        my_model = BaseModel()
+        old_updated_at = my_model.updated_at
+        time.sleep(1)  # Add a small delay
+        my_model.save()
+        new_updated_at = my_model.updated_at
+        self.assertAlmostEqual(old_updated_at, new_updated_at, delta=datetime.timedelta(seconds=1))
 
     def test_uuid(self):
         """Test that id is a valid uuid"""
@@ -145,7 +156,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(string, str(inst))
 
     @mock.patch('models.storage')
-    def test_save(self, mock_storage):
+    def test_save_mock(self, mock_storage):
         """Test that save method updates `updated_at` and calls
         `storage.save`"""
         inst = BaseModel()
@@ -155,6 +166,7 @@ class TestBaseModel(unittest.TestCase):
         new_created_at = inst.created_at
         new_updated_at = inst.updated_at
         self.assertNotEqual(old_updated_at, new_updated_at)
+        self.assertAlmostEqual(old_updated_at, new_updated_at, delta=datetime.timedelta(seconds=0.5))
         self.assertEqual(old_created_at, new_created_at)
         self.assertTrue(mock_storage.new.called)
         self.assertTrue(mock_storage.save.called)
