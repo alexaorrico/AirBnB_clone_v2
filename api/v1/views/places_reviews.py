@@ -110,18 +110,18 @@ def update_review(review_id):
             # Return 400 error if the request data is not in JSON format
             abort(400, 'Not a JSON')
 # Get the JSON data from the request
-    data = request.get_json()
-    ignore_keys = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
+        data = request.get_json()
+        ignore_keys = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
 # Update the attributes of the Review object with the JSON data
-    for key, value in data.items():
-        if key not in ignore_keys:
-            setattr(review, key, value)
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(review, key, value)
 # Save the updated Review object to the storage
-            review.save()
+        review.save()
 # Return the updated Review object in JSON format with 200 status code
-            return jsonify(review.to_dict()), 200
-        else:
-            abort(404)
+        return jsonify(review.to_dict()), 200
+    else:
+        abort(404)
 
 
 # Error Handlers:
