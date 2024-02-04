@@ -60,14 +60,21 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return False
-        if args[0] in classes:
+
+        class_name = args[0]
+        if class_name in classes:
             new_dict = self._key_value_parser(args[1:])
-            instance = classes[args[0]](**new_dict)
+        
+            # Set a default value for 'name' if not provided
+            if 'name' not in new_dict:
+                new_dict['name'] = 'DefaultName'
+
+            instance = classes[class_name](**new_dict)
+            print(instance.id)
+            instance.save()
         else:
             print("** class doesn't exist **")
             return False
-        print(instance.id)
-        instance.save()
 
     def do_show(self, arg):
         """Prints an instance as a string based on the class and id"""

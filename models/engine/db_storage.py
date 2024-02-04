@@ -57,7 +57,14 @@ class DBStorage:
 
     def save(self):
         """commit all changes of the current database session"""
-        self.__session.commit()
+        try:
+            self.__session.commit()
+        except Exception as e:
+            print(f"Error during commit: {e}")
+            self.__session.rollback()
+            raise
+        finally:
+            self.close()
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
@@ -76,16 +83,14 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """object based on class and ID."""
+        """Retrieve an object based on class and ID."""
         if cls and id:
             query_result = self.__session.query(cls).get(id)
-        return query_result
+            return query_result
+        return None
 
     def count(self, cls=None):
         """Count the number of objects in storage."""
-        if cls:
-            count = self.__session.query(cls).count()
-        else:
-            count = sum(self.__session.query(sub_cls).count()
-                        for sub_cls in Base.__subclasses__())
-        return count
+        query_class = cls if cls else State
+        query = self.__session.query(query_class)
+        return query.count()
