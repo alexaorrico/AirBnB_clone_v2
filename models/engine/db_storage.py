@@ -75,7 +75,13 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Returns the object based on the class and its ID"""
+        """
+        returns object based on it's class and id
+        None if not found
+        Args:
+            id (int): id of the class instance
+            cls (obj): class object_
+        """
         if cls is None or id is None:
             return None
         if cls:
