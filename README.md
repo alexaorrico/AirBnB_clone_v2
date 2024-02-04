@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Egbinola Oluwakemi - [https://github.com/oluwakemiegbinola]   
+Egbinola Oluwakemi - [ https://github.com/oluwakemiegbinola]   
 Habeeb Oyebode
 
 Second part of Airbnb: Joann Vuong
