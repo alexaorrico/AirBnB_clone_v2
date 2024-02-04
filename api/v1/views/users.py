@@ -1,13 +1,9 @@
 #!/usr/bin/python3
-"""
-This module handles the RESTful API actions for User objects
-"""
-
+"""This module handles the RESTful API actions for User objects"""
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.user import User
-
 
 @app_views.route('/users', methods=['GET'])
 def get_all_users():
@@ -21,33 +17,36 @@ def get_user(user_id):
     user = storage.get(User, user_id)
     if not user:
         abort(404)
-    return jsonify(user.get('to_dict'()))
+    return jsonify(user.to_dict())
 
 @app_views.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    """deletes a User object by its id"""
-    delete_response = REST_actions.delete(User, user_id)
-    if delete_response.get('status code') == 404:
+    """Deletes a User object by user_id"""
+    user = storage.get(User, user_id)
+    if not user:
         abort(404)
-    return jsonify({}),200
+    storage.delete(user)
+    storage.save()
+    return jsonify({}), 200
 
 @app_views.route('/users', methods=['POST'])
 def post_user():
-    """creates a User"""
+    """Creates a new User"""
     request_body = request.get_json()
     if not request_body:
         return jsonify({'error': 'Not a JSON'}), 400
-    if not request_body.get('email'):
+    if 'email' not in request_body:
         return jsonify({'error': 'Missing email'}), 400
-    if not request_body.get('password'):
+    if 'password' not in request_body:
         return jsonify({'error': 'Missing password'}), 400
     new_user = User(**request_body)
-    post_response = REST_actions.post(new_user)
-    return post_response.get('object dict'), post_response.get('status code'), 201
+    storage.new(new_user)
+    storage.save()
+    return jsonify(new_user.to_dict()), 201
 
-app_views.route('/users/<user_id>', methods=['PUT'])
+@app_views.route('/users/<user_id>', methods=['PUT'])
 def put_user(user_id):
-    """ updates a User object by its id """
+    """Updates a User object by user_id"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -62,4 +61,4 @@ def put_user(user_id):
             setattr(user, key, value)
 
     storage.save()
-    return put_response.get('object dict'), put_response.get('status code')
+    return jsonify(user.to_dict()), 200
