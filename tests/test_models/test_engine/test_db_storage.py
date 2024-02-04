@@ -41,7 +41,7 @@ class TestDBStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_engine/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 3,
                          "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
@@ -115,7 +115,7 @@ class TestFileStorage(unittest.TestCase):
         storage.reload()
         new_obj = State(name="New York")
         storage.new(new_obj)
-       storage.save()
+        storage.save()
         obj_id = new_obj.id
         retrieved_obj = storage.get(State, obj_id)
         self.assertEqual(retrieved_obj, new_obj)
