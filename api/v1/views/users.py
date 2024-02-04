@@ -9,8 +9,7 @@ from models import storage
 from models.user import User
 
 
-@app_views.route('/users/', methods=['GET', 'POST'])
-@app_views.route('/users', methods=['GET', 'POST'])
+@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def post_get_user_obj():
     """ This function contains two http method handler
 

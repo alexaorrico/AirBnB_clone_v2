@@ -9,8 +9,8 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities/', methods=['GET', 'POST'])
-@app_views.route('/amenities', methods=['GET', 'POST'])
+# @app_views.route('/amenities/', methods=['GET', 'POST'])
+@app_views.route('/amenities', methods=['GET', 'POST'], strict_slashes=False)
 def post_get_amenity_obj():
     """ This function contains two http method handler
 

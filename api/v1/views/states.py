@@ -7,8 +7,8 @@ from models import storage
 from models.state import State
 
 
-@app_views.route('/states/', methods=['GET', 'POST'])
-@app_views.route('/states', methods=['GET', 'POST'])
+# @app_views.route('/states/', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
 def post_get_state_obj():
     """ This function contains two http method handler
 
@@ -52,9 +52,10 @@ def delete_put_get_state_obj(state_id):
     elif request.method == 'GET':
         return jsonify(state.to_dict())
     elif request.method == 'DELETE':
-        storage.delete(state)
-        storage.save()
-        return jsonify({}), 200
+        if not state.cities:
+            storage.delete(state)
+            storage.save()
+            return jsonify({}), 200
     elif request.method == 'PUT':
         try:
             state_dict = request.get_json()

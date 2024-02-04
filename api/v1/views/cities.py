@@ -10,8 +10,11 @@ from models.state import State
 from models.city import City
 
 
-@app_views.route('/states/<state_id>/cities/', methods=['GET', 'POST'])
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
+# @app_views.route('/states/<state_id>/cities/', methods=['GET', 'POST'])
+@app_views.route(
+        '/states/<state_id>/cities',
+        methods=['GET', 'POST'], strict_slashes=False
+        )
 def post_get_city_obj(state_id):
     """ This function contains two http method handler
 
