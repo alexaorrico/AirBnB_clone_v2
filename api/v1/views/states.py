@@ -11,7 +11,7 @@ def get_states():
     '''returns json to the route'''
     obj = [obj.to_dict() for obj in storage.all(State).values()]
 
-    return jsonify(obj)
+    return jsonify(obj), 200
 
 
 @app_views.route('/states/<state_id>', methods=['GET'],
