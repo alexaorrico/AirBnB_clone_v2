@@ -3,20 +3,18 @@
 Contains the TestAmenityDocs classes
 """
 
-import inspect
-import unittest
 from datetime import datetime
-import pep8
+import inspect
 import models
 from models import amenity
 from models.base_model import BaseModel
-
+import pep8
+import unittest
 Amenity = amenity.Amenity
 
 
 class TestAmenityDocs(unittest.TestCase):
     """Tests to check the documentation and style of Amenity class"""
-
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -25,18 +23,16 @@ class TestAmenityDocs(unittest.TestCase):
     def test_pep8_conformance_amenity(self):
         """Test that models/amenity.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(["models/amenity.py"])
-        self.assertEqual(
-            result.total_errors, 0, "Found code style errors (and warnings)."
-        )
+        result = pep8s.check_files(['models/amenity.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_amenity(self):
         """Test that tests/test_models/test_amenity.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(["tests/test_models/test_amenity.py"])
-        self.assertEqual(
-            result.total_errors, 0, "Found code style errors (and warnings)."
-        )
+        result = pep8s.check_files(['tests/test_models/test_amenity.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_amenity_module_docstring(self):
         """Test for the amenity.py module docstring"""
@@ -55,19 +51,14 @@ class TestAmenityDocs(unittest.TestCase):
     def test_amenity_func_docstrings(self):
         """Test for the presence of docstrings in Amenity methods"""
         for func in self.amenity_f:
-            self.assertIsNot(
-                func[1].__doc__, None,
-                "{:s} method needs a docstring".format(func[0])
-            )
-            self.assertTrue(
-                len(func[1].__doc__) >= 1,
-                "{:s} method needs a docstring".format(func[0]),
-            )
+            self.assertIsNot(func[1].__doc__, None,
+                             "{:s} method needs a docstring".format(func[0]))
+            self.assertTrue(len(func[1].__doc__) >= 1,
+                            "{:s} method needs a docstring".format(func[0]))
 
 
 class TestAmenity(unittest.TestCase):
     """Test the Amenity class"""
-
     def test_is_subclass(self):
         """Test that Amenity is a subclass of BaseModel"""
         amenity = Amenity()
@@ -80,7 +71,7 @@ class TestAmenity(unittest.TestCase):
         """Test that Amenity has attribute name, and it's as an empty string"""
         amenity = Amenity()
         self.assertTrue(hasattr(amenity, "name"))
-        if models.storage_t == "db":
+        if models.storage_t == 'db':
             self.assertEqual(amenity.name, None)
         else:
             self.assertEqual(amenity.name, "")
