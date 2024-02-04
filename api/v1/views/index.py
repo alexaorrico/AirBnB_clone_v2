@@ -15,7 +15,7 @@ from sqlalchemy.sql.functions import user
 @app_views.route('/status')
 def status():
     """returns a JSON says the status of the API is OK"""
-    return jsonify({"status": "OK"}), 200
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats')
