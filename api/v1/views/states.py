@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Handles RESTFul API actions for states
+Handles RESTFul API actions for amenities
 """
 
 from flask import abort
@@ -11,7 +11,7 @@ from models.state import State
 from models import storage
 
 
-@app_views.route("/states", strict_slashes=False)
+@app_views.route("/states", methods=["GET"], strict_slashes=False)
 def all_states():
     """
     Returns list of all states
