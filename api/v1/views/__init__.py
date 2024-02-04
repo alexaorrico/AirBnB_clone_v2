@@ -11,4 +11,4 @@ from models import *
 from api.v1.views.places_amenities import *
 from api.v1.views.states import *
 from api.v1.views.cities import *
-from api.v1.views import amenities *
+from api.v1.views import amenities
