@@ -47,7 +47,10 @@ def post_get_city_obj(state_id):
         return jsonify(new_city.to_dict()), 201
 
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route(
+        '/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'],
+        strict_slashes=False
+        )
 def delete_put_get_city_obj(city_id):
     """ This function contains three http method handler
 

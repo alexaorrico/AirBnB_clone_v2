@@ -37,7 +37,10 @@ def post_get_amenity_obj():
         return jsonify(new_amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route(
+        '/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'],
+        strict_slashes=False
+        )
 def delete_put_get_amenity_obj(amenity_id):
     """ This function contains two http method handler
 

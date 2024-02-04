@@ -38,7 +38,9 @@ def post_get_user_obj():
         return jsonify(new_user.to_dict()), 201
 
 
-@app_views.route('/users/<user_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route(
+        '/users/<user_id>', methods=['GET', 'DELETE', 'PUT'],
+        strict_slashes=False)
 def delete_put_get_user_obj(user_id):
     """ This function contains two http method handler
 

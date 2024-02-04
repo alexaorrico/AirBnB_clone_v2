@@ -35,7 +35,9 @@ def post_get_state_obj():
         return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route(
+        '/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+        strict_slashes=False)
 def delete_put_get_state_obj(state_id):
     """ This function contains two http method handler
 
