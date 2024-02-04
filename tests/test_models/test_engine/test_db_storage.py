@@ -78,9 +78,12 @@ test_db_storage.py'])
         pass
 
     def setUp(self):
-        """Prepares an isolated test environment; called before every test function."""
+        """
+        Prepares an isolated test environment;
+        called before every test function.
+        """
         self.session = storage._DBStorage__session
-        self.session.rollback()  # Ensure each test starts with a clean database state
+        self.session.rollback()
 
     def tearDown(self):
         """Cleans up resources after each test."""
@@ -120,7 +123,10 @@ test_db_storage.py'])
         storage.save()
 
     def test_add_incomplete_object(self):
-        """Test adding an object with missing required fields; should raise an error."""
+        """
+        Test adding an object with missing required fields;
+        should raise an error.
+        """
         incomplete_state = State()
         with self.assertRaises(IntegrityError):
             storage.new(incomplete_state)
@@ -153,7 +159,10 @@ test_db_storage.py'])
         storage.new(city1)
         storage.new(city2)
         storage.save()
-        filtered_cities = storage._DBStorage__session.query(City).join(State).filter(State.name == "QueryState1").all()
+        filtered_cities = storage._DBStorage__session.query(City) \
+            .join(State) \
+            .filter(State.name == "QueryState1") \
+            .all()
         self.assertIn(city1, filtered_cities)
         self.assertNotIn(city2, filtered_cities)
         storage.delete(city1)
