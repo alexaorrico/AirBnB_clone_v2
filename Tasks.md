@@ -84,15 +84,15 @@
 
 **Files to create/Update**
 
--   `api/v1/views/users.py`
--   `api/v1/views`
+-   ~~`api/v1/views/users.py`~~
+-   ~~`api/v1/views`~~
 
 ## Task 10
 
 **Files to create/Update**
 
--   `api/v1/views/places.py`
--   `api/v1/views/__init__.py`
+-   ~~`api/v1/views/places.py`~~
+-   ~~`api/v1/views/__init__.py`~~
 
 ## Task 11
 
