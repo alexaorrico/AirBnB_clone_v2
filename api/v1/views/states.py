@@ -24,9 +24,8 @@ def post_get_state_obj():
             object_list.append(obj.to_dict())
         return jsonify(object_list)
     elif request.method == 'POST':
-        try:
-            state_dict = request.get_json()
-        except Exception:
+        state_dict = request.get_json()
+        if not state_dict:
             abort(400, description="Not a JSON")
         if "name" not in state_dict:
             abort(400, description="Missing name")
@@ -62,12 +61,11 @@ def delete_put_get_state_obj(state_id):
             abort(400, description="referenced by cities")
 
     elif request.method == 'PUT':
-        try:
-            state_dict = request.get_json()
-            for key, value in state_dict.items():
-                if key != "id" and key != "created_at" and key != "updated_at":
-                    setattr(state, key, value)
-            state.save()
-            return jsonify(state.to_dict()), 200
-        except Exception:
+        state_dict = request.get_json()
+        if not state_dict:
             abort(400, description="Not a JSON")
+        for key, value in state_dict.items():
+            if key != "id" and key != "created_at" and key != "updated_at":
+                setattr(state, key, value)
+        state.save()
+        return jsonify(state.to_dict()), 200

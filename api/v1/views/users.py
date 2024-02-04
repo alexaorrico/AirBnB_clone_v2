@@ -25,9 +25,8 @@ def post_get_user_obj():
             user_list.append(user.to_dict())
         return jsonify(user_list)
     elif request.method == 'POST':
-        try:
-            user_dict = request.get_json()
-        except Exception:
+        user_dict = request.get_json()
+        if not user_dict:
             abort(400, description="Not a JSON")
         if "email" not in user_dict:
             abort(400, description="Missing email")
@@ -61,12 +60,11 @@ def delete_put_get_user_obj(user_id):
         storage.save()
         return jsonify({}), 200
     elif request.method == 'PUT':
-        try:
-            user_dict = request.get_json()
-            for key, value in user_dict.items():
-                if key not in ["id", "created_at", "email"]:
-                    setattr(user, key, value)
-            user.save()
-            return jsonify(user.to_dict()), 200
-        except Exception:
+        user_dict = request.get_json()
+        if not user_dict:
             abort(400, description="Not a JSON")
+        for key, value in user_dict.items():
+            if key not in ["id", "created_at", "email"]:
+                setattr(user, key, value)
+        user.save()
+        return jsonify(user.to_dict()), 200

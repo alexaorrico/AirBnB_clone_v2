@@ -35,9 +35,8 @@ def post_get_city_obj(state_id):
         else:
             abort(404)
     elif request.method == 'POST':
-        try:
-            city_dict = request.get_json()
-        except Exception:
+        city_dict = request.get_json()
+        if not city_dict:
             abort(400, description="Not a JSON")
         if "name" not in city_dict:
             abort(400, description="Missing name")
@@ -71,12 +70,11 @@ def delete_put_get_city_obj(city_id):
         storage.save()
         return jsonify({}), 200
     elif request.method == 'PUT':
-        try:
-            city_dict = request.get_json()
-            for key, value in city_dict.items():
-                if key != "id" and key != "created_at" and key != "updated_at":
-                    setattr(city, key, value)
-            city.save()
-            return jsonify(city.to_dict()), 200
-        except Exception:
+        city_dict = request.get_json()
+        if not city_dict:
             abort(400, description="Not a JSON")
+        for key, value in city_dict.items():
+            if key != "id" and key != "created_at" and key != "updated_at":
+                setattr(city, key, value)
+        city.save()
+        return jsonify(city.to_dict()), 200

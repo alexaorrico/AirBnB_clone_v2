@@ -37,9 +37,8 @@ def post_get_review_obj(place_id):
         else:
             abort(404)
     elif request.method == 'POST':
-        try:
-            review_dict = request.get_json()
-        except Exception:
+        review_dict = request.get_json()
+        if not review_dict
             abort(400, description="Not a JSON")
         if "text" not in review_dict:
             abort(400, description="Missing text")
@@ -81,13 +80,12 @@ def delete_put_get_review_obj(review_id):
         storage.save()
         return jsonify({}), 200
     elif request.method == 'PUT':
-        try:
-            review_dict = request.get_json()
-            const = ["id", "user_id", "updated_at", "created_at", "place_id"]
-            for key, value in review_dict.items():
-                if key not in const:
-                    setattr(review, key, value)
-            review.save()
-            return jsonify(review.to_dict()), 200
-        except Exception:
+        review_dict = request.get_json()
+        if not review_dict:
             abort(400, description="Not a JSON")
+        const = ["id", "user_id", "updated_at", "created_at", "place_id"]
+        for key, value in review_dict.items():
+            if key not in const:
+                setattr(review, key, value)
+        review.save()
+        return jsonify(review.to_dict()), 200

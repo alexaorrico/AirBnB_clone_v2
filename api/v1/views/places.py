@@ -36,9 +36,8 @@ def post_get_place_obj(city_id):
         else:
             abort(404)
     elif request.method == 'POST':
-        try:
-            places_dict = request.get_json()
-        except Exception:
+        places_dict = request.get_json()
+        if not places_dict
             abort(400, description="Not a JSON")
         if "name" not in places_dict:
             abort(400, description="Missing name")
@@ -80,13 +79,12 @@ def delete_put_get_place_obj(place_id):
         storage.save()
         return jsonify({}), 200
     elif request.method == 'PUT':
-        try:
-            place_dict = request.get_json()
-            const = ["id", "user_id", "updated_at", "created_at", "city_id"]
-            for key, value in place_dict.items():
-                if key not in const:
-                    setattr(place, key, value)
-            place.save()
-            return jsonify(place.to_dict()), 200
-        except Exception:
+        place_dict = request.get_json()
+        if not place_dict:
             abort(400, description="Not a JSON")
+        const = ["id", "user_id", "updated_at", "created_at", "city_id"]
+        for key, value in place_dict.items():
+            if key not in const:
+                setattr(place, key, value)
+        place.save()
+        return jsonify(place.to_dict()), 200

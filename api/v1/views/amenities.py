@@ -26,9 +26,8 @@ def post_get_amenity_obj():
             amenity_list.append(amenity.to_dict())
         return jsonify(amenity_list)
     elif request.method == 'POST':
-        try:
-            amenity_dict = request.get_json()
-        except Exception:
+        amenity_dict = request.get_json()
+        if not amenity_dict 
             abort(400, description="Not a JSON")
         if "name" not in amenity_dict:
             abort(400, description="Missing name")
@@ -61,12 +60,11 @@ def delete_put_get_amenity_obj(amenity_id):
         storage.save()
         return jsonify({}), 200
     elif request.method == 'PUT':
-        try:
-            amenity_dict = request.get_json()
-            for key, value in amenity_dict.items():
-                if key != "id" and key != "created_at" and key != "updated_at":
-                    setattr(amenity, key, value)
-            amenity.save()
-            return jsonify(amenity.to_dict()), 200
-        except Exception:
+        amenity_dict = request.get_json()
+        if not amenity_dict:
             abort(400, description="Not a JSON")
+        for key, value in amenity_dict.items():
+            if key != "id" and key != "created_at" and key != "updated_at":
+                setattr(amenity, key, value)
+        amenity.save()
+        return jsonify(amenity.to_dict()), 200
