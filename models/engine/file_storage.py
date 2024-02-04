@@ -78,7 +78,8 @@ class FileStorage:
             id (uuid4 str): id of the object
         """
         if cls and id:
-            key = f"{cls.__class__}.{id}"
+            key = f"{cls.__name__}.{id}"
+            print(key)
             return self.all(cls).get(key)
 
         return None
