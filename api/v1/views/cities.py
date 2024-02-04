@@ -52,8 +52,9 @@ def post_city(state_id):
         abort(404)
     if 'name' not in data:
         abort(400, "Missing name")
-    data["state_id"] = state_id
-    new_city = City(**data)
+    new_data = data.copy()
+    new_data["state_id"] = state_id
+    new_city = City(**new_data)
     new_city.save()
     return jsonify(new_city.to_dict()), 201
 
