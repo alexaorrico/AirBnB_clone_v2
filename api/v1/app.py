@@ -2,12 +2,12 @@
 """This module contain a web application for the airbnb
     website
 """
-
+import os
 from flask import Flask, jsonify
-app = Flask(__name__)
 from models import storage
 from api.v1.views import app_views
-import os
+
+app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
@@ -25,6 +25,6 @@ def page_not_found(error):
 
 if __name__ == "__main__":
     """ Execute the following line if not imported """
-    host = os.getenv("HBNB_API_HOST")
-    port = os.getenv("HBNB_API_PORT")
+    host = os.getenv("HBNB_API_HOST", "0.0.0.0")
+    port = os.getenv("HBNB_API_PORT", 5000)
     app.run(host=host, port=port, threaded=True)
