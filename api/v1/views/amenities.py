@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-''' Creates a view for Amenity objects - handles all default RESTful API actions.
+''' Creates a view for Amenity objects -
+handles all default RESTful API actions.
 '''
 # Import necessary modules
 from flask import abort, jsonify, request
@@ -20,7 +21,7 @@ def get_all_amenities():
 
 # Route for retrieving a specific Amenity object by ID
 @app_views.route('/amenities/<amenity_id>',
-methods=['GET'], strict_slashes=False)
+                 methods=['GET'], strict_slashes=False)
 def get_amenity(amenity_id):
     '''Retrieves an Amenity object'''
     # Get the Amenity object with the given ID from the storage
@@ -43,10 +44,10 @@ def delete_amenity(amenity_id):
         # Delete the Amenity object from the storage and save changes
         storage.delete(amenity)
         storage.save()
-    # Return an empty JSON with 200 status code
+        # Return an empty JSON with 200 status code
         return jsonify({}), 200
     else:
-    # Return 404 error if the Amenity object is not found
+        # Return 404 error if the Amenity object is not found
         abort(404)
 
 
@@ -60,7 +61,7 @@ def create_amenity():
     # Get the JSON data from the request
     data = request.get_json()
     if 'name' not in data:
-# Return 400 error if 'name' key is missing in the JSON data
+        # Return 400 error if 'name' key is missing in the JSON data
         abort(400, 'Missing name')
     # Create a new Amenity object with the JSON data
     amenity = Amenity(**data)
@@ -73,7 +74,7 @@ def create_amenity():
 
 # Route for updating an existing Amenity object by ID
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
-strict_slashes=False)
+                 strict_slashes=False)
 def update_amenity(amenity_id):
     '''Updates an Amenity object'''
     # Get the Amenity object with the given ID from the storage
@@ -91,7 +92,6 @@ def update_amenity(amenity_id):
                 setattr(amenity, key, value)
                 # Save the updated Amenity object to the storage
             amenity.save()
-            # Return the updated Amenity object in JSON format with 200 status code
             return jsonify(amenity.to_dict()), 200
     else:
         # Return 404 error if the Amenity object is not found
