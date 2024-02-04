@@ -26,6 +26,9 @@ def get_all_amenities():
 def get_amenity(amenity_id):
     """
     Retrieves an Amenity obj
+
+    Args:
+        amenity_id(int): id for amenity.
     """
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
@@ -40,6 +43,9 @@ def get_amenity(amenity_id):
 def delete_amenity(amenity_id):
     """
     Deletes an Amenity obj
+
+    Args:
+        amenity_id(int): id for amenity.
     """
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
@@ -73,6 +79,9 @@ def create_amenity():
 def update_amenity(amenity_id):
     """
     Updates an Amenity obj
+
+    Args:
+        amenity_id(int): id for amenity.
     """
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
@@ -95,6 +104,9 @@ def update_amenity(amenity_id):
 def not_found(error):
     """
     Returns 404: Not Found
+
+    Args:
+        error: error
     """
     return jsonify({'error': 'Not found'}), 404
 
@@ -103,5 +115,8 @@ def not_found(error):
 def bad_request(error):
     """
     Return Bad Request message
+
+    Args:
+        error: error
     """
     return jsonify({'error': 'Bad Request'}), 400
