@@ -65,10 +65,11 @@ class DBStorage:
             cls (any): class
             id (str): string representing the object ID
         """
-        all_objs = self.all(cls)
-        for obj in all_objs.values():
-            if id == str(obj.id):
-                return obj
+        if cls in classes.values() and id and type(id) == str:
+            all_objs = self.all(cls)
+            for key, value in all_objs.items():
+                if key.split(".")[1] == id:
+                    return value
         return None
 
     def count(self, cls=None):
@@ -77,7 +78,10 @@ class DBStorage:
         Args:
             cls (any): class
         """
-        return len(self.all(cls))
+        allobj = self.all(cls)
+        if cls in classes.values():
+            allobj = self.all(cls)
+        return len(allobj)
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
