@@ -76,9 +76,8 @@ def update_state(state_id):
         return make_response(jsonify({"error":  "Not a JSON"}), 400)
 
     for key, value in data.items():
-        if key == 'id' or key == 'created_at' or key == 'updated_at':
-            continue
-        setattr(stat, key, value)
+        if key not in {'id', 'created_at', 'updated_at'}:
+            setattr(stat, key, value)
     storage.save()
     stat = stat.to_dict()
 
