@@ -3,18 +3,20 @@
 Contains the class DBStorage
 """
 
-import models
+
 from models.amenity import Amenity
-from models.base_model import BaseModel, Base
+from models.base_model import Base, BaseModel
 from models.city import City
+from sqlalchemy import create_engine
+from os import getenv
+import models
 from models.place import Place
 from models.review import Review
+from sqlalchemy.orm import scoped_session, sessionmaker
+import sqlalchemy
 from models.state import State
 from models.user import User
-from os import getenv
-import sqlalchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
+
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -34,10 +36,10 @@ class DBStorage:
         HBNB_ENV = getenv('HBNB_ENV')
         self.__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.format(
-                                                HBNB_MYSQL_USER,
-                                                HBNB_MYSQL_PWD,
-                                                HBNB_MYSQL_HOST,
-                                                HBNB_MYSQL_DB))
+                HBNB_MYSQL_USER,
+                HBNB_MYSQL_PWD,
+                HBNB_MYSQL_HOST,
+                HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
@@ -50,7 +52,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+                    return (new_dict)
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -66,11 +68,11 @@ class DBStorage:
         for obj in all.values():
             if obj.id == id:
                 return obj
-        return None
+            return None
 
     def count(self, cls=None):
         """Returns the number of objects in storage matching the given class
-            counts all if no class is given"""
+        counts all if no class is given"""
         all = self.all(cls)
         total = len(all)
         return total
