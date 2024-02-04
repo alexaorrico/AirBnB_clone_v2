@@ -6,7 +6,7 @@ from models.user import User
 from models.amenity import Amenity
 from models.state import State
 from models import storage
-from app import app
+from api.v1.app import app
 from flask import Response
 
 class TestPlaceAppViews(unittest.TestCase):

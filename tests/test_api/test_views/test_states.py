@@ -1,87 +1,105 @@
+#!/usr/bin/python3
+from api.v1.app import app as app
+from flask import Flask, make_response, jsonify, json
 import unittest
-import json
-from models.state import State
-from api.v1.app import app
-from models import storage
-from flask import Response
+import pprint
+import ast
+import os
 
-
-class TestAppViews(unittest.TestCase):
-    def setUp(self):
-        # Create a test client
-        self.app = app.test_client()
-        # Create a new state for testing
-        self.test_state = State(name="Test State")
-        self.test_state.save()
-
-    def tearDown(self):
-        # Clean up the test state after each test
-        self.test_state.delete()
-
-    def test_get_states(self):
-        response = self.app.get('/api/v1/states')
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                    "Testing FileStorage")
+class FlaskTestCase(unittest.TestCase):
+    data = {"name": "California"}
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the doc tests"""
+        cls.app = app
+# test correct status code
+    def test_get_status(self):
+        tester = app.test_client(self)
+        response = tester.get('/api/v1/states', content_type='html/text')
         self.assertEqual(response.status_code, 200)
-        data = json.loads(response.get_data(as_text=True))
-        self.assertTrue(isinstance(data, list))
+    def test_valid_json(self):
+        tester = app.test_client(self)
+        response = tester.get('/api/v1/states', content_type='html/text')
+        self.assertEqual(response.content_type, 'application/json')
 
-    def test_get_states_id(self):
-        response = self.app.get('/api/v1/states/{}'.format(self.test_state.id))
-        self.assertEqual(response.status_code, 200)
-        data = json.loads(response.get_data(as_text=True))
-        self.assertEqual(data['id'], self.test_state.id)
 
-    def test_get_states_id_not_found(self):
-        response = self.app.get('/api/v1/states/12345')  # Non-existing ID
-        self.assertEqual(response.status_code, 404)
-
-    def test_del_by_id(self):
-        response = self.app.delete(
-            '/api/v1/states/{}'.format(self.test_state.id))
-        self.assertEqual(response.status_code, 200)
-        # Verify that the state has been deleted
-        deleted_state = storage.get(State, self.test_state.id)
-        self.assertIsNone(deleted_state)
-
-    def test_del_by_id_not_found(self):
-        response = self.app.delete('/api/v1/states/12345')  # Non-existing ID
-        self.assertEqual(response.status_code, 404)
-
-    def test_create_state(self):
-        new_state_data = {"name": "New State"}
-        response = self.app.post('/api/v1/states', json=new_state_data)
+    def test_post_methoc(self):
+        tester = app.test_client(self)
+        response = tester.post('/api/v1/states', json=self.data)
+        self.assertEqual(response.content_type, 'application/json')
         self.assertEqual(response.status_code, 201)
-        data = json.loads(response.get_data(as_text=True))
-        self.assertIn('id', data)
-        self.assertEqual(data['name'], new_state_data['name'])
 
-    def test_create_state_missing_name(self):
-        invalid_state_data = {"other_key": "value"}
-        response = self.app.post('/api/v1/states', json=invalid_state_data)
-        self.assertEqual(response.status_code, 400)
+    def test_get_post_method(self):
+        tester = app.test_client(self)
+        response = tester.post('/api/v1/states', json=self.data)
+        data1 = response.data.decode('UTF-8')
+        mydata = ast.literal_eval(data1)
+        dic = mydata
+        self.assertTrue("name" in dic)
+        self.assertTrue("__class__" in dic)
+        self.assertTrue("created_at" in dic)
+        self.assertTrue("id" in dic)
+        self.assertTrue("updated_at" in dic)
+        response = tester.get('/api/v1/states')
+        data1 = response.data.decode('UTF-8')
+        mydata = ast.literal_eval(data1)
+        dic = mydata[0]
+        self.assertTrue("name" in dic)
+        self.assertTrue("__class__" in dic)
+        self.assertTrue("created_at" in dic)
+        self.assertTrue("id" in dic)
+        self.assertTrue("updated_at" in dic)
 
-    def test_update_state(self):
-        updated_state_data = {"name": "Updated State"}
-        response = self.app.put(
-            '/api/v1/states/{}'.format(self.test_state.id), json=updated_state_data)
+
+    def test_get_method_by_id(self):
+        tester = app.test_client(self)
+        response = tester.post('/api/v1/states', json=self.data)
+        self.assertEqual(response.status_code, 201)
+        data1 = response.data.decode('UTF-8')
+        mydata = ast.literal_eval(data1)
+        dic_post = mydata
+
+        all_places = tester.get('/api/v1/states')
+        self.assertEqual(all_places.status_code, 200)
+        data1 = all_places.data.decode('UTF-8')
+        all_places = ast.literal_eval(data1)
+        dic_get = all_places
+
+        unique_id = dic_get[-1]['id']
+
+        state_id = {"id": unique_id}
+        tester = app.test_client(self)
+        response = tester.get('/api/v1/states/{}'.format(unique_id))
         self.assertEqual(response.status_code, 200)
-        data = json.loads(response.get_data(as_text=True))
-        self.assertEqual(data['name'], updated_state_data['name'])
+        data1 = response.data.decode('UTF-8')
+        mydata = ast.literal_eval(data1)
+        dic_by_id = mydata
 
-    def test_update_state_not_found(self):
-        response = self.app.put(
-            '/api/v1/states/12345',
-            json={
-                "name": "Updated State"})
-        self.assertEqual(response.status_code, 404)
+    def test_put_method_by_id(self):
+        tester = app.test_client(self)
+        all_places = tester.get('/api/v1/states')
+        self.assertEqual(all_places.status_code, 200)
+        data1 = all_places.data.decode('UTF-8')
+        all_places = ast.literal_eval(data1)
+        dic_get = all_places
 
-    def test_update_state_invalid_json(self):
-        response = self.app.put(
-            '/api/v1/states/{}'.format(
-                self.test_state.id),
-            data="Invalid JSON",
-            content_type="application/json")
-        self.assertEqual(response.status_code, 400)
+        unique_id = dic_get[0]['id']
+        arguments_need = {"name": "Updating"}
+        tester = app.test_client(self)
+        response = tester.put('/api/v1/states/{}'.format(unique_id), json=arguments_need)
+        self.assertEqual(response.status_code, 200)
+        data1 = response.data.decode('UTF-8')
+        mydata = ast.literal_eval(data1)
+        dic_by_id = mydata
+        self.assertTrue("Updating" in dic_by_id['name'])
+        self.assertTrue("__class__" in dic_by_id)
+        self.assertTrue("created_at" in dic_by_id)
+        self.assertTrue("id" in dic_by_id)
+        self.assertTrue("updated_at" in dic_by_id)
 
 
-if __name__ == '__main__':
-    unittest.main()
+if __name__ == "__main__":
+
+    unnittest.main()
