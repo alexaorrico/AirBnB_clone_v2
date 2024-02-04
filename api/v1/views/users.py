@@ -4,7 +4,8 @@ Module for User views in version 1 of the API.
 """
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
-from models import storage, User
+from models import storage
+from models.user import User
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
