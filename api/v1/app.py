@@ -17,13 +17,13 @@ cors = CORS(app, resources={r"/api/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def close_db(obj):
-    """ calls methods close() """
+    """ close() """
     storage.close()
 
 
 @app.errorhandler(404)
 def page_not_foun(error):
-    """ Loads a custom 404 page not found """
+    """ 404 page not found """
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
