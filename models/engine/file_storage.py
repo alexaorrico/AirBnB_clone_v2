@@ -82,8 +82,10 @@ class FileStorage:
         return c
 
     def get(self, cls, id):
-        '''this method returns a single obj and if not found returns None'''
+        '''this def returns a single obj if present'''
         if cls is not None:
-            key = cls.__name__ + '.' + id
-            return self.all()[key]
+            ob = self.all(cls)
+            for k, v in ob.items():
+                if k.split('.')[1] == id:
+                    return v
         return None
