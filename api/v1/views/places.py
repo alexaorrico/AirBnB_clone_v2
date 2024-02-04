@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" This module contains a blue print for a restful API that
+"""This module contains a blue print for a restful API that
     works for place objects
 """
 
@@ -17,7 +17,7 @@ from models.city import City
         methods=['GET', 'POST'], strict_slashes=False
         )
 def post_get_place_obj(city_id):
-    """ This function contains two http method handler
+    """This function contains two http method handler
 
         GET:
             return the all place objects related to the city_id
@@ -60,7 +60,7 @@ def post_get_place_obj(city_id):
         strict_slashes=False
         )
 def delete_put_get_place_obj(place_id):
-    """ This function contains three http method handler
+    """This function contains three http method handler
 
     GET:
         return the place with the respective place_id

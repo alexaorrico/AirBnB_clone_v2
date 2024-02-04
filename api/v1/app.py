@@ -24,7 +24,7 @@ def page_not_found(error):
 
 
 if __name__ == "__main__":
-    """ Execute the following line if not imported """
-    host = os.getenv("HBNB_API_HOST", "0.0.0.0")
-    port = os.getenv("HBNB_API_PORT", 5000)
-    app.run(host=host, port=port, threaded=True)
+    """Execute the following line if not imported"""
+    HOST = os.getenv("HBNB_API_HOST", "0.0.0.0")
+    PORT = os.getenv("HBNB_API_PORT", 5000)
+    app.run(host=HOST, port=PORT, threaded=True)
