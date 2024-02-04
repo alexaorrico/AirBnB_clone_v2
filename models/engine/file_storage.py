@@ -35,15 +35,21 @@ class FileStorage:
         return self.__objects
 
     def get(self, cls, id):
-        """method to retrieve objects"""
-        all_class = self.all(cls)
-
-        for obj in all_class.values():
-            if id == str(obj.id):
-                return obj
+        """Returns the object based on the class and ID"""
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls is None:
+            return None
+        for item in self.__objects.values():
+            if item.__class__ == cls and item.id == id:
+                return item
 
     def count(self, cls=None):
-        """A method to count instances"""
+        """Returns the number of objects in the passed class storage"""
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls is None:
+            return len(self.all())
         return len(self.all(cls))
 
     def new(self, obj):
