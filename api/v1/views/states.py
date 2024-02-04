@@ -54,9 +54,9 @@ def add_state():
     """
     data = request.get_json(silent=True)
     if not data:
-        return 'Not a JSON', 400
+        abort(400,'Not a JSON')
     if 'name' not in data:
-        return "Missing name", 400
+        abort(400,"Missing name")
 
     name = data['name']
     new_state = State(name=name)
@@ -73,7 +73,7 @@ def update_state(state_id):
     if state:
         data = request.get_json(silent=True)
         if not data:
-            return "Not a JSON", 400
+            abort(400,"Not a JSON")
         keys_to_ignore = ["created_at", "id", "updated_at"]
         for k, v in data.items():
             if k not in keys_to_ignore:
