@@ -42,12 +42,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """Returns an object based on the class and its id"""
-        cls_objs = []
-        if cls in classes:
-            cls_objs =  self.__session.query(classes[cls]).all()
-        for obj in cls_objs:
-            if (obj.id == id):
-                return obj
+        cls_objs = models.storage.all(cls)
+        for key, value in cls_objs.items():
+            if value.id == id:
+                return value
         return None
 
     def count(self, cls=None):

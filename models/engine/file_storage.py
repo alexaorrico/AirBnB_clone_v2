@@ -27,12 +27,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """Returns an object based on the class and its id"""
-        objs = []
-        if cls in classes:
-            objs = models.storage.all(cls)
-        for obj in objs:
-            if (obj.id == id):
-                return val
+        cls_objs = models.storage.all(cls)
+        for key, value in cls_objs.items():
+            if value.id == id:
+                return value
         return None
 
     def count(self, cls=None):
