@@ -22,4 +22,4 @@ class CustomTestRunner(unittest.TextTestResult):
 
 
 if __name__ == '__main__':
-    unittest.main(testRunner=CustomTestRunner)
+    unittest.main(testRunner=unittest.TextTestRunner(verbosity=2))
