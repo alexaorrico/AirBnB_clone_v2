@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" This module contains a web app """
+""" This module contains route for status of the api
+    and statistic of all classes
+"""
 
 from api.v1.views import app_views
 from flask import jsonify
@@ -14,7 +16,7 @@ from models.city import City
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """ return the status of the request """
+    """ return the status of the API """
     return jsonify({"status": "OK"})
 
 
