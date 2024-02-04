@@ -91,7 +91,8 @@ class FileStorage:
         If no class is passed, returns the count of all objects in storage.
 
         Args:
-            cls (class, optional): _description_. Defaults to None.
+            cls (class, optional): type of objects to count.
+            Defaults to None. which returns count objects in storage
         """
 
         return len(self.all(cls))
