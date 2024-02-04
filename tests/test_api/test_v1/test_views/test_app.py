@@ -22,7 +22,7 @@ class TestStatus(unittest.TestCase):
         self.client = app.test_client()
 
     def tearDown(self):
-        """Tear down context """
+        """Tear down app context """
         self.ctx.pop()
 
     def test_status_ok(self):
