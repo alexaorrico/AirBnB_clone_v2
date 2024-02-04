@@ -47,15 +47,13 @@ def create_review(place_id):  # Create a review about a place
         abort(400, description="Not a JSON")
     if "user_id" not in data:
         abort(400, description="Missing user_id")
-    if "name" not in data:
-        abort(400, description="Missing name")
     if "text" not in data:
         abort(400, description="Missing text")
     user = storage.get(User, data.get('user_id'))
     if not user:
         abort(404)
+    data["place_id"] = place_id
     new_review = Review(**data)
-    new_review.place_id = place_id
     new_review.save()
     return make_response(jsonify(new_review.to_dict()), 201)
 
