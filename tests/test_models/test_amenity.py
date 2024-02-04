@@ -6,9 +6,7 @@ Contains the TestAmenityDocs classes
 import inspect
 import unittest
 from datetime import datetime
-
 import pep8
-
 import models
 from models import amenity
 from models.base_model import BaseModel
@@ -42,19 +40,24 @@ class TestAmenityDocs(unittest.TestCase):
 
     def test_amenity_module_docstring(self):
         """Test for the amenity.py module docstring"""
-        self.assertIsNot(amenity.__doc__, None, "amenity.py needs a docstring")
-        self.assertTrue(len(amenity.__doc__) >= 1, "amenity.py needs a docstring")
+        self.assertIsNot(amenity.__doc__, None,
+                         "amenity.py needs a docstring")
+        self.assertTrue(len(amenity.__doc__) >= 1,
+                        "amenity.py needs a docstring")
 
     def test_amenity_class_docstring(self):
         """Test for the Amenity class docstring"""
-        self.assertIsNot(Amenity.__doc__, None, "Amenity class needs a docstring")
-        self.assertTrue(len(Amenity.__doc__) >= 1, "Amenity class needs a docstring")
+        self.assertIsNot(Amenity.__doc__, None,
+                         "Amenity class needs a docstring")
+        self.assertTrue(len(Amenity.__doc__) >= 1,
+                        "Amenity class needs a docstring")
 
     def test_amenity_func_docstrings(self):
         """Test for the presence of docstrings in Amenity methods"""
         for func in self.amenity_f:
             self.assertIsNot(
-                func[1].__doc__, None, "{:s} method needs a docstring".format(func[0])
+                func[1].__doc__, None,
+                "{:s} method needs a docstring".format(func[0])
             )
             self.assertTrue(
                 len(func[1].__doc__) >= 1,
