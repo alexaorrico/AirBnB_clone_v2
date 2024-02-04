@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -27,8 +28,17 @@ class TestDBStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of DBStorage class"""
     @classmethod
     def setUpClass(cls):
-        """Set up for the doc tests"""
-        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+        """Set up for DBStorage tests."""
+        super(TestDBStorageDocs, cls).setUpClass()
+        if type(storage).__name__ == 'FileStorage':
+            cls.skipTest(cls, "DBStorage tests skipped, FileStorage is in use")
+
+    def setUp(self):
+        """Skip or adapt setup if using FileStorage."""
+        if type(storage).__name__ == 'DBStorage':
+            self.session = storage._DBStorage__session
+        else:
+            self.skipTest("DBStorage specific tests")
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
@@ -66,11 +76,6 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
-
-        @classmethod
-    def setUpClass(cls):
-        """Prepares the test environment before the tests start."""
-        storage.reload()
 
     @classmethod
     def tearDownClass(cls):
