@@ -80,7 +80,7 @@ class DBStorage:
         for obj in all.values():
             if obj.id == id:
                 return obj
-            return None
+        return None
 
     def count(self, cls=None):
         """
