@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-"""This module contain a web application"""
+"""This module contain a web application for the airbnb
+    website
+"""
 
 from flask import Flask, jsonify
 app = Flask(__name__)
 from models import storage
 from api.v1.views import app_views
+import os
 app.register_blueprint(app_views)
 
 
@@ -21,6 +24,7 @@ def page_not_found(error):
 
 
 if __name__ == "__main__":
-    host = "0.0.0.0"
-    port = 5000
+    """ Execute the following line if not imported """
+    host = os.getenv("HBNB_API_HOST")
+    port = os.getenv("HBNB_API_PORT")
     app.run(host=host, port=port, threaded=True)
