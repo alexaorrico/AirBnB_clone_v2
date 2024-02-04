@@ -23,7 +23,8 @@ def list_cities(state_id):
             abort(400, description="Not a JSON")
         if "name" not in json_data.keys():
             abort(400, description="Missing name")
-        state_object.cities.append(City(**json_data))
+        new_city_object = City(**json_data)
+        storage.new(new_city_object)
         storage.save()
         return make_response(jsonify(json_data), 201)
 
