@@ -47,16 +47,15 @@ def del_by_id(state_id):
                  strict_slashes=False)
 def create_state():
     '''creates a State obj'''
-    try:
-        data = request.get_json()
-    except Exception:
+    data = request.get_json()
+    if not data:
         return make_response(jsonify({"error":  "Not a JSON"}), 400)
-
-    if 'name' not in data:
+    elif 'name' not in data:
         return make_response(jsonify({"error": "Missing name"}), 400)
 
     create = State(**data)
-    create.save()
+    storage.new(create)
+    storage.save()
     create = create.to_dict()
     return jsonify(create), 201
 
@@ -70,9 +69,9 @@ def update_state(state_id):
     if stat is None:
         abort(404)
 
-    try:
-        data = request.get_json()
-    except Exception:
+    data = request.get_json()
+
+    if not data:
         return make_response(jsonify({"error":  "Not a JSON"}), 400)
 
     for key, value in data.items():
