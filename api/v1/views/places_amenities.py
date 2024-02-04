@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Module for handling RESTful API actions for the link between Place and Amenity objects.
+Module for handling RESTful API actions for
+the link between Place and Amenity objects.
 """
 
 from flask import Flask, jsonify, abort, request
@@ -19,13 +20,13 @@ def get_place_amenities(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404, description=f"Place with ID {place_id} not found")
-    
+
     if storage.__class__.__name__ == 'DBStorage':
         amenities = place.amenities
     elif storage.__class__.__name__ == 'FileStorage':
-        amenities = [amenity.to_dict() for amenity in storage.all(Amenity).values()
-                      if amenity.id in place.amenity_ids]
-
+        amenities = [amenity.to_dict()
+                     for amenity in storage.all(Amenity).values()
+                     if amenity.id in place.amenity_ids]
     return jsonify(amenities)
 
 
@@ -45,12 +46,14 @@ def delete_place_amenity(place_id, amenity_id):
 
     if storage.__class__.__name__ == 'DBStorage':
         if amenity not in place.amenities:
-            abort(404, description=f"Amenity with ID {amenity_id} not linked to Place with ID {place_id}")
+            abort(404, description=f"Amenity with ID {amenity_id}\
+                  not linked to Place with ID {place_id}")
         place.amenities.remove(amenity)
         storage.save()
     elif storage.__class__.__name__ == 'FileStorage':
         if amenity.id not in place.amenity_ids:
-            abort(404, description=f"Amenity with ID {amenity_id} not linked to Place with ID {place_id}")
+            abort(404, description=f"Amenity with ID {amenity_id}\
+                  not linked to Place with ID {place_id}")
         place.amenity_ids.remove(amenity.id)
         storage.save()
 
