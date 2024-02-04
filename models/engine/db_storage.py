@@ -84,10 +84,12 @@ class DBStorage:
             id (int): id of the class instance
             cls (obj): class object_
         """
-        if cls is None or id is None:
-            return None
-        if cls:
-            return self.__session.query(cls).get(id)
+        if cls in classes.values() and id and type(id) is str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
 
     def count(self, cls=None):
         """ Returns the number of objects in storage
