@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from flask import abort, jsonify, request
-from models.__init__ import City, State
+from models import City, State
 from api.v1.views import app_views
 
 #Retrive handle
