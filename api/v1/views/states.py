@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-handles RESTFul API actions for states
+Handles RESTFul API actions for states
 """
 
 from api.v1.views import app_views
@@ -9,7 +9,9 @@ from models import storage
 
 @app_views.route("/states", strict_slashes=False)
 def all_states():
-    """Returns list of all states"""
+    """
+    Returns list of all states
+    """
     states = storage.all("State")
     list_states = []
     for state in states.values():
