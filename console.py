@@ -46,10 +46,10 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     try:
                         value = int(value)
-                    except:
+                    except Exception as e:
                         try:
                             value = float(value)
-                        except:
+                        except Exception as e:
                             continue
                 new_dict[key] = value
         return new_dict
@@ -60,14 +60,21 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return False
-        if args[0] in classes:
+
+        class_name = args[0]
+        if class_name in classes:
             new_dict = self._key_value_parser(args[1:])
-            instance = classes[args[0]](**new_dict)
+        
+            # Set a default value for 'name' if not provided
+            if 'name' not in new_dict:
+                new_dict['name'] = 'DefaultName'
+
+            instance = classes[class_name](**new_dict)
+            print(instance.id)
+            instance.save()
         else:
             print("** class doesn't exist **")
             return False
-        print(instance.id)
-        instance.save()
 
     def do_show(self, arg):
         """Prints an instance as a string based on the class and id"""
@@ -140,12 +147,12 @@ class HBNBCommand(cmd.Cmd):
                                 if args[2] in integers:
                                     try:
                                         args[3] = int(args[3])
-                                    except:
+                                    except Exception as e:
                                         args[3] = 0
                                 elif args[2] in floats:
                                     try:
                                         args[3] = float(args[3])
-                                    except:
+                                    except Exception as e:
                                         args[3] = 0.0
                             setattr(models.storage.all()[k], args[2], args[3])
                             models.storage.all()[k].save()
@@ -159,6 +166,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
