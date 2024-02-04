@@ -1,70 +1,72 @@
 #!/usr/bin/python3
-'''Contains the states view for the API.'''
-from flask import abort, jsonify, make_response, request
+"""states"""
 from api.v1.views import app_views
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
+from datetime import datetime
+import uuid
 
-# Retrieves the list of all State objects: GET /api/v1/states
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
-def state():
-    """Retrieves the list of all State objects"""
-    objs = storage.all(State)
-    return jsonify([obj.to_dict() for obj in objs.values()])
 
-# Retrieves a State object: GET /api/v1/states/<state_id>
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def single_state(state_id):
-    """Retrieves a State object"""
-    obj = storage.get(State, state_id)
-    if not obj:
+@app_views.route('/states/', methods=['GET'])
+def list_states():
+    '''Retrieves a list of all State objects'''
+    list_states = [obj.to_dict() for obj in storage.all("State").values()]
+    return jsonify(list_states)
+
+
+@app_views.route('/states/<state_id>', methods=['GET'])
+def get_state(state_id):
+    '''Retrieves a State object'''
+    all_states = storage.all("State").values()
+    state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
+    if state_obj == []:
         abort(404)
-    return jsonify(obj.to_dict())
+    return jsonify(state_obj[0])
 
-# Deletes a State object:: DELETE /api/v1/states/<state_id>
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def del_state(state_id):
-    """Deletes a State object"""
-    obj = storage.get(State, state_id)
-    if not obj:
+
+@app_views.route('/states/<state_id>', methods=['DELETE'])
+def delete_state(state_id):
+    '''Deletes a State object'''
+    all_states = storage.all("State").values()
+    state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
+    if state_obj == []:
         abort(404)
-    obj.delete()
+    state_obj.remove(state_obj[0])
+    for obj in all_states:
+        if obj.id == state_id:
+            storage.delete(obj)
+            storage.save()
+    return jsonify({}), 200
+
+
+@app_views.route('/states/', methods=['POST'])
+def create_state():
+    '''Creates a State'''
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    if 'name' not in request.get_json():
+        abort(400, 'Missing name')
+    states = []
+    new_state = State(name=request.json['name'])
+    storage.new(new_state)
     storage.save()
-    return make_response(jsonify({}), 200)
-
-# Creates a State: POST /api/v1/states
-# You must use request.get_json from Flask to transform the HTTP body request to a dictionary
-# If the HTTP body request is not valid JSON, raise a 400 error with the message Not a JSON
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
-def post_state():
-    """Returns the new State with the status code 201"""
-    new_obj = request.get_json()
-    if not new_obj:
-        abort(400, "Not a JSON")
-    if 'name' not in new_obj:
-        abort(400, "Missing name")
-    obj = State(**new_obj)
-    storage.new(obj)
-    storage.save()
-    return make_response(jsonify(obj.to_dict()), 201)
+    states.append(new_state.to_dict())
+    return jsonify(states[0]), 201
 
 
-# Updates a State object: PUT /api/v1/states/<state_id>
-# If the state_id is not linked to any State object, raise a 404 error
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def put_state(state_id):
-    """ Updates a State object """
-    obj = storage.get(State, state_id)
-    if not obj:
+@app_views.route('/states/<state_id>', methods=['PUT'])
+def updates_state(state_id):
+    '''Updates a State object'''
+    all_states = storage.all("State").values()
+    state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
+    if state_obj == []:
         abort(404)
-
-    req = request.get_json()
-    if not req:
-        abort(400, "Not a JSON")
-
-    for k, v in req.items():
-        if k not in ['id', 'created_at', 'updated_at']:
-            setattr(obj, k, v)
-
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    state_obj[0]['name'] = request.json['name']
+    for obj in all_states:
+        if obj.id == state_id:
+            obj.name = request.json['name']
     storage.save()
-    return make_response(jsonify(obj.to_dict()), 200)
+    return jsonify(state_obj[0]), 200
