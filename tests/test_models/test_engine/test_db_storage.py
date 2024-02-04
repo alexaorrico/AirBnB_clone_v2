@@ -141,6 +141,7 @@ test_db_storage.py'])
         storage.delete(new_city)
         storage.delete(new_state)
         storage.save()
+
     def test_complex_query_with_filters(self):
         """Test complex queries with filters."""
         state1 = State(name="QueryState1")
@@ -161,7 +162,7 @@ test_db_storage.py'])
         storage.delete(state2)
         storage.save()
 
-def test_deletion_with_foreign_key(self):
+    def test_deletion_with_foreign_key(self):
         """Test that deleting a State also deletes its cities."""
         state = State(name="DeleteState")
         city = City(name="DeleteCity", state=state)
@@ -181,6 +182,7 @@ def test_deletion_with_foreign_key(self):
         self.assertEqual(state, result)
         storage.delete(state)
         storage.save()
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
