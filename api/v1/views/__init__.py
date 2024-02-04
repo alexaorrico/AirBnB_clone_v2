@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+create blueprint to be used across
+"""
 
 from flask import Blueprint
 
