@@ -14,9 +14,9 @@ from models.state import State
 def get_cities_of_state(state_id):
     """ get all cities of belongs to state_id"""
     state = storage.get(State, state_id)
-    json_obj = [c.to_dict() for c in state.cities]
     if not state:
         abort(404)
+    json_obj = [c.to_dict() for c in state.cities]
     return jsonify(json_obj)
 
 
