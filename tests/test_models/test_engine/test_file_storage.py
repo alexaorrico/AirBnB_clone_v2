@@ -65,7 +65,55 @@ test_file_storage.py'])
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+                    "{:s} method needs a docstring".format(func[0]))
+
+    def test_get_method(self):
+        """Test get method documentation."""
+        self.assertTrue(hasattr(FileStorage, 'get'))
+        self.assertTrue(isinstance(FileStorage.get.__doc__, str))
+
+    def test_count_method(self):
+        """Test count method documentation."""
+        self.assertTrue(hasattr(FileStorage, 'count'))
+        self.assertTrue(isinstance(FileStorage.count.__doc__, str))
+
+    def test_get_method_returns_object(self):
+        """Test get method returns the correct object."""
+        file_storage = FileStorage()
+        user = User()
+        user_id = user.id
+        file_storage.new(user)
+        retrieved_user = file_storage.get(User, user_id)
+        self.assertEqual(user, retrieved_user)
+
+    def test_get_method_returns_none_if_not_found(self):
+        """Test get method returns None if object is not found."""
+        file_storage = FileStorage()
+        non_existent_user = file_storage.get(User, "non_existent_id")
+        self.assertIsNone(non_existent_user)
+
+    def test_count_method_counts_all_objects(self):
+        """Test count method counts all objects."""
+        file_storage = FileStorage()
+        user1 = User()
+        user2 = User()
+        file_storage.new(user1)
+        file_storage.new(user2)
+        total_objects = file_storage.count()
+        self.assertEqual(total_objects, 2)
+
+    def test_count_method_counts_objects_of_specific_class(self):
+        """Test count method counts objects of a specific class."""
+        file_storage = FileStorage()
+        user = User()
+        amenity = Amenity()
+        file_storage.new(user)
+        file_storage.new(amenity)
+        user_count = file_storage.count(User)
+        amenity_count = file_storage.count(Amenity)
+        self.assertEqual(user_count, 1)
+        self.assertEqual(amenity_count, 1)
+
 
 
 class TestFileStorage(unittest.TestCase):
