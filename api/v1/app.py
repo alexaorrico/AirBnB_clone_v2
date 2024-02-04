@@ -2,17 +2,25 @@
 """The main app to run from."""
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-# @app.teardown_appcontext
-# def close(exception=None):
-#     """close session at the end"""
-#     storage.close()
+
+@app.errorhandler(404)
+def not_found(error):
+    """Response for page not found"""
+    return jsonify({"error": "Not found"}), 404
+
+
+@app.teardown_appcontext
+def close(exception=None):
+    """close session at the end"""
+    storage.close()
+
 
 if __name__ == '__main__':
     host = getenv('HBNB_API_HOST')
