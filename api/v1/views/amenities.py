@@ -27,7 +27,7 @@ def post_get_amenity_obj():
         return jsonify(amenity_list)
     elif request.method == 'POST':
         amenity_dict = request.get_json()
-        if not amenity_dict 
+        if not amenity_dict:
             abort(400, description="Not a JSON")
         if "name" not in amenity_dict:
             abort(400, description="Missing name")

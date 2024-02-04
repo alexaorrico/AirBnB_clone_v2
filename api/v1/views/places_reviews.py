@@ -38,7 +38,7 @@ def post_get_review_obj(place_id):
             abort(404)
     elif request.method == 'POST':
         review_dict = request.get_json()
-        if not review_dict
+        if not review_dict:
             abort(400, description="Not a JSON")
         if "text" not in review_dict:
             abort(400, description="Missing text")

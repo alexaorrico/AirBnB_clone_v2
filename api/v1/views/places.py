@@ -37,7 +37,7 @@ def post_get_place_obj(city_id):
             abort(404)
     elif request.method == 'POST':
         places_dict = request.get_json()
-        if not places_dict
+        if not places_dict:
             abort(400, description="Not a JSON")
         if "name" not in places_dict:
             abort(400, description="Missing name")
