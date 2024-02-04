@@ -77,6 +77,7 @@ def update_state(state_id):
     for key, value in data.items():
         if key not in {'id', 'created_at', 'updated_at'}:
             setattr(stat, key, value)
+    storage.new(stat)
     storage.save()
     stat = stat.to_dict()
 
