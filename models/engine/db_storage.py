@@ -1,6 +1,23 @@
 #!/usr/bin/python3
 """
 Contains the class DBStorage
+Update DBStorage adding two new methods
+A method to retrieve one object:
+
+Prototype: def get(self, cls, id):
+cls: class
+id: string representing the object ID
+Returns the object based on the class and its
+ID, or None if not found
+
+A method to count the number of objects in storage:
+
+Prototype: def count(self, cls=None):
+cls: class (optional)
+Returns the number of objects in storage matching the
+given class. If no class is passed, returns the count
+of all objects in storage.
+
 """
 
 import models
@@ -74,3 +91,19 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """returns the object based on the class and its ID"""
+        if cls not in classes.values():
+            return None
+        for obj in self.all(cls).values():
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """count the number of objects in storage"""
+        if cls is None:
+            return len(self.all())
+        else:
+            return len(self.all(cls))
