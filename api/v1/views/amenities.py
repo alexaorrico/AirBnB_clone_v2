@@ -1,82 +1,115 @@
 #!/usr/bin/python3
-""" objects that handle all default RestFul API actions for Place - Amenity """
-from models.place import Place
+''' Creates a view for Amenity objects - handles all default RESTful API actions.
+'''
+# Import necessary modules
+from flask import abort, jsonify, request
 from models.amenity import Amenity
-from models import storage
 from api.v1.views import app_views
-from os import environ
-from flask import abort, jsonify, make_response, request
-from flasgger.utils import swag_from
+from models import storage
 
 
-@app_views.route('places/<place_id>/amenities', methods=['GET'],
-                 strict_slashes=False)
-@swag_from('documentation/place_amenity/get_places_amenities.yml',
-           methods=['GET'])
-def get_places_amenities(place_id):
-    """
-Retrieves the list of all Amenity objects of a Place
-    """
-    place = storage.get(Place, place_id)
-    if not place:
-        abort(404)
-    if environ.get('HBNB_TYPE_STORAGE') == "db":
-        amenities = [amenity.to_dict() for amenity in place.amenities]
-    else:
-        amenities = [storage.get(Amenity, amenity_id).to_dict()
-                     for amenity_id in place.amenity_ids]
-    return jsonify(amenities)
+# Route for retrieving all Amenity objects
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
+def get_all_amenities():
+    '''Retrieves the list of all Amenity objects'''
+    # Get all Amenity objects from the storage
+    amenities = storage.all(Amenity).values()
+    # Convert objects to dictionaries and jsonify the list
+    return jsonify([amenity.to_dict() for amenity in amenities])
 
 
-@app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                 methods=['DELETE'], strict_slashes=False)
-@swag_from('documentation/place_amenity/delete_place_amenities.yml',
-           methods=['DELETE'])
-def delete_places_amenity(place_id, amenity_id):
-    """
-Deletes a Amenity object of a Place
-"""
-    place = storage.get(Place, place_id)
-    if not place:
-        abort(404)
+# Route for retrieving a specific Amenity object by ID
+@app_views.route('/amenities/<amenity_id>',
+methods=['GET'], strict_slashes=False)
+def get_amenity(amenity_id):
+    '''Retrieves an Amenity object'''
+    # Get the Amenity object with the given ID from the storage
     amenity = storage.get(Amenity, amenity_id)
-    if not amenity:
-        abort(404)
-    if environ.get('HBNB_TYPE_STORAGE') == "db":
-        if amenity not in place.amenities:
-            abort(404)
-        place.amenities.remove(amenity)
+    if amenity:
+        # Return the Amenity object in JSON format
+        return jsonify(amenity.to_dict())
     else:
-        if amenity_id not in place.amenity_ids:
-            abort(404)
-        place.amenity_ids.remove(amenity_id)
-    storage.save()
-    return make_response(jsonify({}), 200)
-
-
-@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['POST'],
-                 strict_slashes=False)
-@swag_from('documentation/place_amenity/post_place_amenities.yml',
-           methods=['POST'])
-def post_places_amenity(place_id, amenity_id):
-    """
-Link a Amenity object to a Place
-    """
-    place = storage.get(Place, place_id)
-    if not place:
+        # Return 404 error if the Amenity object is not found
         abort(404)
+
+
+# Route for deleting a specific Amenity object by ID
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'])
+def delete_amenity(amenity_id):
+    '''Deletes an Amenity object'''
+    # Get the Amenity object with the given ID from the storage
     amenity = storage.get(Amenity, amenity_id)
-    if not amenity:
-        abort(404)
-    if environ.get('HBNB_TYPE_STORAGE') == "db":
-        if amenity in place.amenities:
-            return make_response(jsonify(amenity.to_dict()), 200)
-        else:
-            place.amenities.append(amenity)
+    if amenity:
+        # Delete the Amenity object from the storage and save changes
+        storage.delete(amenity)
+        storage.save()
+    # Return an empty JSON with 200 status code
+        return jsonify({}), 200
     else:
-        if amenity_id in place.amenity_ids:
-            return make_response(jsonify(amenity.to_dict()), 200)
-        else:
-            place.amenity_ids.append(amenity_id)
-    storage.save()
-    return make_response(jsonify(amenity.to_dict()), 201)
+    # Return 404 error if the Amenity object is not found
+        abort(404)
+
+
+# Route for creating a new Amenity object
+@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+def create_amenity():
+    '''Creates an Amenity object'''
+    if not request.get_json():
+        # Return 400 error if the request data is not in JSON format
+        abort(400, 'Not a JSON')
+    # Get the JSON data from the request
+    data = request.get_json()
+    if 'name' not in data:
+# Return 400 error if 'name' key is missing in the JSON data
+        abort(400, 'Missing name')
+    # Create a new Amenity object with the JSON data
+    amenity = Amenity(**data)
+    # Save the Amenity object to the storage
+    amenity.save()
+    # Return the newly created Amenity
+    # object in JSON format with 201 status code
+    return jsonify(amenity.to_dict()), 201
+
+
+# Route for updating an existing Amenity object by ID
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+strict_slashes=False)
+def update_amenity(amenity_id):
+    '''Updates an Amenity object'''
+    # Get the Amenity object with the given ID from the storage
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity:
+        # Return 400 error if the request data is not in JSON format
+        if not request.get_json():
+            abort(400, 'Not a JSON')
+        # Get the JSON data from the request
+        data = request.get_json()
+        ignore_keys = ['id', 'created_at', 'updated_at']
+        # Update the attributes of the Amenity object with the JSON data
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(amenity, key, value)
+                # Save the updated Amenity object to the storage
+            amenity.save()
+            # Return the updated Amenity object in JSON format with 200 status code
+            return jsonify(amenity.to_dict()), 200
+    else:
+        # Return 404 error if the Amenity object is not found
+        abort(404)
+
+
+# Error Handlers:
+@app_views.errorhandler(404)
+def not_found(error):
+    '''Returns 404: Not Found'''
+    # Return a JSON response for 404 error
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
+
+
+@app_views.errorhandler(400)
+def bad_request(error):
+    '''Return Bad Request message for illegal requests to the API.'''
+    # Return a JSON response for 400 error
+    response = {'error': 'Bad Request'}
+    return jsonify(response), 400
