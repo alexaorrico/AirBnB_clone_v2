@@ -73,3 +73,7 @@ class TestFileStorage(unittest.TestCase):
                 else:
                     obj_datetime = getattr(obj, k).strftime("%Y-%m-%dT%H:%M:%S.%f")
                     self.assertEqual(obj_datetime, v)
+
+
+if __name__ == "__main__":
+    unittest.main()
