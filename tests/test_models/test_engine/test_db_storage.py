@@ -8,7 +8,7 @@ import inspect
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
@@ -18,6 +18,9 @@ import json
 import os
 import pep8
 import unittest
+import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -70,10 +73,40 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
+    def setUp(self):
+        """set up our database for testing"""
+        # Create an in-memory SQLite database for testing
+        self.engine = create_engine('sqlite:///:memory:')
+        Base.metadata.create_all(self.engine)
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+        self.test_db_storage = DBStorage()
+        self.test_db_storage._DBStorage__session = self.session
+
+    def tearDown(self):
+        """Tear down the test envirenment"""
+        self.session.close_all()
+        Base.metadata.drop_all(self.engine)
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
+        # Create some test objects
+        amenity1 = Amenity(name='Swimming Pool')
+        amenity2 = Amenity(name='Gym')
+        self.test_db_storage.new(amenity1)
+        self.test_db_storage.new(amenity2)
+        self.test_db_storage.save()
+
         self.assertIs(type(models.storage.all()), dict)
+
+        # Call the all() method with Amenity class
+        result = self.test_db_storage.all(cls=Amenity)
+        # Check if the result is a dictionary and contains the expected objects
+        self.assertIsInstance(result, dict)
+        self.assertIn('Amenity.' + amenity1.id, result)
+        self.assertIn('Amenity.' + amenity2.id, result)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
@@ -86,3 +119,40 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get method gets the apropriate object for the id"""
+        s = State(name="Alabama")
+        self.test_db_storage.new(s)
+        s_get = self.test_db_storage.get(State, s.id)
+
+        self.assertIsInstance(s_get, State)
+        self.assertEqual(s, s_get)
+        self.assertEqual(s.id, s_get.id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_invalide(self):
+        """Test the invalide cases of get method"""
+        s = State(name="Alabama")
+        s_get = self.test_db_storage.get(None, s.id)
+        self.assertIsNone(s_get)
+        s_get = self.test_db_storage.get(State, None)
+        self.assertIsNone(s_get)
+        s_get = self.test_db_storage.get(State, "")
+        self.assertIsNone(s_get)
+        s_get = self.test_db_storage.get(State, "invalide_id")
+        self.assertIsNone(s_get)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """the count method to get the number of objects or all objects"""
+        count = self.test_db_storage.count()
+
+        count1 = self.test_db_storage.count(State)
+        s = State(name="Alabama")
+        self.test_db_storage.new(s)
+        count2 = self.test_db_storage.count(State)
+
+        self.assertEqual(count + 1, len(self.test_db_storage.all()))
+        self.assertEqual(count1 + 1, count2)

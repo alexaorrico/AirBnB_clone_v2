@@ -113,3 +113,44 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get method gets the apropriate object for the id"""
+        storage = FileStorage()
+        s = State()
+        storage.new(s)
+        s_get = storage.get(State, s.id)
+
+        self.assertIsInstance(s_get, State)
+        self.assertEqual(s, s_get)
+        self.assertEqual(s.id, s_get.id)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_invalide(self):
+        """Test the invalide cases of get method"""
+        storage = FileStorage()
+        s = State()
+        storage.new(s)
+        s_get = storage.get(None, s.id)
+        self.assertIsNone(s_get)
+        s_get = storage.get(State, None)
+        self.assertIsNone(s_get)
+        s_get = storage.get(State, "")
+        self.assertIsNone(s_get)
+        s_get = storage.get(State, "invalide_id")
+        self.assertIsNone(s_get)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """the count method to get the number of objects or all objects"""
+        storage = FileStorage()
+        count = storage.count()
+
+        count1 = storage.count(State)
+        s = State()
+        storage.new(s)
+        count2 = storage.count(State)
+
+        self.assertEqual(count + 1, len(storage.all()))
+        self.assertEqual(count1 + 1, count2)
