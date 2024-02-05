@@ -4,10 +4,10 @@ Handles RESTFul API actions for amenities
 """
 
 from flask import abort
+from models.amenity import Amenity
 from api.v1.views import app_views
 from flask import jsonify
 from flask import request
-from models.amenity import Amenity
 from models import storage
 
 
