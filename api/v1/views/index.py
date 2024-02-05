@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/status')
+@app_views.route('/status', strict_slashes=False)
 def view_status():
     """Show Ok status"""
     return jsonify({"status": "OK"})
