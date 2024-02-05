@@ -100,26 +100,30 @@ def places_search():
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
 
-    states = data.get("states", [])
-    cities = data.get("cities", [])
-    amenities = data.get("amenities", [])
+    states = data.get("states", None)
+    cities = data.get("cities", None)
+    amenities = data.get("amenities", None)
 
     places = []
 
     if not states and not cities and not amenities:
         places = [place.to_dict() for place in storage.all(Place).values()]
     else:
-        for state_id in states:
-            state = storage.get(State, state_id)
-            if state:
-                places.extend([place.to_dict() for city in state.cities
-                              for place in city.places])
-
-        for city_id in cities:
-            city = storage.get(City, city_id)
-            if city:
-                places.extend([place.to_dict() for place in city.places])
-
+        if states:
+            states_obj = [storage.get(State, s_id) for s_id in states]
+            for state in states_obj:
+                if state:
+                    for city in state.cities:
+                        if city:
+                            for plc in city.places:
+                                places.append(plc)
+        if cities:
+            city_obj = [storage.get(City, c_id) for c_id in cities]
+            for city in city_obj:
+                if city:
+                    for place in city.places:
+                        if plc not in list_places:
+                            places.append(plc)
     if amenities:
         amenities_set = set(amenities)
         places = [place for place in places
