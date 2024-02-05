@@ -73,6 +73,17 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """test that the get method works correctly"""
+        db_storage = DBStorage()
+        instance = State()
+        first_state_id = list(storage.all(State).values())[0].id
+        returned_instance = db_storage.get(State, id)
+        self.assertTrue(returned_instance.id == first_state_id)
+    
 
     def test_count(self):
         """test that count method works correctly"""
+        db_storage = DBStorage()
+        count_before = db_storage.count()
+        instance = State()
+        count_after = db_storage.count()
+        self.assertTrue(count_after - count_before == 1)
