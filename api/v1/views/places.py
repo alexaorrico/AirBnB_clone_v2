@@ -10,7 +10,8 @@ from models import storage
 
 @app_views.route('/places/<string:place_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
-@app_views.route('/places', strict_slashes=False, methods=['GET', 'POST'])
+@app_views.route('/cities/<string:city_id>/places', 
+                 strict_slashes=False, methods=['GET', 'POST'])
 def places(place_id=None):
     """Retrieves a Place or All the places"""
     if request.method == 'GET':
@@ -33,8 +34,16 @@ def places(place_id=None):
 
     elif request.method == 'POST':
         data = request.get_json()
-        if not data:
+        city = storage.get(City, city_id)
+        user = storage.get(User, user_id)
+        if city is None:
+            abort(404)
+        elif not data:
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
+        elif 'user_id' not in data:
+            return make_response(jsonify({'error': 'Missing user_id'}), 400)
+        elif user is None:
+            abort(404)
         elif 'name' not in data:
             return make_response(jsonify({'error': 'Missing name'}), 400)
         else:
@@ -52,7 +61,7 @@ def places(place_id=None):
             return make_response(jsonify({'error': 'not a json'}), 400)
 
         for key, value in data.items():
-            if key not in ['id', 'created_at', 'updated_at']:
+            if key not in ['id', 'user_id', 'city_id','created_at', 'updated_at']:
                 setattr(place, key, value)
         place.save()
         return make_response(jsonify(place.to_dict()), 200)
