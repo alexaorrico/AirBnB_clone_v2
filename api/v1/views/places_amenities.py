@@ -6,6 +6,7 @@ the link between Place and Amenity objects.
 
 from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
+from models import *
 from models import storage
 from models.place import Place
 from models.amenity import Amenity

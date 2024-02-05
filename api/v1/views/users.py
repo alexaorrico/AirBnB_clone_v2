@@ -5,6 +5,7 @@ Module for handling RESTful API actions for User objects.
 
 from flask import Flask, jsonify, abort, request
 from api.v1.views import app_views
+from models import *
 from models import storage
 from models.user import User
 

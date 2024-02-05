@@ -4,6 +4,7 @@ Module for handling RESTful API actions for City objects.
 """
 
 from flask import Flask, jsonify, abort, request
+from models import *
 from models import storage
 from api.v1.views import app_views
 from models.state import State
