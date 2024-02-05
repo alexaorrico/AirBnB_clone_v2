@@ -89,7 +89,7 @@ class DBStorage:
                 return new_dict[key]
 
     def count(self, cls=None):
-        """query on the current database session"""
+        """query on the current database session to get count"""
         new_dict = {}
         count = 0
         for clss in classes:
