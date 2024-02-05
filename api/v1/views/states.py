@@ -12,7 +12,7 @@ from models.state import State
 def states_routes():
     """
     GET: Retrieves the list of all State objects
-    POST: Creates a State
+    POST: Creates a State object
     """
     if request.method == "GET":
         states = [state.to_dict() for state in storage.all(State).values()]

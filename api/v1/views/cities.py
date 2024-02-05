@@ -15,7 +15,7 @@ def state_cities_routes(state_id):
     """
     GET: Retrieves the list of all City objects in the state where
          id == state_id
-    POST: Creates a City in the state where id == state_id
+    POST: Creates a City object in the state where id == state_id
     """
     state = storage.get(State, state_id)
     if state is None:
