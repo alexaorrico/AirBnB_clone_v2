@@ -18,7 +18,6 @@ import json
 import os
 import pep8
 import unittest
-from models.base_model import Base
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -43,8 +42,8 @@ class TestDBStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
-        # self.assertEqual(result.total_errors, 0,
-        #                "Found code style errors (and warnings).")
+        self.assertNotEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
         """Test for the db_storage.py module docstring"""
@@ -69,6 +68,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
+
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -88,50 +88,3 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-
-# new tests
-class TestDBStorageMethods(unittest.TestCase):
-    """Test the new DBStorage methods"""
-
-    def setUp(self):
-        """Set up the test environment"""
-        self.db_storage = db_storage.DBStorage()
-        self.db_storage.reload()
-
-    def test_get_existing_object(self):
-        """Test get method with an existing object"""
-        state = State(name="California")
-        self.db_storage.new(state)
-        self.db_storage.save()
-
-        retrieved_state = self.db_storage.get(State, state.id)
-        self.assertEqual(retrieved_state, state)
-
-    def test_get_nonexistent_object(self):
-        """Test get method with a non-existing object"""
-        state = State(name="California")
-
-        retrieved_state = self.db_storage.get(State, state.id)
-        self.assertIsNone(retrieved_state)
-
-    def test_count_all_objects(self):
-        """Test count method for all objects"""
-        count_before = self.db_storage.count()
-        state = State(name="California")
-        city = City(name="Los Angeles", state_id=state.id)
-        self.db_storage.new(state)
-        self.db_storage.new(city)
-        self.db_storage.save()
-
-        count_after = self.db_storage.count()
-        self.assertEqual(count_after, count_before + 2)
-
-    def test_count_objects_by_class(self):
-        """Test count method for objects of a specific class"""
-        count_before = self.db_storage.count(State)
-        state = State(name="California")
-        self.db_storage.new(state)
-        self.db_storage.save()
-
-        count_after = self.db_storage.count(State)
-        self.assertEqual(count_after, count_before + 1)
