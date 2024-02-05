@@ -11,7 +11,7 @@ from models.state import State
 from models import storage
 
 
-@app_views.route("/states", strict_slashes=False)
+@app_views.route("/states", methods = ['GET'], strict_slashes=False)
 def all_states():
     """
     Returns list of all states
@@ -58,7 +58,8 @@ def add_state():
     if 'name' not in data:
         abort(400,"Missing name")
 
-    new_state = State(**data)
+    name = data['name']
+    new_state = State(name=name)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 
@@ -79,5 +80,4 @@ def update_state(state_id):
                 state.__dict__.update({k: v})
         storage.save()
         return jsonify(state.to_dict()), 200
-
     abort(404)
