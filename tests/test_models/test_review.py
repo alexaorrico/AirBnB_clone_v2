@@ -101,7 +101,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in r.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
@@ -119,5 +119,10 @@ class TestReview(unittest.TestCase):
     def test_str(self):
         """test that the str method has the correct output"""
         review = Review()
-        string = "[Review] ({}) {}".format(review.id, review.__dict__)
+        _dict = review.__dict__.copy()
+
+        if _dict.get("_sa_instance_state") is not None:
+            del _dict["_sa_instance_state"]
+
+        string = "[Review] ({}) {}".format(review.id, _dict)
         self.assertEqual(string, str(review))
