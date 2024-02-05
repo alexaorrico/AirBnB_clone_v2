@@ -13,7 +13,7 @@ from models import storage
 @app_views.route(
         "/places/<place_id>/reviews",
         strict_slashes=False,
-        methods=["GET"]
+        methods=["GET", "POST"]
         )
 def get_reviews(place_id):
     """ Function to get the reviws
@@ -45,7 +45,7 @@ def get_reviews(place_id):
 @app_views.route(
         "/reviews/<review_id>",
         strict_slashes=False,
-        methods=["GET"]
+        methods=["GET", "DELETE", "PUT"]
         )
 def get_review(review_id):
     """Function to get a particular review using
