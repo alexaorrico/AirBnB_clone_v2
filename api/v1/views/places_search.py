@@ -27,7 +27,8 @@ def places_search():
 
     if not states and not cities and not amenities:
         place_result = [
-                        place.to_dict() for place in storage.all(Place).values))
+                        place.to_dict() for place in storage.all(
+                            Place).values()
                        ]
     else:
         if states:
@@ -35,7 +36,8 @@ def places_search():
                 state = storage.get(State, state_id)
                 if state:
                     places_result.extend([
-                            place.to_dict() for city in state.cities for place in city.places
+                            place.to_dict(
+                            ) for city in state.cities for place in city.places
                     ])
 
         if cities:
@@ -49,6 +51,7 @@ def places_search():
         if amenities:
             amnenities_set = set(amenities)
             places_result = [
-                    place for place in places_result if amenities_set.issubset(place.get('amenities', []))]
+                    place for place in places_result if amenities_set.issubset(
+                        place.get('amenities', []))]
 
     return jsonify(places_result)
