@@ -98,11 +98,19 @@ class TestDBStorage(unittest.TestCase):
         first_state_id = list(storage.all(State).values())[0].id
         returned_instance = db_storage.get(State, id)
         self.assertTrue(returned_instance.id == first_state_id)
+        self.assertTrue(type(returned_instance) is State)
+        wrong_id = 'wrong-id'
+        self.assertTrue(db_storage.get(State, wrong_id) is None)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """test that count method works correctly"""
         db_storage = DBStorage()
         count_before = db_storage.count()
-        instance = State()
+        count_state_before = db_storage.count(State)
+        instance_1 = City()
+        instance_2 = State()
+        count_state_after = db_storage.count(State)
         count_after = db_storage.count()
-        self.assertTrue(count_after - count_before == 1)
+        self.assertTrue(count_after - count_before == 2)
+        self.assertTrue(count_state_before - count_state_after == 1)

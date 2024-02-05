@@ -118,15 +118,15 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """test that count method work properly"""
         storage = FileStorage()
-        count_before = storage.count(classes["State"])
-        instance = classes["State"]()
+        count_before = storage.count(State)
+        instance = State()
         storage.new(instance)
-        count_after = storage.count(classes["State"])
+        count_after = storage.count(State)
         self.assertTrue(count_after - count_before == 1)
         count_all_before = storage.count()
-        instance = classes["City"]()
+        instance = City()
         storage.new(instance)
-        instance = classes["Place"]()
+        instance = Place()
         storage.new(instance)
         count_all_after = storage.count()
         self.assertTrue(count_all_after - count_all_before == 2)
@@ -135,8 +135,11 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """test that get method work properly"""
         storage = FileStorage()
-        instance = classes["State"]()
+        instance = State()
         storage.new(instance)
         first_state_id = list(storage.all(State).values())[0].id
         returned_instance = storage.get(State, first_state_id)
+        self.assertTrue(type(returned_instance) is State)
         self.assertTrue(returned_instance.id == first_state_id)
+        wrong_id = 'wrong-id'
+        self.assertTrue(storage.get(State, wrong_id) is None)
