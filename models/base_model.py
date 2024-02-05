@@ -73,3 +73,17 @@ class BaseModel:
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def to_dict(self, show_password=False):
+        """Returns a dictionary containing all keys/values of the instance"""
+        new_dict = self.__dict__.copy()
+        # Convert datetime objects to strings
+        new_dict['created_at'] = new_dict['created_at'].strftime(time)
+        new_dict['updated_at'] = new_dict['updated_at'].strftime(time)
+        new_dict['__class__'] = self.__class__.__name__
+        # Remove SQLAlchemy instance state
+        new_dict.pop('_sa_instance_state', None)
+        # Conditionally exclude password
+        if not show_password:
+            new_dict.pop('password', None)
+        return new_dict
