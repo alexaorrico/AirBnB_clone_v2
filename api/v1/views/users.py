@@ -58,3 +58,4 @@ def users_view(user_id=None):
                     }
             user_object.update(user_update)
             storage.save()
+            return make_response(jsonify(user_object.to_dict()), 200)
