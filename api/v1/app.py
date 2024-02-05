@@ -2,7 +2,7 @@
 '''
     app for registering blueprint and starting flask
 '''
-flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
