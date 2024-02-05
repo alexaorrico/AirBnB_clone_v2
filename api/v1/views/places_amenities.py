@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 Contains the places_amenities view for the AirBnB clone v3 API.
-Handles all default RESTful API actions for the link between Place objects and Amenity objects.
+Handles all default RESTful API actions for the link
+between Place objects and Amenity objects.
 """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
