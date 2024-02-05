@@ -119,17 +119,17 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(type(storage.count(State)), int)
 
         self.assertEqual(storage.count(), storage.count(None))
-        State(name='California').save()
+        State(name='Phalombe').save()
 
         self.assertGreater(storage.count(State), 0)
         self.assertEqual(storage.count(State), storage.count(None))
 
         state_before = storage.count(State)
-        State(name='Florida').save()
+        State(name='Thyolo').save()
 
         self.assertGreater(storage.count(State), state_before)
 
-        Amenity(name='Gym').save()
+        Amenity(name='Swimming Pool').save()
         self.assertGreater(storage.count(), storage.count(State))
 
         with self.assertRaises(TypeError):
