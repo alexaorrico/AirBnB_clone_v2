@@ -71,8 +71,8 @@ class TestUserAppViews(unittest.TestCase):
         updated_user_data = {
             "email": "updated@example.com",
             "password": "updatedpassword"}
-        response = self.app.put(
-            '/api/v1/users/{}'.format(self.test_user.id), json=updated_user_data)
+        response = self.app.put('/api/v1/users/{}'.format(
+                                self.test_user.id), json=updated_user_data)
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_data(as_text=True))
         self.assertEqual(data['email'], updated_user_data['email'])
