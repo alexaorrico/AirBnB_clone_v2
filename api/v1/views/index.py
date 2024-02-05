@@ -5,7 +5,7 @@ from flask import jsonify
 from api.v1.views import app_views
 from models import storage
 
-# Define classes for stats endpoint
+
 classes = {
     'amenities': 'Amenity',
     'cities': 'City',
