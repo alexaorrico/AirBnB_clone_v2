@@ -39,7 +39,7 @@ def amenity_id_routes(amenity_id):
     """
     GET: Retrieves the Amenity where id == amenity_id
     PUT: Updates the Amenity that has id == amenity_id
-    PUT: Deletes the Amenity that has id == amenity_id
+    DELETE: Deletes the Amenity that has id == amenity_id
     """
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:

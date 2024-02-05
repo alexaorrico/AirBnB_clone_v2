@@ -38,7 +38,7 @@ def state_id_routes(state_id):
     """
     GET: Retrieves the State where id == state_id
     PUT: Updates the State that has id == state_id
-    PUT: Deletes the State that has id == state_id
+    DELETE: Deletes the State that has id == state_id
     """
     state = storage.get(State, state_id)
     if state is None:

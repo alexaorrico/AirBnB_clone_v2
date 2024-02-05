@@ -46,7 +46,7 @@ def city_id_routes(city_id):
     """
     GET: Retrieves the City where id == city_id
     PUT: Updates the City that has id == city_id
-    PUT: Deletes the City that has id == city_id
+    DELETE: Deletes the City that has id == city_id
     """
     city = storage.get(City, city_id)
     if city is None:

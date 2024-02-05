@@ -55,7 +55,7 @@ def review_id_routes(review_id):
     """
     GET: Retrieves the Review where id == review_id
     PUT: Updates the Review that has id == review_id
-    PUT: Deletes the Review that has id == review_id
+    DELETE: Deletes the Review that has id == review_id
     """
     review = storage.get(Review, review_id)
     if review is None:

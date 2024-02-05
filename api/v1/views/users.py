@@ -39,7 +39,7 @@ def user_id_routes(user_id):
     """
     GET: Retrieves the User where id == user_id
     PUT: Updates the User that has id == user_id
-    PUT: Deletes the User that has id == user_id
+    DELETE: Deletes the User that has id == user_id
     """
     user = storage.get(User, user_id)
     if user is None:

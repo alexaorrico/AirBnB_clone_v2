@@ -55,7 +55,7 @@ def place_id_routes(place_id):
     """
     GET: Retrieves the Place where id == place_id
     PUT: Updates the Place that has id == place_id
-    PUT: Deletes the Place that has id == place_id
+    DELETE: Deletes the Place that has id == place_id
     """
     place = storage.get(Place, place_id)
     if place is None:
