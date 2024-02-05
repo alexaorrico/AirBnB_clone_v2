@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -125,9 +126,9 @@ class TestFileStorageGetCount(unittest.TestCase):
 
     def test_get_count(self):
         """Test .get() and .count() methods"""
-        print("All objects: {}"format(storage.count()))
+        print("All objects: {}".format(storage.count()))
         print("State objects: {}".format(storage.count(State)))
-        first_state_id = list(storage.all(State)values())[0].id
+        first_state_id = list(storage.all(State).values())[0].id
         first_state = storage.get(State, first_state_id)
         print("First state: {}".format(first_state))
 

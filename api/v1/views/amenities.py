@@ -4,7 +4,7 @@ Module for Amenity views in version 1 of the API.
 """
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
-from models import storage, Amenity
+from models import storage, amenity
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)

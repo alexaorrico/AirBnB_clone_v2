@@ -17,13 +17,13 @@ def get_states():
 
 
 @app_views.route('states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state(state_id):
+def get_state_by_id(state_id):
     """Retrieves a State object """
-    state = storage.get(State, state_id)
-    if state:
-        return jsonify(state.to_dict())
-    else:
+    state = storage.get("State", state_id)
+    if state is None:
         abort(404)
+    else:
+        return jsonify(state.to_dict())
 
 
 @app_views.route('/states/<state_id>',
