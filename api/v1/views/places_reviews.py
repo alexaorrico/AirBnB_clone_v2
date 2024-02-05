@@ -69,6 +69,6 @@ def get_review(review_id):
                     "created_at", "updated_at"
                         ]:
                 setattr(review_object, key, value)
-        review_object.save()
-        #  storage.save()
+        #  review_object.save()
+        storage.save()
         return jsonify(review_object.to_dict()), 200
