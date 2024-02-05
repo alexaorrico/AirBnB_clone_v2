@@ -9,7 +9,11 @@ from flask import abort, jsonify, make_response, request
 import json
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET", "POST"])
+@app_views.route(
+        "/states/<state_id>/cities",
+        methods=["GET", "POST"],
+        strict_slashes=False
+        )
 def list_cities(state_id):
     """ The list of cities for a given state id"""
     state_object = storage.get(State, state_id)
@@ -34,7 +38,11 @@ def list_cities(state_id):
         return make_response(jsonify(new_city_object.to_dict()), 201)
 
 
-@app_views.route("/cities/<city_id>", methods=['GET', 'DELETE', 'PUT'])
+@app_views.route(
+        "/cities/<city_id>",
+        methods=['GET', 'DELETE', 'PUT'],
+        strict_slashes=False
+        )
 def retrieve_city_object(city_id):
     """ Used to return city object representation"""
     city_object = storage.get(City, city_id)
