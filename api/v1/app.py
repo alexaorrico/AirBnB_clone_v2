@@ -10,7 +10,7 @@ from flask_cors import CORS
 from api.v1.views import amenities
 from api.v1.views import places_amenities
 from api.v1.views import users
-
+from api.v1.views import places
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
