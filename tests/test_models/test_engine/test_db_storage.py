@@ -93,7 +93,7 @@ class TestFileStorage(unittest.TestCase):
         obj = State(name='Texas')
         obj.save()
 
-        self.assertEqual(obj.id, storage.get(Sate, obj.id).id)
+        self.assertEqual(obj.id, storage.get(State, obj.id).id)
         self.assertEqual(obj.name, storage.get(State, obj.id).name)
 
         self.assertIsNot(obj, storage.get(State, obj.id + 'op'))
