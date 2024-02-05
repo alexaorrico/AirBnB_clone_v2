@@ -14,7 +14,7 @@ from models.state import State
 def get_users(user_id=None):
     """retrives the list of all users object of state"""
     list_user = []
-    if user_id in None:
+    if user_id is None:
         all_objs = storage.all(User).values()
         for v in all_objs:
             list_user.append(v.to_dict())
@@ -46,6 +46,10 @@ def create_user():
         abort(400)
     if "name" not in data:
         abort(400, "Missing name")
+    if "email" not in data:
+        abort(400, "Missing email")
+    if "password" not in data:
+        abort(400, "Missing password")
     new_user = User(**data)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
