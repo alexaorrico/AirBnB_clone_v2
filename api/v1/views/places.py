@@ -78,7 +78,7 @@ def update_place(place_id):
     if not data:
         abort(400, "Not a JSON")
     for key in data:
-        if key not in ['id', 'id_user', 'city_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
             # ref_obj_state.__dict__[key] = data[key]
             setattr(ref_obj_place, key, data[key])
     storage.save()
