@@ -21,12 +21,15 @@ def users_view(user_id=None):
         return make_response(jsonify(object_returned), 200)
     if request.method == "POST" and user_id is None:
         if not request.is_json:
-            abort(400, description="Not a JSON")
+            #  abort(400, description="Not a JSON")
+            return jsonify({"error": "Not a JSON"}), 400
         input_data = request.get_json()   # Not always dict.
         if "email" not in input_data:
-            abort(400, "Missing email")
+            #  abort(400, "Missing email")
+            return jsonify({"error": "Missing email"}), 400
         elif "password" not in input_data:
-            abort(400, "Missing password")
+            #  abort(400, jsonify({"error": "Missing password"}))
+            return jsonify({"error": "Missing password"}), 400
         else:
             new_user = User(**input_data)
             storage.new(new_user)
@@ -44,7 +47,8 @@ def users_view(user_id=None):
             return make_response(jsonify({}), 200)
         if request.method == "PUT":
             if not request.is_json:
-                abort(400, description="Not a JSON")
+                #  abort(400, description=jsonify({"error": "Not a JSON"}))
+                return jsonify({"error": "Not a JSON"}), 400
             user_update_data = request.get_json()
             user_update = {
                     key: user_update_data[key]
