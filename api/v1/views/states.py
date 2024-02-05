@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Handles RESTFul API actions for amenities
+Handles RESTFul API actions for states
 """
 
 from flask import abort
@@ -78,7 +78,7 @@ def update_state(state_id):
         keys_to_ignore = ["created_at", "id", "updated_at"]
         for k, v in data.items():
             if k not in keys_to_ignore:
-                state.__dict__.update({k: v})
+                setattr(state, k, v)
         storage.save()
         return jsonify(state.to_dict()), 200
     abort(404)
