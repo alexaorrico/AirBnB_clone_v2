@@ -155,3 +155,96 @@ class TestCityViews(unittest.TestCase):
                     rv.get_json(),
                     {"error": "Not found"}
                     )
+
+    def test_delete_city(self):
+        """ Test the DELETE option on a given valid
+        city_id"""
+        akure_city_id = self.akure_city_object.id
+        with app.test_client() as c:
+            rv = c.delete(f'/api/v1/cities/{akure_city_id}')
+            self.assertDictEqual(
+                        rv.get_json(),
+                        {}
+                        )
+            self.assertEqual(rv.status_code, 200)
+        #  After deletion, akure_city_id should be invalid.
+        with app.test_client() as c:
+            rv = c.delete(f'/api/v1/cities/{akure_city_id}')
+            self.assertEqual(404, rv.status_code)
+            self.assertDictEqual(
+                        {"error": "Not found"},
+                        rv.get_json()
+                        )
+
+    def test_post_cites(self):
+        """ This will test for behaviours for
+        when a new city object is posted to cities"""
+        ondo_id = self.ondo_state_object.id
+        with app.test_client() as c:
+            rv = c.post(
+                    "/api/v1/states/invalidstateid/cities",
+                    json={
+                        "name": "Akoko",
+                        "id": str(uuid.uuid4()),
+                        "created_at": datetime.now(),
+                        "updated_at": datetime.now()
+                        }
+                    )
+            self.assertEqual(404, rv.status_code)
+        #  Pass in some html data
+        with app.test_client() as c:
+            rv = c.post(
+                    f"/api/v1/states/{ondo_id}/cities",
+                    data='<html>lang=en-us</html>'
+                    )
+            self.assertEqual(400, rv.status_code)
+        #  Remove the use of name in json data
+        with app.test_client() as c:
+            rv = c.post(
+                    f"/api/v1/states/{ondo_id}/cities",
+                    json={
+                        "id": str(uuid.uuid4()),
+                        "created_at": datetime.now(),
+                        "updated_at": datetime.now()
+                        }
+                    )
+            self.assertEqual(400, rv.status_code)
+        #  Correct POST request.
+        with app.test_client() as c:
+            rv = c.post(
+                    f"/api/v1/states/{ondo_id}/cities",
+                    json={
+                        "name": "Akoko",
+                        "id": str(uuid.uuid4()),
+                        "created_at": datetime.now().strftime(
+                                "%Y-%m-%dT%H:%M:%S.%f"
+                                ),
+                        "updated_at": datetime.now().strftime(
+                                "%Y-%m-%dT%H:%M:%S.%f"
+                                )
+                        }
+                    )
+            self.assertEqual(201, rv.status_code)
+            expected_akoko_object = City(**{
+                    "name": "Akoko",
+                    "state_id": self.ondo_state_object.id,
+                    "id": str(uuid.uuid4()),
+                    "created_at": datetime.now(),
+                    "updated_at": datetime.now()
+                    })
+            self.assertEqual(
+                    rv.get_json()["name"],
+                    "Akoko"
+                        )
+            self.assertEqual(
+                    rv.get_json().get("state_id", None),
+                    ondo_id
+                        )
+            self.assertGreaterEqual(
+                        len(rv.get_json()["id"]),
+                        28
+                        )
+            self.assertEqual(
+                        len(rv.get_json()["created_at"]),
+                        len(rv.get_json()["updated_at"])
+                        )
