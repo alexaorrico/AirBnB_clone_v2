@@ -155,6 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Humphrey Otieno - humphreyotieno04@gmail.com
+
 Immaculate Owuor - immaculateadhiambo79@gmail.com
 
 Second part of Airbnb: Joann Vuong
