@@ -87,25 +87,50 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def test_get(self):
-        """Test returns correct output."""
-        storage = DBStorage()
-        dic = {"name": "Enclos"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
+    def def test_get(self):
+        """Testreturns correct output."""
+        storage = models.storage
+        obj = State(name='Texas')
+        obj.save()
+
+        self.assertEqual(obj.id, storage.get(State, obj.id).id)
+        self.assertEqual(obj.name, storage.get(State, obj.id).name)
+
+        self.assertIsNot(obj, storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, 45))
+        self.assertIsNone(storage.get(None, obj.id))
+        self.assertIsNone(storage.get(int, obj.id))
+
+        with self.assertRaises(TypeError):
+            storage.get(State, obj.id, 'op')
+        with self.assertRaises(TypeError):
+            storage.get(State)
+        with self.assertRaises(TypeError):
+            storage.get()
 
     def test_count(self):
         """Test for count."""
-        storage = DBStorage()
-        dic = {"name": "Quartier"}
-        state = State(**dic)
-        storage.new(state)
-        dic = {"name": "France", "state_id": state.id}
-        city = City(**dic)
-        storage.new(city)
-        storage.save()
-        x = storage.count()
-        self.assertEqual(len(storage.all()), x)
+        storage = models.storage
+
+        self.assertIs(type(storage.count()), int)
+        self.assertIs(type(storage.count(None)), int)
+        self.assertIs(type(storage.count(int)), int)
+        self.assertIs(type(storage.count(State)), int)
+
+        self.assertEqual(storage.count(), storage.count(None))
+        State(name='California').save()
+
+        self.assertGreater(storage.count(State), 0)
+        self.assertEqual(storage.count(State), storage.count(None))
+
+        state_before = storage.count(State)
+        State(name='Florida').save()
+
+        self.assertGreater(storage.count(State), state_before)
+
+        Amenity(name='Gym').save()
+        self.assertGreater(storage.count(), storage.count(State))
+
+        with self.assertRaises(TypeError):
+            storage.count(State, 'op')
