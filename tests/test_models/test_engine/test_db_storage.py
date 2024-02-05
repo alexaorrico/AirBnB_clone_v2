@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+import logging
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -70,6 +71,18 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    new_model = User()
+    new_model.email = 'westgift@gmail.com'
+    new_model.password = 'qwertygift277'
+    new_model.first_name = 'Gift'
+    new_model.last_name = 'West'
+
+    def setUp(self):
+        """ Set up test environment """
+        self.prev_size = models.storage.count(User)
+        models.storage.new(TestFileStorage.new_model)
+        models.storage.save()
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -80,9 +93,27 @@ class TestFileStorage(unittest.TestCase):
         """Test that all returns all rows when no class is passed"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        new_size = models.storage.count(User)
+        self.assertTrue(new_size, self.prev_size + 1)
+        models.storage.delete(TestFileStorage.new_model)
+        models.storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that verifies count"""
+        count = 0
+        for c in classes.values():
+            count += models.storage.count(c)
+        self.assertEqual(models.storage.count(), count)
+        self.assertTrue(type(models.storage.count()), int)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that verifies the get method"""
+        key = TestFileStorage.new_model.id
+        self.assertTrue(type(models.storage.get(User, key)), dict)
+        self.assertTrue(type(models.storage.get(User, key)), User)
+        self.assertEqual(models.storage.get(
+            User, key).email, 'westgift@gmail.com')

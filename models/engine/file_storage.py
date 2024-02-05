@@ -79,7 +79,9 @@ class FileStorage:
         """
         if cls not in classes.values():
             return None
-        return FileStorage.__objects.get(id)
+        for obj in FileStorage.__objects.values():
+            if isinstance(obj, cls) and obj.id == id:
+                return obj
 
     def count(self, cls=None):
         """
