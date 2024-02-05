@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """AirBnB Clone API configuration file"""
 
-from flask import Flask, render_template, jsonify, make_reponse
+from flask import Flask, render_template, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 from os import getenv
