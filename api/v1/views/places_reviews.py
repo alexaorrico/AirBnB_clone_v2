@@ -1,84 +1,106 @@
 #!/usr/bin/python3
-"""
-Contains the reviews view for the AirBnB clone v3 API.
-Handles all default RESTful API actions for Review objects associated with places.
-"""
-from flask import jsonify, request, abort
+'''Contains the places_amenities view for the API.'''
+from flask import jsonify, request
+from werkzeug.exceptions import NotFound, MethodNotAllowed
+
 from api.v1.views import app_views
-from models import storage
+from models import storage, storage_t
+from models.amenity import Amenity
 from models.place import Place
-from models.review import Review
-from models.user import User
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
-def get_place_reviews(place_id=None):
-    """
-    Retrieves the list of all Review objects for a specific Place.
-    """
-    place = storage.get(Place, place_id)
-    if not place:
-        abort(404)
-    reviews = [review.to_dict() for review in place.reviews]
-    return jsonify(reviews)
 
-@app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
-def get_review(review_id=None):
-    """
-    Retrieves a specific Review object.
-    """
-    review = storage.get(Review, review_id)
-    if not review:
-        abort(404)
-    return jsonify(review.to_dict())
+@app_views.route('/places/<place_id>/amenities', methods=['GET'])
+@app_views.route(
+    '/places/<place_id>/amenities/<amenity_id>',
+    methods=['DELETE', 'POST']
+)
+def handle_places_amenities(place_id=None, amenity_id=None):
+    '''The method handler for the places endpoint.
+    '''
+    handlers = {
+        'GET': get_place_amenities,
+        'DELETE': remove_place_amenity,
+        'POST': add_place_amenity
+    }
+    if request.method in handlers:
+        return handlers[request.method](place_id, amenity_id)
+    else:
+        raise MethodNotAllowed(list(handlers.keys()))
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST'], strict_slashes=False)
-def create_review_for_place(place_id=None):
-    """
-    Creates a Review object for a specific Place.
-    """
-    place = storage.get(Place, place_id)
-    if not place:
-        abort(404)
-    request_data = request.get_json()
-    if not request_data:
-        abort(400, description='Not a JSON')
-    if 'user_id' not in request_data:
-        abort(400, description='Missing user_id')
-    user = storage.get(User, request_data['user_id'])
-    if not user:
-        abort(404)
-    if 'text' not in request_data:
-        abort(400, description='Missing text')
-    request_data['place_id'] = place_id
-    new_review = Review(**request_data)
-    new_review.save()
-    return jsonify(new_review.to_dict()), 201
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
-def delete_review(review_id=None):
-    """
-    Deletes a specific Review object.
-    """
-    review = storage.get(Review, review_id)
-    if not review:
-        abort(404)
-    storage.delete(review)
-    storage.save()
-    return jsonify({}), 200
+def get_place_amenities(place_id=None, amenity_id=None):
+    '''Gets the amenities of a place with the given id.
+    '''
+    if place_id:
+        place = storage.get(Place, place_id)
+        if place:
+            all_amenities = list(map(lambda x: x.to_dict(), place.amenities))
+            return jsonify(all_amenities)
+    raise NotFound()
 
-@app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
-def update_review(review_id=None):
-    """
-    Updates a specific Review object.
-    """
-    review = storage.get(Review, review_id)
-    if not review:
-        abort(404)
-    request_data = request.get_json()
-    if not request_data:
-        abort(400, description='Not a JSON')
-    for key, value in request_data.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
-            setattr(review, key, value)
-    review.save()
-    return jsonify(review.to_dict()), 200
+
+def remove_place_amenity(place_id=None, amenity_id=None):
+    '''Removes an amenity with a given id from a place with a given id.
+    '''
+    if place_id and amenity_id:
+        place = storage.get(Place, place_id)
+        if not place:
+            raise NotFound()
+        amenity = storage.get(Amenity, amenity_id)
+        if not amenity:
+            raise NotFound()
+        place_amenity_link = list(
+            filter(lambda x: x.id == amenity_id, place.amenities)
+        )
+        if not place_amenity_link:
+            raise NotFound()
+        if storage_t == 'db':
+            amenity_place_link = list(
+                filter(lambda x: x.id == place_id, amenity.place_amenities)
+            )
+            if not amenity_place_link:
+                raise NotFound()
+            place.amenities.remove(amenity)
+            place.save()
+            return jsonify({}), 200
+        else:
+            amenity_idx = place.amenity_ids.index(amenity_id)
+            place.amenity_ids.pop(amenity_idx)
+            place.save()
+            return jsonify({}), 200
+    raise NotFound()
+
+
+def add_place_amenity(place_id=None, amenity_id=None):
+    '''Adds an amenity with a given id to a place with a given id.
+    '''
+    if place_id and amenity_id:
+        place = storage.get(Place, place_id)
+        if not place:
+            raise NotFound()
+        amenity = storage.get(Amenity, amenity_id)
+        if not amenity:
+            raise NotFound()
+        if storage_t == 'db':
+            place_amenity_link = list(
+                filter(lambda x: x.id == amenity_id, place.amenities)
+            )
+            amenity_place_link = list(
+                filter(lambda x: x.id == place_id, amenity.place_amenities)
+            )
+            if amenity_place_link and place_amenity_link:
+                res = amenity.to_dict()
+                del res['place_amenities']
+                return jsonify(res), 200
+            place.amenities.append(amenity)
+            place.save()
+            res = amenity.to_dict()
+            del res['place_amenities']
+            return jsonify(res), 201
+        else:
+            if amenity_id in place.amenity_ids:
+                return jsonify(amenity.to_dict()), 200
+            place.amenity_ids.push(amenity_id)
+            place.save()
+            return jsonify(amenity.to_dict()), 201
+    raise NotFound()
