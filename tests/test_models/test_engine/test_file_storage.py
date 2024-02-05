@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -113,3 +114,38 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_existing_object(self):
+        """Test get method with an existing object"""
+        state = State(name="California")
+        state.save()
+        retrieved_state = storage.get(State, state.id)
+        self.assertEqual(retrieved_state, state)
+
+    def test_get_nonexistent_object(self):
+        """Test get method with a non-existing object"""
+        state = State(name="California")
+
+        retrieved_state = storage.get(State, state.id)
+        self.assertIsNone(retrieved_state)
+
+    def test_count_all_objects(self):
+        """Test count method for all objects"""
+        count_before = storage.count()
+        state = State(name="California")
+        city = City(name="Los Angeles", state_id=state.id)
+        state.save()
+        city.save()
+        storage.save()
+
+        count_after = storage.count()
+        self.assertEqual(count_after, count_before + 2)
+
+    def test_count_objects_by_class(self):
+        """Test count method for objects of a specific class"""
+        count_before = storage.count(State)
+        state = State(name="California")
+        state.save()
+
+        count_after = storage.count(State)
+        self.assertEqual(count_after, count_before + 1)
