@@ -1,31 +1,29 @@
 #!/usr/bin/python3
 """
-Flask route that returns json status response
+This module contains endpoint(route) status
 """
-from api.v1.views import app_views
-from flask import jsonify, Flask
 from models import storage
+from flask import Flask
+from api.v1.views import app_views
+from flask import jsonify
 
 
-@app_views.route("/status", strict_slashes=False)
+@app_views.route('/status', strict_slashes=False)
 def status():
     """
-    function for status route that returns the status
+    Returns a JSON status
     """
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats", strict_slashes=False)
-def stats():
+@app_views.route('/stats', strict_slashes=False)
+def count():
     """
-    Create an endpoint that retrieves the number of each objects by type
+    Retrieves the number of each objects by type
     """
-    stats = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User"),
-    }
-    return jsonify(stats)
+    return jsonify({"amenities": storage.count("Amenity"),
+                    "cities": storage.count("City"),
+                    "places": storage.count("Place"),
+                    "reviews": storage.count("Review"),
+                    "states": storage.count("State"),
+                    "users": storage.count("User")})
