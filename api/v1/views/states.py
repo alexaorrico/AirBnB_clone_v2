@@ -48,9 +48,9 @@ def state_id_routes(state_id):
         if in_data is None or not isinstance(in_data, dict):
             return 'Not a JSON\n', 400
 
-        in_data = {key: val for key, val in in_data.items()
-                   if key not in ["id", "created_at", "updated_at"]}
-        state.__init__(**in_data)
+        for key, val in in_data.items():
+            if key not in ["id", "created_at", "updated_at"]:
+                setattr(state, key, val)
         state.save()
         return state.to_dict(), 200
 
