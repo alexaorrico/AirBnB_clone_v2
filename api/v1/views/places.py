@@ -10,7 +10,7 @@ from models import storage
 
 @app_views.route('/places/<string:place_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
-@app_views.route('/cities/<string:city_id>/places', 
+@app_views.route('/cities/<string:city_id>/places',
                  strict_slashes=False, methods=['GET', 'POST'])
 def places(place_id=None):
     """Retrieves a Place or All the places"""
@@ -61,7 +61,8 @@ def places(place_id=None):
             return make_response(jsonify({'error': 'not a json'}), 400)
 
         for key, value in data.items():
-            if key not in ['id', 'user_id', 'city_id','created_at', 'updated_at']:
+            if key not in ['id', 'user_id', 'city_id',
+                           'created_at', 'updated_at']:
                 setattr(place, key, value)
         place.save()
         return make_response(jsonify(place.to_dict()), 200)
