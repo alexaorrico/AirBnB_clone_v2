@@ -1,83 +1,98 @@
 #!/usr/bin/python3
-'''
-    RESTful API for class City
-'''
-from flask import Flask, jsonify, abort, request
-from models import storage
+'''Contains the cities view for the API.'''
+from flask import jsonify, request
+from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
+
 from api.v1.views import app_views
+from models import storage, storage_t
 from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
-                 strict_slashes=False)
-def get_city_by_state(state_id):
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+def handle_cities(state_id=None, city_id=None):
+    '''The method handler for the cities endpoint.
     '''
-        return cities in state, json form
-    '''
-    state = storage.get("State", state_id)
-    if state is None:
-        abort(404)
-    city_list = [c.to_dict() for c in state.cities]
-    return jsonify(city_list), 200
-
-
-@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def get_city_id(city_id):
-    '''
-        return city and its id using GET
-    '''
-    city = storage.get("City", city_id)
-    if city is None:
-        abort(404)
-    return jsonify(city.to_dict()), 200
-
-
-@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
-def delete_city(city_id):
-    '''
-        DELETE city obj given city_id
-    '''
-    city = storage.get("City", city_id)
-    if city is None:
-        abort(404)
-    city.delete()
-    storage.save()
-    return jsonify({}), 200
-
-
-@app_views.route('/states/<state_id>/cities', methods=['POST'],
-                 strict_slashes=False)
-def create_city(state_id):
-    '''
-        create new city obj through state association using POST
-    '''
-    if not request.get_json():
-        return jsonify({"error": "Not a JSON"}), 400
-    elif "name" not in request.get_json():
-        return jsonify({"error": "Missing name"}), 400
+    handlers = {
+        'GET': get_cities,
+        'DELETE': remove_city,
+        'POST': add_city,
+        'PUT': update_city,
+    }
+    if request.method in handlers:
+        return handlers[request.method](state_id, city_id)
     else:
-        obj_data = request.get_json()
-        state = storage.get("State", state_id)
-        if state is None:
-            abort(404)
-        obj_data['state_id'] = state.id
-        obj = City(**obj_data)
-        obj.save()
-        return jsonify(obj.to_dict()), 201
+        raise MethodNotAllowed(list(handlers.keys()))
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_city(city_id):
+def get_cities(state_id=None, city_id=None):
+    '''Gets the city with the given id or all cities in
+    the state with the given id.
     '''
-        update existing city object using PUT
-    '''
-    if not request.get_json():
-        return jsonify({"error": "Not a JSON"}), 400
+    if state_id:
+        state = storage.get(State, state_id)
+        if state:
+            cities = list(map(lambda x: x.to_dict(), state.cities))
+            return jsonify(cities)
+    elif city_id:
+        city = storage.get(City, city_id)
+        if city:
+            return jsonify(city.to_dict())
+    raise NotFound()
 
-    obj = storage.get("City", city_id)
-    if obj is None:
-        abort(404)
-    obj_data = request.get_json()
-    obj.name = obj_data['name']
-    obj.save()
-    return jsonify(obj.to_dict()), 200
+
+def remove_city(state_id=None, city_id=None):
+    '''Removes a city with the given id.
+    '''
+    if city_id:
+        city = storage.get(City, city_id)
+        if city:
+            storage.delete(city)
+            if storage_t != "db":
+                for place in storage.all(Place).values():
+                    if place.city_id == city_id:
+                        for review in storage.all(Review).values():
+                            if review.place_id == place.id:
+                                storage.delete(review)
+                        storage.delete(place)
+            storage.save()
+            return jsonify({}), 200
+    raise NotFound()
+
+
+def add_city(state_id=None, city_id=None):
+    '''Adds a new city.
+    '''
+    state = storage.get(State, state_id)
+    if not state:
+        raise NotFound()
+    data = request.get_json()
+    if type(data) is not dict:
+        raise BadRequest(description='Not a JSON')
+    if 'name' not in data:
+        raise BadRequest(description='Missing name')
+    data['state_id'] = state_id
+    city = City(**data)
+    city.save()
+    return jsonify(city.to_dict()), 201
+
+
+def update_city(state_id=None, city_id=None):
+    '''Updates the city with the given id.
+    '''
+    xkeys = ('id', 'state_id', 'created_at', 'updated_at')
+    if city_id:
+        city = storage.get(City, city_id)
+        if city:
+            data = request.get_json()
+            if type(data) is not dict:
+                raise BadRequest(description='Not a JSON')
+            for key, value in data.items():
+                if key not in xkeys:
+                    setattr(city, key, value)
+            city.save()
+            return jsonify(city.to_dict()), 200
+    raise NotFound()
