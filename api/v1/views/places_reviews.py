@@ -19,13 +19,15 @@ def get_reviews(place_id):
     """ Function to get the reviws
     of a place_id"""
     place_object = storage.get(Place, place_id)
-    if place_object is None:
-        abort(404)
     if request.method == "GET":
+        if place_object is None:
+            abort(404)
         return jsonify(
                 [obj.to_dict() for obj in place_object.reviews]
                 )
     if request.method == "POST":
+        if place_object is None:
+            abort(404)
         if not request.is_json:
             abort(400, "Not a JSON")
         json_data = request.get_json()
@@ -51,15 +53,19 @@ def get_review(review_id):
     """Function to get a particular review using
     review_id from the list of reviews"""
     review_object = storage.get(Review, review_id)
-    if not review_object:
-        abort(404)
     if request.method == "GET":
+        if not review_object:
+            abort(404)
         return jsonify(review_object.to_dict())
     if request.method == "DELETE":
+        if not review_object:
+            abort(404)
         storage.delete(review_object)
         storage.save()
         return jsonify({}), 200
     if request.method == "PUT":
+        if not review_object:
+            abort(404)
         if not request.is_json:
             abort(400, "Not a JSON")
         json_data = request.get_json()
@@ -69,6 +75,6 @@ def get_review(review_id):
                     "created_at", "updated_at"
                         ]:
                 setattr(review_object, key, value)
-        #  review_object.save()
-        storage.save()
+        review_object.save()
+        #  storage.save()
         return jsonify(review_object.to_dict()), 200
