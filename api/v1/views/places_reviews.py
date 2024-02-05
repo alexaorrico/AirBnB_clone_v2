@@ -41,7 +41,7 @@ def delete_review(review_id):
     if review is None:
         abort(404)
 
-    storage.delete(review)
+    review.delete()
     storage.save()
     return jsonify({}), 200
 
@@ -55,22 +55,20 @@ def create_review(place_id):
         return jsonify({"error": "Not a JSON"}), 400
     elif 'user_id' not in data:
         return jsonify({"error": "Missing user_id"}), 400
+    elif 'text' not in data:
+        return jsonify({"error": "Missing text"}), 400
 
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-
+    data['place_id'] = place_id
     user_id = data['user_id']
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
 
-    if 'text' not in data:
-        return jsonify({"error": "Missing text"}), 400
-
-    review = Review(place_id=place_id, user_id=user_id, **data)
-    storage.new(review)
-    storage.save()
+    review = Review(**data)
+    review.save()
 
     return jsonify(review.to_dict()), 201
 
@@ -83,14 +81,14 @@ def update_review(review_id):
     if not data:
         return jsonify({"error": "Not a JSON"}), 400
 
+    review = storage.get(Review, review_id)
+    if review is None:
+        abort(404)
+
     for key, value in data.items():
         if key not in ['id', 'user_id', 'place_id', 'created_at',
                        'updated_at']:
             setattr(review, key, value)
-
-    review = storage.get(Review, review_id)
-    if review is None:
-        abort(404)
 
     storage.save()
     return jsonify(review.to_dict()), 200
