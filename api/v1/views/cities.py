@@ -48,17 +48,15 @@ def delete_city(city_id):
                  strict_slashes=False)
 def create_city(state_id):
     '''Create a City object'''
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Not a JSON"}), 400
+    elif 'name' not in data:
+        return jsonify({"error": "Missing name"}), 400
+
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-
-    try:
-        data = request.get_json()
-    except Exception:
-        return jsonify({"error": "Not a JSON"}), 400
-
-    if 'name' not in data:
-        return jsonify({"error": "Missing name"}), 400
 
     city = City(state_id=state_id, **data)
     storage.new(city)
@@ -70,14 +68,13 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     '''Update a City object'''
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Not a JSON"}), 400
+
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-
-    try:
-        data = request.get_json()
-    except json.JSONDecodeError:
-        return jsonify({"error": "Not a JSON"}), 400
 
     for key, value in data.items():
         if key not in ['id', 'state_id', 'created_at', 'updated_at']:
