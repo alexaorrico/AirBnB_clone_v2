@@ -8,8 +8,8 @@ from flask import abort, jsonify, make_response, request
 import json
 
 
-@app_views.route("/users", methods=["GET", "POST"])
-@app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"])
+@app_views.route("/users", methods=["GET", "POST"], strict_slashes=False)
+@app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"], strict_slashes=False)
 def users_view(user_id=None):
     """ View function to retrieve user
     objects"""
@@ -37,15 +37,19 @@ def users_view(user_id=None):
             return jsonify(new_user.to_dict()), 201
     if user_id is not None:
         user_object = storage.get(User, user_id)
-        if user_object is None:
-            abort(404)
         if request.method == "GET":
+            if user_object is None:
+                abort(404)
             return jsonify(user_object.to_dict()), 200
         if request.method == "DELETE":
+            if user_object is None:
+                abort(404)
             storage.delete(user_object)
             storage.save()
             return jsonify({}), 200
         if request.method == "PUT":
+            if user_object is None:
+                abort(404)
             if not request.is_json:
                 #  abort(400, description=jsonify({"error": "Not a JSON"}))
                 return jsonify({"error": "Not a JSON"}), 400
