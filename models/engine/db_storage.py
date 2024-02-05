@@ -83,7 +83,7 @@ class DBStorage:
         self.__session.remove()
 
     def count(self, cls=None):
-        """Count instances"""
+        """Count the number of instances"""
         return len(self.all(cls))
 
     def get(self, cls, id):
