@@ -11,19 +11,19 @@ from flask import request
 from models import storage
 
 
-@app_views.route("/cities/<city_id>/places", methods=["GET"], strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", methods=["GET"],
+                 strict_slashes=False)
 def places_in_city(city_id):
     """
     Returns list of places in a city
     """
     city = storage.get("City", city_id)
     if city:
-        all_places = storage.all("Places")
-        city_places = []
-        for place in all_places.values():
-            if place.city_id == city_id:
-                city_places.append(place.to_dict())
-        return jsonify(city_places)
+        city_places = city.places
+        list_places = []
+        for place in city_places:
+            list_places.append(place.to_dict())
+        return jsonify(list_places)
     abort(404)
 
 
@@ -53,7 +53,8 @@ def delete_place(place_id):
     abort(404)
 
 
-@app_views.route("/cities/<city_id>/places", methods=['POST'], strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", methods=['POST'],
+                 strict_slashes=False)
 def add_place(city_id):
     """
     Adds a place object based on data provided
@@ -61,7 +62,7 @@ def add_place(city_id):
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data:
         abort(400, "Not a JSON")
     if "user_id" not in data:
@@ -71,7 +72,7 @@ def add_place(city_id):
         abort(404)
     if "name" not in data:
         abort(400, "Missing name")
-    data.update()
+    data.update({"city_id": city_id})
     new_place = Place(**data)
     new_place.save()
     return jsonify(new_place.to_dict()), 201
@@ -88,10 +89,11 @@ def update_place(place_id):
         data = request.get_json(silent=True)
         if not data:
             abort(400, "Not a JSON")
-        keys_to_ignore = ["created_at", "id", "updated_at", "city_id", "user_id"]
+        keys_to_ignore = ["created_at", "id", "updated_at",
+                          "city_id", "user_id"]
         for k, v in data.items():
             if k not in keys_to_ignore:
-                amenity.__dict__.update({k: v})
+                setattr(place, k, v)
         storage.save()
-        return jsonify(amenity.to_dict()), 200
+        return jsonify(place.to_dict()), 200
     abort(404)
