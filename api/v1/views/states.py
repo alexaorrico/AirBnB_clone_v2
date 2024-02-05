@@ -10,7 +10,10 @@ from models.state import State
 
 @app_views.route("/states", methods=["GET", "POST"], strict_slashes=False)
 def states_routes():
-    """Retrieves the list of all State objects"""
+    """
+    GET: Retrieves the list of all State objects
+    POST: Creates a State
+    """
     if request.method == "GET":
         states = [state.to_dict() for state in storage.all(State).values()]
         return jsonify(states)
@@ -32,18 +35,19 @@ def states_routes():
 @app_views.route("/states/<state_id>", methods=["GET", "PUT", "DELETE"],
                  strict_slashes=False)
 def state_id_routes(state_id):
-    """Retrieves the list of all State objects"""
-    if request.method == "GET":
-        state = storage.get(State, state_id)
-        if state is None:
-            abort(404)
+    """
+    GET: Retrieves the State where id == state_id
+    PUT: Updates the State that has id == state_id
+    PUT: Deletes the State that has id == state_id
+    """
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+
+    if request.method == "GET":        
         return jsonify(state.to_dict())
 
     elif request.method == "PUT":
-        state = storage.get(State, state_id)
-        if state is None:
-            abort(404)
-
         in_data = request.get_json(silent=True)
         if in_data is None or not isinstance(in_data, dict):
             return 'Not a JSON\n', 400
@@ -55,9 +59,6 @@ def state_id_routes(state_id):
         return state.to_dict(), 200
 
     elif request.method == "DELETE":
-        state = storage.get(State, state_id)
-        if state is None:
-            abort(404)
         storage.delete(state)
         storage.save()
         return jsonify({}), 200
