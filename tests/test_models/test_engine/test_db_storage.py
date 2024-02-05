@@ -107,3 +107,14 @@ class TestDBStorage(unittest.TestCase):
                       models.storage.all().keys())
 
         self.assertIn(new_obj, models.storage.all().values())
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """tests that get method retrieves an object from the database"""
+        self.assertIsNone(models.storage.get(None, None))
+        new_obj = State(name='California')
+        models.storage.new(new_obj)
+
+        self.assertIsNone(models.storage.get(None, new_obj.id))
+        self.assertIsNone(models.storage.get(State, None))
+        self.assertIsNotNone(models.storage.get(State, new_obj.id))

@@ -79,7 +79,6 @@ class FileStorage:
         """
         if cls and id:
             key = f"{cls.__name__}.{id}"
-            print(key)
             return self.all(cls).get(key)
 
         return None
