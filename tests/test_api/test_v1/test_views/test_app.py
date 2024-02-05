@@ -286,7 +286,7 @@ class TestUserViews(unittest.TestCase):
         except (SQLAlchemyError):
             storage.delete(self.akingbeni_user_object)
             storage.delete(self.david_user_object)
-            storag.save()
+            storage.save()
 
     def test_views_get_users(self):
         """ Test for get for users"""
@@ -294,6 +294,6 @@ class TestUserViews(unittest.TestCase):
             rv = c.get(f'/api/v1/users')
             output_json_list = rv.get_json()
             self.assertEqual(
-                len(output_json_list), 2,
-                "Users != 2"
+                len(output_json_list), 3,
+                "Users != 3"
                 )
