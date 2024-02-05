@@ -99,12 +99,12 @@ class TestDBStorageGetCount(unittest.TestCase):
 
     def test_get_count(self):
         """Test get() and count() methods"""
-        print("All objects: {}".format(storage.count()))
-        print("State objects: {}".format(storage.count(State)))
+        # print("All objects: {}".format(storage.count()))
+        # print("State objects: {}".format(storage.count(State)))
 
         first_state_id = list(storage.all(State).values())[0].id
         first_state = storage.get(State, first_state_id)
-        print("First state: {}".format(first_state))
+        # print("First state: {}".format(first_state))
 
         self.assertIsNotNone(first_state)
         self.assertIsInstance(first_state, State)
