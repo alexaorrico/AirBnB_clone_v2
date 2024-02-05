@@ -2,7 +2,7 @@
 '''routes for Place objects'''
 
 from api.v1.views import app_views
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from models import storage
 from models.city import City
 from models.place import Place
