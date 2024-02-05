@@ -87,7 +87,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def def test_get(self):
+    def test_get(self):
         """Testreturns correct output."""
         storage = models.storage
         obj = State(name='Texas')
