@@ -43,7 +43,7 @@ class TestDBStorageDocs(unittest.TestCase):
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertNotEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+                            "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
         """Test for the db_storage.py module docstring"""
@@ -68,7 +68,6 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -87,4 +86,3 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-
