@@ -39,7 +39,7 @@ def delete_city(city_id):
     if city is None:
         abort(404)
 
-    storage.delete(city)
+    city.delete()
     storage.save()
     return jsonify({}), 200
 
@@ -57,10 +57,10 @@ def create_city(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-
-    city = City(state_id=state_id, **data)
-    storage.new(city)
-    storage.save()
+    
+    data['state_id'] = state_id
+    city = City(**data)
+    city.save()
 
     return jsonify(city.to_dict()), 201
 
