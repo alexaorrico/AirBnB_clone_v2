@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 """ The implemtation of tha application"""
 from flask import Flask, jsonify, make_response
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 import os
 
 app = Flask(__name__)
+cors = CORS(app, resources={'/*': {'origins': ['0.0.0.0']}})
+
 app.register_blueprint(app_views)
 
 
