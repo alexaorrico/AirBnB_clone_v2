@@ -1,4 +1,4 @@
-#!/home/anoos/cs/env_py2/bin/python3
+#!/usr/bin/python3
 """ console """
 
 import cmd
