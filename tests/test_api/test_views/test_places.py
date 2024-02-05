@@ -12,6 +12,7 @@ from api.v1.app import app
 from flask import Response
 
 
+
 class TestPlaceAppViews(unittest.TestCase):
     def setUp(self):
         # Create a test client
