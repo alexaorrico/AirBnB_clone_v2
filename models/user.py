@@ -6,6 +6,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import hashlib  # Add this import for MD5 hashing
 
 
 class User(BaseModel, Base):
@@ -27,3 +28,13 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+        if 'password' in kwargs:
+            self.password = hashlib.md5(kwargs['password'].encode()).hexdigest()
+
+    def to_dict(self, exclude_password=True):
+        """returns a dictionary containing all keys/values of the instance"""
+        user_dict = super().to_dict()
+        if exclude_password and 'password' in user_dict:
+            del user_dict['password']
+        return user_dict
