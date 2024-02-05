@@ -1,3 +1,6 @@
+"""
+initialize the models package
+"""
 from flask import Blueprint
 
 
