@@ -1,32 +1,35 @@
 #!/usr/bin/python3
-'''Define API view routes for status and stats endpoints.'''
-
+"""
+Defines index views for the AirBnB clone v3 API.
+Includes endpoints for checking the status of the API and
+retrieving the number of objects by type.
+"""
 from flask import jsonify
 from api.v1.views import app_views
-from models import storage
-
-
-classes = {
-    'amenities': 'Amenity',
-    'cities': 'City',
-    'places': 'Place',
-    'reviews': 'Review',
-    'states': 'State',
-    'users': 'User'
-}
+from models import storage, Amenity, City, Place, Review, State, User
 
 
 @app_views.route('/status', methods=['GET'])
-def status():
-    '''Returns a JSON response with the status of the API.'''
+def get_status():
+    """
+    Returns the current status of the API.
+    """
     return jsonify(status='OK')
 
 
 @app_views.route('/stats', methods=['GET'])
-def stats():
-    '''Returns the count of each object by type.'''
-    counts = {
-        cls: storage.count(cls_name)
-        for cls, cls_name in classes.items()
-        }
+def get_stats():
+    """
+    Returns the count of each object type in storage.
+    """
+    classes = {
+        "amenities": Amenity,
+        "cities": City,
+        "places": Place,
+        "reviews": Review,
+        "states": State,
+        "users": User
+    }
+    counts = {cls_name: storage.count(cls)
+              for cls_name, cls in classes.items()}
     return jsonify(counts)
