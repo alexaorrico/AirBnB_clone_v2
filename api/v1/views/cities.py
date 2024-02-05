@@ -8,9 +8,10 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def get_or_create_cities(state_id):
-    """Retrieves the list of all City objects of a State or creates a new one"""
+    """Retrieve list of all City objects of State or creates a new one"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -27,6 +28,7 @@ def get_or_create_cities(state_id):
         city = City(name=data['name'], state_id=state_id)
         city.save()
         return jsonify(city.to_dict()), 201
+
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
 def get_update_or_delete_city(city_id):

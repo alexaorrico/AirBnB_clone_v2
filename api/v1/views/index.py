@@ -19,7 +19,7 @@ def get_status():
     return jsonify(status='OK')
 
 
-@app_views.route('/stats', methods ['GET'])
+@app_views.route('/stats', methods['GET'])
 def stats():
     '''Retrieves the number of each objects by type'''
     objects = {

@@ -17,17 +17,20 @@ app.register_blueprint(app_views)
 # Enable CORS for all routes under origin
 CORS(app, resources={'/*': {'origins': app_host}})
 
+
 # Close the storage session after each request
 @app.teardown_appcontext
 def close_storage(error):
     """Close the storage session"""
     storage.close()
 
+
 # Handle 404 errors with a custom JSON response
 @app.errorhandler(404)
 def not_found(error):
     """Return a JSON error message for 404"""
     return jsonify({'error': 'Not found'}), 404
+
 
 # Handle 400 errors with a custom JSON response
 @app.errorhandler(400)
@@ -37,6 +40,7 @@ def bad_request(error):
     if isinstance(error, Exception) and error.description:
         message = error.description
     return jsonify({'error': message}), 400
+
 
 # Run the app if executed as the main script
 if __name__ == '__main__':
