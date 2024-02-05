@@ -23,6 +23,7 @@ def get_state_by_id(state_id):
     if state is None:
         abort(404)
     else:
+        print(jsonify(state.to_dict()))
         return jsonify(state.to_dict())
 
 

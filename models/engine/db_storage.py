@@ -88,13 +88,11 @@ class DBStorage:
             return len(self.all())
         else:
             return len(self.all(cls))
-    '''
 
     def get(self, cls, id):
         """Retrieve one object"""
         return self.__session.query(cls).get(id)
 
-    '''
     def count(self, cls=None):
         """Count the number of objects in storage"""
         if cls:
@@ -105,6 +103,15 @@ class DBStorage:
                 count += self.__session.query(model_class).count()
             return count
     '''
+    def get(self, cls, id):
+        """Retrieve an object by primary key"""
+        if isinstance(cls, str) and isinstance(id, str) and cls in classes:
+            cls = classes[cls]
+            return self.__session.query(cls).get(id)
+        else:
+            return self.__session.query(cls).get(id)
+
+
     def count(self, cls=None):
         """Count the number of objects in storage"""
         if cls:
