@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Handles RESTFul API actions for states
+Handles RESTFul API actions for amenities
 """
 
 from flask import abort
@@ -11,7 +11,7 @@ from models.state import State
 from models import storage
 
 
-@app_views.route("/states", methods = ['GET'], strict_slashes=False)
+@app_views.route("/states", methods=["GET"], strict_slashes=False)
 def all_states():
     """
     Returns list of all states
@@ -54,9 +54,9 @@ def add_state():
     """
     data = request.get_json(silent=True)
     if not data:
-        abort(400,'Not a JSON')
+        abort(400, 'Not a JSON')
     if 'name' not in data:
-        abort(400,"Missing name")
+        abort(400, "Missing name")
 
     name = data['name']
     new_state = State(name=name)
@@ -73,7 +73,7 @@ def update_state(state_id):
     if state:
         data = request.get_json(silent=True)
         if not data:
-            abort(400,"Not a JSON")
+            abort(400, "Not a JSON")
         keys_to_ignore = ["created_at", "id", "updated_at"]
         for k, v in data.items():
             if k not in keys_to_ignore:
