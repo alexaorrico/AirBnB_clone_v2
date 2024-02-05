@@ -1,6 +1,7 @@
-ontains the FileStorage class
+#!/usr/bin/python3
 """
-
+Contains the FileStorage class
+"""
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
