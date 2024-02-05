@@ -68,6 +68,7 @@ def users_view(user_id=None):
                         "updated_at"
                         ]
                     }
-            user_object.update(user_update)
+            for k, v in user_update.items():
+                setattr(user_object, v)
             user_object.save()
             return jsonify(user_object.to_dict()), 200
