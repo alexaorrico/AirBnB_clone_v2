@@ -1,34 +1,22 @@
-#!/usr/bin/python3
-'''
-Create a route
-'''
-
-
-from flask import jsonify
+i#!/usr/bin/python3
+"""index status blueprint"""
 from api.v1.views import app_views
+from flask import jasonify
 from models import storage
 
+@app_views.route("/status")
+def status():
+    """check status"""
+    return jasonify(status='OK')
 
-@app_views.route('/status', methods=['GET'])
-def api_status():
-    '''
-    Returns a JSON response for RESTful API health.
-    '''
-    response = {'status': 'OK'}
-    return jsonify(response)
+@app_views.route("/api/v1/stats")
+def stats():
+    """checks the stats of each object by its type"""
+    return jasonify(storage.count())
 
-
-@app_views.route('/stats', methods=['GET'])
-def get_stats():
-    '''
-    Retrieves the number of each objects by type.
-    '''
-    stats = {
-        'amenities': storage.count('Amenity'),
-        'cities': storage.count('City'),
-        'places': storage.count('Place'),
-        'reviews': storage.count('Review'),
-        'states': storage.count('State'),
-        'users': storage.count('User')
-    }
-    return jsonify(stats)
+@app_views.errorhandler(404)
+def not_found():
+    """handles not found error"""
+    response = jasonify(error='Not Found')
+    response.status_code = 404
+    return response
