@@ -43,9 +43,7 @@ def create_user():
     """create a new post reqs"""
     data = request.get_json(force=True, silent=True)
     if not data:
-        abort(400)
-    if "name" not in data:
-        abort(400, "Missing name")
+        abort(400, "Not a JSON")
     if "email" not in data:
         abort(400, "Missing email")
     if "password" not in data:
@@ -61,10 +59,10 @@ def update_user(user_id):
     """updates a amenity object"""
     user_obj = storage.get(User, user_id)
     if not user_obj:
-        abort(404)
+        abort(404, 'Not a JSON')
     data = request.get_json(force=True, silent=True)
-    if not data:
-        abort(400, 'Not a JSON')
+    if "email" not in data:
+        abort(400, 'Missing email')
     ignore_keys = ['id', 'email', 'state_id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in ignore_keys:
