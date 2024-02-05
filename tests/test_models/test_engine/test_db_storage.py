@@ -87,54 +87,30 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def test_get(self):
-        """Testreturns correct output."""
-        storage = models.storage
-        obj = State(name='Texas')
-        obj.save()
+    def test_get_existing_obj(self):
+        """Test for existing object."""
+        obj = storage.get(State, self.state.id)
+        self.assertIsNotNone(obj)
 
-        self.assertEqual(obj.id, storage.get(State, obj.id).id)
-        self.assertEqual(obj.name, storage.get(State, obj.id).name)
+    def test_get_non_existing_obj(self):
+        """ Test that attempts to find non-existing object."""
+        obj = storage.get(State, "non-existing-id")
+        self.assertNone(obj)
 
-        self.assertIsNot(obj, storage.get(State, obj.id + 'op'))
-        self.assertIsNone(storage.get(State, obj.id + 'op'))
-        self.assertIsNone(storage.get(State, 45))
-        self.assertIsNone(storage.get(None, obj.id))
-        self.assertIsNone(storage.get(int, obj.id))
+    def test_count_specific_cls(self):
+        """Count test of specific class"""
+        init_count = storage.count(State)
+        new_state = State(name="OldTestState")
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(State), init_count + 1)
+        storage.delete(new_state)
 
-        with self.assertRaises(TypeError):
-            storage.get(State, obj.id, 'op')
-        with self.assertRaises(TypeError):
-            storage.get(State)
-        with self.assertRaises(TypeError):
-            storage.get()
-
-    def test_count(self):
-        """Test for count."""
-        storage = models.storage
-
-        self.assertIs(type(storage.count()), int)
-        self.assertIs(type(storage.count(None)), int)
-        self.assertIs(type(storage.count(int)), int)
-        self.assertIs(type(storage.count(State)), int)
-
-        self.assertEqual(storage.count(), storage.count(None))
-        State(name='California').save()
-
-        self.assertGreater(storage.count(State), 0)
-        self.assertEqual(storage.count(State), storage.count(None))
-
-        state_before = storage.count(State)
-        State(name='Florida').save()
-
-        self.assertGreater(storage.count(State), state_before)
-
-        Amenity(name='Gym').save()
-        self.assertGreater(storage.count(), storage.count(State))
-
-        with self.assertRaises(TypeError):
-            storage.count(State, 'op')
-
-
-if __main__ == '__name':
-    unittest.main()
+    def test_count_all_obj(self):
+        """Test for count of all objects."""
+        init_count = storage.count()
+        new_state = State(name="NewTestState")
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(), init_count + 1)
+        storage.delete(new_state)

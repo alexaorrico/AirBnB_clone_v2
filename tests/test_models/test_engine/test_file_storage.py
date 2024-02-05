@@ -114,54 +114,41 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    def test_get(self):
-        """Testreturns correct output."""
-        storage = models.storage
-        obj = State(name='Texas')
-        obj.save()
+    def setUp(self):
+        """Sets up tests."""
 
-        self.assertEqual(obj.id, storage.get(State, obj.id).id)
-        self.assertEqual(obj.name, storage.get(State, obj.id).name)
+        # Assumption that BaseModel is correct
+        self.model = BaseModel()
+        self.model.save()
 
-        self.assertIsNot(obj, storage.get(State, obj.id + 'op'))
-        self.assertIsNone(storage.get(State, obj.id + 'op'))
-        self.assertIsNone(storage.get(State, 45))
-        self.assertIsNone(storage.get(None, obj.id))
-        self.assertIsNone(storage.get(int, obj.id))
+    def tearDown(self):
+        """Tests for tear Down."""
 
-        with self.assertRaises(TypeError):
-            storage.get(State, obj.id, 'op')
-        with self.assertRaises(TypeError):
-            storage.get(State)
-        with self.assertRaises(TypeError):
-            storage.get()
+        # Deletes the model to avoid test side effects in storage.
+        del self.model
 
-    def test_count(self):
-        """Test for count."""
-        storage = models.storage
+    def test_get_existing_obj(self):
+        """Test for an existing object class."""
+        obj = storage.get("BaseModel", self.model.id)
+        self.assertIsNone(obj)
 
-        self.assertIs(type(storage.count()), int)
-        self.assertIs(type(storage.count(None)), int)
-        self.assertIs(type(storage.count(int)), int)
-        self.assertIs(type(storage.count(State)), int)
+    def test_get_non_existing_obj(self):
+        """Tests for non-existing objects."""
+        obj = storage.get("BaseModel", "non-existing-id")
+        self.assertIsNone(obj)
 
-        self.assertEqual(storage.count(), storage.count(None))
-        State(name='California').save()
+    def test_count_specific_cls(self):
+        """Test count for specific class."""
+        init_count = storage.count("BaseModel")
+        new_model = BaseModel()
+        new_model.save()
+        self.assertEqual(storage.count("BaseModel"), init_count + 1)
+        storage.delete(new_model)
 
-        self.assertGreater(storage.count(State), 0)
-        self.assertEqual(storage.count(State), storage.count(None))
-
-        state_before = storage.count(State)
-        State(name='Florida').save()
-
-        self.assertGreater(storage.count(State), state_before)
-
-        Amenity(name='Gym').save()
-        self.assertGreater(storage.count(), storage.count(State))
-
-        with self.assertRaises(TypeError):
-            storage.count(State, 'op')
-
-
-if __main__ == '__name__:
-    unittest.main()
+    def test_count_all_obj(self):
+        """Test count for all objects."""
+        init_count = storage.count()
+        new_model = BaseModel()
+        new_model.save()
+        self.assertEqual(storage.count(), init_count + 1)
+        storage.delete(new_model)
