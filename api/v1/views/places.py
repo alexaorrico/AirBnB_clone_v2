@@ -107,7 +107,11 @@ def places_search():
     places = []
 
     if not states and not cities and not amenities:
-        places = [place.to_dict() for place in storage.all(Place).values()]
+        #places = [place.to_dict() for place in storage.all(Place).values()]
+        place = storage.all(Place).values()
+        places = []
+        for plc in place:
+            places.append(plc.to_dict())
         return jsonify(placas)
     
     if states:
