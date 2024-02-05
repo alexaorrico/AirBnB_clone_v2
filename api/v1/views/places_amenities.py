@@ -4,7 +4,7 @@ from api.v1.views import app_views
 from models.place import Place
 from models.amenity import Amenity
 from models import storage
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, make_response
 from os import getenv
 
 
@@ -18,7 +18,7 @@ def get_place_amenities(place_id):  # Get all amenities of a place
             return jsonify(
                 [
                     storage.get(Amenity, amenity_id).to_dict()
-                    for amenity_id in place.amenities
+                    for amenity_id in place.amenity_ids
                 ]
             )
     abort(404)
