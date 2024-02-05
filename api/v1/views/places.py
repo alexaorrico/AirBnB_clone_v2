@@ -1,10 +1,13 @@
 #!/usr/bin/python3
+
 """Places module"""
+
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from models import storage
 from models.city import City
 from models.user import User
+from models.place import Place
 
 
 @app_views.route('/cities/<city_id>/places',
