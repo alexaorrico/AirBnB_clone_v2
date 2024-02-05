@@ -40,7 +40,7 @@ class BaseModel:
                 self.updated_at = datetime.strptime(kwargs["updated_at"], time)
             else:
                 self.updated_at = datetime.utcnow()
-            if kwargs.get("id") is None and getattr (self, "id") is None:
+            if kwargs.get("id") is None and getattr(self, "id") is None:
                 self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
