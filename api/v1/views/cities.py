@@ -6,6 +6,7 @@ from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+import json
 
 
 @app_views.route("/states/<state_id>/cities", methods=["GET", "POST"])
@@ -18,12 +19,14 @@ def list_cities(state_id):
         cities_list = [city.to_dict() for city in state_object.cities]
         return jsonify(cities_list)
     if request.method == "POST":
-        json_data = request.get_json()
-        if not json_data:
+        if not request.is_json:
             abort(400, description="Not a JSON")
-        if "name" not in json_data.keys():
+        json_data = request.get_json()
+        if "name" not in json_data:
             abort(400, description="Missing name")
+        json_data["state_id"] = state_id
         new_city_object = City(**json_data)
+        #  setattr(new_city_object, "state_id", state_id)
         storage.new(new_city_object)
         storage.save()
         return make_response(jsonify(json_data), 201)
@@ -40,6 +43,7 @@ def retrieve_city_object(city_id):
         return jsonify(city_repr)
     if request.method == "DELETE":
         storage.delete(city_object)
+        storage.save()
         return make_response(jsonify({}), 200)
     if request.method == "PUT":
         user_data = request.get_json()
