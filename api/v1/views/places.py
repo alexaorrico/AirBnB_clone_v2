@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This module contains a blue print for a restful API that
     works for place objects
-"""
+    """
 
 from api.v1.views import app_views
 from flask import jsonify, abort, request

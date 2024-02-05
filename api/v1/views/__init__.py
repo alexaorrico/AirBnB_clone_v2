@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 This module contains a flask blueprint for a web application
+framework
 """
 
 from flask import Blueprint
