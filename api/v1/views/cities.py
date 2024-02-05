@@ -21,7 +21,7 @@ def state_cities_routes(state_id):
     if state is None:
         abort(404)
 
-    if request.method == "GET":        
+    if request.method == "GET":
         cities = [city.to_dict() for city in state.cities]
         return jsonify(cities)
 

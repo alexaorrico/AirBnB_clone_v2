@@ -44,7 +44,7 @@ def state_id_routes(state_id):
     if state is None:
         abort(404)
 
-    if request.method == "GET":        
+    if request.method == "GET":
         return jsonify(state.to_dict())
 
     elif request.method == "PUT":
