@@ -2,14 +2,19 @@
 """
 This test files holds all the tests needed to test the console application
 """
+
+import console
+import pep8
+import inspect
 import unittest
 from unittest.mock import patch
 from console import HBNBCommand
 from io import StringIO
 import re
+HBNBCommand = console.HBNBCommand
 
 
-class TestConsole(unittest.TestCase):
+class TestConsoleDocs(unittest.TestCase):
     """
     A unit test to see if the overall functinalits
     of the console like, the precmd, the parsing, the
