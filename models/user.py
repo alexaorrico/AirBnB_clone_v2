@@ -30,7 +30,8 @@ class User(BaseModel, Base):
         super().__init__(*args, **kwargs)
 
         if 'password' in kwargs:
-            self.password = hashlib.md5(kwargs['password'].encode()).hexdigest()
+            self.password = hashlib.md5(
+                kwargs['password'].encode()).hexdigest()
 
     def to_dict(self, exclude_password=True):
         """returns a dictionary containing all keys/values of the instance"""
