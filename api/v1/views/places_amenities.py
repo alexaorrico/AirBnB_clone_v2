@@ -14,25 +14,22 @@ from models.user import User
 db_mode = os.getenv("HBNB_TYPE_STORAGE")
 
 
-@app_views.route('/places/<place_id>/amenities', methods=['GET'],
-                 strict_slashes=False)
-def get_amenties_by_place(place_id):
-    """Retrieves the list of all amenity objects of a place"""
+@app_views.route("/places/<place_id>/amenities", strict_slashes=False,
+                 methods=["GET"])
+def place_amenities(place_id):
+    """retrieve place amenities"""
+    amenities_list = []
     place = storage.get(Place, place_id)
     if not place:
-        abort(404)
-    amenities = [amenity.to_dict() for amenity in place.amenities]
-    return jsonify(amenities)
+        abort(400)
+    if db_mode == "db":
+        amenities = place.amenities
+        for amenity in amenities:
+            amenities_list.append(amenity.to_dict())
 
-
-@app_views.route('/places/<place_id>/amenities', methods=['GET'],
-                 strict_slashes=False)
-def get_amenties(amenities_id):
-    """Retrives a Amenties object"""
-    amenities = storage.get(Amenity, amenities_id)
-    if not amenities:
-        abort(404)
-    return jsonify(amenities.to_dict())
+    else:
+        amenities_list = place.amenity_ids
+    return jsonify(amenities_list)
 
 
 @app_views.route("/places/<place_id>/amenities/<amenity_id>",
