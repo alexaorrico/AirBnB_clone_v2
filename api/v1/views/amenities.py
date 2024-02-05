@@ -58,9 +58,12 @@ def update_amenity(amenity_id):
     amenity_obj = storage.get(Amenity, amenity_id)
     if not amenity_obj:
         abort(404)
+    if not request.json:
+        abort(400, 'Not a JSON')
     data = request.get_json(force=True, silent=True)
-    if not data:
-        abort(404, 'Not a JSON')
-    amenity_name = data.get('name', amenity_name)
+    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
+    for key, value in data.items():
+        if key not in ignore_keys:
+            setattr(amenity_obj, key, value)
     amenity_obj.save()
     return jsonify(amenity_obj.to_dict()), 200
