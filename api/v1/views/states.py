@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Handles RESTFul API actions for amenities
+Handles RESTFul API actions for states
 """
 
 from flask import abort
@@ -59,7 +59,8 @@ def add_state():
     if 'name' not in data:
         abort(400, "Missing name")
 
-    new_state = State(**data)
+    name = data['name']
+    new_state = State(name=name)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 
@@ -80,5 +81,4 @@ def update_state(state_id):
                 setattr(state, k, v)
         storage.save()
         return jsonify(state.to_dict()), 200
-
     abort(404)

@@ -78,7 +78,7 @@ def update_amenity(amenity_id):
         keys_to_ignore = ["created_at", "id", "updated_at"]
         for k, v in data.items():
             if k not in keys_to_ignore:
-                amenity.__dict__.update({k: v})
+                setattr(amenity, k, v)
         storage.save()
         return jsonify(amenity.to_dict()), 200
     abort(404)
