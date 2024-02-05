@@ -3,7 +3,6 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models import storage
-from models.state import State
 from models.amenity import Amenity
 
 
@@ -50,7 +49,7 @@ def post_amenity():
     if "name" not in json_req:
         return jsonify({"error": "Missing name"}), 400
 
-    amenity = Amenity(name=json_req["name"])
+    amenity = Amenity(**json_req)
     storage.new(amenity)
     storage.save()
     return jsonify(amenity.to_dict()), 201

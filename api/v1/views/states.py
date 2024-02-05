@@ -49,7 +49,7 @@ def post_state():
     if 'name' not in json_req:
         return jsonify({"error": "Missing name"}), 400
 
-    state = State(name=json_req['name'])
+    state = State(**json_req)
     storage.new(state)
     storage.save()
     return jsonify(state.to_dict()), 201
