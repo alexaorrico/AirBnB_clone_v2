@@ -134,3 +134,7 @@ class TestFileStorage(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             storage.count(State, 'op')
+
+
+if __main__ == '__name':
+    unittest.main()
