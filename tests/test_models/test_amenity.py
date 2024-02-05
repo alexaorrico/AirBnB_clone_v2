@@ -33,6 +33,7 @@ class TestAmenityDocs(unittest.TestCase):
         result = pep8s.check_files(['tests/test_models/test_amenity.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
+
     def test_amenity_module_docstring(self):
         """Test for the amenity.py module docstring"""
         self.assertIsNot(amenity.__doc__, None,
