@@ -38,6 +38,7 @@ def get_reviews(place_id):
             abort(404)
         if "text" not in json_data:
             abort(400, "Missing text")
+        json_data["place_id"] = place_id
         new_review_object = Review(**json_data)
         storage.new(new_review_object)
         storage.save()
