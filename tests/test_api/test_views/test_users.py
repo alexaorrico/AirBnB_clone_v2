@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+'''user unittest'''
 import unittest
 import json
 from models.user import User

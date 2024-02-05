@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+'''places unittest'''
 import unittest
 import json
 from models.city import City
@@ -8,6 +10,7 @@ from models.state import State
 from models import storage
 from api.v1.app import app
 from flask import Response
+
 
 class TestPlaceAppViews(unittest.TestCase):
     def setUp(self):

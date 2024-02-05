@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+'''states unittest'''
 import unittest
 import json
 from models.state import State
