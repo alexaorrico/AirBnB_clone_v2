@@ -80,6 +80,7 @@ class DBStorage:
         Returns the object based on the class name and its ID, or None if not
         found
         """
+        cls = eval(cls) if type(cls) is str else cls
         if cls in classes.values():
             objects = self.all(cls)
             for obj in objects.values():
