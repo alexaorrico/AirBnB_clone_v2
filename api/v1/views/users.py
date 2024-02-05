@@ -62,9 +62,9 @@ def update_user(user_id):
     user_obj = storage.get(User, user_id)
     if not user_obj:
         abort(404)
-    if not request.json:
-        abort(400, 'Not a JSON')
     data = request.get_json(force=True, silent=True)
+    if not data:
+        abort(400, 'Not a JSON')
     ignore_keys = ['id', 'email', 'state_id', 'created_at', 'updated_at']
     for key, value in data.items():
         if key not in ignore_keys:
