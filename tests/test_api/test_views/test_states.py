@@ -61,8 +61,8 @@ class TestAppViews(unittest.TestCase):
 
     def test_update_state(self):
         updated_state_data = {"name": "Updated State"}
-        response = self.app.put(
-            '/api/v1/states/{}'.format(self.test_state.id), json=updated_state_data)
+        response = self.app.put('/api/v1/states/{}'.format(
+                                self.test_state.id), json=updated_state_data)
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_data(as_text=True))
         self.assertEqual(data['name'], updated_state_data['name'])
