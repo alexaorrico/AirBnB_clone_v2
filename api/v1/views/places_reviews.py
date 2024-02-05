@@ -38,6 +38,7 @@ def get_reviews(place_id):
             abort(404)
         if "text" not in json_data:
             abort(400, "Missing text")
+        json_data["place_id"] = place_id
         new_review_object = Review(**json_data)
         storage.new(new_review_object)
         storage.save()
@@ -69,7 +70,7 @@ def get_review(review_id):
         if not request.is_json:
             abort(400, "Not a JSON")
         json_data = request.get_json()
-        for key, value in json_data:
+        for key, value in json_data.items():
             if key not in [
                     "id", "user_id", "place_id",
                     "created_at", "updated_at"
