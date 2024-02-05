@@ -9,7 +9,11 @@ import json
 
 
 @app_views.route("/users", methods=["GET", "POST"], strict_slashes=False)
-@app_views.route("/users/<user_id>", methods=["GET", "DELETE", "PUT"], strict_slashes=False)
+@app_views.route(
+            "/users/<user_id>",
+            methods=["GET", "DELETE", "PUT"],
+            strict_slashes=False
+            )
 def users_view(user_id=None):
     """ View function to retrieve user
     objects"""

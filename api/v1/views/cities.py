@@ -38,16 +38,20 @@ def list_cities(state_id):
 def retrieve_city_object(city_id):
     """ Used to return city object representation"""
     city_object = storage.get(City, city_id)
-    if not city_object:
-        abort(404)
     if request.method == "GET":
+        if not city_object:
+            abort(404)
         city_repr = city_object.to_dict()
         return jsonify(city_repr)
     if request.method == "DELETE":
+        if not city_object:
+            abort(404)
         storage.delete(city_object)
         storage.save()
         return make_response(jsonify({}), 200)
     if request.method == "PUT":
+        if not city_object:
+            abort(404)
         if not request.is_json:
             abort(400, description="Not a JSON")
         user_data = request.get_json()
