@@ -22,9 +22,9 @@ def view_status():
 @app_views.route('/stats')
 def view_stats():
     """Show counts of each class in storage"""
-    return jsonify({"amenities": models.storage.count(Amenity)
-                    "cities": models.storage.count(City)
-                    "places": models.storage.count(Place)
-                    "reviews": models.storage.count(Review)
-                    "states": models.storage.count(State)
+    return jsonify({"amenities": models.storage.count(Amenity),
+                    "cities": models.storage.count(City),
+                    "places": models.storage.count(Place),
+                    "reviews": models.storage.count(Review),
+                    "states": models.storage.count(State),
                     "users": models.storage.count(User)})
