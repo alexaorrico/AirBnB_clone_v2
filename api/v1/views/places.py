@@ -102,9 +102,8 @@ def update_place(place_id):
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
     '''Search for places based on JSON request'''
-    try:
-        data = request.get_json()
-    except Exception:
+    data = request.get_json()
+    if not data:
         return jsonify({"error": "Not a JSON"}), 400
 
     states = data.get("states", [])
