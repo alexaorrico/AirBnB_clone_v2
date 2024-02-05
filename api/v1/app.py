@@ -1,50 +1,99 @@
+#!/usr/bin/python3
+'''Contains the cities view for the API.'''
+ntains the cities view for the API.'''
+from flask import jsonify, request
+from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
-ntains a Flask web application API.
-'''
-import os
-from flask import Flask, jsonify
-from flask_cors import CORS
-
-from models import storage
 from api.v1.views import app_views
+from models import storage, storage_t
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 
-app = Flask(__name__)
-'''The Flask web application instance.'''
-app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-app_port = int(os.getenv('HBNB_API_PORT', '5000'))
-app.url_map.strict_slashes = False
-app.register_blueprint(app_views)
-CORS(app, resources={'/*': {'origins': app_host}})
+@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
+@app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
+def handle_cities(state_id=None, city_id=None):
+    '''The method handler for the cities endpoint.
+    '''
+    handlers = {
+        'GET': get_cities,
+        'DELETE': remove_city,
+        'POST': add_city,
+        'PUT': update_city,
+    }
+    if request.method in handlers:
+        return handlers[request.method](state_id, city_id)
+    else:
+        raise MethodNotAllowed(list(handlers.keys()))
 
 
-@app.teardown_appcontext
-def teardown_flask(exception):
-    '''The Flask app/request context end event listener.'''
-    # print(exception)
-    storage.close()
+def get_cities(state_id=None, city_id=None):
+    '''Gets the city with the given id or all cities in
+    the state with the given id.
+    '''
+    if state_id:
+        state = storage.get(State, state_id)
+        if state:
+            cities = list(map(lambda x: x.to_dict(), state.cities))
+            return jsonify(cities)
+    elif city_id:
+        city = storage.get(City, city_id)
+        if city:
+            return jsonify(city.to_dict())
+    raise NotFound()
 
 
-@app.errorhandler(404)
-def error_404(error):
-    '''Handles the 404 HTTP error code.'''
-    return jsonify(error='Not found'), 404
+def remove_city(state_id=None, city_id=None):
+    '''Removes a city with the given id.
+    '''
+    if city_id:
+        city = storage.get(City, city_id)
+        if city:
+            storage.delete(city)
+            if storage_t != "db":
+                for place in storage.all(Place).values():
+                    if place.city_id == city_id:
+                        for review in storage.all(Review).values():
+                            if review.place_id == place.id:
+                                storage.delete(review)
+                        storage.delete(place)
+            storage.save()
+            return jsonify({}), 200
+    raise NotFound()
 
 
-@app.errorhandler(400)
-def error_400(error):
-    '''Handles the 400 HTTP error code.'''
-    msg = 'Bad request'
-    if isinstance(error, Exception) and hasattr(error, 'description'):
-        msg = error.description
-    return jsonify(error=msg), 400
+def add_city(state_id=None, city_id=None):
+    '''Adds a new city.
+    '''
+    state = storage.get(State, state_id)
+    if not state:
+        raise NotFound()
+    data = request.get_json()
+    if type(data) is not dict:
+        raise BadRequest(description='Not a JSON')
+    if 'name' not in data:
+        raise BadRequest(description='Missing name')
+    data['state_id'] = state_id
+    city = City(**data)
+    city.save()
+    return jsonify(city.to_dict()), 201
 
 
-if __name__ == '__main__':
-    app_host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-    app_port = int(os.getenv('HBNB_API_PORT', '5000'))
-    app.run(
-        host=app_host,
-        port=app_port,
-        threaded=True
-    )
+def update_city(state_id=None, city_id=None):
+    '''Updates the city with the given id.
+    '''
+    xkeys = ('id', 'state_id', 'created_at', 'updated_at')
+    if city_id:
+        city = storage.get(City, city_id)
+        if city:
+            data = request.get_json()
+            if type(data) is not dict:
+                raise BadRequest(description='Not a JSON')
+            for key, value in data.items():
+                if key not in xkeys:
+                    setattr(city, key, value)
+            city.save()
+            return jsonify(city.to_dict()), 200
+    raise NotFound()
