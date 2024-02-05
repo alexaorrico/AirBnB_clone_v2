@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """return the object based on the class and Id else None"""
 
-        if cls in classes.values() and id type(id) is str:
+        if cls in classes.values() and id and type(id) is str:
             all_objects = self.all(cls)
             for key, value in all_objects.items():
                 if key.split(".")[1] == id:
