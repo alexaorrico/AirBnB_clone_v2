@@ -84,3 +84,49 @@ def update_place(place_id):
             setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict()), 200
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def places_search():
+    """Retrieves Place objects based on a JSON search criteria."""
+    data = request.get_json()
+    if data is None:
+        abort(400, description="Not a JSON")
+
+    # If the JSON body is empty or each list of all keys are empty
+    search_keys = ['states', 'cities', 'amenities']
+    if not data or all(not data.get(key) for key in search_keys):
+        places = storage.all(Place).values()
+    else:
+        places = search_places(data)
+
+    places_dicts = [place.to_dict() for place in places]
+    return jsonify(places_dicts)
+
+
+def search_places(data):
+    """Search for places based on states, cities, and amenities."""
+    places = []
+    if 'states' in data and data['states']:
+        for state_id in data['states']:
+            state = storage.get(State, state_id)
+            if state:
+                for city in state.cities:
+                    places.extend(city.places)
+
+    if 'cities' in data and data['cities']:
+        for city_id in data['cities']:
+            city = storage.get(City, city_id)
+            if city and city not in [place.city for place in places]:
+                places.extend(city.places)
+
+    if 'amenities' in data and data['amenities']:
+        filtered_places = []
+        for place in places:
+            if all(amenity.id in [a.id for a in place.amenities]
+                   for amenity_id in data['amenities']
+                   for amenity in storage.get(Amenity, amenity_id)):
+                filtered_places.append(place)
+        places = filtered_places
+
+    return places
