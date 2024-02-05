@@ -124,11 +124,13 @@ def places_search():
                     for place in city.places:
                         if plc not in places:
                             places.append(plc)
-    if amenities:
-        amenities_set = set(amenities)
-        places = [place for place in places
-                  if amenities_set.issubset(place.get("amenities", []))]
-
+        if amenities:
+            if not places:
+                list_places = storage.all(Place).values()
+            amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
+            list_places = [place for place in list_places
+                            if all([am in place.amenities
+                               for am in amenities_obj])]
     list_of_places = [pl.pop('amenities', None).to_dict() for pl in places]
 
     return jsonify(list_of_places)
