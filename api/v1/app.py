@@ -2,7 +2,7 @@
 """create a variable app, instance of Flask"""
 
 from flask import Flask, jsonify
-from api.v1.views import app_views
+from api.v1.views import *
 from models import storage
 import os
 from os import getenv
