@@ -21,7 +21,7 @@ def get_cities(state_id):
 
 @app_views.route("/cities/<city_id>")
 def get_city(city_id):
-    """a function to get a city by id""" 
+    """a function to get a city by id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -79,7 +79,7 @@ def update_city(city_id):
     if city is None:
         abort(404)
 
-    ignored_keys = ["id","state_id", "created_at", "updated_at"]
+    ignored_keys = ["id", "state_id", "created_at", "updated_at"]
     for key, value in json_req.items():
         if key not in ignored_keys:
             setattr(city, key, value)
