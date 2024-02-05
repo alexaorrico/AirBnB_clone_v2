@@ -98,7 +98,7 @@ def places_search():
     '''Search for places based on JSON request'''
     data = request.get_json()
     if not data:
-        return jsonify({"error": "Not a JSON"}), 400
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
 
     states = data.get("states", None)
     cities = data.get("cities", None)
@@ -122,11 +122,13 @@ def places_search():
             for city in city_obj:
                 if city:
                     for place in city.places:
-                        if plc not in list_places:
+                        if plc not in places:
                             places.append(plc)
     if amenities:
         amenities_set = set(amenities)
         places = [place for place in places
                   if amenities_set.issubset(place.get("amenities", []))]
 
-    return jsonify(places)
+    list_of_places = [pl.pop('amenities', None).to_dict() for pl in places]
+
+    return jsonify(list_of_places)
