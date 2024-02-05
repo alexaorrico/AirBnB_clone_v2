@@ -13,12 +13,14 @@ import json
 def list_cities(state_id):
     """ The list of cities for a given state id"""
     state_object = storage.get(State, state_id)
-    if not state_object:
-        abort(404)
     if request.method == "GET":
+        if not state_object:
+            abort(404)
         cities_list = [city.to_dict() for city in state_object.cities]
         return jsonify(cities_list)
     if request.method == "POST":
+        if not state_object:
+            abort(404)
         if not request.is_json:
             abort(400, description="Not a JSON")
         json_data = request.get_json()
