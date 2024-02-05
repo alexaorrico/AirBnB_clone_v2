@@ -34,13 +34,13 @@ class BaseModel:
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
-            else:
+            elif getattr(self, "created_at") is None:
                 self.created_at = datetime.utcnow()
             if kwargs.get("updated_at", None) and type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(kwargs["updated_at"], time)
-            else:
+            elif getattr(self, "updated_at") is None:
                 self.updated_at = datetime.utcnow()
-            if kwargs.get("id", None) is None:
+            if kwargs.get("id") is None and getattr(self, "id") is None:
                 self.id = str(uuid.uuid4())
         else:
             self.id = str(uuid.uuid4())
