@@ -29,7 +29,7 @@ def list_cities(state_id):
         #  setattr(new_city_object, "state_id", state_id)
         storage.new(new_city_object)
         storage.save()
-        return make_response(jsonify(json_data), 201)
+        return make_response(jsonify(new_city_object.to_dict()), 201)
 
 
 @app_views.route("/cities/<city_id>", methods=['GET', 'DELETE', 'PUT'])
@@ -46,10 +46,9 @@ def retrieve_city_object(city_id):
         storage.save()
         return make_response(jsonify({}), 200)
     if request.method == "PUT":
-        user_data = request.get_json()
-        print("User data", user_data)
-        if not user_data:
+        if not request.is_json:
             abort(400, description="Not a JSON")
+        user_data = request.get_json()
         ignored_keys = ["id", "state_id", "created_at", "updated_at"]
         for key in user_data:
             if key not in ignored_keys:
