@@ -45,9 +45,9 @@ def create_city(state_id):
     """Creates a city object"""
     state = storage.get(State, state_id)
     if state:
-        if request.json:
-            if 'name' in request.json:
-                data = request.json
+        if request.get_json():
+            if 'name' in request.get_json():
+                data = request.get_json()
                 data['state_id'] = state_id
                 city = City(**data)
                 city.save()
@@ -65,8 +65,8 @@ def update_city(city_id):
     """updates city object"""
     city = storage.get(City, city_id)
     if city:
-        if request.json:
-            for key, value in request.json.items():
+        if request.get_json():
+            for key, value in request.get_json().items():
                 if key not in ['id', 'state_id', 'created_at', 'updated_at']:
                     setattr(city, key, value)
             city.save()
