@@ -20,7 +20,7 @@ def amenities(amenity_id=None):
                 abort(404)
             return jsonify(amenity.to_dict())
         amenities = storage.all(Amenity)
-        amenities_dicts = [val.to_dict() for val in amenities.values()]
+        amenities_dicts = [val.to_dict() for val in amenitys.values()]
         return jsonify(amenities_dicts)
 
     elif request.method == 'DELETE':
@@ -49,7 +49,7 @@ def amenities(amenity_id=None):
 
         data = request.get_json()
         if not data:
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+            return make_response(jsonify({'error': 'not a json'}), 400)
 
         for key, value in data.items():
             if key not in ['id', 'created_at', 'updated_at']:
