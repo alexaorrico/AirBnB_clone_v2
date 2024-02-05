@@ -1,86 +1,106 @@
 #!/usr/bin/python3
-'''Contains the states view for the API.'''
-from flask import jsonify, request
-from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
-
-from api.v1.views import app_views
+"""
+Defines the places view for the API, handling all default RESTful API actions.
+"""
+from flask import jsonify, request, abort
 from models import storage
-from models.state import State
+from models.place import Place
+from models.city import City
+from models.user import User
+from api.v1.views import app_views
 
 
-ALLOWED_METHODS = ['GET', 'DELETE', 'POST', 'PUT']
-'''Methods allowed for the states endpoint.'''
-
-
-@app_views.route('/states', methods=ALLOWED_METHODS)
-@app_views.route('/states/<state_id>', methods=ALLOWED_METHODS)
-def handle_states(state_id=None):
-    '''The method handler for the states endpoint.
-    '''
+@app_views.route('/cities/<city_id>/places',
+                 methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/places/<place_id>',
+                 methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+def handle_places(city_id=None, place_id=None):
+    """
+    Handles all default RESTful API actions for Place objects.
+    """
     handlers = {
-        'GET': get_states,
-        'DELETE': remove_state,
-        'POST': add_state,
-        'PUT': update_state,
+        'GET': get_places,
+        'POST': add_place,
+        'DELETE': remove_place,
+        'PUT': update_place
     }
-    if request.method in handlers:
-        return handlers[request.method](state_id)
-    else:
-        raise MethodNotAllowed(list(handlers.keys()))
+    request_method = request.method
+    if request_method in handlers:
+        return handlers[request_method](city_id=city_id, place_id=place_id)
+    abort(405)
 
 
-def get_states(state_id=None):
-    '''Gets the state with the given id or all states.
-    '''
-    all_states = storage.all(State).values()
-    if state_id:
-        res = list(filter(lambda x: x.id == state_id, all_states))
-        if res:
-            return jsonify(res[0].to_dict())
-        raise NotFound()
-    all_states = list(map(lambda x: x.to_dict(), all_states))
-    return jsonify(all_states)
+def get_places(city_id=None, place_id=None):
+    """
+    Retrieves Place objects based on city_id or a specific place_id.
+    """
+    if city_id:
+        city = storage.get(City, city_id)
+        if not city:
+            abort(404)
+        places = [place.to_dict() for place in city.places]
+        return jsonify(places)
+    if place_id:
+        place = storage.get(Place, place_id)
+        if not place:
+            abort(404)
+        return jsonify(place.to_dict())
+    abort(404)
 
 
-def remove_state(state_id=None):
-    '''Removes a state with the given id.
-    '''
-    all_states = storage.all(State).values()
-    res = list(filter(lambda x: x.id == state_id, all_states))
-    if res:
-        storage.delete(res[0])
-        storage.save()
-        return jsonify({}), 200
-    raise NotFound()
+def add_place(city_id=None, place_id=None):
+    """
+    Creates a new Place object within a specified City.
+    """
+    if not city_id or place_id:
+        abort(404)
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404)
+    request_data = request.get_json(silent=True)
+    if request_data is None:
+        abort(400, description="Not a JSON")
+    if 'user_id' not in request_data:
+        abort(400, description="Missing user_id")
+    if 'name' not in request_data:
+        abort(400, description="Missing name")
+    user = storage.get(User, request_data['user_id'])
+    if not user:
+        abort(404)
+    new_place = Place(city_id=city_id, **request_data)
+    new_place.save()
+    return jsonify(new_place.to_dict()), 201
 
 
-def add_state(state_id=None):
-    '''Adds a new state.
-    '''
-    data = request.get_json()
-    if type(data) is not dict:
-        raise BadRequest(description='Not a JSON')
-    if 'name' not in data:
-        raise BadRequest(description='Missing name')
-    new_state = State(**data)
-    new_state.save()
-    return jsonify(new_state.to_dict()), 201
+def remove_place(city_id=None, place_id=None):
+    """
+    Deletes a specific Place object by place_id.
+    """
+    if not place_id:
+        abort(404)
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    storage.delete(place)
+    storage.save()
+    return jsonify({}), 200
 
 
-def update_state(state_id=None):
-    '''Updates the state with the given id.
-    '''
-    xkeys = ('id', 'created_at', 'updated_at')
-    all_states = storage.all(State).values()
-    res = list(filter(lambda x: x.id == state_id, all_states))
-    if res:
-        data = request.get_json()
-        if type(data) is not dict:
-            raise BadRequest(description='Not a JSON')
-        old_state = res[0]
-        for key, value in data.items():
-            if key not in xkeys:
-                setattr(old_state, key, value)
-        old_state.save()
-        return jsonify(old_state.to_dict()), 200
-    raise NotFound()
+def update_place(city_id=None, place_id=None):
+    """
+    Updates a specific Place object by place_id.
+    """
+    if not place_id:
+        abort(404)
+    place = storage.get(Place, place_id)
+    if not place:
+        abort(404)
+    request_data = request.get_json(silent=True)
+    if request_data is None:
+        abort(400, description="Not a JSON")
+    ignore_keys = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
+    for key, value in request_data.items():
+        if key not in ignore_keys:
+            setattr(place, key, value)
+    place.save()
+    return jsonify(place.to_dict()), 200
