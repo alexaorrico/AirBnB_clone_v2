@@ -408,6 +408,30 @@ class TestStorageCount(unittest.TestCase):
         self.assertEqual(int(0 if len(storage.all("City")) is None else
                              len(storage.all("City"))), result)
 
+    def test_get(self):
+        '''
+            Test if get method retrieves obj requested
+        '''
+        new_state = State(name="NewYork")
+        self.storage.new(new_state)
+        key = "State.{}".format(new_state.id)
+        result = self.storage.get("State", new_state.id)
+        self.assertTrue(result.id, new_state.id)
+        self.assertIsInstance(result, State)
+
+    def test_count(self):
+        '''
+            Test if count method returns expected number of objects
+        '''
+        old_count = self.storage.count("State")
+        new_state1 = State(name="NewYork")
+        self.storage.new(new_state1)
+        new_state2 = State(name="Virginia")
+        self.storage.new(new_state2)
+        new_state3 = State(name="California")
+        self.storage.new(new_state3)
+        self.assertEqual(old_count + 3, self.storage.count("State"))
+
 
 if __name__ == '__main__':
     unittest.main
