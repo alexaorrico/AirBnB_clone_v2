@@ -70,7 +70,7 @@ def get_review(review_id):
         if not request.is_json:
             abort(400, "Not a JSON")
         json_data = request.get_json()
-        for key, value in json_data:
+        for key, value in json_data.items():
             if key not in [
                     "id", "user_id", "place_id",
                     "created_at", "updated_at"
