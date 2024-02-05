@@ -9,7 +9,7 @@ from models.state import State
 
 
 @app_views.route("/users", strict_slashes=False, methods=["GET"])
-@app_views.route("/users/<users_id>", strict_slashes=False,
+@app_views.route("/users/<user_id>", strict_slashes=False,
                  methods=["GET"])
 def get_users(user_id=None):
     """retrives the list of all users object of state"""
