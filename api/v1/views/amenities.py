@@ -11,7 +11,7 @@ from models.amenity import Amenity
 @app_views.route("/amenities", strict_slashes=False, methods=["GET"])
 @app_views.route("/amenities/<amenity_id>", strict_slashes=False,
                  methods=["GET"])
-def get_amenties(amenity_id):
+def get_amenties(amenity_id=None):
     """Retrieves the list of all amenties object of a state"""
     list_amenity = []
     if amenity_id is None:
@@ -46,24 +46,21 @@ def create_amenity():
         abort(404, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
-    amenity = Amenity(**data)
-    amenity.save
-    return jsonify(amenity.to_dict()), 201
+    new_amenity = Amenity(**data)
+    new_amenity.save
+    return jsonify(new_amenity.to_dict()), 201
 
 
 @app_views.route("/amenities/<amenity_id>", strict_slashes=False,
                  methods=["PUT"])
 def update_amenity(amenity_id):
     """updates a amenity object"""
-    amenity = storage.get(Amenity, amenity_id)
-    if not amenity:
+    amenity_obj = storage.get(Amenity, amenity_id)
+    if not amenity_obj:
         abort(404)
-    if not request.json:
-        abort(400, 'Not a JSON')
-    data = request.json
-    ignore_keys = ['id', 'state_id', 'created_at', 'updated_at']
-    for key , value in data.items():
-        if key not in ignore_keys:
-            setattr(amenity, key, value)
-    amenity.save()
-    return jsonify(amenity.to_dict()), 200
+    data = request.get_json(force=True, silent=True)
+    if not data:
+        abort(404, 'Not a JSON')
+    amenity_name = data.get('name', amenity_name)
+    amenity_obj.save()
+    return jsonify(amenity_obj.to_dict()), 200
