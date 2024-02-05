@@ -20,7 +20,7 @@ def amenities(amenity_id=None):
                 abort(404)
             return jsonify(amenity.to_dict())
         amenities = storage.all(Amenity)
-        amenities_dicts = [val.to_dict() for val in amenitys.values()]
+        amenities_dicts = [val.to_dict() for val in amenity.values()]
         return jsonify(amenities_dicts)
 
     elif request.method == 'DELETE':
