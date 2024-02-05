@@ -108,29 +108,30 @@ def places_search():
 
     if not states and not cities and not amenities:
         places = [place.to_dict() for place in storage.all(Place).values()]
-    else:
-        if states:
-            states_obj = [storage.get(State, s_id) for s_id in states]
-            for state in states_obj:
-                if state:
-                    for city in state.cities:
-                        if city:
-                            for plc in city.places:
-                                places.append(plc)
-        if cities:
-            city_obj = [storage.get(City, c_id) for c_id in cities]
-            for city in city_obj:
-                if city:
-                    for place in city.places:
-                        if plc not in places:
+        return jsonify(placas)
+    
+    if states:
+        states_obj = [storage.get(State, s_id) for s_id in states]
+        for state in states_obj:
+            if state:
+                for city in state.cities:
+                    if city:
+                        for plc in city.places:
                             places.append(plc)
-        if amenities:
-            if not places:
-                places = storage.all(Place).values()
-            amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
-            places = [place for place in places
-                            if all([am in place.amenities
-                               for am in amenities_obj])]
-    list_of_places = [pl.pop('amenities', None).to_dict() for pl in places]
+    if cities:
+        city_obj = [storage.get(City, c_id) for c_id in cities]
+        for city in city_obj:
+            if city:
+                for place in city.places:
+                    if plc not in places:
+                        places.append(plc)
+    if amenities:
+        if not places:
+            places = storage.all(Place).values()
+        amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
+        places = [place for place in places
+                        if all([am in place.amenities
+                            for am in amenities_obj])]
+    list_of_places = [pl.to_dict().pop('amenities', None) for pl in places]
 
     return jsonify(list_of_places)
