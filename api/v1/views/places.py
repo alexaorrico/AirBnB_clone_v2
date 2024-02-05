@@ -31,7 +31,7 @@ def city_places_routes(city_id):
         if in_data is None or not isinstance(in_data, dict):
             return 'Not a JSON\n', 400
 
-        name = in_data.get("user_id")
+        user_id = in_data.get("user_id")
         if user_id is None:
             return "Missing user_id\n", 400
 
