@@ -14,6 +14,7 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
+* [Rest Api Flask](#examples-of-use)
 * [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
@@ -149,7 +150,12 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
-
+## Rest Api Flask
+- api/v1/status : get the status of api
+- api/v1/stats: the number of each object
+- CRUD for classes[State, City, Amenity, User,  Place, Reviews]
+- add cross origin ressource state to the app
+- get,delete,post for the link table Place - Amenity
 ## Bugs
 No known bugs at this time. 
 
