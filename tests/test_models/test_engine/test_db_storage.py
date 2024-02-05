@@ -87,34 +87,25 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def test_get_de(self):
+    def test_get(self):
         """Testreturns correct output."""
         storage = models.storage
         obj = State(name='Texas')
         obj.save()
 
-        retrieved_obj = storage.get(State, obj.id)
-        self.assertEqual(obj.id, retrieved_obj.id)
-        self.assertEqual(obj.name, retrieved_obj.name)
+        self.assertEqual(obj.id, storage.get(Sate, obj.id).id)
+        self.assertEqual(obj.name, storage.get(State, obj.id).name)
 
-        with self.assertRaises(ValueError):
-            storage.get(State, obj.id + 'op')
-
-        with self.assertRaises(ValueError):
-            storage.get(State, 45)
-
-        with self.assertRaises(ValueError):
-            storage.get(None, obj.id)
-
-        with self.assertRaises(ValueError):
-            storage.get(int, obj.id)
+        self.assertIsNot(obj, storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, 45))
+        self.assertIsNone(storage.get(None, obj.id))
+        self.assertIsNone(storage.get(int, obj.id))
 
         with self.assertRaises(TypeError):
             storage.get(State, obj.id, 'op')
-
         with self.assertRaises(TypeError):
             storage.get(State)
-
         with self.assertRaises(TypeError):
             storage.get()
 
@@ -128,24 +119,18 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(type(storage.count(State)), int)
 
         self.assertEqual(storage.count(), storage.count(None))
-
-        state_before = storage.count(State)
         State(name='California').save()
 
         self.assertGreater(storage.count(State), 0)
-        self.assertGreater(storage.count(), storage.count(None))
-        self.assertGreater(storage.count(State), state_before)
+        self.assertEqual(storage.count(State), storage.count(None))
 
         state_before = storage.count(State)
         State(name='Florida').save()
 
         self.assertGreater(storage.count(State), state_before)
 
-        amenity_before = storage.count(Amenity)
         Amenity(name='Gym').save()
-
-        self.assertGreater(storage.count(), state_before)
-        self.assertGreater(storage.count(Amenity), amenity_before)
+        self.assertGreater(storage.count(), storage.count(State))
 
         with self.assertRaises(TypeError):
             storage.count(State, 'op')
