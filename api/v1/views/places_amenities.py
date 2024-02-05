@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Review objects view"""
+"""amenities objects view"""
 
 import os
 from api.v1.views import app_views
