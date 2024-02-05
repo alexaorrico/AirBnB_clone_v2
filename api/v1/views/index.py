@@ -32,4 +32,3 @@ def storage_counts():
         "users": storage.count("User")
     }
     return jsonify(cls_counts)
-
