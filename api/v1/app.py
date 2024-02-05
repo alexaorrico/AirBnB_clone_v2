@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Contains the status of the API  """
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from os import getenv
 from api.v1.views import app_views
@@ -14,6 +14,12 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 def tear_down(exc):
     """Start a new storage session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """ json 404 page """
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
