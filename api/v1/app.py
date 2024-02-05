@@ -9,6 +9,7 @@ from os import getenv
 from flask_cors import CORS
 from api.v1.views import amenities
 from api.v1.views import places_amenities
+from api.v1.views import users
 
 
 app = Flask(__name__)
