@@ -98,5 +98,7 @@ class DBStorage:
         Args:
             cls (class, optional): _description_. Defaults to None.
         """
+        if cls:
+            return len(self.all(cls))
 
-        return len(self.all(cls))
+        return len(self.all())
