@@ -16,7 +16,7 @@ app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 # CORS setup allowing all origins for the entire app
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": app_host}})
 
 
 @app.teardown_appcontext
