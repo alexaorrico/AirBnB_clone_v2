@@ -1,97 +1,128 @@
 #!/usr/bin/python3
 """
-route to handle State objects and operations
+states
 """
-from flask import jsonify, abort, request
-from api.v1.views import app_views, storage
+
+# Import necessary modules
+from flask import abort, jsonify, request
 from models.state import State
+from api.v1.views import app_views
+from models import storage
 
-
-@app_views.route("/states", methods=["GET"], strict_slashes=False)
-def state_get_all():
+# Route for retrieving all State objects
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
+def get_all_states():
     """
-    retrieves all State objects
-    :return: json of all states
+    Retrieves the list of all State objects.
     """
-    state_list = []
-    state_obj = storage.all("State")
-    for obj in state_obj.values():
-        state_list.append(obj.to_json())
-
+    # Get all State objects from the storage
+    states = storage.all(State).values()
+    # Convert objects to dictionaries and jsonify the list
+    state_list = [state.to_dict() for state in states]
     return jsonify(state_list)
 
+# Route for retrieving a specific State object by ID
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+def get_state(state_id):
+    """
+    Retrieves a State object.
+    """
+    # Get the State object with the given ID from the storage
+    state = storage.get(State, state_id)
+    if state:
+        # Return the State object in JSON format
+        return jsonify(state.to_dict())
+    else:
+        # Return 404 error if the State object is not found
+        abort(404)
 
-@app_views.route("/states", methods=["POST"], strict_slashes=False)
-def state_create():
+# Route for deleting a specific State object by ID
+@app_views.route('/states/<state_id>', methods=['DELETE'])
+def delete_state(state_id):
     """
-    create state route
-    :return: newly created state obj
+    Deletes a State object.
     """
-    state_json = request.get_json(silent=True)
-    if state_json is None:
+    # Get the State object with the given ID from the storage
+    state = storage.get(State, state_id)
+    if state:
+        # Delete the State object from the storage and save changes
+        storage.delete(state)
+        storage.save()
+        # Return an empty JSON with 200 status code
+        return jsonify({}), 200
+    else:
+        # Return 404 error if the State object is not found
+        abort(404)
+
+# Route for creating a new State object
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+def create_state():
+    """
+    Creates a State object.
+    """
+    if not request.get_json():
+        # Return 400 error if the request data is not in JSON format
         abort(400, 'Not a JSON')
-    if "name" not in state_json:
+
+    # Get the JSON data from the request
+    kwargs = request.get_json()
+    if 'name' not in kwargs:
+        # Return 400 error if 'name' key is missing in the JSON data
         abort(400, 'Missing name')
 
-    new_state = State(**state_json)
-    new_state.save()
-    resp = jsonify(new_state.to_json())
-    resp.status_code = 201
+    # Create a new State object with the JSON data
+    state = State(**kwargs)
+    # Save the State object to the storage
+    state.save()
+    # Return the newly created State object in JSON format with 201 status code
+    return jsonify(state.to_dict()), 201
 
-    return resp
-
-
-@app_views.route("/states/<state_id>",  methods=["GET"], strict_slashes=False)
-def state_by_id(state_id):
+# Route for updating an existing State object by ID
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+def update_state(state_id):
     """
-    gets a specific State object by ID
-    :param state_id: state object id
-    :return: state obj with the specified id or error
+    Updates a State object.
     """
+    # Get the State object with the given ID from the storage
+    state = storage.get(State, state_id)
+    if state:
+        if not request.get_json():
+            # Return 400 error if the request data is not in JSON format
+            abort(400, 'Not a JSON')
 
-    fetched_obj = storage.get("State", str(state_id))
+        # Get the JSON data from the request
+        data = request.get_json()
+        ignore_keys = ['id', 'created_at', 'updated_at']
+        # Update the attributes of the State object with the JSON data
+        for key, value in data.items():
+            if key not in ignore_keys:
+                setattr(state, key, value)
 
-    if fetched_obj is None:
+        # Save the updated State object to the storage
+        state.save()
+        # Return the updated State object in JSON format with 200 status code
+        return jsonify(state.to_dict()), 200
+    else:
+        # Return 404 error if the State object is not found
         abort(404)
 
-    return jsonify(fetched_obj.to_json())
+# Error Handlers:
 
-
-@app_views.route("/states/<state_id>",  methods=["PUT"], strict_slashes=False)
-def state_put(state_id):
+@app_views.errorhandler(404)
+def not_found(error):
     """
-    updates specific State object by ID
-    :param state_id: state object ID
-    :return: state object and 200 on success, or 400 or 404 on failure
+    Raises a 404 error.
     """
-    state_json = request.get_json(silent=True)
-    if state_json is None:
-        abort(400, 'Not a JSON')
-    fetched_obj = storage.get("State", str(state_id))
-    if fetched_obj is None:
-        abort(404)
-    for key, val in state_json.items():
-        if key not in ["id", "created_at", "updated_at"]:
-            setattr(fetched_obj, key, val)
-    fetched_obj.save()
-    return jsonify(fetched_obj.to_json())
+    # Return a JSON response for 404 error
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
 
-
-@app_views.route("/states/<state_id>", methods=["DELETE"],
-                 strict_slashes=False)
-def state_delete_by_id(state_id):
+@app_views.errorhandler(400)
+def bad_request(error):
     """
-    deletes State by id
-    :param state_id: state object id
-    :return: empty dict with 200 or 404 if not found
+    Returns a Bad Request message for illegal requests to the API.
     """
+    # Return a JSON response for 400 error
+    response = {'error': 'Bad Request'}
+    return jsonify(response), 400
 
-    fetched_obj = storage.get("State", str(state_id))
-
-    if fetched_obj is None:
-        abort(404)
-
-    storage.delete(fetched_obj)
-    storage.save()
-
-    return jsonify({})
