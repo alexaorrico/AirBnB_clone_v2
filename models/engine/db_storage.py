@@ -74,6 +74,7 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
     def get(self, cls, id):
         """query on the current database session"""
         new_dict = {}
@@ -86,7 +87,7 @@ class DBStorage:
         for key, value in new_dict.items():
             if value.__class__ == cls and value.id == id:
                 return new_dict[key]
-            
+
     def count(self, cls=None):
         """query on the current database session"""
         new_dict = {}
