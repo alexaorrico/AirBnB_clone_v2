@@ -18,7 +18,7 @@ def users_view(user_id=None):
         object_returned = [
                     obj.to_dict() for obj in user_objects
                     ]
-        return make_response(jsonify(object_returned), 200)
+        return jsonify(object_returned), 200
     if request.method == "POST" and user_id is None:
         if not request.is_json:
             #  abort(400, description="Not a JSON")
@@ -34,17 +34,17 @@ def users_view(user_id=None):
             new_user = User(**input_data)
             storage.new(new_user)
             storage.save()
-            return make_response(jsonify(new_user.to_dict()), 201)
+            return jsonify(new_user.to_dict()), 201
     if user_id is not None:
         user_object = storage.get(User, user_id)
         if user_object is None:
             abort(404)
         if request.method == "GET":
-            return make_response(jsonify(user_object.to_dict()), 200)
+            return jsonify(user_object.to_dict()), 200
         if request.method == "DELETE":
             storage.delete(user_object)
             storage.save()
-            return make_response(jsonify({}), 200)
+            return jsonify({}), 200
         if request.method == "PUT":
             if not request.is_json:
                 #  abort(400, description=jsonify({"error": "Not a JSON"}))
@@ -61,5 +61,5 @@ def users_view(user_id=None):
                         ]
                     }
             user_object.update(user_update)
-            storage.save()
-            return make_response(jsonify(user_object.to_dict()), 200)
+            user_object.save()
+            return jsonify(user_object.to_dict()), 200
