@@ -14,7 +14,7 @@ from models import storage
                  methods=['GET', 'DELETE', 'PUT'])
 @app_views.route('/cities/<string:city_id>/places',
                  strict_slashes=False, methods=['GET', 'POST'])
-def places(place_id=None):
+def places(place_id=None, city_id=None):
     """Retrieves a Place or All the places"""
     if request.method == 'GET':
         if place_id is not None:
@@ -22,6 +22,11 @@ def places(place_id=None):
             if place is None:
                 abort(404)
             return jsonify(place.to_dict())
+        elif city_id is no None:
+            city = storage.get(City, city_id)
+            if city is None:
+                abort(404)
+            return jsonify(city.places.to_dict())
         places = storage.all(Place)
         places_dicts = [val.to_dict() for val in places.values()]
         return jsonify(places_dicts)
