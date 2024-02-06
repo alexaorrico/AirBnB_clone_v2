@@ -6,8 +6,9 @@ from models.state import State
 from models.city import City
 from models.base_model import BaseModel
 
+
 @app_views.route('/amenities', methods=["GET"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_amenities():
     res = []
     amenities = storage.all(Amenity).values()
@@ -15,8 +16,9 @@ def get_amenities():
         res.append(amenity.to_dict())
     return jsonify(res)
 
+
 @app_views.route('/amenities', methods=["GET", "POST"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def create_amenity():
     if not request.json:
         abort(400, description="Not a JSON")
@@ -26,8 +28,9 @@ def create_amenity():
     amenity.save()
     return (jsonify(amenity.to_dict()), 201)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=[
-                "GET", "PUT"], strict_slashes=False)
+                 "GET", "PUT"], strict_slashes=False)
 def update_amenity(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
@@ -40,8 +43,9 @@ def update_amenity(amenity_id):
             amenity.save()
             return (jsonify(amenity.to_dict()), 200)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
-                strict_slashes=False)
+                 strict_slashes=False)
 def delete_amenities():
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:

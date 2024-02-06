@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-""" user view """
 from api.v1.views import app_views
 from flask import jsonify, Blueprint, make_response, abort, request
 from models import storage
 from models.user import User
 from models.base_model import BaseModel
 
+
 @app_views.route("/users", methods=["GET", "POST"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_users():
     """Get Users"""
     res = []
@@ -27,8 +27,9 @@ def get_users():
         new_user.save()
         return (jsonify(new_user.to_dict()), 201)
 
+
 @app_views.route("/users/<int:id>", methods=["GET", "PUT", "DELETE"],
-                strict_slashes=True)
+                 strict_slashes=True)
 def get_user(id):
     """Get User"""
     user = storage.get(User, id)

@@ -3,10 +3,12 @@ from api.v1.views import app_views
 from flask import jsonify, Blueprint, render_template, abort
 from models import storage
 
+
 @app_views.route('/status', method='GET')
 def status():
     """Return Status"""
     return (jsonify({"status": "OK"}))
+
 
 @app_views.route('stats', method='GET')
 def stats():

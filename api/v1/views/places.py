@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 from api.v1.views import app_views
 from flask import jsonify, Blueprint, make_response, abort, request
 from models import storage
@@ -8,8 +7,9 @@ from models.city import City
 from models.place import Place
 from models.base_model import BaseModel
 
+
 @app_views.route("/cities/<city_id>/places", methods=["GET", "POST"],
-                    strict_slashes=False)
+                 strict_slashes=False)
 def get_place(city_id):
     res = []
     city = storage.get(City, city_id)
@@ -30,8 +30,9 @@ def get_place(city_id):
                 new_place.save()
                 return (jsonify(new_place.to_dict()), 201)
 
+
 @app_views.route("/places/<place_id>", methods=[
-                "GET", "PUT", "DELETE"], strict_slashes=True)
+                 "GET", "PUT", "DELETE"], strict_slashes=True)
 def manage_place(place_id):
     Place = storage.get(Place, place_id)
     if Place is None:

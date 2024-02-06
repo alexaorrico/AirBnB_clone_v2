@@ -5,8 +5,9 @@ from models import storage
 from models.state import State
 from models.base_model import BaseModel
 
+
 @app_views.route("/State", methods=["GET", "POST"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_states():
     res = []
     if request.method == "GET":
@@ -22,8 +23,9 @@ def get_states():
         new_state.save()
         return (jsonify(new_state.to_dict()), 201)
 
+
 @app_views.route("/State/<state_id>", methods=["GET", "PUT"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def get_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
@@ -39,8 +41,9 @@ def get_state(state_id):
         state.save()
         return (jsonify(state.to_dict()), 200)
 
+
 @app_views.route("/State/<state_id>", methods=["Get", "DELETE"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def delete_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
@@ -51,6 +54,3 @@ def delete_state(state_id):
         storage.delete(state)
         storage.save()
         return (jsonify({}), 200)
-
-
-
