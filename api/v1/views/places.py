@@ -95,7 +95,7 @@ def update_place(place_id):
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
-""" search places by id """
+    '''search places by id'''
     if request.get_json() is None:
         return make_response(jsonify({"error": "Not a JSON"}), 400)
 
@@ -148,4 +148,4 @@ def places_search():
         d.pop('amenities', None)
         places.append(d)
 
-    return jsonify(places)
+    ireturn jsonify(places)
