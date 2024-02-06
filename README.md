@@ -1,3 +1,4 @@
+![img](https://assets.imaginablefutures.com/media/images/ALX_Logo.max-200x150.png)
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
@@ -67,6 +68,8 @@ TestBaseModelDocs class:
 * `def setUpClass(cls)`- Set up for the doc tests
 * `def test_pep8_conformance_base_model(self)` - Test that models/base_model.py conforms to PEP8
 * `def test_pep8_conformance_test_base_model(self)` - Test that tests/test_models/test_base_model.py conforms to PEP8
+* `def test_pep8_conformance_base_model(self)` - Test that models/base_model.py conforms to PEP8
+* `def test_pep8_conformance_test_base_model(self)` - Test that tests/test_models/test_base_model.py conforms to PEP8
 * `def test_bm_module_docstring(self)` - Test for the base_model.py module docstring
 * `def test_bm_class_docstring(self)` - Test for the BaseModel class docstring
 * `def test_bm_func_docstrings(self)` - Test for the presence of docstrings in BaseModel methods
@@ -117,8 +120,6 @@ TestBaseModel class:
 * `def test_pep8_conformance_state(self)` - Test that models/state.py conforms to PEP8
 * `def test_pep8_conformance_test_state(self)` - Test that tests/test_models/test_state.py conforms to PEP8
 * `def test_state_module_docstring(self)` - Test for the state.py module docstring
-* `def test_state_class_docstring(self)` - Test for the State class docstring
-
 [/test_models/user.py](/tests/test_models/test_user.py) - Contains the TestUserDocs class:
 * `def setUpClass(cls)` - Set up for the doc tests
 * `def test_pep8_conformance_user(self)` - Test that models/user.py conforms to PEP8
@@ -154,8 +155,8 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Jonah Ominyi - [Github](https://github.com/jonahjohnzon) / [Twitter](https://twitter.com/luzebox)  
+Peace Emedo  - [Github](https://github.com/Emedo586) / [Twitter](https://twitter.com/chiamakaemedo)
 
 Second part of Airbnb: Joann Vuong
 ## License
