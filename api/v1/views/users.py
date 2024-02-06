@@ -13,7 +13,8 @@ from flasgger.utils import swag_from
 @swag_from('documentation/user/get.yml', methods=['GET'])
 def get_all_users():
     """ Retrieves the list of all User objects """
-    users_list = [user_obj.to_dict() for user_obj in storage.all(User).values()]
+    users = storage.all(User).values()
+    users_list = [user_obj.to_dict() for user_obj in users]
     return jsonify(users_list)
 
 
