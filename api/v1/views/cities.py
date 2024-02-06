@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """view for city object that handles all default RESTFul API actions"""
 from . import app_views
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 from models.city import City
@@ -13,7 +13,7 @@ def get_cities_state(state_id):
     state = storage.get(State, state_id)
     if state:
         cities = [city.to_dict() for city in state.cities]
-        return make_response(jsonify(cities), 200)
+        return jsonify(cities), 200
     else:
         abort(404)
 
@@ -23,7 +23,7 @@ def get_city(city_id):
     """Return a dict representation of city object"""
     city = storage.get(City, city_id)
     if city:
-        return make_response(jsonify(city.to_dict()), 200)
+        return jsonify(city.to_dict()), 200
     else:
         abort(404)
 
@@ -35,7 +35,7 @@ def delete_city(city_id):
     if city:
         storage.delete(city)
         storage.save()
-        return make_response(jsonify("{}"), 200)
+        return jsonify({}), 200
     else:
         abort(404)
 
@@ -51,11 +51,11 @@ def create_city(state_id):
                 data['state_id'] = state_id
                 city = City(**data)
                 city.save()
-                return make_response(city.to_dict(), 201)
+                return city.to_dict(), 201
             else:
-                return make_reponse(jsonify({"error": "Missing name"}), 400)
+                return jsonify({"error": "Missing name"}), 400
         else:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
+            return jsonify({"error": "Not a JSON"}), 400
     else:
         abort(404)
 
@@ -70,8 +70,8 @@ def update_city(city_id):
                 if key not in ['id', 'state_id', 'created_at', 'updated_at']:
                     setattr(city, key, value)
             city.save()
-            return make_response(city.to_dict(), 200)
+            return city.to_dict(), 200
         else:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
+            return jsonify({"error": "Not a JSON"}), 400
     else:
         abort(404)
