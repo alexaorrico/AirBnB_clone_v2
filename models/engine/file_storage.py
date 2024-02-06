@@ -70,7 +70,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """retrieves one object based on class name and id"""
+	"""retrieves one object based on class name and id"""
         if cls and id:
             fetch_obj = "{}.{}".format(cls, id)
             all_obj = self.all(cls)
