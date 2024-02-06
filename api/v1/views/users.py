@@ -58,17 +58,10 @@ def users_view(user_id=None):
                 #  abort(400, description=jsonify({"error": "Not a JSON"}))
                 return jsonify({"error": "Not a JSON"}), 400
             user_update_data = request.get_json()
-            user_update = {
-                    key: user_update_data[key]
-                    for key in user_update_data
-                    if key not in [
-                        "id",
-                        "email",
-                        "created_at",
-                        "updated_at"
-                        ]
-                    }
-            for k, v in user_update.items():
-                setattr(user_object, v)
+            for k, v in user_update_data.items():
+                if k not in [
+                        "id", "email", "created_at", "updated_at"
+                        ]:
+                    setattr(user_object, k, v)
             user_object.save()
             return jsonify(user_object.to_dict()), 200
