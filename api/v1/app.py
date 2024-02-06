@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-"""This module contain a flask web application framework
-    for the airbnb website
-
-    It contains two functions
+"""
+This module contain a flask web application framework for the airbnb website
 """
 import os
 from flask import Flask, jsonify
