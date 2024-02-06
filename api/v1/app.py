@@ -29,7 +29,7 @@ def page_not_found(error):
     """Handle 404 error by returning a JSON."""
     error_dict = {"error": "Not found"}
     status_code = 404
-    return make_response(jsonify(error_dict), status_code)
+    return jsonify(error_dict), status_code
 
 
 if __name__ == "__main__":
