@@ -12,7 +12,7 @@ from models import storage
                  methods=['GET', 'DELETE', 'PUT'])
 @app_views.route('/states', strict_slashes=False, methods=['GET', 'POST'])
 def states(state_id=None):
-    """Retrieves a State or All the States"""
+    """Retrieves, Update, Create and Delete State or All the States"""
     if request.method == 'GET':
         if state_id is not None:
             state = storage.get(State, state_id)

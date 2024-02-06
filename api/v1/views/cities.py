@@ -4,32 +4,21 @@ Define route for view City
 """
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
-from models.city import City
 from models import storage
+from models.state import State
+from models.city import City
 
 
-@app_views.route('/cities/<string:city_id>', strict_slashes=False,
-                 methods=['GET', 'DELETE', 'PUT'])
-@app_views.route('/cities', strict_slashes=False, methods=['GET', 'POST'])
-def cities(city_id=None):
-    """Retrieves a City or All the cities"""
+@app_views.route('/states/<string:state_id>/cities', strict_slashes=False,
+                 methods=['GET', 'POST'])
+def city_state(state_id=None):
+    """Retrieves and Creates a City given state_id"""
     if request.method == 'GET':
-        if city_id is not None:
-            city = storage.get(City, city_id)
-            if city is None:
-                abort(404)
-            return jsonify(city.to_dict())
-        cities = storage.all(City)
-        cities_dicts = [val.to_dict() for val in cities.values()]
-        return jsonify(cities_dicts)
-
-    elif request.method == 'DELETE':
-        city = storage.get(City, city_id)
-        if city is None:
+        state = storage.get(State, state_id)
+        if state is None:
             abort(404)
-        storage.delete(city)
-        storage.save()
-        return make_response(jsonify({}), 200)
+        cities = [city.to_dict() for city in state.cities]
+        return jsonify(cities)
 
     elif request.method == 'POST':
         data = request.get_json()
@@ -38,9 +27,29 @@ def cities(city_id=None):
         elif 'name' not in data:
             return make_response(jsonify({'error': 'Missing name'}), 400)
         else:
+            data['state_id'] = state_id
             city = City(**data)
             city.save()
             return make_response(jsonify(city.to_dict()), 201)
+
+
+@app_views.route('/cities/<string:city_id>', strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
+def city(city_id=None):
+    if request.method == 'GET':
+
+        city = storage.get(City, city_id)
+        if city is None:
+            abort(404)
+        return jsonify(city.to_dict())
+
+    elif request.method == 'DELETE':
+        city = storage.get(City, city_id)
+        if city is None:
+            abort(404)
+        storage.delete(city)
+        storage.save()
+        return make_response(jsonify({}), 200)
 
     elif request.method == 'PUT':
         city = storage.get(City, city_id)
