@@ -53,9 +53,9 @@ def create_city(state_id):
                 city.save()
                 return city.to_dict(), 201
             else:
-                return jsonify({"error": "Missing name"}), 400
+                return abort(400, "Missing name")
         else:
-            return jsonify({"error": "Not a JSON"}), 400
+            return abort(400, "Not a JSON")
     else:
         abort(404)
 
@@ -72,6 +72,6 @@ def update_city(city_id):
             city.save()
             return city.to_dict(), 200
         else:
-            return jsonify({"error": "Not a JSON"}), 400
+            return abort(400, "Not a JSON")
     else:
         abort(404)
