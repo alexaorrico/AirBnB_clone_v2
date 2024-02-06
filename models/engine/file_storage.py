@@ -71,7 +71,7 @@ class FileStorage:
 
     def get(self, cls, id):
         """method to retrieve one object based on its class and id"""
-	if type(cls) is str:
+        if type(cls) is str:
             cls = classes.get(cls)
         if cls is None:
             return None
@@ -80,7 +80,6 @@ class FileStorage:
                 return item
 
     def count(self, cls=None):
-        """Counts the number of objects in storage"""
         if type(cls) is str:
             cls = classes.get(cls)
         if cls is None:
