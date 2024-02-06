@@ -157,7 +157,7 @@ No known bugs at this time.
 <ol>
         <li>Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)</li>
         <li>Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)</li>
-        <li>Stephen B. Adah - [Github] https://github.com/LeaderSteve84) / [Twitter](https://twitter.com/Elbest2018)</li>
+        <li>Stephen B. Adah -- [Github] https://github.com/LeaderSteve84) / [Twitter](https://twitter.com/Elbest2018)</li>
 </ol>
 
 Second part of Airbnb: Joann Vuong
