@@ -5,6 +5,8 @@ Define route for view Place
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models.place import Place
+from models.city import City
+from models.user import User
 from models import storage
 
 
