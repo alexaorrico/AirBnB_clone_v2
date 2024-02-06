@@ -13,39 +13,43 @@ from models import storage, storage_t
 @app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
                  strict_slashes=False, methods=['DELETE', 'POST'])
 def amenities_place(place_id=None, amenity_id=None):
-    """Retrieves amentiy or All the amenities given place_id"""
+    """Retrieves amenity or All the amenities given place_id"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
 
     if amenity_id is None:
-        amenities = [amenity.to_dict() for amenity in place.amenities]
+        if storage_t == 'db':
+            amenities = [amenity.to_dict() for amenity in place.amenities]
+        else:
+            amenities = [storage.get(Amenity, amenity_id)
+                         for amenity_id in place.amenities]
         return jsonify(amenities)
 
-    amentiy = storage.get(Amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
 
     if request.method == 'DELETE':
-        for place_amentiy in place.amenities:
-            if place_amentiy.id == amentiy.id:
-                if storage_t == 'db':
-                    place.amenities.remove(amentiy)
-                else:
-                    place.amentiy_id.remove(amentiy.id)
-
-            storage.save()
-            return jsonify({})
-        abort(404)
+        if storage_t == 'db':
+            if amenity not in place.amenities:
+                abort(404)
+            place.amenities.remove(amenity)
+        else:
+            if amenity_id not in place.amenities:
+                abort(404)
+            place.amenity_id.remove(amenity.id)
+        storage.save()
+        return jsonify({})
 
     if request.method == 'POST':
-        for place_amentiy in place.amenities:
-            if place_amentiy.id == amentiy.id:
-                return jsonify(amentiy.to_dict())
-
         if storage_t == 'db':
-            place.amenities.append(amentiy)
+            if amenity in place.amenities:
+                return jsonify(amenity.to_dict())
+            place.amenities.append(amenity)
         else:
-            place.amentiy_id.append(amentiy.id)
+            if amenity_id in place.amenities:
+                return jsonify(amenity.to_dict())
+            place.amenity_id.append(amenity.id)
         storage.save()
         return jsonify(amenity.to_dict()), 201
