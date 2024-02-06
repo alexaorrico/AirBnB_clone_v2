@@ -23,8 +23,8 @@ def places(place_id=None, city_id=None):
                 abort(404)
             return jsonify(place.to_dict())
         elif city_id is not None:
-            city = storage.get(City, city_id)
-            if city is None:
+            city = storage.get(city, city_id)
+            if city is none:
                 abort(404)
             places = [place.to_dict() for place in city.places]
             return jsonify(places)

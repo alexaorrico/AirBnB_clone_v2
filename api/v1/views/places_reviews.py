@@ -15,7 +15,7 @@ from models import storage
                  methods=['GET', 'DELETE', 'PUT'])
 @app_views.route('/places/<string:place_id>/reviews',
                  strict_slashes=False, methods=['GET', 'POST'])
-def reviews(review_id=None):
+def reviews(review_id=None, place_id=None):
     """Retrieves a Review or All the reviews"""
     if request.method == 'GET':
         if review_id is not None:
@@ -23,6 +23,13 @@ def reviews(review_id=None):
             if review is None:
                 abort(404)
             return jsonify(review.to_dict())
+        elif place_id is no None:
+            place = storage.get(Place, place_id)
+            if place is none:
+                abort(404)
+            reviews = [review.to_dict() for review in place.review]
+            return jsonify(reviews)
+
         reviews = storage.all(Review)
         reviews_dicts = [val.to_dict() for val in reviews.values()]
         return jsonify(reviews_dicts)
