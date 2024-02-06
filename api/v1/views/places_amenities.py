@@ -40,7 +40,7 @@ def amenities_view(place_id, amenity_id=None):
         #  Get amenity object and delete.
         storage.delete(storage.get(Amenity, amenity_id))
         storage.save()
-        return jsonify({}}, 200
+        return jsonify({}), 200
     if request.method == "POST":
         if not storage.get(Amenity, amenity_id):
             abort(404)
@@ -53,4 +53,5 @@ def amenities_view(place_id, amenity_id=None):
         # link amenity to place...
         amenity_object = storage.get(Amenity, amenity_id)
         place_object.amenities.append(amenity_object)
+        storage.save()
         return jsonify(amenity_object.to_dict()), 201

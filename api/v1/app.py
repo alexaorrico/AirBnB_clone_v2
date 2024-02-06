@@ -14,11 +14,13 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def close_app(exc=None):
+    """ Tear down context to tear app down"""
     storage.close()
 
 
 @app.errorhandler(404)
 def handle_error(error):
+    """ Error handler for 404"""
     return make_response(jsonify({"error": "Not found"}), 404)
 
 

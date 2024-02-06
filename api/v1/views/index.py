@@ -8,6 +8,7 @@ from models import storage
 
 @app_views.route("/status")
 def status():
+    """Function to reveal the status of API"""
     from flask import jsonify
 
     return jsonify({"status": "OK"})
@@ -15,6 +16,8 @@ def status():
 
 @app_views.route("/stats")
 def stats():
+    """Function to retrieve the stats of the built in
+    API"""
     from models.amenity import Amenity
     from models.city import City
     from models.place import Place
