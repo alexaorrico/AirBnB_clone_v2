@@ -36,6 +36,7 @@ def city_state(state_id=None):
 @app_views.route('/cities/<string:city_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
 def city(city_id=None):
+    """Retrieves, Delete and Update a City given state_id"""
     if request.method == 'GET':
 
         city = storage.get(City, city_id)
