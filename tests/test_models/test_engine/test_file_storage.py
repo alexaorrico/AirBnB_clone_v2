@@ -113,3 +113,38 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test the get method"""
+        storage = models.storage
+        obj = State(name='Michigan')
+        obj.save()
+        self.assertEqual(obj.id, storage.get(State, obj.id).id)
+        self.assertEqual(obj.name, storage.get(State, obj.id).name)
+        self.assertIsNot(obj, storage.get(State.obj + 'op'))
+        self.assertIsNone(storage.get(State, 32))
+        self.assertIsNone(storage.get(None, obj.id))
+
+        with self.assertRaises(TypeError):
+            storage.get(State, obj.id, 'op')
+        with self.assertRaises(TypeError):
+            storage.get(State)
+        with self.assertRaises(typeError):
+            storage.get()
+
+    def test_count(self):
+        """test the count returns by object of a class"""
+        storage = models.storage
+        self.assertIs(type(storage.count()), int)
+        self.assertIs(type(storage.count(None)), int)
+        self.assertIs(type(storage.count(State)), int)
+        self.assertIs(type(storage.count(int)), int)
+        self.assertEqual(storage.count(), storage.count(None))
+        b = storage.count(State)
+        State(name='Ogun').save()
+        self.assertGreater(storage.count(State), 0)
+        Amenity(name="Free Wifi").save()
+        self.assertGreater(storage.count(), storage.count(State))
+        with self.assertRaises(TypeError):
+            storage.count(State, 'op')

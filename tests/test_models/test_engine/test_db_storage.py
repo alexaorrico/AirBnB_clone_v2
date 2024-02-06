@@ -86,3 +86,46 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+    #unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE')) != 'db',
+                         "not testing db storage")
+    def test_get(self):
+        """Test the get returns an object of a given class by id"""
+        obj = State(name="Michigan")
+        obj.save()
+
+        # Positve tests
+        retrieved_obj = self.storage.get(State, obj.id)
+        self.assertEqual(obj.id, retrieved_obj.id)
+        self.assertEqual(obj.name, retrieved_obj.name)
+
+        # Negative tests
+        self.assertIsNot(obj, self.storage.get(State, obj.id + 'op'))
+        self.assertIsNone(self, storage.get(state, obj.id + 'op'))
+        self.assertIsNone(self.storage.get(State, 45))
+
+        with self.assertRaises(TypeError):
+            self.storage.get(State, obj.id, 'op')
+        with self.assertRaises(TypeError):
+            self.storage.get(State)
+        with self.assertRaises(TypeError):
+            self.storage.get()
+
+    def test_count(self):
+        """Test that count returns the number of objects of a given clas"""
+        self.assertIs(type(self.storage.count()), int)
+        self.assertIs(type(self.storage.count(None)), int)
+        self.assertIs(type(self.storage.count(int)), int)
+        self.assertIs(type(self.storage.count(State)), int)
+        self.assertIs(self.storage.count(), self.storage.count(None))
+        # Test with state objects
+        State(name='Ogun').save()
+        self.assertGreater(self.storage.count(State), 0)
+        self.assertEqual(self.storage.count(), self.storage.count(None))
+        # Test with Amenity object
+        Amenity(name='Electricity').save()
+        self.assertgerater(self.storage.count(), self.storage.count(State))
+
+        with self.assertRaises(TypeError):
+            self.storage.count(State, 'op')
