@@ -18,14 +18,16 @@ from models import storage
 @app_views.route('/status', methods=['GET'])
 def status():
     """returns a JSON says the status of the API is OK"""
-    return jsonify({"status": "OK"})
+    return jsonify({
+        "status": "OK"
+        })
 
 
 @app_views.route('/stats')
 def stats():
     """retrieves the number of each objects by type"""
     classes = {"amenities": Amenity, "cities": City, "places": Place,
-               "reviews": Review, "states": State, "users": User}
+            "reviews": Review, "states": State, "users": User}
     count_dict = {}
     for key, value in classes.items():
         count_dict[key] = storage.count(value)
