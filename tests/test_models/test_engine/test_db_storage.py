@@ -67,6 +67,28 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def test_get(self):
+        user = User()
+        user.save()
+        retrieved_user = self.db_storage.get(User, user.id)
+        self.assertEqual(retrieved_user, user)
+
+    def test_get_not_found(self):
+        retrieved_user = self.db_storage.get(User, "nonexixtent_id")
+        self.asserIsNone(retrieved_user)
+
+    def test_count_all(self):
+        user = User()
+        user.save()
+        count = self.db_storage.count()
+        self.assertEqual(count, 1)
+
+    def test_count_specific_class(self):
+        user = User()
+        user.save()
+        count = self.db_storage.count(User)
+        self.assertEqual(count, 1)
+
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
