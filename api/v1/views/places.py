@@ -148,4 +148,4 @@ def places_search():
         d.pop('amenities', None)
         places.append(d)
 
-    ireturn jsonify(places)
+    return jsonify(places)
