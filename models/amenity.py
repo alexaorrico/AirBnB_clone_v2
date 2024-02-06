@@ -15,6 +15,7 @@ class Amenity(BaseModel, Base):
         name = Column(String(128), nullable=False)
     else:
         name = ""
+        place_id = ""  # Added line
 
     def __init__(self, *args, **kwargs):
         """initializes Amenity"""
