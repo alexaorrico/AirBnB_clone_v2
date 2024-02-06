@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """this module handles status and stats routs"""
-
 from sqlalchemy.sql.functions import user
 from api.v1.views import *
 from api.v1.views import app_views
