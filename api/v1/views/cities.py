@@ -65,4 +65,3 @@ def city(city_id=None):
                 setattr(city, key, value)
         city.save()
         return make_response(jsonify(city.to_dict()), 200)
-
