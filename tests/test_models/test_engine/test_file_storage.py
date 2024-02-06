@@ -113,3 +113,42 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test that count method work properly"""
+        storage = FileStorage()
+        count_before = storage.count(State)
+        instance_1 = State()
+        storage.new(instance_1)
+        storage.save()
+        count_after = storage.count(State)
+        self.assertTrue(count_after - count_before == 1)
+        count_all_before = storage.count()
+        instance_2 = City()
+        storage.new(instance_2)
+        instance_3 = Place()
+        storage.new(instance_3)
+        storage.save()
+        count_all_after = storage.count()
+        self.assertTrue(count_all_after - count_all_before == 2)
+        storage.delete(instance_1)
+        storage.delete(instance_2)
+        storage.delete(instance_3)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test that get method work properly"""
+        storage = FileStorage()
+        instance_1 = State()
+        storage.new(instance_1)
+        storage.save()
+        first_state_id = list(storage.all(State).values())[0].id
+        returned_instance = storage.get(State, first_state_id)
+        self.assertTrue(type(returned_instance) is State)
+        self.assertTrue(returned_instance is
+                        list(storage.all(State).values())[0])
+        self.assertTrue(returned_instance.id == first_state_id)
+        wrong_id = 'wrong-id'
+        self.assertTrue(storage.get(State, wrong_id) is None)
+        storage.delete(instance_1)
