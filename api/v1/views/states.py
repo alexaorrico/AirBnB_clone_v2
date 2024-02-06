@@ -34,9 +34,9 @@ def states(state_id=None):
     elif request.method == 'POST':
         data = request.get_json()
         if not data:
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+            abort(400, 'Not a JSON')
         elif 'name' not in data:
-            return make_response(jsonify({'error': 'Missing name'}), 400)
+            abort(400, 'Missing name')
         else:
             state = State(**data)
             state.save()
@@ -49,7 +49,7 @@ def states(state_id=None):
 
         data = request.get_json()
         if not data:
-            return make_response(jsonify({'error': 'not a json'}), 400)
+            abort(400, 'Not a JSON')
 
         for key, value in data.items():
             if key not in ['id', 'created_at', 'updated_at']:
