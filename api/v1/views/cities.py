@@ -13,10 +13,11 @@ from models.city import City
                  methods=['GET', 'POST'])
 def city_state(state_id=None):
     """Retrieves and Creates a City given state_id"""
+    state = storage.get(State, state_id)
+    if state is None:
+        abort(404)
+
     if request.method == 'GET':
-        state = storage.get(State, state_id)
-        if state is None:
-            abort(404)
         cities = [city.to_dict() for city in state.cities]
         return jsonify(cities)
 
