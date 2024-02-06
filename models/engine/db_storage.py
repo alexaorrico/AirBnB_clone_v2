@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -58,6 +58,30 @@ class DBStorage:
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
+
+    def get(self, cls, id):
+        """A method to retrieve one object.
+        Args:
+            cls (any): class
+            id (str): string representing the object ID
+        """
+        if cls in classes.values() and id and isinstance(id, str):
+            all_objs = self.all(cls)
+            for key, value in all_objs.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
+
+    def count(self, cls=None):
+        """count the number of objects in storage.
+
+        Args:
+            cls (any): class
+        """
+        allobj = self.all(cls)
+        if cls in classes.values():
+            allobj = self.all(cls)
+        return len(allobj)
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
