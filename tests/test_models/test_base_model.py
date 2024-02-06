@@ -15,6 +15,8 @@ class TestBaseModelDocs(unittest.TestCase):
     """Tests to check the documentation and style of BaseModel class"""
 
     @classmethod
+    def __init__(self):
+        self.created_at = datetime.now()
     def setUpClass(self):
         """Set up for docstring tests"""
         self.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
@@ -83,13 +85,18 @@ class TestBaseModel(unittest.TestCase):
         and that upon creation have identical updated_at and created_at
         value."""
         tic = datetime.now()
+        print("tic:", tic)
         inst1 = BaseModel()
         toc = datetime.now()
+        print("toc:", toc)
+        print("inst1.created_at:", inst1.created_at)
         self.assertTrue(tic <= inst1.created_at <= toc)
         time.sleep(1e-4)
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
+        print("tic:", tic)
+        print("toc:", toc)
         self.assertTrue(tic <= inst2.created_at <= toc)
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
