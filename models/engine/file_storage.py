@@ -70,14 +70,19 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        """method to retrieve one object based on its class and id"""
-        if type(cls) is str:
-            cls = classes.get(cls)
-        if cls is None:
-            return None
-        for item in self.__objects.values():
-            if item.__class__ == cls and item.id == id:
-                return item
+        """
+        returns object based on it's class and id
+        None if not found
+        Args:
+            id (int): id of the class instance
+            cls (obj): class object_
+        """
+        if cls in classes.values() and id and type(id) is str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
 
     def count(self, cls=None):
         if type(cls) is str:
