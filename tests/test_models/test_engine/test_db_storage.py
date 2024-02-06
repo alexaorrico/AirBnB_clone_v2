@@ -20,7 +20,7 @@ import pep8
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
-           "Review": Review, "State": State, "User": User}
+            "Review": Review, "State": State, "User": User}
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestDBStorageDocs(unittest.TestCase):
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+                        "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
@@ -43,19 +43,19 @@ class TestDBStorageDocs(unittest.TestCase):
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+                        "Found code style errors (and warnings).")
 
     def test_db_storage_module_docstring(self):
         """Test for the db_storage.py module docstring"""
         self.assertIsNot(db_storage.__doc__, None,
-                         "db_storage.py needs a docstring")
+                        "db_storage.py needs a docstring")
         self.assertTrue(len(db_storage.__doc__) >= 1,
                         "db_storage.py needs a docstring")
 
     def test_db_storage_class_docstring(self):
         """Test for the DBStorage class docstring"""
         self.assertIsNot(DBStorage.__doc__, None,
-                         "DBStorage class needs a docstring")
+                        "DBStorage class needs a docstring")
         self.assertTrue(len(DBStorage.__doc__) >= 1,
                         "DBStorage class needs a docstring")
 
@@ -63,7 +63,7 @@ test_db_storage.py'])
         """Test for the presence of docstrings in DBStorage methods"""
         for func in self.dbs_f:
             self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
+                            "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
@@ -86,3 +86,56 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    def test_get_existing_object(self):
+        """Test getting an existing object"""
+        storage = DBStorage()
+        obj = State(name="California")
+        storage.new(obj)
+        storage.save()
+        retrieved_obj = storage.get(State, obj.id)
+        self.assertEqual(retrieved_obj, obj)
+
+    def test_get_nonexistent_object(self):
+        """Test getting a nonexistent object"""
+        storage = DBStorage()
+        obj = storage.get(State, "nonexistent_id")
+        self.assertIsNone(obj)
+
+    def test_get_invalid_id(self):
+        """Test getting an object with an invalid id"""
+        storage = DBStorage()
+        obj = storage.get(State, 123)
+        self.assertIsNone(obj)
+
+    def test_get_invalid_class(self):
+        """Test getting an object with an invalid class"""
+        storage = DBStorage()
+        obj = storage.get("InvalidClass", "valid_id")
+        self.assertIsNone(obj)
+
+"""Count unittest"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    def test_count_all_objects(self):
+        """Test counting all objects in storage"""
+        storage = DBStorage()
+        count = storage.count()
+        self.assertEqual(count, len(storage.all()))
+
+    def test_count_specific_class(self):
+        """Test counting objects of a specific class in storage"""
+        storage = DBStorage()
+        count = storage.count(State)
+        self.assertEqual(count, len(storage.all(State)))
+
+    def test_count_invalid_class(self):
+        """Test counting objects with an invalid class"""
+        storage = DBStorage()
+        count = storage.count("InvalidClass")
+        self.assertEqual(count, 0)
