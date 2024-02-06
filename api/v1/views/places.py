@@ -12,25 +12,15 @@ from models import storage
 
 @app_views.route('/places/<string:place_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
-@app_views.route('/cities/<string:city_id>/places',
-                 strict_slashes=False, methods=['GET', 'POST'])
-def places(place_id=None, city_id=None):
+def places(place_id=None):
     """Retrieves a Place or All the places"""
     if request.method == 'GET':
         if place_id is not None:
             place = storage.get(Place, place_id)
             if place is None:
                 abort(404)
-            return jsonify(place.to_dict())
-        elif city_id is not None:
-            city = storage.get(City, city_id)
-            if city is None:
-                abort(404)
-            places = [place.to_dict() for place in city.places]
-            return jsonify(places)
-        places = storage.all(Place)
-        places_dicts = [val.to_dict() for val in places.values()]
-        return jsonify(places_dicts)
+            else:
+                return jsonify(place.to_dict())
 
     elif request.method == 'DELETE':
         place = storage.get(Place, place_id)
@@ -39,6 +29,35 @@ def places(place_id=None, city_id=None):
         storage.delete(place)
         storage.save()
         return make_response(jsonify({}), 200)
+
+    elif request.method == 'PUT':
+        place = storage.get(Place, place_id)
+        if place is None:
+            abort(404)
+
+        data = request.get_json()
+        if not data:
+            return make_response(jsonify({'error': 'not a json'}), 400)
+
+        for key, value in data.items():
+            if key not in ['id', 'user_id', 'city_id',
+                           'created_at', 'updated_at']:
+                setattr(place, key, value)
+        place.save()
+        return make_response(jsonify(place.to_dict()), 200)
+
+
+@app_views.route('/cities/<string:city_id>/places',
+                 strict_slashes=False, methods=['GET', 'POST'])
+def place_city(city_id=None):
+    """Retrieves a Place or All the places"""
+    if request.method == 'GET':
+        if city_id is not None:
+            city = storage.get(City, city_id)
+            if city is None:
+                abort(404)
+            places = [place.to_dict() for place in city.places]
+            return jsonify(places)
 
     elif request.method == 'POST':
         data = request.get_json()
@@ -58,19 +77,3 @@ def places(place_id=None, city_id=None):
             place = Place(**data)
             place.save()
             return make_response(jsonify(place.to_dict()), 201)
-
-    elif request.method == 'PUT':
-        place = storage.get(Place, place_id)
-        if place is None:
-            abort(404)
-
-        data = request.get_json()
-        if not data:
-            return make_response(jsonify({'error': 'not a json'}), 400)
-
-        for key, value in data.items():
-            if key not in ['id', 'user_id', 'city_id',
-                           'created_at', 'updated_at']:
-                setattr(place, key, value)
-        place.save()
-        return make_response(jsonify(place.to_dict()), 200)
