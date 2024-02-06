@@ -81,29 +81,29 @@ class FileStorage:
 
     def get(self, cls, id):
         '''
-        gets an object
-        Args:
-            cls (str): class name
-            id (str): object ID
-        Returns:
-            an object based on class name and its ID
+            Retrieve an obj w/class name and id
         '''
-        obj_dict = self.all(cls)
-        for k, v in obj_dict.items():
-            matchstring = cls + '.' + id
-            if k == matchstring:
-                return v
+        result = None
 
-        return None
+        try:
+            for v in self.__objects.values():
+                if v.id == id:
+                    result = v
+        except BaseException:
+            pass
+
+        return result
 
     def count(self, cls=None):
         '''
-        counts number of objects in a class (if given)
-        Args:
-            cls (str): class name
-        Returns:
-            number of objects in class, if no class name given
-            return total number of objects in database
+            Count num objects in FileStorage
         '''
-        obj_dict = self.all(cls)
-        return len(obj_dict)
+        cls_counter = 0
+
+        if cls is not None:
+            for k in self.__objects.keys():
+                if cls in k:
+                    cls_counter += 1
+        else:
+            cls_counter = len(self.__objects)
+        return cls_counter
