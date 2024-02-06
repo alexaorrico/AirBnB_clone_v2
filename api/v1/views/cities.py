@@ -3,7 +3,7 @@
 Define route for view City
 """
 from api.v1.views import app_views
-from flask import jsonify, abort, request 
+from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 from models.city import City
@@ -21,23 +21,23 @@ def city_state(state_id=None):
         cities = [city.to_dict() for city in state.cities]
         return jsonify(cities)
 
-    elif request.method == 'POST':
+    if request.method == 'POST':
         data = request.get_json()
         if not data:
             abort(400, 'Not a JSON')
-        elif 'name' not in data:
+        if 'name' not in data:
             abort(400, 'Missing name')
-        else:
-            data['state_id'] = state_id
-            city = City(**data)
-            city.save()
-            return jsonify(city.to_dict()), 201
+
+        data['state_id'] = state_id
+        city = City(**data)
+        city.save()
+        return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<string:city_id>', strict_slashes=False,
                  methods=['GET', 'DELETE', 'PUT'])
 def city(city_id=None):
-    """Retrieves, Delete and Update a City given city_id"""
+    """Retrieves, Delete and Update a City given state_id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -45,12 +45,12 @@ def city(city_id=None):
     if request.method == 'GET':
         return jsonify(city.to_dict())
 
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         storage.delete(city)
         storage.save()
         return jsonify({})
 
-    elif request.method == 'PUT':
+    if request.method == 'PUT':
         data = request.get_json()
         if not data:
             abort(400, 'Not a JSON')
