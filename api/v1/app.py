@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''api main app run'''
+'''api main app run
+This module initializes and runs the Flask application for the API.
+'''
 
 
 from flask import Flask, jsonify, make_response
@@ -17,13 +19,16 @@ CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 
 @app.teardown_appcontext
 def teardown(self):
-    '''closes storage after done'''
+    '''Closes the database connection after each request.'''
     storage.close()
 
 
 @app.errorhandler(404)
 def er_404(error):
-    '''response for 404'''
+    '''Handles 404 errors by returning a JSON response.
+    Returns:
+        A JSON response containng Not found 404 error.
+    '''
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
