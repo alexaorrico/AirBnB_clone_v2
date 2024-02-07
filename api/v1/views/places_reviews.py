@@ -47,7 +47,8 @@ def create_review(place_id):
     """Create a review."""
     place = storage.get(Place, place_id)
     payload = request.get_json()
-    if not place or not payload or "user_id" not in payload or "text" not in payload:
+    if not place or not payload or "user_id" not in payload or \
+            "text" not in payload:
         abort(400)
 
     user_id = payload["user_id"]
