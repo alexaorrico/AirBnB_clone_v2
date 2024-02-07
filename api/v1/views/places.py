@@ -93,7 +93,7 @@ def search_places():
                     cities.append(city)
 
     if not cities:
-        cities = [city in storage.all(City).values()]
+        cities = [city for city in storage.all(City).values()]
 
     places = [place for city in cities
               for place in city.places]
