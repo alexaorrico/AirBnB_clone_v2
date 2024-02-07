@@ -10,9 +10,8 @@ from flask import Response
 
 class TestAppViews(unittest.TestCase):
     def setUp(self):
-        # Create a test client
+        '''seting up test'''
         self.app = app.test_client()
-        # Create a new state for testing
         self.test_state = State(name="Test State")
         self.test_state.save()
 

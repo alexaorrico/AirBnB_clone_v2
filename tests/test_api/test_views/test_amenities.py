@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 import unittest
 from flask import json
-from your_module_name import app_views
+from api.v1.app import app
 
 
 class TestAmenitiesRoutes(unittest.TestCase):
 
     def setUp(self):
-        self.app = app_views.app.test_client()
+        self.app = app.test_client()
 
     def test_get_all_amenities(self):
         response = self.app.get('/api/v1/amenities')
@@ -17,7 +17,7 @@ class TestAmenitiesRoutes(unittest.TestCase):
         self.assertTrue(isinstance(data, list))
 
     def test_get_amenity_by_id(self):
-        amenity_id = 'your_amenity_id'
+        amenity_id = '09e628ab-ebc3-4be8-baa4-2dbc844cec49'
         response = self.app.get(f'/api/v1/amenities/{amenity_id}')
         data = json.loads(response.data.decode('utf-8'))
 

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''routes'''
+'''routes for states'''
 from api.v1.views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
@@ -79,5 +79,4 @@ def update_state(state_id):
             setattr(stat, key, value)
     storage.save()
     stat = stat.to_dict()
-
     return jsonify(stat), 200
