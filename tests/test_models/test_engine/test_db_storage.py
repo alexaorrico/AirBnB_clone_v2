@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -93,34 +94,32 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """test that the get method works correctly"""
-        storage = DBStorage()
-        instance_1 = State()
-        storage.new(instance_1)
+        state_inst = State(name='Abdoland')
+        storage.new(state_inst)
         storage.save()
         first_state_id = list(storage.all(State).values())[0].id
-        returned_instance = db_storage.get(State, id)
+        returned_instance = storage.get(State, first_state_id)
         self.assertTrue(returned_instance.id == first_state_id)
         self.assertTrue(returned_instance is
                         list(storage.all(State).values())[0])
         self.assertTrue(type(returned_instance) is State)
         wrong_id = 'wrong-id'
-        self.assertTrue(db_storage.get(State, wrong_id) is None)
-        storage.delete(instance_1)
+        self.assertTrue(storage.get(State, wrong_id) is None)
+        storage.delete(state_inst)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """test that count method works correctly"""
-        storage = DBStorage()
-        count_before = db_storage.count()
-        count_state_before = db_storage.count(State)
-        instance_1 = City()
-        instance_2 = State()
-        storage.new(instance_1)
-        storage.new(instance_2)
+        count_before = storage.count()
+        count_state_before = storage.count(State)
+        state_inst = State(name='Zoland')
+        city_inst = City(name='Zocity', state_id=state_inst.id)
+        storage.new(city_inst)
+        storage.new(state_inst)
         storage.save()
-        count_state_after = db_storage.count(State)
-        count_after = db_storage.count()
+        count_state_after = storage.count(State)
+        count_after = storage.count()
         self.assertTrue(count_after - count_before == 2)
-        self.assertTrue(count_state_before - count_state_after == 1)
-        storage.delete(instance_1)
-        storage.delete(instance_2)
+        self.assertTrue(count_state_after - count_state_before == 1)
+        storage.delete(city_inst)
+        storage.delete(state_inst)

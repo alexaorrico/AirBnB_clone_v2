@@ -3,7 +3,7 @@
 Define route for view Amenity
 """
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request
 from models.amenity import Amenity
 from models import storage
 
@@ -13,9 +13,10 @@ from models import storage
 @app_views.route('/amenities', strict_slashes=False, methods=['GET', 'POST'])
 def amenities(amenity_id=None):
     """Retrieves a Amenity or All the amenities"""
+    amenity = storage.get(Amenity, amenity_id)
+
     if request.method == 'GET':
         if amenity_id is not None:
-            amenity = storage.get(Amenity, amenity_id)
             if amenity is None:
                 abort(404)
             return jsonify(amenity.to_dict())
@@ -23,30 +24,26 @@ def amenities(amenity_id=None):
         amenities_dicts = [val.to_dict() for val in amenities.values()]
         return jsonify(amenities_dicts)
 
-    elif request.method == 'DELETE':
-        amenity = storage.get(Amenity, amenity_id)
-        if amenity is None:
-            abort(404)
-        storage.delete(amenity)
-        storage.save()
-        return make_response(jsonify({}), 200)
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         data = request.get_json()
         if not data:
             abort(400, 'Not a JSON')
-        elif 'name' not in data:
+        if 'name' not in data:
             abort(400, 'Missing name')
-        else:
-            amenity = Amenity(**data)
-            amenity.save()
-            return make_response(jsonify(amenity.to_dict()), 201)
 
-    elif request.method == 'PUT':
-        amenity = storage.get(Amenity, amenity_id)
-        if amenity is None:
-            abort(404)
+        amenity = Amenity(**data)
+        amenity.save()
+        return jsonify(amenity.to_dict()), 201
 
+    if amenity is None:
+        abort(404)
+
+    if request.method == 'DELETE':
+        storage.delete(amenity)
+        storage.save()
+        return jsonify({})
+
+    if request.method == 'PUT':
         data = request.get_json()
         if not data:
             abort(400, 'Not a JSON')
@@ -55,4 +52,4 @@ def amenities(amenity_id=None):
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(amenity, key, value)
         amenity.save()
-        return make_response(jsonify(amenity.to_dict()), 200)
+        return jsonify(amenity.to_dict())
