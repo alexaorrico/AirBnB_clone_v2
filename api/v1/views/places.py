@@ -84,11 +84,13 @@ def search_places():
     amenities_id = data.get('amenities', [])
 
     cities = [storage.get(City, city_id) for city_id in cities_id]
+    cities = list(filter(None, cities))
     for state_id in states_id:
         state = storage.get(State, state_id)
-        for city in state.cities:
-            if city not in cities:
-                cities.append(city)
+        if state:
+            for city in state.cities:
+                if city not in cities:
+                    cities.append(city)
 
     if cities is []:
         cities = [city in storage.all(City).values()]

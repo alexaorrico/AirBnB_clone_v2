@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+python3 -m json.tool > out.json
+batcat out.json
+rm out.json
