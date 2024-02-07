@@ -107,5 +107,4 @@ def search_places():
             place_dict = place.to_dict()
             del place_dict['amenities']
             filtered_places.append(place_dict)
-    print(filtered_places)
     return jsonify(filtered_places)
