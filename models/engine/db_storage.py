@@ -50,8 +50,8 @@ class DBStorage:
                 total_count = 0
                 for model in dir(models):
                     model_cls = getattr(models, model)
-                    if isinstance(model_cls, type) and 
-                                            issubclass(model_cls, Base):
+                    if isinstance(model_cls, type) and \
+                            issubclass(model_cls, Base):
                         total_count += session.query(model_cls).count()
                 return total_count
         finally:
