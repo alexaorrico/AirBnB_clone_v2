@@ -51,8 +51,7 @@ def create_obj_amenity():
         return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in request.get_json():
         return make_response(jsonify({"error": "Missing name"}), 400)
-    js = request.get_json()
-    obj = Amenity(**js)
+    amenity = Amenity(**request.get_json())
     obj.save()
     return (jsonify(obj.to_dict()), 201)
 
@@ -62,13 +61,13 @@ def create_obj_amenity():
 @swag_from('documentation/amenity/put.yml', methods=['PUT'])
 def update_amenity(amenity_id):
     """updates amenity based on the id"""
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    obj = storage.get(Amenity, amenity_id)
-    if obj is None:
+    amenity = storage.get("Amenity", amenity_id)
+    if amenity is None:
         abort(404)
-    for key, value in request.get_json().items():
-        if key not in ['id', 'created_at', 'updated_at']:
-            setattr(obj, key, value)
-    storage.save()
-    return jsonify(obj.to_dict())
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    for attr, val in request.get_json().items():
+        if attr not in ['id', 'created_at', 'updated_at']:
+            setattr(amenity, attr, val)
+    amenity.save()
+    return jsonify(amenity.to_dict())
