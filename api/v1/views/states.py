@@ -26,6 +26,38 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
+@swag_from('documentation/state/post_id.yml', methods=['POST'])
+def add_state():
+    """adds a state object"""
+    data = request.get_json()
+    if data is None:
+        abort(400, 'Not a JSON')
+    if not data['name']:
+        abort(400, 'Missing name')
+    new_state = State(**data)
+    storage.new(new_state)
+    storage.save()
+    return jsonify(new_state.to_dict()), 201
+
+
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('documentation/state/PUT.yml', methods=['PUT'])
+def update_state(state_id):
+    """adds a state object"""
+    data = request.get_json()
+    if data is None:
+        abort(400, 'Not a JSON')
+    state = storage.get('State', state_id)
+    if state is None:
+        abort(404)
+    for k, v in data.items():
+        if k not in ('id', 'created_at', 'updated_at'):
+            setattr(state, k, v)
+    state.save()
+    return jsonify(state.to_dict())
+
+
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/state/delete.yml', methods=['DELETE'])
@@ -37,4 +69,3 @@ def del_method(state_id):
     state.delete()
     storage.save()
     return jsonify({}), 200
-
