@@ -7,6 +7,7 @@ from flask import jsonify, abort, request
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.state import State
 from models import storage
 
 
@@ -69,3 +70,37 @@ def place_city(city_id=None):
         place = Place(**data)
         place.save()
         return jsonify(place.to_dict()), 201
+
+
+@app_views.route('/places_search', strict_slashes=False, methods=['POST'])
+def search_places():
+    data = request.get_json()
+
+    if not data:
+        abort(400, 'Not a JSON')
+
+    states_id = data.get('states', [])
+    cities_id = data.get('cities', [])
+    amenities_id = data.get('amenities', [])
+
+    cities = [storage.get(City, city_id) for city_id in cities_id]
+    for state_id in states_id:
+        state = storage.get(State, state_id)
+        for city in state.cities:
+            if city not in cities:
+                cities.append(city)
+
+    if cities is []:
+        cities = [city in storage.all(City).values()]
+
+    places = [place for city in cities
+              for place in city.places]
+
+    filtered_places = []
+    for place in places:
+        place_amenities_id = [amenity.id for amenity in place.amenities]
+        valid = all(amenity_id in place_amenities_id
+                    for amenity_id in amenities_id)
+        if valid:
+            filtered_places.append(place.to_dict())
+    return jsonify(filtered_places)
