@@ -105,7 +105,7 @@ class testFileStorage(unittest.TestCase):
         try:
             self.storage.reload()
             self.assertTrue(True)
-        except:
+        except Exception:
             self.assertTrue(False)
 
     def test_delete(self):
