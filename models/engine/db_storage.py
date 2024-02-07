@@ -32,13 +32,38 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+        self.__engine = create_engine('mysql+pymysql://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
+
+    def count(self, cls=None):
+        """Count the number of objects in the database."""
+        session = self.__session()
+        try:
+            if cls:
+                return session.query(cls).count()
+            else:
+                total_count = 0
+                for model in dir(models):
+                    model_cls = getattr(models, model)
+                    if isinstance(model_cls, type) and \
+                            issubclass(model_cls, Base):
+                        total_count += session.query(model_cls).count()
+                return total_count
+        finally:
+            session.close()
+
+    def get(self, cls, id):
+        """Retrieve an object from the database by its ID."""
+        session = self.__session()
+        try:
+            return session.query(cls).get(id)
+        finally:
+            session.close()
 
     def all(self, cls=None):
         """query on the current database session"""
