@@ -98,6 +98,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_count(self):
         """ Tests for checking the count method db storage """
+        storage = DBStorage()
         dic = {"name": "Vecindad"}
         state = State(**dic)
         storage.new(state)
