@@ -56,7 +56,7 @@ class DBStorage:
                 return total_count
         finally:
             session.close()
-    
+
     def get(self, cls, id):
         """Retrieve an object from the database by its ID."""
         session = self.__session()
