@@ -1,10 +1,10 @@
-#!/usr/bin/python3
 """Handles all default RESTful API actions for State objects."""
 
 from flask import abort, jsonify, request
 from api.v1.views import app_views
 from models.state import State
 from models import storage
+
 
 # Route for retrieving all State objects
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -13,6 +13,7 @@ def get_all_states():
     states = storage.all(State).values()
     state_list = [state.to_dict() for state in states]
     return jsonify(state_list)
+
 
 # Route for retrieving a specific State object by ID
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
@@ -24,8 +25,10 @@ def get_state(state_id):
     else:
         abort(404)
 
+
 # Route for deleting a specific State object by ID
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object."""
     state = storage.get(State, state_id)
@@ -35,6 +38,7 @@ def delete_state(state_id):
         return jsonify({}), 200
     else:
         abort(404)
+
 
 # Route for creating a new State object
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -48,6 +52,7 @@ def create_state():
     state = State(**data)
     state.save()
     return jsonify(state.to_dict()), 201
+
 
 # Route for updating an existing State object by ID
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
