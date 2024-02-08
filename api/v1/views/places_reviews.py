@@ -20,8 +20,8 @@ def retrieve_all_reviews(place_id):
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
-    reviews = [review.to_dict() for review in place.review]
-    return jsonify(reviews)
+    review = [review.to_dict() for review in place.review]
+    return jsonify(review)
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'],
