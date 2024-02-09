@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Engr Bassey - [Github](https://github.com/EngrBassey) 
-Jennifer Huang - [Github](setalxswe@gmail.com)
+Isearl Udofia - [Github](setalxswe@gmail.com)
 
 ## License
 Public Domain. No copy write protection. 
