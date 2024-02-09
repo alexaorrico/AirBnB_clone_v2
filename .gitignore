@@ -1,0 +1,9 @@
+__pycache__/
+models/__pycache__/
+models/engine/__pycache__/
+tests/__pycache__/
+tests/test_models/__pycache__/
+tests/test_models/test_engine/__pycache__/
+file.json
+main.py
+test_get_count.py
