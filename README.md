@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Yassmine El Ghalbzouri - [Github](https://github.com/yassminee00)
-Innocent Chukwuma
+Joy Matthew - https://github.com/jo-esign
 
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copywrite protection. 
