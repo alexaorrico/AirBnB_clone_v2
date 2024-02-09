@@ -113,3 +113,60 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test validate count of obj in storage"""
+        storage = FileStorage()
+        state = State(name="California")
+        state.save()
+        retrieved_state = storage.get(State, state.id)
+        self.assertEqual(state, retrieved_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_nonexistent_object(self):
+        """Test get method with a non-existing object"""
+        # Try to retrieve a non-existing city
+        storage = FileStorage()
+        city = storage.get(City, "nonexistent_id")
+
+        # Assert that None is returned
+        self.assertIsNone(city)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all_objects(self):
+        """Test count method for all objects"""
+        # Create some objects and add them to storage
+        os.remove("file.json")
+        storage = FileStorage()
+        state1 = State(name="California")
+        state1.save()
+        state2 = State(name="New York")
+        state2.save()
+        city = City(name="Los Angeles", state_id=state1.id)
+        city.save()
+
+        # Count all objects in storage
+        total_objects = storage.count()
+
+        # Assert that the count matches the expected number of objects
+        self.assertEqual(total_objects, 3)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_objects_by_class(self):
+        """Test count method for objects of a specific class"""
+        # Create some objects and add them to storage
+        os.remove("file.json")
+        storage = FileStorage()
+        state1 = State(name="California")
+        state1.save()
+        state2 = State(name="New York")
+        state2.save()
+        city = City(name="Los Angeles", state_id=state1.id)
+        city.save()
+
+        # Count the number of State objects in storage
+        state_count = storage.count(State)
+
+        # Assert that the count matches the expected number of State objects
+        self.assertEqual(state_count, 2)
