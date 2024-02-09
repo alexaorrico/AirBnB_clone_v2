@@ -99,9 +99,9 @@ class TestDBStorage(unittest.TestCase):
         newState.save()
         newUser = User(email="bob@foobar.com", password="password")
         newUser.save()
-        self.assertIsNone(newState, models.storage.get("State", newState.id))
-        self.assertIsNone(models.storage.get("State", "blah"))
-        self.assertIsNone(models.storage.get("blah", "blah"))
+        self.assertIs(newState, models.storage.get("State", newState.id))
+        self.assertIs(None, models.storage.get("State", "blah"))
+        self.assertIs(None, models.storage.get("blah", "blah"))
         self.assertIs(newUser, models.storage.get("User", newUser.id))
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
