@@ -79,10 +79,34 @@ class TestFileStorage(unittest.TestCase):
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects to the database"""
+
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_delete(self):
+        """test that delete properly deletes an object from the database"""
+
+
+    def test_reload(self):
+        """test that reload properly reloads data from database"""
+
+
+    def test_close(self):
+        """test that close properly closes the session as required"""
+
+
+    def test_get(self):
+        """test that get properly gets the required object"""
+
+
+    def test_count(self):
+        """test that count correctly retrives the number of objects"""
+
