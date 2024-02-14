@@ -53,6 +53,7 @@ Classes inherited from Base Model:
 * [review.py](/models/review.py)
 * [state.py](/models/state.py)
 * [user.py](/models/user.py)
+![Console Working](C:\Users\walte\github\holbertonschool-AirBnB_clone_v3-1\web_static\images\2024-02-14 19_06_49-kali [Running] - Oracle VM VirtualBox.png)
 
 #### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
 [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
