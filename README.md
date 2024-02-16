@@ -53,6 +53,7 @@ Classes inherited from Base Model:
 * [review.py](/models/review.py)
 * [state.py](/models/state.py)
 * [user.py](/models/user.py)
+![Console Working](C:\Users\walte\github\holbertonschool-AirBnB_clone_v3-1\web_static\images\2024-02-14 19_06_49-kali [Running] - Oracle VM VirtualBox.png)
 
 #### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
 [file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
@@ -156,7 +157,9 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Juan Rodriguez - [Github](https://github.com/JCRoooD) / [linkedin](https://www.linkedin.com/in/juan-carlos-rodriguez-ocasio-4215661b1/)
+Walter Carrion - [Github](https://github.com/Scopecr)
 
 Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
