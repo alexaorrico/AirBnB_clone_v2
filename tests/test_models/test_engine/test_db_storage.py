@@ -70,6 +70,17 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    @classmethod
+    def setUpClass(cls):
+        """Setup db and initialize sorage"""
+        cls.storage = db_storage.DBStorage()
+        cls.storage.reload()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Remove session instances"""
+        del cls.storage
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +97,12 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_existing_object(self):
+        """Test get existing object"""
+        new_user = User()
+        new_user.save()
+        obj_id = new_user.id
+        get_user = self.storage.get(User, obj_id)
+        self.assertEqual(get_user, new_user)
