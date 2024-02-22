@@ -67,6 +67,23 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+    def setUp(self):
+        """Initialize a data store for testing"""
+        self.data_store = YourDataStore()
+        self.data_store.data["User"] = {"user1": {"name": "Alice"},
+                                        "user2": {"name": "Bob"}}
+
+    def test_get_existing_object(self):
+        """Test retrieving an existing user object"""
+        user_id = "user1"
+        user = self.data_store.get("User", user_id)
+        self.assertEqual(user, {"name": "Alice"})
+
+    def test_get_nonexistent_object(self):
+        """Test retrieving a non-existent object"""
+        invalid_user_id = "user3"
+        user = self.data_store.get("User", invalid_user_id)
+        self.assertIsNone(user)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
