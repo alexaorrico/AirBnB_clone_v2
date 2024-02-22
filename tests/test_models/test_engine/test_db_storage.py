@@ -87,8 +87,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-class TestDBStorage(unittest.TestCase):
-    """Test cases for DBStorage"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test get method"""
         storage = DBStorage()
@@ -97,6 +96,7 @@ class TestDBStorage(unittest.TestCase):
         storage.save()
         self.assertEqual(state, storage.get(State, state.id))
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test count method"""
         storage = DBStorage()
@@ -106,6 +106,14 @@ class TestDBStorage(unittest.TestCase):
         storage.save()
         self.assertEqual(initial_count + 1, storage.count())
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_nonexistent_object(self):
+        """Test get method with nonexistent object"""
+        storage = DBStorage()
+        self.assertIsNone(storage.get(State, "nonexistent_id"))
 
-if __name__ == "__main__":
-    unittest.main()
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_no_objects(self):
+        """Test count method with no objects present"""
+        storage = DBStorage()
+        self.assertEqual(0, storage.count(State))
