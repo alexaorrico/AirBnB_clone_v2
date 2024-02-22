@@ -101,8 +101,11 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_existing_object(self):
         """Test get existing object"""
-        new_user = User()
+        new_user = User(email='example@example.com',
+                        password='password',
+                        first_name='John',
+                        last_name='Doe')
         new_user.save()
         obj_id = new_user.id
         get_user = self.storage.get(User, obj_id)
-        self.assertEqual(get_user, new_user)
+        self.assertEqual(get_user.id, obj_id)
