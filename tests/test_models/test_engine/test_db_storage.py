@@ -109,3 +109,33 @@ class TestFileStorage(unittest.TestCase):
         obj_id = new_user.id
         get_user = self.storage.get(User, obj_id)
         self.assertEqual(get_user.id, obj_id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_non_existing_object(self):
+        """Test get non existing object"""
+        get_user = self.storage.get(User, "Fake id")
+        self.assertIsNone(get_user.id, None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_all_objects(self):
+        """Test counting all objects"""
+        old_count = self.storage.count()
+        new_user = User(email='example2@example.com',
+                        password='password2',
+                        first_name='Jonnie',
+                        last_name='Max')
+        new_user.save()
+        new_count = self.storage.count()
+        self.assertEqual(old_count, new_count + 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_objects_of_user_class(self):
+        """Test count objects of a class"""
+        old_count = self.storage.count(User)
+        new_user = User(email='example3@example.com',
+                        password='password3',
+                        first_name='Alex',
+                        last_name='Jones')
+        new_user.save()
+        new_count = self.storage.count(User)
+        self.assertEqual(old_count, new_count + 1)
