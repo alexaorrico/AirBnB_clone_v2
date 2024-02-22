@@ -80,8 +80,8 @@ class DBStorage:
         if cls in classes:
             objs = self.all(cls)
             for key, value in objs.items():
-                if key == id and objs[key] == id:
-                    return objs[:-1]
+                if key == "id" and objs[key] == id:
+                    return item
         else:
             return None
 
