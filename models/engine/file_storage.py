@@ -74,6 +74,7 @@ class FileStorage:
         Returns one object
         """
         key = cls.__name__ + '.' + id
+        obj = None
         for k, v in self.__objects.items():
             if key == k:
                 obj = v

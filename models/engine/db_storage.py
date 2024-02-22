@@ -79,7 +79,7 @@ class DBStorage:
         """
         Returns one object
         """
-        obj = self.__session.query(cls).filter(cls.id == id)
+        obj = self.__session.query(cls).filter(cls.id == id).first()
         return obj
 
     def count(self, cls=None):
