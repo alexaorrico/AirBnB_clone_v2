@@ -158,7 +158,7 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
-John Ngala - [Github](https://github.com/johnahumanbeing) / [Twitter](https:twitter.com/blessmefornow)
+John Ngala - [Github](https://github.com/johnahumanbeing) / [Twitter](https://twitter.com/blessmefornow)
 
 Sarah Kimani - [Github](https://github.com/KimaniSarah)
 
