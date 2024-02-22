@@ -159,7 +159,7 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Mokhatr Ramadan - [Github](https://github.com/mokhtarmramadan) / [Twitter](https://twitter.com/mokhtarmramadan)
 
-Ahmed Elsharkwi - [Github](https://github.com/Ahmed-Elsharkwi)
+Ahmed Elsharkwi - [Github](https://github.com/Ahmed-Elsharkwi) / [Twitter](https://twitter.com/Ahmed2102023)
 
 Second part of Airbnb: Joann Vuong
 ## License
