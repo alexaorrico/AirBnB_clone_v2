@@ -23,7 +23,7 @@ def close_db(self):
 
 if __name__ == "__main__":
     if HBNB_API_HOST and HBNB_API_PORT:
-        app.run(HBNB_API_HOST, HBNB_API_PORT,
+        app.run(host=HBNB_API_HOST, port=HBNB_API_PORT,
                 debug=True, threaded=True)
     else:
         app.run(host='0.0.0.0', port=5000,
