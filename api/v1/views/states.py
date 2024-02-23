@@ -25,15 +25,12 @@ def id_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete(state_id):
-    try:
-        state = storage.get(State, state_id)
-        if state is None:
-            abort (404)
-        storage.delete(state)
-        storage.save()
-        return make_response(jsonify({}), 200)
-    except IntegrityError:
-        return jsonify(error=True, message="Invalid state_id provided"), 400
+    state = storage.get(State, state_id)
+    if state is None:
+        abort (404)
+    storage.delete(state)
+    storage.save()
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -44,7 +41,7 @@ def post():
     if dict.get('name') is None:
         abort (400, 'Missing name')
     new_status = State(**dict)
-    storage.save()
+    new_status.save()
     return make_response(jsonify(new_status.to_dict()), 201)
 
 
