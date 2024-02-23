@@ -32,7 +32,7 @@ fi
 
 # Commit changes with a timestamp (only edit this in this file: the commit message)
 timestamp=$(date +"%Y-%m-%d %T")
-commit_message="Task <number>: <task title> - Automated commit at $timestamp"
+commit_message="Task <number - 2>: <task title: debug> - Automated commit at $timestamp"
 git commit -m "$commit_message"
 
 # Push changes to the branch, handling conflicts
