@@ -1,0 +1,8 @@
+# *.pyc files
+*.pyc
+main.py
+code_file
+.*.sw*
+.vscode/*
+file.json
+
