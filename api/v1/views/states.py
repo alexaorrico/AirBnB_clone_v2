@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ api/v1/views/states.py """
-from flask import Flask, jsonify, request, abort
-from api.v1.views import app_views
-from models import storage
 from models.state import State
+from models import storage
+from api.v1.views import app_views
+from flask import abort, jsonify, make_response, request
+from flasgger.utils import swag_from
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
