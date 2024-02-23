@@ -8,12 +8,13 @@ from flask import Flask, jsonify, abort, make_response, request
 from sqlalchemy.exc import IntegrityError
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def all_cities(state_id):
     """Retrieves the list of all City objects of a State"""
     state = storage.get(State, state_id)
     if state is None:
-        abort (404)
+        abort(404)
     cities_list = [city.to_dict() for city in state.cities]
     return jsonify(cities_list)
 
