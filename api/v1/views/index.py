@@ -9,6 +9,7 @@ from models import storage
 def Json_status():
     return (jsonify({"status": "OK"}))
 
+
 @app_views.route('/stats')
 def number_obj():
     return (jsonify({"amenity": storage.count("Amenity"),

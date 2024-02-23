@@ -19,15 +19,16 @@ def all_states():
 def id_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
-        abort (404)
+        abort(404)
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete(state_id):
     state = storage.get(State, state_id)
     if state is None:
-        abort (404)
+        abort(404)
     storage.delete(state)
     storage.save()
     return make_response(jsonify({}), 200)
@@ -37,9 +38,9 @@ def delete(state_id):
 def post():
     dict = request.get_json()
     if dict is None:
-        abort (400, 'Not a JSON')
+        abort(400, 'Not a JSON')
     if dict.get('name') is None:
-        abort (400, 'Missing name')
+        abort(400, 'Missing name')
     new_status = State(**dict)
     new_status.save()
     return make_response(jsonify(new_status.to_dict()), 201)
@@ -49,10 +50,10 @@ def post():
 def put(state_id):
     state = storage.get(State, state_id)
     if state is None:
-        abort (404)
+        abort(404)
     dict = request.get_json()
     if dict is None:
-        abort (400, 'Not a JSON')
+        abort(400, 'Not a JSON')
     keys_substract = ['id', 'created_at', 'updated_at']
     for key, val in dict.items():
         if key not in keys_substract:
