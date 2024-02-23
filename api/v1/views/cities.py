@@ -3,24 +3,28 @@
 API actions"""
 from api.v1.views import app_views
 from models.state import State
+from models.city import City
 from models import storage
 from flask import Flask, jsonify, abort, make_response, request
 from sqlalchemy.exc import IntegrityError
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes=False)
-def all_states():
-    states = storage.all(State).values()
-    states_list = [state.to_dict() for state in states]
-    return jsonify(states_list)
-
-
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def id_state(state_id):
+@app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
+def all_cities(state_id):
+    """Retrieves the list of all City objects of a State"""
     state = storage.get(State, state_id)
     if state is None:
         abort (404)
-    return jsonify(state.to_dict())
+    cities_list = [city.to_dict() for city in state.cities]
+    return jsonify(cities_list)
+
+
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+def id_state(city_id):
+    city = storage.get(City, city_id)
+    if city is None:
+        abort (404)
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
