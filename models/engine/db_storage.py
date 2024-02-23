@@ -56,7 +56,7 @@ class DBStorage:
         obj = None
         if cls is not None and issubclass(cls, BaseModel):
             obj = self.__session.query(cls).filter(cls.id == id).first()
-	return obj
+        return obj
 
     def count(self, cls=None):
         ''' Returns the number of objects in storage matching the given class '''
