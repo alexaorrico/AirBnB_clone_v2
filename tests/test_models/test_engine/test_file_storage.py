@@ -114,3 +114,25 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """ Test get method based on cls and id """
+        state1 = State(name="California")
+        storage.new(state1)
+        storage.save()
+        result = storage.get(State, state1.id)
+        self.assertEqual(result, state1)
+
+    def test_count(self):
+        """ test for counting objects for db """
+        s1 = State(name="New York")
+        s2 = State(name="Arizona")
+        city = City(name="Albany", state_id=st1.id)
+        storage.new(s1)
+        storage.new(s2)
+        storage.new(city)
+        storage.save()
+        all_objs = storage.count()
+        self.assertEqual(all_objs, len(storage.all()))
+        city_objects = storage.count(City)
+        self.assertEqual(city_objects, len(storage.all(City)))
