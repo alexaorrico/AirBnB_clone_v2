@@ -1,1 +1,0 @@
-Folder contains the business logic of RESTful API

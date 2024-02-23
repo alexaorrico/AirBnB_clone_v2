@@ -1,1 +1,0 @@
-Folder contains the various API resource end points
