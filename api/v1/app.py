@@ -4,6 +4,11 @@ from flask import Flask, jsonify
 from werkzeug.exceptions import NotFound
 from api.v1.views import app_views
 from models import storage
+from os import environ
+from flask import Flask, render_template, make_response, jsonify
+from flask_cors import CORS
+from flasgger import Swagger
+from flasgger.utils import swag_from
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
