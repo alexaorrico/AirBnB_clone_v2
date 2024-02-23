@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Mohamed Osama - [Github](https://github.com/mossama2003) / [Twitter](https://twitter.com/mossama350)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Mohanned Sameh - [Github](https://github.com/Mohanned-sameh) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
 ## License
