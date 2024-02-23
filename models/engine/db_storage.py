@@ -46,10 +46,17 @@ class DBStorage:
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
                 objs = self.__session.query(classes[clss]).all()
+                print(objs)
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
+
+    def get(self, cls, id):
+        """Get only one"""
+        if issubclass(cls, BaseModel) and id is not None:
+            obj = self.__session.query(cls)
+            return (obj)
 
     def new(self, obj):
         """add the object to the current database session"""
