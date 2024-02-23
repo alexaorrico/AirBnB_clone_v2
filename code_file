@@ -1,0 +1,9 @@
+create State name="California" id="95a5abab-aa65-4861-9bc6-1da4a36069aa"
+
+create City state_id="95a5abab-aa65-4861-9bc6-1da4a36069aa" name="San_Francisco" id="4b457e66-c7c8-4f63-910f-fd91c3b7140b"
+
+create User email="gui@hbtn.io" password="guipwd" first_name="Guillaume" last_name="Snow" id="d93638d9-8233-4124-8f4e-17786592908b"
+
+create Place city_id="4b457e66-c7c8-4f63-910f-fd91c3b7140b" user_id="d93638d9-8233-4124-8f4e-17786592908b" name="Lovely_place" number_rooms=3 number_bathrooms=1 max_guest=6 price_by_night=120 latitude=37.773972 longitude=-122.431297 id="ed72aa02-3286-4891-acbc-9d9fc80a1103"
+
+create Review place_id="ed72aa02-3286-4891-acbc-9d9fc80a1103" user_id="d93638d9-8233-4124-8f4e-17786592908b" text="Amazing_place,_huge_kitchen" id="b88259fe-fb55-478e-9531-07c7254bdb28"
