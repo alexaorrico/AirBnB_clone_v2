@@ -11,7 +11,7 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-HBNB_API_HOST = getenv('HBNB_API_PORT')
+HBNB_API_HOST = getenv('HBNB_API_HOST')
 HBNB_API_PORT = getenv('HBNB_API_PORT')
 
 
