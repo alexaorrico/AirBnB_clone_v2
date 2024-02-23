@@ -14,10 +14,10 @@ def get_all_amenities():
     return jsonify([amenity.to_dict() for amenity in amenities.values()])
 
 
-@app_views.route("/amenities/<amenity_id>", methods = ["GET"])
+@app_views.route("/amenities/<amenity_id>", methods=["GET"])
 def get_amenity_by_id(amenity_id):
     """Retrieves an Amenity object by ID"""
-    amenity=storage.get(Amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity:
         return jsonify(amenity.to_dict())
     else:
@@ -25,12 +25,12 @@ def get_amenity_by_id(amenity_id):
 
 
 @app_views.route("/amenities/<amenity_id>",
-                   methods = ["DELETE"],
-                   strict_slashes=False
-                   )
+                 methods=["DELETE"],
+                 strict_slashes=False
+                 )
 def delete_amenity_by_id(amenity_id):
     """Deletes an Amenity object by ID"""
-    amenity=storage.get(Amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity:
         storage.delete(amenity)
         storage.save()
@@ -39,30 +39,31 @@ def delete_amenity_by_id(amenity_id):
         abort(404)
 
 
-@app_views.route("/amenities", methods = ["POST"], strict_slashes=False)
+@app_views.route("/amenities", methods=["POST"], strict_slashes=False)
 def create_amenity():
     """Creates a new Amenity"""
-    data=request.get_json()
+    data = request.get_json()
     if not data:
-        abort(400, description = "Not a JSON")
+        abort(400, description="Not a JSON")
     if "name" not in data:
-        abort(400, description = "Missing name")
+        abort(400, description="Missing name")
     amenity = Amenity(**data)
     storage.new(amenity)
     storage.save()
     return (jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route("/amenities/<amenity_id>", methods = ["PUT"],
-                                            strict_slashes = False)
+@app_views.route("/amenities/<amenity_id>",
+                 methods=["PUT"],
+                 strict_slashes=False)
 def update_amenity_by_id(amenity_id):
     """Updates an Amenity object by ID"""
-    amenity=storage.get(Amenity, amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
-    data=request.get_json()
+    data = request.get_json()
     if not data:
-        abort(400, description = "Not a JSON")
+        abort(400, description="Not a JSON")
     for key, value in data.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(amenity, key, value)
