@@ -10,6 +10,15 @@ from os import environ, stat
 import pep8
 from models.base_model import Base
 from models.engine.db_storage import DBStorage
+from models.engine.file_storage import FileStorage
+from models import storage
+from models.state import State
+from models.city import City
+from models.user import User
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
+
 
 STORAGE_TYPE = environ.get("HBNB_TYPE_STORAGE")
 
@@ -39,7 +48,11 @@ class TestDBStorageDocs(unittest.TestCase):
 
     def test_doc_class(self):
         """... documentation for the class"""
-        expected = "\n        handles long term storage of all class instance" "s\n    "
+        expected = (
+            "\n        handles long \
+            term storage of all class instance"
+            "s\n    "
+        )
         actual = DBStorage.__doc__
         self.assertEqual(expected, actual)
 
@@ -85,11 +98,16 @@ class TestTracebackNullError(unittest.TestCase):
         storage.rollback_session()
 
     def test_state_no_name(self):
-        """... checks to create a state with no name"""
+        """... checks to create a state \
+        with no name"""
         with self.assertRaises(Exception) as context:
             s = State()
             s.save()
-        self.assertTrue("\"Column 'name' cannot be null\"" in str(context.exception))
+        self.assertTrue(
+            "\"Column 'name' cannot \
+                        be null\""
+            in str(context.exception)
+        )
 
     def test_city_no_state(self):
         """... checks to create a city with invalid state"""
@@ -97,36 +115,56 @@ class TestTracebackNullError(unittest.TestCase):
             c = City(name="Tapioca", state_id="NOT VALID")
             c.save()
         self.assertTrue(
-            "a child row: a foreign key constraint fails" in str(context.exception)
+            "a child row: a foreign key \
+                constraint fails"
+            in str(context.exception)
         )
 
     def test_place_no_user(self):
-        """... checks to create a place with no city"""
+        """... checks to create a Place with no user"""
         with self.assertRaises(Exception) as context:
             p = Place()
             p.save()
-        self.assertTrue("\"Column 'city_id' cannot be null\"" in str(context.exception))
+        self.assertTrue(
+            "\"Column 'user_id' cannot \
+                        be null\""
+            in str(context.exception)
+        )
 
     def test_review_no_text(self):
         """... checks to create a Review with no text"""
         with self.assertRaises(Exception) as context:
             r = Review()
             r.save()
-        self.assertTrue("\"Column 'text' cannot be null\"" in str(context.exception))
+        self.assertTrue(
+            "\"Column 'text' cannot \
+                        be null\""
+            in str(context.exception)
+        )
 
     def test_amenity_no_name(self):
-        """... checks to create an amenity with no name"""
+        """... checks to create an amenity with \
+            no name"""
         with self.assertRaises(Exception) as context:
             a = Amenity()
             a.save()
-        self.assertTrue("\"Column 'name' cannot be null\"" in str(context.exception))
+        self.assertTrue(
+            "\"Column 'name' cannot be \
+                        null\""
+            in str(context.exception)
+        )
 
     def test_user_no_name(self):
-        """... checks to create a user with no email"""
+        """... checks to create a user \
+            with no email"""
         with self.assertRaises(Exception) as context:
             u = User()
             u.save()
-        self.assertTrue("\"Column 'email' cannot be null\"" in str(context.exception))
+        self.assertTrue(
+            "\"Column 'email' \
+                        cannot be null\""
+            in str(context.exception)
+        )
 
 
 @unittest.skipIf(STORAGE_TYPE != "db", "skip if environ is not db")

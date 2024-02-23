@@ -52,7 +52,11 @@ class TestFileStorageDocs(unittest.TestCase):
 
     def test_doc_class(self):
         """... documentation for the class"""
-        expected = "\n        handles long term storage of all class instance" "s\n    "
+        expected = (
+            "\n        handles long term \
+            storage of all class instance"
+            "s\n    "
+        )
         actual = FileStorage.__doc__
         self.assertEqual(expected, actual)
 
