@@ -17,8 +17,9 @@ HBNB_API_PORT = getenv('HBNB_API_PORT')
 
 @app.teardown_appcontext
 def close_db(self):
-    """text"""
+    """close database"""
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found_error(error):
