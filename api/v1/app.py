@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# api/v1/app.py
+""" api/v1/app.py """
 from flask import Flask, jsonify
 from werkzeug.exceptions import NotFound
 from api.v1.views import app_views
