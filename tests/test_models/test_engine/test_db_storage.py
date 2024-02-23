@@ -86,3 +86,37 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test that storage.count returns correct values"""
+
+        current_value = len(models.storage.all())
+        count_value = models.storage.count()
+        # check operation with no parameters
+        self.assertEqual(count_value, current_value)
+
+        # check operation with class objects as parameters
+        for key, value in classes.items():
+            curr_value = len(models.storage.all(key))
+            class_value = models.storage.count(value)
+
+            self.assertEqual(curr_value, class_value)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """test that storage.get returns a valid object"""
+        s1 = State(name="Io")
+        sn1 = State(name="NotIo")
+        s1_id = s1.id
+
+        models.storage.new(s1)
+        models.storage.save()
+
+        x = models.storage.get(State, s1_id)
+
+        # check if s1 can be gotten
+        self.assertEqual(s1_id, x.id)
+
+        # check if sn1 search returns None
+        self.assertEqual(None, models.storage.get(State, sn1.id))
