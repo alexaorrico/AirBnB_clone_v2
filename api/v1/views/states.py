@@ -2,6 +2,7 @@ from api.v1.views import app_views
 from models.state import State
 from models import storage
 from flask import Flask, jsonify, abort, make_response, request
+from sqlalchemy.exc import IntegrityError
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -21,12 +22,16 @@ def id_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 def delete(state_id):
-    state = storage.get(State, state_id)
-    if state is None:
-        abort (404)
-    storage.delete(state)
-    storage.save()
-    return make_response(jsonify({}), 200)
+    try:
+        state = storage.get(State, state_id)
+        if state is None:
+            abort (404)
+        storage.delete(state)
+        storage.save()
+        return make_response(jsonify({}), 200)
+    except IntegrityError:
+        return jsonify(error=True, message="Invalid state_id provided"), 400
+
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def post():
