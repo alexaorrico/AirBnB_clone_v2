@@ -5,7 +5,6 @@ Contains the FileStorage class
 
 import json
 import models
-from hashlib import md5
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -81,4 +80,7 @@ class FileStorage:
         if cls is not None:
             return len([obj for obj in self.__objects.values() if isinstance(obj, cls)])
         else:
-            return len(self.__objects)
+            count = 0
+            for clss in classes:
+                count += len([obj for obj in self.__objects.values() if isinstance(obj, classes[clss])])
+            return count
