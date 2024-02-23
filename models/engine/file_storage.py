@@ -35,7 +35,7 @@ class FileStorage:
         return self.__objects
 
     def get(self, cls, id):
-        ''' A method to retrieve one object '''
+        ''' A method to retrieves one object '''
         if cls is not None:
             result = list(filter(lambda x: type(x) is cls and x.id == id,
                           self.__objects.values()))
