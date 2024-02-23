@@ -10,7 +10,8 @@ from models.city import City
 from flask import jsonify, abort, request
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>/cities',
+                 methods=['GET'], strict_slashes=False)
 def states(state_id=None):
     states = storage.get(State, state_id)
     if states is None:
@@ -22,7 +23,8 @@ def states(state_id=None):
         return jsonify(cities)
 
 
-@app_views.route('/cities/<string:city_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<string:city_id>',
+                 methods=['GET'], strict_slashes=False)
 def cities(city_id=None):
     cities = storage.get(City, city_id)
     if cities is None:
