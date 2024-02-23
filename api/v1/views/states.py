@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """hey"""
-
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
@@ -11,7 +10,7 @@ from models.state import State
 def get_states():
     """get state information for all states"""
     states = []
-    for state in storage.all("State").values():
+    for state in storage.all(State).values():
         states.append(state.to_dict())
     return jsonify(states)
 
@@ -20,7 +19,7 @@ def get_states():
                  strict_slashes=False)
 def get_state(state_id):
     """get state information for specified state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -30,12 +29,12 @@ def get_state(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """deletes a state based on its state_id"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state.delete()
     storage.save()
-    return (jsonify({}))
+    return (jsonify({}), 200)
 
 
 @app_views.route('/states/', methods=['POST'], strict_slashes=False)
@@ -54,7 +53,7 @@ def post_state():
                  strict_slashes=False)
 def put_state(state_id):
     """update a state"""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if not request.get_json():
@@ -63,10 +62,4 @@ def put_state(state_id):
         if attr not in ['id', 'created_at', 'updated_at']:
             setattr(state, attr, val)
     state.save()
-    return jsonify(state.to_dict())
-
-
-@app_views.errorhandler(404)
-def not_found(error):
-    """ override of the default 404 page"""
-    return jsonify({'error': 'Not found'}), 404
+    return jsonify(state.to_dict()), 200
