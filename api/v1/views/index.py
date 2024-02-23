@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Index """
+""" Index script """
 from api.v1.views import app_views
 from flask import jsonify
 from models.amenity import Amenity
