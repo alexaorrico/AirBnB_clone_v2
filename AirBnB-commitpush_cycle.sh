@@ -1,6 +1,6 @@
 #!/bin/bash
 # Git Staging Automation (Authour - Ernest Shongwe created during JPMC
-# internship, modified during AirBnB Clone v3 @ ALX Africa
+# internship, modified during AirBnB Clone v3 @ ALX Africa)
 
 # Lock file definition
 lock_file="/tmp/push_script.lock"
