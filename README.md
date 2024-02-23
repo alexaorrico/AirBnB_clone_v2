@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Gamila Programmer - [Github](https://github.com/gameliaprogrammer)
-Jennifer Huang - [Github](https://github.com/jhuang10123) 
+Amr Alnas - [Github](https://github.com/AMR856) 
 
 Second part of Airbnb: Joann Vuong
 ## License
