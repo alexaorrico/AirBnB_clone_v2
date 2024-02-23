@@ -15,15 +15,15 @@ from os import environ, stat, remove, path
 User = models.user.User
 BaseModel = models.base_model.BaseModel
 State = models.state.State
-STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
+STORAGE_TYPE = environ.get("HBNB_TYPE_STORAGE")
 
-if STORAGE_TYPE != 'db':
+if STORAGE_TYPE != "db":
     FileStorage = models.file_storage.FileStorage
 storage = models.storage
-F = './dev/file.json'
+F = "./dev/file.json"
 
 
-@unittest.skipIf(STORAGE_TYPE == 'db', 'skip if environ is not db')
+@unittest.skipIf(STORAGE_TYPE == "db", "skip if environ is not db")
 class TestFileStorageDocs(unittest.TestCase):
     """Class for testing BaseModel docs"""
 
@@ -31,10 +31,10 @@ class TestFileStorageDocs(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        print('\n\n.................................')
-        print('..... Testing Documentation .....')
-        print('..... For FileStorage Class .....')
-        print('.................................\n\n')
+        print("\n\n.................................")
+        print("..... Testing Documentation .....")
+        print("..... For FileStorage Class .....")
+        print(".................................\n\n")
 
     def tearDownClass():
         """tidies up the tests removing storage objects"""
@@ -43,15 +43,16 @@ class TestFileStorageDocs(unittest.TestCase):
 
     def test_doc_file(self):
         """... documentation for the file"""
-        expected = ("\nHandles I/O, writing and reading, of JSON for storage "
-                    "of all class instances\n")
+        expected = (
+            "\nHandles I/O, writing and reading, of JSON for storage "
+            "of all class instances\n"
+        )
         actual = models.file_storage.__doc__
         self.assertEqual(expected, actual)
 
     def test_doc_class(self):
         """... documentation for the class"""
-        expected = ('\n        handles long term storage of all class instance'
-                    's\n    ')
+        expected = "\n        handles long term storage of all class instance" "s\n    "
         actual = FileStorage.__doc__
         self.assertEqual(expected, actual)
 
@@ -64,28 +65,28 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_pep8_fs(self):
         """... filestorage.py conforms to PEP8 Style"""
         pep8style = pep8.StyleGuide(quiet=True)
-        errors = pep8style.check_files(['models/engine/file_storage.py'])
+        errors = pep8style.check_files(["models/engine/file_storage.py"])
         self.assertEqual(errors.total_errors, 0, errors.messages)
 
     def test_file_is_executable(self):
         """... tests if file has correct permissions so user can execute"""
-        file_stat = stat('models/engine/file_storage.py')
+        file_stat = stat("models/engine/file_storage.py")
         permissions = str(oct(file_stat[0]))
         actual = int(permissions[5:-2]) >= 5
         self.assertTrue(actual)
 
 
-@unittest.skipIf(STORAGE_TYPE == 'db', 'skip if environ is db')
+@unittest.skipIf(STORAGE_TYPE == "db", "skip if environ is db")
 class TestBmFsInstances(unittest.TestCase):
     """testing for class instances"""
 
     @classmethod
     def setUpClass(cls):
         """sets up the class"""
-        print('\n\n.................................')
-        print('...... Testing FileStorate ......')
-        print('..... For FileStorage Class .....')
-        print('.................................\n\n')
+        print("\n\n.................................")
+        print("...... Testing FileStorate ......")
+        print("..... For FileStorage Class .....")
+        print(".................................\n\n")
         cls.bm_obj = BaseModel()
         cls.state_obj = State(name="Illinois")
         cls.bm_obj.save()
@@ -137,7 +138,7 @@ class TestBmFsInstances(unittest.TestCase):
         self.bm_obj.save()
         bm_id = self.bm_obj.id
         actual = False
-        with open(F, mode='r', encoding='utf-8') as f_obj:
+        with open(F, mode="r", encoding="utf-8") as f_obj:
             storage_dict = json.load(f_obj)
         for k in storage_dict.keys():
             if bm_id in k:
@@ -145,13 +146,16 @@ class TestBmFsInstances(unittest.TestCase):
         self.assertTrue(True)
 
     def test_to_json(self):
-        """... to_json should return serializable dict object"""
-        my_model_json = self.bm_obj.to_json()
-        actual = True
-        try:
-            serialized = json.dumps(my_model_json)
-        except:
-            actual = False
+        """... checks proper usage of to_json method"""
+        remove(F)
+        self.bm_obj.save()
+        bm_id = self.bm_obj.id
+        actual = False
+        with open(F, mode="r", encoding="utf-8") as f_obj:
+            storage_dict = json.load(f_obj)
+        for k, v in storage_dict.items():
+            if bm_id in k:
+                actual = True
         self.assertTrue(actual)
 
     def test_reload(self):
@@ -179,22 +183,22 @@ class TestBmFsInstances(unittest.TestCase):
         all_obj = new_storage.all()
         for k, v in all_obj.items():
             if bm_id in k:
-                if type(v).__name__ == 'BaseModel':
+                if type(v).__name__ == "BaseModel":
                     actual = True
         self.assertTrue(actual)
 
 
-@unittest.skipIf(STORAGE_TYPE == 'db', 'skip if environ is db')
+@unittest.skipIf(STORAGE_TYPE == "db", "skip if environ is db")
 class TestUserFsInstances(unittest.TestCase):
     """testing for class instances"""
 
     @classmethod
     def setUpClass(cls):
         """sets up the class"""
-        print('\n\n.................................')
-        print('...... Testing FileStorage ......')
-        print('.......... User  Class ..........')
-        print('.................................\n\n')
+        print("\n\n.................................")
+        print("...... Testing FileStorage ......")
+        print(".......... User  Class ..........")
+        print(".................................\n\n")
         cls.user = User()
         cls.user.save()
         cls.bm_obj = BaseModel()
@@ -218,7 +222,7 @@ class TestUserFsInstances(unittest.TestCase):
 
     def test_count_cls(self):
         """... checks count method with class input arg"""
-        count_user = storage.count('User')
+        count_user = storage.count("User")
         expected = 1
         self.assertEqual(expected, count_user)
 
@@ -230,7 +234,7 @@ class TestUserFsInstances(unittest.TestCase):
 
     def test_get_cls_id(self):
         """... checks get method with class and id inputs"""
-        duplicate = storage.get('User', self.user.id)
+        duplicate = storage.get("User", self.user.id)
         expected = self.user.id
         actual = duplicate.id
         self.assertEqual(expected, actual)
@@ -251,7 +255,7 @@ class TestUserFsInstances(unittest.TestCase):
         self.user.save()
         u_id = self.user.id
         actual = False
-        with open(F, mode='r', encoding='utf-8') as f_obj:
+        with open(F, mode="r", encoding="utf-8") as f_obj:
             storage_dict = json.load(f_obj)
         for k in storage_dict.keys():
             if u_id in k:
@@ -273,5 +277,5 @@ class TestUserFsInstances(unittest.TestCase):
         self.assertTrue(actual)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main
