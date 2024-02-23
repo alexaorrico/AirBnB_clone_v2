@@ -2,7 +2,7 @@
 """
 api flask app
 """
-from flask import Flask
+from flask import Flask, jsonify
 import models
 from models import storage
 from api.v1.views import app_views
@@ -19,6 +19,10 @@ HBNB_API_PORT = getenv('HBNB_API_PORT')
 def close_db(self):
     """text"""
     storage.close()
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return jsonify({'error': 'Not found'}), 404
 
 
 if __name__ == "__main__":
