@@ -28,4 +28,4 @@ def cities(city_id=None):
     if cities is None:
         abort(404)
     else:
-        return jsonify(cities)
+        return jsonify(cities.to_dict())
