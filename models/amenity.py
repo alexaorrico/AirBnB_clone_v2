@@ -1,8 +1,5 @@
 """ Holds class Amenity """
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
 
 import models
 from models.base_model import BaseModel, Base

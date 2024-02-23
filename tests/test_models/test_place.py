@@ -3,7 +3,6 @@
 Contains the TestPlaceDocs classes
 """
 
-from datetime import datetime
 import inspect
 import models
 from models import place

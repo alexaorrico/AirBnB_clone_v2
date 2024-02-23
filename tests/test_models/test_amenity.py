@@ -3,7 +3,6 @@
 Contains the TestAmenityDocs classes
 """
 
-from datetime import datetime
 import inspect
 import unittest
 
