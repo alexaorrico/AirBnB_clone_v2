@@ -1,5 +1,7 @@
 #!/bin/bash
 
+//commit and push script//
+
 # Define the branch name
 branch_name="storage_get_count"
 
