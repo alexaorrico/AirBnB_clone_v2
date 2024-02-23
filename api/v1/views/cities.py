@@ -7,7 +7,8 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route('/states/<string:state_id>/cities', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
 def get_cities(state_id):
     """get cities info in a specified state"""
     state = storage.get("State", state_id)
@@ -73,4 +74,4 @@ def put_city(city_id):
         if attr not in ['id', 'state_id', 'created_at', 'updated_at']:
             setattr(city, attr, val)
     city.save()
-    return jsonify(state.to_dict()), 200
+    return jsonify(city.to_dict()), 200
