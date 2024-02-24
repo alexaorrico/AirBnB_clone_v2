@@ -77,7 +77,8 @@ class DBStorage:
 
     def get(self, cls, id):
         """
-        get: Retrieves object from FileStorage by class and ID.
+        get: Returns object based on class name and ID, or
+        None if not found
         """
         if cls not in classes.values():
             return None
@@ -91,14 +92,14 @@ class DBStorage:
 
     def count(self, cls=None):
         """
-        count: Counts number of storage objects matching given class.
+        count: Counts number of objects in storage
         """
         all_class = classes.values()
 
         if not cls:
             count = 0
-            for item in all_class:
-                count += len(models.storage.all(item).values())
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
         else:
             count = len(models.storage.all(cls).values())
 
