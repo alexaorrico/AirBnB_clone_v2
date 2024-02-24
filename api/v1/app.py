@@ -13,7 +13,7 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 
 
 @app.teardown_appcontext
-def teardown_appcontext(exception):
+def teardown(exception):
     """Teardown app context"""
     storage.close()
 
