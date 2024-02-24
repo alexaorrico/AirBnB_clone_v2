@@ -139,20 +139,24 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_get(self):
-        """Test that get returns the correct object"""
+        """Test that get returns the object with the given id"""
         storage = FileStorage()
-        new_state = State(name="California")
-        new_state.save()
-        self.assertIs(storage.get(State, new_state.id), new_state)
+        obj = State(name="California")
+        storage.new(obj)
+        storage.save()
+        self.assertEqual(obj, storage.get("State", obj.id))
 
     @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_count(self):
         """Test that count returns the number of objects in storage"""
         storage = FileStorage()
-        self.assertEqual(storage.count(), 0)
-        new_state = State(name="Oregon")
-        new_state.save()
-        self.assertEqual(storage.count(), 1)
-        new_state = State(name="Oregon")
-        new_state.save()
-        self.assertEqual(storage.count(), 2)
+        obj = State(name="California")
+        storage.new(obj)
+        storage.save()
+        self.assertEqual(1, storage.count())
+        obj2 = State(name="Oregon")
+        storage.new(obj2)
+        storage.save()
+        self.assertEqual(2, storage.count())
+        self.assertEqual(1, storage.count("State"))
+        self.assertEqual(0, storage.count("NotARealClass"))
