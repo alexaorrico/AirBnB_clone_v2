@@ -10,20 +10,19 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
-def api_status():
-    """ Endpoint to get the status of the API """
-    return jsonify({"status": "OK"})
+@app_views.route('/api/v1/stats', methods=['GET'], strict_slashes=False)
+def get_stats():
+    """
+    Retrieves the number of each object type
+    """
+    stats = {
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'places': storage.count('Place'),
+        'reviews': storage.count('Review'),
+        'states': storage.count('State'),
+        'users': storage.count('User')
+        # Add more object types as needed
+    }
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def objects_statistics():
-    """ Endpoint to retrieve the number of each object type """
-    object_types = [Amenity, City, Place, Review, State, User]
-    type_names = ["amenities", "cities", "places", "reviews", "states", "users"]
-
-    object_counts = {}
-    for i in range(len(object_types)):
-        object_counts[type_names[i]] = storage.count(object_types[i])
-
-    return jsonify(object_counts)
-
+    return jsonify(stats)
