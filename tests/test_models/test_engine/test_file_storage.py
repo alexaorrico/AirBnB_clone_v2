@@ -116,26 +116,26 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """Test that get retrieves objects stored in file.json"""
+        """Test that get objects stored in file.json"""
         storage = FileStorage()
-        new_instance = {"name": "Nabeul"}
-        instance = State(**new_instance)
-        storage.new(instance)
+        new_obj = {"name": "Blantyre"}
+        created_obj = State(**new_obj)
+        storage.new(created_obj)
         storage.save()
         storage = FileStorage()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
+        get_obj = storage.get(State, created_obj.id)
+        self.assertEqual(get_obj, created_obj)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """Test that count returns the right number of objects in file.json"""
+        """Test that count the number of objects in file.json"""
         storage = FileStorage()
-        new_instance = {"name": "Greater-Accra"}
-        state = State(**new_instance)
-        storage.new(state)
-        new_instance2 = {"name": "Accra"}
-        city = City(**new_instance2)
+        new_obj = {"name": "Lilongwe"}
+        created_obj = State(**new_obj)
+        storage.new(created_obj)
+        new_obj2 = {"name": "Mzuzu"}
+        city = City(**new_obj2)
         storage.new(city)
         storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
+        obj_count = storage.count()
+        self.assertEqual(len(storage.all()), obj_count)
