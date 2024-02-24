@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Application file API
 """
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
@@ -19,7 +19,7 @@ def teardownSession(expection):
 
 @app.errorhandler(404)
 def handle_404_error(_error):
-    resp = jsonify({"error": "Not Found"})
+    resp = jsonify({"error": "Not found"})
     resp.status_code = 404
     return resp
 
