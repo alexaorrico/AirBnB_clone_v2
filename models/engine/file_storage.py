@@ -80,7 +80,7 @@ class FileStorage:
                 return elem
 
     def count(self, cls=None):
-        """returns the number of cls objects or number of all classes"""
+        """returns the number of cls objects or number of all classes """
         if cls:
             return len(list(models.storage.all(cls)))
         return len(list(models.storage.all()))
