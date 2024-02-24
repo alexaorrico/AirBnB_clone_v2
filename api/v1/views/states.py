@@ -12,12 +12,8 @@ from flask import jsonify, abort, request
 def get_state():
     """ Gets a single state
     """
-    state_list = []
-    state_obj = storage.all("State")
-    for obj in state_obj.values():
-        state_list.append(obj.to_dict())
-
-    return jsonify(state_list)
+    return (jsonify([state.to_dict() for state in
+            storage.all("State").values()]))
 
 
 @app_views.route("/states/<state_id>", methods=["GET"])
@@ -61,9 +57,9 @@ def create_state():
 
 
 @app_views.route("/states/<state_id>", methods=["PUT"])
-def update_states(states_id):
+def update_states(state_id):
     """Updates an existing state"""
-    state_obj = storage.get("State", str(states_id))
+    state_obj = storage.get("State", str(state_id))
     if state_obj is None:
         abort(404)
 
