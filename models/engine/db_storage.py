@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -78,18 +78,18 @@ class DBStorage:
     # New functions to define
     def get(self, cls, id):
         """Retrieves one object"""
-        objs = self.__session.query(cls).filter_by(id=id)
-        if (objs):
-            return objs
-        else:
-            return None
+        if cls in classes.values():
+            objs = self.__session.query(cls).filter(id==id).first()
+            if (objs):
+                return objs    
+        return None
 
     def count(self, cls=None):
         """Returns the number of objects in storage"""
         if cls is None:
             num = 0
             for clss in classes.values():
-                num += self.__session.query(clss).all().count()
+                num += self.__session.query(func.count('*')).select_from(clss).scalar()
             return num
         if cls in classes.values():
-            return self.__session.query(cls).all().count()
+            return self.__session.query(func.count('*')).select_from(cls).scalar()
