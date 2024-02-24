@@ -10,12 +10,14 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def get_status():
     """
     Returns a JSON: "status": "OK"
     """
     return jsonify({"status": "OK"})
+
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def get_stats():
