@@ -73,4 +73,18 @@ def city_by_state(state_id):
 @app_views.route("cities/<city_id>", methods=["PUT"], strict_slashes=False)
 def city_put(city_id)
     """
-    
+    Updates specific city object ID
+    :param city_id: city object ID
+    :return: city object and 200 on success, or 400 or 404 in failure
+    """
+    city_json = request.get_json(silent=True)
+    if city_json is None:
+        abort(400, 'Not a JSON')
+    fetched_obj = storage.get("City", str(city_id))
+    if fetched_obj is None:
+        abort(404)
+    for key, val in city_json.item():
+        if key not in ["id", "created_at", "updated_at", "state_id"]:
+            setattr(fetched_obj, key, val)
+    fetched_obj.save()
+    return jsonify(fetched_obj.to_json())
