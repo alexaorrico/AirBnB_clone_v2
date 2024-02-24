@@ -85,6 +85,15 @@ class DBStorage:
             obj: The object based on the class and its ID,
             or None if not found.
         """
+
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
         if cls and id:
             key = cls.__name__ + '.' + id
             return self.all(cls).get(key)
@@ -100,9 +109,12 @@ class DBStorage:
             If no class is passed,
                  returns the count of all objects in storage.
         """
-        if cls:
-            return self.__session.query(cls).count()
-        total_count = 0
-        for cls in classes.values():
-            total_count += self.__session.query(cls).count()
-        return total_count
+        if cls is None:
+            count = 0
+            for class_instance in classes.values():
+                count += len(models.storage.all(class_instance))
+            return count
+        else:
+            if cls not in classes.values():
+                return 0
+            return len(models.storage.all(cls))
