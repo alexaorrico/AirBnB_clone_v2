@@ -61,9 +61,9 @@ def create_state():
 
 
 @app_views.route("/states/<state_id>", methods=["PUT"])
-def update_states(states_id):
+def update_states(state_id):
     """Updates an existing state"""
-    state_obj = storage.get("State", str(states_id))
+    state_obj = storage.get("State", str(state_id))
     if state_obj is None:
         abort(404)
 
