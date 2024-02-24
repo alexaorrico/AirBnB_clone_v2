@@ -49,4 +49,51 @@ def amenity_by_id(amenity_id):
   :param amenity_id: amenity obj id
   :Return: State object with the specific ID or error
   """
-  
+
+  fetched_obj = storage.get("Amenity", str(amenity_id))
+
+  if fetched_obj is None:
+    abort(404)
+
+  return jsonify(fetched_obj.to_json())
+
+
+@app_views.route("/amenities/<amenity_id>", methods=["PUT"],
+                 strict_slashes=False)
+def amenity_put(amenity_id):
+  """
+  Updates specific Amenity objects by ID
+  :param amenity_id: amenity object ID
+  :Return: amenity obj and 200 on success, or 400 or 404 failure
+  """
+  am_json = request.get_json(silent=True)
+  if am_json is None:
+    abort(400, 'Not a JSON')
+  fetched_obj = storage.get("Amenity", str(amenity_id))
+  if fetched_obj is None:
+    abort(400)
+  for key, val in am_json.items():
+    if key not in ["id", "created_at", "updated_at"]:
+        setattr(fetched_obj, key,val)
+    fetched_obj.save()
+    return jsonify(fetched_obj.to_json())
+
+
+@app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
+                 strict_slashes=False)
+def amenity_delete_by_id(amenity_id):
+  """
+  Deletes Amenity by ID
+  :param amenity_id: Amenity obj id
+  :Return: empty dict with a 200 or 404 if not found
+  """
+
+fetched_obj = storage.get("Amenity", str(amenity_id))
+
+if fetched_obj is None:
+  abort(404)
+
+storage.delete(fetched_obj)
+storage.save()
+
+return jsonify({})
