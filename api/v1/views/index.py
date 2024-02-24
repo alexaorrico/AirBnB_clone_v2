@@ -4,10 +4,11 @@
 Returns a JSON
 """
 from api.v1.views import app_views
-from flask import Flask
+from flask import jsonify
 
 
-@app_views.route('/status', methods=['GET'])
-def get_status():
+"""Define a route /status on the app_views Blueprint"""
+@app_views.route('/status')
+def status():
     """A route that returns a JSON"""
     return jsonify({"status": "OK"})
