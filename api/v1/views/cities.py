@@ -71,7 +71,7 @@ def city_by_state(state_id):
 
 
 @app_views.route("cities/<city_id>", methods=["PUT"], strict_slashes=False)
-def city_put(city_id)
+def city_put(city_id):
     """
     Updates specific city object ID
     :param city_id: city object ID
