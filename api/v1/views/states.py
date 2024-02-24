@@ -9,7 +9,7 @@ from models.state import State
 
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
-def get_all_states():
+def state_get_all():
     """
     retrieves all State objects
     :return: json of all states
@@ -23,7 +23,7 @@ def get_all_states():
 
 
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
-def create_state():
+def state_create():
     """
     create state route
     :return: newly created state obj
@@ -59,7 +59,7 @@ def state_by_id(state_id):
 
 
 @app_views.route("/states/<state_id>",  methods=["PUT"], strict_slashes=False)
-def update_state(state_id):
+def state_put(state_id):
     """
     updates specific State object by ID
     :param state_id: state object ID
@@ -80,7 +80,7 @@ def update_state(state_id):
 
 @app_views.route("/states/<state_id>", methods=["DELETE"],
                  strict_slashes=False)
-def delete_state_by_id(state_id):
+def state_delete_by_id(state_id):
     """
     deletes State by id
     :param state_id: state object id
