@@ -19,7 +19,9 @@ def teardownSession(expection):
 
 @app.errorhandler(404)
 def handle_404_error(_error):
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    resp = jsonify({"error": "Not Found"})
+    resp.status_code = 404
+    return resp
 
 
 if __name__ == "__main__":
