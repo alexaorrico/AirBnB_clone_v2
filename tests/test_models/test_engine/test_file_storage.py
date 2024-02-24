@@ -113,3 +113,20 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get_existing_object(self):
+        """Test that get returns an existing object"""
+        storage = FileStorage()
+        obj = BaseModel()
+        obj.id = "test_id"
+        storage.new(obj)
+        storage.save()
+
+        retrieved_obj = storage.get(BaseModel, "test_id")
+        self.assertEqual(retrieved_obj, obj)
+
+    def test_get_nonexistent_object(self):
+        """Test that get returns None for a nonexistent object"""
+        storage = FileStorage()
+        retrieved_obj = storage.get(BaseModel, "nonexistent_id")
+        self.assertIsNone(retrieved_obj)
