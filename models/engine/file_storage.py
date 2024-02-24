@@ -37,7 +37,7 @@ class FileStorage:
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
+            key = obj.__class__.__name__ + "." + str(obj.id)
             self.__objects[key] = obj
 
     def save(self):
@@ -55,7 +55,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except BaseException:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +68,23 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """
+        A method to retrieve one object:
+        """
+        if cls:
+            all_of_cls = self.all(cls)
+            for obj in all_of_cls.values():
+                if obj.id == id:
+                    return obj
+        return None
+
+    def count(self, cls=None):
+        """
+        A method to count the number of objects in storage:
+        """
+        if cls:
+            return len(self.all(cls))
+        else:
+            return len(self.all())
