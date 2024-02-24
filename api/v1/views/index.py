@@ -1,9 +1,11 @@
 #!/usr/bin/python3
-""" this responds with a message """
+"""define routes of blueprint"""
+
 from api.v1.views import app_views
-from flask import jsonify
+from models import storage
 
-
-@app_views.route('/status', methods=['GET'])
+@app_views.route("/status", strict_slashes=False, methods=["GET"])
 def status():
-    return jsonify({"status": "OK"})
+    return {
+        "status": "OK",
+    }
