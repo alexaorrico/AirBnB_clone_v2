@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Handles blueprint initialization and imports"""
+"""
+Handles blueprint initialization and imports
+"""
 
 from flask import Blueprint
 
