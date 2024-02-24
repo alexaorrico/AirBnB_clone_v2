@@ -54,8 +54,9 @@ class DBStorage:
     def get(self, cls, id):
         """Get only one"""
         if issubclass(cls, BaseModel) and id is not None:
-            obj = self.__session.query(cls)
-            return (obj)
+            objs = self.__session.query(cls)
+            for obj in objs:
+                print(obj)
 
     def new(self, obj):
         """add the object to the current database session"""
