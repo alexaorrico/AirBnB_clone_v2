@@ -75,10 +75,12 @@ class DBStorage:
         '''Returns the object based on the class and its ID, or None
            if not found
         '''
-        for item in self.all(cls):
+        cls = self.all(cls)
+        for item in cls:
             if id == str(item.id):
                 return item
         return None
+
     def count(self, cls=None):
         """
         Returns the number of objects in storage matching the given class.
@@ -89,6 +91,7 @@ class DBStorage:
         if cls is None:
             return len(self.all())
         return len(self.all(cls))
+
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
