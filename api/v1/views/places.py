@@ -6,6 +6,8 @@ Handles all default RESTFul API actions for Place objects
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.amenity import Amenity
+from models.amenity import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
