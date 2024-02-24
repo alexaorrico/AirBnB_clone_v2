@@ -39,4 +39,8 @@ def del_cities(city_id=None):
     """
     remove city that has specific id
     """
-    cities = storage.get(City, )
+    cities = storage.get(City, city_id)
+    if cities is None:
+        abort(404)
+    else:
+        
