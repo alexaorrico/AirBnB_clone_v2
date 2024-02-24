@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" api/v1/views/index.py """
+"""api/v1/views/index.py"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -10,9 +10,9 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-@app_views.route("/stats")
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
-    """Return a JSON with the number of each objects by type"""
+    """Return a JSON with the number of each object by type"""
     classes = {
         "users": User,
         "states": State,
