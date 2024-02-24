@@ -41,4 +41,12 @@ def amenity_create():
   return resp
 
 
-@app_views.route("/amenities", methods=["GET"], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=["GET"],
+                 strict_slashes=False)
+def amenity_by_id(amenity_id):
+  """
+  Get specific Amenity object by ID
+  :param amenity_id: amenity obj id
+  :Return: State object with the specific ID or error
+  """
+  
