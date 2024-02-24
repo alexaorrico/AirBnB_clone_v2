@@ -21,7 +21,7 @@ def amenity_get_all():
   return jsonify(am_list)
 
 
-@app_views.route("/amenities", methods=["GET"], strict_slashes=False)
+@app_views.route("/amenities", methods=["POST"], strict_slashes=False)
 def amenity_create():
   """
   Creates an amenity route
