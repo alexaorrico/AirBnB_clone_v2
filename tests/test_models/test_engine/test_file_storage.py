@@ -16,11 +16,29 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
+
+
+class TestCodeFormat(unittest.TestCase):
+    def test_pycodestyle_conformance_file_storage(self):
+        """Test that models/engine/file_storage.py conforms to pycodestyle."""
+        pycodestyles = pycodestyle.StyleGuide(quiet=True)
+        result = pycodestyles.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
+
+    def test_pycodestyle_conformance_test_file_storage(self):
+        """Test tests/test_models/test_engine/test_file_storage.py
+        conforms to pycodestyle."""
+        pycodestyles = pycodestyle.StyleGuide(quiet=True)
+        result = pycodestyles.check_files(
+            ['tests/test_models/test_engine/test_file_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
 
 class TestFileStorageDocs(unittest.TestCase):
@@ -29,21 +47,6 @@ class TestFileStorageDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.fs_f = inspect.getmembers(FileStorage, inspect.isfunction)
-
-    def test_pep8_conformance_file_storage(self):
-        """Test that models/engine/file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_pep8_conformance_test_file_storage(self):
-        """Test tests/test_models/test_file_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
 
     def test_file_storage_module_docstring(self):
         """Test for the file_storage.py module docstring"""
@@ -113,3 +116,107 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorageMethodsGetandcount(unittest.TestCase):
+    """
+    Class for Test File Storage Methods Get and count
+    """
+
+    def setUp(self):
+        """
+        setup method
+        """
+        self.storage = FileStorage()
+        self.state_o = State(id=120)
+        self.storage.new(self.state_o)
+        self.storage.save()
+
+    def tearDown(self):
+        """
+        tear down
+        """
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_one(self):
+        """
+        first function tests get
+        """
+        self.assertEqual(self.storage.get(State, 120), self.state_o)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_two(self):
+        """
+        first function tests get
+        """
+        self.assertEqual(self.storage.get(State, 190), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_cls_none(self):
+        """
+        Test get with cls as None
+        """
+        self.assertEqual(self.storage.get(None, 120), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_id_none(self):
+        """
+        Test get with id as None
+        """
+        self.assertEqual(self.storage.get(State, None), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_no_cls_in_storage(self):
+        """
+        Test get with valid cls but no instances in storage
+        """
+        self.assertEqual(self.storage.get(TestFileStorage, 120), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_no_id_in_storage(self):
+        """
+        Test get with valid id but no object with that id in storage
+        """
+        self.assertEqual(self.storage.get(State, 9999), None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all(self):
+        """
+        Test count with no class specified
+        """
+        # Assuming self.storage.all() returns a dictionary
+        expected_count = len(self.storage.all())
+        self.assertEqual(self.storage.count(), expected_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_cls(self):
+        """
+        Test count with a specific class
+        """
+        # Assuming self.storage.all(cls) returns a dictionary
+        expected_count = len(self.storage.all(State))
+        self.assertEqual(self.storage.count(State), expected_count)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_cls_none(self):
+        """
+        Test count with a class that doesn't exist in storage
+        """
+        # Assuming NonExistentClass is a class that doesn't exist in storage
+        self.assertEqual(self.storage.count(TestFileStorage), 0)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_all_empty(self):
+        """
+        Test count with no class specified and storage is empty
+        """
+        self.storage.all().clear()
+        self.assertEqual(self.storage.count(), 0)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count_cls_empty(self):
+        """
+        Test count with a specific class and storage is empty
+        """
+        self.storage.all().clear()
+        self.assertEqual(self.storage.count(State), 0)
