@@ -12,7 +12,7 @@ from models.city import City
 def city_by_state(state_id):
   """
   Retrieves all city objects from specific states
-  :return: json of all cities in a state or 404 error
+  :Returns: json of all cities in a state or 404 error
   """
   city_list = []
   state_obj = storage.get("State", state_id)
@@ -31,7 +31,7 @@ def city_by_state(state_id):
     """
     Create city route
     param: state_id - state id
-    :return: newly created obj
+    :Returns: newly created obj
     """
     city_json = request.get_json(silent=True)
     if city_json is None:
@@ -59,7 +59,7 @@ def city_by_state(state_id):
       """
       Gets specific City object by ID
       :param city_id: city object id
-      :return: city obj with the specified id or error
+      :Returns: city obj with the specified id or error
       """
 
       fetched_obj = storage.get("City", str(city_id))
@@ -75,7 +75,7 @@ def city_put(city_id):
     """
     Updates specific city object ID
     :param city_id: city object ID
-    :return: city object and 200 on success, or 400 or 404 in failure
+    :Returns: city object and 200 on success, or 400 or 404 in failure
     """
     city_json = request.get_json(silent=True)
     if city_json is None:
@@ -96,7 +96,7 @@ def city_delete_by_id(city_id):
     """
     Deletes City by ID
     :param city_id: city object ID
-    :return: Empty dict with 200 or 404 not found
+    :Returns: Empty dict with 200 or 404 not found
     """
 
     fetched_obj = storage.get("City", str(city_id))
