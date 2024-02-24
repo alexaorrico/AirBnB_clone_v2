@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Define the directory to search
+dir="tests"
+
+# Use find to get all Python files in the directory
+# Then use sed to replace 'pep8' with 'pycodestyle' in-place
+find "$dir" -name '*.py' -exec sed -i 's/pep8/pycodestyle/g' {} \;
