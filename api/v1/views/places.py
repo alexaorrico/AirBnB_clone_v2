@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for Places """
+
+from models import storage
+from api.v1.views import app_views
 from models.state import State
 from models.city import City
 from models.place import Place
 from models.user import User
 from models.amenity import Amenity
-from models import storage
-from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from flasgger.utils import swag_from
 
@@ -16,14 +17,14 @@ from flasgger.utils import swag_from
 @swag_from('documentation/place/get_places.yml', methods=['GET'])
 def get_places(city_id):
     """
-    Retrieves the list of all Place objects of a City
+    Gets the list of all Place objects of a City
     """
-    city = storage.get(City, city_id)
+    all_city = storage.get(City, city_id)
 
-    if not city:
+    if not all_city:
         abort(404)
 
-    places = [place.to_dict() for place in city.places]
+    places = [place.to_dict() for place in all_city.places]
 
     return jsonify(places)
 
@@ -34,11 +35,11 @@ def get_place(place_id):
     """
     Retrieves a Place object
     """
-    place = storage.get(Place, place_id)
-    if not place:
+    get_place = storage.get(Place, place_id)
+    if not get_place:
         abort(404)
 
-    return jsonify(place.to_dict())
+    return jsonify(get_place.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['DELETE'],
@@ -49,12 +50,12 @@ def delete_place(place_id):
     Deletes a Place Object
     """
 
-    place = storage.get(Place, place_id)
+    del_place = storage.get(Place, place_id)
 
-    if not place:
+    if not del_place:
         abort(404)
 
-    storage.delete(place)
+    storage.delete(del_place)
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -65,11 +66,11 @@ def delete_place(place_id):
 @swag_from('documentation/place/post_place.yml', methods=['POST'])
 def post_place(city_id):
     """
-    Creates a Place
+    Creates a Place object
     """
-    city = storage.get(City, city_id)
+    create_city = storage.get(City, city_id)
 
-    if not city:
+    if not create_city:
         abort(404)
 
     if not request.get_json():
@@ -91,30 +92,6 @@ def post_place(city_id):
     instance = Place(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
-
-
-@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
-@swag_from('documentation/place/put_place.yml', methods=['PUT'])
-def put_place(place_id):
-    """
-    Updates a Place
-    """
-    place = storage.get(Place, place_id)
-
-    if not place:
-        abort(404)
-
-    data = request.get_json()
-    if not data:
-        abort(400, description="Not a JSON")
-
-    ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
-
-    for key, value in data.items():
-        if key not in ignore:
-            setattr(place, key, value)
-    storage.save()
-    return make_response(jsonify(place.to_dict()), 200)
 
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
@@ -178,3 +155,27 @@ def places_search():
         places.append(d)
 
     return jsonify(places)
+
+
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
+@swag_from('documentation/place/put_place.yml', methods=['PUT'])
+def put_place(place_id):
+    """
+    Updates a Place
+    """
+    upd_place = storage.get(Place, place_id)
+
+    if not upd_place:
+        abort(404)
+
+    data = request.get_json()
+    if not data:
+        abort(400, description="Not a JSON")
+
+    ignore = ['id', 'user_id', 'city_id', 'created_at', 'updated_at']
+
+    for key, value in data.items():
+        if key not in ignore:
+            setattr(upd_place, key, value)
+    storage.save()
+    return make_response(jsonify(upd_place.to_dict()), 200)
