@@ -1,0 +1,17 @@
+*~
+*main*
+*__pycache__*
+*.o
+*.pyc
+push
+fix
+a.out
+*.so
+*/__pycache__
+*.json
+*.csv
+*.txt
+*.swp
+test.py
+tester.py
+.env
