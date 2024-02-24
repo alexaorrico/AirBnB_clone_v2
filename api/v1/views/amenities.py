@@ -27,4 +27,18 @@ def amenity_create():
   Creates an amenity route
   :Return: newly created amenity object
   """
-  am+json = request.get_json(silent=True)
+  am_json = request.get_json(silent=True)
+  if am_json is None:
+    abort(400, 'Not a JSON')
+  if "name" not in am_json:
+    abort(400, 'Missing name')
+    
+  new_am = Amenity(**am_json)
+  new_am.save()
+  resp = jsonify(new_am.to.json())
+  resp.status_code = 201
+  
+  return resp
+
+
+@app_views.route("/amenities", methods=["GET"], strict_slashes=False)
