@@ -12,7 +12,7 @@ from models.city import City
 def city_by_state(state_id):
   """
   Retrieves all city objects from specific states
-  :eeturn: json of all cities in a state or 404 error
+  :return: json of all cities in a state or 404 error
   """
   city_list = []
   state_obj = storage.get("State", state_id)
@@ -25,7 +25,7 @@ def city_by_state(state_id):
   return jsonify(city_list)
 
 
-@app_views.route("states/<state_id>/cities", methods=["POST"]
+@app_views.route("states/<state_id>/cities", methods=["POST"],
                 strict_slashes=FALSE)
 def city_by_state(state_id):
     """
