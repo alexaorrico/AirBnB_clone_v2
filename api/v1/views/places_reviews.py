@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for Reviews """
+
+from api.v1.views import app_views
+from flask import abort, jsonify, make_response, request
 from models.review import Review
 from models.place import Place
 from models.user import User
 from models import storage
-from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
 from flasgger.utils import swag_from
 
 
@@ -14,14 +15,14 @@ from flasgger.utils import swag_from
 @swag_from('documentation/reviews/get_reviews.yml', methods=['GET'])
 def get_reviews(place_id):
     """
-    Retrieves the list of all Review objects of a Place
+    Gets the list of all Review objects of a Place
     """
-    place = storage.get(Place, place_id)
+    place_rev = storage.get(Place, place_id)
 
-    if not place:
+    if not place_rev:
         abort(404)
 
-    reviews = [review.to_dict() for review in place.reviews]
+    reviews = [review.to_dict() for review in place_rev.reviews]
 
     return jsonify(reviews)
 
@@ -30,13 +31,13 @@ def get_reviews(place_id):
 @swag_from('documentation/reviews/get_review.yml', methods=['GET'])
 def get_review(review_id):
     """
-    Retrieves a Review object
+    Gets the review object
     """
-    review = storage.get(Review, review_id)
-    if not review:
+    reviews = storage.get(Review, review_id)
+    if not reviews:
         abort(404)
 
-    return jsonify(review.to_dict())
+    return jsonify(reviews.to_dict())
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
@@ -47,12 +48,12 @@ def delete_review(review_id):
     Deletes a Review Object
     """
 
-    review = storage.get(Review, review_id)
+    del_review = storage.get(Review, review_id)
 
-    if not review:
+    if not del_review:
         abort(404)
 
-    storage.delete(review)
+    storage.delete(del_review)
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -97,9 +98,9 @@ def put_review(review_id):
     """
     Updates a Review
     """
-    review = storage.get(Review, review_id)
+    update_review = storage.get(Review, review_id)
 
-    if not review:
+    if not update_review:
         abort(404)
 
     if not request.get_json():
@@ -108,8 +109,8 @@ def put_review(review_id):
     ignore = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
 
     data = request.get_json()
-    for key, value in data.items():
-        if key not in ignore:
-            setattr(review, key, value)
+    for k, val in data.items():
+        if k not in ignore:
+            setattr(update_review, k, val)
     storage.save()
-    return make_response(jsonify(review.to_dict()), 200)
+    return make_response(jsonify(update_review.to_dict()), 200)
