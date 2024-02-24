@@ -157,6 +157,10 @@ No known bugs at this time.
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
+AirBnB Version 3 - Authors
+Ricki Potts - [Github](https://github.com/Garricku) / [Twitter](https://twitter.com/garricku777)
+Oluwatobi Adesanya - [Github](https://github.com/theChosenDevop)
+
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
