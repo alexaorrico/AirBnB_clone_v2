@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+    #!/usr/bin/python3
 """ API Status and Object Statistics """
 from models.user import User
 from models import storage
@@ -26,4 +26,3 @@ def objects_statistics():
         object_counts[type_names[i]] = storage.count(object_types[i])
 
     return jsonify(object_counts)
-
