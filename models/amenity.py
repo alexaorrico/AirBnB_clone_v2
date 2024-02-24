@@ -4,7 +4,7 @@ import models
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 
@@ -13,6 +13,7 @@ class Amenity(BaseModel, Base):
     if models.storage_t == 'db':
         __tablename__ = 'amenities'
         name = Column(String(128), nullable=False)
+        # place_id = Column(String(60), ForeignKey('places.id'), nullable=True) #changed
     else:
         name = ""
 

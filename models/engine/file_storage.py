@@ -80,8 +80,8 @@ class FileStorage:
             return len(self.__objects)        
         else:
             """  If no class is passed, returns the count of all objects in storage """
+            count = 0
             for key, value in self.__objects.items():
-                count = 0
                 if isinstance(value, cls):
                     count += 1
             return count
