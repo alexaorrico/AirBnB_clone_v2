@@ -12,11 +12,11 @@ from sqlalchemy.ext.declarative import declarative_base
 import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
-if getenv('HBNB_TYPE_STORAGE', 'fs') == 'db':
+
+if models.storage_t == "db":
     Base = declarative_base()
 else:
     Base = object
-
 
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
