@@ -3,8 +3,8 @@
 
 from flask import Flask
 from models import storage
-from views import app_views
 from os import getenv
+from api.v1.views import app_views
 
 
 app = Flask(__name__)
@@ -18,4 +18,4 @@ def teardown_appcontext(exception):
 
 
 if __name__ == '__main__':
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, threaded=True)
