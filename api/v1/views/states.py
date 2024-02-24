@@ -12,8 +12,12 @@ from flask import jsonify, abort, request
 def get_state():
     """ Gets a single state
     """
-    return (jsonify([state.to_dict() for state in
-            storage.all("State").values()]))
+    state_list = []
+    state_obj = storage.all("State")
+    for obj in state_obj.values():
+        state_list.append(obj.to_dict())
+
+    return jsonify(state_list)
 
 
 @app_views.route("/states/<state_id>", methods=["GET"])
