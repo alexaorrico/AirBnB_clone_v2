@@ -27,7 +27,7 @@ def get_states(state_id):
     if state_obj is None:
         abort(404)
 
-    return jsonify(state_obj.to_json())
+    return jsonify(state_obj.to_dict())
 
 
 @app_views.route("/states/<state_id>", methods=["DELETE"])
@@ -35,7 +35,7 @@ def del_state(state_id):
     """ Deletes a state using ID"""
     state_obj = storage.get('State', str(state_id))
     if state_obj is None:
-        abort(404) 
+        abort(404)
     storage.delete(state_obj)
     storage.save()
     return jsonify({}, 200)
@@ -54,7 +54,7 @@ def create_state():
     state_instance = State(**new_state)
     storage.new(state_instance)
     storage.save()
-    resp = jsonify(state_instance.to_json())
+    resp = jsonify(state_instance.to_dict())
     resp.status_code = 201
 
     return resp
@@ -75,6 +75,6 @@ def update_states(states_id):
         if key not in ["id", "created_at", "updated_at"]:
             setattr(state_obj, key, value)
     state_obj.save()
-    resp = jsonify(state_obj.to_json())
+    resp = jsonify(state_obj.to_dict())
     resp.status_code = 200
     return resp
