@@ -17,12 +17,12 @@ def status():
 def obj_types():
     """retrieves the number of each objects by type"""
     type_data = {
-        "amenities": storage.count("amenity"),
-        "cities": storage.count("city"),
-        "places": storage.count("place"),
-        "reviews": storage.count("review"),
-        "states": storage.count("state"),
-        "users": storage.count("user")
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
     }
 
     resp = jsonify(type_data)
