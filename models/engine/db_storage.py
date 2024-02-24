@@ -83,7 +83,7 @@ class DBStorage:
         for elem in all_obj.values():
             if elem.id == id:
                 return elem
-    
+
     def count(self, cls=None):
         """returns the number of cls objects or number of all classes"""
         if cls:
