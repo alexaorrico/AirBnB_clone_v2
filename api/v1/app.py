@@ -3,10 +3,10 @@
 Setup a Flask app
 
 """
+import os
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-import os
 
 
 app = Flask(__name__)
