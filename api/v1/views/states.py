@@ -15,7 +15,7 @@ def get_state():
     state_list = []
     state_obj = storage.all("State")
     for obj in state_obj.values():
-        state_list.append(obj.to_json())
+        state_list.append(obj.to_dict())
 
     return jsonify(state_list)
 
@@ -35,11 +35,10 @@ def del_state(state_id):
     """ Deletes a state using ID"""
     state_obj = storage.get('State', str(state_id))
     if state_obj is None:
-        abort(404)
-    else:
-        storage.delete(state_obj)
-        storage.save()
-    return jsonify({})
+        abort(404) 
+    storage.delete(state_obj)
+    storage.save()
+    return jsonify({}, 200)
 
 
 @app_views.route("/states", methods=["POST"])
