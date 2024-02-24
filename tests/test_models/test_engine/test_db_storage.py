@@ -87,25 +87,46 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
     def test_get(self):
         """Tests method used to obtain DB storage instance"""
-        storage = DBStorage()
-        dic = {"name": "Cundinamarca"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
+        storage = models.storage
+        obj = State(name='Michigan')
+        obj.save()
+        self.assertEqual(obj.id, storage.get(State, obj.id).id)
+        self.assertEqual(obj.name, storage.get(State, obj.id).name)
+        self.assertIsNot(obj, storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, obj.id + 'op'))
+        self.assertIsNone(storage.get(State, 45))
+        self.assertIsNone(storage.get(None, obj.id))
+        self.assertIsNone(storage.get(int, obj.id))
+        with self.assertRaises(TypeError):
+            storage.get(State, obj.id, 'op')
+        with self.assertRaises(TypeError):
+            storage.get(State)
+        with self.assertRaises(TypeError):
+            storage.get()
 
     def test_count(self):
         """Tests storage DB count method"""
-        storage = DBStorage()
-        dic = {"name": "Vecindad"}
-        state = State(**dic)
-        storage.new(state)
-        dic = {"name": "Mexico", "state_id": state.id}
-        city = City(**dic)
-        storage.new(city)
-        storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
+        storage = models.storage
+        self.assertIs(type(storage.count()), int)
+        self.assertIs(type(storage.count(None)), int)
+        self.assertIs(type(storage.count(int)), int)
+        self.assertIs(type(storage.count(State)), int)
+        self.assertEqual(storage.count(), storage.count(None))
+        State(name='Lagos').save()
+        self.assertGreater(storage.count(State), 0)
+        self.assertEqual(storage.count(), storage.count(None))
+        a = storage.count(State)
+        State(name='Enugu').save()
+        self.assertGreater(storage.count(State), a)
+        Amenity(name='Free WiFi').save()
+        self.assertGreater(storage.count(), storage.count(State))
+        with self.assertRaises(TypeError):
+            storage.count(State, 'op')
