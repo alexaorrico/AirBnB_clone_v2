@@ -24,6 +24,7 @@ def city_by_state(state_id):
     
   return jsonify(city_list)
 
+
 @app_views.route("states/<state_id>/cities", methods=["POST"]
                 strict_slashes=FALSE)
 def city_by_state(state_id):
@@ -50,3 +51,26 @@ def city_by_state(state_id):
   resp.status_code = 201
 
   return resp
+
+
+  @app_views.route("cities/<city_id>", methods=["GET"],
+                    strict_slashes=False)
+  def city_by_id(city_id):
+      """
+      Gets specific City object by ID
+      :param city_id: city object id
+      :return: city obj with the specified id or error
+      """
+
+      fetched_obj = storage.get("City", str(city_id))
+
+      if fetched_obj is None:
+          abort(404)
+
+      return jsonify(fetched_obj.to_json())
+
+
+@app_views.route("cities/<city_id>", methods=["PUT"], strict_slashes=False)
+def city_put(city_id)
+    """
+    
