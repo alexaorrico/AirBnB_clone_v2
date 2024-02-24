@@ -16,6 +16,7 @@ def teardown(exception):
     """ Teardown  function """
     storage.close()
 
+
 @app.errorhandler(404)
 def not_found_error(error):
     """ returns a JSON-formatted 404 status code response """
