@@ -54,9 +54,17 @@ class DBStorage:
     def get(self, cls, id):
         """Get only one"""
         if issubclass(cls, BaseModel) and id is not None:
-            objs = self.__session.query(cls)
-            for obj in objs:
-                print(obj)
+            objs_records = self.__session.query(cls)
+            for obj_record in objs_records:
+                if obj_record.id == id:
+                    return obj_record
+
+    def count(self, cls=None):
+        """Count number of records in a table given by cls"""
+        if cls is None:
+            return len(self.all())
+        if issubclass(cls, BaseModel):
+            return len(self.all(cls))
 
     def new(self, obj):
         """add the object to the current database session"""
