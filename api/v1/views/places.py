@@ -47,7 +47,7 @@ def delete_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def create_place(city_id):
+def create_place(city_id=None):
     """Creates a Place object"""
     city = storage.get(City, city_id)
     if city is None:
@@ -70,7 +70,7 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_place(place_id):
+def update_place(place_id=None):
     """Updates a Place object"""
     place = storage.get(Place, place_id)
     if place is None:
