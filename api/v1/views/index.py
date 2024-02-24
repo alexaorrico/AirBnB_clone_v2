@@ -13,7 +13,7 @@ def status():
     return make_response(jsonify({"status": "OK"}), 200)
 
 
-@app_views.route('/api/v1/stats')
+@app_views.route('/stats')
 def obj_types():
     """retrieves the number of each objects by type"""
     type_data = {
@@ -25,4 +25,7 @@ def obj_types():
         "users": storage.count("users")
     }
 
-    return make_response(jsonify(type_data), 200)
+    resp = jsonify(type_data)
+    resp.status_code = 200
+
+    return resp
