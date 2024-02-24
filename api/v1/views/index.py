@@ -20,10 +20,12 @@ def get_stats():
     Returns:
         A JSON response with the count of each object type.
     """
-    stats = {}
-    for cls in storage.classes.values():
-        cls_name = cls.__name__
-        count = storage.count(cls)
-        stats[cls_name] = count
-
+    stats = {
+            "amenities": storage.count("Amenity"),
+            "cities": storage.count("City"),
+            "places": storage.count("Place"),
+            "reviews": storage.count("Review"),
+            "states": storage.count("State"),
+            "users": storage.count("User")
+            }
     return jsonify(stats)
