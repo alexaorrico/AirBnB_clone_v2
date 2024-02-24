@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-""" This code sets up a Flask web application with API views
-it ensures the database connection closes properly
-and runs the app on a specified host and port"""
-from os import getenv
+"""Endpoint (route) will be to return the status of your API"""
+import os
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
+from flask_cors import CORS
 
 # creating a Flask app
 app = Flask(__name__)
