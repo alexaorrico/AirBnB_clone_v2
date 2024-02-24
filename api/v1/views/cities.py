@@ -12,7 +12,7 @@ from models.city import City
 def city_by_state(state_id):
   """
   Retrieves all city objects from specific states
-  :Returns: json of all cities in a state or 404 error
+  :eeturn: json of all cities in a state or 404 error
   """
   city_list = []
   state_obj = storage.get("State", state_id)
@@ -88,3 +88,23 @@ def city_put(city_id):
             setattr(fetched_obj, key, val)
     fetched_obj.save()
     return jsonify(fetched_obj.to_json())
+
+
+@app_views.route("cities/<city_id>", methods=["DELETE"],
+                  strict_slashes=False)
+def city_delete_by_id(city_id):
+    """
+    Deletes City by ID
+    :param city_id: city object ID
+    :return: Empty dict with 200 or 404 not found
+    """
+
+    fetched_obj = storage.get("City", str(city_id))
+
+    if fetched_obj is None:
+        abort(404)
+
+    storage.delete(fetched_obj)
+    storage.save()
+
+    return jsonify({})
