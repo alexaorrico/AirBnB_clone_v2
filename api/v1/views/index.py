@@ -8,4 +8,6 @@ import json
 @app_views.route('/status', strict_slashes=False)
 def show_status():
     """ Shows the api response status """
-    return json.dumps({"status": 'OK'})
+    return json.dumps({
+        "status": "OK"
+        })
