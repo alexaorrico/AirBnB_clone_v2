@@ -33,4 +33,20 @@ def city_by_state(state_id):
     :return: newly created obj
     """
     city_json = request.get_json(silent=True)
-    
+    if city_json is None:
+        abort(400, 'Not a JSON')
+
+    if not storage.get("State", str(state_id)):
+        abort(404)
+
+    if "name" not in city_json:
+        abort(400, 'Missing name')
+
+  city_json["state_id"] = state_id
+
+  new_city City(**city_json)
+  new_city.save()
+  resp = jsonify(new_city.to_json())
+  resp.status_code = 201
+
+  return resp
