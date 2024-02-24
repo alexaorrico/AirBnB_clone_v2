@@ -11,6 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import models
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -68,3 +69,23 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """Retrieve an object based on its class and ID."""
+        if cls not in classes.values():
+            return None
+
+        stored_objs = models.storage.all(cls)
+        return next((obj for obj in stored_objs.values()
+                     if obj.id == id), None)
+
+    def count(self, cls=None):
+        """Count the number of objects in storage."""
+        number_of_objects = 0
+        if cls:
+            number_of_objects = len(models.storage.all(cls).values())
+        else:
+            number_of_objects = sum(len(models.storage.all(obj).values())
+                                    for obj in classes.values())
+
+        return number_of_objects
