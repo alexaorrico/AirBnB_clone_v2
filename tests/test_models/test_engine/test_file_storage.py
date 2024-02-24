@@ -114,30 +114,45 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+
+class TestFileStorage2(unittest.TestCase):
+    """test doc doc"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_get_method(self):
-        """Test the get method"""
-        storage = FileStorage()
-        new_obj = BaseModel()
-        storage.new(new_obj)
-        result = storage.get(BaseModel, new_obj.id)
-        self.assertEqual(result, new_obj)
+    def test_get(self):
+        """test doc doc"""
+        models.storage._FileStorage__objects = {}
+        state1 = State(name="state1")
+        state2 = State(name="state2")
+        state3 = State(name="state3")
+        models.storage.new(state1)
+        models.storage.new(state2)
+        models.storage.new(state3)
+        models.storage.save()
+        first_state = list(models.storage.all().values())[2]
+        first_state_id = first_state.id
+        get = models.storage.get(State, first_state_id)
+        self.assertEqual(get.id, first_state_id)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_method(self):
-        """Test the count method"""
-        storage = FileStorage()
-        # Adding some objects of different classes for testing
-        for cls_name, cls in classes.items():
-            for _ in range(3):  # Adding 3 instances of each class
-                storage.new(cls())
-        # Test count without passing a class
-        total_count = sum(3 for _ in classes.values())
-        self.assertEqual(storage.count(), total_count)
-        # Test count with passing a class
-        self.assertEqual(storage.count(BaseModel), 3)
-        self.assertEqual(storage.count(User), 3)
-        self.assertEqual(storage.count(Amenity), 3)
-        # Adding new object of BaseModel and test count again
-        storage.new(BaseModel())
-        self.assertEqual(storage.count(BaseModel), 4)
+    def test_count(self):
+        """test doc doc"""
+        models.storage._FileStorage__objects = {}
+        state1 = State(name="state1")
+        state2 = State(name="state2")
+        state3 = State(name="state3")
+        city1 = City(state_id=state1.id, name="San Francisco")
+        city2 = City(state_id=state2.id, name="San Francisco2")
+        city3 = City(state_id=state3.id, name="San Francisco3")
+        models.storage.new(state1)
+        models.storage.new(state2)
+        models.storage.new(state3)
+        models.storage.new(city1)
+        models.storage.new(city2)
+        models.storage.new(city3)
+        models.storage.save()
+        total = len(models.storage.all())
+        total_state = len(models.storage.all(State))
+        count_total = models.storage.count()
+        count_state = models.storage.count(State)
+        self.assertEqual(total, count_total)
+        self.assertEqual(total_state, count_state)
