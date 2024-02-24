@@ -2,7 +2,6 @@
 """
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
-
 from datetime import datetime
 import inspect
 import models
@@ -18,6 +17,7 @@ import json
 import os
 import pep8
 import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -68,8 +68,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +86,37 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_method(self):
+        """Test the get method"""
+        storage = DBStorage()
+        new_obj = BaseModel()
+        storage.new(new_obj)
+        storage.save()
+        result = storage.get(BaseModel, new_obj.id)
+        self.assertEqual(result, new_obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_method(self):
+        """Test the count method"""
+        storage = DBStorage()
+        # Adding some objects of different classes for testing
+        for cls_name, cls in classes.items():
+            for _ in range(3):  # Adding 3 instances of each class
+                storage.new(cls())
+        storage.save()
+        # Test count without passing a class
+        total_count = sum(3 for _ in classes.values())
+        self.assertEqual(storage.count(), total_count)
+        # Test count with passing a class
+        self.assertEqual(storage.count(BaseModel), 3)
+        self.assertEqual(storage.count(User), 3)
+        # Adding new object of BaseModel and test count again
+        storage.new(BaseModel())
+        storage.save()
+        self.assertEqual(storage.count(BaseModel), 4)
+
+
+if __name__ == '__main__':
+    unittest.main()
