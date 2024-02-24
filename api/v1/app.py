@@ -8,8 +8,7 @@ from api.v1.views import app_views
 
 
 app = Flask(__name__)
-host = getenv('HBNB_API_HOST')
-port = getenv('HBNB_API_PORT')
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
@@ -18,4 +17,7 @@ def teardown_appcontext(exception):
 
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, threaded=True)
+    api_host = getenv('HBNB_API_HOST')
+    api_port = getenv('HBNB_API_PORT')
+    app.run(host=api_host if api_host else '0.0.0.0',
+            port=api_port if api_port else 5000, threaded=True)
