@@ -9,12 +9,14 @@ from models.amenity import Amenity
 from flask import abort, request, make_response, Response
 import json
 
+
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def all_amenities():
     """
     Retrieves the list of all amenity objects
     """
-    dict_of_amenities = [obj.to_dict() for obj in storage.all(Amenity).values()]
+    dict_of_amenities = [obj.to_dict()
+                         for obj in storage.all(Amenity).values()]
     response = Response(
         response=json.dumps(dict_of_amenities, indent=4),
         status=200,
