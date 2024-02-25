@@ -1,0 +1,6 @@
+# Ignore all shell script files
+*.sh
+
+# Ignore AirBnB-main-branch-commit.sh
+AirBnB-main-branch-commit.sh
+AirBnB-storage_get_count-branch-commit.sh
