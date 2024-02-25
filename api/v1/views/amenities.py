@@ -11,7 +11,7 @@ from models.amenity import Amenity
 def get_amenities():
     """Retrieve all the amenities."""
     amenities = []
-    for amenity in storage.all("Amenity").values():
+    for amenity in storage.all(Amenity).values():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
@@ -21,7 +21,7 @@ def get_amenities():
 )
 def get_amenity(amenity_id):
     """Get info about specified amenity."""
-    amenity = storage.get("Amenity", amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
     return jsonify(amenity.to_dict())
@@ -32,10 +32,10 @@ def get_amenity(amenity_id):
 )
 def delete_amenity(amenity_id):
     """Delete specified amenity."""
-    amenity = storage.get("Amenity", amenity_id)
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-    amenity.delete()
+    storage.delete(amenity)
     storage.save()
     return jsonify({})
 
@@ -43,11 +43,12 @@ def delete_amenity(amenity_id):
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)
 def create_amenity():
     """Create a new amenity."""
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if "name" not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    amenity = Amenity(**request.get_json())
+    req = request.get_json(silent=True)
+    if not req:
+        abort(400, "Not a JSON")
+    if "name" not in req:
+        abort(400, "Missing name")
+    amenity = Amenity(**req)
     amenity.save()
     return make_response(jsonify(amenity.to_dict()), 201)
 
@@ -57,11 +58,12 @@ def create_amenity():
 )
 def update_amenity(amenity_id):
     """Update specified amenity."""
-    amenity = storage.get("Amenity", amenity_id)
+    req = request.get_json(silent=True)
+    if not req:
+        abort(400, "Not a JSON")
+    amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
     for attr, val in request.get_json().items():
         if attr not in ["id", "created_at", "updated_at"]:
             setattr(amenity, attr, val)
