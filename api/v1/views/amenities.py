@@ -12,12 +12,12 @@ from flask import jsonify, abort, request
                  strict_slashes=False)
 def get_amenity_id(amenity_id):
     """Retrieves all amenity objects from a specific id"""
-    amenity_obj = storage.get("Amenity", amenity_id)
+    amenity_obj = storage.get("Amenity", str(amenity_id))
 
     if amenity_obj is None:
         abort(404)
 
-    return jsonify(amenity_obj.to_dict())
+    return jsonify(amenity_obj.to_json())
 
 
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)
@@ -32,7 +32,7 @@ def city_create():
 
     new_amenity = Amenity(**amenity_json)
     new_amenity.save()
-    resp = jsonify(new_amenity.to_dict())
+    resp = jsonify(new_amenity.to_json())
     resp.status_code = 201
 
     return resp
@@ -44,11 +44,8 @@ def get_amentiy():
     amenity_list = []
     fetched_obj = storage.all("Amenity")
 
-    if fetched_obj is None:
-        abort(404)
-
     for obj in fetched_obj.values():
-        amenity_list.append(obj.to_dict())
+        amenity_list.append(obj.to_json())
 
     return jsonify(amenity_list)
 
@@ -67,7 +64,7 @@ def city_put(amenity_id):
         if key not in ["id", "created_at", "updated_at"]:
             setattr(fetched_obj, key, val)
     fetched_obj.save()
-    return jsonify(fetched_obj.to_dict())
+    return jsonify(fetched_obj.to_json())
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
