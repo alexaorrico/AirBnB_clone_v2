@@ -13,7 +13,11 @@ from models import storage
 
 
 # Route for retrieving all Review objects of a Place
-@app_views.route("/places/<place_id>/reviews", methods=["GET"], strict_slashes=False)
+@app_views.route(
+    "/places/<place_id>/reviews",
+    methods=["GET"],
+    strict_slashes=False,
+)
 def get_reviews_by_place(place_id):
     """
     Retrieves the list of all Review objects of a Place
@@ -65,7 +69,11 @@ def delete_review(review_id):
 
 
 # Route for creating a new Review object
-@app_views.route("/places/<place_id>/reviews", methods=["POST"], strict_slashes=False)
+@app_views.route(
+    "/places/<place_id>/reviews",
+    methods=["POST"],
+    strict_slashes=False,
+)
 def create_review(place_id):
     """
     Creates a Review object
