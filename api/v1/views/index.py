@@ -19,6 +19,5 @@ def show_stats():
     class_count = {}
     for clas in classes:
         count = storage.count(clas)
-        if count > 0:
-            class_count[clas] = count
+        class_count[clas] = count
     return jsonify(class_count)
