@@ -16,9 +16,5 @@ def teardown_appcontext(exception):
 
 # Inside if __name__ == "__main__":, run your Flask server (variable app)
 if __name__ == "__main__":
-    # Define host and port based on environment variables or default values
-    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-    port = int(os.getenv('HBNB_API_PORT', 5000))
-    
     # Run the Flask server
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=0.0.0.0, port=5000, threaded=True)
