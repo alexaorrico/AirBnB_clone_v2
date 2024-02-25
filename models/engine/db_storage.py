@@ -79,7 +79,7 @@ class DBStorage:
         '''get:
         retrieve an object from the file storage by class and id.
         '''
-        if cls in classes.values() and id and isinstance(id, str):
+        if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
             for key, value in d_obj.items():
                 if key.split(".")[1] == id:
