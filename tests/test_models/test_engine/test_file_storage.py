@@ -113,3 +113,39 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get properly gets the right object from file.json"""
+        storage = FileStorage()
+        storage.new(State())
+        storage.save()
+        objs = FileStorage._FileStorage__objects
+        keys = list(objs)
+        new_key = keys[-1]
+        out_1 = storage.get(objs[new_key].__class__, objs[new_key].id)
+        self.assertEqual(objs[new_key], out_1)
+        out_2 = storage.get(None, None)
+        self.assertEqual(None, out_2)
+        out_3 = storage.get(None, objs[new_key].id)
+        self.assertEqual(None, out_3)
+        out_4 = storage.get(objs[new_key].__class__, None)
+        self.assertEqual(out_4, None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count properly gets the right count of objects from
+        file.json"""
+        storage = FileStorage()
+        all_objs = storage.all()
+        objs_count = storage.count()
+        self.assertEqual(len(all_objs), objs_count)
+        storage.new(State())
+        storage.save()
+        all_objs_2 = storage.all()
+        state_count = storage.count(State)
+        count = 0
+        for obj_key in list(all_objs_2):
+            if (all_objs_2[obj_key].__class__ == State):
+                count += 1
+        self.assertEqual(count, state_count)
