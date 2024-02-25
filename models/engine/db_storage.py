@@ -17,31 +17,29 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
-                   "Place": Place, "Review": Review, "State": State, "User": User}
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
-        """interaacts with the MySQL database"""
-            __engine = None
-            __session = None
+    """interaacts with the MySQL database"""
+    __engine = None
+    __session = None
 
     def __init__(self):
-                """Instantiate a DBStorage object"""
-                        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
-                        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
-                        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
-                        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
-                        HBNB_ENV = getenv('HBNB_ENV')
-                        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                                                                                              format(HNB_MYSQL_USER,
-                                                                                                                                                               HBNB_MYSQL_PWD,
-                                                                                                                                                                                                            HBNB_MYSQL_HOST,
-                                                                                                                                                                                                                                                         HBNB_MYSQL_DB))
-                                                                                                                      if HBNB_ENV == "test":
-                                                                                                                                      Base.metadata.drop_all(self.__engine)
+        """Instantiate a DBStorage object"""
+        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
+        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
+        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
+        HBNB_ENV = getenv('HBNB_ENV')
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(HBNB_MYSQL_USER,
+                                             HBNB_MYSQL_PWD,
+                                             HBNB_MYSQL_HOST,
+                                             HBNB_MYSQL_DB))
+        if HBNB_ENV == "test":
+            Base.metadata.drop_all(self.__engine)
 
-<<<<<<< HEAD
-=======
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
@@ -96,4 +94,3 @@ class DBStorage:
         if cls in classes.values():
             data = self.all(cls)
         return len(data)
->>>>>>> 13c0482dd8e438e140f4557d1d04481cc0b42b85
