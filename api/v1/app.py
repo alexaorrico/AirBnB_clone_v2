@@ -2,7 +2,8 @@
 """app.py"""
 from models import storage
 from api.v1.views import app_views
-from flask import Flask, Blueprint
+from flask import Flask
+import os
 
 HBNB_API_HOST = "0.0.0.0"
 HBNB_API_PORT = 5000
@@ -12,7 +13,8 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def close_storage():
+def close_storage(exception=None):
+    """call close func"""
     storage.close()
 
 
