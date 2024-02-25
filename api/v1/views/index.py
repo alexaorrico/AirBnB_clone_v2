@@ -14,7 +14,10 @@ classes = {"users": "User", "places": "Place", "states": "State",
 
 @app_views.route('/status', strict_slashes=False)
 def status():
-    """status route"""
+    """
+    status route
+    :return: response with json
+    """
     response = {
         "status": "OK"
     }
@@ -22,9 +25,12 @@ def status():
     return jsonify(response)
 
 
-@app_views.route('stats', strict_slashes=False)
+@app_views.route('/stats', strict_slashes=False)
 def stats():
-    """stats route"""
+    """
+    stats of all objs route
+    :return: json of all objs
+    """
     counts = {}
     for key, value in classes.items():
         counts[key] = storage.count(value)
