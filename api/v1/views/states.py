@@ -11,7 +11,7 @@ from models.state import State
 def get_states():
     """Retrieve all the states."""
     states = []
-    for state in storage.all("State").values():
+    for state in storage.all(State).values():
         states.append(state.to_dict())
     return jsonify(states)
 
@@ -21,7 +21,7 @@ def get_states():
 )
 def get_state(state_id):
     """Get info about specified state."""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     return jsonify(state.to_dict())
@@ -32,7 +32,7 @@ def get_state(state_id):
 )
 def delete_state(state_id):
     """Delete specified state."""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     state.delete()
@@ -57,7 +57,7 @@ def create_state():
 )
 def update_state(state_id):
     """Update specified state."""
-    state = storage.get("State", state_id)
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
     if not request.get_json():
