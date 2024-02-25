@@ -38,11 +38,7 @@ def get_places_by_city(city_id):
 
 
 # Route for retrieving a specific Place object by ID
-@app_views.route(
-    "/places/<place_id>",
-    methods=["GET"],
-    strict_slashes=False,
-)
+@app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
 def get_place(place_id):
     """
     Retrieves a Place object
@@ -194,7 +190,7 @@ def places_search():
         amenities = data.get("amenities", None)
 
     # If no criteria provided, retrieve all places
-    if not any([states, cities, amenities]):
+    if not data or not len(data) or (not states and not cities and not amenities):
         places = storage.all(Place).values()
         list_places = []
         for place in places:
