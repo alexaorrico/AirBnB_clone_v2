@@ -87,9 +87,9 @@ def update_review(review_id):
     if fetched_obj is None:
         abort(404)
 
-    for key, val in review_json.items():
-        if key not in ["id", "created_at", "updated_at", "user_id", "place_id"]:
-            setattr(fetched_obj, key, val)
+    for k, val in review_json.items():
+        if k not in ["id", "created_at", "updated_at", "user_id", "place_id"]:
+            setattr(fetched_obj, k, val)
 
     fetched_obj.save()
     return jsonify(fetched_obj.to_dict()), 200
