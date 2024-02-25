@@ -3,10 +3,10 @@
 states.py
 """
 from . import app_views
-from flask import Flask, jsonify
+from flask import jsonify
 from models import storage
 from models.state import State
-from flask import abort, request, Response
+from flask import abort, request, Response, make_response
 import json
 
 
@@ -24,7 +24,7 @@ def allstates():
     return response
 
 
-@app_views.route('/states/<string:state_id>',
+@app_views.route('/states/<state_id>',
                  methods=['GET'], strict_slashes=False)
 def state_by_id(state_id):
     """
@@ -37,7 +37,7 @@ def state_by_id(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<string:state_id>',
+@app_views.route('/states/<state_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_by_id(state_id):
     """
@@ -47,7 +47,7 @@ def delete_by_id(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    state.delete()
+    storage.delete(state)
     storage.save()
     return jsonify({}), 200
 
@@ -57,19 +57,27 @@ def create_state():
     """
     Creates a new State object
     """
-    data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
-    if 'name' not in data:
-        abort(400, 'Missing name')
+    # data = request.get_json()
+    # if not data:
+    #     abort(400, 'Not a JSON')
+    # if 'name' not in data:
+    #     abort(400, 'Missing name')
 
-    new_state = State(**data)
-    new_state.save()
+    # new_state = State(**data)
+    # new_state.save()
 
-    return jsonify(new_state.to_dict()), 201
+    # return jsonify(new_state.to_dict()), 201
+    if not request.json:
+        return make_response("Not a JSON", 400)
+    if 'name' not in request.json:
+        return make_response("Missing name", 400)
+    obj = State
+    new_inst = obj(**request.json)
+    new_inst.save()
+    return new_inst.to_dict(), 201
 
 
-@app_views.route('/states/<string:state_id>',
+@app_views.route('/states/<state_id>',
                  methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """
