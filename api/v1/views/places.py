@@ -204,13 +204,22 @@ def places_search():
 
     # Filter places based on amenities criteria
     if amenities:
-        amenity_obj = [storage.get(Amenity, a_id) for a_id in amenities]
-        for place in list_places:
-            place_amenities = place.amenities
-            for amenity in amenity_obj:
-                if amenity not in place_amenities:
-                    list_places.remove(place)
+        if not list_places:
+            list_places = storage.all(Place).values()
+        amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
+
+        list_places = [
+            place
+            for place in list_places
+            if all([am in place.amenities for am in amenities_obj])
+        ]
 
     # Prepare the final list of places for response
-    places = [place.to_dict() for place in list_places]
+    places = []
+    for p in list_places:
+        d = p.to_dict()
+        d.pop("amenities", None)
+        places.append(d)
+
+    # Return the list of places in JSON format
     return jsonify(places)
