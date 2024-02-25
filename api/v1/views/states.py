@@ -1,121 +1,93 @@
-# Import necessary modules
-from flask import abort, jsonify, request
-from models.state import State
-from api.v1.views import app_views
-from models import storage
+#!/usr/bin/python3
+""" objects that handle all default RestFul API actions for States """
 
-# Route for retrieving all State objects
+from flask import abort, jsonify, make_response, request
+from flasgger.utils import swag_from
+from models.state import State
+from models import storage
+from api.v1.views import app_views
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-def get_all_states():
+@swag_from('documentation/state/get_state.yml', methods=['GET'])
+def get_states():
     """
-    Retrieves the list of all State objects.
+    This gets the list of all State objects
     """
-    states = storage.all(State).values()
-    state_list = [state.to_dict() for state in states]
-    return jsonify(state_list)
-
-# Route for retrieving a specific State object by ID
+    get_all_states = storage.all(State).values()
+    list_states = []
+    for state in get_all_states:
+        list_states.append(state.to_dict())
+    return jsonify(list_states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+@swag_from('documentation/state/get_id_state.yml', methods=['get'])
 def get_state(state_id):
-    """
-    Retrieves a State object.
-    """
+    """ gets a specific State """
     state = storage.get(State, state_id)
-    if state:
-        return jsonify(state.to_dict())
-    else:
+    if not state:
         abort(404)
 
-# Route for deleting a specific State object by ID
+    return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
+@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
-    Deletes a State object.
+    Deletes a State Object
     """
+
     state = storage.get(State, state_id)
-    if state:
-        storage.delete(state)
-        storage.save()
-        return jsonify({}), 200
-    else:
+
+    if not state:
         abort(404)
 
-# Route for creating a new State object
+    storage.delete(state)
+    storage.save()
+
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create_state():
+@swag_from('documentation/state/post_state.yml', methods=['POST'])
+def post_state():
     """
-    Creates a State object.
+    Creates a State
     """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    if 'name' not in request.get_json():
+        abort(400, description="Missing name")
+
     data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
-
-    if 'name' not in data:
-        abort(400, 'Missing name')
-
-    state = State(**data)
-    state.save()
-    return jsonify(state.to_dict()), 201
-
-# Route for updating an existing State object by ID
+    instance = State(**data)
+    instance.save()
+    return make_response(jsonify(instance.to_dict()), 201)
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_state(state_id):
+@swag_from('documentation/state/put_state.yml', methods=['PUT'])
+def put_state(state_id):
     """
-    Updates a State object.
+    Updates a State
     """
     state = storage.get(State, state_id)
-    if state:
-        data = request.get_json()
-        if not data:
-            abort(400, 'Not a JSON')
 
-        ignore_keys = ['id', 'created_at', 'updated_at']
-        for key, value in data.items():
-            if key not in ignore_keys:
-                setattr(state, key, value)
-
-        state.save()
-        return jsonify(state.to_dict()), 200
-    else:
+    if not state:
         abort(404)
 
-# Error Handlers
+    if not request.get_json():
+        abort(400, description="Not a JSON")
 
+    ignore = ['id', 'created_at', 'updated_at']
 
-@app_views.errorhandler(404)
-def not_found(error):
-    """
-    Raises a 404 error.
-    """
-    response = {'error': 'Not found'}
-    return jsonify(response), 404
-
-
-@app_views.errorhandler(400)
-def bad_request(error):
-    """
-    Returns a Bad Request message for illegal requests to the API.
-    """
-    response = {'error': 'Bad Request'}
-    return jsonify(response), 400
-
-# Add a generic error handler for other unexpected errors
-
-
-@app_views.errorhandler(Exception)
-def handle_error(error):
-    """
-    Returns a generic error message.
-    """
-    response = {'error': 'Internal Server Error'}
-    return jsonify(response), 500
+    data = request.get_json()
+    for k, val in data.items():
+        if k not in ignore:
+            setattr(state, k, val)
+    storage.save()
+    return make_response(jsonify(state.to_dict()), 200)
