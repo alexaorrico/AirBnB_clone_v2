@@ -38,4 +38,3 @@ class User(BaseModel, Base):
                 secure_password = secure.hexdigest()
                 kwargs['password'] = secure_password
         super().__init__(*args, **kwargs)
-
