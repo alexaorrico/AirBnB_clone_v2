@@ -85,6 +85,7 @@ class DBStorage:
             obj: The object based on the class and its ID,
             or None if not found.
         """
+
         if cls not in classes.values():
             return None
 
@@ -93,6 +94,9 @@ class DBStorage:
             if (value.id == id):
                 return value
 
+        if cls and id:
+            key = cls.__name__ + '.' + id
+            return self.all(cls).get(key)
         return None
 
     def count(self, cls=None):
