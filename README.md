@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Deiaa elzyat - [Github](https://github.com/Deiaa-alzyat) / [Twitter](https://twitter.com/deiaa_alzyat)  
-Jennifer Huang - [Github](https://github.com/Mohamedswahed) / [Twitter](https://twitter.com/Mohamedswahed)
+Mohamed Madian - [Github](https://github.com/Mohamedswahed) / [Twitter](https://twitter.com/Mohamedswahed)
 
 Second part of Airbnb: Joann Vuong
 ## License
