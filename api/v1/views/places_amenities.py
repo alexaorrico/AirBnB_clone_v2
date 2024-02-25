@@ -11,7 +11,7 @@ from models.amenity import Amenity
 
 @app_views.route(
     "/places/<string:place_id>/amenities",
-    methods=["POST"],
+    methods=["GET"],
     strict_slashes=False,
 )
 def get_place_amenities(place_id):
@@ -25,13 +25,13 @@ def get_place_amenities(place_id):
     # else:
     #     amenity_objects = place.amenity_ids
     for amenity in place.amenities:
-        amenities.append(amenity)
+        amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
 
 @app_views.route(
     "/places/<string:place_id>/amenities/<string:amenity_id>",
-    methods=["POST"],
+    methods=["DELETE"],
     strict_slashes=False,
 )
 def delete_place_amenity(place_id, amenity_id):
@@ -62,9 +62,13 @@ def delete_place_amenity(place_id, amenity_id):
 def add_amenity_to_place(place_id, amenity_id):
     """Add an Amenity to the specified place."""
     place = storage.get(Place, place_id)
+    if place is None:
+        abort(404, "Place not found")
     amenity = storage.get(Amenity, amenity_id)
-    if place is None or amenity is None:
-        abort(404)
+    if amenity is None:
+        abort(404, "Amenity not found")
+    # if place is None or amenity is None:
+    #     abort(404)
     if getenv("HBNB_TYPE_STORAGE") == "db":
         place_amenities = place.amenities
     else:
