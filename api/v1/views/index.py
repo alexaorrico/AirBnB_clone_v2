@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """index"""
 
+
 from flask import jsonify
 from api.v1.views import app_views
 
@@ -32,6 +33,7 @@ def stats():
     :return: json of all objs
     """
     counts = {}
-    for key, value in classes.items():
-        counts[key] = storage.count(value)
+    for key, class_name in classes.items():
+        counts[key] = storage.count(class_name)
     return jsonify(counts)
+
