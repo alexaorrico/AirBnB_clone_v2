@@ -57,9 +57,9 @@ def create_state():
     """
     Creates a new State object
     """
+    if not request.is_json:
+        return make_response("Not a JSON", 400)
     data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
 
@@ -78,9 +78,9 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
+    if not request.is_json:
+        return make_response("Not a JSON", 400)
     data = request.get_json()
-    if not data:
-        abort(400, 'Not a JSON')
     ignored_keys = ['id', 'updated_at', 'created_at']
     for key, value in data.items():
         if key in ignored_keys:
