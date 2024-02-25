@@ -48,7 +48,7 @@ class FileStorage:
             if id == str(each_object.id):
                 return each_object
         return None
-    
+
     def count(self, cls=None):
         """
         Returns the no of objects in storage matching the given class

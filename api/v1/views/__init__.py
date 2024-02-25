@@ -3,6 +3,7 @@
 defining the __init__file for api
 """
 
+
 from flask import Blueprint
 # from api.v1.views.index import *
 

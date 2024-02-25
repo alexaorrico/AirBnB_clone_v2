@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def storage_close(exception):
     """
@@ -24,4 +25,3 @@ if __name__ == "__main__":
 
     # Runs the app instance with port and host
     app.run(host=host, port=port, threaded=True)
-

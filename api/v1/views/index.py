@@ -8,6 +8,7 @@ from flask import jsonify
 
 from models import storage
 
+
 # We define a route on app_view object
 @app_views.route('/status', methods=['GET'])
 def status():
@@ -17,12 +18,13 @@ def status():
     }
     return jsonify(json_status), 200
 
+
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """
     Creates an endpoint that retrives number of objects by type
     """
-    object_data = { 
+    object_data = {
         "amenities": storage.count("Amenities"),
         "cities": storage.count("Cities"),
         "places": storage.count("Places"),
