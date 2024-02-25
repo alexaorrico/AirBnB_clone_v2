@@ -12,9 +12,9 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def clean(exe):
-    """Closes the database connection."""
+    """Closes the Storage."""
     storage.close()
 
 
 if __name__ == "__main__":
-    app.run(getenv("HBNB_API_HOST"), getenv("HBNB_API_PORT"))
+    app.run(getenv("HBNB_API_HOST"), getenv("HBNB_API_PORT"), threaded=True)
