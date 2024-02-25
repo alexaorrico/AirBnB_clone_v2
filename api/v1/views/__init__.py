@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" This code initializes a Flask Blueprint """
+"""
+Module for initializing Flask Blueprint object
+"""
 
 from flask import Blueprint
 
