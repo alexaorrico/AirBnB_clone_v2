@@ -145,7 +145,7 @@ class TestGetCountFileStorage(unittest.TestCase):
     """Test the new methods."""
 
     @unittest.skipIf(
-        os.getenv("HBNB_TYPE_STORAGE") == "db", "not testing file storage"
+        os.getenv("HBNB_TYPE_STORAGE") != "db", "not testing file storage"
     )
     def test_get(self):
         """Test the get method."""
@@ -159,7 +159,7 @@ class TestGetCountFileStorage(unittest.TestCase):
         self.assertIs(newUser, models.storage.get("User", newUser.id))
 
     @unittest.skipIf(
-        os.getenv("HBNB_TYPE_STORAGE") == "db", "not testing file storage"
+        os.getenv("HBNB_TYPE_STORAGE") != "db", "not testing file storage"
     )
     def test_count(self):
         """Test the count method."""
