@@ -86,3 +86,48 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """Tests db storage methods"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage\
+")
+    def test_get_existing_object(self):
+        """test the object returned """
+
+        storage = DBStorage()
+        state_1 = State(name="Mombasa")
+        storage.new(state_1)
+        storage.save()
+        id = str(getattr(state_1, id))
+        result = storage.get(State, id)
+        self.assertIsNotNone(result)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage\
+")
+    def test_get_nonexistent_object(self):
+        """test for object that does't exists in storage"""
+
+        storage = DBStorage()
+        id = "11111"
+        result = storage.get(State, id)
+        self.assertIsNone(result)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage\
+")
+    def test_count_all_objects(self):
+        """test for number of objects class name not provided"""
+
+        storage = DBStorage()
+        n = storage.count()
+        self.assertGreaterEqual(n, 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage\
+")
+    def test_count_class_objects(self):
+        """test for specific class objects"""
+
+        storage = DBStorage()
+        n = storage.count(cls=State)
+        self.assertGreaterEqual(n, 1)

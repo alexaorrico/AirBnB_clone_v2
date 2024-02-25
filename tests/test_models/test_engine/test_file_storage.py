@@ -113,3 +113,44 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file stora\
+ge")
+    def test_get_existing_objects(self):
+        """test for existing object"""
+
+        storage = FileStorage()
+        state_1 = State(name="Nairobi")
+        storage.new(state_1)
+        storage.save()
+        state_id = str(getattr(state_1, 'id'))
+        result = storage.get(State, state_id)
+        self.assertIsNotNone(result)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file stora\
+ge")
+    def test_get_nonexistent_object(self):
+        """test for non-existing object"""
+
+        storage = FileStorage()
+        state_id = "1111"
+        result = storage.get(State, state_id)
+        self.assertIsNone(result)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file stora\
+ge")
+    def test_count_all_objects(self):
+        """test the number of objects class not provided"""
+
+        storage = FileStorage()
+        n = storage.count()
+        self.assertGreaterEqual(n, 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file stora\
+ge")
+    def test_count_class_objects(self):
+        """test number of objects - class provided"""
+
+        storage = FileStorage()
+        n = storage.count(cls=State)
+        self.assertGreaterEqual(n, 1)
