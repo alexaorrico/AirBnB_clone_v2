@@ -111,6 +111,7 @@ class TestDBStorage(unittest.TestCase):
         state = State(name="California")
         self.assertEqual(models.storage(State, state.id), state)
 
+
 class TestDBStorageMethodsGet(unittest.TestCase):
     """
     Class for Test File Storage Methods Get and count
@@ -154,6 +155,7 @@ class TestDBStorageMethodsGet(unittest.TestCase):
     def test_get_invalid_cls(self):
         """Get function"""
         self.assertEqual(self.storage.get(None, 153), None)
+
 
 class TestStorageCount(unittest.TestCase):
     """Count function"""

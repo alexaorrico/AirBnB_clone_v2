@@ -116,6 +116,8 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
 class TestDBStorageMethodsGet(unittest.TestCase):
     """
     Class for Test File Storage Methods Get and count
@@ -159,6 +161,7 @@ class TestDBStorageMethodsGet(unittest.TestCase):
     def test_get_invalid_cls(self):
         """Get function"""
         self.assertEqual(self.storage.get(None, 153), None)
+
 
 class TestStorageCount(unittest.TestCase):
     """Count function"""
