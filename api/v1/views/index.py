@@ -12,12 +12,11 @@ def show_status():
     return jsonify(status="OK")
 
 
-@app_views.route('/stats', strict_slashes=False)
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def show_stats():
-    """ Shows the number of each object """
+    """ Shows the number of each class objects """
     classes = ['Amenity', 'City', 'Place', 'Review', 'State', 'User']
     class_count = {}
     for clas in classes:
-        count = storage.count(clas)
-        class_count[clas] = count
+        class_count[clas] = storage.count(clas)
     return jsonify(class_count)
