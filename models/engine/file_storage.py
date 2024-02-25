@@ -84,3 +84,16 @@ class FileStorage:
         for item in self.__objects.values():
             if item.__class == cls and item.id == id:
                 return item
+
+    def count(self, cls=None):
+        """A method to count the number of objects
+            Args:
+                cls (object): the instance of a class
+
+                Return: number of objects or if None then all existing obj
+        """
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls in None:
+            return len(self.all())
+        return len(self.all(cls))

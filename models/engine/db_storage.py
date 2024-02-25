@@ -88,3 +88,16 @@ class DBStorage:
         if (cls is None):
             return (None)
         return self.__session.query(cls).filter(cls.id == id).first()
+
+    def count(self, cls=None):
+        """A method to count the number of objects
+            Args:
+                cls (object): the instance of a class
+
+                Return: number of objects or if None then all existing obj
+        """
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls in None:
+            return len(self.all())
+        return len(self.all(cls))
