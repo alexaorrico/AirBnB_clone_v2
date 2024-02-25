@@ -122,10 +122,10 @@ class TestDBStorage(unittest.TestCase):
         newState.save()
         newUser = User(email="bob@foobar.com", password="password")
         newUser.save()
-        self.assertIs(newState, models.storage.get("State", newState.id))
-        self.assertIs(None, models.storage.get("State", "blah"))
+        self.assertIs(newState, models.storage.get(State, newState.id))
+        self.assertIs(None, models.storage.get(State, "blah"))
         self.assertIs(None, models.storage.get("blah", "blah"))
-        self.assertIs(newUser, models.storage.get("User", newUser.id))
+        self.assertIs(newUser, models.storage.get(User, newUser.id))
 
     @unittest.skipIf(models.storage_t != "db", "not testing db storage")
     def test_count(self):
@@ -136,5 +136,5 @@ class TestDBStorage(unittest.TestCase):
         newState.save()
         newUser = User(email="test@mail.com", password="password")
         newUser.save()
-        self.assertEqual(models.storage.count("State"), startCount + 1)
+        self.assertEqual(models.storage.count(State), startCount + 1)
         self.assertEqual(models.storage.count(), startCount + 2)
