@@ -101,7 +101,6 @@ def create_city(state_id):
         data = request.get_json()
         # Check if the JSON data has the required attribute
         if "name" not in data:
-            # Return 400 error if the JSON data does not have the required attribute
             abort(400, "Missing name")
 
         # Create a new City object with the JSON data
