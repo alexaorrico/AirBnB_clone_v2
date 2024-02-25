@@ -154,9 +154,11 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+Hammed Amusat Oriyomi - 
+# Github: https://github.com/mederhoo-script
+# Twitter: @mederhoo
 Emeka Nwobu - [Github](https://github.com/emecusxyz) / [Twitter](https://twitter.com/emecusxyz)  
 
 
-Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
