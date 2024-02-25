@@ -87,25 +87,46 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
+class TestStorageMethods(unittest.TestCase):
+    """Test get and count Methods"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get(self):
-        """ Tests method for obtaining an instance db storage"""
-        dic = {"name": "Cundinamarca"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
+    def setUp(self):
+        self.db_storage = DBStorage()
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
-        """ Tests count method db storage """
-        dic = {"name": "Vecindad"}
-        state = State(**dic)
-        storage.new(state)
-        dic = {"name": "Mexico", "state_id": state.id}
-        city = City(**dic)
-        storage.new(city)
-        storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
+        """Create a State object and add it to database storage"""
+        state1 = State()
+        state2 = State()
+        self.db_storage.new(state1)
+        self.db_storage.new(state2)
+        self.db_storage.save()
+
+        state_count = self.db_storage.count(State)
+        self.assertEqual(state_count, 3)
+
+        count_all = self.db_storage.count()
+        self.assertEqual(count_all, 3)
+
+        with self.assertRaises(NameError):
+            count_n = self.db_storage.count(Yes)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get method of db storage"""
+        state = State()
+        state_id = state.id
+        self.db_storage.new(state)
+        self.db_storage.save()
+
+        get_state = self.db_storage.get(State, state_id)
+        self.assertEqual(get_state, state)
+
+        with self.assertRaises(TypeError):
+            get_state1 = self.db_storage.get(State)
+
+        with self.assertRaises(TypeError):
+            get_state2 = self.db_storage.get(state_id)
+
+        with self.assertRaises(TypeError):
+            get_state3 = self.db_storage.get()
