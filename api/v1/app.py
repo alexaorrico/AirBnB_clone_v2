@@ -11,7 +11,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown_engine(exception):
-    '''Removes the current SQLAlchemy Session object after each 
+    '''Removes the current SQLAlchemy Session object after each
         request.
     '''
     storage.close()
