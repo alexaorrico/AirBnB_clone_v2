@@ -9,12 +9,15 @@ from flask import jsonify
 from models import storage
 
 # We define a route on app_view object
-@app_views.route('/status', method=['GET'])
+@app_views.route('/status', methods=['GET'])
 def status():
     """ returns a JSON status """
-    return jsonify({"status": "OK"}), 200
+    json_status = {
+        "status": "OK"
+    }
+    return jsonify(json_status), 200
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'])
 def stats():
     """
     Creates an endpoint that retrives number of objects by type
