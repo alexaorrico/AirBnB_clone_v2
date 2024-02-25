@@ -13,12 +13,12 @@ def amenity_get_all():
     retrieves all Amenity objects
     :return: json of all states
     """
-    amenity_list = []
-    amenity_obj = storage.all("Amenity")
-    for obj in amenity_obj.values():
-        amenity_list.append(obj.to_json())
+    am_list = []
+    am_obj = storage.all("Amenity")
+    for obj in am_obj.values():
+        am_list.append(obj.to_json())
 
-    return jsonify(amenity_list)
+    return jsonify(am_list)
 
 
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)
@@ -27,15 +27,15 @@ def amenity_create():
     create amenity route
     :return: newly created amenity obj
     """
-    amenity_json = request.get_json(silent=True)
-    if amenity_json is None:
+    am_json = request.get_json(silent=True)
+    if am_json is None:
         abort(400, 'Not a JSON')
-    if "name" not in amenity_json:
+    if "name" not in am_json:
         abort(400, 'Missing name')
 
-    new_amenity = Amenity(**amenity_json)
-    new_amenity.save()
-    resp = jsonify(new_amenity.to_json())
+    new_am = Amenity(**am_json)
+    new_am.save()
+    resp = jsonify(new_am.to_json())
     resp.status_code = 201
 
     return resp
@@ -66,13 +66,13 @@ def amenity_put(amenity_id):
     :param amenity_id: amenity object ID
     :return: amenity object and 200 on success, or 400 or 404 on failure
     """
-    amenity_json = request.get_json(silent=True)
-    if amenity_json is None:
+    am_json = request.get_json(silent=True)
+    if am_json is None:
         abort(400, 'Not a JSON')
     fetched_obj = storage.get("Amenity", str(amenity_id))
     if fetched_obj is None:
         abort(404)
-    for key, val in amenity_json.items():
+    for key, val in am_json.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(fetched_obj, key, val)
     fetched_obj.save()
