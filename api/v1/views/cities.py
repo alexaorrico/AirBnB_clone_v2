@@ -147,22 +147,3 @@ def update_city(city_id):
     else:
         # Return 404 error if the City object is not found
         abort(404)
-
-
-# Error Handlers:
-@app_views.errorhandler(404)
-def not_found(error):
-    """
-    Return Not Found message for invalid resource requests to API.
-    """
-    # Return a JSON response for 404 error
-    return jsonify({"error": "Not found"}), 404
-
-
-@app_views.errorhandler(400)
-def bad_request(error):
-    """
-    Return Bad Request message for invalid requests to API.
-    """
-    # Return a JSON response for 400 error
-    return jsonify({"error": "Bad request"}), 400
