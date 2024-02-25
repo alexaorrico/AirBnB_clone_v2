@@ -211,9 +211,11 @@ def places_search():
         list_places = [
             place
             for place in list_places
-            if all(amenity in place.amenities for amenity in amenities_obj)
+            if all([am in place.amenities for am in amenities_obj])
         ]
 
+    if not list_places:
+        list_places = [place for place in storage.all(Place).values()]
     # Prepare the final list of places for response
     places = [place.to_dict() for place in list_places]
     # Return the list of places in JSON format
