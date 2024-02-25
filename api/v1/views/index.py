@@ -6,6 +6,9 @@ from api.v1.views import app_views
 
 @app_views.route("/status")
 def status():
+    response = jsonify(data)
+    response.status_code = 200
+    return response
     """Defines a status route returning a json object of the api status.
     """
     return jsonify({"status": "OK"})
