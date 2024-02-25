@@ -75,4 +75,16 @@ class DBStorage:
         """call remove() method on the private session attribute"""
         self.__session.remove()
 
-    
+    def get(self, cls, id):
+        """ retrieves an object based on class and itd ID"""
+        # Check if the class is a valid class in the storage
+        if cls in classes.values():
+            # Retrieve all objects of the given class
+            all_obj = self.all(cls)
+            # Iterate through each key-value pair in the dictionary of objects
+            for key, value in all_obj.items():
+                # The key format is "<class_name>.<object_id>"
+                if key.split(".")[1] == id:
+                    return value  # Return the object if found
+        # If the class or id is invalid, or if the object is not found
+        return None
