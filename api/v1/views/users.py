@@ -65,8 +65,9 @@ def create_user():
         abort(400, 'Missing password')
     new_user = User(**data)
     new_user.save()
-    return jsonify(new_user.to_dict()), 201
-
+    response = make_response(jsonify(new_user.to_dict()), 201)
+    response.mimetype = 'application/json'
+    return response
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
@@ -85,4 +86,6 @@ def update_user(user_id):
             continue
         setattr(user, key, value)
     user.save()
-    return jsonify(user.to_dict()), 200
+    response = make_response(jsonify(user.to_dict()), 200)
+    response.mimetype = 'application/json'
+    return response
