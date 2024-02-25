@@ -2,7 +2,7 @@
 """ State view """
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import jsonify, abort
 from models import storage
 
 
@@ -11,3 +11,12 @@ def list_states():
     """ Lists all State objects """
     all_states = storage.all('State')
     return jsonify([state.to_dict() for state in all_states.values()])
+
+
+@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+def state_id(state_id):
+    """ Returns the State object with the given id """
+    state = storage.get('State', state_id)
+    if state:
+        return state.to_dict()
+    abort(404)
