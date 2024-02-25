@@ -2,7 +2,7 @@
 """ State view """
 
 from api.v1.views import app_views
-from flask import jsonify, abort
+from flask import jsonify, abort, make_response
 from models import storage
 
 
@@ -28,6 +28,6 @@ def delete_state_id(state_id):
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
-    else:
-        storage.get('State', state_id).delete()
-        return jsonify()
+    state.delete()
+    storage.save()
+    return make_response(jsonify({}), 200)
