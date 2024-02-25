@@ -14,9 +14,10 @@ import uuid
     strict_slashes=False,
 )
 def list_states():
-    """Retrieves a list of all State objects"""
-    list_states = [obj.to_dict() for obj in storage.all("State").values()]
-    return jsonify(list_states)
+    """Retrieves the list of all State objects"""
+    all_states = storage.all("State").values()
+    states = [obj.to_dict() for obj in all_states]
+    return jsonify(states)
 
 
 @app_views.route(
@@ -44,11 +45,8 @@ def delete_state(state_id):
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:
         abort(404)
-    state_obj.remove(state_obj[0])
-    for obj in all_states:
-        if obj.id == state_id:
-            storage.delete(obj)
-            storage.save()
+    storage.delete(state_obj[0])
+    storage.save()
     return jsonify({}), 200
 
 
@@ -63,12 +61,9 @@ def create_state():
         abort(400, "Not a JSON")
     if "name" not in request.get_json():
         abort(400, "Missing name")
-    states = []
-    new_state = State(name=request.json["name"])
-    storage.new(new_state)
-    storage.save()
-    states.append(new_state.to_dict())
-    return jsonify(states[0]), 201
+    new_state = State(**request.get_json())
+    new_state.save()
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route(
@@ -78,15 +73,13 @@ def create_state():
 )
 def updates_state(state_id):
     """Updates a State object"""
-    all_states = storage.all("State").values()
-    state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
-    if state_obj == []:
+    state_obj = storage.get("State", state_id)
+    if state_obj is None:
         abort(404)
     if not request.get_json():
         abort(400, "Not a JSON")
-    state_obj[0]["name"] = request.json["name"]
-    for obj in all_states:
-        if obj.id == state_id:
-            obj.name = request.json["name"]
-    storage.save()
-    return jsonify(state_obj[0]), 200
+    for key, value in request.get_json().items():
+        if key not in ["id", "created_at", "updated_at"]:
+            setattr(state_obj, key, value)
+    state_obj.save()
+    return jsonify(state_obj.to_dict()), 200
