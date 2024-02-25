@@ -4,12 +4,12 @@ Contains the class DBStorage
 """
 
 import models
+from models.review import Review
+from models.state import State
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
-from models.review import Review
-from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
@@ -74,3 +74,23 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        '''get:
+        retrieve an object from the file storage by class and id.
+        '''
+        if cls in classes.values() and id and isinstance(id, str):
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
+        return None
+
+    def count(self, cls=None):
+        '''count:
+        this count the number of objects in storage matching the given class.
+        '''
+        data = self.all(cls)
+        if cls in classes.values():
+            data = self.all(cls)
+        return len(data)
