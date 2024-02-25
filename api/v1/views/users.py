@@ -56,7 +56,7 @@ def create_user():
     """
     if not request.is_json:
         return make_response("Not a JSON", 400)
-    data = request.get_json()
+    data = request.get_json(force=True)
     if 'name' not in data:
         abort(400, 'Missing name')
     if 'email' not in data:
@@ -65,7 +65,7 @@ def create_user():
         abort(400, 'Missing password')
     new_user = User(**data)
     new_user.save()
-    return jsonify(new_user.to_dict(), force=True), 201
+    return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
@@ -78,11 +78,11 @@ def update_user(user_id):
         abort(404)
     if not request.is_json:
         return make_response("Not a JSON", 400)
-    data = request.get_json()
+    data = request.get_json(force=True)
     ignored_keys = ['id', 'updated_at', 'created_at']
     for key, value in data.items():
         if key in ignored_keys:
             continue
         setattr(user, key, value)
     user.save()
-    return jsonify(user.to_dict(), force=True), 200
+    return jsonify(user.to_dict()), 200
