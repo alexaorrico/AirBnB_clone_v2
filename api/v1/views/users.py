@@ -11,7 +11,7 @@ from models.user import User
 def get_users():
     """Retrieve all the users."""
     users = []
-    for user in storage.all("User").values():
+    for user in storage.all(User).values():
         users.append(user.to_dict())
     return jsonify(users)
 
@@ -21,7 +21,7 @@ def get_users():
 )
 def get_user(user_id):
     """Get info about specified user."""
-    user = storage.get("User", user_id)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
     return jsonify(user.to_dict())
@@ -32,10 +32,10 @@ def get_user(user_id):
 )
 def delete_user(user_id):
     """Delete specified user."""
-    user = storage.get("User", user_id)
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    user.delete()
+    storage.delete(user)
     storage.save()
     return jsonify({})
 
@@ -43,11 +43,12 @@ def delete_user(user_id):
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user():
     """Create a new user."""
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    if "name" not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
-    user = User(**request.get_json())
+    req = request.get_json(silent=True)
+    if not req:
+        abort(400, "Not a JSON")
+    if "name" not in req:
+        abort(400, "Missing name")
+    user = User(**req)
     user.save()
     return make_response(jsonify(user.to_dict()), 201)
 
@@ -57,11 +58,12 @@ def create_user():
 )
 def update_user(user_id):
     """Update specified user."""
-    user = storage.get("user", user_id)
+    req = request.get_json(silent=True)
+    if not req:
+        abort(400, "Not a JSON")
+    user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
     for attr, val in request.get_json().items():
         if attr not in ["id", "created_at", "updated_at"]:
             setattr(user, attr, val)
