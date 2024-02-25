@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
-@app.teardown_appcontext('storage_close')
+@app.teardown_appcontext('/storage_close')
 def storage_close():
     """
     The decorator call the storage.close method
