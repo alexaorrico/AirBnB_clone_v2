@@ -61,7 +61,8 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """returns a dictionary containing all keys/values of __dict__ of the instance"""
+        """returns a dictionary containing all keys/values of
+        __dict__ of the instance"""
         new_dict = self.__dict__.copy()
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]

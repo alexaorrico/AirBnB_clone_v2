@@ -17,7 +17,11 @@ from models import storage
 
 
 # Route for retrieving all Place objects of a City
-@app_views.route("/cities/<city_id>/places", methods=["GET"], strict_slashes=False)
+@app_views.route(
+    "/cities/<city_id>/places",
+    methods=["GET"],
+    strict_slashes=False,
+)
 def get_places_by_city(city_id):
     """
     Retrieves the list of all Place objects of a City
@@ -34,7 +38,11 @@ def get_places_by_city(city_id):
 
 
 # Route for retrieving a specific Place object by ID
-@app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
+@app_views.route(
+    "/places/<place_id>",
+    methods=["GET"],
+    strict_slashes=False,
+)
 def get_place(place_id):
     """
     Retrieves a Place object
@@ -69,7 +77,11 @@ def delete_place(place_id):
 
 
 # Route for creating a new Place object
-@app_views.route("/cities/<city_id>/places", methods=["POST"], strict_slashes=False)
+@app_views.route(
+    "/cities/<city_id>/places",
+    methods=["POST"],
+    strict_slashes=False,
+)
 def create_place(city_id):
     """
     Creates a Place object
