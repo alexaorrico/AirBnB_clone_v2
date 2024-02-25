@@ -21,7 +21,8 @@ def tear_down(exception):
 @app.errorhandler(404)
 def not_found_handler(exception):
     """
-    handler for 404 errors that returns a JSON-formatted 404 status code response
+    handler for 404 errors that returns a JSON-formatted 404 status code
+    response
     """
     json_data = {
         "error": "Not found"
