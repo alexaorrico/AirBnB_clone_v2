@@ -178,7 +178,7 @@ No known bugs at this time.
 
 ## Authors
 
-Mohamed Youssef - [Github](https://github.com/mossama2003) / [LinkedIn](https://www.linkedin.com/in/mohamed-osama2003)  
+Mohamed Osama - [Github](https://github.com/mossama2003) / [LinkedIn](https://www.linkedin.com/in/mohamed-osama2003)  
 Mohanned Sameh - [Github](https://github.com/mohanned-sameh) / [LinkedIn](https://linkedin.com/in/mohanned-sameh)
 
 Second part of Airbnb: Joann Vuong
