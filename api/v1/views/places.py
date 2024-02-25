@@ -215,6 +215,11 @@ def places_search():
         ]
 
     # Prepare the final list of places for response
-    places = [place.to_dict() for place in list_places]
+    places = []
+    for p in list_places:
+        d = p.to_dict()
+        d.pop("amenities", None)
+        places.append(d)
+
     # Return the list of places in JSON format
     return jsonify(places)
