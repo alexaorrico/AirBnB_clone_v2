@@ -6,8 +6,8 @@ from . import app_views
 from flask import Flask, jsonify
 from models import storage
 from models.state import State
-from flask import abort
-from flask import request
+from flask import abort, request, Response
+import json
 
 
 @app_views.route('/states', methods=['GET'])
@@ -17,7 +17,12 @@ def allstates():
     Retrieves the list of all State objects
     """
     dict_of_states = [obj.to_dict() for obj in storage.all(State).values()]
-    return jsonify(dict_of_states)
+    response = Response(
+        response=json.dumps(dict_of_states, indent=4),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 
 @app_views.route('/states/<string:state_id>', methods=['GET'])
