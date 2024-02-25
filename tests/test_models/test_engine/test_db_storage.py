@@ -111,23 +111,35 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def test_get_db(self):
-        """Test the get method."""
-        dic = {"name": "Cundinamarca"}
-        instance = State(**dic)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
 
+class TestFileStorage(unittest.TestCase):
+    """Test the new methods."""
+
+    @unittest.skipIf(
+        os.getenv("HBNB_TYPE_STORAGE") == "db", "not testing file storage"
+    )
+    def test_get(self):
+        """Test the get method."""
+        newState = State(name="New York")
+        newState.save()
+        newUser = User(email="bob@foobar.com", password="password")
+        newUser.save()
+        self.assertIs(newState, models.storage.get("State", newState.id))
+        self.assertIs(None, models.storage.get("State", "blah"))
+        self.assertIs(None, models.storage.get("blah", "blah"))
+        self.assertIs(newUser, models.storage.get("User", newUser.id))
+
+    @unittest.skipIf(
+        os.getenv("HBNB_TYPE_STORAGE") == "db", "not testing file storage"
+    )
     def test_count(self):
         """Test the count method."""
-        dic = {"name": "Vecindad"}
-        state = State(**dic)
-        storage.new(state)
-        dic = {"name": "Mexico", "state_id": state.id}
-        city = City(**dic)
-        storage.new(city)
-        storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
+        initialCountAll = models.storage.count()
+        initialCountState = models.storage.count("State")
+        self.assertEqual(models.storage.count("Blah"), 0)
+        newState = State(name="state_name")
+        newState.save()
+        newUser = User(email="test@mail.com", password="password")
+        newUser.save()
+        self.assertEqual(models.storage.count("State"), initialCountState + 1)
+        self.assertEqual(models.storage.count(), initialCountAll + 2)
