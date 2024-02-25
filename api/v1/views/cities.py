@@ -17,7 +17,7 @@ def city_by_state(state_id):
     if state_obj is None:
         abort(404)
     for obj in state_obj.cities:
-        city_list.append(obj.to_json())
+        city_list.append(obj.to_dict())
 
     return jsonify(city_list)
 
@@ -39,7 +39,7 @@ def city_create(state_id):
 
     new_city = City(**city_json)
     new_city.save()
-    resp = jsonify(new_city.to_json())
+    resp = jsonify(new_city.to_dict())
     resp.status_code = 201
 
     return resp
@@ -53,7 +53,7 @@ def city_by_id(city_id):
     if fetched_obj is None:
         abort(404)
 
-    return jsonify(fetched_obj.to_json())
+    return jsonify(fetched_obj.to_dict())
 
 
 @app_views.route("/cities/<city_id>", methods=["PUT"], strict_slashes=False)
@@ -69,7 +69,7 @@ def city_put(city_id):
         if key not in ["id", "created_at", "updated_at", "state_id"]:
             setattr(fetched_obj, key, val)
     fetched_obj.save()
-    return jsonify(fetched_obj.to_json())
+    return jsonify(fetched_obj.to_dict())
 
 
 @app_views.route("/cities/<city_id>", methods=["DELETE"], strict_slashes=False)
