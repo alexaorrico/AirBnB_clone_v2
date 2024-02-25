@@ -6,17 +6,15 @@ from . import app_views
 from flask import jsonify
 from models import storage
 from models.amenity import Amenity
-from flask import abort, request, Response, make_response
+from flask import abort, request, make_response, Response
 import json
 
-
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
-def allamenities():
+def all_amenities():
     """
     Retrieves the list of all amenity objects
     """
-    dict_of_amenities = [obj.to_dict()
-                         for obj in storage.all(Amenity).values()]
+    dict_of_amenities = [obj.to_dict() for obj in storage.all(Amenity).values()]
     response = Response(
         response=json.dumps(dict_of_amenities, indent=4),
         status=200,
@@ -29,8 +27,8 @@ def allamenities():
                  methods=['GET'], strict_slashes=False)
 def amenity_by_id(amenity_id):
     """
-    Retrieves a State object:
-    GET /api/v1/amenitiees/<amenity_id>
+    Retrieves a Amenity object:
+    GET /api/v1/amenities/<amenity_id>
     """
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
@@ -38,12 +36,12 @@ def amenity_by_id(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route('amenities/<amenity_id>',
+@app_views.route('/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
 def delete_amenity_by_id(amenity_id):
     """
-    Deletes a amenity object::
-    DELETE /api/v1/amenity/<amenity_id>
+    Deletes an amenity object::
+    DELETE /api/v1/amenities/<amenity_id>
     """
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
@@ -55,7 +53,7 @@ def delete_amenity_by_id(amenity_id):
 
 @app_views.route('/amenities',
                  methods=['POST'], strict_slashes=False)
-def create_Amentiy():
+def create_amenity():
     """
     creates amenity
     """
@@ -72,9 +70,9 @@ def create_Amentiy():
 
 @app_views.route('/amenities/<amenity_id>',
                  methods=['PUT'], strict_slashes=False)
-def update_state(amenity_id):
+def update_amenity(amenity_id):
     """
-    updates a new State object
+    updates an Amenity object
     """
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
