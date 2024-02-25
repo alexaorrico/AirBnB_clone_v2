@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ index"""
 
+from flask import Flask
 from api.v1.views import app_views
 
-app = Flask(_name__)
+app = Flask(__name__)
 app.register_blueprint(app_views)
 
 @app_views.route('/status', methods=['GET'])

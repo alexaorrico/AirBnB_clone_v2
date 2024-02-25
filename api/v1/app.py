@@ -17,4 +17,4 @@ def teardown_appcontext(exception):
 # Inside if __name__ == "__main__":, run your Flask server (variable app)
 if __name__ == "__main__":
     # Run the Flask server
-    app.run(host=0.0.0.0, port=5000, threaded=True)
+    app.run(host='0.0.0.0', port=5000, threaded=True)
