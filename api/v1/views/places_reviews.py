@@ -5,6 +5,8 @@ from api.v1.views import app_views
 from flask import abort, jsonify, request, make_response
 from models import storage
 from models.review import Review
+from models.place import Place
+from models.user import User
 
 
 @app_views.route(
@@ -12,7 +14,7 @@ from models.review import Review
 )
 def get_reviews(place_id):
     """Retrieve all the reviews of the specified place."""
-    place = storage.get("Place", place_id)
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
     reviews = []
@@ -28,7 +30,7 @@ def get_reviews(place_id):
 )
 def get_review(review_id):
     """Get info about specified review."""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
     return jsonify(review.to_dict())
@@ -39,10 +41,10 @@ def get_review(review_id):
 )
 def delete_review(review_id):
     """Delete specified review."""
-    review = storage.get("Review", review_id)
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    review.delete()
+    storage.delete(review)
     storage.save()
     return jsonify({})
 
@@ -52,21 +54,21 @@ def delete_review(review_id):
 )
 def create_review(place_id):
     """Create a new review."""
-    place = storage.get("Place", place_id)
+    req = request.get_json(silent=True)
+    if not req:
+        abort(400, "Not a JSON")
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    kwargs = request.get_json()
-    if "user_id" not in kwargs:
-        return make_response(jsonify({"error": "Missing user_id"}), 400)
-    user = storage.get("User", kwargs["user_id"])
+    if "user_id" not in req:
+        abort(400, "Missing user_id")
+    user = storage.get(User, req["user_id"])
     if user is None:
         abort(404)
-    if "text" not in kwargs:
-        return make_response(jsonify({"error": "Missing text"}), 400)
-    kwargs["place_id"] = place_id
-    review = Review(**kwargs)
+    if "text" not in req:
+        abort(400, "Missing text")
+    req["place_id"] = place_id
+    review = Review(**req)
     review.save()
     return make_response(jsonify(review.to_dict()), 201)
 
@@ -76,12 +78,13 @@ def create_review(place_id):
 )
 def update_review(review_id):
     """Update specified review."""
-    review = storage.get("Review", review_id)
+    req = request.get_json(silent=True)
+    if not req:
+        abort(400, "Not a JSON")
+    review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    if not request.get_json():
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
-    for attr, val in request.get_json().items():
+    for attr, val in req.items():
         if attr not in [
             "id",
             "created_at",
