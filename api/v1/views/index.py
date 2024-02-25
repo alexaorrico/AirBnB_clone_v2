@@ -10,6 +10,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.user import User
+from flask import jsonify
 
 """Defines routes using app_views"""
 @app_views.route("/status", strict_slashes=False, methods=["GET"])
