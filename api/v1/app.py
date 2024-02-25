@@ -2,7 +2,7 @@
 """script returns the status of our API"""
 import os
 
-from flask import Flask
+from flask import Flask, jsonify
 
 from api.v1.views import app_views
 from models import storage
@@ -23,7 +23,10 @@ def not_found_handler(exception):
     """
     handler for 404 errors that returns a JSON-formatted 404 status code response
     """
-    return {"error": "Not found"}
+    json_data = {
+        "error": "Not found"
+    }
+    return jsonify(json_data), 404
 
 
 if __name__ == "__main__":
