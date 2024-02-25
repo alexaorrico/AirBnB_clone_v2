@@ -191,9 +191,9 @@ def places_search():
 
     # If no criteria provided, retrieve all places
     if not data or not len(data) or (
-        not states and
-        not cities and
-        not amenities):
+            not states and
+            not cities and
+            not amenities):
         places = storage.all(Place).values()
         list_places = []
         for place in places:
