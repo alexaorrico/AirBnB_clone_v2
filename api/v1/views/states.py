@@ -40,7 +40,7 @@ def get_state(state_id):
 
 
 # Route for deleting a specific State object by ID
-@app_views.route("/states/<state_id>", methods=["DELETE"])
+@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
 def delete_state(state_id):
     """
     Deletes a State object.
