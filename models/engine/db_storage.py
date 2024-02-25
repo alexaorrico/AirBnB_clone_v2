@@ -80,10 +80,14 @@ class DBStorage:
         if cls in classes:
             return self.__session.query(classes[cls]).get(id)
         return None
-    
+
     def count(self, cls=None):
-        """returns the number of objects in storage matching the given class."""
+        """
+        returns the number of objects in storage
+        matching the given class.
+        """
         if cls is None:
-            return sum(self.__session.query(cls).count() for cls in classes.values())
+            return sum(self.__session.query(cls).count()
+                       for cls in classes.values())
         else:
             self.__session.query(classes[cls]).count()
