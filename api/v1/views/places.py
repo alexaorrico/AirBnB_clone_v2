@@ -208,11 +208,12 @@ def places_search():
             list_places = storage.all(Place).values()
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
 
-        list_places = [
-            place
-            for place in list_places
-            if all([am in place.amenities for am in amenities_obj])
-        ]
+        for place in list_places:
+            place_amenities = place.amenities
+            for amenity in amenities_obj:
+                if amenity not in place_amenities:
+                    list_places.remove(place)
+                    break
 
     # Prepare the final list of places for response
     places = [place.to_dict() for place in list_places]
