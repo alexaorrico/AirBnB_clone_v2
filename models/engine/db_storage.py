@@ -76,9 +76,9 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        '''get:
+        """get:
         retrieve object from file storage by class and id.
-        '''
+        """
         if cls in classes.values() and id and type(id) == str:
             d_obj = self.all(cls)
             for key, value in d_obj.items():
