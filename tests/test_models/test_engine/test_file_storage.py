@@ -70,6 +70,14 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
 
+    """Test the FileStorage class"""
+    def tearDown(self):
+        """commit session changes"""
+        if os.path.isfile('file.json'):
+            os.remove('file.json')
+            pass
+        models.storage.reload()
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""

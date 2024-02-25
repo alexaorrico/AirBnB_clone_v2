@@ -70,6 +70,11 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
 
+    """Test the FileStorage class"""
+    def tearDown(self):
+        """commit session changes"""
+        models.storage._DBStorage__session.commit()
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
