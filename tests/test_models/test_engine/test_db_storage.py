@@ -112,7 +112,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that save properly saves objects to file.json"""
 
 
-class TestFileStorage(unittest.TestCase):
+class TestGetCountDBStorage(unittest.TestCase):
     """Test the new methods."""
 
     @unittest.skipIf(

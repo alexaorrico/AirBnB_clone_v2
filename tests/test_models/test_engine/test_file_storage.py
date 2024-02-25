@@ -141,7 +141,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestGetCountFileStorage(unittest.TestCase):
     """Test the new methods."""
 
     @unittest.skipIf(
