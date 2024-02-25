@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """First api"""
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 from api.v1.views import app_views
@@ -14,7 +14,7 @@ app.register_blueprint(app_views)
 @app.errorhandler(404)
 def not_found(error):
     """ 404 not found handler """
-    return make_response(jsonify({'error': 'not found'}), 404)
+    return jsonify(error='not found'), 404
 
 
 @app.teardown_appcontext
