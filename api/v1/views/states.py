@@ -118,7 +118,8 @@ def update_state(state_id):
 @app_views.errorhandler(404)
 def not_found(error):
     """
-    Returns a Not Found message for requests to the API for non-existent objects.
+    Returns a Not Found message for requests to the API for
+    non-existent objects.
     """
     # Return a JSON response for 404 error
     response = {"error": "Not found"}
