@@ -151,3 +151,27 @@ class TestDBStorage(unittest.TestCase):
         newUser.save()
         self.assertEqual(models.storage.count("State"), startCount + 1)
         self.assertEqual(models.storage.count(), startCount + 2)
+
+    @unittest.skipIf(
+        os.getenv("HBNB_TYPE_STORAGE") != "db",
+        "not testing db storage",
+    )
+    def test_delete(self):
+        """Test that delete removes an object from the database"""
+        newState = State(name="New York")
+        newState.save()
+        newUser = User(email="", password="")
+        newUser.save()
+        models.storage.delete(newState)
+        self.assertIs(None, models.storage.get("State", newState.id))
+        models.storage.delete(newUser)
+        self.assertIs(None, models.storage.get("User", newUser.id))
+
+    @unittest.skipIf(
+        os.getenv("HBNB_TYPE_STORAGE") != "db",
+        "not testing db storage",
+    )
+    def test_close(self):
+        """Test that close calls remove on the session"""
+        models.storage.close()
+        self.assertIsNone(models.storage._DBStorage__session)
