@@ -8,7 +8,8 @@ from models.city import City
 from flask import jsonify, abort, request
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["GET"],
+                 strict_slashes=False)
 def city_by_state(state_id):
     """Retrieves all City objects from a specific state"""
     city_list = []
@@ -22,7 +23,8 @@ def city_by_state(state_id):
     return jsonify(city_list)
 
 
-@app_views.route("/states/<state_id>/cities", methods=["POST"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["POST"],
+                 strict_slashes=False)
 def city_create(state_id):
     """Creates a City for a given state"""
     city_json = request.get_json(silent=True)
