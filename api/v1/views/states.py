@@ -10,6 +10,8 @@ from api.v1.views import app_views
 from models import storage
 
 # Route for retrieving all State objects
+
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_all_states():
     """
@@ -22,6 +24,8 @@ def get_all_states():
     return jsonify(state_list)
 
 # Route for retrieving a specific State object by ID
+
+
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state(state_id):
     """
@@ -37,6 +41,8 @@ def get_state(state_id):
         abort(404)
 
 # Route for deleting a specific State object by ID
+
+
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """
@@ -55,6 +61,8 @@ def delete_state(state_id):
         abort(404)
 
 # Route for creating a new State object
+
+
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """
@@ -78,6 +86,8 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 # Route for updating an existing State object by ID
+
+
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """
@@ -108,6 +118,7 @@ def update_state(state_id):
 
 # Error Handlers:
 
+
 @app_views.errorhandler(404)
 def not_found(error):
     """
@@ -116,6 +127,7 @@ def not_found(error):
     # Return a JSON response for 404 error
     response = {'error': 'Not found'}
     return jsonify(response), 404
+
 
 @app_views.errorhandler(400)
 def bad_request(error):
