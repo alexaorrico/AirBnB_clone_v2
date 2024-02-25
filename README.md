@@ -150,6 +150,11 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+Build API With Flask:
+====================
+* `In this project learner will be required to build an API for the data in our database
+* `Create enough unittest for the new logic
+
 ## Bugs
 No known bugs at this time. 
 
