@@ -203,7 +203,9 @@ def places_search():
         places = [
             place
             for place in places
-            if all(amenity.id in place.amenities for amenity in amenities)
+            if all(
+                amenity.id in [a.id for a in place.amenities] for amenity in amenities
+            )
         ]
 
     # Convert the filtered Place objects to dictionaries and return them
