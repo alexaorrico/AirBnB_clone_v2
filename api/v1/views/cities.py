@@ -5,8 +5,7 @@ cities.py
 from . import app_views
 from flask import jsonify
 from models import storage
-from models.city import City
-from models.state import State
+from models.engine.db_storage import classes
 from flask import abort, request, Response, make_response
 import json
 
@@ -19,7 +18,7 @@ def cities_per_id(state_id):
     objects of a State
     """
     desired_cities = []
-    for key, value in storage.all(City).items():
+    for key, value in storage.all(classes["State"]).items():
         if value.state_id == state_id:
             desired_cities.append({key: value})
     if desired_cities != []:
@@ -33,7 +32,7 @@ def city_by_id(city_id):
     """
     retrieves one city per id
     """
-    city = storage.get(City, city_id)
+    city = storage.get(classes["City"], city_id)
     if city:
         return jsonify(city.to_dict())
     else:
@@ -45,7 +44,7 @@ def delete_city(city_id):
     """
     deletes city
     """
-    city = storage.get(City, city_id)
+    city = storage.get(classes["City"], city_id)
     if city:
         storage.delete(city)
         storage.save()
@@ -65,7 +64,7 @@ def POST_city(state_id):
         abort(400, 'Not a JSON')
     if 'name' not in data:
         abort(400, 'Missing name')
-    obj = City()
+    obj = classes["City"]()
     try:
         new_city = obj()
         setattr(new_city, "state_id", state_id)
