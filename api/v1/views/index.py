@@ -13,7 +13,14 @@ from models.state import State
 from models.user import User
 
 
-
+classes = {
+    "amenities": Amenity,
+    "cities": City,
+    "places": Place,
+    "reviews": Review,
+    "states": State,
+    "users": User,
+    }
 
 @app_views.route("/status")
 def status_json():
@@ -23,14 +30,7 @@ def status_json():
 @app_views.route("/stats")
 def stats_obj():
     '''retrieves the number of each objects by type'''
-    classes = {
-    "amenities": Amenity,
-    "cities": City,
-    "places": Place,
-    "reviews": Review,
-    "states": State,
-    "users": User,
-    }
+
     stats={}
     for key, value in classes.items():
         stats[key] = storage.count(value)
