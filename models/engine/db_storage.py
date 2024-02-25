@@ -15,6 +15,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from urllib.parse import quote_plus
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -28,7 +29,7 @@ class DBStorage:
     def __init__(self):
         """Instantiate a DBStorage object"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
-        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+        HBNB_MYSQL_PWD = quote_plus(getenv('HBNB_MYSQL_PWD'))
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
@@ -74,3 +75,18 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        '''get an object by class and id'''
+        result = self.__session.query(cls).filter_by(id=id).first()
+        return result
+
+    def count(self, cls=None):
+        '''count the number of objects in storage'''
+        if cls is not None:
+            count = self.__session.query(cls).count()
+        else:
+            count = 0
+            for clss in classes:
+                count += self.__session.query(classes[clss]).count()
+        return count
