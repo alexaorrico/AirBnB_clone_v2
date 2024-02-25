@@ -21,7 +21,7 @@ def get_states():
                  strict_slashes=False)
 def get_state(state_id):
     """Retrieves a specific State object by ID"""
-    state_obj = storage.get("State", state_id)
+    state_obj = storage.get("State", str(state_id))
     if state_obj is None:
         abort(404)
     return jsonify(state_obj.to_dict())
@@ -42,7 +42,7 @@ def delete_state(state_id):
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
 def create_state():
     """Creates a new State object"""
-    state_data = request.get_json()
+    state_data = request.get_json(silent=True)
     if state_data is None:
         abort(400, "Not a JSON")
 
@@ -61,7 +61,7 @@ def create_state():
                  strict_slashes=False)
 def update_state(state_id):
     """Updates a specific State object by ID"""
-    state_data = request.get_json()
+    state_data = request.get_json(silent=True)
     if state_data is None:
         abort(400, "Not a JSON")
 

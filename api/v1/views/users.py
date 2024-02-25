@@ -43,7 +43,7 @@ def delete_user(user_id):
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user():
     """Creates a new User object"""
-    user_data = request.get_json()
+    user_data = request.get_json(silent=True)
     if user_data is None:
         abort(400, "Not a JSON")
 
@@ -65,7 +65,7 @@ def create_user():
                  strict_slashes=False)
 def update_user(user_id):
     """Updates a specific User object by ID"""
-    user_data = request.get_json()
+    user_data = request.get_json(silent=True)
     if user_data is None:
         abort(400, "Not a JSON")
 
