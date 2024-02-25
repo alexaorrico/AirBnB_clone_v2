@@ -59,7 +59,7 @@ class TestBaseModelDocs(unittest.TestCase):
 class TestBaseModel(unittest.TestCase):
     """Test the BaseModel class"""
     def test_instantiation(self):
-        """Test that object is correctly created"""
+        """Tests if object is created correctly"""
         inst = BaseModel()
         self.assertIs(type(inst), BaseModel)
         inst.name = "Holberton"
@@ -79,7 +79,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(inst.number, 89)
 
     def test_datetime_attributes(self):
-        """Test that two BaseModel instances have different datetime objects
+        """Test if two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
         tic = datetime.now()
@@ -97,7 +97,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
 
     def test_uuid(self):
-        """Test that id is a valid uuid"""
+        """Test if ID is a valid uuid"""
         inst1 = BaseModel()
         inst2 = BaseModel()
         for inst in [inst1, inst2]:
@@ -111,7 +111,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(inst1.id, inst2.id)
 
     def test_to_dict(self):
-        """Test conversion of object attributes to dictionary for json"""
+        """Tests conversion of object attributes to dictionary for json"""
         my_model = BaseModel()
         my_model.name = "Holberton"
         my_model.my_number = 89
@@ -128,7 +128,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(d['my_number'], 89)
 
     def test_to_dict_values(self):
-        """test that values in dict returned from to_dict are correct"""
+        """Test if values in dict returned from to_dict are correct"""
         t_format = "%Y-%m-%dT%H:%M:%S.%f"
         bm = BaseModel()
         new_d = bm.to_dict()
@@ -139,14 +139,14 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_d["updated_at"], bm.updated_at.strftime(t_format))
 
     def test_str(self):
-        """test that the str method has the correct output"""
+        """Test if the str method has the correct output"""
         inst = BaseModel()
         string = "[BaseModel] ({}) {}".format(inst.id, inst.__dict__)
         self.assertEqual(string, str(inst))
 
     @mock.patch('models.storage')
     def test_save(self, mock_storage):
-        """Test that save method updates `updated_at` and calls
+        """Test if save method updates `updated_at` and calls
         `storage.save`"""
         inst = BaseModel()
         old_created_at = inst.created_at
