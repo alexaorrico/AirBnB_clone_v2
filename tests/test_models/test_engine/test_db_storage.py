@@ -70,6 +70,7 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +87,32 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestStorageDB(unittest.TestCase):
+    """Methos to test the possible cases in db classes"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_get(self):
+        """Test to if get() returns the right objects"""
+        new_amenity = Amenity(name="Table")
+        new_amenity.save()
+        self.assertIs(new_amenity, models.storage.get("Amenity",
+                      new_amenity.id))
+        new_state = State("Floarida")
+        new_state.save()
+        self.assertIs(new_state, models.storage.get("State", new_state.id))
+        self.assertIs(None, models.storage.get("NotExists", "notexist"))
+        self.assertIs(None, models.storage.get("blahblah", "blah"))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "don't test db storage")
+    def test_count(self):
+        """test the total count for any new object"""
+        count = models.storage.count()
+        self.assertEqual(models.storage.count("ExistsNot"), 0)
+        new_state = State(name="Las Vegas")
+        new_state.save()
+        self.assertEqual(models.storage.count("State"), count + 1)
+        self.assertEqual(models.storage.count(), count + 2)

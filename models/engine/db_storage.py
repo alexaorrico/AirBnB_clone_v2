@@ -85,7 +85,7 @@ class DBStorage:
         """
         if type(cls) == str:
             cls = classes.get(cls)
-        if (cls is None):
+        if cls is None:
             return (None)
         return self.__session.query(cls).filter(cls.id == id).first()
 
@@ -98,6 +98,6 @@ class DBStorage:
         """
         if type(cls) is str:
             cls = classes.get(cls)
-        if cls in None:
+        if cls is None:
             return len(self.all())
         return len(self.all(cls))
