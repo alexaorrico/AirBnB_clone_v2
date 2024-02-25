@@ -19,4 +19,15 @@ def stats():
     """
     return the count of all objects in the tables
     """
-    res
+    objects = {
+        "Amenity": "amenities",
+        "Place": "places",
+        "City": "cities",
+        "Review": "reviews",
+        "State": "states",
+        "User": "users"
+    }
+    response = {}
+    for key, value in objects.items():
+        response[value] = storage.count(key)
+    return jsonify(response)
