@@ -79,7 +79,8 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.name, "")
 
     def test_description_attr(self):
-        """Test that Place has attribute description, and it's an empty string"""
+        """Test that Place has attribute description,
+        and it's an empty string"""
         place = Place()
         self.assertTrue(hasattr(place, "description"))
         self.assertEqual(place.description, "")
@@ -91,7 +92,8 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.number_rooms, 0)
 
     def test_number_bathrooms_attr(self):
-        """Test that Place has attribute number_bathrooms, and it's an int == 0"""
+        """Test that Place has attribute number_bathrooms,
+        and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "number_bathrooms"))
         self.assertEqual(place.number_bathrooms, 0)
@@ -103,7 +105,8 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(place.max_guest, 0)
 
     def test_price_by_night_attr(self):
-        """Test that Place has attribute price_by_night, and it's an int == 0"""
+        """Test that Place has attribute price_by_night,
+        and it's an int == 0"""
         place = Place()
         self.assertTrue(hasattr(place, "price_by_night"))
         self.assertEqual(place.price_by_night, 0)

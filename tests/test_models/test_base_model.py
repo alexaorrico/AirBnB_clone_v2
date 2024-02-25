@@ -22,11 +22,16 @@ class TestBaseModelDocs(unittest.TestCase):
 
     def test_pep8_conformance_base_model(self):
         """Test that models/base_model.py conforms to PEP8."""
-        for path in ["models/base_model.py", "tests/test_models/test_base_model.py"]:
+        for path in [
+            "models/base_model.py",
+            "tests/test_models/test_base_model.py",
+        ]:
             style = pycodestyle.StyleGuide(quiet=True)
             result = style.check_files([path])
             self.assertEqual(
-                result.total_errors, 0, "Found code style errors (and warnings)."
+                result.total_errors,
+                0,
+                "Found code style errors (and warnings).",
             )
 
     def test_module_docstring(self):
@@ -80,7 +85,15 @@ class TestBaseModel(unittest.TestCase):
         base_dict = base.to_dict()
         self.assertIsInstance(base_dict, dict)
         for key in base_dict:
-            self.assertTrue(key in ["id", "created_at", "updated_at", "__class__"])
+            self.assertTrue(
+                key
+                in [
+                    "id",
+                    "created_at",
+                    "updated_at",
+                    "__class__",
+                ]
+            )
         self.assertEqual(base_dict["__class__"], "BaseModel")
         self.assertEqual(base_dict["id"], base.id)
 
