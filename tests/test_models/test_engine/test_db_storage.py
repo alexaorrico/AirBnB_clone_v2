@@ -115,9 +115,7 @@ class TestFileStorage(unittest.TestCase):
 class TestDBStorage(unittest.TestCase):
     """Test the new methods."""
 
-    @unittest.skipIf(
-        os.getenv("HBNB_TYPE_STORAGE") == "db", "not testing db storage"
-    )
+    @unittest.skipIf(models.storage_t != "db", "not testing db storage")
     def test_get(self):
         """Test the get method."""
         newState = State(name="New York")
@@ -129,9 +127,7 @@ class TestDBStorage(unittest.TestCase):
         self.assertIs(None, models.storage.get("blah", "blah"))
         self.assertIs(newUser, models.storage.get("User", newUser.id))
 
-    @unittest.skipIf(
-        os.getenv("HBNB_TYPE_STORAGE") == "db", "not testing db storage"
-    )
+    @unittest.skipIf(models.storage_t != "db", "not testing db storage")
     def test_count(self):
         """Test the count method."""
         startCount = models.storage.count()
