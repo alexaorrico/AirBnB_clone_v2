@@ -157,3 +157,7 @@ No known bugs at this time.
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+
+## Authors
+ALHADJI OUMATE
+JACKSON NDIRITU
