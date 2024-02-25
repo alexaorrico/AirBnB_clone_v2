@@ -48,7 +48,7 @@ def create_state():
     if new_state is None:
         abort(400, "Not a JSON")
 
-    if "name" is None:
+    if "name" not in new_state:
         abort(400, "Missing name")
 
     state_instance = State(**new_state)
@@ -68,7 +68,7 @@ def update_states(state_id):
         abort(404)
 
     new_state = request.get_json()
-    if new_state is None:
+    if not new_state:
         abort(400, "Not a JSON")
 
     for key, value in new_state.items():
