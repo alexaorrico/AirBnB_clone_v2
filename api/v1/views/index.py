@@ -34,4 +34,3 @@ def stats():
         obj_cout[key] = models.storage.count(value)
 
     return jsonify(obj_cout)
-
