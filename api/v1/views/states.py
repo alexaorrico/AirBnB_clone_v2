@@ -59,7 +59,7 @@ def create_state():
     """
     if not request.is_json:
         return make_response("Not a JSON", 400)
-    data = request.get_json()
+    data = request.get_json(force=True)
     if 'name' not in data:
         abort(400, 'Missing name')
 
@@ -80,7 +80,7 @@ def update_state(state_id):
         abort(404)
     if not request.is_json:
         return make_response("Not a JSON", 400)
-    data = request.get_json()
+    data = request.get_json(force=True)
     ignored_keys = ['id', 'updated_at', 'created_at']
     for key, value in data.items():
         if key in ignored_keys:

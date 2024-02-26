@@ -60,7 +60,7 @@ def create_review(place_id):
         abort(404)
     if not request.is_json:
         return make_response("Not a JSON", 400)
-    data = request.get_json()
+    data = request.get_json(force=True)
     if 'user_id' not in data:
         abort(400, "Missing user_id")
     if not storage.get(User, data['user_id']):
@@ -80,7 +80,7 @@ def update_review(review_id):
         abort(404)
     if not request.is_json:
         return make_response("Not a JSON", 400)
-    data = request.get_json()
+    data = request.get_json(force=True)
     for key, value in data.items():
         if key not in [
             'id',
