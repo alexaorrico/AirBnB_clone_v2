@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """index for blueprint"""
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, make_response
 import models
 from models.amenity import Amenity
 from models.city import City
@@ -14,7 +14,7 @@ from models.user import User
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """ Status of API """
-    return jsonify({"status": "OK"})
+    return make_response(jsonify({"status": "OK"}))
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
