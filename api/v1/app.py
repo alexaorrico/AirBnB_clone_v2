@@ -17,13 +17,13 @@ port = os.getenv('HBNB_API_PORT', 5000)
 app.register_blueprint(app_views)
 
 
-# begin flask page rendering
 @app.teardown_appcontext
 def teardown_db(exception):
     """
     calls close methods after each method
     """
     storage.close()
+
 
 @app.errorhandler(404)
 def not_found(error):
