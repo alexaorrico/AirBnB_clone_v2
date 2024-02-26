@@ -29,10 +29,9 @@ if storage_t == 'fs':
         def test_pycodestyle_conformance_file_storage(self):
             """Test that models/engine/file_storage.py conforms to pycodestyle."""
             pycodestyles = pycodestyle.StyleGuide(quiet=True)
-            result = pycodestyles.check_files(
-                ['models/engine/file_storage.py'])
+            result = pycodestyles.check_files(['models/engine/file_storage.py'])
             self.assertEqual(result.total_errors, 0,
-                             "Found code style errors (and warnings).")
+                            "Found code style errors (and warnings).")
 
         def test_pycodestyle_conformance_test_file_storage(self):
             """Test tests/test_models/test_engine/test_file_storage.py
@@ -41,7 +40,8 @@ if storage_t == 'fs':
             result = pycodestyles.check_files(
                 ['tests/test_models/test_engine/test_file_storage.py'])
             self.assertEqual(result.total_errors, 0,
-                             "Found code style errors (and warnings).")
+                            "Found code style errors (and warnings).")
+
 
     class TestFileStorageDocs(unittest.TestCase):
         """Tests to check the documentation and style of FileStorage class"""
@@ -53,27 +53,25 @@ if storage_t == 'fs':
         def test_file_storage_module_docstring(self):
             """Test for the file_storage.py module docstring"""
             self.assertIsNot(file_storage.__doc__, None,
-                             "file_storage.py needs a docstring")
+                            "file_storage.py needs a docstring")
             self.assertTrue(len(file_storage.__doc__) >= 1,
                             "file_storage.py needs a docstring")
 
         def test_file_storage_class_docstring(self):
             """Test for the FileStorage class docstring"""
             self.assertIsNot(FileStorage.__doc__, None,
-                             "FileStorage class needs a docstring")
+                            "FileStorage class needs a docstring")
             self.assertTrue(len(FileStorage.__doc__) >= 1,
                             "FileStorage class needs a docstring")
 
         def test_fs_func_docstrings(self):
             """Test for the presence of docstrings in FileStorage methods"""
             for func in self.fs_f:
-                self.assertIsNot(
-                    func[1].__doc__,
-                    None,
-                    "{:s} method needs a docstring".format(
-                        func[0]))
+                self.assertIsNot(func[1].__doc__, None,
+                                "{:s} method needs a docstring".format(func[0]))
                 self.assertTrue(len(func[1].__doc__) >= 1,
                                 "{:s} method needs a docstring".format(func[0]))
+
 
     class TestFileStorage(unittest.TestCase):
         """Test the FileStorage class"""
@@ -123,37 +121,36 @@ if storage_t == 'fs':
                 js = f.read()
             self.assertEqual(json.loads(string), json.loads(js))
 
-    def test_get_invalid_cls_type(self):
-        """
-        Test get with invalid cls type
-        """
-        with self.assertRaises(TypeError):
-            self.storage.get(123, 120)
+        def test_get_invalid_cls_type(self):
+            """
+            Test get with invalid cls type
+            """
+            with self.assertRaises(TypeError):
+                self.storage.get(123, 120)
 
-    def test_get_invalid_id_type(self):
-        """
-        Test get with invalid id type
-        """
-        with self.assertRaises(TypeError):
-            self.storage.get(State, "invalid")
+        def test_get_invalid_id_type(self):
+            """
+            Test get with invalid id type
+            """
+            with self.assertRaises(TypeError):
+                self.storage.get(State, "invalid")
 
-    def test_count_invalid_cls_type(self):
-        """
-        Test count with invalid cls type
-        """
-        with self.assertRaises(TypeError):
-            self.storage.count(123)
+        def test_count_invalid_cls_type(self):
+            """
+            Test count with invalid cls type
+            """
+            with self.assertRaises(TypeError):
+                self.storage.count(123)
 
-    def test_get_valid_cls_no_id(self):
-        """
-        Test get with valid cls but no id in storage
-        """
-        self.assertEqual(self.storage.get(State, 9999), None)
+        def test_get_valid_cls_no_id(self):
+            """
+            Test get with valid cls but no id in storage
+            """
+            self.assertEqual(self.storage.get(State, 9999), None)
 
-    def test_count_valid_cls_no_instances(self):
-        """
-        Test count with valid cls but no instances in storage
-        """
-        # Assuming TestFileStorage is a valid class but has no instances in
-        # storage
-        self.assertEqual(self.storage.count(TestFileStorage), 0)
+        def test_count_valid_cls_no_instances(self):
+            """
+            Test count with valid cls but no instances in storage
+            """
+            # Assuming TestFileStorage is a valid class but has no instances in storage
+            self.assertEqual(self.storage.count(TestFileStorage), 0)
