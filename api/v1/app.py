@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-app
+for app
 """
 
 from flask import Flask, jsonify
@@ -21,7 +21,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown(exception):
     """
-    teardown function
+    To teardown function
     """
     storage.close()
 
@@ -29,8 +29,8 @@ def teardown(exception):
 @app.errorhandler(404)
 def handle_404(exception):
     """
-    handles 404 error
-    :return: returns 404 json
+    To handle 404 error
+    @Return: returns 404 json
     """
     data = {
         "error": "Not found"

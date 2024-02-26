@@ -11,8 +11,8 @@ from models import storage
 @app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
     """
-    status route
-    :return: response with json
+    To status route
+    @Return: response with json
     """
     data = {
         "status": "OK"
@@ -27,8 +27,8 @@ def status():
 @app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
     """
-    stats of all objs route
-    :return: json of all objs
+    To state of all objs route
+    @Return: json of all objs
     """
     data = {
         "amenities": storage.count("Amenity"),
