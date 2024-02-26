@@ -14,6 +14,7 @@ from flask import jsonify, abort, request
                  methods=['GET', 'POST'],
                  strict_slashes=False)
 def states(state_id=None):
+    """new function"""
     states = storage.get(State, state_id)
     if states is None:
         abort(404)
@@ -42,6 +43,7 @@ def states(state_id=None):
                  methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def cities(city_id=None):
+    """new function"""
     cities = storage.get(City, city_id)
     if cities is None:
         abort(404)
