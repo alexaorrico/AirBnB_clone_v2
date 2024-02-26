@@ -18,7 +18,7 @@ def status():
 @app_views.route('/stats', strict_slashes=False)
 def count():
     """
-    Retrieves the number of each objects by type
+        Retrieves the number of each objects by type
     """
     stats = {
             "amenities": storage.count("Amenity"),
