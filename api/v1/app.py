@@ -3,7 +3,7 @@
 Your first endpoint (route) will be to return the status of your API:
 """
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify
 from flask_cors import CORS
 import os
 # from os import getenv
@@ -24,7 +24,7 @@ def teardown(exc):
 @app.errorhandler(404)
 def errorhandler(error):
     """handles 404 errors"""
-    return make_response(jsonify({'error': 'Not Found'}), 404)
+    return jsonify(error='Not Found'), 404
 
 
 if __name__ == "__main__":
