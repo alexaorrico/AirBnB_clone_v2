@@ -5,7 +5,7 @@ from models import storage
 
 
 @app_views.app_errorhandler(404)
-def err(e):
+def err_404(e):
     """error handler for 404"""
     resp = make_response(jsonify({'error': 404}))
     resp.status_code = 404
@@ -21,7 +21,8 @@ def err_400(e):
 @app_views.route('/status', methods = ['GET'] , strict_slashes= False)
 def show_status():
     """returns the api status"""
-    return jsonify({'status': 'ok'})
+    resp = make_response(jsonify({'status' : 'ok'}), 200)
+    return resp
 
 @app_views.route('/stats', methods= ['GET'], strict_slashes=False)
 def stats():
@@ -35,5 +36,6 @@ def stats():
             obdict[clsname] += 1
         except KeyError:
             obdict[clsname] = 1
-        
-    return  jsonify(obdict)
+
+    resp = make_response(jsonify(obdict), 200)    
+    return  resp
