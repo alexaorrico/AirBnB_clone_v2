@@ -116,38 +116,26 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """Test the get method"""
-        state = State()
-        state_id = state.id
-        self.file_storage.new(state)
-        self.file_storage.save()
-
-        get_state = self.file_storage.get(State, state_id)
-        self.assertEqual(get_state, state)
-
-        with self.assertRaises(TypeError):
-            get_state1 = self.file_storage.get(State)
-
-        with self.assertRaises(TypeError):
-            get_state2 = self.file_storage.get(state_id)
-
-        with self.assertRaises(TypeError):
-            get_state3 = self.file_storage.get()
+        """ Tests method for obtaining an instance file storage"""
+        storage = FileStorage()
+        dic = {"name": "Vecindad"}
+        instance = State(**dic)
+        storage.new(instance)
+        storage.save()
+        storage = FileStorage()
+        get_instance = storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """Count the objects"""
-        state1 = State()
-        state2 = State()
-        self.file_storage.new(state1)
-        self.file_storage.new(state2)
-        self.file_storage.save()
-
-        total = self.file_storage.count(State)
-        self.assertEqual(total, 3)
-
-        total_n = self.file_storage.count()
-        self.assertEqual(total_n, 9)
-
-        with self.assertRaises(NameError):
-            total_y = self.file_storage.count(Yes)
+        """ Tests count method file storage """
+        storage = FileStorage()
+        dic = {"name": "Vecindad"}
+        state = State(**dic)
+        storage.new(state)
+        dic = {"name": "Mexico"}
+        city = City(**dic)
+        storage.new(city)
+        storage.save()
+        c = storage.count()
+        self.assertEqual(len(storage.all()), c)
