@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+"""
+returns api
+"""
+
+from flask import Flask, jsonify, make_response
+# from flask_cors import CORS
+import os
+# from os import getenv
+from models import storage
+from api.v1.views import app_views
+
+app = Flask(__name__)
+app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})  # Allowing CORS from all origins
+
+
+@app.teardown_appcontext
+def teardown(exc):
+    """removes the current sqlalchemy session"""
+    storage.close()
+
+
+@app.errorhandler(404)
+def errorhandler(error):
+    """handles 404 errors"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+if __name__ == "__main__":
+    app.run(host=os.environ.get('HBNB_API_HOST'),
+            port=os.environ.get('HBNB_API_PORT'))
