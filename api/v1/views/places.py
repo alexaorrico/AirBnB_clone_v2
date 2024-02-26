@@ -166,4 +166,3 @@ def places_search():
         places.append(d)
 
     return jsonify(places)
-

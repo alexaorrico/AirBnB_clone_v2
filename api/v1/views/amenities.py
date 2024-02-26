@@ -85,4 +85,3 @@ def bad_request(error):
     """Return Bad Request message for illegal requests to the API."""
     response = {'error': 'Bad Request'}
     return jsonify(response), 400
-

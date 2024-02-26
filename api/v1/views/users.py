@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """Contains the User objects in the API."""
 
@@ -86,4 +85,3 @@ def bad_request(error):
     """Return Bad Request message for illegal requests to the API."""
     response = {'error': 'Bad Request'}
     return jsonify(response), 400
-

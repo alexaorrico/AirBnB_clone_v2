@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """contains the cities view for the API."""
 
@@ -94,4 +93,3 @@ def page_not_found(error):
 def bad_request(error):
     """Return Bad Request message for illegal requests to API."""
     return jsonify({'error': 'Bad Request'}), 400
-
