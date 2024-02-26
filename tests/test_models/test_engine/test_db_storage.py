@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage_t
 import json
 import os
 import pycodestyle
@@ -22,196 +23,180 @@ DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
+if storage_t == 'db':
+    class TestDBStorageDocs(unittest.TestCase):
+        """Tests to check the documentation and style of DBStorage class"""
+        @classmethod
+        def setUpClass(cls):
+            """Set up for the doc tests"""
+            cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
-class TestDBStorageDocs(unittest.TestCase):
-    """Tests to check the documentation and style of DBStorage class"""
-    @classmethod
-    def setUpClass(cls):
-        """Set up for the doc tests"""
-        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+        def test_pycodestyle_conformance_db_storage(self):
+            """Test that models/engine/db_storage.py conforms to PEP8."""
+            pycodestyles = pycodestyle.StyleGuide(quiet=True)
+            result = pycodestyles.check_files(['models/engine/db_storage.py'])
+            self.assertEqual(result.total_errors, 0,
+                            "Found code style errors (and warnings).")
 
-    def test_pycodestyle_conformance_db_storage(self):
-        """Test that models/engine/db_storage.py conforms to PEP8."""
-        pycodestyles = pycodestyle.StyleGuide(quiet=True)
-        result = pycodestyles.check_files(['models/engine/db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+        def test_pycodestyle_conformance_test_db_storage(self):
+            """Test tests/test_models/test_db_storage.py conforms to PEP8."""
+            pycodestyles = pycodestyle.StyleGuide(quiet=True)
+            result = pycodestyles.check_files(['tests/test_models/test_engine/\
+    test_db_storage.py'])
+            self.assertEqual(result.total_errors, 0,
+                            "Found code style errors (and warnings).")
 
-    def test_pycodestyle_conformance_test_db_storage(self):
-        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pycodestyles = pycodestyle.StyleGuide(quiet=True)
-        result = pycodestyles.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+        def test_db_storage_module_docstring(self):
+            """Test for the db_storage.py module docstring"""
+            self.assertIsNot(db_storage.__doc__, None,
+                            "db_storage.py needs a docstring")
+            self.assertTrue(len(db_storage.__doc__) >= 1,
+                            "db_storage.py needs a docstring")
 
-    def test_db_storage_module_docstring(self):
-        """Test for the db_storage.py module docstring"""
-        self.assertIsNot(db_storage.__doc__, None,
-                         "db_storage.py needs a docstring")
-        self.assertTrue(len(db_storage.__doc__) >= 1,
-                        "db_storage.py needs a docstring")
+        def test_db_storage_class_docstring(self):
+            """Test for the DBStorage class docstring"""
+            self.assertIsNot(DBStorage.__doc__, None,
+                            "DBStorage class needs a docstring")
+            self.assertTrue(len(DBStorage.__doc__) >= 1,
+                            "DBStorage class needs a docstring")
 
-    def test_db_storage_class_docstring(self):
-        """Test for the DBStorage class docstring"""
-        self.assertIsNot(DBStorage.__doc__, None,
-                         "DBStorage class needs a docstring")
-        self.assertTrue(len(DBStorage.__doc__) >= 1,
-                        "DBStorage class needs a docstring")
-
-    def test_dbs_func_docstrings(self):
-        """Test for the presence of docstrings in DBStorage methods"""
-        for func in self.dbs_f:
-            self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
-
-
-class TestDBStorage(unittest.TestCase):
-    """Test the DBStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-        state = State(name="California")
-        state.save()
-        self.assertEqual(models.storage.all(), models.storage.all(State))
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-        state = State(name="California")
-        state.save()
-        self.assertIn(state, models.storage.all().values())
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
-        state = State(name="California")
-        state.save()
-        models.storage.reload()
-        self.assertIn("State.{}".format(state.id), models.storage.all().keys())
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get(self):
-        """Test that get returns the object based on the class and id"""
-        state = State(name="California")
-        state.save()
-        self.assertEqual(models.storage.get(State, state.id), state)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_count(self):
-        """Test that count returns the number of objects in storage"""
-        state = State(name="California")
-        state.save()
-        self.assertEqual(models.storage.count(State), 1)
-        self.assertEqual(models.storage.count(), 1)
+        def test_dbs_func_docstrings(self):
+            """Test for the presence of docstrings in DBStorage methods"""
+            for func in self.dbs_f:
+                self.assertIsNot(func[1].__doc__, None,
+                                "{:s} method needs a docstring".format(func[0]))
+                self.assertTrue(len(func[1].__doc__) >= 1,
+                                "{:s} method needs a docstring".format(func[0]))
 
 
-class TestDBStorageMethodsGetandcount(unittest.TestCase):
-    """
-    Class for Test File Storage Methods Get and count
-    """
+    class TestDBStorage(unittest.TestCase):
+        """Test the DBStorage class"""
 
-    def setUp(self):
+        def test_all_returns_dict(self):
+            """Test that all returns a dictionaty"""
+            self.assertIs(type(models.storage.all()), dict)
+
+        def test_all_no_class(self):
+            """Test that all returns all rows when no class is passed"""
+            state = State(name="California")
+            state.save()
+            self.assertEqual(models.storage.all(), models.storage.all(State))
+
+        def test_new(self):
+            """test that new adds an object to the database"""
+            state = State(name="California")
+            state.save()
+            self.assertIn(state, models.storage.all().values())
+
+        def test_save(self):
+            """Test that save properly saves objects to file.json"""
+            state = State(name="California")
+            state.save()
+            models.storage.reload()
+            self.assertIn("State.{}".format(state.id), models.storage.all().keys())
+
+        def test_get(self):
+            """Test that get returns the object based on the class and id"""
+            state = State(name="California")
+            state.save()
+            self.assertEqual(models.storage.get(State, state.id), state)
+
+        def test_count(self):
+            """Test that count returns the number of objects in storage"""
+            state = State(name="California")
+            state.save()
+            self.assertEqual(models.storage.count(State), 1)
+            self.assertEqual(models.storage.count(), 1)
+
+
+    class TestDBStorageMethodsGetandcount(unittest.TestCase):
         """
-        setup method
-        """
-        self.storage = DBStorage()
-        self.state_o = State(id=120)
-        self.storage.new(self.state_o)
-        self.storage.save()
-
-    def tearDown(self):
-        """
-        tear down
+        Class for Test File Storage Methods Get and count
         """
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_get_one(self):
-        """
-        first function tests get
-        """
-        self.assertEqual(self.storage.get(State, 120), self.state_o)
+        def setUp(self):
+            """
+            setup method
+            """
+            self.storage = DBStorage()
+            self.state_o = State(id=120)
+            self.storage.new(self.state_o)
+            self.storage.save()
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_get_two(self):
-        """
-        first function tests get
-        """
-        self.assertEqual(self.storage.get(State, 190), None)
+        def tearDown(self):
+            """
+            tear down
+            """
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_get_cls_none(self):
-        """
-        Test get with cls as None
-        """
-        self.assertEqual(self.storage.get(None, 120), None)
+        def test_get_one(self):
+            """
+            first function tests get
+            """
+            self.assertEqual(self.storage.get(State, 120), self.state_o)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_get_id_none(self):
-        """
-        Test get with id as None
-        """
-        self.assertEqual(self.storage.get(State, None), None)
+        def test_get_two(self):
+            """
+            first function tests get
+            """
+            self.assertEqual(self.storage.get(State, 190), None)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_get_no_cls_in_storage(self):
-        """
-        Test get with valid cls but no instances in storage
-        """
-        self.assertEqual(self.storage.get(TestDBStorage, 120), None)
+        def test_get_cls_none(self):
+            """
+            Test get with cls as None
+            """
+            self.assertEqual(self.storage.get(None, 120), None)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_get_no_id_in_storage(self):
-        """
-        Test get with valid id but no object with that id in storage
-        """
-        self.assertEqual(self.storage.get(State, 9999), None)
+        def test_get_id_none(self):
+            """
+            Test get with id as None
+            """
+            self.assertEqual(self.storage.get(State, None), None)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_count_all(self):
-        """
-        Test count with no class specified
-        """
-        # Assuming self.storage.all() returns a dictionary
-        expected_count = len(self.storage.all())
-        self.assertEqual(self.storage.count(), expected_count)
+        def test_get_no_cls_in_storage(self):
+            """
+            Test get with valid cls but no instances in storage
+            """
+            self.assertEqual(self.storage.get(TestDBStorage, 120), None)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_count_cls(self):
-        """
-        Test count with a specific class
-        """
-        # Assuming self.storage.all(cls) returns a dictionary
-        expected_count = len(self.storage.all(State))
-        self.assertEqual(self.storage.count(State), expected_count)
+        def test_get_no_id_in_storage(self):
+            """
+            Test get with valid id but no object with that id in storage
+            """
+            self.assertEqual(self.storage.get(State, 9999), None)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_count_cls_none(self):
-        """
-        Test count with a class that doesn't exist in storage
-        """
-        # Assuming NonExistentClass is a class that doesn't exist in storage
-        self.assertEqual(self.storage.count(TestDBStorage), 0)
+        def test_count_all(self):
+            """
+            Test count with no class specified
+            """
+            # Assuming self.storage.all() returns a dictionary
+            expected_count = len(self.storage.all())
+            self.assertEqual(self.storage.count(), expected_count)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_count_all_empty(self):
-        """
-        Test count with no class specified and storage is empty
-        """
-        self.storage.all().clear()
-        self.assertEqual(self.storage.count(), 0)
+        def test_count_cls(self):
+            """
+            Test count with a specific class
+            """
+            # Assuming self.storage.all(cls) returns a dictionary
+            expected_count = len(self.storage.all(State))
+            self.assertEqual(self.storage.count(State), expected_count)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
-    def test_count_cls_empty(self):
-        """
-        Test count with a specific class and storage is empty
-        """
-        self.storage.all().clear()
-        self.assertEqual(self.storage.count(State), 0)
+        def test_count_cls_none(self):
+            """
+            Test count with a class that doesn't exist in storage
+            """
+            # Assuming NonExistentClass is a class that doesn't exist in storage
+            self.assertEqual(self.storage.count(TestDBStorage), 0)
+
+        def test_count_all_empty(self):
+            """
+            Test count with no class specified and storage is empty
+            """
+            self.storage.all().clear()
+            self.assertEqual(self.storage.count(), 0)
+
+        def test_count_cls_empty(self):
+            """
+            Test count with a specific class and storage is empty
+            """
+            self.storage.all().clear()
+            self.assertEqual(self.storage.count(State), 0)
