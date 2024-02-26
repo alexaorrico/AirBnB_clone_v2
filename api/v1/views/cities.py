@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """
-text
+city code
 """
 from models import storage
 from api.v1.views import app_views
-from models import storage
 from models.state import State
 from models.city import City
 from flask import jsonify, abort, request
@@ -17,17 +16,17 @@ def get_or_create_city(state_id):
     """Get cities by state or create a new city"""
     state = storage.get(State, state_id)
     if state is None:
-        abort(404)
+        abort(404, "State not found")
 
     if request.method == 'GET':
         cities = [city.to_dict() for city in state.cities]
-        return jsonify(cities)
+        return jsonify(cities), 200
 
     elif request.method == 'POST':
-        if not request.is_json:
-            abort(400, 'Not a JSON')
-
         data = request.get_json()
+        if not data:
+            abort(400, "JSON data is required")
+
         name = data.get('name')
         if not name:
             abort(400, 'Missing name')
@@ -46,10 +45,10 @@ def get_update_or_delete_city(city_id):
     """Get, update, or delete a city by ID"""
     city = storage.get(City, city_id)
     if city is None:
-        abort(404)
+        abort(404, "City not found")
 
     if request.method == 'GET':
-        return jsonify(city.to_dict())
+        return jsonify(city.to_dict()), 200
 
     elif request.method == 'DELETE':
         storage.delete(city)
@@ -57,10 +56,10 @@ def get_update_or_delete_city(city_id):
         return jsonify({}), 200
 
     elif request.method == 'PUT':
-        if not request.is_json:
-            abort(400, 'Not a JSON')
-
         data = request.get_json()
+        if not data:
+            abort(400, "JSON data is required")
+
         for k, v in data.items():
             if k not in ["id", "created_at", "updated_at"]:
                 setattr(city, k, v)
