@@ -2,8 +2,8 @@
 """States"""
 
 
-from flask import jsonify, Response, abort, request
-from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
+from flask import jsonify, Response, abort, request, make_response
+from werkzeug.exceptions import BadRequest
 import json
 from models import storage
 from models.state import State
@@ -48,18 +48,18 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
-    """Create new state"""
-    # Get JSON data from the request body, and if parsing fails,
-    # return None
-    data = request.get_json(silent=True, force=True)
-    if type(data) is not dict:
-        raise BadRequest(description='Not a JSON')
+    """
+    Creates a new State
+    """
+    if not request.is_json:
+        return make_response("Not a JSON", 400)
+    data = request.get_json()
     if 'name' not in data:
-        raise BadRequest(description='Missing name')
-    # used for unpacking the dictionary and passing
-    # its key-value pairs as keyword arguments to the State
+        abort(400, 'Missing name')
+
     new_state = State(**data)
-    storage.save()
+    new_state.save()
+
     return jsonify(new_state.to_dict()), 201
 
 
