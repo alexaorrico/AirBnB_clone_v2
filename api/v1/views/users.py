@@ -26,3 +26,30 @@ def get_or_add_user():
             return jsonify(new_user.to_dict()), 201
         else:
             abort(400, 'Not a JSON')
+
+
+@app_views.route('/users/<user_id>',
+                 methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
+def user_byid(user_id=None):
+    """user function"""
+    user_data = storage.get(User, user_id)
+    if user_id is None:
+        abort(400)
+    else:
+        if request.methods == 'GET':
+            return jsonify(user_data.to_dict())
+        elif request.methods == 'DELETE':
+            storage.delete(user_data)
+            storage.save()
+            return {}, 200
+        elif request.methods == 'PUT':
+            if request.get_json:
+                data = request.get_json
+                for k, v in data.items():
+                    if k not in ['id', 'email', 'created_at', ' updated_at']:
+                        setattr(user_data, k, v)
+                user_data.save()
+                return jsonify(user_data.to_dict()), 200
+            else:
+                abort(400, 'Not a JSON')
