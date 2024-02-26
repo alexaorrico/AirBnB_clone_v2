@@ -23,17 +23,15 @@ def status():
 
 
 @app_views.route('/stats', strict_slashes=False)
-def stats():
-    """
-        Simple stats for the web app
-    """
-    objects = {'users': User,
-               'cities': City,
-               'places': Place,
-               'reviews': Review,
-               'states': State,
-               'users': User
-               }
-    for obj in objects:
-        objects[obj] = storage.count(objects[obj])
-    return jsonify(objects)
+def stuff():
+    '''JSON Responses'''
+    todos = {'states': State,
+             'users': User,
+             'amenities': Amenity,
+             'cities': City,
+             'places': Place,
+             'reviews': Review
+             }
+    for key in todos:
+        todos[key] = storage.count(todos[key])
+    return jsonify(todos)
