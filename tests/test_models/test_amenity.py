@@ -30,7 +30,8 @@ class TestAmenityDocs(unittest.TestCase):
     def test_pycodestyle_conformance_test_amenity(self):
         """Test that tests/test_models/test_amenity.py conforms to PEP8."""
         pycodestyles = pycodestyle.StyleGuide(quiet=True)
-        result = pycodestyles.check_files(['tests/test_models/test_amenity.py'])
+        result = pycodestyles.check_files(
+                ['tests/test_models/test_amenity.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
