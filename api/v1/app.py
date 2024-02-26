@@ -2,7 +2,7 @@
 """app.py"""
 from models import storage
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Blueprint
 import os
 
 HBNB_API_HOST = "0.0.0.0"
@@ -30,4 +30,4 @@ if __name__ == "__main__":
 
     port = 5000 if "HBNB_API_PORT" not in \
         os.environ else os.getenv("HBNB_API_PORT")
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port, threaded=True, debug=True)
