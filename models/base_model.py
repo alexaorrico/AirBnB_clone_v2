@@ -76,8 +76,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if 'password' in new_dict and not include_password:
-            del new_dict['password']        
+        # if 'password' in new_dict and not include_password:
+        #     del new_dict['password']
         return new_dict
 
     def delete(self):
