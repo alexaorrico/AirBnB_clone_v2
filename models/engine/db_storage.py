@@ -32,6 +32,9 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
+
+
+
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
@@ -65,19 +68,29 @@ class DBStorage:
             self.__session.delete(obj)
 
     def get(self, cls, id):
-        """retrieve one object"""
-        for obj in self.__session:
-            if obj is not None:
-                if isinstance(obj, cls) and obj.id == id:
-                    return obj
-        return None
+        """
+        Returns the object based on the class name and its ID, or
+        None if not found
+        """
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+
 
     def count(self, cls=None):
         """Count the number of objects in storage"""
         if cls is None:
-            return self.__session.query(models.base_model.Base).count()
+            return len(self.all())
         else:
-            return self.__session.query(cls).count()
+            count = 0
+            for obj in self.all().values():
+                if isinstance(obj, cls):
+                    count += 1
+                return count
 
     def reload(self):
         """reloads data from the database"""
