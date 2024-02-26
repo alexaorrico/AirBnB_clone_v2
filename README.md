@@ -156,6 +156,6 @@ No known bugs at this time.
 ## Authors
 Lamber J. Kpukuyou - [Github](https://github.com/Lamber22) / [Twitter](https://twitter.com/lamber_j)  
 
-Third part of Airbnb: Joann Vuong
+Third part of Airbnb: Lamber J. Kpukuyou
 ## License
 Public Domain. No copy write protection. 
