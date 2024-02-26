@@ -28,5 +28,6 @@ def status():
 def get_stats():
     """Retrieves the number of each object by type"""
     classes = ["Amenity", "City", "Place", "Review", "State", "User"]
-    stats = {cls.lower(): storage.count(eval(cls)) for cls in classes}
+    stats = {
+        cls.lower(): storage.count(eval(cls)) for cls in classes}
     return jsonify(stats)
