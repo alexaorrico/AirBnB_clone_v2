@@ -17,6 +17,7 @@ def status():
     """ Status of API """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """An endpoint that retrieves the number of each objects by type:"""
@@ -28,9 +29,9 @@ def stats():
         "state": State,
         "user": User
     }
-    
+
     obj_cout = {}
     for key, value in classes.items():
         obj_cout[key] = models.storage.count(value)
-    
+
     return jsonify(obj_cout)
