@@ -60,10 +60,10 @@ class DBStorage:
 
     def get(self, cls, id):
         """
-        fetches specific object
-        :param cls: class of object as string
-        :param id: id of object as string
-        :return: found object or None
+        Tofetche specific object
+        @param cls: class of object as string
+        @param id: id of object as string
+        @Return: found object or None
         """
         all_class = self.all(cls)
 
@@ -75,12 +75,11 @@ class DBStorage:
 
     def count(self, cls=None):
         """
-        count of how many instances of a class
-        :param cls: class name
-        :return: count of instances of a class
+        Count of how many instances of a class
+        @param cls: class name
+        @Return: count of instances of a class
         """
         return len(self.all(cls))
-
     def save(self):
         """ commits all changes of current database session """
         self.__session.commit()

@@ -203,13 +203,13 @@ class TestUserFsInstances(unittest.TestCase):
 @unittest.skipIf(storage_type == 'db', 'skip if environ is not db')
 class TestStorageGet(unittest.TestCase):
     """
-    Testing `get()` method in DBStorage
+    To test `get()` method in DBStorage
     """
 
     @classmethod
     def setUpClass(cls):
         """
-        setup tests for class
+        To setup tests for class
         """
         print('\n\n.................................')
         print('...... Testing Get() Method ......')
@@ -218,15 +218,15 @@ class TestStorageGet(unittest.TestCase):
 
     def setUp(self):
         """
-        setup method
+        To setup method
         """
         self.state = models.state.State(name="Florida")
         self.state.save()
 
     def test_get_method_obj(self):
         """
-        testing get() method
-        :return: True if pass, False if not pass
+        To test get() method
+        @Return: True if pass, False if not pass
         """
 
         print(self.state.id)
@@ -236,8 +236,8 @@ class TestStorageGet(unittest.TestCase):
 
     def test_get_method_return(self):
         """
-        testing get() method for id match
-        :return: True if pass, false if not pass
+        To test get() method for id match
+        @Return: True if pass, false if not pass
         """
         result = storage.get(cls="State", id=str(self.state.id))
 
@@ -256,13 +256,13 @@ class TestStorageGet(unittest.TestCase):
 @unittest.skipIf(storage_type == 'db', 'skip if environ is not db')
 class TestStorageCount(unittest.TestCase):
     """
-    tests count() method in DBStorage
+    To test count() method in DBStorage
     """
 
     @classmethod
     def setUpClass(cls):
         """
-        setup tests for class
+        To setup tests for class
         """
         print('\n\n.................................')
         print('...... Testing Get() Method ......')
@@ -271,7 +271,7 @@ class TestStorageCount(unittest.TestCase):
 
     def setup(self):
         """
-        setup method
+        To setup method
         """
         models.state.State()
         models.state.State()
@@ -283,8 +283,8 @@ class TestStorageCount(unittest.TestCase):
 
     def test_count_all(self):
         """
-        testing counting all instances
-        :return: True if pass, false if not pass
+        To test counting all instances
+        @Return: True if pass, false if not pass
         """
         result = storage.count()
 
@@ -292,8 +292,8 @@ class TestStorageCount(unittest.TestCase):
 
     def test_count_state(self):
         """
-        testing counting state instances
-        :return: True if pass, false if not pass
+        To test counting state instances
+        @Return: True if pass, false if not pass
         """
         result = storage.count(cls="State")
 
@@ -309,7 +309,6 @@ class TestStorageCount(unittest.TestCase):
         self.assertEqual(
             int(0 if len(storage.all("City")) is None else
                 len(storage.all("City"))), result)
-
 
 if __name__ == '__main__':
     unittest.main

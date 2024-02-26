@@ -45,10 +45,10 @@ class FileStorage:
 
     def get(self, cls, id):
         """
-        gets specific object
-        :param cls: class
-        :param id: id of instance
-        :return: object or None
+        To get specific object
+        @param cls: class
+        @param id: id of instance
+        @Return: object or None
         """
         all_class = self.all(cls)
 
@@ -60,13 +60,12 @@ class FileStorage:
 
     def count(self, cls=None):
         """
-        count of instances
-        :param cls: class
-        :return: number of instances
+        To count of instances
+        @param cls: class
+        @Return: number of instances
         """
 
         return len(self.all(cls))
-
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         fname = FileStorage.__file_path
