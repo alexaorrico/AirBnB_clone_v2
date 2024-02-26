@@ -1,25 +1,23 @@
 #!/usr/bin/python3
 """
-Places_Amenities Module
+Places Amenities Module
 """
 
-from api.v1.views import app_views
-from flask import Flask, jsonify, request, abort
+from flask import Flask, Blueprint, jsonify, abort, request
 from models import storage
+from api.v1.views import app_views
 from models.place import Place
 from models.amenity import Amenity
+from os import getenv
 
-# CORS
-# CORS(app_views, resources={r"/*": {"origins": "0.0.0.0"}})
+app = Flask(__name__)
 
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET', 'POST'],
                  strict_slashes=False)
 def places_amenities(place_id):
-    """Retrieve the list of all Amenity objects of a Place
-    or link a Amenity object to a Place"""
-    place = storage.get("Place", place_id)
-
+    """Handle GET and POST requests on /places/<place_id>/amenities"""
+    place = storage.get(Place, place_id)
     if place is None:
         abort(404)
 
@@ -27,10 +25,15 @@ def places_amenities(place_id):
         amenities_list = [amenity.to_dict() for amenity in place.amenities]
         return jsonify(amenities_list)
 
-    elif request.method == 'POST':
-        amenity_id = request.args.get('amenity_id')
-        amenity = storage.get("Amenity", amenity_id)
+    if request.method == 'POST':
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            abort(405)
 
+        amenity_id = request.get_json()
+        if amenity_id is None:
+            return jsonify({"error": "Not a JSON"}), 400
+
+        amenity = storage.get(Amenity, amenity_id)
         if amenity is None:
             abort(404)
 
@@ -39,16 +42,15 @@ def places_amenities(place_id):
 
         place.amenities.append(amenity)
         storage.save()
-
         return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>/amenities/<amenity_id>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_places_amenities(place_id, amenity_id):
-    """Deletes a Amenity object to a Place"""
-    place = storage.get("Place", place_id)
-    amenity = storage.get("Amenity", amenity_id)
+def place_amenity(place_id, amenity_id):
+    """Handle DELETE requests on /places/<place_id>/amenities/<amenity_id>"""
+    place = storage.get(Place, place_id)
+    amenity = storage.get(Amenity, amenity_id)
 
     if place is None or amenity is None:
         abort(404)
@@ -56,7 +58,13 @@ def delete_places_amenities(place_id, amenity_id):
     if amenity not in place.amenities:
         abort(404)
 
-    place.amenities.remove(amenity)
-    storage.save()
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        place.amenities.remove(amenity)
+        storage.save()
+    else:
+        if amenity_id not in place.amenity_ids:
+            abort(404)
+        place.amenity_ids.remove(amenity_id)
+        storage.save()
 
     return jsonify({}), 200
