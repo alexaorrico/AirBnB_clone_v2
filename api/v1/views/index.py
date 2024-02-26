@@ -16,7 +16,7 @@ def api_status():
     '''
     if request.method == 'GET':
         response = {'status': 'OK'}
-        return jsonify(response)
+    return jsonify(response)
 
 
 @app_views.route('/stats', methods=['GET'])
@@ -33,4 +33,4 @@ def get_stats():
             'states': storage.count('State'),
             'users': storage.count('User')
     }
-        return jsonify(stats)
+    return jsonify(stats)
