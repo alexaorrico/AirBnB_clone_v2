@@ -10,10 +10,10 @@ from os import getenv
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 if storage_t == "db":
-    from models.engine.db_storage import DBStorage, classes
+    from models.engine.db_storage import DBStorage
     storage = DBStorage()
 else:
-    from models.engine.file_storage import FileStorage, classes
+    from models.engine.file_storage import FileStorage
     storage = FileStorage()
-CLS = classes
+
 storage.reload()
