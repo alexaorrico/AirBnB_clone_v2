@@ -23,6 +23,7 @@ def all_cities():
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city(city_id):
+    """Get a specific city using id"""
     city = storage.get(City, id=city_id)
     if city:
         resp = make_response(jsonify(city.to_dict()))
@@ -33,6 +34,7 @@ def get_city(city_id):
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 def delete_city(city_id):
+    """Delete a city Fom DELETE req"""
     city: City = storage.get(City, city_id)
     if city:
         storage.delete(city)
