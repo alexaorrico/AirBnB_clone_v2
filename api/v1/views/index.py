@@ -9,7 +9,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from models import storage
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
@@ -22,12 +21,12 @@ def status():
 def stats():
     """An endpoint that retrieves the number of each objects by type:"""
     classes = {
-        "amenity": Amenity,
-        "city": City,
-        "place": Place,
-        "review": Review,
-        "state": State,
-        "user": User
+        "amenities": Amenity,
+        "cities": City,
+        "places": Place,
+        "reviews": Review,
+        "states": State,
+        "users": User
     }
 
     obj_cout = {}
