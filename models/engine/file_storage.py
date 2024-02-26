@@ -23,7 +23,7 @@ class FileStorage:
     __file_path = "file.json"
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
-
+i
     def all(self, cls=None):
         """returns the dictionary __objects"""
         if cls is not None:
@@ -33,6 +33,21 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
+
+    def get(self, cls, id):
+        """Retreive one object"""
+        obj = self.all(cls)
+        for obj in objects.values():
+            if obj.id == id:
+            return obj
+        return None
+
+    def count(self, cls=None):
+        """Counts objects"""
+        if cls:
+            return sum(1 for obj in self.all(cls).values())
+        else:
+            return len(self.__objects)
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
