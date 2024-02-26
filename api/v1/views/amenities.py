@@ -16,13 +16,10 @@ from api.v1.views import app_views
 def all_amenities():
     """Retrieves the list of all amenity"""
     amenities = [obj.to_dict()
-                 for obj in storage.all(Amenity).values()]
+                         for obj in storage.all(Amenity).values()]
     resp = Response(
-        # The indent=4 argument is used to add indentation
         response=json.dumps(amenities, indent=4),
         status=200,
-        # Sets the MIME type of the response to indicate that
-        # it is in JSON format.
         mimetype='application/json'
     )
     return resp
@@ -79,8 +76,8 @@ def update_amenity(amenity_id):
         raise BadRequest('Not a JSON', 400)
     data = request.get_json(silent=True)
     for key, value in data.items():
-        # Ignore keys: id, created_at, and updated_at
-        if key not in ["id", "created_at", "updated_at"]:
-            setattr(amenity, key, value)
+        if key in ["id", "created_at", "updated_at"]:
+            continue
+        setattr(amenity, key, value)
     amenity.save()
     return jsonify(amenity.to_dict()), 200
