@@ -16,6 +16,7 @@ app = Flask(__name__)
 
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def removed_db(exception):
     """
@@ -23,6 +24,7 @@ def removed_db(exception):
     db is been created in every subsequent calls
     """
     storage.close()
+
 
 if __name__ == "__main__":
     app.run(host=host, port=port, threaded=True)
