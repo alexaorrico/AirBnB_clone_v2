@@ -13,7 +13,7 @@ ALLOWED_METHODS = ['GET', 'DELETE', 'POST', 'PUT']
 
 @app_views.route('/amenities', methods=ALLOWED_METHODS)
 @app_views.route('/amenities/<amenity_id>', methods=ALLOWED_METHODS)
-def handle_states(state_id=None):
+def handle_amenities(amenity_id=None):
     """handles all allowed HTTP methods to amenity(id)."""
     handlers = {
         'GET': get_amenity,
@@ -31,7 +31,8 @@ def get_amenity(amenity_id=None):
     """uses the GET method to retrieve an amenity(id) or all amenities."""
     all_amenities = storage.all(Amenity).values()
     if amenity_id:
-        unique_amenity = [amenity for amenity in all_amenities if amenity.id == amenity_id]
+        unique_amenity = [amenity for amenity in all_amenities
+                          if amenity.id == amenity_id]
         if unique_amenity:
             return jsonify(unique_amenity[0].to_dict())
         else:
@@ -44,9 +45,10 @@ def get_amenity(amenity_id=None):
 def del_amenity(amenity_id=None):
     """uses the DELETE method to delete an amenity(id)."""
     all_amenities = storage.all(Amenity).values()
-    unique_amenity = [amenity for amenity in all_amenities if amenity.id == amenity_id]
-    if unique_state:
-        amenity_to_delete = unique_unique[0]
+    unique_amenity = [amenity for amenity in all_amenities
+                      if amenity.id == amenity_id]
+    if unique_amenity:
+        amenity_to_delete = unique_amenity[0]
         storage.delete(amenity_to_delete)
         storage.save()
 
@@ -54,34 +56,35 @@ def del_amenity(amenity_id=None):
     raise NotFound()
 
 
-def add_state(state_id=None):
-    """uses the POST method to add a new state"""
+def add_amenity(amenity_id=None):
+    """uses the POST method to add a new Amenity."""
     data = request.get_json()
     if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
-    A
+
     if 'name' not in data:
         raise BadRequest(description='Missing name')
-    new_state = State(**data)
-    new_state.save()
-    return jsonify(new_state.to_dict()),  201
+    new_amenity = Amenity(**data)
+    new_amenity.save()
+    return jsonify(new_amenity.to_dict()),  201
 
 
-def update_state(state_id=None):
-    """uses the PUT method to update state."""
+def update_amenity(amenity_id=None):
+    """uses the PUT method to update amenity."""
     keys_to_update = ('id', 'created_at', 'updated_at')
-    all_states = storage.all(State).values()
-    unique_state = [state for state in all_states if state.id == state_id]
-    if unique_state:
+    all_amenities = storage.all(Amenties).values()
+    upd_amenity = [amenity for amenity in all_amenities
+                   if amenity.id == amenity_id]
+    if upd_amenity:
         data = request.get_json()
         if type(data) is not dict:
             raise BadRequest(description='Not a JSON')
         for key, value in data.items():
             if key not in keys_to_update:
-                setattr(unique_state[0], key, value)
+                setattr(upd_amenity[0], key, value)
 
-        unique_state[0].save()
+        upd_amenity[0].save()
 
-        return jsonify(unique_state[0].to_dict()), 200
+        return jsonify(upd_amenity[0].to_dict()), 200
 
     raise NotFound()

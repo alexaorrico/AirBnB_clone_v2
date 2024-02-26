@@ -71,17 +71,17 @@ def update_state(state_id=None):
     """uses the PUT method to update state."""
     keys_to_update = ('id', 'created_at', 'updated_at')
     all_states = storage.all(State).values()
-    unique_state = [state for state in all_states if state.id == state_id]
+    upd_state = [state for state in all_states if state.id == state_id]
     if unique_state:
         data = request.get_json()
         if type(data) is not dict:
             raise BadRequest(description='Not a JSON')
         for key, value in data.items():
             if key not in keys_to_update:
-                setattr(unique_state[0], key, value)
+                setattr(upd_state[0], key, value)
 
-        unique_state[0].save()
+        upd_state[0].save()
 
-        return jsonify(unique_state[0].to_dict()), 200
+        return jsonify(upd_state[0].to_dict()), 200
 
     raise NotFound()
