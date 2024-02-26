@@ -33,4 +33,4 @@ def stats():
     for key, value in classes.items():
         obj_cout[key] = models.storage.count(value)
 
-    return make_response(jsonify(obj_cout))
+    return make_response(jsonify(obj_cout), 200)
