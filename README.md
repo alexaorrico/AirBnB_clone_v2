@@ -1,3 +1,4 @@
+This repository was cloned by Biruk Shegute(git hub user-name: birukshegute) in order to complete the project AirBnB clone - RESTful API. The original code base isn't mine, but I have added to the code base based on the instruction given to me by the project. I have also updated the Authors file in order to show my contribution on the repository.
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
