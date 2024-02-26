@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+DBStorage
 """
-
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
@@ -21,12 +20,16 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """
+    database
+    """
     __engine = None
     __session = None
 
     def __init__(self):
-        """Instantiate a DBStorage object"""
+        """
+        Instantiate
+        """
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
@@ -41,7 +44,9 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """
+        all
+        """
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -52,25 +57,55 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add the object to the current database session"""
+        """
+        new
+        """
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session"""
+        """
+        save
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session obj if not None"""
+        """
+        delete
+        """
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """reloads data from the database"""
+        """
+        reload
+        """
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
 
+    def get(self, cls, id):
+        """
+        get
+        """
+        if type(cls) == str:
+            cls = classes.get(cls)
+        if cls is None:
+            return None
+        return self.__session.query(cls).filter(cls.id == id).first()
+
+    def count(self, cls=None):
+        """
+        count
+        """
+        if type(cls) is str:
+            cls = classes.get(cls)
+        if cls is None:
+            return len(self.all())
+        return len(self.all(cls))
+
     def close(self):
-        """call remove() method on the private session attribute"""
+        """
+        close
+        """
         self.__session.remove()
