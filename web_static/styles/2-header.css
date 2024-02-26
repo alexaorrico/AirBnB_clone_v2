@@ -1,5 +1,10 @@
+@charset "UTF-8";
+/** Holberton Practice Styles
+ * ------ Header
+ */
+
 header {
-    width: 100%;
-    background-color: #FF0000;
-    height: 70px;
+	background-color: #FF0000;
+	height: 70px;
+	width: 100%;
 }
