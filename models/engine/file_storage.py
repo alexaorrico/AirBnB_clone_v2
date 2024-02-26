@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+Contains the FileStorage class
+"""
+
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -12,13 +17,17 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 class FileStorage:
-    """Serializes instances to a JSON file & deserializes back to instances"""
+    """serializes instances to a JSON file & deserializes back to instances"""
 
+    # string - path to the JSON file
     __file_path = "file.json"
+    # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
+
+
     def all(self, cls=None):
-        """Returns the dictionary __objects"""
+        """returns the dictionary __objects"""
         if cls is not None:
             new_dict = {}
             for key, value in self.__objects.items():
@@ -26,15 +35,37 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
+    
+    def count(self, cls=None):
+        """A method to count the number of objects in storage
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage"""
+        if cls is not None:
+            new_dict = {}
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    new_dict[key] = value
+            return len(new_dict)
+        return len(self.__objects)
+
+    def get(self, cls, id):
+        """
+        A method to retrieve one object
+        Returns the object based on the class and its ID,
+        or None if not found"""
+        key = f'{cls.__name__}.{id}'
+        if key in self.__objects:
+            return self.__objects[key]
+        return None
 
     def new(self, obj):
-        """Sets in __objects the obj with key <obj class name>.id"""
+        """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
 
     def save(self):
-        """Serializes __objects to the JSON file (path: __file_path)"""
+        """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}
         for key in self.__objects:
             json_objects[key] = self.__objects[key].to_dict()
@@ -42,22 +73,22 @@ class FileStorage:
             json.dump(json_objects, f)
 
     def reload(self):
-        """Deserializes the JSON file to __objects"""
+        """deserializes the JSON file to __objects"""
         try:
             with open(self.__file_path, 'r') as f:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except FileNotFoundError:
+        except:
             pass
 
     def delete(self, obj=None):
-        """Delete obj from __objects if it’s inside"""
+        """delete obj from __objects if it’s inside"""
         if obj is not None:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
 
     def close(self):
-        """Call reload() method for deserializing the JSON file to objects"""
+        """call reload() method for deserializing the JSON file to objects"""
         self.reload()

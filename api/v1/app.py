@@ -1,24 +1,20 @@
 #!/usr/bin/python3
-""" api setup"""
 
 from flask import Flask
-from models import storage
+from os import getenv
 from api.v1.views import app_views
-
+from models import storage
 app = Flask(__name__)
 
-# Register the blueprint app_views to your Flask instance app
 app.register_blueprint(app_views)
 
 
-# Declare a method to handle teardown_appcontext that calls storage.close()
 @app.teardown_appcontext
-def teardown_appcontext(exception):
-    """Close the current SQLAlchemy session."""
+def tear_down(exception):
+    """calls storage.close()"""
     storage.close()
 
-
-# Inside if __name__ == "__main__":, run your Flask server (variable app)
 if __name__ == "__main__":
-    # Run the Flask server
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    host = getenv('HBNB_API_HOST') or '0.0.0.0'
+    port = getenv('HBNB_API_PORT') or 5000
+    app.run(host='0.0.0.0', port=4000, threaded=True, debug=True)
