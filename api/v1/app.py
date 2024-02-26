@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Flask App Engine"""
-from flask import Flask
+from flask import Flask, jsonify
 import os
 from models import storage
 from api.v1.views import app_views
@@ -15,6 +15,10 @@ def teardown_db(exc):
 
     storage.close()
 
+@app.errorhandler(404)
+def not_found(error):
+    """Handle error 404"""
+    return jsonify({"error": "Not found"})
 
 if __name__ == "__main__":
     """Run App on loop"""

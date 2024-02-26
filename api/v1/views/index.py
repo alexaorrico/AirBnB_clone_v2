@@ -9,7 +9,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
 
 
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
@@ -34,5 +33,5 @@ def stats():
     for key, value in classes.items():
         obj_cout[key] = models.storage.count(value)
 
-    response = json.dumps(obj_cout, indent=2)
-    return response, 200, {'Content-Type': 'application/json'}
+    return jsonify(obj_cout)
+
