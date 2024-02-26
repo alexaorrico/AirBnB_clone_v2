@@ -92,4 +92,3 @@ class DBStorage:
             for model_class in self.__models_available.values():
                 total += self.__session.query(model_class).count()
             return total
-
