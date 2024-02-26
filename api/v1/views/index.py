@@ -21,16 +21,16 @@ def status():
 def stats():
     """An endpoint that retrieves the number of each objects by type:"""
     classes = {
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-        "User": "users"
+        "amenity": Amenity,
+        "city": City,
+        "place": Place,
+        "review": Review,
+        "state": State,
+        "user": User
     }
     
     obj_cout = {}
     for key, value in classes.items():
-        obj_cout[value] = models.storage.count(key)
+        obj_cout[key] = models.storage.count(value)
     
     return jsonify(obj_cout)
