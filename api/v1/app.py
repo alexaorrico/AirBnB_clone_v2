@@ -14,7 +14,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def tear(self):
+def tear(_):
     """
         Closes the storage
     """
@@ -22,7 +22,7 @@ def tear(self):
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(_):
     """
         Error Page Generation
     """
@@ -31,5 +31,5 @@ def page_not_found(e):
 
 if __name__ == '__main__':
     host = getenv('HBNB_API_HOST') if getenv('HBNB_API_HOST') else '0.0.0.0'
-    port = int(getenv('HBNB_API_PORT')) if getenv('HBNB_API_PORT') else 5000
-    app.run(host=host, port=port, threaded=True)
+    port = getenv('HBNB_API_PORT') if getenv('HBNB_API_PORT') else 5000
+    app.run(host=host, port=int(port), threaded=True)
