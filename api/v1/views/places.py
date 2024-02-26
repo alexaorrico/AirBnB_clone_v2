@@ -82,8 +82,53 @@ def update_place(place_id):
     return jsonify(place.to_dict())
 
 
+def filter_places_by_states_cities(states, cities):
+    """Filter places based on states and cities."""
+    places = set()
+    for state_id in states:
+        state = storage.get(State, state_id)
+        if state:
+            places.update(state.places)
+    for city_id in cities:
+        city = storage.get(City, city_id)
+        if city:
+            places.update(city.places)
+    return places
+
+
+def filter_places_by_amenities(places, amenities):
+    """Filter places based on amenities."""
+    if amenities:
+        amenities_set = set(amenities)
+        places = [place for place in places if all(
+            amenity.id in amenities_set for amenity in place.amenities)]
+    return places
+
+
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
 def places_search():
+    """Search for places based on JSON content."""
+    request_json = request.get_json()
+    if not request_json:
+        return jsonify({"error": "Not a JSON"}), 400
+
+    states = request_json.get('states', [])
+    cities = request_json.get('cities', [])
+    amenities = request_json.get('amenities', [])
+
+    if not states and not cities:
+        places = storage.all(Place).values()
+    else:
+        places = filter_places_by_states_cities(states, cities)
+
+    places = filter_places_by_amenities(places, amenities)
+
+    places_list = [place.to_dict() for place in places]
+    return jsonify(places_list)
+
+
+@app_views.route('/places_searched', methods=['POST'], strict_slashes=False)
+def places_searched():
     """Search for places based on JSON content."""
     request_json = request.get_json()
     if not request_json:
