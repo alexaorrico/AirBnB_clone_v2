@@ -27,7 +27,8 @@ def err_400(e):
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def show_status():
     """returns the api status"""
-    resp = make_response(jsonify({'status': 'ok'}), 200)
+    resp = make_response(jsonify({'status': 'ok'}))
+    resp.status_code = 200
     return resp
 
 
@@ -36,7 +37,6 @@ def stats():
     """retrieves the number of each objects by type"""
     objs = storage.all().values()
     obdict = {}
-    print(objs)
     for obj in objs:
         clsname = obj.__class__.__name__
         try:
