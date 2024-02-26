@@ -7,14 +7,14 @@ from models.user import User
 
 @app_views.route("/users", methods=["GET"], strict_slashes=False)
 def get_all_users():
-    """ Retrieve all User objects """
+    """ Retrieves all User objects """
     users = storage.all(User).values()
     return jsonify([user.to_dict() for user in users])
 
 
 @app_views.route("/users/<user_id>", methods=["GET"], strict_slashes=False)
 def get_user_by_id(user_id):
-    """ Get a specific User by ID """
+    """ Retrieves a specific User object by ID """
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -23,7 +23,7 @@ def get_user_by_id(user_id):
 
 @app_views.route("/users/<user_id>", methods=["DELETE"], strict_slashes=False)
 def delete_user_by_id(user_id):
-    """ Delete a User by ID """
+    """ Deletes a User object by ID """
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -36,7 +36,7 @@ def delete_user_by_id(user_id):
 
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user():
-    """ Create a new User """
+    """ Creates a new User """
     user_json = request.get_json()
     if not user_json:
         abort(400, 'Not a JSON')
@@ -53,7 +53,7 @@ def create_user():
 
 @app_views.route("/users/<user_id>", methods=["PUT"], strict_slashes=False)
 def update_user(user_id):
-    """ Update a specific User by ID """
+    """ Updates a User object by ID """
     user = storage.get(User, user_id)
     if not user:
         abort(404)
