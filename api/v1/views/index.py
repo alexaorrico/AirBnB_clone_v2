@@ -17,7 +17,7 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/stats')
 def stats():
     """An endpoint that retrieves the number of each objects by type:"""
     classes = {
