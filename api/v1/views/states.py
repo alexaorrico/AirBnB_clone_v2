@@ -26,7 +26,8 @@ def get_state(state_id):
     return jsonify(state.to_dict()), 200
 
 
-@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["DELETE"],
+                 strict_slashes=False)
 def delete_state(state_id):
     """Deletes a State object"""
     state = storage.get("State", str(state_id))
@@ -67,7 +68,7 @@ def update_state(state_id):
     return jsonify(state_obj.to_dict()), 200
 
 # get the object to be updated by it's id
-# get the dictionary repr of the state instance for id=state_id using get_json()
+# get the dictionary repr of state instance for id=state_id using get_json()
 # check if it's a valid json and return none if it's not
 # iterate the dictionary
 # id, created_at and updated_at should not be available to be set
