@@ -53,4 +53,12 @@ def cities(city_id=None):
             storage.save()
             return {}, 200
         elif request.methods == 'PUT':
-            
+            if not request.get_json(silent=True):
+                abort(400, "Not a JSON")
+            kwargs = request.get_json(silent=True)
+            if kwargs:
+                for key, value in kwargs.items():
+                    if key not in ["id", "created_at", "updated_at"]:
+                        setattr(cities, key, value)
+                cities.save()
+            return jsonify(cities.to_dict()), 200
