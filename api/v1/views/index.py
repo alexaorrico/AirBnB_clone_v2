@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """index for blueprint"""
 from api.v1.views import app_views
-from flask import jsonify, make_response
+from flask import jsonify
 import models
 from models.amenity import Amenity
 from models.city import City
@@ -33,4 +33,4 @@ def stats():
     for key, value in classes.items():
         obj_cout[key] = models.storage.count(value)
 
-    return make_response(jsonify(obj_cout), 200)
+    return jsonify(obj_cout)
