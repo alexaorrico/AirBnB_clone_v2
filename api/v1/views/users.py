@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from models.user import User
 from models import storage
 
+
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def get_or_add_user():
     users = storage.all(User).values()
