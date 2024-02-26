@@ -9,6 +9,7 @@ from models import storage
 @app_views.route('/users', methods=['GET', 'POST'],
                  strict_slashes=False)
 def get_or_add_user():
+    """user function"""
     users = storage.all("User").values()
     if request.methods == 'GET':
         return jsonify([obj.to_dict() for obj in storage.all("User").

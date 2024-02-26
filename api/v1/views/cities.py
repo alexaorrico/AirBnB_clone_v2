@@ -21,7 +21,7 @@ def get_or_create_city(state_id):
 
     if request.method == 'GET':
         cities = [city.to_dict() for city in state.cities]
-        return jsonify(cities)
+        return jsonify(cities), 200
 
     elif request.method == 'POST':
         if not request.is_json:
@@ -49,7 +49,7 @@ def get_update_or_delete_city(city_id):
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(city.to_dict())
+        return jsonify(city.to_dict()), 200
 
     elif request.method == 'DELETE':
         storage.delete(city)
