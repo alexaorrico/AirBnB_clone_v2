@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Brian Omondi - [Github](https://github.com/kellyinfortech) / [Twitter](https://twitter.com/kellyinfortech1)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Isaiah Nwezeh - [Github](https://github.com/Isaiah19)
 
 Second part of Airbnb: Brian Omondi
 ## License
