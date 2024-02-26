@@ -11,13 +11,12 @@ def get_status():
     """
     Route to return status in JSON format
     """
-    data = {
-        "status": "ok"
-    }
+    data = {"status": "ok"}
     response = jsonify(data)
     return response
 
-@app_views.route("/stats", methods=['GET'], strict_slashes=False)
+
+@app_views.route("/stats", methods=["GET"], strict_slashes=False)
 def stats():
     """
     stats of all objs route

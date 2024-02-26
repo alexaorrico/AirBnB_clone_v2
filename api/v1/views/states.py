@@ -4,6 +4,7 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
 from models.state import State
 
+
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
 def state_get_all():
     """
@@ -26,9 +27,9 @@ def state_create():
     """
     state_json = request.get_json(silent=True)
     if state_json is None:
-        abort(400, 'Not a JSON')
+        abort(400, "Not a JSON")
     if "name" not in state_json:
-        abort(400, 'Missing name')
+        abort(400, "Missing name")
 
     new_state = State(**state_json)
     new_state.save()
@@ -38,7 +39,7 @@ def state_create():
     return resp
 
 
-@app_views.route("/states/<state_id>",  methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
 def state_by_id(state_id):
     """
     gets a specific State object by ID
@@ -54,7 +55,7 @@ def state_by_id(state_id):
     return jsonify(fetched_obj.to_json())
 
 
-@app_views.route("/states/<state_id>",  methods=["PUT"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
 def state_put(state_id):
     """
     updates specific State object by ID
@@ -63,7 +64,7 @@ def state_put(state_id):
     """
     state_json = request.get_json(silent=True)
     if state_json is None:
-        abort(400, 'Not a JSON')
+        abort(400, "Not a JSON")
     fetched_obj = storage.get("State", str(state_id))
     if fetched_obj is None:
         abort(404)
@@ -74,8 +75,7 @@ def state_put(state_id):
     return jsonify(fetched_obj.to_json())
 
 
-@app_views.route("/states/<state_id>", methods=["DELETE"],
-                 strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
 def state_delete_by_id(state_id):
     """
     deletes State by id
