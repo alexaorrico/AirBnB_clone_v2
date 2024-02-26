@@ -5,6 +5,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 
 from datetime import datetime
 import inspect
+from models import storage
 import models
 from models.engine import db_storage
 from models.amenity import Amenity
@@ -15,6 +16,7 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
+from os import environ, stat
 import os
 import pep8
 import unittest
@@ -63,9 +65,9 @@ test_db_storage.py'])
         """Test for the presence of docstrings in DBStorage methods"""
         for func in self.dbs_f:
             self.assertIsNot(func[1].__doc__, None,
-                             "{:s} method needs a docstring".format(func[0]))
+                             "{} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
-                            "{:s} method needs a docstring".format(func[0]))
+                            "{} method needs a docstring".format(func[0]))
 
 
 class TestFileStorage(unittest.TestCase):
@@ -86,3 +88,74 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestCountGet(unittest.TestCase):
+    """testing Count and Get methods"""
+
+    @classmethod
+    def setUpClass(cls):
+        """sets up the class for this round of tests"""
+        storage.delete_all()
+        cls.state = State(name="Centre")
+        cls.city = City(state_id=cls.state.id,
+                        name="Yaounde")
+        cls.user = User(email="oumate.alhadji61@gmail.com",
+                        password="pwd")
+        cls.place1 = Place(user_id=cls.user.id, city_id=cls.city.id,
+                           name="a house")
+        cls.place2 = Place(user_id=cls.user.id, city_id=cls.city.id,
+                           name="another house")
+        cls.amenity1 = Amenity(name="Wifi")
+        cls.amenity2 = Amenity(name="fridge")
+        cls.amenity3 = Amenity(name="Table")
+        objs = [cls.state, cls.city, cls.user, cls.place1, cls.place2,
+                cls.amenity1, cls.amenity2, cls.amenity3]
+        for obj in objs:
+            obj.save()
+
+    def setUp(self):
+        """initializes new user for testing"""
+        self.city = TestCountGet.city
+        self.state = TestCountGet.state
+        self.user = TestCountGet.user
+        self.place1 = TestCountGet.place1
+        self.place2 = TestCountGet.place2
+        self.amenity1 = TestCountGet.amenity1
+        self.amenity2 = TestCountGet.amenity2
+        self.amenity3 = TestCountGet.amenity3
+
+    def test_all_reload_save(self):
+        """... checks if all(), save(), and reload function
+        in new instance.  This also tests for reload"""
+        actual = 0
+        db_objs = storage.all()
+        for obj in db_objs.values():
+            for x in [self.state.id, self.city.id,
+                      self.user.id, self.place1.id]:
+                if x == obj.id:
+                    actual += 1
+        self.assertTrue(actual == 4)
+
+    def test_get_pace(self):
+        """... checks if get() function returns properly"""
+        duplicate = storage.get('Place', self.place1.id)
+        expected = self.place1.id
+        self.assertEqual(expected, duplicate.id)
+
+    def test_count_amenity(self):
+        """... checks if count() returns proper count with Class input"""
+        count_amenity = storage.count('Amenity')
+        expected = 3
+        self.assertEqual(expected, count_amenity)
+
+    def test_count_all(self):
+        """... checks if count() functions with no class"""
+        count_all = storage.count()
+        expected = 8
+        self.assertEqual(expected, count_all)
+
+
+if __name__ == "__main__":
+    unittest.main
