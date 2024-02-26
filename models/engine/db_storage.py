@@ -4,6 +4,7 @@ Contains the class DBStorage
 """
 
 import models
+from sqlalchemy import create_engine, func
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -68,14 +69,9 @@ class DBStorage:
 
     def count(self, cls=None):
         """Count the number of objects in storage"""
-        if cls is None:
-            count = sum(
-                self.__session.query(cls).count()
-                for cls in classes.values()
-            )
-        else:
-            count = self.__session.query(cls).count()
+        count = self.__session.query(func.count(cls)).scalar()
         return count
+
     ###########################################################################
     ###########################################################################
 
