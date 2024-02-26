@@ -6,11 +6,13 @@ from models import storage
 from flask import Flask, make_response, jsonify
 from . import views
 from os import getenv
+from flask_cors import CORS
 host = getenv('HBNB_API_HOST')
 port = getenv('HBNB_API_PORT')
 
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 # how the app will be viewed, many pages, many routes
 app.register_blueprint(views.app_views)
 
