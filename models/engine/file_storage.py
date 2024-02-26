@@ -63,5 +63,21 @@ class FileStorage:
             value in FileStorage.__objects.items() if value != obj
         }
 
+    def get(self, cls, id):
+        """retrieve one object if exists"""
+        dict = self.all(cls)
+        for i, j in dict.items():
+            obj = cls + '.' + id
+            if i == obj:
+                return(j)
+        return(None)
+
+    def count(self, cls=None):
+        """count the num of objects in particular cls"""
+        count = 0
+        dict = self.all(cls)
+        count = len(dict)
+        return(count)
+
     def close(self):
         self.reload()
