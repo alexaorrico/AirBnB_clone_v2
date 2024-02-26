@@ -1,35 +1,34 @@
 #!/usr/bin/python3
-"""
-starts a Flask web application
-"""
-
+"""hello flask"""
 from flask import Flask
+
+
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
+@app.route("/")
 def index():
-    """returns Hello HBNB!"""
-    return 'Hello HBNB!'
+    return "Hello HBNB!"
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb")
 def hbnb():
-    """returns HBNB"""
-    return 'HBNB'
+    return "HBNB"
 
 
-@app.route('/c/<text>', strict_slashes=False)
-def cisfun(text):
-    """display “C ” followed by the value of the text variable"""
-    return 'C ' + text.replace('_', ' ')
+@app.route("/c/<text>")
+def c_is(text):
+    res = text.replace("_", " ")
+    return f"C {res}"
 
 
-@app.route('/python', strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
-def pythoniscool(text='is cool'):
-    """display “Python ”, followed by the value of the text variable"""
-    return 'Python ' + text.replace('_', ' ')
+@app.route("/python/")
+@app.route("/python/<text>")
+def python_is(text="is cool"):
+    res = text.replace("_", " ")
+    return f"Python {res}"
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.url_map.strict_slashes = False
+    app.run(host='0.0.0.0', port=5000)
