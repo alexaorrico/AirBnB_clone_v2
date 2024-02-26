@@ -19,8 +19,12 @@ import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
-classes = {"Amenity": Amenity, "City": City, "Place": Place,
-           "Review": Review, "State": State, "User": User}
+classes = {"Amenity": Amenity,
+           "City": City,
+           "Place": Place,
+           "Review": Review,
+           "State": State,
+           "User": User}
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -33,15 +37,14 @@ class TestDBStorageDocs(unittest.TestCase):
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/db_storage.py'])
+        result = pep8s.check_files('[models/engine/db_storage.py]')
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine/test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -79,10 +82,46 @@ class TestFileStorage(unittest.TestCase):
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != db, "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """
+    Test the DBStorage class
+    """
+
+    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) != 'db',
+                     "not testing db storage")
+    def test_get(self):
+        """
+        Test that get returns specific object, or none
+        """
+        latest_state = State(name="New York")
+        latest_state.save()
+        latest_user = User(email="bob@foobar.com", password="password")
+        latest_user.save()
+        self.assertIs(latest_state, models.storage.get("State", latest_state.id))
+        self.assertIs(None, models.storage.get("State", "blah"))
+        self.assertIs(None, models.storage.get("blah", "blah"))
+        self.assertIs(latest_user, models.storage.get("User", latest_user.id))
+
+    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) != 'db',
+                     "not testing db storage")
+    def test_count(self):
+        """
+        test that new adds an object to the database
+        """
+        initial_count = models.storage.count()
+        self.assertEqual(models.storage.count("Blah"), 0)
+        latest_state = State(name="Florida")
+        latest_state.save()
+        latest_user = User(email="bob@foobar.com", password="password")
+        latest_user.save()
+        self.assertEqual(models.storage.count("State"), initial_count + 1)
+        self.assertEqual(models.storage.count(), initial_count + 2)
