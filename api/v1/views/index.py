@@ -1,12 +1,14 @@
 #!/usr/bin/python3
-
+"""
+flask route with json response
+"""
 from api.v1.views import app_views
 from flask import jsonify, request
 
 
-@app_views.route('/status', METHOD=['GET'])
+@app_views.route('/status', methods=['GET'])
 def status():
-    """returns the status"""
+    """function that returns the status"""
     if request.method == 'GET':
-        response = {"status": "OK"}
-        return jsonify(response)
+        resp = {"status": "OK"}
+        return jsonify(resp)
