@@ -3,15 +3,17 @@
 flask application
 """
 
+from flask_cors import CORS
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
 
 app = Flask(__name__)
+# Enable CORS for all routes and origins
+CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 # app.url_map.strict_slashes = False
 app.register_blueprint(app_views, url_prefix='/api/v1')
-# app.register_blueprint(app_views)
 
 
 @app.route('/', methods=['GET'])
