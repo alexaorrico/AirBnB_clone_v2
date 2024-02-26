@@ -72,15 +72,21 @@ class DBStorage:
         self.__session = Session
 
     def get(self, cls, id):
-        """ This is a method to retrive one object"""
+        """ A method to retrieve one object"""
         if cls and id:
-            temp = cls, __name__ + "." + id
-            count = self.all(cls)
-            for key in count:
-                if key == temp:
-                    return count[key]
+            obj_id = f'{(cls.__name__)}.{id}'
+            states = self.all(cls)
+            for obj in states:
+                if obj == obj_id:
+                    return states[obj]
+            return None
         else:
             return None
+
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def count(self, cls=None):
+        """ Counts number of items based on class, optionally """
+        return (len(self.all(cls)))
