@@ -1,72 +1,42 @@
 #!/usr/bin/python3
-"""
-Flask App that integrates with AirBnB static HTML Template
-"""
-from api.v1.views import app_views
-from flask import Flask, jsonify, make_response, render_template, url_for
-from flask_cors import CORS, cross_origin
-from flasgger import Swagger
+'''
+Createw Flask app; and register blueprint app_views to Flask instance app.
+'''
+
+from os import getenv
+from flask import Flask, jsonify
+from flask_cors import CORS
 from models import storage
-import os
-from werkzeug.exceptions import HTTPException
+from api.v1.views import app_views
 
-# Global Flask Application Variable: app
 app = Flask(__name__)
-swagger = Swagger(app)
 
-# global strict slashes
+# enable CORS and allow for origins:
+CORS(app, resources={r'/api/v1/*': {'origins': '0.0.0.0'}})
+
+app.register_blueprint(app_views)
 app.url_map.strict_slashes = False
 
-# flask server environmental setup
-host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-port = os.getenv('HBNB_API_PORT', 5000)
 
-# Cross-Origin Resource Sharing
-cors = CORS(app, resources={r'/*': {'origins': host}})
-
-# app_views BluePrint defined in api.v1.views
-app.register_blueprint(app_views)
-
-
-# begin flask page rendering
 @app.teardown_appcontext
-def teardown_db(exception):
-    """
-    after each request, this method calls .close() (i.e. .remove()) on
-    the current SQLAlchemy Session
-    """
+def teardown_engine(exception):
+    '''
+    Removes current SQLAlchemy Session object after each request.
+    '''
     storage.close()
 
 
-@app.errorhandler(Exception)
-def global_error_handler(err):
-    """
-        Global Route to handle All Error Status Codes
-    """
-    if isinstance(err, HTTPException):
-        if type(err).__name__ == 'NotFound':
-            err.description = "Not found"
-        message = {'error': err.description}
-        code = err.code
-    else:
-        message = {'error': err}
-        code = 500
-    return make_response(jsonify(message), code)
+# Error handlers for expected app behavior:
+@app.errorhandler(404)
+def not_found(error):
+    '''
+    Return the errmsg `Not Found`.
+    '''
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
 
 
-def setup_global_errors():
-    """
-    This updates HTTPException Class with custom error function
-    """
-    for cls in HTTPException.__subclasses__():
-        app.register_error_handler(cls, global_error_handler)
-
-
-if __name__ == "__main__":
-    """
-    MAIN Flask App
-    """
-    # initializes global error handling
-    setup_global_errors()
-    # start Flask app
-    app.run(host=host, port=port)
+if __name__ == '__main__':
+    HOST = getenv('HBNB_API_HOST', '0.0.0.0')
+    PORT = int(getenv('HBNB_API_PORT', 5000))
+    app.run(host=HOST, port=PORT, threaded=True)
