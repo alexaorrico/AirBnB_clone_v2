@@ -22,5 +22,5 @@ if __name__ == "__main__":
     # Get the host from the environment variable or use "0.0.0.0" as default
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
     # Get the port from the environment variable or use 5000 as default
-    port = int(os.getenv("HBNB_API_PORT", 5000))
+    port = int(os.getenv("HBNB_API_PORT", 5001))
     app.run(host=host, port=port, threaded=True)
