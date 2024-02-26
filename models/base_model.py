@@ -59,7 +59,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self, save_fs=None):
-        """returns a dictionary containing all keys/values of the instance"""
+        """ to remove the password key except when it’s used by FileStorage to save data to disk"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
