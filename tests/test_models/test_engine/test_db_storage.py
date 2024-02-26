@@ -71,18 +71,62 @@ test_db_storage.py'])
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+    def test_get(self):
+        """Testing the get methods from the db storage"""
+        newState = State(name="California")
+        newCity = City(name="San_Francisco", state_id=newState.id)
+        newUser = User(email="thisisanemail@email.com",
+                       password="thisisnotapassword")
+        newPlace = Place(name="Great Five Stars Hotel",
+                         city_id=newCity.id,
+                         state_id=newState.id,
+                         user_id=newUser.id)
+        newReview = Review(text="This is a review",
+                           place_id=newPlace.id,
+                           user_id=newUser.id)
+        newAmenity = Amenity(name="Ventilator3000")
+        newState.save()
+        newCity.save()
+        newUser.save()
+        newPlace.save()
+        newReview.save()
+        newAmenity.save()
+        self.assertEqual(None, models.storage.get(int, "dksfjsd"))
+        self.assertEqual(newCity, models.storage.get(City, newCity.id))
+        self.assertEqual(newUser, models.storage.get(User, newUser.id))
+        self.assertEqual(newPlace, models.storage.get(Place, newPlace.id))
+        self.assertEqual(newReview, models.storage.get(Review, newReview.id))
+        self.assertEqual(newAmenity,
+                         models.storage.get(Amenity, newAmenity.id))
+        self.assertEqual(None, models.storage.get(State, "Not a good ID"))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+    def test_count(self):
+        """testing the count function form the db storage"""
+        currentNumberOfState = models.storage.count(State)
+        listOfState = ["California", "New_York", "Floride", "Utah"]
+        for stateName in listOfState:
+            newState = State(name=stateName)
+            newState.save()
+        newNumberOfState = models.storage.count(State)
+        self.assertEqual(newNumberOfState - currentNumberOfState,
+                         len(listOfState))
+        allInstance = models.storage.count()
+        self.assertEqual(allInstance - currentNumberOfState,
+                         len(listOfState))
+        texasState = State(name="Texas")
+        texasState.save()
+        newNumberOfState += 1
+        currentNumberOfCity = models.storage.count(City)
+        listCityOfTexas = ["Austin", "Dallas", "Del Rio", "Killeen"]
+        for cityName in listCityOfTexas:
+            newCity = City(name=cityName, state_id=texasState.id)
+            newCity.save()
+        newNumberOfCity = models.storage.count(City)
+        self.assertEqual(newNumberOfCity - currentNumberOfCity,
+                         len(listCityOfTexas))
+        allInstance = models.storage.count()
+        numberOfState = newNumberOfState - currentNumberOfState
+        numberOfCity = newNumberOfCity - currentNumberOfCity
+        numberOfAllInstance = numberOfState + numberOfCity
+        self.assertEqual(numberOfAllInstance, allInstance)

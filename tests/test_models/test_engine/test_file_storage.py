@@ -70,6 +70,21 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    def setUp(self):
+        """ Set up test environment """
+        del_list = []
+        for key in models.storage._FileStorage__objects.keys():
+            del_list.append(key)
+        for key in del_list:
+            del models.storage._FileStorage__objects[key]
+
+    def tearDown(self):
+        """ Remove storage file at end of tests """
+        try:
+            os.remove('file.json')
+        except Exception:
+            pass
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +128,64 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_get(self):
+        """Testing the get methods from the db storage"""
+        newState = State(name="California")
+        newCity = City(name="San_Francisco", state_id=newState.id)
+        newUser = User(email="thisisanemail@email.com",
+                       password="thisisnotapassword")
+        newPlace = Place(name="Great Five Stars Hotel",
+                         city_id=newCity.id,
+                         state_id=newState.id,
+                         user_id=newUser.id)
+        newReview = Review(text="This is a review",
+                           place_id=newPlace.id,
+                           user_id=newUser.id)
+        newAmenity = Amenity(name="Ventilator3000")
+        newState.save()
+        newCity.save()
+        newUser.save()
+        newPlace.save()
+        newReview.save()
+        newAmenity.save()
+        self.assertEqual(None, models.storage.get("jkdsf", "dksfjsd"))
+        self.assertEqual(newCity, models.storage.get(City, newCity.id))
+        self.assertEqual(newUser, models.storage.get(User, newUser.id))
+        self.assertEqual(newPlace, models.storage.get(Place, newPlace.id))
+        self.assertEqual(newReview, models.storage.get(Review, newReview.id))
+        self.assertEqual(newAmenity,
+                         models.storage.get(Amenity, newAmenity.id))
+        self.assertEqual(None, models.storage.get(State, "Not a good ID"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing db storage")
+    def test_count(self):
+        """testing the count function form the db storage"""
+        currentNumberOfState = models.storage.count(State)
+        listOfState = ["California", "New_York", "Floride", "Utah"]
+        for stateName in listOfState:
+            newState = State(name=stateName)
+            newState.save()
+        newNumberOfState = models.storage.count(State)
+        self.assertEqual(newNumberOfState - currentNumberOfState,
+                         len(listOfState))
+        allInstance = models.storage.count()
+        self.assertEqual(allInstance - currentNumberOfState,
+                         len(listOfState))
+        texasState = State(name="Texas")
+        texasState.save()
+        newNumberOfState += 1
+        currentNumberOfCity = models.storage.count(City)
+        listCityOfTexas = ["Austin", "Dallas", "Del Rio", "Killeen"]
+        for cityName in listCityOfTexas:
+            newCity = City(name=cityName, state_id=texasState.id)
+            newCity.save()
+        newNumberOfCity = models.storage.count(City)
+        self.assertEqual(newNumberOfCity - currentNumberOfCity,
+                         len(listCityOfTexas))
+        allInstance = models.storage.count()
+        numberOfState = newNumberOfState - currentNumberOfState
+        numberOfCity = newNumberOfCity - currentNumberOfCity
+        numberOfAllInstance = numberOfState + numberOfCity
+        self.assertEqual(numberOfAllInstance, allInstance)
