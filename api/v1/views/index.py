@@ -20,17 +20,11 @@ def status():
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """An endpoint that retrieves the number of each objects by type:"""
-    classes = {
-        "amenities": Amenity,
-        "cities": City,
-        "places": Place,
-        "reviews": Review,
-        "states": State,
-        "users": User
-    }
+    classes = [Amenity, City, Place, Review, State, User]
+    names = ["amenities", "cities", "places", "reviews", "states", "users"]
 
-    obj_cout = {}
-    for key, value in classes.items():
-        obj_cout[key] = models.storage.count(value)
+    num_objs = {}
+    for i in range(len(classes)):
+        num_objs[names[i]] = models.storage.count(classes[i])
 
-    return jsonify(obj_cout)
+    return jsonify(num_objs)
