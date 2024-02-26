@@ -5,12 +5,11 @@ Places_Amenities Module
 
 from api.v1.views import app_views
 from flask import Flask, jsonify, request, abort
-from models import storage, Place, Amenity
+from models import storage
 from models.place import Place
 from models.amenity import Amenity
 
-# Import the CORS class if needed
-
+# CORS
 # CORS(app_views, resources={r"/*": {"origins": "0.0.0.0"}})
 
 
