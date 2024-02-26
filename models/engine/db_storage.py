@@ -13,7 +13,7 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
@@ -66,16 +66,11 @@ class DBStorage:
         key = "{}.{}".format(cls.__name__, id)
         return self.__session.query(cls).filter_by(id=id).first()
 
-    def count(self, cls=None):
-        """Count the number of objects in storage"""
-        if cls is None:
-            count = sum(
-                self.__session.query(cls).count()
-                for cls in classes.values()
-            )
-        else:
-            count = self.__session.query(cls).count()
+    def count(self, cls):
+        """Count the number of objects in storage."""
+        count = self.__session.query(func.count(cls)).scalar()
         return count
+
     ###########################################################################
     ###########################################################################
 
