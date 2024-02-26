@@ -72,15 +72,16 @@ class DBStorage:
         self.__session = Session
 
     def get(self, cls, id):
-        """ This is a method to retrive one object"""
+        """ A method to retrieve one object"""
         if cls and id:
-            temp = cls, __name__ + "." + id
+            tempo = cls, __name__ + "." + id
             count = self.all(cls)
             for key in count:
-                if key == temp:
+                if key == tempo:
                     return count[key]
         else:
             return None
+
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
