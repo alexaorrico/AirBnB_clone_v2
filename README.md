@@ -155,8 +155,11 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+Daniel Asare Ntow - [Github](https://github.com/danielntow) / [Twitter](https://twitter.com/dasarentow)
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Joe Joe - [Github](https://github.com/Oseijoel6111)  
+
 
 Second part of Airbnb: Joann Vuong
 ## License
