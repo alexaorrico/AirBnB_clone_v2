@@ -1,16 +1,15 @@
 #!/usr/bin/python3
 """ Route for handling place reviews """
-from flask import jsonify, abort, request, make_response
-from api.v1.views import app_views
+from flask import jsonify, abort, request
+from api.v1.views import app_views, storage
 from models.review import Review
 from models.place import Place
 from models.user import User
-from models import storage
 
 
-@app_views.route("/places/<place_id>/reviews", methods=["GET"],
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-def get_reviews_by_place(place_id):
+def get_reviews(place_id):
     """
     Retrieves the list of all Review objects of a Place
     """
@@ -24,26 +23,26 @@ def get_reviews_by_place(place_id):
     return jsonify(reviews)
 
 
-@app_views.route("/reviews/<review_id>", methods=["GET"],
+@app_views.route('/reviews/<review_id>', methods=['GET'],
                  strict_slashes=False)
-def get_review_by_id(review_id):
+def get_review(review_id):
     """
     Retrieves a Review object
     """
     review = storage.get(Review, review_id)
-
     if not review:
         abort(404)
 
     return jsonify(review.to_dict())
 
 
-@app_views.route("/reviews/<review_id>", methods=["DELETE"],
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_review_by_id(review_id):
+def delete_review(review_id):
     """
     Deletes a Review Object
     """
+
     review = storage.get(Review, review_id)
 
     if not review:
@@ -52,12 +51,12 @@ def delete_review_by_id(review_id):
     storage.delete(review)
     storage.save()
 
-    return make_response(jsonify({}), 200)
+    return jsonify({}), 200
 
 
-@app_views.route("/places/<place_id>/reviews", methods=["POST"],
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def create_review(place_id):
+def post_review(place_id):
     """
     Creates a Review
     """
@@ -84,12 +83,12 @@ def create_review(place_id):
     data['place_id'] = place_id
     instance = Review(**data)
     instance.save()
-    return make_response(jsonify(instance.to_dict()), 201)
+    return jsonify(instance.to_dict()), 201
 
 
-@app_views.route("/reviews/<review_id>", methods=["PUT"],
+@app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_review_by_id(review_id):
+def put_review(review_id):
     """
     Updates a Review
     """
@@ -108,4 +107,4 @@ def update_review_by_id(review_id):
         if key not in ignore:
             setattr(review, key, value)
     storage.save()
-    return make_response(jsonify(review.to_dict()), 200)
+    return jsonify(review.to_dict()), 200
