@@ -51,7 +51,7 @@ def create_state():
     """Create new state"""
     # Get JSON data from the request body, and if parsing fails,
     # return None
-    data = request.get_json(silent=True)
+    data = request.get_json(silent=True, force=True)
     if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
     if 'name' not in data:
