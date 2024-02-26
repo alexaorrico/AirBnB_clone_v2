@@ -79,14 +79,17 @@ class DBStorage:
         """
         Retrieve one object by class and ID.
         """
-        all_objects = self.all(cls)
-        return all_objects.get(id, None)
+        return self.__session.query(cls).get(id)
 
     def count(self, cls=None):
         """
         Count objects in storage by class.
         """
         if cls:
-            return len(self.all(cls))
+            return self.__session.query(cls).count()
         else:
-            return len(self.__objects)
+            total = 0
+            for model_class in self.__models_available.values():
+                total += self.__session.query(model_class).count()
+            return total
+
