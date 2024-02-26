@@ -39,7 +39,7 @@ def states(state_id=None):
 
 
 @app_views.route('/cities/<string:city_id>',
-                 methods=['GET', 'DELETE'],
+                 methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def cities(city_id=None):
     cities = storage.get(City, city_id)
@@ -52,3 +52,5 @@ def cities(city_id=None):
             storage.delete(cities)
             storage.save()
             return {}, 200
+        elif request.methods == 'PUT':
+            
