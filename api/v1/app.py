@@ -5,7 +5,6 @@ from flask import Flask
 from models import storage
 from api.v1.views import app_views
 
-# Create a variable app, instance of Flask
 app = Flask(__name__)
 
 # Register the blueprint app_views to your Flask instance app
