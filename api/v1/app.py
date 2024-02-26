@@ -24,10 +24,7 @@ def not_found_handler(exception):
     handler for 404 errors that returns a JSON-formatted 404 status code
     response
     """
-    json_data = {
-        "error": "Not found"
-    }
-    return jsonify(json_data), 404
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
