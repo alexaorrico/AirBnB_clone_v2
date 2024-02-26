@@ -116,7 +116,7 @@ def places_search():
                     if city:
                         for place in city.places:
                             list_places.append(place)
-     if cities:
+    if cities:
         city_obj = [storage.get(City, c_id) for c_id in cities]
         for city in city_obj:
             if city:
@@ -129,8 +129,8 @@ def places_search():
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
 
         list_places = [place for place in list_places
-                if all([am in place.amenities
-                    for am in amenities_obj])]
+                       if all([am in place.amenities
+                               for am in amenities_obj])]
     places = []
     for p in list_places:
         d = p.to_dict()
