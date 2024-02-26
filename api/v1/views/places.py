@@ -9,6 +9,7 @@ from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.state import State
 
 app = Flask(__name__)
 
@@ -78,3 +79,46 @@ def update_place(place_id):
             setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict())
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def places_search():
+    """Searches for places based on JSON in the request body"""
+
+    try:
+        search_params = request.get_json()
+    except Exception:
+        abort(400, "Not a JSON")
+
+    if not search_params or not any(search_params.values()):
+        places = storage.all(Place).values()
+        return jsonify([place.to_dict() for place in places])
+
+    states = search_params.get('states', [])
+    cities = search_params.get('cities', [])
+    amenities = search_params.get('amenities', [])
+
+    if not isinstance(states, list) or not isinstance(cities, list) or not isinstance(amenities, list):
+        abort(400, "Invalid JSON")
+
+    places_result = set()
+
+    # Filter places by states
+    for state_id in states:
+        state = storage.get(State, state_id)
+        if state:
+            places_result.update(state.places)
+
+    # Filter places by cities
+    for city_id in cities:
+        city = storage.get(City, city_id)
+        if city:
+            places_result.update(city.places)
+
+    # Filter places by amenities
+    if amenities:
+        amenities_set = set(amenities)
+        places_result = [
+            place for place in places_result if amenities_set.issubset(place.amenities)]
+
+    return jsonify([place.to_dict() for place in places_result])
