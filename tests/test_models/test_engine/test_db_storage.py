@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-Contains the TestDBStorageDocs and TestDBStorage classes
+Contains the TestFileStorageDocs classes
 """
-
 from datetime import datetime
 import inspect
 import models
@@ -86,3 +85,4 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
