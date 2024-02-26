@@ -16,7 +16,7 @@ from api.v1.views import app_views
 def all_amenities():
     """Retrieves the list of all amenity"""
     amenities = [obj.to_dict()
-                         for obj in storage.all(Amenity).values()]
+                 for obj in storage.all(Amenity).values()]
     resp = Response(
         response=json.dumps(amenities, indent=4),
         status=200,
