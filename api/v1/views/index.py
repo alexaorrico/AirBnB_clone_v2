@@ -7,9 +7,11 @@ from api.v1.views import app_views
 app = Flask(__name__)
 status_bp = Blueprint('status', __name__)
 
+
 @status_bp.route('/status', methods=['GET'])
 def status():
-    return jsonify ({'status': 'OK'})
+    return jsonify({'status': 'OK'})
+
 
 app.register_blueprint(status_bp)
 
