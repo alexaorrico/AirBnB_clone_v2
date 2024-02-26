@@ -69,7 +69,7 @@ def updated_state(state_id):
     state : State = storage.get(State, state_id)
     if not state:
         abort(404)
-        return
+
     try:
         kwargs: dict = request.get_json(force=True)
         for key in kwargs.keys():
