@@ -40,8 +40,7 @@ class TestFileStorageDocs(unittest.TestCase):
     def test_pep8_conformance_test_file_storage(self):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
+        result = pep8s.check_files(['tests/test_models/test_engine/test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -113,3 +112,27 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == 'db',
+                     "not testing file storage")
+    def test_get(self):
+        """Test that the get method properly retrievs objects"""
+        storage_object = FileStorage()
+        self.assertIs(storage_object.get("User", "blah"), None)
+        self.assertIs(storage_object.get("blah", "blah"), None)
+        latest_user = User()
+        latest_user.save()
+        self.assertIs(storage_object.get("User", latest_user.id), latest_user)
+
+    @unittest.skipIf(os.getenv(HBNB_TYPE_STORAGE) == db,
+                     "not testing file storage")
+    def test_count(self):
+        storage_object = FileStorage()
+        first_length = len(storage_object.all())
+        self.assertEqual(storage_object.count(), first_length)
+        length_of_state = len(storage_object.all("State"))
+        self.assertEqual(storage_object.count("State"), length_of_state)
+        latest_state = State()
+        latest_state.save()
+        self.assertEqual(storage_object.count(), first_length + 1)
+        self.assertEqual(storage_object.count("State"), length_of_state + 1)

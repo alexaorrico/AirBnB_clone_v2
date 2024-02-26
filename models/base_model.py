@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Contains class BaseModel
+Module contains the base_model class
+this is the parent model
 """
 
 from datetime import datetime
@@ -20,7 +21,9 @@ else:
 
 
 class BaseModel:
-    """The BaseModel class from which future classes will be derived"""
+    """
+    The BaseModel class from which future classes will be derived
+    """
     if models.storage_t == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
@@ -68,8 +71,13 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if getenv("HBNB_TYPE_STORAGE") == "db":
+            if "password" in new_dict:
+                del new_dict["password"]
         return new_dict
 
     def delete(self):
-        """delete the current instance from the storage"""
+        """
+        delete the current instance from the storage
+        """
         models.storage.delete(self)
