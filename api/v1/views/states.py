@@ -3,37 +3,40 @@
 
 from api.v1.views import app_views
 from flask import jsonify, request, abort
-from models import storage, State
+from models import storage, state
+
+State = state.State
 
 
-@app_views.route('/states', method=['GET'])
+@app_views.route('/states', methods=['GET'])
 def get_states():
     """Returns all states object in json format"""
     states = [state.to_dict() for state in storage.all('State').values()]
     return jsonify(states)
 
 
-@app_views.route('/states/<state_id>', method=['GET'])
+@app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """Returns a specified state using the state id"""
-    state = storage.get(State, state_id)
+    state = storage.get('State', state_id)
     if state is None:  # if id is not found return 404
         abort(404)
-    return jsonify(state.to_dict())
+    return jsonify(state.to_dict()), 200
 
 
-@app_views.route('/states/<state_id>', method=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """Deletes a specific state using the give id"""
-    state = storage.get(State, state_id)
-    if state is None:  # If the state_id is not linked to any State object, raise a 404 error
+    state = storage.get('State', state_id)
+    # If the state_id is not linked to any State object, raise a 404 error
+    if state is None:
         abort(404)
     state.delete()
     storage.save()
     return jsonify({}), 200
 
 
-@app_views.route('/states', method=['POST'])
+@app_views.route('/states', methods=['POST'])
 def create_state():
     """Creates a new state object"""
     data = request.get_json()
@@ -46,10 +49,10 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', method=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """Updates a state object with the given id"""
-    state = storage.get(State, state_id)
+    state = storage.get('State', state_id)
     if state is None:
         abort(404)
     data = request.get_json()
