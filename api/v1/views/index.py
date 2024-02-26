@@ -2,7 +2,7 @@
 """
 routes
 """
-
+from api.v1.views import app_views
 # api/v1/views/index.py
 from flask import jsonify, Blueprint
 
