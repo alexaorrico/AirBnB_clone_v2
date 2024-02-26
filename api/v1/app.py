@@ -24,7 +24,7 @@ def teardown(exc):
 @app.errorhandler(404)
 def errorhandler(error):
     """handles 404 errors"""
-    return jsonify(error='Not Found'), 404
+    return jsonify(error='Not found'), 404
 
 
 if __name__ == "__main__":
