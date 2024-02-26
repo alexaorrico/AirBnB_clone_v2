@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-api flask app
+api flask app.
 """
 from flask import Blueprint
 
