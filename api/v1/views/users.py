@@ -11,7 +11,8 @@ from models import storage
 def get_or_add_user():
     users = storage.all("User").values()
     if request.methods == 'GET':
-        return jsonify(users.to_dict())
+        return jsonify([obj.to_dict() for obj in storage.all("User").
+                        values()]), 200
     elif request.methods == 'POST':
         if request.get_json:
             data = request.get_json
@@ -40,7 +41,7 @@ def user_byid(user_id=None):
         abort(400)
     else:
         if request.methods == 'GET':
-            return jsonify(user_data.to_dict())
+            return jsonify(user_data.to_dict()), 200
         elif request.methods == 'DELETE':
             storage.delete(user_data)
             storage.save()
