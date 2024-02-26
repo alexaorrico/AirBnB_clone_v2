@@ -17,12 +17,12 @@ def status():
 def stats():
     '''an endpoint that retrieves the number of each object"'''
     objects = {
-            "amenities": "Amenities",
-            "cities": "Cities",
-            "places": "Places",
-            "reviews": "Reviews",
-            "states": "Status",
-            "users": "Users"
+            "amenities": "Amenity",
+            "cities": "City",
+            "places": "Place",
+            "reviews": "Review",
+            "states": "State",
+            "users": "User"
             }
     itemcount = {}
     for key, value in objects.items():
