@@ -24,15 +24,15 @@ def get_stats():
     """
     Retrieves the counts of various object types in the database.
     """
-    try:
-        stats = {
+    classes = {
             'amenities': storage.count(Amenity),
             'cities': storage.count(City),
             'places': storage.count(Place),
             'reviews': storage.count(Review),
             'states': storage.count(State),
             'users': storage.count(User)
-        }
-        return jsonify(stats)
-    except Exception as e:
-        return jsonify(error=str(e)), 500
+            }
+    stats = {}
+    for key, value in classes.items():
+        stats[key] = storage.count(value)
+    return jsonify(stats)
