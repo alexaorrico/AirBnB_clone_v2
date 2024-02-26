@@ -83,10 +83,10 @@ class FileStorage:
         obj_dict = {}
         obj = None
         if cls:
-            obj_dict = FileStorage.__objects.values()
-            for item in obj_dict:
-                if item.id == id:
-                    obj = item
+            obj_dict = FileStorage.__objects.items()
+            for key, value in obj_dict:
+                if key == id:
+                    obj = value
             return obj
 
     def count(self, cls=None):
