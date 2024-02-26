@@ -43,7 +43,7 @@ def delete_amenity(amenity_id):
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)
 def create_amenity():
     """Creates a new Amenity object"""
-    amenity_data = request.get_json()
+    amenity_data = request.get_json(silent=True)
     if amenity_data is None:
         abort(400, "Not a JSON")
 
@@ -62,7 +62,7 @@ def create_amenity():
                  strict_slashes=False)
 def update_amenity(amenity_id):
     """Updates a specific Amenity object by ID"""
-    amenity_data = request.get_json()
+    amenity_data = request.get_json(silent=True)
     if amenity_data is None:
         abort(400, "Not a JSON")
 
