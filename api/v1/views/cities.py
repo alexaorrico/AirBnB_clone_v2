@@ -1,39 +1,42 @@
 #!/usr/bin/python3
+"""
+city view
+"""
 
 from flask import jsonify, abort, request, json, make_response
 from api.v1.views import app_views
 from models import storage
-from models.state import State
+from models.city import City
 
 
 
 
-@app_views.route('/states', methods=['GET'], strict_slashes= False)
-def all_states():
-    """returns a json of all states"""
-    states = storage.all(State).values()
+@app_views.route('/cities', methods=['GET'], strict_slashes= False)
+def all_cities():
+    """returns a json of all cities"""
+    cities = storage.all(City).values()
     jsonlist = []
-    for state in states:
-        jsonlist.append(state.to_dict())
+    for city in cities:
+        jsonlist.append(city.to_dict())
     resp = make_response(jsonify(jsonlist))
     resp.status_code = 200
     return resp
 
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_state(state_id):
-    state : State =  storage.get(State, id=state_id)
-    if state:
-        resp = make_response(jsonify(state.to_dict()))
+@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+def get_city(city_id):
+    city : City =  storage.get(City, id=city_id)
+    if city:
+        resp = make_response(jsonify(city.to_dict()))
         resp.status_code = 200
         return resp
     abort(404)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def delete_state(state_id):
-    state : State=  storage.get(State, id=state_id)
-    if state:
-        storage.delete(state)
+@app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
+def delete_city(city_id):
+    city : City=  storage.get(City,city_id)
+    if city:
+        storage.delete(city)
         storage.save()
         resp = make_response(jsonify({'status': 200}))
         resp.status_code = 200
@@ -43,8 +46,8 @@ def delete_state(state_id):
     return resp
 
 
-@app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create_state():
+@app_views.route('/cities', methods=['POST'], strict_slashes=False)
+def create_city():
     try:
         kwargs = request.get_json(force=True)
     except:
@@ -55,19 +58,19 @@ def create_state():
         resp = make_response(jsonify({'error': 'Missing Name'}))
         resp.status_code = 400
         return resp
-    state = State(**kwargs)
-    storage.new(state)
+    city = City(**kwargs)
+    storage.new(city)
     storage.save()
-    resp = make_response(jsonify(state.to_dict()))
+    resp = make_response(jsonify(city.to_dict()))
     resp.status_code = 201
 
     return resp
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def updated_state(state_id):
-    state : State = storage.get(State, state_id)
-    if not state:
+@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+def updated_city(city_id):
+    city : City = storage.get(city_id)
+    if not city:
         abort(404)
 
     try:
@@ -83,12 +86,12 @@ def updated_state(state_id):
         resp = make_response(jsonify({'error': 'Missing Name'}))
         resp.status_code = 400
         return resp
-    state_dict = state.to_dict()
-    state_dict.update(kwargs)
-    state = State(**state_dict)
-    storage.new(state)
+    city_dict = city.to_dict()
+    city_dict.update(kwargs)
+    city = City(**city_dict)
+    storage.new(city)
     storage.save()
-    resp = make_response(jsonify(state.to_dict()))
+    resp = make_response(jsonify(city.to_dict()))
     resp.status_code = 201
 
     return resp

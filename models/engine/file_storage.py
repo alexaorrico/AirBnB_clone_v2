@@ -24,8 +24,6 @@ class FileStorage:
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
-
-
     def all(self, cls=None):
         """returns the dictionary __objects"""
         if cls is not None:
@@ -35,7 +33,7 @@ class FileStorage:
                     new_dict[key] = value
             return new_dict
         return self.__objects
-    
+
     def count(self, cls=None):
         """A method to count the number of objects in storage
         Returns the number of objects in storage matching the given class.
@@ -79,7 +77,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except json.JSONDecodeError:
             pass
 
     def delete(self, obj=None):
