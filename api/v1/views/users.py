@@ -6,9 +6,10 @@ from models.user import User
 from models import storage
 
 
-@app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/users', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def get_or_add_user():
-    users = storage.all(User).values()
+    users = storage.all("User").values()
     if request.methods == 'GET':
         return jsonify(users.to_dict())
     elif request.methods == 'POST':
@@ -34,7 +35,7 @@ def get_or_add_user():
                  strict_slashes=False)
 def user_byid(user_id=None):
     """user function"""
-    user_data = storage.get(User, user_id)
+    user_data = storage.get("User", user_id)
     if user_id is None:
         abort(400)
     else:
