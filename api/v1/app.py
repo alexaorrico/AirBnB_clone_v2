@@ -25,6 +25,11 @@ def teardown_db(exception):
     """
     storage.close()
 
+@app.errorhandler(404)
+def not_found(error):
+    """Errro handeling"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
     app.run(host=host, port=port)
