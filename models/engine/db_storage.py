@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -39,15 +39,14 @@ class DBStorage:
                                              HBNB_MYSQL_DB))
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
-    
+
     def get(self, cls, id):
         """
         A method to retrieve one object
         Returns the object based on the class and its ID,
         or None if not found"""
         obj = self.__session.query(cls).filter(cls.id == id).one_or_none()
-        return(obj)
-
+        return (obj)
 
     def count(self, cls=None):
         """A method to count the number of objects in storage
@@ -61,7 +60,6 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (len(new_dict))
-
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -95,29 +93,5 @@ class DBStorage:
         self.__session = Session
 
     def close(self):
-<<<<<<< HEAD
         """call remove() method on the private session attribute"""
         self.__session.remove()
-=======
-        """Call remove() method on the private session attribute"""
-        self.__session.close()
-
-    def get(self, cls, id):
-        """Retrieve one object by ID"""
-        if cls is None or id is None:
-            return None
-        key = cls.__name__ + '.' + id
-        return self.__session.query(classes[cls]).get(id)
-
-    def count(self, cls=None):
-        """Count number of objects in storage"""
-        if cls is None:
-            # If no class is provided, count all objects
-            total_count = 0
-            for clss in classes.values():
-                total_count += self.__session.query(clss).count()
-            return total_count
-        else:
-            # Count objects of the specified class
-            return self.__session.query(cls).count()
->>>>>>> 30d46851c2c3678c68c398e3c9d9e00b9853ccb2

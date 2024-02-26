@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Index file
+"""
+
 from flask import jsonify, make_response
 from api.v1.views import app_views
 from models import storage
@@ -11,6 +15,7 @@ def err_404(e):
     resp.status_code = 404
     return resp
 
+
 @app_views.app_errorhandler(400)
 def err_400(e):
     """error handler for 400"""
@@ -18,13 +23,15 @@ def err_400(e):
     resp.status_code = 400
     return resp
 
-@app_views.route('/status', methods = ['GET'] , strict_slashes= False)
+
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def show_status():
     """returns the api status"""
-    resp = make_response(jsonify({'status' : 'ok'}), 200)
+    resp = make_response(jsonify({'status': 'ok'}), 200)
     return resp
 
-@app_views.route('/stats', methods= ['GET'], strict_slashes=False)
+
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """retrieves the number of each objects by type"""
     objs = storage.all().values()
@@ -37,5 +44,5 @@ def stats():
         except KeyError:
             obdict[clsname] = 1
 
-    resp = make_response(jsonify(obdict), 200)    
-    return  resp
+    resp = make_response(jsonify(obdict), 200)
+    return resp
