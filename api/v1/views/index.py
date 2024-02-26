@@ -19,6 +19,7 @@ def status():
 
 
 @app_views.route("/stats", methods=["GET"])
+# update
 def get_stats():
     """
     Retrieves the number of each object type.
