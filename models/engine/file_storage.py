@@ -75,6 +75,9 @@ class FileStorage:
 
     def count(self, cls=None):
         if cls:
-            return len(self.all(cls))
-        else:
-            return len(self.__objects)
+            counter = 0
+            for obj in self.__objects.values():
+                if obj.__class__.__name__ == cls:
+                    counter += 1
+            return counter
+        return len(self.__objects)
