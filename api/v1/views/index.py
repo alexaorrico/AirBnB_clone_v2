@@ -4,6 +4,12 @@
 from flask import jsonify
 from api.v1.views import app_views
 from models import storage
+from models.amenity import Amenity
+from models.city import City
+from models.review import Review
+from models.state import State
+from models.user import User
+from models.place import Place
 
 
 @app_views.route("/status", methods=["GET"])
@@ -21,9 +27,12 @@ def get_stats():
         A JSON response with the count of each object type.
     """
     stats = {}
-    for cls in storage.classes.values():
-        cls_name = cls.__name__
-        count = storage.count(cls)
-        stats[cls_name] = count
-
+    stats = {
+            "amenities": storage.count(Amenity),
+            "cities": storage.count(City),
+            "places": storage.count(Place),
+            "reviews": storage.count(Review),
+            "states": storage.count(State),
+            "users": storage.count(User)
+            }
     return jsonify(stats)

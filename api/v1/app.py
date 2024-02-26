@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" API app module """
 
 import os
 from flask import Flask, jsonify
@@ -8,7 +9,11 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-cors = CORS(app)
+
+host = "0.0.0.0"
+port = 5000
+
+cors = CORS(app, resources={r'/*': {'origins': host}})
 
 
 @app.teardown_appcontext
@@ -24,8 +29,6 @@ def not_found_error(error):
 
 
 if __name__ == "__main__":
-    host = "0.0.0.0"
-    port = 5000
     if 'HBNB_API_HOST' in os.environ:
         host = os.environ["HBNB_API_HOST"]
     if "HBNB_API_PORT" in os.environ:

@@ -13,17 +13,20 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+# classes = {"Amenity": Amenity, "City": City,
+#           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class DBStorage:
     """interaacts with the MySQL database"""
     __engine = None
     __session = None
+
+    classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
     def __init__(self):
         """Instantiate a DBStorage object"""
@@ -81,8 +84,9 @@ class DBStorage:
 
     def count(self, cls=None):
         """Counts the number of objects in storage matching the given class."""
-        if cls:
+        #print(str(self.__session.query()))
+        if cls is not None:
             return self.__session.query(cls).count()
         else:
-            total_count = sum(self.__session.query(c).count() for c in storage.classes.values())
+            total_count = sum(self.__session.query(c).count() for c in models.storage.classes.values())
             return total_count
