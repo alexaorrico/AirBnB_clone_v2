@@ -35,7 +35,6 @@ class TestFlaskRoutes(unittest.TestCase):
         response = self.app.get(f'/api/v1/states/{state.id}')
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_data(as_text=True))
-        print(data)
         self.assertEqual(data['id'], state.id)
         # Test case for retrieving a non-existent state
         response = self.app.get('/api/v1/states/1000')
@@ -48,7 +47,7 @@ class TestFlaskRoutes(unittest.TestCase):
         storage.save()
         response = self.app.delete('/api/v1/states/{}'.format(state.id))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(storage.get(State, state.id), None)
+        self.assertEqual(storage.get('State', state.id), None)
 
         # Test case for deleting a non-existent state
         response = self.app.delete('/api/v1/states/1000')
@@ -66,7 +65,7 @@ class TestFlaskRoutes(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
 
         # Test case for creating a state with invalid JSON
-        response = self.app.post('/api/v1/states', data='invalid json')
+        response = self.app.post('/api/v1/states', json='invalid json')
         self.assertEqual(response.status_code, 400)
 
     def test_update_state(self):
@@ -77,7 +76,7 @@ class TestFlaskRoutes(unittest.TestCase):
         data = {'name': 'Updated State'}
         response = self.app.put('/api/v1/states/{}'.format(state.id), json=data)
         self.assertEqual(response.status_code, 200)
-        updated_state = storage.get(State, state.id)
+        updated_state = storage.get('State', state.id)
         self.assertEqual(updated_state.name, 'Updated State')
 
         # Test case for updating a non-existent state
@@ -85,7 +84,7 @@ class TestFlaskRoutes(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
         # Test case for updating a state with invalid JSON
-        response = self.app.put('/api/v1/states/{}'.format(state.id), data='invalid json')
+        response = self.app.put('/api/v1/states/{}'.format(state.id), json='invalid json')
         self.assertEqual(response.status_code, 400)
 
 

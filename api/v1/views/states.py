@@ -2,7 +2,7 @@
 """ A Flask route that returns json status response"""
 
 from api.v1.views import app_views
-from flask import jsonify, request, abort
+from flask import current_app,jsonify, request, abort
 from models import storage, state
 
 State = state.State
@@ -49,17 +49,25 @@ def create_state():
     return jsonify(state.to_dict()), 201
 
 
+
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """Updates a state object with the given id"""
     state = storage.get('State', state_id)
     if state is None:
         abort(404)
-    data = request.get_json()
-    if data is None:
-        abort(400, 'Not a JSON')
-    for key, value in data.items():
-        if key not in ['id', 'created_at', 'updated_at']:
-            setattr(state, key, value)
-    storage.save()
-    return jsonify(state.to_dict()), 200
+
+    try:
+        data = request.get_json()
+        if data is None:
+            abort(400, 'Not a JSON')
+        for key, value in data.items():
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(state, key, value)
+        storage.save()
+        return jsonify(state.to_dict()), 200
+    except Exception as e:
+        abort(400, f'Error parsing JSON: {str(e)}')
+
+
+
