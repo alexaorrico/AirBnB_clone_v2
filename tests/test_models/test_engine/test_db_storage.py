@@ -126,4 +126,5 @@ class TestFileStorage(unittest.TestCase):
         self.assertNotIn(key, state_objs.keys())
 
     def test_reload(self):
-        """"""
+        """ tests if reload() recreates objs in the db """
+        
