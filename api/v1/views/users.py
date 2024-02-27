@@ -2,6 +2,11 @@
 """
 This module creates a new view for users object tha handles
 all default RESTFul API actions
+THIS MODULE CONTAINS THE FOLLOWING:
+DELETE - Deletes a user
+CREATES - Creates a user
+UPDATES - Updates a user
+RETRIEVES - Retrieves a user
 """
 from api.v1.views import app_views
 from flask import jsonify, abort, request
