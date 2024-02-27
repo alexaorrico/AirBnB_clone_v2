@@ -96,7 +96,7 @@ class TestFileStorage(unittest.TestCase):
         """test that new adds an object to the database"""
         db = models.storage
         ini = len(db.all(State))
-        state = State({'name': "california", 'age': 20})
+        state = State()
         db.new(state)
         end = len(db.all(State))
         self.assertTrue(end > ini)
