@@ -86,9 +86,8 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_db_storage_get(self):
         """Test get strorage if working"""
-        state = State()
+        state = State(name='Texas')
         state.save()
-        storage = DBStorage()
         id = state.id
-        new_state = storage.get(State, id)
+        new_state = models.storage.get(State, id)
         self.assertEqual(state, new_state)
