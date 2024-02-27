@@ -14,12 +14,9 @@ def retrieve_all_amenities():
 
     :return: JSON of all amenities
     """
-    amenities_list = []
-    amenities_obj = storage.all(Amenity)
-    for obj in amenities_obj.values():
-        amenities_list.append(obj.to_json())
-
-    return jsonify(amenities_list)
+    amenities = storage.all(Amenity).values()
+    amenity_list = [amenity.to_dict() for amenity in amenities]
+    return jsonify(amenity_list)
 
 
 @app_views.route("/amenities", methods=["POST"], strict_slashes=False)
@@ -37,13 +34,14 @@ def create_amenity():
 
     new_amenity = Amenity(**amenity_json)
     new_amenity.save()
-    response = jsonify(new_amenity.to_json())
+    response = jsonify(new_amenity.to_dict())
     response.status_code = 201
 
     return response
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=["GET"],
+                 strict_slashes=False)
 def get_amenity_by_id(amenity_id):
     """
     Get a specific Amenity object by ID.
@@ -51,16 +49,16 @@ def get_amenity_by_id(amenity_id):
     :param amenity_id: The ID of the amenity object
     :return: Amenity object with the specified ID or error
     """
+    amenity = storage.get(Amenity, amenity_id)
 
-    obj_fetched = storage.get(Amenity, str(amenity_id))
-
-    if obj_fetched is None:
+    if amenity is None:
         abort(404)
 
-    return jsonify(obj_fetched.to_json())
+    return jsonify(amenity.to_dict())
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=["PUT"],
+                 strict_slashes=False)
 def update_amenity_by_id(amenity_id):
     """
     Update a specific Amenity object by ID.
@@ -71,17 +69,18 @@ def update_amenity_by_id(amenity_id):
     amenity_json = request.get_json(silent=True)
     if amenity_json is None:
         abort(400, 'Not a JSON')
-    obj_fetched = storage.get(Amenity, str(amenity_id))
-    if obj_fetched is None:
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity is None:
         abort(404)
     for key, val in amenity_json.items():
         if key not in ["id", "created_at", "updated_at"]:
-            setattr(obj_fetched, key, val)
-    obj_fetched.save()
-    return jsonify(obj_fetched.to_json())
+            setattr(amenity, key, val)
+    amenity.save()
+    return jsonify(amenity.to_dict())
 
 
-@app_views.route("/amenities/<amenity_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
+                 strict_slashes=False)
 def delete_amenity_by_id(amenity_id):
     """
     Delete an Amenity by ID.
@@ -89,13 +88,12 @@ def delete_amenity_by_id(amenity_id):
     :param amenity_id: The ID of the amenity object
     :return: Empty dictionary with 200 or 404 if not found
     """
+    amenity = storage.get(Amenity, amenity_id)
 
-    obj_fetched = storage.get(Amenity, str(amenity_id))
-
-    if obj_fetched is None:
+    if amenity is None:
         abort(404)
 
-    storage.delete(obj_fetched)
+    storage.delete(amenity)
     storage.save()
 
     return jsonify({}), 200
