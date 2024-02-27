@@ -153,4 +153,4 @@ class TestFileStorage(unittest.TestCase):
         db = models.storage
         state = State(name='London')
         ret = db.get(State, state.id)
-        
+        self.assertEqual(ret, state)
