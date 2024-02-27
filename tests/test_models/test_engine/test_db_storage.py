@@ -110,4 +110,5 @@ class TestFileStorage(unittest.TestCase):
         db.new(state)
         db.save()
         state_objs = db.all(State)
-        self.assert
+        key = "{}.{}".format()
+        self.assertIn()
