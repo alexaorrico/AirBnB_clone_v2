@@ -163,5 +163,7 @@ class TestFileStorage(unittest.TestCase):
         state = State(name='Ontario')
         state2 = State(name='Canada')
         city = City(state_id=state.id)
-        
+        state.save()
+        state2.save()
+        city.save()
         self.assertFalse
