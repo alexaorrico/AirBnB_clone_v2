@@ -36,18 +36,25 @@ i
 
     def get(self, cls, id):
         """Retreive one object"""
-        obj = self.all(cls)
-        for obj in objects.values():
-            if obj.id == id:
-            return obj
-        return None
+        if cls not in classes.values():
+            return None
+
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+            return None
 
     def count(self, cls=None):
         """Counts objects"""
-        if cls:
-            return sum(1 for obj in self.all(cls).values())
-        else:
-            return len(self.__objects)
+        all_class = classes.values()
+
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).valuess())
+            else:
+                count = len(models.storage.all(cls).values())
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
