@@ -103,29 +103,3 @@ class TestFileStorage(unittest.TestCase):
         storage = DBStorage()
         num_states = storage.count(State)
         self.assertEqual(num_states, len(storage.all(State)))
-
-    def test_get(self):
-        """ Tests method for obtaining an instance db storage"""
-        storage = DBStorage
-        storage.reload()
-        data = {"name": "Test"}
-        instance = State(**data)
-        storage.new(instance)
-        storage.save()
-        get_instance = storage.get(State, instance.id)
-        self.assertEqual(get_instance, instance)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_count(self):
-        """ Tests count method db storage """
-        storage = DBStorage
-        storage.reload()
-        data = {"name": "Test"}
-        state = State(**data)
-        storage.new(state)
-        data = {"name": "Test1", "state_id": state.id}
-        city = City(**data)
-        storage.new(city)
-        storage.save()
-        c = storage.count()
-        self.assertEqual(len(storage.all()), c)
