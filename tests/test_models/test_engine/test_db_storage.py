@@ -107,4 +107,5 @@ class TestFileStorage(unittest.TestCase):
         """ Test that save properly saves objects to the database """
         db = models.storage
         state = State(name='Lagos')
-        
+        db.new(state)
+        db.
