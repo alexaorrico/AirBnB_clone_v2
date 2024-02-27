@@ -9,15 +9,15 @@ from models import storage
 from models.city import City
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["GET"],
+                 strict_slashes=False)
 def get_cities(state_id):
     """Retrieves the list of all City objects of a State"""
     state_obj = storage.get("State", str(state_id))
     if state_obj is None:
         abort(404)
     all_cities = state_obj.cities
-    result = list(all_cities)
-
+    result = [city.to_dict() for city in all_cities]
     return jsonify(result), 200
 
 
@@ -41,7 +41,8 @@ def delete_city(city_id):
     return ({}), 200
 
 
-@app_views.route("/states/<state_id>/cities", methods=["POST"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["POST"],
+                 strict_slashes=False)
 def create_city(state_id):
     """Creates a city"""
     state_obj = storage.get("State", str(state_id))
@@ -68,7 +69,7 @@ def update_city(city_id):
     if city_json is None:
         abort(400, "Not a JSON")
     for key, value in city_json.items():
-        if key not in ["id", "created_at", "updated_at"]:
+        if key not in ["id", "state_id", "created_at", "updated_at"]:
             setattr(city_obj, key, value)
     city_obj.save()
     return jsonify(city_obj.to_dict()), 200
