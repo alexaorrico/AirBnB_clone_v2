@@ -111,4 +111,4 @@ class TestFileStorage(unittest.TestCase):
         db.save()
         state_objs = db.all(State)
         key = "{}.{}".format(State.__name__, state.id)
-        self.assertIn(key, s)
+        self.assertIn(key, state_objs.keys())
