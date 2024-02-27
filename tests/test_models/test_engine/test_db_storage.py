@@ -96,7 +96,7 @@ class TestFileStorage(unittest.TestCase):
         """test that new adds an object to the database"""
         db = models.storage
         ini = len(db.all(State))
-        state = State()
+        state = State(name='Abia')
         db.new(state)
         db.save()
         end = len(db.all(State))
