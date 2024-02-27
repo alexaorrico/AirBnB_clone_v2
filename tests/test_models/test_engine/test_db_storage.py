@@ -119,4 +119,4 @@ class TestFileStorage(unittest.TestCase):
         db = models.storage
         state = State(name='Anambra')
         db.new(state)
-        
+        db.
