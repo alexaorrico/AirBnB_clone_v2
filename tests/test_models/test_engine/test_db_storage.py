@@ -121,4 +121,5 @@ class TestFileStorage(unittest.TestCase):
         db.new(state)
         db.delete(state)
         state_objs = db.all(State)
+        key = "{}.{}".format(State.__name__, state.id)
         
