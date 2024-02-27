@@ -135,7 +135,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_with_id_None(self):
-        """ Tests if get retrieves an object when id is None """
+        """ Tests if get() retrieves an object when id is None """
         db = models.storage
         state = State(name='Texas')
         ret = db.get(State, None)
@@ -143,4 +143,6 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_with_wrongID(self):
+        """ Tests get() with a wrong id """
+        db = models.storage
         
