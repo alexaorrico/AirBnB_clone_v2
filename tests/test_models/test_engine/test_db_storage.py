@@ -115,7 +115,7 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_delete(self):
-        """ deletes an obj from the current session """
+        """ Tests that delete() deletes an obj from the current session """
         db = models.storage
         state = State(name='Anambra')
         db.new(state)
@@ -125,4 +125,5 @@ class TestFileStorage(unittest.TestCase):
         key = "{}.{}".format(State.__name__, state.id)
         self.assertNotIn(key, state_objs.keys())
 
-    def test_reload(self)
+    def test_reload(self):
+        """"""
