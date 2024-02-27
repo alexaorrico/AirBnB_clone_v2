@@ -55,7 +55,7 @@ def post_citie(state_id):
 
 @app_views.route('/cities/<citie_id>', methods=['PUT'],
                  strict_slashes=False)
-def put_city(citie_id):
+def put_citie(citie_id):
     citie = storage.get("City", citie_id)
     if not citie:
         abort(404)
