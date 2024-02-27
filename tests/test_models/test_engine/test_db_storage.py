@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -86,3 +87,34 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
+
+    @unittest.skipIf(storage._class.name_ != 'DBStorage', "not testing DB storage")
+    def test_all_no_class(self):
+        """Test that all returns all rows when no class is passed"""
+        # Add your test code here
+        all_objects = storage.all()
+        self.assertIsInstance(all_objects, dict)
+
+    @unittest.skipIf(storage._class.name_ != 'DBStorage', "not testing DB storage")
+    def test_new(self):
+        """Test that new adds an object to the database"""
+        # Add your test code here
+        new_state = State(name="California")
+        storage.new(new_state)
+        all_objects = storage.all()
+        self.assertIn(new_state, all_objects.values())
+
+    @unittest.skipIf(storage._class.name_ != 'DBStorage', "not testing DB storage")
+    def test_save(self):
+        """Test that save properly saves objects to the database"""
+        # Add your test code here
+        state_count_before = len(storage.all(State))
+        new_state = State(name="Florida")
+        storage.new(new_state)
+        storage.save()
+        state_count_after = len(storage.all(State))
+        self.assertEqual(state_count_after, state_count_before + 1)
