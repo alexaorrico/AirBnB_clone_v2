@@ -118,3 +118,5 @@ class TestFileStorage(unittest.TestCase):
         """ deletes an obj from the current session """
         db = models.storage
         state = State(name='Anambra')
+        db.new(state)
+        
