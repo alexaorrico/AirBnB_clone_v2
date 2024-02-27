@@ -133,7 +133,9 @@ class TestFileStorage(unittest.TestCase):
         end = len(db.all())
         self.assertFalse(end == 0)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get_with_id_None(self):
         """ Tests if get retrieves an object when id is None """
         db = models.storage
+        state = State
         
