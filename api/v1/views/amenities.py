@@ -42,7 +42,7 @@ def amenity_create():
 
 
 @app_views.route("/amenities/<amenity_id>",  methods=["GET"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def amenity_by_id(amenity_id):
     """
     gets a specific Amenity object by ID
@@ -59,7 +59,7 @@ def amenity_by_id(amenity_id):
 
 
 @app_views.route("/amenities/<amenity_id>",  methods=["PUT"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def amenity_put(amenity_id):
     """
     updates specific Amenity object by ID
@@ -80,7 +80,7 @@ def amenity_put(amenity_id):
 
 
 @app_views.route("/amenities/<amenity_id>",  methods=["DELETE"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def amenity_delete_by_id(amenity_id):
     """
     deletes Amenity by id
