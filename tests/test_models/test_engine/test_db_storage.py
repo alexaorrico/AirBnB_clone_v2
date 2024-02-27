@@ -131,4 +131,4 @@ class TestFileStorage(unittest.TestCase):
         ini = len(db.all())
         db.reload()
         end = db.all()
-        self.assertNot
+        self.assertFalse(ini == end)
