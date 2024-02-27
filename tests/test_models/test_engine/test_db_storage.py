@@ -125,6 +125,7 @@ class TestFileStorage(unittest.TestCase):
         key = "{}.{}".format(State.__name__, state.id)
         self.assertNotIn(key, state_objs.keys())
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_reload(self):
         """ tests if reload() recreates objs in the db """
         db = DBStorage()
