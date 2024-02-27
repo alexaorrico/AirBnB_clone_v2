@@ -86,7 +86,7 @@ class TestBaseModel(unittest.TestCase):
         inst1 = BaseModel()
         toc = datetime.now()
         self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
+        time.sleep(0.001)
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
