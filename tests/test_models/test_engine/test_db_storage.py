@@ -129,5 +129,5 @@ class TestFileStorage(unittest.TestCase):
         """ tests if reload() recreates objs in the db """
         db = DBStorage()
         db.reload()
-        end = db.all()
+        end = len(db.all())
         self.assertFalse(end == 0)
