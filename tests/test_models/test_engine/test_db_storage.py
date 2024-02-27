@@ -122,4 +122,4 @@ class TestFileStorage(unittest.TestCase):
         db.delete(state)
         state_objs = db.all(State)
         key = "{}.{}".format(State.__name__, state.id)
-        
+        self.assertNotIn(key, state_objs.keys())
