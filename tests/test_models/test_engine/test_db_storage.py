@@ -138,5 +138,6 @@ class TestFileStorage(unittest.TestCase):
         """ Tests if get retrieves an object when id is None """
         db = models.storage
         state = State(name='Texas')
+        ret = db.get(State, None)
         
         
