@@ -42,14 +42,20 @@ class DBStorage:
 
     def all(self, cls=None):
         """query on the current database session"""
-        new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+        if cls:
+            instance = self.__session.query(cls)
+            objs = {}
+            for row in instance:
+                key = "{}.{}".format(cls.__name__, row.id)
+                objs[key] = row
+        else:
+            objs = {}
+            for clas in classes.values():
+                ins = self.__session.query(clas)
+                for result in ins:
+                    key = "{}.{}".format(clas.__name__, result.id)
+                    objs[key] = result
+        return objs
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -79,18 +85,14 @@ class DBStorage:
         """ Retrieves an object from storage """
         if cls is None or id is None:
             return None
-        ins = self.__session.query(cls)
-        for row in ins:
-            if row.id == id:
-                return {"{}.{}".format(cls, id): row}
+        ins = self.all(cls)
+        for key in ins.keys():
+            if key.split('.')[-1] == id:
+                return ins[key]
         return None
 
     def count(self, cls=None):
         """ Returns count of instances in the database """
         if cls is None:
             return len(self.all())
-        objs = self.__session.query(cls)
-        total = 0
-        for obj in objs:
-            total += 1
-        return total
+        return len(self.all(cls))
