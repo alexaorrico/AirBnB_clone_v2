@@ -124,3 +124,5 @@ class TestFileStorage(unittest.TestCase):
         state_objs = db.all(State)
         key = "{}.{}".format(State.__name__, state.id)
         self.assertNotIn(key, state_objs.keys())
+
+    def test_reload(self)
