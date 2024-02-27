@@ -98,6 +98,7 @@ class TestFileStorage(unittest.TestCase):
         ini = len(db.all(State))
         state = State()
         db.new(state)
+        db.save()
         end = len(db.all(State))
         self.assertTrue(end > ini)
         
