@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-index
+index file
 """
 from flask import jsonify
 from api.v1.views import app_views
@@ -8,11 +8,12 @@ from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route("/status", methods=['GET'], strict_slashes=False)
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
+.route("/status", methods=['GET'], strict_slashes=False)
 def status():
     """
-    status route
-    :return: response with json
+    to status route
+    :return: Response with json
     """
     data = {
         "status": "OK"
@@ -42,4 +43,4 @@ def stats():
     resp = jsonify(data)
     resp.status_code = 200
 
-    return resp
+    return resppp_views.route("/stats", methods=['GET'], strict_slashes=False)

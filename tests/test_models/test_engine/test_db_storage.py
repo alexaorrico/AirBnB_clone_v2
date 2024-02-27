@@ -407,6 +407,5 @@ class TestStorageCount(unittest.TestCase):
         self.assertEqual(int(0 if len(storage.all("City")) is None else
                              len(storage.all("City"))), result)
 
-
 if __name__ == '__main__':
     unittest.main
