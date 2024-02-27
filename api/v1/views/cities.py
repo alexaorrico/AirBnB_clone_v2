@@ -35,7 +35,7 @@ def del_citie(citie_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<state_id>/citie', methods=['POST'],
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 def post_citie(state_id):
     state = storage.get("State", state_id)
