@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models.engine.file_storage import FileStorage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -18,6 +19,7 @@ import json
 import os
 import pep8
 import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -77,7 +79,9 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+        """Test that all returns all rows when no class is passed """
+        db = DBStorage()
+        self.assertNotEqual(db.all(), {})
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
