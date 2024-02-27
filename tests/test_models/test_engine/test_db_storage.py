@@ -112,3 +112,6 @@ class TestFileStorage(unittest.TestCase):
         state_objs = db.all(State)
         key = "{}.{}".format(State.__name__, state.id)
         self.assertIn(key, state_objs.keys())
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test
