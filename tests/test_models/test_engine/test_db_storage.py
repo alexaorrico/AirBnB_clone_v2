@@ -166,4 +166,4 @@ class TestFileStorage(unittest.TestCase):
         state.save()
         state2.save()
         city.save()
-        self.assertFalse
+        self.assertFalse(db.count() == db.count(State))
