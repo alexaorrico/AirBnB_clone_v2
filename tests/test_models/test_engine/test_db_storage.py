@@ -161,5 +161,6 @@ class TestFileStorage(unittest.TestCase):
         """ Tests the count() """
         db = models.storage
         state = State(name='Ontario')
-        city = City()
+        state2 = State(n)
+        city = City(state_id=state.id)
         self.assertFalse
