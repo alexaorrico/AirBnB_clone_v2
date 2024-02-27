@@ -145,4 +145,4 @@ class TestFileStorage(unittest.TestCase):
     def test_get_with_wrongID(self):
         """ Tests get() with a wrong id """
         db = models.storage
-        
+        db.get(State, "abc-def")
