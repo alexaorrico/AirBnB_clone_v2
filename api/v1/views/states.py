@@ -56,15 +56,21 @@ def del_state(state_id=None):
 
 def add_state(state_id=None):
     """uses the POST method to add a new state"""
-    data = request.get_json()
-    if type(data) is not dict:
-        raise BadRequest(description='Not a JSON')
+    try:
+        data = request.get_json()
+        if type(data) is not dict:
+            raise BadRequest(description='Not a JSON')
 
-    if 'name' not in data:
-        raise BadRequest(description='Missing name')
-    new_state = State(**data)
-    new_state.save()
-    return jsonify(new_state.to_dict()),  201
+        if 'name' not in data:
+            raise BadRequest(description='Missing name')
+        new_state = State(**data)
+        new_state.save()
+        return jsonify(new_state.to_dict()),  201
+    except Exception as e:
+        # Log the exception or handle it as needed
+        app.logger.error(f"Error creating state: {e}")
+        raise InternalServerError(description='An error occurred \
+                while creating the state')
 
 
 def update_state(state_id=None):
@@ -72,7 +78,7 @@ def update_state(state_id=None):
     keys_to_update = ('id', 'created_at', 'updated_at')
     all_states = storage.all(State).values()
     upd_state = [state for state in all_states if state.id == state_id]
-    if unique_state:
+    if upd_state:
         data = request.get_json()
         if type(data) is not dict:
             raise BadRequest(description='Not a JSON')
