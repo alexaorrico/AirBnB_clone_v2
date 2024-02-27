@@ -6,7 +6,8 @@ from flask import abort, jsonify, make_response, request
 from models import storage, classes
 
 
-@app_views.route('/states', methods=['GET', 'POST'])
+@app_views.route('/states', methods=['GET', 'POST'],
+                 strict_slashes=False)
 def states_no_id():
     """
         handle http method with no id provided for state request
@@ -28,7 +29,8 @@ def states_no_id():
         return jsonify(new_object.to_json()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'],
+                 strict_slashes=False)
 def states_with_id(state_id=None):
     """
         handle http method with id provided for state request
