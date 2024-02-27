@@ -100,7 +100,6 @@ class TestFileStorage(unittest.TestCase):
         db.save()
         end = len(db.all(State))
         self.assertTrue(end > ini)
-        
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
