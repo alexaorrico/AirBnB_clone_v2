@@ -1,6 +1,9 @@
 #!/usr/bin/python3
-""" holds class User"""
+"""
+User
+"""
 import models
+import hashlib
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
@@ -9,7 +12,9 @@ from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
-    """Representation of a user """
+    """
+    User
+    """
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
@@ -25,5 +30,11 @@ class User(BaseModel, Base):
         last_name = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes user"""
+        """
+        Initializes
+        """
         super().__init__(*args, **kwargs)
+        if kwargs:
+            if kwargs.get("password", None):
+                self.password = hashlib.md5(
+                    kwargs["password"].encode()).hexdigest()
