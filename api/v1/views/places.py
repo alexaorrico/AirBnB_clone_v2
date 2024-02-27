@@ -6,7 +6,6 @@ from flask import abort, jsonify, request
 
 from api.v1.views import app_views
 from models import storage
-from models.city import City
 from models.place import Place
 
 
@@ -14,22 +13,22 @@ from models.place import Place
                  strict_slashes=False)
 def get_places_of_city(city_id):
     """Retrieves the list of all Place objects of a city"""
-    city = storage.get(City, str(city_id))
-    if city is None:
+    city_obj = storage.get("City", str(city_id))
+    if city_obj is None:
         abort(404)
-    places = [place.to_dict() for place in city.places]
-    return jsonify(places), 200
+    all_places = city_obj.places
+    result = [place.to_dict() for place in all_places]
+    return jsonify(result), 200
 
 
 @app_views.route("/places/<place_id>", methods=["GET"],
                  strict_slashes=False)
 def get_places(place_id):
-    """Retrieves the list of all Place objects"""
-    all_places = storage.get("Place", str(place_id))
-    if all_places is None:
+    """Retrieves a Place object"""
+    place_obj = storage.get("Place", str(place_id))
+    if place_obj is None:
         abort(404)
-    places = [place.to_dict() for place in all_places]
-    return jsonify(places), 200
+    return jsonify(place_obj.to_dict()), 200
 
 
 @app_views.route("/places/<place_id>", methods=["DELETE"],
@@ -47,29 +46,31 @@ def delete_place(place_id):
 @app_views.route("/cities/<city_id>/places", methods=["POST"],
                  strict_slashes=False)
 def create_place(city_id):
-    """Creates an Amenity"""
+    """Creates a place"""
     city = storage.get("City", city_id)
     if city is None:
         abort(404)
     dict_ = request.get_json(silent=True)
     if dict_ is None:
         abort(400, "Not a JSON")
+    user = storage.get("User", dict_["user_id"])
+    if user is None:
+        abort(404)
     if "user_id" not in dict_:
         abort(400, "Missing user_id")
     if "name" not in dict_:
         abort(400, "Missing name")
-    user = storage.get("User", dict_["user_id"])
-    if user is None:
-        abort(404)
+
+    dict_["city_id"] = city_id
     place = Place(**dict_)
     place.save()
     return jsonify(place.to_dict()), 201
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"], strict_slashes=False)
-def update_place(amenity_id):
+def update_place(place_id):
     """Updates an Place object"""
-    place_obj = storage.get("Place", str(amenity_id))
+    place_obj = storage.get("Place", str(place_id))
     place_dict = request.get_json(silent=True)
     if place_obj is None:
         abort(404)
@@ -80,11 +81,3 @@ def update_place(amenity_id):
             setattr(place_obj, key, val)
     place_obj.save()
     return jsonify(place_obj.to_dict()), 200
-
-
-# get the object to be updated by it's id
-# get the dictionary repr of state instance for id=state_id using get_json()
-# check if it's a valid json and return none if it's not
-# iterate the dictionary
-# id, created_at and updated_at should not be available to be set
-# set object attributes based on their keys
