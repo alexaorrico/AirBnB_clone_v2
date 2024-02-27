@@ -114,4 +114,5 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(key, state_objs.keys())
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test
+    def test_delete(self):
+        """ """
