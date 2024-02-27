@@ -58,15 +58,20 @@ def del_amenity(amenity_id=None):
 
 def add_amenity(amenity_id=None):
     """uses the POST method to add a new Amenity."""
-    data = request.get_json()
-    if type(data) is not dict:
-        raise BadRequest(description='Not a JSON')
+    try:
+        data = request.get_json()
+        if type(data) is not dict:
+            raise BadRequest(description='Not a JSON')
 
-    if 'name' not in data:
-        raise BadRequest(description='Missing name')
-    new_amenity = Amenity(**data)
-    new_amenity.save()
-    return jsonify(new_amenity.to_dict()),  201
+        if 'name' not in data:
+            raise BadRequest(description='Missing name')
+        new_amenity = Amenity(**data)
+        new_amenity.save()
+        return jsonify(new_amenity.to_dict()),  201
+    except Exception as e:
+        app.logger.error(f"Error creating amenity: {e}")
+        raise InternalServererror(description='An error occured \
+                while creating the amenity')
 
 
 def update_amenity(amenity_id=None):
