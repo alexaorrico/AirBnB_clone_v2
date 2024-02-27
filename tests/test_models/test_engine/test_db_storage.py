@@ -152,4 +152,5 @@ class TestFileStorage(unittest.TestCase):
     def test_get_with_ID(self):
         db = models.storage
         state = State(name='London')
-        ret = 
+        ret = db.get(State, state.id)
+        
