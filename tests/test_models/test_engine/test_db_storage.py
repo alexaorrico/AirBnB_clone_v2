@@ -120,4 +120,5 @@ class TestFileStorage(unittest.TestCase):
         state = State(name='Anambra')
         db.new(state)
         db.delete(state)
+        state_objs = db.all(State)
         
