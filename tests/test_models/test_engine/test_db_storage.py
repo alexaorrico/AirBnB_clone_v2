@@ -68,14 +68,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-    def test_db_storage_get(self):
-        """Test get strorage if working"""
-        state = State()
-        state.save()
-        id = state.id
-        new_state = storage.get(State, id)
-        self.assertEqual(state, new_state)
-
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
@@ -95,3 +87,13 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test get strorage if working"""
+        storage = DBStorage()
+        state = State()
+        state.save()
+        id = state.id
+        new_state = storage.get(State, id)
+        self.assertEqual(state, new_state)
