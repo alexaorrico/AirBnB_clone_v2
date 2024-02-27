@@ -97,7 +97,7 @@ class TestFileStorage(unittest.TestCase):
         db = models.storage
         state = State({'name': "california", 'age': 20})
         db.new(state)
-        s
+        
         self.assertDictEqual()
         
 
