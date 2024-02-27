@@ -86,7 +86,7 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_with_class(self):
         """ Tests all() with a class parameter passed """
-        
+        db = models.storage
         state_obj = [obj for obj in db.all(State).keys()]
         key = state_obj[0].split('.')[0]
         self.assertEqual(key, "State")
