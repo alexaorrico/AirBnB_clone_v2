@@ -3,8 +3,7 @@
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
-import console
-from models import storage, classes
+from models import *
 
 
 @app_views.route('/states', methods=['GET', 'POST'])
@@ -50,5 +49,8 @@ def states_with_id(state_id=None):
         json_request = request.get_json()
         if json_request is None:
             abort(400, 'Not a JSON')
-        state_obj = console.HBNBCommand.do_update('State', json_request)
+
+        for k, v in json_request.items():
+            setattr(k, v)
+        state_obj.update(json_request)
         return jsonify(state_obj.to_json())
