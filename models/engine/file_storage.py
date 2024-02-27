@@ -70,8 +70,9 @@ class FileStorage:
         try:
             with open(fname, mode='r', encoding='utf-8') as f_io:
                 new_objs = json.load(f_io)
-        except:
+        except FileNotFoundError:
             return
+
         for o_id, d in new_objs.items():
             k_cls = d['__class__']
             FileStorage.__objects[o_id] = FileStorage.CNC[k_cls](**d)
@@ -94,8 +95,9 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, mode='w') as f_io:
                 pass
-        except:
+        except FileNotFoundError:
             pass
+
         del FileStorage.__objects
         FileStorage.__objects = {}
         self.save()
@@ -108,16 +110,31 @@ class FileStorage:
 
     def get(self, cls, id):
         """
-            retrieves one object based on class name and id
+        Retrieves one object based on class name and id.
+
+        Args:
+            cls (str): The class name of the object.
+            id (str): The identifier of the object.
+
+        Returns:
+            object: The object corresponding to the
+            provided id if found, otherwise None.
         """
         if cls and id:
-            fetch_obj = "{}.{}".format(cls, id)
+            fetch = "{}.{}".format(cls, id)
             all_obj = self.all(cls)
-            return all_obj.get(fetch_obj)
+            return all_obj.get(fetch)
         return None
 
     def count(self, cls=None):
         """
-        count of all objects in storage
+        Returns the count of all objects in storage.
+
+        Args:
+            cls (str, optional): The class name of
+            objects to count. If None, counts all objects.
+
+        Returns:
+            int: The count of objects in storage.
         """
         return (len(self.all(cls)))

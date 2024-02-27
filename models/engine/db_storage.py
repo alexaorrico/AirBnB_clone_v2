@@ -117,7 +117,15 @@ class DBStorage:
 
     def get(self, cls, id):
         """
-            retrieves one object based on class name and id
+        Retrieves one object based on class name and id.
+
+        Args:
+            cls (str): The class name of the object.
+            id (str): The identifier of the object.
+
+        Returns:
+            object: The object corresponding to the
+            provided id if found, otherwise None.
         """
         if cls and id:
             fetch = "{}.{}".format(cls, id)
@@ -127,6 +135,13 @@ class DBStorage:
 
     def count(self, cls=None):
         """
-            returns the count of all objects in storage
+        Returns the count of all objects in storage.
+
+        Args:
+            cls (str, optional): The class name of
+            objects to count. If None, counts all objects.
+
+        Returns:
+            int: The count of objects in storage.
         """
         return (len(self.all(cls)))
