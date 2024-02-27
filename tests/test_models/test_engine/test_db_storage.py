@@ -119,6 +119,7 @@ class TestFileStorage(unittest.TestCase):
         db = models.storage
         state = State(name='Anambra')
         db.new(state)
+        db.save()
         db.delete(state)
         state_objs = db.all(State)
         key = "{}.{}".format(State.__name__, state.id)
