@@ -83,7 +83,8 @@ class TestFileStorage(unittest.TestCase):
         db = DBStorage()
         self.assertNotEqual(db.all(), {})
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing ")        
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_all_with
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
