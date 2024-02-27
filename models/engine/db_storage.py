@@ -79,17 +79,17 @@ class DBStorage:
         """
         Retrives an object by its class and id
         """
-        if cls in classes.values() and id and type(id) == str:
-            obj = self.all(cls)
-            for key, value in obj.items():
-                if key.split('.')[1] == id:
-                    return value
+        return self.__session.query(cls).filter_by(id=id).first()
 
     def count(self, cls=None):
         """
         Counts the number of objects matching a class in storage
         """
-        counted = self.all(cls)
-        if cls in classes.values():
-            counted = self.all(cls)
-        return len(counted)
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
+        return (len(new_dict.items()))
