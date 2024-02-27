@@ -1,7 +1,5 @@
-#!/bin/python3
+#!/usr/bin/python3
 """initialize views package"""
-
-# imports
 from flask import Blueprint
 
 # define a blueprint

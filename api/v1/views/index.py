@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 """index page"""
 from api.v1.views import app_views
 from flask import jsonify
