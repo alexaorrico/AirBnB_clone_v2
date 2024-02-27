@@ -132,3 +132,6 @@ class TestFileStorage(unittest.TestCase):
         db.reload()
         end = len(db.all())
         self.assertFalse(end == 0)
+
+    def test_get(self):
+        """ Tests if get retrieves an object """
