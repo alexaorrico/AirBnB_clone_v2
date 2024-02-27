@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-    This module creates an api endpoint
-"""
+""" This module creates an api endpoint """
 
 from api.v1.views import app_views
 from flask import Flask
@@ -15,9 +13,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def tear(_):
-    """
-        Closes the storage
-    """
+    """ Closes the storage """
     storage.close()
 
 
@@ -32,4 +28,4 @@ def page_not_found(_):
 if __name__ == '__main__':
     host = getenv('HBNB_API_HOST') if getenv('HBNB_API_HOST') else '0.0.0.0'
     port = getenv('HBNB_API_PORT') if getenv('HBNB_API_PORT') else 5000
-    app.run(host=host, port=int(port), threaded=True)
+    app.run(host=host, port=int(port), threaded=True, debug=True)
