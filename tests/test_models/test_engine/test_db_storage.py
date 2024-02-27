@@ -160,4 +160,6 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """ Tests the count() """
         db = models.storage
+        state = State(name='Ontario')
+        
         self.assertFalse
