@@ -83,6 +83,8 @@ class TestFileStorage(unittest.TestCase):
         db = DBStorage()
         self.assertNotEqual(db.all(), {})
 
+    @unittest        
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
