@@ -5,7 +5,7 @@ A script that starts a flask app and / returns “Hello HBNB!”
 
 
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 
@@ -20,6 +20,15 @@ def tear_storage(exception):
     This method closes storage instance
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def error_404(error):
+    """
+    Return "error": "Not found"
+    """
+    response = {'error': 'Not found'}
+    return jsonify(response), 404
 
 
 if __name__ == "__main__":
