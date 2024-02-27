@@ -18,6 +18,8 @@ import json
 import os
 import pep8
 import unittest
+from models.engine import file_storage
+from models import storage
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +115,34 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+
+    @unittest.skipIf(storage._class.name_ != 'FileStorage', "not testing File storage")
+    def test_all_returns_dict(self):
+        """Test that all returns the FileStorage.__objects attr"""
+        # Add your test code here
+        all_objects = storage.all()
+        self.assertIsInstance(all_objects, dict)
+
+    @unittest.skipIf(storage._class.name_ != 'FileStorage', "not testing File storage")
+    def test_new(self):
+        """test that new adds an object to the FileStorage.__objects attr"""
+        # Add your test code here
+        new_state = State(name="California")
+        storage.new(new_state)
+        all_objects = storage.all()
+        self.assertIn(new_state, all_objects.values())
+
+    @unittest.skipIf(storage._class.name_ != 'FileStorage', "not testing File storage")
+    def test_save(self):
+        """Test that save properly saves objects to file.json"""
+        # Add your test code here
+        state_count_before = len(storage.all(State))
+        new_state = State(name="Florida")
+        storage.new(new_state)
+        storage.save()
+        state_count_after = len(storage.all(State))
+        self.assertEqual(state_count_after, state_count_before + 1)
