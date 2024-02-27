@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the class DBStorage
-"""
+""" DBStorage """
 
 import models
 from models.amenity import Amenity
@@ -76,13 +74,20 @@ class DBStorage:
         self.__session.remove()
 
     def get(self, cls, id):
-        """Retrieves one object based on the class and its ID."""
-        if cls and id:
-            return self.__session.query(cls).get(id)
+        '''get:
+        retrieve an object from the file storage by class and id.
+        '''
+        if cls in classes.values() and id and type(id) == str:
+            d_obj = self.all(cls)
+            for key, value in d_obj.items():
+                if key.split(".")[1] == id:
+                    return value
         return None
 
     def count(self, cls=None):
-        """Counts the number of objects in storage matching the given class."""
-        if cls:
-            return self.__session.query(cls).count()
-        return sum(self.__session.query(cls).count() for cls in classes.values())
+        '''count:
+                count the number of objects in storage matching the given class.'''
+        data = self.all(cls)
+        if cls in classes.values():
+            data = self.all(cls)
+        return len(data)

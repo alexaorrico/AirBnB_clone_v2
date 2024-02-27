@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Contains the TestFileStorageDocs classes
-"""
+"""TestFileStorageDocs """
 
 from datetime import datetime
 import inspect
@@ -18,8 +16,7 @@ import json
 import os
 import pep8
 import unittest
-from models.engine import file_storage
-from models import storage
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -43,7 +40,7 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
-test_file_storage.py'])
+                                    test_file_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -116,33 +113,30 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """ Tests method to obtain an instance file storage"""
+        self.storage = FileStorage()
+        self.storage.reload()
+        dic = {"name": "Vecindad"}
+        instance = State(**dic)
+        self.storage.new(instance)
+        self.storage.save()
+        self.storage = FileStorage()
+        get_instance = self.storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-
-    @unittest.skipIf(storage._class.name_ != 'FileStorage', "not testing File storage")
-    def test_all_returns_dict(self):
-        """Test that all returns the FileStorage.__objects attr"""
-        # Add your test code here
-        all_objects = storage.all()
-        self.assertIsInstance(all_objects, dict)
-
-    @unittest.skipIf(storage._class.name_ != 'FileStorage', "not testing File storage")
-    def test_new(self):
-        """test that new adds an object to the FileStorage.__objects attr"""
-        # Add your test code here
-        new_state = State(name="California")
-        storage.new(new_state)
-        all_objects = storage.all()
-        self.assertIn(new_state, all_objects.values())
-
-    @unittest.skipIf(storage._class.name_ != 'FileStorage', "not testing File storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
-        # Add your test code here
-        state_count_before = len(storage.all(State))
-        new_state = State(name="Florida")
-        storage.new(new_state)
-        storage.save()
-        state_count_after = len(storage.all(State))
-        self.assertEqual(state_count_after, state_count_before + 1)
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """ Tests count method file storage """
+        self.storage = FileStorage()
+        self.storage.reload()
+        dic = {"name": "Dallas"}
+        state = State(**dic)
+        self.storage.new(state)
+        dic = {"name": "New"}
+        city = City(**dic)
+        self.storage.new(city)
+        self.storage.save()
+        c = self.storage.count()
+        self.assertEqual(len(self.storage.all()), c)
