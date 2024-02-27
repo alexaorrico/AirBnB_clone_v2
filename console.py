@@ -118,9 +118,9 @@ class HBNBCommand(cmd.Cmd):
             return False
         for key in obj_dict:
             obj_list.append(str(obj_dict[key]))
-        print("[", end="")
+        print("{", end="")
         print(", ".join(obj_list), end="")
-        print("]")
+        print("}")
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
