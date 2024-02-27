@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Routes for handling Place objects and operations
+Route for handling Place objects and operations
 """
 from flask import jsonify, abort, request
 from api.v1.views import app_views, storage
@@ -9,7 +9,7 @@ from flasgger.utils import swag_from
 
 
 @app_views.route("/cities/<city_id>/places", methods=["GET"], strict_slashes=False)
-@swag_from('documentation/place/get_places.yml', methods=['GET'])
+@swag_from('documentation/place/get_places_by_city.yml', methods=['GET'])
 def get_places_by_city(city_id):
     """
     Retrieves all Place objects by city
@@ -24,7 +24,7 @@ def get_places_by_city(city_id):
 
 
 @app_views.route("/cities/<city_id>/places", methods=["POST"], strict_slashes=False)
-@swag_from('documentation/place/post_place.yml', methods=['POST'])
+@swag_from('documentation/place/create_place.yml', methods=['POST'])
 def create_place(city_id):
     """
     Create place route
@@ -53,7 +53,7 @@ def create_place(city_id):
 
 
 @app_views.route("/places/<place_id>", methods=["GET"], strict_slashes=False)
-@swag_from('documentation/place/get_place.yml', methods=['GET'])
+@swag_from('documentation/place/get_place_by_id.yml', methods=['GET'])
 def get_place_by_id(place_id):
     """
     Gets a specific Place object by ID
@@ -70,7 +70,7 @@ def get_place_by_id(place_id):
 
 
 @app_views.route("/places/<place_id>", methods=["PUT"], strict_slashes=False)
-@swag_from('documentation/place/put_place.yml', methods=['PUT'])
+@swag_from('documentation/place/update_place.yml', methods=['PUT'])
 def update_place(place_id):
     """
     Updates specific Place object by ID
