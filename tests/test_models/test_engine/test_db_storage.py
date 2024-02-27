@@ -129,3 +129,6 @@ class TestFileStorage(unittest.TestCase):
         """ tests if reload() recreates objs in the db """
         db = DBStorage()
         ini = len(db.all())
+        db.reload()
+        end = db.all()
+        self.assertNot
