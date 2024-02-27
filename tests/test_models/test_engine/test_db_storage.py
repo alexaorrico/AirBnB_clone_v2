@@ -97,7 +97,8 @@ class TestFileStorage(unittest.TestCase):
         db = models.storage
         state = State({'name': "california", 'age': 20})
         db.new(state)
-        self.assertDictEqual(db.)
+        s
+        self.assertDictEqual()
         
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
