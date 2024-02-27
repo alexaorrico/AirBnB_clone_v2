@@ -139,5 +139,5 @@ class TestFileStorage(unittest.TestCase):
         db = models.storage
         state = State(name='Texas')
         ret = db.get(State, None)
-        
+        self.assertEqual(ret, None)
         
