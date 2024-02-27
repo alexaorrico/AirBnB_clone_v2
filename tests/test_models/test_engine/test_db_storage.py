@@ -108,4 +108,5 @@ class TestFileStorage(unittest.TestCase):
         db = models.storage
         state = State(name='Lagos')
         db.new(state)
-        db.
+        db.save()
+        
