@@ -134,5 +134,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertFalse(end == 0)
 
     def test_get_with_id_None(self):
-        """ Tests if get retrieves an object """
+        """ Tests if get retrieves an object when id is None """
+        db = models.storage
         
