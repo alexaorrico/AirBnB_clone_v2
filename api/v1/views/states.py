@@ -59,7 +59,7 @@ def add_state(state_id=None):
     data = request.get_json()
     if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
-    A
+
     if 'name' not in data:
         raise BadRequest(description='Missing name')
     new_state = State(**data)
