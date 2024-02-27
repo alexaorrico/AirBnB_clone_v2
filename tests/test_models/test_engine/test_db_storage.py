@@ -140,4 +140,7 @@ class TestFileStorage(unittest.TestCase):
         state = State(name='Texas')
         ret = db.get(State, None)
         self.assertEqual(ret, None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_with_wrongID(self):
         
