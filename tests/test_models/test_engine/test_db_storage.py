@@ -152,5 +152,6 @@ class TestFileStorage(unittest.TestCase):
     def test_get_with_ID(self):
         db = models.storage
         state = State(name='London')
+        state.save()
         ret = db.get(State, state.id)
         self.assertEqual(ret, state)
