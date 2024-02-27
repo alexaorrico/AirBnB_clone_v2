@@ -13,12 +13,14 @@ app = Flask(__name__)
 # register blueprint app_views
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def tear_storage(exception):
     """
     This method closes storage instance
     """
     storage.close()
+
 
 if __name__ == "__main__":
     HOST = getenv('HBNB_API_HOST', '0.0.0.0')
