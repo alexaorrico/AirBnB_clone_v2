@@ -58,22 +58,6 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def update(self, attr_dict=None):
-        """
-            updates the basemodel and sets the correct attributes
-        """
-        IGNORE = [
-            'id', 'created_at', 'updated_at',
-            'state_id', 'user_id', 'city_id', 'place_id'
-        ]
-        if attr_dict:
-            updated_dict = {
-                k: v for k, v in attr_dict.items() if k not in IGNORE
-            }
-            for key, value in updated_dict.items():
-                setattr(self, key, value)
-            self.save()
-
     def to_dict(self):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()

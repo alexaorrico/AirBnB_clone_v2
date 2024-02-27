@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
-from models import *
+from models import storage, classes
 
 
 @app_views.route('/states', methods=['GET', 'POST'])
@@ -51,6 +51,7 @@ def states_with_id(state_id=None):
             abort(400, 'Not a JSON')
 
         for k, v in json_request.items():
-            setattr(k, v)
-        state_obj.update(json_request)
-        return jsonify(state_obj.to_json())
+            if k not in ['id', 'created_at', 'updated_at']:
+                setattr(state_obj, k, v)
+        state_obj.save()
+        return jsonify(state_obj.to_dict())
