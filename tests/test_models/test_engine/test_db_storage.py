@@ -99,7 +99,7 @@ class TestFileStorage(unittest.TestCase):
         state = State({'name': "california", 'age': 20})
         db.new(state)
         end = len(db.all(State))
-        self.assertGreater()
+        self.assertGreater(i)
         
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
