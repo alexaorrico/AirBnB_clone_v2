@@ -79,7 +79,7 @@ class DBStorage:
         """
         Retrives an object by its class and id
         """
-        return self.__session.query(cls).filter_by(id=id).first()
+        return self.__session.query(cls).filter_by(id==id).first()
 
     def count(self, cls=None):
         """
