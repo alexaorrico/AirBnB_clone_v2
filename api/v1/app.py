@@ -1,4 +1,4 @@
-#!/usr/bin/pytho3
+#!/usr/bin/python3
 """
 endpoint (route) will be to return the status of your API
 """
