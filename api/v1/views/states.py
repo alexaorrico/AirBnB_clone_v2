@@ -2,7 +2,7 @@
 """ Handles all State requests for the API """
 
 from api.v1.views import app_views
-from flask import jsonify
+from flask import jsonify, ra
 from models.state import State
 from models import storage
 
@@ -21,4 +21,6 @@ def one_state(state_id):
     """ Returns a JSON of a state whose id was requested """
     obj = storage.get(State, state_id)
     if obj is not None:
-        return jsonify(obj.to)
+        return jsonify(obj.to_dict())
+    else:
+        
