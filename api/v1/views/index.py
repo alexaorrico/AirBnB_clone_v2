@@ -24,5 +24,6 @@ def endpoint():
     return jsonify({"amenities": storage.count(Amenity),
                     "cities": storage.count(City),
                     "places": storage.count(Place),
-                    "reviews"})
+                    "reviews": storage.count(Review),
+                    "states": storage.re})
     
