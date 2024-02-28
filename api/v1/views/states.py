@@ -37,4 +37,4 @@ def delete_state(state_id):
 
 @app_views.route('/states', methods=['POST'])
 def add_state(state):
-    """ """
+    """ Creates a new state obj into the db"""
