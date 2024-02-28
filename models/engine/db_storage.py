@@ -78,15 +78,10 @@ class DBStorage:
     def get(self, cls, id):
         """method to retrieve one object Returns the object
         based on the class and its ID, or None if not found"""
-        cls = "State"
-        if cls is not None:
-            if cls in classes:
-                objs = self.__session.query(
-                        classes[cls]).filter_by(id=id).all()
-                for obj in objs:
-                    result = "[{:s}] ({:s}) {}".format(
-                                obj.__class__.__name__, obj.id, obj.__dict__)
-                return result
+        objs = models.storage.all(cls)
+        for value in objs.values():
+            if value.id == id:
+                return value
         return None
 
     def count(self, cls=None):
@@ -96,13 +91,11 @@ class DBStorage:
         If no class is passed, returns the count of all
         objects in storage"""
         if cls is not None:
-            cls = classes[cls.__name__]
-            objs = self.__session.query(cls).all()
+            objs = models.storage.all(cls).values()
             count = len(objs)
-            return count
         else:
-            total_count = 0
+            count = 0
             for cls in classes:
-                objs = self.__session.query(classes[cls]).all()
-                total_count += len(objs)
-            return total_count
+                objs = models.storage.all(cls).values()
+                count += len(objs)
+        return count
