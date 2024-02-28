@@ -49,4 +49,5 @@ def add_state(state):
     return jsonify(obj.to_dict())
 
 
-@app_views.route('/states/<state_id>')
+@app_views.route('/states/<state_id>', methods=['PUT'])
+
