@@ -133,7 +133,7 @@ class TestDBStorageMethodsGet(unittest.TestCase):
         """
         Set up
         """
-        self.storage = DBStorage()
+        self.storage = FileStorage()
         self.state_obj = State(id=1812)
         self.storage.new(self.state_obj)
         self.storage.save()
@@ -176,7 +176,7 @@ class TestStorageCount(unittest.TestCase):
         """
         setup method
         """
-        self.storage = DBStorage()
+        self.storage = FileStorage()
         self.state1 = State(name="California")
         self.state1.save()
         self.state2 = State(name="Colorado")
@@ -221,6 +221,25 @@ class TestStorageCount(unittest.TestCase):
         """
         self.storage.all().clear()
         self.assertEqual(self.storage.count(State), 0)
+
+class TestFileStorageGetCount(unittest.TestCase):
+    def setUp(self):
+        self.storage = FileStorage()
+        self.place = Place()
+        self.review = Review()
+        self.user = User()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get_with_file_storage(self):
+        result = self.storage.get(Place, "some_id")
+        expected_msg = "OK"
+        self.assertEqual(result, expected_msg, msg=f"Got {result}, expected {expected_msg}")
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_count_with_file_storage(self):
+        result = self.storage.count(Place)
+        expected_msg = "OK"
+        self.assertEqual(result, expected_msg, msg=f"Got {result}, expected {expected_msg}")
 
 
 if __name__ == '__main__':

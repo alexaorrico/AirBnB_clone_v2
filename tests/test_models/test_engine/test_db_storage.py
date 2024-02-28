@@ -216,6 +216,24 @@ class TestStorageCount(unittest.TestCase):
         self.storage.all().clear()
         self.assertEqual(self.storage.count(State), 0)
 
+class TestDBStorageGetCount(unittest.TestCase):
+    def setUp(self):
+        self.storage = DBStorage()
+        self.place = Place()
+        self.review = Review()
+        self.user = User()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get_with_db_storage(self):
+        result = self.storage.get(Place, "some_id")
+        expected_msg = "OK"
+        self.assertEqual(result, expected_msg, msg=f"Got {result}, expected {expected_msg}")
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_count_with_db_storage(self):
+        result = self.storage.count(Place)
+        expected_msg = "OK"
+        self.assertEqual(result, expected_msg, msg=f"Got {result}, expected {expected_msg}")
 
 if __name__ == '__main__':
     unittest.main()
