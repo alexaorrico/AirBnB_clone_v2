@@ -16,7 +16,7 @@ def all_states(state):
     return jsonify(states)
 
 
-@app_views.route('/states/<int: state_id>')
+@app_views.route('/states/<state_id>')
 def one_state(state_id):
     """ Returns a JSON of a state whose id was requested """
     obj = storage.get(State, state_id)
@@ -25,4 +25,4 @@ def one_state(state_id):
     return jsonify({"error": "Not found"})
 
 
-@app_views.route('')
+@app_views.route('/states/<state_id>', methods=)
