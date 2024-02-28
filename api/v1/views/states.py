@@ -51,4 +51,5 @@ def add_state(state):
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
-    """ Updates a state obj with the """
+    """ Updates a state obj with the dict from HTTP request """
+    
