@@ -22,5 +22,5 @@ def one_state(state_id):
     obj = storage.get(State, state_id)
     if obj is not None:
         return jsonify(obj.to_dict())
-    
+    return jsonify({"e"})
         
