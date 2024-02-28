@@ -11,4 +11,5 @@ def all(state):
     """ Returns a JSON of State objects """
     states = []
     for obj in storage.all(State).values():
-        states.append(ob)
+        states.append(obj.to_dict())
+    
