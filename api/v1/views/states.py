@@ -16,7 +16,7 @@ def all_states():
     return jsonify(states)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False)
+@app_views.route('/states/<string:state_id>', strict_slashes=False)
 def one_state(state_id):
     """ Returns a JSON of a state whose id was requested """
     obj = storage.get(State, state_id)
