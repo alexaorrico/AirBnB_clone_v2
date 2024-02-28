@@ -7,6 +7,6 @@ from models import storage
 
 
 @app_views.route('/states', methods=['GET'])
-def all(states):
+def all(state):
     """ Returns a JSON of State objects """
     
