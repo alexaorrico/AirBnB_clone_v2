@@ -4,6 +4,7 @@
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
+from models.amenity import Amenity
 
 
 @app_views.route('/status')
@@ -14,4 +15,5 @@ def status():
 
 @app_views.route('/stats')
 def endpoint():
-    """ Retrieves the number of each """
+    """ Retrieves the number of each objects """
+    
