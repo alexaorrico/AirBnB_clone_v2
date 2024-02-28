@@ -59,4 +59,4 @@ def update_state(state_id):
         new = request.get_json()
     except Exception:
         return make_response("Not a JSON", 400)
-    
+    j
