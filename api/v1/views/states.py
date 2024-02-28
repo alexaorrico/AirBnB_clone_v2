@@ -65,4 +65,5 @@ def update_state(state_id):
         del new['created_at']
     if 'updated_at' in new.keys():
         del new['updated_at']
-    obj.
+    obj.__dict__.update(new)
+    obj.save()
