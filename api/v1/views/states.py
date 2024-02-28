@@ -32,7 +32,7 @@ def delete_state(state_id):
     obj = storage.get(State, state_id)
     if obj is None:
         return make_response(jsonify({"error": "Not found"}), 404)
-    storage.delete(obj)
+    obj.delete()
     return make_response(jsonify({}), 200)
 
 
