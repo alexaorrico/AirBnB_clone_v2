@@ -45,4 +45,4 @@ def add_state(state):
     if 'name' not in new.keys():
         return make_response("Missing name", 400)
     obj = State(**new)
-    
+    obj.save()
