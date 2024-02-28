@@ -16,8 +16,8 @@ def close_storage(exception=None):
     Function to be called when the application context is torn down.
     Closes the SQLAlchemy session.
     """
-    storage.close()
+    return storage.close()
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, threaded=True)
