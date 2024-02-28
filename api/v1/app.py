@@ -2,7 +2,7 @@
 """
 start my API
 """
-from flask import Flask
+from flask import Flask, make_response, jsonify
 from model import storage
 from api.v1.views import app_views
 
@@ -21,3 +21,8 @@ if __name__ == "__main__":
 
     app.run(host, int(port), threaded=True)
 
+
+@app.errorhandler(404)
+def not_found(err):
+    """custom error message"""
+    return make_response(jsonify({"error": "Not found"}), 404)
