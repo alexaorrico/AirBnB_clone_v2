@@ -25,4 +25,4 @@ def one_state(state_id):
     return jsonify({"error": "Not found"})
 
 
-
+@app_views.route('')
