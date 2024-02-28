@@ -10,10 +10,12 @@ from os import getenv
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def teardown_context(error=None):
     """ calls storage.close() """
     storage.close()
+
 
 if __name__ == "__main__":
     HBNB_API_HOST = getenv("HBNB_API_HOST")
