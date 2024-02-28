@@ -20,7 +20,7 @@ def teardown_context(error=None):
 @app.errorhandler(404)
 def not_found():
     """ Returns a JSON with error not found """
-    return jsonify({""})
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
