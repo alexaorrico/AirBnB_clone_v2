@@ -91,6 +91,56 @@ class TestFileStorage(unittest.TestCase):
 
 
 @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestStorageGet(unittest.TestCase):
+    """
+    Testing `get()` method in DBStorage
+    """
+
+    @classmethod
+    def setUpClass(cls)
+        """
+        setup tests for class
+        """
+        print('\n\n.................................')
+        print('...... Testing Get() Method ......')
+        print('.......... Place  Class ..........')
+        print('.................................\n\n')
+
+    def setUp(self)
+        """
+        setup method 
+        """
+        self.state = State(name="Florida")
+        self.state.save()	
+
+    def test_get_method_obj(self):
+        """
+        testing get() method
+        :return: True if pass, False if not pass
+        """
+        result = storage.get(cls="State", id=self.state.id)	 
+
+        self.assertIsInstance(result, State)
+
+    def test_get_method_return(self):
+        """
+        testing get() method for id match
+        :return: True if pass, false if not pass
+        """
+        result = storage.get(cls="State", id=str(self.state.id))	 
+        self.assertEqual(self.state.id, result.id)
+
+    def test_get_method_none(self)
+        """
+        testing get() method for None return
+        :return: True if pass, false if not pass
+        """
+        result = storage.get(cls="State", id="doesnotexist")
+
+        self.assertIsNone(result)
+
+
+@unittest.skipIf(storage_type != 'db', 'skip if environ is not db')
 class TestCountGet(unittest.TestCase):
     """testing Count and Get methods"""
 
