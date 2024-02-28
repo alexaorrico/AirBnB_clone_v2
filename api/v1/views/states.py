@@ -35,7 +35,7 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states', methods=['POST'], s)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def add_state(state):
     """ Creates a new state obj into the db """
     try:
@@ -49,7 +49,7 @@ def add_state(state):
     return jsonify(obj.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """ Updates a state obj with the dict from HTTP request """
     obj = storage.get(State, state_id)
