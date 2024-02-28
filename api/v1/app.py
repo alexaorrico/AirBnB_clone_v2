@@ -2,6 +2,7 @@
 """
 endpoint (route) will be to return the status of your API
 """
+from os import getenv
 from models import storage
 from flask import Flask, jsonify
 from api.v1.views import app_views
@@ -20,4 +21,6 @@ def close_storage(exception=None):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, threaded=True)
+    host = getenv("HBNB_API_HOST") if getenv("HBNB_API_HOST") else "0.0.0.0"
+    port = getenv("HBNB_API_PORT") if getenv("HBNB_API_PORT") else 5000
+    app.run(host=host, port=port, threaded=True)
