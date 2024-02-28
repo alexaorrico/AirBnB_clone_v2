@@ -22,10 +22,12 @@ The console is the first segment of the AirBnB project at Holberton School that 
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
 
 ## Installation
-* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
-* Run hbnb(interactively): `./console` and enter command
-* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
+* Clone this repository: `git clone "https://github.com/krisCrossApplecause/AirBnB_clone_v3.git"`
+* Access AirBnb directory: `cd AirBnB_clone_v3`
+* Run hbnb(interactively) with JSON file storage: `./console` and enter command
+* Run hbnb(non-interactively) with JSON file storage: `echo "<command>" | ./console.py`
+* Run hbnb(interactively) with MySQL file storage: `HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./console.py` and enter command
+* Run hbnb(non-interactively) with MySQL file storage: `echo "<command>" | HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db ./console.py`
 
 ## File Descriptions
 [console.py](console.py) - the console contains the entry point of the command interpreter. 
@@ -126,6 +128,17 @@ TestBaseModel class:
 * `def test_user_module_docstring(self)` - Test for the user.py module docstring
 * `def test_user_class_docstring(self)` - Test for the User class docstring
 
+#### `api/v1/` directory contains our api APP for this project:
+[/v1/app.py](/api/v1/app.py) - Contains our flask app
+
+#### `api/v1/views/` directory contains our api api views for this project:
+[/v1/views/amenities.py](/api/v1/views/amenities.py) - Contains our amenities api views
+[/v1/views/cities.py](/api/v1/views/cities.py) - Contains our cities api views
+[/v1/views/places_reviews.py](/api/v1/views/places_reviews.py) - Contains our places_reviews api views
+[/v1/views/places.py](/api/v1/views/places.py) - Contains our places api views
+[/v1/views/states.py](/api/v1/views/states.py) - Contains our states api views
+[/v1/views/users.py](/api/v1/views/users.py) - Contains our users api views
+[/v1/views/index.py](/api/v1/views/index.py) - Contains the base api view for stats and status
 
 ## Examples of use
 ```
@@ -156,6 +169,9 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
+Karis Richardson - [Github](https://github.com/krisCrossApplesauce)
+Ben Harper - [Github](https://github.com/HenBarper)
 
 Second part of Airbnb: Joann Vuong
 ## License
