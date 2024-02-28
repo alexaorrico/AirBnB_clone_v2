@@ -60,12 +60,8 @@ def update_state(state_id):
     put_data = request.get_json()
     if put_data is None:
         abort(400, "Not a JSON")
-    if 'id' in put_data.keys():
-        del put_data['id']
-    if 'created_at' in put_data.keys():
-        del put_data['created_at']
-    if 'updated_at' in put_data.keys():
-        del put_data['updated_at']
-    obj.__dict__.update(put_data)
+    for key, value in put_data.items():
+        if key not in ["id", "created_at", "updated_at"]:
+            setattr(obj, key, value)
     obj.save()
     return make_response(jsonify(obj.to_dict()), 200)
