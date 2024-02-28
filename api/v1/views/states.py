@@ -41,4 +41,4 @@ def add_state(state):
     try:
         new = request.get_json()
     except Exception:
-        
+        make_response()
