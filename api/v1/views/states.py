@@ -25,7 +25,8 @@ def one_state(state_id):
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_state(state_id):
     """ Deletes an obj whose id was passed """
     obj = storage.get(State, state_id)
@@ -49,7 +50,8 @@ def add_state(state):
     return jsonify(obj.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_state(state_id):
     """ Updates a state obj with the dict from HTTP request """
     obj = storage.get(State, state_id)
