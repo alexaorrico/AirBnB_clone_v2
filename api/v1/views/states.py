@@ -30,3 +30,4 @@ def delete_state(state_id):
     """ Deletes an obj whose id was passed """
     if storage.get(State, state_id) is None:
         return make_response(jsonify({"error": "Not found"}), 404)
+    
