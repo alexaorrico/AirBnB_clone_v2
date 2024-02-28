@@ -47,7 +47,7 @@ def add_state():
         abort(400, "Missing name")
     obj = State(**post_data)
     obj.save()
-    return jsonify(obj.to_dict())
+    return jsonify(obj.to_dict()), 201
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
