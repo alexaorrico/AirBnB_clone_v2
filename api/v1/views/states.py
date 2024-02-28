@@ -2,7 +2,7 @@
 """ Handles all State requests for the API """
 
 from api.v1.views import app_views
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request, abort
 from models.state import State
 from models import storage
 
@@ -37,15 +37,14 @@ def delete_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def add_state(state):
+def add_state():
     """ Creates a new state obj into the db """
-    try:
-        new = request.get_json()
-    except Exception:
-        return make_response("Not a JSON", 400)
-    if 'name' not in new.keys():
-        return make_response("Missing name", 400)
-    obj = State(**new)
+    post_data = request.get_json()
+    if post_data is None:
+        abort(400, "Not a JSON")
+    if "name" not in post_data.keys():
+        abort(400, "Missing name")
+    obj = State(**post_data)
     obj.save()
     return jsonify(obj.to_dict())
 
@@ -57,16 +56,15 @@ def update_state(state_id):
     obj = storage.get(State, state_id)
     if obj is None:
         return make_response(jsonify({"error": "Not found"}), 404)
-    try:
-        new = request.get_json()
-    except Exception:
-        return make_response("Not a JSON", 400)
-    if 'id' in new.keys():
-        del new['id']
-    if 'created_at' in new.keys():
-        del new['created_at']
-    if 'updated_at' in new.keys():
-        del new['updated_at']
-    obj.__dict__.update(new)
+    put_data = request.get_json()
+    if put_data is None:
+        abort(400, "Not a JSON")
+    if 'id' in put_data.keys():
+        del put_data['id']
+    if 'created_at' in put_data.keys():
+        del put_data['created_at']
+    if 'updated_at' in put_data.keys():
+        del put_data['updated_at']
+    obj.__dict__.update(put_data)
     obj.save()
     return make_response(jsonify(obj.to_dict()), 200)
