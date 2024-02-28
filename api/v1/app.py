@@ -2,7 +2,7 @@
 """ Flask App """
 
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from models import storage
 from os import getenv
 
@@ -18,9 +18,9 @@ def teardown_context(error=None):
 
 
 @app.errorhandler(404)
-def not_found():
+def not_found(error=404):
     """ Returns a JSON with error not found """
-    return jsonify({"error": "Not found"})
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == "__main__":
