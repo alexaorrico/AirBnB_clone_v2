@@ -15,3 +15,5 @@ def all(state):
         states.append(obj.to_dict())
     return jsonify(states)
 
+
+@app_views.route('/states/<>')
