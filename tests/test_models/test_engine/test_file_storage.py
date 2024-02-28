@@ -138,4 +138,3 @@ class TestFileStorage(unittest.TestCase):
         count_city = self.storage.count(City)
         self.assertEqual(count_state, 1)
         self.assertEqual(count_city, 1)
-
