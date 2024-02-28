@@ -54,7 +54,7 @@ def update_state(state_id):
     """ Updates a state obj with the dict from HTTP request """
     obj = storage.get(State, state_id)
     if obj is None:
-        return 
+        return make_response(jsonify({"error": "Not found"}), 404)
     try:
         new = request.get_json()
     except Exception:
