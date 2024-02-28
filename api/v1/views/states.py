@@ -9,4 +9,5 @@ from models import storage
 @app_views.route('/states', methods=['GET'])
 def all(state):
     """ Returns a JSON of State objects """
-    
+    states = []
+    for obj in storage.all(State)
