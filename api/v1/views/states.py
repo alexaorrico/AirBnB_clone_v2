@@ -19,4 +19,4 @@ def all_states(state):
 @app_views.route('/states/<int: state_id>')
 def one_state(state_id):
     """ Returns a JSON of a state whose id was requested """
-    
+    ret = storage.get(State, state_id)
