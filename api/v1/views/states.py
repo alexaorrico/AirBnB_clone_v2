@@ -9,7 +9,7 @@ from models import storage
 
 @app_views.route('/states', methods=['GET'])
 def all_states(state):
-    """ Returns a JSON of State objects """
+    """ Returns a JSON of all State objects """
     states = []
     for obj in storage.all(State).values():
         states.append(obj.to_dict())
@@ -17,4 +17,5 @@ def all_states(state):
 
 
 @app_views.route('/states/<int: state_id>')
-def one_state()
+def one_state(state_id):
+    """ Returns a JSON of a state"""
