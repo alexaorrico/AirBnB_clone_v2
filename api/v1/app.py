@@ -17,6 +17,12 @@ def teardown_context(error=None):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found():
+    """ Returns a JSON with error not found """
+
+
+
 if __name__ == "__main__":
     HBNB_API_HOST = getenv("HBNB_API_HOST")
     HBNB_API_PORT = getenv("HBNB_API_PORT")
