@@ -10,5 +10,6 @@ app = Flask(__name__)
 
 
 if __name__ == "__main__":
-    HOST
+    HBNB_API_HOST = getenv("HBNB_API_HOST")
+    if 
     app.run(host=)
