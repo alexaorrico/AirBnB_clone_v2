@@ -35,4 +35,5 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('')
+@app_views.route('/states', methods=['POST'])
+def 
