@@ -33,6 +33,7 @@ def delete_state(state_id):
     if obj is None:
         return make_response(jsonify({"error": "Not found"}), 404)
     obj.delete()
+    storage.save()
     return make_response(jsonify({}), 200)
 
 
