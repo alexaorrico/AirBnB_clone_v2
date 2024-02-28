@@ -6,4 +6,5 @@ from models.state import State
 
 
 @app_views.route('/states', methods=['GET'])
-def all(stat)
+def all(states):
+    """ Returns a JSON of State objects """
