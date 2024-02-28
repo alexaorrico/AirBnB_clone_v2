@@ -67,3 +67,4 @@ def update_state(state_id):
         del new['updated_at']
     obj.__dict__.update(new)
     obj.save()
+    
