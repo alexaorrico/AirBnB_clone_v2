@@ -6,8 +6,8 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
-from models import engine
-from models.engine.file_storage import FileStorage
+from models import storage
+from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -20,16 +20,12 @@ from os import remove, stat, path
 import os
 import pep8
 import unittest
-
-User = models.user.User
-BaseModel = models.base_model.BaseModel
-FileStorage = engine.file_storage.FileStorage
-storage = models.storage
+FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 F = './dev/file.json'
 if models.storage_t != 'db':
-    FileStorage = engine.file_storage.FileStorage
+    FileStorage = models.file_storage.FileStorage
 
 
 class TestFileStorageDocs(unittest.TestCase):
@@ -56,9 +52,9 @@ test_file_storage.py'])
 
     def test_file_storage_module_docstring(self):
         """Test for the file_storage.py module docstring"""
-        self.assertIsNot(FileStorage.__doc__, None,
-                       "file_storage.py needs a docstring")
-        self.assertTrue(len(FileStorage.__doc__) >= 1,
+        self.assertIsNot(file_storage.__doc__, None,
+                         "file_storage.py needs a docstring")
+        self.assertTrue(len(file_storage.__doc__) >= 1,
                         "file_storage.py needs a docstring")
 
     def test_file_storage_class_docstring(self):
@@ -138,11 +134,8 @@ class TestUserFsInstances(unittest.TestCase):
 
     def tearDownClass():
         """tidies up the tests removing storage objects"""
-        storage.close()
-        try:
-            remove(F)
-        except FileNotFoundError:
-            pass #Ignore if the file does't exist
+        storage.delete_all()
+        remove(F)
 
     def setUp(self):
         """initializes new user for testing"""
@@ -162,10 +155,10 @@ class TestUserFsInstances(unittest.TestCase):
         self.assertEqual(expected, count_user)
 
     def test_count_all(self):
-       """checks count method with no class input"""
-       count_all = storage.count()
-       expected = 2
-       self.assertEqual(expected, c#iount_all))
+        """checks count method with no class input"""
+        count_all = storage.count()
+        expected = 2
+        self.assertEqual(expected, count_all)
 
     def test_get_cls_id(self):
         """checks get method with class and id inputs"""
