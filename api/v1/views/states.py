@@ -46,4 +46,7 @@ def add_state(state):
         return make_response("Missing name", 400)
     obj = State(**new)
     obj.save()
-    return jsonify()
+    return jsonify(obj.to_dict())
+
+
+@a
