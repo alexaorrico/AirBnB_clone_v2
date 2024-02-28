@@ -35,7 +35,7 @@ def delete_state(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], s)
 def add_state(state):
     """ Creates a new state obj into the db """
     try:
