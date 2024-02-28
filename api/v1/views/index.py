@@ -22,3 +22,4 @@ def status():
 def endpoint():
     """ Retrieves the number of each objects """
     
+    
