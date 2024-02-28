@@ -61,4 +61,5 @@ def update_state(state_id):
         return make_response("Not a JSON", 400)
     if 'id' in new.keys():
         del new['id']
-    if ''
+    if 'created_at' in new.keys():
+        del new[]
