@@ -28,6 +28,7 @@ def one_state(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """ Deletes an obj whose id was passed """
+    
     if storage.get(State, state_id) is None:
         return make_response(jsonify({"error": "Not found"}), 404)
-    
+    storage.delete()
