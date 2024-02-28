@@ -67,4 +67,4 @@ def update_state(state_id):
         del new['updated_at']
     obj.__dict__.update(new)
     obj.save()
-    return make_response(jsonify(obj.to_dict()))
+    return make_response(jsonify(obj.to_dict()), 200)
