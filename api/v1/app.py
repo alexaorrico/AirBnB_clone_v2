@@ -3,7 +3,7 @@
 Variable app, instance of Flask.
 """
 from os import environ
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 
@@ -18,6 +18,12 @@ app.register_blueprint(app_views)
 def teardown_storage(exec=None):
     """closes storage connection"""
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(err):
+    """custom 404 error page"""
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
