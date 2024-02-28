@@ -36,4 +36,4 @@ def delete_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'])
-def 
+def add_state()
