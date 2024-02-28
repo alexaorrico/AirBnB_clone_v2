@@ -44,4 +44,4 @@ def add_state(state):
         return make_response("Not a JSON", 400)
     if 'name' not in new.keys():
         return make_response("Missing name", 400)
-    
+    obj = State()
