@@ -41,4 +41,5 @@ def add_state(state):
     try:
         new = request.get_json()
     except Exception:
-        return make_response("Not a JSON", )
+        return make_response("Not a JSON", 400)
+    
