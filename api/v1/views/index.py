@@ -22,5 +22,7 @@ def status():
 def endpoint():
     """ Retrieves the number of each objects """
     return jsonify({"amenities": storage.count(Amenity),
-                    "cities": storage.count})
+                    "cities": storage.count(City),
+                    "places": storage.count(Place),
+                    "reviews"})
     
