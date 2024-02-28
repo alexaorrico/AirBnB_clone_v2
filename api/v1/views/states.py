@@ -53,3 +53,8 @@ def add_state(state):
 def update_state(state_id):
     """ Updates a state obj with the dict from HTTP request """
     
+    try:
+        new = request.get_json()
+    except Exception:
+        return make_response("Not a JSON", 400)
+    
