@@ -54,13 +54,14 @@ def create_state():
     """
     Creates a State
     """
-    if not request.get_json():
+    req = request.get_json()
+    if type(req) is not dict:
         return abort(400, {'message': 'Not a JSON'})
 
-    if 'name' not in request.get_json():
+    if 'name' not in req:
         return abort(400, {'message': 'Missing name'})
 
-    new_state = State(**request.get_json())
+    new_state = State(**req)
     new_state.save()
 
     return jsonify(new_state.to_dict()), 201
@@ -74,8 +75,8 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-
-    if not request.get_json():
+    req = request.get_json()
+    if type(req) is not dict:
         return abort(400, {'message': 'Not a JSON'})
 
     check = ["id", "state_id", "created_at", "updated_at"]
