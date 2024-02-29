@@ -26,9 +26,11 @@ def stats():
     """
     endpoint that retrieves the number of each objects by type
     """
-    return jsonify({"amenities": storage.count(Amenity),
-                    "city": storage.count(City),
-                    "place": storage.count(Place),
-                    "review": storage.count(Review),
-                    "state": storage.count(State),
-                    "user": storage.count(User)})
+    return jsonify({
+        "amenities": storage.count(Amenity),
+        "city": storage.count(City),
+        "place": storage.count(Place),
+        "review": storage.count(Review),
+        "state": storage.count(State),
+        "user": storage.count(User)
+        })
