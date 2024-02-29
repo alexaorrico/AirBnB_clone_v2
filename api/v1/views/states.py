@@ -31,11 +31,10 @@ def retrieve_state(state_id):
     """
     Retrieves a State object
     """
-    states = storage.all(State).values()
-    states_list = [state.to_dict() for state in states if state.id == state_id]
-    if not states_list:
+    states = storage.get(State, state_id)
+    if states is not None:
         abort(404)
-    return jsonify(states_list)
+    return jsonify(state.to_dict())
 
 
 @app_views.route("/states/<state_id>", methods=['DELETE'],
