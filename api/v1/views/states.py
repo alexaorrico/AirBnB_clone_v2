@@ -14,7 +14,7 @@ def all_states():
     states = []
     for obj in storage.all(State).values():
         states.append(obj.to_dict())
-    return jsonify(states), 200
+    return jsonify(states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'],
