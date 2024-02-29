@@ -32,7 +32,7 @@ def retrieve_state(state_id):
     Retrieves a State object
     """
     states = storage.get(State, state_id)
-    if states is not None:
+    if states is None:
         abort(404)
     return jsonify(state.to_dict())
 
