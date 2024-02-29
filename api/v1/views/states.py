@@ -13,7 +13,7 @@ def all_states():
     states = []
     for obj in storage.all(State).values():
         states.append(obj.to_dict())
-    return jsonify(states), 200
+    return jsonify(states)
 
 
 @app_views.route('/states/<string:state_id>', strict_slashes=False)
@@ -21,7 +21,7 @@ def one_state(state_id):
     """ Returns a JSON of a state whose id was requested """
     obj = storage.get(State, state_id)
     if obj is not None:
-        return jsonify(obj.to_dict()), 200
+        return jsonify(obj.to_dict())
     return make_response(jsonify({"error": "Not found"}), 404)
 
 
