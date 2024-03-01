@@ -35,5 +35,5 @@ def one_city(city_id):
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
-def
+def delete_city
     
