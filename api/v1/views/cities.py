@@ -8,7 +8,7 @@ from models.city import City
 from models.state import State
 
 
-@app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'],
+@app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def all_cities(state_id):
     """ Returns all cities linked to a particular city """
@@ -23,7 +23,7 @@ def all_cities(state_id):
         return jsonify(cities), 200
 
 
-@app_views.route('/api/v1/cities/<city_id>', methods=['GET'],
+@app_views.route('/cities/<city_id>', methods=['GET'],
                  strict_slashes=False)
 def one_city(city_id):
     """ Returns one city """
@@ -33,7 +33,7 @@ def one_city(city_id):
     abort(404)
 
 
-@app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'],
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
     """ Deletes a city object """
@@ -45,11 +45,11 @@ def delete_city(city_id):
     abort(404)
 
 
-@app_views.route('/api/v1/states/<state_id>/cities',
+@app_views.route('/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """ Creates a new city obj using a state_id """
-    data = request.json()
+    data = request.get_json()
     if not isinstance(data, dict):
         abort(400, "Not a JSON")
     if 'name' not in data:
@@ -62,11 +62,11 @@ def create_city(state_id):
     abort(404)
 
 
-@app_views.route('/api/v1/cities/<city_id>', methods=['PUT'],
+@app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
     """ Updates a city package """
-    data = request.json()
+    data = request.get_json()
     if not isinstance(data, dict):
         abort(400, "Not a JSON")
     obj = storage.get(City, city_id)
