@@ -57,3 +57,5 @@ def create_city(state_id):
     if storage.get(State, state_id):
         data['state_id'] = state_id
         obj = City(**data)
+        obj.save()
+        
