@@ -31,4 +31,7 @@ def one_city(city_id):
     if city:
         return jsonify(city.to_dict()), 200
     abort(404)
+
+
+@app_views.route()
     
