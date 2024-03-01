@@ -2,6 +2,7 @@
 """ New City view """
 
 from api.v1.views import app_views
+from flask import abort, jsonify
 from models import storage
 from models.city import City
 from models.state import State
@@ -11,4 +12,4 @@ from models.state import State
                  strict_slashes=False)
 def all_cities(state_id):
     """ Returns all cities linked to a particular city """
-    
+    state_obj = storage.get
