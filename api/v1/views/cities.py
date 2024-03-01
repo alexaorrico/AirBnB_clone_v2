@@ -24,4 +24,7 @@ def all_cities(state_id):
 
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['GET'],
-                 strict_slashes=F)
+                 strict_slashes=False)
+def one_city(city_id):
+    """ Returns one city """
+    
