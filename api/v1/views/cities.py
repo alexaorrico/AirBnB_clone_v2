@@ -66,4 +66,4 @@ def create_city(state_id):
                  strict_slashes=False)
 def update_city(city_id):
     """ Updates a city package """
-    
+    obj = storage.get()
