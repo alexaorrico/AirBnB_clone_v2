@@ -10,4 +10,5 @@ from models.state import State
 @app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def all_cities(state_id):
-    """ """
+    """ Returns all cities linked to a particular city """
+    
