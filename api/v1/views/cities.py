@@ -74,4 +74,4 @@ def update_city(city_id):
         for key, value in data.items():
             if key not in ["id", "state_id", "created_at", "updated_at"]:
                 setattr(obj, key, value)
-    
+        obj.
