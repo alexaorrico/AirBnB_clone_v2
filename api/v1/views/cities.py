@@ -5,4 +5,6 @@ from api.v1.views import app_views
 from models.city import City
 
 
-@app_views.route('/api/v1/states/<state_id>/cities')
+@app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'],
+                 strict_slashes=False)
+def 
