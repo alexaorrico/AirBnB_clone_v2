@@ -19,4 +19,7 @@ def all_cities(state_id):
             cities.append(obj.to_dict())
     if len(cities) == 0:
         abort(404)
-    
+    else:
+        return jsonify(cities), 200
+
+
