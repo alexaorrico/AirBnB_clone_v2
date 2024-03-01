@@ -41,4 +41,5 @@ def delete_city(city_id):
     if city:
         city.delete()
         storage.save()
+        return 
     
