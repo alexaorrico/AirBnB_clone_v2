@@ -12,4 +12,6 @@ from models.state import State
                  strict_slashes=False)
 def all_cities(state_id):
     """ Returns all cities linked to a particular city """
-    state_obj = storage.get
+    state_obj = storage.get(State, state_id)
+    if state_obj:
+        
