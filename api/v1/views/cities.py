@@ -71,4 +71,5 @@ def update_city(city_id):
         abort(400, "Not a JSON")
     obj = storage.get(City, city_id)
     if obj:
-        for key in data
+        for key, value in data.items():
+            if key not in []
