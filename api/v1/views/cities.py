@@ -35,5 +35,7 @@ def one_city(city_id):
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_city
+def delete_city(city_id):
+    """ Deletes a city object """
+    city = 
     
