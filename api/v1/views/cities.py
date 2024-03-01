@@ -28,3 +28,4 @@ def all_cities(state_id):
 def one_city(city_id):
     """ Returns one city """
     city = storage.get(City, city_id)
+    
