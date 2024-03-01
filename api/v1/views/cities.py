@@ -23,4 +23,5 @@ def all_cities(state_id):
         return jsonify(cities), 200
 
 
-@app_views.route('/api/v1/cities/<city_id>', )
+@app_views.route('/api/v1/cities/<city_id>', methods=['GET'],
+                 strict_slashes=F)
