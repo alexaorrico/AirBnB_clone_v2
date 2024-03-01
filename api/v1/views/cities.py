@@ -50,5 +50,6 @@ def delete_city(city_id):
 def create_city(state_id):
     """ Creates a new city obj using a state_id """
     data = request.json()
+    if 'name' and 
     if storage.get(State, state_id):
-        
+        c
