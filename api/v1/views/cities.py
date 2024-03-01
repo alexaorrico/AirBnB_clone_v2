@@ -65,4 +65,5 @@ def create_city(state_id):
 @app_views.route('/api/v1/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
-    """ """
+    """ Updates a city package """
+    
