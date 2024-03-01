@@ -27,4 +27,4 @@ def all_cities(state_id):
                  strict_slashes=False)
 def one_city(city_id):
     """ Returns one city """
-    
+    city = storage.get(City, city_id)
