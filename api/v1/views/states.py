@@ -43,7 +43,7 @@ def delete_state(state_id):
 def add_state():
     """ Creates a new state obj into the db """
     post_data = request.get_json()
-    if post_data is None:
+    if not isinstance(post_data, dict):
         abort(400, "Not a JSON")
     if "name" not in post_data.keys():
         abort(400, "Missing name")
@@ -60,10 +60,10 @@ def update_state(state_id):
     if obj is None:
         abort(404)
     put_data = request.get_json()
-    if put_data is None:
+    if not isinstance(put_data, dict):
         abort(400, "Not a JSON")
     for key, value in put_data.items():
         if key not in ["id", "created_at", "updated_at"]:
             setattr(obj, key, value)
-    storage.save()
+    obj.save()
     return jsonify(obj.to_dict()), 201
