@@ -16,4 +16,5 @@ def all_cities(state_id):
     cities = []
     for obj in city_objs.values():
         if obj.state_id == state_id:
-            cities
+            cities.append(obj.to_dict())
+    
