@@ -37,5 +37,5 @@ def one_city(city_id):
                  strict_slashes=False)
 def delete_city(city_id):
     """ Deletes a city object """
-    city = 
+    city = storage.get(City, city_id)
     
