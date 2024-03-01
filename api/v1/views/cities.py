@@ -3,8 +3,9 @@
 
 from api.v1.views import app_views
 from models.city import City
+from models.state import State
 
 
 @app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-def 
+def all_cities(state_id)
