@@ -58,4 +58,5 @@ def create_city(state_id):
         data['state_id'] = state_id
         obj = City(**data)
         obj.save()
-        return jsonify(obj.to_dict()), 200
+        return jsonify(obj.to_dict()), 201
+    abort(404)
