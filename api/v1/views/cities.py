@@ -62,4 +62,7 @@ def create_city(state_id):
     abort(404)
 
 
-@app_views.route('/api/v1/cities/<city_id>', methods=['PUT'])
+@app_views.route('/api/v1/cities/<city_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_city(city_id):
+    """ """
