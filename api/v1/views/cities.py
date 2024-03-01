@@ -2,7 +2,7 @@
 """ New City view """
 
 from api.v1.views import app_views
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from models import storage
 from models.city import City
 from models.state import State
@@ -47,4 +47,4 @@ def delete_city(city_id):
 
 @app_views.route('/api/v1/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
-def create_city
+def create_city(state_id)
