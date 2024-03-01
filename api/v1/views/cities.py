@@ -17,5 +17,6 @@ def all_cities(state_id):
     for obj in city_objs.values():
         if obj.state_id == state_id:
             cities.append(obj.to_dict())
-    
+    if len(cities) == 0:
+        abort(404)
     
