@@ -67,5 +67,6 @@ def create_city(state_id):
 def update_city(city_id):
     """ Updates a city package """
     data = request.json()
+    if not isinstance(data, dict):
+        abort
     obj = storage.get(City, city_id)
-    
