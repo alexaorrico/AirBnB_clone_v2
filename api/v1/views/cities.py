@@ -33,5 +33,7 @@ def one_city(city_id):
     abort(404)
 
 
-@app_views.route()
+@app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def
     
