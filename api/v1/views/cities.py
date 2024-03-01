@@ -13,4 +13,5 @@ from models.state import State
 def all_cities(state_id):
     """ Returns all cities linked to a particular city """
     city_objs = storage.all(City)
-    for city in 
+    for obj in city_objs.values():
+        
