@@ -14,13 +14,15 @@ def all_cities(state_id):
     """ Returns all cities linked to a particular city """
     city_objs = storage.all(City)
     cities = []
+    if storage.get(State, state_id) is None:
+        abort(404)
     for obj in city_objs.values():
         if obj.state_id == state_id:
             cities.append(obj.to_dict())
     if len(cities) == 0:
         abort(404)
     else:
-        return jsonify(cities), 200
+        return jsonify(cities)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'],
@@ -29,7 +31,7 @@ def one_city(city_id):
     """ Returns one city """
     city = storage.get(City, city_id)
     if city:
-        return jsonify(city.to_dict()), 200
+        return jsonify(city.to_dict())
     abort(404)
 
 
