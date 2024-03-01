@@ -49,4 +49,4 @@ def delete_city(city_id):
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """ Creates a new city obj using a state_id """
-    
+    if storage.get(S)
