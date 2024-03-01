@@ -13,5 +13,7 @@ from models.state import State
 def all_cities(state_id):
     """ Returns all cities linked to a particular city """
     city_objs = storage.all(City)
+    cities = []
     for obj in city_objs.values():
-        if obj.state_id == state_id
+        if obj.state_id == state_id:
+            cities
