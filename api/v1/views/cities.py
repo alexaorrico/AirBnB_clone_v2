@@ -55,4 +55,4 @@ def create_city(state_id):
     if 'name' and 'state_id' not in data:
         abort(404, "Missing name")
     if storage.get(State, state_id):
-        c
+        obj = 
