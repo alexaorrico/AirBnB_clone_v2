@@ -51,12 +51,15 @@ def create_city(state_id):
     """ Creates a new city obj using a state_id """
     data = request.json()
     if not isinstance(data, dict):
-        abort(404, "Not a JSON")
+        abort(400, "Not a JSON")
     if 'name' not in data:
-        abort(404, "Missing name")
+        abort(400, "Missing name")
     if storage.get(State, state_id):
         data['state_id'] = state_id
         obj = City(**data)
         obj.save()
         return jsonify(obj.to_dict()), 201
     abort(404)
+
+
+@app_views
