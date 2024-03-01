@@ -45,4 +45,4 @@ def delete_city(city_id):
     abort(404)
 
 
-    
+@app_views.route('/api/v1/states/<state_id>/cities', methods=['POST'])    
