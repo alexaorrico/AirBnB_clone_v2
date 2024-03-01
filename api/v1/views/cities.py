@@ -22,4 +22,3 @@ def all_cities(state_id):
     else:
         return jsonify(cities), 200
 
-
