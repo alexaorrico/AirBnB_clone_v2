@@ -72,4 +72,5 @@ def update_city(city_id):
     obj = storage.get(City, city_id)
     if obj:
         for key, value in data.items():
-            if key not in ["id", "state_id", "created_at"]
+            if key not in ["id", "state_id", "created_at", "updated_at"]:
+                setattr(obj, )
