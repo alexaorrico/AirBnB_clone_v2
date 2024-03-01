@@ -14,4 +14,4 @@ def all_cities(state_id):
     """ Returns all cities linked to a particular city """
     state_obj = storage.get(State, state_id)
     if state_obj:
-        for city in state_obj
+        for city in state_obj.c
