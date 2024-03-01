@@ -8,7 +8,7 @@ import inspect
 import models
 from models import city
 from models.base_model import BaseModel
-import pep8
+import pycodestyle as pep8
 import unittest
 City = city.City
 
