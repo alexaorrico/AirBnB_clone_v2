@@ -52,7 +52,7 @@ def create_city(state_id):
     data = request.json()
     if not isinstance(data, dict):
         abort(404, "Not a JSON")
-    if 'name' and 'state_id' not in data:
+    if 'name' not in data:
         abort(404, "Missing name")
     if storage.get(State, state_id):
-        obj = 
+        data['state_id']
