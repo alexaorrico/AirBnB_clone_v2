@@ -48,3 +48,5 @@ def delete_city(city_id):
 @app_views.route('/api/v1/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id)
+    """ Creates a new city obj using a state_id """
+    
