@@ -39,5 +39,5 @@ def delete_city(city_id):
     """ Deletes a city object """
     city = storage.get(City, city_id)
     if city:
-        
+        city.delete()
     
