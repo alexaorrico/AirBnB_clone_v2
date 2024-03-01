@@ -50,7 +50,9 @@ def delete_city(city_id):
 def create_city(state_id):
     """ Creates a new city obj using a state_id """
     data = request.json()
+    if not isinstance(data, dict):
+        abort(404, "Not a JSON")
     if 'name' and 'state_id' not in data:
-        abort(404, "Mi")
+        abort(404, "Missing name")
     if storage.get(State, state_id):
         c
