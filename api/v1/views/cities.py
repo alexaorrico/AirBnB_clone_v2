@@ -14,8 +14,6 @@ def all_cities(state_id):
     """ Returns all cities linked to a particular city """
     city_objs = storage.all(City)
     cities = []
-    if storage.get(State, state_id) is None:
-        abort(404)
     for obj in city_objs.values():
         if obj.state_id == state_id:
             cities.append(obj.to_dict())
