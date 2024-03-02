@@ -50,8 +50,7 @@ def delete_city(city_id):
 def create_city(state_id):
     """ Creates a new city obj using a state_id. """
     data = request.get_json()
-    if request.content_type != "application/json" and not isinstance(data,
-                                                                    dict):
+    if request.content_type != "application/json":
         abort(400, "Not a JSON")
     if 'name' not in data:
         abort(400, "Missing name")
@@ -68,7 +67,7 @@ def create_city(state_id):
 def update_city(city_id):
     """ Updates a city package """
     data = request.get_json()
-    if request.content_type != "application/json" and not isinstance(data, dict):
+    if request.content_type != "application/json":
         abort(400, description="Not a JSON")
     obj = storage.get(City, city_id)
     if obj:
