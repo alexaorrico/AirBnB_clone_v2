@@ -67,9 +67,9 @@ def create_city(state_id):
                  strict_slashes=False)
 def update_city(city_id):
     """ Updates a city package """
-    if request.content_type != "application/json":
-        abort(400, "Not a JSON")
     data = request.get_json()
+    if request.content_type != "application/json" and not isinstance(data, dict):
+        abort(400, "Not a JSON")
     obj = storage.get(City, city_id)
     if obj:
         for key, value in data.items():
