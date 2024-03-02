@@ -49,9 +49,9 @@ def delete_city(city_id):
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """ Creates a new city obj using a state_id """
-    data = request.get_json()
-    if not isinstance(data, dict):
+    if request.content_type != "application/json":
         abort(400, "Not a JSON")
+    data = request.get_json()
     if 'name' not in data:
         abort(400, "Missing name")
     if storage.get(State, state_id):
@@ -66,9 +66,9 @@ def create_city(state_id):
                  strict_slashes=False)
 def update_city(city_id):
     """ Updates a city package """
-    data = request.get_json()
-    if not isinstance(data, dict):
+    if request.content_type != "application/json":
         abort(400, "Not a JSON")
+    data = request.get_json()
     obj = storage.get(City, city_id)
     if obj:
         for key, value in data.items():
