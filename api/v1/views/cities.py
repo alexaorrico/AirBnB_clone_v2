@@ -69,7 +69,7 @@ def update_city(city_id):
     """ Updates a city package """
     data = request.get_json()
     if request.content_type != "application/json" and not isinstance(data, dict):
-        abort(400, "Not a JSON")
+        abort(400, description="Not a JSON")
     obj = storage.get(City, city_id)
     if obj:
         for key, value in data.items():
