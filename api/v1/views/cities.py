@@ -48,7 +48,7 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities',
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
-    """ Creates a new city obj using a state_id """
+    """ Creates a new city obj using a state_id. """
     data = request.get_json()
     if request.content_type != "application/json" and not isinstance(data,
                                                                     dict):
