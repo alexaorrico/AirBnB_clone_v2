@@ -49,9 +49,10 @@ def delete_city(city_id):
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """ Creates a new city obj using a state_id """
-    if request.content_type != "application/json":
-        abort(400, "Not a JSON")
     data = request.get_json()
+    if request.content_type != "application/json" or not isinstance(data,
+                                                                    dict):
+        abort(400, "Not a JSON")
     if 'name' not in data:
         abort(400, "Missing name")
     if storage.get(State, state_id):
