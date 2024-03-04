@@ -86,3 +86,16 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorageMethods(unittest.TestCase):
+    """Test that certain methods are in the DB storage module"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_methods_exist(self):
+        """Test for existance of methods"""
+        class_name = db_storage.DBStorage
+        method_names = ["get", "count"]
+        for method_name in method_names:
+            with self.subTest(method_name=method_name):
+                self.assertTrue(hasattr(class_name, method_name),
+                                f"Method '{method_name}' does not exist")

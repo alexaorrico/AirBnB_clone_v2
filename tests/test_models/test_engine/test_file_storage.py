@@ -113,3 +113,16 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorageMethods(unittest.TestCase):
+    """Test that certain methods are in the DB storage module"""
+    @unittest.skipIf(models.storage_t == 'db', "not not testing file storage")
+    def test_methods_exist(self):
+        """Test for existance of methods"""
+        class_name = file_storage.FileStorage
+        method_names = ["get", "count"]
+        for method_name in method_names:
+            with self.subTest(method_name=method_name):
+                self.assertTrue(hasattr(class_name, method_name),
+                                f"Method '{method_name}' does not exist")
