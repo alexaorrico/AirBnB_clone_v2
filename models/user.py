@@ -6,6 +6,7 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import hashlib
 
 
 class User(BaseModel, Base):
@@ -24,6 +25,20 @@ class User(BaseModel, Base):
         first_name = ""
         last_name = ""
 
+    # def __init__(self, *args, **kwargs):
+    #     """initializes user"""
+    #     super().__init__(*args, **kwargs)
+
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+        if kwargs.get("password"):
+            # Hash the password if it's present in the kwargs
+            self.password = hashlib.md5(
+                kwargs["password"].encode()).hexdigest()
+
+    def save(self, *args, **kwargs):
+        """updates the attribute 'updated_at' with the current datetime"""
+        self.password = hashlib.md5(self.password.encode()).hexdigest()
+        super().save(*args, **kwargs)
