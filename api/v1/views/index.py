@@ -9,3 +9,17 @@ from models import storage, Amenity, City, Place, Review, State, User
 def status():
     """return: status ok"""
     return jsonify({"status": "OK"})
+
+
+@app_views.route("/stats", strict_slashes=False)
+def get_class_objects():
+    """retrieves: the number of each objects by type"""
+    data = {
+        "amenities": storage.count(Amenity),
+        "cities": storage.count(City),
+        "places": storage.count(Place),
+        "reviews": storage.count(Review),
+        "states": storage.count(State),
+        "users": storage.count(User)
+    }
+    return jsonify(data)
