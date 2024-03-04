@@ -14,16 +14,16 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 
+@app.errorhandler(404)
+def page_not_found(err):
+    """custom 404 error page"""
+    return jsonify({"error": "Not found"}), 404
+
+
 @app.teardown_appcontext
 def teardown_storage(exec=None):
     """closes storage connection"""
     storage.close()
-
-
-@app.errorhandler(404)
-def page_not_found(err):
-    """custom 404 error page"""
-    return jsonify({"error": "Not found"})
 
 
 if __name__ == "__main__":
