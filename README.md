@@ -156,6 +156,7 @@ No known bugs at this time.
 
 ## Authors
 Daniel Asare Ntow - [Github](https://github.com/danielntow) / [Twitter](https://twitter.com/dasarentow)
+George Turkson - [Github](https://github.com/joejoturkson89) / [Twitter](https://twitter.com/joejo_1921)
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 Joe Joe - [Github](https://github.com/Oseijoel6111)  
