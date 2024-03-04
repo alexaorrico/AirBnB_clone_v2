@@ -1,0 +1,26 @@
+header {
+    display: flex;
+    background: white;
+    height: 70px;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px solid #CCCCCC;
+}
+header .logo {
+    background: url("../images/logo.png") no-repeat;
+    margin-left: 20px;
+    width: 95%;
+    height: 100%;
+}
+
+#api_status {
+    width: 40px;
+    height: 40px;
+    margin-right: 30px;
+    border-radius: 100%;
+    background-color: #cccccc;
+}
+
+#api_status.available {
+    background-color: #ff545f;
+}
