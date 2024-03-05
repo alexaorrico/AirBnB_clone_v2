@@ -32,7 +32,7 @@ def one_place(place_id):
                  strict_slashes=False)
 def del_place(place_id):
     """ Deletes a Place obj """
-    obj = storage.get(Place, user_id)
+    obj = storage.get(Place, place_id)
     if obj:
         obj.delete()
         storage.save()
