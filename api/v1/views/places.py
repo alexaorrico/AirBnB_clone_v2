@@ -49,18 +49,16 @@ def create_place(city_id):
     if request.is_json is True:
         data = request.get_json()
         if storage.get(City, city_id):
-            if 'user_id' in data.keys():
-                if 'name' in data.keys():
-                    if storage.get(User, data['user_id']):
-                        obj = Place(**data)
-                        storage.new(obj)
-                        storage.save()
-                        return make_response(jsonify(obj.to_dict()), 201)
-                    abort(404)
-                else:
-                    abort(400, "Missing name")
-            else:
+            if 'user_id' not in data.keys():
                 abort(400, "Missing user_id")
+            if 'name' not in data.keys():
+                abort(400, "Missing name")
+            if storage.get(User, data['user_id']):
+                obj = Place(**data)
+                storage.new(obj)
+                storage.save()
+                return make_response(jsonify(obj.to_dict()), 201)
+            abort(404)
         abort(404)
     abort(400, "Not a JSON")
 
@@ -74,8 +72,7 @@ def update_place(place_id):
         obj = storage.get(Place, place_id)
         if obj:
             for key, value in data.items():
-                if key not in ['id', 'user', 'city_id', 'created_at',
-                               'updated_at']:
+                if key not in ['id', 'user', 'city_id', 'created_at', 'updated_at']:
                     setattr(obj, key, value)
             obj.save()
             return make_response(jsonify(obj.to_dict()), 200)
