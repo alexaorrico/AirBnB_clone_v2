@@ -7,11 +7,12 @@ from models.place import Place
 from models import storage
 
 
-@app_views.route('/places', strict_slashes=False)
-def all_places():
-    """ Retrieves a list of all Place objects """
+@app_views.route('/cities/<city_id>/places', strict_slashes=False)
+def all_places(city_id):
+    """ Retrieves a list of all Place objects linked to a City """
     places = []
     for obj in storage.all(Place).values():
+        if obj.
         places.append(obj.to_dict())
     return make_response(jsonify(places), 200)
 
