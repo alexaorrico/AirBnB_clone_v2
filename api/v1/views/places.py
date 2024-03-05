@@ -3,12 +3,12 @@
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+from models.place import Place
 from models import storage
-from models.user import User
 
 
-@app_views.route('/users', strict_slashes=False)
-def all_users():
+@app_views.route('/places', strict_slashes=False)
+def all_places():
     """ Retrieves a list of all User objects """
     users = []
     for obj in storage.all(User).values():
