@@ -56,11 +56,11 @@ def create_user():
 
 @app_views.route('/users/<user_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_amenity(amenity_id):
-    """ Updates an existing amenity object """
+def update_user(user_id):
+    """ Updates an existing User object """
     if request.is_json is True:
         data = request.get_json()
-        obj = storage.get(Amenity, amenity_id)
+        obj = storage.get(User, user_id)
         for key, value in data.items():
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(obj, key, value)
