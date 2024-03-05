@@ -48,7 +48,6 @@ def create_place(city_id):
     if request.is_json is True:
         data = request.get_json()
         if storage.get(City, city_id):
-            
         if 'email' not in data.keys():
             abort(400, "Missing email")
         if 'password' not in data.keys():
