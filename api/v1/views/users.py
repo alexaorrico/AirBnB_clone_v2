@@ -17,9 +17,9 @@ def all_users():
 
 
 @app_views.route('/users/<user_id>', strict_slashes=False)
-def one_user(amenity_id):
+def one_user(user_id):
     """ Retrieves one object using its id """
-    obj = storage.get(Amenity, amenity_id)
+    obj = storage.get(User, user_id)
     if obj:
         return make_response(jsonify(obj.to_dict()), 200)
     abort(404)
