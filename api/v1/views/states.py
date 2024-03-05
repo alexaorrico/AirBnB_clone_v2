@@ -2,19 +2,18 @@
 """ Handles all State requests for the API """
 
 from api.v1.views import app_views
-from flask import jsonify, request, abort
-from models import storage
+from flask import abort, jsonify, make_response, request
 from models.state import State
+from models import storage
 
 
-@app_views.route('/states', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/states', strict_slashes=False)
 def all_states():
     """ Returns a JSON of all State objects """
     states = []
     for obj in storage.all(State).values():
         states.append(obj.to_dict())
-    return jsonify(states)
+    return make_response(jsonify(states), 200)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'],
@@ -22,8 +21,8 @@ def all_states():
 def one_state(state_id):
     """ Returns a JSON of a state whose id was requested """
     obj = storage.get(State, state_id)
-    if obj is not None:
-        return jsonify(obj.to_dict())
+    if obj:
+        return make_response(jsonify(obj.to_dict()), 200)
     abort(404)
 
 
@@ -36,20 +35,21 @@ def delete_state(state_id):
         abort(404)
     obj.delete()
     storage.save()
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def add_state():
     """ Creates a new state obj into the db """
-    post_data = request.get_json()
-    if not isinstance(post_data, dict):
-        abort(400, "Not a JSON")
-    if "name" not in post_data.keys():
+    if request.is_json is True:
+        post_data = request.get_json()
+        if "name" in post_data.keys():
+            obj = State(**post_data)
+            storage.new(obj)
+            storage.save()
+            return make_response(jsonify(obj.to_dict()), 201)
         abort(400, "Missing name")
-    obj = State(**post_data)
-    obj.save()
-    return jsonify(obj.to_dict()), 201
+    abort(400, "Not a JSON")
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'],
