@@ -2,14 +2,13 @@
 """ New City view """
 
 from api.v1.views import app_views
-from flask import (abort, jsonify, request)
-from models import storage
+from flask import (abort, jsonify, request, make_response)
 from models.city import City
+from models import storage
 from models.state import State
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', strict_slashes=False)
 def all_cities(state_id):
     """ Returns all cities linked to a particular city """
     city_objs = storage.all(City)
@@ -23,8 +22,7 @@ def all_cities(state_id):
         return jsonify(cities)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/cities/<city_id>', strict_slashes=False)
 def one_city(city_id):
     """ Returns one city """
     city = storage.get(City, city_id)
@@ -41,7 +39,7 @@ def delete_city(city_id):
     if city:
         city.delete()
         storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({}), 200)
     abort(404)
 
 
@@ -49,16 +47,16 @@ def delete_city(city_id):
                  methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """ Creates a new city obj using a state_id. """
-    data = request.get_json()
-    if request.content_type != "application/json":
+    if request.is_json is False:
         abort(400, "Not a JSON")
+    data = request.get_json()
     if 'name' not in data:
         abort(400, "Missing name")
     if storage.get(State, state_id):
         data['state_id'] = state_id
         obj = City(**data)
         obj.save()
-        return jsonify(obj.to_dict()), 201
+        return make_response(jsonify(obj.to_dict()), 201)
     abort(404)
 
 
@@ -66,14 +64,14 @@ def create_city(state_id):
                  strict_slashes=False)
 def update_city(city_id):
     """ Updates a city package """
+    if request.is_json is False:
+        abort(400, "Not a JSON")
     data = request.get_json()
-    if request.content_type != "application/json":
-        abort(400, description="Not a JSON")
     obj = storage.get(City, city_id)
     if obj:
         for key, value in data.items():
             if key not in ["id", "state_id", "created_at", "updated_at"]:
                 setattr(obj, key, value)
         obj.save()
-        return jsonify(obj.to_dict()), 200
+        return make_response(jsonify(obj.to_dict()), 200)
     abort(404)
