@@ -51,4 +51,6 @@ def create_amenity():
     abort(400, "Not a JSON")
 
 
-@app_views.route('')
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
+def update_amenity()
