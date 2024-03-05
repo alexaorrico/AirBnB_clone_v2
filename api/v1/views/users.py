@@ -40,11 +40,11 @@ def del_user(user_id):
 @app_views.route('/users', methods=['POST'],
                  strict_slashes=False)
 def create_user():
-    """ Creates a new  object """
+    """ Creates a new User object """
     if request.is_json is True:
         data = request.get_json()
         if 'name' in data.keys():
-            obj = Amenity(**data)
+            obj = User(**data)
             storage.new(obj)
             storage.save()
             return make_response(jsonify(obj.to_dict()), 201)
