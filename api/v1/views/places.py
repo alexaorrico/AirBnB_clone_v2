@@ -72,7 +72,7 @@ def update_place(place_id):
         obj = storage.get(Place, place_id)
         if obj:
             for key, value in data.items():
-                if key not in ['id', 'user', 'created_at', 'updated_at']:
+                if key not in ['id', 'user', 'city_id', 'created_at', 'updated_at']:
                     setattr(obj, key, value)
             obj.save()
             return make_response(jsonify(obj.to_dict()), 200)
