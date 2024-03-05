@@ -9,14 +9,14 @@ from models import storage
 
 @app_views.route('/places', strict_slashes=False)
 def all_places():
-    """ Retrieves a list of all User objects """
-    users = []
-    for obj in storage.all(User).values():
-        users.append(obj.to_dict())
-    return make_response(jsonify(users), 200)
+    """ Retrieves a list of all Place objects """
+    places = []
+    for obj in storage.all(Place).values():
+        places.append(obj.to_dict())
+    return make_response(jsonify(places), 200)
 
 
-@app_views.route('/users/<user_id>', strict_slashes=False)
+@app_views.route('/places/<user_id>', strict_slashes=False)
 def one_user(user_id):
     """ Retrieves one object using its id """
     obj = storage.get(User, user_id)
