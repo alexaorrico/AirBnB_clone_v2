@@ -28,7 +28,7 @@ def one_place(place_id):
     abort(404)
 
 
-@app_views.route('/users/<user_id>', methods=['DELETE'],
+@app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_place(place_id):
     """ Deletes a Place obj """
