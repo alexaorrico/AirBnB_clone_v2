@@ -20,4 +20,6 @@ def all_amenities():
 def one_amenity(amenity_id):
     """ Retrieves one object using its id """
     obj = storage.get(Amenity, amenity_id)
-    if 
+    if obj:
+        return jsonify(obj.to_dict())
+    
