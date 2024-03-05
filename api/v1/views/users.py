@@ -28,10 +28,10 @@ def one_user(user_id):
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def del_user(user_id):
-    """ Deletes an Amenity obj """
-    amenity = storage.get(Amenity, amenity_id)
-    if amenity:
-        amenity.delete()
+    """ Deletes an User obj """
+    obj = storage.get(User, amenity_id)
+    if obj:
+        obj.delete()
         storage.save()
         return make_response(jsonify({}), 200)
     abort(404)
