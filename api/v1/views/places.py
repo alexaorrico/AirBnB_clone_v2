@@ -42,7 +42,7 @@ def del_place(place_id):
 
 @app_views.route('/users', methods=['POST'],
                  strict_slashes=False)
-def create_user():
+def create_place():
     """ Creates a new User object """
     if request.is_json is True:
         data = request.get_json()
