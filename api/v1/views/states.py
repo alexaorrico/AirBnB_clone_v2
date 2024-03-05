@@ -60,9 +60,10 @@ def update_state(state_id):
         put_data = request.get_json()
         obj = storage.get(State, state_id)
         if obj:
-        for key, value in put_data.items():
-            if key not in ["id", "created_at", "updated_at"]:
-                setattr(obj, key, value)
-        obj.save()
-        return make_response(jsonify(obj.to_dict()), 201)
+            for key, value in put_data.items():
+                if key not in ["id", "created_at", "updated_at"]:
+                    setattr(obj, key, value)
+            obj.save()
+            return make_response(jsonify(obj.to_dict()), 201)
+        abort(404)
     abort(400, "Not a JSON")
