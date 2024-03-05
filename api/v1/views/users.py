@@ -25,9 +25,9 @@ def one_user(user_id):
     abort(404)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+@app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
-def del_amenity(amenity_id):
+def del_user(user_id):
     """ Deletes an Amenity obj """
     amenity = storage.get(Amenity, amenity_id)
     if amenity:
