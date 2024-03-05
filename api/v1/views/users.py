@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-View for unser object that handles all default RESTFul API actions.
+View for `User` object that handles all default RESTFul API actions.
 """
 from models import storage
 from api.v1.views import app_views, User
@@ -72,7 +72,7 @@ def update_user(user_id):
                 abort(400, 'Not a JSON')
             # update user obj
             for k, v in data.items():
-                if k == 'id' or k == 'email' or k == 'created_at'
+                if k == 'id' or k == 'email' or k == 'created_at'\
                 or k == 'updated_at':
                     continue
                 setattr(user, k, v)
