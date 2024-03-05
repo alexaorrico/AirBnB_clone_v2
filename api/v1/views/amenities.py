@@ -44,7 +44,7 @@ def create_amenity():
     if request.content_type == 'application/json':
         data = request.get_json()
         if 'name' in data.keys():
-            obj = Amenity()
-            for key, value in data.items():
-                
+            obj = Amenity(**data)
+            obj.save()
+            return make_response(jsonify(obj.to_dict()))
     abort(400, "Not a JSON")
