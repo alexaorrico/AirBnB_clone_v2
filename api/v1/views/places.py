@@ -51,13 +51,14 @@ def create_place(city_id):
         if storage.get(City, city_id):
             if 'user_id' in data.keys():
                 if 'name' not in data.keys():
-                    abort(400, "Missing name")
+                    
                 if storage.get(User, data['user_id']):
                 obj = Place(**data)
                 storage.new(obj)
                 storage.save()
                 return make_response(jsonify(obj.to_dict()), 201)
-            abort(404)
+            else:
+                abort(400, "Missing user_id")
         abort(404)
     abort(400, "Not a JSON")
 
