@@ -31,4 +31,6 @@ def del_amenity(amenity_id):
     """ Deletes an Amenity obj """
     amenity = storage.get(Amenity, amenity_id)
     if amenity:
-        
+        amenity.delete()
+        storage.save()
+        return 
