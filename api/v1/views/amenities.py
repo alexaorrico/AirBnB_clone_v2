@@ -37,4 +37,5 @@ def del_amenity(amenity_id):
     abort(404)
 
 
-@app_views.route('/amenities')
+@app_views.route('/amenities', methods=['POST'],
+                 strict)
