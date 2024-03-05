@@ -11,4 +11,5 @@ from models import storage
 def all_amenities():
     """ Retrieves a list of all amenity objects """
     amenities = []
-    for values
+    for amenity in storage.all(Amenity).values():
+        amenities.
