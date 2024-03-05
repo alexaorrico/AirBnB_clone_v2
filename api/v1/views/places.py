@@ -40,10 +40,10 @@ def del_place(place_id):
     abort(404)
 
 
-@app_views.route('/users', methods=['POST'],
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def create_place():
-    """ Creates a new User object """
+    """ Creates a new Place object """
     if request.is_json is True:
         data = request.get_json()
         if 'email' not in data.keys():
