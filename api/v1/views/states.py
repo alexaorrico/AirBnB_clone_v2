@@ -57,10 +57,10 @@ def add_state():
 def update_state(state_id):
     """ Updates a state obj with the dict from HTTP request """
     if request.is_json is True:
+        put_data = request.get_json()
         obj = storage.get(State, state_id)
         if obj is None:
             abort(404)
-        put_data = request.get_json()
         for key, value in put_data.items():
             if key not in ["id", "created_at", "updated_at"]:
                 setattr(obj, key, value)
