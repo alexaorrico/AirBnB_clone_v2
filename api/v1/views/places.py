@@ -56,6 +56,7 @@ def create_place(city_id):
                 storage.new(obj)
                 storage.save()
                 return make_response(jsonify(obj.to_dict()), 201)
+            abort(404)
         abort(404)
     abort(400, "Not a JSON")
 
