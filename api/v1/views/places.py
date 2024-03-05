@@ -50,10 +50,9 @@ def create_place(city_id):
         data = request.get_json()
         if storage.get(City, city_id):
             if 'user_id' in data.keys():
-                
-            if 'name' not in data.keys():
-                abort(400, "Missing name")
-            if storage.get(User, data['user_id']):
+                if 'name' not in data.keys():
+                    abort(400, "Missing name")
+                if storage.get(User, data['user_id']):
                 obj = Place(**data)
                 storage.new(obj)
                 storage.save()
