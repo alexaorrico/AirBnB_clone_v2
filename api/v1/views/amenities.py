@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from models.amenity import Amenity
-from flask import abort, jsonify
+from flask import abort, jsonify, make_response
 from models import storage
 
 
@@ -27,4 +27,6 @@ def one_amenity(amenity_id):
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
-def del_amenity()
+def del_amenity(amenity_id):
+    """ Deletes an Amenity obj """
+    
