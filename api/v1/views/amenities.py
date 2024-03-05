@@ -44,3 +44,4 @@ def create_amenity():
     if request.content_type == 'application/json':
         data = request.get_json()
         
+    abort(400, "Not a JSON")
