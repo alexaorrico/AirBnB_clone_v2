@@ -54,7 +54,7 @@ def create_user():
     abort(400, "Not a JSON")
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+@app_views.route('/users/<user_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_amenity(amenity_id):
     """ Updates an existing amenity object """
