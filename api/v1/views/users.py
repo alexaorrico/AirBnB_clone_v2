@@ -67,4 +67,5 @@ def update_user(user_id):
                     setattr(obj, key, value)
             obj.save()
             return make_response(jsonify(obj.to_dict()), 200)
+        abort(404)
     abort(400, "Not a JSON")
