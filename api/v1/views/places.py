@@ -65,11 +65,11 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-def update_user(user_id):
-    """ Updates an existing User object """
+def update_place(place_id):
+    """ Updates an existing Place object """
     if request.is_json is True:
         data = request.get_json()
-        obj = storage.get(User, user_id)
+        obj = storage.get(Place, user_id)
         if obj:
             for key, value in data.items():
                 if key not in ['id', 'email', 'created_at', 'updated_at']:
