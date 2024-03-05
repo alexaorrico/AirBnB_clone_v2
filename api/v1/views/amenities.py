@@ -16,4 +16,4 @@ def all_amenities():
     return jsonify(amenities)
 
 
-@app
+@app.route('')
