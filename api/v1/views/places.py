@@ -63,7 +63,7 @@ def create_place(city_id):
     abort(400, "Not a JSON")
 
 
-@app_views.route('/users/<user_id>', methods=['PUT'],
+@app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_user(user_id):
     """ Updates an existing User object """
