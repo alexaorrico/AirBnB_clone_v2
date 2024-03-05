@@ -51,11 +51,11 @@ def create_place(city_id):
         if storage.get(City, city_id):
             if 'user_id' not in data.keys():
                 abort(400, "Missing user_id")
-            if storage.get(User, data['user_id'])
-            obj = User(**data)
-            storage.new(obj)
-            storage.save()
-            return make_response(jsonify(obj.to_dict()), 201)
+            if storage.get(User, data['user_id']):
+                obj = User(**data)
+                storage.new(obj)
+                storage.save()
+                return make_response(jsonify(obj.to_dict()), 201)
         abort(404)
     abort(400, "Not a JSON")
 
