@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from models.amenity import Amenity
-from flask import abort, jsonify, make_response
+from flask import abort, jsonify, make_response, request
 from models import storage
 
 
@@ -38,4 +38,5 @@ def del_amenity(amenity_id):
 
 
 @app_views.route('/amenities', methods=['POST'],
-                 strict)
+                 strict_slashes=False)
+def create_amenity()
