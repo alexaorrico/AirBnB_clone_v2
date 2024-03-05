@@ -29,4 +29,4 @@ def one_amenity(amenity_id):
                  strict_slashes=False)
 def del_amenity(amenity_id):
     """ Deletes an Amenity obj """
-    
+    amenity = storage
