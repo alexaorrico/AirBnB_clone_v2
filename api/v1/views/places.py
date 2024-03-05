@@ -46,6 +46,7 @@ def create_place():
     """ Creates a new Place object """
     if request.is_json is True:
         data = request.get_json()
+        
         if 'email' not in data.keys():
             abort(400, "Missing email")
         if 'password' not in data.keys():
