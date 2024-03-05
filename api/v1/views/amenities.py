@@ -41,7 +41,7 @@ def del_amenity(amenity_id):
                  strict_slashes=False)
 def create_amenity():
     """ Creates a new Amenity object """
-    if request.i:
+    if request.is_json is True:
         data = request.get_json()
         if 'name' in data.keys():
             obj = Amenity(**data)
@@ -62,5 +62,5 @@ def update_amenity(amenity_id):
             if key not in ['id', 'created_at', 'updated_at']:
                 setattr(obj, key, value)
         obj.save()
-        return make_response(jsonify(), 200)
+        return make_response(jsonify(obj.to_dict()), 200)
     abort(400, "Not a JSON")
