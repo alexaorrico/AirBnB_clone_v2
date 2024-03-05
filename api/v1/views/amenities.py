@@ -10,4 +10,5 @@ from models import storage
 @app_views.route('/amenities')
 def all_amenities():
     """ Retrieves a list of all amenity objects """
-    
+    amenities = []
+    for values
