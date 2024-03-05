@@ -29,7 +29,7 @@ def one_user(user_id):
                  strict_slashes=False)
 def del_user(user_id):
     """ Deletes an User obj """
-    obj = storage.get(User, amenity_id)
+    obj = storage.get(User, user_id)
     if obj:
         obj.delete()
         storage.save()
@@ -37,10 +37,10 @@ def del_user(user_id):
     abort(404)
 
 
-@app_views.route('/amenities', methods=['POST'],
+@app_views.route('/users', methods=['POST'],
                  strict_slashes=False)
-def create_amenity():
-    """ Creates a new Amenity object """
+def create_user():
+    """ Creates a new  object """
     if request.is_json is True:
         data = request.get_json()
         if 'name' in data.keys():
