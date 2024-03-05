@@ -16,8 +16,8 @@ def all_places():
     return make_response(jsonify(places), 200)
 
 
-@app_views.route('/places/<user_id>', strict_slashes=False)
-def one_user(user_id):
+@app_views.route('/places/<place_id>', strict_slashes=False)
+def one_user(place_id):
     """ Retrieves one object using its id """
     obj = storage.get(User, user_id)
     if obj:
