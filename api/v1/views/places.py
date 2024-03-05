@@ -30,9 +30,9 @@ def one_place(place_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
-def del_user(user_id):
-    """ Deletes an User obj """
-    obj = storage.get(, user_id)
+def del_place(place_id):
+    """ Deletes a Place obj """
+    obj = storage.get(Place, user_id)
     if obj:
         obj.delete()
         storage.save()
