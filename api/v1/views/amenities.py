@@ -55,6 +55,8 @@ def create_amenity():
                  strict_slashes=False)
 def update_amenity(amenity_id):
     """ Updates an existing amenity object """
+    if request.content_type == 'application/json':
+        data = request.
     obj = storage.get(Amenity, amenity_id)
     if obj:
         
