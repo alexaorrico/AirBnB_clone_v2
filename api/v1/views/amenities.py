@@ -13,7 +13,7 @@ def all_amenities():
     amenities = []
     for amenity in storage.all(Amenity).values():
         amenities.append(amenity.to_dict())
-    return jsonify(amenities)
+    return make_response(jsonify(amenities), 200)
 
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False)
@@ -21,7 +21,7 @@ def one_amenity(amenity_id):
     """ Retrieves one object using its id """
     obj = storage.get(Amenity, amenity_id)
     if obj:
-        return jsonify(obj.to_dict())
+        return make_response(jsonify(obj.to_dict()), 200)
     abort(404)
 
 
