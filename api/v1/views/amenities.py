@@ -25,4 +25,4 @@ def one_amenity(amenity_id):
     abort(404)
 
 
-@app_views.route()
+@app_views.route('/amenities/<amenity_id>', methods=)
