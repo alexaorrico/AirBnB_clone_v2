@@ -16,4 +16,4 @@ def all_amenities():
     return jsonify(amenities)
 
 
-@app.route('')
+@app_views.route('/amenities/<amenity_id>')
