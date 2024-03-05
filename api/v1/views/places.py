@@ -14,7 +14,8 @@ def all_places(city_id):
     for obj in storage.all(Place).values():
         if obj.city_id == city_id:
             places.append(obj.to_dict())
-    if 
+    if len(places) == 0:
+        abort
     return make_response(jsonify(places), 200)
 
 
