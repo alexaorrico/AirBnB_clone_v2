@@ -58,5 +58,5 @@ def update_amenity(amenity_id):
     if request.is_json is True:
         data = request.get_json()
         obj = storage.get(Amenity, amenity_id)
-        if obj:
+        for key, value i
         
