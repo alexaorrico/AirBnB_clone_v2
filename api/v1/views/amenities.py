@@ -33,4 +33,8 @@ def del_amenity(amenity_id):
     if amenity:
         amenity.delete()
         storage.save()
-        return make_response()
+        return make_response(jsonify({}), 200)
+    abort(404)
+
+
+@app_views()
