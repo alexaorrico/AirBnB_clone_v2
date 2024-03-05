@@ -8,4 +8,5 @@ from models.amenity import Amenity
 
 @app_views.route('/amenities')
 def all_amenities():
+    """ Retrieves a list of all amenity objects """
     
