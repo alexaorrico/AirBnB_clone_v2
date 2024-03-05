@@ -19,4 +19,4 @@ def all_amenities():
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False)
 def one_amenity(amenity_id):
     """ Retrieves one object using its id """
-    obj = 
+    obj = storage
