@@ -45,7 +45,8 @@ def create_amenity():
         data = request.get_json()
         if 'name' in data.keys():
             obj = Amenity(**data)
-            obj.save()
+            storage.new(obj)
+            storage.save()
             return make_response(jsonify(obj.to_dict()), 201)
         abort(400, "Missing name")
     abort(400, "Not a JSON")
