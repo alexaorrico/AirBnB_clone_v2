@@ -42,11 +42,11 @@ def del_place(place_id):
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
-def create_place():
+def create_place(city_id):
     """ Creates a new Place object """
     if request.is_json is True:
         data = request.get_json()
-        
+        if storage.get()
         if 'email' not in data.keys():
             abort(400, "Missing email")
         if 'password' not in data.keys():
