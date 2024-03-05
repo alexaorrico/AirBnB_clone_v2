@@ -2,4 +2,7 @@
 """ Amenity module """
 
 from api.v1.views import app_views
-from flask import js
+from flask import abort, jsonify
+from models.amenity
+
+
