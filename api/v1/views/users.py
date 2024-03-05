@@ -48,7 +48,7 @@ def create_user():
             storage.new(obj)
             storage.save()
             return make_response(jsonify(obj.to_dict()), 201)
-        abort(400, "Missing name")
+        abort(400, "Missing email")
     abort(400, "Not a JSON")
 
 
