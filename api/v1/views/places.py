@@ -56,7 +56,8 @@ def create_place(city_id):
                         storage.new(obj)
                         storage.save()
                         return make_response(jsonify(obj.to_dict()), 201)
-                    else:
+                    abort(404)
+                else:
                     abort(400, "Missing name")
             else:
                 abort(400, "Missing user_id")
