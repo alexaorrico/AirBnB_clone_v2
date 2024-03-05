@@ -8,11 +8,11 @@ from models import storage
 
 
 @app_views.route('/users', strict_slashes=False)
-def all_amenities():
-    """ Retrieves a list of all amenity objects """
-    amenities = []
-    for amenity in storage.all(Amenity).values():
-        amenities.append(amenity.to_dict())
+def all_users():
+    """ Retrieves a list of all User objects """
+    users = []
+    for amenity in storage.all(User).values():
+        users.append(amenity.to_dict())
     return make_response(jsonify(amenities), 200)
 
 
