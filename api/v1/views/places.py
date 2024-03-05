@@ -46,7 +46,7 @@ def del_place(place_id):
                  strict_slashes=False)
 def create_place(city_id):
     """ Creates a new Place object """
-    if storage.get(City, city_id):
+    if request.is_json is True:
         data = request.get_json()
         if storage.get(City, city_id):
             if 'user_id' not in data.keys():
