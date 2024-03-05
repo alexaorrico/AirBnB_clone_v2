@@ -69,10 +69,10 @@ def update_place(place_id):
     """ Updates an existing Place object """
     if request.is_json is True:
         data = request.get_json()
-        obj = storage.get(Place, user_id)
+        obj = storage.get(Place, place_id)
         if obj:
             for key, value in data.items():
-                if key not in ['id', 'email', 'created_at', 'updated_at']:
+                if key not in ['id', 'user', 'created_at', 'updated_at']:
                     setattr(obj, key, value)
             obj.save()
             return make_response(jsonify(obj.to_dict()), 200)
