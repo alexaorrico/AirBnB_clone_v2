@@ -58,5 +58,6 @@ def update_amenity(amenity_id):
     if request.is_json is True:
         data = request.get_json()
         obj = storage.get(Amenity, amenity_id)
-        for key, value i
+        for key, value in data.items():
+            if key not in ['id']
         
