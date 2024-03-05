@@ -33,4 +33,4 @@ def del_amenity(amenity_id):
     if amenity:
         amenity.delete()
         storage.save()
-        return 
+        return make_response()
