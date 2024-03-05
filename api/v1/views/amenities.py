@@ -47,5 +47,8 @@ def create_amenity():
             obj = Amenity(**data)
             obj.save()
             return make_response(jsonify(obj.to_dict()), 201)
-        abort(404, )
+        abort(400, "Missing name")
     abort(400, "Not a JSON")
+
+
+@app_views.route('')
