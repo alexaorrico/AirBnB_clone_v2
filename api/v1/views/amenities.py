@@ -59,5 +59,6 @@ def update_amenity(amenity_id):
         data = request.get_json()
         obj = storage.get(Amenity, amenity_id)
         for key, value in data.items():
-            if key not in ['id']
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(obj, key)
         
