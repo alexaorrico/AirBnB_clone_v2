@@ -17,3 +17,5 @@ def all_amenities():
 
 
 @app_views.route('/amenities/<amenity_id>')
+def one_amenity(amenity_id):
+    """ Retrie"""
