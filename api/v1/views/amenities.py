@@ -7,7 +7,7 @@ from flask import abort, jsonify
 from models import storage
 
 
-@app_views.route('/amenities', strict_slashes=F)
+@app_views.route('/amenities', strict_slashes=False)
 def all_amenities():
     """ Retrieves a list of all amenity objects """
     amenities = []
@@ -16,7 +16,7 @@ def all_amenities():
     return jsonify(amenities)
 
 
-@app_views.route('/amenities/<amenity_id>')
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False)
 def one_amenity(amenity_id):
     """ Retrieves one object using its id """
-    
+    obj = 
