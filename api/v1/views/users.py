@@ -12,12 +12,12 @@ def all_users():
     """ Retrieves a list of all User objects """
     users = []
     for obj in storage.all(User).values():
-        users.append(user.to_dict())
+        users.append(obj.to_dict())
     return make_response(jsonify(users), 200)
 
 
-@app_views.route('/amenities/<amenity_id>', strict_slashes=False)
-def one_amenity(amenity_id):
+@app_views.route('/users/<user_id>', strict_slashes=False)
+def one_user(amenity_id):
     """ Retrieves one object using its id """
     obj = storage.get(Amenity, amenity_id)
     if obj:
