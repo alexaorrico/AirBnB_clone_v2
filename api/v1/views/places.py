@@ -19,7 +19,7 @@ def all_places():
 @app_views.route('/places/<place_id>', strict_slashes=False)
 def one_user(place_id):
     """ Retrieves one object using its id """
-    obj = storage.get(User, user_id)
+    obj = storage.get(Place, place_id)
     if obj:
         return make_response(jsonify(obj.to_dict()), 200)
     abort(404)
