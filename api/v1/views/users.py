@@ -11,9 +11,9 @@ from models import storage
 def all_users():
     """ Retrieves a list of all User objects """
     users = []
-    for amenity in storage.all(User).values():
-        users.append(amenity.to_dict())
-    return make_response(jsonify(amenities), 200)
+    for obj in storage.all(User).values():
+        users.append(user.to_dict())
+    return make_response(jsonify(users), 200)
 
 
 @app_views.route('/amenities/<amenity_id>', strict_slashes=False)
