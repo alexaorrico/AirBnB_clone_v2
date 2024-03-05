@@ -43,10 +43,14 @@ def create_user():
     """ Creates a new User object """
     if request.is_json is True:
         data = request.get_json()
-        if 'email' in data.keys():
+        if 'email' not in data.keys():
             abort(400, "Missing email")
         if 'password' not in data.keys():
-            abort(400)
+            abort(400, "Missing password")
+        obj = User(**data)
+        storage.new(obj)
+        storage.save()
+        return make_response(jsonify(obj.to_dict()), 201)
     abort(400, "Not a JSON")
 
 
