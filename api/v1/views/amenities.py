@@ -43,5 +43,6 @@ def create_amenity():
     """ Creates a new Amenity object """
     if request.content_type == 'application/json':
         data = request.get_json()
-        
+        if 'name' in data.keys():
+            
     abort(400, "Not a JSON")
