@@ -6,4 +6,6 @@ from flask import abort, jsonify
 from models.amenity import Amenity
 
 
-@app_views.route('')
+@app_views.route('/amenities')
+def all_amenities():
+    
