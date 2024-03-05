@@ -22,4 +22,7 @@ def one_amenity(amenity_id):
     obj = storage.get(Amenity, amenity_id)
     if obj:
         return jsonify(obj.to_dict())
-    
+    abort(404)
+
+
+@app_views.route()
