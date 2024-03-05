@@ -43,7 +43,7 @@ def create_user():
     """ Creates a new User object """
     if request.is_json is True:
         data = request.get_json()
-        if 'name' in data.keys():
+        if 'email' in data.keys():
             obj = User(**data)
             storage.new(obj)
             storage.save()
