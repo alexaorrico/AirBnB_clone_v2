@@ -3,6 +3,7 @@
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+from models.city import City
 from models.place import Place
 from models import storage
 
@@ -46,7 +47,7 @@ def create_place(city_id):
     """ Creates a new Place object """
     if request.is_json is True:
         data = request.get_json()
-        if storage.get()
+        if storage.get(City, )
         if 'email' not in data.keys():
             abort(400, "Missing email")
         if 'password' not in data.keys():
