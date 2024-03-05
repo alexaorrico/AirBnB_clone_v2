@@ -46,5 +46,6 @@ def create_amenity():
         if 'name' in data.keys():
             obj = Amenity(**data)
             obj.save()
-            return make_response(jsonify(obj.to_dict()))
+            return make_response(jsonify(obj.to_dict()), 201)
+        abort(404, )
     abort(400, "Not a JSON")
