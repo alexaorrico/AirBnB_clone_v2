@@ -15,12 +15,12 @@ def all_places(city_id):
         if obj.city_id == city_id:
             places.append(obj.to_dict())
     if len(places) == 0:
-        abort
+        abort(404)
     return make_response(jsonify(places), 200)
 
 
 @app_views.route('/places/<place_id>', strict_slashes=False)
-def one_user(place_id):
+def one_place(place_id):
     """ Retrieves one object using its id """
     obj = storage.get(Place, place_id)
     if obj:
