@@ -47,4 +47,5 @@ def delete_review(review_id):
                  strict_slashes=False)
 def createReview(place_id):
     """ Creates a new Review object using a place_id """
-    
+    place_obj = storage.get(Place, place_id)
+    if place_obj:
