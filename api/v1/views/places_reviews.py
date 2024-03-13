@@ -43,4 +43,4 @@ def delete_review(review_id):
     abort(404)
 
 
-@app_views.route('')
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],)
