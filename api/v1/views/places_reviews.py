@@ -20,3 +20,6 @@ def get(place_id):
                 reviews.append(obj.to_dict())
         return make_response(jsonify(reviews), 200)
     abort(404)
+
+
+@app_views.route('')
