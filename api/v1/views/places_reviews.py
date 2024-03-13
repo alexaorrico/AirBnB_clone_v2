@@ -74,3 +74,5 @@ def update(review_id):
     """ Updates a review object """
     if request.is_json is True:
         data = request.get_json()
+        obj
+    abort(400, "Not a JSON")
