@@ -22,4 +22,6 @@ def get(place_id):
     abort(404)
 
 
-@app_views.route('/reviews/<review_id>', )
+@app_views.route('/reviews/<review_id>', strict_slashes=False)
+def one_review(review_id):
+    """ """
