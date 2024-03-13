@@ -2,7 +2,7 @@
 """ Place Reviews Module """
 
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response
+from flask import abort, jsonify, make_response, request
 from models.place import Place
 from models.review import Review
 from models import storage
@@ -49,3 +49,4 @@ def createReview(place_id):
     """ Creates a new Review object using a place_id """
     place_obj = storage.get(Place, place_id)
     if place_obj:
+        
