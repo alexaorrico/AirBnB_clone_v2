@@ -22,4 +22,4 @@ def get(place_id):
     abort(404)
 
 
-@app_views.route('')
+@app_views.route('/reviews/<review_id>', )
