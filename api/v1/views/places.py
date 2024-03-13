@@ -5,20 +5,21 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models.city import City
 from models.place import Place
-from models.user import User
 from models import storage
+from models.user import User
 
 
 @app_views.route('/cities/<city_id>/places', strict_slashes=False)
 def all_places(city_id):
     """ Retrieves a list of all Place objects linked to a City """
     places = []
-    for obj in storage.all(Place).values():
-        if obj.city_id == city_id:
-            places.append(obj.to_dict())
-    if len(places) == 0:
-        abort(404)
-    return make_response(jsonify(places), 200)
+    city_obj = storage.get(City, city_id)
+    if city_obj:
+        for obj in storage.all(Place).values():
+            if obj.city_id == city_id:
+                places.append(obj.to_dict())
+        return make_response(jsonify(places), 200)
+    abort(404)
 
 
 @app_views.route('/places/<place_id>', strict_slashes=False)
@@ -54,6 +55,7 @@ def create_place(city_id):
             if 'name' not in data.keys():
                 abort(400, "Missing name")
             if storage.get(User, data['user_id']):
+                data["city_id"] = city_id
                 obj = Place(**data)
                 storage.new(obj)
                 storage.save()
