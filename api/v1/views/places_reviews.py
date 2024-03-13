@@ -77,6 +77,7 @@ def update(review_id):
         obj = storage.get(Review, review_id)
         if obj:
             for key, value in data.items():
-                if key not in ["id", "u"]
+                if key not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
+                    
         abort(404)
     abort(400, "Not a JSON")
