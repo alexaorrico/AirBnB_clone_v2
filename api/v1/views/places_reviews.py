@@ -49,4 +49,6 @@ def createReview(place_id):
     """ Creates a new Review object using a place_id """
     place_obj = storage.get(Place, place_id)
     if place_obj:
-        if request.is_json is True
+        if request.is_json is True:
+            data = request.get_json()
+        abort(400)
