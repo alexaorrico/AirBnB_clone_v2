@@ -80,6 +80,6 @@ def update(review_id):
                 if key not in ["id", "user_id", "place_id", "created_at", "updated_at"]:
                     setattr(obj, key, value)
             obj.save()
-            
+            return make_response(jsonify(obj.to_dict()), 200)
         abort(404)
     abort(400, "Not a JSON")
