@@ -15,6 +15,6 @@ def get(place_id):
     if place_obj:
         all_reviews = storage.all(Review)
         reviews = []
-        for key, value in all_reviews.items():
+        for obj in all_reviews.values():
             
     abort(404)
