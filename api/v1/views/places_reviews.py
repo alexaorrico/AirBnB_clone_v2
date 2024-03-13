@@ -72,3 +72,4 @@ def createReview(place_id):
                  strict_slashes=False)
 def update(review_id):
     """ Updates a review object """
+    if requ
