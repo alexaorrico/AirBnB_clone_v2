@@ -24,4 +24,5 @@ def get(place_id):
 
 @app_views.route('/reviews/<review_id>', strict_slashes=False)
 def one_review(review_id):
-    """ """
+    """ Returns one review object """
+    
