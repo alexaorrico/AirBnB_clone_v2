@@ -2,8 +2,8 @@
 """ Place Reviews Module """
 
 from api.v1.views import app_views
-from flask import abort, Flask, jsonify, make_response
-from models.place import place_amenity, Place
+from flask import abort, jsonify, make_response
+from models.place import Place
 from models.review import Review
 from models import storage
 
@@ -47,3 +47,4 @@ def delete_review(review_id):
                  strict_slashes=False)
 def createReview(place_id):
     """ Creates a new Review object using a place_id """
+    
