@@ -31,4 +31,5 @@ def one_review(review_id):
     abort(404)
 
 
-@app_views.route('')
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
+                 strict_)
