@@ -70,4 +70,5 @@ def createReview(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
-d
+def update(review_id):
+    """ Updates a review object """
