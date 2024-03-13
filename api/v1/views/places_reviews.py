@@ -3,8 +3,8 @@
 
 from api.v1.views import app_views
 from flask import abort, Flask, jsonify, make_response
-from models.amenity import Amenity
 from models.place import place_amenity, Place
+from models.review import Review
 from models import storage
 
 
