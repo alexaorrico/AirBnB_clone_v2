@@ -13,5 +13,6 @@ def get(place_id):
     """ Returns a list of Reviews objects """
     place_obj = storage.get(Place, place_id)
     if place_obj:
-        all_reviews = 
+        all_reviews = storage.all(Review)
+        
     abort(404)
