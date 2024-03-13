@@ -34,4 +34,5 @@ def one_review(review_id):
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_review(review_id):
-    """ Deletes a"""
+    """ Deletes a Review obj if it exists """
+    obj = storage.get(Review, )
