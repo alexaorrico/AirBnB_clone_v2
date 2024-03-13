@@ -68,4 +68,6 @@ def createReview(place_id):
     abort(404)
 
 
-@app_views
+@app_views.route('/reviews/<review_id>', methods=['PUT'],
+                 strict_slashes=False)
+d
