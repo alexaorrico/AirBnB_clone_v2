@@ -28,4 +28,7 @@ def one_review(review_id):
     obj = storage.get(Review, review_id)
     if obj:
         return make_response(jsonify(obj.to_dict()), 200)
-    a
+    abort(404)
+
+
+@app_views.route()
