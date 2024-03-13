@@ -32,4 +32,6 @@ def one_review(review_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
-                 strict_)
+                 strict_slashes=False)
+def delete_review(review_id):
+    """ Deletes a"""
