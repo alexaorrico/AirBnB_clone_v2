@@ -59,7 +59,9 @@ def createReview(place_id):
                 if user_obj:
                     data["place_id"] = place_id
                     new_review = Review(**data)
-                    storage.
+                    storage.new(new_review)
+                    storage.save()
+                    return make_response
                 abort(404)
             abort(400, "Missing user_id")
         abort(400, "Not a JSON")
