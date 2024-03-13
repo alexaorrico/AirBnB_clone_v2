@@ -52,7 +52,8 @@ def createReview(place_id):
     if place_obj:
         if request.is_json is True:
             data = request.get_json()
-            if "text"
+            if "text" not in data:
+                abort(400, "Missing text")
             if "user_id" in data:
                 user_obj = storage.get(User, data["user_id"])
                 if user_obj:
