@@ -11,15 +11,14 @@ from models.state import State
 @app_views.route('/states/<state_id>/cities', strict_slashes=False)
 def all_cities(state_id):
     """ Returns all cities linked to a particular city """
-    city_objs = storage.all(City)
-    cities = []
-    for obj in city_objs.values():
-        if obj.state_id == state_id:
-            cities.append(obj.to_dict())
-    if len(cities) == 0:
-        abort(404)
-    else:
-        return jsonify(cities)
+    if storage.get(State, state_id):
+        city_objs = storage.all(City)
+        cities = []
+        for obj in city_objs.values():
+            if obj.state_id == state_id:
+                cities.append(obj.to_dict())
+        return make_response(jsonify(cities), 200)
+    abort(404)
 
 
 @app_views.route('/cities/<city_id>', strict_slashes=False)
@@ -27,7 +26,7 @@ def one_city(city_id):
     """ Returns one city """
     city = storage.get(City, city_id)
     if city:
-        return jsonify(city.to_dict())
+        return make_response(jsonify(city.to_dict()), 200)
     abort(404)
 
 
