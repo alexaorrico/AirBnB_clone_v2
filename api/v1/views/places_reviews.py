@@ -16,5 +16,5 @@ def get(place_id):
         all_reviews = storage.all(Review)
         reviews = []
         for obj in all_reviews.values():
-            
+            if obj.place_id == place_id:
     abort(404)
