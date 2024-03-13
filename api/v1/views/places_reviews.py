@@ -7,4 +7,6 @@ from models.place import place_amenity
 
 
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False)
-def get()
+def get(place_id):
+    """ Returns a list of Reviews objects """
+    
