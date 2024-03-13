@@ -39,4 +39,8 @@ def delete_review(review_id):
     if obj:
         obj.delete()
         storage.save()
-        return 
+        return make_response(jsonify({}), 200)
+    abort(404)
+
+
+@app_views.route('')
