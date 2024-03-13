@@ -61,8 +61,11 @@ def createReview(place_id):
                     new_review = Review(**data)
                     storage.new(new_review)
                     storage.save()
-                    return make_response
+                    return make_response(jsonify(new_review.to_dict()), 201)
                 abort(404)
             abort(400, "Missing user_id")
         abort(400, "Not a JSON")
     abort(404)
+
+
+@app_views
