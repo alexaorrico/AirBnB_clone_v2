@@ -45,4 +45,5 @@ def delete_review(review_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-def createReview(place)
+def createReview(place_id):
+    """ Creates a new Review object using a place_id """
