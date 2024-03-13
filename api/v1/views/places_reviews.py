@@ -6,6 +6,7 @@ from flask import abort, jsonify, make_response, request
 from models.place import Place
 from models.review import Review
 from models import storage
+from models.user import User
 
 
 @app_views.route('/places/<place_id>/reviews', strict_slashes=False)
@@ -51,4 +52,8 @@ def createReview(place_id):
     if place_obj:
         if request.is_json is True:
             data = request.get_json()
-        abort(400)
+            if "user_id" in data:
+                user_obj = storage.get(User, data["user_id"])
+            abort(400, "Missing user_id")
+        abort(400, "Not a JSON")
+    abort(404)
