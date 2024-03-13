@@ -18,5 +18,5 @@ def get(place_id):
         for obj in all_reviews.values():
             if obj.place_id == place_id:
                 reviews.append(obj.to_dict())
-            
+        return make_response(jsonify(reviews), 200)
     abort(404)
