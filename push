@@ -1,6 +1,0 @@
-#!/bin/bash
-git add $1
-echo "enter commit title: "
-read commit_title
-git commit -m "$commit_title"
-git push
