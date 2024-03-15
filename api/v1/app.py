@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """init app flask object and runs app"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 # hasn't been created yet
 from api.v1.views import app_views
@@ -15,6 +15,13 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 @app.teardown_appcontext
 def teardown(exception):
     storage.close()
+
+@app.errorhandler(404)
+def errorhandler(error):
+        status = {
+            "error":"Not found"
+        }
+        return jsonify(status), 404
 
 
 if __name__ == "__main__":
