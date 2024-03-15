@@ -17,11 +17,5 @@ else:
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
-
-@app.route('/status', strict_slashes=False)
-def status():
-    return response
-
-
 if __name__ == '__main__':
     app.run(host=host, port=port, threaded=True)
