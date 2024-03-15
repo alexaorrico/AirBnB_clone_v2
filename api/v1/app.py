@@ -24,4 +24,5 @@ if __name__ == "__main__":
     if environ['HBNB_API_PORT'] is None:
         environ['HBNB_API_PORT'] = 5000
     app.run(host=environ['HBNB_API_HOST'],
-            port=environ['HBNB_API_PORT'], threaded=True)
+            port=environ['HBNB_API_PORT'], threaded=True, 
+            debug=True)
