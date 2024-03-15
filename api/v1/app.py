@@ -6,11 +6,11 @@ from api.v1.views import app_views
 import os
 
 if 'HBNB_API_HOST' in os.environ:
-    host = getenv('HBNB_API_HOST')
+    host = os.getenv('HBNB_API_HOST')
 else:
     host = '0.0.0.0'
 if 'HBNB_API_PORT' in os.environ:
-    port = getenv('HBNB_API_PORT')
+    port = os.getenv('HBNB_API_PORT')
 else:
     port = 5000
 
