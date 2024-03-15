@@ -3,7 +3,7 @@
 from flask import Flask
 from models import storage
 # hasn't been created yet
-from api.v1.views import app_views 
+from api.v1.views import app_views
 from os import environ
 
 
@@ -23,5 +23,5 @@ if __name__ == "__main__":
         environ['HBNB_API_HOST'] = '0.0.0.0'
     if environ['HBNB_API_PORT'] is None:
         environ['HBNB_API_PORT'] = 5000
-    app.run(host=environ['HBNB_API_HOST'], 
+    app.run(host=environ['HBNB_API_HOST'],
             port=environ['HBNB_API_PORT'], threaded=True)
