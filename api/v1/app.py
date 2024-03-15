@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Module containing API engine"""
+from api.v1.views import app_views
 from flask import Flask
 from models import storage
-from api.v1.views import app_views
 import os
 
 if 'HBNB_API_HOST' in os.environ:
@@ -12,7 +12,8 @@ else:
 if 'HBNB_API_PORT' in os.environ:
     port = os.getenv('HBNB_API_PORT')
 else:
-    port = 5000
+    port = '5000'
+
 
 app = Flask(__name__)
 app.register_blueprint(app_views)

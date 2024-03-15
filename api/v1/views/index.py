@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module containing API routes"""
 from api.v1.views import app_views
+from flask import jsonify
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -9,9 +10,10 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from logging.config import dictConfig
 
-classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {"amenities": Amenity, "cities": City,
+           "places": Place, "reviews": Review, "states": State, "users": User}
 
 
 @app_views.route('/status', strict_slashes=False)
@@ -24,5 +26,5 @@ def status():
 def stats():
     counts = {}
     for cls in classes:
-        counts[cls] = storage.count(cls)
-    return counts
+        counts.update({cls: storage.count(classes[cls])})
+    return jsonify(counts)
