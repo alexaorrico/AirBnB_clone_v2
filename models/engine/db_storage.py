@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+print("init has run")
 """
 Contains the class DBStorage
 """
