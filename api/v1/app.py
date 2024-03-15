@@ -16,12 +16,13 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 def teardown(exception):
     storage.close()
 
+
 @app.errorhandler(404)
 def errorhandler(error):
-        status = {
-            "error":"Not found"
-        }
-        return jsonify(status), 404
+    status = {
+        "error": "Not found"
+    }
+    return jsonify(status), 404
 
 
 if __name__ == "__main__":
