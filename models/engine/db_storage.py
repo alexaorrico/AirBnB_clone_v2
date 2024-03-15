@@ -3,7 +3,6 @@
 Contains the class DBStorage
 """
 
-import models
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -82,7 +81,7 @@ class DBStorage:
 
         # iterates through dict; format: <state>.<id>:<instance>
         for obj in objs:
-            
+
             # if str after "." matches given str id
             if id == obj.split(".")[1]:
                 return obj
