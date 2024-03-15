@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""init Blueprint and imports index func"""
+
 from flask import Blueprint, render_template
 
 
