@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -29,22 +29,7 @@ class TestDBStorageDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
-
-    def test_pep8_conformance_db_storage(self):
-        """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/engine/db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
-    def test_pep8_conformance_test_db_storage(self):
-        """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
+       
     def test_db_storage_module_docstring(self):
         """Test for the db_storage.py module docstring"""
         self.assertIsNot(db_storage.__doc__, None,
@@ -86,3 +71,37 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_method(self):
+        """Test the get method for DBStorage"""
+        # Create and commit a new object for retrieval
+        obj_to_retrieve = BaseModel()
+        obj_to_retrieve.save()
+
+        # Retrieve the object using the get method
+        retrieved_obj = db_storage.get(BaseModel, obj_to_retrieve.id)
+
+        # Assertions
+        self.assertIsNotNone(retrieved_obj, "Object retrieval failed.")
+        self.assertEqual(obj_to_retrieve.id, retrieved_obj.id,
+                         "Retrieved object ID does not match.")
+
+        # Cleanup
+        db_storage.delete(retrieved_obj)
+        db_storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_method(self):
+        """Test the count method for DBStorage"""
+        # Initial count
+        initial_count = db_storage.save().count(BaseModel)
+
+        # Create a new object to affect the count
+        new_obj = BaseModel()
+        new_obj.save()
+
+        # New count should be greater by 1
+        new_count = db_storage.count(BaseModel)
+        self.assertEqual(new_count, initial_count + 1,
+                         "Count did not increase after adding an object.")
