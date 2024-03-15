@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""init app flask object and runs app"""
 from flask import Flask
 from models import storage
 # hasn't been created yet
