@@ -19,6 +19,7 @@ def status():
     res = {"status": "OK"}
     return res
 
+
 @app_views.route('/stats', strict_slashes=False)
 def stats():
     counts = {}
