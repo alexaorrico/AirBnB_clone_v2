@@ -81,7 +81,6 @@ class DBStorage:
 
         # iterates through dict; format: <state>.<id>:<instance>
         for obj in objs:
-
             # if str after "." matches given str id
             if id == obj.split(".")[1]:
                 return obj
