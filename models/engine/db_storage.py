@@ -63,14 +63,19 @@ class DBStorage:
 
     def count(self, cls=None):
         """ Return number of objects in storage. """
-        if cls and cls in classes.values():
-            return self.__session.query(cls).count()
-        elif not cls:
-            total_obj = 0
-            for model_cls in classes.values():
-                total_obj += self.__session.query(model_cls).count()
-            return total_obj
-        return 0
+        # if cls and cls in classes.values():
+        #     return self.__session.query(cls).count()
+        # elif not cls:
+        #     total_obj = 0
+        #     for model_cls in classes.values():
+        #         total_obj += self.__session.query(model_cls).count()
+        #     return total_obj
+        objects = []
+        if cls is None:
+            objects = self.all()
+        else:
+            objects = self.all(cls)
+        return len(objects)
 
     def save(self):
         """commit all changes of the current database session"""
