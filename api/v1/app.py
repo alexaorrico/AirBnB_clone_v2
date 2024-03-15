@@ -12,11 +12,9 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 # register blueprint app_views to app ?
-
 @app.teardown_appcontext
 def teardown(exception):
     storage.close()
-
 
 
 if __name__ == "__main__":
@@ -25,6 +23,5 @@ if __name__ == "__main__":
         environ['HBNB_API_HOST'] = '0.0.0.0'
     if environ['HBNB_API_PORT'] is None:
         environ['HBNB_API_PORT'] = 5000
-    app.run(host=environ['HBNB_API_HOST'], port=environ['HBNB_API_PORT'], threaded=True)
-    # threaded=true, what does that mean?
-
+    app.run(host=environ['HBNB_API_HOST'], 
+            port=environ['HBNB_API_PORT'], threaded=True)
