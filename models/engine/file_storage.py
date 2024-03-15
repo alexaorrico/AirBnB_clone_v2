@@ -68,3 +68,34 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """retrieves one object; same as db method"""
+        # gets dictionary of cls
+        objs = self.all(cls)
+
+        # iterates through dict; format: <state>.<id>:<instance>
+        for obj in objs:
+            
+            # if str after "." matches given str id
+            if id == obj.split(".")[1]:
+                return obj
+
+    def count(self, cls=None):
+        """count the number of objects in storage"""
+        """this is same as db but since storage.all returns """
+        """a dictionary it shouldn't matter?"""
+        # returning all objects in storage
+        if cls is None:
+
+            # using storage.all function to access database, returns dict
+            total_list = self.all()
+
+            # len of dict seems to return correct amount, not sure
+            return len(total_list)
+        
+        # returning only class objects if cls is given, use storage.all
+        cls_list = self.all(cls)
+
+        # same len of dict, seems right ?
+        return len(cls_list)
