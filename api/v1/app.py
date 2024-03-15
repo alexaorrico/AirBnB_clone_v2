@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Module containing API engine"""
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -16,6 +16,12 @@ else:
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
+@app.errorhandler(404)
+def not_found(error):
+    """ 404 but in JSON :( """
+    return jsonify({"error": "Not found"}), 404
+
 
 if __name__ == '__main__':
     app.run(host=host, port=port, threaded=True)
