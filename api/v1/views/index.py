@@ -3,13 +3,29 @@
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from models import storage
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+
+app = Flask(__name__)
 
 
 @app_views.route('/status', methods=['GET'])
 def status():
     """ checks status of API """
-    return jsonify({"status":"OK"})
+    return jsonify({"status": "OK"})
 
 
-if __name__ == '__main__':
-    app_views.run(debug=True, host='0.0.0.0', port='5000')
+@app_views.route('stats')
+def get_number_objects():
+    """ returns number of each object by types """
+    classes = [Amenity, City, Place, Review, State, User]
+    objects = ['amenities', 'cities', 'places', 'reviews', 'states', 'users']
+    number_objects = {
+        objects[i]: storage.count(
+            classes[i]) for i in range(
+            len(classes))}
+    return jsonify(number_objects)
