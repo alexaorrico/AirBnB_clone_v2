@@ -29,40 +29,43 @@ def get_city_id(city_id):
                  methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
-    ''' deletes state object '''
-    state_object = storage.get(State, state_id)
-    if state_object is None:
+    ''' deletes city object '''
+    city_object = storage.get(State, city_id)
+    if city_object is None:
         abort(404)
-    storage.delete(state_object)
+    storage.delete(city_object)
     storage.save()
     return make_response(jsonify({}))
 
 
-@app_views.route('/states<state_id>/cities', methods=['POST'], strict_slashes=False)
-def create_city():
-    '''' creates a state '''
+@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+def create_city(state_id):
+    '''' creates a city '''
+    state_object = storage.get(State, state_id)
+    if state_object is None:
+        abort(404)    
     response = request.get_json(silent=True)
     if not response:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'name' not in response:
         return make_response(jsonify({'error': 'Missing name'}), 400)
-    new_state = State(**response)
-    new_state.save()
-    return make_response(jsonify(new_state.to_dict()), 201)
+    new_city = City(**response)
+    new_city.save()
+    return make_response(jsonify(new_city.to_dict()), 201)
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
-    '''' updates a state object '''
-    state = storage.get(State, state_id)
+    '''' updates a city object '''
+    city = storage.get(City, city_id)
     response = request.get_json(silent=True)
-    if not state:
+    if not city:
         abort(404)
     if not response:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     for key, value in response.items():
-        if key not in ['id', 'created_at', 'updated_at']:
-            setattr(state, key, value)
+        if key not in ['id', 'state_id', 'created_at', 'updated_at']:
+            setattr(city, key, value)
     storage.save()
-    return make_response(state.to_dict(), 200)
+    return make_response(city.to_dict(), 200)
