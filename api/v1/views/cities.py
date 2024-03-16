@@ -8,19 +8,21 @@ from models.city import City
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
-def get_cities():
-    ''' gets list of all state objects '''
-    states_list = [state.to_dict() for state in storage.all(State).values()]
-    return jsonify(states_list)
+def get_cities(state_id):
+    ''' gets the list of all City objects of a State '''
+    state_object = storage.get(State, state_id)
+    if state_object is None:
+        abort(404)
+    return jsonify(state_object.to_dict())
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city_id(city_id):
     ''' gets specific state objects by its state ID '''
-    state_object = storage.get(State, state_id)
-    if state_object is None:
+    city_object = storage.get(City, city_id_id)
+    if city_object is None:
         abort(404)
-    return jsonify(state_object.to_dict())
+    return jsonify(city_object.to_dict())
 
 
 @app_views.route('/cities/<city_id>',
