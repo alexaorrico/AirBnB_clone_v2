@@ -20,7 +20,7 @@ def get_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
 def get_city_id(city_id):
     ''' gets specific state objects by its state ID '''
-    city_object = storage.get(City, city_id_id)
+    city_object = storage.get(City, city_id)
     if city_object is None:
         abort(404)
     return jsonify(city_object.to_dict())
