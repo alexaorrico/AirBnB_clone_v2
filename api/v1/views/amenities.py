@@ -16,6 +16,7 @@ def get_amenities():
                  in storage.all(Amenity).values()]
     return jsonify(amenities)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['GET'],
                  strict_slashes=False)
 def get_amenity(amenity_id):
@@ -24,6 +25,7 @@ def get_amenity(amenity_id):
     if amenity:
         return jsonify(amenity.to_dict())
     abort(404)
+
 
 @app_views.route('/amenities', methods=['POST'],
                  strict_slashes=False)
@@ -50,6 +52,7 @@ def delete_amenity(amenity_id):
         storage.save()
         return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/amenities/<amenity_id>', methods=['PUT'],
                  strict_slashes=False)
