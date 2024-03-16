@@ -57,7 +57,7 @@ def update_state(state_id):
         abort(404)
     if not response:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    
+
     for key, value in response.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
