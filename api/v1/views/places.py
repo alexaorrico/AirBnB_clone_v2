@@ -11,20 +11,19 @@ from models.place import Place
                  methods=['GET'], strict_slashes=False)
 def get_cities(city_id):
     ''' gets the list of all City objects of a City '''
-    state_object = storage.get(State, state_id)
-    if state_object is None:
+    city_object = storage.get(City, city_id)
+    if city_object is None:
         abort(404)
-    cities_list = [city.to_dict() for city in state_object.cities]
-    return jsonify(cities_list)
+    return jsonify(city_object.to_dict())
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
 def get_place_id(place_id):
     ''' gets specific place objects by its place ID '''
-    city_object = storage.get(City, city_id)
-    if city_object is None:
+    place_object = storage.get(Place, place_id)
+    if place_object is None:
         abort(404)
-    return jsonify(city_object.to_dict())
+    return jsonify(place_object.to_dict())
 
 
 @app_views.route('/places/<place_id>',
