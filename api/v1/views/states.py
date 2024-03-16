@@ -29,7 +29,7 @@ def delete_state(state_id):
         abort(404)
     storage.delete(state)
     storage.save()
-    return jsonify({}), 200 
+    return jsonify({}), 200
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def creates_a_state():
@@ -50,7 +50,7 @@ def updating_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    HTTP_body = request.get_json()
+    HTTP_body = request.get_json(silent=True)
     if not HTTP_body:
         abort(400, 'Not a JSON')
     ignoring_keys = ['id', 'created_at', 'updated_at']
