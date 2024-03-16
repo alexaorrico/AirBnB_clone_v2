@@ -13,7 +13,7 @@ from api.v1.views import app_views
 def get_users():
     """Get all User objects"""
     users = [user.to_dict() for user
-                 in storage.all(User).values()]
+             in storage.all(User).values()]
     return jsonify(users)
 
 
