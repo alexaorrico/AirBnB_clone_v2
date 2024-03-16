@@ -3,7 +3,6 @@
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
-from flask_cors import CORS
 import os
 
 app = Flask(__name__)
@@ -13,7 +12,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def close_db(exception):
     """ closes db """
-    return storage.close()
+    storage.close()
 
 
 @app.errorhandler(404)
@@ -24,4 +23,6 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000', threaded=True, debug=True)
+    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(os.getenv('HBNB_API_PORT','5000'))
+    app.run(debug=True, host=host, port=port, threaded=True)

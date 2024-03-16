@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.config['JSON_SORT_KEYS'] = False
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status')
 def status():
     """ checks status of API """
     return jsonify({"status": "OK"})
