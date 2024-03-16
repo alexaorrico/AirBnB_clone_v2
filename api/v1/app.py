@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Starts instance of Flask application for communication with API """
-from flask import Flask
+from flask import Flask, jsonify
 import os
 from models import storage
 from api.v1.views import app_views
@@ -12,6 +12,15 @@ app = Flask(__name__)
 
 # Register app_view blueprint
 app.register_blueprint(app_views)
+
+# Error Handling for 404 status. 
+# Using JSON...
+@app.errorhandler(404)
+def not_found(error):
+    """Handler for 404 errors, which returns a JSON
+    formatted response. """
+    return jsonify({"error": "Not Found"}), 404
+
 
 
 # Teardown 
