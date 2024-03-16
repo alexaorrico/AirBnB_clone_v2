@@ -107,16 +107,16 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Test the count method."""
         # Initial count
-        initial_count = storage.count(BaseModel)
+        initial_count = storage.count(State)
 
         # Create a new object and save it
-        obj = BaseModel()
+        obj = State()
         # Assuming there's a save method to persist changes
         storage.new(obj)
         storage.save()
 
         # Verify the count has increased by 1
-        new_count = storage.count(BaseModel)
+        new_count = storage.count(State)
         self.assertEqual(initial_count + 1, new_count,
                          "Count should increase by 1 after adding an object.")
 
@@ -125,7 +125,7 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
 
         # Verify the count has returned to the initial value
-        final_count = storage.count(BaseModel)
+        final_count = storage.count(State)
         self.assertEqual(initial_count, final_count,
                          "Count should return to initial value after deletion")
 
@@ -133,11 +133,11 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test creating an object, retrieving it, and then deleting it."""
         # Setup: Create a new object and save it
-        created_model = BaseModel()
+        created_model = State()
         created_model.save()
 
         # Attempt to retrieve the object using the get method
-        retrieved_model = storage.get(BaseModel, created_model.id)
+        retrieved_model = storage.get(State, created_model.id)
 
         # Assertions to ensure the retrieved object matches the created object
         self.assertIsNotNone(retrieved_model, "Failed to retrieve the model.")
@@ -150,5 +150,5 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
 
         # Verify deletion
-        deleted_model = storage.get(BaseModel, created_model.id)
+        deleted_model = storage.get(State, created_model.id)
         self.assertIsNone(deleted_model, "Model was not deleted successfully.")
