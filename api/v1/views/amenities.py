@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-
+"""
+returns json response for GET, POST, PUT and DELETE
+Methods for Amenities of API
+"""
 from flask import Flask, jsonify, request, abort
 from models import storage
 from models.amenity import Amenity
