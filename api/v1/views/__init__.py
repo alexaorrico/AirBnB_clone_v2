@@ -25,4 +25,5 @@ from api.v1.views.users import *
 #Import Places
 from api.v1.views.places import *
 
-# There will be additional imports.
+#Import Reviews
+from api.v1.views.places_reviews import *
