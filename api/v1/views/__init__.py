@@ -19,4 +19,7 @@ from api.v1.views.cities import *
 #Import Amenities
 from api.v1.views.amenities import *
 
+#Import Users
+from api.v1.views.users import *
+
 # There will be additional imports.
