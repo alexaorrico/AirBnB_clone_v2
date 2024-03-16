@@ -41,7 +41,7 @@ def create_state():
     response = request.get_json(silent=True)
     if not response:
         return make_response(jsonify({'error':'Not a JSON'}), 400)
-    if 'name' not in response.keys() or response['name'] is None:
+    if 'name' not in response:
         return make_response(jsonify({'error':'Missing name'}), 400)
     new_state = State(**response)
     new_state.save()
@@ -56,7 +56,7 @@ def update_state(state_id):
         abort(400)
     response = request.get_json()
     if not response:
-        return make_response(jsonify({'Not a JSON'}), 400)
+        return make_response(jsonify({'error':'Not a JSON'}), 400)
     ignore_keys = ['id', 'created_at', 'updated_at']
     for key, value in response.items():
         if key not in ignore_keys:
