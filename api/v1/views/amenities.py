@@ -25,13 +25,15 @@ def get_amenity(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
-    """Create a new Amenity object"""
-    if not request.json:
-        #abort(400, description="Not a JSON")
+    if request.headers['Content-Type'] != 'application/json':
+        return jsonify({'error': 'Unsupported Media Type'}), 415
+    
+    data = request.get_json(silent=True)
+    if data is None:
         return jsonify({'error': 'Not a JSON'}), 400
-    if 'name' not in request.json:
+    if 'name' not in data:
         return jsonify({'error': 'Missing name'}), 400
-        #abort(400, description="Missing name")
+
     # Process the valid request data...
     #new_amenity = Amenity(name=request.json['name'])
     new_amenity = Amenity(**request.get_json())
