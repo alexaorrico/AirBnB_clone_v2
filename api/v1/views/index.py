@@ -13,7 +13,7 @@ from models.user import User
 app = Flask(__name__)
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status')
 def status():
     """ checks status of API """
     return jsonify({"status": "OK"})
