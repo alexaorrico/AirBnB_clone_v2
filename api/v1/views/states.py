@@ -52,14 +52,14 @@ def create_state():
 def update_state(state_id):
     '''' updates a state object '''
     state = storage.get(State, state_id)
-    if not response:
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     response = request.get_json()
     if not state:
         abort(404)
-    ignore_keys = ['id', 'created_at', 'updated_at']
+    if not response:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    
     for key, value in response.items():
-        if key not in ignore_keys:
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
     storage.save()
     return make_response(jsonify(state.to_dict()), 200)
