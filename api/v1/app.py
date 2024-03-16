@@ -11,14 +11,14 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def close_db(exception=None):
+def close_db(exception):
     """ closes db """
     return storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
-    response = jsonify({'error': 'not found'})
+    response = jsonify({'error': 'Not Found'})
     response.status_code = 404
     return response
 
