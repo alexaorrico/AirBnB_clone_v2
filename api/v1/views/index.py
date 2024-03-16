@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """ retruns json response status of API """
 from flask import Flask, jsonify
 from api.v1.views import app_views

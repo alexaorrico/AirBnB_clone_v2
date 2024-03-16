@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """ initializes Flask application """
 from flask import Flask, jsonify
 from models import storage
