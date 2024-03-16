@@ -12,6 +12,9 @@ from models.user import User
 
 app = Flask(__name__)
 
+# Configure Flask to pretty-print JSON responses
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config['JSON_SORT_KEYS'] = False
 
 @app_views.route('/status')
 def status():

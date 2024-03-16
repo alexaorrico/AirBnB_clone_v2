@@ -102,51 +102,53 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
-        
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
         """Test the count method."""
         # Initial count
-        initial_count = storage.count(BaseModel)
+        initial_count = storage.count(State)
 
         # Create a new object and save it
-        obj = BaseModel()
+        obj = State()
         # Assuming there's a save method to persist changes
         storage.new(obj)
         storage.save()
 
         # Verify the count has increased by 1
-        new_count = storage.count(BaseModel)
-        self.assertEqual(initial_count + 1, new_count, "Count should increase by 1 after adding an object.")
+        new_count = storage.count(State)
+        self.assertEqual(initial_count + 1, new_count,
+                         "Count should increase by 1 after adding an object.")
 
         # Clean up by deleting the created object
         storage.delete(obj)
         storage.save()
 
         # Verify the count has returned to the initial value
-        final_count = storage.count(BaseModel)
-        self.assertEqual(initial_count, final_count, "Count should return to initial value after deleting the object.")
+        final_count = storage.count(State)
+        self.assertEqual(initial_count, final_count,
+                         "Count should return to initial value after deletion")
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test creating an object, retrieving it, and then deleting it."""
         # Setup: Create a new object and save it
-        created_model = BaseModel()
+        created_model = State()
         created_model.save()
-        
+
         # Attempt to retrieve the object using the get method
-        retrieved_model = storage.get(BaseModel, created_model.id)
-        
+        retrieved_model = storage.get(State, created_model.id)
+
         # Assertions to ensure the retrieved object matches the created object
         self.assertIsNotNone(retrieved_model, "Failed to retrieve the model.")
-        self.assertEqual(created_model.id, retrieved_model.id, "Retrieved model ID does not match the created model.")
-        
+        self.assertEqual(created_model.id, retrieved_model.id,
+                         "Retrieved model ID does not match the created model")
+
         # Teardown: Delete the created object to clean up
         # Assuming your storage has a delete method. This part may vary.
         storage.delete(created_model)
         storage.save()
 
-        # Optional: Verify deletion if possible (depends on storage system capabilities)
-        # This step might not be straightforward in all storage systems
-        deleted_model = storage.get(BaseModel, created_model.id)
+        # Verify deletion
+        deleted_model = storage.get(State, created_model.id)
         self.assertIsNone(deleted_model, "Model was not deleted successfully.")
