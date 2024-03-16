@@ -16,4 +16,7 @@ from api.v1.views.states import *
 # Import Cities.
 from api.v1.views.cities import *
 
+#Import Amenities
+from api.v1.views.amenities import *
+
 # There will be additional imports.
