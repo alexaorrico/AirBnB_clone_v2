@@ -1,16 +1,1 @@
-{
-  "State.f681a525-21b3-4126-b8d3-1acc98388b05": {
-    "name": "Oklahoma",
-    "created_at": "2023-11-07T17:04:36.008683",
-    "updated_at": "2023-11-07T17:04:36.008834",
-    "id": "f681a525-21b3-4126-b8d3-1acc98388b05",
-    "__class__": "State"
-  },
-  "State.e1105ebd-e649-4996-b5f1-29440b0b42fd": {
-    "name": "Texas",
-    "created_at": "2023-11-07T17:04:45.696801",
-    "updated_at": "2023-11-07T17:04:45.696871",
-    "id": "e1105ebd-e649-4996-b5f1-29440b0b42fd",
-    "__class__": "State"
-  }
-}
+{"Amenity.64a4f093-7bf6-48fc-a3c6-7ca7c725d8da": {"id": "64a4f093-7bf6-48fc-a3c6-7ca7c725d8da", "created_at": "2024-03-16T02:42:15.020754", "updated_at": "2024-03-16T02:42:15.020754", "__class__": "Amenity"}, "BaseModel.44cc40a5-c409-484c-b7ea-de561100a263": {"id": "44cc40a5-c409-484c-b7ea-de561100a263", "created_at": "2024-03-16T02:42:15.020758", "updated_at": "2024-03-16T02:42:15.020758", "__class__": "BaseModel"}, "City.2268719e-73b3-4b70-aaaf-eae657afefbb": {"id": "2268719e-73b3-4b70-aaaf-eae657afefbb", "created_at": "2024-03-16T02:42:15.020761", "updated_at": "2024-03-16T02:42:15.020761", "__class__": "City"}, "Place.49ea477c-02d5-4216-b698-f101c9529081": {"id": "49ea477c-02d5-4216-b698-f101c9529081", "created_at": "2024-03-16T02:42:15.020763", "updated_at": "2024-03-16T02:42:15.020763", "__class__": "Place"}, "Review.50d16908-f7d3-482c-8d76-c47a92ba9d4d": {"id": "50d16908-f7d3-482c-8d76-c47a92ba9d4d", "created_at": "2024-03-16T02:42:15.020766", "updated_at": "2024-03-16T02:42:15.020766", "__class__": "Review"}, "State.fc222b5b-53a5-4601-b1c2-dc9ce49029e2": {"id": "fc222b5b-53a5-4601-b1c2-dc9ce49029e2", "created_at": "2024-03-16T02:42:15.020768", "updated_at": "2024-03-16T02:42:15.020768", "__class__": "State"}, "User.1b77132d-e4da-47b2-9003-d4fcfa767389": {"id": "1b77132d-e4da-47b2-9003-d4fcfa767389", "created_at": "2024-03-16T02:42:15.020770", "updated_at": "2024-03-16T02:42:15.020770", "__class__": "User"}}
