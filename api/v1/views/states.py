@@ -53,7 +53,7 @@ def update_state(state_id):
     '''' updates a state object '''
     state = storage.get(State, state_id)
     if not state:
-        abort(400)
+        abort(404)
     response = request.get_json()
     if not response:
         abort(400, description='Not a JSON')
