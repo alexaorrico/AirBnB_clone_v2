@@ -5,12 +5,12 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 from models.city import City
+from models.place import Place
 
-
-@app_views.route('/states/<state_id>/cities',
+@app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
-def get_cities(state_id):
-    ''' gets the list of all City objects of a State '''
+def get_cities(city_id):
+    ''' gets the list of all City objects of a City '''
     state_object = storage.get(State, state_id)
     if state_object is None:
         abort(404)
@@ -18,20 +18,20 @@ def get_cities(state_id):
     return jsonify(cities_list)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def get_city_id(city_id):
-    ''' gets specific state objects by its state ID '''
+@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+def get_place_id(place_id):
+    ''' gets specific place objects by its place ID '''
     city_object = storage.get(City, city_id)
     if city_object is None:
         abort(404)
     return jsonify(city_object.to_dict())
 
 
-@app_views.route('/cities/<city_id>',
+@app_views.route('/places/<place_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
-def delete_city(city_id):
-    ''' deletes city object '''
+def delete_place(place_id):
+    ''' deletes place object '''
     city_object = storage.get(City, city_id)
     if city_object is None:
         abort(404)
@@ -40,10 +40,10 @@ def delete_city(city_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<state_id>/cities',
+@app_views.route('cities/<city_id>/places',
                  methods=['POST'], strict_slashes=False)
-def create_city(state_id):
-    '''' creates a city '''
+def create_place(city_id):
+    '''' creates a place '''
     state_object = storage.get(State, state_id)
     if state_object is None:
         abort(404)
@@ -59,9 +59,9 @@ def create_city(state_id):
     return make_response(jsonify(new_city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def update_city(city_id):
-    '''' updates a city object '''
+@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
+def update_place(place_id):
+    '''' updates a place object '''
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
