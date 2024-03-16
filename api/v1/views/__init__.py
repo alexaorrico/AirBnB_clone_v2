@@ -1,4 +1,4 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
 """ initializes app_view """
 from flask import Blueprint
 
