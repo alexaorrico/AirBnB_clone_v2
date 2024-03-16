@@ -78,7 +78,7 @@ class FileStorage:
 
     def count(self, cls=None):
         """
-        A method to count the number of objects 
+        A method to count the number of objects
         in Filestorage
         """
         all_objs = self.all(cls)
