@@ -3,7 +3,7 @@
 returns json response for GET, POST, PUT and DELETE
 Methods for Amenities of API
 """
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
 from models import storage
 from models.amenity import Amenity
 from api.v1.views import app_views
@@ -25,20 +25,17 @@ def get_amenity(amenity_id):
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
 def create_amenity():
-    if request.headers['Content-Type'] != 'application/json':
-        return jsonify({'error': 'Unsupported Media Type'}), 415
+    response = request.get_json(silent=True)
     
-    data = request.get_json(silent=True)
-    if data is None:
-        return jsonify({'error': 'Not a JSON'}), 400
-    if 'name' not in data:
-        return jsonify({'error': 'Missing name'}), 400
-
-    # Process the valid request data...
+    if not response:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if 'name' not in response:
+        return make_response(jsonify({'error': 'Missing name'}), 400)
+    """Create a new Amenity object"""
     #new_amenity = Amenity(name=request.json['name'])
-    new_amenity = Amenity(**request.get_json())
+    new_amenity = Amenity(**response)
     new_amenity.save()
-    return jsonify(new_amenity.to_dict()), 201
+    return make_response(jsonify(new_amenity.to_dict()), 201)
 
 @app_views.route('/amenities/<amenity_id>', methods=['DELETE'], strict_slashes=False)
 def delete_amenity(amenity_id):
