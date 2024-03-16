@@ -34,8 +34,10 @@ def create_user():
 
     if not response:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    if 'name' not in response:
-        return make_response(jsonify({'error': 'Missing name'}), 400)
+    if 'email' not in response:
+        return make_response(jsonify({'error': 'Missing email'}), 400)
+    if 'password' not in response:
+        return make_response(jsonify({'error': 'Missing password'}), 400)
     """Create a new User object"""
     new_user = User(**response)
     new_user.save()
