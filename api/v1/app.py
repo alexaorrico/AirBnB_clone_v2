@@ -19,6 +19,7 @@ def close_db(exception):
 def not_found(error):
     response = jsonify({'error': 'Not Found'})
     response.status_code = 404
+    response.headers['Content-Type'] = 'application/json'
     return response
 
 
