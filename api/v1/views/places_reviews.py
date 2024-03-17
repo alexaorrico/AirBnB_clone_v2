@@ -11,12 +11,11 @@ from models.review import Review
                  methods=['GET'], strict_slashes=False)
 def get_reviews(place_id):
     ''' gets the list of all City objects of a State '''
-    place_object = storage.get(Place, place_id)
-    if place_object is None:
+    place_id = storage.get(Place, place_id)
+    if place_id is None:
         abort(404)
-    reviews_list = [review.to_dict() for review in place_object.places]
+    reviews_list = [review.to_dict() for review in place_id.reviews]
     return jsonify(reviews_list)
-
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def get_review_id(review_id):
