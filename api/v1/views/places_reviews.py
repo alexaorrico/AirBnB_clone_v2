@@ -35,7 +35,7 @@ def get_review(review_id):
                  strict_slashes=False)
 def create_review(place_id):
     """Creates a review for a specific place"""
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
@@ -74,7 +74,7 @@ def delete_review(review_id):
                  strict_slashes=False)
 def update_review(review_id):
     """Updates a review"""
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
@@ -85,7 +85,9 @@ def update_review(review_id):
     if not review_data:
         abort(400, description="Not a JSON")
     for key, value in review_data.items():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+        if key not in[
+            'id', 'user_id', 'place_id', 'created_at', 'updated_at'
+            ]:
             setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict()), 200
