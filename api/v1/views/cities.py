@@ -34,7 +34,7 @@ def get_city(city_id):
                  strict_slashes=False)
 def create_city(state_id):
     """Creates a City in a State """
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
@@ -68,7 +68,7 @@ def delete_city(city_id):
                  strict_slashes=False)
 def update_city(city_id):
     """Updates the passed City object"""
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
