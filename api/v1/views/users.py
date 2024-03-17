@@ -13,6 +13,7 @@ def get_users():
     list_of_users = [user.to_dict() for user in users]
     return jsonify(list_of_users)
 
+
 @app_views.route("/users", methods=["POST"], strict_slashes=False)
 def create_user():
     """API endpoint that creates a new User object"""
@@ -49,7 +50,7 @@ def delete_user(user_id):
     return jsonify({}), 200
 
 
-@app.route("/users/<user_id", methods=['PUT', strict_slashes=False])
+@app.route("/users/<user_id", methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
     """API endpoint that updates a User object"""
     user = storage.get(User, user_id)
@@ -64,4 +65,3 @@ def update_user(user_id):
             setattr(user, key, value)
     storage.save()
     return jsonify(user.to_dict()), 200
-
