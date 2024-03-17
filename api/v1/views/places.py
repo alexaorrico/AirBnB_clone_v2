@@ -56,7 +56,7 @@ def create_place(city_id):
     if 'user_id' not in response:
         return make_response(jsonify({'error': 'Missing name'}), 400)
 
-    user_id = storage.get(User, user_id)
+    user_id = storage.get(User, response['user_id'])
     if user_id is None:
         abort(404)
 
@@ -64,7 +64,7 @@ def create_place(city_id):
         return make_response(jsonify({'error': 'Missing name'}), 400)
 
     new_place = Place(**response)
-    new_place.city_id_id = city_id
+    new_place.city_id = city_id
     new_place.save()
     return make_response(jsonify(new_place.to_dict()), 201)
 
