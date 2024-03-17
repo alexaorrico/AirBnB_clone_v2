@@ -74,3 +74,37 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+<<<<<<< Updated upstream
+     def get(self, cls, id):
+        """Returns object based on class and ID, None if not found"""
+         for obj in class_list:
+             if hasattr(obj, 'id') and obj.id == object_id:
+                 return obj
+         return None
+
+     def count(self, cls=None):
+        """Returns number of objects matching given class or all objects if none given"""
+         if cls:
+            count = sum(1 for obj in self.objects if isinstance(obj, cls))
+         else:
+            count = len(self.objects)
+         return count
+=======
+    def get(self, cls, id):
+        """Returns object based on class and ID, None if not found"""
+        if cls not in classes.values():
+            return None
+
+        if cls and id:
+            all_objs = models.storage.all(cls)
+            for v in all_objs.values():
+                if (v.id == id):
+                    return v
+        return None
+
+    def count(self, cls=None):
+        """Returns number of objects matching given class or all objects if none given"""
+        all_obj = self.all(cls)
+        return len(all_obj)
+>>>>>>> Stashed changes
