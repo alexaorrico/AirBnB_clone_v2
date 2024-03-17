@@ -29,6 +29,9 @@ def get_state(state_id):
 def create_state():
     """Creates a state."""
     state_data = request.get_json()
+    # Check if the Content-Type is appication/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expected 'application/json'")
     # Currently, we don't have a global error catch for 
     # 400's, so set them manually. 
     if not state_data:
