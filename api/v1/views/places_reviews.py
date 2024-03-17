@@ -11,7 +11,8 @@ from models.user import User
 from api.v1.views import app_views
 
 
-@app_views.route('/places/<place_id>/reviews', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>/reviews', methods=['GET'],
+                 strict_slashes=False)
 def get_reviews(place_id):
     """Returns the list of all review objects of the specified Place"""
     place = storage.get(Place, place_id)
@@ -19,7 +20,9 @@ def get_reviews(place_id):
         abort(404)
     return jsonify([review.to_dict() for review in place.reviews])
 
-@app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/reviews/<review_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_review(review_id):
     """Returns a review object"""
     review = storage.get(Review, review_id)
@@ -27,12 +30,15 @@ def get_review(review_id):
         abort(404)
     return jsonify(review.to_dict())
 
-@app_views.route('/places/<place_id>/reviews', methods=['POST'], strict_slashes=False)
+
+@app_views.route('/places/<place_id>/reviews', methods=['POST'],
+                 strict_slashes=False)
 def create_review(place_id):
     """Creates a review for a specific place"""
      # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
-        abort(400, description="Invalid Content-Type. Expects 'application/json'")
+        abort(400,
+              description="Invalid Content-Type. Expects 'application/json'")
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -51,7 +57,9 @@ def create_review(place_id):
     review.save()
     return jsonify(review.to_dict()), 201
 
-@app_views.route('/reviews/<review_id>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/reviews/<review_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def delete_review(review_id):
     """Deletes a Review"""
     review = storage.get(Review, review_id)
@@ -61,12 +69,15 @@ def delete_review(review_id):
     storage.save()
     return jsonify({}), 200
 
-@app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
+
+@app_views.route('/reviews/<review_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_review(review_id):
     """Updates a review"""
      # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
-        abort(400, description="Invalid Content-Type. Expects 'application/json'")
+        abort(400,
+              description="Invalid Content-Type. Expects 'application/json'")
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
