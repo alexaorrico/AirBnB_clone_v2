@@ -6,6 +6,7 @@ from models import storage
 from models.state import State
 from models.city import City
 from models.place import Place
+from models.user import User
 
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
@@ -31,10 +32,10 @@ def get_place_id(place_id):
                  strict_slashes=False)
 def delete_place(place_id):
     ''' deletes place object '''
-    city_object = storage.get(City, city_id)
-    if city_object is None:
+    place_object = storage.get(Place, place_id)
+    if place_object is None:
         abort(404)
-    storage.delete(city_object)
+    storage.delete(place_object)
     storage.save()
     return make_response(jsonify({}), 200)
 
@@ -43,19 +44,27 @@ def delete_place(place_id):
                  methods=['POST'], strict_slashes=False)
 def create_place(city_id):
     '''' creates a place '''
-    state_object = storage.get(State, state_id)
-    if state_object is None:
+    city_object = storage.get(City, city_id)
+    if city_object is None:
         abort(404)
+    
     response = request.get_json(silent=True)
     if not response:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if 'user_id' not in response:
+        return make_response(jsonify({'error': 'Missing name'}), 400)
+    
+    user_id = storage.get(User, user_id)
+    if user_id is None:
+            abort(404)
+
     if 'name' not in response:
         return make_response(jsonify({'error': 'Missing name'}), 400)
 
-    new_city = City(**response)
-    new_city.state_id = state_id
-    new_city.save()
-    return make_response(jsonify(new_city.to_dict()), 201)
+    new_place = Place(**response)
+    new_place.city_id_id = city_id
+    new_place.save()
+    return make_response(jsonify(new_place.to_dict()), 201)
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
