@@ -55,7 +55,7 @@ def create_review(place_id):
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
     if 'text' not in response:
         return make_response(jsonify({'error': 'Missing text'}), 400)
-    
+
     user_id = storage.get(User, response['user_id'])
     if user_id is None:
         abort(404)
