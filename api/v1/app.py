@@ -16,7 +16,7 @@ app.register_blueprint(app_views)
 
 # Testing to see if enabling CORS will
 # correct connection issues.
-CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+CORS(app, resources={r"/api/v1*": {"origins": "*"}})
 
 
 # Error Handling for 404 status.
