@@ -8,6 +8,7 @@ from models.city import City
 from models.place import Place
 from models.user import User
 
+
 @app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
 def get_cities(city_id):
@@ -47,16 +48,16 @@ def create_place(city_id):
     city_object = storage.get(City, city_id)
     if city_object is None:
         abort(404)
-    
+
     response = request.get_json(silent=True)
     if not response:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'user_id' not in response:
         return make_response(jsonify({'error': 'Missing name'}), 400)
-    
+
     user_id = storage.get(User, user_id)
     if user_id is None:
-            abort(404)
+        abort(404)
 
     if 'name' not in response:
         return make_response(jsonify({'error': 'Missing name'}), 400)
