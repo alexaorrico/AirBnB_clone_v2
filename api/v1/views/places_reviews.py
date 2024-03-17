@@ -58,9 +58,6 @@ def create_review(place_id):
     if user_id is None:
         abort(404)
 
-    if 'name' not in response:
-        return make_response(jsonify({'error': 'Missing name'}), 400)
-
     new_review = Review(**response)
     new_review.place_id = place_id
     new_review.save()
