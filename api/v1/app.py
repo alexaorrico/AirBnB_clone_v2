@@ -18,17 +18,17 @@ app.register_blueprint(app_views)
 # correct connection issues.
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-# Error Handling for 404 status. 
+
+# Error Handling for 404 status.
 # Using JSON...
 @app.errorhandler(404)
 def not_found(error):
     """Handler for 404 errors, which returns a JSON
     formatted response. """
-    return jsonify({"error": "Not Found"}), 404
+    return jsonify({"error": "Not found"}), 404
 
 
-
-# Teardown 
+# Teardown
 @app.teardown_appcontext
 def teardown_db(exception=None):
     storage.close()
@@ -38,6 +38,6 @@ if __name__ == "__main__":
     # Get environment variables and set defaults
     host = os.environ.get('HBNB_API_HOST', '0.0.0.0')
     port = int(os.environ.get('HBNB_API_PORT', 5000))
-    
+
     # Run Flask app, with debug and threaded options
     app.run(host=host, port=port, debug=True, threaded=True)
