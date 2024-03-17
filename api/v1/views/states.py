@@ -63,7 +63,7 @@ def delete_state(state_id):
                  strict_slashes=False)
 def update_state(state_id):
     """This updates a state. If one is correctly passed that is."""
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
@@ -74,7 +74,7 @@ def update_state(state_id):
     if not json_data:
         abort(400, description="Not a JSON")
     for key, value in json_data.items():
-        if key not in ['id','created_at', 'updated_at']:
+        if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict()), 200
