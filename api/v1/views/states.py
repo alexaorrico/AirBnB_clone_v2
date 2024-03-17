@@ -56,10 +56,10 @@ def update_state(state_id):
     state = storage.get(State, state_id)
     if not state:
         abort(404)
-    request = request.get_json()
-    if not request:
+    json_data = request.get_json()
+    if not json_data:
         abort(400, description="Not a JSON")
-    for key, value in request.items():
+    for key, value in json_data.items():
         if key not in ['id','created_at', 'updated_at']:
             setattr(state, key, value)
     state.save()
