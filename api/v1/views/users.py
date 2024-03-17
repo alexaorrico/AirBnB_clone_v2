@@ -26,6 +26,9 @@ def get_user(user_id):
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user():
     """Creates a User"""
+     # Check if the Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
     # ALWAYS use encryption when setting passwords. 
     # You are responsible for your user's data.
     user_data = request.get_json()
@@ -56,6 +59,9 @@ def delete_user(user_id):
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
     """Updates a User"""
+     # Check if the Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
     user = storage.get(User, user_id)
     if not user:
         abort(404)
