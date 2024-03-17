@@ -17,6 +17,7 @@ def get_reviews(place_id):
     reviews_list = [review.to_dict() for review in place_id.reviews]
     return jsonify(reviews_list)
 
+
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
 def get_review_id(review_id):
     ''' gets specific state objects by its state ID '''
@@ -39,7 +40,7 @@ def delete_review(review_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/places/<place_id>/reviews',
+@app_views.route('places/<place_id>/reviews',
                  methods=['POST'], strict_slashes=False)
 def create_review(place_id):
     '''' creates a review '''
@@ -53,6 +54,12 @@ def create_review(place_id):
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
     if 'text' not in response:
         return make_response(jsonify({'error': 'Missing text'}), 400)
+    user_id = storage.get(User, response['user_id'])
+    if user_id is None:
+        abort(404)
+
+    if 'name' not in response:
+        return make_response(jsonify({'error': 'Missing name'}), 400)
 
     new_review = Review(**response)
     new_review.place_id = place_id
@@ -71,7 +78,8 @@ def update_review(review_id):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     for key, value in response.items():
-        if key not in ['id', 'place_id', 'user_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'place_id', 'user_id', 'created_at',
+                       'updated_at']:
             setattr(review, key, value)
     storage.save()
     return make_response(review.to_dict(), 200)
