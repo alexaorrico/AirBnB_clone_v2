@@ -51,6 +51,19 @@ def create_city(state_id):
     return jsonify(city.to_dict()), 201
 
 
+@app_views.route('/cities/<city_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_city(city_id):
+    """This deletes a state."""
+    city = storage.get(City, city_id)
+    if city:
+        storage.delete(city)
+        storage.save()
+        return jsonify({}), 200
+    # Again, if you're here, you're an error.
+    abort(404)
+
+
 @app_views.route('/cities/<city_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
