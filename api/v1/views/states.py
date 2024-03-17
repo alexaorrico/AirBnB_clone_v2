@@ -28,10 +28,10 @@ def get_state(state_id):
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates a state."""
-    state_data = request.get_json()
-    # Check if the Content-Type is appication/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
-        abort(400, description="Invalid Content-Type. Expected 'application/json'")
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
+    state_data = request.get_json()
     # Currently, we don't have a global error catch for 
     # 400's, so set them manually. 
     if not state_data:
@@ -56,6 +56,9 @@ def delete_state(state_id):
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state(state_id):
     """This updates a state. If one is correctly passed that is."""
+     # Check if the Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
     state = storage.get(State, state_id)
     if not state:
         abort(404)

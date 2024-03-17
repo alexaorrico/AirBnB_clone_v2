@@ -29,6 +29,9 @@ def get_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
 def create_city(state_id):
     """Creates a City in a State """
+     # Check if the Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -44,6 +47,9 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
 def update_city(city_id):
     """Updates the passed City object"""
+     # Check if the Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
     city = storage.get(City, city_id)
     if not city:
         abort(404)

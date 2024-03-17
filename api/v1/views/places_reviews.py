@@ -30,6 +30,9 @@ def get_review(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'], strict_slashes=False)
 def create_review(place_id):
     """Creates a review for a specific place"""
+     # Check if the Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -61,6 +64,9 @@ def delete_review(review_id):
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
 def update_review(review_id):
     """Updates a review"""
+     # Check if the Content-Type is application/json
+    if request.content_type != 'application/json':
+        abort(400, description="Invalid Content-Type. Expects 'application/json'")
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
