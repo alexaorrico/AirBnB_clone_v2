@@ -1,4 +1,4 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
 """ API views for Amenities object(s)
 Allows routes to list, get, delete, create, and update cities
 as requested. """
@@ -7,6 +7,7 @@ from flask import jsonify, abort, request
 from models import storage
 from models.amenity import Amenity
 from api.v1.views import app_views
+
 
 @app_views.route('/amenities', methods=['GET'],
                  strict_slashes=False)
@@ -30,7 +31,7 @@ def get_amenity(amenity_id):
                  strict_slashes=False)
 def create_amenity():
     """ Creates a new Amenity Object."""
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
@@ -60,7 +61,7 @@ def delete_amenity(amenity_id):
                  strict_slashes=False)
 def update_amenity(amenity_id):
     """Updates an existing Amenity. """
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")

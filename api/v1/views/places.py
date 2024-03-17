@@ -35,7 +35,7 @@ def get_place(place_id):
                  strict_slashes=False)
 def create_place(city_id):
     """Creates a Place in the specified City"""
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
@@ -74,7 +74,7 @@ def delete_place(place_id):
                  strict_slashes=False)
 def update_place(place_id):
     """Updates a place"""
-     # Check if the Content-Type is application/json
+    # Check if the Content-Type is application/json
     if request.content_type != 'application/json':
         abort(400,
               description="Invalid Content-Type. Expects 'application/json'")
