@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Place objects RESTful API. """
-from flask import jsonify, request, abort
+from flask import jsonify, request, abort, current_app
 from models import storage
 from models.city import City
 from models.place import Place
@@ -27,10 +27,13 @@ def get_places(city_id):
 @app_views.route("/cities/<city_id>/places", methods=[P], strict_slashes=False)
 def create_place(city_id):
     """API endpoint that creates a new Place object in a city"""
+    current_app.logger.info(city_id)
     checked_city = storage.get(City, city_id)
     if not checked_city:
+        current_app.logger.info("checked city not found")
         abort(404)
     HTTP_body = request.get_json(silent=True)
+    current_app.logger.info(HTTP_body)
     if not HTTP_body:
         abort(400, 'Not a JSON')
     if 'user_id' not in HTTP_body:
@@ -40,6 +43,8 @@ def create_place(city_id):
         abort(404)
     if 'name' not in HTTP_body:
         abort(400, 'Missing name')
+    if 'city_id' not in HTTP_body:
+        HTTP_body['city_id'] = city_id
     latest_place = Place(**HTTP_body)
     storage.new(latest_place)
     storage.save()
