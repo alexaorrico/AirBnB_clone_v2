@@ -15,7 +15,7 @@ def list_all():
     return (jsonify(display))
 
 
-@app_views.route('/states/state_id', method=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', method=['GET'], strict_slashes=False)
 def list_id(state_id):
     """lists state id with GET method"""
     retrieve_id = storage.get(State, state_id)
@@ -25,7 +25,7 @@ def list_id(state_id):
     return jsonify(display)
 
 
-@app_views.route('/states/state_id', method=['DELETE'])
+@app_views.route('/states/<path:state_id>', method=['DELETE'])
 def delete_state(state_id):
     """deletes state id"""
     delete_id = storage.get(State, state_id)
@@ -50,7 +50,7 @@ def post_state():
     return jsonify(posts_obj.to_dict()), 201
 
 
-@app_views.route('/states/state_id', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def put_state_id(state_id):
     """Update State"""
     update = request.get_json()
