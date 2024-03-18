@@ -50,7 +50,7 @@ def delete_user(user_id):
     return jsonify({}), 200
 
 
-@app_views.route("/users/<user_id", methods=['PUT'], strict_slashes=False)
+@app_views.route("/users/<user_id>", methods=['PUT'], strict_slashes=False)
 def update_user(user_id):
     """API endpoint that updates a User object"""
     user = storage.get(User, user_id)
