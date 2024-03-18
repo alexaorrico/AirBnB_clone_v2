@@ -9,9 +9,9 @@ from api.v1.views import app_views
 
 @app_views.route('/api/v1/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
-def getting_states():
+def getting_cities(state_id):
     """ Retrieves list of all State objs. """
-    states = storage.all(State).values()
+    states = storage.get(State, state_id)
     list_of_states = [state.to_dict() for state in states]
     return jsonify(list_of_states)
 
@@ -27,7 +27,7 @@ def city_by_id(state_id):
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_state(city_id):
+def delete_city(city_id):
     """ Deletes state based on id. """
     state = storage.get(City, city_id)
     if not state:
