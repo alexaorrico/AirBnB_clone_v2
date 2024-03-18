@@ -37,9 +37,9 @@ def delete_state(city_id):
     return jsonify({}), 200
 
 
-@app_views.route('/api/v1/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
 def creates_a_city(state_id):
-    """ Creates a State. """
+    """ Creates a City in a State. """
     if not storage.get(State, state_id):
         abort(404, 'State not found')
     HTTP_body = request.get_json(silent=True)
@@ -47,7 +47,7 @@ def creates_a_city(state_id):
         abort(400, 'Not a JSON')
     if 'name' not in HTTP_body:
         abort(400, 'Missing name')
-        HTTP_body['state_id'] = state_id
+    HTTP_body['state_id'] = state_id
     latest_city = City(**HTTP_body)
     storage.new(latest_city)
     storage.save()
