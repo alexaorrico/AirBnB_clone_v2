@@ -12,27 +12,29 @@ from api.v1.views import app_views
 def getting_cities(state_id):
     """ Retrieves list of all State objs. """
     states = storage.get(State, state_id)
-    list_of_states = [state.to_dict() for state in states]
-    return jsonify(list_of_states)
+    if not states:
+        abort(404)
+    cities = [city.to_dict() for city in states.cities]
+    return jsonify(cities)
 
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def city_by_id(state_id):
+def city_by_id(city_id):
     """ Returns a state based from it's ID. """
-    state = storage.get(State, state_id)
-    if not state:
+    city = storage.get(City, city_id)
+    if not city:
         abort(404)
-    return jsonify(state.to_dict())
+    return jsonify(city.to_dict())
 
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
     """ Deletes state based on id. """
-    state = storage.get(City, city_id)
-    if not state:
+    city = storage.get(City, city_id)
+    if not city:
         abort(404)
-    storage.delete(state)
+    storage.delete(city)
     storage.save()
     return jsonify({}), 200
 
@@ -40,18 +42,18 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
 def creates_a_city(state_id):
     """ Creates a City in a State. """
-    if not storage.get(State, state_id):
+    state = storage.get(State, state_id)
+    if not state:
         abort(404, 'State not found')
     HTTP_body = request.get_json(silent=True)
     if not HTTP_body:
         abort(400, 'Not a JSON')
     if 'name' not in HTTP_body:
         abort(400, 'Missing name')
-    HTTP_body['state_id'] = state_id
-    latest_city = City(**HTTP_body)
-    storage.new(latest_city)
-    storage.save()
-    return jsonify(latest_city.to_dict()), 201
+    city_data = request.get_json()
+    city = City(name=city_data['name'], state_id=state_id)
+    city.save()
+    return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/api/v1/cities/<city_id>', methods=['PUT'],
@@ -68,5 +70,5 @@ def updating_city(city_id):
     for key, value in HTTP_body.items():
         if key not in ignoring_keys:
             setattr(cities, key, value)
-    storage.save()
+    cities.save()
     return jsonify(cities.to_dict()), 200
