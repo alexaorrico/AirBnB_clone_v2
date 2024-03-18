@@ -113,3 +113,26 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def setUp(self):
+        """ Set up for testing get / count """
+        self.storage = file_storage.FileStorage()
+        self.user1 = User(id='123', name='John Doe', email='john.doe@test.com')
+        self.user2 = User(id='345', name='Jane Doe', email='jane.doe@test.com')
+        self.storage.new(self.user1)
+        self.storage.new(self.user2)
+
+    def test_get(self):
+        """ Test get returning correct object """
+        result = self.storage.get(User, '123')
+        self.assertIsNotNone(result)
+        self.assertEqual(result.id, '123')
+        self.assertEqual(result.name, 'John Doe')
+        self.assertEqual(result.email, 'john.doe@test.com')
+
+    def test_count(self):
+        """ Test count returns correct num of objects """
+        count = self.storage.count(User)
+        self.assertEqual(count, 2)
+        count = self.storage.count()
+        self.assertEqual(count, 2)
