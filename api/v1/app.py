@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Module containing API engine"""
 from flask import Flask, jsonify
+from flask_cors import CORS
 from api.v1.views import app_views
 from models import storage
 import os
@@ -34,6 +35,7 @@ else:
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.errorhandler(404)
 def not_found(error):
