@@ -20,6 +20,12 @@ def close(self):
     storage.close()
 
 
+@app.errorhandler(404)
+def error_message(error):
+    """error message"""
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+
 if __name__ == '__main__':
     app.run(
             host=os.getenv("HBNB_API_HOST", '0.0.0.0'),
