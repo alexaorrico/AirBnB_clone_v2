@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" handles all default RESTFul API actions"""
+
+"""Handles all default RESTFul API actions"""
 
 from models import storage
 from models.state import State
@@ -10,8 +11,8 @@ from api.v1.views import app_views
 @app_views.route('/states', method=["GET"], strict_slashes=False)
 def list_all():
     """lists all state objects with GET method"""
-    stat = storage.all(State).values()
-    display = [obj.to_dict() for obj in stat]
+    states = storage.all(State).values()
+    display = [obj.to_dict() for obj in states]
     return jsonify(display)
 
 
