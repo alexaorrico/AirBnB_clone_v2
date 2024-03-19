@@ -7,7 +7,7 @@ from flask import jsonify, abort, request
 from api.v1.views import app_views
 
 
-@app_views.route('/states', method=['GET'], strict_slashes=False)
+@app_views.route('/states', method=["GET"], strict_slashes=False)
 def list_all():
     """lists all state objects with GET method"""
     stats = storage.all(State).values()
@@ -17,36 +17,35 @@ def list_all():
     return (jsonify(display))
 
 
-@app_views.route('/states/<state_id>', method=['GET'], strict_slashes=False)
+@app_views.route('/states/<state_id>', method=["GET"], strict_slashes=False)
 def list_id(state_id):
     """lists state id with GET method"""
     retrieve_id = storage.get(State, state_id)
-    if (retrieve_id is None):
+    if not retrieve_id:
         abort(404)
     display = retrieve_id.to_dict()
     return jsonify(display)
 
 
-@app_views.route('/states/<path:state_id>', method=['DELETE'])
+@app_views.route('/states/<state_id>', method=["DELETE"], strict_slashes=False)
 def delete_state(state_id):
     """deletes state id"""
     delete_id = storage.get(State, state_id)
-    if delete_id is None:
+    if not delete_id:
         abort(404)
-    else:
-        storage.delete(delete_id)
-        storage.save()
-        return (jsonify({}), 200)
+    storage.delete(delete_id)
+    storage.save()
+    return (jsonify({}), 200)
 
 
-@app_views.route('/states', method=['POST'], strict_slashes=False)
+@app_views.route('/states', method=["POST"], strict_slashes=False)
 def post_state():
     """Posts a new state"""
     posts = request.get_json()
-    if posts is None:
-        return (jsonify({'error': 'Not a JSON'}), 400)
+    if not posts:
+        abort(400, "Not a JSON")
     if 'name' not in posts:
-        return (jsonify({'error': 'Missing name'}), 400)
+        abort(400, "Missing name")
     posts_obj = State(**posts)
     posts_obj.save()
     return jsonify(posts_obj.to_dict()), 201
