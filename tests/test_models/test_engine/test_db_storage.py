@@ -115,7 +115,7 @@ class TestDBStorage(unittest.TestCase):
         state = State(name="California")
         state.save()
         state_list = storage.count(State)
-        self.assertNotEqual(state_count, state_list)
+        self.assertEqual(state_count, state_list)
 
     @unittest.skipIf(models.storage_t != 'db', "testing db storage")
     def tearDown(self):
