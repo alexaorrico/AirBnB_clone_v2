@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -41,7 +42,7 @@ class TestDBStorageDocs(unittest.TestCase):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
-test_db_storage.py'])
+                                     test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
@@ -86,3 +87,39 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorage(unittest.TestCase):
+    """Test the DatabaseStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "testing db storage")
+    def setUp(self):
+        """Prepare resources"""
+        os.environ["HBNB_MYSQL_USER"] = "hbnb_test"
+        os.environ["HBNB_MYSQL_PWD"] = "hbnb_test_pwd"
+        os.environ["HBNB_MYSQL_DB"] = "hbnb_test_db"
+
+    @unittest.skipIf(models.storage_t != 'db', "testing db storage")
+    def test_get(self):
+        """Test get presentation with databasestorage"""
+        storage = DBStorage()
+        state = State(name="California")
+        state.save()
+        state_to_id = storage.get(State, state.id)
+        self.assertIs(state, state_to_id)
+
+    @unittest.skipIf(models.storage_t != 'db', "testing db storage")
+    def test_count(self):
+        """Test count presentation with databasestorage"""
+        storage = DBStorage()
+        state_count = storage.count(State)
+        state = State(name="California")
+        state.save()
+        state_list = storage.count(State)
+        self.assertNotEqual(state_count, state_list)
+
+    @unittest.skipIf(models.storage_t != 'db', "testing db storage")
+    def tearDown(self):
+        """Clean up resources"""
+        os.environ["HBNB_MYSQL_USER"] = "hbnb_dev"
+        os.environ["HBNB_MYSQL_PWD"] = "hbnb_dev_pwd"
+        os.environ["HBNB_MYSQL_DB"] = "hbnb_dev_db"
