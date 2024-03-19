@@ -23,7 +23,7 @@ def close(self):
 @app.errorhandler(404)
 def error_message(error):
     """error message"""
-    return make_response(jsonify({"error": "Not found"}), 404)
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == '__main__':
