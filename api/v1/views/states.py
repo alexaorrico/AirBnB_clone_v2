@@ -11,7 +11,9 @@ from api.v1.views import app_views
 def list_all():
     """lists all state objects with GET method"""
     stats = storage.all(State).values()
-    display = [obj.to_dict() for obj in stats]
+    display = []
+    for stat in stats:
+        stats.append(stat.to_dict())
     return (jsonify(display))
 
 
