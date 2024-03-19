@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Flask application that retrieves information"""
-from api.v1.views import app_views
+from api.v1.stats import app_views
 from flask import jsonify
 
 
