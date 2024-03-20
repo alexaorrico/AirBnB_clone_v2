@@ -40,11 +40,16 @@ def delete_state(state_id):
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
 def create_state():
     """Creates an object"""
-    state_data = request.get_json()
+    if not request.is_json:
+        abort(415, "Unsupported Media Type - Request body must be in JSON format")
+
+    state_data = request.json
     if not state_data:
-        abort(400, "Not a JSON")
-    elif "name" not in state_data:
-        abort(400, "Missing name")
+        abort(400, "Request body is empty")
+
+    if "name" not in state_data:
+        abort(400, "Missing 'name' field in the request body")
+
     new_state = State(**state_data)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
