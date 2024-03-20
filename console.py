@@ -46,10 +46,10 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     try:
                         value = int(value)
-                    except:
+                    except Exception:
                         try:
                             value = float(value)
-                        except:
+                        except Exception:
                             continue
                 new_dict[key] = value
         return new_dict
@@ -124,42 +124,41 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
-    args = shlex.split(arg)
-    integers = ["number_rooms", "number_bathrooms", "max_guest",
-                "price_by_night"]
-    floats = ["latitude", "longitude"]
-    if len(args) == 0:
-        print("** class name missing **")
-    elif args[0] in classes:
-        if len(args) > 1:
-            k = args[0] + "." + args[1]
-            if k in models.storage.all():
-                if len(args) > 2:
-                    if len(args) > 3:
-                        if args[2] in classes[args[0]].__dict__:
-                            try:
-                                if args[0] == "Place":
-                                    if args[2] in integers:
+        args = shlex.split(arg)
+        integers = ["number_rooms", "number_bathrooms", "max_guest",
+                    "price_by_night"]
+        floats = ["latitude", "longitude"]
+        if len(args) == 0:
+            print("** class name missing **")
+        elif args[0] in classes:
+            if len(args) > 1:
+                k = args[0] + "." + args[1]
+                if k in models.storage.all():
+                    if len(args) > 2:
+                        if len(args) > 3:
+                            if args[0] == "Place":
+                                if args[2] in integers:
+                                    try:
                                         args[3] = int(args[3])
-                                    elif args[2] in floats:
+                                    except Exception:
+                                        args[3] = 0
+                                elif args[2] in floats:
+                                    try:
                                         args[3] = float(args[3])
-                                setattr(models.storage.all()[k], args[2], args[3])
-                                models.storage.all()[k].save()
-                            except (ValueError, TypeError):
-                                print("** invalid value provided **")
+                                    except Exception:
+                                        args[3] = 0.0
+                            setattr(models.storage.all()[k], args[2], args[3])
+                            models.storage.all()[k].save()
                         else:
-                            print(f"** attribute '{args[2]}' does not exist in class '{args[0]}' **")
+                            print("** value missing **")
                     else:
-                        print("** value missing **")
+                        print("** attribute name missing **")
                 else:
-                    print("** attribute name missing **")
+                    print("** no instance found **")
             else:
-                print("** no instance found **")
+                print("** instance id missing **")
         else:
-            print("** instance id missing **")
-    else:
-        print("** class doesn't exist **")
-
+            print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
