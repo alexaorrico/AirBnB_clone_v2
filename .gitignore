@@ -7,3 +7,5 @@ tmp/
 *.log
 Thumbs.db
 .DS_Store
+tests/test_models/test_engine/__pycache__/test_db_storage.cpython-38.pyc
+tests/test_models/test_engine/__pycache__/test_file_storage.cpython-38.pyc

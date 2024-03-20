@@ -83,7 +83,7 @@ class TestFileStorage(unittest.TestCase):
     def test_count_method(self):
         """Test the count method for DBStorage"""
         # Initial count
-        initial_count = db_storage.save().count(BaseModel)
+        initial_count = db_storage.count(BaseModel)
 
         # Create a new object to affect the count
         new_obj = BaseModel()
