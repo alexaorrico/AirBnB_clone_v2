@@ -70,11 +70,11 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-        
+
     def setUp(self):
         self.storage = DBStorage()
         self.storage.reload()
-        
+
     def test_get_existing_object(self):
         # Assuming you have added a User object with ID '123'
         user = self.storage.get(User, '123')
