@@ -19,7 +19,8 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except:
+    except OSError as e:
+        print(f"An error occurred: {e}")
         return None
 
 
@@ -40,8 +41,9 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except:
-        return False
+    except OSError as e:
+        print(f"An error occurred: {e}")
+        return None
 
 
 def deploy():

@@ -70,6 +70,31 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+        
+    def setUp(self):
+        self.storage = DBStorage()
+        self.storage.reload()
+        
+    def test_get_existing_object(self):
+        # Assuming you have added a User object with ID '123'
+        user = self.storage.get(User, '123')
+        self.assertIsNotNone(user)
+        self.assertEqual(user.id, '123')
+
+    def test_get_nonexistent_object(self):
+        user = self.storage.get(User, 'nonexistent_id')
+        self.assertIsNone(user)
+
+    def test_count_all_objects(self):
+        # Assuming you have added User objects
+        count = self.storage.count()
+        self.assertEqual(count, 1)
+
+    def test_count_specific_class(self):
+        # Assuming you have added City objects
+        count = self.storage.count(City)
+        self.assertEqual(count, 1)
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
