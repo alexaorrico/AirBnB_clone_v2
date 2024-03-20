@@ -88,6 +88,8 @@ class TestFileStorage(unittest.TestCase):
         # Create a new object to affect the count
         new_obj = BaseModel()
         new_obj.save()
+        initial_count = db_storage.count(BaseModel)
+
 
         # New count should be greater by 1
         new_count = db_storage.count(BaseModel)
