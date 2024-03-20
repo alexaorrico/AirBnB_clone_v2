@@ -70,7 +70,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    
+
     def setUp(self):
         """Set up the test environment"""
         self.storage = file_storage.FileStorage()
@@ -101,7 +101,7 @@ class TestFileStorage(unittest.TestCase):
         # Test counting objects of a non-existing class
         count_nonexisting = self.storage.count(None)
         self.assertEqual(count_nonexisting, 0)
-        
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -147,4 +147,6 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(json.loads(string), json.loads(js))
 
 if __name__ == '__main__':
+
+
     unittest.main()
