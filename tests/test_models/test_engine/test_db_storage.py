@@ -133,7 +133,6 @@ class TestDBStorage(unittest.TestCase):
         state_data = {"name": "Maldives"}
 
         state_instance = State(**state_data)
-
         storage.new(state_instance)
         storage.save()
 
