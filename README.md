@@ -61,6 +61,12 @@ Classes inherited from Base Model:
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * ` def reload(self)` -  deserializes the JSON file to __objects
 
+#### '/api/v1' REST API serving objects of this project:
+[app.py](/api/v1/app.py) - serves JSON representation of Class objects e.g States, Places, Amenities etc
+[index.py](/app/v1/views/index.py) - return index details on the api
+* `def status(self)` - Return status of the api in JSON
+* `def total_objs(self)` - Return the total no of individual class objects
+
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
 TestBaseModelDocs class:
