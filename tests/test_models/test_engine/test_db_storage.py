@@ -137,11 +137,9 @@ class TestDBStorage(unittest.TestCase):
         storage.save()
 
         retrieved_state = storage.get(State, state_instance.id)
-
         self.assertEqual(state_instance, retrieved_state)
 
         fake_state_id = storage.get(State, 'fake_id')
-
         self.assertEqual(fake_state_id, None)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -159,9 +157,7 @@ class TestDBStorage(unittest.TestCase):
         city_data = {"name": "Rocky", "state_id": state_instance.id}
 
         city_instance = City(**city_data)
-
         storage.new(city_instance)
-
         storage.save()
 
         state_occurrance = storage.count(State)
