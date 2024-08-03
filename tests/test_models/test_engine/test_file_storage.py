@@ -137,4 +137,6 @@ class TestFileStorage(unittest.TestCase):
             cls_obj = test_dict[instance_key[i]]
             self.assertEqual(get_obj, cls_obj)
             i += 1
-
+        # if no class is given to get()
+        get_obj = storage.get(instance_key[0])
+        self.assertIsNone(get_obj)
