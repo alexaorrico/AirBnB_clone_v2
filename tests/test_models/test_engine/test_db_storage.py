@@ -3,9 +3,14 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
+import json
+import os
+import pep8
+import unittest
 import inspect
 import models
+from unittest.mock import patch, Mock
+from datetime import datetime
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -14,10 +19,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -68,7 +69,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -86,3 +87,63 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @patch.object(models.storage, 'all')
+    def test_get(self, mock_all):
+        """Test that get retrieve one object"""
+        mock_user = Mock(spec=classes.get('State'))
+        mock_user.id = '1234567890'
+        cls = mock_user.__class__
+
+        # All returns a dictionary containing object
+        mock_all.return_value = {f'{cls.__name__}.{mock_user.id}': mock_user}
+        obj = models.storage.get(cls, mock_user.id)
+        mock_all.assert_called_once_with(cls)
+        # Test that the object returned matches with the expected object
+        self.assertEqual(mock_user, obj)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @patch.object(models.storage, 'all')
+    def test_count_cls_not_none(self, mock_all):
+        """
+        Test that count returns 1 when a class and ID are passed.
+        This is with 1 total object in the database of type Place.
+        """
+        mock_place = Mock(spec=classes.get('Place'))
+        mock_place.id = '1234567890'
+        cls = mock_place.__class__
+
+        # All returns a dictionary containing a single Place object
+        mock_all.return_value = {f'{cls.__name__}.{mock_place.id}': mock_place}
+
+        count = models.storage.count(cls)
+        mock_all.assert_called_once_with(cls)
+
+        self.assertEqual(count, 1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @patch.object(models.storage, 'all')
+    def test_count_cls_none(self, mock_all):
+        """
+        Test that count returns 2 when None or an empty class is passed.
+        This is with 2 total objects in the database of type Place and State.
+        """
+        mock_place = Mock(spec=classes.get('Place'))
+        mock_state = Mock(spec=classes.get('State'))
+
+        mock_place.id = '1234567890'
+        mock_state.id = '0987654321'
+
+        place_cls = mock_place.__class__
+        state_cls = mock_state.__class__
+
+        # All returns a dictionary containing a Place and State object
+        mock_all.return_value = {
+            f'{place_cls.__name__}.{mock_place.id}': mock_place,
+            f'{state_cls.__name__}.{mock_state.id}': mock_state
+        }
+        count = models.storage.count(None)
+        mock_all.assert_called_once_with(None)
+
+        self.assertEqual(count, 2)

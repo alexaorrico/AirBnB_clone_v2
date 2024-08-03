@@ -5,7 +5,9 @@ Contains the TestFileStorageDocs classes
 
 from datetime import datetime
 import inspect
+import unittest
 import models
+from unittest.mock import patch, Mock
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -17,7 +19,6 @@ from models.user import User
 import json
 import os
 import pep8
-import unittest
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +114,61 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @patch.object(models.storage, 'all')
+    def test_get(self, mock_all):
+        """Test that get retrieve one object"""
+        mock_user = Mock(spec=classes.get('State'))
+        mock_user.id = '1234567890'
+        cls = mock_user.__class__
+
+        # All returns a dictionary containing object
+        mock_all.return_value = {f'{cls.__name__}.{mock_user.id}': mock_user}
+        obj = models.storage.get(cls, mock_user.id)
+        mock_all.assert_called_once_with(cls)
+        # Test that the object returned matches with the expected object
+        self.assertEqual(mock_user, obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @patch.object(models.storage, 'all')
+    def test_count_cls_not_none(self, mock_all):
+        """Test that count returns 1 when class and ID is passed
+        with total object in database of type Place (1)
+        """
+        mock_place = Mock(spec=classes.get('Place'))
+        mock_place.id = '1234567890'
+        cls = mock_place.__class__
+
+        # All returns a dictionary containing a single Place object
+        mock_all.return_value = {f'{cls.__name__}.{mock_place.id}': mock_place}
+
+        count = models.storage.count(cls)
+        mock_all.assert_called_once_with(cls)
+
+        self.assertEqual(count, 1)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @patch.object(models.storage, 'all')
+    def test_count_cls_none(self, mock_all):
+        """Test that count returns 2 when None is passed or cls is empty
+        with total object in the daabase of type Place and State (2)
+        """
+        mock_place = Mock(spec=classes.get('Place'))
+        mock_state = Mock(spec=classes.get('State'))
+
+        mock_place.id = '1234567890'
+        mock_state.id = '0987654321'
+
+        place_cls = mock_place.__class__
+        state_cls = mock_state.__class__
+
+        # All returns a dictionary containing a Place and State object
+        mock_all.return_value = {
+            f'{place_cls.__name__}.{mock_place.id}': mock_place,
+            f'{state_cls.__name__}.{mock_state.id}': mock_state
+        }
+        count = models.storage.count(None)
+        mock_all.assert_called_once_with(None)
+
+        self.assertEqual(count, 2)
