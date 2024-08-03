@@ -67,13 +67,11 @@ class FileStorage:
     
     def get(self, cls, id):
         """Retrive a valid class object specified by its id attribute"""
-        if cls is not None and id is not None:
-            for key, clss in classes.items():
-                if type(cls) == type(clss):
-                    self.reload()  # retrieve all objects from JSON file
-            for key, obj in self.__objects.items():
-                if id == key.split('.', 1)[1]:  # object id is after the "."
-                    return obj 
+        self.reload()  # retrieve all objects from JSON file
+        all_obj_dict = self.all(cls)
+        for key, obj in all_obj_dict.items():
+            if f'{cls}.{id}' == key:
+                return obj 
         return None
 
     def close(self):
