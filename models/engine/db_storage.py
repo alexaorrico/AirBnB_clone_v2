@@ -77,11 +77,19 @@ class DBStorage:
             for key, clss in classes.items():
                 if type(cls) == type(clss):
                     self.reload()  # retrieve all objects from JSON file
-            for key, obj in self.__session.all():
-                if id == key.split('.', 1)[1]:  # object id is after the "."
-                    return obj
+                    all_obj_dict = self.all(cls)
+                    for key, obj in all_obj_duct.items():
+                        if id == key.split('.', 1)[1]:  # object id is after the "."
+                            return obj
         return None
 
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+
+
+if __name__ == '__main__':
+    obj = DBStorage()
+    all_dict = obj.all()
+    print(all_dict)
