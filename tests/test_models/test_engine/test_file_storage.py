@@ -133,18 +133,18 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         i = 0
         for key, value in classes.items():  # test all objs saved
-            get_obj = storage.get(value, instance_key[i])
-            cls_obj = test_dict[instance_key[i]]
+            get_obj = storage.get(value, instance_keys[i])
+            cls_obj = test_dict[instance_keys[i]]
             self.assertEqual(get_obj, cls_obj)
             i += 1
         # if no class is passed to get()
-        get_obj = storage.get(instance_key[0])
+        get_obj = storage.get(instance_keys[0])
         self.assertIsNone(get_obj)
         # if a valod class as a string is passed to get()
-        get_obj = storage.get('Amenity', instance_key[0])
+        get_obj = storage.get('Amenity', instance_keys[0])
         self.assertIsNotNone(get_obj)
         # if an invalid/unknown class is passed to get()
-        get_obj = storage.get('Unknown', instance_key[0])
+        get_obj = storage.get('Unknown', instance_keys[0])
         self.assertIsNone(get_obj)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
