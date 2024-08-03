@@ -68,7 +68,7 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -76,13 +76,94 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+    def test_all_plus_class(self):
+        """Test that all returns all objects of a particular class."""
+        data = {"name": "Lagos"}
+        new_state = State(**data)
+
+        models.storage.new(new_state)
+        models.storage.save()
+
+        sesh = models.storage.get_session()
+
+        all_states = sesh.query(State).all()
+
+        self.assertTrue(len(all_states) > 0)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        data = {"name": "Abuja"}
+
+        new_state = State(**data)
+
+        models.storage.new(new_state)
+
+        # confirm presence of state
+        sesh = models.storage.get_session()
+
+        state = sesh.query(State).filter_by(id=new_state.id).first()
+
+        self.assertEqual(state.id, new_state.id)
+        self.assertEqual(state.name, new_state.name)
+        self.assertIsNotNone(state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects to db"""
+        data = {"name": "Accra"}
+
+        new_state = State(**data)
+
+        models.storage.new(new_state)
+        models.storage.save()
+
+        sesh = models.storage.get_session()
+        state = sesh.query(State).filter_by(id=new_state.id).first()
+
+        self.assertEqual(state.id, new_state.id)
+        self.assertEqual(state.name, new_state.name)
+        self.assertIsNotNone(state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get properly retrieves objects"""
+        storage = models.storage
+
+        storage.reload()
+
+        data = {"name": "Alberta"}
+
+        new_state = State(**data)
+
+        state = storage.get(State, new_state.id)
+
+        self.assertEqual(new_state, state)
+
+        none = storage.get(State, "non_existent_id")
+
+        self.assertEqual(none, None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count properly enumerates objects"""
+
+        storage = models.storage
+
+        storage.reload()
+
+        data = {"name": "Nova Scotia"}
+
+        new_state = State(**data)
+        storage.new(new_state)
+
+        new_city = {"name": "Wolf", "state_id": new_state.id}
+
+        new_city = City(**new_city)
+
+        storage.new(new_city)
+        storage.save()
+
+        all_states = storage.count(State)
+
+        self.assertEqual(all_states, len(storage.all(State)))
