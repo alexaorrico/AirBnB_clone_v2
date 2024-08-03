@@ -1,0 +1,7 @@
+*.pyc
+
+# Ignore pip package directory
+pip/
+*.exe
+*.dll
+*.bin
