@@ -1,11 +1,16 @@
 #!/usr/bin/python3
-from models import storage
+from models.engine.db_storage import DBStorage
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+import models
+
+# Initialize storage
+storage = DBStorage()
+storage.reload()
 
 # Create initial data
 state = State(name="California")
