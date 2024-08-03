@@ -146,3 +146,24 @@ class TestFileStorage(unittest.TestCase):
         # if an invalid/unknown class is passed to get()
         get_obj = storage.get('Unknown', instance_key[0])
         self.assertIsNone(get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the no of objs returned by count()"""
+        storage = FileStorage()
+        instance_keys = []
+        i = 0
+        for key, value in classes.items():  # Populate storage with class objs
+            with self.subTest(key=key, value=value):
+                instance = value()
+                instance_keys.append(instance.__class__.__name__
+                                    + "."
+                                    + instance.id)
+                storage.new(instance)
+                obj_no = storage.count(value)
+                self.assertEqual(obj_no, 1)  # one obj for each class
+                i += 1
+        # test if no class is passed
+        total_keys = len(instance_keys)
+        total_objs = storage.count()
+        self.assertEqual(total_keys, total_objs)
