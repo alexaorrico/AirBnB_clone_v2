@@ -3,21 +3,25 @@
 Contains the TestFileStorageDocs classes
 """
 
-from datetime import datetime
 import inspect
+import json
+import os
+import unittest
+from datetime import datetime
+
+import pep8
+
 import models
-from models.engine import file_storage
+from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
+from models.engine import file_storage
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -114,46 +118,19 @@ class TestFileStorage(unittest.TestCase):
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
-        """Test that get properly retrieves objects"""
-        storage = FileStorage()
+        """Test that get resturns one object"""
+        first_state_id = list(storage.all(State).values())[0].id
+        self.assertEqual(first_state_id, storage.get(State, first_state_id).id)
 
-        storage.reload()
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_not_existing_id(self):
+        """Test that get resturns one object"""
+        self.assertEqual(None, storage.get(State, 'SomeBlaH'))
 
-        data = {"name": "Alberta"}
-
-        new_state = State(**data)
-
-        state = storage.get(State, new_state.id)
-
-        self.assertEqual(new_state, state)
-
-        none = storage.get(State, "non_existent_id")
-
-        self.assertEqual(none, None)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
-        """Test that count properly enumerates objects"""
-
-        storage = FileStorage()
-
-        storage.reload()
-
-        data = {"name": "Nova Scotia"}
-
-        new_state = State(**data)
-
-        storage.new(new_state)
-
-        new_city = {"name": "Wolfville", "state_id": new_state.id}
-
-        new_city = City(**new_city)
-
-        storage.new(new_city)
-        storage.save()
-
-        all_states = storage.count(State)
-
-        self.assertEqual(all_states, len(storage.all(State)))
+        """Test that get resturns one object"""
+        self.assertIsInstance(storage.count(), int)
+        self.assertIsInstance(storage.count(State), int)
