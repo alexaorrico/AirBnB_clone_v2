@@ -103,32 +103,26 @@ class TestDBStorage(unittest.TestCase):
     def test_get(self):
         """Test that get() gets the desired object from database"""
         storage = DBStorage()
-        test_dict = {}
-        instance_keys = []
-        i = 0
         for key, value in classes.items():  # Populate storage with class objs
             with self.subTest(key=key, value=value):
                 instance = value()
-                instance_keys.append(instance.__class__.__name__
+                instance_key = (instance.__class__.__name__
                                     + "."
                                     + instance.id)
                 storage.new(instance)
-                test_dict[instance_keys[i]] = instance  # storage replica dict
-                i += 1
-                self.assertEqual(test_dict, storage.all())
                 self.assertEqual(test_dict, storage._DBStorage__session)
-        i = 0
-        for key, value in classes.items():  # test all objs saved
-            get_obj = storage.get(value, instance_key[i])
-            cls_obj = test_dict[instance_key[i]]
+        for clss in classes:  # test all objs just saved
+            get_obj = list(storage.get(cls, instance_key))
+            cls_obj = storage._DBStorage__session.query(classes[clss]).all()
             self.assertEqual(get_obj, cls_obj)
-            i += 1
         # if no class is passed to get()
-        get_obj = storage.get(instance_key[0])
+        get_obj = storage.get(instance_key)
         self.assertIsNone(get_obj)
-        # if a valod class as a string is passed to get()
-        get_obj = storage.get('Amenity', instance_key[0])
+        # if a valid class is passed to get() as a string
+        get_obj = storage.get('Amenity', instance_key)
+         = storage._DBStorage__session.query(classes['Amenity']).all()
         self.assertIsNotNone(get_obj)
+        self.assertEqual(get_obj, )
         # if an invalid/unknown class is passed to get()
         get_obj = storage.get('Unknown', instance_key[0])
         self.assertIsNone(get_obj)
