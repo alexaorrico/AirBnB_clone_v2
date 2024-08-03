@@ -1,40 +1,50 @@
 #!/usr/bin/python3
 """
-Views index, contains status and stat endpoints.
+Create an endpoint that retrieves the number of each objects by type:
+
+In api/v1/views/index.py
+Route: /api/v1/stats
+You must use the newly added count() method from storage
 """
-from api.v1.views import app_views
+
 from flask import jsonify
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
+from api.v1.views import app_views
+
 from models import storage
 
 
-classes = {
-    "amenities": Amenity,
-    "cities": City,
-    "places": Place,
-    "reviews": Review,
-    "states": State,
-    "users": User,
-}
-
-
-@app_views.route("/status")
+@app_views.route("/status", methods=['GET'], strict_slashes=False)
 def status():
-    """Status of my API"""
-    return jsonify({"status": "OK"})
+    """
+    status route
+    :return: response with json
+    """
+    data = {
+        "status": "OK"
+    }
+
+    resp = jsonify(data)
+    resp.status_code = 200
+
+    return resp
 
 
-@app_views.route("/stats")
+@app_views.route("/stats", methods=['GET'], strict_slashes=False)
 def stats():
-    """Retrieve the number of each objects by type"""
-    statistics = {}
+    """
+    stats of all objs route
+    :return: json of all objs
+    """
+    data = {
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User"),
+    }
 
-    for key, value in classes.items():
-        statistics[key] = storage.count(value)
+    resp = jsonify(data)
+    resp.status_code = 200
 
-    return jsonify(statistics)
+    return resp
