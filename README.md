@@ -11,8 +11,8 @@ The console is the first segment of the AirBnB project at Holberton School that 
 ## Table of Content
 * [Environment](#environment)
 * [Installation](#installation)
+* [Commands](#commands)
 * [File Descriptions](#file-descriptions)
-* [Usage](#usage)
 * [Examples of use](#examples-of-use)
 * [Bugs](#bugs)
 * [Authors](#authors)
@@ -27,17 +27,29 @@ This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
+## Commands
+| Command     |  Description                                                                                     | Usage                                          |
+| :---------- | :----------------------------------------------------------------------------------------------- | :--------------------------------------------- |
+| `EOF`       | exits console                                                                                    | `EOF`                                          |
+| `quit`      | exits console                                                                                    | `quite`                                        |
+| `create`    | creates a new object, saves it to storage and prints the id                                      | `create <ClassName>`                           |
+| `destroy`   | deletes an object from storage                                                                   | `destroy <ClassName> <ObjectID>`               |
+| `show`      | prints the string representation of an object                                                    | `show <ClassName> <ObjectID>`                  |
+| `all`       | prints the string representation of all objects or all instances of a specified class in storage | `all` or `all <ClassName>`                     |
+| `update`    | update an existing object (to add or change the value of an attribute but not to remove)         | `update <ClassName> <ObjectID> <attr> <value>` |
+
+In addition to the command format above, the following also exist:
+| Command     |  Description                                                                                   | Usage                                                       |
+| :---------- | :--------------------------------------------------------------------------------------------- | :---------------------------------------------------------- |
+| `all`       | prints the string representation of all instances of a specified class in storage              | `<ClassName>.all()`                                         |
+| `count`     | retrieves the number of instances of a specified class                                         | `<ClassName>.count()`                                       |
+| `destroy`   | deletes an object from storage                                                                 | `<ClassName>.destory(<ObjectID>)`                           |
+| `show`      | prints the string representation of an object                                                  | `<ClassName>.show(<ObjectID>)`                              |
+| `update`    | update an existing object (to add or change the value of an attribute but not to remove)       | `<ClassName>.update(<ObjectID>, <attr>, <value>)...`        |
+| `update`    | update an existing object with a dictionary representation of attributes and values            | `<ClassName>.update(<ObjectID>, {"<attr>": "<value>"},...)` |
+
 ## File Descriptions
 [console.py](console.py) - the console contains the entry point of the command interpreter. 
-List of commands this console current supports:
-* `EOF` - exits console 
-* `quit` - exits console
-* `<emptyline>` - overwrites default emptyline method and does nothing
-* `create` - Creates a new instance of`BaseModel`, saves it (to the JSON file) and prints the id
-* `destroy` - Deletes an instance based on the class name and id (save the change into the JSON file). 
-* `show` - Prints the string representation of an instance based on the class name and id.
-* `all` - Prints all string representation of all instances based or not on the class name. 
-* `update` - Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). 
 
 #### `models/` directory contains classes used for this project:
 [base_model.py](/models/base_model.py) - The BaseModel class from which future classes will be derived
@@ -54,12 +66,28 @@ Classes inherited from Base Model:
 * [state.py](/models/state.py)
 * [user.py](/models/user.py)
 
-#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization :
-[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances
-* `def all(self)` - returns the dictionary __objects
-* `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
-* `def save(self)` - serializes __objects to the JSON file (path: __file_path)
-* ` def reload(self)` -  deserializes the JSON file to __objects
+#### `/models/engine` directory contains File Storage class that handles JASON serialization and deserialization  and the DB_storage class that handles the saving of data in a persistent RDB storage (A MySQL Database):
+[file_storage.py](/models/engine/file_storage.py) - serializes instances to a JSON file & deserializes back to instances  
+Class defined here:  
+*`class FileStorage`  
+Methods defined here:  
+&emsp; * `def all(self)` - returns the dictionary __objects  
+&emsp; * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id  
+&emsp; * `def save(self)` - serializes __objects to the JSON file (path: __file_path)  
+&emsp; * ` def reload(self)` -  deserializes the JSON file to __objects  
+&emsp; * `def delete(self, obj=None)` - delete object `obj` from __objects if it’s inside  
+&emsp; * `def close(self)` - call the reload(self) method  
+
+[db_storage.py](/models/engine/db_storage.py) - uses object relational mapper to interact with MySQL database to create, modify and store data in RDB  
+Class defined here  
+*`class DBStorage`  
+Methods defined here:  
+&emsp; * `def all(self, cls=None)` - query on the database to return all objects or the specified object by the argument `cls`  
+&emsp; * `def new(self, obj)` - adds a new object to the current database session  
+&emsp; * `def save(self)` - commits and save all changes of the current database session  
+&emsp; * `def reload(self)` -  loads data from database into runtime  
+&emsp; * `def delete(self, obj=None)` - delete an object `obj` from the current database session  
+&emsp; * `def close(self)` - closes current database session and release all existing transaction  
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -147,7 +175,11 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) destroy BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
 (hbnb) show BaseModel 7da56403-cc45-4f1c-ad32-bfafeb2bb050
 ** no instance found **
+(hbnb) City.show(acc962fd-a154-45ed-9acd-423eae5a2bbf)
+[City] (acc962fd-a154-45ed-9acd-423eae5a2bbf) {'id': 'acc962fd-a154-45ed-9acd-423eae5a2bbf', 'created_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 35678), 'updated_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 35886), 'state_id': '06fdb9f6-b5fe-4eaf-a77f-279623ce1b7b', 'name': 'Fremont'}
 (hbnb) quit
+(hbnb) City.all()
+["[City] (acc962fd-a154-45ed-9acd-423eae5a2bbf) {'id': 'acc962fd-a154-45ed-9acd-423eae5a2bbf', 'created_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 35678), 'updated_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 35886), 'state_id': '06fdb9f6-b5fe-4eaf-a77f-279623ce1b7b', 'name': 'Fremont'}", "[City] (585e21cb-3dd5-47fe-849e-597ebc18eb7c) {'id': '585e21cb-3dd5-47fe-849e-597ebc18eb7c', 'created_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 36727), 'updated_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 36942), 'state_id': '06fdb9f6-b5fe-4eaf-a77f-279623ce1b7b', 'name': 'Napa'}", "[City] (646c81fa-8e73-436e-87ae-c200de6f411d) {'id': '646c81fa-8e73-436e-87ae-c200de6f411d', 'created_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 55817), 'updated_at': datetime.datetime(2024, 7, 29, 6, 45, 1, 56105), 'state_id': 'e226e9d7-c48a-41b6-b555-dcaca1fdd8ed', 'name': 'Sonoma'}", "[City] (12c6f011-dae5-401c-9c53-82cb8e715ed4) {'id': '12c6f011-dae5-401c-9c53-82cb8e715ed4', 'created_at': datetime.datetime(2024, 8, 2, 8, 44, 12, 143427), 'updated_at': datetime.datetime(2024, 8, 2, 8, 44, 12, 143487)}"]
 ```
 
 ## Bugs
@@ -158,5 +190,6 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+Third version: Enyone Christian Achobe [Github](https://github.com/AEnyChris) / [Twitter](https://x.com/enyonejoseph)
 ## License
 Public Domain. No copy write protection. 

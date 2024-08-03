@@ -6,6 +6,8 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from uuid import uuid4
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -86,3 +88,44 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get method that it properly gets the specified object"""
+        # storage = DBStorage()
+        new_state = State(name="Georgia")
+        new_state.save()
+        new_inst = City(name="Phoenix", state_id=new_state.id)
+        new_inst.save()
+        get_obj = storage.get(new_inst.__class__, new_inst.id)
+        get_obj_notfound = storage.get(new_inst.__class__, str(uuid4))
+        self.assertEqual(get_obj.__class__, City)
+        self.assertEqual(get_obj.id, new_inst.id)
+        self.assertTrue(get_obj_notfound is None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count works properly for all
+        objects and for specified class"""
+        # storage = DBStorage()
+
+        # create new instance and compare storage.all and using count
+        new_inst1 = State(name="California")
+        new_inst1.save()
+        all_objs_count = len(list(storage.all().values()))
+        state_objs_count = len(list(storage.all(State).values()))
+        get_count = storage.count()
+        get_count_state = storage.count(State)
+        self.assertEqual(all_objs_count, get_count)
+        self.assertEqual(state_objs_count, get_count_state)
+        self.assertEqual(state_objs_count, get_count_state)
+
+        # create another instance and compare old and new count
+        new_inst2 = State(name="Arizona")
+        new_inst2.save()
+        get_count_new = storage.count()
+        get_count_state_new = storage.count(State)
+        count_diff = get_count_new - get_count
+        state_count_diff = get_count_state_new - get_count_state
+        self.assertTrue(count_diff == 1)
+        self.assertTrue(state_count_diff == 1)

@@ -5,6 +5,7 @@ Contains the TestFileStorageDocs classes
 
 from datetime import datetime
 import inspect
+from uuid import uuid4
 import models
 from models.engine import file_storage
 from models.amenity import Amenity
@@ -113,3 +114,41 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method that it properly gets the specified object"""
+        storage = FileStorage()
+        new_inst = City()
+        new_inst.save()
+        get_obj = storage.get(new_inst.__class__, new_inst.id)
+        get_obj_notfound = storage.get(new_inst.__class__, str(uuid4))
+        self.assertEqual(get_obj.__class__, City)
+        self.assertEqual(get_obj.id, new_inst.id)
+        self.assertTrue(get_obj_notfound is None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count works properly for all objects
+        and for specified class"""
+        storage = FileStorage()
+
+        # create new instance and compare storage.all and count
+        new_inst1 = State()
+        new_inst1.save()
+        all_objs_count = len(list(storage.all().values()))
+        state_objs_count = len(list(storage.all(State).values()))
+        get_count = storage.count()
+        get_count_state = storage.count(State)
+        self.assertEqual(all_objs_count, get_count)
+        self.assertEqual(state_objs_count, get_count_state)
+
+        # create another instance and compare old and new count
+        new_inst2 = State()
+        new_inst2.save()
+        get_count_new = storage.count()
+        get_count_state_new = storage.count(State)
+        count_diff = get_count_new - get_count
+        state_count_diff = get_count_state_new - get_count_state
+        self.assertTrue(count_diff == 1)
+        self.assertTrue(state_count_diff == 1)
