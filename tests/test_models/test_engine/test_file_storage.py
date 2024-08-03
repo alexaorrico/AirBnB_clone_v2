@@ -113,3 +113,26 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_get(self):
+        """test get()"""
+        obj = State(name="Texas")
+        obj.save()
+
+        result = models.storage.get(State, obj.id)
+        self.assertEqual(result, obj)
+
+        # invalid ID
+        result = models.storage.get("State", "Not_Found_ID")
+        self.assertEqual(result, None)
+        # invalid class
+        result = models.storage.get("DUMB_CLASS", obj.id)
+        self.assertEqual(result, None)
+
+    def test_count(self):
+        """test count()"""
+        old = models.storage.count()
+        obj = State(name="Texas")
+        obj.save()
+        new = models.storage.count()
+        self.assertEqual(new, (old + 1))        
