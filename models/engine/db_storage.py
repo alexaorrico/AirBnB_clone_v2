@@ -73,12 +73,14 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrive a valid class object specified by its id attribute"""
-        self.reload()  # retrieve all objects from db
-        all_obj_dict = self.all(cls)
-        for key, obj in all_obj_dict.items():
-            if f'{cls}.{id}' == key:
-                return obj
-        return None
+        if cls is not None and id is not None:
+            self.reload()  # retrieve all objects from db
+            all_obj_dict = self.all(cls)
+            for key, obj in all_obj_dict.items():
+                if f'{cls}.{id}' == key:
+                    return obj
+        else:
+            return None
 
     def count(self, cls=None):
         """Return no of objects if a class or all classes in storage"""
