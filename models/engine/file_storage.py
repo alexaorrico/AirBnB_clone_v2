@@ -64,6 +64,18 @@ class FileStorage:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
+    
+    def get(self, cls, id):
+        """Retrive a valid class object specified by its id attribute"""
+        if cls or id is not None:
+            for key, clss in classes.item():
+                if type(cls) == type(clss):
+                    self.reload()  # retrieve all objects from JSON file
+            for key, obj in self.__objects.items():
+                if id == key.splice('.'):  # get the id, which is after the "."
+                    return obj
+                    
+            
 
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
