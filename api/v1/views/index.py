@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from models import storage
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status')
 def api_status():
     """
     Return the status of the API
@@ -16,17 +16,17 @@ def api_status():
     return jsonify(response)
 
 
-@app_views.route('/stats', strict_slashes=False)
+@app_views.route('/stats')
 def get_stats():
     """
     Retrieve the number of each object by type
     """
     stats = {
-        "amenities": storage.count("Amenity"),
-        "cities": storage.count("City"),
-        "places": storage.count("Place"),
-        "reviews": storage.count("Review"),
-        "states": storage.count("State"),
-        "users": storage.count("User")
+        "amenities": storage.count('Amenity'),
+        "cities": storage.count('City'),
+        "places": storage.count('Place'),
+        "reviews": storage.count('Review'),
+        "states": storage.count('State'),
+        "users": storage.count('User')
     }
     return jsonify(stats)
