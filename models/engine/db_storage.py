@@ -73,7 +73,7 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrive a valid class object specified by its id attribute"""
-        self.reload()  # retrieve all objects from JSON file
+        self.reload()  # retrieve all objects from db
         all_obj_dict = self.all(cls)
         for key, obj in all_obj_dict.items():
             if f'{cls}.{id}' == key:
