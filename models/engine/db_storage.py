@@ -42,14 +42,26 @@ class DBStorage:
 
     def all(self, cls=None):
         """query on the current database session"""
-        new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
+        obj_dict = {}
+        if (cls is not None) and (cls in classes.keys()):
+            objs = self.__session.query(classes[cls]).all()
+            for obj in objs:
+                key = cls + "." + obj.id
+                obj_dict[key] = obj
+
+        elif (cls is not None) and (cls in classes.values()):
+            objs = self.__session.query(cls).all()
+            for obj in objs:
+                key = cls.__name__ + "." + obj.id
+                # print(obj_dict)
+                obj_dict[key] = obj
+        else:
+            for table in classes.values():
+                objs = self.__session.query(table).all()
                 for obj in objs:
-                    key = obj.__class__.__name__ + '.' + obj.id
-                    new_dict[key] = obj
-        return (new_dict)
+                    key = obj.__class__.__name__ + "." + obj.id
+                    obj_dict[key] = obj
+        return obj_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -74,3 +86,26 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """gete a record from db"""
+        self.reload()
+        if cls in classes.values():
+            result = self.__session().query(cls).filter_by(id=id).all()
+            if result == []:
+                return None
+            return result[0]
+        else:
+            return None
+
+    def count(self, cls=None):
+        """count objects of the specified class"""
+        self.reload()
+        if cls in classes.values():
+            count = self.__session.query(cls).count()
+            return count
+        elif not cls:
+            count = 0
+            for clss in classes.values():
+                count += self.__session.query(clss).count()
+            return count
