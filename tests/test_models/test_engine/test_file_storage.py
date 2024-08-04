@@ -113,3 +113,38 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Tests that an object is returned and is the right object"""
+        storage = FileStorage()
+        new_instances = {}
+        for key, value in classes.items():
+            instance = value()
+            new_instances.update({f"{key}.{instance.id}": instance})
+        tmp_storage = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_instances
+        state_obj_id = list(storage.all(State).values())[0].id
+        retrieved_state = storage.get(State, state_obj_id)
+        self.assertEqual(retrieved_state.id, state_obj_id)
+        FileStorage._FileStorage__objects = tmp_storage
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Tests the count of instances in the storage object"""
+        storage = FileStorage()
+        count = 0
+        new_instances = {}
+        for key, value in classes.items():
+            instance = value()
+            new_instances.update({"{}.{}".format(key, instance.id): instance})
+            count += 1
+        more_states = [State(), State(), State()]
+        for state in more_states:
+            new_instances.update({"State.{}".format(state.id): state})
+        tmp_storage = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_instances
+        allClasses = len(storage.all())
+        self.assertEqual(allClasses, count+3)
+        allStates = len(storage.all(State))
+        self.assertEqual(allStates, 4)
