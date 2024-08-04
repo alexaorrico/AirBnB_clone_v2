@@ -20,6 +20,7 @@ def get_all_states():
 
     return jsonify(list_states)
 
+
 @app_views.route("/states", methods=["POST"], strict_slashes=False)
 def create_state():
     """
@@ -38,6 +39,7 @@ def create_state():
     resp.status_code = 201
 
     return resp
+
 
 @app_views.route("/states/<state_id>",  methods=["GET"], strict_slashes=False)
 def access_state_by_id(state_id):
@@ -72,6 +74,7 @@ def update_state(state_id):
             setattr(get_obj, key, val)
     get_obj.save()
     return jsonify(getd_obj.to_json())
+
 
 @app_views.route("/states/<state_id>", methods=["DELETE"],
                  strict_slashes=False)

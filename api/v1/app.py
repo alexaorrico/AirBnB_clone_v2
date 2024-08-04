@@ -5,7 +5,7 @@ Flask app
 
 from api.v1.views import app_views
 from models import storage
-from os import getevn
+from os import getenv
 from flask import Flask, jsonify
 from flask_cors import CORS
 
@@ -38,7 +38,8 @@ def handle_404(exception):
     resp = jsonify(data)
     resp.status_code = 404
 
-    return(resp)
+    return (resp)
+
 
 if __name__ == "__main__":
     app.run(getenv("HBNB_API_HOST"), getenv("HBNB_API_PORT"))
