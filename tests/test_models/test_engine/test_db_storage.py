@@ -16,11 +16,14 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pep8
+import pycodestyle
 import unittest
+
+
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
-           "Review": Review, "State": State, "User": User}
+           "Review": Review, "State": State, 
+           "User": User,"BaseModel": BaseModel}
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -32,14 +35,27 @@ class TestDBStorageDocs(unittest.TestCase):
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
+        result = pep8s.check_files(['models/engine/db_storage.py'])
+
+
+class TestDBStorageDocs(unittest.TestCase):
+    """Tests to check the documentation and style of DBStorage class"""
+    @classmethod
+    def setUpClass(cls):
+        """Set up for the doc tests"""
+        cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
+
+    def test_pep8_conformance_db_storage(self):
+        """Test that models/engine/db_storage.py conforms to PEP8."""
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pep8.StyleGuide(quiet=True)
+        pep8s = pycodestyle.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
@@ -86,3 +102,33 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+class TestDBStorageGetCount(unittest.TestCase):   
+    """Tests to check the DBStorage.get and DBStorage.count methods"""
+    def setUp(self):
+        """Create some objects for testing"""
+        self.state = State(name="California")
+        self.city = City(name="San Francisco", state=self.state)
+        DBStorage.new(self.state)
+        DBStorage.new(self.city)
+        DBStorage.save()
+
+    def tearDown(self):
+        """Delete the test objects"""
+        DBStorage.delete(self.state)
+        DBStorage.delete(self.city)
+        DBStorage.save()
+
+    def test_get_one_state(self):
+        """Tests retrieving a single State object by ID."""
+        state = DBStorage.get(State, self.state.id)
+        self.assertIsNotNone(state)
+        self.assertEqual(state.id, self.state.id)
+        self.assertIsInstance(state, State)
+
+    def test_get_none(self):
+        """Tests retrieving a non-existent object."""
+        nonexistent_id = "12345-fake-id"
+        obj = DBStorage.get(State, nonexistent_id)
+        self.assertIsNone(obj)
