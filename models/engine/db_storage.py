@@ -77,8 +77,9 @@ class DBStorage:
             self.reload()
             all_obj_dict = self.all(cls)  # retrieve all objects from db
             for key, obj in all_obj_dict.items():
-                if f'{cls}.{id}' == key:
-                    return obj
+                for obj in all_obj_dict.values():  # check key on all objs
+                    if f'{obj.__class__.__name__}.{id}' == key:
+                        return obj
         return None
 
     def count(self, cls=None):
