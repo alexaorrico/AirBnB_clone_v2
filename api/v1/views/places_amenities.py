@@ -8,56 +8,52 @@ from models.amenity import Amenity
 from models.place import Place
 
 
-@app_views.route('/places/<string:place_id>/amenities', methods=['GET'],
-                 strict_slashes=False)
+@app_views.route('/places/<string:place_id>/amenities', methods=['GET'], strict_slashes=False)  #noqa
 def get_place_amenities(place_id):
-    """get amenity information for a specified place"""
+    """Retrieves the list of all Amenity objects of a Place"""
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    amenities = []
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        amenity_objects = place.amenities
+        amenities = place.amenities
     else:
-        amenity_objects = place.amenity_ids
-    for amenity in amenity_objects:
-        amenities.append(amenity.to_dict())
-    return jsonify(amenities)
+        amenities = [storage.get("Amenity", amenity_id) for amenity_id in place.amenity_ids]
+    return jsonify([amenity.to_dict() for amenity in amenities])
 
 
-@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
-                 methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>', methods=['DELETE'], strict_slashes=False)  #noqa
 def delete_place_amenity(place_id, amenity_id):
-    """deletes an amenity object from a place"""
+    """Deletes an Amenity object to a Place"""
     place = storage.get("Place", place_id)
     amenity = storage.get("Amenity", amenity_id)
     if place is None or amenity is None:
         abort(404)
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        place_amenities = place.amenities
+        if amenity not in place.amenities:
+            abort(404)
+        place.amenities.remove(amenity)
     else:
-        place_amenities = place.amenity_ids
-    if amenity not in place_amenities:
-        abort(404)
-    place_amenities.remove(amenity)
+        if amenity_id not in place.amenity_ids:
+            abort(404)
+        place.amenity_ids.remove(amenity_id)
     place.save()
-    return jsonify({})
+    return jsonify({}), 200
 
 
-@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>',
-                 methods=['POST'], strict_slashes=False)
+@app_views.route('/places/<string:place_id>/amenities/<string:amenity_id>', methods=['POST'], strict_slashes=False)  #noqa
 def post_place_amenity(place_id, amenity_id):
-    """adds an amenity object to a place"""
+    """Links an Amenity object to a Place"""
     place = storage.get("Place", place_id)
     amenity = storage.get("Amenity", amenity_id)
     if place is None or amenity is None:
         abort(404)
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        place_amenities = place.amenities
+        if amenity in place.amenities:
+            return jsonify(amenity.to_dict()), 200
+        place.amenities.append(amenity)
     else:
-        place_amenities = place.amenity_ids
-    if amenity in place_amenities:
-        return jsonify(amenity.to_dict())
-    place_amenities.append(amenity)
+        if amenity_id in place.amenity_ids:
+            return jsonify(amenity.to_dict()), 200
+        place.amenity_ids.append(amenity_id)
     place.save()
-    return make_response(jsonify(amenityto_dict()), 201)
+    return make_response(jsonify(amenity.to_dict()), 201)
