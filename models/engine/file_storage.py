@@ -64,14 +64,14 @@ class FileStorage:
             key = obj.__class__.__name__ + '.' + obj.id
             if key in self.__objects:
                 del self.__objects[key]
-    
+
     def get(self, cls, id):
         """Retrive a valid class object specified by its id attribute"""
         self.reload()
         all_obj_dict = self.all(cls)  # retrieve all objects from JSON file
         for key, obj in all_obj_dict.items():
             if f'{cls}.{id}' == key:
-                return obj 
+                return obj
         return None
 
     def count(self, cls=None):
