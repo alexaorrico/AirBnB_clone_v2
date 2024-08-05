@@ -127,6 +127,10 @@ TestBaseModel class:
 * `def test_user_class_docstring(self)` - Test for the User class docstring
 
 
+## REST API - Allows software applications to communicate with one another
+* `def get(self, cls, id)` - Returns the object based on the class and its ID, or None if not found
+* `def count(self, cls=None)` - Returns the number of objects in storage matching the given class.
+* 
 ## Examples of use
 ```
 vagrantAirBnB_clone$./console.py
@@ -156,6 +160,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Franklyn Denish - [Github](https://github.com/webstafrank) / [Twitter](https://twitter.com/denis_franklyn)
 
 Second part of Airbnb: Joann Vuong
 ## License
