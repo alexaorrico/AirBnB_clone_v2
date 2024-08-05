@@ -71,6 +71,12 @@ test_file_storage.py'])
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def setUp(self):
+        """Set up the FileStorage instance for tests"""
+        self.storage = FileStorage()
+        self.storage._FileStorage__objects = {}
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -113,3 +119,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method"""
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.assertEqual(self.storage.get(BaseModel, obj.id), obj)
+        self.assertIsNone(self.storage.get(BaseModel, "nonexistent_id"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the count method"""
+        self.assertEqual(self.storage.count(), 0)
+        obj1 = BaseModel()
+        obj2 = Amenity()
+        self.storage.new(obj1)
+        self.storage.new(obj2)
+        self.assertEqual(self.storage.count(), 2)
+        self.assertEqual(self.storage.count(BaseModel), 1)
+        self.assertEqual(self.storage.count(Amenity), 1)
+        self.assertEqual(self.storage.count(City), 0)
