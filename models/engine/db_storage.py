@@ -92,10 +92,3 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
-
-
-
-if __name__ == '__main__':
-    obj = DBStorage()
-    all_dict = obj.all()
-    print(all_dict)
