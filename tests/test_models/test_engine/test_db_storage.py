@@ -111,10 +111,12 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         self.assertEqual(self.test_dict, self.storage.all())
+        i = o
         for clss in classes:  # test all objs saved in self.storage
-            get_obj = list(storage.get(cls, instance_key))
+            get_obj = list(storage.get(cls, instance_key[i]))
             cls_obj = storage._DBStorage__session.query(classes[clss]).all()
             self.assertEqual(get_obj, cls_obj)
+            i += 1
         # if no class is passed to get()
         get_obj = storage.get(instance_key)
         self.assertIsNone(get_obj)
