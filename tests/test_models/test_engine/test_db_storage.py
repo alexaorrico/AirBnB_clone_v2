@@ -113,18 +113,26 @@ class TestDBStorage(unittest.TestCase):
         self.assertEqual(self.test_dict, self.storage.all())
         i = o
         for clss in classes:  # test all objs saved in self.storage
-            get_obj = list(storage.get(cls, instance_key[i]))
-            cls_obj = storage._DBStorage__session.query(classes[clss]).all()
+            get_obj = list(self.storage.get(cls, self.instance_key[i]))
+            cls_obj = self.storage._DBStorage__session.query(classes[clss]).all()
             self.assertEqual(get_obj, cls_obj)
             i += 1
         # if no class is passed to get()
-        get_obj = storage.get(instance_key)
+        get_obj = self.storage.get(self.instance_key[0])
         self.assertIsNone(get_obj)
         # if a valid class is passed to get() as a string
-        get_obj = storage.get('Amenity', instance_key[0])
-        cls_obj= storage._DBStorage__session.query(classes['Amenity']).all()  # possibly incorrect
+        get_obj = self.storage.get('Amenity', self.instance_key[0])
+        cls_obj= self.storage._DBStorage__session.query(classes['Amenity']).all()  # possibly incorrect
         self.assertIsNotNone(get_obj)
         self.assertEqual(get_obj, cls_obj)  # will likely fail
         # if an invalid/unknown class is passed to get()
-        get_obj = storage.get('Unknown', instance_key[0])
+        get_obj = self.storage.get('Unknown', self.instance_key[0])
         self.assertIsNone(get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the no of objs returned by count()"""
+        # there should be only one object per class
+        total_objs = len(self.test_dict)
+        total_objs = self.storage.count()
+        self.assertEqual(total_keys, total_objs)
