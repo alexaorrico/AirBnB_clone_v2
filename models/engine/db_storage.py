@@ -79,9 +79,7 @@ class DBStorage:
             for key, obj in all_obj_dict.items():
                 if f'{cls}.{id}' == key:
                     return obj
-            return None
-        else:
-            return None
+        return None
 
     def count(self, cls=None):
         """Return no of objects if a class or all classes in storage"""
