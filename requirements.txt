@@ -1,0 +1,5 @@
+sqlalchemy
+flask
+flask-cors
+flask-sqlalchemy
+pycodestyle
