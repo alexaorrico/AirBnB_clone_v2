@@ -83,12 +83,13 @@ class TestDBStorage(unittest.TestCase):
                                     + "."
                                     + instance.id)
                 self.storage.new(instance)
+                self.test_dict[instance_key] = instance
 
-@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def tearDown(self):
     """Close database after testing"""
-    self.storage.close()
-                self.test_dict[instance_key] = instance
+        self.storage.close()
+    
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -117,6 +118,7 @@ class TestDBStorage(unittest.TestCase):
             cls_obj = self.storage._DBStorage__session.query(classes[clss]).all()
             self.assertEqual(get_obj, cls_obj)
             i += 1
+
         # if no class is passed to get()
         get_obj = self.storage.get(self.instance_key[0])
         self.assertIsNone(get_obj)
