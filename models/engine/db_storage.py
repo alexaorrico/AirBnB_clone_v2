@@ -74,8 +74,8 @@ class DBStorage:
     def get(self, cls, id):
         """Retrive a valid class object specified by its id attribute"""
         if cls is not None and id is not None:
-            self.reload()  # retrieve all objects from db
-            all_obj_dict = self.all(cls)
+            self.reload()
+            all_obj_dict = self.all(cls)  # retrieve all objects from db
             for key, obj in all_obj_dict.items():
                 if f'{cls}.{id}' == key:
                     return obj
