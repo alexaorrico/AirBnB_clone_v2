@@ -71,24 +71,27 @@ test_db_storage.py'])
 class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def setUp(self):
+    """ Prepare database for testing"""
+        self.storage = DBStorage()
+        self.test_dict = {}
+        for key, value in classes.items():  # Populate storage with class objs
+            with self.subTest(key=key, value=value):
+                instance = value()
+                self.instance_key = instance.__class__.__name__
+                                    + "."
+                                    + instance.id)
+                self.storage.new(instance)
+                self.test_dict[instance_key] = instance
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-        storage = DBStorage()
-        test_dict = {}
-        for key, value in classes.items():  # Populate storage with class objs
-            with self.subTest(key=key, value=value):
-                instance = value()
-                instance_key = instance.__class__.__name__
-                                    + "."
-                                    + instance.id)
-                storage.new(instance)
-                test_dict[instance_key] = instance
-        all_dict = storage.all()
+        """Test that all() returns all objects when no class is passed"""
+        all_dict = self.storage.all()
         self.assertEqual(test_dict, all_dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
