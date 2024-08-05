@@ -72,7 +72,7 @@ class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def setUp(self):
-    """ Prepare database for testing"""
+        """ Prepare database for testing"""
         self.storage = DBStorage()
         self.test_dict = {}
         self.instance_key = []
@@ -80,16 +80,16 @@ class TestDBStorage(unittest.TestCase):
             with self.subTest(key=key, value=value):
                 instance = value()
                 self.instance_key.append(instance.__class__.__name__
-                                    + "."
-                                    + instance.id)
+                                         + "."
+                                         + instance.id)
                 self.storage.new(instance)
                 self.test_dict[instance_key] = instance
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def tearDown(self):
-    """Close database after testing"""
+        """Close database after testing"""
         self.storage.close()
-    
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -115,7 +115,8 @@ class TestDBStorage(unittest.TestCase):
         i = o
         for clss in classes:  # test all objs saved in self.storage
             get_obj = list(self.storage.get(cls, self.instance_key[i]))
-            cls_obj = self.storage._DBStorage__session.query(classes[clss]).all()
+            cls_obj = self.storage._DBStorage__session.query(classes
+                                                             [clss]).all()
             self.assertEqual(get_obj, cls_obj)
             i += 1
 
@@ -124,7 +125,8 @@ class TestDBStorage(unittest.TestCase):
         self.assertIsNone(get_obj)
         # if a valid class is passed to get() as a string
         get_obj = self.storage.get('Amenity', self.instance_key[0])
-        cls_obj= self.storage._DBStorage__session.query(classes['Amenity']).all()  # possibly incorrect
+        cls_obj = self.storage._DBStorage__session.query(classes
+                                                         ['Amenity']).all()
         self.assertIsNotNone(get_obj)
         self.assertEqual(get_obj, cls_obj)  # will likely fail
         # if an invalid/unknown class is passed to get()

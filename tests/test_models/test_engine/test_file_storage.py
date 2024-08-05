@@ -34,7 +34,7 @@ class TestFileStorageDocs(unittest.TestCase):
         """Test that models/engine/file_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/file_storage.py'])
-        qself.assertEqual(result.total_errors, 0,
+        self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_file_storage(self):
@@ -124,8 +124,8 @@ class TestFileStorage(unittest.TestCase):
         for key, value in classes.items():  # Populate storage with class objs
             with self.subTest(key=key, value=value):
                 instance = value()
-                instance_key.append(instance.__class__.__name__ 
-                                    + "." 
+                instance_key.append(instance.__class__.__name__
+                                    + "."
                                     + instance.id)
                 storage.new(instance)
                 test_dict[instance_key[i]] = instance  # storage replica dict
@@ -157,8 +157,8 @@ class TestFileStorage(unittest.TestCase):
         for key, value in classes.items():  # Populate storage with class objs
             with self.subTest(key=key, value=value):
                 instance = value()
-                instance_key.append(instance.__class__.__name__ 
-                                    + "." 
+                instance_key.append(instance.__class__.__name__
+                                    + "."
                                     + instance.id)
                 storage.new(instance)
                 test_dict[instance_key[i]] = instance  # storage replica dict
