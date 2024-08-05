@@ -82,6 +82,11 @@ class TestDBStorage(unittest.TestCase):
                                     + "."
                                     + instance.id)
                 self.storage.new(instance)
+
+@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def tearDown(self):
+    """Close database after testing"""
+    self.storage.close()
                 self.test_dict[instance_key] = instance
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
