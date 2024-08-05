@@ -32,3 +32,13 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     city_list.append(city)
             return city_list
+
+    def to_json(self):
+        """Convert State instance to JSON"""
+        state_dict = self.to_dict()
+        return {
+            'id': state_dict['id'],
+            'name': self.name,
+            'created_at': state_dict['created_at'],
+            'updated_at': state_dict['updated_at']
+        }
