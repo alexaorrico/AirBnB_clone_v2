@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestFileStorageDocs classes
+Contains the TestFileStorageDocs and TestFileStorage classes
 """
 
 from datetime import datetime
@@ -113,3 +113,36 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get retrieves an object by class and ID"""
+        storage = FileStorage()
+        new_obj = User(email="test@test.com", password="password")
+        storage.new(new_obj)
+        storage.save()
+        retrieved_obj = storage.get(User, new_obj.id)
+        self.assertEqual(new_obj, retrieved_obj)
+        storage.delete(new_obj)
+        storage.save()
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test that count returns the number of objects in storage"""
+        storage = FileStorage()
+        initial_count = storage.count()
+        new_obj = City(name="San Francisco")
+        storage.new(new_obj)
+        storage.save()
+        self.assertEqual(storage.count(), initial_count + 1)
+        storage.delete(new_obj)
+        storage.save()
+        self.assertEqual(storage.count(), initial_count)
+
+        state_count = storage.count(State)
+        new_state = State(name="California")
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(State), state_count + 1)
+        storage.delete(new_state)
+        storage.save()
