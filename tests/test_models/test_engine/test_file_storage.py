@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -25,6 +26,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
+
     @classmethod
     def setUpClass(cls):
         """Set up for the doc tests"""
@@ -70,6 +72,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
@@ -113,3 +116,29 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test get method"""
+        newState = State(name="California")
+        newState.save()
+        newUser = User(email="ichigo.kurasaki@shi.qui.ss", password="GetSugaTencho")
+        newUser.save()
+        self.assertIs(newState, models.storage.get("State", newState.id))
+        self.assertIs(None, models.storage.get("State", "Seireitei"))
+        self.assertIs(None, models.storage.get("State", "Rukongai"))
+        self.assertIs(newUser, models.storage.get("User", newUser.id))
+        self.assertIs(None, models.storage.get("User", "Kurosaki"))
+        self.assertIs(None, models.storage.get("User", "Yhwach"))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test count method"""
+        count_ = models.storage.count()
+        self.assertEqual(models.storage.count(), 0)
+        newState = State(name="California")
+        newState.save()
+        newUser = User(email="Zaraki.Kenpachi@.strength.ss", password="TheKenpachi")
+        newUser.save()
+        self.assertEqual(models.storage.count("State"), count_ + 1)
+        self.assertEqual(models.storage.count("User"), count_ + 2)

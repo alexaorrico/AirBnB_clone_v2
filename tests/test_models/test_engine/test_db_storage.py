@@ -30,6 +30,32 @@ class TestDBStorageDocs(unittest.TestCase):
         """Set up for the doc tests"""
         cls.dbs_f = inspect.getmembers(DBStorage, inspect.isfunction)
 
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test the get method"""
+        newState = State(name="California")
+        newState.save()
+        newUser = User(email="ichigo.kurasaki@shi.qui.ss", password="GetSugaTencho")
+        newUser.save()
+        self.assertIs(newState, models.storage.get("State", newState.id))
+        self.assertIs(None, models.storage.get("State", "Seireitei"))
+        self.assertIs(None, models.storage.get("State", "Rukongai"))
+        self.assertIs(newUser, models.storage.get("User", newUser.id))
+        self.assertIs(None, models.storage.get("User", "Kurosaki"))
+        self.assertIs(None, models.storage.get("User", "Yhwach"))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test count method"""
+        count_ = models.storage.count()
+        self.assertEqual(models.storage.count(), 0)
+        newState = State(name="California")
+        newState.save()
+        newUser = User(email="Zaraki.Kenpachi@.strength.ss", password="TheKenpachi")
+        newUser.save()
+        self.assertEqual(models.storage.count("State"), count_ + 1)
+        self.assertEqual(models.storage.count("User"), count_ + 2)
+
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
