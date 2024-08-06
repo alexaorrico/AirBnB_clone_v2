@@ -71,6 +71,60 @@ class DBStorage:
         Session = scoped_session(sess_factory)
         self.__session = Session
 
+    def get(self, cls, id):
+        """Returns the object based on the class and its ID,
+        or None if not found"""
+        
+        if cls in classes.values() and isinstance(id, str):
+            all_obj = self.all(cls)
+            for key, value in all_obj.items():
+                if key.split('.')[1] == id:
+                    return value
+        return None
+     
+    def count(self, cls=None):
+        """Returns the number of objects in storage
+        matching the given class. If no class is passed,
+        returns the count of all objects in storage.
+        """
+
+        if not cls:
+            classes_inst = self.all()
+            return len(classes_inst)
+        if cls in classes.values():
+            all_cls_inst = self.all(cls)
+            return len(all_cls_inst)
+        if cls not in classes.values():
+            return
+    
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+    
+    """def get(self, cls, id):
+        Returns the object based on the class and its ID,
+        or None if not found
+        if cls in classes.values() and isinstance(id, str):
+            all_obj = self.all(cls)
+            for key, value in all_obj.items():
+                if key.split('.')[1] == id:
+                    return value
+        return None
+     
+    def count(self, cls=None):
+        Returns the number of objects in storage
+        matching the given class. If no class is passed,
+        returns the count of all objects in storage.
+        
+        if not cls:
+            classes_inst = self.all()
+            return len(classes_inst)
+        if cls in classes.values():
+            all_cls_inst = self.all(cls)
+            return len(all_cls_inst)
+        if cls not in classes.values():
+            return
+
+    """
+    
+    
