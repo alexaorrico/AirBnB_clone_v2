@@ -57,12 +57,40 @@ class DBStorage:
 
     def save(self):
         """commit all changes of the current database session"""
+        self.__session.commit()  
+    
+    def get(self, cls, id):
+        """
+        fetches specific object
+        :param cls: class of object as string
+        :param id: id of object as string
+        :return: found object or None
+        """
+        all_class = self.all(cls)
+
+        for obj in all_class.values():
+            if id == str(obj.id):
+                return obj
+
+        return None
+
+ def count(self, cls=None):
+        """
+        count of how many instances of a class
+        :param cls: class name
+        :return: count of instances of a class
+        """
+        return len(self.all(cls)
+
+    def save(self):
+        """ commits all changes of current database session """
         self.__session.commit()
 
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+
 
     def reload(self):
         """reloads data from the database"""

@@ -156,6 +156,13 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Chisom Ann - [Github](https://github.com/Somyann)
+
+#contributions
+(hbnb) update <class_name> <id> <attribute_name> "<attribute_value>"
+Updates an instance based on the class name and id by adding or updating an attribute.
+- Destory command : (hbnb) destroy <class_name> <id>
+Deletes an instance based on the class name and id.
 
 Second part of Airbnb: Joann Vuong
 ## License
