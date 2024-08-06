@@ -149,6 +149,8 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
+## My contributions
+I will be updating this code by using RESTFUL API
 
 ## Bugs
 No known bugs at this time. 
@@ -156,6 +158,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Agbaraojo sodiq - [Github](https://github.com/scodeq65) / [Email](Sodiqagbaraojo@gmail.com)
 
 Second part of Airbnb: Joann Vuong
 ## License
