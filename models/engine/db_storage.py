@@ -17,11 +17,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+           "Place": Place, "Review": Review,
+           "State": State, "User": User}
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -44,7 +45,7 @@ class DBStorage:
         """query on the current database session"""
         new_dict = {}
         for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
+            if (cls is None) or (cls is classes[clss]) or (cls is clss):
                 objs = self.__session.query(classes[clss]).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
@@ -74,3 +75,46 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Retrieves an object based on its classname and ID.
+
+        Args:
+            cls: String, name of the class to which object belongs.
+            id: Integer, Unique Identifier of the object
+
+        Return:
+            The actual Object or None, if not found.
+        """
+        try:
+            if cls is None or id is None or not isinstance(id, str):
+                print("Usage: obj.get(<className>, <ID>)")
+            else:
+                for clss in classes:
+                    if cls == clss or cls == classes[clss]:
+                        objs_dict = self.all(cls)
+                        for obj in objs_dict.values():
+                            if id == obj.id:
+                                return (obj)
+                        return (None)
+        except Exception:
+            print("Error occured during 'get()' call.")
+
+    def count(self, cls=None):
+        """Computes the number of Objects in storage.
+
+        Arg:
+            cls: Optional, specify the className filter.
+
+        Return:
+            The number of objects found in storage.
+        """
+        if cls is None:
+            objs_list = self.all().values()
+            return (len(objs_list))
+        count = 0;
+        for obj in self.all().keys():
+            class_name = obj.split('.')[0]
+            if class_name == cls:
+                count += 1
+        return (count)
