@@ -60,6 +60,13 @@ Classes inherited from Base Model:
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * ` def reload(self)` -  deserializes the JSON file to __objects
+### Storage Improvements
+- **Added `get` method**: Retrieve an object based on its class and ID.
+  ```python
+  def get(self, cls, id):
+      # cls: class
+      # id: string representing the object ID
+      # Returns the object based on the class and its ID, or None if not found
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -156,6 +163,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Ebenezer osigwe - [Github](https://github.com/ebnen)
 
 Second part of Airbnb: Joann Vuong
 ## License
