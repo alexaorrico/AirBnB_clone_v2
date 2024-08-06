@@ -5,7 +5,7 @@ initialize the models package
 
 from os import getenv
 
-
+storage = None
 storage_t = getenv("HBNB_TYPE_STORAGE")
 
 if storage_t == "db":
@@ -14,4 +14,5 @@ if storage_t == "db":
 else:
     from models.engine.file_storage import FileStorage
     storage = FileStorage()
+
 storage.reload()
