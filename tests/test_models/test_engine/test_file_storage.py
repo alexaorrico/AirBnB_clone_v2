@@ -113,3 +113,80 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """
+        Test that the `get` method retrieves objects stored in file.json.
+
+        This test checks that the `get` method returns the correct object
+        when provided with a valid class type and object ID. It verifies
+        that the method accurately locates and returns objects stored in
+        the file storage system.
+        """
+        # Assuming we have a setup method that creates
+        # some objects in file storage
+
+        # Retrieve an object of class `User` with a specific ID
+        obj = models.storage.get(User, 'some-id')
+
+        # Assert that the retrieved object is not None
+        self.assertIsNotNone(
+            obj,
+            "The object should be retrieved successfully"
+        )
+
+        # Assert that the object is an instance of the User class
+        self.assertIsInstance(
+            obj,
+            User,
+            "The object should be an instance of User"
+        )
+
+        # Additional assertions to verify the correctness
+        # of the retrieved object
+        self.assertEqual(
+            obj.id,
+            'some-id',
+            "The object's ID should match"
+        )
+        self.assertEqual(
+            obj.name,
+            'John Doe',
+            "The object's name should match"
+        )
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """
+        Test that the `count` method returns the correct number of objects
+        in file.json
+
+        This test verifies the accuracy of the `count` method by checking
+        that it returns the expected number of objects for a specific class
+        type and for all classes combined. It confirms that the method
+        correctly counts the number of stored objects in the file storage
+        system.
+        """
+        # Assuming we have a setup method
+        # that creates some objects in file storage
+
+        # Count the number of User objects in file storage
+        user_count = models.storage.count(User)
+
+        # Assert that the count of User objects is as expected
+        self.assertEqual(
+            user_count,
+            5,
+            "The count of User objects should be 5"
+        )
+
+        # Count the total number of all objects in file storage
+        total_count = models.storage.count()
+
+        # Assert that the total count of objects is as expected
+        self.assertEqual(
+            total_count,
+            10,
+            "The total count of objects should be 10"
+        )

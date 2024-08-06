@@ -1,0 +1,52 @@
+GET method, lists all states
+---
+tags:
+  - States
+summary: Retrieve a list of all State instances.
+description: |
+  This endpoint retrieves all State instances stored in the database. 
+  The response includes a list of states, each represented by its unique ID, name, and timestamps for creation and last update.
+parameters:
+  - name: no_needed
+    in: path
+    type: string
+    required: false
+    description: This parameter is not needed for this endpoint and will be ignored if provided.
+responses:
+  200:
+    description: Successful request. Returns a list of State objects.
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              __class__:
+                type: string
+                description: The class name of the instance, typically "State".
+                example: "State"
+              created_at:
+                type: string
+                format: date-time
+                description: Datetime of instance creation.
+                example: "2024-08-06T12:34:56.789Z"
+              id:
+                type: string
+                description: The unique ID of the state instance.
+                example: "123e4567-e89b-12d3-a456-426614174000"
+              name:
+                type: string
+                description: The name of the State.
+                example: "California"
+              updated_at:
+                type: string
+                format: date-time
+                description: Datetime of the last instance update.
+                example: "2024-08-07T12:34:56.789Z"
+  500:
+    description: Internal server error. An unexpected error occurred on the server.
+    content:
+      application/json:
+        example:
+          error: "Internal server error"

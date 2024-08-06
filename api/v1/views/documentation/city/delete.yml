@@ -1,0 +1,17 @@
+DELETE method, delete place instance by id
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    type: string
+    required: true
+    description: The unique ID of the city whose place instance is to be deleted.
+responses:
+  404:
+    description: |
+      City not found. The specified city ID does not match any existing city in the database.
+  200:
+    description: |
+      Successful deletion. The place instance has been successfully removed, and the request was processed correctly.

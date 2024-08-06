@@ -1,0 +1,59 @@
+GET method, lists state by unique id
+---
+tags:
+  - States
+summary: Retrieve a specific State instance by its unique ID.
+description: |
+  This endpoint retrieves a specific State instance from the database using its unique identifier. 
+  If the State does not exist, a 404 error will be returned. 
+  On successful retrieval, a 200 response will be returned with the State's details.
+parameters:
+  - name: state_id
+    in: path
+    type: string
+    required: true
+    description: The unique ID of the State instance to retrieve.
+    example: "123e4567-e89b-12d3-a456-426614174000"
+responses:
+  200:
+    description: Successful request. Returns the details of the State object.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            __class__:
+              type: string
+              description: The class name of the instance, typically "State".
+              example: "State"
+            created_at:
+              type: string
+              format: date-time
+              description: Datetime of instance creation.
+              example: "2024-08-06T12:34:56.789Z"
+            updated_at:
+              type: string
+              format: date-time
+              description: Datetime of instance update.
+              example: "2024-08-07T12:34:56.789Z"
+            id:
+              type: string
+              description: The unique ID of the State instance.
+              example: "123e4567-e89b-12d3-a456-426614174000"
+            name:
+              type: string
+              description: The name of the State.
+              example: "California"
+  404:
+    description: State not found. The provided ID does not match any existing state.
+    content:
+      application/json:
+        example: 
+          error: "State not found"
+  500:
+    description: Internal server error. An unexpected error occurred on the server.
+    content:
+      application/json:
+        example:
+          error: "Internal server error"
+

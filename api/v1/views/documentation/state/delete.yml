@@ -1,0 +1,35 @@
+DELETE method, delete instance by id
+---
+tags:
+  - States
+summary: Delete a specific State instance by its unique ID.
+description: |
+  This endpoint deletes a State instance specified by its unique identifier. 
+  If the State does not exist, a 404 error will be returned. 
+  Upon successful deletion, a 200 response will indicate that the request was processed correctly.
+parameters:
+  - name: state_id
+    in: path
+    type: string
+    required: true
+    description: The unique ID of the State instance to delete.
+    example: "123e4567-e89b-12d3-a456-426614174000"
+responses:
+  200:
+    description: Successful deletion. The state has been removed.
+    content:
+      application/json:
+        example: {}
+  404:
+    description: State not found. The provided ID does not match any existing state.
+    content:
+      application/json:
+        example: 
+          error: "State not found"
+  400:
+    description: Bad request. The provided ID format is incorrect.
+    content:
+      application/json:
+        example:
+          error: "Invalid ID format"
+

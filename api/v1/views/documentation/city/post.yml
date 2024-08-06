@@ -1,0 +1,35 @@
+Post a new city.
+    ---
+    tags:
+      - Cities
+    parameters:
+      - state_id:
+        in: path
+        type: string
+        required: true
+        description: The unique ID of the state to which the city belongs.
+      - name: body_request
+        in: body
+        required: true
+        description: |
+          JSON object containing the details of the city to be created.
+          The request body must include the following property:
+          
+          - **name**: The name of the city (type: string).
+
+          Example:
+          ```json
+          {
+            "name": "San Francisco"
+          }
+          ```
+    responses:
+      404:
+        description: |
+          State not found. The specified state ID does not match any existing state in the database.
+      400:
+        description: |
+          Bad Request. The request is missing the required 'name' property or the JSON is not valid.
+      201:
+        description: |
+          Successful creation. The city has been successfully created and the new city's details are returned in the response.

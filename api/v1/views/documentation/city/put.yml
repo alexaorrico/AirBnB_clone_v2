@@ -1,0 +1,36 @@
+Update a city instance by id
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    type: string
+    required: true
+    description: The unique ID of the city to be updated.
+  - name: update_request
+    in: body
+    required: true
+    description: |
+      JSON object containing the updated attributes of the city.
+      The request body should include the properties to be updated.
+      
+      Example:
+      ```json
+      {
+        "name": "Los Angeles",
+        "population": 4000000
+      }
+      ```
+
+responses:
+  404:
+    description: |
+      City not found. The specified city ID does not match any existing city in the database.
+  400:
+    description: |
+      Bad Request. The request body is not a valid JSON.
+  200:
+    description: |
+      Successful update. The city has been successfully updated, and the updated city's details are returned in the response.
+

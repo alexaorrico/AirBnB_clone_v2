@@ -1,0 +1,27 @@
+Posts a new state.
+    ---
+    tags:
+      - States
+    parameters:
+      - name: request
+        in: body
+        required: true
+        description: |
+          JSON object containing the details of the state to be created.
+          The request must include the following property:
+          
+          - **name**: The name of the state (type: string).
+
+          Example:
+          ```json
+          {
+            "name": "New York"
+          }
+          ```
+    responses:
+      400:
+        description: |
+          Bad Request. This error occurs if the request body is missing the required 'name' property or if the input is not valid JSON. Please ensure that the request payload is correctly formatted.
+      201:
+        description: |
+          Created. The state was successfully created and the new state's details are returned in the response.

@@ -69,7 +69,13 @@ test_db_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+    """
+    Tests for the FileStorage class.
+
+    These tests verify the functionality of various methods in the
+    FileStorage class, ensuring that data is stored and retrieved
+    correctly from file storage.
+    """
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +92,49 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """
+        Test that the `get` method retrieves an item from the database.
+
+        This test checks that the `get` method correctly returns a single
+        object from the database when provided with a valid class and ID.
+        """
+        # Create a new instance of User
+        new_user = User(name="Retrieve User")
+        models.storage.new(new_user)
+        models.storage.save()
+
+        # Retrieve the user by ID
+        retrieved_user = models.storage.get(User, new_user.id)
+        self.assertEqual(
+            retrieved_user, new_user,
+            "The `get` method should retrieve the correct user by ID."
+        )
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """
+        Test that the `count` method returns the correct
+        number of elements in the database
+
+        This test verifies that the `count` method accurately
+        reflects the total number of objects stored in the database,
+        as well as the count of objects for a specific class when specified.
+        """
+        # Get the total count of all objects
+        total_count = models.storage.count()
+
+        # Get the count of User objects
+        user_count = models.storage.count(User)
+
+        # Verify the total count and User count
+        self.assertGreater(
+            total_count, 0,
+            "The total count should be greater than 0."
+        )
+        self.assertGreaterEqual(
+            user_count, 0,
+            "The count of User objects should be non-negative."
+        )

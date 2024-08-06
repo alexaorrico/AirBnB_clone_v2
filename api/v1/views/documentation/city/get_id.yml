@@ -1,0 +1,38 @@
+GET method, retrieve a city based on state_id
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    type: string
+    required: true
+    description: The unique ID of the city to be retrieved.
+responses:
+  200:
+    description: |
+      Successful request. Returns the details of the city associated with the specified city ID.
+    schema:
+      type: object
+      properties:
+        __class__:
+          type: "string"
+          description: The class name of the instance, typically "City".
+        created_at:
+          type: string
+          description: The datetime of instance creation.
+        updated_at:
+          type: string
+          description: The datetime of the last update of the instance.
+        id:
+          type: string
+          description: The unique ID of the city instance.
+        name:
+          type: string
+          description: The name of the city.
+        state_id:
+          type: string
+          description: The ID of the state to which the city belongs.
+  404:
+    description: |
+      City not found. The specified city ID does not match any existing city in the database.

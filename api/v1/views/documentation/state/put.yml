@@ -1,0 +1,32 @@
+Update a state instance by id
+---
+tags:
+  - States
+parameters:
+  - name: state_id
+    in: path
+    type: string
+    required: true
+    description: The unique ID of the state to be updated.
+  - name: request
+    in: body
+    required: true
+    description: |
+      JSON object containing the updated details of the state. The request body must include the following property:
+
+      - **name**: The new name for the state (type: string).
+
+      Example:
+      ```json
+      {
+        "name": "California"
+      }
+      ```
+
+responses:
+  404:
+    description: |
+      State not found. The specified state ID does not correspond to any existing state in the database.
+  200:
+    description: |
+      Successful update. The state has been successfully updated with the provided details, and the updated state information is returned in the response.
