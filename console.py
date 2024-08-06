@@ -121,6 +121,7 @@ class HBNBCommand(cmd.Cmd):
         print("[", end="")
         print(", ".join(obj_list), end="")
         print("]")
+        print(models.storage.count(State))
 
     def do_update(self, arg):
         """Update an instance based on the class name, id, attribute & value"""
