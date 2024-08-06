@@ -48,6 +48,13 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
+    def get(self, cls, obj_id):
+        """This retrives a single object by class and id"""
+        if cls and obj_id:
+            key = "{}.{}".format(cls.__name__, obj_id)
+            return self.__objects.get(key, None)
+        return None
+
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
@@ -68,3 +75,15 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def count(self, cls=None):
+        """This counts the number of objects in __objects"""
+        if cls:
+            return len(
+                [
+                    obj for obj in self.__objects.values()
+                    if isinstance(obj, cls)
+                ]
+            )
+        else:
+            return len(self.__objects)

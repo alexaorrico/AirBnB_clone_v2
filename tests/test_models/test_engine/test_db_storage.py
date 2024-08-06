@@ -78,11 +78,46 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
+        all_objs = models.storage.all()
+        self.assertEqual(type(all_objs), dict)
+        self.assertGreater(len(all_objs), 0)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        new_state = State(name="California")
+        models.storage.new(new_state)
+        self.assertIn(new_state, models.storage.all(State).values())
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+        new_state = State(name="Nevada")
+        models.storage.new(new_state)
+        models.storage.save()
+        self.assertIn(new_state, models.storage.all(State).values())
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get retrieves the correct object based on class and id"""
+        new_state = State(name="Texas")
+        models.storage.new(new_state)
+        models.storage.save()
+        retrieved_state = models.storage.get(State, new_state.id)
+        self.assertEqual(retrieved_state, new_state)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the correct number of objects"""
+        initial_count = models.storage.count(State)
+        new_state = State(name="Arizona")
+        models.storage.new(new_state)
+        models.storage.save()
+        updated_count = models.storage.count(State)
+        self.assertEqual(updated_count, initial_count + 1)
+        initial_total_count = models.storage.count()
+        new_city = City(name="Phoenix", state_id=new_state.id)
+        models.storage.new(new_city)
+        models.storage.save()
+        updated_total_count = models.storage.count()
+        self.assertEqual(updated_total_count, initial_total_count + 1)
