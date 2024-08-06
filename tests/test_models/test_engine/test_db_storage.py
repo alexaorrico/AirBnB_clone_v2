@@ -21,6 +21,7 @@ import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
+print(f"Running tests with storage type: {models.storage_t}")
 
 
 class TestDBStorageDocs(unittest.TestCase):
@@ -86,3 +87,31 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """tests get method"""
+        storage = DBStorage()
+        state = State(name="Michigan")
+        storage.new(state)
+        storage.save()
+        obj = storage.get(State, state.id)
+        self.assertIsNotNone(obj)
+        self.assertEqual(obj.id, state.id)
+        self.assertEqual(obj.name, "Michigan")
+        storage.delete(state)
+        storage.save()
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """tests count method"""
+        storage = DBStorage()
+        initial_count = storage.count()
+        state = State(name="Michigan")
+        storage.new(state)
+        storage.save()
+        count = storage.count()
+        self.assertEqual(count, initial_count + 1)
+        storage.delete(state)
+        storage.save()
+        self.assertEqual(count, initial_count)
