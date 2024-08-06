@@ -156,7 +156,11 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Nour Mazouz - [Github](https://github.com/freakinlight) / [Twitter](https://twitter.com/freakinlight)
 
-Second part of Airbnb: Joann Vuong
+## New Contributions
+- Implemented new features for version 3
+- Improved documentation and code readabilitySecond part of Airbnb: Joann Vuong
+
 ## License
 Public Domain. No copy write protection. 
