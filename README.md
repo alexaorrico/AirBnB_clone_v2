@@ -154,8 +154,11 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
+Normich Itoua - [Github](https://github.com/nitoua-21) / [Twitter](https://x.com/ItouaNormich)
+Raheem Oluwatobiloba - [Github](https://github.com/raim-io) / [Twitter](https://x.com/raim_io)
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
 
 Second part of Airbnb: Joann Vuong
 ## License
