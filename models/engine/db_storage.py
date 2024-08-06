@@ -74,3 +74,30 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """ TODO: Doc"""
+        if cls in classes.values():
+            objs = self.all(cls)
+            for obj in objs:
+                if (objs[obj].id == id):
+                    return (objs[obj])
+        else:
+            return None
+
+
+    def count(self, cls=None):
+        """ TODO: Doc """
+        counter = 0
+        if cls is None:
+            for cls_name in classes:
+                objs = models.storage.all(cls_name).values()
+                counter += len(objs)
+            return (counter)
+        else:
+            if cls in classes.values():
+                objs = self.all(cls).values()
+                counter = len(objs)
+                return (counter)
+            else:
+                raise Exception(f"There is no class found named {cls}")`
