@@ -113,3 +113,35 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+class TestFileStorage(unittest.TestCase):
+	"""Set up the fileStorage instance with the test file path"""
+	self.file_path = 'test_file.json'
+	self.storage = FileStorage(self.file_path)
+
+    def tearDown(self):
+        """Remove the test file after each test to clean up"""
+	if os.path exists(self.file_path):
+	    os.remove(self.file_path)
+
+	def test_get(self):
+	"""Test the get method to retrieve an object by it class"""
+	obj = MyClass(id=1, name='Test Object')
+	self.storage.objects['MyClass.1'] = obj.__dict__
+	self.storage.save_objects()
+	result = self.storage,get(MyClass, 1)
+	self.assertIsNotNone(result, 'Expected to find the objct but we got none')
+	self.assertEqual(result['name'] 'Test object', 'The retreive object name does not match')
+ 
+  def test_count(self):
+      """Test count the object of a gaven class"""
+      obj1 = MyClass(id=1, name='Test Object 1')
+      obj2 = MyClass(id=2, name='Test Object 2')
+      self.storage.save(obj1)
+      self.storage.save(obj2)
+      count = self.storage.count(MyClass)
+      self.assertEqual(count, 2, "Expected count is 2 but got {}".format(count))
+
+if __name__ == '__main__':
+    unittest.main()
+	   

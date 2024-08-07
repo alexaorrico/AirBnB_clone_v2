@@ -86,3 +86,31 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+class TestDBStorage(unittest.TestCase):
+	def setUp(self):
+	    self.storage = DBStorage()
+	    self.storage.connect()
+	def tearDown(self):
+	    self.storage.clear()
+	    self.storage.disconnect()
+
+	def test_get(self):
+	    """Test the get method to retrieve an object by it class and ID"""
+	    obj = MyClass(id=1, name='Test object')
+	    self.storage.save(obj)
+	    results = self.storage.get(MyClass, 1)
+	    self.assertIsNotNone(result, "Expected to find the object but find None.")
+	    self.assertEqual(result.name, 'Test object', "No match objects name")
+
+	def test_count(self):
+	    """Test the count method"""
+	    obj1 = MyClass(id=1, name='Test object 1')
+	    obj2 = MyClass(id=2, name='Test object 2')
+	    self.storage.save(obj1)
+	    self.storage.save(obj2)
+	    count = self.storage.count(MyClass)
+	    self.assertEqual(count, 2, "Expected count is 2 but we got {}".format(count))
+
+if __name__ == '__main__':
+	unittest.main()

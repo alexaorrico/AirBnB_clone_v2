@@ -73,4 +73,20 @@ class DBStorage:
 
     def close(self):
         """call remove() method on the private session attribute"""
+
+
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Retrieve one object by class or id."""
+        if cls is None or id is None:
+            return None
+        return self.__session.query(cls).get(id)
+
+    def count(self, cls=None):
+        """We are counting number of object in store."""
+        if cls is None:
+	    return self.__session.query(self.__model).count()
+        if not issubclass(cls, BaseModel):
+	    raise TypeError("cls must be a subclass of BaseMode")
+        return self.__session.query(cls).count()

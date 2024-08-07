@@ -68,3 +68,19 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+	"""Retrieve one object by class and id"""
+	if cls is None or id is None:
+	    return None
+	all_obj = self.all(cls)
+	return all_obj.get(id, None)
+	
+
+    def count(self, cls=None):
+	"""We count number of object in store"""
+	if cls is None:
+	    return len(self.__objects)
+	if not issubclass(cls, BaseMode):
+	    raise TypeError("cls must be a subclass of BaseModel")
+	return sum(1 for obj in self.__objects.values() if isinstance(obj, cls))
