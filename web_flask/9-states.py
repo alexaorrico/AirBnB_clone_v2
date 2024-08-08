@@ -1,28 +1,37 @@
 #!/usr/bin/python3
 """
-starts a Flask web application
+Script starts a Flask web application:
+Routes:
+ /states - list all states from storage
+ /states/<id> -  list all cities in a specified state
 """
-
 from flask import Flask, render_template
-from models import *
 from models import storage
+from models.state import State
+
+
 app = Flask(__name__)
 
 
-@app.route('/states', strict_slashes=False)
-@app.route('/states/<state_id>', strict_slashes=False)
-def states(state_id=None):
-    """display the states and cities listed in alphabetical order"""
-    states = storage.all("State")
-    if state_id is not None:
-        state_id = 'State.' + state_id
-    return render_template('9-states.html', states=states, state_id=state_id)
-
-
 @app.teardown_appcontext
-def teardown_db(exception):
-    """closes the storage on teardown"""
+def delete_session(exception=None):
     storage.close()
 
+
+@app.route('/states', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
+def list_states_cities(id=None):
+    """
+    Displays a HTML page witha lists of all states if id=None or
+    a list of cities of the specified states.
+    """
+    # Get list of states
+    states = storage.all(State)
+    state_key = None
+    if id is not None:
+        state_key = "State." + id
+    return render_template('9-states.html', state_key=state_key, states=states)
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port=5000, debug=True)

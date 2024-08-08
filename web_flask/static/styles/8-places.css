@@ -1,0 +1,61 @@
+section.places h1{
+    font-size: 30px;
+    text-align: left;
+}
+.articles-section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+section.places article{
+    position: relative;
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ff5a5f;
+    border-radius: 4px;
+}
+section.places article h2{
+    font-size: 30px;
+    text-align: center;
+    margin: 5px 60px 40px 0;
+}
+article div.price_by_night{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #ff5a5f;
+    border: 4px solid #ff5a5f;
+    border-radius: 50%;
+    min-width: 60px;
+    height: 60px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 60px;
+}
+.information{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+.information div{
+    width: 100px;
+    height: 35px;
+    text-align: center;
+}
+.information div .icon{
+    width: 100%;
+    height: 80%;
+}
+.information div .icon i{
+    font-size: 20px;
+} 
+article div.user{
+    margin: 10px 0;
+}
+article div.user span{
+    font-weight: bold;
+}
