@@ -1,0 +1,28 @@
+GET method, lists all states
+---
+tags:
+  - States
+parameters:
+  - name: no needed
+    in: path
+    type: string
+    required: false
+    description: lists all states
+responses:
+  200:
+    description: Succsesful resquest
+    schema:
+      type: array
+      items:
+        properties:
+          __class__:
+            type: "string"
+          created_at:
+            type: string
+            description: datetime of instance creation
+          id:
+            type: string
+            description: The unique id of the state instance
+          name:
+            type: string
+            description: The State name

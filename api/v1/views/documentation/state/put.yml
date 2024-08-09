@@ -1,0 +1,24 @@
+Update a state instance by id
+---
+tags:
+  - States
+parameters:
+  - name: state_id
+    in: path
+    type: string
+    required: true
+    description: the unique id of the state to update
+  - name: request
+    in: body
+    required: true
+    requires:
+      - name
+    properties:
+      name:
+        type: string
+
+responses:
+  404:
+    description: State not found 😳
+  200:
+    description: Successful request ✔️
