@@ -113,3 +113,57 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """
+        The method to retrieve all instances
+        """
+        storage = FileStorage()
+
+        storage.reload()
+
+        state_data = {"name": "Baltimore"}
+        state = State(**state_data)
+
+        storage.new(state)
+        storage.save()
+
+        retrieved_state = storage.get(State, state.id)
+
+        self.assertIsNotNone(retrieved_state)
+        self.assertEqual(retrieved_state.name, "Baltimore")
+
+        fake_state_id = storage.get(State, 'fake_id')
+
+        self.assertIsNone(fake_state_id)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """
+        This method counts all instances
+        """
+        storage = FileStorage()
+
+        storage.reload()
+
+        state_data = {"name": "Boston"}
+        state = State(**state_data)
+        storage.new(state)
+
+        city_data = {"name": "Virginia", "state_id": state.id}
+
+        city = City(**city_data)
+        storage.new(city)
+        storage.save()
+
+        count = storage.count(State)
+
+        self.assertIsNotNone(count)
+        self.assertTrue(isinstance(count, int))
+        self.assertEqual(count, len(storage.all(State)))
+
+        all_instances = storage.count()
+
+        self.assertIsNotNone(all_instances)
+        self.assertEqual(all_instances, len(storage.all()))
