@@ -1,0 +1,42 @@
+curl -X GET http://0.0.0.0:5000/api/v1/states/not_an_id/cities/
+
+curl -X GET http://0.0.0.0:5000/api/v1/states/c43ecbf9-6226-4e38-9f9c-7e0f3cf0ae31/cities
+
+
+curl -X GET http://0.0.0.0:5000/api/v1/cities/743fe35f-602a-4b09-9a7d-f4780cf21676
+
+curl -X POST http://0.0.0.0:5000/api/v1/states/c43ecbf9-6226-4e38-9f9c-7e0f3cf0ae31/cities -H "Content-Type: application/json" -d '{"name": "Portsaid"}' -vvv
+
+curl -X GET http://0.0.0.0:5000/api/v1/cities/743fe35f-602a-4b09-9a7d-f4780cf21676
+
+curl -X DELETE http://0.0.0.0:5000/api/v1/cities/743fe35f-602a-4b09-9a7d-f4780cf21676
+
+curl -X GET http://0.0.0.0:5000/api/v1/cities/743fe35f-602a-4b09-9a7d-f4780cf21676
+
+curl -X PUT http://0.0.0.0:5000/api/v1/cities/743fe35f-602a-4b09-9a7d-f4780cf21676 -H "Content-Type: application/json" -d '{"name": "Bossier City"}'
+
+
+curl -X GET http://0.0.0.0:5000/api/v1/users
+
+curl -X GET http://0.0.0.0:5000/api/v1/users/130bb173-a180-4df4-bf12-deadd1ba2999
+
+curl -X POST http://0.0.0.0:5000/api/v1/users -H "Content-Type: application/json" -d '{"email": "mo4@gmail.com", "password": "1234"}'
+
+
+curl -X PUT http://0.0.0.0:5000/api/v1/users/130bb173-a180-4df4-bf12-deadd1ba2999 -H "Content-Type: application/json" -d '{"first_name": "Mohamed", "last_name": "Magdy"}'
+
+
+# Get all places in a city
+curl -X GET http://0.0.0.0:5000/api/v1/cities/743fe35f-602a-4b09-9a7d-f4780cf21676/places
+
+# Get a specific place
+curl -X GET http://0.0.0.0:5000/api/v1/places/5458edf1-762f-4665-89c7-a5290e60f1ca
+
+# Delete a specific place
+curl -X DELETE http://0.0.0.0:5000/api/v1/places/5458edf1-762f-4665-89c7-a5290e60f1ca
+
+# Create a new place in a city
+curl -X POST http://0.0.0.0:5000/api/v1/cities/743fe35f-602a-4b09-9a7d-f4780cf21676/places -H "Content-Type: application/json" -d '{"user_id": "130bb173-a180-4df4-bf12-deadd1ba2999", "name": "Hotel Bamba"}'
+
+# Update a specific place
+curl -X PUT http://0.0.0.0:5000/api/v1/places/cd4d490b-18be-4ab6-bf08-090c31d54eaa -H "Content-Type: application/json" -d '{"name": "Hotel Tamba", "number_of_rooms": 10, "number_of_bathrooms": 5, "max_guest": 20, "price_by_night": 100, "latitude": 30.0, "longitude": 30.0, "description": "A nice hotel"}'
