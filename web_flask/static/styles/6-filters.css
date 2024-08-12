@@ -51,11 +51,13 @@ section.filters > button:hover {
     left: -51px;
     background-color: #FAFAFA;
     width: 100%;
+    max-height: 300px;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     z-index: 1;
     padding: 30px 50px 30px 0;
     margin-top: 17px;
+    overflow: scroll;
 }
 
 .popover, .popover ul {

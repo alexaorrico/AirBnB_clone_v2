@@ -1,28 +1,27 @@
 #!/usr/bin/python3
-"""
-starts a Flask web application
-"""
-
+"""Flask app to generate html list of all states from storage"""
 from flask import Flask, render_template
-from models import *
 from models import storage
-app = Flask(__name__)
+app = Flask('web_flask')
+app.url_map.strict_slashes = False
 
 
-@app.route('/states', strict_slashes=False)
-@app.route('/states/<state_id>', strict_slashes=False)
-def states(state_id=None):
-    """display the states and cities listed in alphabetical order"""
-    states = storage.all("State")
-    if state_id is not None:
-        state_id = 'State.' + state_id
-    return render_template('9-states.html', states=states, state_id=state_id)
+@app.route('/states/<id>')
+@app.route('/states', defaults={'id': None})
+def specific_state(id):
+    """Render as html alphabetical list of states or specific state entry
+    in `storage` if `id` is a valid identifier"""
+    states = storage.all('State')
+    if id:
+        id = 'State.' + id
+    return render_template('9-states.html', states=states, id=id)
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
-    """closes the storage on teardown"""
+def teardown_db(*args, **kwargs):
+    """Close database or file storage"""
     storage.close()
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
