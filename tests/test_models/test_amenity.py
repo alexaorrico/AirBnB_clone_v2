@@ -8,7 +8,7 @@ import inspect
 import models
 from models import amenity
 from models.base_model import BaseModel
-import pep8
+import pep8 as pycodestyle
 import unittest
 Amenity = amenity.Amenity
 
