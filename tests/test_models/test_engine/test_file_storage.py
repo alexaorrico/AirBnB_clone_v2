@@ -95,6 +95,37 @@ class TestFileStorage(unittest.TestCase):
         FileStorage._FileStorage__objects = save
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test the get method to retrieve an object by class and id"""
+        storage = FileStorage()
+        # Save the original __objects attribute and reset it
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        test_state = State()
+        storage.new(test_state)
+        retrieved_obj = storage.get(State, test_state.id)
+        self.assertEqual(retrieved_obj, test_state)
+        non_existing_obj = storage.get(State, "n234-000o4-4")
+        self.assertIsNone(non_existing_obj)
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the get method to retrieve an object by class and id"""
+        storage = FileStorage()
+        objs = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        test_state = State()
+        test_city = City()
+        storage.new(test_state)
+        storage.new(test_city)
+        count = storage.count()
+        count_state = storage.count(State)
+        self.assertEqual(count, 2)
+        self.assertEqual(count_state, 1)
+        FileStorage._FileStorage__objects = objs
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
