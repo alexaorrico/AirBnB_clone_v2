@@ -70,6 +70,17 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    def setUp(self):
+        self.storage = DBStorage()
+        self.storage.reload()
+
+    def tearDown(self):
+        self.storage.close()
+        try:
+            os.remove("test_file.json")
+        except BaseException:
+            pass
+    
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +97,25 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get(self):
+        """test that get retrieves the correct object"""
+        obj = BaseModel()
+        obj_id = obj.id
+        self.storage.new(obj)
+        self.storage.save()
+        self.assertEqual(self.storage.get(BaseModel, obj_id), obj)
+        self.assertIsNone(self.storage.get(BaseModel, "nonexistent_id"))
+
+    def test_count(self):
+        """test that count returns the correct number of objects"""
+        initial_count = self.storage.count()
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.storage.save()
+        self.assertEqual(self.storage.count(), initial_count + 1)
+        self.assertEqual(self.storage.count(BaseModel), initial_count + 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
