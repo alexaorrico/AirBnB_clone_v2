@@ -113,3 +113,24 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """ test get method that get object stand of id and class"""
+        storgae = FileStorage()
+        obj_dict = storgae.all()
+        obj = [obj for obj in obj_dict.values()]
+        cls_name = obj[0].__class__.__name__
+        cls_obj = classes[cls_name]
+        get_obj = storgae.get(cls=cls_obj, id=obj[0].id)
+        self.assertEqual(get_obj.id, obj[0].id)
+        self.assertEqual(type(get_obj), type(obj[0]))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test count method return the number of object stand of class name"""
+        storage = FileStorage()
+        list_obj = storage.all(State)
+        num_of_obj = len(list_obj)
+        test_valu = storage.count(State)
+        self.assertEqual(num_of_obj, test_valu)

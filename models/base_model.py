@@ -5,6 +5,7 @@ Contains class BaseModel
 
 from datetime import datetime
 import models
+import hashlib
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, DateTime
@@ -58,7 +59,7 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, saving_to_file=False):
         """returns a dictionary containing all keys/values of the instance"""
         new_dict = self.__dict__.copy()
         if "created_at" in new_dict:
@@ -68,8 +69,28 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if not saving_to_file and new_dict["__class__"] == "User":
+            new_dict.pop('password', None)
         return new_dict
 
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
+
+    def update(self, **kwargs):
+        """Update the object attributes"""
+
+        ignored = ['id', 'created_at', 'updated_at', 'user_id', 'city_id']
+
+        for key in ignored:
+            kwargs.pop(key, None)
+
+        if kwargs:
+            password = kwargs.get('password')
+        if password is not None:
+            m = hashlib.md5()
+            m.update(bytes(password, 'utf-8'))
+            kwargs['password'] = m.hexdigest()
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+        self.save()
