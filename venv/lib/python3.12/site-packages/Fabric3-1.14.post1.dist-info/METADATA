@@ -1,0 +1,48 @@
+Metadata-Version: 2.0
+Name: Fabric3
+Version: 1.14.post1
+Summary: Fabric is a simple, Pythonic tool for remote execution and deployment (py2.7/py3.4+ compatible fork).
+Home-page: https://github.com/mathiasertl/fabric/
+Author: Mathias Ertl
+Author-email: mati@er.tl
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Unix
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: System :: Clustering
+Classifier: Topic :: System :: Software Distribution
+Classifier: Topic :: System :: Systems Administration
+Requires-Dist: paramiko (<3.0,>=2.0)
+Requires-Dist: six (>=1.10.0)
+
+
+Fabric3 is a fork of `Fabric <http://fabfile.org>`_ to provide compatability
+with Python 3.4+. The port still works with Python 2.7.
+
+The goal is to stay 100% compatible with the original Fabric.  Any new releases
+of Fabric will also be released here.  Please file issues for any differences
+you find. Known differences are `documented on github
+<https://github.com/mathiasertl/fabric/>`.
+
+To find out what's new in this version of Fabric, please see `the changelog
+<http://fabfile.org/changelog.html>`_ of the original Fabric.
+
+For more information, please see the Fabric website or execute ``fab --help``.
+
+
