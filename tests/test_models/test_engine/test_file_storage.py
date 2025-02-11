@@ -4,8 +4,13 @@ Contains the TestFileStorageDocs classes
 """
 
 from datetime import datetime
+import json
+import os
+import pep8
+import unittest
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -14,10 +19,8 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
-import pep8
-import unittest
+
+
 FileStorage = file_storage.FileStorage
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -113,3 +116,37 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+class TestFileStorageCount(unittest.TestCase):
+    """Test cases for the count method in FileStorage."""
+
+    @unittest.skipIf(storage.__class__.__name__ != "FileStorage",
+                     "not testing file storage")
+    def test_count_all_objects(self):
+        """Test counting all objects in storage."""
+        initial_count = storage.count()
+        new_state = State(name="Texas")
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(), initial_count + 1)
+
+    @unittest.skipIf(storage.__class__.__name__ != "FileStorage",
+                     "not testing file storage")
+    def test_count_specific_class(self):
+        """Test counting objects of a specific class."""
+        initial_count = storage.count(State)
+        new_state = State(name="Florida")
+        storage.new(new_state)
+        storage.save()
+        self.assertEqual(storage.count(State), initial_count + 1)
+
+    @unittest.skipIf(storage.__class__.__name__ != "FileStorage",
+                     "not testing file storage")
+    def test_count_nonexistent_class(self):
+        """Test counting a class that has no instances."""
+        self.assertEqual(storage.count("InvalidClass"), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

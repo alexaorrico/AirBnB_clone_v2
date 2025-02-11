@@ -1,5 +1,13 @@
-# AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+# AirBnB clone - RESTful API
+The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+
+We will have a complete web application composed by:
+
+* A command interpreter to manipulate data without a visual interface, like in a Shell (perfect for development and debugging)  
+* A website (the front-end) that shows the final product to everybody: static and dynamic  
+* A database or files that store data (data = objects)  
+* An API that provides a communication interface between the front-end and your data (retrieve, create, delete, update them)  
+
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
@@ -7,6 +15,11 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Do operations on objects (count, compute stats, etc...)
 * Update attributes of an object
 * Destroy an object
+
+#### RESTful API:
+* Expose all your objects stored via a JSON web interface  
+* Manipulate your objects via a RESTful API
+
 
 ## Table of Content
 * [Environment](#environment)
@@ -156,6 +169,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Joana Casallas - [Github](https://github.com/joacasallas2) / [Twitter](https://twitter.com/joanacasallas)
 
 Second part of Airbnb: Joann Vuong
 ## License

@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
-from datetime import datetime
+from datetime import datetime, timezone
 import inspect
-import models
 import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
+import models
+from models.base_model import BaseModel
+
 BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
@@ -82,14 +84,14 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
-        tic = datetime.now()
+        tic = datetime.now(timezone.utc)
         inst1 = BaseModel()
-        toc = datetime.now()
+        toc = datetime.now(timezone.utc)
         self.assertTrue(tic <= inst1.created_at <= toc)
         time.sleep(1e-4)
-        tic = datetime.now()
+        tic = datetime.now(timezone.utc)
         inst2 = BaseModel()
-        toc = datetime.now()
+        toc = datetime.now(timezone.utc)
         self.assertTrue(tic <= inst2.created_at <= toc)
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
