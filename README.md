@@ -8,6 +8,8 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Update attributes of an object
 * Destroy an object
 
+#AUTHOR
+Newton Kiprono <newtonkiprono19@gmail.com>
 ## Table of Content
 * [Environment](#environment)
 * [Installation](#installation)
@@ -156,7 +158,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
-
+Newton Kiprono  - [Github](https://github.com/SKNYYYYYYY) 
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
