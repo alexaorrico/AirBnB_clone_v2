@@ -113,3 +113,40 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+
+
+
+        #!/usr/bin/python3
+"""Unittest for FileStorage"""
+import unittest
+from models.engine.file_storage import FileStorage
+from models.state import State
+
+
+class TestFileStorage(unittest.TestCase):
+    """Test the FileStorage class"""
+
+    def setUp(self):
+        """Set up test environment"""
+        self.storage = FileStorage()
+        self.state = State(name="California")
+        self.storage.new(self.state)
+        self.storage.save()
+
+    def test_get(self):
+        """Test retrieving an object"""
+        obj = self.storage.get(State, self.state.id)
+        self.assertEqual(obj, self.state)
+
+    def test_count(self):
+        """Test counting objects"""
+        count = self.storage.count()
+        self.assertGreater(count, 0)
+        state_count = self.storage.count(State)
+        self.assertGreaterEqual(state_count, 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
