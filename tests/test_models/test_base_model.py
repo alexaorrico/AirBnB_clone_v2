@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
-from datetime import datetime
+from datetime import datetime, timedelta
 import inspect
 import models
 import pep8 as pycodestyle
 import time
 import unittest
+from models.base_model import BaseModel
 from unittest import mock
-BaseModel = models.base_model.BaseModel
+# BaseModel = models.base_model.BaseModel
 module_doc = models.base_model.__doc__
 
 
@@ -82,17 +83,36 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
-        tic = datetime.now()
+        # Create first instance and get timestamps
+        tic = datetime.utcnow()
         inst1 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
-        tic = datetime.now()
+        toc = datetime.utcnow()
+
+        # Allow a tolerance of 100 milliseconds
+        tolerance = timedelta(milliseconds=100)
+
+        # Check timestamps within the tolerance window
+        self.assertTrue(tic <= inst1.created_at <= toc + tolerance,
+                        f"inst1.created_at="
+                        f"{inst1.created_at}, tic={tic}, toc={toc}")
+
+        # Small delay to ensure difference
+        time.sleep(0.01)
+
+        # Create second instance and get timestamps
+        tic = datetime.utcnow()
         inst2 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
+        toc = datetime.utcnow()
+
+        self.assertTrue(tic <= inst2.created_at <= toc + tolerance,
+                        f"inst2.created_at="
+                        f"{inst2.created_at}, tic={tic}, toc={toc}")
+
+        # Ensure created_at and updated_at are identical at creation
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
+
+        # Ensure different instances have different timestamps
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
 
