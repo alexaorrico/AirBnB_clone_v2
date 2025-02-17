@@ -79,13 +79,23 @@ class DBStorage:
         self.__session.remove()
     def get(self, cls, id):
         """ Retrieves an object based on the class and its ID """
-        try:
-            return self.session.query(cls).filter_by(id=id).one()
-        except NoResultFound:
-            return None
+        if cls and id:
+            if cls in classes.values() and isinstance(id, str):
+                objects = self.all(cls)
+                for key, value in objects.items():
+                    if key.split('.')[1] == id:
+                        return value
+            else:
+                return
+        return
 
     def count(self, cls=None):
         """ Counts the number of objects in storage matching the class """
-        if cls:
-            return self.session.query(cls).count()
-        return self.session.query(BaseModel).count()
+        if not cls:
+            instance_cls = self.all()
+            return len(instance_cls)
+        if cls in classes.values():
+            instance_cls_pro = self.all(cls)
+            return len(instance_cls_pro)
+        if cls not in classes.value():
+            return
