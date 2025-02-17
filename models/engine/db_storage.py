@@ -2,6 +2,7 @@
 """
 Contains the class DBStorage
 """
+from sqlalchemy.exc import NoResultFound
 
 import models
 from models.amenity import Amenity
@@ -13,8 +14,10 @@ from models.state import State
 from models.user import User
 from os import getenv
 import sqlalchemy
+import pymysql
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+pymysql.install_as_MySQLdb()
 
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -74,3 +77,15 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+    def get(self, cls, id):
+        """ Retrieves an object based on the class and its ID """
+        try:
+            return self.session.query(cls).filter_by(id=id).one()
+        except NoResultFound:
+            return None
+
+    def count(self, cls=None):
+        """ Counts the number of objects in storage matching the class """
+        if cls:
+            return self.session.query(cls).count()
+        return self.session.query(BaseModel).count()
