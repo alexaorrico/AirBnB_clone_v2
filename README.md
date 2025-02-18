@@ -1,5 +1,5 @@
-# AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+# AirBnB Clone - RESTful API
+The RESTful API is the third segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
@@ -8,18 +8,27 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Update attributes of an object
 * Destroy an object
 
+#### New v3 Features:
+* RESTful API endpoints for all existing classes
+* Comprehensive CRUD operations through HTTP methods
+* Enhanced storage engine abstraction
+* Request handling and response formatting
+* Error handling and status codes
+* API documentation
+
 ## Table of Content
 * [Environment](#environment)
 * [Installation](#installation)
 * [File Descriptions](#file-descriptions)
 * [Usage](#usage)
 * [Examples of use](#examples-of-use)
+* [API Documentation](#api-documentation)
 * [Bugs](#bugs)
 * [Authors](#authors)
 * [License](#license)
 
 ## Environment
-This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+This project is interpreted/tested on Ubuntu 20.04 LTS using python3 (version 3.4.3)
 
 ## Installation
 * Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
@@ -156,7 +165,12 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Benjamin Owolabi - [Github](https://github.com/Owolabenjade) / [Twitter](https://twitter.com/ademidowolabi)
 
 Second part of Airbnb: Joann Vuong
+
+## API Documentation
+Documentation for the RESTful API endpoints will be available at `/api/v1/documentation`.
+
 ## License
 Public Domain. No copy write protection. 

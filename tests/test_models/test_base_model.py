@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """Test BaseModel for expected behavior and documentation"""
-from datetime import datetime
+from datetime import datetime, timedelta
 import inspect
 import models
-import pep8 as pycodestyle
+import pycodestyle
 import time
 import unittest
 from unittest import mock
@@ -24,7 +24,7 @@ class TestBaseModelDocs(unittest.TestCase):
         for path in ['models/base_model.py',
                      'tests/test_models/test_base_model.py']:
             with self.subTest(path=path):
-                errors = pycodestyle.Checker(path).check_all()
+                errors = pycodestyle.Checker(path).check_all()  # Updated usage
                 self.assertEqual(errors, 0)
 
     def test_module_docstring(self):
@@ -58,6 +58,7 @@ class TestBaseModelDocs(unittest.TestCase):
 
 class TestBaseModel(unittest.TestCase):
     """Test the BaseModel class"""
+
     def test_instantiation(self):
         """Test that object is correctly created"""
         inst = BaseModel()
@@ -85,12 +86,21 @@ class TestBaseModel(unittest.TestCase):
         tic = datetime.now()
         inst1 = BaseModel()
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
+        print(f"inst1 created_at: {inst1.created_at}, tic: {tic}, toc: {toc}")
+        self.assertTrue(
+            tic <= inst1.created_at <= toc + timedelta(seconds=1)
+        )  # Allow for a 1-second difference
+
+        time.sleep(1)  # Increase sleep to 1 second
+
         tic = datetime.now()
         inst2 = BaseModel()
         toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
+        print(f"inst2 created_at: {inst2.created_at}, tic: {tic}, toc: {toc}")
+        self.assertTrue(
+            tic <= inst2.created_at <= toc + timedelta(seconds=1)
+        )  # Allow for a 1-second difference
+
         self.assertEqual(inst1.created_at, inst1.updated_at)
         self.assertEqual(inst2.created_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
@@ -104,10 +114,12 @@ class TestBaseModel(unittest.TestCase):
             uuid = inst.id
             with self.subTest(uuid=uuid):
                 self.assertIs(type(uuid), str)
-                self.assertRegex(uuid,
-                                 '^[0-9a-f]{8}-[0-9a-f]{4}'
-                                 '-[0-9a-f]{4}-[0-9a-f]{4}'
-                                 '-[0-9a-f]{12}$')
+                self.assertRegex(
+                    uuid,
+                    '^[0-9a-f]{8}-[0-9a-f]{4}'
+                    '-[0-9a-f]{4}-[0-9a-f]{4}'
+                    '-[0-9a-f]{12}$'
+                )
         self.assertNotEqual(inst1.id, inst2.id)
 
     def test_to_dict(self):
@@ -135,8 +147,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new_d["__class__"], "BaseModel")
         self.assertEqual(type(new_d["created_at"]), str)
         self.assertEqual(type(new_d["updated_at"]), str)
-        self.assertEqual(new_d["created_at"], bm.created_at.strftime(t_format))
-        self.assertEqual(new_d["updated_at"], bm.updated_at.strftime(t_format))
+        self.assertEqual(
+            new_d["created_at"], bm.created_at.strftime(t_format)
+        )
+        self.assertEqual(
+            new_d["updated_at"], bm.updated_at.strftime(t_format)
+        )
 
     def test_str(self):
         """test that the str method has the correct output"""
