@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Image Slider</title>
+</head>
+<body>
+    <h1>Click the button to change the images</h1>
+    <button id="nextBtn">Next</button>
+    <button id="prevBtn">Previous</button>
+
+    <img id="DisplayImage" src="https://cdn.pixabay.com/photo/2024/12/12/09/50/animal-9262352_1280.jpg" width="400">
+
+    <!-- ✅ Script at the bottom so it loads after the elements -->
+    <script>
+        // Image array
+        let images = [
+            "https://cdn.pixabay.com/photo/2024/12/12/09/50/animal-9262352_1280.jpg",
+            "https://cdn.pixabay.com/photo/2017/02/11/14/19/valentines-day-2057745_640.jpg",
+            "https://cdn.pixabay.com/photo/2022/01/11/18/46/rose-6931259_1280.jpg"
+        ];
+
+        let index = 0;
+
+        function nextImage() {
+            index = (index + 1) % images.length;
+            document.getElementById("DisplayImage").src = images[index];
+            console.log("Next Image:", images[index]);
+        }
+
+        function previousImage() {
+            index = (index - 1 + images.length) % images.length;
+            document.getElementById("DisplayImage").src = images[index];
+            console.log("Previous Image:", images[index]);
+        }
+
+        // ✅ Attach event listeners after DOM is loaded
+        document.getElementById("nextBtn").addEventListener("click", nextImage);
+        document.getElementById("prevBtn").addEventListener("click", previousImage);
+    </script>
+</body>
+</html>
