@@ -12,12 +12,12 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+           "Place": Place, "Review": Review,
+           "State": State, "User": User}
 
 
 class DBStorage:
@@ -63,6 +63,23 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+
+    def get(self, cls, id):
+        """Returns an object based on its class and id"""
+        if cls not in classes.values():
+            return None
+
+        all_objs = self.all(cls)
+        for obj in all_objs.values():
+            if (obj.id == id):
+                return obj
+
+        return None
+
+    def count(self, cls=None):
+        """count number of objects in storage"""
+        new_dict = self.all(cls)
+        return len(new_dict)
 
     def reload(self):
         """reloads data from the database"""
