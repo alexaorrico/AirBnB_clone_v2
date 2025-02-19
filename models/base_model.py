@@ -59,16 +59,20 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """returns a dictionary containing all keys/values of the instance"""
-        new_dict = self.__dict__.copy()
-        if "created_at" in new_dict:
-            new_dict["created_at"] = new_dict["created_at"].strftime(time)
-        if "updated_at" in new_dict:
-            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
-        return new_dict
+        """
+        Method to return a dictionary representation of the BaseModel instance
+        """
+        dictionary = dict(self.__dict__).copy()
+        dictionary['__class__'] = self.__class__.__name__
+        for key, value in self.__dict__.items():
+            dictionary[key] = value
+            if key == 'created_at' or key == 'updated_at':
+                dictionary[key] = value.isoformat()
+        dictionary.pop('_sa_instance_state', None)
+
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            dictionary.pop('password', None)
+        return dictionary
 
     def delete(self):
         """delete the current instance from the storage"""
