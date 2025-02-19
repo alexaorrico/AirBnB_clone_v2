@@ -1,0 +1,5 @@
+*.pyc
+file.json
+_t
+_.
+__pycache__

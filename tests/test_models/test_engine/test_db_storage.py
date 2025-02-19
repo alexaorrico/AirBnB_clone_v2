@@ -68,8 +68,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage """
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -86,3 +86,30 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_get(self):
+        """TEST the get mothods using cls and id"""
+        storage = DBStorage()
+
+        for k, v in classes.items():
+            tmp = v()
+            key_tmp = tmp.__class__.__name__ + "." + tmp.id
+            storage.new(tmp)
+            with self.subTest(key=k, value=v):
+                self.assertEqual(tmp, storage.get(v, tmp.id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing file storage")
+    def test_count(self):
+        """TEST the count mothods using cls"""
+        storage = DBStorage()
+        c1 = storage.cont()
+        self.assertEqual(int, type(c1))
+        for k, v in classes.items():
+            tmp = v()
+            key_tmp = tmp.__class__.__name__ + "." + tmp.id
+            storage.new(tmp)
+            c1 += 1
+            with self.subTest(key=k, value=v):
+                self.assertEqual(c1, storage.count(tmp.__class__))
+        self.assertEqual(c1, storage.count())

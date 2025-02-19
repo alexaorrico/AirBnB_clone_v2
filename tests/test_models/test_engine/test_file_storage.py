@@ -70,7 +70,7 @@ test_file_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing DB storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -78,7 +78,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(new_dict), dict)
         self.assertIs(new_dict, storage._FileStorage__objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing DB storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
@@ -94,7 +94,7 @@ class TestFileStorage(unittest.TestCase):
                 self.assertEqual(test_dict, storage._FileStorage__objects)
         FileStorage._FileStorage__objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(models.storage_t == 'db', "not testing DB storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
@@ -113,3 +113,33 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing DB storage")
+    def test_get(self):
+        """TEST the get mothods using cls and id"""
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+
+        for k, v in classes.items():
+            tmp = v()
+            key_tmp = tmp.__class__.__name__ + "." + tmp.id
+            storage.new(tmp)
+            with self.subTest(key=k, value=v):
+                self.assertEqual(tmp, storage.get(v, tmp.id))
+        FileStorage._FileStorage__objects = save
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing DB storage")
+    def test_count(self):
+        """TEST the count mothods using cls"""
+        storage = FileStorage()
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = {}
+        for k, v in classes.items():
+            tmp = v()
+            key_tmp = tmp.__class__.__name__ + "." + tmp.id
+            storage.new(tmp)
+            with self.subTest(key=k, value=v):
+                self.assertEqual(1, storage.count(tmp.__class__))
+        self.assertEqual(len(classes), storage.count())
+        FileStorage._FileStorage__objects = save
