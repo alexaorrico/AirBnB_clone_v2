@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# sets up hbnb_dev for the mysql database
+cat setup_mysql_dev.sql | mysql -hlocalhost -uroot -p

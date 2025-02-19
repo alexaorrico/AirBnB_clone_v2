@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# sets up hbnb_test for the mysql database 
+cat setup_mysql_test.sql | mysql -hlocalhost -uroot -p

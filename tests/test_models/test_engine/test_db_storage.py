@@ -85,4 +85,49 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects to the db"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """Test that get retrieves an item in db properly"""
+        from models import storage
+        from models.state import State
+        s1 = State(name='Knoxville')
+        storage.new(s1)
+        id = s1.id
+        self.assertEquals(storage.get(State, id), s1)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """Test that count returns the right number of elements in the db"""
+        from models import storage
+        cnt = len(storage.all())
+        self.assertEquals(storage.count(), cnt)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count_cls(self):
+        """Test that count returns the right number of elements in the db"""
+        from models import storage
+        from models.state import State
+        cnt = len(storage.all(State))
+        self.assertEquals(storage.count(State), cnt)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_no_cls(self):
+        """Test that count returns the right number of elements in the db"""
+        from models import storage
+        from models.state import State
+        s1 = State(name='Knoxville')
+        storage.new(s1)
+        id = s1.id
+        self.assertEquals(storage.get(None, id), None)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get_no_id(self):
+        """Test that count returns the right number of elements in the db"""
+        from models import storage
+        from models.state import State
+        s1 = State(name='Knoxville')
+        storage.new(s1)
+        id = s1.id
+        self.assertEquals(storage.get(State, None), None)
