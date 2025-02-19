@@ -2,8 +2,8 @@
 """ holds class Place"""
 import models
 from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
+# from os import getenv
+
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
@@ -33,7 +33,8 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", backref="place")
+        reviews = relationship("Review", backref="place",
+                               cascade="all, delete")
         amenities = relationship("Amenity", secondary="place_amenity",
                                  backref="place_amenities",
                                  viewonly=False)
@@ -56,7 +57,7 @@ class Place(BaseModel, Base):
 
     if models.storage_t != 'db':
         @property
-        def reviews(self):
+        def reviews_(self):
             """getter attribute returns the list of Review instances"""
             from models.review import Review
             review_list = []
@@ -67,7 +68,7 @@ class Place(BaseModel, Base):
             return review_list
 
         @property
-        def amenities(self):
+        def amenities_(self):
             """getter attribute returns the list of Amenity instances"""
             from models.amenity import Amenity
             amenity_list = []
