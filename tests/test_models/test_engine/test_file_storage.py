@@ -113,3 +113,57 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test that get() gets the right object from file.json"""
+        storage = FileStorage()
+        test_dict = {}
+        instance_key = []
+        i = 0
+        for key, value in classes.items():  # Populate storage with class objs
+            with self.subTest(key=key, value=value):
+                instance = value()
+                instance_key.append(instance.__class__.__name__
+                                    + "."
+                                    + instance.id)
+                storage.new(instance)
+                test_dict[instance_key[i]] = instance  # storage replica dict
+                i += 1
+                self.assertEqual(test_dict, storage._FileStorage__objects)
+        i = 0
+        for key, value in classes.items():  # test all objs saved
+            get_obj = storage.get(value, instance_key[i])
+            cls_obj = test_dict[instance_key[i]]
+            self.assertEqual(get_obj, cls_obj)
+            i += 1
+        # if no class is passed to get()
+        with self.assertRaises(TypeError):
+            storage.get(instance_keys[0])
+        # if a valid class as a string is passed to get()
+        get_obj = storage.get('Amenity', instance_key[0])
+        self.assertIsNotNone(get_obj)
+        # if an invalid/unknown class is passed to get()
+        get_obj = storage.get('Unknown', instance_key[0])
+        self.assertIsNone(get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the no of objs returned by count()"""
+        storage = FileStorage()
+        test_dict = {}
+        instance_key = []
+        i = 0
+        for key, value in classes.items():  # Populate storage with class objs
+            with self.subTest(key=key, value=value):
+                instance = value()
+                instance_key.append(instance.__class__.__name__
+                                    + "."
+                                    + instance.id)
+                storage.new(instance)
+                test_dict[instance_key[i]] = instance  # storage replica dict
+                i += 1
+        # there should be only one object per class
+        total_objs = len(test_dict)
+        total_objs = storage.count()
+        self.assertEqual(total_keys, total_objs)

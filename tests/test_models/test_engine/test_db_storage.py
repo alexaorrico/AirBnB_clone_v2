@@ -68,8 +68,28 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def setUp(self):
+        """ Prepare database for testing"""
+        self.storage = DBStorage()
+        self.test_dict = {}
+        self.instance_key = []
+        for key, value in classes.items():  # Populate storage with class objs
+            with self.subTest(key=key, value=value):
+                instance = value()
+                self.instance_key.append(instance.__class__.__name__
+                                         + "."
+                                         + instance.id)
+                self.storage.new(instance)
+                self.test_dict[instance_key] = instance
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def tearDown(self):
+        """Close database after testing"""
+        self.storage.close()
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -77,7 +97,9 @@ class TestFileStorage(unittest.TestCase):
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+        """Test that all() returns all objects when no class is passed"""
+        all_dict = self.storage.all()
+        self.assertEqual(test_dict, all_dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
@@ -86,3 +108,35 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        self.assertEqual(self.test_dict, self.storage.all())
+        i = o
+        for clss in classes:  # test all objs saved in self.storage
+            get_obj = list(self.storage.get(cls, self.instance_key[i]))
+            cls_obj = self.storage._DBStorage__session.query(classes
+                                                             [clss]).all()
+            self.assertEqual(get_obj, cls_obj)
+            i += 1
+
+        # if no class is passed to get()
+        get_obj = self.storage.get(self.instance_key[0])
+        self.assertIsNone(get_obj)
+        # if a valid class is passed to get() as a string
+        get_obj = self.storage.get('Amenity', self.instance_key[0])
+        cls_obj = self.storage._DBStorage__session.query(classes
+                                                         ['Amenity']).all()
+        self.assertIsNotNone(get_obj)
+        self.assertEqual(get_obj, cls_obj)  # will likely fail
+        # if an invalid/unknown class is passed to get()
+        get_obj = self.storage.get('Unknown', self.instance_key[0])
+        self.assertIsNone(get_obj)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test the no of objs returned by count()"""
+        # there should be only one object per class
+        total_objs = len(self.test_dict)
+        total_objs = self.storage.count()
+        self.assertEqual(total_keys, total_objs)
