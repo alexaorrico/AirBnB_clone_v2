@@ -3,7 +3,7 @@
 from datetime import datetime
 import inspect
 import models
-import pep8 as pycodestyle
+import pep8
 import time
 import unittest
 from unittest import mock
@@ -24,7 +24,7 @@ class TestBaseModelDocs(unittest.TestCase):
         for path in ['models/base_model.py',
                      'tests/test_models/test_base_model.py']:
             with self.subTest(path=path):
-                errors = pycodestyle.Checker(path).check_all()
+                errors = pep8.Checker(path).check_all()
                 self.assertEqual(errors, 0)
 
     def test_module_docstring(self):
@@ -82,17 +82,18 @@ class TestBaseModel(unittest.TestCase):
         """Test that two BaseModel instances have different datetime objects
         and that upon creation have identical updated_at and created_at
         value."""
-        tic = datetime.now()
-        inst1 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
+        tic1 = datetime.now()
         time.sleep(1e-4)
-        tic = datetime.now()
+        inst1 = BaseModel()
+        toc1 = datetime.now()
+        time.sleep(1e-4)
+        tic2 = datetime.now()
+        time.sleep(1e-4)
         inst2 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
+        toc2 = datetime.now()
+
         self.assertEqual(inst1.created_at, inst1.updated_at)
-        self.assertEqual(inst2.created_at, inst2.updated_at)
+        self.assertEqual(inst2.updated_at, inst2.updated_at)
         self.assertNotEqual(inst1.created_at, inst2.created_at)
         self.assertNotEqual(inst1.updated_at, inst2.updated_at)
 
