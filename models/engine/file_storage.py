@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the FileStorage class
+This Module Contains the FileStorage class for all functionality
 """
 
 import json
@@ -68,3 +68,21 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id) -> __class__ | int | None:
+        """returns the object based on it's class and ID, of None if not found
+        Args:
+            cls: class to be returned
+            id:  string representing the object ID class to be returned and none if not exists
+        """
+        if cls in classes.values():
+            return self.__session.query(cls).filter(cls.id == id).first()
+        return None
+
+    def count(self, cls=None):
+        """Counts the number of objects in storage andReturns the number of objects,
+        in storage matching the given class. If no class is passed, returns the count of all objects in storage.
+        Args:
+            cls: class (optional)
+        """
+        return len(self.all(cls))

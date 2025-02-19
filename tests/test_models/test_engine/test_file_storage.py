@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the TestFileStorageDocs classes
+This testModule Contains the TestFileStorageDocs classes for functionalities
 """
 
 from datetime import datetime
@@ -113,3 +113,36 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self, cls, id):
+        """tests the get method properly fro all functionalities"""
+        models.storage.reload()
+        user = User(email="emmanwaliugo@gmail.com", password="123")
+        models.storage.new(user)
+        models.storage.save()
+        user_id = user.id
+        bad_id = "666"
+        self.assertTrue(models.storage.get(User, user_id) is user)
+        self.assertIsNone(models.storage.get(User, bad_id))
+        models.storage.delete(user)
+        state = State(name="Abia")
+        models.storage.new(state)
+        models.storage.save()
+        state_id = State.id
+        bad_id = "sharwarma"
+        self.assertTrue(models.storage.get(State, state_id) is state)
+        self.assertIsNone(models.storage.get(State, bad_id))
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """test the count id it returns accurate number of objects"""
+        models.storage.reload()
+        state = State(name="Abakaliki")
+        user = User(email="ja161612040@gmail.com", password="234")
+        models.storage.new(state)
+        models.storage.new(user)
+        models.storage.save()
+        self.assertEqual(models.storage.count(), 2)
+        models.storage.delete(user)
+        models.storage.delete(state)
