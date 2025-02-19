@@ -1,0 +1,23 @@
+Github Username : popstarmav, LJThao
+
+Review Comments:
+
+1. **PEP8 Conformance**:
+   - The `test_pep8_conformance_db_storage` and `test_pep8_conformance_test_db_storage` methods ensure that both `models/engine/db_storage.py` and `tests/test_models/test_engine/test_db_storage.py` conform to PEP8 standards. Good use of `pycodestyle` for style checking.
+
+2. **Docstring Checks**:
+   - The `test_db_storage_module_docstring` and `test_db_storage_class_docstring` methods verify the presence and length of docstrings for `db_storage.py` and the `DBStorage` class respectively. Ensure all modules and classes have clear docstrings to enhance code readability.
+
+3. **Function Docstrings**:
+   - The `test_dbs_func_docstrings` method checks for docstrings in methods of `DBStorage`. It's essential to provide descriptive docstrings for all functions and methods to clarify their purpose and usage.
+
+4. **Testing Functionality**:
+   - Tests like `test_all_returns_dict`, `test_all_no_class`, `test_new`, and `test_save` validate the functionality of the `DBStorage` class under different scenarios. Consider adding more specific test cases to cover edge cases and ensure comprehensive test coverage.
+
+5. **Code Structure**:
+   - The code structure is clear and follows good separation of concerns by importing necessary modules and organizing tests into appropriate classes (`TestDBStorageDocs` and `TestDBStorage`).
+
+6. **Potential Improvements**:
+   - Consider refactoring tests to use fixtures (`setUp` and `tearDown` methods) instead of class-level setup and teardown (`setUpClass` and `tearDownClass`) where applicable, to improve test isolation and maintainability.
+
+Overall, the code adheres to good practices with room for minor improvements in documentation and test coverage. Well done!
