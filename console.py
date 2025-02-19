@@ -29,7 +29,7 @@ class HBNBCommand(cmd.Cmd):
         """ overwriting the emptyline method """
         return False
 
-    def do_quit(self, arg):
+    def do_q(self, arg):
         """Quit command to exit the program"""
         return True
 
