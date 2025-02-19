@@ -3,7 +3,7 @@
 Contains the TestDBStorageDocs and TestDBStorage classes
 """
 
-from datetime import datetime
+from datetime import datetime  # noqa
 import inspect
 import models
 from models.engine import db_storage
@@ -14,8 +14,9 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
+from models import storage
+import json  # noqa
+import os  # noqa
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
@@ -86,3 +87,25 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get(self):
+        """
+        Test the get method of DBStorage.
+        """
+        new_instance = BaseModel()
+        new_instance.save()
+        self.assertIs(storage.get(BaseModel, new_instance.id), new_instance)
+
+    def test_count(self):
+        """
+        Test the count method of DBStorage.
+        """
+        initial_count = storage.count()
+        new_instance = BaseModel()
+        new_instance.save()
+        self.assertEqual(storage.count(), initial_count + 1)
+        self.assertEqual(storage.count(BaseModel), initial_count + 1)
+
+
+if __name__ == "__main__":
+    unittest.main()
