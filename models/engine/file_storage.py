@@ -3,14 +3,19 @@
 Contains the FileStorage class
 """
 
+import models
 import json
 from models.amenity import Amenity
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from os import getenv
+import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -55,7 +60,7 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception:
             pass
 
     def delete(self, obj=None):
@@ -68,3 +73,19 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """returns object based on the class name"""
+        dict1 = self.all(cls)
+        list1 = dict1.values()
+        for item in list1:
+                if item.id == id:
+                    return item
+        return None
+
+    def count(self, cls=None):
+        """Number of objects in storage matching the class"""
+        if cls is None:
+            return len(self.all())
+        else:
+            return len(self.all(cls))
