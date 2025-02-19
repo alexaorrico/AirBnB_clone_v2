@@ -22,6 +22,17 @@ class State(BaseModel, Base):
         """initializes state"""
         super().__init__(*args, **kwargs)
 
+    def to_json(self):
+        """Converts the State object to a dictionary format"""
+        state_dict = {
+            "id": self.id,
+            "name": self.name,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
+            "__class__": self.__class__.__name__
+        }
+        return state_dict
+
     if models.storage_t != "db":
         @property
         def cities(self):
