@@ -1,0 +1,139 @@
+flasgger endpoint for GET, DELETE, and PUT city object
+---
+tags:
+  - Cities
+parameters:
+  - name: city_id
+    in: path
+    type: string
+    required: true
+    description: The unique id of the city
+responses:
+  200:
+    description: Successful request
+    schema:
+      properties:
+        __class__:
+          type: string
+        created_at:
+          type: string
+          description: time of creation of the instance
+        updated_at:
+           type: string
+           description: time of last update of the instance
+        id:
+          type: string
+          description: The uuid of the instance
+        state_id:
+           type: string
+           description: uuid of the city's state
+        name:
+           type: string
+           description: city name
+  404:
+    description: City not found!
+  400:
+    description: Not a valid JSON
+
+/flasgger endpoint for GET, DELETE, and PUT city object/{city_id}:
+  get:
+    responses:
+      200:
+        description: Successful request
+        schema:
+          properties:
+            __class__:
+              type: string
+            created_at:
+              type: string
+              description: time of creation of the instance
+            updated_at:
+               type: string
+               description: time of last update of the instance
+            id:
+              type: string
+              description: The uuid of the instance
+            state_id:
+               type: string
+               description: uuid of the city's state
+            name:
+               type: string
+               description: city name
+  delete:
+    responses:
+      404:
+        description: City not found!
+      200:
+        description: Request completed successfully
+  put:
+    parameters:
+      - name: update_request
+        in: body
+        required: true
+      - name: city_id
+        in: path
+        type: string
+        required: true
+        description: id of the city
+    responses:
+      404:
+        description: City not found!
+      400:
+        description: Not a valid JSON
+      200:
+        description: Request completed successfully
+
+flasgger endpoint for GET, DELETE, and PUT state object
+---
+tags:
+  - States
+paths:
+  /states/{state_id}:
+    get:
+      parameters:
+        - name: state_id
+          in: path
+          type: string
+          required: true
+          description: The unique id of the state
+      responses:
+        200:
+          description: The objects attributes names and values in JSON format
+          schema:
+            properties:
+              __class__:
+                type: string
+                description: Class name (obj.__class__.__name__)
+              id:
+                type: string
+                description: Unique id of the object
+              name:
+                type: string
+                description: Name attribute of the object
+              created_at:
+                type: string
+                description: Datetime the object instance was created
+              updated_at:
+                type: string
+                description: Datetime the object was updated
+    delete:
+      parameters:
+        - name: state_id
+          in: path
+          type: string
+          required: true
+          description: The unique id of the state
+      responses:
+        404:
+          description: State not found!
+        200:
+          description: Request completed successfully
+    put:
+      parameters:
+        - name: state_id
+          in: path
+          type: string
+          required: true
+          description: The unique state id of the state to update
+        - name: name
+          in: body

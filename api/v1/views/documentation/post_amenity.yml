@@ -1,0 +1,19 @@
+    flasgger endpoint for POST request for users data
+    ---
+    tags:
+      - Amenities
+    parameters:
+      - name: amenity_id
+        in: body
+        required: true
+        requires:
+          - name
+        properties:
+          name:
+            type: string
+
+    responses:
+      400:
+        description: Not a JSON
+      201:
+        description: request executed successfully
