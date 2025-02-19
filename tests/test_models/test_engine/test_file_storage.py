@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -69,6 +70,16 @@ test_file_storage.py'])
 
 
 class TestFileStorage(unittest.TestCase):
+    @classmethod
+    def setUp(self):
+        """Set up MySQLdb"""
+        storage.reload()
+
+    @classmethod
+    def tearDown(self):
+        """Tear down storage"""
+        storage.close()
+
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
@@ -113,3 +124,35 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get_fs(self):
+        """returns the object based on the class
+        name and its ID, or None if not found"""
+        storage = FileStorage()
+        s = State()
+        s.save()
+        found = storage.get(State, s.id)
+        self.assertEqual(s, found)
+        self.assertIs(s, found)
+        self.assertIs(None, storage.get(State, "bad id"))
+        self.assertIs(None, storage.get("Bad Class", s.id))
+        s.delete()
+
+        @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+        def test_count_fs(self):
+            """returns the number of objects in
+            storage matching the given class name. If no name is
+            passed, returns the count of all objects in storage."""
+            storage = FileStorage()
+            count_state = storage.count(State)
+            count_all = storage.count()
+            s = State(name='Y')
+            s.save()
+            a = Amenity(name='Z')
+            a.save()
+            self.assertEqual(storage.count("bad state"), 0)
+            self.assertEqual(storage.count(State), count_state + 1)
+            self.assertEqual(storage.count(), count_all + 2)
+            s.delete()
+            a.delete()

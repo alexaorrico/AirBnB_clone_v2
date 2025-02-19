@@ -1,0 +1,6 @@
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Ignore ~ files
+*.pyc
