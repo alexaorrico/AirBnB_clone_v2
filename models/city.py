@@ -1,24 +1,34 @@
-#!/usr/bin/python
-""" holds class City"""
-import models
+#!/usr/bin/python3
+"""
+City Class from Module
+"""
+import os
 from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, ForeignKey
+import models
 
+# Determine the storage type
+storage_type = os.getenv('HBNB_TYPE_STORAGE')
 
 class City(BaseModel, Base):
-    """Representation of city """
-    if models.storage_t == "db":
+    """City class handles all cities"""
+    
+    if storage_type == "db":
         __tablename__ = 'cities'
-        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
-        places = relationship("Place", backref="cities")
+        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+        places = relationship('Place', backref='cities', cascade='delete')
     else:
-        state_id = ""
-        name = ""
+        name = ''
+        state_id = ''
 
-    def __init__(self, *args, **kwargs):
-        """initializes city"""
-        super().__init__(*args, **kwargs)
+    if storage_type != 'db':
+        @property
+        def places(self):
+            """
+            Getter for places when using file storage
+            :return: List of Place instances related to this City instance
+            """
+            all_places = models.storage.all("Place")
+            return [place for place in all_places.values() if place.city_id == self.id]
