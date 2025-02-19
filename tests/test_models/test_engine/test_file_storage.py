@@ -113,3 +113,67 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Tests for the get method"""
+        storage = FileStorage()
+        # Creating a sample object and adding it to storage
+        obj = BaseModel()
+        obj_id = obj.id
+        storage.new(obj)
+
+        # Testing if get returns the correct object
+        retrieved_obj = storage.get(
+            BaseModel,
+            obj_id)
+        self.assertEqual(
+            retrieved_obj,
+            obj,
+            "get() should return the correct object based on class and ID")
+
+        # Testing if get returns None for non-existing ID
+        non_existent_obj = storage.get(BaseModel, "non-existent-id")
+        self.assertIsNone(
+            non_existent_obj,
+            "get() should return None for a non-existent ID")
+
+        # Testing if get returns None for non-existing class
+        non_existent_class_obj = storage.get(Amenity, obj_id)
+        self.assertIsNone(
+            non_existent_class_obj,
+            "get() should return None for a non-existent class")
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test for the count method"""
+        storage = FileStorage()
+
+        # Clear all objects and add a known number of objects for testing
+        storage._FileStorage__objects = {}
+        initial_count = len(storage.all())
+
+        # Creating new objects
+        for _ in range(5):
+            obj = User()
+            storage.new(obj)
+
+        # Test count for all objects
+        self.assertEqual(
+            storage.count(),
+            initial_count + 5,
+            "count() should return the total number of objects in storage")
+
+        # Test count for a specific class
+        self.assertEqual(
+            storage.count(User),
+            5,
+            "count() should return\
+            the number of User instances")
+
+        # Test count for a class with no objects
+        self.assertEqual(
+            storage.count(State),
+            0,
+            "count() should return 0 for a\
+            class with no instances")
