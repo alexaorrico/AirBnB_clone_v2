@@ -68,21 +68,88 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+class TestDBStorageMethods(unittest.TestCase):
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
+    def setUp(self):
+        """Set up a DBStorage instance for testing."""
+        self.storage = DBStorage()
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
+    def tearDown(self):
+        """Clean up after each test."""
+        self.storage.close()
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+    def test_get_existing_object(self):
+        """Test getting an existing object."""
+        # Create a new State object
+        state = State(name="Test State")
+        state.save()
+
+
+
+class TestDBStorageCount(unittest.TestCase):
+    """Test the count method in the DBStorage class"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+        # Get the object by its ID
+        retrieved_state = self.storage.get(State, state.id)
+
+        # Check that the retrieved object matches the original
+        self.assertEqual(retrieved_state.id, state.id)
+        self.assertEqual(retrieved_state.name, state.name)
+
+    def test_get_nonexistent_object(self):
+        """Test getting a nonexistent object."""
+        # Get an object with an ID that doesn't exist
+        nonexistent_state = self.storage.get(State, "nonexistent_id")
+
+        # Check that None is returned
+        self.assertIsNone(nonexistent_state)
+
+    def test_count_all_objects(self):
+        """Test counting all objects in storage."""
+        # Create some objects for testing
+        State(name="State 1").save()
+        State(name="State 2").save()
+        State(name="State 3").save()
+
+        # Count all objects
+        count = self.storage.count()
+
+        # Check that the count matches the number of created objects
+        self.assertEqual(count, 3)
+
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_count_objects_of_specific_class(self):
+        """Test counting objects of a specific class"""
+        storage = DBStorage()
+        count = storage.count("Amenity")
+        self.assertIsInstance(count, int)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_count_objects_of_non_existing_class(self):
+        """Test counting objects of a non-existing class"""
+        storage = DBStorage()
+        count = storage.count("NonExistingClass")
+        self.assertEqual(count, 0)
+
+    def test_count_objects_of_specific_class(self):
+        """Test counting objects of a specific class."""
+        # Create some objects for testing
+        State(name="State 1").save()
+        State(name="State 2").save()
+        BaseModel().save()  # Create an object of a different class
+
+        # Count objects of the State class
+        count = self.storage.count(State)
+
+        # Check that the count matches the number of created State objects
+        self.assertEqual(count, 2)
+
+
+
+if __name__ == '__main__':
+    unittest.main()
