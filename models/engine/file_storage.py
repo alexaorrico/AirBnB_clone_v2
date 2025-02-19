@@ -3,6 +3,7 @@
 Contains the FileStorage class
 """
 
+
 import json
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -11,6 +12,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -24,6 +26,7 @@ class FileStorage:
     # dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
+
     def all(self, cls=None):
         """returns the dictionary __objects"""
         if cls is not None:
@@ -34,11 +37,13 @@ class FileStorage:
             return new_dict
         return self.__objects
 
+
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
             key = obj.__class__.__name__ + "." + obj.id
             self.__objects[key] = obj
+
 
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
@@ -48,6 +53,7 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump(json_objects, f)
 
+
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
@@ -55,8 +61,10 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
+        except Exception as e:
+            print(f"An error occurred: {e}")
             pass
+
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -65,6 +73,27 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
 
+
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """Fetch an object based on class and identifier."""
+        if cls is not None and isinstance(cls, str) and id is not None and \
+           isinstance(id, str) and cls in classes:
+            identifier = f"{cls}.{id}"
+            result = self.__objects.get(identifier, None)
+            return result
+        else:
+            return None
+
+
+    def count(self, cls=None):
+        """Count number of objects in storage"""
+        total = 0
+        if type(cls) == str and cls in classes:
+            total = len(self.all(cls))
+        elif cls is None:
+            total = len(self.__objects)
+        return total
