@@ -151,11 +151,54 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 
 ## Bugs
-No known bugs at this time. 
+- Pep8 bug
+Pep8 contains an error:
+```sh
+
+python3 -m unittest discover tests 2>&1 | tee >(tail)
+/home/stevecmd/ALX/venv/lib/python3.12/site-packages/pep8.py:110: FutureWarning: Possible nested set at position 1
+  EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[[({] | []}),;:]')
+.........................................ssss...............................................................
+----------------------------------------------------------------------
+Ran 108 tests in 0.198s
+
+OK (skipped=4)
+{'id': '82f04bd2-fd5c-4964-a6d8-212592c9dc8e', 'created_at': datetime.datetime(2024, 8, 3, 6, 25, 46, 337932, tzinfo=datetime.timezone.utc), 'updated_at': datetime.datetime(2024, 8, 3, 6, 25, 46, 337932, tzinfo=datetime.timezone.utc)}
+/home/stevecmd/ALX/venv/lib/python3.12/site-packages/pep8.py:110: FutureWarning: Possible nested set at position 1
+  EXTRANEOUS_WHITESPACE_REGEX = re.compile(r'[[({] | []}),;:]')
+.........................................ssss...............................................................
+----------------------------------------------------------------------
+Ran 108 tests in 0.198s
+
+OK (skipped=4)
+{'id': '82f04bd2-fd5c-4964-a6d8-212592c9dc8e', 'created_at': datetime.datetime(2024, 8, 3, 6, 25, 46, 337932, tzinfo=datetime.timezone.utc), 'updated_at': datetime.datetime(2024, 8, 3, 6, 25, 46, 337932, tzinfo=datetime.timezone.utc)}
+
+```
+To avoid seeing the error use:
+```sh
+
+python3 -W ignore::FutureWarning -m unittest discover tests 2>&1 | tee >(tail)
+.........................................ssss...............................................................
+----------------------------------------------------------------------
+Ran 108 tests in 0.197s
+
+OK (skipped=4)
+{'id': 'ad794c38-43e5-4253-b1bc-ab10c3292c8b', 'created_at': datetime.datetime(2024, 8, 3, 6, 29, 2, 329530, tzinfo=datetime.timezone.utc), 'updated_at': datetime.datetime(2024, 8, 3, 6, 29, 2, 329530, tzinfo=datetime.timezone.utc)}
+.........................................ssss...............................................................
+----------------------------------------------------------------------
+Ran 108 tests in 0.197s
+
+OK (skipped=4)
+{'id': 'ad794c38-43e5-4253-b1bc-ab10c3292c8b', 'created_at': datetime.datetime(2024, 8, 3, 6, 29, 2, 329530, tzinfo=datetime.timezone.utc), 'updated_at': datetime.datetime(2024, 8, 3, 6, 29, 2, 329530, tzinfo=datetime.timezone.utc)}
+
+```
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico) <br />
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang) <br />
+Patrick Odhiambo - [Github](https://github.com/patty6339) / [Twitter](https://twitter.com/patwafx) <br />
+Steve Murimi - [Github](https://github.com/Stevecmd) / [Twitter](https://twitter.com/stevedevex)
+<br />
 
 Second part of Airbnb: Joann Vuong
 ## License

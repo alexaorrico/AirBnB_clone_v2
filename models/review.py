@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """ holds class Review"""
-import models
-from models.base_model import BaseModel, Base
 from os import getenv
+import models
 import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, ForeignKey, String
 
 
 class Review(BaseModel, Base):
@@ -22,3 +22,7 @@ class Review(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes Review"""
         super().__init__(*args, **kwargs)
+
+    def __str__(self):
+        """Returns a string representation of the Review instance"""
+        return "[Review] ({}) {}".format(self.id, self.__dict__)

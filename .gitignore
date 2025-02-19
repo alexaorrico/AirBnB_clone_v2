@@ -1,0 +1,12 @@
+myvenv/*
+models/__pycache__/*
+tests/test_models/__pycache__/*
+tests/test_models/test_engine/__pycache__/*
+models/engine/__pycache__/*
+tests/__pycache__/*
+__pycache__/*
+file.json
+test_output.log
+*.pyc
+add_states.py
+

@@ -1,0 +1,26 @@
+Starting a python env named myvenv:
+```sh
+python -m venv myvenv
+source myvenv/bin/activate
+deactivate
+```
+
+To set an empty password for the MySQL root user, follow these steps:
+Log in to MySQL as the root user using sudo:
+sudo mysql -u root
+
+Switch to the mysql database:
+USE mysql;
+
+Update the authentication method for the root user to use the mysql_native_password plugin and set an empty password:
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+
+Flush the privileges to ensure that the changes take effect:
+FLUSH PRIVILEGES;
+
+Exit the MySQL shell:
+EXIT;
+
+Run the cat command again with the updated root user credentials:
+cat 7-dump.sql | mysql -u root --password=""
+cat 7-dump.sql | mysql -u root -p

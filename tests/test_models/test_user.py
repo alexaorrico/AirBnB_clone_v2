@@ -6,10 +6,10 @@ Contains the TestUserDocs classes
 from datetime import datetime
 import inspect
 import models
-from models import user
-from models.base_model import BaseModel
 import pep8
 import unittest
+from models import user
+from models.base_model import BaseModel
 User = user.User
 
 
@@ -110,7 +110,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in u.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 

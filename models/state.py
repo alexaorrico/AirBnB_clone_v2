@@ -1,22 +1,21 @@
 #!/usr/bin/python3
 """ holds class State"""
+from os import getenv
 import models
+import sqlalchemy
 from models.base_model import BaseModel, Base
 from models.city import City
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
     """Representation of state """
+    __tablename__ = 'states'
+    name = Column(String(128), nullable=False)
+
     if models.storage_t == "db":
-        __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")
-    else:
-        name = ""
 
     def __init__(self, *args, **kwargs):
         """initializes state"""
@@ -32,3 +31,7 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     city_list.append(city)
             return city_list
+
+    def __str__(self):
+        """Returns a string representation of the State instance"""
+        return "[State] ({}) {}".format(self.id, self.__dict__)

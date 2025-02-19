@@ -3,7 +3,9 @@
 Contains the class DBStorage
 """
 
+from os import getenv
 import models
+import sqlalchemy
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -11,13 +13,17 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
+classes = {
+    "Amenity": Amenity,
+    "City": City,
+    "Place": Place,
+    "Review": Review,
+    "State": State,
+    "User": User
+}
 
 
 class DBStorage:
@@ -74,3 +80,35 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """
+        Returns the object based on the class name and its ID, or None if not
+        found
+        """
+        cls_name = cls.__name__ if isinstance(cls, type) else cls
+        if cls_name not in classes:
+            return None
+        objects = self.__session.query(classes[cls_name])
+        for obj in objects:
+            if obj.id == id:
+                return obj
+        return None
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage matching the given class name.
+        If no name is passed, returns the count of all objects in storage.
+        """
+        nobjects = 0
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                nobjects += len(self.__session.query(classes[clss]).all())
+        return nobjects
+
+    # def drop_all_tables(self):
+    #     """Drops all tables in the database"""
+    #     for clss in classes.values():
+    #         self.__engine.execute(
+    #             f"DROP TABLE IF EXISTS {clss.__tablename__} CASCADE"
+    #         )

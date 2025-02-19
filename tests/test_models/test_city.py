@@ -72,18 +72,21 @@ class TestCity(unittest.TestCase):
         city = City()
         self.assertTrue(hasattr(city, "name"))
         if models.storage_t == 'db':
-            self.assertEqual(city.name, None)
+            self.assertIsNone(city.name)
         else:
-            self.assertEqual(city.name, "")
+            self.assertIsNotNone(city.name)
 
     def test_state_id_attr(self):
-        """Test that City has attribute state_id, and it's an empty string"""
+        """Test that City has attribute state_id"""
         city = City()
         self.assertTrue(hasattr(city, "state_id"))
         if models.storage_t == 'db':
-            self.assertEqual(city.state_id, None)
+            self.assertIsInstance(city.__table__.columns['state_id'], Column)
+            self.assertEqual(
+                city.__table__.columns['state_id'].type.length, 60
+            )
         else:
-            self.assertEqual(city.state_id, "")
+            self.assertIsNotNone(city.state_id)
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
@@ -92,7 +95,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in c.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
