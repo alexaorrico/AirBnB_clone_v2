@@ -20,6 +20,7 @@ classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
+
 class DBStorage:
     """interaacts with the MySQL database"""
     __engine = None
@@ -74,3 +75,15 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """Retrieve one object using SQLAlchemy query"""
+        if cls and id:
+            return self.__session.query(cls).get(id)
+        return None
+
+    def count(self, cls=None):
+        """Count the number of objects in storage using SQLAlchemy query"""
+        if cls:
+            return self.__session.query(cls).count()
+        return sum(self.__session.query(cls).count() for cls in models.classes.values())
