@@ -47,69 +47,97 @@ test_file_storage.py'])
 
     def test_file_storage_module_docstring(self):
         """Test for the file_storage.py module docstring"""
-        self.assertIsNot(file_storage.__doc__, None,
+        self.assertIsNot(file_storage._doc_, None,
                          "file_storage.py needs a docstring")
-        self.assertTrue(len(file_storage.__doc__) >= 1,
+        self.assertTrue(len(file_storage._doc_) >= 1,
                         "file_storage.py needs a docstring")
 
     def test_file_storage_class_docstring(self):
         """Test for the FileStorage class docstring"""
-        self.assertIsNot(FileStorage.__doc__, None,
-                         "FileStorage class needs a docstring")
-        self.assertTrue(len(FileStorage.__doc__) >= 1,
-                        "FileStorage class needs a docstring")
+        self.assertIsNot(FileStorage._doc_, None,
+                         "State class needs a docstring")
+        self.assertTrue(len(FileStorage._doc_) >= 1,
+                        "State class needs a docstring")
 
     def test_fs_func_docstrings(self):
         """Test for the presence of docstrings in FileStorage methods"""
         for func in self.fs_f:
-            self.assertIsNot(func[1].__doc__, None,
+            self.assertIsNot(func[1]._doc_, None,
                              "{:s} method needs a docstring".format(func[0]))
-            self.assertTrue(len(func[1].__doc__) >= 1,
+            self.assertTrue(len(func[1]._doc_) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
         new_dict = storage.all()
         self.assertEqual(type(new_dict), dict)
-        self.assertIs(new_dict, storage._FileStorage__objects)
+        self.assertIs(new_dict, storage.FileStorage_objects)
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
-        save = FileStorage._FileStorage__objects
-        FileStorage._FileStorage__objects = {}
+        save = FileStorage.FileStorage_objects
+        FileStorage.FileStorage_objects = {}
         test_dict = {}
         for key, value in classes.items():
             with self.subTest(key=key, value=value):
                 instance = value()
-                instance_key = instance.__class__.__name__ + "." + instance.id
+                instance_key = instance._class.name_ + "." + instance.id
                 storage.new(instance)
                 test_dict[instance_key] = instance
-                self.assertEqual(test_dict, storage._FileStorage__objects)
-        FileStorage._FileStorage__objects = save
+                self.assertEqual(test_dict, storage.FileStorage_objects)
+        FileStorage.FileStorage_objects = save
 
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
         storage = FileStorage()
         new_dict = {}
         for key, value in classes.items():
             instance = value()
-            instance_key = instance.__class__.__name__ + "." + instance.id
+            instance_key = instance._class.name_ + "." + instance.id
             new_dict[instance_key] = instance
-        save = FileStorage._FileStorage__objects
-        FileStorage._FileStorage__objects = new_dict
+        save = FileStorage.FileStorage_objects
+        FileStorage.FileStorage_objects = new_dict
         storage.save()
-        FileStorage._FileStorage__objects = save
+        FileStorage.FileStorage_objects = save
         for key, value in new_dict.items():
             new_dict[key] = value.to_dict()
         string = json.dumps(new_dict)
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
+    def test_get(self):
+        """Test that the get method properly retrievs objects"""
+        storage = FileStorage()
+        self.assertIs(storage.get("User", "blah"), None)
+        self.assertIs(storage.get("blah", "blah"), None)
+        new_user = User()
+        new_user.save()
+        self.assertIs(storage.get("User", new_user.id), new_user)
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
+    def test_count(self):
+        storage = FileStorage()
+        initial_length = len(storage.all())
+        self.assertEqual(storage.count(), initial_length)
+        state_len = len(storage.all("State"))
+        self.assertEqual(storage.count("State"), state_len)
+        new_state = State()
+        new_state.save()
+        self.assertEqual(storage.count(), initial_length + 1)
+        self.assertEqual(storage.count("State"),  state_len + 1)
