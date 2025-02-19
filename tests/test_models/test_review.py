@@ -8,8 +8,11 @@ import inspect
 import models
 from models import review
 from models.base_model import BaseModel
-import pep8
 import unittest
+from unittest.mock import patch
+from io import StringIO
+import pep8
+import os
 Review = review.Review
 
 
@@ -19,6 +22,13 @@ class TestReviewDocs(unittest.TestCase):
     def setUpClass(cls):
         """Set up for the doc tests"""
         cls.review_f = inspect.getmembers(Review, inspect.isfunction)
+
+    def test_pep8(self):
+        case = '\n'
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            with os.popen("pep8 tests/test_models/test_user.py") as cmd:
+                print(cmd.read())
+        self.assertEqual(fake_out.getvalue(), case)
 
     def test_pep8_conformance_review(self):
         """Test that models/review.py conforms to PEP8."""
