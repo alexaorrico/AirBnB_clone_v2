@@ -1,0 +1,6 @@
+# Ignoring the pyc folders
+__pycache__/
+venv/
+
+# Ignoring the storage file
+file_store.json
