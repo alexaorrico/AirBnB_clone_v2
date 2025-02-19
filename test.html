@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Apply JavaScript example</title>
+  </head>
+  <body>
+    <div id="divTest">
+	<b>Test</b>
+	<input type="text" id="txtTest" name="txtTest" value="Input field" />
+</div>
+
+<script type="text/javascript">
+$(function()
+{
+	alert("Text: " + $("#divTest").text());
+	alert("HTML: " + $("#divTest").html());
+	alert("Value: " + $("#divTest").val());
+	
+	alert("Text: " + $("#txtTest").text());
+	alert("HTML: " + $("#txtTest").html());
+	alert("Value: " + $("#txtTest").val());
+});
+</script>
+  </body>
+</html>
