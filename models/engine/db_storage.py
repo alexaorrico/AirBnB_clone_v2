@@ -74,3 +74,74 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+
+        #!/usr/bin/python3
+"""Database Storage"""
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import create_engine
+from models.base_model import Base
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+import os
+
+
+class DBStorage:
+    """Database storage engine"""
+    __engine = None
+    __session = None
+
+    def __init__(self):
+        """Initialize the engine"""
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            os.getenv('HBNB_MYSQL_USER'),
+            os.getenv('HBNB_MYSQL_PWD'),
+            os.getenv('HBNB_MYSQL_HOST'),
+            os.getenv('HBNB_MYSQL_DB')),
+            pool_pre_ping=True)
+
+        if os.getenv('HBNB_ENV') == 'test':
+            Base.metadata.drop_all(self.__engine)
+
+    def all(self, cls=None):
+        """Query all objects or specific class"""
+        if cls:
+            return {obj.id: obj for obj in self.__session.query(cls).all()}
+        else:
+            objects = {}
+            for cls in [State, City, User, Place, Review, Amenity]:
+                for obj in self.__session.query(cls).all():
+                    objects[obj.id] = obj
+            return objects
+
+    def new(self, obj):
+        """Add new object"""
+        self.__session.add(obj)
+
+    def save(self):
+        """Commit changes to database"""
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """Delete an object"""
+        if obj:
+            self.__session.delete(obj)
+
+    def reload(self):
+        """Reload session"""
+        Base.metadata.create_all(self.__engine)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        self.__session = scoped_session(session_factory)
+
+    def get(self, cls, id):
+        """Retrieve one object by class and ID"""
+        return self.__session.query(cls).filter_by(id=id).first()
+
+    def count(self, cls=None):
+        """Count number of objects in storage"""
+        return len(self.all(cls))
+

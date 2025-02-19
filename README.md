@@ -156,7 +156,12 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Ibrahim Tijani - [Github](https://github.com/teebabs521) / [Twitter](https://twitter.com/teejayibrahim)
 
+## What's New in v3 by Ibrahim Tijani?
+- Improved API functionality
+- Optimized database queries
+- Bug fixes and performance improvements
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
