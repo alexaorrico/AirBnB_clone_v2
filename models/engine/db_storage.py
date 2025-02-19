@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the class DBStorage
+Contains the class DBStorage trying to understand pull request
 """
 
 import models
@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """interaacts with the MySQL database"""
+    """interacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -49,7 +49,7 @@ class DBStorage:
                 for obj in objs:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
-        return (new_dict)
+        return new_dict
 
     def new(self, obj):
         """add the object to the current database session"""
@@ -69,8 +69,31 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = Session()
 
     def close(self):
         """call remove() method on the private session attribute"""
-        self.__session.remove()
+        self.__session.close()
+
+    def get(self, cls, id):
+        """get:
+        retrieves an object from the file storage by class ID.
+        """
+        if cls and id:
+            if cls in classes.values() and isinstance(id, str):
+                all_objects = self.all(cls)
+                for key, value in all_objects.items():
+                    if key.split('.')[1] == id:
+                        return value
+            else:
+                return None
+        return None
+
+    def count(self, cls=None):
+        """ count:
+        count the number of objects in storage
+        """
+        if cls is None:
+            return len(self.all())
+        else:
+            return len(self.all(cls))
