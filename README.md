@@ -1,5 +1,88 @@
+<img src="hbnb.png" alt="AirBnB Clone" height="100%" >
+
+# AirBnB Clone v3
+
+This is the third version of the AirBnB clone project. After the first two versions that focused on creating a command line interface and a web server, we are now adding a RESTful API to the project. This API will allow us to interact with the data in the database. We will be able to create, update, delete, and view data in the database. We will also be able to view data in the database in different formats, such as JSON.
+
+<img src="https://camo.githubusercontent.com/d16c33f5026cf57b58cfce12282bf28a5b9efad867e7d4eed507e3a3fac3bdbc/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f696e7472616e65742d70726f6a656374732d66696c65732f636f6e63657074732f37342f68626e625f73746570342e706e67" alt="AirBnB Clone" height="100%" >
+
+## Table of Content
+* [Environment](#environment)
+* [Installation](#installation)
+* [AirBnB Clone - RESTful API](#airbnb-clone---restful-api)
+* [AirBnB Clone - The Console](#airbnb-clone---the-console)
+* [Examples of use](#examples-of-use)
+* [Bug](#bugs)
+* [Authors](#authors)
+* [License](#license)
+
+
+## Environment
+This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+
+**Environment variables:**
+* `HBNB_ENV` - running environment. It can be `dev | test` for the moment.
+* `HBNB_MYSQL_USER` - the username of your MySQL user.
+* `HBNB_MYSQL_PWD` - the password of your MySQL user.
+* `HBNB_MYSQL_HOST` - the hostname of your MySQL server (`localhost` by default).
+* `HBNB_MYSQL_DB` - the name of your MySQL database.
+* `HBNB_TYPE_STORAGE` - the type of storage used. It can be `file` (using `FileStorage`) or `db` (using `DBStorage`).
+* `HBNB_API_PORT` - the port number of the API. It is `5000` by default.
+* `HBNB_API_HOST` - the host of the API (`localhost` by default).
+
+
+
+## Installation
+
+* Clone this repository: `https://github.com/gichobih/AirBnB_clone_v3.git`
+* Access AirBnb directory: `cd AirBnB_clone_v3`
+* Run hbnb(interactively): `./console.py` and enter command
+* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
+* Run API: `./api/v1/app.py` the API will be available at `http://localhost:5000/`
+
+# AirBnB Clone - RESTful API
+
+The RESTful API is the objective of this repository. The API will allow us to interact with the data in the database using CRUD operations (Create, Read, Update, Delete).
+
+#### Functionalities of this RESTful API:
+* Create a new object (ex: a new User or a new Place)
+* Retrieve an object from a file, a database etc...
+* Do operations on objects (count, compute stats, etc...)
+* Update attributes of an object
+* Destroy an object
+* Retrieve all objects of a class
+* Retrieve an object by its ID
+* Update an object
+
+
+## File Descriptions
+
+#### `/api/v1` directory contains the API:
+[/api/v1/app.py](/api/v1/app.py) - Contains the Flask application that handles the API routes and error handling
+
+#### `/api/v1/views` directory contains the views for the API:
+[/api/v1/views/index.py](/api/v1/views/index.py) - Contains the index view that returns a JSON representation of the API status
+* `def status()` - Returns a JSON representation of the API status
+
+[/api/v1/views/states.py](/api/v1/views/states.py) - Contains the views for State objects that handles all default RestFul API actions
+* `def get_states()` - Retrieves the list of all State objects
+* `def get_state(state_id)` - Retrieves a State object
+* `def delete_state(state_id)` - Deletes a State object
+* `def create_state()` - Creates a State object
+* `def update_state(state_id)` - Updates a State object
+
+[/api/v1/views/cities.py](/api/v1/views/cities.py) - Contains the views for City objects that handles all default RestFul API actions
+* `def get_cities(state_id)` - Retrieves the list of all City objects of a State
+* `def get_city(city_id)` - Retrieves a City object
+* `def delete_city(city_id)` - Deletes a City object
+* `def create_city(state_id)` - Creates a City object
+* `def update_city(city_id)` - Updates a City object
+
+
+
 # AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+
+The console was the first segment of the AirBnB project at Holberton School that has collectively cover fundamental concepts of higher level programming.
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
@@ -8,24 +91,6 @@ The console is the first segment of the AirBnB project at Holberton School that 
 * Update attributes of an object
 * Destroy an object
 
-## Table of Content
-* [Environment](#environment)
-* [Installation](#installation)
-* [File Descriptions](#file-descriptions)
-* [Usage](#usage)
-* [Examples of use](#examples-of-use)
-* [Bugs](#bugs)
-* [Authors](#authors)
-* [License](#license)
-
-## Environment
-This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
-
-## Installation
-* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
-* Run hbnb(interactively): `./console` and enter command
-* Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
 ## File Descriptions
 [console.py](console.py) - the console contains the entry point of the command interpreter. 
@@ -128,6 +193,8 @@ TestBaseModel class:
 
 
 ## Examples of use
+
+### AirBnB Console
 ```
 vagrantAirBnB_clone$./console.py
 (hbnb) help
@@ -150,12 +217,36 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+### AirBnB API
+```
+user@host: cd AirBnB_clone_v3
+user@host: python3 -m api.v1.app
+ * Serving Flask app 'app'
+ * Debug mode: off
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.X.X:5000
+Press CTRL+C to quit
+```
+
+in another terminal:
+```
+user@host: curl -X GET http://0.0.0.0:5000/api/v1/status
+{
+  "status": "OK"
+}
+```
+
+
 ## Bugs
 No known bugs at this time. 
 
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)  
+Dennis Murimi - [Github](https://github.com/gichobih)  
+Ahmed Amine Nouabi - [Github](https://github.com/amineNouabi)  
+
 
 Second part of Airbnb: Joann Vuong
 ## License

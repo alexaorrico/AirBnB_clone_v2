@@ -14,11 +14,10 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
+
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
 
@@ -68,21 +67,40 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
+@unittest.skipIf(models.storage_t != 'db', "Tests only for db storage")
+class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
         self.assertIs(type(models.storage.all()), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    def test_get_db(self):
+        """ Tests method for obtaining an instance db storage"""
+        dic = {"name": "Cundinamarca"}
+        instance = State(**dic)
+        models.storage.new(instance)
+        models.storage.save()
+        get_instance = models.storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
+
+    def test_count(self):
+        """ Tests count method db storage """
+        dic = {"name": "Vecindad"}
+        state = State(**dic)
+        models.storage.new(state)
+        dic = {"name": "Mexico", "state_id": state.id}
+        city = City(**dic)
+        models.storage.new(city)
+        models.storage.save()
+        c = models.storage.count()
+        self.assertEqual(len(models.storage.all()), c)
