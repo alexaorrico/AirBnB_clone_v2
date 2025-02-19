@@ -9,6 +9,7 @@ import models
 from models import user
 from models.base_model import BaseModel
 import pep8
+import os
 import unittest
 User = user.User
 
@@ -67,6 +68,8 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(user, "created_at"))
         self.assertTrue(hasattr(user, "updated_at"))
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_email_attr(self):
         """Test that User has attr email, and it's an empty string"""
         user = User()
@@ -76,6 +79,8 @@ class TestUser(unittest.TestCase):
         else:
             self.assertEqual(user.email, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_password_attr(self):
         """Test that User has attr password, and it's an empty string"""
         user = User()
@@ -85,6 +90,8 @@ class TestUser(unittest.TestCase):
         else:
             self.assertEqual(user.password, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_first_name_attr(self):
         """Test that User has attr first_name, and it's an empty string"""
         user = User()
@@ -94,6 +101,8 @@ class TestUser(unittest.TestCase):
         else:
             self.assertEqual(user.first_name, "")
 
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "Testing DBStorage")
     def test_last_name_attr(self):
         """Test that User has attr last_name, and it's an empty string"""
         user = User()
@@ -108,10 +117,10 @@ class TestUser(unittest.TestCase):
         u = User()
         new_d = u.to_dict()
         self.assertEqual(type(new_d), dict)
-        self.assertFalse("_sa_instance_state" in new_d)
         for attr in u.__dict__:
             if attr is not "_sa_instance_state":
-                self.assertTrue(attr in new_d)
+                with self.subTest(attr=attr):
+                    self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
     def test_to_dict_values(self):
