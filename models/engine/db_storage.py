@@ -40,6 +40,8 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
+        Base.metadata.create_all(self.__engine)
+
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
@@ -74,3 +76,21 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retrieve one object"""
+        if cls in classes.values():
+            return self.__session.query(cls).filter(cls.id == id).first()
+        else:
+            return None
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage matching
+        the given class. If no class is passed, returns
+        the count of all objects in storage.
+        """
+        if cls is not None:
+            return len(self.all(cls))
+        else:
+            return len(self.all())
