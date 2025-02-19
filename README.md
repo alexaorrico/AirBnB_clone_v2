@@ -150,6 +150,27 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 ```
 
+## RESTful API
+We are updating to version 3, adding a RESTful API to interact with our objects.
+
+### What is REST?
+REST (Representational State Transfer) is an architectural style for designing networked applications. It uses a stateless communication protocol, usually HTTP, to enable interaction between clients and servers.
+
+### What is an API?
+API (Application Programming Interface) is a set of rules and definitions that allow different software applications to communicate with each other.
+
+### HTTP Methods
+* `GET` - Retrieve resource(s)
+* `POST` - Create a resource
+* `PUT` or `PATCH` - Update a resource
+* `DELETE` - Delete a resource
+
+### How to Request a REST API
+Requests to a REST API are made using HTTP methods such as GET, POST, PUT, PATCH, and DELETE. These methods correspond to operations for retrieving, creating, updating, and deleting resources, respectively. Typically, requests are made to specific endpoints, and data is exchanged in formats like JSON or XML.
+
+## Examples of Use
+To be updated with examples of how to use the new RESTful API endpoints.
+
 ## Bugs
 No known bugs at this time. 
 
@@ -159,4 +180,5 @@ Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://tw
 
 Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
+
