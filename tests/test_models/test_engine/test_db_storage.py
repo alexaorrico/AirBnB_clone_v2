@@ -86,3 +86,36 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+
+@unittest.skipIf(os.environ.get('HBNB_TYPE_STORAGE') != 'db', 'skip if environ is not db')
+class TestStorageGet(unittest.TestCase):
+    """
+    Testing get method of DBstorage
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        setup tests for class
+        """
+        print('\n\n.................................')
+        print('...... Testing Get() Method ......')
+        print('.......... Place  Class ..........')
+        print('.................................\n\n')
+
+    def setUp(self):
+        """
+        setup method
+        """
+        self.state = State(name="mexico")
+        self.state.save()
+
+    def test_get_method_obj(self):
+        """
+        testing get() method
+        :return: True if pass, False if not pass
+        """
+        result = DBStorage.get(cls="State", id=self.state.id)
+
+        self.assertIsInstance(result, State)

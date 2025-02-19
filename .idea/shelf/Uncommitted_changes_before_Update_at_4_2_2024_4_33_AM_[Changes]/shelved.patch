@@ -1,0 +1,156 @@
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+new file mode 100644
+--- /dev/null	(date 1711905522177)
++++ b/.idea/inspectionProfiles/profiles_settings.xml	(date 1711905522177)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1711905522052)
++++ b/.idea/vcs.xml	(date 1711905522052)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1712008638422)
++++ b/.idea/misc.xml	(date 1712008638422)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" project-jdk-name="C:\Users\boody\AppData\Local\Programs\Python\Python311\python.exe" project-jdk-type="Python SDK" />
++  <component name="PyCharmProfessionalAdvertiser">
++    <option name="shown" value="true" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1711905521755)
++++ b/.idea/modules.xml	(date 1711905521755)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/AirBnB_clone_v3.iml" filepath="$PROJECT_DIR$/.idea/AirBnB_clone_v3.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/AirBnB_clone_v3.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/AirBnB_clone_v3.iml b/.idea/AirBnB_clone_v3.iml
+new file mode 100644
+--- /dev/null	(date 1712004301831)
++++ b/.idea/AirBnB_clone_v3.iml	(date 1712004301831)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <sourceFolder url="file://$MODULE_DIR$/models" isTestSource="false" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++  <component name="PyDocumentationSettings">
++    <option name="format" value="PLAIN" />
++    <option name="myDocStringFormat" value="Plain" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1711905520428)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1711905520428)
+@@ -0,0 +1,24 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="PyCompatibilityInspection" enabled="true" level="WARNING" enabled_by_default="true">
++      <option name="ourVersions">
++        <value>
++          <list size="2">
++            <item index="0" class="java.lang.String" itemvalue="2.7" />
++            <item index="1" class="java.lang.String" itemvalue="3.11" />
++          </list>
++        </value>
++      </option>
++    </inspection_tool>
++    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
++      <option name="ignoredIdentifiers">
++        <list>
++          <option value="cv2.imread" />
++          <option value="cv2.imshow" />
++          <option value="cv2.waitKey" />
++        </list>
++      </option>
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file
+Index: tests/test_models/test_engine/file.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/tests/test_models/test_engine/file.json b/tests/test_models/test_engine/file.json
+new file mode 100644
+--- /dev/null	(date 1712004379740)
++++ b/tests/test_models/test_engine/file.json	(date 1712004379740)
+@@ -0,0 +1,1 @@
++{"Amenity.5fc8cdb6-352a-4959-a56d-9e651bded202": {"id": "5fc8cdb6-352a-4959-a56d-9e651bded202", "created_at": "2024-04-01T20:46:19.740033", "updated_at": "2024-04-01T20:46:19.740033", "__class__": "Amenity"}, "BaseModel.ac61fb14-238d-4cfa-b39a-b183b84c0264": {"id": "ac61fb14-238d-4cfa-b39a-b183b84c0264", "created_at": "2024-04-01T20:46:19.740033", "updated_at": "2024-04-01T20:46:19.740033", "__class__": "BaseModel"}, "City.51c41678-139a-400a-bf32-50eeebf0874a": {"id": "51c41678-139a-400a-bf32-50eeebf0874a", "created_at": "2024-04-01T20:46:19.740033", "updated_at": "2024-04-01T20:46:19.740033", "__class__": "City"}, "Place.743d844a-9f15-4eed-af7d-a1c5c9b398e0": {"id": "743d844a-9f15-4eed-af7d-a1c5c9b398e0", "created_at": "2024-04-01T20:46:19.740033", "updated_at": "2024-04-01T20:46:19.740033", "__class__": "Place"}, "Review.3d2f9431-afa9-4b58-8574-babf8e87769b": {"id": "3d2f9431-afa9-4b58-8574-babf8e87769b", "created_at": "2024-04-01T20:46:19.740033", "updated_at": "2024-04-01T20:46:19.740033", "__class__": "Review"}, "State.a3d63c50-8cb4-45f1-999e-0bddef195dde": {"id": "a3d63c50-8cb4-45f1-999e-0bddef195dde", "created_at": "2024-04-01T20:46:19.740033", "updated_at": "2024-04-01T20:46:19.740033", "__class__": "State"}, "User.e15d91bf-6d48-4d14-a0c2-3228ae68edda": {"id": "e15d91bf-6d48-4d14-a0c2-3228ae68edda", "created_at": "2024-04-01T20:46:19.740033", "updated_at": "2024-04-01T20:46:19.740033", "__class__": "User"}}
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1711905522552)
++++ b/.idea/.gitignore	(date 1711905522552)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml

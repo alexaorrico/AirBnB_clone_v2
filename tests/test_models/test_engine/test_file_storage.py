@@ -113,3 +113,35 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    @unittest.skipIf(os.environ.get('HBNB_TYPE_STORAGE') == 'db', 'skip if environ is  db')
+    class TestStorageGet(unittest.TestCase):
+        """
+        Testing get method of DBstorage
+        """
+
+        @classmethod
+        def setUpClass(cls):
+            """
+            setup tests for class
+            """
+            print('\n\n.................................')
+            print('...... Testing Get() Method ......')
+            print('.......... Place  Class ..........')
+            print('.................................\n\n')
+
+        def setUp(self):
+            """
+            setup method
+            """
+            self.state = State(name="mexico")
+            self.state.save()
+
+        def test_get_method_obj(self):
+            """
+            testing get() method
+            :return: True if pass, False if not pass
+            """
+            result = FileStorage.get(cls="State", id=self.state.id)
+
+            self.assertIsInstance(result, State)
