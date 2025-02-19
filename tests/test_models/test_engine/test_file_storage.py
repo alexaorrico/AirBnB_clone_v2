@@ -113,3 +113,33 @@ class TestFileStorage(unittest.TestCase):
         with open("file.json", "r") as f:
             js = f.read()
         self.assertEqual(json.loads(string), json.loads(js))
+
+    def test_count(self):
+        """ Test .count() methods
+        """
+        storage = FileStorage()
+        new_dict = {}
+        for key, value in classes.items():
+            instance = value()
+            instance_key = instance.__class__.__name__ + "." + instance.id
+            new_dict[instance_key] = instance
+        save = FileStorage._FileStorage__objects
+        FileStorage._FileStorage__objects = new_dict
+        storage.save()
+        FileStorage._FileStorage__objects = save
+
+        all_count = storage.count()
+        state_all = storage.count(State)
+        self.assertLessEqual(state_all, all_count)
+        self.assertNotEqual(all_count, 0)
+        self.assertNotEqual(state_all, 0)
+
+    def test_get(self):
+        """ Test the .get() methods in Filestorage
+        """
+        storage = FileStorage()
+
+        first_state_id = list(storage.all(State).values())[0].id
+        self.assertIsNotNone(first_state_id)
+        val = storage.get(State, first_state_id)
+        self.assertIsNotNone(val)
