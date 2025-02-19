@@ -156,7 +156,40 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Eteng Moses Effa e-maill_ emosescode@gmail.com
+Peace Chimamaka e-mail_ peaceamaka111@gmail.com
 
 Second part of Airbnb: Joann Vuong
 ## License
-Public Domain. No copy write protection. 
+Public Domain. No copy write protection.
+
+
+AirBnB clone - RESTful API
+Python
+Back-end
+API
+Webserver
+Flask
+ Weight: 2
+ Project to be done in teams of 2 people (your team: Peace Amaka, Eteng Moses)
+ Project will start May 23, 2024 6:00 AM, must end by May 28, 2024 6:00 AM
+ Checker was released at May 24, 2024 12:00 PM
+ An auto review will be launched at the deadline
+Concepts
+For this project, we expect you to look at these concepts:
+
+REST API
+AirBnB clone
+Resources
+Read or watch:
+
+REST API concept page
+Learn REST: A RESTful Tutorial
+Designing a RESTful API with Python and Flask
+HTTP access control (CORS)
+Flask cheatsheet
+What are Flask Blueprints, exactly?
+Flask
+Modular Applications with Blueprints
+Flask tests
+Flask-CORS 
