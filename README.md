@@ -158,5 +158,15 @@ Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twit
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
 
 Second part of Airbnb: Joann Vuong
+
+Cassandra Lelei - [Github](https://github.com/cassandra18) / [Twitter](https://x.com/LelCassandra)
+
+## Changelog
+
+### AirBnB_clone_v3
+- Updated repository to v3
+- Added new features and enhancements such as...
+
+
 ## License
 Public Domain. No copy write protection. 
