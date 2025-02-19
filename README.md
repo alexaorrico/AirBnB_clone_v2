@@ -1,6 +1,10 @@
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
+### Purpose
+
+The purpose of this project is to provide a comprehensive learning experience in higher-level programming concepts through the practical implementation of an AirBnB clone. By developing a command-line interface to manage objects integral to the AirBnB website, students gain hands-on experience in creating, retrieving, updating, and deleting data. Additionally, this project serves as a foundation for understanding web development principles and prepares students for more complex real-world applications. Through collaborative exploration of the codebase, participants can deepen their understanding of software architecture and refine their programming skills.
+
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
 * Retrieve an object from a file, a database etc...
@@ -151,12 +155,13 @@ EOF  all  create  destroy  help  quit  show  update
 ```
 
 ## Bugs
-No known bugs at this time. 
+No known bugs at this time (others will be written) 
 
 ## Authors
-Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Ayoub mohammed ESSBAI - [Github](https://github.com/ayoub22222222) / [Twitter](https://twitter.com/ayoub34120329)
+Zineb ZID - [Github](https://github.com/Zinebb12) /[Twitter](https://twitter.com/zinebzaid)
 
 Second part of Airbnb: Joann Vuong
 ## License
 Public Domain. No copy write protection. 
+This is a project for learning purposes with ALX africa. 
