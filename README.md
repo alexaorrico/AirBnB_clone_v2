@@ -149,7 +149,8 @@ EOF  all  create  destroy  help  quit  show  update
 ** no instance found **
 (hbnb) quit
 ```
-
+## REST API
+Impovement made by Badre Ziani & Fuad Hasen
 ## Bugs
 No known bugs at this time. 
 

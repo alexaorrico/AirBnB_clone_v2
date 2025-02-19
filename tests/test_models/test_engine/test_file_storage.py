@@ -71,6 +71,28 @@ test_file_storage.py'])
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """Test get"""
+        storage = FileStorage()
+        new_state = State(name="Alxiya")
+        storage.new(new_state)
+        storage.save()
+        storage = FileStorage()
+        saved_state = storage.get(State, new_state.id)
+        self.assertEqual(saved_state, new_state)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """Test count"""
+        storage = FileStorage()
+        new_state = State(name="Alxiya")
+        storage.new(new_state)
+        new_state2 = State(name="Africa")
+        storage.new(new_state2)
+        storage.save()
+        self.assertEqual(len(storage.all()), storage.count())
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_all_returns_dict(self):
         """Test that all returns the FileStorage.__objects attr"""
         storage = FileStorage()
