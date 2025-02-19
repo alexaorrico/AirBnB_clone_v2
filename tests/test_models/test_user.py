@@ -59,6 +59,7 @@ class TestUserDocs(unittest.TestCase):
 
 class TestUser(unittest.TestCase):
     """Test the User class"""
+
     def test_is_subclass(self):
         """Test that User is a subclass of BaseModel"""
         user = User()
@@ -130,3 +131,29 @@ class TestUser(unittest.TestCase):
         user = User()
         string = "[User] ({}) {}".format(user.id, user.__dict__)
         self.assertEqual(string, str(user))
+
+    def test_creation_with_kwargs(self):
+        """Test initialization of User with kwargs"""
+        dt = datetime.now().isoformat()
+        user = User(id="123", created_at=dt, updated_at=dt,
+                    email="test@example.com",
+                    password="password", first_name="John", last_name="Doe")
+        self.assertEqual(user.id, "123")
+        self.assertEqual(user.created_at.isoformat(), dt)
+        self.assertEqual(user.updated_at.isoformat(), dt)
+        self.assertEqual(user.email, "test@example.com")
+        self.assertEqual(user.password, "password")
+        self.assertEqual(user.first_name, "John")
+        self.assertEqual(user.last_name, "Doe")
+
+    def test_unique_ids(self):
+        """Test that each User has a unique id"""
+        user1 = User()
+        user2 = User()
+        self.assertNotEqual(user1.id, user2.id)
+
+    def test_storage_of_new_instance(self):
+        """Test that new instance is stored in storage"""
+        user = User()
+        user.save()
+        self.assertIn(user, models.storage.all().values())

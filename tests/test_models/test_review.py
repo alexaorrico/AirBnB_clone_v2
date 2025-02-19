@@ -59,6 +59,7 @@ class TestReviewDocs(unittest.TestCase):
 
 class TestReview(unittest.TestCase):
     """Test the Review class"""
+
     def test_is_subclass(self):
         """Test if Review is a subclass of BaseModel"""
         review = Review()
@@ -121,3 +122,27 @@ class TestReview(unittest.TestCase):
         review = Review()
         string = "[Review] ({}) {}".format(review.id, review.__dict__)
         self.assertEqual(string, str(review))
+
+    def test_creation_with_kwargs(self):
+        """Test initialization of Review with kwargs"""
+        dt = datetime.now().isoformat()
+        review = Review(id="123", created_at=dt, updated_at=dt,
+                        place_id="456", user_id="789", text="Great place!")
+        self.assertEqual(review.id, "123")
+        self.assertEqual(review.created_at.isoformat(), dt)
+        self.assertEqual(review.updated_at.isoformat(), dt)
+        self.assertEqual(review.place_id, "456")
+        self.assertEqual(review.user_id, "789")
+        self.assertEqual(review.text, "Great place!")
+
+    def test_unique_ids(self):
+        """Test that each Review has a unique id"""
+        review1 = Review()
+        review2 = Review()
+        self.assertNotEqual(review1.id, review2.id)
+
+    def test_storage_of_new_instance(self):
+        """Test that new instance is stored in storage"""
+        review = Review()
+        review.save()
+        self.assertIn(review, models.storage.all().values())

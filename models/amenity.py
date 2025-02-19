@@ -19,3 +19,11 @@ class Amenity(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes Amenity"""
         super().__init__(*args, **kwargs)
+
+    def to_dict(self):
+        """returns a dictionary containing all keys/values of the instance"""
+        dict_repr = super().to_dict()
+        dict_repr.update({
+            'name': self.name
+        })
+        return dict_repr

@@ -59,6 +59,7 @@ class TestCityDocs(unittest.TestCase):
 
 class TestCity(unittest.TestCase):
     """Test the City class"""
+
     def test_is_subclass(self):
         """Test that City is a subclass of BaseModel"""
         city = City()
@@ -112,3 +113,24 @@ class TestCity(unittest.TestCase):
         city = City()
         string = "[City] ({}) {}".format(city.id, city.__dict__)
         self.assertEqual(string, str(city))
+
+    def test_creation_with_kwargs(self):
+        """Test initialization of City with kwargs"""
+        dt = datetime.now().isoformat()
+        city = City(id="123", created_at=dt, updated_at=dt, name="New York")
+        self.assertEqual(city.id, "123")
+        self.assertEqual(city.created_at.isoformat(), dt)
+        self.assertEqual(city.updated_at.isoformat(), dt)
+        self.assertEqual(city.name, "New York")
+
+    def test_unique_ids(self):
+        """Test that each City has a unique id"""
+        city1 = City()
+        city2 = City()
+        self.assertNotEqual(city1.id, city2.id)
+
+    def test_storage_of_new_instance(self):
+        """Test that new instance is stored in storage"""
+        city = City()
+        city.save()
+        self.assertIn(city, models.storage.all().values())

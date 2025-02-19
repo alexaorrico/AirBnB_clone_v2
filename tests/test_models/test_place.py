@@ -59,6 +59,7 @@ class TestPlaceDocs(unittest.TestCase):
 
 class TestPlace(unittest.TestCase):
     """Test the Place class"""
+
     def test_is_subclass(self):
         """Test that Place is a subclass of BaseModel"""
         place = Place()
@@ -198,3 +199,37 @@ class TestPlace(unittest.TestCase):
         place = Place()
         string = "[Place] ({}) {}".format(place.id, place.__dict__)
         self.assertEqual(string, str(place))
+
+    def test_creation_with_kwargs(self):
+        """Test initialization of Place with kwargs"""
+        dt = datetime.now().isoformat()
+        place = Place(id="123", created_at=dt, updated_at=dt,
+                      name="Cozy Apartment",
+                      city_id="456", user_id="789", description="Nice view",
+                      number_rooms=2, number_bathrooms=1, max_guest=4,
+                      price_by_night=100, latitude=40.7128, longitude=-74.0060)
+        self.assertEqual(place.id, "123")
+        self.assertEqual(place.created_at.isoformat(), dt)
+        self.assertEqual(place.updated_at.isoformat(), dt)
+        self.assertEqual(place.name, "Cozy Apartment")
+        self.assertEqual(place.city_id, "456")
+        self.assertEqual(place.user_id, "789")
+        self.assertEqual(place.description, "Nice view")
+        self.assertEqual(place.number_rooms, 2)
+        self.assertEqual(place.number_bathrooms, 1)
+        self.assertEqual(place.max_guest, 4)
+        self.assertEqual(place.price_by_night, 100)
+        self.assertEqual(place.latitude, 40.7128)
+        self.assertEqual(place.longitude, -74.0060)
+
+    def test_unique_ids(self):
+        """Test that each Place has a unique id"""
+        place1 = Place()
+        place2 = Place()
+        self.assertNotEqual(place1.id, place2.id)
+
+    def test_storage_of_new_instance(self):
+        """Test that new instance is stored in storage"""
+        place = Place()
+        place.save()
+        self.assertIn(place, models.storage.all().values())

@@ -59,6 +59,7 @@ class TestStateDocs(unittest.TestCase):
 
 class TestState(unittest.TestCase):
     """Test the State class"""
+
     def test_is_subclass(self):
         """Test that State is a subclass of BaseModel"""
         state = State()
@@ -103,3 +104,28 @@ class TestState(unittest.TestCase):
         state = State()
         string = "[State] ({}) {}".format(state.id, state.__dict__)
         self.assertEqual(string, str(state))
+
+    def test_creation_with_kwargs(self):
+        """Test initialization of State with kwargs"""
+        dt = datetime.now().isoformat()
+        state = State(
+            id="123",
+            created_at=dt,
+            updated_at=dt,
+            name="California")
+        self.assertEqual(state.id, "123")
+        self.assertEqual(state.created_at.isoformat(), dt)
+        self.assertEqual(state.updated_at.isoformat(), dt)
+        self.assertEqual(state.name, "California")
+
+    def test_unique_ids(self):
+        """Test that each State has a unique id"""
+        state1 = State()
+        state2 = State()
+        self.assertNotEqual(state1.id, state2.id)
+
+    def test_storage_of_new_instance(self):
+        """Test that new instance is stored in storage"""
+        state = State()
+        state.save()
+        self.assertIn(state, models.storage.all().values())
