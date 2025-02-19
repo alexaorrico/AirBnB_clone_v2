@@ -79,6 +79,24 @@ class TestFileStorage(unittest.TestCase):
         self.assertIs(new_dict, storage._FileStorage__objects)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """test that get method retrieves the correct object"""
+        storage = FileStorage()
+        c_state = State(name="Louisiana")
+        c_state.save()
+        get_state = storage.get(State, c_state.id)
+        self.assertIs(get_state, c_state)
+        get_state = storage.get(State, "non-existent id")
+        self.assertIs(get_state, None)
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_count(self):
+        """test value returned by count is correct"""
+        storage = FileStorage()
+        c_states = storage.count(State)
+        self.assertIs(c_states == len(storage.all(State)))
+
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_new(self):
         """test that new adds an object to the FileStorage.__objects attr"""
         storage = FileStorage()
