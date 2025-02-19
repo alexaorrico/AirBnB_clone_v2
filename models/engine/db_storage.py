@@ -63,6 +63,7 @@ class DBStorage:
         """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
+            self.save()
 
     def reload(self):
         """reloads data from the database"""
@@ -74,3 +75,24 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """i am get"""
+        new_dict_ = self.all()
+        if isinstance(cls, str):
+            key = eval(cls).__name__ + "." + id
+        else:
+            key = cls.__name__ + '.' + id
+        if key in new_dict_:
+            return new_dict_[key]
+        return None
+
+    def count(self, cls=None):
+        """i am count"""
+        if cls is not None:
+            if isinstance(cls, str):
+                carlstive = self.all(eval(cls))
+            else:
+                carlstive = self.all(cls.__name__)
+            return (len(carlstive))
+        return len(self.all())
