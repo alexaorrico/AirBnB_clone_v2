@@ -1,0 +1,77 @@
+#!/usr/bin/python3
+""" The Amenity Object view
+"""
+
+from flask import jsonify, abort, request
+from models.amenity import Amenity
+from models import storage
+from api.v1.views import app_views
+
+
+@app_views.route('/amenities', strict_slashes=False)
+def get_amenities():
+    """ Retrieves all amenities from storage
+    """
+    retrieved_amenities = []
+    amenities = storage.all(Amenity)
+    for amenity in amenities.values():
+        retrieved_amenities.append(amenity.to_dict())
+    return jsonify(retrieved_amenities)
+
+
+@app_views.route('/amenities/<amenity_id>', strict_slashes=False)
+def get_amenity_by_id(amenity_id):
+    """ Retrieves one amenity from storage based on the id
+    """
+    try:
+        return jsonify(storage.get(Amenity, amenity_id).to_dict()), 200
+    except Exception:
+        abort(404)
+
+
+@app_views.route('/amenities/<amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_amenity_by_id(amenity_id):
+    """ Deletes the amenity from storage by its given id
+    """
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity:
+        storage.delete(amenity)
+        storage.save()
+        return jsonify({}), 200
+    else:
+        abort(404)
+
+
+@app_views.route('/amenities', methods=['POST'],
+                 strict_slashes=False)
+def post_amenity():
+    """ Adds a new amenity to storage
+    """
+    body = request.get_json()
+    if body is None:
+        abort(400, 'Not a JSON')
+    if 'name' not in body:
+        abort(400, 'Missing name')
+    new_amenity = Amenity(**body)
+    new_amenity.save()
+    return jsonify(new_amenity.to_dict()), 201
+
+
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
+def put_amenity(amenity_id):
+    """ Modifies the attributes of a amenity if they are not dates or id
+    """
+    amenity = storage.get(Amenity, amenity_id)
+    if amenity:
+        body = request.get_json()
+        if body is None:
+            abort(400, 'Not a JSON')
+        for key, value in body.items():
+            if key not in ['id', 'created_at', 'updated_at']:
+                setattr(amenity, key, value)
+        amenity.save()
+        return jsonify(amenity.to_dict()), 200
+    else:
+        abort(404)
