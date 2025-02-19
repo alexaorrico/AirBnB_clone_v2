@@ -1,0 +1,5 @@
+#!/usr/bin/python3
+""" Blueprint Views
+"""
+from api.v1.views import app_views
+#!/usr/bin/python3
