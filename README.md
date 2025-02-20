@@ -1,5 +1,5 @@
-# AirBnB Clone - The Console
-The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
+# Airbnb Clone - The Console
+The console is the first segment of the Airbnb project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of Airbnb project is to eventually deploy our server a simple copy of the Airbnb Website(HBnB). A command interpreter is created in this segment to manage objects for the Airbnb(HBnB) website.
 
 #### Functionalities of this command interpreter:
 * Create a new object (ex: a new User or a new Place)
@@ -22,8 +22,8 @@ The console is the first segment of the AirBnB project at Holberton School that 
 This project is interpreted/tested on Ubuntu 14.04 LTS using python3 (version 3.4.3)
 
 ## Installation
-* Clone this repository: `git clone "https://github.com/alexaorrico/AirBnB_clone.git"`
-* Access AirBnb directory: `cd AirBnB_clone`
+* Clone this repository: `git clone "https://github.com/alexaorrico/Airbnb_clone.git"`
+* Access Airbnb directory: `cd Airbnb_clone`
 * Run hbnb(interactively): `./console` and enter command
 * Run hbnb(non-interactively): `echo "<command>" | ./console.py`
 
@@ -72,7 +72,7 @@ TestBaseModelDocs class:
 * `def test_bm_func_docstrings(self)` - Test for the presence of docstrings in BaseModel methods
 
 TestBaseModel class:
-* `def test_is_base_model(self)` - Test that the instatiation of a BaseModel works
+* `def test_is_base_model(self)` - Test that the instantiation of a BaseModel works
 * `def test_created_at_instantiation(self)` - Test created_at is a pub. instance attribute of type datetime
 * `def test_updated_at_instantiation(self)` - Test updated_at is a pub. instance attribute of type datetime
 * `def test_diff_datetime_objs(self)` - Test that two BaseModel instances have different datetime objects
@@ -129,7 +129,7 @@ TestBaseModel class:
 
 ## Examples of use
 ```
-vagrantAirBnB_clone$./console.py
+vagrantAirbnb_clone$./console.py
 (hbnb) help
 
 Documented commands (type help <topic>):
