@@ -62,7 +62,10 @@ class DBStorage:
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
-            self.__session.delete(obj)
+            try:
+                self.__session.delete(obj)
+            except Exception as err:
+                print(f'Error on delete: {err}')
 
     def reload(self):
         """reloads data from the database"""
@@ -74,3 +77,25 @@ class DBStorage:
     def close(self):
         """call remove() method on the private session attribute"""
         self.__session.remove()
+
+    def get(self, cls, id):
+        """retrieves an object of the specified class and id"""
+        # check if cls exists in models
+        if cls not in classes.values():
+            return None
+        objs = self.all(cls)
+        for key in objs.keys():
+            if key.split('.')[1] == id:
+                return objs[key]
+        return None
+
+    def count(self, cls=None):
+        """counts the number of objects in storage"""
+        count = 0
+        if cls and cls in classes.values():
+            for obj in self.all(cls).values():
+                count += 1
+            return count
+        for obj in self.all().values():
+            count += 1
+        return count
