@@ -1,0 +1,8 @@
+crash_course-js
+.hbnb3/
+__pycache__/
+file.json
+models/__pycache__/
+models/engine/__pycache__/
+*.txt
+

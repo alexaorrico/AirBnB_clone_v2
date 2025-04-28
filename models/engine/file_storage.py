@@ -55,8 +55,8 @@ class FileStorage:
                 jo = json.load(f)
             for key in jo:
                 self.__objects[key] = classes[jo[key]["__class__"]](**jo[key])
-        except:
-            pass
+        except Exception as err:
+            raise NotImplementedError
 
     def delete(self, obj=None):
         """delete obj from __objects if it’s inside"""
@@ -68,3 +68,23 @@ class FileStorage:
     def close(self):
         """call reload() method for deserializing the JSON file to objects"""
         self.reload()
+
+    def get(self, cls, id):
+        """retrieves one object"""
+        # check if cls is a valid class in models
+        if cls and cls in classes.values():
+            for key, obj in self.all(cls).items():
+                if key.split('.')[1] == id:
+                    return obj
+        return None
+
+    def count(self, cls=None):
+        """counts the number of objects in storage"""
+        count = 0
+        if cls and cls in classes.values():
+            for obj in self.all(cls).values():
+                count += 1
+            return count
+        for obj in self.all().values():
+            count += 1
+        return count
